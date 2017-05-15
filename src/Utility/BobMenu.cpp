@@ -470,7 +470,19 @@ int BobMenu::getAmountOfMenuItems()
 
 //=========================================================================================================================
 //returns bottom of graphic y position
-void BobMenu::render(int y, int x, int endY, bool drawCursor, int* returnBottomOfGraphic, int* returnBottomOfCaptions, bool renderBackgroundAndBorder, int* returnLeftX, int* returnRightX)
+void BobMenu::render
+(
+	int y, 
+	int x, 
+	int endY, 
+	bool drawCursor, 
+	int* returnBottomOfGraphic, 
+	int* returnBottomOfCaptions, 
+	bool renderBackgroundAndBorder, 
+	int* returnLeftX, 
+	int* returnRightX
+
+)
 {//=========================================================================================================================
 
 	if (y == 0 && titleCaption != nullptr)y = titleCaption->getHeight() + 8;

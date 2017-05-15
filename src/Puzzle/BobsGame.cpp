@@ -534,7 +534,6 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-
 }
 
 //=========================================================================================================================
@@ -546,6 +545,7 @@ void BobsGame::drawBobsGameFBO(float x0, float x1, float y0, float y1)
 	GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, x0, x1, y0, y1, 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
 
 	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 }
 
 //int clearToggle = 0;
