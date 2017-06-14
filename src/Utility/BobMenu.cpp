@@ -468,6 +468,11 @@ int BobMenu::getAmountOfMenuItems()
 	return menuItems.size();
 }
 
+
+
+
+
+
 //=========================================================================================================================
 //returns bottom of graphic y position
 void BobMenu::render
@@ -480,7 +485,8 @@ void BobMenu::render
 	int* returnBottomOfCaptions, 
 	bool renderBackgroundAndBorder, 
 	int* returnLeftX, 
-	int* returnRightX
+	int* returnRightX,
+	bool decreaseFontSizeToFit
 
 )
 {//=========================================================================================================================
@@ -530,8 +536,11 @@ void BobMenu::render
 	
 	{
 
+		
+
 		int menuItemsToShow = 0;
 		int lowestHeight = y;
+
 		for (int i = 0; i < menuItems.size(); i++)
 		{
 			MenuItem *m = menuItems.get(i);
@@ -547,20 +556,53 @@ void BobMenu::render
 				else
 				{
 					visibleMenuItems.add(m);
+				}
+			}
+		}
+
+		bool wentSmaller = true;
+
+		//we want to decrease the font size until the menu fits between startY and endY
+		do
+		{
+
+			for (int i = 0; i < visibleMenuItems.size(); i++)
+			{
+				MenuItem *m = visibleMenuItems.get(i);
+				Caption *c = m->caption;
+
+				if (c != nullptr)
+				{
+					
 					lowestHeight += (int)(c->getHeight()*spacing);
 
 					//figure out how many can fit in the space
 					//if less than totalVisible can fit
 					if (lowestHeight >= endY && menuItemsToShow == 0)
 					{
-						menuItemsToShow = visibleMenuItems.size() - 3;
-						if (menuItemsToShow <= 0) { menuItemsToShow = 1; y = endY - (c->getHeight()+20); }
+						menuItemsToShow = i - 3;
+						if (menuItemsToShow <= 0) { menuItemsToShow = 1; y = endY - (c->getHeight() + 20); }
 					}
+					
 				}
 			}
-		}
 
-		if (menuItemsToShow == 0)menuItemsToShow = visibleMenuItems.size();
+			if (menuItemsToShow == 0)menuItemsToShow = visibleMenuItems.size();
+			
+			if(decreaseFontSizeToFit && menuItemsToShow < visibleMenuItems.size())
+			{
+				//decrease the font size for all menu items
+				for (int i = 0; i < menuItems.size(); i++)
+				{
+					MenuItem *m = menuItems.get(i);
+					Caption *c = m->caption;
+					wentSmaller = c->reduceHeightByOne();
+				}
+			}
+
+		} while (decreaseFontSizeToFit && (menuItemsToShow < visibleMenuItems.size() && wentSmaller == true));
+
+
 
 		//set them all invisible so i can only enable the ones to fit on the screen
 		for (int i = 0; i < visibleMenuItems.size(); i++)

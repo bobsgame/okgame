@@ -255,13 +255,32 @@ void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, 
 	if (outline)
 	{
 		TTF_Font* outlineFont = nullptr;
+		if (ttfFont == BobFont::ttf_6)outlineFont = BobFont::ttf_outline_6;
+		if (ttfFont == BobFont::ttf_7)outlineFont = BobFont::ttf_outline_7;
 		if (ttfFont == BobFont::ttf_8)outlineFont = BobFont::ttf_outline_8;
+		if (ttfFont == BobFont::ttf_9)outlineFont = BobFont::ttf_outline_9;
 		if (ttfFont == BobFont::ttf_10)outlineFont = BobFont::ttf_outline_10;
+		if (ttfFont == BobFont::ttf_11)outlineFont = BobFont::ttf_outline_11;
 		if (ttfFont == BobFont::ttf_12)outlineFont = BobFont::ttf_outline_12;
+		if (ttfFont == BobFont::ttf_13)outlineFont = BobFont::ttf_outline_13;
 		if (ttfFont == BobFont::ttf_14)outlineFont = BobFont::ttf_outline_14;
+		if (ttfFont == BobFont::ttf_15)outlineFont = BobFont::ttf_outline_15;
 		if (ttfFont == BobFont::ttf_16)outlineFont = BobFont::ttf_outline_16;
+		if (ttfFont == BobFont::ttf_17)outlineFont = BobFont::ttf_outline_17;
 		if (ttfFont == BobFont::ttf_18)outlineFont = BobFont::ttf_outline_18;
+		if (ttfFont == BobFont::ttf_19)outlineFont = BobFont::ttf_outline_19;
+		if (ttfFont == BobFont::ttf_20)outlineFont = BobFont::ttf_outline_20;
+		if (ttfFont == BobFont::ttf_21)outlineFont = BobFont::ttf_outline_21;
+		if (ttfFont == BobFont::ttf_22)outlineFont = BobFont::ttf_outline_22;
+		if (ttfFont == BobFont::ttf_23)outlineFont = BobFont::ttf_outline_23;
 		if (ttfFont == BobFont::ttf_24)outlineFont = BobFont::ttf_outline_24;
+		if (ttfFont == BobFont::ttf_25)outlineFont = BobFont::ttf_outline_25;
+		if (ttfFont == BobFont::ttf_26)outlineFont = BobFont::ttf_outline_26;
+		if (ttfFont == BobFont::ttf_27)outlineFont = BobFont::ttf_outline_27;
+		if (ttfFont == BobFont::ttf_28)outlineFont = BobFont::ttf_outline_28;
+		if (ttfFont == BobFont::ttf_29)outlineFont = BobFont::ttf_outline_29;
+		if (ttfFont == BobFont::ttf_30)outlineFont = BobFont::ttf_outline_30;
+		if (ttfFont == BobFont::ttf_31)outlineFont = BobFont::ttf_outline_31;
 		if (ttfFont == BobFont::ttf_32)outlineFont = BobFont::ttf_outline_32;
 		if (ttfFont == BobFont::ttf_48)outlineFont = BobFont::ttf_outline_48;
 		if (ttfFont == BobFont::ttf_64)outlineFont = BobFont::ttf_outline_64;
@@ -1127,6 +1146,49 @@ float Caption::getWidth()
 	return width * scale;
 }
 
+//=========================================================================================================================
+bool Caption::reduceHeightByOne()
+{//=========================================================================================================================
+
+	if (ttfFont == nullptr)return false;
+
+	if (ttfFont == BobFont::ttf_6)	return false;
+	if (ttfFont == BobFont::ttf_7)	ttfFont = BobFont::ttf_6;
+	if (ttfFont == BobFont::ttf_8)	ttfFont = BobFont::ttf_7;
+	if (ttfFont == BobFont::ttf_9)	ttfFont = BobFont::ttf_8;
+	if (ttfFont == BobFont::ttf_10)	ttfFont = BobFont::ttf_9;
+	if (ttfFont == BobFont::ttf_11)	ttfFont = BobFont::ttf_10;
+	if (ttfFont == BobFont::ttf_12)	ttfFont = BobFont::ttf_11;
+	if (ttfFont == BobFont::ttf_13)	ttfFont = BobFont::ttf_12;
+	if (ttfFont == BobFont::ttf_14)	ttfFont = BobFont::ttf_13;
+	if (ttfFont == BobFont::ttf_15)	ttfFont = BobFont::ttf_14;
+	if (ttfFont == BobFont::ttf_16)	ttfFont = BobFont::ttf_15;
+	if (ttfFont == BobFont::ttf_17)	ttfFont = BobFont::ttf_16;
+	if (ttfFont == BobFont::ttf_18)	ttfFont = BobFont::ttf_17;
+	if (ttfFont == BobFont::ttf_19)	ttfFont = BobFont::ttf_18;
+	if (ttfFont == BobFont::ttf_20)	ttfFont = BobFont::ttf_19;
+	if (ttfFont == BobFont::ttf_21)	ttfFont = BobFont::ttf_20;
+	if (ttfFont == BobFont::ttf_22)	ttfFont = BobFont::ttf_21;
+	if (ttfFont == BobFont::ttf_23)	ttfFont = BobFont::ttf_22;
+	if (ttfFont == BobFont::ttf_24)	ttfFont = BobFont::ttf_23;
+	if (ttfFont == BobFont::ttf_25)	ttfFont = BobFont::ttf_24;
+	if (ttfFont == BobFont::ttf_26)	ttfFont = BobFont::ttf_25;
+	if (ttfFont == BobFont::ttf_27)	ttfFont = BobFont::ttf_26;
+	if (ttfFont == BobFont::ttf_28)	ttfFont = BobFont::ttf_27;
+	if (ttfFont == BobFont::ttf_29)	ttfFont = BobFont::ttf_28;
+	if (ttfFont == BobFont::ttf_30)	ttfFont = BobFont::ttf_29;
+	if (ttfFont == BobFont::ttf_31)	ttfFont = BobFont::ttf_30;
+	if (ttfFont == BobFont::ttf_32)	ttfFont = BobFont::ttf_31;
+	if (ttfFont == BobFont::ttf_48)	ttfFont = BobFont::ttf_32;
+	if (ttfFont == BobFont::ttf_64)	ttfFont = BobFont::ttf_48;
+								
+
+	setText(text, true);
+
+	return true;
+
+
+}
 
 //=========================================================================================================================
 float Caption::getHeight()

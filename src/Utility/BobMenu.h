@@ -124,8 +124,21 @@ public:
 	virtual MenuItem* addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
+
 	//returns bottom of graphic y position
-	void render(int y = 0, int x = 0, int endY = GLUtils::getViewportHeight(), bool drawCursor = true, int* returnBottomOfGraphic = nullptr, int* returnBottomOfCaptions = nullptr, bool renderBackgroundAndBorder = false, int* returnLeftX = nullptr, int* returnRightX = nullptr);
+	void render(
+		int y = 0, 
+		int x = 0, 
+		int endY = GLUtils::getViewportHeight(), 
+		bool drawCursor = true, 
+		int* returnBottomOfGraphic = nullptr, 
+		int* returnBottomOfCaptions = nullptr, 
+		bool renderBackgroundAndBorder = false, 
+		int* returnLeftX = nullptr, 
+		int* returnRightX = nullptr,
+		bool decreaseFontSizeToFit = true
+	);
+
 	void setHidden(string id, bool b);
 	void setAllInvisible();
 	void setAllVisible();
