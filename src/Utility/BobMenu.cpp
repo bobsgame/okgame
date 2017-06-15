@@ -659,6 +659,7 @@ void BobMenu::render
 					Caption *c = m->caption;
 					changedSize = c->reduceHeightByOne();
 					scaledFontSize = changedSize;
+					topMenuItemDrawn = nullptr;
 				}
 			}
 
@@ -671,6 +672,7 @@ void BobMenu::render
 					Caption *c = m->caption;
 					changedSize = c->increaseHeightByOne();
 					scaledFontSize = changedSize;
+					topMenuItemDrawn = nullptr;
 				}
 			}
 
@@ -755,6 +757,9 @@ void BobMenu::render
 		if (topVisibleMenuItemIndex < 0)topVisibleMenuItemIndex = 0;
 
 		
+
+
+
 
 		for (int i = 0; i < visibleMenuItems.size() && numDrawn <= menuItemsToShow; i++)
 		{

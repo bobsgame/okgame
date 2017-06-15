@@ -1184,7 +1184,7 @@ int Caption::reduceHeightByOne()
 								
 
 	
-
+	return 0;
 	
 
 
@@ -1226,7 +1226,7 @@ int Caption::increaseHeightByOne()
 	if (ttfFont == BobFont::ttf_64)	{return 64;								 }
 								
 
-
+	return 0;
 
 }
 
