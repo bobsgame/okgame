@@ -54,8 +54,8 @@ public:
 	int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
 
 
-	ArrayList<PieceType*> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
-	ArrayList<BlockType*> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
+	ArrayList<shared_ptr<PieceType> > pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
+	ArrayList<shared_ptr<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
 	//ArrayList<BobColor*> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
 
 	ArrayList<string> pieceTypesToDisallow_UUID;
@@ -190,10 +190,10 @@ public:
 
 
 	string toBase64GZippedXML();
-	BlockType* getBlockTypeByName(string s);
-	PieceType* getPieceTypeByName(string s);
-	BlockType* getBlockTypeByUUID(string s);
-	PieceType* getPieceTypeByUUID(string s);
+	shared_ptr<BlockType> getBlockTypeByName(string s);
+	shared_ptr<PieceType> getPieceTypeByName(string s);
+	shared_ptr<BlockType> getBlockTypeByUUID(string s);
+	shared_ptr<PieceType> getPieceTypeByUUID(string s);
 	static GameType* fromBase64GZippedXML(string b64GZipJSON);
 
 	//Color noColor;
@@ -470,7 +470,7 @@ public:
 	int blockAnimationTicksRandomUpToBetweenLoop = 0;						Info blockAnimationTicksRandomUpToBetweenLoop_Info = Info("Visual: Block Animation Ticks Random Up To Between Loop", "If a block sprite has animation, maximum amount of milliseconds to wait before triggering animation cycle.");//drbob
 
 
-	ArrayList<BlockType*> blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
+	ArrayList<shared_ptr<BlockType>> blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
 	private:
 	ArrayList<BlockType> importExport_blockTypes;
 	public:
@@ -497,7 +497,7 @@ public:
 	bool currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty = false;		Info currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info = Info("Get New Pieces Randomly Out Of Bag With One Of Each Piece Until Empty", "Get one of each piece type randomly until all of them have been used instead of generating a completely random piece each time.  Prevents many duplicates in a row and guarantees you will get each piece, but reduces randomness.");
 
 	//TODO: can change these to pieceType.garbage, etc
-	ArrayList<PieceType*> pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
+	ArrayList<shared_ptr<PieceType> > pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
 private:
 	ArrayList<PieceType> importExport_pieceTypes;
 public:
@@ -631,15 +631,15 @@ public:
 	void serialize(Archive & ar, const unsigned int version);
 
 
-	ArrayList<BlockType*> getNormalBlockTypes(DifficultyType *d);
-	ArrayList<BlockType*> getGarbageBlockTypes(DifficultyType *d);
-	ArrayList<BlockType*> getPlayingFieldBlockTypes(DifficultyType *d);
-	ArrayList<BlockType*> getBlockTypesToIgnoreWhenCheckingChain(DifficultyType *d);
-	ArrayList<BlockType*> getBlockTypesToIgnoreWhenMovingDown(DifficultyType *d);
-	ArrayList<BlockType*> getBlockTypesChainMustContain(DifficultyType *d);
-	ArrayList<PieceType*> getNormalPieceTypes(DifficultyType *d);
-	ArrayList<PieceType*> getGarbagePieceTypes(DifficultyType *d);
-	ArrayList<PieceType*> getPlayingFieldPieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getNormalBlockTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getGarbageBlockTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getPlayingFieldBlockTypes(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenCheckingChain(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenMovingDown(DifficultyType *d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesChainMustContain(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType> > getNormalPieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType> > getGarbagePieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType> > getPlayingFieldPieceTypes(DifficultyType *d);
 
 
 };

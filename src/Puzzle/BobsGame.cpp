@@ -2482,7 +2482,7 @@ void BobsGame::updateVersion0ToVersion1()
 
 		for (int n = 0; n < g->pieceTypes.size(); n++)
 		{
-			PieceType *p = g->pieceTypes.get(n);
+			shared_ptr<PieceType> p = g->pieceTypes.get(n);
 			if (p->uuid == "")
 			{
 				boost::uuids::random_generator generator;
@@ -2491,7 +2491,7 @@ void BobsGame::updateVersion0ToVersion1()
 		}
 		for (int n = 0; n < g->blockTypes.size(); n++)
 		{
-			BlockType *b = g->blockTypes.get(n);
+			shared_ptr<BlockType> b = g->blockTypes.get(n);
 			if (b->uuid == "")
 			{
 				boost::uuids::random_generator generator;
@@ -2500,12 +2500,12 @@ void BobsGame::updateVersion0ToVersion1()
 		}
 		for (int n = 0; n<g->pieceTypes.size(); n++)
 		{
-			PieceType *p = g->pieceTypes.get(n);
+			shared_ptr<PieceType> p = g->pieceTypes.get(n);
 			for (int x = 0; x<p->overrideBlockTypes_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				BlockType *b = p->overrideBlockTypes_DEPRECATED.get(x);//wrong block, instantiated by serialize
-				BlockType *correctBlock = g->getBlockTypeByName(b->name);
+				shared_ptr<BlockType> b = p->overrideBlockTypes_DEPRECATED.get(x);//wrong block, instantiated by serialize
+				shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(b->name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")
@@ -2519,13 +2519,13 @@ void BobsGame::updateVersion0ToVersion1()
 		}
 		for (int n = 0; n < g->blockTypes.size(); n++)
 		{
-			BlockType *b = g->blockTypes.get(n);
+			shared_ptr<BlockType> b = g->blockTypes.get(n);
 
 			for (int x = 0; x<b->makePieceTypeWhenCleared_DEPRECATED.size(); x++)
 			{
 				resave = true;
-				PieceType *p = b->makePieceTypeWhenCleared_DEPRECATED.get(x);
-				PieceType *correctPiece = g->getPieceTypeByName(p->name);
+				shared_ptr<PieceType> p = b->makePieceTypeWhenCleared_DEPRECATED.get(x);
+				shared_ptr<PieceType> correctPiece = g->getPieceTypeByName(p->name);
 				if (correctPiece != nullptr)
 				{
 					if (correctPiece->uuid == "")
@@ -2539,8 +2539,8 @@ void BobsGame::updateVersion0ToVersion1()
 			for (int x = 0; x<b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				BlockType *bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.get(x);//wrong block, instantiated by serialize
-				BlockType *correctBlock = g->getBlockTypeByName(bb->name);
+				shared_ptr<BlockType> bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.get(x);//wrong block, instantiated by serialize
+				shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")
@@ -2556,7 +2556,7 @@ void BobsGame::updateVersion0ToVersion1()
 				TurnFromBlockTypeToType* t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(x);
 				if (t->fromType_DEPRECATED != "")
 				{
-					BlockType *correctBlock = g->getBlockTypeByName(t->fromType_DEPRECATED);
+					shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(t->fromType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2569,7 +2569,7 @@ void BobsGame::updateVersion0ToVersion1()
 				}
 				if (t->toType_DEPRECATED != "")
 				{
-					BlockType *correctBlock = g->getBlockTypeByName(t->toType_DEPRECATED);
+					shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(t->toType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2590,8 +2590,8 @@ void BobsGame::updateVersion0ToVersion1()
 			for (int x = 0; x < d->pieceTypesToDisallow_DEPRECATED.size(); x++)
 			{
 				resave = true;
-				PieceType *p = d->pieceTypesToDisallow_DEPRECATED.get(x);
-				PieceType *correctPiece = g->getPieceTypeByName(p->name);
+				shared_ptr<PieceType> p = d->pieceTypesToDisallow_DEPRECATED.get(x);
+				shared_ptr<PieceType> correctPiece = g->getPieceTypeByName(p->name);
 				if (correctPiece != nullptr)
 				{
 					if (correctPiece->uuid == "")
@@ -2605,8 +2605,8 @@ void BobsGame::updateVersion0ToVersion1()
 			for (int x = 0; x<d->blockTypesToDisallow_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				BlockType *bb = d->blockTypesToDisallow_DEPRECATED.get(x);//wrong block, instantiated by serialize
-				BlockType *correctBlock = g->getBlockTypeByName(bb->name);
+				shared_ptr<BlockType> bb = d->blockTypesToDisallow_DEPRECATED.get(x);//wrong block, instantiated by serialize
+				shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")

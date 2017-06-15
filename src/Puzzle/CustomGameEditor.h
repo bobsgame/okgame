@@ -183,8 +183,8 @@ public:
     
     
     
-	BlockType* getBlockTypeByUUID(string uuid);
-	PieceType* getPieceTypeByUUID(string uuid);
+	shared_ptr<BlockType> getBlockTypeByUUID(string uuid);
+	shared_ptr<PieceType> getPieceTypeByUUID(string uuid);
 	//GameType* getGameTypeByName(string name);
 	DifficultyType* getDifficultyTypeByName(string name);
     
@@ -219,9 +219,9 @@ public:
 	void createNewGameType(Gwen::Controls::Base* control);
 	void duplicateGameType(Gwen::Controls::Base* control);
 	void deleteGameType(Gwen::Controls::Base* control);
-	void initBlockPropTree(BlockType *b);
+	void initBlockPropTree(shared_ptr<BlockType> b);
 	void saveBlockPropTreeToCurrentBlockType();
-	void initPiecePropTree(PieceType *b);
+	void initPiecePropTree(shared_ptr<PieceType> b);
 	void savePiecePropTreeToCurrentPieceType();
 	void doEditMakePieceTypeWhenClearedWindowButton(Gwen::Controls::Base* control);
 	void doEditConnectedUDLRChangeIntoBlockTypeWindowButton(Gwen::Controls::Base* control);
@@ -373,17 +373,17 @@ private:
 	Gwen::Controls::Button* deleteGameTypeButton = nullptr;
     
 	GameType *currentGameType = nullptr;
-	BlockType *currentBlockType = nullptr;
+	shared_ptr<BlockType> currentBlockType = nullptr;
     
 	//i use these temp arrays because i need to save the modifications to something
-	//ArrayList<PieceType*> currentBlockType_makePieceTypeWhenCleared;
-	//ArrayList<BlockType*> currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
+	//ArrayList<shared_ptr<PieceType> > currentBlockType_makePieceTypeWhenCleared;
+	//ArrayList<shared_ptr<BlockType>> currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 	//ArrayList<TurnFromBlockTypeToType*> currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
     
-	PieceType *currentPieceType = nullptr;
+	shared_ptr<PieceType> currentPieceType = nullptr;
 	DifficultyType *currentDifficultyType = nullptr;
 	//RotationSet currentPieceType_rotationSet;
-	//ArrayList<BlockType*> currentPieceType_overrideBlockTypes;
+	//ArrayList<shared_ptr<BlockType>> currentPieceType_overrideBlockTypes;
     
 	Gwen::Controls::WindowControl* selectWindow = nullptr;
 	Gwen::Controls::ListBox* selectListBox = nullptr;

@@ -10,7 +10,7 @@
 
 Logger Piece::log = Logger("Piece");
 
-PieceType* PieceType::emptyPieceType = new PieceType();
+shared_ptr<PieceType> PieceType::emptyPieceType(new PieceType());
 //=========================================================================================================================
 bool PieceType::operator==(const PieceType& rhs) const
 {//=========================================================================================================================
@@ -121,7 +121,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 			for (int i = 0; i < importExport_overrideBlockTypes.size(); i++)
 			{
 				BlockType b = importExport_overrideBlockTypes.get(i);
-				BlockType *bp = new BlockType();
+				shared_ptr<BlockType> bp(new BlockType());
 				*bp = b;
 				overrideBlockTypes_DEPRECATED.add(bp);
 			}
@@ -141,7 +141,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 
 
 //=========================================================================================================================
-Piece::Piece(GameLogic* gameInstance, Grid* grid, PieceType *pieceType, ArrayList<BlockType*> &blockTypes)
+Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	this->game = gameInstance;
@@ -157,7 +157,7 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, PieceType *pieceType, ArrayLis
 
 	if (pieceType->overrideBlockTypes_UUID.size()>0)
 	{
-		ArrayList<BlockType*> overrideBlockTypes;
+		ArrayList<shared_ptr<BlockType>> overrideBlockTypes;
 		for(int i=0;i<pieceType->overrideBlockTypes_UUID.size();i++)
 		{
 			overrideBlockTypes.add(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID.get(i)));
@@ -184,7 +184,7 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, PieceType *pieceType, ArrayLis
 
 
 //=========================================================================================================================
-Piece::Piece(GameLogic* gameInstance, Grid* grid, PieceType *pieceType, BlockType *blockType)
+Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType)
 {//=========================================================================================================================
 
 
@@ -196,7 +196,7 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, PieceType *pieceType, BlockTyp
 
 	if (pieceType->overrideBlockTypes_UUID.size()>0)
 	{
-		ArrayList<BlockType*> overrideBlockTypes;
+		ArrayList<shared_ptr<BlockType>> overrideBlockTypes;
 		for (int i = 0; i<pieceType->overrideBlockTypes_UUID.size(); i++)
 		{
 			overrideBlockTypes.add(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID.get(i)));
@@ -491,7 +491,7 @@ void Piece::update()
 
 
 
-		ArrayList<BlockType*> blockTypes;//special case, this is slow so we don't fill it unless we need it
+		ArrayList<shared_ptr<BlockType>> blockTypes;//special case, this is slow so we don't fill it unless we need it
 		bool filledBlockTypes = false;
 
 		for (int i = 0; i < blocks.size(); i++)

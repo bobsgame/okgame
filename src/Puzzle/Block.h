@@ -83,7 +83,7 @@ public:
 	//ArrayList<PieceType> importExport_makePieceTypeWhenCleared;
 public:
 	//don't use!!! use uuid!
-	ArrayList<PieceType*> makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
+	ArrayList<shared_ptr<PieceType> > makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
 	ArrayList<string> makePieceTypeWhenCleared_UUID;
 
 	bool clearEveryOtherLineOnGridWhenCleared = false;						Info clearEveryOtherLineOnGridWhenCleared_Info = Info("Special: Clear Every Other Line On Grid When Cleared", "When this block is cleared it will remove every other line on the grid.");
@@ -98,7 +98,7 @@ public:
 	//ArrayList<BlockType> importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 public:
 	//don't use!!! use uuid!
-	ArrayList<BlockType*> ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED;		Info ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info = Info("If Connected Up Down Left Right To Cleared Block Change Into This Type", "If a block that is touching this one is cleared, this block will transform into one of these block types.");
+	ArrayList<shared_ptr<BlockType>> ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED;		Info ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info = Info("If Connected Up Down Left Right To Cleared Block Change Into This Type", "If a block that is touching this one is cleared, this block will transform into one of these block types.");
 	ArrayList<string> ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID;
 
 	bool addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks = false;				Info addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info = Info("Add To Chain If Connected Up Down Left Right To Cleared Chain Blocks", "If a block that is touching this one is being cleared, this block should be cleared too even if it does not match.");
@@ -120,7 +120,7 @@ public:
 	void serialize(Archive & ar, const unsigned int version);
 	
 
-	static BlockType* emptyBlockType;
+	static shared_ptr<BlockType> emptyBlockType;
 
 	Sprite* sprite = nullptr;//dont serialize these
 	Sprite* specialSprite = nullptr;
@@ -296,7 +296,7 @@ public:
 	int xGrid = -1;
 	int yGrid = -1;
 
-	BlockType *blockType = nullptr;
+	shared_ptr<BlockType> blockType = nullptr;
 
 private:
 	BobColor *color = nullptr;
@@ -453,7 +453,7 @@ public:
 //	}
 
 	Block();
-	Block(GameLogic* game, Grid* grid, Piece *piece, BlockType *blockType);
+	Block(GameLogic* game, Grid* grid, Piece *piece, shared_ptr<BlockType> blockType);
 	void update();
 	void setXYOffsetInPiece(int x, int y);
 	void breakConnectionsInPiece();

@@ -76,7 +76,7 @@ class GLUtils;
 //Sprite* Block::bomb = nullptr;
 //Sprite* Block::weight = nullptr;
 
-BlockType* BlockType::emptyBlockType = new BlockType();
+shared_ptr<BlockType> BlockType::emptyBlockType(new BlockType());
 //=========================================================================================================================
 bool BlockType::operator==(const BlockType& rhs) const
 {//=========================================================================================================================
@@ -224,7 +224,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_makePieceTypeWhenCleared.size(); i++)
 		{
 			PieceType b = importExport_makePieceTypeWhenCleared.get(i);
-			PieceType *bp = new PieceType();
+			shared_ptr<PieceType> bp(new PieceType());
 			*bp = b;
 			makePieceTypeWhenCleared_DEPRECATED.add(bp);
 		}
@@ -254,7 +254,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.size(); i++)
 			{
 				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.get(i);
-				BlockType *bp = new BlockType();
+				shared_ptr<BlockType> bp(new BlockType());
 				*bp = b;
 				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.add(bp);
 			}
@@ -314,7 +314,7 @@ Block::Block()
 }
 
 //=========================================================================================================================
-Block::Block(GameLogic* game, Grid* grid, Piece* piece, BlockType* blockType)
+Block::Block(GameLogic* game, Grid* grid, Piece* piece, shared_ptr<BlockType> blockType)
 {//=========================================================================================================================
 
 	this->game = game;

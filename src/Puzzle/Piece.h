@@ -240,7 +240,7 @@ public:
 	bool pieceShooterPiece = false;											Info pieceShooterPiece_Info = Info("Piece Shooter Piece", "This piece will create blocks below it when the rotate button is pressed.");
 
 	//don't use!!! use uuid!
-	ArrayList<BlockType*> overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
+	ArrayList<shared_ptr<BlockType>> overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
 	ArrayList<string> overrideBlockTypes_UUID;
 private:
 	//ArrayList<BlockType> importExport_overrideBlockTypes;
@@ -259,7 +259,7 @@ public:
 //	PieceType(const string& spriteName, Color* color, int numBlocks, ArrayList<Rotation*>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
 //	PieceType(int numBlocks, ArrayList<Rotation*>* rotationSet);
 
-	static PieceType* emptyPieceType;
+	static shared_ptr<PieceType> emptyPieceType;
 	//=========================================================================================================================
 	PieceType()
 	{//=========================================================================================================================
@@ -348,7 +348,7 @@ private:
 
 public:
 	Block *holdingBlock = nullptr;
-	PieceType *pieceType = nullptr;
+	shared_ptr<PieceType> pieceType = nullptr;
 	bool overrideAnySpecialBehavior = false;
 	int piecesSetSinceThisPieceSet = 0;
 	bool setInGrid = false;
@@ -386,8 +386,8 @@ public:
 //			;
 //	}
 
-	Piece(GameLogic* gameInstance, Grid* grid, PieceType *pieceType, ArrayList<BlockType*> &blockTypes);
-	Piece(GameLogic* gameInstance, Grid* grid, PieceType *pieceType, BlockType *blockType);
+	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes);
+	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType);
 	void initBlocks();
 	void initColors();
 	void setPieceBlockConnections();

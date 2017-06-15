@@ -286,8 +286,8 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 	}
 
 
-	ArrayList<BlockType*> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<PieceType*> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 
 	for (int n = 0; n < removedBlocks.size(); n++)
@@ -345,16 +345,16 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 
 
 //=========================================================================================================================
-Piece* Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x, int y, ArrayList<PieceType*> &pieceTypes, ArrayList<BlockType*> &blockTypes)
+Piece* Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
-	//ArrayList<BlockType*> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
-	//ArrayList<PieceType*> playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
+	//ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
+	//ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
 
 	ArrayList<BobColor*> acceptableColors;
 	for (int b = 0; b < (int)blockTypes.size(); b++)
 	{
-		BlockType* blockType = blockTypes.get(b);
+		shared_ptr<BlockType> blockType = blockTypes.get(b);
 
 		if (blockType->colors.size()>0)
 		{
@@ -436,14 +436,14 @@ Piece* Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x
 
 
 //=========================================================================================================================
-Piece* Grid::dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<PieceType*> &pieceTypes, ArrayList<BlockType*> &blockTypes)
+Piece* Grid::dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	ArrayList<BobColor*> acceptableColors;
 
 	for (int b = 0; b < (int)blockTypes.size(); b++)
 	{
-		BlockType *blockType = blockTypes.get(b);
+		shared_ptr<BlockType> blockType = blockTypes.get(b);
 
 		if (blockType->colors.size()>0)
 		{
@@ -528,19 +528,19 @@ Piece* Grid::dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y,
 
 
 //=========================================================================================================================
-Piece* Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<PieceType*> &pieceTypes, ArrayList<BlockType*> &blockTypes)
+Piece* Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 
-	//ArrayList<BlockType*> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
-	//ArrayList<PieceType*> playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
+	//ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
+	//ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
 
 
 	//dont use the same color as left, above, or below
 	
 	
 	
-	ArrayList<BlockType*> acceptableBlockTypes = blockTypes;//copy so we can modify it
+	ArrayList<shared_ptr<BlockType>> acceptableBlockTypes = blockTypes;//copy so we can modify it
 
 	if (x > 0)//left
 	{
@@ -582,8 +582,8 @@ Piece* Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, in
 
 		if(p == nullptr)
 		{
-			PieceType *pieceType = getRandomPieceType(pieceTypes);
-			BlockType *blockType = acceptableBlockTypes.get(getGameLogic()->getRandomIntLessThan(acceptableBlockTypes.size(), "dontPutSameBlockTypeNextToEachOtherOrReturnNull"));
+			shared_ptr<PieceType> pieceType = getRandomPieceType(pieceTypes);
+			shared_ptr<BlockType> blockType = acceptableBlockTypes.get(getGameLogic()->getRandomIntLessThan(acceptableBlockTypes.size(), "dontPutSameBlockTypeNextToEachOtherOrReturnNull"));
 
 			p = new Piece(game, this, pieceType, blockType);
 
@@ -641,7 +641,7 @@ void Grid::removeAndDestroyAllBlocksInGrid()
 
 
 //=========================================================================================================================
-Piece* Grid::putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<PieceType*> &pieceTypes, ArrayList<BlockType*> &blockTypes)
+Piece* Grid::putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	Piece* p = nullptr;
@@ -739,8 +739,8 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 		}
 	}
 
-	ArrayList<BlockType*> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<PieceType*> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 	//randomly put roughly the same amount of blocks into playing field (a piece at a time)
 	for (int i = 0; i < numberOfBlocks; i++)
@@ -826,8 +826,8 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 		numberOfBlocks = fieldSize - 1;
 	}
 
-	ArrayList<BlockType*> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<PieceType*> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 	int blocksPlaced = 0;
 	for (int y = getHeight() - 1; y >= topY; y--)
@@ -936,8 +936,8 @@ bool Grid::scrollUpStack(Piece* cursorPiece, int amt)
 			}
 		}
 
-		ArrayList<BlockType*> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-		ArrayList<PieceType*> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+		ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
+		ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 		{
 			//create new row of pieces at bottom
@@ -959,8 +959,8 @@ bool Grid::scrollUpStack(Piece* cursorPiece, int amt)
 Piece* Grid::putGarbageBlock(int x, int y)
 {//=========================================================================================================================
 
-	ArrayList<BlockType*> garbageBlockTypes = getGameType()->getGarbageBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<PieceType*> garbagePieceTypes = getGameType()->getGarbagePieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> garbageBlockTypes = getGameType()->getGarbageBlockTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType> > garbagePieceTypes = getGameType()->getGarbagePieceTypes(getGameLogic()->getCurrentDifficulty());
 
 	//Piece* p = getRandomPiece(garbagePieceTypes, garbageBlockTypes);
 	Piece* p = putOneBlockPieceInGridCheckingForFillRules(x, y, garbagePieceTypes, garbageBlockTypes);
@@ -1958,7 +1958,7 @@ ArrayList<Piece*> Grid::getArrayOfPiecesOnGrid()
 
 
 //=========================================================================================================================
-ArrayList<Block*> Grid::checkLines(ArrayList<BlockType*> &ignoreTypes, ArrayList<BlockType*> &mustContainAtLeastOneTypes)
+ArrayList<Block*> Grid::checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
 	ArrayList<Block*> blocksOnFullLines;
@@ -2021,7 +2021,7 @@ ArrayList<Block*> Grid::checkLines(ArrayList<BlockType*> &ignoreTypes, ArrayList
 
 
 //=========================================================================================================================
-bool Grid::doBlocksMatchColor(Block* a, Block* b, ArrayList<BlockType*> &ignoreTypes)
+bool Grid::doBlocksMatchColor(Block* a, Block* b, ArrayList<shared_ptr<BlockType>> &ignoreTypes)
 {//=========================================================================================================================
 
 	if (a == nullptr || b == nullptr)
@@ -2121,7 +2121,7 @@ ArrayList<Block*> Grid::getConnectedBlocksUpDownLeftRight(Block* b)
 
 
 //=========================================================================================================================
-ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<BlockType*> &ignoreUnlessTouchingBreakerBlockTypes, ArrayList<BlockType*> &breakerBlockTypes)
+ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<BlockType>> &ignoreUnlessTouchingBreakerBlockTypes, ArrayList<shared_ptr<BlockType>> &breakerBlockTypes)
 {//=========================================================================================================================
 
 	ArrayList<Block*> breakBlocks;
@@ -2187,7 +2187,7 @@ ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<BlockType*> &ign
 					int size = connected.size();
 					for (int i = 0; i < size; i++)
 					{
-						ArrayList<BlockType*> emptyBlockTypeArray;
+						ArrayList<shared_ptr<BlockType>> emptyBlockTypeArray;
 						addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(connected.get(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
 						addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(connected.get(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
 						if (connected.size() > size)
@@ -2241,7 +2241,7 @@ ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<BlockType*> &ign
 }
 
 //=========================================================================================================================
-void Grid::checkRecursiveConnectedRowOrColumn(ArrayList<Block*> &connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, ArrayList<BlockType*> &ignoreTypes, ArrayList<BlockType*> &mustContainAtLeastOneTypes)
+void Grid::checkRecursiveConnectedRowOrColumn(ArrayList<Block*> &connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
 	//TODO: refactor this like setColorConnections
@@ -2301,7 +2301,7 @@ void Grid::checkRecursiveConnectedRowOrColumn(ArrayList<Block*> &connectedBlocks
 
 
 //=========================================================================================================================
-void Grid::setColorConnections(ArrayList<BlockType*> &ignoreTypes)//, ArrayList<BlockType*>* mustContainAtLeastOneTypes)
+void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//, ArrayList<shared_ptr<BlockType>>* mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
 
@@ -2414,7 +2414,7 @@ void Grid::setColorConnections(ArrayList<BlockType*> &ignoreTypes)//, ArrayList<
 
 
 //=========================================================================================================================
-void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<BlockType*> &ignoreTypes, ArrayList<BlockType*> &mustContainAtLeastOneTypes)
+void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
    //TODO: find everything using this and try to refactor this like setColorConnections
@@ -2486,7 +2486,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(
 }
 
 //=========================================================================================================================
-void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<BlockType*> &ignoreTypes, ArrayList<BlockType*> &mustContainAtLeastOneTypes)
+void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
  //TODO: find everything using this and try to refactor this like setColorConnections
@@ -2554,7 +2554,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmou
 	//return *connectedBlocks;
 }
 //=========================================================================================================================
-void Grid::recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(Block* b, ArrayList<Block*> &connectedBlocksByColor, ArrayList<BlockType*> &ignoreTypes)
+void Grid::recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(Block* b, ArrayList<Block*> &connectedBlocksByColor, ArrayList<shared_ptr<BlockType>> &ignoreTypes)
 {//=========================================================================================================================
 
 	//check up, down, left, right
@@ -2586,7 +2586,7 @@ void Grid::recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlread
 
 
 //=========================================================================================================================
-void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<BlockType*> &ignoreTypes, ArrayList<BlockType*> &mustContainAtLeastOneTypes)
+void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
 
@@ -3232,7 +3232,7 @@ bool Grid::moveDownLinesAboveBlankLinesOneLine()
 
 
 //=========================================================================================================================
-bool Grid::moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<BlockType*> &ignoreTypes)
+bool Grid::moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<shared_ptr<BlockType>> &ignoreTypes)
 {//=========================================================================================================================
 
 	bool moved = false;
@@ -3330,7 +3330,7 @@ bool Grid::moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<BlockType
 
 
 //=========================================================================================================================
-bool Grid::moveDownAnyBlocksAboveBlankSpacesOneLine(ArrayList<BlockType*> &ignoreTypes)
+bool Grid::moveDownAnyBlocksAboveBlankSpacesOneLine(ArrayList<shared_ptr<BlockType>> &ignoreTypes)
 {//=========================================================================================================================
 
 	bool moved = false;
@@ -3577,15 +3577,15 @@ void Grid::doDeathSequence()
 }
 
 //=========================================================================================================================
-PieceType* Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(ArrayList<PieceType*> &arr)
+shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(ArrayList<shared_ptr<PieceType> > &arr)
 {//=========================================================================================================================
 
 
-	ArrayList<PieceType*> randomBag;
+	ArrayList<shared_ptr<PieceType> > randomBag;
 
 	for (int i = 0; i < arr.size(); i++)
 	{
-		PieceType *p = arr.get(i);
+		shared_ptr<PieceType> p = arr.get(i);
 		if (p->frequencySpecialPieceTypeOnceEveryNPieces != 0)
 		{
 			if (getGameLogic()->createdPiecesCounterForFrequencyPieces >= p->frequencySpecialPieceTypeOnceEveryNPieces)
@@ -3600,13 +3600,13 @@ PieceType* Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(A
 	{
 		getGameLogic()->createdPiecesCounterForFrequencyPieces = 0;
 
-		PieceType *p = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
+		shared_ptr<PieceType> p = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
 		return p;
 	}
 
 
 	//		int randomTotal = 1;
-	//		PieceType emptyPieceType = new PieceType();
+	//		PieceType emptyPieceType(new PieceType());
 	//		randomBag.Add(emptyPieceType);
 	//		for(int i=0;i<array.Count;i++)
 	//		{
@@ -3619,7 +3619,7 @@ PieceType* Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(A
 
 	for (int i = 0; i < arr.size(); i++)
 	{
-		PieceType *b = arr.get(i);
+		shared_ptr<PieceType> b = arr.get(i);
 
 		if (b->randomSpecialPieceChanceOneOutOf > 0)
 		{
@@ -3633,7 +3633,7 @@ PieceType* Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(A
 
 	if (randomBag.size() > 0)
 	{
-		PieceType *p = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
+		shared_ptr<PieceType> p = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
 		//if(p!=emptyPieceType)
 		return p;
 	}
@@ -3643,14 +3643,14 @@ PieceType* Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(A
 
 
 //=========================================================================================================================
-PieceType* Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(ArrayList<PieceType*> &arr)
+shared_ptr<PieceType> Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(ArrayList<shared_ptr<PieceType> > &arr)
 {//=========================================================================================================================
 
-	ArrayList<PieceType*> randomBag;
+	ArrayList<shared_ptr<PieceType> > randomBag;
 
 	for (int i = 0; i < arr.size(); i++)
 	{
-		PieceType *b = arr.get(i);
+		shared_ptr<PieceType> b = arr.get(i);
 		if (b->randomSpecialPieceChanceOneOutOf == 0 && b->frequencySpecialPieceTypeOnceEveryNPieces == 0)
 		{
 			randomBag.add(b);
@@ -3659,7 +3659,7 @@ PieceType* Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(ArrayList
 
 	if (randomBag.size() > 0)
 	{
-		PieceType *b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomPieceTypeFromArrayExcludingSpecialPieceTypes"));
+		shared_ptr<PieceType> b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomPieceTypeFromArrayExcludingSpecialPieceTypes"));
 		return b;
 	}
 
@@ -3670,12 +3670,12 @@ PieceType* Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(ArrayList
 //=========================================================================================================================
 ArrayList<Piece*> Grid::getBagOfOneOfEachNonRandomNormalPieces()
 {//=========================================================================================================================
-	ArrayList<PieceType*> pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<BlockType*> blockTypes = getGameType()->getNormalBlockTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType> > pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> blockTypes = getGameType()->getNormalBlockTypes(getGameLogic()->getCurrentDifficulty());
 	ArrayList<Piece*> tempBag;
 	for (int i = 0; i < (int)pieceTypes.size(); i++)
 	{
-		PieceType *type = pieceTypes.get(i);
+		shared_ptr<PieceType> type = pieceTypes.get(i);
 
 		if (type->randomSpecialPieceChanceOneOutOf == 0 && type->frequencySpecialPieceTypeOnceEveryNPieces == 0)
 		{
@@ -3741,12 +3741,12 @@ Piece* Grid::getRandomPiece()
 
 	Piece* piece = nullptr;
 
-	ArrayList<BlockType*> blockTypes = getGameType()->getNormalBlockTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> blockTypes = getGameType()->getNormalBlockTypes(getGameLogic()->getCurrentDifficulty());
 
 	{
 		//make piece
-		ArrayList<PieceType*> pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
-		PieceType *pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(pieceTypes);
+		ArrayList<shared_ptr<PieceType> > pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
+		shared_ptr<PieceType> pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(pieceTypes);
 
 		if (getGameType()->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty)
 		{
@@ -3776,7 +3776,7 @@ Piece* Grid::getRandomPiece()
 
 
 //=========================================================================================================================
-Piece* Grid::getRandomPiece(ArrayList<PieceType*> &pieceTypes, ArrayList<BlockType*> &blockTypes)
+Piece* Grid::getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	Piece* piece = new Piece(getGameLogic(), this, getRandomPieceType(pieceTypes), blockTypes);
@@ -3785,10 +3785,10 @@ Piece* Grid::getRandomPiece(ArrayList<PieceType*> &pieceTypes, ArrayList<BlockTy
 
 
 //=========================================================================================================================
-PieceType* Grid::getRandomPieceType(ArrayList<PieceType*> &arr)
+shared_ptr<PieceType> Grid::getRandomPieceType(ArrayList<shared_ptr<PieceType> > &arr)
 {//=========================================================================================================================
 
-	PieceType *pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(arr);
+	shared_ptr<PieceType> pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(arr);
 	if (pieceType == nullptr)
 	{
 		pieceType = getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(arr);
@@ -3799,10 +3799,10 @@ PieceType* Grid::getRandomPieceType(ArrayList<PieceType*> &arr)
 
 
 //=========================================================================================================================
-BlockType* Grid::getRandomBlockType(ArrayList<BlockType*> &arr)
+shared_ptr<BlockType> Grid::getRandomBlockType(ArrayList<shared_ptr<BlockType>> &arr)
 {//=========================================================================================================================
 
-	BlockType *blockType = getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(arr);
+	shared_ptr<BlockType> blockType = getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(arr);
 
 	if (blockType == nullptr)
 	{
@@ -3813,25 +3813,25 @@ BlockType* Grid::getRandomBlockType(ArrayList<BlockType*> &arr)
 }
 
 //=========================================================================================================================
-BlockType* Grid::getRandomBlockTypeDisregardingSpecialFrequency(ArrayList<BlockType*> &arr)
+shared_ptr<BlockType> Grid::getRandomBlockTypeDisregardingSpecialFrequency(ArrayList<shared_ptr<BlockType>> &arr)
 {//=========================================================================================================================
 
-	BlockType *blockType = arr.get(getGameLogic()->getRandomIntLessThan(arr.size(), "getRandomBlockTypeDisregardingSpecialFrequency"));
+	shared_ptr<BlockType> blockType = arr.get(getGameLogic()->getRandomIntLessThan(arr.size(), "getRandomBlockTypeDisregardingSpecialFrequency"));
 
 	if (blockType == nullptr)blockType = BlockType::emptyBlockType;
 	return blockType;
 }
 
 //=========================================================================================================================
-BlockType* Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(ArrayList<BlockType*> &arr)
+shared_ptr<BlockType> Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(ArrayList<shared_ptr<BlockType>> &arr)
 {//=========================================================================================================================
 
 
-	ArrayList<BlockType*> randomBag;
+	ArrayList<shared_ptr<BlockType>> randomBag;
 
 	for (int i = 0; i < arr.size(); i++)
 	{
-		BlockType *b = arr.get(i);
+		shared_ptr<BlockType> b = arr.get(i);
 		if (b->frequencySpecialBlockTypeOnceEveryNPieces != 0)
 		{
 			if (getGameLogic()->createdPiecesCounterForFrequencyPieces >= b->frequencySpecialBlockTypeOnceEveryNPieces - 1)
@@ -3846,13 +3846,13 @@ BlockType* Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(A
 	{
 		getGameLogic()->createdPiecesCounterForFrequencyPieces = 0;
 
-		BlockType *b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
+		shared_ptr<BlockType> b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
 		return b;
 	}
 
 
 	//		int randomTotal = 1;
-	//		BlockType emptyBlockType = new BlockType();
+	//		BlockType emptyBlockType(new BlockType());
 	//		randomBag.Add(emptyBlockType);
 	//		for(int i=0;i<array.Count;i++)
 	//		{
@@ -3865,7 +3865,7 @@ BlockType* Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(A
 
 	for (int i = 0; i < arr.size(); i++)
 	{
-		BlockType *b = arr.get(i);
+		shared_ptr<BlockType> b = arr.get(i);
 		if (b->randomSpecialBlockChanceOneOutOf > 0)
 		{
 			if (getGameLogic()->getRandomIntLessThan(b->randomSpecialBlockChanceOneOutOf,"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull") == 0)
@@ -3879,7 +3879,7 @@ BlockType* Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(A
 
 	if (randomBag.size() > 0)
 	{
-		BlockType *b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
+		shared_ptr<BlockType> b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
 
 		//			if(b!=emptyBlockType)
 		return b;
@@ -3890,14 +3890,14 @@ BlockType* Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(A
 
 
 //=========================================================================================================================
-BlockType* Grid::getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(ArrayList<BlockType*> &arr)
+shared_ptr<BlockType> Grid::getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(ArrayList<shared_ptr<BlockType>> &arr)
 {//=========================================================================================================================
 
-	ArrayList<BlockType*> randomBag;
+	ArrayList<shared_ptr<BlockType>> randomBag;
 
 	for (int i = 0; i < arr.size(); i++)
 	{
-		BlockType *b = arr.get(i);
+		shared_ptr<BlockType> b = arr.get(i);
 
 		if (b->isSpecialType() == false)
 		{
@@ -3907,11 +3907,11 @@ BlockType* Grid::getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(ArrayList
 
 	if (randomBag.size() > 0)
 	{
-		BlockType *b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomBlockTypeFromArrayExcludingSpecialBlockTypes"));
+		shared_ptr<BlockType> b = randomBag.get(getGameLogic()->getRandomIntLessThan(randomBag.size(),"getRandomBlockTypeFromArrayExcludingSpecialBlockTypes"));
 		return b;
 	}
 
-	return new BlockType("square","Square","", nullptr, BobColor::gray, 0, 0);
+	return shared_ptr<BlockType>(new BlockType("square","Square","", nullptr, BobColor::gray, 0, 0));
 }
 
 

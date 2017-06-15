@@ -329,8 +329,8 @@ void GameLogic::initGame()
 
 		if (currentGameType->stackCursorType == CursorType::ONE_BLOCK_PICK_UP)
 		{
-			PieceType* cursorPiece = new PieceType("cursorPiece", "", nullptr, 1, Piece::get1BlockCursorRotationSet());
-			BlockType* cursorBlock = BlockType::emptyBlockType;
+			shared_ptr<PieceType> cursorPiece(new PieceType("cursorPiece", "", nullptr, 1, Piece::get1BlockCursorRotationSet()));
+			shared_ptr<BlockType> cursorBlock = BlockType::emptyBlockType;
 			currentPiece = new Piece(this, grid, cursorPiece, cursorBlock);
 			currentPiece->xGrid = (grid->getWidth() / 2);
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -339,8 +339,8 @@ void GameLogic::initGame()
 
 		if (currentGameType->stackCursorType == CursorType::TWO_BLOCK_HORIZONTAL)
 		{
-			PieceType* cursorPiece = new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockHorizontalCursorRotationSet());
-			BlockType* cursorBlock = BlockType::emptyBlockType;
+			shared_ptr<PieceType> cursorPiece(new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockHorizontalCursorRotationSet()));
+			shared_ptr<BlockType> cursorBlock = BlockType::emptyBlockType;
 			currentPiece = new Piece(this, grid, cursorPiece, cursorBlock);
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -349,8 +349,8 @@ void GameLogic::initGame()
 
 		if (currentGameType->stackCursorType == CursorType::TWO_BLOCK_VERTICAL)
 		{
-			PieceType* cursorPiece = new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockVerticalCursorRotationSet());
-			BlockType* cursorBlock = BlockType::emptyBlockType;
+			shared_ptr<PieceType> cursorPiece(new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockVerticalCursorRotationSet()));
+			shared_ptr<BlockType> cursorBlock = BlockType::emptyBlockType;
 			currentPiece = new Piece(this, grid, cursorPiece, cursorBlock);
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -359,16 +359,16 @@ void GameLogic::initGame()
 
 		if (currentGameType->stackCursorType == CursorType::THREE_BLOCK_HORIZONTAL)
 		{
-			PieceType* cursorPiece = new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockHorizontalCursorRotationSet());
-			BlockType* cursorBlock = BlockType::emptyBlockType;
+			shared_ptr<PieceType> cursorPiece(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockHorizontalCursorRotationSet()));
+			shared_ptr<BlockType> cursorBlock = BlockType::emptyBlockType;
 			currentPiece = new Piece(this, grid, cursorPiece, cursorBlock);
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
 		if (currentGameType->stackCursorType == CursorType::THREE_BLOCK_VERTICAL)
 		{
-			PieceType* cursorPiece = new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockVerticalCursorRotationSet());
-			BlockType* cursorBlock = BlockType::emptyBlockType;
+			shared_ptr<PieceType> cursorPiece(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockVerticalCursorRotationSet()));
+			shared_ptr<BlockType> cursorBlock = BlockType::emptyBlockType;
 			currentPiece = new Piece(this, grid, cursorPiece, cursorBlock);
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -376,8 +376,8 @@ void GameLogic::initGame()
 
 		if (currentGameType->stackCursorType == CursorType::QUAD_BLOCK_ROTATE)
 		{
-			PieceType* cursorPiece = new PieceType("cursorPiece", "", nullptr, 4, Piece::get4BlockCursorRotationSet());
-			BlockType* cursorBlock = BlockType::emptyBlockType;
+			shared_ptr<PieceType> cursorPiece(new PieceType("cursorPiece", "", nullptr, 4, Piece::get4BlockCursorRotationSet()));
+			shared_ptr<BlockType> cursorBlock = BlockType::emptyBlockType;
 			currentPiece = new Piece(this, grid, cursorPiece, cursorBlock);
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -1354,7 +1354,7 @@ void GameLogic::removeFlashedChainBlocks()
 			{
 				if (b->blockType->makePieceTypeWhenCleared_UUID.size()>0)
 				{
-					PieceType *pt = currentGameType->getPieceTypeByUUID(b->blockType->makePieceTypeWhenCleared_UUID.get(getRandomIntLessThan(b->blockType->makePieceTypeWhenCleared_UUID.size(), "removeFlashedChainBlocks")));
+					shared_ptr<PieceType> pt = currentGameType->getPieceTypeByUUID(b->blockType->makePieceTypeWhenCleared_UUID.get(getRandomIntLessThan(b->blockType->makePieceTypeWhenCleared_UUID.size(), "removeFlashedChainBlocks")));
 					Piece* p = new Piece(this, grid, pt, BlockType::emptyBlockType);
 					nextPieceSpecialBuffer.add(p);
 
@@ -1607,8 +1607,8 @@ void GameLogic::checkForChain()
 
 	currentChainBlocks.clear();
 
-	ArrayList<BlockType*> ignoreTypes = currentGameType->getBlockTypesToIgnoreWhenCheckingChain(getCurrentDifficulty());
-	ArrayList<BlockType*> mustContainAtLeastOneTypes = currentGameType->getBlockTypesChainMustContain(getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> ignoreTypes = currentGameType->getBlockTypesToIgnoreWhenCheckingChain(getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> mustContainAtLeastOneTypes = currentGameType->getBlockTypesChainMustContain(getCurrentDifficulty());
 
 
 	//can use this while blocks are falling to detect sticky colors
@@ -1968,7 +1968,7 @@ bool GameLogic::moveDownBlocksOverBlankSpaces()
 {//=========================================================================================================================
 
 
-	ArrayList<BlockType*> ignoreMovingBlockTypes = currentGameType->getBlockTypesToIgnoreWhenMovingDown(getCurrentDifficulty());
+	ArrayList<shared_ptr<BlockType>> ignoreMovingBlockTypes = currentGameType->getBlockTypesToIgnoreWhenMovingDown(getCurrentDifficulty());
 	bool movedDownBlocks = true;
 
 	if (moveDownLineTicksCounter >= currentGameType->gravityRule_ticksToMoveDownBlocksOverBlankSpaces || currentGameType->moveDownAllLinesOverBlankSpacesAtOnce)
@@ -2033,7 +2033,7 @@ bool GameLogic::movePiece(MovementType move)
 
 			//make new piece, not new block
 			//this is so the colors get initialized and the block can be updated by getting arrayOfPiecesInGrid
-			Piece* p = new Piece(this, grid, PieceType::emptyPieceType, new BlockType("shotPiece","Square","", nullptr, BobColor::gray, 0, 0));
+			Piece* p = new Piece(this, grid, PieceType::emptyPieceType, shared_ptr<BlockType>(new BlockType("shotPiece","Square","", nullptr, BobColor::gray, 0, 0)));
 			Block* b = p->blocks.get(0);
 
 			//set last screenXY to current piece so it appears to shoot, even though it's really just being placed directly into the grid.
@@ -2706,7 +2706,7 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 
 	if (garbageBlock == nullptr)
 	{
-		ArrayList<BlockType*> garbageTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
+		ArrayList<shared_ptr<BlockType>> garbageTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
 		Piece* p = new Piece(this, grid, PieceType::emptyPieceType, grid->getRandomBlockType(garbageTypes));//TODO: use garbagePieceTypes with one block
 		garbageBlock = p->blocks.get(0);
 	}
