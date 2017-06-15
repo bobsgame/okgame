@@ -144,10 +144,11 @@ BobMenu::~BobMenu()
 int graphicWidth = 0;
 int graphicYStartPosition = 0;
 //=========================================================================================================================
-void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition)
+void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight)
 {//=========================================================================================================================
 	this->graphic = t;
 	this->graphicWidth = graphicWidth;
+	this->maxGraphicHeight = maxGraphicHeight;
 	this->graphicYStartPosition = graphicYStartPosition;
 
 }
@@ -469,38 +470,39 @@ BobMenu::MenuItem* BobMenu::getSelectedMenuItem()
 void BobMenu::setFontSize(int size)
 {//=========================================================================================================================
 
-	switch (size)
-	{
-		case 6: font = BobFont::ttf_6;break;
-		case 7: 	font = BobFont::ttf_7;	 break;
-		case 8: 	font = BobFont::ttf_8;	 break;
-		case 9: 	font = BobFont::ttf_9;	 break;
-		case 10: 	font = BobFont::ttf_10;	 break;
-		case 11: 	font = BobFont::ttf_11;	 break;
-		case 12: 	font = BobFont::ttf_12;	 break;
-		case 13: 	font = BobFont::ttf_13;	 break;
-		case 14: 	font = BobFont::ttf_14;	 break;
-		case 15: 	font = BobFont::ttf_15;	 break;
-		case 16: 	font = BobFont::ttf_16;	 break;
-		case 17: 	font = BobFont::ttf_17;	 break;
-		case 18: 	font = BobFont::ttf_18;	 break;
-		case 19: 	font = BobFont::ttf_19;	 break;
-		case 20: 	font = BobFont::ttf_20;	 break;
-		case 21: 	font = BobFont::ttf_21;	 break;
-		case 22: 	font = BobFont::ttf_22;	 break;
-		case 23: 	font = BobFont::ttf_23;	 break;
-		case 24: 	font = BobFont::ttf_24;	 break;
-		case 25: 	font = BobFont::ttf_25;	 break;
-		case 26: 	font = BobFont::ttf_26;	 break;
-		case 27: 	font = BobFont::ttf_27;	 break;
-		case 28: 	font = BobFont::ttf_28;	 break;
-		case 29: 	font = BobFont::ttf_29;	 break;
-		case 30: 	font = BobFont::ttf_30;	 break;
-		case 31: 	font = BobFont::ttf_31;	 break;
-		case 32: 	font = BobFont::ttf_32;	 break;
-		case 48: 	font = BobFont::ttf_48;	 break;
-		case 64: 	font = BobFont::ttf_64;	 break;
-	}
+//	switch (size)
+//	{
+//		case 6: font = BobFont::ttf_6;break;
+//		case 7: 	font = BobFont::ttf_7;	 break;
+//		case 8: 	font = BobFont::ttf_8;	 break;
+//		case 9: 	font = BobFont::ttf_9;	 break;
+//		case 10: 	font = BobFont::ttf_10;	 break;
+//		case 11: 	font = BobFont::ttf_11;	 break;
+//		case 12: 	font = BobFont::ttf_12;	 break;
+//		case 13: 	font = BobFont::ttf_13;	 break;
+//		case 14: 	font = BobFont::ttf_14;	 break;
+//		case 15: 	font = BobFont::ttf_15;	 break;
+//		case 16: 	font = BobFont::ttf_16;	 break;
+//		case 17: 	font = BobFont::ttf_17;	 break;
+//		case 18: 	font = BobFont::ttf_18;	 break;
+//		case 19: 	font = BobFont::ttf_19;	 break;
+//		case 20: 	font = BobFont::ttf_20;	 break;
+//		case 21: 	font = BobFont::ttf_21;	 break;
+//		case 22: 	font = BobFont::ttf_22;	 break;
+//		case 23: 	font = BobFont::ttf_23;	 break;
+//		case 24: 	font = BobFont::ttf_24;	 break;
+//		case 25: 	font = BobFont::ttf_25;	 break;
+//		case 26: 	font = BobFont::ttf_26;	 break;
+//		case 27: 	font = BobFont::ttf_27;	 break;
+//		case 28: 	font = BobFont::ttf_28;	 break;
+//		case 29: 	font = BobFont::ttf_29;	 break;
+//		case 30: 	font = BobFont::ttf_30;	 break;
+//		case 31: 	font = BobFont::ttf_31;	 break;
+//		case 32: 	font = BobFont::ttf_32;	 break;
+//		case 48: 	font = BobFont::ttf_48;	 break;
+//		case 64: 	font = BobFont::ttf_64;	 break;
+//	}
+
 	fontSize = size;
 
 
@@ -553,11 +555,22 @@ void BobMenu::render
 
 		float ratio = (float)(graphicWidth) / (float)(graphic->getImageWidth());
 
-		float sx0 = (float)((int)((getEngine()->getWidth() - graphicWidth) / 2));
-		float sx1 = (float)floor((int)(sx0 + graphicWidth));
+		float screenWidth = graphicWidth;
+		float screenHeight = graphic->getImageHeight() * ratio;
+
+		if(screenHeight > maxGraphicHeight)
+		{
+			screenHeight = maxGraphicHeight;
+			float widthToHeightRatio = (float)(screenHeight) / (float)(graphic->getImageHeight());
+			screenWidth = graphic->getImageWidth() * ratio;
+		}
+
+
+		float sx0 = (float)((int)((getEngine()->getWidth() - screenWidth) / 2));
+		float sx1 = (float)floor((int)(sx0 + screenWidth));
 
 		float sy0 = (float)graphicYStartPosition;
-		float sy1 = (float)floor((int)(sy0 + (float)(graphic->getImageHeight() * ratio)));
+		float sy1 = (float)floor((int)(sy0 + (float)(screenHeight)));
 
 		y = (int)(sy1 + 40);
 

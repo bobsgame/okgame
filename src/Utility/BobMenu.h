@@ -27,7 +27,7 @@ public:
 	//gl draw ratio fit between height or width
 
 private:
-	TTF_Font *font = BobFont::ttf_18;
+	//TTF_Font *font = BobFont::ttf_18;
 
 	int fontSize = 18;
 	int scaledFontSize = 18;
@@ -83,6 +83,7 @@ public:
 	bool center = true;
 	
 	int graphicWidth = 0;
+	int maxGraphicHeight = 0;
 	int graphicYStartPosition = 0;
 	
 	//=========================================================================================================================
@@ -114,7 +115,7 @@ public:
 	BobMenu(Engine *g, string title);
 	~BobMenu();
 
-	void setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition);
+	void setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight);
 	void clear();
 	void setAllCaptionsToFullAlpha();
 	static void update(int ticksPassed);

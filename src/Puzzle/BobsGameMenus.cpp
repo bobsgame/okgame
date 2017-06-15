@@ -502,6 +502,7 @@ void BobsGame::startScreenMenuUpdate()
 	{
 		startScreenMenu = new BobMenu(this, "");
 		startScreenMenu->spacing = 1.2f;
+		startScreenMenu->setFontSize(32);
 
 		//pressEnterCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y-60, -1, "Press Enter to begin", oswald_24, infoColor, clearColor, RenderOrder::OVER_GUI);
 		//pressEnterCaption->flashing = true;
@@ -531,10 +532,10 @@ void BobsGame::startScreenMenuUpdate()
 		infoMenu->setFontSize(10);
 		infoMenu->outline = false;
 		infoMenu->addInfo("Build " + Main::version + " " + __TIMESTAMP__);// +" - Support this game: ", "Build Number");
-		infoMenu->addInfo("This game is actively developed by one person for free and will have bugs. I rely on your feedback!");
-		infoMenu->addInfo("Please report problems, crashes, and suggestions to bugs@bobsgame.com or ", "Open Forum");
-		infoMenu->addInfo("There are no built in games, they are downloaded. If no games show in the menu the server might be overloaded, wait a bit or restart a few times.");
-		infoMenu->addInfo("Currently working on: Better leaderboards, Android/iOS ports.");
+//		infoMenu->addInfo("This game is actively developed by one person for free and will have bugs. I rely on your feedback!");
+//		infoMenu->addInfo("Please report problems, crashes, and suggestions to bugs@bobsgame.com or ", "Open Forum");
+//		infoMenu->addInfo("There are no built in games, they are downloaded. If no games show in the menu the server might be overloaded, wait a bit or restart a few times.");
+//		infoMenu->addInfo("Currently working on: Better leaderboards, Android/iOS ports.");
 	}
 
 
@@ -550,14 +551,14 @@ void BobsGame::startScreenMenuUpdate()
 
 
 
-	if (forumMenu == nullptr)
-	{
-		forumMenu = new BobMenu(this, "");
-		forumMenu->center = false;
-		forumMenu->setFontSize(10);
-		forumMenu->outline = false;
-		forumMenu->addInfo("https://bobsgame.com/forum", "Open Forum",BobColor::lightBlue);
-	}
+//	if (forumMenu == nullptr)
+//	{
+//		forumMenu = new BobMenu(this, "");
+//		forumMenu->center = false;
+//		forumMenu->setFontSize(10);
+//		forumMenu->outline = false;
+//		forumMenu->addInfo("https://bobsgame.com/forum", "Open Forum",BobColor::lightBlue);
+//	}
 
 	if(getServerConnection()->getConnectedToServer_S())
 	{
@@ -670,15 +671,15 @@ void BobsGame::startScreenMenuUpdate()
 
 		if (confirm == false && clicked == true)
 		{
-			if (patreonMenu!=nullptr && patreonMenu->isSelectedID("Patreon", clicked, mx, my))
-			{
-				Main::openURL("https://www.patreon.com/bobsgame");
-			}
-
-			if (forumMenu!=nullptr && forumMenu->isSelectedID("Open Forum", clicked, mx, my))
-			{
-				Main::openURL("https://www.bobsgame.com/forum");
-			}
+//			if (patreonMenu!=nullptr && patreonMenu->isSelectedID("Patreon", clicked, mx, my))
+//			{
+//				Main::openURL("https://www.patreon.com/bobsgame");
+//			}
+//
+//			if (forumMenu!=nullptr && forumMenu->isSelectedID("Open Forum", clicked, mx, my))
+//			{
+//				Main::openURL("https://www.bobsgame.com/forum");
+//			}
 		}
 
 		if (leaveMenu)
@@ -726,27 +727,27 @@ void BobsGame::startScreenMenuRender()
 
 	if (t != nullptr)
 	{
-		startScreenMenu->setGraphic(t, getWidth()/3*2, getHeight() / 10);
+		startScreenMenu->setGraphic(t, getWidth()/3*2, getHeight() / 10, getHeight()/3);
 		startScreenMenu->render();
 	}
 
 	infoMenu->render(0, 6);// getHeight() - (infoMenu->getAmountOfMenuItems() * 20), 10);
 
-	if(patreonMenu!=nullptr)
-	{
-		Caption *c = infoMenu->getMenuItemByID("Build Number")->caption;
-		int x = c->screenX + c->getWidth();
-		int y = c->screenY;
-		patreonMenu->render(y, x);
-	}
-
-	if(forumMenu!=nullptr)
-	{
-		Caption *c = infoMenu->getMenuItemByID("Open Forum")->caption;
-		int x = x = c->screenX + c->getWidth();
-		int y = y = c->screenY;
-		forumMenu->render(y, x);
-	}
+//	if(patreonMenu!=nullptr)
+//	{
+//		Caption *c = infoMenu->getMenuItemByID("Build Number")->caption;
+//		int x = c->screenX + c->getWidth();
+//		int y = c->screenY;
+//		patreonMenu->render(y, x);
+//	}
+//
+//	if(forumMenu!=nullptr)
+//	{
+//		Caption *c = infoMenu->getMenuItemByID("Open Forum")->caption;
+//		int x = x = c->screenX + c->getWidth();
+//		int y = y = c->screenY;
+//		forumMenu->render(y, x);
+//	}
 }
 
 
