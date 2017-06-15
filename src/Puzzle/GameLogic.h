@@ -504,16 +504,16 @@ private:
 
 	BobColor* captionTextColor = nullptr;// = Color::white;
 	BobColor* captionBGColor = nullptr;// = Color::black;
-	TTF_Font* captionFont = nullptr;// = BobFont::font_normal_8;
+	int captionFontSize = 0;// = BobFont::font_normal_8;
 
 
 	float announcementCaptionScale = 0.3f;
 	BobColor* announcementCaptionTextColor = nullptr;// = Color::white;
 	BobColor* announcementCaptionBGColor = nullptr;// = Color::clear;
-	TTF_Font* announcementCaptionFont = nullptr;// = BobFont::font_32;
-	TTF_Font* resultCaptionFont = nullptr;// = BobFont::font_32;
+	int announcementCaptionFontSize = 0;// = BobFont::font_32;
+	int resultCaptionFontSize = 0;// = BobFont::font_32;
 
-	TTF_Font* mediumCaptionFont = nullptr;// = BobFont::font_normal_16_outlined_smooth;
+	int mediumCaptionFontSize = 0;// = BobFont::font_normal_16_outlined_smooth;
 
 
 public:

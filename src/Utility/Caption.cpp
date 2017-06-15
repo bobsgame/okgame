@@ -40,17 +40,17 @@ Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const strin
 	init(g, screenX, screenY, ticks, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 }
 //=========================================================================================================================
-Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const string& text, TTF_Font* ttfFont, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
+Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
 {//=========================================================================================================================
 
-	initTTF(g, screenX, screenY, ticks, text, ttfFont, textColor, textBGColor, layer, scale, entity, area, outline);
+	initTTF(g, screenX, screenY, ticks, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
 }
 
 //=========================================================================================================================
-Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const string& text, TTF_Font* ttfFont, BobColor* textColor, RenderOrder layer, bool outline)
+Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, RenderOrder layer, bool outline)
 {//=========================================================================================================================
 
-	initTTF(g, screenX, screenY, ticks, text, ttfFont, textColor, BobColor::clear, layer, 1, nullptr, nullptr, outline);
+	initTTF(g, screenX, screenY, ticks, text, fontSize, textColor, BobColor::clear, layer, 1, nullptr, nullptr, outline);
 }
 //=========================================================================================================================
 void Caption::setText(const string& text, bool force)
@@ -69,7 +69,7 @@ void Caption::setText(const string& text, bool force)
 	}
 
 
-	if (ttfFont != nullptr)initTTF(e, screenX, screenY, ticksToRemain, text, ttfFont, textColor, textBGColor, layer, scale, entity, area, outline);
+	if (ttfFont != nullptr)initTTF(e, screenX, screenY, ticksToRemain, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
 	else init(e, screenX, screenY, ticksToRemain, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 	
 	updateScreenXY();
@@ -200,7 +200,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 
 
 //=========================================================================================================================
-void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, const string& text, TTF_Font* font, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
+void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -214,7 +214,8 @@ void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, 
 	this->layer = layer;
 	this->scale = scale;
 	this->ticksToRemain = ticks;
-	this->ttfFont = font;
+	
+	this->fontSize = fontSize;
 
 	this->actionCaptionType = ActionManager::ACTIONCAPTIONTYPE_NONE;
 	this->entity = entity;
@@ -251,39 +252,41 @@ void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, 
 	SDL_Surface* surface = nullptr;
 
 
+	TTF_Font* outlineFont = nullptr;
+
+	if (fontSize == 6) { this->ttfFont = BobFont::ttf_6;	 outlineFont = BobFont::ttf_outline_6; }
+	if (fontSize == 7) { this->ttfFont = BobFont::ttf_7;	 outlineFont = BobFont::ttf_outline_7; }
+	if (fontSize == 8) { this->ttfFont = BobFont::ttf_8;	 outlineFont = BobFont::ttf_outline_8; }
+	if (fontSize == 9) { this->ttfFont = BobFont::ttf_9;	 outlineFont = BobFont::ttf_outline_9; }
+	if (fontSize == 10) { this->ttfFont = BobFont::ttf_10; outlineFont = BobFont::ttf_outline_10; }
+	if (fontSize == 11) { this->ttfFont = BobFont::ttf_11; outlineFont = BobFont::ttf_outline_11; }
+	if (fontSize == 12) { this->ttfFont = BobFont::ttf_12; outlineFont = BobFont::ttf_outline_12; }
+	if (fontSize == 13) { this->ttfFont = BobFont::ttf_13; outlineFont = BobFont::ttf_outline_13; }
+	if (fontSize == 14) { this->ttfFont = BobFont::ttf_14; outlineFont = BobFont::ttf_outline_14; }
+	if (fontSize == 15) { this->ttfFont = BobFont::ttf_15; outlineFont = BobFont::ttf_outline_15; }
+	if (fontSize == 16) { this->ttfFont = BobFont::ttf_16; outlineFont = BobFont::ttf_outline_16; }
+	if (fontSize == 17) { this->ttfFont = BobFont::ttf_17; outlineFont = BobFont::ttf_outline_17; }
+	if (fontSize == 18) { this->ttfFont = BobFont::ttf_18; outlineFont = BobFont::ttf_outline_18; }
+	if (fontSize == 19) { this->ttfFont = BobFont::ttf_19; outlineFont = BobFont::ttf_outline_19; }
+	if (fontSize == 20) { this->ttfFont = BobFont::ttf_20; outlineFont = BobFont::ttf_outline_20; }
+	if (fontSize == 21) { this->ttfFont = BobFont::ttf_21; outlineFont = BobFont::ttf_outline_21; }
+	if (fontSize == 22) { this->ttfFont = BobFont::ttf_22; outlineFont = BobFont::ttf_outline_22; }
+	if (fontSize == 23) { this->ttfFont = BobFont::ttf_23; outlineFont = BobFont::ttf_outline_23; }
+	if (fontSize == 24) { this->ttfFont = BobFont::ttf_24; outlineFont = BobFont::ttf_outline_24; }
+	if (fontSize == 25) { this->ttfFont = BobFont::ttf_25; outlineFont = BobFont::ttf_outline_25; }
+	if (fontSize == 26) { this->ttfFont = BobFont::ttf_26; outlineFont = BobFont::ttf_outline_26; }
+	if (fontSize == 27) { this->ttfFont = BobFont::ttf_27; outlineFont = BobFont::ttf_outline_27; }
+	if (fontSize == 28) { this->ttfFont = BobFont::ttf_28; outlineFont = BobFont::ttf_outline_28; }
+	if (fontSize == 29) { this->ttfFont = BobFont::ttf_29; outlineFont = BobFont::ttf_outline_29; }
+	if (fontSize == 30) { this->ttfFont = BobFont::ttf_30; outlineFont = BobFont::ttf_outline_30; }
+	if (fontSize == 31) { this->ttfFont = BobFont::ttf_31; outlineFont = BobFont::ttf_outline_31; }
+	if (fontSize == 32) { this->ttfFont = BobFont::ttf_32; outlineFont = BobFont::ttf_outline_32; }
+	if (fontSize == 48) { this->ttfFont = BobFont::ttf_48; outlineFont = BobFont::ttf_outline_48; }
+	if (fontSize == 64) { this->ttfFont = BobFont::ttf_64; outlineFont = BobFont::ttf_outline_64; }
+
 	if (outline)this->outline = true;
 	if (outline)
 	{
-		TTF_Font* outlineFont = nullptr;
-		if (ttfFont == BobFont::ttf_6)outlineFont = BobFont::ttf_outline_6;
-		if (ttfFont == BobFont::ttf_7)outlineFont = BobFont::ttf_outline_7;
-		if (ttfFont == BobFont::ttf_8)outlineFont = BobFont::ttf_outline_8;
-		if (ttfFont == BobFont::ttf_9)outlineFont = BobFont::ttf_outline_9;
-		if (ttfFont == BobFont::ttf_10)outlineFont = BobFont::ttf_outline_10;
-		if (ttfFont == BobFont::ttf_11)outlineFont = BobFont::ttf_outline_11;
-		if (ttfFont == BobFont::ttf_12)outlineFont = BobFont::ttf_outline_12;
-		if (ttfFont == BobFont::ttf_13)outlineFont = BobFont::ttf_outline_13;
-		if (ttfFont == BobFont::ttf_14)outlineFont = BobFont::ttf_outline_14;
-		if (ttfFont == BobFont::ttf_15)outlineFont = BobFont::ttf_outline_15;
-		if (ttfFont == BobFont::ttf_16)outlineFont = BobFont::ttf_outline_16;
-		if (ttfFont == BobFont::ttf_17)outlineFont = BobFont::ttf_outline_17;
-		if (ttfFont == BobFont::ttf_18)outlineFont = BobFont::ttf_outline_18;
-		if (ttfFont == BobFont::ttf_19)outlineFont = BobFont::ttf_outline_19;
-		if (ttfFont == BobFont::ttf_20)outlineFont = BobFont::ttf_outline_20;
-		if (ttfFont == BobFont::ttf_21)outlineFont = BobFont::ttf_outline_21;
-		if (ttfFont == BobFont::ttf_22)outlineFont = BobFont::ttf_outline_22;
-		if (ttfFont == BobFont::ttf_23)outlineFont = BobFont::ttf_outline_23;
-		if (ttfFont == BobFont::ttf_24)outlineFont = BobFont::ttf_outline_24;
-		if (ttfFont == BobFont::ttf_25)outlineFont = BobFont::ttf_outline_25;
-		if (ttfFont == BobFont::ttf_26)outlineFont = BobFont::ttf_outline_26;
-		if (ttfFont == BobFont::ttf_27)outlineFont = BobFont::ttf_outline_27;
-		if (ttfFont == BobFont::ttf_28)outlineFont = BobFont::ttf_outline_28;
-		if (ttfFont == BobFont::ttf_29)outlineFont = BobFont::ttf_outline_29;
-		if (ttfFont == BobFont::ttf_30)outlineFont = BobFont::ttf_outline_30;
-		if (ttfFont == BobFont::ttf_31)outlineFont = BobFont::ttf_outline_31;
-		if (ttfFont == BobFont::ttf_32)outlineFont = BobFont::ttf_outline_32;
-		if (ttfFont == BobFont::ttf_48)outlineFont = BobFont::ttf_outline_48;
-		if (ttfFont == BobFont::ttf_64)outlineFont = BobFont::ttf_outline_64;
 
 		int OUTLINE_SIZE = 1;
 		// render text and text outline 
@@ -514,10 +517,12 @@ void Caption::render()
 	ty0 = 0.0f;
 	ty1 = (float)(height) / (float)(texHeight);
 
+
+
 	x0 = (float)((int)(screenX));
-	x1 = (float)((int)((screenX) + (width * scale)));
+	x1 = (float)((int)((screenX) +getWidth()));
 	y0 = (float)((int)(screenY));
-	y1 = (float)((int)((screenY) + (height * scale)));
+	y1 = (float)((int)((screenY) +getHeight()));
 
 
 	int filter = 0;
@@ -1140,11 +1145,7 @@ void Caption::setAlphaImmediately(float a)
 }
 
 
-//=========================================================================================================================
-float Caption::getWidth()
-{//=========================================================================================================================
-	return width * scale;
-}
+
 
 //=========================================================================================================================
 int Caption::reduceHeightByOne()
@@ -1152,41 +1153,10 @@ int Caption::reduceHeightByOne()
 
 	if (ttfFont == nullptr)return 0;
 
-	if (ttfFont == BobFont::ttf_6)	{return 6;							   }
-	if (ttfFont == BobFont::ttf_7)	{ttfFont = BobFont::ttf_6;	setText(text, true); return 6; }
-	if (ttfFont == BobFont::ttf_8)	{ttfFont = BobFont::ttf_7;	setText(text, true); return 7; }
-	if (ttfFont == BobFont::ttf_9)	{ttfFont = BobFont::ttf_8;	setText(text, true); return 8; }
-	if (ttfFont == BobFont::ttf_10)	{ttfFont = BobFont::ttf_9;	setText(text, true); return 9; }
-	if (ttfFont == BobFont::ttf_11)	{ttfFont = BobFont::ttf_10;	setText(text, true); return 10; }
-	if (ttfFont == BobFont::ttf_12)	{ttfFont = BobFont::ttf_11;	setText(text, true); return 11; }
-	if (ttfFont == BobFont::ttf_13)	{ttfFont = BobFont::ttf_12;	setText(text, true); return 12; }
-	if (ttfFont == BobFont::ttf_14)	{ttfFont = BobFont::ttf_13;	setText(text, true); return 13; }
-	if (ttfFont == BobFont::ttf_15)	{ttfFont = BobFont::ttf_14;	setText(text, true); return 14; }
-	if (ttfFont == BobFont::ttf_16)	{ttfFont = BobFont::ttf_15;	setText(text, true); return 15; }
-	if (ttfFont == BobFont::ttf_17)	{ttfFont = BobFont::ttf_16;	setText(text, true); return 16; }
-	if (ttfFont == BobFont::ttf_18)	{ttfFont = BobFont::ttf_17;	setText(text, true); return 17; }
-	if (ttfFont == BobFont::ttf_19)	{ttfFont = BobFont::ttf_18;	setText(text, true); return 18; }
-	if (ttfFont == BobFont::ttf_20)	{ttfFont = BobFont::ttf_19;	setText(text, true); return 19; }
-	if (ttfFont == BobFont::ttf_21)	{ttfFont = BobFont::ttf_20;	setText(text, true); return 20; }
-	if (ttfFont == BobFont::ttf_22)	{ttfFont = BobFont::ttf_21;	setText(text, true); return 21; }
-	if (ttfFont == BobFont::ttf_23)	{ttfFont = BobFont::ttf_22;	setText(text, true); return 22; }
-	if (ttfFont == BobFont::ttf_24)	{ttfFont = BobFont::ttf_23;	setText(text, true); return 23; }
-	if (ttfFont == BobFont::ttf_25)	{ttfFont = BobFont::ttf_24;	setText(text, true); return 24; }
-	if (ttfFont == BobFont::ttf_26)	{ttfFont = BobFont::ttf_25;	setText(text, true); return 25; }
-	if (ttfFont == BobFont::ttf_27)	{ttfFont = BobFont::ttf_26;	setText(text, true); return 26; }
-	if (ttfFont == BobFont::ttf_28)	{ttfFont = BobFont::ttf_27;	setText(text, true); return 27; }
-	if (ttfFont == BobFont::ttf_29)	{ttfFont = BobFont::ttf_28;	setText(text, true); return 28; }
-	if (ttfFont == BobFont::ttf_30)	{ttfFont = BobFont::ttf_29;	setText(text, true); return 29; }
-	if (ttfFont == BobFont::ttf_31)	{ttfFont = BobFont::ttf_30;	setText(text, true); return 30; }
-	if (ttfFont == BobFont::ttf_32)	{ttfFont = BobFont::ttf_31;	setText(text, true); return 31; }
-	if (ttfFont == BobFont::ttf_48)	{ttfFont = BobFont::ttf_32;	setText(text, true); return 32; }
-	if (ttfFont == BobFont::ttf_64)	{ttfFont = BobFont::ttf_48;	setText(text, true); return 48; }
+	fontSize--;
+	if (fontSize < 6)fontSize = 6;
+	return fontSize;
 								
-
-	
-	return 0;
-	
-
 
 }
 //=========================================================================================================================
@@ -1195,45 +1165,44 @@ int Caption::increaseHeightByOne()
 
 	if (ttfFont == nullptr)return 0;
 
-	if (ttfFont == BobFont::ttf_6)	{ttfFont = BobFont::ttf_7;	setText(text, true);	return 7; 	 }
-	if (ttfFont == BobFont::ttf_7)	{ttfFont = BobFont::ttf_8;	setText(text, true);	return 8; 	 }
-	if (ttfFont == BobFont::ttf_8)	{ttfFont = BobFont::ttf_9;	setText(text, true);	return 9; 	 }
-	if (ttfFont == BobFont::ttf_9)	{ttfFont = BobFont::ttf_10;	setText(text, true);	return 10;	 }
-	if (ttfFont == BobFont::ttf_10)	{ttfFont = BobFont::ttf_11;	setText(text, true);	return 11;	 }
-	if (ttfFont == BobFont::ttf_11)	{ttfFont = BobFont::ttf_12;	setText(text, true);	return 12;	 }
-	if (ttfFont == BobFont::ttf_12)	{ttfFont = BobFont::ttf_13;	setText(text, true);	return 13;	 }
-	if (ttfFont == BobFont::ttf_13)	{ttfFont = BobFont::ttf_14;	setText(text, true);	return 14;	 }
-	if (ttfFont == BobFont::ttf_14)	{ttfFont = BobFont::ttf_15;	setText(text, true);	return 15;	 }
-	if (ttfFont == BobFont::ttf_15)	{ttfFont = BobFont::ttf_16;	setText(text, true);	return 16;	 }
-	if (ttfFont == BobFont::ttf_16)	{ttfFont = BobFont::ttf_17;	setText(text, true);	return 17;	 }
-	if (ttfFont == BobFont::ttf_17)	{ttfFont = BobFont::ttf_18;	setText(text, true);	return 18;	 }
-	if (ttfFont == BobFont::ttf_18)	{ttfFont = BobFont::ttf_19;	setText(text, true);	return 19;	 }
-	if (ttfFont == BobFont::ttf_19)	{ttfFont = BobFont::ttf_20;	setText(text, true);	return 20;	 }
-	if (ttfFont == BobFont::ttf_20)	{ttfFont = BobFont::ttf_21;	setText(text, true);	return 21;	 }
-	if (ttfFont == BobFont::ttf_21)	{ttfFont = BobFont::ttf_22;	setText(text, true);	return 22;	 }
-	if (ttfFont == BobFont::ttf_22)	{ttfFont = BobFont::ttf_23;	setText(text, true);	return 23;	 }
-	if (ttfFont == BobFont::ttf_23)	{ttfFont = BobFont::ttf_24;	setText(text, true);	return 24;	 }
-	if (ttfFont == BobFont::ttf_24)	{ttfFont = BobFont::ttf_25;	setText(text, true);	return 25;	 }
-	if (ttfFont == BobFont::ttf_25)	{ttfFont = BobFont::ttf_26;	setText(text, true);	return 26;	 }
-	if (ttfFont == BobFont::ttf_26)	{ttfFont = BobFont::ttf_27;	setText(text, true);	return 27;	 }
-	if (ttfFont == BobFont::ttf_27)	{ttfFont = BobFont::ttf_28;	setText(text, true);	return 28;	 }
-	if (ttfFont == BobFont::ttf_28)	{ttfFont = BobFont::ttf_29;	setText(text, true);	return 29;	 }
-	if (ttfFont == BobFont::ttf_29)	{ttfFont = BobFont::ttf_30;	setText(text, true);	return 30;	 }
-	if (ttfFont == BobFont::ttf_30)	{ttfFont = BobFont::ttf_31;	setText(text, true);	return 31;	 }
-	if (ttfFont == BobFont::ttf_31)	{ttfFont = BobFont::ttf_32;	setText(text, true);	return 32;	 }
-	if (ttfFont == BobFont::ttf_32)	{ttfFont = BobFont::ttf_48;	setText(text, true);	return 48;	 }
-	if (ttfFont == BobFont::ttf_48)	{ttfFont = BobFont::ttf_64;	setText(text, true);	return 64;	 }
-	if (ttfFont == BobFont::ttf_64)	{return 64;								 }
-								
+	fontSize++;
+	if (fontSize > 64)fontSize = 64;
+	return fontSize;
 
-	return 0;
+}
 
+//=========================================================================================================================
+float Caption::getWidth()
+{//=========================================================================================================================
+
+	float screenWidth = width * scale;
+	float screenHeight = height * scale;
+
+//	if (ttfFont != nullptr)
+//	{
+//		screenHeight = (fontSize + 4)*scale;
+//		float heightRatio = screenHeight / (height * scale);
+//		screenWidth = (width * scale)*heightRatio;
+//	}
+
+	return screenWidth;
 }
 
 //=========================================================================================================================
 float Caption::getHeight()
 {//=========================================================================================================================
-	return height * scale;
+
+	float screenWidth = width * scale;
+	float screenHeight = height * scale;
+
+//	if (ttfFont != nullptr)
+//	{
+//		screenHeight = (fontSize + 4)*scale;
+//		float heightRatio = screenHeight / (height * scale);
+//		screenWidth = (width * scale)*heightRatio;
+//	}
+
+	return screenHeight;
 }
 
 
@@ -1414,9 +1383,9 @@ void Caption::updateScreenXY()
 	//-----------------------------
 	//don't let captions wrap offscreen
 	//-----------------------------
-	if (screenX + width * scale >= GLUtils::getViewportWidth())
+	if (screenX + getWidth() >= GLUtils::getViewportWidth())
 	{
-		screenX = (float)(GLUtils::getViewportWidth() - (int)(width * scale + 1));
+		screenX = (float)(GLUtils::getViewportWidth() - (int)(getWidth() + 1));
 	}
 	if (screenX < 0)
 	{

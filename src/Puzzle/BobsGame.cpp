@@ -1130,7 +1130,7 @@ void BobsGame::update()
 					text = "Press Enter or Start to return to lobby";
 				}
 
-				pressEnterToRestartCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, getHeight() - 100, -1, text, BobFont::ttf_24, BobColor::white);
+				pressEnterToRestartCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, getHeight() - 100, -1, text, 24, BobColor::white);
 				pressEnterToRestartCaption->flashing = true;
 				pressEnterToRestartCaption->flashingTicksPerFlash = 2000;
 			}
@@ -1453,7 +1453,7 @@ void BobsGame::tryToCloseGame()
 //
 //			lastTimeTriedToCloseGame = currentTime;
 //
-//			getCaptionManager()->newManagedCaption(Caption::CENTERED_SCREEN,0,5000,"Network game is in progress! Match will be forfeit. Try again within 5 seconds to confirm.",BobFont::ttf_oswald_16,Color::red);
+//			getCaptionManager()->newManagedCaption(Caption::CENTERED_SCREEN,0,5000,"Network game is in progress! Match will be forfeit. Try again within 5 seconds to confirm.",oswald_16,Color::red);
 //		}
 //	}
 //	else

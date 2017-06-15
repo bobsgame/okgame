@@ -50,6 +50,7 @@ public:
 	Caption* titleCaption = nullptr;
 	
 	bool outline = true;
+	bool decreaseFontSizeToFit = true;
 
 	int cursorPosition = 0;
 	static BobTexture* rectangleCursorTexture;
@@ -140,8 +141,7 @@ public:
 		int* returnBottomOfCaptions = nullptr, 
 		bool renderBackgroundAndBorder = false, 
 		int* returnLeftX = nullptr, 
-		int* returnRightX = nullptr,
-		bool decreaseFontSizeToFit = true
+		int* returnRightX = nullptr
 	);
 
 	void setHidden(string id, bool b);

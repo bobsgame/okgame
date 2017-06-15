@@ -503,7 +503,7 @@ void BobsGame::startScreenMenuUpdate()
 		startScreenMenu = new BobMenu(this, "");
 		startScreenMenu->spacing = 1.2f;
 
-		//pressEnterCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y-60, -1, "Press Enter to begin", BobFont::ttf_oswald_24, infoColor, clearColor, RenderOrder::OVER_GUI);
+		//pressEnterCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y-60, -1, "Press Enter to begin", oswald_24, infoColor, clearColor, RenderOrder::OVER_GUI);
 		//pressEnterCaption->flashing = true;
 		//pressEnterCaption->flashingTicksPerFlash = 3000;
 
@@ -543,7 +543,7 @@ void BobsGame::startScreenMenuUpdate()
 //	{
 //		patreonMenu = new BobMenu(this, "");
 //		patreonMenu->center = false;
-//		patreonMenu->font = BobFont::ttf_10;
+//		patreonMenu->font = 10;
 //		patreonMenu->outline = false;
 //		patreonMenu->addInfo("https://patreon.com/bobsgame", "Patreon", BobColor::lightBlue);
 //	}
@@ -1240,8 +1240,8 @@ void BobsGame::loginMenuUpdate()
 
 	int y = (int)(getHeight() / 4 * 3);
 
-	if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", BobFont::ttf_16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-	if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", BobFont::ttf_16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+	if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+	if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 
 	if (loginMenu == nullptr)
@@ -1427,8 +1427,8 @@ void BobsGame::createAccountMenuUpdate()
 	{
 		int y = (int)(getHeight() / 4 * 3);
 
-		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", BobFont::ttf_16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", BobFont::ttf_16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 		if (userNameOrEmailText.length()>0)
 		{
@@ -4476,8 +4476,8 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 			{
 				p->confirmed = true;
 
-				p->gameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, p->gameLogic->currentGameSequence->name, BobFont::ttf_12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-				p->difficultyCaption = getCaptionManager()->newManagedCaption(0, 0, -1, p->gameLogic->currentGameSequence->currentDifficultyName, BobFont::ttf_12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				p->gameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, p->gameLogic->currentGameSequence->name, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				p->difficultyCaption = getCaptionManager()->newManagedCaption(0, 0, -1, p->gameLogic->currentGameSequence->currentDifficultyName, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 			}
 
 			
@@ -4490,7 +4490,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 		{
 			if (localMultiplayerPressStartCaption == nullptr) 
 			{
-				localMultiplayerPressStartCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, (int)(getHeight() - 50), -1, "Press the Enter key or Start on your controller to start game", BobFont::ttf_16, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				localMultiplayerPressStartCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, (int)(getHeight() - 50), -1, "Press the Enter key or Start on your controller to start game", 16, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 				localMultiplayerPressStartCaption->flashing = true;
 				localMultiplayerPressStartCaption->flashingTicksPerFlash = 1000;
 			}
@@ -4529,7 +4529,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 				PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 				p->useKeyboard = true;
 				players.add(p);
-				p->nameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "Local (Keyboard)", BobFont::ttf_12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				p->nameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "Local (Keyboard)", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 			}
 		}
 	}
@@ -4568,7 +4568,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 					PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 					p->gameController = g;
 					players.add(p);
-					p->nameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", BobFont::ttf_12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+					p->nameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 				}
 			}
 		}

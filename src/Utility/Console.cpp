@@ -289,7 +289,7 @@ void Console::update()
 		int cy = d->y;
 		if (cx == -1)cx = 0;
 		if (cy == -1)cy = 0;//-1 is a magic num for captions, dont use it
-		if (d->caption == nullptr)d->caption = Console::captionManager->newManagedCaption(cx, cy, -1, d->text, BobFont::ttf_bobsgame_8, d->color, BobColor::clear, RenderOrder::CONSOLE);
+		if (d->caption == nullptr)d->caption = Console::captionManager->newManagedCaption(cx, cy, -1, d->text, 8, d->color, BobColor::clear, RenderOrder::CONSOLE);
 
 		if (d->caption->text != d->text)d->caption->setText(d->text, false);
 		if (d->caption->getTextColor() != d->color)d->caption->setTextColor(d->color, nullptr, BobColor::clear);
