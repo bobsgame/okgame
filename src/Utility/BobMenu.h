@@ -115,7 +115,7 @@ public:
 	BobMenu(Engine *g, string title);
 	~BobMenu();
 
-	void setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight);
+	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0);
 	void clear();
 	void setAllCaptionsToFullAlpha();
 	static void update(int ticksPassed);

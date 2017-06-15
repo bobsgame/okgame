@@ -148,8 +148,8 @@ void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosit
 {//=========================================================================================================================
 	this->graphic = t;
 	this->graphicWidth = graphicWidth;
-	this->maxGraphicHeight = maxGraphicHeight;
 	this->graphicYStartPosition = graphicYStartPosition;
+	this->maxGraphicHeight = maxGraphicHeight;
 
 }
 
@@ -553,16 +553,22 @@ void BobMenu::render
 		float ty0 = 0;
 		float ty1 = (float)((float)(graphic->getImageHeight()) / (float)(graphic->getTextureHeight()))-0.01;
 
-		float ratio = (float)(graphicWidth) / (float)(graphic->getImageWidth());
+		
 
 		float screenWidth = graphicWidth;
+		if(graphicWidth==0)
+		{
+			screenWidth = graphic->getImageWidth();
+		}
+		float ratio = (float)(graphicWidth) / (float)(graphic->getImageWidth());
+
 		float screenHeight = graphic->getImageHeight() * ratio;
 
-		if(screenHeight > maxGraphicHeight)
+		if(maxGraphicHeight > 0 && screenHeight > maxGraphicHeight)
 		{
 			screenHeight = maxGraphicHeight;
 			float widthToHeightRatio = (float)(screenHeight) / (float)(graphic->getImageHeight());
-			screenWidth = graphic->getImageWidth() * ratio;
+			screenWidth = graphic->getImageWidth() * widthToHeightRatio;
 		}
 
 
