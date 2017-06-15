@@ -463,6 +463,51 @@ BobMenu::MenuItem* BobMenu::getSelectedMenuItem()
 	return menuItems.get(cursorPosition);
 }
 
+
+
+//=========================================================================================================================
+void BobMenu::setFontSize(int size)
+{//=========================================================================================================================
+
+	switch (size)
+	{
+		case 6: font = BobFont::ttf_6;break;
+		case 7: 	font = BobFont::ttf_7;	 break;
+		case 8: 	font = BobFont::ttf_8;	 break;
+		case 9: 	font = BobFont::ttf_9;	 break;
+		case 10: 	font = BobFont::ttf_10;	 break;
+		case 11: 	font = BobFont::ttf_11;	 break;
+		case 12: 	font = BobFont::ttf_12;	 break;
+		case 13: 	font = BobFont::ttf_13;	 break;
+		case 14: 	font = BobFont::ttf_14;	 break;
+		case 15: 	font = BobFont::ttf_15;	 break;
+		case 16: 	font = BobFont::ttf_16;	 break;
+		case 17: 	font = BobFont::ttf_17;	 break;
+		case 18: 	font = BobFont::ttf_18;	 break;
+		case 19: 	font = BobFont::ttf_19;	 break;
+		case 20: 	font = BobFont::ttf_20;	 break;
+		case 21: 	font = BobFont::ttf_21;	 break;
+		case 22: 	font = BobFont::ttf_22;	 break;
+		case 23: 	font = BobFont::ttf_23;	 break;
+		case 24: 	font = BobFont::ttf_24;	 break;
+		case 25: 	font = BobFont::ttf_25;	 break;
+		case 26: 	font = BobFont::ttf_26;	 break;
+		case 27: 	font = BobFont::ttf_27;	 break;
+		case 28: 	font = BobFont::ttf_28;	 break;
+		case 29: 	font = BobFont::ttf_29;	 break;
+		case 30: 	font = BobFont::ttf_30;	 break;
+		case 31: 	font = BobFont::ttf_31;	 break;
+		case 32: 	font = BobFont::ttf_32;	 break;
+		case 48: 	font = BobFont::ttf_48;	 break;
+		case 64: 	font = BobFont::ttf_64;	 break;
+	}
+	fontSize = size;
+
+
+}
+
+
+
 int BobMenu::getAmountOfMenuItems()
 {
 	return menuItems.size();
@@ -538,9 +583,8 @@ void BobMenu::render
 
 		
 
-		int menuItemsToShow = 0;
-		int lowestHeight = y;
 
+		//populate visibleMenuItems
 		for (int i = 0; i < menuItems.size(); i++)
 		{
 			MenuItem *m = menuItems.get(i);
@@ -560,11 +604,21 @@ void BobMenu::render
 			}
 		}
 
-		bool wentSmaller = true;
 
-		//we want to decrease the font size until the menu fits between startY and endY
+
+		int menuItemsToShow = 0;
+		
+		int minSize = 6;
+		int changedSize = minSize;
 		do
 		{
+
+			menuItemsToShow = visibleMenuItems.size();
+
+			int lowestHeight = y;
+			bool pastEnd = false;
+
+			int captionHeight = 0;
 
 			for (int i = 0; i < visibleMenuItems.size(); i++)
 			{
@@ -573,22 +627,29 @@ void BobMenu::render
 
 				if (c != nullptr)
 				{
-					
+					captionHeight = (int)(c->getHeight()*spacing);
+
 					lowestHeight += (int)(c->getHeight()*spacing);
 
-					//figure out how many can fit in the space
-					//if less than totalVisible can fit
-					if (lowestHeight >= endY && menuItemsToShow == 0)
+					//if we are past endY already
+					if (lowestHeight >= endY && pastEnd == false)
 					{
+						pastEnd = true;
+
+						//leave room for arrows
 						menuItemsToShow = i - 3;
+
+						//always show at least one menu item
 						if (menuItemsToShow <= 0) { menuItemsToShow = 1; y = endY - (c->getHeight() + 20); }
+						
 					}
 					
 				}
 			}
 
-			if (menuItemsToShow == 0)menuItemsToShow = visibleMenuItems.size();
 			
+
+						
 			if(decreaseFontSizeToFit && menuItemsToShow < visibleMenuItems.size())
 			{
 				//decrease the font size for all menu items
@@ -596,11 +657,28 @@ void BobMenu::render
 				{
 					MenuItem *m = menuItems.get(i);
 					Caption *c = m->caption;
-					wentSmaller = c->reduceHeightByOne();
+					changedSize = c->reduceHeightByOne();
+					scaledFontSize = changedSize;
 				}
 			}
 
-		} while (decreaseFontSizeToFit && (menuItemsToShow < visibleMenuItems.size() && wentSmaller == true));
+			if(decreaseFontSizeToFit && menuItemsToShow == visibleMenuItems.size() && scaledFontSize < fontSize && pastEnd == false && endY - lowestHeight >= captionHeight)
+			{
+				//increase the font size for all menu items only up to the default size
+				for (int i = 0; i < menuItems.size(); i++)
+				{
+					MenuItem *m = menuItems.get(i);
+					Caption *c = m->caption;
+					changedSize = c->increaseHeightByOne();
+					scaledFontSize = changedSize;
+				}
+			}
+
+			//we want to decrease the font size until the menu fits between startY and endY
+		} while (decreaseFontSizeToFit && (menuItemsToShow < visibleMenuItems.size() && changedSize > minSize));
+
+
+
 
 
 
@@ -641,13 +719,16 @@ void BobMenu::render
 		float downArrowY = 0;
 
 		int topVisibleMenuItemIndex = 0;
+
+
+
 		//get index of last menu item drawn
-		if(topMenuItemDrawn!=nullptr)
+		if (topMenuItemDrawn != nullptr)
 		{
 			bool found = false;
 			for (int i = 0; i < visibleMenuItems.size(); i++)
 			{
-				if(topMenuItemDrawn == visibleMenuItems.get(i))
+				if (topMenuItemDrawn == visibleMenuItems.get(i))
 				{
 					found = true;
 					topVisibleMenuItemIndex = i;
@@ -657,10 +738,13 @@ void BobMenu::render
 			if (found == false)topMenuItemDrawn = nullptr;
 		}
 
+		
+
+
 		int selectedVisibleMenuItemIndex = 0;
 		for (int i = 0; i < visibleMenuItems.size(); i++)
 		{
-			if(menuItems.get(cursorPosition) == visibleMenuItems.get(i))
+			if (menuItems.get(cursorPosition) == visibleMenuItems.get(i))
 			{
 				selectedVisibleMenuItemIndex = i;
 				break;
@@ -669,6 +753,8 @@ void BobMenu::render
 		if (selectedVisibleMenuItemIndex < topVisibleMenuItemIndex)topVisibleMenuItemIndex = selectedVisibleMenuItemIndex;
 		if (selectedVisibleMenuItemIndex >= topVisibleMenuItemIndex + menuItemsToShow)topVisibleMenuItemIndex = selectedVisibleMenuItemIndex - menuItemsToShow;
 		if (topVisibleMenuItemIndex < 0)topVisibleMenuItemIndex = 0;
+
+		
 
 		for (int i = 0; i < visibleMenuItems.size() && numDrawn <= menuItemsToShow; i++)
 		{

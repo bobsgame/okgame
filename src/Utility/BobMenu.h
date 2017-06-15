@@ -26,7 +26,12 @@ public:
 
 	//gl draw ratio fit between height or width
 
+private:
 	TTF_Font *font = BobFont::ttf_18;
+
+	int fontSize = 18;
+	int scaledFontSize = 18;
+public:
 
 
 
@@ -147,6 +152,8 @@ public:
 	Caption* getCaptionByID(string id);
 	MenuItem* getMenuItemByID(string id);
 	MenuItem* getSelectedMenuItem();
+
+	void setFontSize(int size);
 
 
 	//bool cancelToQuit = true;

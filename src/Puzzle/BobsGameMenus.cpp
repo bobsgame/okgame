@@ -528,7 +528,7 @@ void BobsGame::startScreenMenuUpdate()
 	{
 		infoMenu = new BobMenu(this, "");
 		infoMenu->center = false;
-		infoMenu->font = BobFont::ttf_10;
+		infoMenu->setFontSize(10);
 		infoMenu->outline = false;
 		infoMenu->addInfo("Build " + Main::version + " " + __TIMESTAMP__);// +" - Support this game: ", "Build Number");
 		infoMenu->addInfo("This game is actively developed by one person for free and will have bugs. I rely on your feedback!");
@@ -554,7 +554,7 @@ void BobsGame::startScreenMenuUpdate()
 	{
 		forumMenu = new BobMenu(this, "");
 		forumMenu->center = false;
-		forumMenu->font = BobFont::ttf_10;
+		forumMenu->setFontSize(10);
 		forumMenu->outline = false;
 		forumMenu->addInfo("https://bobsgame.com/forum", "Open Forum",BobColor::lightBlue);
 	}
@@ -1890,7 +1890,7 @@ void BobsGame::whichStatsMiniMenuUpdate()
 	{
 		whichStatsMiniMenu = new BobMenu(this, "");
 		whichStatsMiniMenu->center = false;
-		whichStatsMiniMenu->font = BobFont::ttf_12;
+		whichStatsMiniMenu->setFontSize(12);
 
 		whichStatsMiniMenu->add("Top Players By Total Time Played", "totalTimePlayed");
 		whichStatsMiniMenu->add("Top Players By Total Blocks Cleared", "totalBlocksCleared");
@@ -2113,7 +2113,7 @@ void BobsGame::statsMenuUpdate()
 	{
 		yourStatsMenu = new BobMenu(this, "");
 		yourStatsMenu->center = false;
-		yourStatsMenu->font = BobFont::ttf_12;
+		yourStatsMenu->setFontSize(12);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -2125,7 +2125,7 @@ void BobsGame::statsMenuUpdate()
 	{
 		leaderBoardMenu = new BobMenu(this, "");
 		leaderBoardMenu->center = false;
-		leaderBoardMenu->font = BobFont::ttf_12;
+		leaderBoardMenu->setFontSize(12);
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -3548,7 +3548,7 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 	{
 		selectSingleGameTypeMenu = new BobMenu(this, "");
 		selectSingleGameTypeMenu->center = false;
-		selectSingleGameTypeMenu->font = BobFont::ttf_12;
+		selectSingleGameTypeMenu->setFontSize(12);
 
 
 		populateGameTypesMenu(selectSingleGameTypeMenu);
@@ -4717,7 +4717,7 @@ void BobsGame::playerDifficultyMiniMenuUpdate(PuzzlePlayer *p)
 		{
 			p->menu = new BobMenu(this, "");
 			p->menu->center = false;
-			p->menu->font = BobFont::ttf_12;
+			p->menu->setFontSize(12);
 			GameType g;
 
 			for (int i = 0; i<g.difficultyTypes.size(); i++)
@@ -4815,7 +4815,7 @@ void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 		{
 			p->menu = new BobMenu(this, "");
 			p->menu->center = false;
-			p->menu->font = BobFont::ttf_12;
+			p->menu->setFontSize(12);
 
 			if (p->selectGameSequenceOrSingleGameTypeMiniMenuShowing)
 			{

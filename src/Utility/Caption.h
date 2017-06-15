@@ -143,7 +143,8 @@ public:
 	virtual void setAlphaTo(float a);
 	virtual void setAlphaImmediately(float a);
 	virtual float getWidth();
-	virtual bool reduceHeightByOne();
+	virtual int reduceHeightByOne();
+	virtual int increaseHeightByOne();
 	virtual float getHeight();
 private:
 	void drawBlankColumn();

@@ -853,7 +853,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	{
 		yourStatsMenu = new BobMenu(this, "");
 		yourStatsMenu->center = false;
-		yourStatsMenu->font = BobFont::ttf_12;
+		yourStatsMenu->setFontSize(12);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -866,7 +866,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	{
 		leaderBoardMenu = new BobMenu(this, "");
 		leaderBoardMenu->center = false;
-		leaderBoardMenu->font = BobFont::ttf_12;
+		leaderBoardMenu->setFontSize(12);
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -1007,7 +1007,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	if (friendsOnlineMenu == nullptr)
 	{
 		friendsOnlineMenu = new BobMenu(this, "");
-		friendsOnlineMenu->font = BobFont::ttf_12;
+		friendsOnlineMenu->setFontSize(12);
 		friendsOnlineMenu->center = false;
 		friendsOnlineMenu->outline = false;
 		friendsOnlineMenu->defaultMenuColor = BobColor::darkGray;
@@ -1016,7 +1016,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	if (roomsMenu == nullptr)
 	{
 		roomsMenu = new BobMenu(this, "");
-		roomsMenu->font = BobFont::ttf_12;
+		roomsMenu->setFontSize(12);
 		roomsMenu->center = false;
 		populateRoomsMenu();
 	}
@@ -1774,7 +1774,7 @@ void BobsGame::selectSingleGameTypeFilterMenuUpdate()
 	{
 		selectSingleGameTypeMenu = new BobMenu(this, "");
 		selectSingleGameTypeMenu->center = false;
-		selectSingleGameTypeMenu->font = BobFont::ttf_12;
+		selectSingleGameTypeMenu->setFontSize(12);
 		populateGameTypesMenu(selectSingleGameTypeMenu);
 		selectSingleGameTypeMenu->cursorPosition = selectSingleGameTypeMenuCursorPosition;
 	}
@@ -1905,7 +1905,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 0, -1, " ", BobFont::ttf_16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 		networkMultiplayerPlayerJoinMenu = new BobMenu(this, "Network Multiplayer Room");
-		networkMultiplayerPlayerJoinMenu->font = BobFont::ttf_12;
+		networkMultiplayerPlayerJoinMenu->setFontSize(12);
 		networkMultiplayerPlayerJoinMenu->addInfo("Press the Space key or A on your controller to join. Multiple local players are allowed.");
 		networkMultiplayerPlayerJoinMenu->addInfo("Press Esc or Select on your controller to return to lobby.");
 		networkMultiplayerPlayerJoinMenu->addInfo(" ");
@@ -1917,7 +1917,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 	{
 		//show room options
 		networkMultiplayerRoomRulesMenu = new BobMenu(this, "");
-		networkMultiplayerRoomRulesMenu->font = BobFont::ttf_12;
+		networkMultiplayerRoomRulesMenu->setFontSize(12);
 		networkMultiplayerRoomRulesMenu->center = false;
 
 
@@ -1999,7 +1999,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 			if (networkMultiplayerJoinedPeersMenu == nullptr)
 			{
 				networkMultiplayerJoinedPeersMenu = new BobMenu(this, "");
-				networkMultiplayerJoinedPeersMenu->font = BobFont::ttf_12;
+				networkMultiplayerJoinedPeersMenu->setFontSize(12);
 				networkMultiplayerJoinedPeersMenu->center = false;
 			}
 			networkMultiplayerJoinedPeersMenu->clear();

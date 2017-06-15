@@ -1147,45 +1147,85 @@ float Caption::getWidth()
 }
 
 //=========================================================================================================================
-bool Caption::reduceHeightByOne()
+int Caption::reduceHeightByOne()
 {//=========================================================================================================================
 
-	if (ttfFont == nullptr)return false;
+	if (ttfFont == nullptr)return 0;
 
-	if (ttfFont == BobFont::ttf_6)	return false;
-	if (ttfFont == BobFont::ttf_7)	ttfFont = BobFont::ttf_6;
-	if (ttfFont == BobFont::ttf_8)	ttfFont = BobFont::ttf_7;
-	if (ttfFont == BobFont::ttf_9)	ttfFont = BobFont::ttf_8;
-	if (ttfFont == BobFont::ttf_10)	ttfFont = BobFont::ttf_9;
-	if (ttfFont == BobFont::ttf_11)	ttfFont = BobFont::ttf_10;
-	if (ttfFont == BobFont::ttf_12)	ttfFont = BobFont::ttf_11;
-	if (ttfFont == BobFont::ttf_13)	ttfFont = BobFont::ttf_12;
-	if (ttfFont == BobFont::ttf_14)	ttfFont = BobFont::ttf_13;
-	if (ttfFont == BobFont::ttf_15)	ttfFont = BobFont::ttf_14;
-	if (ttfFont == BobFont::ttf_16)	ttfFont = BobFont::ttf_15;
-	if (ttfFont == BobFont::ttf_17)	ttfFont = BobFont::ttf_16;
-	if (ttfFont == BobFont::ttf_18)	ttfFont = BobFont::ttf_17;
-	if (ttfFont == BobFont::ttf_19)	ttfFont = BobFont::ttf_18;
-	if (ttfFont == BobFont::ttf_20)	ttfFont = BobFont::ttf_19;
-	if (ttfFont == BobFont::ttf_21)	ttfFont = BobFont::ttf_20;
-	if (ttfFont == BobFont::ttf_22)	ttfFont = BobFont::ttf_21;
-	if (ttfFont == BobFont::ttf_23)	ttfFont = BobFont::ttf_22;
-	if (ttfFont == BobFont::ttf_24)	ttfFont = BobFont::ttf_23;
-	if (ttfFont == BobFont::ttf_25)	ttfFont = BobFont::ttf_24;
-	if (ttfFont == BobFont::ttf_26)	ttfFont = BobFont::ttf_25;
-	if (ttfFont == BobFont::ttf_27)	ttfFont = BobFont::ttf_26;
-	if (ttfFont == BobFont::ttf_28)	ttfFont = BobFont::ttf_27;
-	if (ttfFont == BobFont::ttf_29)	ttfFont = BobFont::ttf_28;
-	if (ttfFont == BobFont::ttf_30)	ttfFont = BobFont::ttf_29;
-	if (ttfFont == BobFont::ttf_31)	ttfFont = BobFont::ttf_30;
-	if (ttfFont == BobFont::ttf_32)	ttfFont = BobFont::ttf_31;
-	if (ttfFont == BobFont::ttf_48)	ttfFont = BobFont::ttf_32;
-	if (ttfFont == BobFont::ttf_64)	ttfFont = BobFont::ttf_48;
+	if (ttfFont == BobFont::ttf_6)	{return 6;							   }
+	if (ttfFont == BobFont::ttf_7)	{ttfFont = BobFont::ttf_6;	setText(text, true); return 6; }
+	if (ttfFont == BobFont::ttf_8)	{ttfFont = BobFont::ttf_7;	setText(text, true); return 7; }
+	if (ttfFont == BobFont::ttf_9)	{ttfFont = BobFont::ttf_8;	setText(text, true); return 8; }
+	if (ttfFont == BobFont::ttf_10)	{ttfFont = BobFont::ttf_9;	setText(text, true); return 9; }
+	if (ttfFont == BobFont::ttf_11)	{ttfFont = BobFont::ttf_10;	setText(text, true); return 10; }
+	if (ttfFont == BobFont::ttf_12)	{ttfFont = BobFont::ttf_11;	setText(text, true); return 11; }
+	if (ttfFont == BobFont::ttf_13)	{ttfFont = BobFont::ttf_12;	setText(text, true); return 12; }
+	if (ttfFont == BobFont::ttf_14)	{ttfFont = BobFont::ttf_13;	setText(text, true); return 13; }
+	if (ttfFont == BobFont::ttf_15)	{ttfFont = BobFont::ttf_14;	setText(text, true); return 14; }
+	if (ttfFont == BobFont::ttf_16)	{ttfFont = BobFont::ttf_15;	setText(text, true); return 15; }
+	if (ttfFont == BobFont::ttf_17)	{ttfFont = BobFont::ttf_16;	setText(text, true); return 16; }
+	if (ttfFont == BobFont::ttf_18)	{ttfFont = BobFont::ttf_17;	setText(text, true); return 17; }
+	if (ttfFont == BobFont::ttf_19)	{ttfFont = BobFont::ttf_18;	setText(text, true); return 18; }
+	if (ttfFont == BobFont::ttf_20)	{ttfFont = BobFont::ttf_19;	setText(text, true); return 19; }
+	if (ttfFont == BobFont::ttf_21)	{ttfFont = BobFont::ttf_20;	setText(text, true); return 20; }
+	if (ttfFont == BobFont::ttf_22)	{ttfFont = BobFont::ttf_21;	setText(text, true); return 21; }
+	if (ttfFont == BobFont::ttf_23)	{ttfFont = BobFont::ttf_22;	setText(text, true); return 22; }
+	if (ttfFont == BobFont::ttf_24)	{ttfFont = BobFont::ttf_23;	setText(text, true); return 23; }
+	if (ttfFont == BobFont::ttf_25)	{ttfFont = BobFont::ttf_24;	setText(text, true); return 24; }
+	if (ttfFont == BobFont::ttf_26)	{ttfFont = BobFont::ttf_25;	setText(text, true); return 25; }
+	if (ttfFont == BobFont::ttf_27)	{ttfFont = BobFont::ttf_26;	setText(text, true); return 26; }
+	if (ttfFont == BobFont::ttf_28)	{ttfFont = BobFont::ttf_27;	setText(text, true); return 27; }
+	if (ttfFont == BobFont::ttf_29)	{ttfFont = BobFont::ttf_28;	setText(text, true); return 28; }
+	if (ttfFont == BobFont::ttf_30)	{ttfFont = BobFont::ttf_29;	setText(text, true); return 29; }
+	if (ttfFont == BobFont::ttf_31)	{ttfFont = BobFont::ttf_30;	setText(text, true); return 30; }
+	if (ttfFont == BobFont::ttf_32)	{ttfFont = BobFont::ttf_31;	setText(text, true); return 31; }
+	if (ttfFont == BobFont::ttf_48)	{ttfFont = BobFont::ttf_32;	setText(text, true); return 32; }
+	if (ttfFont == BobFont::ttf_64)	{ttfFont = BobFont::ttf_48;	setText(text, true); return 48; }
 								
 
-	setText(text, true);
+	
 
-	return true;
+	
+
+
+}
+//=========================================================================================================================
+int Caption::increaseHeightByOne()
+{//=========================================================================================================================
+
+	if (ttfFont == nullptr)return 0;
+
+	if (ttfFont == BobFont::ttf_6)	{ttfFont = BobFont::ttf_7;	setText(text, true);	return 7; 	 }
+	if (ttfFont == BobFont::ttf_7)	{ttfFont = BobFont::ttf_8;	setText(text, true);	return 8; 	 }
+	if (ttfFont == BobFont::ttf_8)	{ttfFont = BobFont::ttf_9;	setText(text, true);	return 9; 	 }
+	if (ttfFont == BobFont::ttf_9)	{ttfFont = BobFont::ttf_10;	setText(text, true);	return 10;	 }
+	if (ttfFont == BobFont::ttf_10)	{ttfFont = BobFont::ttf_11;	setText(text, true);	return 11;	 }
+	if (ttfFont == BobFont::ttf_11)	{ttfFont = BobFont::ttf_12;	setText(text, true);	return 12;	 }
+	if (ttfFont == BobFont::ttf_12)	{ttfFont = BobFont::ttf_13;	setText(text, true);	return 13;	 }
+	if (ttfFont == BobFont::ttf_13)	{ttfFont = BobFont::ttf_14;	setText(text, true);	return 14;	 }
+	if (ttfFont == BobFont::ttf_14)	{ttfFont = BobFont::ttf_15;	setText(text, true);	return 15;	 }
+	if (ttfFont == BobFont::ttf_15)	{ttfFont = BobFont::ttf_16;	setText(text, true);	return 16;	 }
+	if (ttfFont == BobFont::ttf_16)	{ttfFont = BobFont::ttf_17;	setText(text, true);	return 17;	 }
+	if (ttfFont == BobFont::ttf_17)	{ttfFont = BobFont::ttf_18;	setText(text, true);	return 18;	 }
+	if (ttfFont == BobFont::ttf_18)	{ttfFont = BobFont::ttf_19;	setText(text, true);	return 19;	 }
+	if (ttfFont == BobFont::ttf_19)	{ttfFont = BobFont::ttf_20;	setText(text, true);	return 20;	 }
+	if (ttfFont == BobFont::ttf_20)	{ttfFont = BobFont::ttf_21;	setText(text, true);	return 21;	 }
+	if (ttfFont == BobFont::ttf_21)	{ttfFont = BobFont::ttf_22;	setText(text, true);	return 22;	 }
+	if (ttfFont == BobFont::ttf_22)	{ttfFont = BobFont::ttf_23;	setText(text, true);	return 23;	 }
+	if (ttfFont == BobFont::ttf_23)	{ttfFont = BobFont::ttf_24;	setText(text, true);	return 24;	 }
+	if (ttfFont == BobFont::ttf_24)	{ttfFont = BobFont::ttf_25;	setText(text, true);	return 25;	 }
+	if (ttfFont == BobFont::ttf_25)	{ttfFont = BobFont::ttf_26;	setText(text, true);	return 26;	 }
+	if (ttfFont == BobFont::ttf_26)	{ttfFont = BobFont::ttf_27;	setText(text, true);	return 27;	 }
+	if (ttfFont == BobFont::ttf_27)	{ttfFont = BobFont::ttf_28;	setText(text, true);	return 28;	 }
+	if (ttfFont == BobFont::ttf_28)	{ttfFont = BobFont::ttf_29;	setText(text, true);	return 29;	 }
+	if (ttfFont == BobFont::ttf_29)	{ttfFont = BobFont::ttf_30;	setText(text, true);	return 30;	 }
+	if (ttfFont == BobFont::ttf_30)	{ttfFont = BobFont::ttf_31;	setText(text, true);	return 31;	 }
+	if (ttfFont == BobFont::ttf_31)	{ttfFont = BobFont::ttf_32;	setText(text, true);	return 32;	 }
+	if (ttfFont == BobFont::ttf_32)	{ttfFont = BobFont::ttf_48;	setText(text, true);	return 48;	 }
+	if (ttfFont == BobFont::ttf_48)	{ttfFont = BobFont::ttf_64;	setText(text, true);	return 64;	 }
+	if (ttfFont == BobFont::ttf_64)	{return 64;								 }
+								
+
 
 
 }
