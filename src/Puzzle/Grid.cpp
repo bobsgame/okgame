@@ -11,7 +11,7 @@
 
 Logger Grid::log = Logger("Grid");
 
-Block* Grid::nullBlock = new Block();
+shared_ptr<Block> Grid::nullBlock(new Block());
 
 //=========================================================================================================================
 Grid::Grid(GameLogic* gameInstance)
@@ -104,10 +104,10 @@ void Grid::update()
 
 
 	//update pieces instead of blocks so we can update all the pieces and blocks inside pieces.update
-	ArrayList<Piece*> piecesInGrid = getArrayOfPiecesOnGrid();
+	ArrayList<shared_ptr<Piece>> piecesInGrid = getArrayOfPiecesOnGrid();
 	for (int i = 0; i < piecesInGrid.size(); i++)
 	{
-		Piece* p = piecesInGrid.get(i);
+		shared_ptr<Piece> p = piecesInGrid.get(i);
 		p->update();
 	}
 
@@ -131,7 +131,7 @@ void Grid::update()
 void Grid::reformat(int oldWidth, int oldHeight)
 {//=========================================================================================================================
 
-	ArrayList<Block*> blockList;
+	ArrayList<shared_ptr<Block>> blockList;
 
 	if (blocks.size() > 0)
 	{
@@ -142,7 +142,7 @@ void Grid::reformat(int oldWidth, int oldHeight)
 			{
 				if (contains(y * oldWidth + x))
 				{
-					Block* b = blocks.get(y * oldWidth + x);
+					shared_ptr<Block> b = blocks.get(y * oldWidth + x);
 					blocks.removeAt(y * oldWidth + x);
 #ifdef blocksHashMap
 #else
@@ -178,7 +178,7 @@ void Grid::reformat(int oldWidth, int oldHeight)
 
 	while (blockList.size() > 0 && y >= 0)//blocks above aboveGridBuffer will be cleared and fade out when we replace them with new game pieces
 	{
-		Block* b = blockList.get(0);
+		shared_ptr<Block> b = blockList.get(0);
 		blockList.removeAt(0);
 
 
@@ -213,7 +213,7 @@ int Grid::getNumberOfFilledCells()
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 
 			if (b != nullptr)
 			{
@@ -227,11 +227,11 @@ int Grid::getNumberOfFilledCells()
 
 
 //=========================================================================================================================
-void Grid::removeAllBlocksOfPieceFromGrid(Piece* p, bool fadeOut)
+void Grid::removeAllBlocksOfPieceFromGrid(shared_ptr<Piece> p, bool fadeOut)
 {//=========================================================================================================================
 	for (int i = 0; i < (int)p->blocks.size(); i++)
 	{
-		Block* b = p->blocks.get(i);
+		shared_ptr<Block> b = p->blocks.get(i);
 		if(b->setInGrid)remove(b, fadeOut, true);
 	}
 }
@@ -242,7 +242,7 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 {//=========================================================================================================================
 
 
-	ArrayList<Block*> removedBlocks;
+	ArrayList<shared_ptr<Block>> removedBlocks;
 
 	int maxHeight = 0;
 
@@ -270,7 +270,7 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 		{
 			if (get(x, y) != nullptr)
 			{
-				Block* a = get(x, y);
+				shared_ptr<Block> a = get(x, y);
 				removedBlocks.add(a);
 
 				if (y < maxHeight)
@@ -292,24 +292,24 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 
 	for (int n = 0; n < removedBlocks.size(); n++)
 	{
-		Block* a = removedBlocks.get(n);
+		shared_ptr<Block> a = removedBlocks.get(n);
 		int x = a->xGrid;
 		int y = a->yGrid;
 
 		if (y >= maxHeight)
 		{
 
-//			Piece* p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
+//			shared_ptr<Piece> p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
 //
 //			//remove other blocks and break connections, we only want one block
 //			while (p->blocks.size() > 1)
 //			{
-//				Block* b = p->blocks.get(p->blocks.size() - 1);
+//				shared_ptr<Block> b = p->blocks.get(p->blocks.size() - 1);
 //				p->blocks.removeAt(p->blocks.size() - 1);
 //				b->breakConnectionsInPiece();
 //			}
 
-			Piece* p = putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
+			shared_ptr<Piece> p = putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
 
 			if (p != nullptr)
 			{
@@ -321,7 +321,7 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 
 				if (p->blocks.size() > 0)
 				{
-					Block* b = p->blocks.get(0);
+					shared_ptr<Block> b = p->blocks.get(0);
 					if (b != nullptr)
 					{
 						b->lastScreenX = a->lastScreenX;
@@ -345,7 +345,7 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 
 
 //=========================================================================================================================
-Piece* Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	//ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
@@ -411,7 +411,7 @@ Piece* Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x
 			//remove other blocks and break connections, we only want one block
 			while (p->blocks.size() > 1)
 			{
-				Block* b = p->blocks.get(p->blocks.size() - 1);
+				shared_ptr<Block> b = p->blocks.get(p->blocks.size() - 1);
 				p->blocks.removeAt(p->blocks.size() - 1);
 				b->breakConnectionsInPiece();
 			}
@@ -419,7 +419,7 @@ Piece* Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x
 
 		for (int i = 0; i < (int)p->blocks.size(); i++)
 		{
-			Block* b = p->blocks.get(i);
+			shared_ptr<Block> b = p->blocks.get(i);
 			b->setColor(color);
 		}
 
@@ -436,7 +436,7 @@ Piece* Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x
 
 
 //=========================================================================================================================
-Piece* Grid::dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	ArrayList<BobColor*> acceptableColors;
@@ -494,14 +494,14 @@ Piece* Grid::dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y,
 			//remove other blocks and break connections, we only want one block
 			while (p->blocks.size() > 1)
 			{
-				Block* b = p->blocks.get(p->blocks.size() - 1);
+				shared_ptr<Block> b = p->blocks.get(p->blocks.size() - 1);
 				p->blocks.removeAt(p->blocks.size() - 1);
 				b->breakConnectionsInPiece();
 			}
 
 			for (int i = 0; i < (int)p->blocks.size(); i++)
 			{
-				Block* b = p->blocks.get(i);
+				shared_ptr<Block> b = p->blocks.get(i);
 				b->setColor(color);
 			}
 		}
@@ -509,7 +509,7 @@ Piece* Grid::dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y,
 		{
 			for (int i = 0; i < (int)p->blocks.size(); i++)
 			{
-				Block* b = p->blocks.get(i);
+				shared_ptr<Block> b = p->blocks.get(i);
 
 				if(acceptableColors.contains(b->getColor())==false)
 					b->setColor(color);
@@ -528,7 +528,7 @@ Piece* Grid::dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y,
 
 
 //=========================================================================================================================
-Piece* Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 
@@ -544,19 +544,19 @@ Piece* Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, in
 
 	if (x > 0)//left
 	{
-		Block* leftBlock = get(x - 1, y);
+		shared_ptr<Block> leftBlock = get(x - 1, y);
 		if(leftBlock!=nullptr && acceptableBlockTypes.contains(leftBlock->blockType))
 			acceptableBlockTypes.remove(leftBlock->blockType);
 	}
 	if (y < getHeight() - 1)//down
 	{
-		Block* downBlock = get(x, y + 1);
+		shared_ptr<Block> downBlock = get(x, y + 1);
 		if (downBlock != nullptr && acceptableBlockTypes.contains(downBlock->blockType))
 			acceptableBlockTypes.remove(downBlock->blockType);
 	}
 	if (y > 0)//up
 	{
-		Block* upBlock = get(x, y - 1);
+		shared_ptr<Block> upBlock = get(x, y - 1);
 		if (upBlock != nullptr && acceptableBlockTypes.contains(upBlock->blockType))
 			acceptableBlockTypes.remove(upBlock->blockType);
 	}
@@ -570,7 +570,7 @@ Piece* Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, in
 		{
 			for (int i = 0; i < (int)p->blocks.size(); i++)
 			{
-				Block* b = p->blocks.get(i);
+				shared_ptr<Block> b = p->blocks.get(i);
 
 				if (acceptableBlockTypes.contains(b->blockType) == false)
 				{
@@ -585,12 +585,12 @@ Piece* Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, in
 			shared_ptr<PieceType> pieceType = getRandomPieceType(pieceTypes);
 			shared_ptr<BlockType> blockType = acceptableBlockTypes.get(getGameLogic()->getRandomIntLessThan(acceptableBlockTypes.size(), "dontPutSameBlockTypeNextToEachOtherOrReturnNull"));
 
-			p = new Piece(game, this, pieceType, blockType);
+			p = shared_ptr<Piece>(new Piece(game, this, pieceType, blockType));
 
 			//remove other blocks and break connections, we only want one block
 			while (p->blocks.size() > 1)
 			{
-				Block* b = p->blocks.get(p->blocks.size() - 1);
+				shared_ptr<Block> b = p->blocks.get(p->blocks.size() - 1);
 				p->blocks.removeAt(p->blocks.size() - 1);
 				b->breakConnectionsInPiece();
 			}
@@ -624,7 +624,7 @@ void Grid::removeAndDestroyAllBlocksInGrid()
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 
 			if (b != nullptr)
 			{
@@ -641,10 +641,10 @@ void Grid::removeAndDestroyAllBlocksInGrid()
 
 
 //=========================================================================================================================
-Piece* Grid::putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
-	Piece* p = nullptr;
+	shared_ptr<Piece> p = nullptr;
 	if (getGameType()->stackDontPutSameColorNextToEachOther)
 	{
 		p = dontPutSameColorNextToEachOtherOrReturnNull(p, x, y, pieceTypes, blockTypes);
@@ -665,7 +665,7 @@ Piece* Grid::putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<
 		//remove other blocks and break connections, we only want one block
 		while (p->blocks.size() > 1)
 		{
-			Block* b = p->blocks.get(p->blocks.size() - 1);
+			shared_ptr<Block> b = p->blocks.get(p->blocks.size() - 1);
 			p->blocks.removeAt(p->blocks.size() - 1);
 			b->breakConnectionsInPiece();
 		}
@@ -723,14 +723,14 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 
 
 	//get old blocks and remove them
-	ArrayList<Block*> blockList;
+	ArrayList<shared_ptr<Block>> blockList;
 	for (int y = 0; y < getHeight(); y++)
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
 			if (contains(x, y))//TODO redundant but trying to find all bad accesses
 			{
-				Block* b = remove(x, y, false, true);
+				shared_ptr<Block> b = remove(x, y, false, true);
 				if (b != nullptr && blockList.contains(b) == false)
 				{
 					blockList.add(b);
@@ -763,8 +763,8 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 
 		if (get(x, y) == nullptr)
 		{
-			//Piece* p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
-			Piece* p = putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
+			//shared_ptr<Piece> p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
+			shared_ptr<Piece> p = putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
 			if(p!=nullptr)i += (int)p->blocks.size()-1;//-1 because we already increment i in the loop
 		}
 	}
@@ -775,10 +775,10 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b != nullptr && blockList.size() > 0)
 			{
-				Block* a = blockList.get(0);
+				shared_ptr<Block> a = blockList.get(0);
 				blockList.removeAt(0);
 
 				b->lastScreenX = a->lastScreenX;
@@ -841,8 +841,8 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 			}
 			else
 			{
-				//Piece* p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
-				Piece* p = putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
+				//shared_ptr<Piece> p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
+				shared_ptr<Piece> p = putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
 				if(p!=nullptr)blocksPlaced += (int)p->blocks.size();
 			}
 		}
@@ -859,7 +859,7 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 		{
 			if (get(x, y) != nullptr)
 			{
-				//Block* b =
+				//shared_ptr<Block> b =
                 remove(x, y, false, true);
 
 				blocksPlaced--;
@@ -873,7 +873,7 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 
 
 //=========================================================================================================================
-bool Grid::scrollUpStack(Piece* cursorPiece, int amt)
+bool Grid::scrollUpStack(shared_ptr<Piece> cursorPiece, int amt)
 {//=========================================================================================================================
 
 
@@ -885,7 +885,7 @@ bool Grid::scrollUpStack(Piece* cursorPiece, int amt)
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b != nullptr)
 			{
 				b->lastScreenY = b->getScreenY();
@@ -923,7 +923,7 @@ bool Grid::scrollUpStack(Piece* cursorPiece, int amt)
 			{
 				if (contains(x, y + 1))//TODO redundant but trying to find all bad accesses
 				{
-					Block* b = remove(x, y + 1, false, false);
+					shared_ptr<Block> b = remove(x, y + 1, false, false);
 					if (b != nullptr)
 					{
 						add(x, y, b);
@@ -944,8 +944,8 @@ bool Grid::scrollUpStack(Piece* cursorPiece, int amt)
 			int y = getHeight() - 1;
 			for (int x = 0; x < getWidth(); x++)
 			{
-				//Piece* p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
-				//Piece* p =
+				//shared_ptr<Piece> p = getRandomPiece(playingFieldPieceTypes, playingFieldBlockTypes);
+				//shared_ptr<Piece> p =
                 putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
 			}
 		}
@@ -956,14 +956,14 @@ bool Grid::scrollUpStack(Piece* cursorPiece, int amt)
 
 
 //=========================================================================================================================
-Piece* Grid::putGarbageBlock(int x, int y)
+shared_ptr<Piece> Grid::putGarbageBlock(int x, int y)
 {//=========================================================================================================================
 
 	ArrayList<shared_ptr<BlockType>> garbageBlockTypes = getGameType()->getGarbageBlockTypes(getGameLogic()->getCurrentDifficulty());
 	ArrayList<shared_ptr<PieceType> > garbagePieceTypes = getGameType()->getGarbagePieceTypes(getGameLogic()->getCurrentDifficulty());
 
-	//Piece* p = getRandomPiece(garbagePieceTypes, garbageBlockTypes);
-	Piece* p = putOneBlockPieceInGridCheckingForFillRules(x, y, garbagePieceTypes, garbageBlockTypes);
+	//shared_ptr<Piece> p = getRandomPiece(garbagePieceTypes, garbageBlockTypes);
+	shared_ptr<Piece> p = putOneBlockPieceInGridCheckingForFillRules(x, y, garbagePieceTypes, garbageBlockTypes);
 
 	return p;
 }
@@ -975,13 +975,13 @@ void Grid::makeGarbageRowFromCeiling()
 	int y = 0;// + GameLogic::aboveGridBuffer;
 	for (int x = 0; x < getWidth(); x++)
 	{
-		Piece* p = putGarbageBlock(x, y);
+		shared_ptr<Piece> p = putGarbageBlock(x, y);
 
 		if (p != nullptr)
 		{
 			for (int i = 0; i < p->getNumBlocksInCurrentRotation() && i < p->blocks.size(); i++)
 			{
-				Block* b = p->blocks.get(i);
+				shared_ptr<Block> b = p->blocks.get(i);
 
 				b->lastScreenX = getXInFBO() + (b->xGrid) * cellW();
 				b->lastScreenY = getYInFBO() + b->yInPiece*cellH();
@@ -1001,7 +1001,7 @@ void Grid::moveAllRowsUpOne()
 	{
 		if (contains(x,0))
 		{
-			Block* b = get(x, 0);
+			shared_ptr<Block> b = get(x, 0);
 			remove(b, true, true);
 		}
 	}
@@ -1013,7 +1013,7 @@ void Grid::moveAllRowsUpOne()
 		{
 			if (contains(x,y+1))
 			{
-				Block* b = remove(x, y + 1, false, false);
+				shared_ptr<Block> b = remove(x, y + 1, false, false);
 				add(x, y, b);
 			}
 		}
@@ -1098,11 +1098,11 @@ void Grid::makeGarbageRowFromFloor()
 
 
 //=========================================================================================================================
-void Grid::cursorSwapBetweenTwoBlocksHorizontal(Piece* cursor)
+void Grid::cursorSwapBetweenTwoBlocksHorizontal(shared_ptr<Piece> cursor)
 {//=========================================================================================================================
 
-	Block* a = get(cursor->xGrid, cursor->yGrid);
-	Block* b = get(cursor->xGrid + 1, cursor->yGrid);
+	shared_ptr<Block> a = get(cursor->xGrid, cursor->yGrid);
+	shared_ptr<Block> b = get(cursor->xGrid + 1, cursor->yGrid);
 
 	if (a != nullptr && a->interpolateSwappingWithX == 0 && a->flashingToBeRemoved == false)
 	{
@@ -1127,11 +1127,11 @@ void Grid::cursorSwapBetweenTwoBlocksHorizontal(Piece* cursor)
 	//		add(currentPiece.x+1,currentPiece.y,a);
 }
 //=========================================================================================================================
-void Grid::cursorSwapBetweenTwoBlocksVertical(Piece* cursor)
+void Grid::cursorSwapBetweenTwoBlocksVertical(shared_ptr<Piece> cursor)
 {//=========================================================================================================================
 
-	Block* a = get(cursor->xGrid, cursor->yGrid);
-	Block* b = get(cursor->xGrid, cursor->yGrid+1);
+	shared_ptr<Block> a = get(cursor->xGrid, cursor->yGrid);
+	shared_ptr<Block> b = get(cursor->xGrid, cursor->yGrid+1);
 
 	if (a != nullptr && a->interpolateSwappingWithY == 0 && a->flashingToBeRemoved == false)
 	{
@@ -1151,12 +1151,12 @@ void Grid::cursorSwapBetweenTwoBlocksVertical(Piece* cursor)
 }
 
 //=========================================================================================================================
-void Grid::cursorSwapBetweenThreeBlocksHorizontal(Piece* cursor, MovementType rotation)
+void Grid::cursorSwapBetweenThreeBlocksHorizontal(shared_ptr<Piece> cursor, MovementType rotation)
 {//=========================================================================================================================
 
-	Block* a = get(cursor->xGrid - 1, cursor->yGrid);
-	Block* b = get(cursor->xGrid, cursor->yGrid);
-	Block* c = get(cursor->xGrid + 1, cursor->yGrid);
+	shared_ptr<Block> a = get(cursor->xGrid - 1, cursor->yGrid);
+	shared_ptr<Block> b = get(cursor->xGrid, cursor->yGrid);
+	shared_ptr<Block> c = get(cursor->xGrid + 1, cursor->yGrid);
 
 	if (rotation == MovementType::ROTATE_CLOCKWISE)
 	{
@@ -1219,12 +1219,12 @@ void Grid::cursorSwapBetweenThreeBlocksHorizontal(Piece* cursor, MovementType ro
 	//		add(currentPiece.x+1,currentPiece.y,a);
 }
 //=========================================================================================================================
-void Grid::cursorSwapBetweenThreeBlocksVertical(Piece* cursor, MovementType rotation)
+void Grid::cursorSwapBetweenThreeBlocksVertical(shared_ptr<Piece> cursor, MovementType rotation)
 {//=========================================================================================================================
 
-	Block* a = get(cursor->xGrid, cursor->yGrid - 1);
-	Block* b = get(cursor->xGrid, cursor->yGrid);
-	Block* c = get(cursor->xGrid, cursor->yGrid + 1);
+	shared_ptr<Block> a = get(cursor->xGrid, cursor->yGrid - 1);
+	shared_ptr<Block> b = get(cursor->xGrid, cursor->yGrid);
+	shared_ptr<Block> c = get(cursor->xGrid, cursor->yGrid + 1);
 
 	if (rotation == MovementType::ROTATE_CLOCKWISE)
 	{
@@ -1282,14 +1282,14 @@ void Grid::cursorSwapBetweenThreeBlocksVertical(Piece* cursor, MovementType rota
 }
 
 //=========================================================================================================================
-void Grid::cursorSwapHoldingBlockWithGrid(Piece* cursor)
+void Grid::cursorSwapHoldingBlockWithGrid(shared_ptr<Piece> cursor)
 {//=========================================================================================================================
 
 
 	int x = cursor->xGrid;
 	int y = cursor->yGrid;
 
-	Block* gridBlock = get(x, y);
+	shared_ptr<Block> gridBlock = get(x, y);
 
 	if (gridBlock != nullptr && gridBlock->flashingToBeRemoved == true)
 	{
@@ -1297,7 +1297,7 @@ void Grid::cursorSwapHoldingBlockWithGrid(Piece* cursor)
 	}
 
 
-	Block* heldBlock = cursor->holdingBlock;
+	shared_ptr<Block> heldBlock = cursor->holdingBlock;
 	cursor->holdingBlock = gridBlock;
 
 	if (gridBlock != nullptr)
@@ -1313,13 +1313,13 @@ void Grid::cursorSwapHoldingBlockWithGrid(Piece* cursor)
 
 
 //=========================================================================================================================
-void Grid::cursorRotateBlocks(Piece* cursor, MovementType rotation)
+void Grid::cursorRotateBlocks(shared_ptr<Piece> cursor, MovementType rotation)
 {//=========================================================================================================================
 
-	Block* a = get(cursor->xGrid, cursor->yGrid);
-	Block* b = get(cursor->xGrid + 1, cursor->yGrid);
-	Block* c = get(cursor->xGrid, cursor->yGrid + 1);
-	Block* d = get(cursor->xGrid + 1, cursor->yGrid + 1);
+	shared_ptr<Block> a = get(cursor->xGrid, cursor->yGrid);
+	shared_ptr<Block> b = get(cursor->xGrid + 1, cursor->yGrid);
+	shared_ptr<Block> c = get(cursor->xGrid, cursor->yGrid + 1);
+	shared_ptr<Block> d = get(cursor->xGrid + 1, cursor->yGrid + 1);
 
 	if (a != nullptr && a->flashingToBeRemoved == true)
 	{
@@ -1377,12 +1377,12 @@ bool Grid::continueSwappingBlocks()
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* a = get(x, y);
+			shared_ptr<Block> a = get(x, y);
 			if (a != nullptr)
 			{
 				if (a->interpolateSwappingWithX != 0)
 				{
-					Block* b = get(x + a->interpolateSwappingWithX, y);
+					shared_ptr<Block> b = get(x + a->interpolateSwappingWithX, y);
 
 					swappingAny = true;
 
@@ -1421,7 +1421,7 @@ bool Grid::continueSwappingBlocks()
 
 				if (a->interpolateSwappingWithY != 0)
 				{
-					Block* b = get(x, y + a->interpolateSwappingWithY);
+					shared_ptr<Block> b = get(x, y + a->interpolateSwappingWithY);
 
 					swappingAny = true;
 
@@ -1693,7 +1693,7 @@ void Grid::wigglePlayingField()
 
 
 //=========================================================================================================================
-void Grid::add(int x, int y, Block* b)
+void Grid::add(int x, int y, shared_ptr<Block> b)
 {//=========================================================================================================================
 	if (b == nullptr || b == nullBlock)
 	{
@@ -1790,7 +1790,7 @@ bool Grid::contains(int index)
 
 
 //=========================================================================================================================
-Block* Grid::get(int x, int y)
+shared_ptr<Block> Grid::get(int x, int y)
 {//=========================================================================================================================
 
 	if (x < 0 || y < 0)
@@ -1810,10 +1810,10 @@ Block* Grid::get(int x, int y)
 	//if (contains(x,y))
 	{
 #ifdef blocksHashMap
-			Block* b = blocks.get(y * getWidth() + x);
+			shared_ptr<Block> b = blocks.get(y * getWidth() + x);
 			return b;
 #else
-		Block* b = blocks.get(y * getWidth() + x);
+		shared_ptr<Block> b = blocks.get(y * getWidth() + x);
 		if (b == nullBlock)return nullptr;
 		return b;
 #endif
@@ -1826,7 +1826,7 @@ Block* Grid::get(int x, int y)
 
 
 //=========================================================================================================================
-Block* Grid::remove(int x, int y, bool fadeOut, bool breakConnections)
+shared_ptr<Block> Grid::remove(int x, int y, bool fadeOut, bool breakConnections)
 {//=========================================================================================================================
 
 	//Debug.log("remove("+x+","+y+","+fadeOut+","+breakConnections+")");
@@ -1846,7 +1846,7 @@ Block* Grid::remove(int x, int y, bool fadeOut, bool breakConnections)
 		}
 		else
 		{
-			Block* b = blocks.get(y * getWidth() + x);
+			shared_ptr<Block> b = blocks.get(y * getWidth() + x);
 			blocks.removeAt(y * getWidth() + x);
 
 #ifdef blocksHashMap
@@ -1883,7 +1883,7 @@ Block* Grid::remove(int x, int y, bool fadeOut, bool breakConnections)
 
 
 //=========================================================================================================================
-void Grid::remove(Block* b, bool fadeOut, bool breakConnections)
+void Grid::remove(shared_ptr<Block> b, bool fadeOut, bool breakConnections)
 {//=========================================================================================================================
 
 	if (b->xGrid < 0 || b->yGrid < 0)
@@ -1892,7 +1892,7 @@ void Grid::remove(Block* b, bool fadeOut, bool breakConnections)
 		return;
 	}
 
-	Block* c = remove(b->xGrid, b->yGrid, fadeOut, breakConnections);
+	shared_ptr<Block> c = remove(b->xGrid, b->yGrid, fadeOut, breakConnections);
 
 	if (c == nullptr)
 	{
@@ -1909,7 +1909,7 @@ void Grid::remove(Block* b, bool fadeOut, bool breakConnections)
 
 
 //=========================================================================================================================
-void Grid::moveToAndRemoveAndFadeOut(Block* b, int x, int y)
+void Grid::moveToAndRemoveAndFadeOut(shared_ptr<Block> b, int x, int y)
 {//=========================================================================================================================
 	b->lastScreenX = b->getScreenX();
 	b->lastScreenY = b->getScreenY();
@@ -1937,15 +1937,15 @@ bool Grid::checkLine(int y)
 
 
 //=========================================================================================================================
-ArrayList<Piece*> Grid::getArrayOfPiecesOnGrid()
+ArrayList<shared_ptr<Piece>> Grid::getArrayOfPiecesOnGrid()
 {//=========================================================================================================================
-	ArrayList<Piece*> piecesOnGrid;
+	ArrayList<shared_ptr<Piece>> piecesOnGrid;
 
 	for (int y = 0; y < getHeight(); y++)
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b != nullptr && b->piece != nullptr && piecesOnGrid.contains(b->piece) == false)
 			{
 				piecesOnGrid.add(b->piece);
@@ -1958,10 +1958,10 @@ ArrayList<Piece*> Grid::getArrayOfPiecesOnGrid()
 
 
 //=========================================================================================================================
-ArrayList<Block*> Grid::checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
+ArrayList<shared_ptr<Block>> Grid::checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
-	ArrayList<Block*> blocksOnFullLines;
+	ArrayList<shared_ptr<Block>> blocksOnFullLines;
 
 
 	for (int y = getHeight() - 1; y >= 0; y--) //this was y>0 but i think its wrong im going to put it to y>=0
@@ -1970,7 +1970,7 @@ ArrayList<Block*> Grid::checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes
 
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b == nullptr || (ignoreTypes.size() > 0 && ignoreTypes.contains(b->blockType)))
 			{
 				lineFull = false;
@@ -1983,7 +1983,7 @@ ArrayList<Block*> Grid::checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes
 		{
 			for (int x = 0; x < getWidth(); x++)
 			{
-				Block* b = get(x, y);
+				shared_ptr<Block> b = get(x, y);
 				if (blocksOnFullLines.contains(b) == false)
 				{
 					blocksOnFullLines.add(b);
@@ -1996,10 +1996,10 @@ ArrayList<Block*> Grid::checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes
 					{
 						for (int c = 0; c < (int)b->connectedBlocksByPiece.size(); c++)
 						{
-							Block* connected = b->connectedBlocksByPiece.get(c);
+							shared_ptr<Block> connected = b->connectedBlocksByPiece.get(c);
 							for (int cx = 0; cx < getWidth(); cx++)
 							{
-								Block* otherLineBlock = get(cx, connected->yGrid);
+								shared_ptr<Block> otherLineBlock = get(cx, connected->yGrid);
 								if (otherLineBlock != nullptr && blocksOnFullLines.contains(otherLineBlock) == false)
 								{
 									blocksOnFullLines.add(otherLineBlock);
@@ -2021,7 +2021,7 @@ ArrayList<Block*> Grid::checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes
 
 
 //=========================================================================================================================
-bool Grid::doBlocksMatchColor(Block* a, Block* b, ArrayList<shared_ptr<BlockType>> &ignoreTypes)
+bool Grid::doBlocksMatchColor(shared_ptr<Block> a, shared_ptr<Block> b, ArrayList<shared_ptr<BlockType>> &ignoreTypes)
 {//=========================================================================================================================
 
 	if (a == nullptr || b == nullptr)
@@ -2069,16 +2069,16 @@ bool Grid::doBlocksMatchColor(Block* a, Block* b, ArrayList<shared_ptr<BlockType
 
 
 //=========================================================================================================================
-ArrayList<Block*> Grid::getConnectedBlocksUpDownLeftRight(Block* b)
+ArrayList<shared_ptr<Block>> Grid::getConnectedBlocksUpDownLeftRight(shared_ptr<Block> b)
 {//=========================================================================================================================
 
-	ArrayList<Block*> connectedBlocks;
+	ArrayList<shared_ptr<Block>> connectedBlocks;
 
 
 	int xOffset = 1;
 	if (b->xGrid + xOffset < getWidth())
 	{
-		Block* n = get(b->xGrid + xOffset, b->yGrid);
+		shared_ptr<Block> n = get(b->xGrid + xOffset, b->yGrid);
 		if (n != nullptr)
 		{
 			connectedBlocks.add(n);
@@ -2087,7 +2087,7 @@ ArrayList<Block*> Grid::getConnectedBlocksUpDownLeftRight(Block* b)
 
 	if (b->xGrid - xOffset >= 0)
 	{
-		Block* n = get(b->xGrid - xOffset, b->yGrid);
+		shared_ptr<Block> n = get(b->xGrid - xOffset, b->yGrid);
 		if (n != nullptr)
 		{
 			connectedBlocks.add(n);
@@ -2098,7 +2098,7 @@ ArrayList<Block*> Grid::getConnectedBlocksUpDownLeftRight(Block* b)
 	int yOffset = 1;
 	if (b->yGrid + yOffset < getHeight())
 	{
-		Block* n = get(b->xGrid, b->yGrid + yOffset);
+		shared_ptr<Block> n = get(b->xGrid, b->yGrid + yOffset);
 		if (n != nullptr)
 		{
 			connectedBlocks.add(n);
@@ -2107,7 +2107,7 @@ ArrayList<Block*> Grid::getConnectedBlocksUpDownLeftRight(Block* b)
 
 	if (b->yGrid - yOffset >= 0)
 	{
-		Block* n = get(b->xGrid, b->yGrid - yOffset);
+		shared_ptr<Block> n = get(b->xGrid, b->yGrid - yOffset);
 		if (n != nullptr)
 		{
 			connectedBlocks.add(n);
@@ -2121,10 +2121,10 @@ ArrayList<Block*> Grid::getConnectedBlocksUpDownLeftRight(Block* b)
 
 
 //=========================================================================================================================
-ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<BlockType>> &ignoreUnlessTouchingBreakerBlockTypes, ArrayList<shared_ptr<BlockType>> &breakerBlockTypes)
+ArrayList<shared_ptr<Block>> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<BlockType>> &ignoreUnlessTouchingBreakerBlockTypes, ArrayList<shared_ptr<BlockType>> &breakerBlockTypes)
 {//=========================================================================================================================
 
-	ArrayList<Block*> breakBlocks;
+	ArrayList<shared_ptr<Block>> breakBlocks;
 
 
 	//check grid for breaker blocks
@@ -2136,16 +2136,16 @@ ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<Block
 	//	{
 	//		for (int n = 0; n < breakBlocks.size(); n++)
 	//		{
-	//			Block* b = breakBlocks.get(n);
+	//			shared_ptr<Block> b = breakBlocks.get(n);
 	//
 	//			if (breakerBlockTypes.contains(b->blockType))
 	//			{
 	//				//take out any counter pieces it is touching as well
-	//				ArrayList<Block*> surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
+	//				ArrayList<shared_ptr<Block>> surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
 	//
 	//				for (int i = 0; i < surroundingBlocks.size(); i++)
 	//				{
-	//					Block* d = surroundingBlocks.get(i);
+	//					shared_ptr<Block> d = surroundingBlocks.get(i);
 	//					if (ignoreUnlessTouchingBreakerBlockTypes.contains(d->blockType))
 	//					{
 	//						if (breakBlocks.contains(d) == false)
@@ -2167,9 +2167,9 @@ ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<Block
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			ArrayList<Block*> connected;
+			ArrayList<shared_ptr<Block>> connected;
 
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 
 			if (b != nullptr && breakerBlockTypes.contains(b->blockType))
 			{
@@ -2202,7 +2202,7 @@ ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<Block
 					{
 						for (int i = 0; i < connected.size(); i++)
 						{
-							Block* c = connected.get(i);
+							shared_ptr<Block> c = connected.get(i);
 							if (breakBlocks.contains(c) == false)
 							{
 								breakBlocks.add(c);
@@ -2210,11 +2210,11 @@ ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<Block
 						}
 
 						//take out any counter pieces it is touching as well
-						ArrayList<Block*> surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
+						ArrayList<shared_ptr<Block>> surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
 
 						for (int i = 0; i < surroundingBlocks.size(); i++)
 						{
-							Block* d = surroundingBlocks.get(i);
+							shared_ptr<Block> d = surroundingBlocks.get(i);
 							if (ignoreUnlessTouchingBreakerBlockTypes.contains(d->blockType))
 							{
 								if (breakBlocks.contains(d) == false)
@@ -2241,7 +2241,7 @@ ArrayList<Block*> Grid::checkBreakerBlocks(int toRow, ArrayList<shared_ptr<Block
 }
 
 //=========================================================================================================================
-void Grid::checkRecursiveConnectedRowOrColumn(ArrayList<Block*> &connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
+void Grid::checkRecursiveConnectedRowOrColumn(ArrayList<shared_ptr<Block>> &connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
 	//TODO: refactor this like setColorConnections
@@ -2249,9 +2249,9 @@ void Grid::checkRecursiveConnectedRowOrColumn(ArrayList<Block*> &connectedBlocks
 	{
 		for (int x = startX; x < endX; x++)
 		{
-			ArrayList<Block*> connectedToThisBlock;
+			ArrayList<shared_ptr<Block>> connectedToThisBlock;
 
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 
 			if (b != nullptr && ignoreTypes.contains(b->blockType) == false)
 			{
@@ -2278,7 +2278,7 @@ void Grid::checkRecursiveConnectedRowOrColumn(ArrayList<Block*> &connectedBlocks
 					{
 						for (int i = 0; i < connectedToThisBlock.size(); i++)
 						{
-							Block* c = connectedToThisBlock.get(i);
+							shared_ptr<Block> c = connectedToThisBlock.get(i);
 							if (connectedBlocks.contains(c) == false)
 							{
 								connectedBlocks.add(c);
@@ -2323,7 +2323,7 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b != nullptr)// && (ignoreTypes->isEmpty() || ignoreTypes->contains(b->blockType) == false))
 			{
 				b->connectedBlocksByColor.clear();
@@ -2335,9 +2335,9 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			ArrayList<Block*> connectedBlocksByColorList;
+			ArrayList<shared_ptr<Block>> connectedBlocksByColorList;
 
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b != nullptr && (ignoreTypes.isEmpty() || ignoreTypes.contains(b->blockType) == false))
 			{
 
@@ -2350,7 +2350,7 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 				//{
 					for (int i = 0; i < connectedBlocksByColorList.size(); i++)
 					{
-						Block* c = connectedBlocksByColorList.get(i);
+						shared_ptr<Block> c = connectedBlocksByColorList.get(i);
 						if (b != c && b->connectedBlocksByColor.contains(c) == false)
 						{
 							b->connectedBlocksByColor.add(c);
@@ -2367,9 +2367,9 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 //	{
 //		for (int x = 0; x < getWidth(); x++)
 //		{
-//			ArrayList<Block*>* connectedBlocksList = new ArrayList<Block *>();
+//			ArrayList<shared_ptr<Block>>* connectedBlocksList = new ArrayList<shared_ptr<Block> >();
 //
-//			Block* b = get(x, y);
+//			shared_ptr<Block> b = get(x, y);
 //			if (b != nullptr && (ignoreTypes->isEmpty() || ignoreTypes->contains(b->blockType) == false))
 //			{
 //				b->connectedBlocksByColor.clear();
@@ -2383,7 +2383,7 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 //					int previousSize = connectedBlocksList->size();
 //					for (int i = 0; i < previousSize; i++)
 //					{
-//						Block *connectedBlock = connectedBlocksList->get(i);
+//						shared_ptr<Block> connectedBlock = connectedBlocksList->get(i);
 //						addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowOrColumnAtLeastAmount(connectedBlock, connectedBlocksList, 2, 0, getWidth(), 0, getHeight(), ignoreTypes, nullptr);
 //						if (connectedBlocksList->size() > previousSize)
 //						{
@@ -2397,7 +2397,7 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 //					{
 //						for (int i = 0; i < connectedBlocksList->size(); i++)
 //						{
-//							Block* c = connectedBlocksList->get(i);
+//							shared_ptr<Block> c = connectedBlocksList->get(i);
 //							if (b != c && b->connectedBlocksByColor.contains(b) == false)
 //							{
 //								b->connectedBlocksByColor.add(c);
@@ -2414,19 +2414,19 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 
 
 //=========================================================================================================================
-void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
+void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
    //TODO: find everything using this and try to refactor this like setColorConnections
 	{
-		ArrayList<Block*> row;
+		ArrayList<shared_ptr<Block>> row;
 		row.add(b);
 
 
 		//check all blocks starting from this block to the right
 		for (int xOffset = 1; b->xGrid + xOffset < endX; xOffset++) 
 		{
-			Block* n = get(b->xGrid + xOffset, b->yGrid);
+			shared_ptr<Block> n = get(b->xGrid + xOffset, b->yGrid);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				row.add(n);
@@ -2440,7 +2440,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(
 		//check all blocks starting from this block to the left
 		for (int xOffset = 1; b->xGrid - xOffset >= startX; xOffset++) 
 		{
-			Block* n = get(b->xGrid - xOffset, b->yGrid);
+			shared_ptr<Block> n = get(b->xGrid - xOffset, b->yGrid);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				row.add(n);
@@ -2471,7 +2471,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(
 
 			for (int i = 0; i < row.size(); i++)
 			{
-				Block* c = row.get(i);
+				shared_ptr<Block> c = row.get(i);
 				if (connectedBlocks.contains(c) == false)
 				{
 					connectedBlocks.add(c);
@@ -2486,19 +2486,19 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(
 }
 
 //=========================================================================================================================
-void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
+void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
  //TODO: find everything using this and try to refactor this like setColorConnections
 	
 	{
-		ArrayList<Block*> column;
+		ArrayList<shared_ptr<Block>> column;
 		column.add(b);
 
 
 		for (int yOffset = 1; b->yGrid + yOffset < endY; yOffset++) //check all blocks starting from this block to the up
 		{
-			Block* n = get(b->xGrid, b->yGrid + yOffset);
+			shared_ptr<Block> n = get(b->xGrid, b->yGrid + yOffset);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				column.add(n);
@@ -2511,7 +2511,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmou
 
 		for (int yOffset = 1; b->yGrid - yOffset >= startY; yOffset++) //check all blocks starting from this block to the down
 		{
-			Block* n = get(b->xGrid, b->yGrid - yOffset);
+			shared_ptr<Block> n = get(b->xGrid, b->yGrid - yOffset);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				column.add(n);
@@ -2542,7 +2542,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmou
 
 			for (int i = 0; i < column.size(); i++)
 			{
-				Block* c = column.get(i);
+				shared_ptr<Block> c = column.get(i);
 				if (connectedBlocks.contains(c) == false)
 				{
 					connectedBlocks.add(c);
@@ -2554,7 +2554,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmou
 	//return *connectedBlocks;
 }
 //=========================================================================================================================
-void Grid::recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(Block* b, ArrayList<Block*> &connectedBlocksByColor, ArrayList<shared_ptr<BlockType>> &ignoreTypes)
+void Grid::recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocksByColor, ArrayList<shared_ptr<BlockType>> &ignoreTypes)
 {//=========================================================================================================================
 
 	//check up, down, left, right
@@ -2566,12 +2566,12 @@ void Grid::recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlread
 		connectedBlocksByColor.add(b);
 	}
 
-	ArrayList<Block*> udlr = getConnectedBlocksUpDownLeftRight(b);
+	ArrayList<shared_ptr<Block>> udlr = getConnectedBlocksUpDownLeftRight(b);
 
 	//check all blocks starting from this block to the right
 	for (int i = 0; i < udlr.size(); i++)
 	{
-		Block* n = udlr.get(i);
+		shared_ptr<Block> n = udlr.get(i);
 		if (doBlocksMatchColor(b, n, ignoreTypes))
 		{
 			if (connectedBlocksByColor.contains(n) == false)
@@ -2586,17 +2586,17 @@ void Grid::recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlread
 
 
 //=========================================================================================================================
-void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
+void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes)
 {//=========================================================================================================================
 
 
 	{
-		ArrayList<Block*> upLeftDownRight;
+		ArrayList<shared_ptr<Block>> upLeftDownRight;
 		upLeftDownRight.add(b);
 
 		for (int xOffset = 1, yOffset = 1; b->xGrid + xOffset < endX && b->yGrid + yOffset < endY; xOffset++ , yOffset++) //down right
 		{
-			Block* n = get(b->xGrid + xOffset, b->yGrid + yOffset);
+			shared_ptr<Block> n = get(b->xGrid + xOffset, b->yGrid + yOffset);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				upLeftDownRight.add(n);
@@ -2609,7 +2609,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmou
 
 		for (int xOffset = 1, yOffset = 1; b->xGrid - xOffset >= startX && b->yGrid - yOffset >= startY; xOffset++ , yOffset++) //up left
 		{
-			Block* n = get(b->xGrid - xOffset, b->yGrid - yOffset);
+			shared_ptr<Block> n = get(b->xGrid - xOffset, b->yGrid - yOffset);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				upLeftDownRight.add(n);
@@ -2640,7 +2640,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmou
 
 			for (int i = 0; i < upLeftDownRight.size(); i++)
 			{
-				Block* c = upLeftDownRight.get(i);
+				shared_ptr<Block> c = upLeftDownRight.get(i);
 				if (connectedBlocks.contains(c) == false)
 				{
 					connectedBlocks.add(c);
@@ -2651,13 +2651,13 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmou
 
 
 	{
-		ArrayList<Block*> downLeftUpRight;
+		ArrayList<shared_ptr<Block>> downLeftUpRight;
 		downLeftUpRight.add(b);
 
 
 		for (int xOffset = 1, yOffset = 1; b->xGrid - xOffset >= startX && b->yGrid + yOffset < endY; xOffset++ , yOffset++) //down left
 		{
-			Block* n = get(b->xGrid - xOffset, b->yGrid + yOffset);
+			shared_ptr<Block> n = get(b->xGrid - xOffset, b->yGrid + yOffset);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				downLeftUpRight.add(n);
@@ -2670,7 +2670,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmou
 
 		for (int xOffset = 1, yOffset = 1; b->xGrid + xOffset < endX && b->yGrid - yOffset >= startY; xOffset++ , yOffset++) //up right
 		{
-			Block* n = get(b->xGrid + xOffset, b->yGrid - yOffset);
+			shared_ptr<Block> n = get(b->xGrid + xOffset, b->yGrid - yOffset);
 			if (doBlocksMatchColor(b, n, ignoreTypes))
 			{
 				downLeftUpRight.add(n);
@@ -2701,7 +2701,7 @@ void Grid::addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmou
 
 			for (int i = 0; i < downLeftUpRight.size(); i++)
 			{
-				Block* c = downLeftUpRight.get(i);
+				shared_ptr<Block> c = downLeftUpRight.get(i);
 				if (connectedBlocks.contains(c) == false)
 				{
 					connectedBlocks.add(c);
@@ -2803,7 +2803,7 @@ void Grid::render()
 	{
 		for (int y = 0; y < getHeight(); y++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b != nullptr)
 			{
 				b->render(getXInFBO() + x * cellW(), getYInFBO() + (scrollPlayingFieldY / scrollBlockIncrement)*cellH() + y * cellH(), 1.0f, 1.0f, true, false);
@@ -2820,7 +2820,7 @@ void Grid::renderBlockOutlines()
 	{
 		for (int y = 0; y < getHeight(); y++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 			if (b != nullptr)
 			{
 				b->renderOutlines(getXInFBO() + x * cellW(), getYInFBO() + (scrollPlayingFieldY / scrollBlockIncrement)*cellH() + y * cellH(), 1.0f);
@@ -2951,7 +2951,7 @@ void Grid::renderTransparentOverLastRow()
 
 
 //=========================================================================================================================
-void Grid::renderGhostPiece(Piece* currentPiece)
+void Grid::renderGhostPiece(shared_ptr<Piece> currentPiece)
 {//=========================================================================================================================
 	int ghostY = currentPiece->yGrid;
 	for (int y = ghostY; y < getHeight(); y++)
@@ -2980,7 +2980,7 @@ void Grid::renderGhostPiece(Piece* currentPiece)
 
 
 //=========================================================================================================================
-bool Grid::isWithinBounds(Piece* piece, int x, int y)
+bool Grid::isWithinBounds(shared_ptr<Piece> piece, int x, int y)
 {//=========================================================================================================================
 
 	for (int b = 0; b < (int)piece->getNumBlocksInCurrentRotation() && b < piece->blocks.size(); b++)
@@ -2996,14 +2996,14 @@ bool Grid::isWithinBounds(Piece* piece, int x, int y)
 
 
 //=========================================================================================================================
-bool Grid::isHittingLeft(Piece* piece)
+bool Grid::isHittingLeft(shared_ptr<Piece> piece)
 {//=========================================================================================================================
 	return isHittingLeft(piece, piece->xGrid, piece->yGrid);
 }
 
 
 //=========================================================================================================================
-bool Grid::isHittingLeft(Piece* piece, int x, int y)
+bool Grid::isHittingLeft(shared_ptr<Piece> piece, int x, int y)
 {//=========================================================================================================================
 
 	if (x < 0)
@@ -3034,14 +3034,14 @@ bool Grid::isHittingLeft(Piece* piece, int x, int y)
 
 
 //=========================================================================================================================
-bool Grid::isHittingRight(Piece* piece)
+bool Grid::isHittingRight(shared_ptr<Piece> piece)
 {//=========================================================================================================================
 	return isHittingRight(piece, piece->xGrid, piece->yGrid);
 }
 
 
 //=========================================================================================================================
-bool Grid::isHittingRight(Piece* piece, int x, int y)
+bool Grid::isHittingRight(shared_ptr<Piece> piece, int x, int y)
 {//=========================================================================================================================
 
 	if (x >= getWidth())
@@ -3071,14 +3071,14 @@ bool Grid::isHittingRight(Piece* piece, int x, int y)
 
 
 //=========================================================================================================================
-bool Grid::doesPieceFit(Piece* piece)
+bool Grid::doesPieceFit(shared_ptr<Piece> piece)
 {//=========================================================================================================================
 	return doesPieceFit(piece, piece->xGrid, piece->yGrid);
 }
 
 
 //=========================================================================================================================
-bool Grid::doesPieceFit(Piece* piece, int x, int y)
+bool Grid::doesPieceFit(shared_ptr<Piece> piece, int x, int y)
 {//=========================================================================================================================
 
 
@@ -3106,14 +3106,14 @@ bool Grid::doesPieceFit(Piece* piece, int x, int y)
 
 
 //=========================================================================================================================
-void Grid::setPiece(Piece* piece)
+void Grid::setPiece(shared_ptr<Piece> piece)
 {//=========================================================================================================================
 	setPiece(piece, piece->xGrid, piece->yGrid);
 }
 
 
 //=========================================================================================================================
-void Grid::setPiece(Piece* piece, int x, int y)
+void Grid::setPiece(shared_ptr<Piece> piece, int x, int y)
 {//=========================================================================================================================
 	if (isWithinBounds(piece, x, y) == false)
 	{
@@ -3126,7 +3126,7 @@ void Grid::setPiece(Piece* piece, int x, int y)
 	{
 		for (int i = 0; i < piece->getNumBlocksInCurrentRotation() && i < piece->blocks.size(); i++)
 		{
-			Block* b = piece->blocks.get(i);
+			shared_ptr<Block> b = piece->blocks.get(i);
 			b->fadingOut = true;
 			if (getGameLogic()->fadingOutBlocks.contains(b) == false)
 			{
@@ -3142,7 +3142,7 @@ void Grid::setPiece(Piece* piece, int x, int y)
 	//set blocks in the grid
 	for (int i = 0; i < piece->getNumBlocksInCurrentRotation() && i < piece->blocks.size(); i++)
 	{
-		Block* b = piece->blocks.get(i);
+		shared_ptr<Block> b = piece->blocks.get(i);
 
 
 		add(x + b->xInPiece, y + b->yInPiece, b);
@@ -3154,14 +3154,14 @@ void Grid::setPiece(Piece* piece, int x, int y)
 	//if it is a block which changes other blocks into something else do that
 	for (int i = 0; i < piece->getNumBlocksInCurrentRotation() && i < piece->blocks.size(); i++)
 	{
-		Block* b = piece->blocks.get(i);
+		shared_ptr<Block> b = piece->blocks.get(i);
 
 		if (b->blockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size() > 0)
 		{
-			ArrayList<Block*> surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
+			ArrayList<shared_ptr<Block>> surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
 			for (int k = 0; k < surroundingBlocks.size(); k++)
 			{
-				Block* touchingBlock = surroundingBlocks.get(k);
+				shared_ptr<Block> touchingBlock = surroundingBlocks.get(k);
 
 				//don't affect blocks in the piece we just placed
 				if (piece->blocks.contains(touchingBlock) == false)
@@ -3179,7 +3179,7 @@ void Grid::setPiece(Piece* piece, int x, int y)
 			}
 
 			//fade out and remove this block from the grid (which we just added)
-			//Block *r = 
+			//shared_ptr<Block> r = 
 			remove(x + b->xInPiece, y + b->yInPiece, true, false);
 
 			piece->blocks.remove(b);
@@ -3215,7 +3215,7 @@ bool Grid::moveDownLinesAboveBlankLinesOneLine()
 		{
 			for (int x = 0; x < getWidth(); x++)
 			{
-				Block* b = get(x, y - 1);
+				shared_ptr<Block> b = get(x, y - 1);
 				if (b != nullptr)
 				{
 					remove(x, y - 1, false, false);
@@ -3241,7 +3241,7 @@ bool Grid::moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<shared_pt
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 
 			if (b != nullptr && (ignoreTypes.isEmpty() || ignoreTypes.contains(b->blockType) == false))
 			{
@@ -3251,10 +3251,10 @@ bool Grid::moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<shared_pt
 				}
 
 
-				Block* c = nullptr;
+				shared_ptr<Block> c = nullptr;
 				for (int i = 0; i < (int)b->connectedBlocksByPiece.size(); i++)
 				{
-					Block* temp = b->connectedBlocksByPiece.get(i);
+					shared_ptr<Block> temp = b->connectedBlocksByPiece.get(i);
 					if (blocks.containsValue(temp) == true)
 					{
 						c = temp;
@@ -3277,7 +3277,7 @@ bool Grid::moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<shared_pt
 				{
 					for (int i = 0; i < (int)b->connectedBlocksByPiece.size(); i++)
 					{
-						Block* temp = b->connectedBlocksByPiece.get(i);
+						shared_ptr<Block> temp = b->connectedBlocksByPiece.get(i);
 						if (blocks.containsValue(temp) == true && c != b)
 						{
 							c = temp;
@@ -3339,7 +3339,7 @@ bool Grid::moveDownAnyBlocksAboveBlankSpacesOneLine(ArrayList<shared_ptr<BlockTy
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 
 			if (b != nullptr && (ignoreTypes.isEmpty() || ignoreTypes.contains(b->blockType) == false))
 			{
@@ -3396,7 +3396,7 @@ void Grid::setRandomMatrixBlockColors()
 }
 
 //=========================================================================================================================
-void Grid::setRandomWholePieceColors(bool grayscale, Piece* currentPiece, ArrayList<Piece*> &nextPieces)
+void Grid::setRandomWholePieceColors(bool grayscale, shared_ptr<Piece> currentPiece, ArrayList<shared_ptr<Piece>> &nextPieces)
 {//=========================================================================================================================
 
 	//TODO
@@ -3484,7 +3484,7 @@ void Grid::setRandomWholePieceColors(bool grayscale, Piece* currentPiece, ArrayL
 
 
 //=========================================================================================================================
-void Grid::setRandomPieceGrayscaleColors(Piece* currentPiece, ArrayList<Piece*> &nextPieces)
+void Grid::setRandomPieceGrayscaleColors(shared_ptr<Piece> currentPiece, ArrayList<shared_ptr<Piece>> &nextPieces)
 {//=========================================================================================================================
 	setRandomWholePieceColors(true, currentPiece, nextPieces);
 }
@@ -3517,16 +3517,16 @@ void Grid::doDeathSequence()
 
 	if (deadX < getWidth())
 	{
-		Piece* p = getRandomPiece();
+		shared_ptr<Piece> p = getRandomPiece();
 		for (int i = 0; i < (int)p->blocks.size(); i++)
 		{
-			Block* b = p->blocks.get(i);
+			shared_ptr<Block> b = p->blocks.get(i);
 			b->lastScreenX = getXInFBO() + (deadX + b->xInPiece) * cellW();
 			b->lastScreenY = getYInFBO() + (deadY + b->yInPiece) * cellH() + (scrollPlayingFieldY / scrollBlockIncrement)*cellH();
 		}
 
 
-		Block* d = get(deadX, deadY);
+		shared_ptr<Block> d = get(deadX, deadY);
 		if (d != nullptr)
 		{
 			removeAllBlocksOfPieceFromGrid(d->piece, true);
@@ -3668,11 +3668,11 @@ shared_ptr<PieceType> Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceType
 
 
 //=========================================================================================================================
-ArrayList<Piece*> Grid::getBagOfOneOfEachNonRandomNormalPieces()
+ArrayList<shared_ptr<Piece>> Grid::getBagOfOneOfEachNonRandomNormalPieces()
 {//=========================================================================================================================
 	ArrayList<shared_ptr<PieceType> > pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
 	ArrayList<shared_ptr<BlockType>> blockTypes = getGameType()->getNormalBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<Piece*> tempBag;
+	ArrayList<shared_ptr<Piece>> tempBag;
 	for (int i = 0; i < (int)pieceTypes.size(); i++)
 	{
 		shared_ptr<PieceType> type = pieceTypes.get(i);
@@ -3680,7 +3680,7 @@ ArrayList<Piece*> Grid::getBagOfOneOfEachNonRandomNormalPieces()
 		if (type->randomSpecialPieceChanceOneOutOf == 0 && type->frequencySpecialPieceTypeOnceEveryNPieces == 0)
 		{
 			
-			Piece* tempPiece = new Piece(getGameLogic(), this, type, blockTypes);
+			shared_ptr<Piece> tempPiece(new Piece(getGameLogic(), this, type, blockTypes));
 			tempBag.add(tempPiece);
 		}
 	}
@@ -3690,15 +3690,15 @@ ArrayList<Piece*> Grid::getBagOfOneOfEachNonRandomNormalPieces()
 
 
 //=========================================================================================================================
-Piece* Grid::getPieceFromNormalPieceRandomBag()
+shared_ptr<Piece> Grid::getPieceFromNormalPieceRandomBag()
 {//=========================================================================================================================
 
 
-	Piece* piece = nullptr;
+	shared_ptr<Piece> piece = nullptr;
 
 	if (randomBag.isEmpty())
 	{
-		ArrayList<Piece*> tempBag = getBagOfOneOfEachNonRandomNormalPieces();
+		ArrayList<shared_ptr<Piece>> tempBag = getBagOfOneOfEachNonRandomNormalPieces();
 
 		while (tempBag.size() > 0)
 		{
@@ -3719,7 +3719,7 @@ Piece* Grid::getPieceFromNormalPieceRandomBag()
 
 	if (randomBag.isEmpty())
 	{
-		ArrayList<Piece*> tempBag = getBagOfOneOfEachNonRandomNormalPieces();
+		ArrayList<shared_ptr<Piece>> tempBag = getBagOfOneOfEachNonRandomNormalPieces();
 		while (tempBag.size() > 0)
 		{
 			int i = getGameLogic()->getRandomIntLessThan(tempBag.size(),"getPieceFromNormalPieceRandomBag");
@@ -3736,10 +3736,10 @@ Piece* Grid::getPieceFromNormalPieceRandomBag()
 
 
 //=========================================================================================================================
-Piece* Grid::getRandomPiece()
+shared_ptr<Piece> Grid::getRandomPiece()
 {//=========================================================================================================================
 
-	Piece* piece = nullptr;
+	shared_ptr<Piece> piece = nullptr;
 
 	ArrayList<shared_ptr<BlockType>> blockTypes = getGameType()->getNormalBlockTypes(getGameLogic()->getCurrentDifficulty());
 
@@ -3752,7 +3752,7 @@ Piece* Grid::getRandomPiece()
 		{
 			if (pieceType != nullptr)
 			{
-				piece = new Piece(getGameLogic(), this, pieceType, blockTypes);
+				piece = shared_ptr<Piece>(new Piece(getGameLogic(), this, pieceType, blockTypes));
 			}
 			else
 			{
@@ -3766,7 +3766,7 @@ Piece* Grid::getRandomPiece()
 				pieceType = getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(pieceTypes);
 			}
 			if (pieceType == nullptr)pieceType = PieceType::emptyPieceType;
-			piece = new Piece(getGameLogic(), this, pieceType, blockTypes);
+			piece = shared_ptr<Piece>(new Piece(getGameLogic(), this, pieceType, blockTypes));
 		}
 	}
 
@@ -3776,10 +3776,10 @@ Piece* Grid::getRandomPiece()
 
 
 //=========================================================================================================================
-Piece* Grid::getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
-	Piece* piece = new Piece(getGameLogic(), this, getRandomPieceType(pieceTypes), blockTypes);
+	shared_ptr<Piece> piece(new Piece(getGameLogic(), this, getRandomPieceType(pieceTypes), blockTypes));
 	return piece;
 }
 
@@ -3923,7 +3923,7 @@ bool Grid::areAnyBlocksPopping()
 	{
 		for (int x = 0; x < getWidth(); x++)
 		{
-			Block* b = get(x, y);
+			shared_ptr<Block> b = get(x, y);
 
 			if (b != nullptr)
 			{

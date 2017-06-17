@@ -4514,7 +4514,7 @@ void CustomGameEditorControl::initPreviewGame()
 	if (currentPieceType != nullptr)p = currentPieceType;
 	if (currentBlockType != nullptr)b = currentBlockType;
 			
-	bobsGame->getPlayer1Game()->nextPieces.add(new Piece(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, p, b));
+	bobsGame->getPlayer1Game()->nextPieces.add(shared_ptr<Piece>(new Piece(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, p, b)));
 
 }
 

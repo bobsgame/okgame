@@ -316,7 +316,7 @@ Block::Block()
 }
 
 //=========================================================================================================================
-Block::Block(GameLogic* game, Grid* grid, Piece* piece, shared_ptr<BlockType> blockType)
+Block::Block(GameLogic* game, Grid* grid, shared_ptr<Piece> piece, shared_ptr<BlockType> blockType)
 {//=========================================================================================================================
 
 	this->game = game;
@@ -391,7 +391,7 @@ void Block::update()
 		{
 			fadingOut = false;
 
-			getGameLogic()->fadingOutBlocks.remove(this);
+			getGameLogic()->fadingOutBlocks.remove(shared_ptr<Block>(this));
 			return;
 		}
 	}
@@ -462,7 +462,7 @@ void Block::update()
 						grid->remove(grid->get(x, yy), true, true);
 					}
 				}
-				grid->moveToAndRemoveAndFadeOut(this, x, 0);
+				grid->moveToAndRemoveAndFadeOut(shared_ptr<Block>(this), x, 0);
 			}
 			else
 			if (direction == DOWN)
@@ -474,7 +474,7 @@ void Block::update()
 						grid->remove(grid->get(x, yy), true, true);
 					}
 				}
-				grid->moveToAndRemoveAndFadeOut(this, x, grid->getHeight() - 1);
+				grid->moveToAndRemoveAndFadeOut(shared_ptr<Block>(this), x, grid->getHeight() - 1);
 			}
 			else
 			if (direction == LEFT)
@@ -486,7 +486,7 @@ void Block::update()
 						grid->remove(grid->get(xx, y), true, true);
 					}
 				}
-				grid->moveToAndRemoveAndFadeOut(this, 0, y);
+				grid->moveToAndRemoveAndFadeOut(shared_ptr<Block>(this), 0, y);
 			}
 			else
 			if (direction == RIGHT)
@@ -498,11 +498,11 @@ void Block::update()
 						grid->remove(grid->get(xx, y), true, true);
 					}
 				}
-				grid->moveToAndRemoveAndFadeOut(this, grid->getWidth() - 1, y);
+				grid->moveToAndRemoveAndFadeOut(shared_ptr<Block>(this), grid->getWidth() - 1, y);
 			}
 			else
 			{
-				grid->remove(this, true, true);
+				grid->remove(shared_ptr<Block>(this), true, true);
 			}
 			
 			
@@ -532,15 +532,15 @@ void Block::update()
 		{
 			if (yGrid < grid->getHeight() - 1)
 			{
-				Block* a = grid->get(xGrid, yGrid + 1);
+				shared_ptr<Block> a = grid->get(xGrid, yGrid + 1);
 				if (a != nullptr && a->getColor() != nullptr && a->blockType->removeAllBlocksOfColorOnFieldBlockIsSetOn==false && a->blockType->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor == false)//dont remove other diamonds
 				{
 					for (int y = 0; y < grid->getHeight(); y++)
 					{
 						for (int x = 0; x < grid->getWidth(); x++)
 						{
-							Block* b = grid->get(x, y);
-							if (b != nullptr && b != this)
+							shared_ptr<Block> b = grid->get(x, y);
+							if (b != nullptr && b != shared_ptr<Block>(this))
 							{
 								if (b->getColor() == a->getColor())
 								{
@@ -556,7 +556,7 @@ void Block::update()
 			//i believe it is when there are multiple diamonds stacked, the top ones actually delete the bottom ones since they are the same color
 			//so i'm checking to see if the grid actually contains it, otherwise i could not have it delete diamonds above
 			//if(grid->contains(xGrid,yGrid))
-			grid->remove(this, true, true);
+			grid->remove(shared_ptr<Block>(this), true, true);
 			
 			getGameLogic()->manuallyApplyGravityWithoutChainChecking();//TODO: probably only apply gravity to the relevant blocks
 			getGameLogic()->forceGravityThisFrame = true;//TODO: doubt i need to do this because of above
@@ -570,7 +570,7 @@ void Block::update()
 		{
 			if (yGrid < grid->getHeight() - 1)
 			{
-				Block* a = grid->get(xGrid, yGrid + 1);
+				shared_ptr<Block> a = grid->get(xGrid, yGrid + 1);
 				if (a != nullptr && a->getColor() != nullptr && a->getColor() != this->getColor() && a->blockType->removeAllBlocksOfColorOnFieldBlockIsSetOn == false && a->blockType->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor == false)//dont remove other diamonds
 				{
 					BobColor *colorToReplace = a->getColor();
@@ -579,8 +579,8 @@ void Block::update()
 					{
 						for (int x = 0; x < grid->getWidth(); x++)
 						{
-							Block* b = grid->get(x, y);
-							if (b != nullptr && b != this)
+							shared_ptr<Block> b = grid->get(x, y);
+							if (b != nullptr && b != shared_ptr<Block>(this))
 							{
 								if (b->getColor() == colorToReplace)
 								{
@@ -592,7 +592,7 @@ void Block::update()
 				}
 			}
 			//if (grid->contains(xGrid, yGrid))
-			grid->remove(this, true, true);
+			grid->remove(shared_ptr<Block>(this), true, true);
 
 
 			getGameLogic()->manuallyApplyGravityWithoutChainChecking();//TODO: probably only apply gravity to the relevant blocks
@@ -655,7 +655,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByColor.size(); i++)
 			{
-				Block* c = connectedBlocksByColor.get(i);
+				shared_ptr<Block> c = connectedBlocksByColor.get(i);
 				if (c->xGrid == xGrid && c->yGrid == yGrid - 1)
 				{
 					connectedUp = true;
@@ -699,7 +699,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 			{
-				Block* c = connectedBlocksByPiece.get(i);
+				shared_ptr<Block> c = connectedBlocksByPiece.get(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1)
 				{
@@ -782,7 +782,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 			{
-				Block* c = connectedBlocksByPiece.get(i);
+				shared_ptr<Block> c = connectedBlocksByPiece.get(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1 && c->color == color && color != nullptr)
 				{
@@ -1002,8 +1002,8 @@ void Block::breakConnectionsInPiece()
 	for (int i = 0; i < connectedBlocksByColor.size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		Block* connectedBlock = connectedBlocksByColor.get(i);
-		connectedBlock->connectedBlocksByColor.remove(this);
+		shared_ptr<Block> connectedBlock = connectedBlocksByColor.get(i);
+		connectedBlock->connectedBlocksByColor.remove(shared_ptr<Block>(this));
 	}
 	connectedBlocksByColor.clear();
 
@@ -1011,8 +1011,8 @@ void Block::breakConnectionsInPiece()
 	for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		Block* connectedBlock = connectedBlocksByPiece.get(i);
-		connectedBlock->connectedBlocksByPiece.remove(this);
+		shared_ptr<Block> connectedBlock = connectedBlocksByPiece.get(i);
+		connectedBlock->connectedBlocksByPiece.remove(shared_ptr<Block>(this));
 	}
 	connectedBlocksByPiece.clear();
 
@@ -1022,16 +1022,16 @@ void Block::breakConnectionsInPiece()
 		//these should never happen due to above
 		for (int i = 0; i < (int)piece->blocks.size(); i++)
 		{
-			Block* c = piece->blocks.get(i);
-			while (c->connectedBlocksByColor.contains(this))
+			shared_ptr<Block> c = piece->blocks.get(i);
+			while (c->connectedBlocksByColor.contains(shared_ptr<Block>(this)))
 			{
 				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
-				c->connectedBlocksByColor.remove(this);
+				c->connectedBlocksByColor.remove(shared_ptr<Block>(this));
 				
 			}
-			while (c->connectedBlocksByPiece.contains(this))
+			while (c->connectedBlocksByPiece.contains(shared_ptr<Block>(this)))
 			{
-				c->connectedBlocksByPiece.remove(this);
+				c->connectedBlocksByPiece.remove(shared_ptr<Block>(this));
 				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
 			}
 		}
@@ -1039,7 +1039,7 @@ void Block::breakConnectionsInPiece()
 
 		for (int i = 0; i < (int)piece->blocks.size(); i++)
 		{
-			if (piece->blocks.get(i) == this)
+			if (piece->blocks.get(i) == shared_ptr<Block>(this))
 			{
 				piece->blocks.removeAt(i);
 				i = 0;
@@ -1047,9 +1047,9 @@ void Block::breakConnectionsInPiece()
 		}
 
 		//this should never happen due to above
-		while (piece->blocks.contains(this))
+		while (piece->blocks.contains(shared_ptr<Block>(this)))
 		{
-			piece->blocks.remove(this);
+			piece->blocks.remove(shared_ptr<Block>(this));
 
 			log.error("Shouldn't happen!");
 		}

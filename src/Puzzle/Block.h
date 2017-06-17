@@ -288,9 +288,9 @@ public:
 
 
 
-	Piece* piece = nullptr;
-	ArrayList<Block*> connectedBlocksByPiece;
-	ArrayList<Block*> connectedBlocksByColor;
+	shared_ptr<Piece> piece = nullptr;
+	ArrayList<shared_ptr<Block>> connectedBlocksByPiece;
+	ArrayList<shared_ptr<Block>> connectedBlocksByColor;
 
 	int xInPiece = 0; //offset in Piece() block is in
 	int yInPiece = 0;
@@ -455,7 +455,7 @@ public:
 //	}
 
 	Block();
-	Block(GameLogic* game, Grid* grid, Piece *piece, shared_ptr<BlockType> blockType);
+	Block(GameLogic* game, Grid* grid, shared_ptr<Piece> piece, shared_ptr<BlockType> blockType);
 	void update();
 	void setXYOffsetInPiece(int x, int y);
 	void breakConnectionsInPiece();

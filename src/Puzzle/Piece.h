@@ -330,7 +330,7 @@ public:
 	int xGrid = 0;
 	int yGrid = 0;
 
-	ArrayList<Block*> blocks;
+	ArrayList<shared_ptr<Block>> blocks;
 
 
 	float cursorAlphaFrom = 0.3f;
@@ -353,7 +353,7 @@ private:
 
 
 public:
-	Block *holdingBlock = nullptr;
+	shared_ptr<Block> holdingBlock = nullptr;
 	shared_ptr<PieceType> pieceType = nullptr;
 	bool overrideAnySpecialBehavior = false;
 	int piecesSetSinceThisPieceSet = 0;

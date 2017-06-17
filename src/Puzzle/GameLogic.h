@@ -290,16 +290,16 @@ private:
 	long long flashBlocksTicksCounter = 0;
 	int timesToFlashBlocksQueue = 0;
 	long long removeBlocksTicksCounter = 0;
-	ArrayList<Block*> currentChainBlocks;
+	ArrayList<shared_ptr<Block>> currentChainBlocks;
 public:
-	ArrayList<Block*> fadingOutBlocks;
+	ArrayList<shared_ptr<Block>> fadingOutBlocks;
 
 
-	Piece* currentPiece = nullptr;
+	shared_ptr<Piece> currentPiece = nullptr;
 
-	Piece* holdPiece = nullptr;
-	ArrayList<Piece*> nextPieces;
-	ArrayList<Piece*> nextPieceSpecialBuffer;
+	shared_ptr<Piece> holdPiece = nullptr;
+	ArrayList<shared_ptr<Piece>> nextPieces;
+	ArrayList<shared_ptr<Piece>> nextPieceSpecialBuffer;
 
 
 	int lastKnownLevel = 0;
@@ -363,7 +363,7 @@ private:
 	int queuedVSGarbageAmountFromOtherPlayer = 0;
 	int garbageWaitPieces = 0;
 
-	Block* garbageBlock = nullptr;
+	shared_ptr<Block> garbageBlock = nullptr;
 
 	bool checkForChainAgainIfNoBlocksPopping = false;
 
@@ -396,7 +396,7 @@ private:
 
 private:
 	void processFrame();
-	void addToChainBlocks(ArrayList<Block*> &arr);
+	void addToChainBlocks(ArrayList<shared_ptr<Block>> &arr);
 	bool detectedChain();
 	void checkForChain();
 

@@ -173,14 +173,14 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(new Block(gameInstance, grid, this, grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes)));
+			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, shared_ptr<Piece>(this), grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
 		}
 	}
 	else
 	{
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(new Block(gameInstance, grid, this, grid->getRandomBlockType(blockTypes)));
+			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, shared_ptr<Piece>(this), grid->getRandomBlockType(blockTypes))));
 		}
 	}
 
@@ -221,7 +221,7 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 	for (int b = 0; b < maxNumBlocks; b++)
 	{
-		blocks.add(new Block(gameInstance, grid, this, blockType));
+		blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, shared_ptr<Piece>(this), blockType)));
 	}
 
 
@@ -248,7 +248,7 @@ void Piece::initColors()
 
 	for (int i = 0; i < blocks.size(); i++)
 	{
-		Block* b = blocks.get(i);
+		shared_ptr<Block> b = blocks.get(i);
 
 		if (b->blockType->colors.size()>0)
 		{
@@ -270,11 +270,11 @@ void Piece::initColors()
 		//don't match a green crash piece with a green crash piece
 		for (int a = 0; a < blocks.size(); a++)
 		{
-			Block* blockA = blocks.get(a);
+			shared_ptr<Block> blockA = blocks.get(a);
 
 			for (int b = 0; b < blocks.size(); b++)
 			{
-				Block* blockB = blocks.get(b);
+				shared_ptr<Block> blockB = blocks.get(b);
 
 				if (blockB == blockA)
 				{
@@ -297,11 +297,11 @@ void Piece::initColors()
 		//don't match a green crash piece with a green gem
 		for (int a = 0; a < blocks.size(); a++)
 		{
-			Block* blockA = blocks.get(a);
+			shared_ptr<Block> blockA = blocks.get(a);
 
 			for (int b = 0; b < blocks.size(); b++)
 			{
-				Block* blockB = blocks.get(b);
+				shared_ptr<Block> blockB = blocks.get(b);
 
 				if (blockB == blockA)
 				{
@@ -353,11 +353,11 @@ void Piece::initColors()
 
 			if (allTheSame)
 			{
-				Block* blockA = blocks.get(0);
+				shared_ptr<Block> blockA = blocks.get(0);
 
 				for (int b = 0; b < blocks.size(); b++)
 				{
-					Block* blockB = blocks.get(b);
+					shared_ptr<Block> blockB = blocks.get(b);
 
 					if (blockB == blockA)
 					{
@@ -475,7 +475,7 @@ void Piece::update()
 
 	for (int i = 0; i < blocks.size(); i++)
 	{
-		Block* b = blocks.get(i);
+		shared_ptr<Block> b = blocks.get(i);
 		if (b->blockType->counterType)
 		{
 			if (b->counterCount == -2)
@@ -504,7 +504,7 @@ void Piece::update()
 
 		for (int i = 0; i < blocks.size(); i++)
 		{
-			Block* b = blocks.get(i);
+			shared_ptr<Block> b = blocks.get(i);
 
 			if (b->blockType->turnBackToNormalBlockAfterNPiecesLock != -1)
 			{
@@ -565,7 +565,7 @@ void Piece::renderOutlineFirstBlock(float x, float y, float alpha, bool asGhost)
 	float w = (float)cellW();
 	float h = (float)cellH();
 
-	Block* b = blocks.get(0);
+	shared_ptr<Block> b = blocks.get(0);
 
 
 	float bx = x + b->xInPiece * w;
@@ -613,14 +613,14 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
 	{
-		Block* b = blocks.get(i);
+		shared_ptr<Block> b = blocks.get(i);
 
 
 		//outline main piece
 		if (b->xInPiece == 0 && b->yInPiece == 0)
 		{
-			float bx = x + b->xInPiece*w;
-			float by = y + b->yInPiece*h;
+			float bx = x + b->xInPiece * w;
+			float by = y + b->yInPiece * h;
 
 			if (asGhost == false)
 			{
@@ -706,9 +706,9 @@ void Piece::renderAsCurrentPiece(float x, float y)
 		{
 			int ox = getGameType()->gridPixelsBetweenColumns;
 			int oy = getGameType()->gridPixelsBetweenRows;
-			Block* b = blocks.get(i);
-			float bx = x + b->xInPiece*w + b->xInPiece*ox;
-			float by = y + b->yInPiece*h + b->yInPiece*oy;
+			shared_ptr<Block> b = blocks.get(i);
+			float bx = x + b->xInPiece * w + b->xInPiece * ox;
+			float by = y + b->yInPiece * h + b->yInPiece * oy;
 
 
 			//this was commented
@@ -742,8 +742,8 @@ void Piece::render(float x, float y)
 {//=========================================================================================================================
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
 	{
-		Block* b = blocks.get(i);
-		b->render(x + b->xInPiece*cellW(), y + b->yInPiece*cellH(), 1.0f, 1.0f, true, false);
+		shared_ptr<Block> b = blocks.get(i);
+		b->render(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), 1.0f, 1.0f, true, false);
 	}
 }
 
@@ -754,17 +754,17 @@ void Piece::renderGhost(float x, float y, float alpha)
 
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
 	{
-		Block* b = blocks.get(i);
+		shared_ptr<Block> b = blocks.get(i);
 
 
 		BobColor *c = getGameLogic()->player->gridCheckeredBackgroundColor1;
 
 
 		// fill in black square so background doesnt show through alpha
-		GLUtils::drawFilledRectXYWH(x + b->xInPiece*cellW(), y + b->yInPiece*cellH(), (float)cellW(), (float)cellH(), c->rf(), c->gf(), c->bf(), 1.0f);
+		GLUtils::drawFilledRectXYWH(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), (float)cellW(), (float)cellH(), c->rf(), c->gf(), c->bf(), 1.0f);
 
 
-		b->render(x + b->xInPiece*cellW(), y + b->yInPiece*cellH(), ghostAlpha * alpha, 1.0f, false, true);
+		b->render(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), ghostAlpha * alpha, 1.0f, false, true);
 	}
 
 	if (getGameType()->currentPieceRule_OutlineBlockAtZeroZero)
@@ -784,7 +784,7 @@ void Piece::setBlocksSlamming()
 {//=========================================================================================================================
 	for (int i = 0; i < blocks.size(); i++)
 	{
-		Block* b = blocks.get(i);
+		shared_ptr<Block> b = blocks.get(i);
 		b->slamming = true;
 		b->slamX = getScreenX() + (b->xInPiece) * cellW();
 		b->slamY = getScreenY() + (b->yInPiece) * cellH();

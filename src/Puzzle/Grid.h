@@ -41,12 +41,12 @@ public:
 //#define blockHashMap
 
 #ifdef blocksHashMap
-	HashMap<int, Block*>* blocks = new HashMap<int, Block*>();
+	HashMap<int, shared_ptr<Block>>* blocks = new HashMap<int, shared_ptr<Block>>();
 #else
-	ArrayList<Block*> blocks;
+	ArrayList<shared_ptr<Block>> blocks;
 #endif
 
-	static Block* nullBlock;
+	static shared_ptr<Block> nullBlock;
 
 private:
 	int wigglePlayingFieldTicksSpeed = 60;
@@ -99,7 +99,7 @@ private:
 public:
 	int lastGarbageHoleX = 0;
 	bool garbageHoleDirectionToggle = true;
-	ArrayList<Piece*> randomBag;;
+	ArrayList<shared_ptr<Piece>> randomBag;;
 	Grid(GameLogic* gameInstance);
 	float getXInFBO();
 	float getXInFBONoShake();
@@ -114,85 +114,85 @@ public:
 	void update();
 	void reformat(int oldWidth, int oldHeight);
 	int getNumberOfFilledCells();
-	void removeAllBlocksOfPieceFromGrid(Piece* p, bool fadeOut);
+	void removeAllBlocksOfPieceFromGrid(shared_ptr<Piece> p, bool fadeOut);
 	void replaceAllBlocksWithNewGameBlocks();
-	Piece* dontPutSameColorDiagonalOrNextToEachOtherReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
-	Piece* dontPutSameColorNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
-	Piece* dontPutSameBlockTypeNextToEachOtherOrReturnNull(Piece* p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
+	shared_ptr<Piece> dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
+	shared_ptr<Piece> dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
+	shared_ptr<Piece> dontPutSameBlockTypeNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
 	void removeAndDestroyAllBlocksInGrid();
-	Piece* putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
+	shared_ptr<Piece> putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes);
 	void randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY);
 	void buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY);
-	bool scrollUpStack(Piece* cursorPiece, int amt);
-	Piece* putGarbageBlock(int x, int y);
+	bool scrollUpStack(shared_ptr<Piece> cursorPiece, int amt);
+	shared_ptr<Piece> putGarbageBlock(int x, int y);
 	void makeGarbageRowFromCeiling();
 	void moveAllRowsUpOne();
 	void makeGarbageRowFromFloor();
-	void cursorSwapBetweenTwoBlocksHorizontal(Piece* cursor);
-	void cursorSwapBetweenTwoBlocksVertical(Piece* cursor);
-	void cursorSwapBetweenThreeBlocksHorizontal(Piece* cursor, MovementType rotation);
-	void cursorSwapBetweenThreeBlocksVertical(Piece* cursor, MovementType rotation);
-	void cursorSwapHoldingBlockWithGrid(Piece* cursor);
-	void cursorRotateBlocks(Piece* cursor, MovementType rotation);
+	void cursorSwapBetweenTwoBlocksHorizontal(shared_ptr<Piece> cursor);
+	void cursorSwapBetweenTwoBlocksVertical(shared_ptr<Piece> cursor);
+	void cursorSwapBetweenThreeBlocksHorizontal(shared_ptr<Piece> cursor, MovementType rotation);
+	void cursorSwapBetweenThreeBlocksVertical(shared_ptr<Piece> cursor, MovementType rotation);
+	void cursorSwapHoldingBlockWithGrid(shared_ptr<Piece> cursor);
+	void cursorRotateBlocks(shared_ptr<Piece> cursor, MovementType rotation);
 	bool continueSwappingBlocks();
 	void scrollBackground();
 	void shakeSmall();
 	void shakeMedium();
 	void shakeHard();
 	void wigglePlayingField();
-	void add(int x, int y, Block* b);
+	void add(int x, int y, shared_ptr<Block> b);
 	bool contains(int index);
 	bool contains(int x, int y);
-	Block* get(int x, int y);
+	shared_ptr<Block> get(int x, int y);
 
 private:
-	Block* remove(int x, int y, bool fadeOut, bool breakConnections);
+	shared_ptr<Block> remove(int x, int y, bool fadeOut, bool breakConnections);
 
 public:
-	void remove(Block* b, bool fadeOut, bool breakConnections);
-	void moveToAndRemoveAndFadeOut(Block* b, int x, int y);
+	void remove(shared_ptr<Block> b, bool fadeOut, bool breakConnections);
+	void moveToAndRemoveAndFadeOut(shared_ptr<Block> b, int x, int y);
 	bool checkLine(int y);
-	ArrayList<Piece*> getArrayOfPiecesOnGrid();
-	ArrayList<Block*> checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
-	bool doBlocksMatchColor(Block* a, Block* b, ArrayList<shared_ptr<BlockType>> &ignoreTypes);
-	ArrayList<Block*> getConnectedBlocksUpDownLeftRight(Block* b);
-	void checkRecursiveConnectedRowOrColumn(ArrayList<Block*> &connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
+	ArrayList<shared_ptr<Piece>> getArrayOfPiecesOnGrid();
+	ArrayList<shared_ptr<Block>> checkLines(ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
+	bool doBlocksMatchColor(shared_ptr<Block> a, shared_ptr<Block> b, ArrayList<shared_ptr<BlockType>> &ignoreTypes);
+	ArrayList<shared_ptr<Block>> getConnectedBlocksUpDownLeftRight(shared_ptr<Block> b);
+	void checkRecursiveConnectedRowOrColumn(ArrayList<shared_ptr<Block>> &connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
 	void setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes);// , ArrayList<shared_ptr<BlockType>>* mustContainAtLeastOneTypes);
-	ArrayList<Block*> checkBreakerBlocks(int toRow, ArrayList<shared_ptr<BlockType>> &ignoreUnlessTouchingBreakerBlockTypes, ArrayList<shared_ptr<BlockType>> &breakerBlockTypes);
-	void recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(Block* b, ArrayList<Block*> &connectedBlocks, ArrayList<shared_ptr<BlockType>> &ignoreTypes);
-	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
-	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
-	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(Block* b, ArrayList<Block*> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
+	ArrayList<shared_ptr<Block>> checkBreakerBlocks(int toRow, ArrayList<shared_ptr<BlockType>> &ignoreUnlessTouchingBreakerBlockTypes, ArrayList<shared_ptr<BlockType>> &breakerBlockTypes);
+	void recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocks, ArrayList<shared_ptr<BlockType>> &ignoreTypes);
+	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
+	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
+	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(shared_ptr<Block> b, ArrayList<shared_ptr<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, ArrayList<shared_ptr<BlockType>> &ignoreTypes, ArrayList<shared_ptr<BlockType>> &mustContainAtLeastOneTypes);
 	void renderBackground();
 	void render();
 	void renderBlockOutlines();
 	void renderBorder();
 	void renderTransparentOverLastRow();
-	void renderGhostPiece(Piece* currentPiece);
-	bool isWithinBounds(Piece* piece, int x, int y);
-	bool isHittingLeft(Piece* piece);
-	bool isHittingLeft(Piece* piece, int x, int y);
-	bool isHittingRight(Piece* piece);
-	bool isHittingRight(Piece* piece, int x, int y);
-	bool doesPieceFit(Piece* piece);
-	bool doesPieceFit(Piece* piece, int x, int y);
-	void setPiece(Piece* piece);
-	void setPiece(Piece* piece, int x, int y);
+	void renderGhostPiece(shared_ptr<Piece> currentPiece);
+	bool isWithinBounds(shared_ptr<Piece> piece, int x, int y);
+	bool isHittingLeft(shared_ptr<Piece> piece);
+	bool isHittingLeft(shared_ptr<Piece> piece, int x, int y);
+	bool isHittingRight(shared_ptr<Piece> piece);
+	bool isHittingRight(shared_ptr<Piece> piece, int x, int y);
+	bool doesPieceFit(shared_ptr<Piece> piece);
+	bool doesPieceFit(shared_ptr<Piece> piece, int x, int y);
+	void setPiece(shared_ptr<Piece> piece);
+	void setPiece(shared_ptr<Piece> piece, int x, int y);
 	bool moveDownLinesAboveBlankLinesOneLine();
 	bool moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<shared_ptr<BlockType>> &ignoreTypes);
 	bool moveDownAnyBlocksAboveBlankSpacesOneLine(ArrayList<shared_ptr<BlockType>> &ignoreTypes);
 	void setRandomBlockColors();
 	void setRandomMatrixBlockColors();
-	void setRandomWholePieceColors(bool grayscale, Piece* currentPiece, ArrayList<Piece*> &nextPieces);
-	void setRandomPieceGrayscaleColors(Piece* currentPiece, ArrayList<Piece*> &nextPieces);
+	void setRandomWholePieceColors(bool grayscale, shared_ptr<Piece> currentPiece, ArrayList<shared_ptr<Piece>> &nextPieces);
+	void setRandomPieceGrayscaleColors(shared_ptr<Piece> currentPiece, ArrayList<shared_ptr<Piece>> &nextPieces);
 	bool isAnythingAboveThreeQuarters();
 	void doDeathSequence();
 	shared_ptr<PieceType> getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(ArrayList<shared_ptr<PieceType> > &arr);
 	shared_ptr<PieceType> getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(ArrayList<shared_ptr<PieceType> > &arr);
-	ArrayList<Piece*> getBagOfOneOfEachNonRandomNormalPieces();
-	Piece* getPieceFromNormalPieceRandomBag();
-	Piece* getRandomPiece();
-	Piece* getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceArray, ArrayList<shared_ptr<BlockType>> &blockArray);
+	ArrayList<shared_ptr<Piece>> getBagOfOneOfEachNonRandomNormalPieces();
+	shared_ptr<Piece> getPieceFromNormalPieceRandomBag();
+	shared_ptr<Piece> getRandomPiece();
+	shared_ptr<Piece> getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceArray, ArrayList<shared_ptr<BlockType>> &blockArray);
 	shared_ptr<PieceType> getRandomPieceType(ArrayList<shared_ptr<PieceType> > &arr);
 	shared_ptr<BlockType> getRandomBlockType(ArrayList<shared_ptr<BlockType>> &arr);
 	shared_ptr<BlockType> getRandomBlockTypeDisregardingSpecialFrequency(ArrayList<shared_ptr<BlockType>> &arr);
