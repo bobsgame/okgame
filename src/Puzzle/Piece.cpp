@@ -11,6 +11,14 @@
 Logger Piece::log = Logger("Piece");
 
 shared_ptr<PieceType> PieceType::emptyPieceType(new PieceType());
+shared_ptr<PieceType> PieceType::oneBlockCursorPieceType(new PieceType("cursorPiece", "", nullptr, 1, Piece::get1BlockCursorRotationSet()));
+shared_ptr<PieceType> PieceType::twoBlockHorizontalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockHorizontalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::twoBlockVerticalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockVerticalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::threeBlockHorizontalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockHorizontalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::threeBlockVerticalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockVerticalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::fourBlockCursorPieceType(new PieceType("cursorPiece", "", nullptr, 4, Piece::get4BlockCursorRotationSet()));
+
+
 //=========================================================================================================================
 bool PieceType::operator==(const PieceType& rhs) const
 {//=========================================================================================================================

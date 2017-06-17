@@ -77,6 +77,8 @@ class GLUtils;
 //Sprite* Block::weight = nullptr;
 
 shared_ptr<BlockType> BlockType::emptyBlockType(new BlockType());
+shared_ptr<BlockType> BlockType::squareBlockType(new BlockType("square", "Square", "", nullptr, BobColor::gray, 0, 0));
+shared_ptr<BlockType> BlockType::shotPieceBlockType(new BlockType("shotPiece", "Square", "", nullptr, BobColor::gray, 0, 0));
 //=========================================================================================================================
 bool BlockType::operator==(const BlockType& rhs) const
 {//=========================================================================================================================

@@ -485,7 +485,7 @@ GameType *GameType::fromBase64GZippedXML(string b64GZipJSON)
 
 
 
-//	public void addRandomSpecialnew PieceType(shared_ptr<PieceType> pieceType)
+//	public void addRandomSpecialPieceType(shared_ptr<PieceType> pieceType)
 //	{
 //
 //		randomSpecialPieceTypes.Add(pieceType);
@@ -494,7 +494,7 @@ GameType *GameType::fromBase64GZippedXML(string b64GZipJSON)
 //
 //
 //	
-//	public void addRegularFrequencySpecialnew PieceType(shared_ptr<PieceType> pieceType)
+//	public void addRegularFrequencySpecialPieceType(shared_ptr<PieceType> pieceType)
 //	{
 //
 //		regularFrequencySpecialPieceTypes.Add(pieceType);
@@ -910,21 +910,21 @@ DifficultyType* GameType::getDifficultyByName(string s)
 //}
 
 ////=========================================================================================================================
-//void GameType::addNormalnew PieceType(shared_ptr<PieceType> pieceType)
+//void GameType::addNormalPieceType(shared_ptr<PieceType> pieceType)
 //{//=========================================================================================================================
 //	pieceType.useAsNormalPiece = true;
 //	pieceTypes.add(pieceType);
 //}
 //
 ////=========================================================================================================================
-//void GameType::addPlayingFieldnew PieceType(shared_ptr<PieceType> pieceType)
+//void GameType::addPlayingFieldPieceType(shared_ptr<PieceType> pieceType)
 //{//=========================================================================================================================
 //	pieceType.useAsPlayingFieldFillerPiece = true;
 //	pieceTypes.add(pieceType);
 //}
 //
 ////=========================================================================================================================
-//void GameType::addDisallowedFirstnew PieceType(shared_ptr<PieceType> pieceType)
+//void GameType::addDisallowedFirstPieceType(shared_ptr<PieceType> pieceType)
 //{//=========================================================================================================================
 //	pieceType.disallowAsFirstPiece = true;
 //	pieceTypes.add(pieceType);
@@ -944,21 +944,21 @@ DifficultyType* GameType::getDifficultyByName(string s)
 //}
 
 ////=========================================================================================================================
-//void GameType::addnew BlockType(shared_ptr<BlockType> blockClass)
+//void GameType::addBlockType(shared_ptr<BlockType> blockClass)
 //{//=========================================================================================================================
 //
 //	blockTypes.add(blockClass);
 //}
 
 ////=========================================================================================================================
-//void GameType::addPlayingFieldnew BlockType(shared_ptr<BlockType> blockClass)
+//void GameType::addPlayingFieldBlockType(shared_ptr<BlockType> blockClass)
 //{//=========================================================================================================================
 //
 //	playingFieldBlockTypes.add(blockClass);
 //}
 //
 ////=========================================================================================================================
-//void GameType::addGarbagenew BlockType(shared_ptr<BlockType> blockClass)
+//void GameType::addGarbageBlockType(shared_ptr<BlockType> blockClass)
 //{//=========================================================================================================================
 //
 //	garbageBlockTypes.add(blockClass);
@@ -966,14 +966,14 @@ DifficultyType* GameType::getDifficultyByName(string s)
 
 
 //	//=========================================================================================================================
-//	public void addRandomSpecialnew BlockType(shared_ptr<BlockType> blockClass)
+//	public void addRandomSpecialBlockType(shared_ptr<BlockType> blockClass)
 //	{//=========================================================================================================================
 //
 //		randomSpecialBlockTypes.Add(blockClass);
 //	}
 //
 //	//=========================================================================================================================
-//	public void addRegularFrequencySpecialnew BlockType(shared_ptr<BlockType> blockClass)
+//	public void addRegularFrequencySpecialBlockType(shared_ptr<BlockType> blockClass)
 //	{//=========================================================================================================================
 //
 //		regularFrequencySpecialBlockTypes.Add(blockClass);

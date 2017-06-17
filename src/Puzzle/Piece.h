@@ -260,6 +260,12 @@ public:
 //	PieceType(int numBlocks, ArrayList<Rotation*>* rotationSet);
 
 	static shared_ptr<PieceType> emptyPieceType;
+	static shared_ptr<PieceType> oneBlockCursorPieceType;
+	static shared_ptr<PieceType> twoBlockHorizontalCursorPieceType;
+	static shared_ptr<PieceType> twoBlockVerticalCursorPieceType;
+	static shared_ptr<PieceType> threeBlockHorizontalCursorPieceType;
+	static shared_ptr<PieceType> threeBlockVerticalCursorPieceType;
+	static shared_ptr<PieceType> fourBlockCursorPieceType;
 	//=========================================================================================================================
 	PieceType()
 	{//=========================================================================================================================

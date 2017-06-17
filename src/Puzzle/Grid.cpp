@@ -3911,7 +3911,7 @@ shared_ptr<BlockType> Grid::getRandomBlockTypeFromArrayExcludingSpecialBlockType
 		return b;
 	}
 
-	return shared_ptr<BlockType>(new BlockType("square","Square","", nullptr, BobColor::gray, 0, 0));
+	return shared_ptr<BlockType>(BlockType::squareBlockType);
 }
 
 

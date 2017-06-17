@@ -121,6 +121,8 @@ public:
 	
 
 	static shared_ptr<BlockType> emptyBlockType;
+	static shared_ptr<BlockType> squareBlockType;
+	static shared_ptr<BlockType> shotPieceBlockType;
 
 	Sprite* sprite = nullptr;//dont serialize these
 	Sprite* specialSprite = nullptr;
