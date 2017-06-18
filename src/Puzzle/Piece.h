@@ -343,11 +343,11 @@ private:
 
 
 public:
-	float ghostAlphaFrom = 0.3f;
-	float ghostAlphaTo = 0.7f;
-	long long ghostFadeTicksPerPhase = 100;
+	float ghostAlphaFrom = 0.5f;
+	float ghostAlphaTo = 0.8f;
+	long long ghostFadeTicksPerPhase = 200;
 private:
-	float ghostAlpha = 0.3f; // ghostAlphaFrom;
+	float ghostAlpha = 0.5f; // ghostAlphaFrom;
 	long long ghostFadeTicks = 0;
 	bool ghostFadeInOutToggle = false;
 
