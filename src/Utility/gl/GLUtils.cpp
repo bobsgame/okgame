@@ -191,10 +191,21 @@ void GLUtils::initGL(char* windowName)
 
 	log.info("Setting up SDL window...");
 
+
+	int w = 1920;
+	int h = 1080;
+	if(monitorWidth < 1920 || monitorHeight < 1080)
+	{
+		w = monitorWidth - 100;
+		h = monitorHeight - 100;
+	}
+
+
+
 	window = SDL_CreateWindow(windowName,
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		(int)monitorWidth/2, (int)monitorHeight/2,
+		w, h,
 //#ifndef _DEBUG
 //		SDL_WINDOW_FULLSCREEN_DESKTOP |
 //#endif
