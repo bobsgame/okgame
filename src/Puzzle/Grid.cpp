@@ -586,6 +586,7 @@ shared_ptr<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(shared_p
 			shared_ptr<BlockType> blockType = acceptableBlockTypes.get(getGameLogic()->getRandomIntLessThan(acceptableBlockTypes.size(), "dontPutSameBlockTypeNextToEachOtherOrReturnNull"));
 
 			p = shared_ptr<Piece>(new Piece(game, this, pieceType, blockType));
+			p->init();
 
 			//remove other blocks and break connections, we only want one block
 			while (p->blocks.size() > 1)
@@ -3681,6 +3682,7 @@ ArrayList<shared_ptr<Piece>> Grid::getBagOfOneOfEachNonRandomNormalPieces()
 		{
 			
 			shared_ptr<Piece> tempPiece(new Piece(getGameLogic(), this, type, blockTypes));
+			tempPiece->init();
 			tempBag.add(tempPiece);
 		}
 	}
@@ -3753,6 +3755,7 @@ shared_ptr<Piece> Grid::getRandomPiece()
 			if (pieceType != nullptr)
 			{
 				piece = shared_ptr<Piece>(new Piece(getGameLogic(), this, pieceType, blockTypes));
+				piece->init();
 			}
 			else
 			{
@@ -3767,6 +3770,7 @@ shared_ptr<Piece> Grid::getRandomPiece()
 			}
 			if (pieceType == nullptr)pieceType = PieceType::emptyPieceType;
 			piece = shared_ptr<Piece>(new Piece(getGameLogic(), this, pieceType, blockTypes));
+			piece->init();
 		}
 	}
 
@@ -3780,6 +3784,7 @@ shared_ptr<Piece> Grid::getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceT
 {//=========================================================================================================================
 
 	shared_ptr<Piece> piece(new Piece(getGameLogic(), this, getRandomPieceType(pieceTypes), blockTypes));
+	piece->init();
 	return piece;
 }
 

@@ -173,21 +173,21 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, this->shared_from_this(), grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
+			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, nullptr, grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
 		}
 	}
 	else
 	{
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, this->shared_from_this(), grid->getRandomBlockType(blockTypes))));
+			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, nullptr, grid->getRandomBlockType(blockTypes))));
 		}
 	}
 
 	setRotation(0);
 
 
-	initBlocks();
+
 }
 
 
@@ -221,24 +221,34 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 	for (int b = 0; b < maxNumBlocks; b++)
 	{
-		blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, this->shared_from_this(), blockType)));
+		blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, nullptr, blockType)));
 	}
 
 
 	setRotation(0);
 
 
-	initBlocks();
 }
 
 
 //=========================================================================================================================
-void Piece::initBlocks()
+//must call this after constructor because of shared_ptr problem
+void Piece::init()
 {//=========================================================================================================================
+
+
+	//initialize piece shared_ptr hack since can't do shared_from_this in constructor
+	for (int i = 0; i<blocks.size(); i++)
+	{
+		blocks.get(i)->piece = this->shared_from_this();
+	}
+
 	initColors();
 	setPieceBlockConnections();
 	setBlockColorConnectionsInPiece();
 }
+
+
 
 
 //=========================================================================================================================

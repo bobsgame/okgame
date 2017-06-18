@@ -332,6 +332,7 @@ void GameLogic::initGame()
 			shared_ptr<PieceType> cursorPieceType(PieceType::oneBlockCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
 			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2);
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
@@ -342,6 +343,7 @@ void GameLogic::initGame()
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockHorizontalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
 			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
@@ -352,6 +354,7 @@ void GameLogic::initGame()
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockVerticalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
 			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
@@ -362,6 +365,7 @@ void GameLogic::initGame()
 			shared_ptr<PieceType> cursorPieceType(PieceType::threeBlockHorizontalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
 			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
@@ -370,6 +374,7 @@ void GameLogic::initGame()
 			shared_ptr<PieceType> cursorPieceType(PieceType::threeBlockVerticalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
 			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
@@ -379,6 +384,7 @@ void GameLogic::initGame()
 			shared_ptr<PieceType> cursorPieceType(PieceType::fourBlockCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
 			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
@@ -1356,6 +1362,7 @@ void GameLogic::removeFlashedChainBlocks()
 				{
 					shared_ptr<PieceType> pt = currentGameType->getPieceTypeByUUID(b->blockType->makePieceTypeWhenCleared_UUID.get(getRandomIntLessThan(b->blockType->makePieceTypeWhenCleared_UUID.size(), "removeFlashedChainBlocks")));
 					shared_ptr<Piece> p(new Piece(this, grid, pt, BlockType::emptyBlockType));
+					p->init();
 					nextPieceSpecialBuffer.add(p);
 
 					//DONE: sound "got bomb" "got weight" "got shooter"
@@ -2034,6 +2041,8 @@ bool GameLogic::movePiece(MovementType move)
 			//make new piece, not new block
 			//this is so the colors get initialized and the block can be updated by getting arrayOfPiecesInGrid
 			shared_ptr<Piece> p(new Piece(this, grid, PieceType::emptyPieceType, shared_ptr<BlockType>(BlockType::shotPieceBlockType)));
+			p->init();
+
 			shared_ptr<Block> b = p->blocks.get(0);
 
 			//set last screenXY to current piece so it appears to shoot, even though it's really just being placed directly into the grid.
@@ -2708,6 +2717,7 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 	{
 		ArrayList<shared_ptr<BlockType>> garbageTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
 		shared_ptr<Piece> p(new Piece(this, grid, PieceType::emptyPieceType, grid->getRandomBlockType(garbageTypes)));//TODO: use garbagePieceTypes with one block
+		p->init();
 		garbageBlock = p->blocks.get(0);
 	}
 }

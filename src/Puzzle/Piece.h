@@ -394,7 +394,7 @@ public:
 
 	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes);
 	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType);
-	void initBlocks();
+	void init();
 	void initColors();
 	void setPieceBlockConnections();
 	void setBlockColorConnectionsInPiece();
