@@ -50,7 +50,7 @@ public:
 	Caption* titleCaption = nullptr;
 	
 	bool outline = true;
-	bool decreaseFontSizeToFit = true;
+	bool scaleFontSizeToFit = true;
 
 	int cursorPosition = 0;
 	static BobTexture* rectangleCursorTexture;

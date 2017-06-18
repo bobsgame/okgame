@@ -625,7 +625,6 @@ void BobMenu::render
 		int menuItemsToShow = 0;
 		
 		int minSize = 6;
-		int changedSize = minSize;
 		bool stillIncreasingSize = false;
 		do
 		{
@@ -667,15 +666,15 @@ void BobMenu::render
 			
 
 						
-			if(decreaseFontSizeToFit && menuItemsToShow < visibleMenuItems.size())
+			if(scaleFontSizeToFit && menuItemsToShow < visibleMenuItems.size())
 			{
 				//decrease the font size for all menu items
 				for (int i = 0; i < menuItems.size(); i++)
 				{
 					MenuItem *m = menuItems.get(i);
 					Caption *c = m->caption;
-					changedSize = c->reduceHeightByOne();
-					scaledFontSize = changedSize;
+					scaledFontSize = c->reduceHeightByOne();
+
 					topMenuItemDrawn = nullptr;
 				}
 			}
@@ -683,15 +682,15 @@ void BobMenu::render
 
 			stillIncreasingSize = false;
 
-			if(decreaseFontSizeToFit && menuItemsToShow == visibleMenuItems.size() && scaledFontSize < fontSize && pastEnd == false && endY - lowestHeight >= captionHeight)
+			if(scaleFontSizeToFit && menuItemsToShow == visibleMenuItems.size() && scaledFontSize < fontSize && pastEnd == false && endY - lowestHeight >= captionHeight*2)
 			{
 				//increase the font size for all menu items only up to the default size
 				for (int i = 0; i < menuItems.size(); i++)
 				{
 					MenuItem *m = menuItems.get(i);
 					Caption *c = m->caption;
-					changedSize = c->increaseHeightByOne();
-					scaledFontSize = changedSize;
+					scaledFontSize = c->increaseHeightByOne();
+
 					topMenuItemDrawn = nullptr;
 					stillIncreasingSize = true;
 				}
@@ -699,10 +698,10 @@ void BobMenu::render
 
 			//we want to decrease the font size until the menu fits between startY and endY
 		} while(
-				decreaseFontSizeToFit
+				scaleFontSizeToFit
 				&&
 				(
-					(menuItemsToShow < visibleMenuItems.size() && changedSize > minSize)
+					(menuItemsToShow < visibleMenuItems.size() && scaledFontSize > minSize)
 					||
 					(menuItemsToShow == visibleMenuItems.size() && stillIncreasingSize)
 				)
