@@ -271,7 +271,7 @@ public:
 BOOST_CLASS_VERSION(TurnFromBlockTypeToType, 1)
 BOOST_CLASS_TRACKING(TurnFromBlockTypeToType, boost::serialization::track_never)
 //=========================================================================================================================
-class Block
+class Block : public std::enable_shared_from_this<Block>
 {//=========================================================================================================================
 public:
 

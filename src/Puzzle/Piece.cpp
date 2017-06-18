@@ -173,14 +173,14 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, shared_ptr<Piece>(this), grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
+			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, this->shared_from_this(), grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
 		}
 	}
 	else
 	{
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, shared_ptr<Piece>(this), grid->getRandomBlockType(blockTypes))));
+			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, this->shared_from_this(), grid->getRandomBlockType(blockTypes))));
 		}
 	}
 
@@ -221,7 +221,7 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 	for (int b = 0; b < maxNumBlocks; b++)
 	{
-		blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, shared_ptr<Piece>(this), blockType)));
+		blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, this->shared_from_this(), blockType)));
 	}
 
 

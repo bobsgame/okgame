@@ -310,7 +310,7 @@ public:
 BOOST_CLASS_VERSION(PieceType, 1)
 BOOST_CLASS_TRACKING(PieceType, boost::serialization::track_never)
 //=========================================================================================================================
-class Piece
+class Piece : public std::enable_shared_from_this<Piece>
 {//=========================================================================================================================
 public:
 
