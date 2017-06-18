@@ -254,10 +254,10 @@ void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, 
 
 	TTF_Font* outlineFont = nullptr;
 
-	if (fontSize == 6) { this->ttfFont = BobFont::ttf_6;	 outlineFont = BobFont::ttf_outline_6; }
-	if (fontSize == 7) { this->ttfFont = BobFont::ttf_7;	 outlineFont = BobFont::ttf_outline_7; }
-	if (fontSize == 8) { this->ttfFont = BobFont::ttf_8;	 outlineFont = BobFont::ttf_outline_8; }
-	if (fontSize == 9) { this->ttfFont = BobFont::ttf_9;	 outlineFont = BobFont::ttf_outline_9; }
+	if (fontSize < 7)  { this->ttfFont = BobFont::ttf_6;  outlineFont = BobFont::ttf_outline_6;  this->fontSize = 6; }
+	if (fontSize == 7)  { this->ttfFont = BobFont::ttf_7;  outlineFont = BobFont::ttf_outline_7;  }
+	if (fontSize == 8)  { this->ttfFont = BobFont::ttf_8;  outlineFont = BobFont::ttf_outline_8;  }
+	if (fontSize == 9)  { this->ttfFont = BobFont::ttf_9;  outlineFont = BobFont::ttf_outline_9;  }
 	if (fontSize == 10) { this->ttfFont = BobFont::ttf_10; outlineFont = BobFont::ttf_outline_10; }
 	if (fontSize == 11) { this->ttfFont = BobFont::ttf_11; outlineFont = BobFont::ttf_outline_11; }
 	if (fontSize == 12) { this->ttfFont = BobFont::ttf_12; outlineFont = BobFont::ttf_outline_12; }
@@ -281,8 +281,8 @@ void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, 
 	if (fontSize == 30) { this->ttfFont = BobFont::ttf_30; outlineFont = BobFont::ttf_outline_30; }
 	if (fontSize == 31) { this->ttfFont = BobFont::ttf_31; outlineFont = BobFont::ttf_outline_31; }
 	if (fontSize == 32) { this->ttfFont = BobFont::ttf_32; outlineFont = BobFont::ttf_outline_32; }
-	if (fontSize == 48) { this->ttfFont = BobFont::ttf_48; outlineFont = BobFont::ttf_outline_48; }
-	if (fontSize == 64) { this->ttfFont = BobFont::ttf_64; outlineFont = BobFont::ttf_outline_64; }
+	if (fontSize > 32) { this->ttfFont = BobFont::ttf_48; outlineFont = BobFont::ttf_outline_48; this->fontSize = 48; }
+	if (fontSize > 48) { this->ttfFont = BobFont::ttf_64; outlineFont = BobFont::ttf_outline_64; this->fontSize = 64; }
 
 	if (outline)this->outline = true;
 	if (outline)
@@ -1155,6 +1155,9 @@ int Caption::reduceHeightByOne()
 
 	fontSize--;
 	if (fontSize < 6)fontSize = 6;
+
+	setText(text, true);
+
 	return fontSize;
 								
 
@@ -1167,6 +1170,9 @@ int Caption::increaseHeightByOne()
 
 	fontSize++;
 	if (fontSize > 64)fontSize = 64;
+
+	setText(text, true);
+
 	return fontSize;
 
 }
