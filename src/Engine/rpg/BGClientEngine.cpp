@@ -556,7 +556,7 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				SkillData* data = SkillData::fromBase64ZippedJSON(s);
+				SkillData* data = new SkillData(); data->initFromString(s);
 
 				//Skill* skill =
                 new Skill(this, data);//adds itself to eventManager skill list in constructor
@@ -585,7 +585,7 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				DialogueData* data = DialogueData::fromBase64ZippedJSON(s);
+				DialogueData* data = new DialogueData(); data->initFromString(s);
 				//Dialogue* m =
                 new Dialogue(this, data);
 				//getEventManager()->dialogueList.add(m);
@@ -612,7 +612,7 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				FlagData* data = FlagData::fromBase64ZippedJSON(s);
+				FlagData* data = new FlagData(); data->initFromString(s);
 				//Flag* m =
                 new Flag(this, data);
 				//getEventManager()->flagList.add(m);
@@ -639,7 +639,7 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				GameStringData* data = GameStringData::fromBase64ZippedJSON(s);
+				GameStringData* data = new GameStringData(); data->initFromString(s);
 				//GameString* m =
                 new GameString(this, data);
 				//getEventManager()->gameStringList.add(m);
@@ -666,7 +666,7 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				EventData* data = EventData::fromBase64ZippedJSON(s);
+				EventData* data = new EventData(); data->initFromString(s);
 				//Event* m =
                 new Event(this, data);
 				//getEventManager()->eventList.add(m);
@@ -694,9 +694,9 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				SpriteData* data = SpriteData::fromBase64ZippedJSON(s);
+				SpriteData* data = new SpriteData(); data->initFromString(s);
 
-				if (getSpriteManager()->spriteByIDHashMap.get(data->getID()) == nullptr)
+				if (getSpriteManager()->spriteByIDHashMap.containsKey(data->getID()) == false)
 				{
 					Sprite* sprite = new Sprite(this);
 					sprite->initializeWithSpriteData(data);
@@ -736,7 +736,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				SoundData* data = SoundData::fromBase64ZippedJSON(s);
+				SoundData* data = new SoundData(); data->initFromString(s);
 
 				//Sound* m =
                 new Sound(this, data);
@@ -773,7 +773,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				MusicData* data = MusicData::fromBase64ZippedJSON(s);
+				MusicData* data = new MusicData(); data->initFromString(s);
 
 				//Music* m =
                 new Music(this, data);
@@ -805,9 +805,9 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				MapData* data = MapData::fromBase64ZippedJSON(s);
+				MapData* data = new MapData(); data->initFromString(s);
 
-				if (getMapManager()->mapByIDHashMap.get(data->getID()) == nullptr)
+				if (getMapManager()->mapByIDHashMap.containsKey(data->getID()) == false)
 				{
 					Map* m = new Map(this, data);
 
@@ -1299,7 +1299,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 	s = s.substr(s.find(":") + 1); //intentional ::
 
 
-	EventData* data = EventData::fromBase64ZippedJSON(s);
+	EventData* data = new EventData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{

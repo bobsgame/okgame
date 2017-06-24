@@ -208,72 +208,72 @@ string SpriteData::initFromString(string t)
 
 	t = t.substr(t.find("isNPC:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNPC = stob(t.substr(0, t.find("`")));
+	isNPC = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isKid:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isKid = stob(t.substr(0, t.find("`")));
+	isKid = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAdult:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAdult = stob(t.substr(0, t.find("`")));
+	isAdult = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isMale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isMale = stob(t.substr(0, t.find("`")));
+	isMale = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isFemale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isFemale = stob(t.substr(0, t.find("`")));
+	isFemale = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isCar:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isCar = stob(t.substr(0, t.find("`")));
+	isCar = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAnimal:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAnimal = stob(t.substr(0, t.find("`")));
+	isAnimal = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("hasShadow:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	hasShadow = stob(t.substr(0, t.find("`")));
+	hasShadow = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isRandom:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isRandom = stob(t.substr(0, t.find("`")));
+	isRandom = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isDoor:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isDoor = stob(t.substr(0, t.find("`")));
+	isDoor = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isGame:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isGame = stob(t.substr(0, t.find("`")));
+	isGame = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isItem:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isItem = stob(t.substr(0, t.find("`")));
+	isItem = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceHQ2X:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceHQ2X = stob(t.substr(0, t.find("`")));
+	forceHQ2X = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceMD5Export:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceMD5Export = stob(t.substr(0, t.find("`")));
+	forceMD5Export = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("eventID:`") + 1);

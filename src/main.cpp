@@ -281,6 +281,25 @@ void Main::mainInit()
 
 	srand((int)(time(nullptr)));
 
+
+
+	log.info("Init GUI");
+
+	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
+	gwenRenderer->Init();
+	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
+	gwenSkin = new Gwen::Skin::TexturedBase(gwenRenderer);
+	string path = Main::getPath();
+	gwenSkin->Init(path + "data/DefaultSkin.png");
+	gwenSkin->SetDefaultFont(Gwen::Utility::StringToUnicode(path + "data/fonts/Lato-Medium.ttf"), 16);
+	gwenCanvas = new Gwen::Controls::Canvas(gwenSkin);
+	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
+	gwenCanvas->SetDrawBackground(false);
+	gwenInput = new Gwen::Input::GwenSDL2();
+	gwenInput->Initialize(gwenCanvas);
+
+
+
 	//log.info("Create BobsGame");
 	//bobsGame = new BobsGame();
 	//log.info("Init BobsGame");
@@ -349,20 +368,7 @@ void Main::mainInit()
 
 
 
-	log.info("Init GUI");
 
-	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
-	gwenRenderer->Init();
-	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
-	gwenSkin = new Gwen::Skin::TexturedBase(gwenRenderer);
-	string path = Main::getPath();
-	gwenSkin->Init(path + "data/DefaultSkin.png");
-	gwenSkin->SetDefaultFont(Gwen::Utility::StringToUnicode(path + "data/fonts/Lato-Medium.ttf"), 16);
-	gwenCanvas = new Gwen::Controls::Canvas(gwenSkin);
-	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
-	gwenCanvas->SetDrawBackground(false);
-	gwenInput = new Gwen::Input::GwenSDL2();
-	gwenInput->Initialize(gwenCanvas);
 
 
 

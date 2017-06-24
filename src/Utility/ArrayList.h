@@ -30,14 +30,24 @@ public:
 //	}
 
 };
-
-//class Boolean
+//
+//bool stob(string s)
 //{
-//	static bool parseBoolean(string s)
-//	{
-//		return 0 != stoi(s);
-//	}
-//};
+//	return 0 != stoi(s);
+//}
+class Boolean
+{
+public:
+	//Parses the string argument as a boolean. The boolean returned represents the value true if the string argument is not null and is equal, ignoring case, to the string "true". 
+	//Example: Boolean.parseBoolean("True") returns true.
+	//Example: Boolean.parseBoolean("yes") returns false.
+	static bool parseBoolean(string s)
+	{
+		std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+		if (s == "true")return true;
+		return false;
+	}
+};
 //
 //class Float
 //{

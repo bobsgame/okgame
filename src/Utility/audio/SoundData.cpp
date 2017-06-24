@@ -27,29 +27,29 @@ SoundData::SoundData(int id, const string& name, const string& filename)
 
 	this->fileName = filename;
 }
-
-SoundData* SoundData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
-
-	string json = FileUtils::unzipBase64StringToString(b64);
-
-	//Gson gson = new Gson();
-	//SoundData data = gson.fromJson(json,SoundData.class);
-
-
-	return fromJSON(json);
-}
-
-SoundData* SoundData::fromJSON(const string& json)
-{ //===============================================================================================
-
-
-	//Gson* gson = new Gson();
-	SoundData* data = nullptr;// gson->fromJson(json, SoundData::typeid);
-
-
-	return data;
-}
+//
+//SoundData* SoundData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//SoundData data = gson.fromJson(json,SoundData.class);
+//
+//
+//	return fromJSON(json);
+//}
+//
+//SoundData* SoundData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	SoundData* data = nullptr;// gson->fromJson(json, SoundData::typeid);
+//
+//
+//	return data;
+//}
 
 
 string SoundData::initFromString(string t)

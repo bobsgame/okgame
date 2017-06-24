@@ -558,6 +558,9 @@
     <ClInclude Include="src\Puzzle\Legacy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lib\md5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -1056,6 +1059,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\BobMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\md5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -128,39 +128,39 @@ string FileUtils::removeIllegalFilenameChars(string filename)
 	return filename;
 }
 
-
-//==========================================================================================================================
-char* textFileRead(string filename)
-{//==========================================================================================================================
-
-	filename = Main::getPath() + filename;
-
-	FILE* fp;
-	char* content = nullptr;
-
-	long count = 0;
-
-	if (filename != "")
-	{
-		fp = fopen(filename.c_str(), "rt");
-
-		if (fp != nullptr)
-		{
-			fseek(fp, 0, SEEK_END);
-			count = ftell(fp);
-			rewind(fp);
-
-			if (count > 0)
-			{
-				content = (char *)malloc(sizeof(char) * (count + 1));
-				count = fread(content, sizeof(char), count, fp);
-				content[count] = '\0';
-			}
-			fclose(fp);
-		}
-	}
-	return content;
-}
+//
+////==========================================================================================================================
+//char* textFileRead(string filename)
+//{//==========================================================================================================================
+//
+//	filename = Main::getPath() + filename;
+//
+//	FILE* fp;
+//	char* content = nullptr;
+//
+//	long count = 0;
+//
+//	if (filename != "")
+//	{
+//		fp = fopen(filename.c_str(), "rt");
+//
+//		if (fp != nullptr)
+//		{
+//			fseek(fp, 0, SEEK_END);
+//			count = ftell(fp);
+//			rewind(fp);
+//
+//			if (count > 0)
+//			{
+//				content = (char *)malloc(sizeof(char) * (count + 1));
+//				count = fread(content, sizeof(char), count, fp);
+//				content[count] = '\0';
+//			}
+//			fclose(fp);
+//		}
+//	}
+//	return content;
+//}
 
 
 //==========================================================================================================================
@@ -294,10 +294,10 @@ BufferedImage* FileUtils::readBufferedImageFromFile(BobFile* file)
 	return new BufferedImage();
 }
 
-ArrayList<string>* FileUtils::readLines(u8* get_resource_as_stream)
-{
-	return new ArrayList<string>;
-}
+//ArrayList<string>* FileUtils::readLines(u8* get_resource_as_stream)
+//{
+//	return new ArrayList<string>;
+//}
 
 void FileUtils::makeDir(const string& cs)
 {
@@ -429,82 +429,102 @@ void FileUtils::makeDir(const string& cs)
 //	return "";
 //}
 
-
-short* FileUtils::oldLoadShortIntFile(const string& filename)
-{ //=========================================================================================================================
-	//   File* file = new File(filename);
-	//
-	//
-	//   int* intArray(((int)(file->length())) / 2);
-	//
-	//   BufferedInputStream* bin = new BufferedInputStream(FileUtils::getResourceAsStream(filename));
-	//
-	//   try
-	//   {
-	//      int sbyte1 = bin->read(); //signed byte 1
-	//      int sbyte2 = bin->read();
-	//      int i = 0;
-	//
-	//      while (sbyte1 != -1 || sbyte2 != -1)
-	//      {
-	//         int ubyte1 = sbyte1 & 0xFF;
-	//         int ubyte2 = sbyte2 & 0xFF;
-	//
-	//         int result = (ubyte2 << 8) + ubyte1;
-	//
-	//         intArray->get(i) = result;
-	//         i++;
-	//         sbyte1 = bin->read();
-	//         sbyte2 = bin->read();
-	//      }
-	//
-	//      bin->close();
-	//   }
-	//   catch (IOException e)
-	//   {
-	//      e->printStackTrace();
-	//   }
-	//
-	//   return intArray;
-	return new short;
-}
+//
+//short* FileUtils::oldLoadShortIntFile(const string& filename)
+//{ //=========================================================================================================================
+//	//   File* file = new File(filename);
+//	//
+//	//
+//	//   int* intArray(((int)(file->length())) / 2);
+//	//
+//	//   BufferedInputStream* bin = new BufferedInputStream(FileUtils::getResourceAsStream(filename));
+//	//
+//	//   try
+//	//   {
+//	//      int sbyte1 = bin->read(); //signed byte 1
+//	//      int sbyte2 = bin->read();
+//	//      int i = 0;
+//	//
+//	//      while (sbyte1 != -1 || sbyte2 != -1)
+//	//      {
+//	//         int ubyte1 = sbyte1 & 0xFF;
+//	//         int ubyte2 = sbyte2 & 0xFF;
+//	//
+//	//         int result = (ubyte2 << 8) + ubyte1;
+//	//
+//	//         intArray->get(i) = result;
+//	//         i++;
+//	//         sbyte1 = bin->read();
+//	//         sbyte2 = bin->read();
+//	//      }
+//	//
+//	//      bin->close();
+//	//   }
+//	//   catch (IOException e)
+//	//   {
+//	//      e->printStackTrace();
+//	//   }
+//	//
+//	//   return intArray;
+//	return new short;
+//}
 
 
 //=========================================================================================================================
-short* FileUtils::loadShortIntFile(string filename)
+vector<uint16_t>* FileUtils::loadShortIntFile(string filename)
 {//=========================================================================================================================
 
-	//		byte[] byteArray = loadByteFile(filename);
-	//
-	//		short[] shortArray = new short[byteArray.length/2];
-	//
-	//		for(int x=0;x<shortArray.length;x++)
-	//		{
-	//			short sbyte1=byteArray[x*2+0];//signed byte 1
-	//			short sbyte2=byteArray[x*2+1];
-	//
-	//
-	//			short ubyte1 = sbyte1 & 0xFF;
-	//			short ubyte2 = sbyte2 & 0xFF;
-	//
-	//			short result = (ubyte2<<8) + ubyte1;
-	//
-	//			shortArray[x]=result;
-	//		}
+	vector<u8> *byteArray = loadByteFileFromExePath(filename);
+	
+	vector<uint16_t> *shortArray = new vector<uint16_t>(byteArray->size() / 2);
+	
+			for(int x=0;x<shortArray->size();x++)
+			{
+				short sbyte1=(*byteArray)[x*2+0];//signed byte 1
+				short sbyte2=(*byteArray)[x*2+1];
+	
+	
+				short ubyte1 = sbyte1 & 0xFF;
+				short ubyte2 = sbyte2 & 0xFF;
+	
+				short result = (ubyte2<<8) + ubyte1;
+	
+				(*shortArray)[x]=result;
+			}
 
+			delete byteArray;//does this leak? delete[] ?
 	//-------------------
 	//alt
 	//-------------------
 
 	//return getIntArrayFromByteArray(loadByteFile(filename));
 
-	return new short;
+	return shortArray;
 }
+
+
+
 // ===============================================================================================
-u8* FileUtils::getByteArrayFromIntArray(int* intArray)
+vector<u8>* FileUtils::getByteArrayFromIntArray(vector<int>*intArray)
 {// ===============================================================================================
-	return new u8[1];
+
+	vector<u8>* byteArray = new vector<u8>(intArray->size() * 4);
+
+	for (int i = 0; i < intArray->size(); i++)
+	{
+
+		int n = intArray->at(i);
+
+		byteArray->push_back((n >> 24) & 0xFF);
+		byteArray->push_back((n >> 16) & 0xFF);
+		byteArray->push_back((n >> 8) & 0xFF);
+		byteArray->push_back(n & 0xFF);
+	}
+
+	return byteArray;
 }
+
+
 
 
 //save 16 bit to binary
@@ -524,39 +544,45 @@ u8* FileUtils::getByteArrayFromIntArray(int* intArray)
 #include <functional> 
 #include <cctype>
 #include <locale>
-
+//=========================================================================================================================
 // trim from start (in place)
-static inline void ltrim(std::string &s) {
+void FileUtils::ltrim(std::string &s) 
+{//=========================================================================================================================
 	s.erase(s.begin(), std::find_if(s.begin(), s.end(),
 		std::not1(std::ptr_fun<int, int>(std::isspace))));
 }
-
+//=========================================================================================================================
 // trim from end (in place)
-static inline void rtrim(std::string &s) {
+void FileUtils::rtrim(std::string &s) 
+{//=========================================================================================================================
 	s.erase(std::find_if(s.rbegin(), s.rend(),
 		std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-}
+}//=========================================================================================================================
 
 // trim from both ends (in place)
-static inline void trim(std::string &s) {
+void FileUtils::trim(std::string &s) 
+{//=========================================================================================================================
 	ltrim(s);
 	rtrim(s);
 }
-
+//=========================================================================================================================
 // trim from start (copying)
-static inline std::string ltrimmed(std::string s) {
+string FileUtils::ltrimmed(std::string s) 
+{//=========================================================================================================================
 	ltrim(s);
 	return s;
 }
-
+//=========================================================================================================================
 // trim from end (copying)
-static inline std::string rtrimmed(std::string s) {
+string FileUtils::rtrimmed(std::string s) 
+{//=========================================================================================================================
 	rtrim(s);
 	return s;
 }
-
+//=========================================================================================================================
 // trim from both ends (copying)
-static inline std::string trimmed(std::string s) {
+string FileUtils::trimmed(std::string s) 
+{//=========================================================================================================================
 	trim(s);
 	return s;
 }
@@ -605,80 +631,114 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 	return lines;
 }
 
+//
+////=========================================================================================================================
+//u8* FileUtils::loadByteFileFromExePath(string filename, int* size_return)
+//{//=========================================================================================================================
+//
+//	filename = Main::getPath() + filename;
+//
+//
+//
+//
+////	char* cfilepointer = NULL;
+////	FILE* cfile;
+////	int csize;
+////
+////	cfile = fopen(fullname, "rb");
+////	if (cfile != NULL)
+////	{
+////		//get file size using stat
+////		fseek(cfile, 0, SEEK_END);
+////		csize = ftell(cfile);
+////		rewind(cfile);
+////
+////		//fprintf(stdout,"loaded file: %s size: %d\n",fullname,size);
+////
+////		cfilepointer = (char*)malloc(csize * sizeof(char));
+////
+////		if (cfilepointer == NULL)
+////		{
+////			//ERROR_set_error(fullname);
+////			//log.error(string(fullname) + " malloc failed");
+////		}
+////
+////		fread(cfilepointer, 1, csize, cfile);
+////	}
+////	if (cfile == NULL)
+////	{
+////		//ERROR_set_error(fullname);
+////		log.error(string(fullname) + " could not be opened, probably not found");
+////	}
+////	fclose(cfile);
+//////	//HARDWARE_wait_for_vbl();
+////
+//
+//	
+//
+//	char* cppfilepointer = NULL;
+//	streampos cppsize;
+//
+//	ifstream cppfile(filename, ios::in | ios::binary | ios::ate);
+//	if (cppfile.is_open())
+//	{
+//		cppsize = cppfile.tellg();
+//		cppfilepointer = new char[(int)cppsize];
+//		cppfile.seekg(0, ios::beg);
+//		cppfile.read(cppfilepointer, cppsize);
+//		cppfile.close();
+//
+//		if (size_return != nullptr)*size_return = cppsize;
+//		//log.info("Loaded file: " + filename);
+//	}
+//	else
+//	{
+//		log.error("Could not open file: "+filename);
+//	}
+//	
+//	return (u8*)cppfilepointer;
+//}
+
+
 
 //=========================================================================================================================
-u8* FileUtils::loadByteFileFromExePath(string filename)
+vector<u8>* FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
 
-//	char* cfilepointer = NULL;
-//	FILE* cfile;
-//	int csize;
-//
-//	cfile = fopen(fullname, "rb");
-//	if (cfile != NULL)
-//	{
-//		//get file size using stat
-//		fseek(cfile, 0, SEEK_END);
-//		csize = ftell(cfile);
-//		rewind(cfile);
-//
-//		//fprintf(stdout,"loaded file: %s size: %d\n",fullname,size);
-//
-//		cfilepointer = (char*)malloc(csize * sizeof(char));
-//
-//		if (cfilepointer == NULL)
-//		{
-//			//ERROR_set_error(fullname);
-//			//log.error(string(fullname) + " malloc failed");
-//		}
-//
-//		fread(cfilepointer, 1, csize, cfile);
-//	}
-//	if (cfile == NULL)
-//	{
-//		//ERROR_set_error(fullname);
-//		log.error(string(fullname) + " could not be opened, probably not found");
-//	}
-//	fclose(cfile);
-////	//HARDWARE_wait_for_vbl();
-//
+	// open the file:
+	std::ifstream file(filename, std::ios::binary);
+
+	// Stop eating new lines in binary mode!!!
+	file.unsetf(std::ios::skipws);
+
+	// get its size:
+	std::streampos fileSize;
+
+	file.seekg(0, std::ios::end);
+	fileSize = file.tellg();
+	file.seekg(0, std::ios::beg);
+
+	// reserve capacity
+	std::vector<u8> *vec = new vector<u8>();
+	vec->reserve(fileSize);
+
+	// read the data:
+	vec->insert(vec->begin(),
+		std::istream_iterator<u8>(file),
+		std::istream_iterator<u8>());
+
+	return vec;
 
 
-
-
-
-	char* cppfilepointer = NULL;
-	streampos cppsize;
-
-	ifstream cppfile(filename, ios::in | ios::binary | ios::ate);
-	if (cppfile.is_open())
-	{
-		cppsize = cppfile.tellg();
-		cppfilepointer = new char[(int)cppsize];
-		cppfile.seekg(0, ios::beg);
-		cppfile.read(cppfilepointer, cppsize);
-		cppfile.close();
-
-		//log.info("Loaded file: " + filename);
-	}
-	else
-	{
-		log.error("Could not open file: "+filename);
-	}
-	
-
-
-	return (u8*)cppfilepointer;
 }
 
 
-constexpr char hexmap[] = { '0', '1', '2', '3', '4', '5', '6', '7',
-'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-
-std::string byteArrayToHexString(u8 *data, unsigned long len)
-{
+//=========================================================================================================================
+std::string FileUtils::byteArrayToHexString(u8 *data, unsigned long len)
+{//=========================================================================================================================
+	constexpr char hexmap[] = { '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 	std::string s(len * 2, ' ');
 	for (unsigned long i = 0; i < len; ++i) {
 		s[2 * i] = hexmap[(data[i] & 0xF0) >> 4];
@@ -686,9 +746,9 @@ std::string byteArrayToHexString(u8 *data, unsigned long len)
 	}
 	return s;
 }
-
-u8* hexStringToByteArray(const string &hex)
-{
+//=========================================================================================================================
+u8* FileUtils::hexStringToByteArray(const string &hex)
+{//=========================================================================================================================
 	u8* bytes = new u8[hex.length()/2];
 
 	for (unsigned int i = 0; i < hex.length(); i += 2) 
@@ -740,9 +800,9 @@ static const std::string base64_chars =
 static inline bool is_base64(u8 c) {
 	return (isalnum(c) || (c == '+') || (c == '/'));
 }
-
-std::string encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned long in_len)
-{
+//=========================================================================================================================
+std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned long in_len)
+{//=========================================================================================================================
 
 	std::string ret;
 	int i = 0;
@@ -785,8 +845,9 @@ std::string encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned lo
 	return ret;
 
 }
-u8* decodeBase64StringToByteArray(std::string const& encoded_string, unsigned long &returnLength)
-{
+//=========================================================================================================================
+u8* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string, unsigned long &returnLength)
+{//=========================================================================================================================
 	long in_len = (long)encoded_string.size();
 	int i = 0;
 	int j = 0;
@@ -1282,21 +1343,25 @@ string FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
 
 
-	u8* bytes = loadByteFileFromExePath(filename);
+	vector<u8>* bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
-	delete[] bytes;
+	delete bytes;
 	return md5;
 
 
 }
 
+#include "md5.h"
 
-string FileUtils::getByteArrayMD5Checksum(u8* bytes)
+string FileUtils::getByteArrayMD5Checksum(vector<u8>* bytes)
 { //===============================================================================================
 
 
-	std::stringstream stringStream((char*)bytes);
-	return getStringMD5(stringStream.str());
+	return md5(bytes->data(), bytes->size());
+
+
+	//std::stringstream stringStream((char*)bytes);
+	//return getStringMD5(stringStream.str());
 
 
 }
@@ -1304,16 +1369,19 @@ string FileUtils::getByteArrayMD5Checksum(u8* bytes)
 string FileUtils::getStringMD5(const string& stringToMD5)
 { //===============================================================================================
 
+	return md5(stringToMD5);
 
-	Poco::MD5Engine md5;
-	Poco::DigestOutputStream outstr(md5);
-	outstr << stringToMD5;
-	outstr.flush(); //to pass everything to the digest engine
-	const Poco::DigestEngine::Digest& digest = md5.digest();
-	std::string md5string = Poco::DigestEngine::digestToHex(digest);
-	return md5string;
+//	Poco::MD5Engine md5;
+//	Poco::DigestOutputStream outstr(md5);
+//	outstr << stringToMD5;
+//	outstr.flush(); //to pass everything to the digest engine
+//	const Poco::DigestEngine::Digest& digest = md5.digest();
+//	std::string md5string = Poco::DigestEngine::digestToHex(digest);
+//	return md5string;
 }
 
+
+//TODO: 
 void FileUtils::saveImage(const string& s, BufferedImage* bufferedImage)
 { //===============================================================================================
 
@@ -1934,27 +2002,28 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 	//   }
 }
 
-u8* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
+vector<u8>* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
-	//   downloadSmallFileToCacheIfNotExist(getFileName);
-	//
-	//   return FileUtils::loadByteFile(string("") + FileUtils::cacheDir + getFileName);
+	   downloadSmallFileToCacheIfNotExist(fileName);
+	
+	   return loadByteFileFromExePath(string("") + FileUtils::cacheDir + fileName);
 
-	u8* a = new u8;
-	return a;
+
 }
 
-int* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
+
+vector<int>* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
-	//
-	//   downloadSmallFileToCacheIfNotExist(getFileName);
-	//
-	//   return FileUtils::loadShortIntFile(string("") + FileUtils::cacheDir + getFileName);
+	
+	   downloadSmallFileToCacheIfNotExist(fileName);
+	
+	   return loadShortIntFile(string("") + FileUtils::cacheDir + fileName);
 
-	int* a = new int;
-	return a;
+	   //are they exported as 16 or 32??
+
+
 }
 
 void FileUtils::saveByteArrayToCache(u8* byteArray, const string& md5FileName)

@@ -61,28 +61,44 @@ public:
 	static string removeIllegalFilenameChars(string s);
 	//static void fixPath(string &fullname);
 	static BufferedImage* readBufferedImageFromFile(BobFile* file);
-	static ArrayList<string>* readLines(u8* get_resource_as_stream);
+	//static ArrayList<string>* readLines(u8* get_resource_as_stream);
 	static void makeDir(const string& cs);
 	//static unsigned char* decodeBase64StringToByteArray(const string& cs);
 	//static string encodeByteArrayToBase64String(unsigned char const* bytes_to_encode, unsigned int in_len);
 
 	//static u8* getResourceAsStream(const string& filename);//was InputStream
 	//static string getResource(const string& filename);//was URL
-	static short* oldLoadShortIntFile(const string& filename);
-	static short* loadShortIntFile(string filename);
+
+
+	static void ltrim(std::string &s);
+	static void rtrim(std::string &s);
+	static void trim(std::string &s);
+	static string ltrimmed(std::string s);
+	static string rtrimmed(std::string s);
+	static string trimmed(std::string s);
+
+
+
+	//static short* oldLoadShortIntFile(const string& filename);
+	static vector<uint16_t>* loadShortIntFile(string filename);
 	static string loadTextFileFromExePathAndTrim(string filename);
 	static ArrayList<string>* loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename);
-	static u8* loadByteFileFromExePath(string filename);
-	static string zipByteArrayToBase64String(const u8* byteArray, unsigned long size);
+	static vector<u8>* loadByteFileFromExePath(string filename);
+	//static vector<u8>* loadByteFileFromExePathIntoVector(string filename);
+	static string zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
 	static u8* unzipBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
 	static string zipStringToBase64String(const string& s);
 	static string unzipBase64StringToString(const string& s);
 	static string getFileMD5Checksum(const string& filename);
-	static u8* getByteArrayFromIntArray(int* intArray);
-	static string getByteArrayMD5Checksum(u8* bytes);
+	static vector<u8>* getByteArrayFromIntArray(vector<int>*intArray);
+	static string getByteArrayMD5Checksum(vector<u8>* bytes);
 	static string getStringMD5(const string& stringToMD5);
 	static void saveImage(const string& s, BufferedImage* bufferedImage);
 
+	static std::string byteArrayToHexString(u8 *data, unsigned long len);
+	static u8* hexStringToByteArray(const string &hex);
+	static std::string encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned long in_len);
+	static u8* decodeBase64StringToByteArray(std::string const& encoded_string, unsigned long &returnLength);
 
 	static string appDataPath;
 	//static string slash;

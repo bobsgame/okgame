@@ -116,6 +116,7 @@
     <ClInclude Include="lib\authenticate-GWEN-master\include\Gwen\renderer\gwen_renderer_sdl2.h" />
     <ClInclude Include="lib\DG_misc.h" />
     <ClInclude Include="lib\libzip-1.1.3\lib\zipconf.h" />
+    <ClInclude Include="lib\md5.h" />
     <ClInclude Include="lib\SDL_platform.h" />
     <ClInclude Include="lib\stb_image_resize.h" />
     <ClInclude Include="lib\stb_image_write.h" />
@@ -301,6 +302,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="lib\HQ2X\HQ2X.cpp" />
+    <ClCompile Include="lib\md5.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="lib\minilzo-2.09\minilzo.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>

@@ -53,15 +53,14 @@ void Map::initMap(Engine* g, MapData* mapData)
 	chunksWidth = (mapData->getWidthTiles1X() / chunkSizeTiles1X) + 1;
 	chunksHeight = (mapData->getHeightTiles1X() / chunkSizeTiles1X) + 1;
 
-	//   if (chunkTexture.isEmpty())
-	//   {
-	//      chunkTexture = new ArrayList<Texture*>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
-	//      for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
-	//      {
-	//         //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	//         delete chunkTexture.get(i);
-	//      }
-	//   }
+//	if (chunkTexture.isEmpty())
+//	{
+//	    //chunkTexture = new ArrayList<Texture*>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
+//	    for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
+//	    {
+//	        delete chunkTexture.get(i);
+//	    }
+//	}
 
 	if (chunkPNGFileExists == nullptr)
 	{
@@ -2499,6 +2498,8 @@ bool Map::isXYWithinScreen(float x, float y)
 //The following method was originally marked 'synchronized':
 BobTexture* Map::getChunkTexture(int index)
 { //=========================================================================================================================
+
+	if (chunkTexture.containsKey(index) == false)return nullptr;
 	return chunkTexture.get(index);
 }
 

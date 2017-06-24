@@ -132,10 +132,7 @@ using namespace std;
 using namespace std;
 
 
-bool stob(string s)
-{
-	return 0 != stoi(s);
-}
+
 
 
 typedef struct

@@ -70,7 +70,7 @@ string MusicData::initFromString(string t)
 
 	t = t.substr(t.find("preload:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	preload = stob(t.substr(0, t.find("`")));
+	preload = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 

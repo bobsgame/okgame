@@ -313,12 +313,12 @@ string AreaData::initFromString(string t)
 
 	t = t.substr(t.find("randomPointOfInterestOrExit:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomPointOfInterestOrExit = stob(t.substr(0, t.find("`")));
+	randomPointOfInterestOrExit = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomNPCSpawnPoint:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomNPCSpawnPoint = stob(t.substr(0, t.find("`")));
+	randomNPCSpawnPoint = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("standSpawnDirection:`") + 1);
@@ -333,17 +333,17 @@ string AreaData::initFromString(string t)
 
 	t = t.substr(t.find("randomWaitTime:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomWaitTime = stob(t.substr(0, t.find("`")));
+	randomWaitTime = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("onlyOneAllowed:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	onlyOneAllowed = stob(t.substr(0, t.find("`")));
+	onlyOneAllowed = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomNPCStayHere:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomNPCStayHere = stob(t.substr(0, t.find("`")));
+	randomNPCStayHere = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnChance:`") + 1);
@@ -353,12 +353,12 @@ string AreaData::initFromString(string t)
 
 	t = t.substr(t.find("randomSpawnOnlyTryOnce:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnOnlyTryOnce = stob(t.substr(0, t.find("`")));
+	randomSpawnOnlyTryOnce = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnOnlyOffscreen:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnOnlyOffscreen = stob(t.substr(0, t.find("`")));
+	randomSpawnOnlyOffscreen = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnDelay:`") + 1);
@@ -368,42 +368,42 @@ string AreaData::initFromString(string t)
 
 	t = t.substr(t.find("randomSpawnKids:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnKids = stob(t.substr(0, t.find("`")));
+	randomSpawnKids = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnAdults:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnAdults = stob(t.substr(0, t.find("`")));
+	randomSpawnAdults = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnMales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnMales = stob(t.substr(0, t.find("`")));
+	randomSpawnMales = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnFemales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnFemales = stob(t.substr(0, t.find("`")));
+	randomSpawnFemales = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnCars:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnCars = stob(t.substr(0, t.find("`")));
+	randomSpawnCars = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("autoPilot:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	autoPilot = stob(t.substr(0, t.find("`")));
+	autoPilot = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("playerFaceDirection:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	playerFaceDirection = stob(t.substr(0, t.find("`")));
+	playerFaceDirection = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("suckPlayerIntoMiddle:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	suckPlayerIntoMiddle = stob(t.substr(0, t.find("`")));
+	suckPlayerIntoMiddle = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("eventID:`") + 1);
@@ -451,7 +451,7 @@ string AreaData::initFromString(string t)
 
 	t = t.substr(t.find("isWarpArea:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isWarpArea = stob(t.substr(0, t.find("`")));
+	isWarpArea = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("destinationMapName:`") + 1);

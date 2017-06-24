@@ -434,7 +434,7 @@ void Engine::incomingSpriteData(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	SpriteData* data = SpriteData::fromBase64ZippedJSON(s);
+	SpriteData* data = new SpriteData(); data->initFromString(s);
 
 
 	if (data == nullptr)
@@ -474,7 +474,7 @@ void Engine::incomingMapData(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	MapData* data = MapData::fromBase64ZippedJSON(s);
+	MapData* data = new MapData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -537,7 +537,7 @@ void Engine::incomingDialogue(string s)
 
 								   //Dialogue:id-name:base64Blob
 
-	DialogueData* data = DialogueData::fromBase64ZippedJSON(s);
+	DialogueData* data = new DialogueData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -564,7 +564,7 @@ void Engine::incomingEvent(string s)
 	s = s.substr(s.find(":") + 1); //intentional ::
 
 
-	EventData* data = EventData::fromBase64ZippedJSON(s);
+	EventData* data = new EventData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -590,7 +590,7 @@ void Engine::incomingGameString(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	GameStringData* data = GameStringData::fromBase64ZippedJSON(s);
+	GameStringData* data = new GameStringData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -616,7 +616,7 @@ void Engine::incomingFlag(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	FlagData* data = FlagData::fromBase64ZippedJSON(s);
+	FlagData* data = new FlagData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -642,7 +642,7 @@ void Engine::incomingSkill(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	SkillData* data = SkillData::fromBase64ZippedJSON(s);
+	SkillData* data = new SkillData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -667,7 +667,7 @@ void Engine::incomingMusic(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	MusicData* data = MusicData::fromBase64ZippedJSON(s);
+	MusicData* data = new MusicData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -693,7 +693,7 @@ void Engine::incomingSound(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	SoundData* data = SoundData::fromBase64ZippedJSON(s);
+	SoundData* data = new SoundData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
