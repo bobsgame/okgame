@@ -51,6 +51,38 @@ SoundData* SoundData::fromJSON(const string& json)
 	return data;
 }
 
+
+string SoundData::initFromString(string t)
+{
+	t = super::initFromString(t);
+
+
+	t = t.substr(t.find("fileName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	fileName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("fullFilePath:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	fullFilePath = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("md5Name:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	md5Name = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+
+
+
+
+	return t;
+
+
+}
+
+
+
 string SoundData::getTYPEIDString()
 { //===============================================================================================
 	return string("SOUND.") + to_string(getID());

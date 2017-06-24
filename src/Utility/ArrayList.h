@@ -24,7 +24,30 @@ public:
 	int i;
 	Integer(int i) { this->i = i; }
 	int value() { return i; }
+//	static int parseInt(string s)
+//	{
+//		return stoi(s);
+//	}
+
 };
+
+//class Boolean
+//{
+//	static bool parseBoolean(string s)
+//	{
+//		return 0 != stoi(s);
+//	}
+//};
+//
+//class Float
+//{
+//	static float parseFloat(string s)
+//	{
+//		return stof(s);
+//	}
+//
+//};
+
 
 
 template <typename E> class ArrayList

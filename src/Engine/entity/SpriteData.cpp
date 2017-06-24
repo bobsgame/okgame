@@ -95,26 +95,284 @@ void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, i
 	animationList->add(new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
 }
 
-SpriteData* SpriteData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//SpriteData* SpriteData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//	//string decode64 = FileUtils::decodeBase64String(b64);
+//	string json = "";// FileUtils::unzipBase64StringToString(decode64);
+//
+//
+//	return fromJSON(json);
+//}
+//
+//SpriteData* SpriteData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//	//Gson* gson = new Gson();
+//	SpriteData* data = nullptr;// gson->fromJson(json, SpriteData::typeid);
+//
+//
+//	return data;
+//}
 
 
-	//string decode64 = FileUtils::decodeBase64String(b64);
-	string json = "";// FileUtils::unzipBase64StringToString(decode64);
 
 
-	return fromJSON(json);
+//
+////===============================================================================================
+//string SpriteData::toString()
+//{//===============================================================================================
+//
+//	string s = "";
+//
+//	s = super::toString();
+//
+//
+//	s += "comment:`" + comment + "`,";
+//	s += "displayName:`" + displayName + "`,";
+//	s += "widthPixels1X:`" + widthPixels1X + "`,";
+//	s += "heightPixels1X:`" + heightPixels1X + "`,";
+//	s += "frames:`" + frames + "`,";
+//	s += "isNPC:`" + isNPC + "`,";
+//	s += "isKid:`" + isKid + "`,";
+//	s += "isAdult:`" + isAdult + "`,";
+//	s += "isMale:`" + isMale + "`,";
+//	s += "isFemale:`" + isFemale + "`,";
+//	s += "isCar:`" + isCar + "`,";
+//	s += "isAnimal:`" + isAnimal + "`,";
+//	s += "hasShadow:`" + hasShadow + "`,";
+//	s += "isRandom:`" + isRandom + "`,";
+//	s += "isDoor:`" + isDoor + "`,";
+//	s += "isGame:`" + isGame + "`,";
+//	s += "isItem:`" + isItem + "`,";
+//	s += "forceHQ2X:`" + forceHQ2X + "`,";
+//	s += "forceMD5Export:`" + forceMD5Export + "`,";
+//	s += "eventID:`" + eventID + "`,";
+//	s += "itemGameDescription:`" + itemGameDescription + "`,";
+//	s += "gamePrice:`" + gamePrice + "`,";
+//	s += "utilityOffsetXPixels1X:`" + utilityOffsetXPixels1X + "`,";
+//	s += "utilityOffsetYPixels1X:`" + utilityOffsetYPixels1X + "`,";
+//	s += "dataMD5:`" + dataMD5 + "`,";
+//	s += "paletteMD5:`" + paletteMD5 + "`,";
+//	for (int i = 0; i<animationList->size(); i++)
+//	{
+//
+//		s += "animationList:";
+//		s += "frameSequenceName:`" + animationList->get(i)->frameSequenceName + "`,";
+//		s += "frameStart:`" + animationList->get(i)->frameStart + "`,";
+//		s += "hitBoxFromLeftPixels1X:`" + animationList->get(i)->hitBoxFromLeftPixels1X + "`,";
+//		s += "hitBoxFromRightPixels1X:`" + animationList->get(i)->hitBoxFromRightPixels1X + "`,";
+//		s += "hitBoxFromTopPixels1X:`" + animationList->get(i)->hitBoxFromTopPixels1X + "`,";
+//		s += "hitBoxFromBottomPixels1X:`" + animationList->get(i)->hitBoxFromBottomPixels1X + "`,";
+//	}
+//
+//
+//
+//	return s;
+//}
+
+
+
+
+string SpriteData::initFromString(string t)
+{
+	t = super::initFromString(t);
+
+
+
+	t = t.substr(t.find("comment:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	comment = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("displayName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	displayName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("widthPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	widthPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("heightPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	heightPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("frames:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	frames = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isNPC:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isNPC = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isKid:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isKid = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isAdult:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isAdult = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isMale:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isMale = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isFemale:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isFemale = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isCar:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isCar = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isAnimal:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isAnimal = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("hasShadow:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	hasShadow = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isRandom:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isRandom = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isDoor:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isDoor = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isGame:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isGame = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isItem:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isItem = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("forceHQ2X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	forceHQ2X = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("forceMD5Export:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	forceMD5Export = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("eventID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	eventID = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("itemGameDescription:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	itemGameDescription = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("gamePrice:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	gamePrice = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("utilityOffsetXPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	utilityOffsetXPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("utilityOffsetYPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	utilityOffsetYPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("dataMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	dataMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("paletteMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	paletteMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+
+	while(String::startsWith(t,"animationList:"))
+	{
+		string frameSequenceName = "";
+		int frameStart = 0;
+		int hitBoxFromLeftPixels1X = 0;
+		int hitBoxFromRightPixels1X = 0;
+		int hitBoxFromTopPixels1X = 0;
+		int hitBoxFromBottomPixels1X = 0;
+
+		t = t.substr(t.find("frameSequenceName:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		frameSequenceName = t.substr(0, t.find("`"));
+		t = t.substr(t.find("`,") + 2);
+
+		t = t.substr(t.find("frameStart:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		frameStart = stoi(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		t = t.substr(t.find("hitBoxFromLeftPixels1X:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		hitBoxFromLeftPixels1X = stoi(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		t = t.substr(t.find("hitBoxFromRightPixels1X:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		hitBoxFromRightPixels1X = stoi(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		t = t.substr(t.find("hitBoxFromTopPixels1X:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		hitBoxFromTopPixels1X = stoi(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		t = t.substr(t.find("hitBoxFromBottomPixels1X:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		hitBoxFromBottomPixels1X = stoi(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		SpriteAnimationSequence *s = new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
+		animationList->add(s);
+	}
+
+	return t;
+
+
 }
 
-SpriteData* SpriteData::fromJSON(const string& json)
-{ //===============================================================================================
-
-	//Gson* gson = new Gson();
-	SpriteData* data = nullptr;// gson->fromJson(json, SpriteData::typeid);
 
 
-	return data;
-}
+
+
+
+
+
+
+
+
+
+
+
 
 string SpriteData::getTYPEIDString()
 { //===============================================================================================

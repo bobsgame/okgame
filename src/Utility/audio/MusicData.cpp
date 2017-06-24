@@ -28,29 +28,68 @@ MusicData::MusicData(int id, const string& name, const string& filename)
 	this->fileName = filename;
 }
 
-MusicData* MusicData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//MusicData* MusicData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	return fromJSON(json);
+//}
+//
+//MusicData* MusicData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	MusicData* data = nullptr;// gson->fromJson(json, MusicData::typeid);
+//
+//
+//	return data;
+//}
 
-	string json = FileUtils::unzipBase64StringToString(b64);
 
-	return fromJSON(json);
+string MusicData::initFromString(string t)
+{
+	t = super::initFromString(t);
+
+
+	t = t.substr(t.find("fileName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	fileName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("fullFilePath:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	fullFilePath = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("md5Name:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	md5Name = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("preload:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	preload = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+
+
+
+
+	return t;
+
+
 }
 
-MusicData* MusicData::fromJSON(const string& json)
-{ //===============================================================================================
 
 
-	//Gson* gson = new Gson();
-	MusicData* data = nullptr;// gson->fromJson(json, MusicData::typeid);
-
-
-	return data;
-}
 
 string MusicData::getTYPEIDString()
 { //===============================================================================================
 	return string("MUSIC.") + to_string(getID());
 }
+
 
 string MusicData::getFileName()
 {

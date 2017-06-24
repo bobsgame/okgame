@@ -123,29 +123,183 @@ MapData::MapData(int id, const string& name, int widthTiles1X, int heightTiles1X
 	//		this.heightPixelsHQ2X = getHeightTiles1X*2*8; //hq2x pixel width
 }
 
-MapData* MapData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//MapData* MapData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//
+//	//Gson gson = new Gson();
+//	//MapData data = gson.fromJson(json,MapData.class);
+//
+//	return fromJSON(json);
+//}
+//
+//MapData* MapData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	MapData* data = nullptr;// gson->fromJson(json, MapData::typeid);
+//
+//
+//	return data;
+//}
 
 
-	string json = FileUtils::unzipBase64StringToString(b64);
+
+string MapData::initFromString(string t)
+{
+	t = super::initFromString(t);
 
 
-	//Gson gson = new Gson();
-	//MapData data = gson.fromJson(json,MapData.class);
+	t = t.substr(t.find("mapNote:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	mapNote = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
 
-	return fromJSON(json);
+	t = t.substr(t.find("widthTiles1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	widthTiles1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("heightTiles1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	heightTiles1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("maxRandoms:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	maxRandoms = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isOutside:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isOutside = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("preload:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	preload = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("groundLayerMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	groundLayerMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("groundObjectsMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	groundObjectsMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("groundShadowMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	groundShadowMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("objectsMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	objectsMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("objects2MD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	objects2MD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("objectShadowMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	objectShadowMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("aboveMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	aboveMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("above2MD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	above2MD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("spriteShadowMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	spriteShadowMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("groundShaderMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	groundShaderMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("cameraBoundsMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	cameraBoundsMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("hitBoundsMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	hitBoundsMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("lightMaskMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	lightMaskMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("paletteMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	paletteMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("tilesMD5:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	tilesMD5 = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("stateDataList:{") + 1);
+	t = t.substr(t.find("{") + 1);
+	while (String::startsWith(t,"}") == false)
+	{
+		MapStateData *data = new MapStateData();
+		t = data->initFromString(t);
+		stateDataList->add(data);
+	}
+	t = t.substr(t.find("}") + 1);
+	t = t.substr(t.find(",") + 1);
+
+	t = t.substr(t.find("eventDataList:{") + 1);
+	t = t.substr(t.find("{") + 1);
+	while (String::startsWith(t,"}") == false)
+	{
+		EventData *data = new EventData();
+		t = data->initFromString(t);
+		eventDataList->add(data);
+	}
+	t = t.substr(t.find("}") + 1);
+	t = t.substr(t.find(",") + 1);
+
+	t = t.substr(t.find("doorDataList:{") + 1);
+	t = t.substr(t.find("{") + 1);
+	while (String::startsWith(t,"}") == false)
+	{
+		DoorData *data = new DoorData();
+		t = data->initFromString(t);
+		doorDataList->add(data);
+	}
+	t = t.substr(t.find("}") + 1);
+	t = t.substr(t.find(",") + 1);
+
+
+	return t;
+
+
 }
 
-MapData* MapData::fromJSON(const string& json)
-{ //===============================================================================================
 
 
-	//Gson* gson = new Gson();
-	MapData* data = nullptr;// gson->fromJson(json, MapData::typeid);
-
-
-	return data;
-}
 
 string MapData::getTYPEIDString()
 { //===============================================================================================

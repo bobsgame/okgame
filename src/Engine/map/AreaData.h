@@ -14,97 +14,56 @@ class Logger;
 class AreaData : public AssetData
 {
 private:
+	typedef AssetData super;
+
+private:
 	
 	int mapXPixels1X = 0;
-	
 	int mapYPixels1X = 0;
-
-	
 	int widthPixels1X = 0;
-	
 	int heightPixels1X = 0;
-
-
-	
 	bool randomPointOfInterestOrExit = false;
-	
 	bool randomNPCSpawnPoint = false;
-	
 	int standSpawnDirection = -1;
-	
 	int waitHereTicks = 0; //see random stay here
-	
 	bool randomWaitTime = false;
-	
 	bool onlyOneAllowed = false;
-	
 	bool randomNPCStayHere = false; //for cars, audience//the reason there are BOTH stay here and wait here==-1 is that i might want a spawned NPC to walk away from a chair, but a new NPC come and sit down permanently. just a little more lively! :-) I don't know if i thought of this when i put them in, but i could presumably use it for that.
-	
 	float randomSpawnChance = 1.0f; //will distribute max randoms across spawn points based on chance.
-	
 	bool randomSpawnOnlyTryOnce = false; //one shot spawn chance for cars, audience
-	
 	bool randomSpawnOnlyOffscreen = false;
-	
 	int randomSpawnDelay = 1000;
-	
 	bool randomSpawnKids = true;
-	
 	bool randomSpawnAdults = true;
-	
 	bool randomSpawnMales = true;
-	
 	bool randomSpawnFemales = true;
-	
 	bool randomSpawnCars = false;
 
 	//TODO: handle these
-	
 	bool autoPilot = false; //player will enable autopilot, show autopilot getCaption, follow connections
-	
 	bool playerFaceDirection = false; //for couches, chairs
-	
 	bool suckPlayerIntoMiddle = false; //for chairs
-	
 	int eventID = -1;
-
-
-	
 	string comment = "";
-
-
-	
 	int mapID = -1;
-	
 	int stateID = -1;
 
 
 	//can pull connections from sprites to areas and doors, should add these to points of interest list inside sprite.
 	//automatically connect lines from all random points to any random spawn points, when click on random spawn point, should go to other spawn points as well
-
-	
 	ArrayList<string>* connectionTYPEIDList = new ArrayList<string>(); //should ALWAYS be by ID
 
 
 	//warp area specific
-
 	string destinationTYPEID = ""; //AREA.ID
 
-
-	
 	int arrivalXPixels1X = -1;
-	
 	int arrivalYPixels1X = -1;
-
-
-	
 	bool isWarpArea = false;
 
 
 	//ONLY USED FOR EXPORT
-	
 	string destinationMapName = "";
-	
 	string destinationWarpAreaName = "";
 
 
@@ -124,11 +83,13 @@ public:
 	virtual void addConnectionString(const string& s);
 
 
-	static AreaData* fromBase64ZippedJSON(const string& b64);
+//	static AreaData* fromBase64ZippedJSON(const string& b64);
+//
+//
+//	static AreaData* fromJSON(const string& json);
 
 
-	static AreaData* fromJSON(const string& json);
-
+	virtual string initFromString(string t);
 
 	virtual string getTYPEIDString();
 

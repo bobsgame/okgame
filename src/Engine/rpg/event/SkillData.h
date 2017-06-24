@@ -13,6 +13,11 @@ class Logger;
 
 class SkillData : public AssetData
 {
+
+private:
+	typedef AssetData super;
+
+
 public:
 	SkillData();
 
@@ -20,10 +25,11 @@ public:
 	SkillData(int id, const string& name);
 
 
-	static SkillData* fromBase64ZippedJSON(const string& b64);
+	//static SkillData* fromBase64ZippedJSON(const string& b64);
+	//static SkillData* fromJSON(const string& json);
 
 
-	static SkillData* fromJSON(const string& json);
+	string initFromString(string t);
 
 	virtual string getTYPEIDString();
 };

@@ -30,28 +30,56 @@ DialogueData::DialogueData(int id, const string& name, const string& caption, co
 	this->text = text;
 }
 
-DialogueData* DialogueData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//DialogueData* DialogueData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//DialogueData data = gson.fromJson(json,DialogueData.class);
+//
+//	return fromJSON(json);
+//}
+//
+//DialogueData* DialogueData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//	// Gson* gson = new Gson();
+//	DialogueData* data = nullptr;// gson->fromJson(json, DialogueData::typeid);
+//
+//
+//	return data;
+//}
 
 
 
-	string json = FileUtils::unzipBase64StringToString(b64);
+string DialogueData::initFromString(string t)
+{
+	t = super::initFromString(t);
 
-	//Gson gson = new Gson();
-	//DialogueData data = gson.fromJson(json,DialogueData.class);
 
-	return fromJSON(json);
+	t = t.substr(t.find("caption:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	caption = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("comment:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	comment = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("text:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	text = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+
+	return t;
 }
 
-DialogueData* DialogueData::fromJSON(const string& json)
-{ //===============================================================================================
 
-	// Gson* gson = new Gson();
-	DialogueData* data = nullptr;// gson->fromJson(json, DialogueData::typeid);
-
-
-	return data;
-}
 
 string DialogueData::getTYPEIDString()
 { //===============================================================================================

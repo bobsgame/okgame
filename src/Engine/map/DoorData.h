@@ -15,6 +15,11 @@ class Logger;
 class DoorData : public EntityData
 {
 private:
+	typedef EntityData super;
+
+
+
+private:
 	string destinationTYPEID = "";
 
 
@@ -58,10 +63,11 @@ public:
 	DoorData(int id, const string& name);
 
 
-	static DoorData* fromBase64ZippedJSON(const string& b64);
+	//static DoorData* fromBase64ZippedJSON(const string& b64);
+	//static DoorData* fromJSON(const string& json);
 
 
-	static DoorData* fromJSON(const string& json);
+	string initFromString(string t);
 
 
 	virtual string getTYPEIDString();

@@ -13,6 +13,11 @@ class Logger;
 
 class LightData : public EntityData
 {
+
+private:
+	typedef EntityData super;
+
+
 private:
 	
 	int widthPixels1X = 2;
@@ -73,10 +78,12 @@ public:
 	LightData(int id, const string& name);
 
 
-	static LightData* fromBase64ZippedJSON(const string& b64);
+	//static LightData* fromBase64ZippedJSON(const string& b64);
 
 
-	static LightData* fromJSON(const string& json);
+	//static LightData* fromJSON(const string& json);
+
+	string initFromString(string t);
 
 
 	virtual string getTYPEIDString() override;

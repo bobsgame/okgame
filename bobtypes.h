@@ -131,6 +131,13 @@ using namespace std;
 
 using namespace std;
 
+
+bool stob(string s)
+{
+	return 0 != stoi(s);
+}
+
+
 typedef struct
 {
 	int image_w;
@@ -223,29 +230,48 @@ struct SPRITE
 					//alpha?
 }; //this replaces sprite id and gfx slot, the only reason for having this is so i can index them in an array and z-order them, and then draw them in order during render
 
+
 enum class RenderOrder
 {
-	GROUND,
-	ABOVE,
 
-	ABOVE_TOP, //over overlayer, underneath lights
+		
+		GROUND,
+		ABOVE,
 
-			   //sprites over top
-			   //captions
-			   //overlay under lights
-			   //stadium screen
+		ABOVE_TOP, //over overlayer, underneath lights
+
+				   //sprites over top
+				   //captions
+				   //overlay under lights
+				   //stadium screen
 
 
-			   //lights
+				   //lights
 
-			   //should have birds here?
+				   //should have birds here?
 
-			   SPRITE_DEBUG_OUTLINES,
-			   SPRITE_DEBUG_INFO,
-			   OVER_TEXT,
-			   OVER_GUI,
-			   CONSOLE
+				   SPRITE_DEBUG_OUTLINES,
+				   SPRITE_DEBUG_INFO,
+				   OVER_TEXT,
+				   OVER_GUI,
+				   CONSOLE,
+	
+
+
 };
+
+static RenderOrder RenderOrderValueOf(string s)
+{
+	if (s == "GROUND")return RenderOrder::GROUND;
+	if (s == "ABOVE")return RenderOrder::ABOVE;
+	if (s == "ABOVE_TOP")return RenderOrder::ABOVE_TOP;
+	if (s == "SPRITE_DEBUG_OUTLINES")return RenderOrder::SPRITE_DEBUG_OUTLINES;
+	if (s == "SPRITE_DEBUG_INFO")return RenderOrder::SPRITE_DEBUG_INFO;
+	if (s == "OVER_TEXT")return RenderOrder::OVER_TEXT;
+	if (s == "OVER_GUI")return RenderOrder::OVER_GUI;
+	if (s == "CONSOLE")return RenderOrder::CONSOLE;
+	return RenderOrder::GROUND;
+}
 
 
 class Info

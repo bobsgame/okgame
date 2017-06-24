@@ -13,6 +13,10 @@ class Logger;
 
 class FlagData : public AssetData
 {
+private:
+	typedef AssetData super;
+
+
 public:
 	FlagData();
 
@@ -20,11 +24,10 @@ public:
 	FlagData(int id, const string& name);
 
 
-	static FlagData* fromBase64ZippedJSON(const string& b64);
+	//static FlagData* fromBase64ZippedJSON(const string& b64);
+	//static FlagData* fromJSON(const string& json);
 
-
-	static FlagData* fromJSON(const string& json);
-
+	virtual string initFromString(string t);
 
 	virtual string getTYPEIDString();
 };

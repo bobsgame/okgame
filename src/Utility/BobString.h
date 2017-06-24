@@ -11,24 +11,28 @@ class Logger;
 
 
 
-class String
+class String : public std::string
 {
 public:
 	static bool startsWith(const string& doesThisStart, const string& withThis);
+	bool startsWith(const string& withThis);
 
-	string s = "";
-	String(string s)
-	{
-		this->s = s;
-	}
-	void setString(string s)
-	{
-		this->s = s;
-	}
-	string getString()
-	{
-		return s;
-	}
+//	string s = "";
+//	String(string s)
+//	{
+//		this->assign(s);
+//	}
+//	void setString(string s)
+//	{
+//		this->s = s;
+//	}
+//	string getString()
+//	{
+//		return s;
+//	}
+
+	int indexOf(string s);
+	String substring(int pos);
 
 };
 

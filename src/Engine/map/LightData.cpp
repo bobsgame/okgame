@@ -57,30 +57,152 @@ LightData::LightData(int id, const string& name)
 	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, -1, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
 }
 
-LightData* LightData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//LightData* LightData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//LightData data = gson.fromJson(json,LightData.class);
+//
+//
+//	return fromJSON(json);
+//}
+//
+//LightData* LightData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	LightData* data = nullptr;// gson->fromJson(json, LightData::typeid);
+//
+//
+//	return data;
+//}
+
+//===============================================================================================
+string LightData::initFromString(string t)
+{//===============================================================================================
+	t = super::initFromString(t);
 
 
 
-	string json = FileUtils::unzipBase64StringToString(b64);
+	t = t.substr(t.find("widthPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	widthPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
 
-	//Gson gson = new Gson();
-	//LightData data = gson.fromJson(json,LightData.class);
+	t = t.substr(t.find("heightPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	heightPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("redColorByte:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	redColorByte = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("greenColorByte:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	greenColorByte = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("blueColorByte:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	blueColorByte = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("alphaColorByte:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	alphaColorByte = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("radiusPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	radiusPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("blendFalloff:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	blendFalloff = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("decayExponent:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	decayExponent = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("focusRadius1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	focusRadius1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isDayLight:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isDayLight = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isNightLight:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isNightLight = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("flickers:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	flickers = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("changesColor:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	changesColor = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("toggleable:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	toggleable = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("toggleXPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	toggleXPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("toggleYPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	toggleYPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("flickerOnTicks:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	flickerOnTicks = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("flickerOffTicks:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	flickerOffTicks = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("flickerRandomUpToOnTicks:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	flickerRandomUpToOnTicks = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("flickerRandomUpToOffTicks:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	flickerRandomUpToOffTicks = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
 
 
-	return fromJSON(json);
+
+	return t;
+
+
 }
 
-LightData* LightData::fromJSON(const string& json)
-{ //===============================================================================================
 
 
-	//Gson* gson = new Gson();
-	LightData* data = nullptr;// gson->fromJson(json, LightData::typeid);
-
-
-	return data;
-}
 
 string LightData::getTYPEIDString()
 { //===============================================================================================

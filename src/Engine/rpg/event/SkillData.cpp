@@ -24,29 +24,41 @@ SkillData::SkillData(int id, const string& name)
 	this->id = id;
 	this->name = name;
 }
+//
+//SkillData* SkillData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//SkillData data = gson.fromJson(json,SkillData.class);
+//
+//
+//	return fromJSON(json);
+//}
+//
+//SkillData* SkillData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	SkillData* data = nullptr;// gson->fromJson(json, SkillData::typeid);
+//
+//
+//	return data;
+//}
 
-SkillData* SkillData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
-
-	string json = FileUtils::unzipBase64StringToString(b64);
-
-	//Gson gson = new Gson();
-	//SkillData data = gson.fromJson(json,SkillData.class);
 
 
-	return fromJSON(json);
+
+string SkillData::initFromString(string t)
+{
+	t = super::initFromString(t);
+
+	return t;
 }
 
-SkillData* SkillData::fromJSON(const string& json)
-{ //===============================================================================================
 
-
-	//Gson* gson = new Gson();
-	SkillData* data = nullptr;// gson->fromJson(json, SkillData::typeid);
-
-
-	return data;
-}
 
 string SkillData::getTYPEIDString()
 { //===============================================================================================

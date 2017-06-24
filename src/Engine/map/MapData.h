@@ -18,6 +18,11 @@ class DoorData;
 
 class MapData : public AssetData
 {
+private:
+	typedef AssetData super;
+
+
+
 public:
 	static int MAP_GROUND_LAYER;
 	static int MAP_GROUND_DETAIL_LAYER;
@@ -195,10 +200,10 @@ public:
 	MapData(int id, const string& name, int widthTiles1X, int heightTiles1X);
 
 
-	static MapData* fromBase64ZippedJSON(const string& b64);
+	//static MapData* fromBase64ZippedJSON(const string& b64);
+	//static MapData* fromJSON(const string& json);
 
-
-	static MapData* fromJSON(const string& json);
+	virtual string initFromString(string t);
 
 
 	virtual string getTYPEIDString();

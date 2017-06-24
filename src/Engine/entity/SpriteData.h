@@ -13,6 +13,9 @@ class Logger;
 
 class SpriteData : public AssetData
 {
+private:
+	typedef AssetData super;
+
 	//---------------------------------------------------------
 	//---------------------------------------------------------
 	//---------------------------------------------------------
@@ -111,10 +114,13 @@ public:
 	virtual void addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X);
 
 
-	static SpriteData* fromBase64ZippedJSON(const string& b64);
-
-
-	static SpriteData* fromJSON(const string& json);
+//	static SpriteData* fromBase64ZippedJSON(const string& b64);
+//
+//
+//	static SpriteData* fromJSON(const string& json);
+//
+	//string toString();
+	string initFromString(string t);
 
 
 	virtual string getTYPEIDString();

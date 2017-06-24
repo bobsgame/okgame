@@ -13,6 +13,13 @@ class Logger;
 
 class MapStateData : public AssetData
 {
+
+private:
+	typedef AssetData super;
+
+
+
+
 private:
 	
 	ArrayList<LightData*> lightDataList;
@@ -37,11 +44,10 @@ public:
 	MapStateData(int id, const string& name);
 
 
-	static MapStateData* fromBase64ZippedJSON(const string& b64);
+	//static MapStateData* fromBase64ZippedJSON(const string& b64);
+	//static MapStateData* fromJSON(const string& json);
 
-
-	static MapStateData* fromJSON(const string& json);
-
+	string initFromString(string t);
 
 	virtual string getTYPEIDString();
 

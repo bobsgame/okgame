@@ -46,29 +46,108 @@ DoorData::DoorData(int id, const string& name)
 	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, -1, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
 }
 
-DoorData* DoorData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//DoorData* DoorData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//DoorData data = gson.fromJson(json,DoorData.class);
+//
+//
+//	return fromJSON(json);
+//}
+//
+//DoorData* DoorData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	DoorData* data = nullptr;// gson->fromJson(json, DoorData::typeid);
+//
+//
+//	return data;
+//}
 
 
-	string json = FileUtils::unzipBase64StringToString(b64);
+string DoorData::initFromString(string t)
+{
+	t = super::initFromString(t);
 
-	//Gson gson = new Gson();
-	//DoorData data = gson.fromJson(json,DoorData.class);
+
+	t = t.substr(t.find("destinationTYPEID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	destinationTYPEID = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("arrivalXPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	arrivalXPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("arrivalYPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	arrivalYPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomNPCSpawnPoint:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomNPCSpawnPoint = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnChance:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnChance = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomPointOfInterestOrExit:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomPointOfInterestOrExit = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnDelay:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnDelay = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnKids:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnKids = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnAdults:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnAdults = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnMales:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnMales = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnFemales:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnFemales = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("destinationMapName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	destinationMapName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("destinationDoorName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	destinationDoorName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
 
 
-	return fromJSON(json);
+	return t;
+
+
 }
 
-DoorData* DoorData::fromJSON(const string& json)
-{ //===============================================================================================
 
-
-	//Gson* gson = new Gson();
-	DoorData* data = nullptr;// gson->fromJson(json, DoorData::typeid);
-
-
-	return data;
-}
 
 string DoorData::getTYPEIDString()
 { //===============================================================================================

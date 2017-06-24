@@ -24,6 +24,9 @@ public:
 
 	AssetData(int id, const string& name);
 
+
+	virtual string initFromString(string t);
+
 	//
 	//	
 	//	public String toJSON()

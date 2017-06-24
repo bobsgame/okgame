@@ -19,3 +19,5 @@ public:
 	BobBool(bool b);
 };
 
+
+// see arraylist.h for boolean/integer/float commented out

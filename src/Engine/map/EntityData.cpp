@@ -76,26 +76,251 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 	this->comment = comment;
 }
 
-//=========================================================================================================================
-EntityData* EntityData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+////=========================================================================================================================
+//EntityData* EntityData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//	// string decode64 = FileUtils::decodeBase64String(b64);
+//	string json = "";// FileUtils::unzipBase64StringToString(decode64);
+//
+//
+//	return fromJSON(json);
+//}
+//
+//EntityData* EntityData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	EntityData* data = nullptr;// = gson->fromJson(json, EntityData::typeid);
+//
+//	return data;
+//}
 
-	// string decode64 = FileUtils::decodeBase64String(b64);
-	string json = "";// FileUtils::unzipBase64StringToString(decode64);
 
 
-	return fromJSON(json);
+string EntityData::initFromString(string t)
+{
+	t = super::initFromString(t);
+
+
+
+	t = t.substr(t.find("spriteName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	spriteName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("spawnXPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	spawnXPixels1X = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("spawnYPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	spawnYPixels1X = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("initialFrame:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	initialFrame = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("pushable:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	pushable = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("nonWalkable:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	nonWalkable = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("toAlpha:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	toAlpha = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("scale:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	scale = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("disableShadow:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	disableShadow = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("aboveTopLayer:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	aboveTopLayer = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("layer:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	layer = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("renderOrder:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	renderOrder = RenderOrderValueOf(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("aboveWhenEqual:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	aboveWhenEqual = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("alwaysOnBottom:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	alwaysOnBottom = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("alwaysOnTop:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	alwaysOnTop = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("animateThroughFrames:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	animateThroughFrames = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("ticksBetweenFrames:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	ticksBetweenFrames = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomUpToTicksBetweenFrames:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomUpToTicksBetweenFrames = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomFrames:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomFrames = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("ticksBetweenAnimation:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	ticksBetweenAnimation = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomTimeBetweenAnimation:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomTimeBetweenAnimation = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("walkSpeed:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	walkSpeed = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("ticksPerPixelMoved:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	ticksPerPixelMoved = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("eventID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	eventID = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("onlyHereDuringEvent:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	onlyHereDuringEvent = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("mapID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	mapID = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("stateID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	stateID = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("animateThroughCurrentAnimation:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	animateThroughCurrentAnimation = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("loopAnimation:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	loopAnimation = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("voicePitch:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	voicePitch = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("animationDisabled:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	animationDisabled = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("hitLayerDisabled:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	hitLayerDisabled = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("ignoreHitPlayer:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	ignoreHitPlayer = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("ignoreHitEntities:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	ignoreHitEntities = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("dontUsePathfinding:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	dontUsePathfinding = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("pullPlayer:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	pullPlayer = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("pushPlayer:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	pushPlayer = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	while (String::startsWith(t,"behaviorList:`"))
+	{
+		t = t.substr(t.find("behaviorList:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		behaviorList->add(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+	}
+
+	while (String::startsWith(t,"connectionTYPEIDList:`"))
+	{
+		t = t.substr(t.find("connectionTYPEIDList:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		connectionTYPEIDList->add(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+	}
+
+	t = t.substr(t.find("comment:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	comment = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isNPC:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isNPC = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	return t;
+
+
 }
 
-EntityData* EntityData::fromJSON(const string& json)
-{ //===============================================================================================
-
-
-	//Gson* gson = new Gson();
-	EntityData* data = nullptr;// = gson->fromJson(json, EntityData::typeid);
-
-	return data;
-}
 
 string EntityData::getTYPEIDString()
 { //===============================================================================================

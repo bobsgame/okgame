@@ -14,67 +14,34 @@ class Logger;
 class EntityData : public AssetData
 {
 private:
+	typedef AssetData super;
+
+private:
 	
 	string spriteName = "";
-
-
-	
 	float spawnXPixels1X = 0;
-	
 	float spawnYPixels1X = 0;
-
-
-	
 	int initialFrame = 0;
-
-	
 	bool pushable = false;
-	
 	bool nonWalkable = false;
-
-
-	
 	float toAlpha = 1.0f;
-
-
-	
 	float scale = 1.0f;
-
-
-	
 	bool disableShadow = false;
 
-
-	
 	bool aboveTopLayer = false; //dont use this in client, client only uses layer, this is only for the editor to easily set a sprite to above layer.
 	//eventually it will be replaced when i move to objectData save/load in editor.
 	//TODO: phase this out for just "set layer" above/below
 
 
 	int layer = 0; //ground
-
-	
 	RenderOrder renderOrder = RenderOrder::GROUND;
-
-	
 	bool aboveWhenEqual = false; //if two entities are on the same layer and the bottom lines up, render this one after
-
-	
 	bool alwaysOnBottom = false; //render first on whatever layer it is on
-	
 	bool alwaysOnTop = false; //render last on whatever layer it is on
-
-
 	bool animateThroughFrames = false; //cannot have BOTH this and animateThroughCurrentAnimation set.
-
-	
 	int ticksBetweenFrames = 100;
-	
 	bool randomUpToTicksBetweenFrames = false; //added in editor
-
-	
 	bool randomFrames = false; //initial frame will be randomized too. applies to both animateThroughAllFrames and animateThroughCurrentAnimation
-
 	int ticksBetweenAnimation = 0; //will be random up to this if checked random up to ticks between animation loop
 	bool randomTimeBetweenAnimation = false;
 
@@ -84,57 +51,29 @@ public:
 private:
 	
 	float ticksPerPixelMoved = 10;
-
-
-	
 	int eventID = -1;
-	
 	bool onlyHereDuringEvent = false; //TODO: what does this do
-
-
-	
 	int mapID = -1;
-	
 	int stateID = -1;
-
 
 	//TODO: implement in editor:
 	bool animateThroughCurrentAnimation = false; //TODO: implement
 	
 	bool loopAnimation = true; //TODO: implement
-
-	
 	float voicePitch = 0; //TODO: implement
-
 	bool animationDisabled = false; //TODO see where this is used.
-
-	
 	bool hitLayerDisabled = false;
-	
 	bool ignoreHitPlayer = false;
-	
 	bool ignoreHitEntities = false;
-	
 	bool dontUsePathfinding = false;
 
 	//public boolean ignore_fx_layer=false;
 	
 	bool pullPlayer = false;
-	
 	bool pushPlayer = false;
-
-
-	
 	ArrayList<string>* behaviorList = new ArrayList<string>();
-	
 	ArrayList<string>* connectionTYPEIDList = new ArrayList<string>();
-
-
-	
 	string comment = "";
-
-
-	
 	bool isNPC = false; //only used for export from tools for now to determine whether to spawn a character or an entity. determined from the SPRITE.getIsNPC, which is where it should be.
 
 
@@ -159,10 +98,9 @@ public:
 	//	}
 
 
-	static EntityData* fromBase64ZippedJSON(const string& b64);
-
-
-	static EntityData* fromJSON(const string& json);
+	virtual string initFromString(string t);
+	//static EntityData* fromBase64ZippedJSON(const string& b64);
+	//static EntityData* fromJSON(const string& json);
 
 
 	virtual string getTYPEIDString();

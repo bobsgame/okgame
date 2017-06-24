@@ -63,6 +63,10 @@ public:
 
 class EventData : public AssetData
 {
+private:
+	typedef AssetData super;
+
+
 	//---------------------------------------------------------
 	//---------------------------------------------------------
 	//---------------------------------------------------------
@@ -101,11 +105,12 @@ public:
 
 	EventData(int id, const string& name, int type, const string& comment, const string& text);
 
+	virtual string initFromString(string t);
 
-	static EventData* fromBase64ZippedJSON(const string& b64);
+	//static EventData* fromBase64ZippedJSON(const string& b64);
 
 
-	static EventData* fromJSON(const string& json);
+	//static EventData* fromJSON(const string& json);
 
 
 	virtual string getTYPEIDString();

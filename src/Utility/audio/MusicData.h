@@ -13,6 +13,13 @@ class Logger;
 
 class MusicData : public AssetData
 {
+
+private:
+	typedef AssetData super;
+
+
+
+
 	//---------------------------------------------------------
 	//---------------------------------------------------------
 	//---------------------------------------------------------
@@ -49,10 +56,10 @@ public:
 	MusicData(int id, const string& name, const string& filename);
 
 
-	static MusicData* fromBase64ZippedJSON(const string& b64);
+	//static MusicData* fromBase64ZippedJSON(const string& b64);
+	//static MusicData* fromJSON(const string& json);
 
-
-	static MusicData* fromJSON(const string& json);
+	string initFromString(string t);
 
 
 	virtual string getTYPEIDString();

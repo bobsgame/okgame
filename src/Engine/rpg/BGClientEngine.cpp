@@ -535,7 +535,7 @@ void BGClientEngine::loadPreCachedObjectData()
 { //===============================================================================================
 
 
-	bool debug = false;
+	bool debug = true;
 
 
 	ArrayList<string>* b64List = nullptr;
@@ -545,9 +545,9 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadSkillData");
 	}
-	catch (exception e)//IOException e)
+	catch (exception e)
 	{
-		//e->printStackTrace();
+		log.error("Could not load PreloadSkillData");
 	}
 	if (b64List->size() > 0)
 	{
@@ -557,9 +557,11 @@ void BGClientEngine::loadPreCachedObjectData()
 			if (s.length() > 0)
 			{
 				SkillData* data = SkillData::fromBase64ZippedJSON(s);
+
 				//Skill* skill =
-                new Skill(this, data);
+                new Skill(this, data);//adds itself to eventManager skill list in constructor
 				//getEventManager()->skillList.add(skill);
+
 				if (debug)
 				{
 					log.debug(string("Preload Skill id:") + to_string(data->getID()) + string(" name:") + data->getName());

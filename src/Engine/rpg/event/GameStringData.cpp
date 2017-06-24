@@ -28,28 +28,43 @@ GameStringData::GameStringData(int id, const string& name, const string& text)
 	this->text = text;
 }
 
-GameStringData* GameStringData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//GameStringData* GameStringData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//GameStringData data = gson.fromJson(json,GameStringData.class);
+//
+//	return fromJSON(json);
+//}
+//
+//GameStringData* GameStringData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//	//Gson* gson = new Gson();
+//	GameStringData* data = nullptr;// gson->fromJson(json, GameStringData::typeid);
+//
+//
+//	return data;
+//}
+
+string GameStringData::initFromString(string t)
+{
+	t = super::initFromString(t);
 
 
+	t = t.substr(t.find("text:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	text = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
 
-	string json = FileUtils::unzipBase64StringToString(b64);
-
-	//Gson gson = new Gson();
-	//GameStringData data = gson.fromJson(json,GameStringData.class);
-
-	return fromJSON(json);
+	return t;
 }
 
-GameStringData* GameStringData::fromJSON(const string& json)
-{ //===============================================================================================
 
-	//Gson* gson = new Gson();
-	GameStringData* data = nullptr;// gson->fromJson(json, GameStringData::typeid);
-
-
-	return data;
-}
 
 string GameStringData::getTYPEIDString()
 { //===============================================================================================

@@ -158,29 +158,316 @@ void AreaData::addConnectionString(const string& s)
 	connectionTYPEIDList->add(s);
 }
 
-AreaData* AreaData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//AreaData* AreaData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//AreaData data = gson.fromJson(json,AreaData.class);
+//
+//
+//	return fromJSON(json);
+//}
+//
+//AreaData* AreaData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//
+//	//Gson* gson = new Gson();
+//	AreaData* data = nullptr;// gson->fromJson(json, AreaData::typeid);
+//
+//
+//	return data;
+//}
 
 
-	string json = FileUtils::unzipBase64StringToString(b64);
-
-	//Gson gson = new Gson();
-	//AreaData data = gson.fromJson(json,AreaData.class);
 
 
-	return fromJSON(json);
+////===============================================================================================
+//string toString()
+//{//===============================================================================================
+//
+//	string s = "";
+//
+//	s = super.toString();
+//
+//	while (comment.contains("`"))
+//	{
+//		string front = comment.substr(0, comment.find("`"));
+//		string back = comment.substr(comment.find("`") + 1);
+//		comment = front + back;
+//	}
+//
+//	while (destinationTYPEID.contains("`"))
+//	{
+//		string front = destinationTYPEID.substr(0, destinationTYPEID.find("`"));
+//		string back = destinationTYPEID.substr(destinationTYPEID.find("`") + 1);
+//		destinationTYPEID = front + back;
+//	}
+//
+//	while (destinationMapName.contains("`"))
+//	{
+//		string front = destinationMapName.substr(0, destinationMapName.find("`"));
+//		string back = destinationMapName.substr(destinationMapName.find("`") + 1);
+//		destinationMapName = front + back;
+//	}
+//
+//	while (destinationWarpAreaName.contains("`"))
+//	{
+//		string front = destinationWarpAreaName.substr(0, destinationWarpAreaName.find("`"));
+//		string back = destinationWarpAreaName.substr(destinationWarpAreaName.find("`") + 1);
+//		destinationWarpAreaName = front + back;
+//	}
+//
+//
+//
+//	for (int i = 0; i<connectionTYPEIDList.size(); i++)
+//	{
+//
+//		string t = connectionTYPEIDList.get(i);
+//
+//		while (t.contains("`"))
+//		{
+//			string front = t.substr(0, t.find("`"));
+//			string back = t.substr(t.find("`") + 1);
+//			t = front + back;
+//		}
+//		connectionTYPEIDList.remove(i);
+//		connectionTYPEIDList.add(i, t);
+//
+//	}
+//
+//
+//	s += "mapXPixels1X:`" + mapXPixels1X + "`,";
+//	s += "mapYPixels1X:`" + mapYPixels1X + "`,";
+//	s += "widthPixels1X:`" + widthPixels1X + "`,";
+//	s += "heightPixels1X:`" + heightPixels1X + "`,";
+//	s += "randomPointOfInterestOrExit:`" + randomPointOfInterestOrExit + "`,";
+//	s += "randomNPCSpawnPoint:`" + randomNPCSpawnPoint + "`,";
+//	s += "standSpawnDirection:`" + standSpawnDirection + "`,";
+//	s += "waitHereTicks:`" + waitHereTicks + "`,";
+//	s += "randomWaitTime:`" + randomWaitTime + "`,";
+//	s += "onlyOneAllowed:`" + onlyOneAllowed + "`,";
+//	s += "randomNPCStayHere:`" + randomNPCStayHere + "`,";
+//	s += "randomSpawnChance:`" + randomSpawnChance + "`,";
+//	s += "randomSpawnOnlyTryOnce:`" + randomSpawnOnlyTryOnce + "`,";
+//	s += "randomSpawnOnlyOffscreen:`" + randomSpawnOnlyOffscreen + "`,";
+//	s += "randomSpawnDelay:`" + randomSpawnDelay + "`,";
+//	s += "randomSpawnKids:`" + randomSpawnKids + "`,";
+//	s += "randomSpawnAdults:`" + randomSpawnAdults + "`,";
+//	s += "randomSpawnMales:`" + randomSpawnMales + "`,";
+//	s += "randomSpawnFemales:`" + randomSpawnFemales + "`,";
+//	s += "randomSpawnCars:`" + randomSpawnCars + "`,";
+//	s += "autoPilot:`" + autoPilot + "`,";
+//	s += "playerFaceDirection:`" + playerFaceDirection + "`,";
+//	s += "suckPlayerIntoMiddle:`" + suckPlayerIntoMiddle + "`,";
+//	s += "eventID:`" + eventID + "`,";
+//	s += "comment:`" + comment + "`,";
+//	s += "mapID:`" + mapID + "`,";
+//	s += "stateID:`" + stateID + "`,";
+//	for (int i = 0; i<connectionTYPEIDList.size(); i++)
+//	{
+//		s += "connectionTYPEIDList:`" + connectionTYPEIDList.get(i) + "`,";
+//	}
+//	s += "destinationTYPEID:`" + destinationTYPEID + "`,";
+//	s += "arrivalXPixels1X:`" + arrivalXPixels1X + "`,";
+//	s += "arrivalYPixels1X:`" + arrivalYPixels1X + "`,";
+//	s += "isWarpArea:`" + isWarpArea + "`,";
+//	s += "destinationMapName:`" + destinationMapName + "`,";
+//	s += "destinationWarpAreaName:`" + destinationWarpAreaName + "`,";
+//
+//
+//
+//	return s;
+//}
+
+
+
+
+string AreaData::initFromString(string t)
+{
+	t = super::initFromString(t);
+
+
+	t = t.substr(t.find("mapXPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	mapXPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("mapYPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	mapYPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("widthPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	widthPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("heightPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	heightPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomPointOfInterestOrExit:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomPointOfInterestOrExit = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomNPCSpawnPoint:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomNPCSpawnPoint = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("standSpawnDirection:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	standSpawnDirection = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("waitHereTicks:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	waitHereTicks = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomWaitTime:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomWaitTime = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("onlyOneAllowed:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	onlyOneAllowed = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomNPCStayHere:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomNPCStayHere = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnChance:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnChance = stof(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnOnlyTryOnce:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnOnlyTryOnce = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnOnlyOffscreen:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnOnlyOffscreen = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnDelay:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnDelay = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnKids:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnKids = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnAdults:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnAdults = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnMales:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnMales = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnFemales:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnFemales = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("randomSpawnCars:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	randomSpawnCars = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("autoPilot:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	autoPilot = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("playerFaceDirection:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	playerFaceDirection = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("suckPlayerIntoMiddle:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	suckPlayerIntoMiddle = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("eventID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	eventID = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("comment:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	comment = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("mapID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	mapID = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("stateID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	stateID = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	while(String::startsWith(t,"connectionTYPEIDList:`"))
+	{
+		t = t.substr(t.find("connectionTYPEIDList:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		connectionTYPEIDList->add(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+	}
+
+	t = t.substr(t.find("destinationTYPEID:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	destinationTYPEID = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("arrivalXPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	arrivalXPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("arrivalYPixels1X:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	arrivalYPixels1X = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("isWarpArea:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	isWarpArea = stob(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("destinationMapName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	destinationMapName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("destinationWarpAreaName:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	destinationWarpAreaName = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	return t;
 }
 
-AreaData* AreaData::fromJSON(const string& json)
-{ //===============================================================================================
 
-
-	//Gson* gson = new Gson();
-	AreaData* data = nullptr;// gson->fromJson(json, AreaData::typeid);
-
-
-	return data;
-}
 
 string AreaData::getTYPEIDString()
 { //===============================================================================================

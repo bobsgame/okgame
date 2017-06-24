@@ -13,6 +13,9 @@ class Logger;
 
 class DialogueData : public AssetData
 {
+private:
+	typedef AssetData super;
+
 	//---------------------------------------------------------
 	//---------------------------------------------------------
 	//---------------------------------------------------------
@@ -88,10 +91,10 @@ public:
 	DialogueData(int id, const string& name, const string& caption, const string& comment, const string& text);
 
 
-	static DialogueData* fromBase64ZippedJSON(const string& b64);
+	virtual string initFromString(string t);
 
-
-	static DialogueData* fromJSON(const string& json);
+	//static DialogueData* fromBase64ZippedJSON(const string& b64);
+	//static DialogueData* fromJSON(const string& json);
 
 
 	virtual string getTYPEIDString();

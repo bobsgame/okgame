@@ -162,13 +162,13 @@ void Main::mainInit()
 
 	cacheManager = new FileUtils();
 	cacheManager->initCache();
-	
+
 
 	loadGlobalSettingsFromXML();
 
 	if (globalSettings->useXInput == false)SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
-	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS,"1");
-	
+	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
+
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
@@ -176,7 +176,8 @@ void Main::mainInit()
 		exit(2);
 	}
 
-	if (SDLNet_Init() < 0) {
+	if (SDLNet_Init() < 0)
+	{
 		std::cerr << "SDLNet_Init: " << SDLNet_GetError() << std::endl;
 	}
 
@@ -199,13 +200,13 @@ void Main::mainInit()
 	GLUtils::checkSDLError("");
 
 
-//	bool debugOnLiveServer = true;
-//	if (debugOnLiveServer == false)
-//	{
-//		serverAddressString = BobNet::debugServerAddress;
-//		STUNServerAddressString = BobNet::debugSTUNServerAddress;
-//	}
-//	else
+	//	bool debugOnLiveServer = true;
+	//	if (debugOnLiveServer == false)
+	//	{
+	//		serverAddressString = BobNet::debugServerAddress;
+	//		STUNServerAddressString = BobNet::debugSTUNServerAddress;
+	//	}
+	//	else
 	{
 		serverAddressString = BobNet::releaseServerAddress;
 		STUNServerAddressString = BobNet::releaseSTUNServerAddress;
@@ -228,7 +229,7 @@ void Main::mainInit()
 
 	BobFont::initFonts();
 	GLUtils::e();
-	
+
 	if (previewClientInEditor == false)
 	{
 		doLegalScreen();
@@ -280,11 +281,65 @@ void Main::mainInit()
 
 	srand((int)(time(nullptr)));
 
-	log.info("Create BobsGame");
-	bobsGame = new BobsGame();
-	log.info("Init BobsGame");
-	bobsGame->init();
-	stateManager->setState(bobsGame);
+	//log.info("Create BobsGame");
+	//bobsGame = new BobsGame();
+	//log.info("Init BobsGame");
+	//bobsGame->init();
+	//stateManager->setState(bobsGame);
+
+
+
+
+	{
+
+		if (gameEngine != nullptr)
+		{
+			gameEngine->cleanup();
+		}
+
+		gameEngine = new BGClientEngine();
+		//Engine::setClientGameEngine(gameEngine);
+		gameEngine->init();
+		stateManager->setState(gameEngine);
+
+		if (previewClientInEditor == false)
+		{
+			bool didIntro = false; //FileUtils.doesDidIntroFileExist();
+
+			if (didIntro == false)
+			{
+				introMode = true;
+
+				log.info("Setup Intro...");
+
+				gameEngine->statusBar->gameStoreButton->setEnabled(false);
+				gameEngine->statusBar->ndButton->setEnabled(false);
+				gameEngine->statusBar->stuffButton->setEnabled(false);
+				gameEngine->statusBar->moneyCaption->setEnabled(false);
+				gameEngine->statusBar->dayCaption->setEnabled(false);
+
+				stateManager->setState(gameEngine);
+				gameEngine->cinematicsManager->fadeFromBlack(10000);
+
+
+				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
+				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
+				//gameEngine.textManager.getText("Yep \"Yuu\" yay. <.><1>bob! yay, \"bob\" yay! <.><0>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
+			}
+			//		else
+			//		{
+			//			if (System::debugMode == false)
+			//			{
+			//				showControlsImage();
+			//			}
+			//		
+			//			stateManager->setState(loginState);
+			//		}
+		}
+
+	}
+
+
 	
 	log.info("Init BobNet");
 	bobNet = new BobNet();
@@ -317,7 +372,12 @@ void Main::mainInit()
 	System::initTimers();
 	GLUtils::e();
 
-	//initClientEngine();
+
+
+
+
+
+
 	GLUtils::e();
 	//tcpServerConnection = new BGClientTCP(gameEngine);
 	GLUtils::e();
@@ -478,63 +538,6 @@ void Main::initClientEngine()
 {//=========================================================================================================================
 
 
-	if (gameEngine != nullptr)
-	{
-		gameEngine->cleanup();
-	}
-
-	//         if (tcpServerConnection != nullptr)
-	//         {
-	//            tcpServerConnection->cleanup();
-	//         }
-
-
-	gameEngine = new BGClientEngine();
-	//Engine::setClientGameEngine(gameEngine);
-
-
-	//stateManager.setState(game);
-	gameEngine->init();
-
-
-
-
-
-
-	if (previewClientInEditor == false)
-	{
-		bool didIntro = false; //FileUtils.doesDidIntroFileExist();
-
-		if (didIntro == false)
-		{
-			introMode = true;
-
-			log.info("Setup Intro...");
-
-			gameEngine->statusBar->gameStoreButton->setEnabled(false);
-			gameEngine->statusBar->ndButton->setEnabled(false);
-			gameEngine->statusBar->stuffButton->setEnabled(false);
-			gameEngine->statusBar->moneyCaption->setEnabled(false);
-			gameEngine->statusBar->dayCaption->setEnabled(false);
-
-			stateManager->setState(gameEngine);
-			gameEngine->cinematicsManager->fadeFromBlack(10000);
-
-
-			//gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
-			//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
-			//gameEngine.textManager.getText("Yep \"Yuu\" yay. <.><1>bob! yay, \"bob\" yay! <.><0>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
-		}
-		//				else
-		//				{
-		//					if (System::debugMode == false)
-		//					{
-		//						showControlsImage();
-		//					}
-		//
-		//					stateManager->setState(loginState);
-		//				}
-	}
 }
 
 

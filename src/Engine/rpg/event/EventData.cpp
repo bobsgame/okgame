@@ -34,27 +34,54 @@ EventData::EventData(int id, const string& name, int type, const string& comment
 	this->text = text;
 }
 
-EventData* EventData::fromBase64ZippedJSON(const string& b64)
-{ //===============================================================================================
+//EventData* EventData::fromBase64ZippedJSON(const string& b64)
+//{ //===============================================================================================
+//
+//
+//	string json = FileUtils::unzipBase64StringToString(b64);
+//
+//	//Gson gson = new Gson();
+//	//EventData data = gson.fromJson(json,EventData.class);
+//
+//	return fromJSON(json);
+//}
+//
+//EventData* EventData::fromJSON(const string& json)
+//{ //===============================================================================================
+//
+//	//Gson* gson = new Gson();
+//	EventData* data = nullptr;//gson->fromJson(json, EventData::typeid);
+//
+//
+//	return data;
+//}
 
 
-	string json = FileUtils::unzipBase64StringToString(b64);
+//===============================================================================================
+string EventData::initFromString(string t)
+{//===============================================================================================
 
-	//Gson gson = new Gson();
-	//EventData data = gson.fromJson(json,EventData.class);
+	t = super::initFromString(t);
 
-	return fromJSON(json);
+	t = t.substr(t.find("type:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	type = stoi(t.substr(0, t.find("`")));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("comment:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	comment = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+	t = t.substr(t.find("text:`") + 1);
+	t = t.substr(t.find("`") + 1);
+	text = t.substr(0, t.find("`"));
+	t = t.substr(t.find("`,") + 2);
+
+
+	return t;
 }
 
-EventData* EventData::fromJSON(const string& json)
-{ //===============================================================================================
-
-	//Gson* gson = new Gson();
-	EventData* data = nullptr;//gson->fromJson(json, EventData::typeid);
-
-
-	return data;
-}
 
 string EventData::getTYPEIDString()
 { //===============================================================================================
