@@ -37,9 +37,9 @@ class AudioManager : EnginePart
 public:
 	static Logger log;
 
-	ArrayList<Music*>* musicList = new ArrayList<Music*>();
-	ArrayList<Sound*>* soundList = new ArrayList<Sound*>();
-	HashMap<string, Sound*>* soundByNameHashMap = nullptr;// = new HashMap<string, Sound*>();
+	static ArrayList<Music*>* musicList;
+	static ArrayList<Sound*>* soundList;
+	static HashMap<string, Sound*>* soundByNameHashMap;
 
 
 #ifdef USE_SOLOUD

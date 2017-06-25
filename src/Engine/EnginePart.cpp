@@ -140,57 +140,58 @@ int EnginePart::getMinutesSinceLastHere()
 
 Engine* EnginePart::getEngine()
 {
+	if(e==nullptr)return Main::gameEngine;
 	return e;
 }
 
 Cameraman* EnginePart::getCameraman()
 {
-	return e->cameraman;
+	return getEngine()->cameraman;
 }
 
 MapManager* EnginePart::getMapManager()
 {
-	return e->mapManager;
+	return getEngine()->mapManager;
 }
 
 SpriteManager* EnginePart::getSpriteManager()
 {
-	return e->spriteManager;
+	return getEngine()->spriteManager;
 }
 
 ActionManager* EnginePart::getActionManager()
 {
-	return e->actionManager;
+	return getEngine()->actionManager;
 }
 
 TextManager* EnginePart::getTextManager()
 {
-	return e->textManager;
+	return getEngine()->textManager;
 }
 
 AudioManager* EnginePart::getAudioManager()
 {
-	return e->audioManager;
+	return getEngine()->audioManager;
 }
 
 CaptionManager* EnginePart::getCaptionManager()
 {
-	return e->captionManager;
+	return getEngine()->captionManager;
 }
 
 EventManager* EnginePart::getEventManager()
 {
-	return e->eventManager;
+	return getEngine()->eventManager;
 }
 
 CinematicsManager* EnginePart::getCinematicsManager()
 {
-	return e->cinematicsManager;
+	return getEngine()->cinematicsManager;
 }
 
 Map* EnginePart::getCurrentMap()
 {
-	Map* m = e->mapManager->currentMap;
+	Map* m = getEngine()->mapManager->currentMap;
 //	if (m == nullptr)
 //	{
 //		m = new Map(e, new MapData(-1, "none", 0, 0));

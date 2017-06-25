@@ -62,7 +62,7 @@ private:
 
 
 public:
-	Music(Engine* g, int id);
+	//Music(Engine* g, int id);
 
 
 	Music(Engine* g, MusicData* data);

@@ -14,22 +14,23 @@
 Logger Music::log = Logger("Music");
 
 
-Music::Music(Engine* g, int id)
-{ //=========================================================================================================================
-	this->e = g;
-
-	this->data = new MusicData(id, "", "");
-
-	for (int i = 0; i < (int)getAudioManager()->musicList->size(); i++)
-	{
-		if (getAudioManager()->musicList->get(i)->getID() == data->getID())
-		{
-			log.error(string("Music already exists:") + data->getName());
-			return;
-		}
-	}
-	getAudioManager()->musicList->add(this);
-}
+//Music::Music(Engine* g, int id)
+//{ //=========================================================================================================================
+//	this->e = g;
+//
+//	this->data = new MusicData(id, "", "");
+//
+//	for (int i = 0; i < (int)Main::audioManager->musicList->size(); i++)
+//	{
+//		if (Main::audioManager->musicList->get(i)->getName() == data->getName())
+//		{
+//			if (Main::audioManager->musicList->get(i)->getID() == -1)Main::audioManager->musicList->get(i)->setID(data->getID());
+//			log.warn(string("Music already exists:") + data->getName());
+//			return;
+//		}
+//	}
+//	Main::audioManager->musicList->add(this);
+//}
 
 Music::Music(Engine* g, MusicData* data)
 { //=========================================================================================================================
@@ -38,15 +39,16 @@ Music::Music(Engine* g, MusicData* data)
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getAudioManager()->musicList->size(); i++)
+	for (int i = 0; i < (int)Main::audioManager->musicList->size(); i++)
 	{
-		if (getAudioManager()->musicList->get(i)->getID() == data->getID())
+		if (Main::audioManager->musicList->get(i)->getName() == data->getName())
 		{
-			log.error(string("Music already exists:") + data->getName());
+			if (Main::audioManager->musicList->get(i)->getID() == -1)Main::audioManager->musicList->get(i)->setID(data->getID());
+			log.warn(string("Music already exists:") + data->getName());
 			return;
 		}
 	}
-	getAudioManager()->musicList->add(this);
+	Main::audioManager->musicList->add(this);
 }
 
 
@@ -92,7 +94,7 @@ Music::Music(Engine *g, string filename)
 	fileExists = true;
 	setInitialized_S(true);
 
-	getAudioManager()->musicList->add(this);
+	Main::audioManager->musicList->add(this);
 
 }
 

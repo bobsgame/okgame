@@ -5,18 +5,7 @@
 //------------------------------------------------------------------------------
 
 
-#include <fstream>
-#include <iostream>
-#include "Poco/File.h"
-#include "Poco/Path.h"
-#include "Poco/Delegate.h"
-#include "Poco/Zip/Decompress.h"
-#include "Poco/Process.h"
-#include "Poco/DirectoryIterator.h"
-using Poco::DirectoryIterator;
-using Poco::File;
-using Poco::Process;
-using Poco::Path;
+
 
 
 Logger BobsGame::log = Logger("BobsGame");
@@ -114,11 +103,9 @@ void BobsGame::init()
 	initAssets();
 
 
-	//TODO: load music files
 
-	//TODO: load sprite text files regardless of names
 
-	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
+	
 	
 	loadGameTypesFromXML();
 	loadGameSequencesFromXML();
@@ -208,7 +195,18 @@ bool BobsGame::isNetworkGame()
 	return false;
 }
 
-
+#include <fstream>
+#include <iostream>
+#include "Poco/File.h"
+#include "Poco/Path.h"
+#include "Poco/Delegate.h"
+#include "Poco/Zip/Decompress.h"
+#include "Poco/Process.h"
+#include "Poco/DirectoryIterator.h"
+using Poco::DirectoryIterator;
+using Poco::File;
+using Poco::Process;
+using Poco::Path;
 
 //=========================================================================================================================
 void BobsGame::initAssets()
@@ -239,7 +237,7 @@ void BobsGame::initAssets()
 
 
 
-
+	//done: load sprite text files regardless of names
 	//load all txt files from sprites folder
 	string spriteFolderString = Main::getPath() + "data/sprite/";
 	Path spriteFolderPath(spriteFolderString);
@@ -265,29 +263,14 @@ void BobsGame::initAssets()
 
 
 
-	//TODO load sounds/index.txt
-	//for each line, load ogg file
 
 
-	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sounds/index.txt");
+	//TODO: load music files
 
+	
 
-	if (stringList->size() > 0)
-	{
-		for (int i = 0; i < stringList->size(); i++)
-		{
-			string s = stringList->get(i);
-
-			if (s.length() > 0)
-			{
-				//Sound *sound =
-                new Sound(this, "data/sounds/" + s);
-				//sound.byteData = dataFile.readBytes();
-			}
-		}
-	}
 	music = new Music(this, "data/music/slick_v10.ogg");
-
+	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
 
 }
 

@@ -300,12 +300,14 @@ SoLoud::Soloud *AudioManager::soLoud = nullptr;
 #endif
 
 
+ArrayList<Music*>* AudioManager::musicList = new ArrayList<Music*>();
+ArrayList<Sound*>* AudioManager::soundList = new ArrayList<Sound*>();
+HashMap<string, Sound*>* AudioManager::soundByNameHashMap = new HashMap<string, Sound*>();
 
 //=========================================================================================================================
 AudioManager::AudioManager()
 { //=========================================================================================================================
 
-	soundByNameHashMap = new HashMap<string, Sound*>();
 
 }
 
@@ -314,8 +316,23 @@ AudioManager::AudioManager(Engine* g)
 { //=========================================================================================================================
 
 	this->e = g;
-	soundByNameHashMap = new HashMap<string, Sound*>();
+
 }
+
+
+#include <fstream>
+#include <iostream>
+#include "Poco/File.h"
+#include "Poco/Path.h"
+#include "Poco/Delegate.h"
+#include "Poco/Zip/Decompress.h"
+#include "Poco/Process.h"
+#include "Poco/DirectoryIterator.h"
+using Poco::DirectoryIterator;
+using Poco::File;
+using Poco::Process;
+using Poco::Path;
+
 
 //=========================================================================================================================
 void AudioManager::initAudio()
@@ -337,6 +354,65 @@ void AudioManager::initAudio()
 	soLoud = new SoLoud::Soloud();
 	soLoud->init();
 #endif
+
+
+	{
+		string spriteFolderString = Main::getPath() + "data/sounds/";
+		Path spriteFolderPath(spriteFolderString);
+		File spriteFolderPathDir(spriteFolderPath);
+		if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
+		vector<string> files;
+		spriteFolderPathDir.list(files);
+		vector<string>::iterator it = files.begin();
+		for (; it != files.end(); ++it)
+		{
+			//cout << *it << endl;
+			string name = *it;
+			if (name.find(".ogg") != string::npos)
+			{
+				new Sound(nullptr, "data/sounds/" + name);
+			}
+		}
+	}
+
+	{
+		string spriteFolderString = Main::getPath() + "data/music/";
+		Path spriteFolderPath(spriteFolderString);
+		File spriteFolderPathDir(spriteFolderPath);
+		if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
+		vector<string> files;
+		spriteFolderPathDir.list(files);
+		vector<string>::iterator it = files.begin();
+		for (; it != files.end(); ++it)
+		{
+			//cout << *it << endl;
+			string name = *it;
+			if (name.find(".ogg") != string::npos)
+			{
+				new Music(nullptr, "data/music/" + name);
+			}
+		}
+	}
+
+//	//load sounds/index.txt
+//	//for each line, load ogg file
+//	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sounds/index.txt");
+//	if (stringList->size() > 0)
+//	{
+//		for (int i = 0; i < stringList->size(); i++)
+//		{
+//			string s = stringList->get(i);
+//
+//			if (s.length() > 0)
+//			{
+//				//Sound *sound =
+//				new Sound(this, "data/sounds/" + s);
+//				//sound.byteData = dataFile.readBytes();
+//			}
+//		}
+//	}
+
+
 }
 
 

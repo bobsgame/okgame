@@ -13,22 +13,22 @@
 Logger Sound::log = Logger("Sound");
 
 
-Sound::Sound(Engine* g, int id)
-{ //=========================================================================================================================
-
-	this->e = g;
-	this->data = new SoundData(id, "", "");
-
-	for (int i = 0; i < (int)getAudioManager()->soundList->size(); i++)
-	{
-		if (getAudioManager()->soundList->get(i)->getID() == data->getID())
-		{
-			log.error(string("Sound already exists:") + data->getName());
-			return;
-		}
-	}
-	getAudioManager()->soundList->add(this);
-}
+//Sound::Sound(Engine* g, int id)
+//{ //=========================================================================================================================
+//
+//	this->e = g;
+//	this->data = new SoundData(id, "", "");
+//
+//	for (int i = 0; i < (int)Main::audioManager->soundList->size(); i++)
+//	{
+//		if (Main::audioManager->soundList->get(i)->getName() == data->getName())
+//		{
+//			log.warn(string("Sound already exists:") + data->getName());
+//			return;
+//		}
+//	}
+//	Main::audioManager->soundList->add(this);
+//}
 
 Sound::Sound(Engine* g, SoundData* data)
 { //=========================================================================================================================
@@ -37,15 +37,16 @@ Sound::Sound(Engine* g, SoundData* data)
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getAudioManager()->soundList->size(); i++)
+	for (int i = 0; i < (int)Main::audioManager->soundList->size(); i++)
 	{
-		if (getAudioManager()->soundList->get(i)->getID() == data->getID())
+		if (Main::audioManager->soundList->get(i)->getName() == data->getName())
 		{
-			log.error(string("Sound already exists:") + data->getName());
+			if (Main::audioManager->soundList->get(i)->getID() == -1)Main::audioManager->soundList->get(i)->setID(data->getID());
+			log.warn(string("Sound already exists:") + data->getName());
 			return;
 		}
 	}
-	getAudioManager()->soundList->add(this);
+	Main::audioManager->soundList->add(this);
 }
 
 
@@ -87,7 +88,7 @@ Sound::Sound(Engine *g, string filename)
 	fileExists = true;
 	setInitialized_S(true);
 
-	getAudioManager()->soundList->add(this);
+	Main::audioManager->soundList->add(this);
 
 }
 

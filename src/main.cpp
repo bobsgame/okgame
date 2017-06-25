@@ -64,10 +64,7 @@ bool Main::quit = false;
 bool Main::GLOBAL_hq2x_is_on = false;
 //int Main::fpsmeter = true;
 
-GlobalSettings* Main::globalSettings = nullptr;
 
-ControlsManager* Main::controlsManager = new ControlsManager();
-BGClientEngine* Main::gameEngine = nullptr;
 //==========================================================================================================================
 Main::Main()
 {//=========================================================================================================================
@@ -126,6 +123,14 @@ string Main::version = "";
 
 BobNet* Main::bobNet = nullptr;
 Console* Main::console = nullptr;
+AudioManager* Main::audioManager = nullptr;
+FileUtils* Main::cacheManager = nullptr;
+StateManager* Main::stateManager = nullptr;
+System* Main::systemUtils = nullptr;
+GlobalSettings* Main::globalSettings = nullptr;
+ControlsManager* Main::controlsManager = nullptr;
+BGClientEngine* Main::gameEngine = nullptr;
+
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
 Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
@@ -192,7 +197,7 @@ void Main::mainInit()
 	//atexit(SDL_Quit);
 	BobColor::initPresetColors();
 	new GLUtils();
-	new AudioManager();
+	audioManager = new AudioManager();
 	new Logger();
 
 	AudioManager::initAudio();
@@ -222,8 +227,14 @@ void Main::mainInit()
 	//this is done before init game so we can put debug stuff
 	console = new Console();
 
+	
+
 	GLUtils::initGL((char*)"\"bob's game\"");
 	//GLUtils::initTWL();
+	GLUtils::e();
+
+
+	controlsManager = new ControlsManager();
 	ControlsManager::initControllers();
 	GLUtils::e();
 

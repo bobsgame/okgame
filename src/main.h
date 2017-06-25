@@ -127,10 +127,10 @@ public:
 	//ORIGINAL LINE: public volatile boolean exit = false;
 	static bool quit;// = false;
 
-
-	FileUtils* cacheManager = nullptr;
-	StateManager* stateManager = nullptr;
-
+	static AudioManager* audioManager;
+	static FileUtils* cacheManager;
+	static StateManager* stateManager;
+	static System* systemUtils;
 	static ControlsManager* controlsManager;// = nullptr;
 
 	static BGClientEngine* gameEngine;// = nullptr;
@@ -162,7 +162,7 @@ public:
 
 	//FileUtils* utils;
 	//GLUtils* lwjglUtils = nullptr;
-	System* systemUtils = nullptr;
+	
 	//GLUtils* glUtils = nullptr;
 	// static AudioUtils* audioUtils;
 

@@ -42,7 +42,7 @@ protected:
 
 
 public:
-	Sound(Engine* g, int id);
+	//Sound(Engine* g, int id);
 
 
 	Sound(Engine* g, SoundData* data);
