@@ -51,7 +51,7 @@ private:
 
 
 public:
-	deque<PathTile*>* pathTiles = nullptr;
+	deque<PathTile*>* pathTiles = new deque<PathTile*>();
 
 
 	TilePath(PathFinder* outerInstance);
@@ -183,7 +183,8 @@ private:
 	ArrayList<PotentialTile*>* blockedPotentialTilesList = new ArrayList<PotentialTile*>();
 	SortedList* openPotentialTilesList = new SortedList(this);
 
-	ArrayList<ArrayList<PotentialTile*>*>* potentialTiles = new ArrayList<ArrayList<PotentialTile*>*>();
+	//ArrayList<ArrayList<PotentialTile*>*>* potentialTiles = new ArrayList<ArrayList<PotentialTile*>*>();
+	vector<PotentialTile*> *potentialTiles = nullptr;
 	bool* checkedTileArray = nullptr;
 
 

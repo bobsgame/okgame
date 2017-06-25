@@ -415,15 +415,18 @@ PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartY
 
 	//JAVA TO C++ CONVERTER NOTE: The following call to the 'RectangularVectors' helper class reproduces the rectangular array initialization that is automatic in Java:
 	//ORIGINAL LINE: potentialTiles = new PotentialTile[w][h];
-	potentialTiles = RectangularVectors::ReturnRectangularPotentialTileVector(w, h);
+	potentialTiles = new vector<PotentialTile*>(w*h);// RectangularVectors::ReturnRectangularPotentialTileVector(w, h);
 
 
 	for (int x = 0; x < w; x++)
 	{
-		potentialTiles->add(new ArrayList<PotentialTile*>());
+		//potentialTiles->add(new ArrayList<PotentialTile*>());
+
+
 		for (int y = 0; y < h; y++)
 		{
-			potentialTiles->get(x)->add(new PotentialTile(x, y));
+			//potentialTiles->get(x)->add(new PotentialTile(x, y));
+			(*potentialTiles)[y*w + x] = new PotentialTile(x, y);
 		}
 	}
 
@@ -444,13 +447,13 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 
 	// initial state for A*. The closed group is empty. Only the starting
 	// tile is in the open list and it's cost is zero, i.e. we're already there
-	potentialTiles->get(startTileX)->get(startTileY)->cumulativePathCost = 0;
-	potentialTiles->get(startTileX)->get(startTileY)->depth = 0;
+	(*potentialTiles)[startTileY*w+startTileX]->cumulativePathCost = 0;
+	(*potentialTiles)[startTileY*w+startTileX]->depth = 0;
 	blockedPotentialTilesList->clear();
 	openPotentialTilesList->clear();
-	openPotentialTilesList->addAndSort(potentialTiles->get(startTileX)->get(startTileY));
+	openPotentialTilesList->addAndSort((*potentialTiles)[startTileY*w + startTileX]);
 
-	potentialTiles->get(toTileX)->get(toTileY)->parent = nullptr;
+	(*potentialTiles)[toTileY*w + toTileX]->parent = nullptr;
 
 	// while we haven't found the goal and haven't exceeded our max search depth
 	int maxDepth = 0;
@@ -461,7 +464,7 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 		// pull out the first node in our open list, this is determined to
 		// be the most likely to be the next step based on our heuristic
 		PotentialTile* current = openPotentialTilesList->first();
-		if (current == potentialTiles->get(toTileX)->get(toTileY))
+		if (current == (*potentialTiles)[toTileY*w + toTileX])
 		{
 			break;
 		}
@@ -502,7 +505,7 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 					// in the sorted open list
 					float nextStepCost = current->cumulativePathCost + getTileTypeCost(current->x, current->y, xp, yp);
 
-					PotentialTile* neighbour = potentialTiles->get(xp)->get(yp);
+					PotentialTile* neighbour = (*potentialTiles)[yp*w + xp];
 
 					setTileChecked(xp, yp);
 
@@ -540,7 +543,7 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 
 	// since we've got an empty open list or we've run out of search
 	// there was no path. Just return null
-	if (potentialTiles->get(toTileX)->get(toTileY)->parent == nullptr)
+	if ((*potentialTiles)[toTileY*w + toTileX]->parent == nullptr)
 	{
 		return nullptr;
 	}
@@ -553,8 +556,8 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 	// references of the nodes to find out way from the target location back
 	// to the start recording the nodes on the way.
 	TilePath* path = new TilePath(this);
-	PotentialTile* target = potentialTiles->get(toTileX)->get(toTileY);
-	while (target != potentialTiles->get(startTileX)->get(startTileY))
+	PotentialTile* target = (*potentialTiles)[toTileY*w + toTileX];
+	while (target != (*potentialTiles)[startTileY*w + startTileX])
 	{
 		path->addPathTileToBeginning(target->x, target->y);
 		target = target->parent;
