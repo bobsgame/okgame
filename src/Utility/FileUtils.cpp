@@ -936,14 +936,14 @@ std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, 
 
 }
 //=========================================================================================================================
-u8* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string, unsigned long &returnLength)
+vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 	long in_len = (long)encoded_string.size();
 	int i = 0;
 	int j = 0;
 	int in_ = 0;
 	u8 char_array_4[4], char_array_3[3];
-	std::vector<u8> ret;
+	std::vector<u8> *ret = new vector<u8>();
 
 	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
 		char_array_4[i++] = encoded_string[in_]; in_++;
@@ -956,7 +956,7 @@ u8* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string, 
 			char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
 
 			for (i = 0; (i < 3); i++)
-				ret.push_back(char_array_3[i]);
+				ret->push_back(char_array_3[i]);
 			i = 0;
 		}
 	}
@@ -972,17 +972,19 @@ u8* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string, 
 		char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
 		char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
 
-		for (j = 0; (j < i - 1); j++) ret.push_back(char_array_3[j]);
+		for (j = 0; (j < i - 1); j++) ret->push_back(char_array_3[j]);
 	}
 
-	u8* data = new u8[ret.size()];
-	for(int x=0;x<ret.size();x++)
-	{
-		data[x] = ret.at(x);
-	}
-	
-	returnLength = ret.size();
-	return data;
+	return ret;
+
+//	u8* data = new u8[ret.size()];
+//	for(int x=0;x<ret.size();x++)
+//	{
+//		data[x] = ret.at(x);
+//	}
+//	
+//	returnLength = ret.size();
+//	return data;
 }
 
 
@@ -1291,8 +1293,8 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 	
 
 
-	unsigned long zippedLength;
-	u8* zippedBytes = (u8*)decodeBase64StringToByteArray(zippedBytesAsString, zippedLength);
+	//unsigned long zippedLength;
+	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsString);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 	if(zip)
@@ -1301,27 +1303,29 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 		//uint step = 0;
 		int compressStatus;
 		//uLong src_len = sourceLength;// (uLong)strlen(s_pStr);
-		uLong uncompressedLength = zippedLength * 40;
+		uLong uncompressedLength = zippedBytes->size() * 40;
 		//uint total_succeeded = 0;
 
 
-		u8 *uncompressedBytes = nullptr;
-		uncompressedBytes = (mz_uint8 *)malloc((size_t)uncompressedLength);
+		u8 *uncompressedBytes = new u8[uncompressedLength];
+		//uncompressedBytes = (mz_uint8 *)malloc((size_t)uncompressedLength);
 		if ((!uncompressedBytes))
 		{
 			log.error("Could not allocate memory for decompression");
 			return nullptr;
 		}
 
-		compressStatus = uncompress(uncompressedBytes, &uncompressedLength, zippedBytes, zippedLength);
+		compressStatus = uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
 		//total_succeeded += (compressStatus == Z_OK);
 
 		while(compressStatus == Z_BUF_ERROR)
 		{
-			free(uncompressedBytes);
+			//free(uncompressedBytes);
+			delete[] uncompressedBytes;
 			uncompressedLength *= 2;
-			uncompressedBytes = (mz_uint8 *)malloc((size_t)uncompressedLength);
-			compressStatus = uncompress(uncompressedBytes, &uncompressedLength, zippedBytes, zippedLength);
+			//uncompressedBytes = (mz_uint8 *)malloc((size_t)uncompressedLength);
+			uncompressedBytes = new u8[uncompressedLength];
+			compressStatus = uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
 		}
 
 		if (compressStatus != Z_OK)
@@ -1331,7 +1335,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 			return nullptr;
 		}
 
-		delete[] zippedBytes;
+		delete zippedBytes;
 
 		//log.debug("Decompressed " + to_string(zippedLength) + " bytes into " + to_string(uncompressedLength) + " bytes");
 		//printf("Decompressed from %u to %u bytes\n", (mz_uint32)size, (mz_uint32)uncomp_len);
@@ -1354,13 +1358,14 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 	{
 		int compressStatus;
 		//lzo_uint in_len;
-		lzo_uint uncompressedLength = zippedLength * 100;
+		lzo_uint uncompressedLength = zippedBytes->size() * 100;
 		//lzo_uint new_len;
 
-		u8 * __LZO_MMODEL uncompressedBytes = new u8[uncompressedLength];
+		u8 *uncompressedBytes = new u8[uncompressedLength];
+		//u8 * __LZO_MMODEL uncompressedBytes = new u8[uncompressedLength];
 
 		//new_len = in_len;
-		compressStatus = lzo1x_decompress(zippedBytes, zippedLength, uncompressedBytes, &uncompressedLength, NULL);
+		compressStatus = lzo1x_decompress(zippedBytes->data(), zippedBytes->size(), uncompressedBytes, &uncompressedLength, NULL);
 
 		while (compressStatus == LZO_E_INPUT_OVERRUN)
 		{
@@ -1368,7 +1373,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 			log.error("Decompression failed, increasing buffer.");
 			uncompressedLength *= 2;
 			uncompressedBytes = new u8[uncompressedLength];
-			compressStatus = lzo1x_decompress(zippedBytes, zippedLength, uncompressedBytes, &uncompressedLength, NULL);
+			compressStatus = lzo1x_decompress(zippedBytes->data(), zippedBytes->size(), uncompressedBytes, &uncompressedLength, NULL);
 		}
 
 		if (compressStatus == LZO_E_OK)
@@ -1377,15 +1382,15 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 		}
 		else
 		{
-			/* this should NEVER happen */
+			// this should NEVER happen 
 			log.error("Decompression failed:" + to_string(compressStatus));
 			return nullptr;
 		}
 
-		delete[] zippedBytes;
+		delete zippedBytes;
 
 		returnLength = uncompressedLength;
-		return (u8*)uncompressedBytes;
+		return uncompressedBytes;
 	}
 
 	return nullptr;
@@ -1418,6 +1423,7 @@ string FileUtils::unzipBase64StringToString(const string& s)
 	u8* bytes = unzipBase64StringToByteArray(s, returnLength);
 	string out((char*)bytes,returnLength);
 
+	delete[] bytes;
 
 	return out;
 }

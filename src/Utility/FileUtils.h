@@ -99,7 +99,7 @@ public:
 	static std::string byteArrayToHexString(u8 *data, unsigned long len);
 	static u8* hexStringToByteArray(const string &hex);
 	static std::string encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned long in_len);
-	static u8* decodeBase64StringToByteArray(std::string const& encoded_string, unsigned long &returnLength);
+	static vector<u8>* decodeBase64StringToByteArray(std::string const& encoded_string);//, unsigned long &returnLength);
 
 	static string appDataPath;
 	static string cacheDir;

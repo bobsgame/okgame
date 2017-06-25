@@ -3081,7 +3081,7 @@ BobTexture* GLUtils::loadTextureFromSurface(string filename, SDL_Surface* surfac
 	{
 		log.error("Allocating a texture too big for the current hardware");
 	}
-	delete [] maxTexSizeArray;
+	delete[] maxTexSizeArray;
 	//int srcPixelFormat = hasAlpha ? GL_RGBA : GL_RGB;
 
 
