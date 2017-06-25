@@ -204,7 +204,7 @@ public:
 	//DebugText memPoolThresholdCountText;
 	//DebugText mxOSInfoSystemLoadText;
 
-	ConsoleText* vramText;
+	ConsoleText* vramText = nullptr;
 
 
 	//mxbean

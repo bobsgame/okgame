@@ -19,7 +19,7 @@ class TilePath;
 class PathTile
 { // =========================================================================================================================
 private:
-	TilePath* outerInstance;
+	TilePath* outerInstance = nullptr;
 
 
 public:
@@ -47,11 +47,11 @@ public:
 class TilePath
 { // =========================================================================================================================
 private:
-	PathFinder* outerInstance;
+	PathFinder* outerInstance = nullptr;
 
 
 public:
-	deque<PathTile*>* pathTiles;
+	deque<PathTile*>* pathTiles = nullptr;
 
 
 	TilePath(PathFinder* outerInstance);
@@ -84,7 +84,7 @@ public:
 class SortedList
 { // =========================================================================================================================
 private:
-	PathFinder* outerInstance;
+	PathFinder* outerInstance = nullptr;
 
 public:
 	SortedList(PathFinder* outerInstance);
@@ -124,7 +124,7 @@ public:
 class PotentialTile
 { // =========================================================================================================================
 public:
-	PathFinder* outerInstance;
+	PathFinder* outerInstance = nullptr;
 
 
 	/// <summary>
@@ -177,21 +177,21 @@ private:
 
 
 public:
-	TilePath* path;
+	TilePath* path = nullptr;
 
 private:
 	ArrayList<PotentialTile*>* blockedPotentialTilesList = new ArrayList<PotentialTile*>();
 	SortedList* openPotentialTilesList = new SortedList(this);
 
 	ArrayList<ArrayList<PotentialTile*>*>* potentialTiles = new ArrayList<ArrayList<PotentialTile*>*>();
-	bool* checkedTileArray;
+	bool* checkedTileArray = nullptr;
 
 
 	int maxSearchDistance = 0;
 	bool allowDiagMovement = false;
 
 public:
-	Entity* e;
+	Entity* e = nullptr;
 
 
 	int w = 0;

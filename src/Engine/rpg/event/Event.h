@@ -36,7 +36,7 @@ private:
 
 public:
 	Sprite* sprite = nullptr;
-	Map* map;
+	Map* map = nullptr;
 	Door* door = nullptr;
 	Area* area = nullptr;
 	Entity* entity = nullptr;
@@ -47,7 +47,7 @@ public:
 
 
 private:
-	EventData* data;
+	EventData* data = nullptr;
 
 
 public:

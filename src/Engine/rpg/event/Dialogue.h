@@ -26,7 +26,7 @@ private:
 	bool doneValue_S = false;
 	long long timeSet = -1;
 
-	DialogueData* data;
+	DialogueData* data = nullptr;
 
 
 public:

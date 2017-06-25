@@ -106,7 +106,7 @@ public:
 
 	bool buttonIconUpDownToggle = false;
 	int buttonTimer = 0;
-	BobTexture* buttonTexture;
+	BobTexture* buttonTexture = nullptr;
 	// TODO: load button texture, draw where appropriate during render
 
 

@@ -35,7 +35,7 @@ public:
 	//ArrayList<GUI*> gameChallengesGUIs;
 
 	KeyboardScreen* keyboardScreen = nullptr;
-	//GUI* keyboardScreenGUI;
+	//GUI* keyboardScreenGUI = nullptr;
 
 
 	//this panel (with plate)

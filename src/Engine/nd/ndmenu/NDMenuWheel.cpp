@@ -16,8 +16,8 @@
 Logger NDMenuWheel::log = Logger("NDMenuWheel");
 
 
-BobTexture* NDMenuWheelItem::wheelItemBackgroundTexture;
-BobTexture* NDMenuWheelItem::wheelItemGlossyOverlayTexture;
+BobTexture* NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
+BobTexture* NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
 
 NDMenuWheel::NDMenuWheel(Engine* g)
 { //=========================================================================================================================

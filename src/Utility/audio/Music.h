@@ -29,9 +29,9 @@ protected:
 
 
 private:
-	MusicData* data;
+	MusicData* data = nullptr;
 public:
-	vector<u8>* byteData;
+	vector<u8>* byteData = nullptr;
 
 
 	

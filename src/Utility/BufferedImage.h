@@ -20,7 +20,7 @@ class BufferedImage
 public:
 	//static Logger log;
 
-	u8* rgbadata;
+	u8* rgbadata = nullptr;
 
 	BufferedImage();
 	BufferedImage(unsigned char* rgbadata, int w, int h);

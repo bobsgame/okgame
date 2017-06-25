@@ -18,14 +18,14 @@ public:
 	static Logger log;
 
 
-	Engine* e;
+	Engine* e = nullptr;
 
 
 public:
 	class GlowTile
 	{
 	private:
-		GlowTileBackground* outerInstance;
+		GlowTileBackground* outerInstance = nullptr;
 
 	public:
 		GlowTile(GlowTileBackground* outerInstance);
@@ -40,7 +40,7 @@ public:
 public:
 	ArrayList<GlowTile*>* glowTiles = new ArrayList<GlowTile*>();
 	ArrayList<BobTexture*>* glowTileFramesTexture = new ArrayList<BobTexture*>();
-	BobTexture* bgScrollTexture;
+	BobTexture* bgScrollTexture = nullptr;
 	float bgScrollX = 0;
 	float bgScrollY = 0;
 	long long ticksPassed = 0;

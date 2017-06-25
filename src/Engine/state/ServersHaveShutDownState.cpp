@@ -22,7 +22,7 @@ void ServersHaveShutDownState::update()
 { //=========================================================================================================================
 }
 
-GlowTileBackground* Main::glowTileBackground;
+GlowTileBackground* Main::glowTileBackground = nullptr;
 
 void ServersHaveShutDownState::render()
 { //=========================================================================================================================

@@ -17,10 +17,10 @@ public:
 	static Logger log;
 
 
-	//DialogLayout* keyboardPanel;
+	//DialogLayout* keyboardPanel = nullptr;
 
 
-	//Button* okButton;
+	//Button* okButton = nullptr;
 
 
 	KeyboardScreen();
@@ -29,7 +29,7 @@ private:
 	class WidgetAnonymousInnerClassHelper// : public Widget
 	{
 	private:
-		KeyboardScreen* outerInstance;
+		KeyboardScreen* outerInstance = nullptr;
 
 	public:
 		WidgetAnonymousInnerClassHelper(KeyboardScreen* outerInstance);

@@ -49,7 +49,7 @@ public:
 class EventScriptTree
 {
 private:
-	EventData* outerInstance;
+	EventData* outerInstance = nullptr;
 
 public:
 	EventScriptTree(EventData* outerInstance);

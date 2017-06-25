@@ -28,14 +28,14 @@ public:
 	static Logger log;
 
 
-	FriendsPanel* friendsPanel;
-	DebugInfoPanel* debugInfoPanel;
-	StatusPanel* statusPanel;
-	MessagesPanel* messagesPanel;
-	ItemsPanel* itemsPanel;
-	LogsPanel* logsPanel;
-	ControlsPanel* controlsPanel;
-	SettingsPanel* settingsPanel;
+	FriendsPanel* friendsPanel = nullptr;
+	DebugInfoPanel* debugInfoPanel = nullptr;
+	StatusPanel* statusPanel = nullptr;
+	MessagesPanel* messagesPanel = nullptr;
+	ItemsPanel* itemsPanel = nullptr;
+	LogsPanel* logsPanel = nullptr;
+	ControlsPanel* controlsPanel = nullptr;
+	SettingsPanel* settingsPanel = nullptr;
 
 
 	//ArrayList<ToggleButton*> stuffMenuTabs;

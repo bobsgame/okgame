@@ -25,10 +25,10 @@ public:
 	//static const int FBO_SCALE = 1;
 
 
-	StateManager* stadiumGameStateManager;
+	StateManager* stadiumGameStateManager = nullptr;
 
 
-	Area* area;
+	Area* area = nullptr;
 
 
 	StadiumScreen(Engine* g);

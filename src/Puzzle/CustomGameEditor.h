@@ -305,7 +305,7 @@ private:
 	Gwen::Controls::ListBox* blockSelectionListBox = nullptr;
 	Gwen::Controls::ListBox* pieceSelectionListBox = nullptr;
 	Gwen::Controls::ListBox* difficultySelectionListBox = nullptr;
-	Gwen::Controls::Base* previewBase;
+	Gwen::Controls::Base* previewBase = nullptr;
 	
 public:
 	PreviewRectangle* darkRectangle = nullptr;
@@ -316,7 +316,7 @@ private:
 	Gwen::Controls::Button* saveButton = nullptr;
 	Gwen::Controls::Button* uploadButton = nullptr;
 	Gwen::Controls::Button* exitButton = nullptr;
-	Gwen::Controls::Base* leftBase;
+	Gwen::Controls::Base* leftBase = nullptr;
 	Gwen::Controls::WindowControl* settingsWindow = nullptr;
 	Gwen::Controls::ScrollControl* settingsScrollControl = nullptr;
 	Gwen::Controls::PropertyTree* settingsPropTree = nullptr;

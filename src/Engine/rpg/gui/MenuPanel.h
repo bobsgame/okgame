@@ -18,9 +18,9 @@ public:
 	static Logger log;
 
 
-	//DialogLayout* mainPanelLayout;
-	//ScrollPane* scrollPane;
-	//DialogLayout* insideScrollPaneLayout;
+	//DialogLayout* mainPanelLayout = nullptr;
+	//ScrollPane* scrollPane = nullptr;
+	//DialogLayout* insideScrollPaneLayout = nullptr;
 
 
 protected:

@@ -44,7 +44,7 @@ public:
 	class Coords
 	{
 	private:
-		ActionManager* outerInstance;
+		ActionManager* outerInstance = nullptr;
 
 	public:
 		int x = 0;

@@ -2769,6 +2769,8 @@ bool Map::loadLightTexturesFromCachePNGs()
 			if (l->texture == nullptr)
 			{
 				//see if it's in the hashmap loaded already from a different map
+
+				if(getMapManager()->lightTextureHashMap.containsKey(l->getFileName()))
 				l->texture = getMapManager()->lightTextureHashMap.get(l->getFileName());
 
 

@@ -37,7 +37,7 @@ public:
 	
 
 
-	StateManager* nDGameStateManager;
+	StateManager* nDGameStateManager = nullptr;
 
 
 	Light* light = nullptr;

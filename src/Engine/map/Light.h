@@ -27,8 +27,8 @@ private:
 	int width = 0;
 	int height = 0;
 
-	u8* byteArray;
-	u8* byteBuffer;
+	u8* byteArray = nullptr;
+	u8* byteBuffer = nullptr;
 
 	int texWidth = 0;
 	int texHeight = 0;

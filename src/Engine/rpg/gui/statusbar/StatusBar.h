@@ -45,14 +45,14 @@ public:
 
 	static bool useLightTheme;
 
-	ClockCaption* clockCaption;
-	DayCaption* dayCaption;
-	MoneyCaption* moneyCaption;
-	NDButton* ndButton;
-	GameStoreButton* gameStoreButton;
-	StuffButton* stuffButton;
+	ClockCaption* clockCaption = nullptr;
+	DayCaption* dayCaption = nullptr;
+	MoneyCaption* moneyCaption = nullptr;
+	NDButton* ndButton = nullptr;
+	GameStoreButton* gameStoreButton = nullptr;
+	StuffButton* stuffButton = nullptr;
 
-	NotificationManager* notificationManager;
+	NotificationManager* notificationManager = nullptr;
 
 
 	bool enabled = true;

@@ -22,7 +22,7 @@ public:
 	static Logger log;
 
 
-	Caption* caption;
+	Caption* caption = nullptr;
 
 
 	string notificationString;

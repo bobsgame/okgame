@@ -61,7 +61,7 @@ public:
 	ArrayList<RamioMoneyBlock*>* moneyBlocks = new ArrayList<RamioMoneyBlock*>();
 
 
-	RamioGuy* guy;
+	RamioGuy* guy = nullptr;
 
 
 	virtual void updateScore();

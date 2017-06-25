@@ -20,8 +20,8 @@ private:
 public:
 	static Logger log;
 
-	StadiumScreen* stadiumScreen;
-	Area* area;
+	StadiumScreen* stadiumScreen = nullptr;
+	Area* area = nullptr;
 
 
 	BobsGameStadium();

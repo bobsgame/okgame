@@ -170,7 +170,7 @@ void* HARDWARE_load_file(string filename)
 	filename = Main::getPath() + filename;
 
 	char* filepointer = NULL;
-	FILE* file;
+	FILE* file = nullptr;
 	long size;
 
 
@@ -231,7 +231,7 @@ long HARDWARE_get_file_size(string filename)//HARDWARE_FSFile[HARDWARE_FSGetFile
 	filename = Main::getPath() + filename;
 
 	//char* filepointer=NULL;
-	FILE* file;
+	FILE* file = nullptr;
 	long size = 0;
 
 
@@ -1036,10 +1036,10 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 
 //
 //	
-//	zip_source_t *src;
-//	zip_t *za;
+//	zip_source_t *src = nullptr;
+//	zip_t *za = nullptr;
 //	zip_error_t error;
-//	void *data;
+//	void *data = nullptr;
 //	//size_t sourceLength;
 //
 //	zip_error_init(&error);
@@ -1119,7 +1119,7 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 		//uLong sourceLength = sourceLength;// (uLong)strlen(s_pStr);
 		uLong compressedLength = compressBound(sourceLength);
 		//uLong uncomp_len = sourceLength;
-		u8 *compressedBytes;
+		u8 *compressedBytes = nullptr;
 		//uint total_succeeded = 0;
 
 
@@ -1216,10 +1216,10 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 
 //
 //	//unzip the byte array to a new byte array
-//	zip_source_t *src;
-//	zip_t *za;
+//	zip_source_t *src = nullptr;
+//	zip_t *za = nullptr;
 //	zip_error_t error;
-//	void *data;
+//	void *data = nullptr;
 //	//size_t size;
 //
 //	zip_error_init(&error);
@@ -1305,7 +1305,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 		//uint total_succeeded = 0;
 
 
-		u8 *uncompressedBytes;
+		u8 *uncompressedBytes = nullptr;
 		uncompressedBytes = (mz_uint8 *)malloc((size_t)uncompressedLength);
 		if ((!uncompressedBytes))
 		{

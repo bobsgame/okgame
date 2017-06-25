@@ -37,7 +37,7 @@ public:
 
 	int animationDirection = 0;
 
-	PathFinder* pathfinder;
+	PathFinder* pathfinder = nullptr;
 
 
 	int pathPosition = 0;

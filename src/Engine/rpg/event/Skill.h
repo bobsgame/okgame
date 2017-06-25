@@ -18,7 +18,7 @@ private:
 	long long timeSet = -1;
 	float value = 0.0f;
 
-	SkillData* data;
+	SkillData* data = nullptr;
 
 
 public:

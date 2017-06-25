@@ -19,9 +19,9 @@ public:
 	static Logger log;
 
 
-	BobTexture* textBoxTexture;
-	BobTexture* spriteBoxTexture;
-	BobTexture* borderTexture;
+	BobTexture* textBoxTexture = nullptr;
+	BobTexture* spriteBoxTexture = nullptr;
+	BobTexture* borderTexture = nullptr;
 
 
 	float scrollPercent = 0;

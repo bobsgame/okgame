@@ -601,7 +601,7 @@ void TextWindow::setPixel(int index, BobColor* c)
 	(*textBoxTextureByteArray)[index + 3] = static_cast<char>(c->ai()); // was 255
 }
 
-vector<u8>* BobFont::font_Palette_ByteArray;
+vector<u8>* BobFont::font_Palette_ByteArray = nullptr;
 
 void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 { // =========================================================================================================================

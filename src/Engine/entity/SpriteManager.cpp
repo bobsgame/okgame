@@ -883,7 +883,7 @@ SpriteManager::SpriteManager(Engine* g)
 
 	if (actionTexture == nullptr)
 	{
-		actionTexture = GLUtils::getTextureFromPNGExePath("data/misc/glowingDot.png");
+		actionTexture = GLUtils::getTextureFromPNG("data/misc/glowingDot.png");
 	}
 }
 

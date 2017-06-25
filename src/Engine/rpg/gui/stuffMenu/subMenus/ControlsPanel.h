@@ -27,7 +27,7 @@ private:
 	class WidgetAnonymousInnerClassHelper// : public Widget
 	{
 	private:
-		ControlsPanel* outerInstance;
+		ControlsPanel* outerInstance = nullptr;
 
 	public:
 		WidgetAnonymousInnerClassHelper(ControlsPanel* outerInstance);

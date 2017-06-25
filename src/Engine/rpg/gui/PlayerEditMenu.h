@@ -113,7 +113,7 @@ private:
 	class CallbackAnonymousInnerClassHelper// : public EditField::Callback
 	{
 	private:
-		PlayerEditMenu* outerInstance;
+		PlayerEditMenu* outerInstance = nullptr;
 
 	public:
 		CallbackAnonymousInnerClassHelper(PlayerEditMenu* outerInstance);
@@ -125,7 +125,7 @@ private:
 	class CallbackAnonymousInnerClassHelper2// : public EditField::Callback
 	{
 	private:
-		PlayerEditMenu* outerInstance;
+		PlayerEditMenu* outerInstance = nullptr;
 
 	public:
 		CallbackAnonymousInnerClassHelper2(PlayerEditMenu* outerInstance);
@@ -145,7 +145,7 @@ public:
 	class AddressInfo
 	{
 	private:
-		PlayerEditMenu* outerInstance;
+		PlayerEditMenu* outerInstance = nullptr;
 
 	public:
 		AddressInfo(PlayerEditMenu* outerInstance);

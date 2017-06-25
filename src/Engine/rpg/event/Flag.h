@@ -21,7 +21,7 @@ private:
 	bool value = false;
 	long long timeSet = -1;
 
-	FlagData* data;
+	FlagData* data = nullptr;
 
 
 public:

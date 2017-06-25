@@ -934,7 +934,7 @@ void GLUtils::initGL(char* windowName)
 		//set up shaders
 		//-----------------------------
 		/*
-		char *fs, *vs;
+		char *fs = nullptr, *vs = nullptr;
 
 		vert[0] = glCreateShader(GL_VERTEX_SHADER);
 		vs = textFileRead("shaders/coord.vert");
@@ -3286,19 +3286,19 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 	return tex;
 }
 
-
-//=========================================================================================================================
-BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
-{//=========================================================================================================================
-
-
-}
 //=========================================================================================================================
 BobTexture *GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
 	filename = Main::getPath() + filename;
+	return getTextureFromPNGAbsolutePath(filename);
+
+}
+//=========================================================================================================================
+BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+{//=========================================================================================================================
+
 
 	glEnable(GL_TEXTURE_2D);
 

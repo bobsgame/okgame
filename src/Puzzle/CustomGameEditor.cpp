@@ -894,7 +894,7 @@ void CustomGameEditorControl::initBlockSelectionListBox()
 	
 
  //populate the blockList with BlockTypes from settings
-	Layout::TableRow* row;
+	Layout::TableRow* row = nullptr;
 //	if (currentGameType->blockTypes.size() == 0)
 //	{
 //		shared_ptr<BlockType> pt(new BlockType());
@@ -924,7 +924,7 @@ void CustomGameEditorControl::initPieceSelectionListBox()
 
 	GetCanvas()->DoThink();
 
-	Layout::TableRow* row;
+	Layout::TableRow* row = nullptr;
 //	if (currentGameType->pieceTypes.size() == 0)
 //	{
 //		shared_ptr<PieceType> pt(new PieceType());
@@ -965,7 +965,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 	settingsPropTree->SetHeight(1000);
 	{
 		int n = 0;
-		Properties* p;
+		Properties* p = nullptr;
 		n++; p = settingsPropTree->Add("Game Rules"); p->SetToolTip("General game settings");
 		{
 
@@ -1479,7 +1479,7 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 
 		int n = 0;
 
-		Properties* p;
+		Properties* p = nullptr;
 		n++; p = blockPropTree->Add("Block Properties");
 		{
 			n++; p->Add(b->name_Info.label, string(b->name))->SetToolTip(b->name_Info.tip);
@@ -1922,7 +1922,7 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 	{
 
 		int n = 0;
-		Properties* p;
+		Properties* p = nullptr;
 		n++; p = piecePropTree->Add("Piece Properties");
 		{
 			n++; p->Add(b->name_Info.label, string(b->name))->SetToolTip(b->name_Info.tip);
@@ -4647,7 +4647,7 @@ void CustomGameEditorControl::initDifficultySelectionListBox()
 
 	GetCanvas()->DoThink();
 
-	Layout::TableRow* row;
+	Layout::TableRow* row = nullptr;
 
 
 
@@ -4683,7 +4683,7 @@ void CustomGameEditorControl::initDifficultyPropTree(DifficultyType *b)
 	{
 
 		int n = 0;
-		Properties* p;
+		Properties* p = nullptr;
 		n++; p = difficultyPropTree->Add("Difficulty Properties");
 		{
 			//n++; p->Add(b->name_Info.label, string(b->name))->SetToolTip(b->name_Info.tip);

@@ -37,12 +37,12 @@ public:
 	int slot = 0;
 	string name = "";
 
-	NDGameEngine* game;
+	NDGameEngine* game = nullptr;
 
 	BobColor* color = BobColor::black;
 
 
-	Caption* caption;
+	Caption* caption = nullptr;
 
 
 	NDMenuWheelItem(Engine* g, NDGameEngine* game, const string& name, BobColor* color);

@@ -21,10 +21,10 @@ public:
 	static Logger log;
 
 
-	//DialogLayout* notificationPanel;
+	//DialogLayout* notificationPanel = nullptr;
 
-	//Button* yesButton;
-	//Button* noButton;
+	//Button* yesButton = nullptr;
+	//Button* noButton = nullptr;
 
 	FriendCharacter* friendCharacter = nullptr;
 	string gameName = "";

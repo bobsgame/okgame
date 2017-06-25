@@ -18,7 +18,7 @@ class GameStringData;
 class GameString : public ServerObject
 {
 private:
-	GameStringData* data;
+	GameStringData* data = nullptr;
 
 
 public:

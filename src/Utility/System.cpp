@@ -105,7 +105,7 @@ using Poco::Environment;
 #endif
 
 #ifdef USE_SIGAR
-sigar_t *sigar;
+sigar_t *sigar = nullptr;
 #endif
 
 

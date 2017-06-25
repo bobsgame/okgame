@@ -63,7 +63,7 @@ private:
 public:
 	float entityXWhenCreated = 0;
 	float entityYWhenCreated = 0;
-	Entity* entity;
+	Entity* entity = nullptr;
 	int actionCaptionType = ActionManager::ACTIONCAPTIONTYPE_NONE;
 	Area* area = nullptr;
 	int actionRangeX = 0;

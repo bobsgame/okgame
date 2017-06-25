@@ -28,7 +28,7 @@ public:
 
 
 
-	FriendManager* friendManager;
+	FriendManager* friendManager = nullptr;
 
 
 	string mapName = "";
