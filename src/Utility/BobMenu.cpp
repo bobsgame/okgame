@@ -106,10 +106,10 @@ void BobMenu::MenuItem::setText(string s)
 BobMenu::BobMenu(Engine *g, string title)
 {//=========================================================================================================================
 	this->e = g;
-	if (rectangleCursorTexture == nullptr)rectangleCursorTexture = GLUtils::getTextureFromPNG("data/textbox/rectangleCursor.png");
-	if (cursorTexture == nullptr)cursorTexture = GLUtils::getTextureFromPNG("data/textbox/outlinedCursor.png");
-	if (upCursorTexture == nullptr)upCursorTexture = GLUtils::getTextureFromPNG("data/textbox/upCursor.png");
-	if (downCursorTexture == nullptr)downCursorTexture = GLUtils::getTextureFromPNG("data/textbox/downCursor.png");
+	if (rectangleCursorTexture == nullptr)rectangleCursorTexture = GLUtils::getTextureFromPNGExePath("data/textbox/rectangleCursor.png");
+	if (cursorTexture == nullptr)cursorTexture = GLUtils::getTextureFromPNGExePath("data/textbox/outlinedCursor.png");
+	if (upCursorTexture == nullptr)upCursorTexture = GLUtils::getTextureFromPNGExePath("data/textbox/upCursor.png");
+	if (downCursorTexture == nullptr)downCursorTexture = GLUtils::getTextureFromPNGExePath("data/textbox/downCursor.png");
 
 	cursorInOutToggleTicks = 0;
 	cursorInOutToggle = false;

@@ -259,6 +259,7 @@ long HARDWARE_get_file_size(string filename)//HARDWARE_FSFile[HARDWARE_FSGetFile
 
 
 string FileUtils::appDataPath = "";
+string FileUtils::cacheDir = "";
 //string "/" = "";
 string FileUtils::bigDataURL = "";
 string FileUtils::smallDataURL = "";
@@ -268,16 +269,16 @@ FileUtils::FileUtils()
 { //=========================================================================================================================
 
 
-	//   if (System::debugMode == true) //DEBUG
-	//   {
-	//      bigDataURL = BobNet::debugBigDataURL;
-	//      smallDataURL = BobNet::debugSmallDataURL;
-	//   }
-	//   else
-	//   {
-	//      bigDataURL = BobNet::releaseBigDataURL;
-	//      smallDataURL = BobNet::releaseSmallDataURL;
-	//   }
+//	   if (Main::debugMode == true) //DEBUG
+//	   {
+//	      bigDataURL = BobNet::debugBigDataURL;
+//	      smallDataURL = BobNet::debugSmallDataURL;
+//	   }
+//	   else
+//	   {
+	      bigDataURL = BobNet::releaseBigDataURL;
+	      smallDataURL = BobNet::releaseSmallDataURL;
+	  // }
 	//
 	//   //cacheDir = "C:\\bobsGameCache\\";
 	//
@@ -287,6 +288,7 @@ FileUtils::FileUtils()
 	//cacheDir = "";// prop->getProperty("user.home") + slash + string(".bobsGame") + slash;
 	//fileUtils = this;
 	appDataPath = string(SDL_GetPrefPath("Bob Corporation", "bob's game"));
+	cacheDir = appDataPath+"cache/";
 }
 
 BufferedImage* FileUtils::readBufferedImageFromFile(BobFile* file)
@@ -299,8 +301,29 @@ BufferedImage* FileUtils::readBufferedImageFromFile(BobFile* file)
 //	return new ArrayList<string>;
 //}
 
+#include "Poco/File.h"
+#include "Poco/Path.h"
+#include "Poco/Delegate.h"
+#include "Poco/Zip/Decompress.h"
+#include "Poco/Process.h"
+#include "Poco/DirectoryIterator.h"
+using Poco::DirectoryIterator;
+using Poco::File;
+using Poco::Process;
+using Poco::Path;
+using Poco::Delegate;
+using Poco::Zip::Decompress;
+
 void FileUtils::makeDir(const string& cs)
 {
+
+	File f = File(cs);
+	if (f.exists() == false)
+	{
+		f.createDirectory();
+	}
+
+	
 }
 
 
@@ -471,7 +494,7 @@ void FileUtils::makeDir(const string& cs)
 
 
 //=========================================================================================================================
-vector<uint16_t>* FileUtils::loadShortIntFile(string filename)
+vector<uint16_t>* FileUtils::loadShortFile(string filename)
 {//=========================================================================================================================
 
 	vector<u8> *byteArray = loadByteFileFromExePath(filename);
@@ -502,6 +525,48 @@ vector<uint16_t>* FileUtils::loadShortIntFile(string filename)
 	return shortArray;
 }
 
+//=========================================================================================================================
+vector<int>* FileUtils::loadIntFile(string filename)
+{//=========================================================================================================================
+
+	vector<u8> *byteArray = loadByteFile(filename);
+
+	vector<int> *intArray = new vector<int>(byteArray->size() / 4);
+
+	for (int x = 0; x<intArray->size(); x++)
+	{
+		short sbyte1 = (*byteArray)[x * 4 + 0];//signed byte 1
+		short sbyte2 = (*byteArray)[x * 4 + 1];
+		short sbyte3 = (*byteArray)[x * 4 + 2];
+		short sbyte4 = (*byteArray)[x * 4 + 3];
+
+
+		short ubyte1 = sbyte1 & 0xFF;
+		short ubyte2 = sbyte2 & 0xFF;
+		short ubyte3 = sbyte3 & 0xFF;
+		short ubyte4 = sbyte4 & 0xFF;
+
+		short result = (ubyte4 << 24) + (ubyte3 << 16) + (ubyte2 << 8) + ubyte1;
+
+		(*intArray)[x] = result;
+	}
+
+	delete byteArray;//does this leak? delete[] ?
+					 //-------------------
+					 //alt
+					 //-------------------
+
+					 //return getIntArrayFromByteArray(loadByteFile(filename));
+
+	return intArray;
+}
+
+vector<int>* FileUtils::loadIntFileFromExePath(string filename)
+{//=========================================================================================================================
+	filename = Main::getPath() + filename;
+
+	return loadIntFile(filename);
+}
 
 
 // ===============================================================================================
@@ -588,10 +653,9 @@ string FileUtils::trimmed(std::string s)
 }
 
 //=========================================================================================================================
-string FileUtils::loadTextFileFromExePathAndTrim(string filename)
+string FileUtils::loadTextFileAndTrim(string filename)
 {//=========================================================================================================================
 
-	filename = Main::getPath() + filename;
 
 	ifstream t(filename);
 	string str;
@@ -610,11 +674,20 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 	return str;
 }
 
+
 //=========================================================================================================================
-ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename)
+string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
+	return loadTextFileAndTrim(filename);
+}
+
+
+//=========================================================================================================================
+ArrayList<string>* FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
+{//=========================================================================================================================
+
 
 	ArrayList<string>* lines = new ArrayList<string>();
 
@@ -631,7 +704,16 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 	return lines;
 }
 
-//
+//=========================================================================================================================
+ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename)
+{//=========================================================================================================================
+
+	filename = Main::getPath() + filename;
+	return loadTextFileIntoVectorOfStringsAndTrim(filename);
+}
+
+
+
 ////=========================================================================================================================
 //u8* FileUtils::loadByteFileFromExePath(string filename, int* size_return)
 //{//=========================================================================================================================
@@ -702,10 +784,10 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 
 
 //=========================================================================================================================
-vector<u8>* FileUtils::loadByteFileFromExePath(string filename)
+vector<u8>* FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
-	filename = Main::getPath() + filename;
+
 
 	// open the file:
 	std::ifstream file(filename, std::ios::binary);
@@ -732,6 +814,14 @@ vector<u8>* FileUtils::loadByteFileFromExePath(string filename)
 	return vec;
 
 
+}
+
+//=========================================================================================================================
+vector<u8>* FileUtils::loadByteFileFromExePath(string filename)
+{//=========================================================================================================================
+
+	filename = Main::getPath() + filename;
+	return loadByteFile(filename);
 }
 
 
@@ -1565,6 +1655,36 @@ void FileUtils::deleteStatusText()
 	   }
 }
 
+
+
+//private:
+//   class ProgressListener : public ActionListener
+//   {
+//   private:
+//      FileUtils* outerInstance;
+//
+//   public:
+//      ProgressListener(FileUtils* outerInstance);
+//
+//      virtual void actionPerformed(ActionEvent* e) override;
+//   };
+//
+//
+//public:
+//   class DownloadCountingOutputStream : public CountingOutputStream
+//   {
+//   private:
+//      FileUtils* outerInstance;
+//
+//      ActionListener* listener = nullptr;
+//   public:
+//      DownloadCountingOutputStream(FileUtils* outerInstance, OutputStream* out);
+//      virtual void setListener(ActionListener* listener);
+//
+//   protected:
+//      virtual void afterWrite(int n) throw(IOException) override;
+//   };
+
 //
 //FileUtils::ProgressListener::ProgressListener(FileUtils* outerInstance) : outerInstance(outerInstance)
 //{
@@ -1869,43 +1989,46 @@ void FileUtils::downloadFileIfDifferentFromServer(const string& fileName, const 
 void FileUtils::initCache()
 { //===============================================================================================
 
-	//   log.info("Init FileUtils...");
-	//
-	//   FileUtils::makeDir(cacheDir);
-	//   FileUtils::makeDir(cacheDir + string("l") + slash);
-	//
-	//   //File initFile = new File(cacheDir+"init");
-	//   //if(initFile.exists()==false)
-	//   //{
-	//   // check filesize of sprites.zip locally
-	//   // check filesize of sprites.zip on server
-	//   //if different, delete sprites.zip locally, download sprites.zip, decompress.
-	//
-	//
-	//   downloadAndDecompressZIPFileIfDifferentFromServer("sprites.zip", "Sprite Graphics");
-	//   downloadAndDecompressZIPFileIfDifferentFromServer("maps.zip", "Background Graphics");
-	//   downloadAndDecompressZIPFileIfDifferentFromServer("sounds.zip", "Sound Effects");
-	//   downloadAndDecompressZIPFileIfDifferentFromServer("music.zip", "Initial Music Data");
-	//   downloadFileIfDifferentFromServer("gameData", "Initial Game Data");
-	//
-	//   deleteStatusText();
-	//   //FileUtils::listFiles(new File(cacheDir),null,true);
-	//
-	//
-	//   //delete("sprites.zip");
-	//   //delete("maps.zip");
-	//
-	//   //			try
-	//   //			{
-	//   //				initFile.createNewFile();
-	//   //			}
-	//   //			catch (IOException e1)
-	//   //			{
-	//   //				e1.printStackTrace();
-	//   //			}
-	//   //}
-	//
-	//   log.info("FileUtils Complete.");
+	   log.info("Init FileUtils...");
+	
+	   FileUtils::makeDir(cacheDir);
+
+	   FileUtils::makeDir(cacheDir + "l/");
+	
+	   //File initFile = new File(cacheDir+"init");
+	   //if(initFile.exists()==false)
+	   //{
+			// check filesize of sprites.zip locally
+			// check filesize of sprites.zip on server
+			//if different, delete sprites.zip locally, download sprites.zip, decompress.
+	
+	
+	   downloadAndDecompressZIPFileIfDifferentFromServer("sprites.zip", "Sprite Graphics");
+	   downloadAndDecompressZIPFileIfDifferentFromServer("maps.zip", "Background Graphics");
+	   downloadAndDecompressZIPFileIfDifferentFromServer("sounds.zip", "Sound Effects");
+	   downloadAndDecompressZIPFileIfDifferentFromServer("music.zip", "Initial Music Data");
+	   downloadFileIfDifferentFromServer("gameData", "Initial Game Data");
+	
+	   deleteStatusText();
+
+
+	   //FileUtils::listFiles(new File(cacheDir),null,true);
+	
+	
+	   //delete("sprites.zip");
+	   //delete("maps.zip");
+	
+	   //			try
+	   //			{
+	   //				initFile.createNewFile();
+	   //			}
+	   //			catch (IOException e1)
+	   //			{
+	   //				e1.printStackTrace();
+	   //			}
+	   //}
+	
+	   log.info("FileUtils Complete.");
 }
 
 void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
@@ -1974,6 +2097,41 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//   }
 }
 
+
+#undef INADDR_ANY       
+#undef INADDR_LOOPBACK  
+#undef INADDR_BROADCAST 
+#undef INADDR_NONE      
+#include "Poco/Net/HTTPClientSession.h"
+#include "Poco/Net/HTTPRequest.h"
+#include "Poco/Net/HTTPResponse.h"
+#include "Poco/Net/HTTPCredentials.h"
+#include "Poco/StreamCopier.h"
+#include "Poco/NullStream.h"
+#include "Poco/Path.h"
+#include "Poco/URI.h"
+#include "Poco/Exception.h"
+using Poco::Net::HTTPClientSession;
+using Poco::Net::HTTPRequest;
+using Poco::Net::HTTPResponse;
+using Poco::Net::HTTPMessage;
+using Poco::StreamCopier;
+using Poco::Path;
+using Poco::URI;
+using Poco::Exception;
+
+#include "Poco/FileStream.h"
+#include "Poco/URIStreamOpener.h"
+#include "Poco/Net/HTTPStreamFactory.h"
+#include "Poco/Net/FTPStreamFactory.h"
+#include <memory>
+#include <iostream>
+using Poco::FileStream;
+using Poco::URIStreamOpener;
+using Poco::Net::HTTPStreamFactory;
+using Poco::Net::FTPStreamFactory;
+
+
 void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 { //===============================================================================================
 
@@ -2000,45 +2158,110 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 	//         e1->printStackTrace();
 	//      }
 	//   }
+
+	File f = File(cacheDir + fileName);
+	if (f.exists() == false)
+	{
+
+		try
+		{
+
+			HTTPStreamFactory::registerFactory();
+
+
+			URI zipuri(smallDataURL+fileName);
+
+			HTTPClientSession session(zipuri.getHost(), zipuri.getPort());
+			string path(zipuri.getPathAndQuery());
+			HTTPRequest request(HTTPRequest::HTTP_GET, path, HTTPMessage::HTTP_1_1);
+			HTTPResponse response;
+			session.setTimeout(Poco::Timespan(20, 0));
+			session.sendRequest(request);
+			//std::istream& rs =
+			session.receiveResponse(response);
+			//int contentlen = (int)response.getContentLength();
+
+
+			FileStream fs(cacheDir + fileName, ios::out | ios::trunc | ios::binary);
+			std::auto_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
+			StreamCopier::copyStream(*pStr.get(), fs);
+			fs.close();
+		}
+		catch (Exception)
+		{
+			//std::cerr << exc.displayText() << std::endl;
+			log.error("Could not download " + fileName);
+
+			return;
+		}
+	}
+
 }
 
 vector<u8>* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
-	   downloadSmallFileToCacheIfNotExist(fileName);
-	
-	   return loadByteFileFromExePath(string("") + FileUtils::cacheDir + fileName);
-
-
+	downloadSmallFileToCacheIfNotExist(fileName);
+	return loadByteFile(cacheDir + fileName);
 }
 
 
 vector<int>* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
-	
-	   downloadSmallFileToCacheIfNotExist(fileName);
-	
-	   return loadShortIntFile(string("") + FileUtils::cacheDir + fileName);
+	downloadSmallFileToCacheIfNotExist(fileName);
+	return loadIntFile(cacheDir + fileName);
+}
 
-	   //are they exported as 16 or 32??
-
+void FileUtils::saveByteArrayToCache(vector<u8>* byteArray, const string& md5FileName)
+{ //===============================================================================================
+	
+	
+	writeByteArrayToFile(byteArray, cacheDir + md5FileName);
 
 }
 
-void FileUtils::saveByteArrayToCache(u8* byteArray, const string& md5FileName)
+void FileUtils::writeByteArrayToFile(vector<u8>* byteArray, const string& fileName)
 { //===============================================================================================
-	//
-	//   File* outputFile = new File(cacheDir + md5FileName);
-	//
-	//   try
-	//   {
-	//      FileUtils::writeByteArrayToFile(outputFile, byteArray);
-	//   }
-	//   catch (IOException e)
-	//   {
-	//      e->printStackTrace();
-	//   }
+
+
+	std::ofstream file(fileName, std::ios::binary);
+	if (file)
+	{
+		file.write((char*)byteArray->data(), byteArray->size());
+	}
+
+
+
+//	r - open for reading
+//		w - open for writing(file need not exist)
+//		a - open for appending(file need not exist)
+//		r + -open for reading and writing, start at beginning
+//		w + -open for reading and writing(overwrite file)
+//		a + -open for reading and writing(append if file exists)
+//	FILE *f = fopen("out.txt", "w");
+//	if (f == NULL)
+//	{
+//		fprintf(stderr, "Error opening file!\n");
+//		exit(EXIT_FAILURE);
+//	}
+
+//	for (int i = 0; i < len; i++)
+//	{
+//		fprintf(f, "%u", buffer[i]);
+//	}
+	//OR
+//  fwrite(x, sizeof(x[0]), sizeof(x) / sizeof(x[0]), fp);
+	//size_t fwrite(const void *ptr, size_t size_of_elements, size_t number_of_elements, FILE *a_file);
+	//int fputc( int c, FILE *fp );
+//	fclose(f);
+
+
+
+//	Poco::FileOutputStream fos(file, std::ios::binary);
+//	fos << "sometestdata";
+//	fos.close();
+
 }
 
 bool FileUtils::doesDidIntroFileExist()

@@ -19,7 +19,7 @@ StuffButton::StuffButton(BGClientEngine* g)
 	this->e = g;
 
 
-	texture = GLUtils::getTextureFromPNG("data/statusbar/stuff.png");
+	texture = GLUtils::getTextureFromPNGExePath("data/statusbar/stuff.png");
 
 
 	offsetX0 = 0; // GameStoreButton.dividerX+20;//280

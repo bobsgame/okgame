@@ -43,18 +43,18 @@ StatusBar::StatusBar(BGClientEngine* g)
 	notificationManager = new NotificationManager(g);
 
 
-	blackBackgroundTexture = GLUtils::getTextureFromPNG("data/statusbar/blackbarbackground.png");
-	blackForegroundTexture = GLUtils::getTextureFromPNG("data/statusbar/blackbarforeground.png");
+	blackBackgroundTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/blackbarbackground.png");
+	blackForegroundTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/blackbarforeground.png");
 
-	whiteBackgroundTexture = GLUtils::getTextureFromPNG("data/statusbar/whitebarbackground.png");
-	whiteForegroundTexture = GLUtils::getTextureFromPNG("data/statusbar/whitebarforeground.png");
+	whiteBackgroundTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/whitebarbackground.png");
+	whiteForegroundTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/whitebarforeground.png");
 
 	backgroundTexture = blackBackgroundTexture;
 	foregroundTexture = blackForegroundTexture;
 
 
-	glowTexture = GLUtils::getTextureFromPNG("data/statusbar/greenDot.png");
-	dividerTexture = GLUtils::getTextureFromPNG("data/statusbar/dividerLine.png");
+	glowTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/greenDot.png");
+	dividerTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/dividerLine.png");
 }
 
 void StatusBar::init()

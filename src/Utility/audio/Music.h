@@ -31,7 +31,7 @@ protected:
 private:
 	MusicData* data;
 public:
-	u8* byteData;
+	vector<u8>* byteData;
 
 
 	
@@ -94,7 +94,7 @@ protected:
 
 
 public:
-	virtual u8* getByteData();
+	virtual vector<u8>* getByteData();
 
 
 	//The following method was originally marked 'synchronized':

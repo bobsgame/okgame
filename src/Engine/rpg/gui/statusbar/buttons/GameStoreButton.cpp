@@ -21,7 +21,7 @@ GameStoreButton::GameStoreButton(BGClientEngine* g)
 
 	this->e = g;
 
-	texture = GLUtils::getTextureFromPNG("data/statusbar/gameStore.png");
+	texture = GLUtils::getTextureFromPNGExePath("data/statusbar/gameStore.png");
 
 
 	offsetX0 = 0; // NDButton.dividerX+20;//120

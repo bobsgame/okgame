@@ -64,28 +64,28 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 	if (chunkPNGFileExists == nullptr)
 	{
-		chunkPNGFileExists = new bool[(chunksWidth * chunksHeight * 2)];
+		chunkPNGFileExists = new vector<bool>(chunksWidth * chunksHeight * 2);
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
-			chunkPNGFileExists[i] = false;
+			(*chunkPNGFileExists)[i] = false;
 		}
 	}
 
 	if (hq2xChunkPNGFileExists == nullptr)
 	{
-		hq2xChunkPNGFileExists = new bool[(chunksWidth * chunksHeight * 2)];
+		hq2xChunkPNGFileExists = new vector<bool>(chunksWidth * chunksHeight * 2);
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
-			hq2xChunkPNGFileExists[i] = false;
+			(*hq2xChunkPNGFileExists)[i] = false;
 		}
 	}
 
 	if (usingHQ2XTexture == nullptr)
 	{
-		usingHQ2XTexture = new bool[(chunksWidth * chunksHeight * 2)];
+		usingHQ2XTexture = new vector<bool>(chunksWidth * chunksHeight * 2);
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
-			usingHQ2XTexture[i] = false;
+			(*usingHQ2XTexture)[i] = false;
 		}
 	}
 
@@ -765,7 +765,7 @@ void Map::update()
 						{
 							int chunkIndex = (chunksWidth * chunksHeight * chunkLayer) + ((chunkY * chunksWidth) + chunkX);
 
-							if (usingHQ2XTexture[chunkIndex] == false)
+							if ((*usingHQ2XTexture)[chunkIndex] == false)
 							{
 								tempAllHQ2XChunkPNGsLoaded = false;
 							}
@@ -1931,7 +1931,7 @@ void Map::loadUtilityLayers()
 	}
 }
 
-void Map::saveDataToCache(int* intArrayAllLayers, int* tiles, u8* pal)
+void Map::saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, vector<u8>* pal)
 { //=========================================================================================================================
 
 	//I should just save each layer as the MD5 in the cache folder
@@ -1942,14 +1942,14 @@ void Map::saveDataToCache(int* intArrayAllLayers, int* tiles, u8* pal)
 		if (MapData::isTileLayer(l))
 		{
 			int index = (getWidthTiles1X() * getHeightTiles1X() * l);
-			int* layer = new int(getWidthTiles1X() * getHeightTiles1X());
+			vector<int>* layer = new vector<int>(getWidthTiles1X() * getHeightTiles1X());
 			for (int i = 0; i < getWidthTiles1X() * getHeightTiles1X(); i++)
 			{
-				layer[i] = intArrayAllLayers[index + i];
+				(*layer)[i] = (*intArrayAllLayers)[index + i];
 			}
 
 			//save to cache folder as md5 name
-			u8* byteArray = FileUtils::getByteArrayFromIntArray(layer);
+			vector<u8>* byteArray = FileUtils::getByteArrayFromIntArray(layer);
 			string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 			FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 
@@ -2009,7 +2009,7 @@ void Map::saveDataToCache(int* intArrayAllLayers, int* tiles, u8* pal)
 		}
 	}
 	//save tiles
-	u8* byteArray = FileUtils::getByteArrayFromIntArray(tiles);
+	vector<u8>* byteArray = FileUtils::getByteArrayFromIntArray(tiles);
 	string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 	FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 	setTilesMD5(md5FileName);
@@ -2168,7 +2168,7 @@ void Map::releaseAllTextures()
 	{
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
-			usingHQ2XTexture[i] = false;
+			(*usingHQ2XTexture)[i] = false;
 		}
 	}
 
@@ -2372,7 +2372,7 @@ bool Map::getHitLayerValueAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ)
 	int index = (tiley * tilew) + tilex;
 
 
-	if (hitLayer[index] == 0)
+	if ((*hitLayer)[index] == 0)
 	{
 		return false;
 	}
@@ -2405,7 +2405,7 @@ int Map::getCameraBoundsFXLayerAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ
 	int tilew = (getWidthPixelsHQ() / 2) / 8;
 	int index = (tiley * tilew) + tilex;
 
-	return cameraLayer[index];
+	return (*cameraLayer)[index];
 }
 
 bool Map::isXYWithinScreenByAmt(float x, float y, int amt)
@@ -2519,25 +2519,25 @@ void Map::releaseChunkTexture(int index)
 //The following method was originally marked 'synchronized':
 bool Map::getChunkPNGFileExists(int index)
 { //=========================================================================================================================
-	return chunkPNGFileExists[index];
+	return (*chunkPNGFileExists)[index];
 }
 
 //The following method was originally marked 'synchronized':
 void Map::setChunkPNGFileExists_S(int index, bool done)
 { //=========================================================================================================================
-	chunkPNGFileExists[index] = done;
+	(*chunkPNGFileExists)[index] = done;
 }
 
 //The following method was originally marked 'synchronized':
 bool Map::getHQ2XChunkPNGFileExists(int index)
 { //=========================================================================================================================
-	return hq2xChunkPNGFileExists[index];
+	return (*hq2xChunkPNGFileExists)[index];
 }
 
 //The following method was originally marked 'synchronized':
 void Map::setHQ2XChunkFileExists_S(int index, bool done)
 { //=========================================================================================================================
-	hq2xChunkPNGFileExists[index] = done;
+	(*hq2xChunkPNGFileExists)[index] = done;
 }
 
 //The following method was originally marked 'synchronized':
@@ -2613,12 +2613,12 @@ bool Map::loadChunkTexturesFromCachePNGs()
 
 							if (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists(chunkIndex) == true)
 							{
-								textureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
-								usingHQ2XTexture[chunkIndex] = true;
+								textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+								(*usingHQ2XTexture)[chunkIndex] = true;
 							}
 							else
 							{
-								textureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+								textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
 							}
 
 							if (textureFile->exists() == false)
@@ -2644,7 +2644,7 @@ bool Map::loadChunkTexturesFromCachePNGs()
 								//however, this isn't possible with lwjgl without some hacks, so what CAN we do?
 								//let's see why it gives the error it does...
 
-								setChunkTexture(chunkIndex, GLUtils::getTextureFromPNG(textureFile->getAbsolutePath()));
+								setChunkTexture(chunkIndex, GLUtils::getTextureFromPNGAbsolutePath(textureFile->getAbsolutePath()));
 							}
 
 							incrementChunkTexturesLoaded();
@@ -2783,7 +2783,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 					if (l->getLightTexturePNGFileExists_S() == true)
 					{
 						//floatcheck it exists, this should never be false.
-						BobFile* textureFile = new BobFile(FileUtils::appDataPath + "l" + "/" + l->getFileName());
+						BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						if (textureFile->exists() == false)
 						{
 							//(exception())->printStackTrace();
@@ -2791,7 +2791,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 						}
 
 
-						BobTexture* t = GLUtils::getTextureFromPNG(FileUtils::appDataPath + "l" + "/" + l->getFileName());
+						BobTexture* t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						getMapManager()->lightTextureHashMap.put(l->getFileName(), t);
 
 						l->texture = t;
@@ -2826,7 +2826,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 			{
 				int chunkIndex = (chunksWidth * chunksHeight * chunkLayer) + ((chunkY * chunksWidth) + chunkX);
 
-				if (usingHQ2XTexture[chunkIndex] == false)
+				if ((*usingHQ2XTexture)[chunkIndex] == false)
 				{
 					tempAllHQ2XChunksLoaded = false;
 
@@ -2836,7 +2836,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 
 						if (getHQ2XChunkPNGFileExists(chunkIndex) == true)
 						{
-							textureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+							textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
 						}
 
 						if (textureFile->exists() == false)
@@ -2867,10 +2867,10 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 						else
 						{
 							//DONE: create new thread: load it as a texture, set TileTexture to this texture, delete ByteBuffer
-							setChunkTexture(chunkIndex, GLUtils::getTextureFromPNG(textureFile->getAbsolutePath()));
+							setChunkTexture(chunkIndex, GLUtils::getTextureFromPNGAbsolutePath(textureFile->getAbsolutePath()));
 						}
 
-						usingHQ2XTexture[chunkIndex] = true;
+						(*usingHQ2XTexture)[chunkIndex] = true;
 					}
 				}
 			}
@@ -2902,9 +2902,9 @@ void Map::startThreadsForMissingChunkPNGs()
 
 	//does cache/groundMD5/ exist?
 	//if not, make it.
-	FileUtils::makeDir(FileUtils::appDataPath + string("_") + getGroundLayerMD5());
-	FileUtils::makeDir(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/");
-	FileUtils::makeDir(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5());
+	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/");
 
 
 	//   if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
@@ -2955,8 +2955,8 @@ void Map::startThreadsForMissingChunkPNGs()
 
 
 				//check for existence of texture in groundMD5
-				BobFile* textureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-				BobFile* hq2xTextureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+				BobFile* textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+				BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
 
 
 				if (hq2xTextureFile->exists())
@@ -2989,8 +2989,8 @@ void Map::startThreadsForMissingChunkPNGs()
 					int threadChunkX = chunkX;
 					int threadChunkY = chunkY;
 					int threadChunkIndex = chunkIndex;
-					int* threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
-					u8* threadPaletteRGBByteArray = paletteRGBByteArray;
+					vector<int>* threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
+					vector<u8>* threadPaletteRGBByteArray = paletteRGBByteArray;
 
 
 					if (MapManager::useThreads == true)
@@ -3133,7 +3133,7 @@ void Map::startThreadsForMissingLightPNGs()
 
 	//does cache/groundMD5/ exist?
 	//if not, make it.
-	FileUtils::makeDir(FileUtils::appDataPath + string("l") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + string("l") + "/");
 
 
 	//   //if(MapManager.useThreads==true&&generatePNGExecutorService==null)generatePNGExecutorService = Executors.newFixedThreadPool(3);
@@ -3174,7 +3174,7 @@ void Map::startThreadsForMissingLightPNGs()
 			if (l->getLightTexturePNGFileExists_S() == false)
 			{
 				//check for existence of texture in cache folder
-				BobFile* textureFile = new BobFile(FileUtils::appDataPath + string("l") + "/" + l->getFileName());
+				BobFile* textureFile = new BobFile(FileUtils::cacheDir + string("l") + "/" + l->getFileName());
 				if (textureFile->exists())
 				{
 					l->setLightTexturePNGFileExists_S(true);
@@ -3211,7 +3211,7 @@ void Map::startThreadsForMissingLightPNGs()
 					else
 					{
 						//do it linearly, waiting for all to finish before continuing
-						l->createLightTexturePNG(FileUtils::appDataPath + string("l") + "/" + l->getFileName());
+						l->createLightTexturePNG(FileUtils::cacheDir + string("l") + "/" + l->getFileName());
 
 						l->setLightTexturePNGFileExists_S(true);
 					}
@@ -3246,9 +3246,9 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 
 	//does cache/groundMD5/ exist?
 	//if not, make it.
-	FileUtils::makeDir(FileUtils::appDataPath + string("_") + getGroundLayerMD5());
-	FileUtils::makeDir(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/");
-	FileUtils::makeDir(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5());
+	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/");
 
 
 	//   if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
@@ -3297,7 +3297,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 			int chunkIndexOverLayer = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
 			//check for existence of texture in groundMD5
-			BobFile* hq2xTextureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+			BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
 
 			if (hq2xTextureFile->exists())
 			{
@@ -3425,7 +3425,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 	//if(MapManager.useThreads==true)generateHQ2XPNGExecutorService.shutdown();
 }
 
-void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, int* tilesetIntArray, u8* paletteRGBByteArray)
+void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray)
 { //=========================================================================================================================
 
 	//Thread.yield();
@@ -3450,7 +3450,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	G.fillRect(0, 0, chunkImageBorder.getWidth(), chunkImageBorder.getHeight());
 	G.dispose();*/
 
-	int* layerChunkBuffer = new int[((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2))];
+	vector<int>* layerChunkBuffer = new vector<int>((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2));
 
 	string layerFileName = "";
 
@@ -3531,8 +3531,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 		//log.debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
 
 		//save 0 byte placeholder, this will always load blank texture
-		BobFile* f = new BobFile(string("") + FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-		BobFile* f2 = new BobFile(string("") + FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(chunkIndex));
+		BobFile* f = new BobFile(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+		BobFile* f2 = new BobFile(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(chunkIndex));
 
 		try
 		{
@@ -3547,12 +3547,12 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	else
 	{
 		//save this as png in folder groundMD5/0_0_0
-		FileUtils::saveImage(string("") + FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex), chunkImage);
-		FileUtils::saveImage(string("") + FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(chunkIndex), chunkImageBorder);
+		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex), chunkImage);
+		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(chunkIndex), chunkImageBorder);
 	}
 }
 
-bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, int* layerChunkBuffer, bool shadowLayer, int* tilesetIntArray, u8* paletteRGBByteArray)
+bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray)
 { //=========================================================================================================================
 
 
@@ -3562,7 +3562,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 	RandomAccessFile* raf = nullptr;
 	try
 	{
-		raf = new RandomAccessFile(string("") + FileUtils::appDataPath + layerFileName, "r");
+		raf = new RandomAccessFile(string("") + FileUtils::cacheDir + layerFileName, "r");
 	}
 	catch (exception e)//FileNotFoundException e)
 	{
@@ -3633,7 +3633,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 					{
 						if (x >= getWidthTiles1X() || x < 0)
 						{
-							layerChunkBuffer[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = 0;
+							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = 0;
 						}
 						else
 						{
@@ -3649,7 +3649,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 								isBlank = false;
 							}
 
-							layerChunkBuffer[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = result;
+							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = result;
 						}
 					}
 				}
@@ -3664,7 +3664,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 					{
 						if (x >= getWidthTiles1X() || x < 0)
 						{
-							layerChunkBuffer[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = 0;
+							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = 0;
 						}
 						else
 						{
@@ -3680,7 +3680,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 								isBlank = false;
 							}
 
-							layerChunkBuffer[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = result;
+							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = result;
 						}
 					}
 				}
@@ -3715,7 +3715,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 	{
 		for (int tx = 0; tx < (chunkSizeTiles1X + 2); tx++)
 		{
-			int tile = layerChunkBuffer[(ty * (chunkSizeTiles1X + 2)) + tx];
+			int tile = (*layerChunkBuffer)[(ty * (chunkSizeTiles1X + 2)) + tx];
 
 			//skip black tiles on the ground layer
 			if (groundLayer == true && tile == 1)
@@ -3748,7 +3748,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 
 					int tilesetIndex = ((tile * 64) + (py * 8 + px)); //*2;
 
-					int paletteIndex = tilesetIntArray[tilesetIndex];
+					int paletteIndex = (*tilesetIntArray)[tilesetIndex];
 
 					//					int byte1 = tileset[tilesetIndex] & 0xFF;
 					//					int byte2 = tileset[tilesetIndex+1] & 0xFF;
@@ -3757,9 +3757,9 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 
 					if (paletteIndex != 0)
 					{
-						int paletteR = paletteRGBByteArray[(paletteIndex * 3) + (0)] & 0xFF;
-						int paletteG = paletteRGBByteArray[(paletteIndex * 3) + (1)] & 0xFF;
-						int paletteB = paletteRGBByteArray[(paletteIndex * 3) + (2)] & 0xFF;
+						int paletteR = (*paletteRGBByteArray)[(paletteIndex * 3) + (0)] & 0xFF;
+						int paletteG = (*paletteRGBByteArray)[(paletteIndex * 3) + (1)] & 0xFF;
+						int paletteB = (*paletteRGBByteArray)[(paletteIndex * 3) + (2)] & 0xFF;
 
 						BobColor* c = new BobColor(paletteR, paletteG, paletteB);
 
@@ -3815,8 +3815,8 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	int underChunkIndex = (chunksWidth * chunksHeight * 0) + ((chunkY * chunksWidth) + chunkX);
 	int overChunkIndex = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
-	BobFile* underLayerTextureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(underChunkIndex));
-	BobFile* overLayerTextureFile = new BobFile(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(overChunkIndex));
+	BobFile* underLayerTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(underChunkIndex));
+	BobFile* overLayerTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(overChunkIndex));
 
 
 	//TODO: handle if 1x file doesn't exist, make it again from md5!
@@ -4017,7 +4017,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	}
 
 	//save temp as hq2x_top
-	FileUtils::saveImage(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(overChunkIndex), temp);
+	FileUtils::saveImage(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(overChunkIndex), temp);
 
 	//don't need temp
 	delete temp;
@@ -4095,7 +4095,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//Outputting full HQ2X bottom layer
 	//save as hq2x bottom
-	FileUtils::saveImage(FileUtils::appDataPath + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(underChunkIndex), temp);
+	FileUtils::saveImage(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(underChunkIndex), temp);
 
 	//don't need temp
 	delete temp;

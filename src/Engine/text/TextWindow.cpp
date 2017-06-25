@@ -21,7 +21,7 @@ TextWindow::TextWindow(Engine* g)
 {//=========================================================================================================================
 	this->e = g;
 
-	borderTexture = GLUtils::getTextureFromPNG("data/textbox/border.png");
+	borderTexture = GLUtils::getTextureFromPNGExePath("data/textbox/border.png");
 
 	scrollPercent = 0;
 }
@@ -39,11 +39,11 @@ void TextWindow::init()
 
 	if (textBoxTextureByteArray != nullptr)
 	{
-		delete[] textBoxTextureByteArray;
+		delete textBoxTextureByteArray;
 		textBoxTextureByteArray = nullptr;
 	}
 
-	textBoxTextureByteArray = new u8[getTextManager()->pow2TexWidth * getTextManager()->pow2TexHeight * 4];
+	textBoxTextureByteArray = new vector<u8>(getTextManager()->pow2TexWidth * getTextManager()->pow2TexHeight * 4);
 
 
 	//		for(int i=0;i<getTextManager()->textureWidth*getTextManager()->textureHeight;i++)
@@ -66,19 +66,19 @@ void TextWindow::init()
 
 	if (spriteWindowTextureByteArray != nullptr)
 	{
-		delete[] spriteWindowTextureByteArray;
+		delete spriteWindowTextureByteArray;
 		spriteWindowTextureByteArray = nullptr;
 	}
 
-	spriteWindowTextureByteArray = new u8[((64) * (64)) * 4];
+	spriteWindowTextureByteArray = new vector<u8>(((64) * (64)) * 4);
 
 
 	for (int i = 0; i < (64) * (64); i++)
 	{
-		spriteWindowTextureByteArray[(i * 4) + 0] = 0;
-		spriteWindowTextureByteArray[(i * 4) + 1] = 0;
-		spriteWindowTextureByteArray[(i * 4) + 2] = 0;
-		spriteWindowTextureByteArray[(i * 4) + 3] = 255;
+		(*spriteWindowTextureByteArray)[(i * 4) + 0] = 0;
+		(*spriteWindowTextureByteArray)[(i * 4) + 1] = 0;
+		(*spriteWindowTextureByteArray)[(i * 4) + 2] = 0;
+		(*spriteWindowTextureByteArray)[(i * 4) + 3] = 255;
 	}
 
 	spriteBoxTexture = GLUtils::getTextureFromData("spriteWindow", 64, 64, spriteWindowTextureByteArray);
@@ -321,12 +321,12 @@ void TextWindow::updateSpriteWindowTexture()
 
 
 	// make 64 * 64 pixel box
-	u8* newtex = new u8[64 * 64 * 4];
+	vector<u8>* newtex = new vector<u8>(64 * 64 * 4);
 
 	// fill with transparent
 	for (int i = 0; i < 64 * 64 * 4; i++)
 	{
-		newtex[i] = static_cast<char>(0);
+		(*newtex)[i] = 0;
 	}
 
 
@@ -349,10 +349,10 @@ void TextWindow::updateSpriteWindowTexture()
 				{
 					int newy = (y + 1) - top_filled_pixel;
 
-					newtex[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 0] = r;
-					newtex[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 1] = g;
-					newtex[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 2] = b;
-					newtex[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 3] = a;
+					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 0] = r;
+					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 1] = g;
+					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 2] = b;
+					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 3] = a;
 				}
 			}
 		}
@@ -362,13 +362,13 @@ void TextWindow::updateSpriteWindowTexture()
 	// go through each pixel
 	// if a pixel isn't transparent and isn't completely white (so it ignores already-outlined areas)
 	// if the surrounding pixels are transparent, set it to white.
-	for (int t = 127 - 32; t >= 0; t -= 16)
+	for (u8 t = 127 - 32; t >= 0; t -= 16)
 	{
 		for (int x = 0; x < 64; x++)
 		{
 			for (int y = 0; y < 64; y++)
 			{
-				if (newtex[((64 * y) + x) * 4 + 3] != static_cast<char>(0) && (newtex[((64 * y) + x) * 4 + 0] != static_cast<char>(t) || newtex[((64 * y) + x) * 4 + 1] != static_cast<char>(t) || newtex[((64 * y) + x) * 4 + 2] != static_cast<char>(t))) // b -  g -  r
+				if ((*newtex)[((64 * y) + x) * 4 + 3] != 0 && ((*newtex)[((64 * y) + x) * 4 + 0] != t || (*newtex)[((64 * y) + x) * 4 + 1] != t || (*newtex)[((64 * y) + x) * 4 + 2] != t)) // b -  g -  r
 				{
 					for (int i = 0; i < 8; i++)
 					{
@@ -419,12 +419,12 @@ void TextWindow::updateSpriteWindowTexture()
 
 						if (y + yy >= 0 && y + yy < 64 && x + xx >= 0 && x + xx < 64)
 						{
-							if (newtex[((64 * (y + yy)) + (x + xx)) * 4 + 3] == static_cast<char>(0))
+							if ((*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 3] == 0)
 							{
-								newtex[((64 * (y + yy)) + (x + xx)) * 4 + 0] = static_cast<char>(t);
-								newtex[((64 * (y + yy)) + (x + xx)) * 4 + 1] = static_cast<char>(t);
-								newtex[((64 * (y + yy)) + (x + xx)) * 4 + 2] = static_cast<char>(t);
-								newtex[((64 * (y + yy)) + (x + xx)) * 4 + 3] = static_cast<char>(t);
+								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 0] = t;
+								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 1] = t;
+								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 2] = t;
+								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 3] = t;
 							}
 						}
 					}
@@ -435,7 +435,7 @@ void TextWindow::updateSpriteWindowTexture()
 
 	// make texture from new 64*64 array
 
-	delete [] spriteWindowTextureByteArray;
+	delete spriteWindowTextureByteArray;
 	spriteWindowTextureByteArray = newtex;
 
 	spriteBoxTexture->release();
@@ -564,14 +564,14 @@ void TextWindow::clearByteArray()
 	{
 		for (int y = 0; y < getTextManager()->pow2TexHeight; y++)
 		{
-			textBoxTextureByteArray[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 0] = 0;
-			textBoxTextureByteArray[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 1] = 0;
-			textBoxTextureByteArray[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 2] = 0;
-			textBoxTextureByteArray[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 3] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 0] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 1] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 2] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 3] = 0;
 
 			if (x < getTextManager()->width && y < getTextManager()->height)
 			{
-				textBoxTextureByteArray[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 3] = 255;
+				(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 3] = 255;
 			}
 		}
 	}
@@ -595,13 +595,13 @@ void TextWindow::setPixel(int index, BobColor* c)
 { // =========================================================================================================================
 
 
-	textBoxTextureByteArray[index + 0] = static_cast<char>(c->ri());
-	textBoxTextureByteArray[index + 1] = static_cast<char>(c->gi());
-	textBoxTextureByteArray[index + 2] = static_cast<char>(c->bi());
-	textBoxTextureByteArray[index + 3] = static_cast<char>(c->ai()); // was 255
+	(*textBoxTextureByteArray)[index + 0] = static_cast<char>(c->ri());
+	(*textBoxTextureByteArray)[index + 1] = static_cast<char>(c->gi());
+	(*textBoxTextureByteArray)[index + 2] = static_cast<char>(c->bi());
+	(*textBoxTextureByteArray)[index + 3] = static_cast<char>(c->ai()); // was 255
 }
 
-u8* BobFont::font_Palette_ByteArray;
+vector<u8>* BobFont::font_Palette_ByteArray;
 
 void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 { // =========================================================================================================================
@@ -654,7 +654,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 			if (index > 2)
 			{
 				// get the gray color from the getText palette
-				int byte1 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 0] & 255);
+				int byte1 = (int)((*BobFont::font_Palette_ByteArray)[index * 2 + 0] & 255);
 				//int byte2 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 1] & 255);
 				//int abgr1555 = (byte2 << 8) + byte1;
 				int r = 255 - (int)((((byte1 & 31)) / 32.0f) * 255.0f);

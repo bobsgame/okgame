@@ -25,8 +25,8 @@ public:
 
 	//static ExecutorService *generatePNGExecutorService;
 
-	int* indexDataIntArray = nullptr;
-	u8* paletteRGBByteArray = nullptr;
+	vector<int>* indexDataIntArray = nullptr;
+	vector<u8>* paletteRGBByteArray = nullptr;
 
 	BobTexture* texture = nullptr;
 	BobTexture* shadowTexture = nullptr;
@@ -101,9 +101,9 @@ public:
 	//	}
 
 	virtual void loadTextures();
-	virtual u8* getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set);
+	virtual vector<u8>* getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set);
 	//The following method was originally marked 'synchronized':
-	virtual u8* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
+	virtual vector<u8>* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
 	//The following method was originally marked 'synchronized':
 	virtual void createSpriteTexturePNG_S();
 	//The following method was originally marked 'synchronized':

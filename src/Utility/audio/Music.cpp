@@ -158,7 +158,7 @@ void Music::setFileExists(bool i)
 	_fileExists = i;
 }
 
-u8* Music::getByteData()
+vector<u8>* Music::getByteData()
 { //=========================================================================================================================
 	return byteData;
 }

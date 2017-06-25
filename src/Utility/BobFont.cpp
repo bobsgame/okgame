@@ -1091,7 +1091,7 @@ int BobFont::getFontPixelValueAtIndex(int index, BobFont* font)
 //		log.error("BobFont::getFontPixelValueAtIndex index >=size should never happen!");
 //		return -1;
 //	}
-	return font->byteArray[index];
+	return (*font->byteArray)[index];
 }
 
 

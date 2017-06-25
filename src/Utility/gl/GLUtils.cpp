@@ -990,8 +990,8 @@ void GLUtils::initGL(char* windowName)
 
 
 	log.info("Loading graphics");
-	blankTexture = GLUtils::getTextureFromPNG("data/misc/blank.png");
-	boxTexture = GLUtils::getTextureFromPNG("data/misc/box.png");
+	blankTexture = GLUtils::getTextureFromPNGExePath("data/misc/blank.png");
+	boxTexture = GLUtils::getTextureFromPNGExePath("data/misc/box.png");
 
 
 }
@@ -3196,7 +3196,7 @@ GLuint GLUtils::createTextureID()
 }
 
 //=========================================================================================================================
-BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, u8* data)
+BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, vector<u8>* data)
 {//=========================================================================================================================
 
 
@@ -3243,15 +3243,15 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 
 
 
-	u8* t = new u8[texWidth*texHeight * 4];
+	vector<u8>* t = new vector<u8>(texWidth*texHeight * 4);
 
 	for (int y = 0; y<imageHeight; y++)
 		for (int x = 0; x<imageWidth; x++)
 		{
-			t[(((y*texWidth) + x) * 4) + 0] = data[(((y*imageWidth) + x) * 4) + 0];//bgra
-			t[(((y*texWidth) + x) * 4) + 1] = data[(((y*imageWidth) + x) * 4) + 1];
-			t[(((y*texWidth) + x) * 4) + 2] = data[(((y*imageWidth) + x) * 4) + 2];//bgra
-			t[(((y*texWidth) + x) * 4) + 3] = data[(((y*imageWidth) + x) * 4) + 3];
+			(*t)[(((y*texWidth) + x) * 4) + 0] = (*data)[(((y*imageWidth) + x) * 4) + 0];//bgra
+			(*t)[(((y*texWidth) + x) * 4) + 1] = (*data)[(((y*imageWidth) + x) * 4) + 1];
+			(*t)[(((y*texWidth) + x) * 4) + 2] = (*data)[(((y*imageWidth) + x) * 4) + 2];//bgra
+			(*t)[(((y*texWidth) + x) * 4) + 3] = (*data)[(((y*imageWidth) + x) * 4) + 3];
 
 		}
 	GLUtils::setDefaultTextureParams();
@@ -3271,9 +3271,9 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 	*/
 	GLint level = 0;
 	GLint border = 0;
-	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, data->data());
 
-	delete[] t;
+	delete t;
 
 
 	//tex->setCacheName(textureName);
@@ -3287,9 +3287,14 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 }
 
 
-
 //=========================================================================================================================
-BobTexture *GLUtils::getTextureFromPNG(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+{//=========================================================================================================================
+
+
+}
+//=========================================================================================================================
+BobTexture *GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 

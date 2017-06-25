@@ -1468,10 +1468,11 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 	int pantsSet = pantsColorIndex + 1;
 	int shoeSet = shoeColorIndex + 1;
 
-	u8* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, -1);
+	vector<u8>* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, -1);
 
 	uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getScreenWidth(), sprite->getScreenHeight() * sprite->getNumFrames(), bb);
 
+	delete bb;
 
 	if (this->sprite != nullptr)
 	{

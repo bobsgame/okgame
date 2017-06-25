@@ -438,15 +438,15 @@ void Caption::init(Engine* g, float screenX, float screenY, long long ticks, con
 
 
 	//textureByteArray = (u8*)malloc(sizeof(u8)*texWidth * texHeight * 4);
-	textureByteArray = new u8[texWidth * texHeight * 4];
+	textureByteArray = new vector<u8>(texWidth * texHeight * 4);
 
 
 	for (int i = 0; i < texWidth * texHeight; i++)
 	{
-		textureByteArray[(i * 4) + 0] = 0;
-		textureByteArray[(i * 4) + 1] = 0;
-		textureByteArray[(i * 4) + 2] = 0;
-		textureByteArray[(i * 4) + 3] = 0; //255 for debug
+		(*textureByteArray)[(i * 4) + 0] = 0;
+		(*textureByteArray)[(i * 4) + 1] = 0;
+		(*textureByteArray)[(i * 4) + 2] = 0;
+		(*textureByteArray)[(i * 4) + 3] = 0; //255 for debug
 	}
 
 
@@ -455,20 +455,20 @@ void Caption::init(Engine* g, float screenX, float screenY, long long ticks, con
 	{
 		for (int i = 0; i < texWidth * texHeight; i++)
 		{
-			textureByteArray[(i * 4) + 0] = 255;
-			textureByteArray[(i * 4) + 1] = 0;
-			textureByteArray[(i * 4) + 2] = 255;
-			textureByteArray[(i * 4) + 3] = 255; //255 for debug
+			(*textureByteArray)[(i * 4) + 0] = 255;
+			(*textureByteArray)[(i * 4) + 1] = 0;
+			(*textureByteArray)[(i * 4) + 2] = 255;
+			(*textureByteArray)[(i * 4) + 3] = 255; //255 for debug
 		}
 
 		for (int x = 0; x < (maxWidth) && x < texWidth; x++)
 		{
 			for (int y = 0; y < (height); y++)
 			{
-				textureByteArray[(((y * texWidth) + x) * 4) + 0] = 0;
-				textureByteArray[(((y * texWidth) + x) * 4) + 1] = 255;
-				textureByteArray[(((y * texWidth) + x) * 4) + 2] = 0;
-				textureByteArray[(((y * texWidth) + x) * 4) + 3] = 255; //255 for debug
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 0] = 0;
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 1] = 255;
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 2] = 0;
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 3] = 255; //255 for debug
 			}
 		}
 
@@ -476,10 +476,10 @@ void Caption::init(Engine* g, float screenX, float screenY, long long ticks, con
 		{
 			for (int y = 0; y < (height); y++)
 			{
-				textureByteArray[(((y * texWidth) + x) * 4) + 0] = 0;
-				textureByteArray[(((y * texWidth) + x) * 4) + 1] = 0;
-				textureByteArray[(((y * texWidth) + x) * 4) + 2] = 255; //255 for debug
-				textureByteArray[(((y * texWidth) + x) * 4) + 3] = 255;
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 0] = 0;
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 1] = 0;
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 2] = 255; //255 for debug
+				(*textureByteArray)[(((y * texWidth) + x) * 4) + 3] = 255;
 			}
 		}
 	}
@@ -489,7 +489,7 @@ void Caption::init(Engine* g, float screenX, float screenY, long long ticks, con
 
 
 	this->texture = GLUtils::getTextureFromData("Caption"+to_string(rand()) + to_string(rand()), texWidth, texHeight, textureByteArray);
-	delete[] textureByteArray;
+	delete textureByteArray;
 	textureByteArray = nullptr;
 
 
@@ -1104,10 +1104,10 @@ void Caption::setPixel(int index, BobColor* c)
 	}
 
 	
-	textureByteArray[index + 0] = static_cast<u8>(c->ri());
-	textureByteArray[index + 1] = static_cast<u8>(c->gi());
-	textureByteArray[index + 2] = static_cast<u8>(c->bi());
-	textureByteArray[index + 3] = static_cast<u8>(c->ai());
+	(*textureByteArray)[index + 0] = static_cast<u8>(c->ri());
+	(*textureByteArray)[index + 1] = static_cast<u8>(c->gi());
+	(*textureByteArray)[index + 2] = static_cast<u8>(c->bi());
+	(*textureByteArray)[index + 3] = static_cast<u8>(c->ai());
 	
 
 
@@ -1265,7 +1265,7 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 		else if (index > 2) //additional aa pixels, use the color value to set the opacity
 		{
 			//get the gray color from the getText palette
-			int byte1 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 0] & 255);
+			int byte1 = (int)((*BobFont::font_Palette_ByteArray)[index * 2 + 0] & 255);
 			//int byte2 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 1] & 255);
 			//int abgr1555 = (byte2 << 8) + byte1;
 			int r = 255 - (int)((((byte1 & 31)) / 32.0f) * 255.0f);

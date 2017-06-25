@@ -90,7 +90,7 @@ void TextManager::init()
 
 	if (questionMarkTexture == nullptr)
 	{
-		questionMarkTexture = GLUtils::getTextureFromPNG("data/textbox/questionmark.png");
+		questionMarkTexture = GLUtils::getTextureFromPNGExePath("data/textbox/questionmark.png");
 	}
 
 

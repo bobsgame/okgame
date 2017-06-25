@@ -54,19 +54,19 @@ public:
 	ArrayList<WarpArea*> warpAreaList;
 
 
-	int* hitLayer = nullptr;
-	int* cameraLayer = nullptr;
-	int* groundShaderLayer = nullptr;
-	int* lightMaskLayer = nullptr;
+	vector<int>* hitLayer = nullptr;
+	vector<int>* cameraLayer = nullptr;
+	vector<int>* groundShaderLayer = nullptr;
+	vector<int>* lightMaskLayer = nullptr;
 
 
 	HashMap<int,BobTexture*> chunkTexture;//= new HashMap<int, Texture*>();
-	bool* chunkPNGFileExists = nullptr;
-	bool* hq2xChunkPNGFileExists = nullptr;
-	bool* usingHQ2XTexture = nullptr;
+	vector<bool>* chunkPNGFileExists = nullptr;
+	vector<bool>* hq2xChunkPNGFileExists = nullptr;
+	vector<bool>* usingHQ2XTexture = nullptr;
 
-	int* tilesetIntArray = nullptr;
-	u8* paletteRGBByteArray = nullptr;
+	vector<int>* tilesetIntArray = nullptr;
+	vector<u8>* paletteRGBByteArray = nullptr;
 
 
 	const static int chunkSizePixelsHQ2X = 512;
@@ -273,7 +273,7 @@ public:
 	virtual void loadUtilityLayers();
 
 
-	virtual void saveDataToCache(int* intArrayAllLayers, int* tiles, u8* pal);
+	virtual void saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, vector<u8>* pal);
 
 
 	virtual void unloadArea(const string& s);
@@ -408,13 +408,13 @@ public:
 	virtual void startThreadsForMissingHQ2XChunkPNGs();
 
 
-	virtual void createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, int* tilesetIntArray, u8* paletteRGBByteArray);
+	virtual void createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
 
 
 	/// <summary>
 	/// returns false if no image is needed
 	/// </summary>
-	virtual bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, int* layerChunkBuffer, bool shadowLayer, int* tilesetIntArray, u8* paletteRGBByteArray);
+	virtual bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
 
 
 	virtual void createHQ2XTexturePNG_THREAD(int chunkX, int chunkY);

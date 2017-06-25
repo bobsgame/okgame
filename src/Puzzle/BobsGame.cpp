@@ -215,24 +215,24 @@ void BobsGame::initAssets()
 {//=========================================================================================================================
 
 	log.info("Loading icons");
-	keyboardTexture = GLUtils::getTextureFromPNG("data/theme/keyboard.png");
-	controllerTexture = GLUtils::getTextureFromPNG("data/theme/controller.png");
-	controllerIconTexture = GLUtils::getTextureFromPNG("data/theme/controllerIcon.png");
-	keyboardIconTexture = GLUtils::getTextureFromPNG("data/theme/keyboardIcon.png");
-	onlineTexture = GLUtils::getTextureFromPNG("data/theme/online.png");
-	networkIconTexture = GLUtils::getTextureFromPNG("data/theme/networkIcon.png");
-	gearsTexture = GLUtils::getTextureFromPNG("data/theme/gears.png");
-	chartTexture = GLUtils::getTextureFromPNG("data/theme/chart.png");
+	keyboardTexture = GLUtils::getTextureFromPNGExePath("data/theme/keyboard.png");
+	controllerTexture = GLUtils::getTextureFromPNGExePath("data/theme/controller.png");
+	controllerIconTexture = GLUtils::getTextureFromPNGExePath("data/theme/controllerIcon.png");
+	keyboardIconTexture = GLUtils::getTextureFromPNGExePath("data/theme/keyboardIcon.png");
+	onlineTexture = GLUtils::getTextureFromPNGExePath("data/theme/online.png");
+	networkIconTexture = GLUtils::getTextureFromPNGExePath("data/theme/networkIcon.png");
+	gearsTexture = GLUtils::getTextureFromPNGExePath("data/theme/gears.png");
+	chartTexture = GLUtils::getTextureFromPNGExePath("data/theme/chart.png");
 
 	log.info("Loading frame");
-	upperLeft = GLUtils::getTextureFromPNG("data/frame/frame1-ul.png");
-	top = GLUtils::getTextureFromPNG("data/frame/frame1-u.png");
-	upperRight = GLUtils::getTextureFromPNG("data/frame/frame1-ur.png");
-	left = GLUtils::getTextureFromPNG("data/frame/frame1-l.png");
-	right = GLUtils::getTextureFromPNG("data/frame/frame1-r.png");
-	lowerLeft = GLUtils::getTextureFromPNG("data/frame/frame1-dl.png");
-	bottom = GLUtils::getTextureFromPNG("data/frame/frame1-d.png");
-	lowerRight = GLUtils::getTextureFromPNG("data/frame/frame1-dr.png");
+	upperLeft = GLUtils::getTextureFromPNGExePath("data/frame/frame1-ul.png");
+	top = GLUtils::getTextureFromPNGExePath("data/frame/frame1-u.png");
+	upperRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-ur.png");
+	left = GLUtils::getTextureFromPNGExePath("data/frame/frame1-l.png");
+	right = GLUtils::getTextureFromPNGExePath("data/frame/frame1-r.png");
+	lowerLeft = GLUtils::getTextureFromPNGExePath("data/frame/frame1-dl.png");
+	bottom = GLUtils::getTextureFromPNGExePath("data/frame/frame1-d.png");
+	lowerRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-dr.png");
 
 	log.info("Loading sprites");
 

@@ -28,7 +28,7 @@ protected:
 private:
 	SoundData* data = nullptr;
 public:
-	u8* byteData = nullptr;
+	vector<u8>* byteData = nullptr;
 
 
 #ifdef USE_SOLOUD
@@ -78,7 +78,7 @@ protected:
 
 
 public:
-	virtual u8* getByteData();
+	virtual vector<u8>* getByteData();
 
 
 	//The following method was originally marked 'synchronized':

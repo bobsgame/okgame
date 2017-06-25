@@ -25,8 +25,8 @@ NotificationManager::NotificationManager(BGClientEngine* g)
 
 	this->e = g;
 
-	loadingBarTexture = GLUtils::getTextureFromPNG("data/statusbar/loadingBar.png");
-	loadingBarBackgroundTexture = GLUtils::getTextureFromPNG("data/statusbar/loadingBarBackground.png");
+	loadingBarTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/loadingBar.png");
+	loadingBarBackgroundTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/loadingBarBackground.png");
 
 
 	//TODO: manage multiple notifications, cycle through them, keep them in a dropdown log

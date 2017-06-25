@@ -339,7 +339,7 @@ std::string MD5::hexdigest() const
  
   char buf[33];
   for (int i=0; i<16; i++)
-    sprintf(buf+i*2, "%02x", digest[i]);
+    sprintf_s(buf+i*2, 1, "%02x", digest[i]);
   buf[32]=0;
  
   return std::string(buf);
@@ -347,10 +347,10 @@ std::string MD5::hexdigest() const
  
 //////////////////////////////
  
-std::ostream& operator<<(std::ostream& out, MD5 md5)
-{
-  return out << md5.hexdigest();
-}
+//std::ostream& operator<<(std::ostream& out, MD5 md5)
+//{
+//  return out << md5.hexdigest();
+//}
  
 //////////////////////////////
  

@@ -111,7 +111,7 @@ void Sprite::preloadFromFile(string name)
 
 
 	//log.info("Loading " + name);
-	texture = GLUtils::getTextureFromPNG("data/sprite/" + name + ".png");
+	texture = GLUtils::getTextureFromPNGExePath("data/sprite/" + name + ".png");
 
 
 
@@ -503,11 +503,11 @@ void Sprite::loadTextures()
 					BobFile* textureFile = nullptr;
 					if (useHQ2X)
 					{
-						textureFile = new BobFile(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
+						textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
 					}
 					else
 					{
-						textureFile = new BobFile(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
+						textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
 					}
 
 					if (textureFile->exists())
@@ -522,11 +522,11 @@ void Sprite::loadTextures()
 					texture = GLUtils::blankTexture;
 					if (useHQ2X)
 					{
-						shadowTexture = GLUtils::getTextureFromPNG(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
+						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
 					}
 					else
 					{
-						shadowTexture = GLUtils::getTextureFromPNG(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
+						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
 					}
 
 					//incrementSpriteTexturesLoaded();
@@ -539,9 +539,9 @@ void Sprite::loadTextures()
 					{
 						threadCreated = true;
 
-						FileUtils::makeDir(FileUtils::appDataPath + string("_") + getDataMD5());
-						FileUtils::makeDir(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/");
-						FileUtils::makeDir(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/");
+						FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5());
+						FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/");
+						FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/");
 
 						//                  if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
 						//                  {
@@ -632,11 +632,11 @@ void Sprite::loadTextures()
 				BobFile* textureFile = nullptr;
 				if (useHQ2X)
 				{
-					textureFile = new BobFile(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5());
+					textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5());
 				}
 				else
 				{
-					textureFile = new BobFile(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5());
+					textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5());
 				}
 				if (textureFile->exists())
 				{
@@ -649,22 +649,22 @@ void Sprite::loadTextures()
 			{
 				if (useHQ2X == true)
 				{
-					texture = GLUtils::getTextureFromPNG(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5());
+					texture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5());
 				}
 				else
 				{
-					texture = GLUtils::getTextureFromPNG(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5());
+					texture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5());
 				}
 
 				if (getHasShadow() == true)
 				{
 					if (useHQ2X)
 					{
-						shadowTexture = GLUtils::getTextureFromPNG(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
+						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
 					}
 					else
 					{
-						shadowTexture = GLUtils::getTextureFromPNG(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
+						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
 					}
 				}
 				else
@@ -695,9 +695,9 @@ void Sprite::loadTextures()
 					}
 
 
-					FileUtils::makeDir(FileUtils::appDataPath + string("_") + getDataMD5());
-					FileUtils::makeDir(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/");
-					FileUtils::makeDir(FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/");
+					FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5());
+					FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/");
+					FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/");
 
 
 					//               if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
@@ -752,33 +752,33 @@ void Sprite::loadTextures()
 
 
 //=========================================================================================================================
-u8* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set)
+vector<u8>* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set)
 { //=========================================================================================================================
 
-	u8* rgb = new u8[3];
-	rgb[0] = r;
-	rgb[1] = g;
-	rgb[2] = b;
+	vector<u8>* rgb = new vector<u8>(3);
+	(*rgb)[0] = r;
+	(*rgb)[1] = g;
+	(*rgb)[2] = b;
 
 
 	int w = s->getScreenWidth() / 2;
 
 	for (int x = 0; x < w; x++)
 	{
-		int oldIndex = s->indexDataIntArray[x] & 0xFF;
+		int oldIndex = (*s->indexDataIntArray)[x] & 0xFF;
 
-		int oldR = s->paletteRGBByteArray[oldIndex * 3 + 0] & 0xFF;
-		int oldG = s->paletteRGBByteArray[oldIndex * 3 + 1] & 0xFF;
-		int oldB = s->paletteRGBByteArray[oldIndex * 3 + 2] & 0xFF;
+		int oldR = (*s->paletteRGBByteArray)[oldIndex * 3 + 0] & 0xFF;
+		int oldG = (*s->paletteRGBByteArray)[oldIndex * 3 + 1] & 0xFF;
+		int oldB = (*s->paletteRGBByteArray)[oldIndex * 3 + 2] & 0xFF;
 
 		if (r == oldR && g == oldG && b == oldB)
 		{
-			int newIndex = s->indexDataIntArray[(w * set) + x];
+			int newIndex = (*s->indexDataIntArray)[(w * set) + x];
 
 
-			rgb[0] = s->paletteRGBByteArray[newIndex * 3 + 0] & 0xFF;
-			rgb[1] = s->paletteRGBByteArray[newIndex * 3 + 1] & 0xFF;
-			rgb[2] = s->paletteRGBByteArray[newIndex * 3 + 2] & 0xFF;
+			(*rgb)[0] = (*s->paletteRGBByteArray)[newIndex * 3 + 0] & 0xFF;
+			(*rgb)[1] = (*s->paletteRGBByteArray)[newIndex * 3 + 1] & 0xFF;
+			(*rgb)[2] = (*s->paletteRGBByteArray)[newIndex * 3 + 2] & 0xFF;
 
 			return rgb;
 		}
@@ -788,12 +788,12 @@ u8* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set)
 }
 
 //The following method was originally marked 'synchronized':
-u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet)
+vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet)
 { //=========================================================================================================================
 
 
-	int* data = indexDataIntArray;
-	u8* pal = paletteRGBByteArray;
+	vector<int>* data = indexDataIntArray;
+	vector<u8>* pal = paletteRGBByteArray;
 
 
 	//create bytebuffer
@@ -810,7 +810,7 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 	int texHeight = Math::getClosestPowerOfTwo(imageHeight);
 
 
-	u8* textureByteArray = new u8[texWidth * texHeight * 4];
+	vector<u8>* textureByteArray = new vector<u8>(texWidth * texHeight * 4);
 
 	//direct method, uses ram outside of the JVM
 	//   u8* textureByteBuffer = ByteBuffer::allocateDirect(textureByteArray->size());
@@ -847,7 +847,7 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 				int a = 255;
 
 
-				int index = data[(f * w * h) + y * w + x]; // & 0xFF;
+				int index = (*data)[(f * w * h) + y * w + x]; // & 0xFF;
 
 
 				if (index == 0)
@@ -872,9 +872,9 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 						}
 						else
 						{
-							r = pal[index * 3 + 0] & 0xFF;
-							g = pal[index * 3 + 1] & 0xFF;
-							b = pal[index * 3 + 2] & 0xFF;
+							r = (*pal)[index * 3 + 0] & 0xFF;
+							g = (*pal)[index * 3 + 1] & 0xFF;
+							b = (*pal)[index * 3 + 2] & 0xFF;
 
 
 							if (r != g || g != b) //skip gray colors, lots of hair is this color.
@@ -892,7 +892,7 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 								//DONE: have these in memory on load.
 								//random sprites should contain their own data and pal.
 
-								u8* rgb;
+								vector<u8>* rgb = nullptr;
 
 								if (carSet != -1)
 								{
@@ -900,9 +900,9 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 
 									if (rgb != nullptr)
 									{
-										r = rgb[0];
-										g = rgb[1];
-										b = rgb[2];
+										r = (*rgb)[0];
+										g = (*rgb)[1];
+										b = (*rgb)[2];
 									}
 								}
 								else
@@ -911,9 +911,9 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 
 									if (rgb != nullptr)
 									{
-										r = rgb[0];
-										g = rgb[1];
-										b = rgb[2];
+										r = (*rgb)[0];
+										g = (*rgb)[1];
+										b = (*rgb)[2];
 									}
 									else
 									{
@@ -922,9 +922,9 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 
 									if (rgb != nullptr)
 									{
-										r = rgb[0];
-										g = rgb[1];
-										b = rgb[2];
+										r = (*rgb)[0];
+										g = (*rgb)[1];
+										b = (*rgb)[2];
 									}
 									else
 									{
@@ -933,9 +933,9 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 
 									if (rgb != nullptr)
 									{
-										r = rgb[0];
-										g = rgb[1];
-										b = rgb[2];
+										r = (*rgb)[0];
+										g = (*rgb)[1];
+										b = (*rgb)[2];
 									}
 									else
 									{
@@ -944,9 +944,9 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 
 									if (rgb != nullptr)
 									{
-										r = rgb[0];
-										g = rgb[1];
-										b = rgb[2];
+										r = (*rgb)[0];
+										g = (*rgb)[1];
+										b = (*rgb)[2];
 									}
 									else
 									{
@@ -955,9 +955,9 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 
 									if (rgb != nullptr)
 									{
-										r = rgb[0];
-										g = rgb[1];
-										b = rgb[2];
+										r = (*rgb)[0];
+										g = (*rgb)[1];
+										b = (*rgb)[2];
 									}
 									else
 									{
@@ -966,11 +966,13 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 
 									if (rgb != nullptr)
 									{
-										r = rgb[0];
-										g = rgb[1];
-										b = rgb[2];
+										r = (*rgb)[0];
+										g = (*rgb)[1];
+										b = (*rgb)[2];
 									}
 								}
+
+								if (rgb != nullptr) delete rgb;
 							}
 						}
 					}
@@ -987,10 +989,10 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 					{
 						for (int xx = 0; xx < 2; xx++)
 						{
-							textureByteArray[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 0] = static_cast<char>(r);
-							textureByteArray[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 1] = static_cast<char>(g);
-							textureByteArray[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 2] = static_cast<char>(b);
-							textureByteArray[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 3] = static_cast<char>(a);
+							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 0] = static_cast<char>(r);
+							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 1] = static_cast<char>(g);
+							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 2] = static_cast<char>(b);
+							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 3] = static_cast<char>(a);
 						}
 					}
 				}
@@ -1017,10 +1019,10 @@ u8* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int h
 			{
 				BobColor* c = new BobColor(hq2xSpriteBufferedImage->getRGB(x, y));// , true);
 
-				textureByteArray[(y * texWidth + x) * 4 + 0] = static_cast<u8>(c->ri());
-				textureByteArray[(y * texWidth + x) * 4 + 1] = static_cast<u8>(c->gi());
-				textureByteArray[(y * texWidth + x) * 4 + 2] = static_cast<u8>(c->bi());
-				textureByteArray[(y * texWidth + x) * 4 + 3] = static_cast<u8>(c->ai());
+				(*textureByteArray)[(y * texWidth + x) * 4 + 0] = static_cast<u8>(c->ri());
+				(*textureByteArray)[(y * texWidth + x) * 4 + 1] = static_cast<u8>(c->gi());
+				(*textureByteArray)[(y * texWidth + x) * 4 + 2] = static_cast<u8>(c->bi());
+				(*textureByteArray)[(y * texWidth + x) * 4 + 3] = static_cast<u8>(c->ai());
 			}
 		}
 
@@ -1072,7 +1074,7 @@ void Sprite::createSpriteTexturePNG_S()
 				int a = 255;
 
 
-				int index = indexDataIntArray[(f * w * h) + (y * w) + x]; // & 0xFF;
+				int index = (*indexDataIntArray)[(f * w * h) + (y * w) + x]; // & 0xFF;
 
 
 				if (index == 0)
@@ -1097,9 +1099,9 @@ void Sprite::createSpriteTexturePNG_S()
 						}
 						else
 						{
-							r = paletteRGBByteArray[index * 3 + 0] & 0xFF;
-							g = paletteRGBByteArray[index * 3 + 1] & 0xFF;
-							b = paletteRGBByteArray[index * 3 + 2] & 0xFF;
+							r = (*paletteRGBByteArray)[index * 3 + 0] & 0xFF;
+							g = (*paletteRGBByteArray)[index * 3 + 1] & 0xFF;
+							b = (*paletteRGBByteArray)[index * 3 + 2] & 0xFF;
 						}
 					}
 				}
@@ -1135,13 +1137,13 @@ void Sprite::createSpriteTexturePNG_S()
 		//---------------------------
 		//save to png
 		//---------------------------
-		FileUtils::saveImage(string("") + FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5(), hq2xSpriteBufferedImage);
+		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5(), hq2xSpriteBufferedImage);
 
 		delete hq2xSpriteBufferedImage;
 	}
 	else
 	{
-		FileUtils::saveImage(string("") + FileUtils::appDataPath + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5(), spriteBufferedImage);
+		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5(), spriteBufferedImage);
 	}
 }
 
@@ -1176,7 +1178,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 		{
 			for (int x = 0; x < width; x++)
 			{
-				int index = indexDataIntArray[(f * width * height) + y * width + x]; // & 0xFF;
+				int index = (*indexDataIntArray)[(f * width * height) + y * width + x]; // & 0xFF;
 
 				if (index != 0)
 				{
@@ -1187,7 +1189,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 					{
 						for (int xx = 0; xx < width; xx++)
 						{
-							if ((indexDataIntArray[(f * width * height) + yy * width + xx]) != 0) // & 0xFF
+							if (((*indexDataIntArray)[(f * width * height) + yy * width + xx]) != 0) // & 0xFF
 							{
 								bottom_pixel_y = yy;
 								yy = -1;

@@ -39,29 +39,29 @@ void NDMenuWheel::init()
 	//------------------------------------------
 
 
-	selectedItemColorSpinTexture[0] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_00.png");
-	selectedItemColorSpinTexture[1] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_01.png");
-	selectedItemColorSpinTexture[2] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_02.png");
-	selectedItemColorSpinTexture[3] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_03.png");
-	selectedItemColorSpinTexture[4] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_04.png");
-	selectedItemColorSpinTexture[5] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_05.png");
-	selectedItemColorSpinTexture[6] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_06.png");
-	selectedItemColorSpinTexture[7] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_07.png");
-	selectedItemColorSpinTexture[8] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_08.png");
-	selectedItemColorSpinTexture[9] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_09.png");
-	selectedItemColorSpinTexture[10] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_10.png");
-	selectedItemColorSpinTexture[11] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_11.png");
-	selectedItemColorSpinTexture[12] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_12.png");
-	selectedItemColorSpinTexture[13] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_13.png");
-	selectedItemColorSpinTexture[14] = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/selectedItemColorSpin_14.png");
+	selectedItemColorSpinTexture[0] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_00.png");
+	selectedItemColorSpinTexture[1] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_01.png");
+	selectedItemColorSpinTexture[2] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_02.png");
+	selectedItemColorSpinTexture[3] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_03.png");
+	selectedItemColorSpinTexture[4] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_04.png");
+	selectedItemColorSpinTexture[5] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_05.png");
+	selectedItemColorSpinTexture[6] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_06.png");
+	selectedItemColorSpinTexture[7] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_07.png");
+	selectedItemColorSpinTexture[8] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_08.png");
+	selectedItemColorSpinTexture[9] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_09.png");
+	selectedItemColorSpinTexture[10] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_10.png");
+	selectedItemColorSpinTexture[11] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_11.png");
+	selectedItemColorSpinTexture[12] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_12.png");
+	selectedItemColorSpinTexture[13] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_13.png");
+	selectedItemColorSpinTexture[14] = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/selectedItemColorSpin_14.png");
 
 
 	//------------------------------------------
 	//load wheel item textures
 	//------------------------------------------
 
-	NDMenuWheelItem::wheelItemBackgroundTexture = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/itemBackground.png");
-	NDMenuWheelItem::wheelItemGlossyOverlayTexture = GLUtils::getTextureFromPNG("data/nD/menu/wheelItem/glossyOverlay.png");
+	NDMenuWheelItem::wheelItemBackgroundTexture = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/itemBackground.png");
+	NDMenuWheelItem::wheelItemGlossyOverlayTexture = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/glossyOverlay.png");
 
 
 	wheelItems->add(new NDMenuWheelItem(getEngine(), nullptr, "GameStore", BobColor::magenta));

@@ -22,7 +22,7 @@ ND::ND()
 { //=========================================================================================================================
 	//MenuPanel();
 
-	texture = GLUtils::getTextureFromPNG("data/nD/nD.png");
+	texture = GLUtils::getTextureFromPNGExePath("data/nD/nD.png");
 
 	widthTextureAspectRatio = ((float)(texture->getTextureWidth()) / (float)(texture->getImageWidth()));
 	heightTextureAspectRatio = ((float)(texture->getTextureHeight()) / (float)(texture->getImageHeight()));

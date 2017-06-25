@@ -44,12 +44,12 @@ void GlowTileBackground::init()
 
 	cleanup();
 
-	bgScrollTexture = GLUtils::getTextureFromPNG("data/guiBackground/glowTileFramesBG.png");
+	bgScrollTexture = GLUtils::getTextureFromPNGExePath("data/guiBackground/glowTileFramesBG.png");
 
 	//glowTileFramesTexture = new ArrayList<Texture*>();
 	for (int i = 0; i < tileFrames; i++)
 	{
-		glowTileFramesTexture->add(GLUtils::getTextureFromPNG("data/guiBackground/glowTileFrames/" + to_string(i) + ".png"));
+		glowTileFramesTexture->add(GLUtils::getTextureFromPNGExePath("data/guiBackground/glowTileFrames/" + to_string(i) + ".png"));
 	}
 
 	glowTiles->clear();

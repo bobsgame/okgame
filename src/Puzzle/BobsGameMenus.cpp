@@ -368,7 +368,7 @@ void BobsGame::updateTitleMenuLogoTexture()
 			int len = (int)numString.length();
 			for (int n = 0; n<2 - len; n++)numString = "0" + numString;//pad to 2 zeros
 
-			titleMenuTextures->add(GLUtils::getTextureFromPNG("data/guiBackground/logo/" + numString + ".png"));
+			titleMenuTextures->add(GLUtils::getTextureFromPNGExePath("data/guiBackground/logo/" + numString + ".png"));
 		}
 	}
 }

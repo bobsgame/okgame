@@ -237,13 +237,13 @@ Map* RandomCharacter::getCurrentMap()
 }
 
 //The following method was originally marked 'synchronized':
-u8* RandomCharacter::getByteBuffer_S()
+vector<u8>* RandomCharacter::getByteBuffer_S()
 { //=========================================================================================================================
 	return textureByteBuffer_S;
 }
 
 //The following method was originally marked 'synchronized':
-void RandomCharacter::setByteBuffer_S(u8* bb)
+void RandomCharacter::setByteBuffer_S(vector<u8>* bb)
 { //=========================================================================================================================
 	textureByteBuffer_S = bb;
 }
@@ -261,7 +261,7 @@ int RandomCharacter::selectRandomSet(Sprite* s)
 		int maxSets = 0;
 		for (int v = 1; v < h; v++)
 		{
-			if ((s->indexDataIntArray[v * w] & 0xFF) == 0)
+			if (((*s->indexDataIntArray)[v * w] & 0xFF) == 0)
 			{
 				maxSets = v - 1;
 				break;
@@ -318,7 +318,7 @@ void RandomCharacter::createRandomTexture()
 		//      }
 		//      else
 		{
-			u8* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
+			vector<u8>* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
 			setByteBuffer_S(bb);
 		}
 
@@ -366,7 +366,7 @@ void RandomCharacter::update()
 			{
 				//we're waiting for the thread to finish generating the bytebuffer
 
-				u8* bb = getByteBuffer_S();
+				vector<u8>* bb = getByteBuffer_S();
 				if (bb != nullptr)
 				{
 					uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getScreenWidth(), sprite->getScreenHeight() * sprite->getNumFrames(), bb);

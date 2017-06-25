@@ -20,7 +20,7 @@ NDButton::NDButton(BGClientEngine* g)
 
 	this->e = g;
 
-	texture = GLUtils::getTextureFromPNG("data/statusbar/nDButton.png");
+	texture = GLUtils::getTextureFromPNGExePath("data/statusbar/nDButton.png");
 
 
 	offsetX0 = 20;

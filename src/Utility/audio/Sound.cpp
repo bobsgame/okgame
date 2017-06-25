@@ -152,7 +152,7 @@ void Sound::setFileExists(bool i)
 	_fileExists = i;
 }
 
-u8* Sound::getByteData()
+vector<u8>* Sound::getByteData()
 { //=========================================================================================================================
 	return byteData;
 }

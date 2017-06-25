@@ -69,20 +69,21 @@ public:
 	//static u8* getResourceAsStream(const string& filename);//was InputStream
 	//static string getResource(const string& filename);//was URL
 
-
 	static void ltrim(std::string &s);
 	static void rtrim(std::string &s);
 	static void trim(std::string &s);
 	static string ltrimmed(std::string s);
 	static string rtrimmed(std::string s);
 	static string trimmed(std::string s);
-
-
-
 	//static short* oldLoadShortIntFile(const string& filename);
-	static vector<uint16_t>* loadShortIntFile(string filename);
+	static vector<int>* loadIntFile(string filename);
+	static vector<int>* loadIntFileFromExePath(string filename);
+	static vector<uint16_t>* loadShortFile(string filename);
+	static string loadTextFileAndTrim(string filename);
 	static string loadTextFileFromExePathAndTrim(string filename);
+	static ArrayList<string>* loadTextFileIntoVectorOfStringsAndTrim(string filename);
 	static ArrayList<string>* loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename);
+	static vector<u8>* loadByteFile(string filename);
 	static vector<u8>* loadByteFileFromExePath(string filename);
 	//static vector<u8>* loadByteFileFromExePathIntoVector(string filename);
 	static string zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
@@ -101,6 +102,7 @@ public:
 	static u8* decodeBase64StringToByteArray(std::string const& encoded_string, unsigned long &returnLength);
 
 	static string appDataPath;
+	static string cacheDir;
 	//static string slash;
 
 	static string bigDataURL; //for zip files
@@ -124,37 +126,6 @@ public:
 	virtual void setStatusText(const string& text);
 	virtual void deleteStatusText();
 
-
-	//private:
-	//   class ProgressListener : public ActionListener
-	//   {
-	//   private:
-	//      FileUtils* outerInstance;
-	//
-	//   public:
-	//      ProgressListener(FileUtils* outerInstance);
-	//
-	//      virtual void actionPerformed(ActionEvent* e) override;
-	//   };
-	//
-	//
-	//public:
-	//   class DownloadCountingOutputStream : public CountingOutputStream
-	//   {
-	//   private:
-	//      FileUtils* outerInstance;
-	//
-	//      ActionListener* listener = nullptr;
-	//   public:
-	//      DownloadCountingOutputStream(FileUtils* outerInstance, OutputStream* out);
-	//      virtual void setListener(ActionListener* listener);
-	//
-	//   protected:
-	//      virtual void afterWrite(int n) throw(IOException) override;
-	//   };
-
-
-public:
 	virtual void downloadFileToCacheWithProgressListener(const string& fileName, const string& niceName);
 	virtual void decompressZipInCache(const string& fileName, const string& niceName);
 	virtual void deleteFileFromCache(const string& fileName);
@@ -166,9 +137,11 @@ public:
 	virtual void initCache();
 	static void downloadBigFileToCacheIfNotExist(const string& fileName);
 	static void downloadSmallFileToCacheIfNotExist(const string& fileName);
-	static u8* loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName);
-	static int* loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName);
-	static void saveByteArrayToCache(u8* byteArray, const string& md5FileName);
+	static vector<u8>* loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName);
+	static vector<int>* loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName);
+	static void saveByteArrayToCache(vector<u8>* byteArray, const string& md5FileName);
+
+	static void writeByteArrayToFile(vector<u8>* byteArray, const string& fileName);
 	static bool doesDidIntroFileExist();
 	static void writeDidIntroFile();
 };

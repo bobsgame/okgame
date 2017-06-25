@@ -37,12 +37,12 @@ void NDMenuBackground::init()
 
 	cleanup();
 
-	bgScrollTexture = GLUtils::getTextureFromPNG("data/guiBackground/nDmenuBG.png");
+	bgScrollTexture = GLUtils::getTextureFromPNGExePath("data/guiBackground/nDmenuBG.png");
 
 	//glowTileFramesTexture = new ArrayList<Texture*>();
 	for (int i = 0; i < tileFrames; i++)
 	{
-		glowTileFramesTexture->add(GLUtils::getTextureFromPNG("data/guiBackground/nDmenu/" + to_string(i) + ".png"));
+		glowTileFramesTexture->add(GLUtils::getTextureFromPNGExePath("data/guiBackground/nDmenu/" + to_string(i) + ".png"));
 	}
 
 	glowTiles->clear();
