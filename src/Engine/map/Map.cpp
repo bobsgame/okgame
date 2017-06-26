@@ -3554,6 +3554,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	}
 }
 
+#include <fstream>
+
 bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray)
 { //=========================================================================================================================
 
@@ -3561,15 +3563,17 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 	bool isBlank = true;
 
 	//open layer as file, load chunk into memory, with 1 tile border, filling with 0 if it is on the map edge
-	RandomAccessFile* raf = nullptr;
-	try
-	{
-		raf = new RandomAccessFile(string("") + FileUtils::cacheDir + layerFileName, "r");
-	}
-	catch (exception e)//FileNotFoundException e)
-	{
-		//e->printStackTrace();
-	}
+
+	//fstream raf;
+	//raf.open(FileUtils::cacheDir + layerFileName, std::ios::binary);
+
+	
+	ifstream raf(FileUtils::cacheDir + layerFileName, ios::in | ios::binary);
+//	if (raf.is_open())
+//	{
+//
+//	}
+
 
 	bool groundLayer = false;
 	if (layerFileName == getGroundLayerMD5())
@@ -3626,7 +3630,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 				if (chunkX == 0)
 				{
 					//seek to 0
-					raf->seek(static_cast<long long>(((y * getWidthTiles1X()) + (startX)) * 4)); //*4 for bytes -> int4
+					raf.seekg(((y * getWidthTiles1X()) + startX) * 4); //*4 for bytes -> int4
 
 					//for -1 to +1
 					//if x is -1, fill with 0
@@ -3639,12 +3643,21 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 						}
 						else
 						{
-							int result = raf->readInt();
+							u8 byte1;
+							u8 byte2;
+							u8 byte3;
+							u8 byte4;
+							raf.read((char*)&byte1, 1);
+							raf.read((char*)&byte2, 1);
+							raf.read((char*)&byte3, 1);
+							raf.read((char*)&byte4, 1);
+							int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
 
-							//								int byte1 = raf.read() & 0xFF;
-							//								int byte2 = raf.read() & 0xFF;
-							//
-							//								int result = (byte2<<8) + byte1;
+
+							//int result;
+							//raf.read((char*)&result, 4);
+							
+							
 
 							if (result != 0)
 							{
@@ -3658,7 +3671,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 				else
 				{
 					//seek to -1
-					raf->seek(static_cast<long long>(((y * getWidthTiles1X()) + (startX - 1)) * 4));
+					raf.seekg(((y * getWidthTiles1X()) + (startX - 1)) * 4);
 
 					//for 0 to +2
 
@@ -3670,7 +3683,24 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 						}
 						else
 						{
-							int result = raf->readInt();
+							//uint32_t result;
+							//raf.read(reinterpret_cast<char *>(&result), sizeof(result));
+
+
+							u8 byte1;
+							u8 byte2;
+							u8 byte3;
+							u8 byte4;
+							raf.read((char*)&byte1, 1);
+							raf.read((char*)&byte2, 1);
+							raf.read((char*)&byte3, 1);
+							raf.read((char*)&byte4, 1);
+							int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
+
+
+							//int result;
+							//raf.read((char*)&result, 4);
+
 
 							//								int byte1 = raf.read() & 0xFF;
 							//								int byte2 = raf.read() & 0xFF;
@@ -3694,17 +3724,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 		//e->printStackTrace();
 	}
 
-	try
-	{
-		if (raf != nullptr)
-		{
-			raf->close();
-		}
-	}
-	catch (exception e)//IOException e)
-	{
-		//e->printStackTrace();
-	}
+	raf.close();
 
 
 	if (isBlank == true)

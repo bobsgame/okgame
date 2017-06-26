@@ -23,32 +23,19 @@ class BobFile
 {
 public:
 
+	string path;
+
 	BobFile();
 	BobFile(const string& s);
 	bool exists();
+	static bool exists(const string& s);
 	int length();
 	string getAbsolutePath();
-	BobFile* createNewFile();
+	void createNewFile();
 	string getName();
 	void deleteFile();
 };
 
-class RandomAccessFile
-{
-public:
-
-	RandomAccessFile();
-	RandomAccessFile(const string& s, const string& mode);
-	bool exists();
-	int length();
-	string getAbsolutePath();
-	RandomAccessFile* createNewFile();
-	string getName();
-	void deleteFile();
-	int readInt();
-	void seek(long long i);
-	void close();
-};
 
 class FileUtils
 {

@@ -30,34 +30,35 @@ BufferedImage::BufferedImage(u8* rgbadata, int w, int h)
 //=========================================================================================================================
 BufferedImage::BufferedImage(int w, int h)
 {//=========================================================================================================================
-	this->rgbadata = new u8[w*h];
-
+	this->rgbadata = new u8[w*h*4];
+	this->w = w;
+	this->h = h;
 }
 
 //=========================================================================================================================
 void BufferedImage::setRGB(int x, int y, int rgb)
 {//=========================================================================================================================
 
-	int a = (rgb >> 24) & 0xFF;
-	int r = (rgb >> 16) & 0xFF;
-	int g = (rgb >> 8) & 0xFF;
-	int b = (rgb >> 0) & 0xFF;
+	u8 r = (rgb >> 24) & 0xFF;
+	u8 g = (rgb >> 16) & 0xFF;
+	u8 b = (rgb >> 8) & 0xFF;
+	u8 a = (rgb >> 0) & 0xFF;
 
-	this->rgbadata[y*w+x+0] = a;
-	this->rgbadata[y*w+x+1] = r;
-	this->rgbadata[y*w+x+2] = g;
-	this->rgbadata[y*w+x+3] = b;
+	this->rgbadata[y*w*4+x*4+0] = r;
+	this->rgbadata[y*w*4+x*4+1] = g;
+	this->rgbadata[y*w*4+x*4+2] = b;
+	this->rgbadata[y*w*4+x*4+3] = a;
 }
 
 //=========================================================================================================================
 int BufferedImage::getRGB(int x, int y)
 {//=========================================================================================================================
 
-	u8 a = this->rgbadata[y*w + x + 0];
-	u8 r = this->rgbadata[y*w + x + 1];
-	u8 g = this->rgbadata[y*w + x + 2];
-	u8 b = this->rgbadata[y*w + x + 3];
-	return (a << 15) + (r << 10) + (g << 5) + b;
+	u8 r = this->rgbadata[y*w*4 + x*4 + 0];
+	u8 g = this->rgbadata[y*w*4 + x*4 + 1];
+	u8 b = this->rgbadata[y*w*4 + x*4 + 2];
+	u8 a = this->rgbadata[y*w*4 + x*4 + 3];
+	return (r << 24) + (g << 16) + (b << 8) + a;
 }
 
 //=========================================================================================================================
@@ -77,9 +78,12 @@ void BufferedImage::fillRect(int x, int y, int w, int h)
 {//=========================================================================================================================
 	if(currentFillColor!=nullptr)
 	{
-		
-
-
+		int rgb = currentFillColor->getRGB();
+		for(int xx = x; xx<x+w; xx++)
+		for(int yy = y; yy<y+h; yy++)
+		{
+			setRGB(xx, yy, rgb);
+		}
 	}
 }
 

@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <fstream>
 
+
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
@@ -503,14 +504,14 @@ vector<uint16_t>* FileUtils::loadShortFile(string filename)
 	
 			for(int x=0;x<shortArray->size();x++)
 			{
-				short sbyte1=(*byteArray)[x*2+0];//signed byte 1
-				short sbyte2=(*byteArray)[x*2+1];
+				u8 sbyte1=(*byteArray)[x*2+0];//signed byte 1
+				u8 sbyte2=(*byteArray)[x*2+1];
 	
 	
-				short ubyte1 = sbyte1 & 0xFF;
-				short ubyte2 = sbyte2 & 0xFF;
+				u8 ubyte1 = sbyte1 & 0xFF;
+				u8 ubyte2 = sbyte2 & 0xFF;
 	
-				short result = (ubyte2<<8) + ubyte1;
+				short result = (ubyte1<<8) + ubyte2;
 	
 				(*shortArray)[x]=result;
 			}
@@ -535,18 +536,18 @@ vector<int>* FileUtils::loadIntFile(string filename)
 
 	for (int x = 0; x<intArray->size(); x++)
 	{
-		short sbyte1 = (*byteArray)[x * 4 + 0];//signed byte 1
-		short sbyte2 = (*byteArray)[x * 4 + 1];
-		short sbyte3 = (*byteArray)[x * 4 + 2];
-		short sbyte4 = (*byteArray)[x * 4 + 3];
+		u8 sbyte1 = (*byteArray)[x * 4 + 0];//signed byte 1
+		u8 sbyte2 = (*byteArray)[x * 4 + 1];
+		u8 sbyte3 = (*byteArray)[x * 4 + 2];
+		u8 sbyte4 = (*byteArray)[x * 4 + 3];
 
 
-		short ubyte1 = sbyte1 & 0xFF;
-		short ubyte2 = sbyte2 & 0xFF;
-		short ubyte3 = sbyte3 & 0xFF;
-		short ubyte4 = sbyte4 & 0xFF;
+		u8 ubyte1 = sbyte1 & 0xFF;
+		u8 ubyte2 = sbyte2 & 0xFF;
+		u8 ubyte3 = sbyte3 & 0xFF;
+		u8 ubyte4 = sbyte4 & 0xFF;
 
-		short result = (ubyte4 << 24) + (ubyte3 << 16) + (ubyte2 << 8) + ubyte1;
+		int result = (ubyte1 << 24) + (ubyte2 << 16) + (ubyte3 << 8) + ubyte4;
 
 		(*intArray)[x] = result;
 	}
@@ -1476,9 +1477,11 @@ string FileUtils::getStringMD5(const string& stringToMD5)
 //	return md5string;
 }
 
-
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <lib/stb_image.h>
+#include <lib/stb_image_write.h>
 //TODO: 
-void FileUtils::saveImage(const string& s, BufferedImage* bufferedImage)
+void FileUtils::saveImage(const string& s, BufferedImage* i)
 { //===============================================================================================
 
 	//		Iterator<ImageWriter> imageWritersIterator = ImageIO.getImageWritersByFormatName("png");
@@ -1530,7 +1533,7 @@ void FileUtils::saveImage(const string& s, BufferedImage* bufferedImage)
 
 
 
-
+	stbi_write_png(s.c_str(), i->getWidth(), i->getHeight(), 4, i->getData(), i->getWidth() *4);
 
 
 
@@ -2309,91 +2312,133 @@ void FileUtils::writeDidIntroFile()
 	//   }
 }
 
+
+
+
 BobFile::BobFile()
 {
 }
 
 BobFile::BobFile(const string& s)
 {
+	path = s;
 }
 
 bool BobFile::exists()
 {
-	return false;
+	File f(path);
+	return f.exists();
+
+}
+
+bool BobFile::exists(const string& s)
+{
+	File f(s);
+	return f.exists();
+
 }
 
 int BobFile::length()
 {
+	File f(path);
+	if (f.exists())
+	{
+		return f.getSize();
+	}
 	return 0;
 }
 
+//includes filename, so just path???
 string BobFile::getAbsolutePath()
 {
-	return "";
+//	string fullPath = string(path);
+//	string absPath;
+//	int found = (int)fullPath.find('/');
+//	while (found != string::npos)
+//	{
+//		absPath += fullPath.substr(0,found + 1);
+//		fullPath = fullPath.substr(found + 1, fullPath.length());
+//		found = (int)fullPath.find('/');
+//	}
+//	return absPath;
+
+	return path;
 }
 
-BobFile* BobFile::createNewFile()
+void BobFile::createNewFile()
 {
-	return new BobFile();
+	File f(path);
+	if (f.exists()==false)
+	{
+		f.createFile();
+	}
 }
 
 string BobFile::getName()
 {
-	return "";
+	string name = string(path);
+	int found = (int)name.find('/');
+	while (found != string::npos)
+	{
+		name = name.substr(found + 1, name.length());
+		found = (int)name.find('/');
+	}
+	return name;
+
 }
 
 void BobFile::deleteFile()
 {
+	File f(path);
+	if (f.exists())
+	{
+		f.remove();
+	}
+
 }
 
 
-RandomAccessFile::RandomAccessFile()
-{
-}
 
-RandomAccessFile::RandomAccessFile(const string& s, const string& mode)
-{
-}
 
-bool RandomAccessFile::exists()
-{
-	return false;
-}
 
-int RandomAccessFile::length()
-{
-	return 0;
-}
 
-string RandomAccessFile::getAbsolutePath()
-{
-	return "";
-}
+/*
 
-RandomAccessFile* RandomAccessFile::createNewFile()
-{
-	return new RandomAccessFile();
-}
 
-string RandomAccessFile::getName()
-{
-	return "";
-}
+Constructor
 
-void RandomAccessFile::deleteFile()
-{
-}
+std::vector<MyType> myVec(numberOfElementsToStart);
+int size = myVec.size();
+int capacity = myVec.capacity();
 
-int RandomAccessFile::readInt()
-{
-	return 0;
-}
+In this first case, using the constructor, size and numberOfElementsToStart will be equal and capacity will be greater than or equal to them.
 
-void RandomAccessFile::seek(long long i)
-{
-}
+Think of myVec as a vector containing a number of items of MyType which can be accessed and modified, push_back(anotherInstanceOfMyType) will append it the the end of the vector.
 
-void RandomAccessFile::close()
-{
-}
+
+
+
+
+Reserve
+
+std::vector<MyType> myVec;
+myVec.reserve(numberOfElementsToStart);
+int size = myVec.size();
+int capacity = myVec.capacity();
+
+When using the reserve function, size will be 0 until you add an element to the array and capacity and numberOfElementsToStart will be equal.
+
+Think of myVec as an empty vector which can have new items appended to it using push_back with no overhead for the first numberOfElementsToStart elements.
+
+*/
+
+
+
+
+
+
+
+
+
+
 

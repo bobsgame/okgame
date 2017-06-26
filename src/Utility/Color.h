@@ -204,7 +204,7 @@ public:
 	//Color *scaleCopy(float value);
 
 
-	static int rgbatoABGRInt(u8 r, u8 g, u8 b, u8 a);
+	//static int rgbatoABGRInt(u8 r, u8 g, u8 b, u8 a);
 	//static int HexToDec(const string &hexst);
 	static int DecToRed(int dec);
 	static int DecToGreen(int dec);

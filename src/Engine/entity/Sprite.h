@@ -53,7 +53,7 @@ public:
 
 	bool _texturePNGExists = false;
 
-
+	bool preloadedFromData = false;
 
 	Sprite();
 	Sprite(Engine* g);

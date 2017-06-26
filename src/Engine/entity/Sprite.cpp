@@ -44,6 +44,7 @@ void Sprite::preloadFromDataFile(string name)
 	//log.info("loadTextFileFromExePathIntoVectorOfStringsAndTrim "+name);
 	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sprite/" + name + ".txt");
 
+	preloadedFromData = true;
 
 	if (stringList->size() > 0)
 	{
@@ -311,13 +312,25 @@ void Sprite::drawFrame(BobTexture* texture, int frame, float x0, float x1, float
 		int w = getImageWidth();
 		int h = getImageHeight();
 
-		int framesPerRow = texture->getTextureWidth() / (w+1);
+		int framesPerRow = texture->getTextureWidth() / (w);
 
 
-		int px0 = 1+(frame % framesPerRow)*(w+1);
+		int px0 = (frame % framesPerRow)*(w);
 		int px1 = px0 + w;
-		int py0 = 1+(frame / framesPerRow)*(h+1);
+		int py0 = (frame / framesPerRow)*(h);
 		int py1 = py0 + h;
+
+		//this is because i outlined all the sprite frames with 1 transparent pixel but it really didn't help so ???
+		//best way to handle this might be to 2x all sprites upon loading like i had before...  then i can clip off more of the texture?
+		if(preloadedFromData)
+		{
+			framesPerRow = texture->getTextureWidth() / (w + 1);
+
+			px0 = 1 + (frame % framesPerRow)*(w + 1);
+			px1 = px0 + w;
+			py0 = 1 + (frame / framesPerRow)*(h + 1);
+			py1 = py0 + h;
+		}
 
 		//tx0=0;
 		//tx1=getWidth();
@@ -469,9 +482,7 @@ void Sprite::loadTextures()
 	{
 		//random bin MD5s are initialized already in the spriteAssetIndex, don't need to get them from the server.
 
-
 		//we always need the bin byte arrays loaded for randoms, since we will be using them each time we make a new random
-
 		if (indexDataIntArray == nullptr)
 		{
 			indexDataIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getDataMD5());
@@ -480,172 +491,65 @@ void Sprite::loadTextures()
 		{
 			paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(string("") + getPaletteMD5());
 		}
+	}
+
+	//should always have this now since we are loading the spriteData from server instead of just the MD5
+	//so if the spriteAsset exists, it has MD5s, or the texture is blankTexture if it was initialized with null
 
 
+	//			if(hasDataMD5==false)//unsynchronized check to avoid locking on synchronized function
+	//			{
+	//				if(getDataMD5()==null)
+	//				{
+	//					requestDataMD5sFromServer();
+	//				}
+	//				else
+	//				{
+	//					hasDataMD5=true;
+	//				}
+	//			}
+	//			else
+
+
+	if (texture == nullptr)
+	{
+		//we've gotten the bin MD5s from the server. now we have to construct the PNGs
+
+		//check if hq2x png exists under md5 name folder
+
+		//TODO: check if 1x png exists under md5 name folder
 		//TODO: check for 1x shadow png as well if not multicore
 
-
-		//check if hq2x shadow png exists under md5 name folder
-
-		//construct shadow texture if it doesn't exist (if getHasShadow)
-
-		//we don't need to construct a normal hq2x png for randoms because it will never be used.
-
-
-		if (texture == nullptr)
+		if (checkedIfExist == false) //only check once if file exists already
 		{
-			if (getHasShadow() == true)
+			checkedIfExist = true;
+
+			BobFile* textureFile = nullptr;
+			if (useHQ2X)
 			{
-				if (checkedIfExist == false) //only check once if file exists already
-				{
-					checkedIfExist = true;
-
-					BobFile* textureFile = nullptr;
-					if (useHQ2X)
-					{
-						textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
-					}
-					else
-					{
-						textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
-					}
-
-					if (textureFile->exists())
-					{
-						setSpritePNGFileExists_S(true);
-					}
-				}
-
-
-				if (getSpritePNGFileExists_S() == true)
-				{
-					texture = GLUtils::blankTexture;
-					if (useHQ2X)
-					{
-						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
-					}
-					else
-					{
-						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
-					}
-
-					//incrementSpriteTexturesLoaded();
-				}
-				else
-				{
-					// if neither exist, load the byte arrays and make them depending on settings (cpu multicore required for hq2x)
-
-					if (threadCreated == false)
-					{
-						threadCreated = true;
-
-						FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5());
-						FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/");
-						FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/");
-
-						//                  if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
-						//                  {
-						//                     generatePNGExecutorService = Executors::newFixedThreadPool(1);
-						//                  }
-						//
-						//                  if (MapManager::useThreads == true)
-						//                  {
-						//                     //incrementSpritePNGThreadsCreated_S();
-						//
-						//                     generatePNGExecutorService->execute([&] ()
-						//                        {
-						//                           try
-						//                           {
-						//                              Thread::currentThread().setName("Sprite_createSpriteRandomShadowTexturePNG");
-						//                           }
-						//                           catch (SecurityException e)
-						//                           {
-						//                              e->printStackTrace();
-						//                           }
-						//                           //createSpriteTexturePNG();
-						//
-						//                           if (getHasShadow() == true)
-						//                           {
-						//                              createSpriteShadowTexturePNG_S();
-						//                           }
-						//
-						//                           setSpritePNGFileExists_S(true);
-						//                           //decrementSpritePNGThreadsCreated_S();
-						//                        }
-						//                     );
-						//                  }
-						//                  else
-						{
-							//do it linearly, waiting for all chunks to finish before continuing
-							createSpriteTexturePNG_S();
-
-							if (getHasShadow() == true)
-							{
-								createSpriteShadowTexturePNG_S();
-							}
-
-							setSpritePNGFileExists_S(true);
-						}
-					}
-				}
+				textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
 			}
 			else
 			{
-				texture = GLUtils::blankTexture;
-				shadowTexture = GLUtils::blankTexture;
+				textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
+			}
+
+			if (textureFile->exists())
+			{
+				setSpritePNGFileExists_S(true);
 			}
 		}
-	}
-	else
-	{
-		//should always have this now since we are loading the spriteData from server instead of just the MD5
-		//so if the spriteAsset exists, it has MD5s, or the texture is blankTexture if it was initialized with null
 
 
-		//			if(hasDataMD5==false)//unsynchronized check to avoid locking on synchronized function
-		//			{
-		//				if(getDataMD5()==null)
-		//				{
-		//					requestDataMD5sFromServer();
-		//				}
-		//				else
-		//				{
-		//					hasDataMD5=true;
-		//				}
-		//			}
-		//			else
-
-
-		if (texture == nullptr)
+		if (getSpritePNGFileExists_S() == true)
 		{
-			//we've gotten the bin MD5s from the server. now we have to construct the PNGs
 
-			//check if hq2x png exists under md5 name folder
-
-			//TODO: check if 1x png exists under md5 name folder
-
-
-			if (checkedIfExist == false) //only check once if file exists already
+			if (getIsRandom() == true)
 			{
-				checkedIfExist = true;
-
-				BobFile* textureFile = nullptr;
-				if (useHQ2X)
-				{
-					textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5());
-				}
-				else
-				{
-					textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5());
-				}
-				if (textureFile->exists())
-				{
-					setSpritePNGFileExists_S(true);
-				}
+				//we don't need to construct a normal hq2x png for randoms because it will never be used.
+				texture = GLUtils::blankTexture;
 			}
-
-
-			if (getSpritePNGFileExists_S() == true)
+			else
 			{
 				if (useHQ2X == true)
 				{
@@ -655,99 +559,114 @@ void Sprite::loadTextures()
 				{
 					texture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5());
 				}
+			}
 
-				if (getHasShadow() == true)
+			//construct shadow texture if it doesn't exist (if getHasShadow)
+			if (getHasShadow() == true)
+			{
+				if (useHQ2X)
 				{
-					if (useHQ2X)
-					{
-						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
-					}
-					else
-					{
-						shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
-					}
+					shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
 				}
 				else
 				{
-					shadowTexture = GLUtils::blankTexture;
+					shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
 				}
-
-				//incrementSpriteTexturesLoaded();
 			}
 			else
 			{
-				// if neither exist, load the byte arrays and make them depending on settings (cpu multicore required for hq2x)
+				shadowTexture = GLUtils::blankTexture;
+			}
 
-				if (threadCreated == false)
+			//incrementSpriteTexturesLoaded();
+		}
+		else
+		{
+			// if neither exist, load the byte arrays and make them depending on settings (cpu multicore required for hq2x)
+
+			if (threadCreated == false)
+			{
+				threadCreated = true;
+
+
+				//make thread
+
+				if (indexDataIntArray == nullptr)
 				{
-					threadCreated = true;
+					indexDataIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getDataMD5());
+				}
+				if (paletteRGBByteArray == nullptr)
+				{
+					paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(string("") + getPaletteMD5());
+				}
 
 
-					//make thread
+				FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5());
+				FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/");
+				FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/");
 
-					if (indexDataIntArray == nullptr)
+
+				//if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
+				//{
+				//   generatePNGExecutorService = Executors::newFixedThreadPool(3);
+				//}
+				//
+				//if (MapManager::useThreads == true)
+				//{
+				//   //incrementSpritePNGThreadsCreated_S();
+				//
+				//   generatePNGExecutorService->execute([&] ()
+				//      {
+				//         try
+				//         {
+				//				if (getIsRandom() == true)
+				//				{
+				//				   Thread::currentThread().setName("Sprite_createSpriteRandomShadowTexturePNG");
+				//				}
+				//				else
+				//				{
+				//				   Thread::currentThread().setName("Sprite_createSpriteTexturePNG");
+				//				}
+				//         }
+				//         catch (SecurityException e)
+				//         {
+				//            e->printStackTrace();
+				//         }
+				//
+				//			if (getIsRandom() == false)
+				//			{
+				//				createSpriteTexturePNG_S();
+				//			}
+				//
+				//         if (getHasShadow() == true)
+				//         {
+				//            createSpriteShadowTexturePNG_S();
+				//         }
+				//
+				//         setSpritePNGFileExists_S(true);
+				//         //decrementSpritePNGThreadsCreated_S();
+				//      }
+				//   );
+				//}
+				//else
+				{
+					//do it linearly, waiting for all chunks to finish before continuing
+					if (getIsRandom() == false)
 					{
-						indexDataIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getDataMD5());
-					}
-					if (paletteRGBByteArray == nullptr)
-					{
-						paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(string("") + getPaletteMD5());
-					}
-
-
-					FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5());
-					FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/");
-					FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/");
-
-
-					//               if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
-					//               {
-					//                  generatePNGExecutorService = Executors::newFixedThreadPool(3);
-					//               }
-					//
-					//               if (MapManager::useThreads == true)
-					//               {
-					//                  //incrementSpritePNGThreadsCreated_S();
-					//
-					//                  generatePNGExecutorService->execute([&] ()
-					//                     {
-					//                        try
-					//                        {
-					//                           Thread::currentThread().setName("Sprite_createSpriteTexturePNG");
-					//                        }
-					//                        catch (SecurityException e)
-					//                        {
-					//                           e->printStackTrace();
-					//                        }
-					//
-					//                        createSpriteTexturePNG_S();
-					//
-					//                        if (getHasShadow() == true)
-					//                        {
-					//                           createSpriteShadowTexturePNG_S();
-					//                        }
-					//
-					//                        setSpritePNGFileExists_S(true);
-					//                        //decrementSpritePNGThreadsCreated_S();
-					//                     }
-					//                  );
-					//               }
-					//               else
-					{
-						//do it linearly, waiting for all chunks to finish before continuing
 						createSpriteTexturePNG_S();
-
-						if (getHasShadow() == true)
-						{
-							createSpriteShadowTexturePNG_S();
-						}
-
-						setSpritePNGFileExists_S(true);
 					}
+
+					if (getHasShadow() == true)
+					{
+						createSpriteShadowTexturePNG_S();
+					}
+
+					setSpritePNGFileExists_S(true);
 				}
 			}
 		}
 	}
+	
 }
 
 
@@ -1187,32 +1106,32 @@ void Sprite::createSpriteShadowTexturePNG_S()
 		}
 	}
 
-	//   if (useHQ2X)
-	//   {
-	//      BufferedImage* hq2xShadowBufferedImage = (new HQ2X())->hq2x(spriteBufferedImage);
-	//
-	//      setHQ2XAlphaFromOriginal(hq2xShadowBufferedImage, spriteBufferedImage);
-	//
-	//      //spriteBufferedImage.flush();
-	//      //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	//      delete spriteBufferedImage;
-	//
-	//      antialiasBufferedImage(hq2xShadowBufferedImage);
-	//
-	//      //---------------------------
-	//      //save to png
-	//      //---------------------------
-	//
-	//      FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"), hq2xShadowBufferedImage);
-	//
-	//      //hq2xShadowBufferedImage.flush();
-	//      //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	//      delete hq2xShadowBufferedImage;
-	//   }
-	//   else
-	//   {
-	//      FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"), spriteBufferedImage);
-	//   }
+	if (useHQ2X)
+	{
+	    BufferedImage* hq2xShadowBufferedImage = (new HQ2X())->hq2x(spriteBufferedImage);
+	
+	    setHQ2XAlphaFromOriginal(hq2xShadowBufferedImage, spriteBufferedImage);
+	
+	    //spriteBufferedImage.flush();
+	    //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
+	    delete spriteBufferedImage;
+	
+	    antialiasBufferedImage(hq2xShadowBufferedImage);
+	
+	    //---------------------------
+	    //save to png
+	    //---------------------------
+	
+	    FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"), hq2xShadowBufferedImage);
+	
+	    //hq2xShadowBufferedImage.flush();
+	    //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
+	    delete hq2xShadowBufferedImage;
+	}
+	else
+	{
+	    FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"), spriteBufferedImage);
+	}
 }
 
 //The following method was originally marked 'synchronized':
