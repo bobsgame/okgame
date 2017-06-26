@@ -130,7 +130,7 @@ System* Main::systemUtils = nullptr;
 GlobalSettings* Main::globalSettings = nullptr;
 ControlsManager* Main::controlsManager = nullptr;
 BGClientEngine* Main::gameEngine = nullptr;
-
+MapManager* Main::mapManager = nullptr;
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
 Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
@@ -268,6 +268,8 @@ void Main::mainInit()
 	titleScreenState = new TitleScreenState();
 	youWillBeNotifiedState = new YouWillBeNotifiedState();
 	GLUtils::e();
+
+	mapManager = new MapManager(nullptr);
 
 	//-------------------
 	//init game

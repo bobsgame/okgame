@@ -26,13 +26,13 @@ private:
 
 
 	
-	int redColorByte = 0;
+	u8 redColorByte = 0;
 	
-	int greenColorByte = 0;
+	u8 greenColorByte = 0;
 	
-	int blueColorByte = 0;
+	u8 blueColorByte = 0;
 	
-	int alphaColorByte = 0;
+	u8 alphaColorByte = 0;
 
 	
 	int radiusPixels1X = 2;
@@ -106,15 +106,15 @@ public:
 	virtual int getToggleXPixelsHQ();
 	virtual int getToggleYPixelsHQ();
 
-	virtual int getRedColorByte();
-	virtual int getGreenColorByte();
-	virtual int getBlueColorByte();
-	virtual int getAlphaColorByte();
+	virtual u8 getRedColorByte();
+	virtual u8 getGreenColorByte();
+	virtual u8 getBlueColorByte();
+	virtual u8 getAlphaColorByte();
 
-	virtual int r();
-	virtual int g();
-	virtual int b();
-	virtual int a();
+	virtual u8 r();
+	virtual u8 g();
+	virtual u8 b();
+	virtual u8 a();
 
 
 	virtual float getBlendFalloff();
@@ -142,10 +142,10 @@ public:
 	virtual void setToggleXPixels1X(int s);
 	virtual void setToggleYPixels1X(int s);
 
-	virtual void setRedColorByte(int s);
-	virtual void setGreenColorByte(int s);
-	virtual void setBlueColorByte(int s);
-	virtual void setAlphaColorByte(int s);
+	virtual void setRedColorByte(u8 s);
+	virtual void setGreenColorByte(u8 s);
+	virtual void setBlueColorByte(u8 s);
+	virtual void setAlphaColorByte(u8 s);
 
 	virtual void setBlendFalloff(float s);
 	virtual void setDecayExponent(float s);

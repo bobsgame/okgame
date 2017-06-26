@@ -487,6 +487,7 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	float offsetY = (getMap()->screenY() * zoom) - ((float)(floor(getMap()->screenY() * zoom)));
 
 
+	
 	//------------------------
 	//draw shadow first
 	//------------------------
@@ -545,6 +546,8 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	//------------------
 	//now draw actual sprite
 	//------------------
+
+
 
 	x0 = getScreenLeft() - offsetX;
 	y0 = getScreenTop() - offsetY;
@@ -2188,7 +2191,7 @@ float Entity::getShadowStart()
 		return 0;
 	}
 
-	return (float)(currentAnimation->hitBoxFromTopPixels1X * 2) / (float)(sprite->getImageHeight());
+	return (float)(currentAnimation->hitBoxFromTopPixels1X) / (float)(sprite->getImageHeight());
 }
 
 float Entity::getX()
@@ -2236,7 +2239,10 @@ float Entity::getWidth()
 
 	if (sprite != nullptr)
 	{
-		return (sprite->getImageWidth() * getScale());
+		int w = sprite->getImageWidth();
+		if (sprite->useHQ2X == false)w *= 2;
+
+		return (w * getScale());
 	}
 	else
 	{
@@ -2248,7 +2254,9 @@ float Entity::getHeight()
 { //=========================================================================================================================
 	if (sprite != nullptr)
 	{
-		return (sprite->getImageHeight() * getScale());
+		int h = sprite->getImageHeight();
+		if (sprite->useHQ2X == false)h *= 2;
+		return (h * getScale());
 	}
 	else
 	{

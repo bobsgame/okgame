@@ -3779,9 +3779,9 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 
 					if (paletteIndex != 0)
 					{
-						int paletteR = (*paletteRGBByteArray)[(paletteIndex * 3) + (0)] & 0xFF;
-						int paletteG = (*paletteRGBByteArray)[(paletteIndex * 3) + (1)] & 0xFF;
-						int paletteB = (*paletteRGBByteArray)[(paletteIndex * 3) + (2)] & 0xFF;
+						u8 paletteR = (*paletteRGBByteArray)[(paletteIndex * 3) + (0)] & 0xFF;
+						u8 paletteG = (*paletteRGBByteArray)[(paletteIndex * 3) + (1)] & 0xFF;
+						u8 paletteB = (*paletteRGBByteArray)[(paletteIndex * 3) + (2)] & 0xFF;
 
 						BobColor* c = new BobColor(paletteR, paletteG, paletteB);
 
@@ -3790,16 +3790,16 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 							int oldPixel = chunkImageBorder->getRGB(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1);
 							BobColor* oldColor = new BobColor(oldPixel);// , true);
 
-							int alpha = 255;
+							u8 alpha = 255;
 							if (oldColor->getRGB() == 0)
 							{
 								alpha = 150;
 							}
 
 							float shadowAlpha = 150.0f;
-							int blendedRed = (int)((shadowAlpha / 255.0f) * paletteR + (1.0f - (shadowAlpha / 255.0f)) * oldColor->ri());
-							int blendedGreen = (int)((shadowAlpha / 255.0f) * paletteG + (1.0f - (shadowAlpha / 255.0f)) * oldColor->gi());
-							int blendedBlue = (int)((shadowAlpha / 255.0f) * paletteB + (1.0f - (shadowAlpha / 255.0f)) * oldColor->bi());
+							u8 blendedRed = (u8)((shadowAlpha / 255.0f) * paletteR + (1.0f - (shadowAlpha / 255.0f)) * oldColor->ri());
+							u8 blendedGreen = (u8)((shadowAlpha / 255.0f) * paletteG + (1.0f - (shadowAlpha / 255.0f)) * oldColor->gi());
+							u8 blendedBlue = (u8)((shadowAlpha / 255.0f) * paletteB + (1.0f - (shadowAlpha / 255.0f)) * oldColor->bi());
 
 							c = new BobColor(blendedRed, blendedGreen, blendedBlue, alpha);
 						}

@@ -14,9 +14,9 @@ class Logger;
 class MapManager : public EnginePart
 {
 public:
-	ArrayList<Map*> mapList;
-	HashMap<string, Map*> mapByNameHashMap;//new HashMap<string, Map*>();
-	HashMap<int, Map*> mapByIDHashMap;//new HashMap<int, Map*>();
+	static ArrayList<Map*> mapList;
+	static HashMap<string, Map*> mapByNameHashMap;//new HashMap<string, Map*>();
+	static HashMap<int, Map*> mapByIDHashMap;//new HashMap<int, Map*>();
 
 	static Logger log;
 	
@@ -41,11 +41,11 @@ public:
 
 
 	//textures mapped to light filenames
-	HashMap<string, BobTexture*> lightTextureHashMap;//new HashMap<string, Texture*>();
+	static HashMap<string, BobTexture*> lightTextureHashMap;//new HashMap<string, Texture*>();
 
 
 	//hashtable (threadsafe) mapped to light filename, and boolean array[1] set whether it exists (so multiple threads don't check if file exists at same time)
-	HashMap<string, BobBool*> lightTextureFileExistsHashtable;//new HashMap<string, BobBool*>();
+	static HashMap<string, BobBool*> lightTextureFileExistsHashtable;//new HashMap<string, BobBool*>();
 
 
 	Door* doorEntered = nullptr;

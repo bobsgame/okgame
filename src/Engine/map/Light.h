@@ -151,15 +151,15 @@ public:
 	virtual int toggleXPixelsHQ();
 	virtual int toggleYPixelsHQ();
 
-	virtual int redColorByte();
-	virtual int greenColorByte();
-	virtual int blueColorByte();
-	virtual int alphaColorByte();
+	virtual u8 redColorByte();
+	virtual u8 greenColorByte();
+	virtual u8 blueColorByte();
+	virtual u8 alphaColorByte();
 
-	virtual int r();
-	virtual int g();
-	virtual int b();
-	virtual int a();
+	virtual u8 r();
+	virtual u8 g();
+	virtual u8 b();
+	virtual u8 a();
 
 	virtual float blendFalloff();
 	virtual float decayExponent();
@@ -185,10 +185,10 @@ public:
 	virtual void setToggleXPixels(int s);
 	virtual void setToggleYPixels(int s);
 
-	virtual void setRedColorByte(int s);
-	virtual void setGreenColorByte(int s);
-	virtual void setBlueColorByte(int s);
-	virtual void setAlphaColorByte(int s);
+	virtual void setRedColorByte(u8 s);
+	virtual void setGreenColorByte(u8 s);
+	virtual void setBlueColorByte(u8 s);
+	virtual void setAlphaColorByte(u8 s);
 
 
 	virtual void setBlendFalloff(float s);

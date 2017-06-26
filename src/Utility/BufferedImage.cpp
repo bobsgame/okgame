@@ -33,6 +33,8 @@ BufferedImage::BufferedImage(int w, int h)
 	this->rgbadata = new u8[w*h*4];
 	this->w = w;
 	this->h = h;
+
+	for (int i = 0; i < w*h * 4; i++)rgbadata[i] = 0;
 }
 
 //=========================================================================================================================

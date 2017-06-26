@@ -18,6 +18,12 @@ bool MapManager::useThreads = false;
 bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
+ArrayList<Map*> MapManager::mapList;
+HashMap<string, Map*> MapManager::mapByNameHashMap;
+HashMap<int, Map*> MapManager::mapByIDHashMap;
+HashMap<string, BobTexture*> MapManager::lightTextureHashMap;
+HashMap<string, BobBool*> MapManager::lightTextureFileExistsHashtable;
+
 MapManager::MapManager(Engine* g)
 { //=========================================================================================================================
 	this->e = g;

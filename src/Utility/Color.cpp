@@ -862,10 +862,10 @@ BobColor::BobColor(int rgb)
 //	uuid = to_string(generator());
 
 
-	int a = (rgb >> 24) & 0xFF;
-	int r = (rgb >> 16) & 0xFF;
-	int g = (rgb >> 8) & 0xFF;
-	int b = (rgb >> 0) & 0xFF;
+	int r = (rgb >> 24) & 0xFF;
+	int g = (rgb >> 16) & 0xFF;
+	int b = (rgb >> 8) & 0xFF;
+	int a = (rgb >> 0) & 0xFF;
 
 	this->r = r;
 	this->g = g;

@@ -64,9 +64,9 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 
 		BobTexture* t = nullptr;
 
-		if (getMapManager()->lightTextureHashMap.containsKey(getFileName()))
+		if (Main::mapManager->lightTextureHashMap.containsKey(getFileName()))
 		{
-			t = getMapManager()->lightTextureHashMap.get(getFileName());
+			t = Main::mapManager->lightTextureHashMap.get(getFileName());
 
 		}
 
@@ -94,7 +94,7 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 			//
 			//				}
 
-			getMapManager()->lightTextureHashMap.put(getFileName(), t);
+			Main::mapManager->lightTextureHashMap.put(getFileName(), t);
 		}
 
 
@@ -274,7 +274,17 @@ bool Light::getLightTexturePNGFileExists_S()
 string Light::getFileName()
 { //===============================================================================================
 
-	return string("") + to_string(getWidth() / 2) + string("_") + to_string(getHeight() / 2) + string("_") + to_string(getRadiusPixelsHQ() / 2) + string("_") + to_string(focusRadiusPixelsHQ() / 2) + string("_") + to_string(decayExponent()) + string("_") + to_string(blendFalloff()) + string("_") + to_string(r()) + string("_") + to_string(g()) + string("_") + to_string(b()) + string("_") + to_string(a());
+	return 
+		"" + to_string((int)getWidth() / 2) + 
+		"_" + to_string((int)getHeight() / 2) + 
+		"_" + to_string((int)getRadiusPixelsHQ() / 2) +
+		"_" + to_string((int)focusRadiusPixelsHQ() / 2) +
+		"_" + to_string((int)decayExponent()) +
+		"_" + to_string((int)blendFalloff()) +
+		"_" + to_string(r()) + 
+		"_" + to_string(g()) + 
+		"_" + to_string(b()) + 
+		"_" + to_string(a());
 }
 
 bool Light::checkEdgeAgainstHitLayerAndOtherLightsInDirection(int dir)
@@ -640,6 +650,14 @@ bool Light::renderLight(float screenX0, float screenX1, float screenY0, float sc
 	float ty0 = 0.0f;
 	float ty1 = ((float)(totalHeight)) / ((float)(texture->getTextureHeight()));
 
+	//TODO: fix this by making 1 pixel transparent border around textures, for now i'm removing 1% of the texture width
+
+	float tw = tx1 - tx0;
+	float th = ty1 - ty0;
+	tx0 += 0.02f*tw;
+	tx1 -= 0.02f*tw;
+	ty0 += 0.02f*th;
+	ty1 -= 0.02f*th;
 
 	float x0;
 	float x1;
@@ -705,7 +723,7 @@ void Light::createLightTexturePNG(const string& fileName)
 
 	//Thread.yield();
 
-	int maxBrightness = a();
+	u8 maxBrightness = a();
 
 	int lightBoxWidth = (int)(getWidth() / 2);
 	int lightBoxHeight = (int)(getHeight() / 2);
@@ -1230,42 +1248,42 @@ int Light::toggleYPixelsHQ()
 	return getLightData()->getToggleYPixelsHQ();
 }
 
-int Light::redColorByte()
+u8 Light::redColorByte()
 {
 	return getLightData()->getRedColorByte();
 }
 
-int Light::greenColorByte()
+u8 Light::greenColorByte()
 {
 	return getLightData()->getGreenColorByte();
 }
 
-int Light::blueColorByte()
+u8 Light::blueColorByte()
 {
 	return getLightData()->getBlueColorByte();
 }
 
-int Light::alphaColorByte()
+u8 Light::alphaColorByte()
 {
 	return getLightData()->getAlphaColorByte();
 }
 
-int Light::r()
+u8 Light::r()
 {
 	return getLightData()->getRedColorByte();
 }
 
-int Light::g()
+u8 Light::g()
 {
 	return getLightData()->getGreenColorByte();
 }
 
-int Light::b()
+u8 Light::b()
 {
 	return getLightData()->getBlueColorByte();
 }
 
-int Light::a()
+u8 Light::a()
 {
 	return getLightData()->getAlphaColorByte();
 }
@@ -1355,22 +1373,22 @@ void Light::setToggleYPixels(int s)
 	getLightData()->setToggleYPixels1X(s);
 }
 
-void Light::setRedColorByte(int s)
+void Light::setRedColorByte(u8 s)
 {
 	getLightData()->setRedColorByte(s);
 }
 
-void Light::setGreenColorByte(int s)
+void Light::setGreenColorByte(u8 s)
 {
 	getLightData()->setGreenColorByte(s);
 }
 
-void Light::setBlueColorByte(int s)
+void Light::setBlueColorByte(u8 s)
 {
 	getLightData()->setBlueColorByte(s);
 }
 
-void Light::setAlphaColorByte(int s)
+void Light::setAlphaColorByte(u8 s)
 {
 	getLightData()->setAlphaColorByte(s);
 }

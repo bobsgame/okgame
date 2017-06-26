@@ -468,9 +468,9 @@ void Area::renderDebugBoxes()
 
 
 			ArrayList<Area*> *areas = map->currentState->areaByNameHashtable.getAllValues();
-			for (int i = 0; i<areas->size(); i++)
+			for (int n = 0; n<areas->size(); n++)
 			{
-				Area* a = areas->get(i);
+				Area* a = areas->get(n);
 
 				if (connectionTYPEIDList()->get(i) == a->getTYPEIDString())
 				{

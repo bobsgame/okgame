@@ -269,42 +269,42 @@ int LightData::getToggleYPixelsHQ()
 	return toggleYPixels1X * 2;
 }
 
-int LightData::getRedColorByte()
+u8 LightData::getRedColorByte()
 {
 	return redColorByte;
 }
 
-int LightData::getGreenColorByte()
+u8 LightData::getGreenColorByte()
 {
 	return greenColorByte;
 }
 
-int LightData::getBlueColorByte()
+u8 LightData::getBlueColorByte()
 {
 	return blueColorByte;
 }
 
-int LightData::getAlphaColorByte()
+u8 LightData::getAlphaColorByte()
 {
 	return alphaColorByte;
 }
 
-int LightData::r()
+u8 LightData::r()
 {
 	return redColorByte;
 }
 
-int LightData::g()
+u8 LightData::g()
 {
 	return greenColorByte;
 }
 
-int LightData::b()
+u8 LightData::b()
 {
 	return blueColorByte;
 }
 
-int LightData::a()
+u8 LightData::a()
 {
 	return alphaColorByte;
 }
@@ -394,22 +394,22 @@ void LightData::setToggleYPixels1X(int s)
 	toggleYPixels1X = s;
 }
 
-void LightData::setRedColorByte(int s)
+void LightData::setRedColorByte(u8 s)
 {
 	redColorByte = s;
 }
 
-void LightData::setGreenColorByte(int s)
+void LightData::setGreenColorByte(u8 s)
 {
 	greenColorByte = s;
 }
 
-void LightData::setBlueColorByte(int s)
+void LightData::setBlueColorByte(u8 s)
 {
 	blueColorByte = s;
 }
 
-void LightData::setAlphaColorByte(int s)
+void LightData::setAlphaColorByte(u8 s)
 {
 	alphaColorByte = s;
 }
