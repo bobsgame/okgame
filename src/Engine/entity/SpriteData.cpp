@@ -394,15 +394,15 @@ int SpriteData::getHeightPixels1X()
 	return heightPixels1X;
 }
 
-int SpriteData::getWidthPixelsHQ()
-{
-	return widthPixels1X * 2;
-}
-
-int SpriteData::getHeightPixelsHQ()
-{
-	return heightPixels1X * 2;
-}
+//int SpriteData::getWidthPixelsHQ()
+//{
+//	return widthPixels1X * 2;
+//}
+//
+//int SpriteData::getHeightPixelsHQ()
+//{
+//	return heightPixels1X * 2;
+//}
 
 int SpriteData::getNumFrames()
 {

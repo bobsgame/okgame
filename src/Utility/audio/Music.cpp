@@ -44,7 +44,7 @@ Music::Music(Engine* g, MusicData* data)
 		if (Main::audioManager->musicList->get(i)->getName() == data->getName())
 		{
 			if (Main::audioManager->musicList->get(i)->getID() == -1)Main::audioManager->musicList->get(i)->setID(data->getID());
-			log.warn(string("Music already exists:") + data->getName());
+			//log.warn(string("Music already exists:") + data->getName());
 			return;
 		}
 	}

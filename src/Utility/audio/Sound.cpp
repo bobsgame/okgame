@@ -42,7 +42,7 @@ Sound::Sound(Engine* g, SoundData* data)
 		if (Main::audioManager->soundList->get(i)->getName() == data->getName())
 		{
 			if (Main::audioManager->soundList->get(i)->getID() == -1)Main::audioManager->soundList->get(i)->setID(data->getID());
-			log.warn(string("Sound already exists:") + data->getName());
+			//log.warn(string("Sound already exists:") + data->getName());
 			return;
 		}
 	}

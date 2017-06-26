@@ -86,8 +86,8 @@ void Entity::initCurrentAnimationFromSprite()
 
 	if (shadowClipPerPixel == nullptr)
 	{
-		shadowClipPerPixel = new float[sprite->getScreenWidth()];
-		for (int i = 0; i < sprite->getScreenWidth(); i++)
+		shadowClipPerPixel = new float[sprite->getImageWidth()];
+		for (int i = 0; i < sprite->getImageWidth(); i++)
 		{
 			shadowClipPerPixel[i] = 1.0f;
 		}
@@ -495,9 +495,9 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 		if (clipShadow == false)
 		{
 			tx0 = 0.0f;
-			tx1 = ((float)(sprite->getScreenWidth()) / (float)(texture->getTextureWidth()));
-			ty0 = (((float)(sprite->getScreenHeight())) * getFrame()) / texture->getTextureHeight();
-			ty1 = ((((float)(sprite->getScreenHeight())) * (getFrame() + 1)) - 1) / texture->getTextureHeight();
+			tx1 = ((float)(sprite->getImageWidth()) / (float)(texture->getTextureWidth()));
+			ty0 = (((float)(sprite->getImageHeight())) * getFrame()) / texture->getTextureHeight();
+			ty1 = ((((float)(sprite->getImageHeight())) * (getFrame() + 1)) - 1) / texture->getTextureHeight();
 
 			x0 = getScreenLeft() - offsetX;
 			x1 = x0 + getWidth() * zoom;
@@ -514,14 +514,14 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 				//bind texture here.
 				glBindTexture(GL_TEXTURE_2D, shadowTexture->getTextureID());
 
-				for (int x = 0; x < sprite->getScreenWidth(); x++)
+				for (int x = 0; x < sprite->getImageWidth(); x++)
 				{
 					//float w = 1.0f/(float)texture.getTextureWidth();
 
 					tx0 = ((float)(x) / (float)(texture->getTextureWidth()));
 					tx1 = ((float)(x + 1.0f) / (float)(texture->getTextureWidth()));
-					ty0 = (((float)(sprite->getScreenHeight())) * getFrame()) / texture->getTextureHeight();
-					ty1 = ((((float)(sprite->getScreenHeight())) * (getFrame() + 1)) - 1) / texture->getTextureHeight();
+					ty0 = (((float)(sprite->getImageHeight())) * getFrame()) / texture->getTextureHeight();
+					ty1 = ((((float)(sprite->getImageHeight())) * (getFrame() + 1)) - 1) / texture->getTextureHeight();
 
 					x0 = (getScreenLeft() - offsetX) + (x * getScale() * zoom);
 					x1 = x0 + (1.0f * getScale() * zoom);
@@ -531,7 +531,7 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 					if (shadowClipPerPixel[x] < 1.0f)
 					{
 						y1 = (float)(floor(y0 + ((y1 - y0) * shadowClipPerPixel[x])));
-						ty1 = ((((((float)(sprite->getScreenHeight())) * (getFrame())) + ((float)(sprite->getScreenHeight()) * shadowClipPerPixel[x])) - 1) / texture->getTextureHeight());
+						ty1 = ((((((float)(sprite->getImageHeight())) * (getFrame())) + ((float)(sprite->getImageHeight()) * shadowClipPerPixel[x])) - 1) / texture->getTextureHeight());
 					}
 
 					//don't bind texture
@@ -2188,7 +2188,7 @@ float Entity::getShadowStart()
 		return 0;
 	}
 
-	return (float)(currentAnimation->hitBoxFromTopPixels1X * 2) / (float)(sprite->getScreenHeight());
+	return (float)(currentAnimation->hitBoxFromTopPixels1X * 2) / (float)(sprite->getImageHeight());
 }
 
 float Entity::getX()
@@ -2236,7 +2236,7 @@ float Entity::getWidth()
 
 	if (sprite != nullptr)
 	{
-		return (sprite->getScreenWidth() * getScale());
+		return (sprite->getImageWidth() * getScale());
 	}
 	else
 	{
@@ -2248,7 +2248,7 @@ float Entity::getHeight()
 { //=========================================================================================================================
 	if (sprite != nullptr)
 	{
-		return (sprite->getScreenHeight() * getScale());
+		return (sprite->getImageHeight() * getScale());
 	}
 	else
 	{

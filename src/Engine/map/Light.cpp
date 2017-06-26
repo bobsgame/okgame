@@ -738,7 +738,7 @@ void Light::createLightTexturePNG(const string& fileName)
 	int centerX = 0; //lightBoxX+lightBoxWidth/2;
 	int centerY = 0; //lightBoxY+lightBoxHeight/2;
 
-	BufferedImage* lightImage = new BufferedImage(maxRadius + lightBoxWidth / 2, maxRadius + lightBoxHeight / 2, BufferedImage::TYPE_INT_ARGB);
+	BufferedImage* lightImage = new BufferedImage(maxRadius + lightBoxWidth / 2, maxRadius + lightBoxHeight / 2);
 
 	//Graphics* lightImageGraphics = lightImage->getGraphics();
 

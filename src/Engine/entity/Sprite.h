@@ -57,7 +57,7 @@ public:
 
 	Sprite();
 	Sprite(Engine* g);
-	void preloadFromFile(string name);
+	void preloadFromDataFile(string name);
 	//The following method was originally marked 'synchronized':
 	virtual void initializeWithSpriteData(SpriteData* spriteData);
 	virtual void sendDataRequest(const string& getSpriteName);
@@ -182,8 +182,8 @@ public:
 
 	virtual int getImageWidth();
 	virtual int getImageHeight();	
-	virtual int getScreenWidth();
-	virtual int getScreenHeight();
+//	virtual int getScreenWidth();
+//	virtual int getScreenHeight();
 	virtual int getNumFrames();
 	virtual string getDisplayName();
 	virtual bool getIsNPC();

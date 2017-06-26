@@ -1470,14 +1470,14 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 
 	vector<u8>* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, -1);
 
-	uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getScreenWidth(), sprite->getScreenHeight() * sprite->getNumFrames(), bb);
+	uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
 
 	delete bb;
 
 	if (this->sprite != nullptr)
 	{
-		shadowClipPerPixel = new float[sprite->getScreenWidth()];
-		for (int i = 0; i < sprite->getScreenWidth(); i++)
+		shadowClipPerPixel = new float[sprite->getImageWidth()];
+		for (int i = 0; i < sprite->getImageWidth(); i++)
 		{
 			shadowClipPerPixel[i] = 1.0f;
 		}
@@ -1696,8 +1696,8 @@ void Character::setShadowClip()
 
 	if (shadowClipPerPixel == nullptr)
 	{
-		shadowClipPerPixel = new float[sprite->getScreenWidth()];
-		for (int i = 0; i < sprite->getScreenWidth(); i++)
+		shadowClipPerPixel = new float[sprite->getImageWidth()];
+		for (int i = 0; i < sprite->getImageWidth(); i++)
 		{
 			shadowClipPerPixel[i] = 1.0f;
 		}
@@ -1724,7 +1724,7 @@ void Character::setShadowClip()
 
 	//ArrayList<Entity> list = get_ONSCREEN_entities_besides_characters_within_amt(32);
 
-	for (int x = 0; x < sprite->getScreenWidth(); x++)
+	for (int x = 0; x < sprite->getImageWidth(); x++)
 	{
 		int clip = 0;
 

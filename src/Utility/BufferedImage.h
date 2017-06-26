@@ -21,15 +21,19 @@ public:
 	//static Logger log;
 
 	u8* rgbadata = nullptr;
+	int w = 0;
+	int h = 0;
+
+	BobColor* currentFillColor = nullptr;
 
 	BufferedImage();
-	BufferedImage(unsigned char* rgbadata, int w, int h);
-	BufferedImage(int width, int height, int type);
-	void setRGB(int i, int i1, int get_rgb);
-	int getRGB(int i, int y);
-	unsigned char* getData();
-	void setColor(BobColor* bob_color);
-	void fillRect(int i, int i1, int i2, int i3);
+	BufferedImage(u8* rgbadata, int w, int h);
+	BufferedImage(int w, int h);
+	void setRGB(int x, int y, int rgb);
+	int getRGB(int x, int y);
+	u8* getData();
+	void setColor(BobColor* c);
+	void fillRect(int x, int y, int w, int h);
 	static BufferedImage* loadFromPNG(string filename);
 	const static int TYPE_INT_ARGB = 0;
 	int getWidth();

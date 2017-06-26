@@ -211,7 +211,7 @@ public:
 
 
 	virtual Sprite* getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
-	Sprite * preloadSpriteFromFile(const string & spriteAssetName);
+	Sprite * preloadSpriteFromDataFile(const string & spriteAssetName);
 	Sprite * getSpriteByName(const string & spriteAssetName);
 };
 

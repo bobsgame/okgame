@@ -253,8 +253,8 @@ int RandomCharacter::selectRandomSet(Sprite* s)
 
 	int set = 0;
 
-	int w = s->getScreenWidth() / 2; //because HQ, draw at 2x, actual data is half size, etc
-	int h = s->getScreenHeight() / 2;
+	int w = s->getImageWidth();
+	int h = s->getImageHeight();
 
 	if (set == 0)
 	{
@@ -369,7 +369,7 @@ void RandomCharacter::update()
 				vector<u8>* bb = getByteBuffer_S();
 				if (bb != nullptr)
 				{
-					uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getScreenWidth(), sprite->getScreenHeight() * sprite->getNumFrames(), bb);
+					uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
 
 					setByteBuffer_S(nullptr);
 					delete bb;

@@ -129,8 +129,8 @@ public:
 	virtual string getDisplayName();
 	virtual int getWidthPixels1X();
 	virtual int getHeightPixels1X();
-	virtual int getWidthPixelsHQ();
-	virtual int getHeightPixelsHQ();
+//	virtual int getWidthPixelsHQ();
+//	virtual int getHeightPixelsHQ();
 	virtual int getNumFrames();
 	virtual bool getIsNPC();
 	virtual bool getIsKid();

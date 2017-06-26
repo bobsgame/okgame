@@ -530,9 +530,9 @@ void RamioGuy::render(float alpha, BobTexture* texture, BobTexture* shadowTextur
 	if (texture != nullptr)
 	{
 		tx0 = 0.0f;
-		tx1 = ((float)(sprite->getScreenWidth()) / (float)(texture->getTextureWidth()));
-		ty0 = (((float)(sprite->getScreenHeight())) * getFrame()) / (float)(texture->getTextureHeight());
-		ty1 = (((float)(sprite->getScreenHeight())) * (getFrame() + 1)) / (float)(texture->getTextureHeight());
+		tx1 = ((float)(sprite->getImageWidth()) / (float)(texture->getTextureWidth()));
+		ty0 = (((float)(sprite->getImageHeight())) * getFrame()) / (float)(texture->getTextureHeight());
+		ty1 = (((float)(sprite->getImageHeight())) * (getFrame() + 1)) / (float)(texture->getTextureHeight());
 
 
 		//NOTICE I AM NOT USING THE OFFSET

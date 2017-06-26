@@ -253,7 +253,7 @@ void BobsGame::initAssets()
 		if (name.find(".txt") != string::npos)
 		{
 			string nameWithoutExtension = name.substr(0, name.find(".txt"));
-			loadedSprites.add(spriteManager->preloadSpriteFromFile(nameWithoutExtension));
+			loadedSprites.add(spriteManager->preloadSpriteFromDataFile(nameWithoutExtension));
 		}
 	}
 

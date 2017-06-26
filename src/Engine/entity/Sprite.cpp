@@ -27,7 +27,7 @@ Sprite::Sprite(Engine* g)
 }
 
 //=========================================================================================================================
-void Sprite::preloadFromFile(string name)
+void Sprite::preloadFromDataFile(string name)
 {//=========================================================================================================================
 
 	//log.info("new SpriteData "+name);
@@ -577,7 +577,7 @@ void Sprite::loadTextures()
 						//                  else
 						{
 							//do it linearly, waiting for all chunks to finish before continuing
-							//createSpriteTexturePNG();
+							createSpriteTexturePNG_S();
 
 							if (getHasShadow() == true)
 							{
@@ -761,7 +761,7 @@ vector<u8>* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int
 	(*rgb)[2] = b;
 
 
-	int w = s->getScreenWidth() / 2;
+	int w = s->getImageWidth();
 
 	for (int x = 0; x < w; x++)
 	{
@@ -803,8 +803,8 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 	//allocate the indexed gfx data array, buffer, and texture
 	//-----------------------------
 
-	int imageWidth = getScreenWidth();
-	int imageHeight = getScreenHeight() * getNumFrames();
+	int imageWidth = getImageWidth();
+	int imageHeight = getImageHeight() * getNumFrames();
 
 	int texWidth = Math::getClosestPowerOfTwo(imageWidth);
 	int texHeight = Math::getClosestPowerOfTwo(imageHeight);
@@ -822,18 +822,13 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 	//if it is 0, bytebuffer is clear
 	//if it is black, bytebuffer is black
 
-	int w = getScreenWidth() / 2; //because width is widthHQ, which is floatd because we draw everything at 2x. actual width of data is width/2
-	int h = getScreenHeight() / 2;
+	int w = getImageWidth();
+	int h = getImageHeight();
 
 	BufferedImage* spriteBufferedImage = nullptr;
-	if (useHQ2X)
-	{
-		spriteBufferedImage = new BufferedImage(w, h * getNumFrames(), BufferedImage::TYPE_INT_ARGB);
-	}
-	else
-	{
-		spriteBufferedImage = new BufferedImage(w * 2, h * 2 * getNumFrames(), BufferedImage::TYPE_INT_ARGB);
-	}
+
+	spriteBufferedImage = new BufferedImage(w, h * getNumFrames());
+
 
 	for (int f = 0; f < getNumFrames(); f++)
 	{
@@ -985,16 +980,12 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 				else
 				{
 					//now fill textureByteArray with this color
-					for (int yy = 0; yy < 2; yy++)
-					{
-						for (int xx = 0; xx < 2; xx++)
-						{
-							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 0] = static_cast<char>(r);
-							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 1] = static_cast<char>(g);
-							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 2] = static_cast<char>(b);
-							(*textureByteArray)[(f * texWidth * h * 2 + ((y * 2 + yy) * texWidth + (x * 2 + xx))) * 4 + 3] = static_cast<char>(a);
-						}
-					}
+
+					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 0] = static_cast<char>(r);
+					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 1] = static_cast<char>(g);
+					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 2] = static_cast<char>(b);
+					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 3] = static_cast<char>(a);
+
 				}
 			}
 		}
@@ -1045,22 +1036,17 @@ void Sprite::createSpriteTexturePNG_S()
 	// construct shadow texture (if getHasShadow)
 
 
-	int w = getScreenWidth() / 2;
-	int h = getScreenHeight() / 2;
+	int w = getImageWidth();
+	int h = getImageHeight();
 
 
 	//---------------------------
 	//make bufferedimage the size of all sprite frames and fill it
 	//---------------------------
 	BufferedImage* spriteBufferedImage = nullptr;
-	if (useHQ2X)
-	{
-		spriteBufferedImage = new BufferedImage(w, h * getNumFrames(), BufferedImage::TYPE_INT_ARGB);
-	}
-	else
-	{
-		spriteBufferedImage = new BufferedImage(w * 2, h * 2 * getNumFrames(), BufferedImage::TYPE_INT_ARGB);
-	}
+
+	spriteBufferedImage = new BufferedImage(w, h * getNumFrames());
+
 
 	for (int f = 0; f < getNumFrames(); f++)
 	{
@@ -1106,20 +1092,9 @@ void Sprite::createSpriteTexturePNG_S()
 					}
 				}
 
-				if (useHQ2X)
-				{
-					spriteBufferedImage->setRGB(x, y + (f * h), (new BobColor(r, g, b, a))->getRGB());
-				}
-				else
-				{
-					for (int yy = 0; yy < 2; yy++)
-					{
-						for (int xx = 0; xx < 2; xx++)
-						{
-							spriteBufferedImage->setRGB(x * 2 + xx, y * 2 + yy + (f * h * 2), (new BobColor(r, g, b, a))->getRGB());
-						}
-					}
-				}
+
+				spriteBufferedImage->setRGB(x, y + (f * h), (new BobColor(r, g, b, a))->getRGB());
+
 			}
 		}
 	}
@@ -1158,19 +1133,14 @@ void Sprite::createSpriteShadowTexturePNG_S()
 	//---------------------------
 
 
-	int width = getScreenWidth() / 2;
-	int height = getScreenHeight() / 2;
+	int width = getImageWidth();
+	int height = getImageHeight();
 
 
 	BufferedImage* spriteBufferedImage = nullptr;
-	if (useHQ2X)
-	{
-		spriteBufferedImage = new BufferedImage(width, height * getNumFrames(), BufferedImage::TYPE_INT_ARGB);
-	}
-	else
-	{
-		spriteBufferedImage = new BufferedImage(width * 2, height * 2 * getNumFrames(), BufferedImage::TYPE_INT_ARGB);
-	}
+
+	spriteBufferedImage = new BufferedImage(width, height * getNumFrames());
+	
 
 	for (int f = 0; f < getNumFrames(); f++)
 	{
@@ -1209,20 +1179,9 @@ void Sprite::createSpriteShadowTexturePNG_S()
 					int ny = (height * f) + ((bottom_pixel_y) - y);
 					int col = BobColor::black->getRGB();
 
-					if (useHQ2X)
-					{
-						spriteBufferedImage->setRGB(nx, ny, col);
-					}
-					else
-					{
-						for (int yy = 0; yy < 2; yy++)
-						{
-							for (int xx = 0; xx < 2; xx++)
-							{
-								spriteBufferedImage->setRGB(nx * 2 + xx, ny * 2 + yy, col);
-							}
-						}
-					}
+
+					spriteBufferedImage->setRGB(nx, ny, col);
+	
 				}
 			}
 		}
@@ -1462,7 +1421,7 @@ void Sprite::antialiasBufferedImage(BufferedImage* bufferedImage)
 	//if pixel is transparent, and the pixel right and down, down and left, left and up, or up and right are black, this one is black
 
 	//have to make a copy otherwise the algorithm becomes recursive
-	BufferedImage* copy = new BufferedImage(bufferedImage->getWidth(), bufferedImage->getHeight(), BufferedImage::TYPE_INT_ARGB);
+	BufferedImage* copy = new BufferedImage(bufferedImage->getWidth(), bufferedImage->getHeight());
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
@@ -1696,23 +1655,25 @@ string Sprite::getComment()
 
 int Sprite::getImageWidth()
 {
+	//if(useHQ2X)return getData()->getWidthPixels1X()*2;
 	return getData()->getWidthPixels1X();
 }
 
 int Sprite::getImageHeight()
 {
+	//if (useHQ2X)return getData()->getHeightPixels1X() * 2;
 	return getData()->getHeightPixels1X();
 }
 
-int Sprite::getScreenWidth()
-{
-	return getData()->getWidthPixelsHQ();
-}
-
-int Sprite::getScreenHeight()
-{
-	return getData()->getHeightPixelsHQ();
-}
+//int Sprite::getScreenWidth()
+//{
+//	return getData()->getWidthPixelsHQ();
+//}
+//
+//int Sprite::getScreenHeight()
+//{
+//	return getData()->getHeightPixelsHQ();
+//}
 
 int Sprite::getNumFrames()
 {

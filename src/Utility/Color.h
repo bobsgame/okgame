@@ -31,10 +31,10 @@ public:
 
 
 	string name = "";
-	int r = 0;
-	int g = 0;
-	int b = 0;
-	int a = 0;
+	u8 r = 0;
+	u8 g = 0;
+	u8 b = 0;
+	u8 a = 0;
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version)
@@ -175,24 +175,24 @@ public:
 	BobColor();
 	//BobColor(BobColor* c);
 	//BobColor(const BobColor &c);
-	BobColor(BobColor c, int ai);
-	BobColor(BobColor c, float af);
+	BobColor(BobColor c, u8 a);
 	//BobColor(BobColor c, float af);
-	BobColor(float rf, float gf, float bf);
-	BobColor(float rf, float gf, float bf, float af);
-	BobColor(int ri, int gi, int bi);
-	BobColor(int ri, int gi, int bi, int ai);
+	//BobColor(BobColor c, float af);
+	//BobColor(float rf, float gf, float bf);
+	//BobColor(float rf, float gf, float bf, float af);
+	BobColor(u8 r, u8 g, u8 b);
+	BobColor(u8 r, u8 g, u8 b, u8 a);
 	BobColor(float hf, float sf, float bf, float af, bool hsbOverload);
 	BobColor(int rgb);
 	float rf();
 	float gf();
 	float bf();
 	float af();
-	int ri();
-	int gi();
-	int bi();
-	int ai();
-	static float* RGBtoHSB(int r, int g, int b);
+	u8 ri();
+	u8 gi();
+	u8 bi();
+	u8 ai();
+	static float* RGBtoHSB(u8 r, u8 g, u8 b);
 	static int HSBtoRGB(float hue, float saturation, float brightness);
 	void darker();
 	void darker(float scale);
@@ -204,7 +204,7 @@ public:
 	//Color *scaleCopy(float value);
 
 
-	static int rgbatoABGRInt(char r, char g, char b, char a);
+	static int rgbatoABGRInt(u8 r, u8 g, u8 b, u8 a);
 	//static int HexToDec(const string &hexst);
 	static int DecToRed(int dec);
 	static int DecToGreen(int dec);

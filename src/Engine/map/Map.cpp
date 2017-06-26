@@ -3433,8 +3433,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	//Thread.yield();
 
 	//create chunkImage
-	BufferedImage* chunkImage = new BufferedImage(chunkSizeTiles1X * 8, chunkSizeTiles1X * 8, BufferedImage::TYPE_INT_ARGB);
-	BufferedImage* chunkImageBorder = new BufferedImage(chunkSizeTiles1X * 8 + 2, chunkSizeTiles1X * 8 + 2, BufferedImage::TYPE_INT_ARGB);
+	BufferedImage* chunkImage = new BufferedImage(chunkSizeTiles1X * 8, chunkSizeTiles1X * 8);
+	BufferedImage* chunkImageBorder = new BufferedImage(chunkSizeTiles1X * 8 + 2, chunkSizeTiles1X * 8 + 2);
 
 
 	//***************************************
@@ -3834,7 +3834,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//handle 0 byte files!
 	if (underLayerTextureFile->length() < 1) //it is actually a completely isEmpty image, it was all 0 tiles
 	{
-		bottom = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2, BufferedImage::TYPE_INT_ARGB);
+		bottom = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 
 
 		//thought this would fix the hq2x grain glitch, but it was from hq2x being static.
@@ -3860,7 +3860,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	if (overLayerTextureFile->length() < 1)
 	{
-		top = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2, BufferedImage::TYPE_INT_ARGB);
+		top = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 		/*Graphics G = top.getGraphics();
 		G.setColor(new Color(0,0,0,0));
 		G.fillRect(0,0,top.getWidth(), top.getHeight());
@@ -3882,7 +3882,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//create bottom + top image
 
-	BufferedImage* bottomAndTop = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2, BufferedImage::TYPE_INT_ARGB);
+	BufferedImage* bottomAndTop = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 
 	//draw bottom, then top into bottomAndTop
 
@@ -3920,7 +3920,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	delete bottomAndTop;
 	bottomAndTop = nullptr;
 
-	BufferedImage* hq2xBottomAndTopCopy = new BufferedImage(hq2xBottomAndTop->getWidth(), hq2xBottomAndTop->getHeight(), BufferedImage::TYPE_INT_ARGB);
+	BufferedImage* hq2xBottomAndTopCopy = new BufferedImage(hq2xBottomAndTop->getWidth(), hq2xBottomAndTop->getHeight());
 	for (int y = 0; y < hq2xBottomAndTop->getHeight(); y++)
 	{
 		for (int x = 0; x < hq2xBottomAndTop->getWidth(); x++)
@@ -4008,7 +4008,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//make temp image size-4
 
-	BufferedImage* temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4, BufferedImage::TYPE_INT_ARGB);
+	BufferedImage* temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
 	for (int y = 2; y < hq2xBottomAndTop->getHeight() - 2; y++)
 	{
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
@@ -4085,7 +4085,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//output hq2x bottom layer full
 	//----------------------
 
-	temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4, BufferedImage::TYPE_INT_ARGB);
+	temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
 	for (int y = 2; y < hq2xBottomAndTop->getHeight() - 2; y++)
 	{
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
@@ -4145,7 +4145,7 @@ void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 	//if pixel is transparent, and the pixel right and down, down and left, left and up, or up and right are black, this one is black
 
 	//have to make a copy otherwise the algorithm becomes recursive
-	BufferedImage* copy = new BufferedImage(bufferedImage->getWidth(), bufferedImage->getHeight(), BufferedImage::TYPE_INT_ARGB);
+	BufferedImage* copy = new BufferedImage(bufferedImage->getWidth(), bufferedImage->getHeight());
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
@@ -4537,15 +4537,15 @@ Entity* Map::createEntityFeetAtXY(Map* map, const string& spriteName, Sprite* sp
 
 	// use hitbox center instead of arbitrary offset
 	SpriteAnimationSequence* a = sprite->getFirstAnimation();
-	int hitBoxYCenter = (a->hitBoxFromTopPixels1X * 2) + (((sprite->getScreenHeight() - (a->hitBoxFromTopPixels1X * 2)) - (a->hitBoxFromBottomPixels1X * 2)) / 2);
+	int hitBoxYCenter = (a->hitBoxFromTopPixels1X) + (((sprite->getImageHeight() - (a->hitBoxFromTopPixels1X)) - (a->hitBoxFromBottomPixels1X)) / 2);
 
-	return createEntity(map, spriteName, sprite, mapX - (sprite->getScreenWidth() / 2), mapY - (hitBoxYCenter));
+	return createEntity(map, spriteName, sprite, mapX - (sprite->getImageWidth() / 2), mapY - (hitBoxYCenter));
 }
 
 Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Map* map, Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt)
 { //=========================================================================================================================
 
-	if (map->isXYWithinScreenByAmt(mapX + sprite->getScreenWidth() / 2, mapY + sprite->getScreenHeight() / 2, amt) == true)
+	if (map->isXYWithinScreenByAmt(mapX + sprite->getImageWidth() / 2, mapY + sprite->getImageHeight() / 2, amt) == true)
 	{
 		if (e == nullptr)
 		{

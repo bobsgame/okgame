@@ -2871,7 +2871,7 @@ BufferedImage* HQ2X::hq2x(BufferedImage* image)// unsigned char* inArr, int w, i
 	//System.runFinalization();
 	//System.gc();
 
-	//unsigned char *out = new unsigned char[((w * 2) * (h * 2)) * 4];// (w * 2, h * 2, BufferedImage::TYPE_INT_ARGB);
+	//unsigned char *out = new unsigned char[((w * 2) * (h * 2)) * 4];// (w * 2, h * 2);
 	//out->setRGB(0, 0, x, y, outArr, 0, x);
 
 	// out = addAlpha(out);
