@@ -30,7 +30,7 @@ public:
 	BufferedImage(u8* rgbadata, int w, int h);
 	BufferedImage(int w, int h);
 	void setRGB(int x, int y, int rgb);
-	int getRGB(int x, int y);
+	int getRGBA(int x, int y);
 	u8* getData();
 	void setColor(BobColor* c);
 	void fillRect(int x, int y, int w, int h);

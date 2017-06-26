@@ -3787,11 +3787,11 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 
 						if (shadowLayer) //shadow layer
 						{
-							int oldPixel = chunkImageBorder->getRGB(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1);
+							int oldPixel = chunkImageBorder->getRGBA(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1);
 							BobColor* oldColor = new BobColor(oldPixel);// , true);
 
 							u8 alpha = 255;
-							if (oldColor->getRGB() == 0)
+							if (oldColor->getRGBA() == 0)
 							{
 								alpha = 150;
 							}
@@ -3801,15 +3801,17 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 							u8 blendedGreen = (u8)((shadowAlpha / 255.0f) * paletteG + (1.0f - (shadowAlpha / 255.0f)) * oldColor->gi());
 							u8 blendedBlue = (u8)((shadowAlpha / 255.0f) * paletteB + (1.0f - (shadowAlpha / 255.0f)) * oldColor->bi());
 
+							delete oldColor;
+
 							c = new BobColor(blendedRed, blendedGreen, blendedBlue, alpha);
 						}
 
 
-						chunkImageBorder->setRGB(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1, c->getRGB());
+						chunkImageBorder->setRGB(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1, c->getRGBA());
 
 						if (tx > 0 && tx < chunkSizeTiles1X + 1 && ty > 0 && ty < chunkSizeTiles1X + 1)
 						{
-							chunkImage->setRGB((tx - 1) * 8 + px, (ty - 1) * 8 + py, c->getRGB());
+							chunkImage->setRGB((tx - 1) * 8 + px, (ty - 1) * 8 + py, c->getRGBA());
 						}
 					}
 				}
@@ -3830,7 +3832,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//load 1x png under and over into bitmap arrays
 
 
-	int clear = (new BobColor(0, 0, 0, 0))->getRGB();
+	int clear = 0;
 	//int black = (new Color(0, 0, 0, 255))->getRGB();
 
 
@@ -3911,7 +3913,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	{
 		for (int x = 0; x < bottom->getWidth(); x++)
 		{
-			bottomAndTop->setRGB(x, y, bottom->getRGB(x, y));
+			bottomAndTop->setRGB(x, y, bottom->getRGBA(x, y));
 		}
 	}
 
@@ -3920,9 +3922,9 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	{
 		for (int x = 0; x < top->getWidth(); x++)
 		{
-			if (top->getRGB(x, y) != clear)
+			if (top->getRGBA(x, y) != clear)
 			{
-				bottomAndTop->setRGB(x, y, top->getRGB(x, y));
+				bottomAndTop->setRGB(x, y, top->getRGBA(x, y));
 			}
 		}
 	}
@@ -3946,7 +3948,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		for (int x = 0; x < hq2xBottomAndTop->getWidth(); x++)
 		{
 			//copy x,y into x-2,y-2
-			hq2xBottomAndTopCopy->setRGB(x, y, hq2xBottomAndTop->getRGB(x, y));
+			hq2xBottomAndTopCopy->setRGB(x, y, hq2xBottomAndTop->getRGBA(x, y));
 		}
 	}
 
@@ -3960,13 +3962,13 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		{
 			//copy alpha pixels from top, including clear and transparent shadows
 			//TODO: fix this in editor as well when outputting hq2x
-			if (((top->getRGB(x, y) >> 24) & 0xff) < 255)
+			if (((top->getRGBA(x, y) >> 24) & 0xff) < 255)
 			{
 				for (int xx = 0; xx < 2; xx++)
 				{
 					for (int yy = 0; yy < 2; yy++)
 					{
-						hq2xBottomAndTop->setRGB((x * 2) + xx, ((y * 2) + yy), top->getRGB(x, y));
+						hq2xBottomAndTop->setRGB((x * 2) + xx, ((y * 2) + yy), top->getRGBA(x, y));
 					}
 				}
 			}
@@ -4034,7 +4036,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
 		{
 			//copy x,y into x-2,y-2
-			temp->setRGB(x - 2, y - 2, hq2xBottomAndTop->getRGB(x, y));
+			temp->setRGB(x - 2, y - 2, hq2xBottomAndTop->getRGBA(x, y));
 		}
 	}
 
@@ -4078,13 +4080,13 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	{
 		for (int x = 0; x < top->getWidth(); x++)
 		{
-			if (top->getRGB(x, y) != clear)
+			if (top->getRGBA(x, y) != clear)
 			{
 				for (int xx = 0; xx < 2; xx++)
 				{
 					for (int yy = 0; yy < 2; yy++)
 					{
-						hq2xBottomAndTop->setRGB((x * 2) + xx, ((y * 2) + yy), hq2xBottom->getRGB((x * 2) + xx, ((y * 2) + yy)));
+						hq2xBottomAndTop->setRGB((x * 2) + xx, ((y * 2) + yy), hq2xBottom->getRGBA((x * 2) + xx, ((y * 2) + yy)));
 					}
 				}
 			}
@@ -4111,7 +4113,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
 		{
 			//copy x,y into x-2,y-2
-			temp->setRGB(x - 2, y - 2, hq2xBottomAndTop->getRGB(x, y));
+			temp->setRGB(x - 2, y - 2, hq2xBottomAndTop->getRGBA(x, y));
 		}
 	}
 
@@ -4170,24 +4172,24 @@ void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
 		{
-			copy->setRGB(x, y, bufferedImage->getRGB(x, y));
+			copy->setRGB(x, y, bufferedImage->getRGBA(x, y));
 		}
 	}
 
-	int clear = (new BobColor(0, 0, 0, 0))->getRGB();
+	int clear = 0;
 
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
 		{
-			if (copy->getRGB(x, y) == clear)
+			if (copy->getRGBA(x, y) == clear)
 			{
 				int black = 0;
 
 				//check right and down
 				if (x + 1 < bufferedImage->getWidth() && y + 1 < bufferedImage->getHeight())
 				{
-					if (copy->getRGB(x + 1, y) != clear && copy->getRGB(x, y + 1) != clear)
+					if (copy->getRGBA(x + 1, y) != clear && copy->getRGBA(x, y + 1) != clear)
 					{
 						black = 1;
 					}
@@ -4196,7 +4198,7 @@ void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 				//check right and up
 				if (x + 1 < bufferedImage->getWidth() && y - 1 >= 0)
 				{
-					if (copy->getRGB(x + 1, y) != clear && copy->getRGB(x, y - 1) != clear)
+					if (copy->getRGBA(x + 1, y) != clear && copy->getRGBA(x, y - 1) != clear)
 					{
 						black = 1;
 					}
@@ -4206,7 +4208,7 @@ void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 				//check left and down
 				if (x - 1 >= 0 && y + 1 < bufferedImage->getHeight())
 				{
-					if (copy->getRGB(x - 1, y) != clear && copy->getRGB(x, y + 1) != clear)
+					if (copy->getRGBA(x - 1, y) != clear && copy->getRGBA(x, y + 1) != clear)
 					{
 						black = 1;
 					}
@@ -4215,7 +4217,7 @@ void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 				//check left and up
 				if (x - 1 >= 0 && y - 1 >= 0)
 				{
-					if (copy->getRGB(x - 1, y) != clear && copy->getRGB(x, y - 1) != clear)
+					if (copy->getRGBA(x - 1, y) != clear && copy->getRGBA(x, y - 1) != clear)
 					{
 						black = 1;
 					}
@@ -4223,7 +4225,7 @@ void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 
 				if (black == 1)
 				{
-					bufferedImage->setRGB(x, y, (new BobColor(0, 0, 0, 127))->getRGB());
+					bufferedImage->setRGB(x, y, BobColor::getRGBA(0, 0, 0, 127));
 				}
 			}
 		}
@@ -4237,13 +4239,13 @@ void Map::setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedIma
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
 		{
-			if (bufferedImage->getRGB(x, y) == 0)
+			if (bufferedImage->getRGBA(x, y) == 0)
 			{
 				for (int xx = 0; xx < 2; xx++)
 				{
 					for (int yy = 0; yy < 2; yy++)
 					{
-						hq2xBufferedImage->setRGB((x * 2) + xx, ((y * 2) + yy), (new BobColor(0, 0, 0, 0))->getRGB());
+						hq2xBufferedImage->setRGB((x * 2) + xx, ((y * 2) + yy), 0);
 					}
 				}
 			}

@@ -3357,7 +3357,7 @@ BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const st
 	u8* data = (u8*)imageSurface->pixels;
 	u8* t = new u8[texWidth*texHeight * 4];
 
-	//for(int i=0;i<texWidth*texHeight * 4;i++)t[i]=0;
+	for(int i=0;i<texWidth*texHeight * 4;i++)t[i]=0;//fixes random white textures and outlines on lights???
 
 	if (hasAlpha)
 	{

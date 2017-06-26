@@ -1051,7 +1051,7 @@ BufferedImageData::BufferedImageData(Light* outerInstance, BufferedImage* buffer
 	{
 		for (int x = 0; x < width; x++)
 		{
-			int argb = bufferedImage->getRGB(x, y);
+			int argb = bufferedImage->getRGBA(x, y);
 			int alpha = (argb >> 24) % 256;
 			int red = (argb >> 16) % 256;
 			int green = (argb >> 8) % 256;

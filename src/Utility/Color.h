@@ -209,7 +209,8 @@ public:
 	static int DecToRed(int dec);
 	static int DecToGreen(int dec);
 	static int DecToBlue(int dec);
-	int getRGB();
+	int getRGBA();
+	static int getRGBA(u8 r, u8 g, u8 b, u8 a);
 };
 
 BOOST_CLASS_VERSION(BobColor, 1)

@@ -478,20 +478,9 @@ void Sprite::loadTextures()
 { //=========================================================================================================================
 
 
-	if (getIsRandom() == true)
-	{
-		//random bin MD5s are initialized already in the spriteAssetIndex, don't need to get them from the server.
 
-		//we always need the bin byte arrays loaded for randoms, since we will be using them each time we make a new random
-		if (indexDataIntArray == nullptr)
-		{
-			indexDataIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getDataMD5());
-		}
-		if (paletteRGBByteArray == nullptr)
-		{
-			paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(string("") + getPaletteMD5());
-		}
-	}
+
+
 
 	//should always have this now since we are loading the spriteData from server instead of just the MD5
 	//so if the spriteAsset exists, it has MD5s, or the texture is blankTexture if it was initialized with null
@@ -543,6 +532,23 @@ void Sprite::loadTextures()
 
 		if (getSpritePNGFileExists_S() == true)
 		{
+
+			if (getIsRandom() == false)
+			{
+				//random bin MD5s are initialized already in the spriteAssetIndex, don't need to get them from the server.
+				//we always need the bin byte arrays loaded for randoms, since we will be using them each time we make a new random
+
+				if (indexDataIntArray == nullptr)
+				{
+					delete indexDataIntArray;
+					indexDataIntArray = nullptr;
+				}
+				if (paletteRGBByteArray == nullptr)
+				{
+					delete paletteRGBByteArray;
+					paletteRGBByteArray = nullptr;
+				}
+			}
 
 			if (getIsRandom() == true)
 			{
@@ -894,7 +900,7 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 				if (useHQ2X)
 				{
-					spriteBufferedImage->setRGB(x, y + (f * h), (new BobColor(r, g, b, a))->getRGB());
+					spriteBufferedImage->setRGB(x, y + (f * h), BobColor::getRGBA(r, g, b, a));
 				}
 				else
 				{
@@ -927,7 +933,7 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 		{
 			for (int x = 0; x < imageWidth; x++)
 			{
-				BobColor* c = new BobColor(hq2xSpriteBufferedImage->getRGB(x, y));// , true);
+				BobColor* c = new BobColor(hq2xSpriteBufferedImage->getRGBA(x, y));// , true);
 
 				(*textureByteArray)[(y * texWidth + x) * 4 + 0] = static_cast<u8>(c->ri());
 				(*textureByteArray)[(y * texWidth + x) * 4 + 1] = static_cast<u8>(c->gi());
@@ -966,6 +972,11 @@ void Sprite::createSpriteTexturePNG_S()
 
 	spriteBufferedImage = new BufferedImage(w, h * getNumFrames());
 
+//	if(getName()=="bobSmallTable")
+//	{
+//		log.info("desk");
+//
+//	}
 
 	for (int f = 0; f < getNumFrames(); f++)
 	{
@@ -973,10 +984,10 @@ void Sprite::createSpriteTexturePNG_S()
 		{
 			for (int x = 0; x < w; x++)
 			{
-				int r = 0;
-				int g = 0;
-				int b = 0;
-				int a = 255;
+				u8 r = 0;
+				u8 g = 0;
+				u8 b = 0;
+				u8 a = 255;
 
 
 				int index = (*indexDataIntArray)[(f * w * h) + (y * w) + x]; // & 0xFF;
@@ -1011,8 +1022,8 @@ void Sprite::createSpriteTexturePNG_S()
 					}
 				}
 
-
-				spriteBufferedImage->setRGB(x, y + (f * h), (new BobColor(r, g, b, a))->getRGB());
+				int rgba = (r << 24) + (g << 16) + (b << 8) + a;
+				spriteBufferedImage->setRGB(x, y + (f * h), rgba);
 
 			}
 		}
@@ -1096,7 +1107,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 
 					int nx = x;
 					int ny = (height * f) + ((bottom_pixel_y) - y);
-					int col = BobColor::black->getRGB();
+					int col = BobColor::black->getRGBA();
 
 
 					spriteBufferedImage->setRGB(nx, ny, col);
@@ -1345,24 +1356,24 @@ void Sprite::antialiasBufferedImage(BufferedImage* bufferedImage)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
 		{
-			copy->setRGB(x, y, bufferedImage->getRGB(x, y));
+			copy->setRGB(x, y, bufferedImage->getRGBA(x, y));
 		}
 	}
 
-	int clear = (new BobColor(0, 0, 0, 0))->getRGB();
+	int clear = 0;
 
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
 		{
-			if (copy->getRGB(x, y) == clear)
+			if (copy->getRGBA(x, y) == clear)
 			{
 				int black = 0;
 
 				//check right and down
 				if (x + 1 < bufferedImage->getWidth() && y + 1 < bufferedImage->getHeight())
 				{
-					if (copy->getRGB(x + 1, y) != clear && copy->getRGB(x, y + 1) != clear)
+					if (copy->getRGBA(x + 1, y) != clear && copy->getRGBA(x, y + 1) != clear)
 					{
 						black = 1;
 					}
@@ -1371,7 +1382,7 @@ void Sprite::antialiasBufferedImage(BufferedImage* bufferedImage)
 				//check right and up
 				if (x + 1 < bufferedImage->getWidth() && y - 1 >= 0)
 				{
-					if (copy->getRGB(x + 1, y) != clear && copy->getRGB(x, y - 1) != clear)
+					if (copy->getRGBA(x + 1, y) != clear && copy->getRGBA(x, y - 1) != clear)
 					{
 						black = 1;
 					}
@@ -1381,7 +1392,7 @@ void Sprite::antialiasBufferedImage(BufferedImage* bufferedImage)
 				//check left and down
 				if (x - 1 >= 0 && y + 1 < bufferedImage->getHeight())
 				{
-					if (copy->getRGB(x - 1, y) != clear && copy->getRGB(x, y + 1) != clear)
+					if (copy->getRGBA(x - 1, y) != clear && copy->getRGBA(x, y + 1) != clear)
 					{
 						black = 1;
 					}
@@ -1390,7 +1401,7 @@ void Sprite::antialiasBufferedImage(BufferedImage* bufferedImage)
 				//check left and up
 				if (x - 1 >= 0 && y - 1 >= 0)
 				{
-					if (copy->getRGB(x - 1, y) != clear && copy->getRGB(x, y - 1) != clear)
+					if (copy->getRGBA(x - 1, y) != clear && copy->getRGBA(x, y - 1) != clear)
 					{
 						black = 1;
 					}
@@ -1398,7 +1409,7 @@ void Sprite::antialiasBufferedImage(BufferedImage* bufferedImage)
 
 				if (black == 1)
 				{
-					bufferedImage->setRGB(x, y, (new BobColor(0, 0, 0, 127))->getRGB());
+					bufferedImage->setRGB(x, y, BobColor::getRGBA(0, 0, 0, 127));
 				}
 			}
 		}
@@ -1412,13 +1423,13 @@ void Sprite::setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, Buffered
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
 		{
-			if (bufferedImage->getRGB(x, y) == 0)
+			if (bufferedImage->getRGBA(x, y) == 0)
 			{
 				for (int xx = 0; xx < 2; xx++)
 				{
 					for (int yy = 0; yy < 2; yy++)
 					{
-						hq2xBufferedImage->setRGB((x * 2) + xx, ((y * 2) + yy), (new BobColor(0, 0, 0, 0))->getRGB());
+						hq2xBufferedImage->setRGB((x * 2) + xx, ((y * 2) + yy), 0);
 					}
 				}
 			}

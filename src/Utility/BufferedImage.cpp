@@ -53,7 +53,7 @@ void BufferedImage::setRGB(int x, int y, int rgb)
 }
 
 //=========================================================================================================================
-int BufferedImage::getRGB(int x, int y)
+int BufferedImage::getRGBA(int x, int y)
 {//=========================================================================================================================
 
 	u8 r = this->rgbadata[y*w*4 + x*4 + 0];
@@ -80,7 +80,7 @@ void BufferedImage::fillRect(int x, int y, int w, int h)
 {//=========================================================================================================================
 	if(currentFillColor!=nullptr)
 	{
-		int rgb = currentFillColor->getRGB();
+		int rgb = currentFillColor->getRGBA();
 		for(int xx = x; xx<x+w; xx++)
 		for(int yy = y; yy<y+h; yy++)
 		{

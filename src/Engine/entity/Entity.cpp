@@ -524,8 +524,11 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 					ty0 = (((float)(sprite->getImageHeight())) * getFrame()) / texture->getTextureHeight();
 					ty1 = ((((float)(sprite->getImageHeight())) * (getFrame() + 1)) - 1) / texture->getTextureHeight();
 
+
+					float pixelSize = 2.0f;
+					if (sprite->useHQ2X)pixelSize = 1.0f;
 					x0 = (getScreenLeft() - offsetX) + (x * getScale() * zoom);
-					x1 = x0 + (1.0f * getScale() * zoom);
+					x1 = x0 + (pixelSize * getScale() * zoom);
 					y0 = (getScreenTop() - offsetY) + ((getHeight() * getShadowStart()) * zoom);
 					y1 = y0 + ((getHeight() * shadowSize) * zoom);
 
