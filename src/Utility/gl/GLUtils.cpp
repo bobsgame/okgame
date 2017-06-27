@@ -2341,15 +2341,81 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 //}
 
 //=========================================================================================================================
-void GLUtils::drawOutlinedString(string text, float screenX, float screenY, BobColor* color)//static
+void GLUtils::drawOutlinedString(string text, float screenX0, float screenY0, BobColor* color)//static
 {//=========================================================================================================================
-	drawOutlinedString(screenX, screenY, text, color);
-}
+
+	screenX0 *= globalDrawScale;
+	//screenX1*=globalDrawScale;
+	screenY0 *= globalDrawScale;
+	//screenY1*=globalDrawScale;
 
 
-//=========================================================================================================================
-void GLUtils::drawOutlinedString(float screenX0, float screenY0, string text, BobColor* color)//static
-{//=========================================================================================================================
+	SDL_Color textSDLColor = { (Uint8)color->ri() ,(Uint8)color->gi(),(Uint8)color->bi(),(Uint8)color->ai() };
+	SDL_Color bgSDLColor = { 0,0,0,0 };
+
+	TTF_Font *ttfFont = BobFont::ttf_8;
+	TTF_Font *outlineFont = BobFont::ttf_outline_8;
+
+	int OUTLINE_SIZE = 1;
+	// render text and text outline 
+
+	BobColor outlineBobColor = BobColor(*color);
+	outlineBobColor.darker();
+	outlineBobColor.darker();
+	SDL_Color outlineColor = { (Uint8)outlineBobColor.ri() ,(Uint8)outlineBobColor.gi(),(Uint8)outlineBobColor.bi(),(Uint8)outlineBobColor.ai() };
+	SDL_Surface* surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
+	SDL_Surface *fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
+	SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
+
+	// blit text onto its outline 
+	SDL_SetSurfaceBlendMode(fg_surface, SDL_BLENDMODE_BLEND);
+	SDL_BlitSurface(fg_surface, NULL, surface, &rect);
+	SDL_FreeSurface(fg_surface);
+
+	if (surface == NULL || surface == nullptr)
+	{
+		log.error("surface is null");
+	}
+
+	int width = fg_surface->w + OUTLINE_SIZE * 2;
+	int height = fg_surface->h + OUTLINE_SIZE * 2;
+
+	BobTexture* texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
+	SDL_FreeSurface(surface);
+
+	int texWidth = texture->getTextureWidth();
+	int texHeight = texture->getTextureHeight();
+
+
+
+	float tx0 = 0.0f;
+	float tx1 = 1.0f;
+	float ty0 = 0.0f;
+	float ty1 = 1.0f;
+
+	float x0 = 0;
+	float x1 = 100;
+	float y0 = 0;
+	float y1 = 100;
+
+	tx0 = 0.0f;
+	tx1 = (float)(width) / (float)(texWidth);
+	ty0 = 0.0f;
+	ty1 = (float)(height) / (float)(texHeight);
+
+
+
+	x0 = (float)((int)(screenX0));
+	x1 = (float)((int)((screenX0)+width));
+	y0 = (float)((int)(screenY0));
+	y1 = (float)((int)((screenY0)+height));
+
+
+	int filter = 0;
+
+	filter = GLUtils::FILTER_FBO_NEAREST_NO_MIPMAPPING;
+
+	GLUtils::drawTexture(texture, tx0, tx1, ty0, ty1, x0, x1, y0, y1, 1.0f, filter);
 
  //
  //		if(font==null)
@@ -2371,10 +2437,7 @@ void GLUtils::drawOutlinedString(float screenX0, float screenY0, string text, Bo
  //if(font==null){log.error("BobFont is null");return;}
  //if(getText==null){log.error("Text is null");return;}
 
-	screenX0 *= globalDrawScale;
-	//screenX1*=globalDrawScale;
-	screenY0 *= globalDrawScale;
-	//screenY1*=globalDrawScale;
+
 	//
 	//Renderer.setRenderer(1);
 
