@@ -23,7 +23,7 @@ Logger Sound::log = Logger("Sound");
 //	{
 //		if (Main::audioManager->soundList->get(i)->getName() == data->getName())
 //		{
-//			log.warn(string("Sound already exists:") + data->getName());
+//			log.warn("Sound already exists:" + data->getName());
 //			return;
 //		}
 //	}
@@ -42,7 +42,7 @@ Sound::Sound(Engine* g, SoundData* data)
 		if (Main::audioManager->soundList->get(i)->getName() == data->getName())
 		{
 			if (Main::audioManager->soundList->get(i)->getID() == -1)Main::audioManager->soundList->get(i)->setID(data->getID());
-			//log.warn(string("Sound already exists:") + data->getName());
+			//log.warn("Sound already exists:" + data->getName());
 			return;
 		}
 	}
@@ -223,7 +223,7 @@ void Sound::update()
 				}
 				//               else
 				//               {
-				//                  log.warn(string("Download thread timed out for Sound: ") + name());
+				//                  log.warn("Download thread timed out for Sound: " + name());
 				//                  downloadThread->start();
 				//               }
 				//            }

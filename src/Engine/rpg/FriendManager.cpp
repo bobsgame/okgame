@@ -66,7 +66,7 @@ void FriendManager::init()
 		//         if (line.length() > 0)
 		//         {
 		//            timesRun = stoi(line);
-		//            log.debug(string("") + to_string(timesRun));
+		//            log.debug("" + to_string(timesRun));
 		//         }
 		//      }
 		//
@@ -75,7 +75,7 @@ void FriendManager::init()
 		//      try
 		//      {
 		//         output = new BufferedWriter(new FileWriter(sessionFile));
-		//         output->write(string("") + to_string(timesRun + 1));
+		//         output->write("" + to_string(timesRun + 1));
 		//         output->close();
 		//      }
 		//      catch (IOException e)

@@ -85,7 +85,7 @@ string EventData::initFromString(string t)
 
 string EventData::getTYPEIDString()
 { //===============================================================================================
-	return string("EVENT.") + to_string(getID());
+	return "EVENT." + to_string(getID());
 }
 
 int EventData::getType()

@@ -109,7 +109,7 @@ GameSave::GameSave()//ResultSet* databaseResultSet)
 	//   }
 	//   catch (exception& ex)
 	//   {
-	//      log.error(string("DB ERROR:") + ex.what());
+	//      log.error("DB ERROR:" + ex.what());
 	//   }
 }
 
@@ -149,30 +149,30 @@ string GameSave::addOrUpdateValueToCommaSeparatedList(string list, string value)
 	string id = value.substr(0, value.find(":"));
 
 
-	if (list.find(id + string(":")) != string::npos)
+	if (list.find(id + ":") != string::npos)
 	{
 		//remove the old value by looking up the id
-		log.debug(string("original list:") + list);
+		log.debug("original list:" + list);
 		string before = "";
-		if (list.find(id + string(":")) > 0)
+		if (list.find(id + ":") > 0)
 		{
-			before = list.substr(0, list.find(id + string(":")));
+			before = list.substr(0, list.find(id + ":"));
 		}
 
 
-		string after = list.substr(list.find(id + string(":")));
+		string after = list.substr(list.find(id + ":"));
 		after = after.substr(after.find(",") + 1);
 
-		log.debug(string("before:") + before);
-		log.debug(string("after:") + after);
-		list = before + after + value + string(","); //tack it on the end, order doesn't matter.
-		log.debug(string("resulting list:") + list);
+		log.debug("before:" + before);
+		log.debug("after:" + after);
+		list = before + after + value + ","; //tack it on the end, order doesn't matter.
+		log.debug("resulting list:" + list);
 	}
 	else
 	{
-		log.debug(string("original list:") + list);
-		list = list + value + string(",");
-		log.debug(string("resulting list:") + list);
+		log.debug("original list:" + list);
+		list = list + value + ",";
+		log.debug("resulting list:" + list);
 	}
 
 	return list;
@@ -182,8 +182,8 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 { //===============================================================================================
 
 
-	log.debug(string("variableName:") + variableName);
-	log.debug(string("value:") + value);
+	log.debug("variableName:" + variableName);
+	log.debug("value:" + value);
 
 	if (variableName.length() == 0)
 	{
@@ -558,183 +558,183 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 string GameSave::encodeGameSave()
 { //===============================================================================================
 
-	string gameSaveString =
-		string("userID:") +
-		string("`") +
+	string gameSaveString = string("") + 
+		"userID:" +
+		"`" +
 		to_string(userID) +
-		string("`") +
-		string(",userName:") +
-		string("`") +
+		"`" +
+		",userName:" +
+		"`" +
 		(userName)+
-		string("`") +
-		string(",emailAddress:") +
-		string("`") +
+		"`" +
+		",emailAddress:" +
+		"`" +
 		(emailAddress) +
-		string("`") +
-		string(",accountCreatedTime:") +
-		string("`") +
+		"`" +
+		",accountCreatedTime:" +
+		"`" +
 		to_string(accountCreatedTime) +
-		string("`") +
-		string(",lastLoginTime:") +
-		string("`") +
+		"`" +
+		",lastLoginTime:" +
+		"`" +
 		to_string(lastLoginTime) +
-		string("`") +
-		string(",timesLoggedIn:") +
-		string("`") +
+		"`" +
+		",timesLoggedIn:" +
+		"`" +
 		to_string(timesLoggedIn) +
-		string("`") +
-		string(",totalTimePlayed:") +
-		string("`") +
+		"`" +
+		",totalTimePlayed:" +
+		"`" +
 		to_string(totalTimePlayed) +
-		string("`") +
-		string(",lastIP:") +
-		string("`") +
+		"`" +
+		",lastIP:" +
+		"`" +
 		(lastIP) +
-		string("`") +
-		string(",facebookID:") +
-		string("`") +
+		"`" +
+		",facebookID:" +
+		"`" +
 		(facebookID) +
-		string("`") +
-		string(",facebookAccessToken:") +
-		string("`") +
+		"`" +
+		",facebookAccessToken:" +
+		"`" +
 		(facebookAccessToken) +
-		string("`") +
-		string(",facebookEmail:") +
-		string("`") +
+		"`" +
+		",facebookEmail:" +
+		"`" +
 		(facebookEmail) +
-		string("`") +
-//		string(",facebookBirthday:") +
-//		string("`") +
+		"`" +
+//		",facebookBirthday:" +
+//		"`" +
 //		(facebookBirthday) +
-//		string("`") +
-		string(",facebookFirstName:") +
-		string("`") +
+//		"`" +
+		",facebookFirstName:" +
+		"`" +
 		(facebookFirstName) +
-		string("`") +
-		string(",facebookLastName:") +
-		string("`") +
+		"`" +
+		",facebookLastName:" +
+		"`" +
 		(facebookLastName) +
-		string("`") +
-		string(",facebookGender:") +
-		string("`") +
+		"`" +
+		",facebookGender:" +
+		"`" +
 		(facebookGender) +
-		string("`") +
-//		string(",facebookLocale:") +
-//		string("`") +
+		"`" +
+//		",facebookLocale:" +
+//		"`" +
 //		(facebookLocale) +
-//		string("`") +
-//		string(",facebookTimeZone:") +
-//		string("`") +
+//		"`" +
+//		",facebookTimeZone:" +
+//		"`" +
 //		to_string(facebookTimeZone) +
-//		string("`") +
-//		string(",facebookUsername:") +
-//		string("`") +
+//		"`" +
+//		",facebookUsername:" +
+//		"`" +
 //		(facebookUsername) +
-//		string("`") +
-//		string(",facebookWebsite:") +
-//		string("`") +
+//		"`" +
+//		",facebookWebsite:" +
+//		"`" +
 //		(facebookWebsite) +
-//		string("`") +
-//		string(",googlePlusID:") +
-//		string("`") +
+//		"`" +
+//		",googlePlusID:" +
+//		"`" +
 //		(googlePlusID) +
-//		string("`") +
-		string(",postalCode:") +
-		string("`") +
+//		"`" +
+		",postalCode:" +
+		"`" +
 		(postalCode) +
-		string("`") +
-		string(",countryName:") +
-		string("`") +
+		"`" +
+		",countryName:" +
+		"`" +
 		(countryName) +
-		string("`") +
-		string(",isoCountryCode:") +
-		string("`") +
+		"`" +
+		",isoCountryCode:" +
+		"`" +
 		(isoCountryCode) +
-		string("`") +
-		string(",placeName:") +
-		string("`") +
+		"`" +
+		",placeName:" +
+		"`" +
 		(placeName) +
-		string("`") +
-		string(",stateName:") +
-		string("`") +
+		"`" +
+		",stateName:" +
+		"`" +
 		(stateName) +
-		string("`") +
-		string(",lat:") +
-		string("`") +
+		"`" +
+		",lat:" +
+		"`" +
 		to_string(lat) +
-		string("`") +
-		string(",lon:") +
-		string("`") +
+		"`" +
+		",lon:" +
+		"`" +
 		to_string(lon) +
-		string("`") +
-		string(",notes:") +
-		string("`") +
+		"`" +
+		",notes:" +
+		"`" +
 		(notes) +
-		string("`") +
-		string(",warnings:") +
-		string("`") +
+		"`" +
+		",warnings:" +
+		"`" +
 		(warnings) +
-		string("`") +
-		string(",avatarIcon:") +
-		string("`") +
+		"`" +
+		",avatarIcon:" +
+		"`" +
 		(avatarIcon) +
-		string("`") +
-		string(",lastKnownRoom:") +
-		string("`") +
+		"`" +
+		",lastKnownRoom:" +
+		"`" +
 		(lastKnownRoom) +
-		string("`") +
-		string(",lastKnownX:") +
-		string("`") +
+		"`" +
+		",lastKnownX:" +
+		"`" +
 		to_string(lastKnownX) +
-		string("`") +
-		string(",lastKnownY:") +
-		string("`") +
+		"`" +
+		",lastKnownY:" +
+		"`" +
 		to_string(lastKnownY) +
-		string("`") +
-		string(",startingRoom:") +
-		string("`") +
+		"`" +
+		",startingRoom:" +
+		"`" +
 		(startingRoom) +
-		string("`") +
-		string(",timePlayed:") +
-		string("`") +
+		"`" +
+		",timePlayed:" +
+		"`" +
 		to_string(timePlayed) +
-		string("`") +
-		string(",pixelsWalked:") +
-		string("`") +
+		"`" +
+		",pixelsWalked:" +
+		"`" +
 		to_string(pixelsWalked) +
-		string("`") +
-		string(",accountRank:") +
-		string("`") +
+		"`" +
+		",accountRank:" +
+		"`" +
 		to_string(accountRank) +
-		string("`") +
-		string(",money:") +
-		string("`") +
+		"`" +
+		",money:" +
+		"`" +
 		to_string(money) +
-		string("`") +
-		string(",characterAppearance:") +
-		string("`") +
+		"`" +
+		",characterAppearance:" +
+		"`" +
 		(characterAppearance) +
-		string("`") +
-		string(",characterName:") +
-		string("`") +
+		"`" +
+		",characterName:" +
+		"`" +
 		(characterName) +
-		string("`") +
-		string(",itemsHeld:") +
-		string("`") +
+		"`" +
+		",itemsHeld:" +
+		"`" +
 		(itemsHeld) +
-		string("`") +
-		string(",dialoguesDone:") +
-		string("`") +
+		"`" +
+		",dialoguesDone:" +
+		"`" +
 		(dialoguesDone) +
-		string("`") +
-		string(",flagsSet:") +
-		string("`") +
+		"`" +
+		",flagsSet:" +
+		"`" +
 		(flagsSet) +
-		string("`") +
-		string(",skillValues:") +
-		string("`") +
+		"`" +
+		",skillValues:" +
+		"`" +
 		(skillValues) +
-		string("`");
+		"`";
 
 
 
@@ -789,7 +789,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("userID:") + to_string(userID));
+			log.debug("userID:" + to_string(userID));
 		}
 	}
 
@@ -804,7 +804,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("userName:") + userName);
+			log.debug("userName:" + userName);
 		}
 	}
 
@@ -819,7 +819,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("emailAddress:") + emailAddress);
+			log.debug("emailAddress:" + emailAddress);
 		}
 	}
 
@@ -842,7 +842,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("accountCreated:") + to_string(accountCreatedTime));
+			log.debug("accountCreated:" + to_string(accountCreatedTime));
 		}
 	}
 
@@ -865,7 +865,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("lastLoginTime:") + to_string(lastLoginTime));
+			log.debug("lastLoginTime:" + to_string(lastLoginTime));
 		}
 	}
 
@@ -888,7 +888,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("timesLoggedIn:") + to_string(timesLoggedIn));
+			log.debug("timesLoggedIn:" + to_string(timesLoggedIn));
 		}
 	}
 
@@ -912,7 +912,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("totalTimePlayed:") + to_string(totalTimePlayed));
+			log.debug("totalTimePlayed:" + to_string(totalTimePlayed));
 		}
 	}
 
@@ -928,7 +928,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("lastIP:") + lastIP);
+			log.debug("lastIP:" + lastIP);
 		}
 	}
 
@@ -961,7 +961,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("facebookID:") + facebookID);
+			log.debug("facebookID:" + facebookID);
 		}
 	}
 
@@ -976,7 +976,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("facebookAccessToken:") + facebookAccessToken);
+			log.debug("facebookAccessToken:" + facebookAccessToken);
 		}
 	}
 
@@ -991,7 +991,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("facebookEmail:") + facebookEmail);
+			log.debug("facebookEmail:" + facebookEmail);
 		}
 	}
 //	{
@@ -1005,7 +1005,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug(string("facebookBirthday:") + facebookBirthday);
+//			log.debug("facebookBirthday:" + facebookBirthday);
 //		}
 //	}
 	{
@@ -1019,7 +1019,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("facebookFirstName:") + facebookFirstName);
+			log.debug("facebookFirstName:" + facebookFirstName);
 		}
 	}
 	{
@@ -1033,7 +1033,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("facebookLastName:") + facebookLastName);
+			log.debug("facebookLastName:" + facebookLastName);
 		}
 	}
 	{
@@ -1047,7 +1047,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("facebookGender:") + facebookGender);
+			log.debug("facebookGender:" + facebookGender);
 		}
 	}
 //	{
@@ -1061,7 +1061,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug(string("facebookLocale:") + facebookLocale);
+//			log.debug("facebookLocale:" + facebookLocale);
 //		}
 //	}
 //	{
@@ -1083,7 +1083,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug(string("facebookTimeZone:") + to_string(facebookTimeZone));
+//			log.debug("facebookTimeZone:" + to_string(facebookTimeZone));
 //		}
 //	}
 //	{
@@ -1097,7 +1097,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug(string("facebookUsername:") + facebookUsername);
+//			log.debug("facebookUsername:" + facebookUsername);
 //		}
 //	}
 //	{
@@ -1111,7 +1111,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug(string("facebookWebsite:") + facebookWebsite);
+//			log.debug("facebookWebsite:" + facebookWebsite);
 //		}
 //	}
 //
@@ -1126,7 +1126,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug(string("googlePlusID:") + googlePlusID);
+//			log.debug("googlePlusID:" + googlePlusID);
 //		}
 //	}
 
@@ -1141,7 +1141,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("postalCode:") + postalCode);
+			log.debug("postalCode:" + postalCode);
 		}
 	}
 
@@ -1156,7 +1156,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("countryName:") + countryName);
+			log.debug("countryName:" + countryName);
 		}
 	}
 
@@ -1171,7 +1171,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("isoCountryCode:") + isoCountryCode);
+			log.debug("isoCountryCode:" + isoCountryCode);
 		}
 	}
 
@@ -1186,7 +1186,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("placeName:") + placeName);
+			log.debug("placeName:" + placeName);
 		}
 	}
 
@@ -1201,7 +1201,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("stateName:") + stateName);
+			log.debug("stateName:" + stateName);
 		}
 	}
 
@@ -1223,7 +1223,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("lat:") + to_string(lat));
+			log.debug("lat:" + to_string(lat));
 		}
 	}
 	{
@@ -1244,7 +1244,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("lon:") + to_string(lon));
+			log.debug("lon:" + to_string(lon));
 		}
 	}
 
@@ -1268,7 +1268,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("notes:") + notes);
+			log.debug("notes:" + notes);
 		}
 	}
 
@@ -1283,7 +1283,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("warnings:") + warnings);
+			log.debug("warnings:" + warnings);
 		}
 	}
 
@@ -1298,7 +1298,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("avatarIcon:") + avatarIcon);
+			log.debug("avatarIcon:" + avatarIcon);
 		}
 	}
 
@@ -1313,7 +1313,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("lastKnownRoom:") + lastKnownRoom);
+			log.debug("lastKnownRoom:" + lastKnownRoom);
 		}
 	}
 
@@ -1335,7 +1335,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("lastKnownX:") + to_string(lastKnownX));
+			log.debug("lastKnownX:" + to_string(lastKnownX));
 		}
 	}
 
@@ -1357,7 +1357,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("lastKnownY:") + to_string(lastKnownY));
+			log.debug("lastKnownY:" + to_string(lastKnownY));
 		}
 	}
 
@@ -1372,7 +1372,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("startingRoom:") + startingRoom);
+			log.debug("startingRoom:" + startingRoom);
 		}
 	}
 
@@ -1394,7 +1394,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("timePlayed:") + to_string(timePlayed));
+			log.debug("timePlayed:" + to_string(timePlayed));
 		}
 	}
 
@@ -1416,7 +1416,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("pixelsWalked:") + to_string(pixelsWalked));
+			log.debug("pixelsWalked:" + to_string(pixelsWalked));
 		}
 	}
 
@@ -1439,7 +1439,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("accountRank:") + to_string(accountRank));
+			log.debug("accountRank:" + to_string(accountRank));
 		}
 	}
 
@@ -1460,7 +1460,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("money:") + to_string(money));
+			log.debug("money:" + to_string(money));
 		}
 	}
 
@@ -1475,7 +1475,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("characterAppearance:") + characterAppearance);
+			log.debug("characterAppearance:" + characterAppearance);
 		}
 	}
 
@@ -1490,7 +1490,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("characterName:") + characterName);
+			log.debug("characterName:" + characterName);
 		}
 	}
 	{ //itemsHeld
@@ -1503,7 +1503,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("itemsHeld:") + itemsHeld);
+			log.debug("itemsHeld:" + itemsHeld);
 		}
 	}
 	{ //dialoguesDone
@@ -1516,7 +1516,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("dialoguesDone:") + dialoguesDone);
+			log.debug("dialoguesDone:" + dialoguesDone);
 		}
 	}
 	{ //flagsSet
@@ -1529,7 +1529,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("flagsSet:") + flagsSet);
+			log.debug("flagsSet:" + flagsSet);
 		}
 	}
 	{ //skillValues
@@ -1542,7 +1542,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug(string("skillValues:") + skillValues);
+			log.debug("skillValues:" + skillValues);
 		}
 	}
 

@@ -174,7 +174,7 @@ void ControlsManager::initControllers()
 	//   }
 	//
 	//   numControllers = Controllers::getControllerCount();
-	//   log.info(to_string(numControllers) + string(" Controllers Found"));
+	//   log.info(to_string(numControllers) + " Controllers Found");
 	//
 	//   for (int n = 0; n < numControllers; n++)
 	//   {
@@ -183,7 +183,7 @@ void ControlsManager::initControllers()
 	//
 	//      if (controllerNames.length() > 0)
 	//      {
-	//         controllerNames = controllerNames.concat(string(",") + controller->getName());
+	//         controllerNames = controllerNames.concat("," + controller->getName());
 	//      }
 	//      else
 	//      {

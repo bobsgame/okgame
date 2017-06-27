@@ -1787,7 +1787,7 @@ void TextManager::parseOption()
 		else if (String::startsWith(optionBuffer, "SETSPRITEBOX0TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			Sprite* e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist(string("SPRITE.") + s);
+			Sprite* e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
 				textBox->get(0)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
@@ -1796,7 +1796,7 @@ void TextManager::parseOption()
 		else if (String::startsWith(optionBuffer, "SETSPRITEBOX1TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			Sprite* e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist(string("SPRITE.") + s);
+			Sprite* e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
 				textBox->get(1)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
@@ -1830,7 +1830,7 @@ void TextManager::parseOption()
 		}
 		else
 		{
-			string e = string("Unknown tag parsed in TextEngine: ") + optionBuffer;
+			string e = "Unknown tag parsed in TextEngine: " + optionBuffer;
 			Console::error(e);
 			log.error(e);
 		}

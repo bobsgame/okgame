@@ -611,7 +611,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	Map* m = getMapByNameBlockUntilLoaded(mapName);
 	if (m == nullptr)
 	{
-		log.error(string("Could not load map: ") + mapName);
+		log.error("Could not load map: " + mapName);
 		return;
 	}
 
@@ -641,7 +641,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 			if (mapName == "BLANK" == false && updateGameSave == true)
 			{
 				//TODO: make sure we are allowed in this room before doing this! otherwise we will be stuck.
-				getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("lastKnownRoom:`") + mapName + string("`,lastKnownX:`") + to_string(mapXPixelsHQ) + string("`,lastKnownY:`") + to_string(mapYPixelsHQ) + string("`"));
+				getServerConnection()->addQueuedGameSaveUpdateRequest_S("lastKnownRoom:`" + mapName + "`,lastKnownX:`" + to_string(mapXPixelsHQ) + "`,lastKnownY:`" + to_string(mapYPixelsHQ) + "`");
 			}
 		}
 	}
@@ -682,7 +682,7 @@ Map* MapManager::getMapByIDBlockUntilLoaded(int id)
 
 	if (id == -1)
 	{
-		log.warn(string("getMapByID: ") + to_string(id));
+		log.warn("getMapByID: " + to_string(id));
 		return getCurrentMap();
 	}
 
@@ -734,7 +734,7 @@ Map* MapManager::getMapByNameBlockUntilLoaded(const string& name)
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
 	{
-		log.warn(string("getMapByName: ") + name);
+		log.warn("getMapByName: " + name);
 		return getCurrentMap();
 	}
 
@@ -788,7 +788,7 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
 	{
-		log.warn(string("requestMapDataIfNotLoadedYet: ") + name);
+		log.warn("requestMapDataIfNotLoadedYet: " + name);
 		return;
 	}
 
@@ -830,7 +830,7 @@ Area* MapManager::getAreaByID(int id)
 	// first check the current state of the current map
 	if (currentMap != nullptr)
 	{
-		Area* a = currentMap->getAreaOrWarpAreaByTYPEID(string("AREA.") + to_string(id));
+		Area* a = currentMap->getAreaOrWarpAreaByTYPEID("AREA." + to_string(id));
 		if (a != nullptr)
 		{
 			return a;

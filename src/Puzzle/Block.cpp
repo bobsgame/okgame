@@ -1394,7 +1394,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 
 	//for special blocks that are larger than one tile (like the weight), we need to draw just the part of the frame we need
-	if (overrideAnySpecialBehavior == false && piece != nullptr && piece->pieceType != nullptr && piece->pieceType->spriteName != string("") && piece->overrideAnySpecialBehavior == false)
+	if (overrideAnySpecialBehavior == false && piece != nullptr && piece->pieceType != nullptr && piece->pieceType->spriteName != "" && piece->overrideAnySpecialBehavior == false)
 	{
 		//figure out what block we are in the piece
 

@@ -108,7 +108,7 @@ string MapStateData::initFromString(string t)
 
 string MapStateData::getTYPEIDString()
 { //===============================================================================================
-	return string("STATE.") + to_string(getID());
+	return "STATE." + to_string(getID());
 }
 
 ArrayList<LightData*>* MapStateData::getLightDataList()

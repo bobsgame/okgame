@@ -113,7 +113,7 @@ void ND::update()
 	}
 
 
-	ndZoomText->text = string("nD zoom: ") + to_string(nDZoom);
+	ndZoomText->text = "nD zoom: " + to_string(nDZoom);
 }
 
 void ND::setGame(NDGameEngine* game)

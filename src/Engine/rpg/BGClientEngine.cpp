@@ -419,97 +419,97 @@ void BGClientEngine::handleGameEngineOptionKeys()
 		if (getControlsManager()->key_H_Pressed() == true)
 		{
 			hitLayerEnabled = !hitLayerEnabled;
-			Console::debug(string("Hit Layer Toggled: ") + StringConverterHelper::toString(hitLayerEnabled), 1000);
+			Console::debug("Hit Layer Toggled: " + StringConverterHelper::toString(hitLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_TILDE_Pressed() == true)
 		{
 			underLayerEnabled = !underLayerEnabled;
-			Console::debug(string("Under Layer Toggled: ") + StringConverterHelper::toString(underLayerEnabled), 1000);
+			Console::debug("Under Layer Toggled: " + StringConverterHelper::toString(underLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_1_Pressed() == true)
 		{
 			entityLayerEnabled = !entityLayerEnabled;
-			Console::debug(string("Entity Layer Toggled: ") + StringConverterHelper::toString(entityLayerEnabled), 1000);
+			Console::debug("Entity Layer Toggled: " + StringConverterHelper::toString(entityLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_2_Pressed() == true)
 		{
 			overLayerEnabled = !overLayerEnabled;
-			Console::debug(string("Over Layer Toggled: ") + StringConverterHelper::toString(overLayerEnabled), 1000);
+			Console::debug("Over Layer Toggled: " + StringConverterHelper::toString(overLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_3_Pressed() == true)
 		{
 			lightsLayerEnabled = !lightsLayerEnabled;
-			Console::debug(string("Lights Layer Toggled: ") + StringConverterHelper::toString(lightsLayerEnabled), 1000);
+			Console::debug("Lights Layer Toggled: " + StringConverterHelper::toString(lightsLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_4_Pressed() == true)
 		{
 			GLUtils::useShaders = !GLUtils::useShaders;
-			Console::debug(string("Shader Toggled: ") + to_string(GLUtils::useShaders), 1000);
+			Console::debug("Shader Toggled: " + to_string(GLUtils::useShaders), 1000);
 		}
 
 //		if (getControlsManager()->key_5_Pressed() == true)
 //		{
 //			GLUtils::useFBO = !GLUtils::useFBO;
-//			Console::debug(string("FBO Toggled: ") + StringConverterHelper::toString(GLUtils::useFBO), 1000);
+//			Console::debug("FBO Toggled: " + StringConverterHelper::toString(GLUtils::useFBO), 1000);
 //		}
 
 		if (getControlsManager()->key_6_Pressed() == true)
 		{
 			debugLayerEnabled = !debugLayerEnabled;
-			Console::debug(string("Debug Layer Toggled: ") + StringConverterHelper::toString(debugLayerEnabled), 1000);
+			Console::debug("Debug Layer Toggled: " + StringConverterHelper::toString(debugLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_NUM2_Pressed() == true)
 		{
 			getMapManager()->contrast -= 0.1f;
-			Console::debug(string("Contrast: ") + to_string(getMapManager()->contrast), 1000);
+			Console::debug("Contrast: " + to_string(getMapManager()->contrast), 1000);
 		}
 
 		if (getControlsManager()->key_NUM3_Pressed() == true)
 		{
 			getMapManager()->contrast += 0.1f;
-			Console::debug(string("Contrast: ") + to_string(getMapManager()->contrast), 1000);
+			Console::debug("Contrast: " + to_string(getMapManager()->contrast), 1000);
 		}
 
 		if (getControlsManager()->key_NUM5_Pressed() == true)
 		{
 			getMapManager()->brightness -= 0.1f;
-			Console::debug(string("Brightness: ") + to_string(getMapManager()->brightness), 1000);
+			Console::debug("Brightness: " + to_string(getMapManager()->brightness), 1000);
 		}
 
 		if (getControlsManager()->key_NUM6_Pressed() == true)
 		{
 			getMapManager()->brightness += 0.1f;
-			Console::debug(string("Brightness: ") + to_string(getMapManager()->brightness), 1000);
+			Console::debug("Brightness: " + to_string(getMapManager()->brightness), 1000);
 		}
 
 		if (getControlsManager()->key_NUM8_Pressed() == true)
 		{
 			getMapManager()->saturation -= 0.1f;
-			Console::debug(string("Saturation: ") + to_string(getMapManager()->saturation), 1000);
+			Console::debug("Saturation: " + to_string(getMapManager()->saturation), 1000);
 		}
 
 		if (getControlsManager()->key_NUM9_Pressed() == true)
 		{
 			getMapManager()->saturation += 0.1f;
-			Console::debug(string("Saturation: ") + to_string(getMapManager()->saturation), 1000);
+			Console::debug("Saturation: " + to_string(getMapManager()->saturation), 1000);
 		}
 
 		if (getControlsManager()->key_NUM1_Pressed() == true)
 		{
 			getMapManager()->gamma -= 0.1f;
-			Console::debug(string("Gamma: ") + to_string(getMapManager()->gamma), 1000);
+			Console::debug("Gamma: " + to_string(getMapManager()->gamma), 1000);
 		}
 
 		if (getControlsManager()->key_NUM4_Pressed() == true)
 		{
 			getMapManager()->gamma += 0.1f;
-			Console::debug(string("Gamma: ") + to_string(getMapManager()->gamma), 1000);
+			Console::debug("Gamma: " + to_string(getMapManager()->gamma), 1000);
 		}
 
 		if (getControlsManager()->key_NUM0_Pressed() == true)
@@ -518,7 +518,7 @@ void BGClientEngine::handleGameEngineOptionKeys()
 			getMapManager()->brightness = 1.0f;
 			getMapManager()->contrast = 1.0f;
 			getMapManager()->gamma = 1.0f;
-			Console::debug(string("Saturation: ") + to_string(getMapManager()->saturation) + string(" | Brightness: ") + to_string(getMapManager()->brightness) + string(" | Contrast: ") + to_string(getMapManager()->contrast) + string(" | Gamma: ") + to_string(getMapManager()->gamma), 1000);
+			Console::debug("Saturation: " + to_string(getMapManager()->saturation) + " | Brightness: " + to_string(getMapManager()->brightness) + " | Contrast: " + to_string(getMapManager()->contrast) + " | Gamma: " + to_string(getMapManager()->gamma), 1000);
 		}
 	}
 }
@@ -527,8 +527,8 @@ void BGClientEngine::updateDebugText()
 { //=========================================================================================================================
 	Engine::updateDebugText();
 
-	playerMapText->text = string("Player map xy: ") + to_string(player->getX()) + string(",") + to_string(player->getY()) + string(" | Tiles: ") + to_string(player->getX() / 8) + string(",") + to_string(player->getY() / 8);
-	playerScreenText->text = string("Player screen xy: ") + to_string(player->getScreenLeft()) + string(",") + to_string(player->getScreenTop()) + string(" Player layer: ") + to_string((int)player->getRenderOrder());
+	playerMapText->text = "Player map xy: " + to_string(player->getX()) + "," + to_string(player->getY()) + " | Tiles: " + to_string(player->getX() / 8) + "," + to_string(player->getY() / 8);
+	playerScreenText->text = "Player screen xy: " + to_string(player->getScreenLeft()) + "," + to_string(player->getScreenTop()) + " Player layer: " + to_string((int)player->getRenderOrder());
 }
 
 void BGClientEngine::loadPreCachedObjectData()
@@ -564,7 +564,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log.debug(string("Preload Skill id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Skill id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -591,7 +591,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->dialogueList.add(m);
 				if (debug)
 				{
-					log.debug(string("Preload Dialogue id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Dialogue id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -618,7 +618,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->flagList.add(m);
 				if (debug)
 				{
-					log.debug(string("Preload Flag id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Flag id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -645,7 +645,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->gameStringList.add(m);
 				if (debug)
 				{
-					log.debug(string("Preload GameString id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload GameString id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -672,7 +672,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->eventList.add(m);
 				if (debug)
 				{
-					log.debug(string("Preload Event id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Event id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -706,14 +706,14 @@ void BGClientEngine::loadPreCachedObjectData()
 				}
 				else
 				{
-					log.error(string("Sprite already exists:") + data->getName());
+					log.error("Sprite already exists:" + data->getName());
 				}
 
 				//System.out.println(spriteData.name);
 
 				if (debug)
 				{
-					log.debug(string("Preload Sprite id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Sprite id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -750,7 +750,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log.debug(string("Preload Sound id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Sound id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -783,7 +783,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log.debug(string("Preload Music id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Music id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -817,12 +817,12 @@ void BGClientEngine::loadPreCachedObjectData()
 				}
 				else
 				{
-					log.error(string("Map already exists:") + data->getName());
+					log.error("Map already exists:" + data->getName());
 				}
 
 				if (debug)
 				{
-					log.debug(string("Preload Map id:") + to_string(data->getID()) + string(" name:") + data->getName());
+					log.debug("Preload Map id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}

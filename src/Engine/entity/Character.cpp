@@ -1470,7 +1470,7 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 
 	vector<u8>* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, -1);
 
-	uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
+	uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
 
 	delete bb;
 

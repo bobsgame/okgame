@@ -833,7 +833,7 @@ void BobsGame::debugKeys()
 		shaderCount++;
 		if (shaderCount >= GLUtils::bgShaderCount)shaderCount = 0;
 		log.info("Shader: " + to_string(shaderCount));
-		Console::add(string("Shader: ") + to_string(shaderCount), 10000);
+		Console::add("Shader: " + to_string(shaderCount), 10000);
 
 		getPlayer1Game()->updateCaptions();
 	}
@@ -848,62 +848,62 @@ void BobsGame::debugKeys()
 	if (getControlsManager()->key_1_Pressed() == true)
 	{
 		Main::globalSettings->hue -= 0.1f;
-		Console::debug(string("Hue: ") + to_string(Main::globalSettings->hue), 1000);
+		Console::debug("Hue: " + to_string(Main::globalSettings->hue), 1000);
 	}
 
 	if (getControlsManager()->key_2_Pressed() == true)
 	{
 		Main::globalSettings->hue += 0.1f;
-		Console::debug(string("Hue: ") + to_string(Main::globalSettings->hue), 1000);
+		Console::debug("Hue: " + to_string(Main::globalSettings->hue), 1000);
 	}
 
 	if (getControlsManager()->key_3_Pressed() == true)
 	{
 		Main::globalSettings->contrast -= 0.1f;
-		Console::debug(string("Contrast: ") + to_string(Main::globalSettings->contrast), 1000);
+		Console::debug("Contrast: " + to_string(Main::globalSettings->contrast), 1000);
 	}
 
 	if (getControlsManager()->key_4_Pressed() == true)
 	{
 		Main::globalSettings->contrast += 0.1f;
-		Console::debug(string("Contrast: ") + to_string(Main::globalSettings->contrast), 1000);
+		Console::debug("Contrast: " + to_string(Main::globalSettings->contrast), 1000);
 	}
 
 	if (getControlsManager()->key_5_Pressed() == true)
 	{
 		Main::globalSettings->
 			brightness -= 0.1f;
-		Console::debug(string("Brightness: ") + to_string(Main::globalSettings->brightness), 1000);
+		Console::debug("Brightness: " + to_string(Main::globalSettings->brightness), 1000);
 	}
 
 	if (getControlsManager()->key_6_Pressed() == true)
 	{
 		Main::globalSettings->brightness += 0.1f;
-		Console::debug(string("Brightness: ") + to_string(Main::globalSettings->brightness), 1000);
+		Console::debug("Brightness: " + to_string(Main::globalSettings->brightness), 1000);
 	}
 
 	if (getControlsManager()->key_7_Pressed() == true)
 	{
 		Main::globalSettings->saturation -= 0.1f;
-		Console::debug(string("Saturation: ") + to_string(Main::globalSettings->saturation), 1000);
+		Console::debug("Saturation: " + to_string(Main::globalSettings->saturation), 1000);
 	}
 
 	if (getControlsManager()->key_8_Pressed() == true)
 	{
 		Main::globalSettings->saturation += 0.1f;
-		Console::debug(string("Saturation: ") + to_string(Main::globalSettings->saturation), 1000);
+		Console::debug("Saturation: " + to_string(Main::globalSettings->saturation), 1000);
 	}
 
 	if (getControlsManager()->key_9_Pressed() == true)
 	{
 		Main::globalSettings->gamma -= 0.1f;
-		Console::debug(string("Gamma: ") + to_string(Main::globalSettings->gamma), 1000);
+		Console::debug("Gamma: " + to_string(Main::globalSettings->gamma), 1000);
 	}
 
 	if (getControlsManager()->key_0_Pressed() == true)
 	{
 		Main::globalSettings->gamma += 0.1f;
-		Console::debug(string("Gamma: ") + to_string(Main::globalSettings->gamma), 1000);
+		Console::debug("Gamma: " + to_string(Main::globalSettings->gamma), 1000);
 	}
 
 	if (getControlsManager()->key_BACKSPACE_Pressed() == true)
@@ -913,7 +913,7 @@ void BobsGame::debugKeys()
 		Main::globalSettings->brightness = 1.0f;
 		Main::globalSettings->contrast = 1.2f;
 		Main::globalSettings->gamma = 1.0f;
-		Console::debug(string("Hue: ") + to_string(Main::globalSettings->hue) + string(" | Saturation: ") + to_string(Main::globalSettings->saturation) + string(" | Brightness: ") + to_string(Main::globalSettings->brightness) + string(" | Contrast: ") + to_string(Main::globalSettings->contrast) + string(" | Gamma: ") + to_string(Main::globalSettings->gamma), 1000);
+		Console::debug("Hue: " + to_string(Main::globalSettings->hue) + " | Saturation: " + to_string(Main::globalSettings->saturation) + " | Brightness: " + to_string(Main::globalSettings->brightness) + " | Contrast: " + to_string(Main::globalSettings->contrast) + " | Gamma: " + to_string(Main::globalSettings->gamma), 1000);
 	}
 
 #endif

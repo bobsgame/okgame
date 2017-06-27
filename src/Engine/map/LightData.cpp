@@ -206,7 +206,7 @@ string LightData::initFromString(string t)
 
 string LightData::getTYPEIDString()
 { //===============================================================================================
-	return string("LIGHT.") + to_string(getID());
+	return "LIGHT." + to_string(getID());
 }
 
 int LightData::getWidthPixels1X()

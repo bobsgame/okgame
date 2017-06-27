@@ -25,7 +25,7 @@ Logger Music::log = Logger("Music");
 //		if (Main::audioManager->musicList->get(i)->getName() == data->getName())
 //		{
 //			if (Main::audioManager->musicList->get(i)->getID() == -1)Main::audioManager->musicList->get(i)->setID(data->getID());
-//			log.warn(string("Music already exists:") + data->getName());
+//			log.warn("Music already exists:" + data->getName());
 //			return;
 //		}
 //	}
@@ -44,7 +44,7 @@ Music::Music(Engine* g, MusicData* data)
 		if (Main::audioManager->musicList->get(i)->getName() == data->getName())
 		{
 			if (Main::audioManager->musicList->get(i)->getID() == -1)Main::audioManager->musicList->get(i)->setID(data->getID());
-			//log.warn(string("Music already exists:") + data->getName());
+			//log.warn("Music already exists:" + data->getName());
 			return;
 		}
 	}
@@ -228,7 +228,7 @@ void Music::update()
 			//               }
 			//               else
 			//               {
-			//                  log.warn(string("Download thread timed out for Sound: ") + name());
+			//                  log.warn("Download thread timed out for Sound: " + name());
 			//                  downloadThread->start();
 			//               }
 			//            }

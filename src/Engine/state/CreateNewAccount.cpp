@@ -385,7 +385,7 @@ void CreateNewAccount::doCreateAccount()
 	//                  }
 	//
 	//                  errorLabel->setText(" ");
-	//                  statusLabel->setText(string("Connecting to server") + dots);
+	//                  statusLabel->setText("Connecting to server" + dots);
 	//
 	//                  if (tries > 10)
 	//                  {

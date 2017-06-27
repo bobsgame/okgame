@@ -68,7 +68,7 @@ string GameStringData::initFromString(string t)
 
 string GameStringData::getTYPEIDString()
 { //===============================================================================================
-	return string("GAMESTRING.") + to_string(getID());
+	return "GAMESTRING." + to_string(getID());
 }
 
 string GameStringData::getText()

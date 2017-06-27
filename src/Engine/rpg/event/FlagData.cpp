@@ -61,6 +61,6 @@ string FlagData::initFromString(string t)
 
 string FlagData::getTYPEIDString()
 { //===============================================================================================
-	return string("FLAG.") + to_string(getID());
+	return "FLAG." + to_string(getID());
 }
 

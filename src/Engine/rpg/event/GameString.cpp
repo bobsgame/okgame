@@ -24,7 +24,7 @@ GameString::GameString(Engine* g, int id)
 	{
 		if (getEventManager()->gameStringList.get(i)->getID() == data->getID())
 		{
-			log.error(string("GameString already exists:") + data->getName());
+			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}
@@ -42,7 +42,7 @@ GameString::GameString(Engine* g, GameStringData* data)
 	{
 		if (getEventManager()->gameStringList.get(i)->getID() == data->getID())
 		{
-			log.error(string("GameString already exists:") + data->getName());
+			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}

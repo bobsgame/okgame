@@ -620,7 +620,7 @@ void LoginScreen::doForgotPassword()
 	//                        dots = dots.concat(".");
 	//                     }
 	//                     errorLabel->setText(" ");
-	//                     statusLabel->setText(string("Connecting to server") + dots);
+	//                     statusLabel->setText("Connecting to server" + dots);
 	//
 	//                     if (tries > 10)
 	//                     {
@@ -801,7 +801,7 @@ void LoginScreen::doLogin()
 	//                        dots = dots.concat(".");
 	//                     }
 	//                     errorLabel->setText(" ");
-	//                     statusLabel->setText(string("Connecting to server") + dots);
+	//                     statusLabel->setText("Connecting to server" + dots);
 	//
 	//                     if (tries > 10)
 	//                     {
@@ -1053,7 +1053,7 @@ void LoginScreen::checkForSessionTokenAndLogInIfExists()
 		//                           dots = dots.concat(".");
 		//                        }
 		//                        errorLabel->setText(" ");
-		//                        statusLabel->setText(string("Existing session found! Connecting to server") + dots);
+		//                        statusLabel->setText("Existing session found! Connecting to server" + dots);
 		//
 		//                        if (tries > 10)
 		//                        {

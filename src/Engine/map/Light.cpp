@@ -36,14 +36,14 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 
 	if (getLightTexturePNGFileExists_S() == false)
 	{
-		BobFile* textureFile = new BobFile(FileUtils::cacheDir + string("l") + "/" + getFileName());
+		BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + getFileName());
 		if (textureFile->exists())
 		{
 			setLightTexturePNGFileExists_S(true);
 		}
 		else
 		{
-			createLightTexturePNG(FileUtils::cacheDir + string("l") + "/" + getFileName());
+			createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + getFileName());
 
 			setLightTexturePNGFileExists_S(true);
 		}
@@ -53,7 +53,7 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 	{
 		BobFile* textureFile = nullptr;
 
-		textureFile = new BobFile(FileUtils::cacheDir + string("l") + "/" + getFileName());
+		textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + getFileName());
 
 
 		if (textureFile->exists() == false)
@@ -72,7 +72,7 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 
 		if (t == nullptr)
 		{
-			//t = GLUtils::getTextureFromPNG(FileUtils::cacheDir + string("l") + "/" + getFileName());
+			//t = GLUtils::getTextureFromPNG(FileUtils::cacheDir + "l" + "/" + getFileName());
 
 			//				if(t==null || t==GLUtils.boxTexture)
 			//				{

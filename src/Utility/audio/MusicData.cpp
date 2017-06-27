@@ -87,7 +87,7 @@ string MusicData::initFromString(string t)
 
 string MusicData::getTYPEIDString()
 { //===============================================================================================
-	return string("MUSIC.") + to_string(getID());
+	return "MUSIC." + to_string(getID());
 }
 
 

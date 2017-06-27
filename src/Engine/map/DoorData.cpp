@@ -151,7 +151,7 @@ string DoorData::initFromString(string t)
 
 string DoorData::getTYPEIDString()
 { //===============================================================================================
-	return string("DOOR.") + to_string(getID());
+	return "DOOR." + to_string(getID());
 }
 
 string DoorData::getDestinationTYPEIDString()

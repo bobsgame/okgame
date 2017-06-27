@@ -369,7 +369,7 @@ void RandomCharacter::update()
 				vector<u8>* bb = getByteBuffer_S();
 				if (bb != nullptr)
 				{
-					uniqueTexture = GLUtils::getTextureFromData(string("random") + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
+					uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
 
 					setByteBuffer_S(nullptr);
 					delete bb;

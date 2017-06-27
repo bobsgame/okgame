@@ -26,7 +26,7 @@ Event::Event(Engine* g, int id)
 	{
 		if (getEventManager()->eventList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Event already exists:") + data->getName());
+			log.error("Event already exists:" + data->getName());
 			return;
 		}
 	}
@@ -45,7 +45,7 @@ Event::Event(Engine* g, EventData* eventData)
 	{
 		if (getEventManager()->eventList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Event already exists:") + data->getName());
+			log.error("Event already exists:" + data->getName());
 			return;
 		}
 	}
@@ -2023,7 +2023,7 @@ void Event::doCommand()
 
 
 	{
-		log.error(string("Error! Unknown Command: ") + currentCommand->commandString);
+		log.error("Error! Unknown Command: " + currentCommand->commandString);
 		getNextCommandInParent();
 		return;
 	}
@@ -3822,7 +3822,7 @@ void Event::playerStandAndShuffleAndFaceEntity_ENTITY()
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
 	Entity* e2 = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 
-	getPlayer()->addEventBehavior(string("StandAndShuffleAndFace:ENTITY.") + to_string(e2->getID())); //TODO:
+	getPlayer()->addEventBehavior("StandAndShuffleAndFace:ENTITY." + to_string(e2->getID())); //TODO:
 
 	getNextCommand();
 }
@@ -4188,14 +4188,14 @@ void Event::entityMoveToArea_ENTITY_AREA_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidO
 
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
 	e->addEventBehavior(
-		string("MoveToArea:") +
-		to_string(a->getID()) + string(",") +
-		string(StringConverterHelper::toString(bWalkOrSlide)) + string(",") +
-		string(StringConverterHelper::toString(bCheckHit)) + string(",") +
-		string(StringConverterHelper::toString(bAvoidOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPushOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPathFind)) + string(",") +
-		string(StringConverterHelper::toString(bAnimate)) + string(",") +
+		"MoveToArea:" +
+		to_string(a->getID()) + "," +
+		string(StringConverterHelper::toString(bWalkOrSlide)) + "," +
+		string(StringConverterHelper::toString(bCheckHit)) + "," +
+		string(StringConverterHelper::toString(bAvoidOthers)) + "," +
+		string(StringConverterHelper::toString(bPushOthers)) + "," +
+		string(StringConverterHelper::toString(bPathFind)) + "," +
+		string(StringConverterHelper::toString(bAnimate)) + "," +
 		string(StringConverterHelper::toString(bMoveDiagonally))
 	);
 
@@ -4218,14 +4218,14 @@ void Event::entityMoveToDoor_ENTITY_DOOR_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidO
 
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
 	e->addEventBehavior(
-		string("MoveToDoor:") +
-		to_string(e2->getID()) + string(",") +
-		string(StringConverterHelper::toString(bWalkOrSlide)) + string(",") +
-		string(StringConverterHelper::toString(bCheckHit)) + string(",") +
-		string(StringConverterHelper::toString(bAvoidOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPushOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPathFind)) + string(",") +
-		string(StringConverterHelper::toString(bAnimate)) + string(",") +
+		"MoveToDoor:" +
+		to_string(e2->getID()) + "," +
+		string(StringConverterHelper::toString(bWalkOrSlide)) + "," +
+		string(StringConverterHelper::toString(bCheckHit)) + "," +
+		string(StringConverterHelper::toString(bAvoidOthers)) + "," +
+		string(StringConverterHelper::toString(bPushOthers)) + "," +
+		string(StringConverterHelper::toString(bPathFind)) + "," +
+		string(StringConverterHelper::toString(bAnimate)) + "," +
 		string(StringConverterHelper::toString(bMoveDiagonally))
 	);
 
@@ -4248,14 +4248,14 @@ void Event::entityMoveToEntity_ENTITY_ENTITY_BOOLwalkOrSlide_BOOLcheckHit_BOOLav
 
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
 	e->addEventBehavior(
-		string("MoveToEntity:") +
-		to_string(e2->getID()) + string(",") +
-		string(StringConverterHelper::toString(bWalkOrSlide)) + string(",") +
-		string(StringConverterHelper::toString(bCheckHit)) + string(",") +
-		string(StringConverterHelper::toString(bAvoidOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPushOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPathFind)) + string(",") +
-		string(StringConverterHelper::toString(bAnimate)) + string(",") +
+		"MoveToEntity:" +
+		to_string(e2->getID()) + "," +
+		string(StringConverterHelper::toString(bWalkOrSlide)) + "," +
+		string(StringConverterHelper::toString(bCheckHit)) + "," +
+		string(StringConverterHelper::toString(bAvoidOthers)) + "," +
+		string(StringConverterHelper::toString(bPushOthers)) + "," +
+		string(StringConverterHelper::toString(bPathFind)) + "," +
+		string(StringConverterHelper::toString(bAnimate)) + "," +
 		string(StringConverterHelper::toString(bMoveDiagonally))
 	);
 
@@ -4279,15 +4279,15 @@ void Event::entityMoveToTileXY_ENTITY_INTxTile1X_INTyTile1X_BOOLwalkOrSlide_BOOL
 
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
 	e->addEventBehavior(
-		string("MoveToMapXY:") +
-		to_string(tX * 8 * 2) + string(",") +
-		to_string(tY * 8 * 2) + string(",") +
-		string(StringConverterHelper::toString(bWalkOrSlide)) + string(",") +
-		string(StringConverterHelper::toString(bCheckHit)) + string(",") +
-		string(StringConverterHelper::toString(bAvoidOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPushOthers)) + string(",") +
-		string(StringConverterHelper::toString(bPathFind)) + string(",") +
-		string(StringConverterHelper::toString(bAnimate)) + string(",") +
+		"MoveToMapXY:" +
+		to_string(tX * 8 * 2) + "," +
+		to_string(tY * 8 * 2) + "," +
+		string(StringConverterHelper::toString(bWalkOrSlide)) + "," +
+		string(StringConverterHelper::toString(bCheckHit)) + "," +
+		string(StringConverterHelper::toString(bAvoidOthers)) + "," +
+		string(StringConverterHelper::toString(bPushOthers)) + "," +
+		string(StringConverterHelper::toString(bPathFind)) + "," +
+		string(StringConverterHelper::toString(bAnimate)) + "," +
 		string(StringConverterHelper::toString(bMoveDiagonally))
 	);
 
@@ -4500,7 +4500,7 @@ void Event::entityStandAndShuffleAndFaceEntity_ENTITY_ENTITY()
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 	Entity* e2 = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 
-	e->addEventBehavior(string("StandAndShuffleAndFace:ENTITY.") + to_string(e2->getID())); //TODO:
+	e->addEventBehavior("StandAndShuffleAndFace:ENTITY." + to_string(e2->getID())); //TODO:
 
 	getNextCommand();
 }
@@ -5039,7 +5039,7 @@ void Event::createScreenSpriteUnderTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), string("SCREENSPRITE.") + s->getName(), s->getName());
+	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 
 	screenSprite->useXPercent = true;
 	screenSprite->useYPercent = true;
@@ -5077,7 +5077,7 @@ void Event::createScreenSpriteOverTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), string("SCREENSPRITE.") + s->getName(), s->getName());
+	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 
 	screenSprite->useXPercent = true;
 	screenSprite->useYPercent = true;
@@ -5112,7 +5112,7 @@ void Event::createScreenSpriteUnderText_SPRITE_INTx_INTy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), string("SCREENSPRITE.") + s->getName(), s->getName());
+	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 	screenSprite->screenXPixelsHQ = (float)screenX;
 	screenSprite->screenYPixelsHQ = (float)screenY;
 
@@ -5149,7 +5149,7 @@ void Event::createScreenSpriteOverText_SPRITE_INTx_INTy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), string("SCREENSPRITE.") + s->getName(), s->getName());
+	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 	screenSprite->screenXPixelsHQ = (float)screenX;
 	screenSprite->screenYPixelsHQ = (float)screenY;
 
@@ -6054,7 +6054,7 @@ void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 	int b = currentCommand->parameterList->get(p++)->i;
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
-	Console::add(gameString->text(), new BobColor(r, g, b), ticks);
+	Console::add(gameString->text(), ticks, new BobColor(r, g, b));
 
 
 	getNextCommand();

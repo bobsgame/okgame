@@ -130,7 +130,7 @@ Item* EventManager::getItemByID(int id)
 	}
 
 
-	string e = string("Item not found! getItemByID():") + to_string(id);
+	string e = "Item not found! getItemByID():" + to_string(id);
 	Console::error(e);
 	log.error(e);
 
@@ -182,7 +182,7 @@ Skill* EventManager::getSkillByIDCreateIfNotExist(int id)
 
 	//All skills defined in editor should be loaded from /res/SkillData at load, so it should always exist.
 
-	string e = string("Skill not found! getSkillByID():") + to_string(id);
+	string e = "Skill not found! getSkillByID():" + to_string(id);
 	Console::error(e);
 	log.error(e);
 

@@ -984,12 +984,12 @@ public:
 //		try
 //		{
 //
-//			isGameTypeOrSequence = databaseResultSet.getstring("isGameTypeOrSequence");
-//			gameTypeName = databaseResultSet.getstring("gameTypeName");
-//			gameTypeUUID = databaseResultSet.getstring("gameTypeUUID");
-//			gameSequenceName = databaseResultSet.getstring("gameSequenceName");
-//			gameSequenceUUID = databaseResultSet.getstring("gameSequenceUUID");
-//			difficultyName = databaseResultSet.getstring("difficultyName");
+//			isGameTypeOrSequence = databaseResultSet.get"isGameTypeOrSequence";
+//			gameTypeName = databaseResultSet.get"gameTypeName";
+//			gameTypeUUID = databaseResultSet.get"gameTypeUUID";
+//			gameSequenceName = databaseResultSet.get"gameSequenceName";
+//			gameSequenceUUID = databaseResultSet.get"gameSequenceUUID";
+//			difficultyName = databaseResultSet.get"difficultyName";
 //
 //
 //			if (isGameTypeOrSequence == nullptr)isGameTypeOrSequence = "";
@@ -1026,7 +1026,7 @@ public:
 //				s.totalBlocksCleared = databaseResultSet.getLong("totalBlocksCleared" + diff);
 //				s.biggestCombo = databaseResultSet.getInt("biggestCombo" + diff);
 //				s.mostBlocksClearedInOneGame = databaseResultSet.getInt("mostBlocksClearedInOneGame" + diff);
-//				s.statsUUID = databaseResultSet.getstring("statsUUID");
+//				s.statsUUID = databaseResultSet.get"statsUUID";
 //
 //				if (s.statsUUID == nullptr)s.statsUUID = "";
 //

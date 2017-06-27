@@ -132,17 +132,17 @@ void Engine::updateDebugText()
 
 	//playerSpeedText.getText = "Player speed: " + player.pixelsToMoveThisFrame;
 	//cameraSpeedText.getText = "Camera speed: " + cameraman.pixelsToMoveThisFrame;
-	zoomText->text = string("Zoom level: ") + to_string(cameraman->getZoom()) + string(" ZoomTO: ") + to_string(cameraman->ZOOMto);
+	zoomText->text = "Zoom level: " + to_string(cameraman->getZoom()) + " ZoomTO: " + to_string(cameraman->ZOOMto);
 
-	mapCamText->text = string("Map cam xy: ") + to_string(getCurrentMap()->mapCamX()) + string(",") + to_string(getCurrentMap()->mapCamY());
-	mapScreenText->text = string("Map screen xy: ") + to_string(getCurrentMap()->screenX()) + string(",") + to_string(getCurrentMap()->screenY());
+	mapCamText->text = "Map cam xy: " + to_string(getCurrentMap()->mapCamX()) + "," + to_string(getCurrentMap()->mapCamY());
+	mapScreenText->text = "Map screen xy: " + to_string(getCurrentMap()->screenX()) + "," + to_string(getCurrentMap()->screenY());
 
-	mapSizeText->text = string("Map: ") + string(getCurrentMap()->getName()) + string(" | Size : ") + to_string(getCurrentMap()->getWidthPixelsHQ()) + string(" x ") + to_string(getCurrentMap()->getHeightPixelsHQ()) + string(" PixelsHQ | ") + to_string(getCurrentMap()->getWidthTiles1X()) + string(" x ") + to_string(getCurrentMap()->getHeightTiles1X()) + string(" Tiles 1X ");
+	mapSizeText->text = "Map: " + string(getCurrentMap()->getName()) + " | Size : " + to_string(getCurrentMap()->getWidthPixelsHQ()) + " x " + to_string(getCurrentMap()->getHeightPixelsHQ()) + " PixelsHQ | " + to_string(getCurrentMap()->getWidthTiles1X()) + " x " + to_string(getCurrentMap()->getHeightTiles1X()) + " Tiles 1X ";
 
-	resolutionText->text = string("Window res: ") + to_string(GLUtils::getViewportWidth()) + string(" x ") + to_string(GLUtils::getViewportHeight()) + string(" (") + to_string((int)(GLUtils::getViewportWidth()) / 2 / cameraman->getZoom()) + string(" x ") + to_string((int)(GLUtils::getViewportHeight()) / 2 / cameraman->getZoom()) + string(")");
+	resolutionText->text = "Window res: " + to_string(GLUtils::getViewportWidth()) + " x " + to_string(GLUtils::getViewportHeight()) + " (" + to_string((int)(GLUtils::getViewportWidth()) / 2 / cameraman->getZoom()) + " x " + to_string((int)(GLUtils::getViewportHeight()) / 2 / cameraman->getZoom()) + ")";
 
-	textText->text = string("Text: ") + textManager->currentText;
-	textOptionText->text = string("Text option: ") + textManager->optionBuffer;
+	textText->text = "Text: " + textManager->currentText;
+	textOptionText->text = "Text option: " + textManager->optionBuffer;
 
 
 }

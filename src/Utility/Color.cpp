@@ -19,12 +19,12 @@ ArrayList<BobColor*> BobColor::colors;
 BobColor* BobColor::clear = new BobColor(0, 0, 0, 0);
 BobColor* BobColor::transparent = clear;
 BobColor* BobColor::black = new BobColor(0, 0, 0);
-BobColor* BobColor::darkerGray = new BobColor(0.2f, 0.2f, 0.2f);
-BobColor* BobColor::darkGray = new BobColor(0.35f, 0.35f, 0.35f);
-BobColor* BobColor::gray = new BobColor(0.5f, 0.5f, 0.5f);
-BobColor* BobColor::lightGray = new BobColor(0.65f, 0.65f, 0.65f);
-BobColor* BobColor::lighterGray = new BobColor(0.8f, 0.8f, 0.8f);
-BobColor* BobColor::white = new BobColor(1.0f, 1.0f, 1.0f);
+BobColor* BobColor::darkerGray = new BobColor(0.2f * 255, 0.2f * 255, 0.2f * 255);
+BobColor* BobColor::darkGray = new BobColor(0.35f * 255, 0.35f * 255, 0.35f * 255);
+BobColor* BobColor::gray = new BobColor(0.5f * 255, 0.5f * 255, 0.5f * 255);
+BobColor* BobColor::lightGray = new BobColor(0.65f * 255, 0.65f * 255, 0.65f * 255);
+BobColor* BobColor::lighterGray = new BobColor(0.8f * 255, 0.8f * 255, 0.8f * 255);
+BobColor* BobColor::white = new BobColor(1.0f*255, 1.0f * 255, 1.0f * 255);
 
 BobColor* BobColor::cyan = new BobColor(0, 255, 255);
 BobColor* BobColor::lightCyan = new BobColor(0, 255, 255); //cyan->lighter();

@@ -37,7 +37,7 @@ void Wallet::update()
 		lastMoney = money;
 
 		//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
-		moneyString = string("") + to_string(money);
+		moneyString = "" + to_string(money);
 		if (moneyString.find('.') != -1)
 		{
 			if (moneyString.find('.') < (moneyString.length() - 1) - 2)
@@ -50,21 +50,21 @@ void Wallet::update()
 				{
 					if (moneyString.find('.') == (moneyString.length() - 1) - 0)
 					{
-						moneyString = moneyString + string("00");
+						moneyString = moneyString + "00";
 					}
 					else if (moneyString.find('.') == (moneyString.length() - 1) - 1)
 					{
-						moneyString = moneyString + string("0");
+						moneyString = moneyString + "0";
 					}
 				}
 			}
 		}
 		else
 		{
-			moneyString = moneyString + string(".0f0");
+			moneyString = moneyString + ".0f0";
 		}
 
-		moneyString = string(" $") + moneyString + string(" ");
+		moneyString = " $" + moneyString + " ";
 
 
 		// getStatusBar()->moneyCaption::updateCaption(moneyString);

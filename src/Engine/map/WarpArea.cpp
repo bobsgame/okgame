@@ -54,7 +54,7 @@ void WarpArea::enter()
 
 	//go through mapMan().doorList and find door.mapAsset=destinationMapAsset and door.entityNameIdentifier=getDestinationDoorName, get arrival x and arrival y
 
-	if (destinationTYPEIDString() == "" || destinationTYPEIDString().length() == 0 || destinationTYPEIDString() == string("AREA.") + to_string(getID()))
+	if (destinationTYPEIDString() == "" || destinationTYPEIDString().length() == 0 || destinationTYPEIDString() == "AREA." + to_string(getID()))
 	{
 		return;
 	}
@@ -114,14 +114,14 @@ void WarpArea::renderDebugInfo()
 	GLUtils::drawOutlinedString(getName(), x, y - 36, BobColor::white);
 
 
-	GLUtils::drawOutlinedString(string("getDestinationTYPEIDString: ") + destinationTYPEIDString(), x, y - 27, new BobColor(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y - 27, new BobColor(200, 0, 255));
 
-	if (destinationTYPEIDString() == string("AREA.") + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self") //if it doesn't have a destination set, mark it as problematic
+	if (destinationTYPEIDString() == "AREA." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self") //if it doesn't have a destination set, mark it as problematic
 	{
 		GLUtils::drawOutlinedString("WarpArea: Has no destination!", x, y - 18, BobColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString(string("WarpArea: Goes to Map.Name: ") + getDestinationMapName() + string(".") + getDestinationWarpAreaName(), x, y - 9, new BobColor(200, 0, 255, 255));
+	GLUtils::drawOutlinedString("WarpArea: Goes to Map.Name: " + getDestinationMapName() + "." + getDestinationWarpAreaName(), x, y - 9, new BobColor(200, 0, 255, 255));
 
 
 	Area::renderDebugInfo();

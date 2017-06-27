@@ -69,7 +69,7 @@ StatusPanel::StatusPanel()
 	//   //--------
 	//
 	//
-	//   string accountToolTip = string("Support \"bob\" with a BobPass for a one-time price of $12 a year.\n") + string("\n") + string("   - Avatar Vanity Plate* (Make everyone else jealous- the spice of life!)\n") + string("   - More Friends* - (Make my servers explode!)\n") + string("   - Forum Membership* - (Come and spew hatred where I could read it and ruin my day!)\n") + string("   - Bug Reports* - (See how much crap I have to fix! Pay to do work for me!)\n") + string("   - Beta Minigames* - (Play em' before they work!)\n") + string("   - Make A Custom Avatar - Coming Soon!\n") + string("   - Design And Script Your House - Coming Soon!\n") + string("   - Whatever else I come up with!\n") + string("\n") + string("Plus, I'll think you're really cool, and my intense psychic energy will \n") + string("resonate in the collective subconscious, improving your life telepathically!**\n") + string("\n") + string("\n") + string("*Features will be rolled out shortly!\n") + string("**Results may vary.");
+	//   string accountToolTip = string("Support \"bob\" with a BobPass for a one-time price of $12 a year.\n") + "\n" + "   - Avatar Vanity Plate* (Make everyone else jealous- the spice of life!)\n" + "   - More Friends* - (Make my servers explode!)\n" + "   - Forum Membership* - (Come and spew hatred where I could read it and ruin my day!)\n" + "   - Bug Reports* - (See how much crap I have to fix! Pay to do work for me!)\n" + "   - Beta Minigames* - (Play em' before they work!)\n" + "   - Make A Custom Avatar - Coming Soon!\n" + "   - Design And Script Your House - Coming Soon!\n" + "   - Whatever else I come up with!\n" + "\n" + "Plus, I'll think you're really cool, and my intense psychic energy will \n" + "resonate in the collective subconscious, improving your life telepathically!**\n" + "\n" + "\n" + "*Features will be rolled out shortly!\n" + "**Results may vary.";
 	//   //"   - Bonus BobCoin$ Added To Your Account (Why the heck not!)\n" +
 	//   accountTypeDescriptionLabel = new Label("Account Type: ");
 	//   accountTypeDescriptionLabel->setCanAcceptKeyboardFocus(false);
@@ -701,7 +701,7 @@ void StatusPanel::doGoPremiumButton()
 	//      URL* url = nullptr;
 	//      try
 	//      {
-	//         url = new URL(string("http://www.bobsgame.com/buyBobPass.php?u=") + getGameSave()->userID);
+	//         url = new URL("http://www.bobsgame.com/buyBobPass.php?u=" + getGameSave()->userID);
 	//      }
 	//      catch (MalformedURLException e)
 	//      {
@@ -715,13 +715,13 @@ void StatusPanel::doGoPremiumButton()
 	//      try
 	//      {
 	//         //open browser window, we can't get it with JS as a desktop client so we need to redirect to PHP or something which stores it in SQL
-	//         string url = string("http://www.bobsgame.com/buyBobPass.php?u=") + getGameSave()->userID;
+	//         string url = "http://www.bobsgame.com/buyBobPass.php?u=" + getGameSave()->userID;
 	//
 	//         java::awt::Desktop::getDesktop().browse(java::net::URI::create(url));
 	//      }
 	//      catch (java::io::IOException e)
 	//      {
-	//         log.error(string("Could not open browser: ") + e->getMessage());
+	//         log.error("Could not open browser: " + e->getMessage());
 	//      }
 	//   }
 }
@@ -737,7 +737,7 @@ void StatusPanel::doAddMoneyButton()
 	//      URL* url = nullptr;
 	//      try
 	//      {
-	//         url = new URL(string("http://www.bobsgame.com/buyBobCoins.php?u=") + getGameSave()->userID);
+	//         url = new URL("http://www.bobsgame.com/buyBobCoins.php?u=" + getGameSave()->userID);
 	//      }
 	//      catch (MalformedURLException e)
 	//      {
@@ -751,13 +751,13 @@ void StatusPanel::doAddMoneyButton()
 	//      try
 	//      {
 	//         //open browser window, we can't get it with JS as a desktop client so we need to redirect to PHP or something which stores it in SQL
-	//         string url = string("http://www.bobsgame.com/buyBobCoins.php?u=") + getGameSave()->userID;
+	//         string url = "http://www.bobsgame.com/buyBobCoins.php?u=" + getGameSave()->userID;
 	//
 	//         java::awt::Desktop::getDesktop().browse(java::net::URI::create(url));
 	//      }
 	//      catch (java::io::IOException e)
 	//      {
-	//         log.error(string("Could not open browser: ") + e->getMessage());
+	//         log.error("Could not open browser: " + e->getMessage());
 	//      }
 	//   }
 }
@@ -828,45 +828,45 @@ void StatusPanel::setVisible(bool b)
 	//
 	//
 	//      //update labels
-	//      moneyLabel->setText(string("") + moneyString);
-	//      accountTypeLabel->setText(string("") + accountTypeString);
+	//      moneyLabel->setText("" + moneyString);
+	//      accountTypeLabel->setText("" + accountTypeString);
 	//
-	//      characterNameLabel->setText(string("") + getGameSave()->characterName);
-	//      emailAddressLabel->setText(string("") + getGameSave()->emailAddress);
+	//      characterNameLabel->setText("" + getGameSave()->characterName);
+	//      emailAddressLabel->setText("" + getGameSave()->emailAddress);
 	//
-	//      accountCreatedTimeLabel->setText(string("") + accountCreatedTimeString);
-	//      lastLoginTimeLabel->setText(string("") + lastLoginTimeString);
-	//      timesLoggedInLabel->setText(string("") + getGameSave()->timesLoggedIn);
-	//      lastIPLabel->setText(string("") + getGameSave()->lastIP);
+	//      accountCreatedTimeLabel->setText("" + accountCreatedTimeString);
+	//      lastLoginTimeLabel->setText("" + lastLoginTimeString);
+	//      timesLoggedInLabel->setText("" + getGameSave()->timesLoggedIn);
+	//      lastIPLabel->setText("" + getGameSave()->lastIP);
 	//      //realNameLabel.setText(""+getGameSave()->realName);
 	//      //birthdayTimeLabel.setText(""+birthdayString);
-	//      postalCodeLabel->setText(string("") + getGameSave()->postalCode);
-	//      countryNameLabel->setText(string("") + getGameSave()->countryName);
-	//      isoCountryCodeLabel->setText(string("") + getGameSave()->isoCountryCode);
-	//      placeNameLabel->setText(string("") + getGameSave()->placeName);
-	//      stateNameLabel->setText(string("") + getGameSave()->stateName);
-	//      latLabel->setText(string("") + getGameSave()->lat);
-	//      lonLabel->setText(string("") + getGameSave()->lon);
-	//      timeZoneLabel->setText(string("") + to_string(Main::mainObject->timeZoneGMTOffset));
+	//      postalCodeLabel->setText("" + getGameSave()->postalCode);
+	//      countryNameLabel->setText("" + getGameSave()->countryName);
+	//      isoCountryCodeLabel->setText("" + getGameSave()->isoCountryCode);
+	//      placeNameLabel->setText("" + getGameSave()->placeName);
+	//      stateNameLabel->setText("" + getGameSave()->stateName);
+	//      latLabel->setText("" + getGameSave()->lat);
+	//      lonLabel->setText("" + getGameSave()->lon);
+	//      timeZoneLabel->setText("" + to_string(Main::mainObject->timeZoneGMTOffset));
 	//
-	//      postalCodeLabel->setText(string("") + getGameSave()->postalCode);
-	//      stateNameLabel->setText(string("") + getGameSave()->stateName);
-	//      countryNameLabel->setText(string("") + getGameSave()->countryName);
+	//      postalCodeLabel->setText("" + getGameSave()->postalCode);
+	//      stateNameLabel->setText("" + getGameSave()->stateName);
+	//      countryNameLabel->setText("" + getGameSave()->countryName);
 	//
 	//
 	//      if (getGameSave()->facebookID.length() > 0)
 	//      {
 	//         facebookDialogLayout->setVisible(true);
 	//
-	//         facebookEmailLabel->setText(string("") + getGameSave()->facebookEmail);
-	//         facebookBirthdayLabel->setText(string("") + getGameSave()->facebookBirthday);
-	//         facebookFirstNameLabel->setText(string("") + getGameSave()->facebookFirstName);
-	//         facebookLastNameLabel->setText(string("") + getGameSave()->facebookLastName);
-	//         facebookGenderLabel->setText(string("") + getGameSave()->facebookGender);
-	//         facebookLocaleLabel->setText(string("") + getGameSave()->facebookLocale);
-	//         facebookTimeZoneLabel->setText(string("") + getGameSave()->facebookTimeZone);
-	//         facebookUsernameLabel->setText(string("") + getGameSave()->facebookUsername);
-	//         facebookWebsiteLabel->setText(string("") + getGameSave()->facebookWebsite);
+	//         facebookEmailLabel->setText("" + getGameSave()->facebookEmail);
+	//         facebookBirthdayLabel->setText("" + getGameSave()->facebookBirthday);
+	//         facebookFirstNameLabel->setText("" + getGameSave()->facebookFirstName);
+	//         facebookLastNameLabel->setText("" + getGameSave()->facebookLastName);
+	//         facebookGenderLabel->setText("" + getGameSave()->facebookGender);
+	//         facebookLocaleLabel->setText("" + getGameSave()->facebookLocale);
+	//         facebookTimeZoneLabel->setText("" + getGameSave()->facebookTimeZone);
+	//         facebookUsernameLabel->setText("" + getGameSave()->facebookUsername);
+	//         facebookWebsiteLabel->setText("" + getGameSave()->facebookWebsite);
 	//      }
 	//      else
 	//      {

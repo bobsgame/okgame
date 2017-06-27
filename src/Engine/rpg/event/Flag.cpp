@@ -24,7 +24,7 @@ Flag::Flag(Engine* g, int id)
 	{
 		if (getEventManager()->flagList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Flag already exists:") + data->getName());
+			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
@@ -46,7 +46,7 @@ Flag::Flag(Engine* g, FlagData* data)
 	{
 		if (getEventManager()->flagList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Flag already exists:") + data->getName());
+			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
@@ -101,11 +101,11 @@ void Flag::setValue_S(bool b)
 
 	if (b == true)
 	{
-		getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("flagsSet:`") + to_string(getID()) + string(":true:") + to_string(timeSet) + string("`"));
+		getServerConnection()->addQueuedGameSaveUpdateRequest_S("flagsSet:`" + to_string(getID()) + ":true:" + to_string(timeSet) + "`");
 	}
 	if (b == false)
 	{
-		getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("flagsSet:`") + to_string(getID()) + string(":false:") + to_string(timeSet) + string("`"));
+		getServerConnection()->addQueuedGameSaveUpdateRequest_S("flagsSet:`" + to_string(getID()) + ":false:" + to_string(timeSet) + "`");
 	}
 }
 

@@ -376,7 +376,7 @@ string SpriteData::initFromString(string t)
 
 string SpriteData::getTYPEIDString()
 { //===============================================================================================
-	return string("SPRITE.") + to_string(getID());
+	return "SPRITE." + to_string(getID());
 }
 
 string SpriteData::getDisplayName()

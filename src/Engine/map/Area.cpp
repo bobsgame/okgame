@@ -519,7 +519,7 @@ void Area::renderDebugInfo()
 	//if(isAnAction)GL.drawOutlinedString("Is An Action", x, y+(++strings*9),Color.red);
 	if (getEventID() != -1)
 	{
-		GLUtils::drawOutlinedString(string("Event ID: ") + to_string(getEventID()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Event ID: " + to_string(getEventID()), x, y + (++strings * 9), BobColor::white);
 	}
 	if (waitHereTicks() == -1)
 	{
@@ -527,11 +527,11 @@ void Area::renderDebugInfo()
 	}
 	if (waitHereTicks() > 0 && randomWaitTime() == false)
 	{
-		GLUtils::drawOutlinedString(string("Wait ") + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
+		GLUtils::drawOutlinedString("Wait " + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
 	}
 	if (waitHereTicks() > 0 && randomWaitTime() == true)
 	{
-		GLUtils::drawOutlinedString(string("Wait Random < ") + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
+		GLUtils::drawOutlinedString("Wait Random < " + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
 	}
 	if (onlyOneAllowed())
 	{
@@ -564,12 +564,12 @@ void Area::renderDebugInfo()
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString(string("Random Spawn Point | Chance: ") + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString(string("Spawn Delay: ") + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
 	}
 
 
@@ -578,25 +578,25 @@ void Area::renderDebugInfo()
 		string allowedTypes = "";
 		if (randomSpawnKids())
 		{
-			allowedTypes = allowedTypes + string(" Kids");
+			allowedTypes = allowedTypes + " Kids";
 		}
 		if (randomSpawnAdults())
 		{
-			allowedTypes = allowedTypes + string(" Adults");
+			allowedTypes = allowedTypes + " Adults";
 		}
 		if (randomSpawnMales())
 		{
-			allowedTypes = allowedTypes + string(" Males");
+			allowedTypes = allowedTypes + " Males";
 		}
 		if (randomSpawnFemales())
 		{
-			allowedTypes = allowedTypes + string(" Females");
+			allowedTypes = allowedTypes + " Females";
 		}
 		if (randomSpawnCars())
 		{
-			allowedTypes = allowedTypes + string(" Cars");
+			allowedTypes = allowedTypes + " Cars";
 		}
-		GLUtils::drawOutlinedString(string("Spawn Types: ") + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
 	}
 	if (randomNPCStayHere())
 	{
@@ -604,7 +604,7 @@ void Area::renderDebugInfo()
 	}
 	if (randomSpawnOnlyTryOnce())
 	{
-		GLUtils::drawOutlinedString(string("Random Only Try Once: ") + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Random Only Try Once: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::white);
 	}
 	if (randomSpawnOnlyOffscreen())
 	{

@@ -32,7 +32,7 @@ void GameDataLoader::loadGameData()
 	//   try
 	//   {
 	//      //stringList = IOUtils.readLines(gameDataLoader.getClass().getClassLoader().getResourceAsStream("gameData"));
-	//      stringList = IOUtils::readLines(Utils::getResourceAsStream(Cache::cacheDir + string("gameData")));
+	//      stringList = IOUtils::readLines(Utils::getResourceAsStream(Cache::cacheDir + "gameData"));
 	//   }
 	//   catch (IOException e)
 	//   {
@@ -94,14 +94,14 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug(string("Loaded Sprite: ") + data->name());
+	//                        log.debug("Loaded Sprite: " + data->name());
 	//                     }
 	//                     for (int n = 0; n < data->getAnimationList()->size(); n++)
 	//                     {
 	//                        SpriteAnimationSequence* a = data->getAnimationList()->get(n);
 	//                        if (debug)
 	//                        {
-	//                           log.debug(string("Loaded Animation: ") + a->frameSequenceName);
+	//                           log.debug("Loaded Animation: " + a->frameSequenceName);
 	//                        }
 	//                     }
 	//
@@ -140,7 +140,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug(string("Loaded Map: ") + data->name());
+	//                        log.debug("Loaded Map: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another mapData
@@ -167,7 +167,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug(string("Loaded Sound: ") + data->name());
+	//                        log.debug("Loaded Sound: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another soundData
@@ -195,7 +195,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug(string("Loaded Music: ") + data->name());
+	//                        log.debug("Loaded Music: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another soundData

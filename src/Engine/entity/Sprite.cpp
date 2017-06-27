@@ -516,11 +516,11 @@ void Sprite::loadTextures()
 			BobFile* textureFile = nullptr;
 			if (useHQ2X)
 			{
-				textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
+				textureFile = new BobFile(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5() + "s");
 			}
 			else
 			{
-				textureFile = new BobFile(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
+				textureFile = new BobFile(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5() + "s");
 			}
 
 			if (textureFile->exists())
@@ -559,11 +559,11 @@ void Sprite::loadTextures()
 			{
 				if (useHQ2X == true)
 				{
-					texture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5());
+					texture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5());
 				}
 				else
 				{
-					texture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5());
+					texture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5());
 				}
 			}
 
@@ -572,11 +572,11 @@ void Sprite::loadTextures()
 			{
 				if (useHQ2X)
 				{
-					shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"));
+					shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5() + "s");
 				}
 				else
 				{
-					shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"));
+					shadowTexture = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5() + "s");
 				}
 			}
 			else
@@ -599,17 +599,17 @@ void Sprite::loadTextures()
 
 				if (indexDataIntArray == nullptr)
 				{
-					indexDataIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getDataMD5());
+					indexDataIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getDataMD5());
 				}
 				if (paletteRGBByteArray == nullptr)
 				{
-					paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(string("") + getPaletteMD5());
+					paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist("" + getPaletteMD5());
 				}
 
 
-				FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5());
-				FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/");
-				FileUtils::makeDir(FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/");
+				FileUtils::makeDir(FileUtils::cacheDir + "_" + getDataMD5());
+				FileUtils::makeDir(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/");
+				FileUtils::makeDir(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/");
 
 
 				//if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
@@ -1042,13 +1042,13 @@ void Sprite::createSpriteTexturePNG_S()
 		//---------------------------
 		//save to png
 		//---------------------------
-		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5(), hq2xSpriteBufferedImage);
+		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5(), hq2xSpriteBufferedImage);
 
 		delete hq2xSpriteBufferedImage;
 	}
 	else
 	{
-		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5(), spriteBufferedImage);
+		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5(), spriteBufferedImage);
 	}
 }
 
@@ -1133,7 +1133,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 	    //save to png
 	    //---------------------------
 	
-	    FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("2x") + "/" + getDataMD5() + string("s"), hq2xShadowBufferedImage);
+	    FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5() + "s", hq2xShadowBufferedImage);
 	
 	    //hq2xShadowBufferedImage.flush();
 	    //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
@@ -1141,7 +1141,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 	}
 	else
 	{
-	    FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getDataMD5() + "/" + string("1x") + "/" + getDataMD5() + string("s"), spriteBufferedImage);
+	    FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5() + "s", spriteBufferedImage);
 	}
 }
 
@@ -1187,7 +1187,7 @@ SpriteAnimationSequence* Sprite::getFirstAnimation()
 	else
 	{
 		getAnimationList()->add(new SpriteAnimationSequence("Default", 0, 0, 0, 0, 0));
-		log.warn(string("First animation sequence not found in SpriteAsset: ") + getName());
+		log.warn("First animation sequence not found in SpriteAsset: " + getName());
 	}
 
 	return getAnimationList()->get(0);

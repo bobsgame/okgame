@@ -328,11 +328,11 @@ void Cameraman::update()
 	float currentSpeedY = (float)(Easing::easeOutQuintic(distY, snapSpeedY, maxSpeed, maxDistY));
 
 
-	currentSpeedXText->text = string("Cam Speed X: ") + to_string(floor(currentSpeedX * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
-	currentSpeedYText->text = string("Cam Speed Y: ") + to_string(floor(currentSpeedY * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
+	currentSpeedXText->text = "Cam Speed X: " + to_string(floor(currentSpeedX * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
+	currentSpeedYText->text = "Cam Speed Y: " + to_string(floor(currentSpeedY * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
 
-	targetSpeedXText->text = string("Player Snap Speed X: ") + to_string(floor(snapSpeedX * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
-	targetSpeedYText->text = string("Player Snap Speed Y: ") + to_string(floor(snapSpeedY * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
+	targetSpeedXText->text = "Player Snap Speed X: " + to_string(floor(snapSpeedX * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
+	targetSpeedYText->text = "Player Snap Speed Y: " + to_string(floor(snapSpeedY * getEngine()->engineTicksPassed() * 0.01f * 1000) / 1000);
 
 
 	float pixelsToMoveX = currentSpeedX * getEngine()->engineTicksPassed() * 0.01f; //currentSpeed*pixelsToMoveThisFrame;//Game().ticksPassed()*0.2f*((float)Math.pow(2.0f, dist));

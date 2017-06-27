@@ -303,11 +303,11 @@ void GLUtils::initGL(char* windowName)
 	char* shaderVersionString = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
 	char* extensionsString = (char*)glGetString(GL_EXTENSIONS);
 
-	if (vendorString !=NULL)log.info(string("GL vendor: ") + string(vendorString));
-	if (versionString != NULL)log.info(string("GL version: ") + string(versionString));
-	if (rendererString != NULL)log.info(string("Renderer: ") + string(rendererString));
-	if (shaderVersionString != NULL)log.info(string("Shader version: ") + string(shaderVersionString));
-	if (extensionsString != NULL)log.info(string("Extensions: ") + string(extensionsString));
+	if (vendorString !=NULL)log.info("GL vendor: " + string(vendorString));
+	if (versionString != NULL)log.info("GL version: " + string(versionString));
+	if (rendererString != NULL)log.info("Renderer: " + string(rendererString));
+	if (shaderVersionString != NULL)log.info("Shader version: " + string(shaderVersionString));
+	if (extensionsString != NULL)log.info("Extensions: " + string(extensionsString));
 
 	int redBits;
 	int greenBits;
@@ -813,7 +813,7 @@ void GLUtils::initGL(char* windowName)
 		log.error("Could not parse glVersionMajor in initGL");
 	}
 
-	log.info(string("glVersionMajor:") + to_string(glVersionMajor));
+	log.info("glVersionMajor:" + to_string(glVersionMajor));
 
 	if (glVersionMajor < 2)
 	{
@@ -843,17 +843,17 @@ void GLUtils::initGL(char* windowName)
 		//			boolean extensionsStringHasNVVertexProgram3 = glExtensions.contains("GL_NV_vertex_program3");
 		//			boolean extensionsStringHasNVGPUProgram4 = glExtensions.contains("GL_NV_gpu_program4");
 
-		log.info(string("Shader version: ") + string((char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
+		log.info("Shader version: " + string((char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
 
-		log.info(string("hasARBShadingLanguage100 (GLSL 1.00):") + to_string(hasARBShadingLanguage100));
-		log.info(string("hasARBFragmentShader (GLSL 1.00):") + to_string(hasARBFragmentShader));
-		log.info(string("hasARBVertexShader (GLSL 1.00):") + to_string(hasARBVertexShader));
-		log.info(string("hasARBShaderObjects (GLSL 1.00):") + to_string(hasARBShaderObjects));
-		log.info(string("shadingVersionExists (GLSL 1.051):") + to_string((string((char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))) != ("0"))));
+		log.info("hasARBShadingLanguage100 (GLSL 1.00):" + to_string(hasARBShadingLanguage100));
+		log.info("hasARBFragmentShader (GLSL 1.00):" + to_string(hasARBFragmentShader));
+		log.info("hasARBVertexShader (GLSL 1.00):" + to_string(hasARBVertexShader));
+		log.info("hasARBShaderObjects (GLSL 1.00):" + to_string(hasARBShaderObjects));
+		log.info("shadingVersionExists (GLSL 1.051):" + to_string((string((char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))) != ("0"))));
 
-		log.info(string("hasARBFragmentProgram (SM 2):") + to_string(hasARBFragmentProgram));
-		log.info(string("hasNVVertexProgram3 (SM 3):") + to_string(hasNVVertexProgram3));
-		log.info(string("hasNVGPUProgram4 (SM 4):") + to_string(hasNVGPUProgram4));
+		log.info("hasARBFragmentProgram (SM 2):" + to_string(hasARBFragmentProgram));
+		log.info("hasNVVertexProgram3 (SM 3):" + to_string(hasNVVertexProgram3));
+		log.info("hasNVGPUProgram4 (SM 4):" + to_string(hasNVGPUProgram4));
 		//			log.info("extensionsStringHasARBShadingLanguage:"+extensionsStringHasARBShadingLanguage);
 		//			log.info("extensionsStringHasARBFragmentShader:"+extensionsStringHasARBFragmentShader);
 		//			log.info("extensionsStringHasARBVertexShader:"+extensionsStringHasARBVertexShader);
@@ -910,13 +910,13 @@ void GLUtils::initGL(char* windowName)
 			//log.debug("makeShader bg bgShaders size "+to_string(bgShaders.size()));
 			for (int i = 0; i < bgShaderCount; i++)
 			{
-				string name = to_string(count) + string(".frag");
+				string name = to_string(count) + ".frag";
 				if (count < 10)
 				{
-					name = string("0") + name;
+					name = "0" + name;
 				}
 
-				if (GLUtils::makeShader(name, bgShaders.get(i)->value(), "data/shaders/texCoord.vert", string("data/shaders/bg/") + name) == false)
+				if (GLUtils::makeShader(name, bgShaders.get(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
 				{
 					log.debug("Could not make bg shader "+name);
 					bgShaderCount--;
@@ -1236,7 +1236,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	if (targetDisplayMode == nullptr)
 	{
-		log.warn(string("Could not find video mode : ") + to_string(width) + string("x") + to_string(height) + string(" fullscreen: ") + StringConverterHelper::toString(fullscreen));
+		log.warn("Could not find video mode : " + to_string(width) + "x" + to_string(height) + " fullscreen: " + StringConverterHelper::toString(fullscreen));
 		return;
 	}
 
@@ -1280,7 +1280,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 	//	}
 	//	catch (exception e)//LWJGLException e)
 	//	{
-	//		log.warn(string("Could not set video mode: ") + to_string(width) + string("x") + to_string(height) + string(" fullscreen: ") + StringConverterHelper::toString(fullscreen));
+	//		log.warn("Could not set video mode: " + to_string(width) + "x" + to_string(height) + " fullscreen: " + StringConverterHelper::toString(fullscreen));
 	//	}
 }
 
@@ -1481,8 +1481,8 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 	}
 	catch (exception& e)
 	{
-		log.error(string("Could not read code: ") + filename);
-		log.error(string("Standard exception: ") + e.what());
+		log.error("Could not read code: " + filename);
+		log.error("Standard exception: " + string(e.what()));
 		return 0;
 	}
 
@@ -1518,7 +1518,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 				{
 					out = out.substr(0, out.length() - 1); //remove extra newline
 				}
-				log.warn(string("ShaderInfoLogARB: ") + out);
+				log.warn("ShaderInfoLogARB: " + out);
 			}
 
 			shader = 0;
@@ -1553,7 +1553,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 				{
 					out = out.substr(0, out.length() - 1); //remove extra newline
 				}
-				log.warn(string("ShaderInfoLog: ") + out);
+				log.warn("ShaderInfoLog: " + out);
 			}
 		
 			shader = 0;
@@ -1629,7 +1629,7 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 				{
 					out = out.substr(0, out.length() - 1); //remove extra newline
 				}
-				out = (string("ProgramInfoLog: ") + out);
+				out = ("ProgramInfoLog: " + out);
 			}
 		}
 		else
@@ -1649,11 +1649,11 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 				{
 					out = out.substr(0, out.length() - 1); //remove extra newline
 				}
-				out = (string("ProgramInfoLog: ") + out);
+				out = ("ProgramInfoLog: " + out);
 			}
 		}
 
-		//log.info(name + string(" status: ") + out);
+		//log.info(name + " status: " + out);
 		string lower = out;
 		transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
 
@@ -1661,7 +1661,7 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 //			lower.find("warning") != string::npos
 //			) //startsWith("Validation successful")==false && String::startsWith(status,"Validation warning! - Sampler")==false)
 //		{
-//			log.warn(name + string(" status: ") + out);
+//			log.warn(name + " status: " + out);
 //			return true;
 //		}
 //		else
@@ -1671,7 +1671,7 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 			lower.find("failed") != string::npos
 			)
 		{
-			log.error(name + string(" status: ") + out);
+			log.error(name + " status: " + out);
 			return false;
 		}
 		else
@@ -1681,7 +1681,7 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 	}
 	else
 	{
-		log.warn(name + string(" did not compile!"));
+		log.warn(name + " did not compile!");
 		return false;
 	}
 }

@@ -288,8 +288,13 @@ void Console::update()
 		int cx = d->x;
 		int cy = d->y;
 		if (cx == -1)cx = 0;
-		if (cy == -1)cy = 0;//-1 is a magic num for captions, dont use it
-		if (d->caption == nullptr)d->caption = Console::captionManager->newManagedCaption(cx, cy, -1, d->text, 8, d->color, BobColor::clear, RenderOrder::CONSOLE);
+		if (cy == -1)cy = 0;//-1 is a magic num for captions, dont use it  //TODO: change that so all instances
+		if (d->caption == nullptr)
+		{
+			d->caption = Console::captionManager->newManagedCaption(cx, cy, -1, d->text, 10, d->color, BobColor::clear, RenderOrder::CONSOLE);
+			d->caption->outline = true;
+			d->caption->setText(d->text, true);
+		}
 
 		if (d->caption->text != d->text)d->caption->setText(d->text, false);
 		if (d->caption->getTextColor() != d->color)d->caption->setTextColor(d->color, nullptr, BobColor::clear);
@@ -308,139 +313,34 @@ void Console::update()
 	}
 }
 
-ConsoleText* Console::error(const string& s)
+
+
+ConsoleText* Console::error(const string& s, int ticks, int x, int y, BobColor* c)
 { //=========================================================================================================================
 
-	return add(s, BobColor::red, -1, -1, -1, true);
+	if (c == nullptr)c = BobColor::red;
+	return add(s, ticks, x, y, c, true);
 }
 
-ConsoleText* Console::error(const string& s, int ticks)
+ConsoleText* Console::debug(const string& s, int ticks, int x, int y, BobColor* c)
 { //=========================================================================================================================
 
-	return add(s, BobColor::red, -1, -1, ticks, true);
-}
-
-ConsoleText* Console::error(const string& s, BobColor* c)
-{ //=========================================================================================================================
-
-	return add(s, c, -1, -1, -1, true);
-}
-
-ConsoleText* Console::error(const string& s, BobColor* c, int ticks)
-{ //=========================================================================================================================
-
-	return add(s, c, -1, -1, ticks, true);
-}
-
-ConsoleText* Console::error(const string& s, int x, int y)
-{ //=========================================================================================================================
-
-	return add(s, BobColor::red, x, y, -1, true);
-}
-
-ConsoleText* Console::error(const string& s, BobColor* c, int x, int y)
-{ //=========================================================================================================================
-
-	return add(s, c, x, y, -1, true);
-}
-
-ConsoleText* Console::debug(const string& s)
-{ //=========================================================================================================================
-
-	ConsoleText* d = add(s, nullptr, -1, -1, -1, true);
-
-	return d;
-}
-
-ConsoleText* Console::debug(const string& s, int ticks)
-{ //=========================================================================================================================
-
-	ConsoleText* d = add(s, nullptr, -1, -1, ticks, true);
-
-	return d;
-}
-
-ConsoleText* Console::debug(const string& s, BobColor* c)
-{ //=========================================================================================================================
-
-	ConsoleText* d = add(s, c, -1, -1, -1, true);
-
-	return d;
-}
-
-ConsoleText* Console::debug(const string& s, BobColor* c, int ticks)
-{ //=========================================================================================================================
-
-	ConsoleText* d = add(s, c, -1, -1, ticks, true);
-
-	return d;
-}
-
-ConsoleText* Console::debug(const string& s, int x, int y)
-{ //=========================================================================================================================
-
-	ConsoleText* d = add(s, nullptr, x, y, -1, true);
-
-	return d;
-}
-
-ConsoleText* Console::debug(const string& s, BobColor* c, int x, int y)
-{ //=========================================================================================================================
-
-	ConsoleText* d = add(s, c, x, y, -1, true);
-
-	return d;
-}
-
-ConsoleText* Console::add(const string& s)
-{ //=========================================================================================================================
-
-	return add(s, nullptr, -1, -1, -1, false);
-}
-
-ConsoleText* Console::add(const string& s, int ticks)
-{ //=========================================================================================================================
-
-	return add(s, nullptr, -1, -1, ticks, false);
+	//if (c == nullptr)c = BobColor::yellow;
+	return add(s, ticks, x, y, c, true);
 }
 
 ConsoleText* Console::add(const string& s, BobColor* c)
 { //=========================================================================================================================
-
-	return add(s, c, -1, -1, -1, false);
+	return add(s, -1, -1, -1, c);
 }
 
-ConsoleText* Console::add(const string& s, BobColor* c, int ticks)
+ConsoleText* Console::add(const string& s, int ticks, BobColor* c)
 { //=========================================================================================================================
-
-	return add(s, c, -1, -1, ticks, false);
+	return add(s, ticks, -1, -1, c);
 }
 
-ConsoleText* Console::add(const string& s, int x, int y)
-{ //=========================================================================================================================
 
-	return add(s, nullptr, x, y, -1, false);
-}
-
-ConsoleText* Console::add(const string& s, int x, int y, int ticks)
-{ //=========================================================================================================================
-
-	return add(s, nullptr, x, y, ticks, false);
-}
-
-ConsoleText* Console::add(const string& s, BobColor* c, int x, int y)
-{ //=========================================================================================================================
-
-	return add(s, c, x, y, -1, false);
-}
-
-ConsoleText* Console::add(const string& s, BobColor* c, int x, int y, int ticks)
-{ //=========================================================================================================================
-
-	return add(s, c, x, y, ticks, false);
-}
-
-ConsoleText* Console::add(const string& s, BobColor* c, int x, int y, int ticks, bool isDebug)
+ConsoleText* Console::add(const string& s, int ticks, int x, int y, BobColor* c, bool isDebug)
 { //=========================================================================================================================
 
 	ConsoleText* dt = new ConsoleText(s, c, x, y, ticks, isDebug);
@@ -507,7 +407,7 @@ void Console::render()
 				//DEBUG_draw_text((float)8, (float)GLUtils::getRealWindowHeight() - (12 * messagesCounter), dt->text, dt->color);
 
 				float x = 8;
-				float y = (float)GLUtils::getRealWindowHeight() - (12 * messagesCounter);
+				float y = (float)GLUtils::getRealWindowHeight() - (16 * messagesCounter);
 				dt->caption->screenX = x;
 				dt->caption->screenY = y;
 			}

@@ -85,7 +85,7 @@ string SoundData::initFromString(string t)
 
 string SoundData::getTYPEIDString()
 { //===============================================================================================
-	return string("SOUND.") + to_string(getID());
+	return "SOUND." + to_string(getID());
 }
 
 string SoundData::getFileName()

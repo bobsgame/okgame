@@ -506,7 +506,7 @@ Music* AudioManager::getMusicByName(const string& musicName)
 
 		if (name == clippedName)
 		{
-			log.error(string("Could not find music: ") + musicName + string(" so returned closest match: ") + name);
+			log.error("Could not find music: " + musicName + " so returned closest match: " + name);
 			return musicList->get(i);
 		}
 	}
@@ -732,7 +732,7 @@ Sound* AudioManager::getSoundByName(const string& soundName)
 
 		if (name == clippedName)
 		{
-			log.error(string("Could not find sound: ") + soundName + string(" so returned closest match: ") + name);
+			log.error("Could not find sound: " + soundName + " so returned closest match: " + name);
 			return soundList->get(i);
 		}
 	}

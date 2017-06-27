@@ -184,7 +184,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//         }
 	//         else
 	//         {
-	//            statusBarGlossValueLabel->setText(string("") + (statusBarGlossScrollbar->getValue()) + string("%"));
+	//            statusBarGlossValueLabel->setText("" + (statusBarGlossScrollbar->getValue()) + "%");
 	//         }
 	//      }
 	//   );

@@ -115,7 +115,7 @@ ControlsPanel::ControlsPanel()
 	//                  }
 	//
 	//                  int timer = 10000;
-	//                  buttonValueLabel[threadi]->setText(string("Waiting for Game Controller input: ") + to_string(timer / 1000));
+	//                  buttonValueLabel[threadi]->setText("Waiting for Game Controller input: " + to_string(timer / 1000));
 	//
 	//                  //Controllers.clearEvents();
 	//
@@ -141,7 +141,7 @@ ControlsPanel::ControlsPanel()
 	//                        return;
 	//                     }
 	//
-	//                     buttonValueLabel[threadi]->setText(string("Waiting for Game Controller input: ") + to_string(timer / 1000));
+	//                     buttonValueLabel[threadi]->setText("Waiting for Game Controller input: " + to_string(timer / 1000));
 	//
 	//
 	//                     while (Controllers->next() == true)
@@ -169,7 +169,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("Left Analog X Axis ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("Left Analog X Axis " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -203,7 +203,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("Left Analog Y Axis ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("Left Analog Y Axis " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -237,7 +237,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("Z Axis ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("Z Axis " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -271,7 +271,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("Pov X ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("Pov X " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -305,7 +305,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("Pov Y ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("Pov Y " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -339,7 +339,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("Right Analog X Axis ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("Right Analog X Axis " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -373,7 +373,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("Right Analog Y Axis ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("Right Analog Y Axis " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -407,7 +407,7 @@ ControlsPanel::ControlsPanel()
 	//                              Controllers::poll();
 	//                           }
 	//
-	//                           buttonValueLabel[threadi]->setText(string("RZ Axis ") + to_string(val));
+	//                           buttonValueLabel[threadi]->setText("RZ Axis " + to_string(val));
 	//
 	//                           if (val < 0)
 	//                           {
@@ -428,7 +428,7 @@ ControlsPanel::ControlsPanel()
 	//                        {
 	//                           if (c->isButtonPressed(i) == true)
 	//                           {
-	//                              buttonValueLabel[threadi]->setText(string("Button ") + to_string(i));
+	//                              buttonValueLabel[threadi]->setText("Button " + to_string(i));
 	//
 	//                              while (c->isButtonPressed(i) != false)
 	//                              {

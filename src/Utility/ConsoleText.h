@@ -29,7 +29,9 @@ public:
 
 	int ticks = -1;
 
-	BobColor* color = BobColor::gray;
+	BobColor* color = nullptr;
+
+	static BobColor* defaultColor;
 
 	bool isDebug = false;
 

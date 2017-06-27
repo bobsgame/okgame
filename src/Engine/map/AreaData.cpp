@@ -474,9 +474,9 @@ string AreaData::getTYPEIDString()
 
 	if (isWarpArea == true)
 	{
-		return string("AREA.") + to_string(getID());
+		return "AREA." + to_string(getID());
 	}
-	return string("AREA.") + to_string(getID());
+	return "AREA." + to_string(getID());
 }
 
 int AreaData::getMapXPixels1X()

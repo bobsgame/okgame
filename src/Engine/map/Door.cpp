@@ -186,7 +186,7 @@ void Door::update()
 								int i = Math::randLessThan(targetTYPEIDList->size());
 
 								//don't count this door
-								if (targetTYPEIDList->get(i) == string("DOOR.") + getName())
+								if (targetTYPEIDList->get(i) == "DOOR." + getName())
 								{
 									targetTYPEIDList->removeAt(i);
 									continue;
@@ -231,7 +231,7 @@ void Door::update()
 								{
 									RandomCharacter* r = new RandomCharacter(getEngine(), getMap(), (int)(arrivalXPixelsHQ() + 8) / 2, (int)(arrivalYPixelsHQ() + 8) / 2, randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), false);
 									r->currentAreaTYPEIDTarget = targetTYPEIDList->get(i);
-									r->cameFrom = string("DOOR.") + getName();
+									r->cameFrom = "DOOR." + getName();
 									targetTYPEIDList->clear();
 									open = true;
 								}
@@ -252,7 +252,7 @@ void Door::enter()
 	//if(open==false&&spriteAsset.frames>1)setDoorAnim("opening");
 
 
-	if (destinationTYPEIDString() == "" || destinationTYPEIDString().length() == 0 || destinationTYPEIDString() == string("DOOR.") + to_string(getID()))
+	if (destinationTYPEIDString() == "" || destinationTYPEIDString().length() == 0 || destinationTYPEIDString() == "DOOR." + to_string(getID()))
 	{
 		//if action held
 
@@ -398,7 +398,7 @@ void Door::renderDebugBoxes()
 				Door* door = getMap()->doorList.get(d);
 				if (door->getMap() == getMap())
 				{
-					if (getConnectionTYPEIDList()->get(i) == string("DOOR.") + door->getName())
+					if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
 					{
 						float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 						float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -460,30 +460,30 @@ void Door::renderDebugInfo()
 	int strings = -1;
 
 
-	GLUtils::drawOutlinedString(string("entityID: ") + getName(), x, y - 18, BobColor::yellow);
+	GLUtils::drawOutlinedString("entityID: " + getName(), x, y - 18, BobColor::yellow);
 
 
-	GLUtils::drawOutlinedString(string("assetName: ") + sprite->getName(), x, y - 9, BobColor::white);
+	GLUtils::drawOutlinedString("assetName: " + sprite->getName(), x, y - 9, BobColor::white);
 
 
-	GLUtils::drawOutlinedString(string("getDestinationTYPEIDString: ") + destinationTYPEIDString(), x, y + (++strings * 9), new BobColor(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y + (++strings * 9), new BobColor(200, 0, 255));
 
-	if (destinationTYPEIDString() == string("DOOR.") + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self")
+	if (destinationTYPEIDString() == "DOOR." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self")
 	{
 		GLUtils::drawOutlinedString("Has no destination!", x, y + (++strings * 9), BobColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString(string("Goes to: ") + destinationMapName() + string(".") + destinationDoorName(), x, y + (++strings * 9), new BobColor(200, 0, 255));
+	GLUtils::drawOutlinedString("Goes to: " + destinationMapName() + "." + destinationDoorName(), x, y + (++strings * 9), new BobColor(200, 0, 255));
 
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString(string("Random Spawn Point | Chance: ") + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString(string("Spawn Delay: ") + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
 	}
 
 	if (randomNPCSpawnPoint())
@@ -491,21 +491,21 @@ void Door::renderDebugInfo()
 		string allowedTypes = "";
 		if (randomSpawnKids())
 		{
-			allowedTypes = allowedTypes + string(" Kids");
+			allowedTypes = allowedTypes + " Kids";
 		}
 		if (randomSpawnAdults())
 		{
-			allowedTypes = allowedTypes + string(" Adults");
+			allowedTypes = allowedTypes + " Adults";
 		}
 		if (randomSpawnMales())
 		{
-			allowedTypes = allowedTypes + string(" Males");
+			allowedTypes = allowedTypes + " Males";
 		}
 		if (randomSpawnFemales())
 		{
-			allowedTypes = allowedTypes + string(" Females");
+			allowedTypes = allowedTypes + " Females";
 		}
-		GLUtils::drawOutlinedString(string("Spawn Types: ") + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
 	}
 
 	if (randomPointOfInterestOrExit())

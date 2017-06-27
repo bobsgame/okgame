@@ -83,7 +83,7 @@ string DialogueData::initFromString(string t)
 
 string DialogueData::getTYPEIDString()
 { //===============================================================================================
-	return string("DIALOGUE.") + to_string(getID());
+	return "DIALOGUE." + to_string(getID());
 }
 
 string DialogueData::getCaption()

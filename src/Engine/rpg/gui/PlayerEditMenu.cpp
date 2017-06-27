@@ -477,7 +477,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//   URL* url = nullptr;
 	//   try
 	//   {
-	//      url = new URL(GEOCODER_REQUEST_PREFIX_FOR_XML + string("?q=") + URLEncoder::encode(address, "UTF-8"));
+	//      url = new URL(GEOCODER_REQUEST_PREFIX_FOR_XML + "?q=" + URLEncoder::encode(address, "UTF-8"));
 	//   }
 	//   catch (MalformedURLException e1)
 	//   {
@@ -608,7 +608,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//   if (resultNodeList == nullptr)
 	//   {
 	//      //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
-	//      log.debug(string("No errormessage in Yahoo GeoCoding API (It returned nothing?)") + geocoderResultDocument->toString());
+	//      log.debug("No errormessage in Yahoo GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }
 	//
@@ -616,7 +616,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//   {
 	//      if (resultNodeList->item(i).getTextContent().equals("No error") == false)
 	//      {
-	//         log.debug(string("Error in Yahoo GeoCoding API: ") + resultNodeList->item(i).getTextContent());
+	//         log.debug("Error in Yahoo GeoCoding API: " + resultNodeList->item(i).getTextContent());
 	//         return nullptr;
 	//      }
 	//   }
@@ -773,7 +773,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//   URL* url = nullptr;
 	//   try
 	//   {
-	//      url = new URL(GEOCODER_REQUEST_PREFIX_FOR_XML + string("?address=") + URLEncoder::encode(address, "UTF-8") + string("&sensor=false"));
+	//      url = new URL(GEOCODER_REQUEST_PREFIX_FOR_XML + "?address=" + URLEncoder::encode(address, "UTF-8") + "&sensor=false");
 	//   }
 	//   catch (MalformedURLException e1)
 	//   {
@@ -895,7 +895,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//   if (resultNodeList == nullptr)
 	//   {
 	//      //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
-	//      log.debug(string("No status in Google GeoCoding API (It returned nothing?)") + geocoderResultDocument->toString());
+	//      log.debug("No status in Google GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }
 	//
@@ -903,7 +903,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//   {
 	//      if (resultNodeList->item(i).getTextContent().equals("OK") == false)
 	//      {
-	//         log.debug(string("Status Error in Google GeoCoding API: ") + resultNodeList->item(i).getTextContent());
+	//         log.debug("Status Error in Google GeoCoding API: " + resultNodeList->item(i).getTextContent());
 	//         return nullptr;
 	//      }
 	//   }
@@ -1005,7 +1005,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//   for (int i = 0; i < resultNodeList->getLength(); ++i)
 	//   {
 	//      Node* node = resultNodeList->item(i);
-	//      if ((string("lat")) == node->getNodeName())
+	//      if (("lat") == node->getNodeName())
 	//      {
 	//         try
 	//         {
@@ -1017,7 +1017,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//         }
 	//      }
 	//
-	//      if ((string("lng")) == node->getNodeName())
+	//      if (("lng") == node->getNodeName())
 	//      {
 	//         try
 	//         {
@@ -1028,7 +1028,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//            ex->printStackTrace();
 	//         }
 	//      }
-	//      if ((string("lon")) == node->getNodeName())
+	//      if (("lon") == node->getNodeName())
 	//      {
 	//         try
 	//         {
@@ -1092,8 +1092,8 @@ void PlayerEditMenu::doOKButton()
 	//         //Main.clientTCP.addQueuedGameSaveUpdateRequest_S("characterName:`"+nameEditField.getText()+"`");
 	//         //Game().gameSave.characterName = nameEditField.getText();
 	//
-	//         string characterAppearance = string("") + genderIndex + string(",") + archetypeIndex + string(",") + hairColorIndex + string(",") + skinColorIndex + string(",") + eyeColorIndex + string(",") + shirtColorIndex + string(",") + pantsColorIndex + string(",") + to_string(shoeColorIndex);
-	//         getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("characterName:`") + nameEditField->getText() + string("`") + string(",") + string("characterAppearance:`") + characterAppearance + string("`"));
+	//         string characterAppearance = "" + genderIndex + "," + archetypeIndex + "," + hairColorIndex + "," + skinColorIndex + "," + eyeColorIndex + "," + shirtColorIndex + "," + pantsColorIndex + "," + to_string(shoeColorIndex);
+	//         getServerConnection()->addQueuedGameSaveUpdateRequest_S("characterName:`" + nameEditField->getText() + "`" + "," + "characterAppearance:`" + characterAppearance + "`");
 	//         getGameSave()->characterName = nameEditField->getText();
 	//         getGameSave()->characterAppearance = characterAppearance;
 	//
@@ -1116,12 +1116,12 @@ void PlayerEditMenu::doOKButton()
 	//            string countryCode = GameSave::getCountryCodeFromCountryString(countryName);
 	//
 	//            //get locality info from google API
-	//            AddressInfo* a = queryGoogleGeocodingAPI(string("") + postalCode + string(", ") + countryName);
+	//            AddressInfo* a = queryGoogleGeocodingAPI("" + postalCode + ", " + countryName);
 	//
 	//            if (a == nullptr)
 	//            {
 	//               //try again with yahoo
-	//               a = queryYahooGeocodingAPI(string("") + postalCode + string(", ") + countryName);
+	//               a = queryYahooGeocodingAPI("" + postalCode + ", " + countryName);
 	//            }
 	//
 	//            //TODO: also try open maps?
@@ -1129,7 +1129,7 @@ void PlayerEditMenu::doOKButton()
 	//
 	//            if (a != nullptr)
 	//            {
-	//               getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("postalCode:`") + a->postalCode + string("`") + string(",") + string("countryName:`") + countryName + string("`") + string(",") + string("isoCountryCode:`") + countryCode + string("`") + string(",") + string("stateName:`") + a->stateName + string("`") + string(",") + string("placeName:`") + a->placeName + string("`") + string(",") + string("lat:`") + a->lat + string("`") + string(",") + string("lon:`") + a->lon + string("`"));
+	//               getServerConnection()->addQueuedGameSaveUpdateRequest_S("postalCode:`" + a->postalCode + "`" + "," + "countryName:`" + countryName + "`" + "," + "isoCountryCode:`" + countryCode + "`" + "," + "stateName:`" + a->stateName + "`" + "," + "placeName:`" + a->placeName + "`" + "," + "lat:`" + a->lat + "`" + "," + "lon:`" + a->lon + "`");
 	//               getGameSave()->postalCode = a->postalCode;
 	//               getGameSave()->countryName = countryName;
 	//               getGameSave()->isoCountryCode = countryCode;
@@ -1194,7 +1194,7 @@ void PlayerEditMenu::doOKButton()
 	//         if (wasValid == false)
 	//         {
 	//            statusLabel->setText(" ");
-	//            errorLabel->setText(string("Error: Zip/Postal Code could not be found.\n") + string("Are you sure it is formatted correctly? Also make sure you've selected the correct Country.\n") + string("Hint: You can also try putting your city name into the Postal Code field."));
+	//            errorLabel->setText("Error: Zip/Postal Code could not be found.\n" + "Are you sure it is formatted correctly? Also make sure you've selected the correct Country.\n" + "Hint: You can also try putting your city name into the Postal Code field.");
 	//            setButtonsVisible(true);
 	//         }
 	//         else
@@ -1258,7 +1258,7 @@ void PlayerEditMenu::linkFacebookAccount()
 	//               User* user = facebookClient->fetchObject("me", User::typeid);
 	//
 	//               string facebookID = user->getId();
-	//               log.debug(string("Facebook ID: ") + facebookID);
+	//               log.debug("Facebook ID: " + facebookID);
 	//            }
 	//            catch (exception& ex)
 	//            {
@@ -1318,7 +1318,7 @@ void PlayerEditMenu::linkFacebookAccount()
 	//               URL* url = nullptr;
 	//               try
 	//               {
-	//                  url = new URL(string("http://www.bobsgame.com/facebook.php?u=") + getGameSave()->userID);
+	//                  url = new URL("http://www.bobsgame.com/facebook.php?u=" + getGameSave()->userID);
 	//               }
 	//               catch (MalformedURLException e)
 	//               {
@@ -1350,13 +1350,13 @@ void PlayerEditMenu::linkFacebookAccount()
 	//               try
 	//               {
 	//                  //open browser window, we can't get it with JS as a desktop client so we need to redirect to PHP or something which stores it in SQL
-	//                  string url = string("http://www.bobsgame.com/facebook.php?u=") + getGameSave()->userID;
+	//                  string url = "http://www.bobsgame.com/facebook.php?u=" + getGameSave()->userID;
 	//
 	//                  java::awt::Desktop::getDesktop().browse(java::net::URI::create(url));
 	//               }
 	//               catch (IOException e)
 	//               {
-	//                  log.error(string("Could not open browser: ") + e->getMessage());
+	//                  log.error("Could not open browser: " + e->getMessage());
 	//               }
 	//
 	//

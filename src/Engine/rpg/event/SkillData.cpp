@@ -62,6 +62,6 @@ string SkillData::initFromString(string t)
 
 string SkillData::getTYPEIDString()
 { //===============================================================================================
-	return string("SKILL.") + to_string(getID());
+	return "SKILL." + to_string(getID());
 }
 

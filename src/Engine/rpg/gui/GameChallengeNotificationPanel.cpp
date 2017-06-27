@@ -33,7 +33,7 @@ GameChallengeNotificationPanel::GameChallengeNotificationPanel(FriendCharacter* 
 	//   notificationPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   notificationPanelLabel->setTheme("bigLabel");
 	//
-	//   Label* challengeTextLabel = new Label(string("") + friend->name() + string(" has challenged you to play ") + gameName);
+	//   Label* challengeTextLabel = new Label("" + friend->name() + " has challenged you to play " + gameName);
 	//   challengeTextLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   timeLeftLabel = new Label("");
@@ -149,7 +149,7 @@ void GameChallengeNotificationPanel::update()
 	//long long startTime = notificationCreatedTime;
 	//long long currentTime = System::currentHighResTimer();
 	//int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-	//timeLeftLabel->setText(string("Time Left: ") + to_string((20000 - (currentTime - notificationCreatedTime)) / 1000));
+	//timeLeftLabel->setText("Time Left: " + to_string((20000 - (currentTime - notificationCreatedTime)) / 1000));
 }
 
 void GameChallengeNotificationPanel::onScrolledUp()

@@ -96,7 +96,7 @@ void Item::getWithCaption_S()
 
 	setHaveItemValue_S(true);
 
-	string name = string("Got ") + this->getName() + string("!");
+	string name = "Got " + this->getName() + "!";
 
 	if (getPlayer() != nullptr)
 	{
@@ -116,11 +116,11 @@ void Item::setHaveItemValue_S(bool b)
 
 	//   if (b == true)
 	//   {
-	//      getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("itemsHeld:`") + getID() + string(":true:") + timeSet + string("`"));
+	//      getServerConnection()->addQueuedGameSaveUpdateRequest_S("itemsHeld:`" + getID() + ":true:" + timeSet + "`");
 	//   }
 	//   if (b == false)
 	//   {
-	//      getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("itemsHeld:`") + getID() + string(":false:") + timeSet + string("`"));
+	//      getServerConnection()->addQueuedGameSaveUpdateRequest_S("itemsHeld:`" + getID() + ":false:" + timeSet + "`");
 	//   }
 
 	haveItemValue_S = b;

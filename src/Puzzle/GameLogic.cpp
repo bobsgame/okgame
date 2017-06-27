@@ -1082,7 +1082,7 @@ void GameLogic::_processIncomingPackets()
 //	//s = s.substring(s.indexOf(":")+1);
 //
 //#ifdef _DEBUG
-//		log.error(string("incoming_Forfeit: Their Seed: ") + to_string(theirRandomSeed));
+//		log.error("incoming_Forfeit: Their Seed: " + to_string(theirRandomSeed));
 //#endif
 //	//Game them = games.get(randomSeed);
 //	//if(them==null){log.error("Could not find game with seed:" + randomSeed);return;}
@@ -1093,7 +1093,7 @@ void GameLogic::_processIncomingPackets()
 //
 //void GameLogic::sendForfeit()
 //{ //=========================================================================================================================
-//	connection->write(netCommand_FORFEIT + to_string(randomSeed) + string(":") + string("-1") + BobNet::endline);
+//	connection->write(netCommand_FORFEIT + to_string(randomSeed) + ":" + "-1" + BobNet::endline);
 //}
 
 
@@ -1698,7 +1698,7 @@ void GameLogic::handleNewChain()
 			currentCombo = 1;
 			currentChain = currentChainBlocks.size();
 
-			makeAnnouncementCaption(string("Chain: ") + to_string(currentChain));
+			makeAnnouncementCaption("Chain: " + to_string(currentChain));
 
 
 			int bonusAmount = (currentChain - chainMinimum);
@@ -1713,7 +1713,7 @@ void GameLogic::handleNewChain()
 
 			if (bonusAmount > 0)
 			{
-				makeAnnouncementCaption(string("Chain Bonus: ") + to_string(bonusAmount), BobColor::green);
+				makeAnnouncementCaption("Chain Bonus: " + to_string(bonusAmount), BobColor::green);
 				queueVSGarbage(bonusAmount);
 			}
 
@@ -1731,9 +1731,9 @@ void GameLogic::handleNewChain()
 
 			if (comboChainTotal > biggestComboChain)biggestComboChain = comboChainTotal;
 
-			makeAnnouncementCaption(string("Chain: ") + to_string(currentChain));
+			makeAnnouncementCaption("Chain: " + to_string(currentChain));
 
-			makeAnnouncementCaption(string("") + to_string(currentCombo) + string("X Combo! Total: ") + to_string(comboChainTotal), BobColor::magenta);
+			makeAnnouncementCaption("" + to_string(currentCombo) + "X Combo! Total: " + to_string(comboChainTotal), BobColor::magenta);
 
 			int bonusAmount = (currentChain - chainMinimum);
 			if (bonusAmount == 0)
@@ -1741,7 +1741,7 @@ void GameLogic::handleNewChain()
 				bonusAmount = 1;
 			}
 
-			makeAnnouncementCaption(string("Combo Bonus: ") + to_string(bonusAmount) + string(" X ") + to_string(currentCombo), BobColor::green);
+			makeAnnouncementCaption("Combo Bonus: " + to_string(bonusAmount) + " X " + to_string(currentCombo), BobColor::green);
 
 			queueVSGarbage(currentCombo);
 
@@ -1827,7 +1827,7 @@ void GameLogic::doStackRiseGame()
 		{
 			stopStackRiseTicksCounter = 0;
 		}
-		stopCounterCaptionText = string("Wait: ") + to_string(stopStackRiseTicksCounter);
+		stopCounterCaptionText = "Wait: " + to_string(stopStackRiseTicksCounter);
 		stop = true;
 	}
 
@@ -1844,7 +1844,7 @@ void GameLogic::doStackRiseGame()
 		{
 			removeFlashedChainBlocks();
 
-			stopCounterCaptionText = string("Wait: Pop ") + to_string(currentChainBlocks.size());
+			stopCounterCaptionText = "Wait: Pop " + to_string(currentChainBlocks.size());
 			stop = true;
 		}
 	}
@@ -2711,7 +2711,7 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 
 	queuedVSGarbageAmountFromOtherPlayer += amount;
 
-	makeAnnouncementCaption(string("Got VS Garbage: ") + to_string(amount));
+	makeAnnouncementCaption("Got VS Garbage: " + to_string(amount));
 
 	if (garbageBlock == nullptr)
 	{
@@ -2731,7 +2731,7 @@ void GameLogic::processQueuedGarbageSentFromOtherPlayer()
 	{
 		if (garbageWaitPieces == 0)
 		{
-			//makeAnnouncementCaption(string("Processed VS Garbage: ") + to_string(queuedGarbageAmountFromOtherPlayer));
+			//makeAnnouncementCaption("Processed VS Garbage: " + to_string(queuedGarbageAmountFromOtherPlayer));
 
 
 			int garbageMultiplier = 2;
@@ -2778,7 +2778,7 @@ void GameLogic::queueVSGarbage(int amount)
 		{
 			if (amount >= queuedVSGarbageAmountFromOtherPlayer)
 			{
-				makeAnnouncementCaption(string("Negated VS Garbage: ") + to_string(queuedVSGarbageAmountFromOtherPlayer));
+				makeAnnouncementCaption("Negated VS Garbage: " + to_string(queuedVSGarbageAmountFromOtherPlayer));
 
 				amount -= queuedVSGarbageAmountFromOtherPlayer;
 				queuedVSGarbageAmountFromOtherPlayer = 0;
@@ -2787,7 +2787,7 @@ void GameLogic::queueVSGarbage(int amount)
 			{
 				if (amount < queuedVSGarbageAmountFromOtherPlayer)
 				{
-					makeAnnouncementCaption(string("Negated VS Garbage: ") + to_string(amount));
+					makeAnnouncementCaption("Negated VS Garbage: " + to_string(amount));
 					queuedVSGarbageAmountFromOtherPlayer -= amount;
 					amount = 0;
 				}
@@ -2797,7 +2797,7 @@ void GameLogic::queueVSGarbage(int amount)
 		if (amount > 0)
 		{
 			queuedVSGarbageAmountToSend += amount;
-			makeAnnouncementCaption(string("Sent VS Garbage: ") + to_string(amount) + string(" Total: ") + to_string(queuedVSGarbageAmountToSend));
+			makeAnnouncementCaption("Sent VS Garbage: " + to_string(amount) + " Total: " + to_string(queuedVSGarbageAmountToSend));
 		}
 	}
 }
@@ -2894,7 +2894,7 @@ void GameLogic::renderQueuedGarbage()
 		garbageWaitCaption->screenY = (float)(grid->getYOnScreenNoShake() - (cellH()));
 		garbageWaitCaption->flashing = true;
 		garbageWaitCaption->flashingTicksPerFlash = 500;
-		garbageWaitCaption->setText(string("Wait: ") + to_string(garbageWaitPieces));
+		garbageWaitCaption->setText("Wait: " + to_string(garbageWaitPieces));
 
 
 		for (int i = 0; i < queuedVSGarbageAmountFromOtherPlayer; i++)
@@ -4379,15 +4379,15 @@ void GameLogic::updateCaptions()
 #ifdef _DEBUG
 	if (currentPiece != nullptr)
 	{
-		xCaption->setText(string("X: ") + to_string(currentPiece->xGrid));
-		yCaption->setText(string("Y: ") + to_string(currentPiece->yGrid));
+		xCaption->setText("X: " + to_string(currentPiece->xGrid));
+		yCaption->setText("Y: " + to_string(currentPiece->yGrid));
 
-		rotationCaption->setText(string("Rotation: ") + to_string(currentPiece->currentRotation));
+		rotationCaption->setText("Rotation: " + to_string(currentPiece->currentRotation));
 	}
 
-	blocksInGridCaption->setText(string("Blocks In Grid: ") + to_string(grid->getNumberOfFilledCells()));
-	seedCaption->setText(string("Seed: ") + to_string(randomSeed));
-	bgCaption->setText(string("Shader: ") + to_string(getBobsGame()->shaderCount));
+	blocksInGridCaption->setText("Blocks In Grid: " + to_string(grid->getNumberOfFilledCells()));
+	seedCaption->setText("Seed: " + to_string(randomSeed));
+	bgCaption->setText("Shader: " + to_string(getBobsGame()->shaderCount));
 #endif
 
 	if (stopCounterCaption != nullptr)
@@ -4414,7 +4414,7 @@ void GameLogic::updateCaptions()
 	}
 	else
 	{
-		levelCaptionText = string("Level: ") + to_string(currentLevel);
+		levelCaptionText = "Level: " + to_string(currentLevel);
 	}
 
 
@@ -4423,23 +4423,23 @@ void GameLogic::updateCaptions()
 	rulesCaption->setText("Rules: "+currentGameType->rules);
 	difficultyCaption->setText("Difficulty: "+ getCurrentDifficulty()->name);
 
-	gravityCaption->setText(string("Gravity: ") + to_string(16.7f / (float)(currentLineDropSpeedTicks)) + string("G"));//::Format("%.3f",
-	lockDelayCaption->setText(string("Lock Delay: ") + to_string(lockDelayTicksCounter));
-	lineDropTicksCaption->setText(string("Line Drop Ticks: ") + to_string(lineDropTicksCounter));
-	spawnDelayCaption->setText(string("Spawn Delay Ticks: ") + to_string(spawnDelayTicksCounter));
-	lineClearDelayCaption->setText(string("Line Clear Delay Ticks: ") + to_string(lineClearDelayTicksCounter));
+	gravityCaption->setText("Gravity: " + to_string(16.7f / (float)(currentLineDropSpeedTicks)) + "G");//::Format("%.3f",
+	lockDelayCaption->setText("Lock Delay: " + to_string(lockDelayTicksCounter));
+	lineDropTicksCaption->setText("Line Drop Ticks: " + to_string(lineDropTicksCounter));
+	spawnDelayCaption->setText("Spawn Delay Ticks: " + to_string(spawnDelayTicksCounter));
+	lineClearDelayCaption->setText("Line Clear Delay Ticks: " + to_string(lineClearDelayTicksCounter));
 
-	linesClearedThisGameCaption->setText(string("Lines This Game: ") + to_string(linesClearedThisGame));
-	blocksClearedThisGameCaption->setText(string("Blocks This Game: ") + to_string(blocksClearedThisGame));
-	piecesMadeThisGameCaption->setText(string("Pieces Made This Game: ") + to_string(piecesMadeThisGame));
+	linesClearedThisGameCaption->setText("Lines This Game: " + to_string(linesClearedThisGame));
+	blocksClearedThisGameCaption->setText("Blocks This Game: " + to_string(blocksClearedThisGame));
+	piecesMadeThisGameCaption->setText("Pieces Made This Game: " + to_string(piecesMadeThisGame));
 
-	totalLinesClearedCaption->setText(string("Lines Total: ") + to_string(linesClearedTotal));
-	totalBlocksClearedCaption->setText(string("Blocks Total: ") + to_string(blocksClearedTotal));
-	totalPiecesMadeCaption->setText(string("Pieces Made Total: ") + to_string(piecesMadeTotal));
+	totalLinesClearedCaption->setText("Lines Total: " + to_string(linesClearedTotal));
+	totalBlocksClearedCaption->setText("Blocks Total: " + to_string(blocksClearedTotal));
+	totalPiecesMadeCaption->setText("Pieces Made Total: " + to_string(piecesMadeTotal));
 
-	currentChainCaption->setText(string("Current Chain: ") + to_string(currentChain));
-	currentComboCaption->setText(string("Current Combo: ") + to_string(currentCombo));
-	comboChainTotalCaption->setText(string("Combo Chain Total: ") + to_string(comboChainTotal));
+	currentChainCaption->setText("Current Chain: " + to_string(currentChain));
+	currentComboCaption->setText("Current Combo: " + to_string(currentCombo));
+	comboChainTotalCaption->setText("Combo Chain Total: " + to_string(comboChainTotal));
 
 
 
@@ -4458,7 +4458,7 @@ void GameLogic::updateCaptions()
 	oss3 << setfill('0') << setw(2) << ((totalTicksPassed / 1000 / 60) % 60);
 	minutes = oss3.str();
 
-	totalTicksPassedCaption->setText(minutes + string(":") + seconds + string(":") + ms);
+	totalTicksPassedCaption->setText(minutes + ":" + seconds + ":" + ms);
 
 	totalTicksPassedCaption->screenX = grid->getXOnScreenNoShake() + (grid->getWidth() * blockWidth) / 2 - timeCaptionStandardizedWidth / 2;
 	totalTicksPassedCaption->screenY = playingFieldY1 - 40;// grid->screenY + grid->getHeight() * blockHeight + 20;

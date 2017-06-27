@@ -303,7 +303,7 @@ string MapData::initFromString(string t)
 
 string MapData::getTYPEIDString()
 { //===============================================================================================
-	return string("MAP.") + to_string(getID());
+	return "MAP." + to_string(getID());
 }
 
 int MapData::getWidthTiles1X()

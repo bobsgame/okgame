@@ -125,7 +125,7 @@ Caption* CaptionManager::newManagedCaption(int x, int y, int ticks, const string
 
 	if (ticks >= 0 && ticks < 100)
 	{
-		log.log(string("Caption was made with ticks: ") + to_string(ticks) + string(". Text: ") + text);
+		log.log("Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
 	Caption* c = new Caption(this->e, (float)x, (float)y, ticks, text, font, textColor, textAAColor, textBGColor, r, scale, width, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
@@ -139,7 +139,7 @@ Caption* CaptionManager::newManagedCaption(int x, int y, int ticks, const string
 
 	if (ticks >= 0 && ticks < 100)
 	{
-		log.log(string("TTF Caption was made with ticks: ") + to_string(ticks) + string(". Text: ") + text);
+		log.log("TTF Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
 	Caption* c = new Caption(this->e, (float)x, (float)y, ticks, text, fontSize, textColor, textBGColor, r, scale, entity, area);

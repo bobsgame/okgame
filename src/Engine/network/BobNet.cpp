@@ -476,10 +476,10 @@ void BobNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myP
 
 	if (_ensureSocketIsOpen() == false)return;
 
-	string s = (BobNet::STUN_Request + to_string(myUserID) + string(",") + to_string(friendUserID) + string(",") + to_string(myPort) + string(",") + BobNet::endline);
+	string s = (BobNet::STUN_Request + to_string(myUserID) + "," + to_string(friendUserID) + "," + to_string(myPort) + "," + BobNet::endline);
 
 #ifdef _DEBUG
-		log.debug(string("SEND STUN SERVER:") + s.substr(0, s.length() - BobNet::endline.length()));
+		log.debug("SEND STUN SERVER:" + s.substr(0, s.length() - BobNet::endline.length()));
 #endif
 
 	const char* buf = s.c_str();

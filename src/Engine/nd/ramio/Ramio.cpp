@@ -255,7 +255,7 @@ void Ramio::update()
 			initGame();
 		}
 
-		ramioText->text = string("GuyX: ") + to_string(guy->getX()) + string(" GuyY: ") + to_string(guy->getY()) + string(" CamX: ") + to_string(getCameraman()->getX()) + string(" CamY: ") + to_string(getCameraman()->getY());
+		ramioText->text = "GuyX: " + to_string(guy->getX()) + " GuyY: " + to_string(guy->getY()) + " CamX: " + to_string(getCameraman()->getX()) + " CamY: " + to_string(getCameraman()->getY());
 
 		updateScore();
 
@@ -269,10 +269,10 @@ void Ramio::update()
 
 		// timer
 		string timerString = "$";
-		timerString += string("") + to_string(((timer / 1000) % 10));
-		timerString += string("") + to_string(((timer / 100) % 10));
-		timerString += string("") + to_string(((timer / 10) % 10));
-		timerString += string("") + to_string((timer % 10));
+		timerString += "" + to_string(((timer / 1000) % 10));
+		timerString += "" + to_string(((timer / 100) % 10));
+		timerString += "" + to_string(((timer / 10) % 10));
+		timerString += "" + to_string((timer % 10));
 
 		if (RAMIO_timercaption == nullptr)
 		{

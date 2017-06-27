@@ -1059,7 +1059,7 @@ void Caption::parseOptions(const string& optionBuffer)
 													}
 													else
 													{
-														Console::debug(string("Unknown getText tag: ") + optionBuffer);
+														Console::debug("Unknown getText tag: " + optionBuffer);
 													}
 												}
 											}

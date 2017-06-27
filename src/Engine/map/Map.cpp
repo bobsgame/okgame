@@ -310,7 +310,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 
 	if (a == nullptr)
 	{
-		log.error(string("Could not find Area/WarpArea: getAreaOrWarpAreaByName() Name:") + name);
+		log.error("Could not find Area/WarpArea: getAreaOrWarpAreaByName() Name:" + name);
 	}
 
 
@@ -325,7 +325,7 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 
 	if (String::startsWith(typeID, "AREA.") == false)
 	{
-		typeID = string("AREA.") + typeID;
+		typeID = "AREA." + typeID;
 	}
 
 
@@ -362,7 +362,7 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 
 	if (a == nullptr)
 	{
-		log.debug(string("Could not find Area/WarpArea: getAreaOrWarpAreaByTYPEID() TypeID:") + typeID);
+		log.debug("Could not find Area/WarpArea: getAreaOrWarpAreaByTYPEID() TypeID:" + typeID);
 	}
 
 
@@ -377,7 +377,7 @@ Door* Map::getDoorByTYPEID(const string& typeID_in)
 
 	if (String::startsWith(typeID, "DOOR.") == false)
 	{
-		typeID = string("DOOR.") + typeID;
+		typeID = "DOOR." + typeID;
 	}
 
 	//doors
@@ -396,7 +396,7 @@ Door* Map::getDoorByTYPEID(const string& typeID_in)
 		}
 	}
 
-	log.error(string("Could not find Door: getDoorByTYPEID() TypeID:") + typeID);
+	log.error("Could not find Door: getDoorByTYPEID() TypeID:" + typeID);
 
 	return nullptr;
 }
@@ -429,7 +429,7 @@ Door* Map::getDoorByName(const string& name_in)
 		}
 	}
 
-	log.error(string("Could not find Door: getDoorByName(): ") + name);
+	log.error("Could not find Door: getDoorByName(): " + name);
 
 	return nullptr;
 }
@@ -448,7 +448,7 @@ MapState* Map::getMapStateByName(const string& name)
 
 
 	//we didn't find it. make a new one. throw an error.
-	log.error(string("Could not find Map State:") + name + string(". This should never happen."));
+	log.error("Could not find Map State:" + name + ". This should never happen.");
 
 	//MapState s = new MapState(-1,name);
 	//stateList.add(s);
@@ -470,7 +470,7 @@ MapState* Map::getMapStateByID(int id)
 	}
 
 
-	log.error(string("Could not find State ID:") + to_string(id) + string(" in currentMap stateList. This should never happen."));
+	log.error("Could not find State ID:" + to_string(id) + " in currentMap stateList. This should never happen.");
 	//then it should look through every map mapStateList, since state ID is guaranteed to be unique.
 
 	//MapState s = new MapState(id,"????");
@@ -830,7 +830,7 @@ void Map::updateLoadingStatus()
 
 		{
 			float percent = ((float)(maxHq2xChunkPNGThreadsCreated - hq2xChunkPNGThreadsCreated) / (float)(maxHq2xChunkPNGThreadsCreated)) * 100.0f;
-			hq2xChunkPNGThreadsDebugText->text = string("HQ2X Chunk PNG Threads: ") + to_string(maxHq2xChunkPNGThreadsCreated - hq2xChunkPNGThreadsCreated) + string(" / ") + to_string(maxHq2xChunkPNGThreadsCreated) + string(" ( ") + to_string(percent) + string(" % )");
+			hq2xChunkPNGThreadsDebugText->text = "HQ2X Chunk PNG Threads: " + to_string(maxHq2xChunkPNGThreadsCreated - hq2xChunkPNGThreadsCreated) + " / " + to_string(maxHq2xChunkPNGThreadsCreated) + " ( " + to_string(percent) + " % )";
 		}
 
 		if (hq2xChunkPNGThreadsCreated == 0)
@@ -852,7 +852,7 @@ void Map::updateLoadingStatus()
 
 		{
 			float percent = ((float)(maxChunkPNGThreadsCreated - chunkPNGThreadsCreated) / (float)(maxChunkPNGThreadsCreated)) * 100.0f;
-			chunkPNGThreadsDebugText->text = string("1X Chunk PNG Threads: ") + to_string(maxChunkPNGThreadsCreated - chunkPNGThreadsCreated) + string(" / ") + to_string(maxChunkPNGThreadsCreated) + string(" ( ") + to_string(percent) + string(" % )");
+			chunkPNGThreadsDebugText->text = "1X Chunk PNG Threads: " + to_string(maxChunkPNGThreadsCreated - chunkPNGThreadsCreated) + " / " + to_string(maxChunkPNGThreadsCreated) + " ( " + to_string(percent) + " % )";
 		}
 
 		if (chunkPNGThreadsCreated == 0)
@@ -874,7 +874,7 @@ void Map::updateLoadingStatus()
 
 		{
 			float percent = ((float)(maxLightPNGThreadsCreated - lightPNGThreadsCreated) / (float)(maxLightPNGThreadsCreated)) * 100.0f;
-			lightPNGThreadsDebugText->text = string("Light PNG Threads: ") + to_string(maxLightPNGThreadsCreated - lightPNGThreadsCreated) + string(" / ") + to_string(maxLightPNGThreadsCreated) + string(" ( ") + to_string(percent) + string(" % )");
+			lightPNGThreadsDebugText->text = "Light PNG Threads: " + to_string(maxLightPNGThreadsCreated - lightPNGThreadsCreated) + " / " + to_string(maxLightPNGThreadsCreated) + " ( " + to_string(percent) + " % )";
 		}
 
 		if (lightPNGThreadsCreated == 0)
@@ -903,7 +903,7 @@ void Map::updateLoadingStatus()
 
 		{
 			float percent = ((float)(chunkTexturesLoaded) / (float)(totalChunkTextures)) * 100.0f;
-			texturesLoadedDebugText->text = string("Textures Loaded: ") + to_string(chunkTexturesLoaded) + string(" / ") + to_string(totalChunkTextures) + string(" ( ") + to_string(percent) + string(" % )");
+			texturesLoadedDebugText->text = "Textures Loaded: " + to_string(chunkTexturesLoaded) + " / " + to_string(totalChunkTextures) + " ( " + to_string(percent) + " % )";
 			generatingAreaNotification->progress = percent / 100.0f;
 		}
 
@@ -1798,7 +1798,7 @@ void Map::loadUtilityLayers()
 
 	if (hitLayer == nullptr)
 	{
-		hitLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getHitBoundsMD5());
+		hitLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getHitBoundsMD5());
 		/*hitLayer = new byte[getWidthTiles1X * getHeightTiles1X];
 		         
 		BufferedInputStream hitBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getHitBoundsMD5));
@@ -1820,7 +1820,7 @@ void Map::loadUtilityLayers()
 	//-----------------------------------
 	if (cameraLayer == nullptr)
 	{
-		cameraLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getCameraBoundsMD5());
+		cameraLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getCameraBoundsMD5());
 
 		//			FileUtils.downloadSmallFileToCacheIfNotExist(""+getCameraBoundsMD5());
 		//
@@ -1858,7 +1858,7 @@ void Map::loadUtilityLayers()
 
 	if (groundShaderLayer == nullptr)
 	{
-		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getGroundShaderMD5());
+		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getGroundShaderMD5());
 
 		/*groundShaderLayer = new int[getWidthTiles1X * getHeightTiles1X];
 		BufferedInputStream shaderBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getGroundShaderMD5));
@@ -1897,7 +1897,7 @@ void Map::loadUtilityLayers()
 	//-----------------------------------
 	if (groundShaderLayer == nullptr)
 	{
-		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getLightMaskMD5());
+		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getLightMaskMD5());
 
 		/*lightMaskLayer = new int[getWidthTiles1X * getHeightTiles1X];
 		BufferedInputStream lightMaskBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getLightMaskMD5));
@@ -2613,12 +2613,12 @@ bool Map::loadChunkTexturesFromCachePNGs()
 
 							if (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists(chunkIndex) == true)
 							{
-								textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+								textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 								(*usingHQ2XTexture)[chunkIndex] = true;
 							}
 							else
 							{
-								textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+								textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
 							}
 
 							if (textureFile->exists() == false)
@@ -2838,7 +2838,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 
 						if (getHQ2XChunkPNGFileExists(chunkIndex) == true)
 						{
-							textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+							textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 						}
 
 						if (textureFile->exists() == false)
@@ -2904,9 +2904,9 @@ void Map::startThreadsForMissingChunkPNGs()
 
 	//does cache/groundMD5/ exist?
 	//if not, make it.
-	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5());
-	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/");
-	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5());
+	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/");
 
 
 	//   if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
@@ -2957,8 +2957,8 @@ void Map::startThreadsForMissingChunkPNGs()
 
 
 				//check for existence of texture in groundMD5
-				BobFile* textureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-				BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+				BobFile* textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+				BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 
 				if (hq2xTextureFile->exists())
@@ -2977,12 +2977,12 @@ void Map::startThreadsForMissingChunkPNGs()
 
 					if (tilesetIntArray == nullptr)
 					{
-						tilesetIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(string("") + getTilesMD5());
+						tilesetIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getTilesMD5());
 					}
 
 					if (paletteRGBByteArray == nullptr)
 					{
-						paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(string("") + getPaletteMD5());
+						paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist("" + getPaletteMD5());
 					}
 
 
@@ -3135,7 +3135,7 @@ void Map::startThreadsForMissingLightPNGs()
 
 	//does cache/groundMD5/ exist?
 	//if not, make it.
-	FileUtils::makeDir(FileUtils::cacheDir + string("l") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + "l" + "/");
 
 
 	//   //if(MapManager.useThreads==true&&generatePNGExecutorService==null)generatePNGExecutorService = Executors.newFixedThreadPool(3);
@@ -3176,7 +3176,7 @@ void Map::startThreadsForMissingLightPNGs()
 			if (l->getLightTexturePNGFileExists_S() == false)
 			{
 				//check for existence of texture in cache folder
-				BobFile* textureFile = new BobFile(FileUtils::cacheDir + string("l") + "/" + l->getFileName());
+				BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 				if (textureFile->exists())
 				{
 					l->setLightTexturePNGFileExists_S(true);
@@ -3201,7 +3201,7 @@ void Map::startThreadsForMissingLightPNGs()
 						//                           e->printStackTrace();
 						//                        }
 						//
-						//                        threadLight->createLightTexturePNG(FileUtils::cacheDir + string("l") + "/" + threadLightFilename);
+						//                        threadLight->createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + threadLightFilename);
 						//                        threadLight->setLightTexturePNGFileExists_S(true);
 						//
 						//                        decrementLightPNGThreadsCreated_S();
@@ -3213,7 +3213,7 @@ void Map::startThreadsForMissingLightPNGs()
 					else
 					{
 						//do it linearly, waiting for all to finish before continuing
-						l->createLightTexturePNG(FileUtils::cacheDir + string("l") + "/" + l->getFileName());
+						l->createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 
 						l->setLightTexturePNGFileExists_S(true);
 					}
@@ -3248,9 +3248,9 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 
 	//does cache/groundMD5/ exist?
 	//if not, make it.
-	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5());
-	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/");
-	FileUtils::makeDir(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5());
+	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/");
+	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/");
 
 
 	//   if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
@@ -3299,7 +3299,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 			int chunkIndexOverLayer = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
 			//check for existence of texture in groundMD5
-			BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(chunkIndex));
+			BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 			if (hq2xTextureFile->exists())
 			{
@@ -3533,8 +3533,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 		//log.debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
 
 		//save 0 byte placeholder, this will always load blank texture
-		BobFile* f = new BobFile(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-		BobFile* f2 = new BobFile(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(chunkIndex));
+		BobFile* f = new BobFile("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+		BobFile* f2 = new BobFile("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex));
 
 		try
 		{
@@ -3549,8 +3549,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	else
 	{
 		//save this as png in folder groundMD5/0_0_0
-		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + to_string(chunkIndex), chunkImage);
-		FileUtils::saveImage(string("") + FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(chunkIndex), chunkImageBorder);
+		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex), chunkImage);
+		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex), chunkImageBorder);
 	}
 }
 
@@ -3839,8 +3839,8 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	int underChunkIndex = (chunksWidth * chunksHeight * 0) + ((chunkY * chunksWidth) + chunkX);
 	int overChunkIndex = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
-	BobFile* underLayerTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(underChunkIndex));
-	BobFile* overLayerTextureFile = new BobFile(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("1x_padded") + "/" + to_string(overChunkIndex));
+	BobFile* underLayerTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(underChunkIndex));
+	BobFile* overLayerTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(overChunkIndex));
 
 
 	//TODO: handle if 1x file doesn't exist, make it again from md5!
@@ -3875,7 +3875,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		}
 		catch (exception e)//IOException e)
 		{
-			log.error(string("Cannot read PNG file: ") + underLayerTextureFile->getName() + string(" "));// +e->getMessage());
+			log.error("Cannot read PNG file: " + underLayerTextureFile->getName() + " ");// +e->getMessage());
 		}
 	}
 
@@ -3897,7 +3897,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		}
 		catch (exception e)//IOException e)
 		{
-			log.error(string("Cannot read PNG file: ") + overLayerTextureFile->getName() + string(" "));// +e->getMessage());
+			log.error("Cannot read PNG file: " + overLayerTextureFile->getName() + " ");// +e->getMessage());
 		}
 	}
 
@@ -4041,7 +4041,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	}
 
 	//save temp as hq2x_top
-	FileUtils::saveImage(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(overChunkIndex), temp);
+	FileUtils::saveImage(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(overChunkIndex), temp);
 
 	//don't need temp
 	delete temp;
@@ -4119,7 +4119,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//Outputting full HQ2X bottom layer
 	//save as hq2x bottom
-	FileUtils::saveImage(FileUtils::cacheDir + string("_") + getGroundLayerMD5() + "/" + string("2x") + "/" + to_string(underChunkIndex), temp);
+	FileUtils::saveImage(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(underChunkIndex), temp);
 
 	//don't need temp
 	delete temp;

@@ -25,7 +25,7 @@ UDPPeerConnection::UDPPeerConnection(long long friendUserID, int type)
 	this->peerUserID = friendUserID;
 	this->peerType = type;
 
-	//   log.info(string("UDP Channel: ") + channel->getId()->toString());
+	//   log.info("UDP Channel: " + channel->getId()->toString());
 
 }
 
@@ -314,7 +314,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						{
 							if (getPeerIPAddress_S() != nullptr)
 							{
-								writeUnreliable_S(string("pong") + BobNet::endline);
+								writeUnreliable_S("pong" + BobNet::endline);
 							}
 							else
 							{
@@ -623,10 +623,10 @@ void UDPPeerConnection::_writeQueuedPackets()
 			if (s.find("PARTIAL:")!=string::npos || s.find("FINAL:") != string::npos || s.find("BOBSGAME:FRAME:") != string::npos)
 			{
 				string c = s.substr(0, 160);
-				threadLogDebug_S(string("SENT PEER: ") + c);
+				threadLogDebug_S("SENT PEER: " + c);
 			}
 			else
-			threadLogDebug_S(string("SENT PEER: ") + s.substr(0,s.find(BobNet::endline)));
+			threadLogDebug_S("SENT PEER: " + s.substr(0,s.find(BobNet::endline)));
 #endif
 
 			string packetIDString = s.substr(0, s.find(":"));
@@ -711,7 +711,7 @@ void UDPPeerConnection::_sendKeepAlivePing()
 		if (pingTicksPassed > 10000)
 		{
 			_lastSentPingTime = currentTime;
-			writeUnreliable_S(string("ping") + BobNet::endline);
+			writeUnreliable_S("ping" + BobNet::endline);
 		}
 	}
 
@@ -730,7 +730,7 @@ void UDPPeerConnection::_checkForTimeout()
 
 		if (getGotFriendData_S() == true)
 		{
-			Console::add(string("") + getFriendData_S().userName + string(" has gone offline."), BobColor::lightRed, 5000);//" escaped from reality and has descended into the inferior meat world. What a traitor."
+			Console::add("" + getFriendData_S().userName + " has gone offline.", 5000, BobColor::lightRed);//" escaped from reality and has descended into the inferior meat world. What a traitor."
 		}
 	}
 
@@ -769,7 +769,7 @@ void UDPPeerConnection::setDisconnectedFromPeer_S(string reason)
 	setPeerIPAddress_S("", -1);
 
 	threadLogWarn_S(string("Disconnected from " + getFriendData_S().userName + ": " + reason));
-	Console::add("Disconnected from " + getFriendData_S().userName + ": " + reason, BobColor::red, 5000);
+	Console::add("Disconnected from " + getFriendData_S().userName + ": " + reason, 5000, BobColor::red);
 
 	SDLNet_UDP_Close(getSocket_S());
 
@@ -810,7 +810,7 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// ChannelHandlerContext
 		string idmd5 = c.substr(0, c.find(":") + 1);//195,e43d6f5f2951a1f767d634346812ad73:
 		c = c.substr(c.find(":") + 1);
 
-		log.warn(string("FROM PEER: ") + command + frame + playerid + idmd5);
+		log.warn("FROM PEER: " + command + frame + playerid + idmd5);
 	}
 	else
 	if(String::startsWith(s, "BOBSGAME:HOSTING:") || String::startsWith(s, "BOBSGAME:PLAYERCONFIRM:"))
@@ -825,12 +825,12 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// ChannelHandlerContext
 		string data = c.substr(0, c.find(":") + 1);//1.2078078643:
 		c = c.substr(c.find(":") + 1);
 
-		log.warn(string("FROM PEER: ") + command + hosting + data);
+		log.warn("FROM PEER: " + command + hosting + data);
 	}
 	else
 	if (String::startsWith(s, "Friend_Location_Update") == false && String::startsWith(s, "ACK:") == false)
 	{
-		log.warn(string("FROM PEER: ") + s);// +channel->getId() + string(" | ") + s);
+		log.warn("FROM PEER: " + s);// +channel->getId() + " | " + s);
 	}
 #endif
 
@@ -934,13 +934,13 @@ bool UDPPeerConnection::writeReliable_S(string s)
 //		string idmd5 = c.substr(0, c.find(":") + 1);//195,e43d6f5f2951a1f767d634346812ad73:
 //		c = c.substr(c.find(":") + 1);
 //
-//		threadLogDebug_S(string("Queued sending message: ") + command+frame+ playerid+idmd5);
+//		threadLogDebug_S("Queued sending message: " + command+frame+ playerid+idmd5);
 //   }
 //   else
 //      //if (String::startsWith(s,"Friend_Location_Update") == false && String::startsWith(s,"Friend_Connect_Request") == false)
 //      {
 //#ifdef _DEBUG
-//         threadLogDebug_S(string("Queued sending message: ") + s.substr(0, s.length() - 2));
+//         threadLogDebug_S("Queued sending message: " + s.substr(0, s.length() - 2));
 //#endif
 //      }
 //#endif
@@ -1089,47 +1089,47 @@ string FriendData::encode(int friendType)
 
 	this->friendType = friendType;
 
-	string s = string("") +
-		to_string(friendType) + string(",") + string("`") +
-		string(userName) + string("`") + string(",") + string("`") +
-		string(characterName) + string("`") + string(",") + string("`") +
-		string(characterAppearance) + string("`") + string(",") + string("`") +
-		to_string(accountRank) + string("`") + string(",") + string("`") +
-		to_string(accountCreatedTime) + string("`") + string(",") + string("`") +
-		to_string(timesLoggedIn) + string("`") + string(",") + string("`") +
-		to_string(totalTimePlayed) + string("`") + string(",") + string("`") +
-		string(postalCode) + string("`") + string(",") + string("`") +
-		string(countryName) + string("`") + string(",") + string("`") +
-		string(isoCountryCode) + string("`") + string(",") + string("`") +
-		string(placeName) + string("`") + string(",") + string("`") +
-		string(stateName) + string("`") + string(",") + string("`") +
-		to_string(lat) + string("`") + string(",") + string("`") +
-		to_string(lon) + string("`") + string(",") + string("`") +
-		to_string(miniGamesTimesPlayed) + string("`") + string(",") + string("`") +
-		to_string(miniGamesTimesBattled) + string("`") + string(",") + string("`") +
-		to_string(miniGamesTimesChallenged) + string("`") + string(",") + string("`") +
-		to_string(miniGamesTimesChallenger) + string("`") + string(",") + string("`") +
-		to_string(miniGamesTimesWon) + string("`") + string(",") + string("`") +
-		to_string(miniGamesTimesLost) + string("`") + string(",") + string("`") +
-		to_string(miniGamesTimesTied) + string("`");
+	string s = "" +
+		to_string(friendType) + "," + "`" +
+		string(userName) + "`" + "," + "`" +
+		string(characterName) + "`" + "," + "`" +
+		string(characterAppearance) + "`" + "," + "`" +
+		to_string(accountRank) + "`" + "," + "`" +
+		to_string(accountCreatedTime) + "`" + "," + "`" +
+		to_string(timesLoggedIn) + "`" + "," + "`" +
+		to_string(totalTimePlayed) + "`" + "," + "`" +
+		string(postalCode) + "`" + "," + "`" +
+		string(countryName) + "`" + "," + "`" +
+		string(isoCountryCode) + "`" + "," + "`" +
+		string(placeName) + "`" + "," + "`" +
+		string(stateName) + "`" + "," + "`" +
+		to_string(lat) + "`" + "," + "`" +
+		to_string(lon) + "`" + "," + "`" +
+		to_string(miniGamesTimesPlayed) + "`" + "," + "`" +
+		to_string(miniGamesTimesBattled) + "`" + "," + "`" +
+		to_string(miniGamesTimesChallenged) + "`" + "," + "`" +
+		to_string(miniGamesTimesChallenger) + "`" + "," + "`" +
+		to_string(miniGamesTimesWon) + "`" + "," + "`" +
+		to_string(miniGamesTimesLost) + "`" + "," + "`" +
+		to_string(miniGamesTimesTied) + "`";
 
 	if (friendType != UDPPeerConnection::FACEBOOK_TYPE)
 	{
 		return s;
 	}
 
-	s = s + string(",") + string("`") +
-		string(facebookID) + string("`") + string(",") + string("`") +
-		string(facebookEmail) + string("`") + string(",") + string("`") +
-		//string(facebookBirthday) + string("`") + string(",") + string("`") +
-		string(facebookFirstName) + string("`") + string(",") + string("`") +
-		string(facebookLastName) + string("`") + string(",") + string("`") +
-		string(facebookGender) + string("`");
-		//string(facebookLocale) + string("`") + string(",") + string("`") +
-		//to_string(facebookTimeZone) + string("`") + string(",") + string("`") +
-		//string(facebookUsername) + string("`") + string(",") + string("`") +
-		//string(facebookWebsite) + string("`") + string(",") + string("`") +
-		//string(googlePlusID) + string("`");
+	s = s + "," + "`" +
+		string(facebookID) + "`" + "," + "`" +
+		string(facebookEmail) + "`" + "," + "`" +
+		//string(facebookBirthday) + "`" + "," + "`" +
+		string(facebookFirstName) + "`" + "," + "`" +
+		string(facebookLastName) + "`" + "," + "`" +
+		string(facebookGender) + "`";
+		//string(facebookLocale) + "`" + "," + "`" +
+		//to_string(facebookTimeZone) + "`" + "," + "`" +
+		//string(facebookUsername) + "`" + "," + "`" +
+		//string(facebookWebsite) + "`" + "," + "`" +
+		//string(googlePlusID) + "`";
 
 	return s;
 }

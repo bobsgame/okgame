@@ -127,7 +127,7 @@ void EventParameter::updateParameterVariablesFromString(Event* event)
 
 							if (o == nullptr)
 							{
-								log.error(string("Could not find GameObject: ") + parameterString + string(" when parsing Event Parameter."));
+								log.error("Could not find GameObject: " + parameterString + " when parsing Event Parameter.");
 							}
 							else
 							{

@@ -193,9 +193,9 @@ void FriendCharacter::sendFriendLocationStatusUpdate()
 
 	connection->writeReliable_S(
 		BobNet::Friend_LocationStatus_Update +
-		string(getMap()->getName()) + string(",") +
-		to_string(getPlayer()->getRoundedMiddleX()) + string(",") +
-		to_string(getPlayer()->getRoundedMiddleY()) + string(",") +
+		string(getMap()->getName()) + "," +
+		to_string(getPlayer()->getRoundedMiddleX()) + "," +
+		to_string(getPlayer()->getRoundedMiddleY()) + "," +
 		to_string(BobNet::myStatus) + BobNet::endline);
 }
 
@@ -298,11 +298,11 @@ void FriendCharacter::sendGameChallengeResponse(bool b)
 
 	if (b == true)
 	{
-		connection->writeReliable_S(BobNet::Game_Challenge_Response + string("Accept") + BobNet::endline);
+		connection->writeReliable_S(BobNet::Game_Challenge_Response + "Accept" + BobNet::endline);
 	}
 	else
 	{
-		connection->writeReliable_S(BobNet::Game_Challenge_Response + string("Decline") + BobNet::endline);
+		connection->writeReliable_S(BobNet::Game_Challenge_Response + "Decline" + BobNet::endline);
 	}
 }
 

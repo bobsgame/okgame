@@ -165,6 +165,8 @@ void Main::mainInit()
  }
  */
 
+	BobColor::initPresetColors();
+
 	cacheManager = new FileUtils();
 	cacheManager->initCache();
 
@@ -195,7 +197,7 @@ void Main::mainInit()
 
 
 	//atexit(SDL_Quit);
-	BobColor::initPresetColors();
+	
 	new GLUtils();
 	audioManager = new AudioManager();
 	new Logger();
@@ -898,13 +900,13 @@ void Main::doScreenShotCheck()
 		struct tm * now = localtime( & t ); 
 		cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
 
-		//string imageName = string("bobsgame-") + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + string(".png");
+		//string imageName = "bobsgame-" + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + ".png";
 		string fileName = string(Main::getPath())+"screenshot"+to_string(now->tm_year + 1900)+to_string(now->tm_mon + 1) +to_string(now->tm_mday)+to_string(now->tm_hour) + to_string(now->tm_min) + to_string(now->tm_sec) +".png";
 
 		//if (System::getProperty("os.name")->contains("Win"))
 		{
-			Console::add("Saved screenshot to "+ Main::getPath()+fileName, BobColor::green, 3000);
-			//getFileName = System::getProperty("user.home") + "/" + string("Desktop") + "/" + imageName;
+			Console::add("Saved screenshot to "+ Main::getPath()+fileName, 3000, BobColor::green);
+			//getFileName = System::getProperty("user.home") + "/" + "Desktop" + "/" + imageName;
 		}
 		//  				else
 		//  				{
@@ -1131,7 +1133,7 @@ void Main::doLegalScreen()
 
 
   //
-  //			if ((new File(FileUtils::cacheDir + string("session")))->exists() == false)
+  //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
   //			{
   //
   //				{
@@ -1183,7 +1185,7 @@ void Main::showControlsImage()
 
 
   //
-  //			if ((new File(FileUtils::cacheDir + string("session")))->exists() == false)
+  //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
   //			{
   //
   //				{

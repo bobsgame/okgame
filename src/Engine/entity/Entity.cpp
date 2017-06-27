@@ -230,7 +230,7 @@ void Entity::renderDebugBoxes()
 			{
 				Door* door = getMap()->doorList.get(d);
 
-				if (getConnectionTYPEIDList()->get(i) == string("DOOR.") + door->getName())
+				if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
 				{
 					float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 					float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -295,21 +295,21 @@ void Entity::renderDebugInfo()
 
 	if (sprite->getDisplayName() == "No Name" == false)
 	{
-		GLUtils::drawOutlinedString(string("entityName: ") + getName(), x, y - 36, BobColor::yellow);
-		GLUtils::drawOutlinedString(string("displayName: ") + sprite->getDisplayName(), x, y - 27, BobColor::green);
+		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 36, BobColor::yellow);
+		GLUtils::drawOutlinedString("displayName: " + sprite->getDisplayName(), x, y - 27, BobColor::green);
 	}
 	else
 	{
-		GLUtils::drawOutlinedString(string("entityName: ") + getName(), x, y - 27, BobColor::yellow);
+		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 27, BobColor::yellow);
 	}
 
-	GLUtils::drawOutlinedString(string("id: ") + to_string(getID()), x, y - 18, BobColor::white);
-	GLUtils::drawOutlinedString(string("SpriteAsset Name: ") + sprite->getName(), x, y - 9, BobColor::white);
+	GLUtils::drawOutlinedString("id: " + to_string(getID()), x, y - 18, BobColor::white);
+	GLUtils::drawOutlinedString("SpriteAsset Name: " + sprite->getName(), x, y - 9, BobColor::white);
 
 
 	if (getEventID() != -1)
 	{
-		GLUtils::drawOutlinedString(string("Has Event: ") + to_string(getEventID()), x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("Has Event: " + to_string(getEventID()), x, y + (++strings * 9), BobColor::red);
 	}
 
 	//GL.drawOutlinedString("mapX: "+getMapXPixelsHQ+" mapY: "+getMapYPixelsHQ, x, y+(++strings*9),Color.white);
@@ -327,8 +327,8 @@ void Entity::renderDebugInfo()
 	//if (this->getClass().equals(char::typeid) || this->getClass().equals(Player::typeid) || this->getClass().equals(RandomCharacter::typeid))
 	if (dynamic_cast<Character*>(this) != NULL || dynamic_cast<Player*>(this) != NULL || dynamic_cast<RandomCharacter*>(this) != NULL)
 	{
-		GLUtils::drawOutlinedString(string("getTicksPerPixelMoved: ") + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), BobColor::white);
-		GLUtils::drawOutlinedString(string("pixelsToMoveThisFrame: ") + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), BobColor::white);
 	}
 
 	//GL.drawOutlinedString("animationTicksCounter: "+animationTicksCounter, x, y+(++strings*9),Color.white);
@@ -344,7 +344,7 @@ void Entity::renderDebugInfo()
 
 	if (getRenderOrder() != RenderOrder::GROUND)
 	{
-		GLUtils::drawOutlinedString(string("RenderOrder: ") + to_string((int)getRenderOrder()), x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("RenderOrder: " + to_string((int)getRenderOrder()), x, y + (++strings * 9), BobColor::red);
 	}
 	if (getAlwaysOnTop())
 	{
@@ -392,15 +392,15 @@ void Entity::renderDebugInfo()
 	}
 	//if(ignore_fx_layer)GL.drawOutlinedString("ignore_fx_layer", x, y+(++strings*9),Color.red);
 
-	GLUtils::drawOutlinedString(string("MiddleY: ") + to_string(getMiddleY()), x, y + (++strings * 9), BobColor::green);
+	GLUtils::drawOutlinedString("MiddleY: " + to_string(getMiddleY()), x, y + (++strings * 9), BobColor::green);
 
 	if (currentAreaTYPEIDTarget != "" && currentAreaTYPEIDTarget.length() > 0)
 	{
-		GLUtils::drawOutlinedString(string("Current Target TYPEID: ") + currentAreaTYPEIDTarget, x, y + (++strings * 9), BobColor::green);
+		GLUtils::drawOutlinedString("Current Target TYPEID: " + currentAreaTYPEIDTarget, x, y + (++strings * 9), BobColor::green);
 	}
 	if (currentAreaTYPEIDTarget != "" && currentAreaTYPEIDTarget.length() > 0)
 	{
-		GLUtils::drawOutlinedString(string("Current Target Name: ") + getCurrentAreaTargetName(), x, y + (++strings * 9), BobColor::green);
+		GLUtils::drawOutlinedString("Current Target Name: " + getCurrentAreaTargetName(), x, y + (++strings * 9), BobColor::green);
 	}
 
 
@@ -1094,13 +1094,13 @@ void Entity::setCurrentAnimationByName(const string& name)
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
-		log.error(string("Sprite is null in Entity: ") + getName() + string(" while setting AnimationByName"));
+		log.error("Sprite is null in Entity: " + getName() + " while setting AnimationByName");
 		return;
 	}
 	SpriteAnimationSequence* a = sprite->getAnimationByName(name);
 	if (a == nullptr)
 	{
-		log.error(string("Animation name: ") + name + string(" not found in Sprite: ") + sprite->getName() + string(" in Entity: ") + getName());
+		log.error("Animation name: " + name + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
 		return;
 	}
 	currentAnimation = a;
@@ -1145,13 +1145,13 @@ void Entity::setCurrentAnimationByDirection(int dir)
 
 	if (sprite == nullptr)
 	{
-		log.error(string("Sprite is null in Entity: ") + getName() + string(" while setting AnimationByName"));
+		log.error("Sprite is null in Entity: " + getName() + " while setting AnimationByName");
 		return;
 	}
 	SpriteAnimationSequence* a = sprite->getAnimationByName(sequenceName);
 	if (a == nullptr)
 	{
-		log.error(string("Animation name: ") + sequenceName + string(" not found in Sprite: ") + sprite->getName() + string(" in Entity: ") + getName());
+		log.error("Animation name: " + sequenceName + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
 		return;
 	}
 	currentAnimation = a;
@@ -1174,13 +1174,13 @@ SpriteAnimationSequence* Entity::getAnimationBySpriteFrame(int frame)
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
-		log.error(string("Sprite is null in Entity: ") + getName() + string(" while getting AnimationByFrame"));
+		log.error("Sprite is null in Entity: " + getName() + " while getting AnimationByFrame");
 	}
 	SpriteAnimationSequence* a = sprite->getAnimationByFrame(frame);
 
 	if (a == nullptr && sprite->getName() == "Camera" == false && sprite->getName() == "none" == false)
 	{
-		log.error(string("Animation for frame: ") + to_string(frame) + string(" not found in Sprite: ") + sprite->getName() + string(" in Entity: ") + getName());
+		log.error("Animation for frame: " + to_string(frame) + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
 	}
 
 	return a;

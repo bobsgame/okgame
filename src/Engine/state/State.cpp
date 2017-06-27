@@ -62,7 +62,7 @@ void State::updateTimers()
 	{
 		ticksThisSecond = 0;
 
-		//log.info(string("") + to_string(rendersThisSecond));
+		//log.info("" + to_string(rendersThisSecond));
 		framesThisSecond = 0;
 	}
 

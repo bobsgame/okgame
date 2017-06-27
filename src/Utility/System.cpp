@@ -117,9 +117,9 @@ void System::initSystemInfo()
 	GLUtils::e();
 	for (int i = 0; i < numAudioDevices; i++)
 	{
-		log.info(string("SDL_GetAudioDeviceName") + to_string(i) + string(":") + SDL_GetAudioDeviceName(i, 0));
+		log.info("SDL_GetAudioDeviceName" + to_string(i) + ":" + SDL_GetAudioDeviceName(i, 0));
 		GLUtils::e();
-		//log.info(string("SDL_GetAudioDeviceStatus") + to_string(i) + string(":") + to_string(SDL_GetAudioDeviceStatus(i)));
+		//log.info("SDL_GetAudioDeviceStatus" + to_string(i) + ":" + to_string(SDL_GetAudioDeviceStatus(i)));
 		//GLUtils::e();
 	}
 	GLUtils::e();
@@ -127,195 +127,195 @@ void System::initSystemInfo()
 	int numAudioDrivers = SDL_GetNumAudioDrivers();
 	for (int i = 0; i < numAudioDrivers; i++)
 	{
-		log.info(string("SDL_GetAudioDriver") + to_string(i) + string(":") + SDL_GetAudioDriver(i));
+		log.info("SDL_GetAudioDriver" + to_string(i) + ":" + SDL_GetAudioDriver(i));
 	}
 	GLUtils::e();
 
-	log.info(string("SDL_GetAudioStatus:") + to_string(SDL_GetAudioStatus()));
+	log.info("SDL_GetAudioStatus:" + to_string(SDL_GetAudioStatus()));
 	GLUtils::e();
-	log.info(string("SDL_GetCurrentAudioDriver:") + +SDL_GetCurrentAudioDriver());
+	log.info("SDL_GetCurrentAudioDriver:" + string(SDL_GetCurrentAudioDriver()));
 	GLUtils::e();
 
 	//SDL_GetQueuedAudioSize();
 
 	//os
-	log.info(string("SDL_GetBasePath:") + string(SDL_GetBasePath()));
-	//log.info(string("SDL_GetClipboardText:") + string(SDL_GetClipboardText()));
+	log.info("SDL_GetBasePath:" + string(SDL_GetBasePath()));
+	//log.info("SDL_GetClipboardText:" + string(SDL_GetClipboardText()));
 
 
-	//log.info(string("SDL_HINT_ACCELEROMETER_AS_JOYSTICK:") + string(SDL_GetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK)));
-	//log.info(string("SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION:") + string(SDL_GetHint(SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION)));
-	//log.info(string("SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION:") + string(SDL_GetHint(SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION)));
-	//log.info(string("SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH:") + string(SDL_GetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH)));
-	//log.info(string("SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT:") + string(SDL_GetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT)));
-	//log.info(string("SDL_HINT_FRAMEBUFFER_ACCELERATION:") + string(SDL_GetHint(SDL_HINT_FRAMEBUFFER_ACCELERATION)));
-	//log.info(string("SDL_HINT_GAMECONTROLLERCONFIG:") + string(SDL_GetHint(SDL_HINT_GAMECONTROLLERCONFIG)));
-	//log.info(string("SDL_HINT_GRAB_KEYBOARD:") + string(SDL_GetHint(SDL_HINT_GRAB_KEYBOARD)));
-	//log.info(string("SDL_HINT_IDLE_TIMER_DISABLED:") + string(SDL_GetHint(SDL_HINT_IDLE_TIMER_DISABLED)));
-	//log.info(string("SDL_HINT_IME_INTERNAL_EDITING:") + string(SDL_GetHint(SDL_HINT_IME_INTERNAL_EDITING)));
-	//log.info(string("SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS:") + string(SDL_GetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS)));
-	//log.info(string("SDL_HINT_MAC_BACKGROUND_APP:") + string(SDL_GetHint(SDL_HINT_MAC_BACKGROUND_APP)));
-	//log.info(string("SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK:") + string(SDL_GetHint(SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK)));
-	//log.info(string("SDL_HINT_MOUSE_RELATIVE_MODE_WARP:") + string(SDL_GetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP)));
-	//log.info(string("SDL_HINT_NO_SIGNAL_HANDLERS:") + string(SDL_GetHint(SDL_HINT_NO_SIGNAL_HANDLERS)));
-	//log.info(string("SDL_HINT_ORIENTATIONS:") + string(SDL_GetHint(SDL_HINT_ORIENTATIONS)));
-	//log.info(string("SDL_HINT_RENDER_DIRECT3D11_DEBUG:") + string(SDL_GetHint(SDL_HINT_RENDER_DIRECT3D11_DEBUG)));
-	//log.info(string("SDL_HINT_RENDER_DIRECT3D_THREADSAFE:") + string(SDL_GetHint(SDL_HINT_RENDER_DIRECT3D_THREADSAFE)));
-	//log.info(string("SDL_HINT_RENDER_DRIVER:") + string(SDL_GetHint(SDL_HINT_RENDER_DRIVER)));
-	//log.info(string("SDL_HINT_RENDER_OPENGL_SHADERS:") + string(SDL_GetHint(SDL_HINT_RENDER_OPENGL_SHADERS)));
-	//log.info(string("SDL_HINT_RENDER_SCALE_QUALITY:") + string(SDL_GetHint(SDL_HINT_RENDER_SCALE_QUALITY)));
-	//log.info(string("SDL_HINT_RENDER_VSYNC:") + string(SDL_GetHint(SDL_HINT_RENDER_VSYNC)));
-	//log.info(string("SDL_HINT_THREAD_STACK_SIZE:") + string(SDL_GetHint(SDL_HINT_THREAD_STACK_SIZE)));
-	//log.info(string("SDL_HINT_TIMER_RESOLUTION:") + string(SDL_GetHint(SDL_HINT_TIMER_RESOLUTION)));
-	//log.info(string("SDL_HINT_VIDEO_ALLOW_SCREENSAVER:") + string(SDL_GetHint(SDL_HINT_VIDEO_ALLOW_SCREENSAVER)));
-	//log.info(string("SDL_HINT_VIDEO_HIGHDPI_DISABLED:") + string(SDL_GetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED)));
-	//log.info(string("SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES:") + string(SDL_GetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES)));
-	//log.info(string("SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS:") + string(SDL_GetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS)));
-	//log.info(string("SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT:") + string(SDL_GetHint(SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT)));
-	//log.info(string("SDL_HINT_VIDEO_WIN_D3DCOMPILER:") + string(SDL_GetHint(SDL_HINT_VIDEO_WIN_D3DCOMPILER)));
-	////log.info(string(":") + string(SDL_GetHint(SDL_HINT_VIDEO_X11_NET_WM_PING)));
-	//log.info(string("SDL_HINT_VIDEO_X11_XINERAMA:") + string(SDL_GetHint(SDL_HINT_VIDEO_X11_XINERAMA)));
-	//log.info(string("SDL_HINT_VIDEO_X11_XRANDR:") + string(SDL_GetHint(SDL_HINT_VIDEO_X11_XRANDR)));
-	//log.info(string("SDL_HINT_VIDEO_X11_XVIDMODE:") + string(SDL_GetHint(SDL_HINT_VIDEO_X11_XVIDMODE)));
-	//log.info(string("SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP:") + string(SDL_GetHint(SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP)));
-	//log.info(string("SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4:") + string(SDL_GetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4)));
-	//log.info(string("SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN:") + string(SDL_GetHint(SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN)));
-	//log.info(string("SDL_HINT_WINRT_HANDLE_BACK_BUTTON:") + string(SDL_GetHint(SDL_HINT_WINRT_HANDLE_BACK_BUTTON)));
-	//log.info(string("SDL_HINT_WINRT_PRIVACY_POLICY_LABEL:") + string(SDL_GetHint(SDL_HINT_WINRT_PRIVACY_POLICY_LABEL)));
-	//log.info(string("SDL_HINT_WINRT_PRIVACY_POLICY_URL:") + string(SDL_GetHint(SDL_HINT_WINRT_PRIVACY_POLICY_URL)));
-	//log.info(string("SDL_HINT_XINPUT_ENABLED:") + string(SDL_GetHint(SDL_HINT_XINPUT_ENABLED)));
-	//log.info(string("SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING:") + string(SDL_GetHint(SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING)));
+	//log.info("SDL_HINT_ACCELEROMETER_AS_JOYSTICK:" + string(SDL_GetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK)));
+	//log.info("SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION:" + string(SDL_GetHint(SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION)));
+	//log.info("SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION:" + string(SDL_GetHint(SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION)));
+	//log.info("SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH:" + string(SDL_GetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH)));
+	//log.info("SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT:" + string(SDL_GetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT)));
+	//log.info("SDL_HINT_FRAMEBUFFER_ACCELERATION:" + string(SDL_GetHint(SDL_HINT_FRAMEBUFFER_ACCELERATION)));
+	//log.info("SDL_HINT_GAMECONTROLLERCONFIG:" + string(SDL_GetHint(SDL_HINT_GAMECONTROLLERCONFIG)));
+	//log.info("SDL_HINT_GRAB_KEYBOARD:" + string(SDL_GetHint(SDL_HINT_GRAB_KEYBOARD)));
+	//log.info("SDL_HINT_IDLE_TIMER_DISABLED:" + string(SDL_GetHint(SDL_HINT_IDLE_TIMER_DISABLED)));
+	//log.info("SDL_HINT_IME_INTERNAL_EDITING:" + string(SDL_GetHint(SDL_HINT_IME_INTERNAL_EDITING)));
+	//log.info("SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS:" + string(SDL_GetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS)));
+	//log.info("SDL_HINT_MAC_BACKGROUND_APP:" + string(SDL_GetHint(SDL_HINT_MAC_BACKGROUND_APP)));
+	//log.info("SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK:" + string(SDL_GetHint(SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK)));
+	//log.info("SDL_HINT_MOUSE_RELATIVE_MODE_WARP:" + string(SDL_GetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP)));
+	//log.info("SDL_HINT_NO_SIGNAL_HANDLERS:" + string(SDL_GetHint(SDL_HINT_NO_SIGNAL_HANDLERS)));
+	//log.info("SDL_HINT_ORIENTATIONS:" + string(SDL_GetHint(SDL_HINT_ORIENTATIONS)));
+	//log.info("SDL_HINT_RENDER_DIRECT3D11_DEBUG:" + string(SDL_GetHint(SDL_HINT_RENDER_DIRECT3D11_DEBUG)));
+	//log.info("SDL_HINT_RENDER_DIRECT3D_THREADSAFE:" + string(SDL_GetHint(SDL_HINT_RENDER_DIRECT3D_THREADSAFE)));
+	//log.info("SDL_HINT_RENDER_DRIVER:" + string(SDL_GetHint(SDL_HINT_RENDER_DRIVER)));
+	//log.info("SDL_HINT_RENDER_OPENGL_SHADERS:" + string(SDL_GetHint(SDL_HINT_RENDER_OPENGL_SHADERS)));
+	//log.info("SDL_HINT_RENDER_SCALE_QUALITY:" + string(SDL_GetHint(SDL_HINT_RENDER_SCALE_QUALITY)));
+	//log.info("SDL_HINT_RENDER_VSYNC:" + string(SDL_GetHint(SDL_HINT_RENDER_VSYNC)));
+	//log.info("SDL_HINT_THREAD_STACK_SIZE:" + string(SDL_GetHint(SDL_HINT_THREAD_STACK_SIZE)));
+	//log.info("SDL_HINT_TIMER_RESOLUTION:" + string(SDL_GetHint(SDL_HINT_TIMER_RESOLUTION)));
+	//log.info("SDL_HINT_VIDEO_ALLOW_SCREENSAVER:" + string(SDL_GetHint(SDL_HINT_VIDEO_ALLOW_SCREENSAVER)));
+	//log.info("SDL_HINT_VIDEO_HIGHDPI_DISABLED:" + string(SDL_GetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED)));
+	//log.info("SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES:" + string(SDL_GetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES)));
+	//log.info("SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS:" + string(SDL_GetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS)));
+	//log.info("SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT:" + string(SDL_GetHint(SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT)));
+	//log.info("SDL_HINT_VIDEO_WIN_D3DCOMPILER:" + string(SDL_GetHint(SDL_HINT_VIDEO_WIN_D3DCOMPILER)));
+	////log.info(":" + string(SDL_GetHint(SDL_HINT_VIDEO_X11_NET_WM_PING)));
+	//log.info("SDL_HINT_VIDEO_X11_XINERAMA:" + string(SDL_GetHint(SDL_HINT_VIDEO_X11_XINERAMA)));
+	//log.info("SDL_HINT_VIDEO_X11_XRANDR:" + string(SDL_GetHint(SDL_HINT_VIDEO_X11_XRANDR)));
+	//log.info("SDL_HINT_VIDEO_X11_XVIDMODE:" + string(SDL_GetHint(SDL_HINT_VIDEO_X11_XVIDMODE)));
+	//log.info("SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP:" + string(SDL_GetHint(SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP)));
+	//log.info("SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4:" + string(SDL_GetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4)));
+	//log.info("SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN:" + string(SDL_GetHint(SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN)));
+	//log.info("SDL_HINT_WINRT_HANDLE_BACK_BUTTON:" + string(SDL_GetHint(SDL_HINT_WINRT_HANDLE_BACK_BUTTON)));
+	//log.info("SDL_HINT_WINRT_PRIVACY_POLICY_LABEL:" + string(SDL_GetHint(SDL_HINT_WINRT_PRIVACY_POLICY_LABEL)));
+	//log.info("SDL_HINT_WINRT_PRIVACY_POLICY_URL:" + string(SDL_GetHint(SDL_HINT_WINRT_PRIVACY_POLICY_URL)));
+	//log.info("SDL_HINT_XINPUT_ENABLED:" + string(SDL_GetHint(SDL_HINT_XINPUT_ENABLED)));
+	//log.info("SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING:" + string(SDL_GetHint(SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING)));
 
 
-	log.info(string("SDL_GetPerformanceCounter") + to_string(SDL_GetPerformanceCounter()));
-	log.info(string("SDL_GetPerformanceFrequency") + to_string(SDL_GetPerformanceFrequency()));
-	log.info(string("SDL_GetPlatform") + string(SDL_GetPlatform()));
-	//log.info(string("SDL_GetPowerInfo") + to_string(SDL_GetPowerInfo()));
-	log.info(string("SDL_GetPrefPath") + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
-	log.info(string("SDL_GetRevision") + string(SDL_GetRevision()));
-	log.info(string("SDL_GetRevisionNumber") + to_string(SDL_GetRevisionNumber()));
-	log.info(string("SDL_GetSystemRAM") + to_string(SDL_GetSystemRAM()));
-	//log.info(string("") + to_string(SDL_GetThreadID()));
-	//log.info(string("SDL_GetThreadName") + string(SDL_GetThreadName()));
-	log.info(string("SDL_GetTicks") + to_string(SDL_GetTicks()));
+	log.info("SDL_GetPerformanceCounter" + to_string(SDL_GetPerformanceCounter()));
+	log.info("SDL_GetPerformanceFrequency" + to_string(SDL_GetPerformanceFrequency()));
+	log.info("SDL_GetPlatform" + string(SDL_GetPlatform()));
+	//log.info("SDL_GetPowerInfo" + to_string(SDL_GetPowerInfo()));
+	log.info("SDL_GetPrefPath" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
+	log.info("SDL_GetRevision" + string(SDL_GetRevision()));
+	log.info("SDL_GetRevisionNumber" + to_string(SDL_GetRevisionNumber()));
+	log.info("SDL_GetSystemRAM" + to_string(SDL_GetSystemRAM()));
+	//log.info("" + to_string(SDL_GetThreadID()));
+	//log.info("SDL_GetThreadName" + string(SDL_GetThreadName()));
+	log.info("SDL_GetTicks" + to_string(SDL_GetTicks()));
 
 
-	//log.info(string("SDL_GetVersion") + string(SDL_GetVersion()));
+	//log.info("SDL_GetVersion" + string(SDL_GetVersion()));
 	SDL_version compiled;
 	SDL_version linked;
 	SDL_VERSION(&compiled);
 	SDL_GetVersion(&linked);
-	log.info(string("Compiled against SDL version:") + to_string(compiled.major) + to_string(compiled.minor) + to_string(compiled.patch));
-	log.info(string("Linked against SDL version:") + to_string(linked.major) + to_string(linked.minor) + to_string(linked.patch));
+	log.info("Compiled against SDL version:" + to_string(compiled.major) + to_string(compiled.minor) + to_string(compiled.patch));
+	log.info("Linked against SDL version:" + to_string(linked.major) + to_string(linked.minor) + to_string(linked.patch));
 
 
 	//window
 	//SDL_GetGrabbedWindow();
-	log.info(string("SDL_GetWindowBrightness:") + to_string(SDL_GetWindowBrightness(GLUtils::window)));
-	//log.info(string(":") + to_string(SDL_GetWindowData()));
-	log.info(string("SDL_GetWindowDisplayIndex():") + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
-	//log.info(string("SDL_GetWindowDisplayMode():") + to_string(SDL_GetWindowDisplayMode(GLUtils::window)));
-	log.info(string("SDL_GetWindowFlags():") + to_string(SDL_GetWindowFlags(GLUtils::window)));
-	//log.info(string("SDL_GetWindowFromID():") + to_string(SDL_GetWindowFromID()));
-	//log.info(string("SDL_GetWindowGammaRamp():") + to_string(SDL_GetWindowGammaRamp(GLUtils::window)));
-	log.info(string("SDL_GetWindowGrab():") + to_string(SDL_GetWindowGrab(GLUtils::window)));
-	log.info(string("SDL_GetWindowID():") + to_string(SDL_GetWindowID(GLUtils::window)));
-	//log.info(string("SDL_GetWindowMaximumSize():") + to_string(SDL_GetWindowMaximumSize(GLUtils::window)));
-	//log.info(string("SDL_GetWindowMinimumSize():") + to_string(SDL_GetWindowMinimumSize(GLUtils::window)));
-	log.info(string("SDL_GetWindowPixelFormat():") + to_string(SDL_GetWindowPixelFormat(GLUtils::window)));
-	//log.info(string("SDL_GetWindowPosition():") + to_string(SDL_GetWindowPosition(GLUtils::window)));
-	//log.info(string("SDL_GetWindowSize():") + to_string(SDL_GetWindowSize(GLUtils::window)));
-	//log.info(string("SDL_GetWindowSurface():") + to_string(SDL_GetWindowSurface()));
-	log.info(string("SDL_GetWindowTitle():") + string(SDL_GetWindowTitle(GLUtils::window)));
+	log.info("SDL_GetWindowBrightness:" + to_string(SDL_GetWindowBrightness(GLUtils::window)));
+	//log.info(":" + to_string(SDL_GetWindowData()));
+	log.info("SDL_GetWindowDisplayIndex():" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
+	//log.info("SDL_GetWindowDisplayMode():" + to_string(SDL_GetWindowDisplayMode(GLUtils::window)));
+	log.info("SDL_GetWindowFlags():" + to_string(SDL_GetWindowFlags(GLUtils::window)));
+	//log.info("SDL_GetWindowFromID():" + to_string(SDL_GetWindowFromID()));
+	//log.info("SDL_GetWindowGammaRamp():" + to_string(SDL_GetWindowGammaRamp(GLUtils::window)));
+	log.info("SDL_GetWindowGrab():" + to_string(SDL_GetWindowGrab(GLUtils::window)));
+	log.info("SDL_GetWindowID():" + to_string(SDL_GetWindowID(GLUtils::window)));
+	//log.info("SDL_GetWindowMaximumSize():" + to_string(SDL_GetWindowMaximumSize(GLUtils::window)));
+	//log.info("SDL_GetWindowMinimumSize():" + to_string(SDL_GetWindowMinimumSize(GLUtils::window)));
+	log.info("SDL_GetWindowPixelFormat():" + to_string(SDL_GetWindowPixelFormat(GLUtils::window)));
+	//log.info("SDL_GetWindowPosition():" + to_string(SDL_GetWindowPosition(GLUtils::window)));
+	//log.info("SDL_GetWindowSize():" + to_string(SDL_GetWindowSize(GLUtils::window)));
+	//log.info("SDL_GetWindowSurface():" + to_string(SDL_GetWindowSurface()));
+	log.info("SDL_GetWindowTitle():" + string(SDL_GetWindowTitle(GLUtils::window)));
 	//SDL_GetWindowWMInfo()));
 
 	//mouse
-	//log.info(string("SDL_GetCursor():") + to_string(SDL_GetCursor()));
-	//log.info(string("SDL_GetDefaultCursor():") + to_string(SDL_GetDefaultCursor()));
-	//log.info(string("SDL_GetGlobalMouseState():") + to_string(SDL_GetGlobalMouseState()));
-	//log.info(string("SDL_GetMouseFocus():") + to_string(SDL_GetMouseFocus()));
-	//log.info(string("SDL_GetMouseState():") + to_string(SDL_GetMouseState()));
-	log.info(string("SDL_GetNumTouchDevices():") + to_string(SDL_GetNumTouchDevices()));
-	//log.info(string("SDL_GetNumTouchFingers():") + to_string(SDL_GetNumTouchFingers()));
-	log.info(string("SDL_GetRelativeMouseMode():") + to_string(SDL_GetRelativeMouseMode()));
-	//log.info(string("SDL_GetRelativeMouseState():") + to_string(SDL_GetRelativeMouseState()));
+	//log.info("SDL_GetCursor():" + to_string(SDL_GetCursor()));
+	//log.info("SDL_GetDefaultCursor():" + to_string(SDL_GetDefaultCursor()));
+	//log.info("SDL_GetGlobalMouseState():" + to_string(SDL_GetGlobalMouseState()));
+	//log.info("SDL_GetMouseFocus():" + to_string(SDL_GetMouseFocus()));
+	//log.info("SDL_GetMouseState():" + to_string(SDL_GetMouseState()));
+	log.info("SDL_GetNumTouchDevices():" + to_string(SDL_GetNumTouchDevices()));
+	//log.info("SDL_GetNumTouchFingers():" + to_string(SDL_GetNumTouchFingers()));
+	log.info("SDL_GetRelativeMouseMode():" + to_string(SDL_GetRelativeMouseMode()));
+	//log.info("SDL_GetRelativeMouseState():" + to_string(SDL_GetRelativeMouseState()));
 
 	//key
-	//log.info(string("SDL_GetKeyFromName():") + to_string(SDL_GetKeyFromName()));
-	//log.info(string("SDL_GetKeyFromScancode():") + to_string(SDL_GetKeyFromScancode()));
-	//log.info(string("SDL_GetKeyName():") + to_string(SDL_GetKeyName()));
-	//log.info(string("SDL_GetKeyboardFocus():") + to_string(SDL_GetKeyboardFocus()));
-	//log.info(string("SDL_GetKeyboardState():") + to_string(SDL_GetKeyboardState()));
-	//log.info(string("SDL_GetModState():") + to_string(SDL_GetModState()));
-	//log.info(string("SDL_GetScancodeFromKey():") + to_string(SDL_GetScancodeFromKey()));
-	//log.info(string("SDL_GetScancodeFromName():") + to_string(SDL_GetScancodeFromName()));
-	//log.info(string("SDL_GetScancodeName():") + to_string(SDL_GetScancodeName()));
-	//log.info(string("SDL_GetTouchDevice():") + to_string(SDL_GetTouchDevice()));
-	//log.info(string("SDL_GetTouchFinger():") + to_string(SDL_GetTouchFinger()));
-	log.info(string("SDL_HasScreenKeyboardSupport():") + to_string(SDL_HasScreenKeyboardSupport()));
+	//log.info("SDL_GetKeyFromName():" + to_string(SDL_GetKeyFromName()));
+	//log.info("SDL_GetKeyFromScancode():" + to_string(SDL_GetKeyFromScancode()));
+	//log.info("SDL_GetKeyName():" + to_string(SDL_GetKeyName()));
+	//log.info("SDL_GetKeyboardFocus():" + to_string(SDL_GetKeyboardFocus()));
+	//log.info("SDL_GetKeyboardState():" + to_string(SDL_GetKeyboardState()));
+	//log.info("SDL_GetModState():" + to_string(SDL_GetModState()));
+	//log.info("SDL_GetScancodeFromKey():" + to_string(SDL_GetScancodeFromKey()));
+	//log.info("SDL_GetScancodeFromName():" + to_string(SDL_GetScancodeFromName()));
+	//log.info("SDL_GetScancodeName():" + to_string(SDL_GetScancodeName()));
+	//log.info("SDL_GetTouchDevice():" + to_string(SDL_GetTouchDevice()));
+	//log.info("SDL_GetTouchFinger():" + to_string(SDL_GetTouchFinger()));
+	log.info("SDL_HasScreenKeyboardSupport():" + to_string(SDL_HasScreenKeyboardSupport()));
 
 	//cpu
-	log.info(string("SDL_GetCPUCacheLineSize():") + to_string(SDL_GetCPUCacheLineSize()));
-	log.info(string("SDL_GetCPUCount():") + to_string(SDL_GetCPUCount()));
-	log.info(string("SDL_Has3DNow():") + to_string(SDL_Has3DNow()));
-	log.info(string("SDL_HasAVX():") + to_string(SDL_HasAVX()));
-	//log.info(string("SDL_HasAVX2():") + to_string(SDL_HasAVX2()));
-	log.info(string("SDL_HasAltiVec():") + to_string(SDL_HasAltiVec()));
-	//log.info(string("SDL_HasClipboardText():") + to_string(SDL_HasClipboardText()));
-	//log.info(string("SDL_HasEvent():") + to_string(SDL_HasEvent()));
-	//log.info(string("SDL_HasEvents():") + to_string(SDL_HasEvents()));
-	//log.info(string("SDL_HasIntersection():") + to_string(SDL_HasIntersection()));
-	log.info(string("SDL_HasMMX():") + to_string(SDL_HasMMX()));
-	log.info(string("SDL_HasRDTSC():") + to_string(SDL_HasRDTSC()));
-	log.info(string("SDL_HasSSE():") + to_string(SDL_HasSSE()));
-	log.info(string("SDL_HasSSE2():") + to_string(SDL_HasSSE2()));
-	log.info(string("SDL_HasSSE3():") + to_string(SDL_HasSSE3()));
-	log.info(string("SDL_HasSSE41():") + to_string(SDL_HasSSE41()));
-	log.info(string("SDL_HasSSE42():") + to_string(SDL_HasSSE42()));
+	log.info("SDL_GetCPUCacheLineSize():" + to_string(SDL_GetCPUCacheLineSize()));
+	log.info("SDL_GetCPUCount():" + to_string(SDL_GetCPUCount()));
+	log.info("SDL_Has3DNow():" + to_string(SDL_Has3DNow()));
+	log.info("SDL_HasAVX():" + to_string(SDL_HasAVX()));
+	//log.info("SDL_HasAVX2():" + to_string(SDL_HasAVX2()));
+	log.info("SDL_HasAltiVec():" + to_string(SDL_HasAltiVec()));
+	//log.info("SDL_HasClipboardText():" + to_string(SDL_HasClipboardText()));
+	//log.info("SDL_HasEvent():" + to_string(SDL_HasEvent()));
+	//log.info("SDL_HasEvents():" + to_string(SDL_HasEvents()));
+	//log.info("SDL_HasIntersection():" + to_string(SDL_HasIntersection()));
+	log.info("SDL_HasMMX():" + to_string(SDL_HasMMX()));
+	log.info("SDL_HasRDTSC():" + to_string(SDL_HasRDTSC()));
+	log.info("SDL_HasSSE():" + to_string(SDL_HasSSE()));
+	log.info("SDL_HasSSE2():" + to_string(SDL_HasSSE2()));
+	log.info("SDL_HasSSE3():" + to_string(SDL_HasSSE3()));
+	log.info("SDL_HasSSE41():" + to_string(SDL_HasSSE41()));
+	log.info("SDL_HasSSE42():" + to_string(SDL_HasSSE42()));
 
 
 	//video
-	//log.info(string("SDL_GetClipRect():") + to_string(SDL_GetClipRect()));
-	//log.info(string("SDL_GetClosestDisplayMode():") + to_string(SDL_GetClosestDisplayMode()));
-	//log.info(string("SDL_GetColorKey():") + to_string(SDL_GetColorKey()));
-	//log.info(string("SDL_GetCurrentDisplayMode():") + to_string(SDL_GetCurrentDisplayMode()));
-	//log.info(string("SDL_GetCurrentVideoDriver():") + to_string(SDL_GetCurrentVideoDriver()));
-	//log.info(string("SDL_GetDesktopDisplayMode():") + to_string(SDL_GetDesktopDisplayMode()));
-	//log.info(string("SDL_GetDisplayBounds():") + to_string(SDL_GetDisplayBounds()));
-	//log.info(string("SDL_GetDisplayDPI():") + to_string(SDL_GetDisplayDPI()));
-	//log.info(string("SDL_GetDisplayMode():") + to_string(SDL_GetDisplayMode()));
-	//log.info(string("SDL_GetDisplayName():") + to_string(SDL_GetDisplayName()));
-	//log.info(string("SDL_GetNumDisplayModes():") + to_string(SDL_GetNumDisplayModes()));
-	log.info(string("SDL_GetNumRenderDrivers():") + to_string(SDL_GetNumRenderDrivers()));
-	log.info(string("SDL_GetNumVideoDisplays():") + to_string(SDL_GetNumVideoDisplays()));
-	log.info(string("SDL_GetNumVideoDrivers():") + to_string(SDL_GetNumVideoDrivers()));
-	//log.info(string("SDL_GetPixelFormatName():") + to_string(SDL_GetPixelFormatName()));
-	//log.info(string("SDL_GetRGB():") + to_string(SDL_GetRGB()));
-	//log.info(string("SDL_GetRGBA():") + to_string(SDL_GetRGBA()));
-	//log.info(string("SDL_GetRenderDrawBlendMode():") + to_string(SDL_GetRenderDrawBlendMode()));
-	//log.info(string("SDL_GetRenderDrawColor():") + to_string(SDL_GetRenderDrawColor()));
-	//log.info(string("SDL_GetRenderDriverInfo():") + to_string(SDL_GetRenderDriverInfo()));
-	//log.info(string("SDL_GetRenderTarget():") + to_string(SDL_GetRenderTarget()));
-	//log.info(string("SDL_GetRenderer():") + to_string(SDL_GetRenderer()));
-	//log.info(string("SDL_GetRendererInfo():") + to_string(SDL_GetRendererInfo()));
-	//log.info(string("SDL_GetRendererOutputSize():") + to_string(SDL_GetRendererOutputSize()));
-	//log.info(string("SDL_GetSurfaceAlphaMod():") + to_string(SDL_GetSurfaceAlphaMod()));
-	//log.info(string("SDL_GetSurfaceBlendMode():") + to_string(SDL_GetSurfaceBlendMode()));
-	//log.info(string("SDL_GetSurfaceColorMod():") + to_string(SDL_GetSurfaceColorMod()));
-	//log.info(string("SDL_GetTextureAlphaMod():") + to_string(SDL_GetTextureAlphaMod()));
-	//log.info(string("SDL_GetTextureBlendMode():") + to_string(SDL_GetTextureBlendMode()));
-	//log.info(string("SDL_GetTextureColorMod():") + to_string(SDL_GetTextureColorMod()));
-	//log.info(string("SDL_GetVideoDriver():") + to_string(SDL_GetVideoDriver()));
+	//log.info("SDL_GetClipRect():" + to_string(SDL_GetClipRect()));
+	//log.info("SDL_GetClosestDisplayMode():" + to_string(SDL_GetClosestDisplayMode()));
+	//log.info("SDL_GetColorKey():" + to_string(SDL_GetColorKey()));
+	//log.info("SDL_GetCurrentDisplayMode():" + to_string(SDL_GetCurrentDisplayMode()));
+	//log.info("SDL_GetCurrentVideoDriver():" + to_string(SDL_GetCurrentVideoDriver()));
+	//log.info("SDL_GetDesktopDisplayMode():" + to_string(SDL_GetDesktopDisplayMode()));
+	//log.info("SDL_GetDisplayBounds():" + to_string(SDL_GetDisplayBounds()));
+	//log.info("SDL_GetDisplayDPI():" + to_string(SDL_GetDisplayDPI()));
+	//log.info("SDL_GetDisplayMode():" + to_string(SDL_GetDisplayMode()));
+	//log.info("SDL_GetDisplayName():" + to_string(SDL_GetDisplayName()));
+	//log.info("SDL_GetNumDisplayModes():" + to_string(SDL_GetNumDisplayModes()));
+	log.info("SDL_GetNumRenderDrivers():" + to_string(SDL_GetNumRenderDrivers()));
+	log.info("SDL_GetNumVideoDisplays():" + to_string(SDL_GetNumVideoDisplays()));
+	log.info("SDL_GetNumVideoDrivers():" + to_string(SDL_GetNumVideoDrivers()));
+	//log.info("SDL_GetPixelFormatName():" + to_string(SDL_GetPixelFormatName()));
+	//log.info("SDL_GetRGB():" + to_string(SDL_GetRGB()));
+	//log.info("SDL_GetRGBA():" + to_string(SDL_GetRGBA()));
+	//log.info("SDL_GetRenderDrawBlendMode():" + to_string(SDL_GetRenderDrawBlendMode()));
+	//log.info("SDL_GetRenderDrawColor():" + to_string(SDL_GetRenderDrawColor()));
+	//log.info("SDL_GetRenderDriverInfo():" + to_string(SDL_GetRenderDriverInfo()));
+	//log.info("SDL_GetRenderTarget():" + to_string(SDL_GetRenderTarget()));
+	//log.info("SDL_GetRenderer():" + to_string(SDL_GetRenderer()));
+	//log.info("SDL_GetRendererInfo():" + to_string(SDL_GetRendererInfo()));
+	//log.info("SDL_GetRendererOutputSize():" + to_string(SDL_GetRendererOutputSize()));
+	//log.info("SDL_GetSurfaceAlphaMod():" + to_string(SDL_GetSurfaceAlphaMod()));
+	//log.info("SDL_GetSurfaceBlendMode():" + to_string(SDL_GetSurfaceBlendMode()));
+	//log.info("SDL_GetSurfaceColorMod():" + to_string(SDL_GetSurfaceColorMod()));
+	//log.info("SDL_GetTextureAlphaMod():" + to_string(SDL_GetTextureAlphaMod()));
+	//log.info("SDL_GetTextureBlendMode():" + to_string(SDL_GetTextureBlendMode()));
+	//log.info("SDL_GetTextureColorMod():" + to_string(SDL_GetTextureColorMod()));
+	//log.info("SDL_GetVideoDriver():" + to_string(SDL_GetVideoDriver()));
 
 
-	log.info(string("Poco::libraryVersion()") + to_string(Environment::libraryVersion()));
-	//log.info(string("Poco::nodeId()") + string(Environment::nodeId()));
-	//log.info(string("Poco::nodeName()") + string(Environment::nodeName()));
-	//log.info(string("Poco::osArchitecture()") + string(Environment::osArchitecture()));
-	//log.info(string("Poco::osDisplayName()") + string(Environment::osDisplayName()));
-	log.info(string("Poco::osName()") + string(Environment::osName()));
-	log.info(string("Poco::osVersion()") + string(Environment::osVersion()));
-	log.info(string("Poco::processorCount()") + to_string(Environment::processorCount()));
+	log.info("Poco::libraryVersion()" + to_string(Environment::libraryVersion()));
+	//log.info("Poco::nodeId()" + string(Environment::nodeId()));
+	//log.info("Poco::nodeName()" + string(Environment::nodeName()));
+	//log.info("Poco::osArchitecture()" + string(Environment::osArchitecture()));
+	//log.info("Poco::osDisplayName()" + string(Environment::osDisplayName()));
+	log.info("Poco::osName()" + string(Environment::osName()));
+	log.info("Poco::osVersion()" + string(Environment::osVersion()));
+	log.info("Poco::processorCount()" + to_string(Environment::processorCount()));
 
 
 #ifdef USE_SIGAR
@@ -422,31 +422,31 @@ log.info("Proc Threads:" + to_string(procstat.threads));
 	//			clientInfo->getEnvNumberOfProcessors = System::getenv("NUMBER_OF_PROCESSORS");
 	//
 	//
-	//			clientInfo->jreVersion = string("") + systemProperties->getProperty("java.version");
-	//			clientInfo->jreVendor = string("") + systemProperties->getProperty("java.vendor");
+	//			clientInfo->jreVersion = "" + systemProperties->getProperty("java.version");
+	//			clientInfo->jreVendor = "" + systemProperties->getProperty("java.vendor");
 	//			//clientInfo.jreVendorURL			= ""+systemProperties.getProperty("java.vendor.url");
-	//			clientInfo->jreHomeDir = string("") + systemProperties->getProperty("java.home");
+	//			clientInfo->jreHomeDir = "" + systemProperties->getProperty("java.home");
 	//			//clientInfo.jvmSpecVersion		= ""+systemProperties.getProperty("java.vm.specification.version");
 	//			//clientInfo.jvmSpecVendor		= ""+systemProperties.getProperty("java.vm.specification.vendor");
 	//			//clientInfo.jvmSpecName			= ""+systemProperties.getProperty("java.vm.specification.name");
-	//			clientInfo->jvmVersion = string("") + systemProperties->getProperty("java.vm.version");
+	//			clientInfo->jvmVersion = "" + systemProperties->getProperty("java.vm.version");
 	//			//clientInfo.jvmVendor			= ""+systemProperties.getProperty("java.vm.vendor");
-	//			clientInfo->jvmName = string("") + systemProperties->getProperty("java.vm.name");
+	//			clientInfo->jvmName = "" + systemProperties->getProperty("java.vm.name");
 	//			//clientInfo.jreSpecVersion		= ""+systemProperties.getProperty("java.specification.version");
 	//			//clientInfo.jreSpecVendor		= ""+systemProperties.getProperty("java.specification.vendor");
 	//			//clientInfo.jreSpecName			= ""+systemProperties.getProperty("java.specification.name");
-	//			clientInfo->javaClassVersion = string("") + systemProperties->getProperty("java.class.version");
-	//			clientInfo->javaClassPath = string("") + systemProperties->getProperty("java.class.path");
-	//			clientInfo->javaLibraryPath = string("") + systemProperties->getProperty("java.library.path");
-	//			clientInfo->javaTempDir = string("") + systemProperties->getProperty("java.io.tmpdir");
+	//			clientInfo->javaClassVersion = "" + systemProperties->getProperty("java.class.version");
+	//			clientInfo->javaClassPath = "" + systemProperties->getProperty("java.class.path");
+	//			clientInfo->javaLibraryPath = "" + systemProperties->getProperty("java.library.path");
+	//			clientInfo->javaTempDir = "" + systemProperties->getProperty("java.io.tmpdir");
 	//			//clientInfo.javaJITCompiler		= ""+systemProperties.getProperty("java.compiler");
 	//			//clientInfo.javaExtensionPath	= ""+systemProperties.getProperty("java.ext.dirs");
-	//			clientInfo->osName = string("") + systemProperties->getProperty("os.name");
-	//			clientInfo->osArch = string("") + systemProperties->getProperty("os.arch");
-	//			clientInfo->osVersion = string("") + systemProperties->getProperty("os.version");
-	//			clientInfo->osUserAccountName = string("") + systemProperties->getProperty("user.name");
-	//			clientInfo->osHomeDir = string("") + systemProperties->getProperty("user.home");
-	//			clientInfo->workingDir = string("") + systemProperties->getProperty("user.dir");
+	//			clientInfo->osName = "" + systemProperties->getProperty("os.name");
+	//			clientInfo->osArch = "" + systemProperties->getProperty("os.arch");
+	//			clientInfo->osVersion = "" + systemProperties->getProperty("os.version");
+	//			clientInfo->osUserAccountName = "" + systemProperties->getProperty("user.name");
+	//			clientInfo->osHomeDir = "" + systemProperties->getProperty("user.home");
+	//			clientInfo->workingDir = "" + systemProperties->getProperty("user.dir");
 	//
 	//
 	//			clientInfo->displayWidth = Screen::getDesktopDisplayMode().getWidth();
@@ -492,8 +492,8 @@ log.info("Proc Threads:" + to_string(procstat.threads));
 	if (extensionsString != NULL)glExtensions = string(extensionsString);
 
 	logSystemInfo();
-	log.info(string("Window Width:") + to_string(GLUtils::getRealWindowWidth()));
-	log.info(string("Window Height:") + to_string(GLUtils::getRealWindowHeight()));
+	log.info("Window Width:" + to_string(GLUtils::getRealWindowWidth()));
+	log.info("Window Height:" + to_string(GLUtils::getRealWindowHeight()));
 
 
 
@@ -510,9 +510,9 @@ void System::initClockAndTimeZone()
 	//			Calendar *calendar = Calendar::getInstance();
 	//
 	//			Date calendarTime = calendar->getTime();
-	//			log.info(string("Local Adjusted Time: ") + calendarTime);
+	//			log.info("Local Adjusted Time: " + calendarTime);
 	//			string gmtOffset = (new SimpleDateFormat("Z"))->format(calendarTime);
-	//			log.info(string("Local TimeZone GMT offset: ") + gmtOffset);
+	//			log.info("Local TimeZone GMT offset: " + gmtOffset);
 	//
 	//
 	//
@@ -619,7 +619,7 @@ void System::initClockAndTimeZone()
 	//						}
 	//						catch (SocketException e)
 	//						{
-	//							log.debug(string("Could not open NTP UDP Client: ") + e->getMessage());
+	//							log.debug("Could not open NTP UDP Client: " + e->getMessage());
 	//							continue;
 	//						}
 	//
@@ -630,7 +630,7 @@ void System::initClockAndTimeZone()
 	//						}
 	//						catch (UnknownHostException e)
 	//						{
-	//							log.debug(string("Could not resolve NTP host: ") + NTPhost + string(" | ") + e->getMessage());
+	//							log.debug("Could not resolve NTP host: " + NTPhost + " | " + e->getMessage());
 	//							continue;
 	//						}
 	//
@@ -644,7 +644,7 @@ void System::initClockAndTimeZone()
 	//						}
 	//						catch (IOException e)
 	//						{
-	//							log.debug(string("Could not get time from NTP host: ") + hostAddr->getHostAddress() + string(" | ") + e->getMessage());
+	//							log.debug("Could not get time from NTP host: " + hostAddr->getHostAddress() + " | " + e->getMessage());
 	//							continue;
 	//						}
 	//
@@ -658,7 +658,7 @@ void System::initClockAndTimeZone()
 	//
 	//
 	//						Date serverDate = xmitNtpTime->getDate();
-	//						log.info(string("Server Time (Adjusted by local TimeZone + DST): ") + serverDate);
+	//						log.info("Server Time (Adjusted by local TimeZone + DST): " + serverDate);
 	//
 	//						// init game clock
 	//
@@ -783,7 +783,7 @@ string System::split(const string& in)
 
 	if (in.length() > 100)
 	{
-		return in.substr(0, 100) + string("...");
+		return in.substr(0, 100) + "...";
 	}
 
 	return in;
@@ -792,7 +792,7 @@ string System::split(const string& in)
 string System::printString()
 { //=========================================================================================================================
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
-	string s = string("");// +string("browserUserAgentString: ") + split(browserUserAgentString) + string("\n") + string("browserAppNameVersionString: ") + split(browserAppNameVersionString) + string("\n") + string("browserReferrerString: ") + split(browserReferrerString) + string("\n") + string("getEnvProcessorIdentifier: ") + split(getEnvProcessorIdentifier) + string("\n") + string("getEnvProcessorArchitecture: ") + split(getEnvProcessorArchitecture) + string("\n") + string("getEnvNumberOfProcessors: ") + split(getEnvNumberOfProcessors) + string("\n") + string("internetProviderString: ") + split(internetProviderString) + string("\n") + string("timeZoneGMTOffset: ") + timeZoneGMTOffset + string("\n") + string("jreVersion: ") + split(jreVersion) + string("\n") + string("jreVendor: ") + split(jreVendor) + string("\n") + string("jreHomeDir: ") + split(jreHomeDir) + string("\n") + string("jvmVersion: ") + split(jvmVersion) + string("\n") + string("jvmName: ") + split(jvmName) + string("\n") + string("javaClassVersion: ") + split(javaClassVersion) + string("\n") + string("javaClassPath: ") + split(javaClassPath) + string("\n") + string("javaLibraryPath: ") + split(javaLibraryPath) + string("\n") + string("javaTempDir: ") + split(javaTempDir) + string("\n") + string("osName: ") + split(osName) + string("\n") + string("osArch: ") + split(osArch) + string("\n") + string("osVersion: ") + split(osVersion) + string("\n") + string("osUserAccountName: ") + split(osUserAccountName) + string("\n") + string("osHomeDir: ") + split(osHomeDir) + string("\n") + string("workingDir: ") + split(workingDir) + string("\n") + string("displayWidth: ") + displayWidth + string("\n") + string("displayHeight: ") + displayHeight + string("\n") + string("displayBPP: ") + displayBPP + string("\n") + string("displayFreq: ") + displayFreq + string("\n") + string("shaderCompiled: ") + (StringConverterHelper::toString(shaderCompiled) + string("\n") + string("canUseFBO: ") + (StringConverterHelper::toString(canUseFBO) + string("\n") + string("usingVSync: ") + (StringConverterHelper::toString(usingVSync) + string("\n") + string("displayAdapter: ") + split(displayAdapter) + string("\n") + string("displayDriver: ") + split(displayDriver) + string("\n") + string("lwjglVersion: ") + split(lwjglVersion) + string("\n") + string("lwjglIs64Bit: ") + (StringConverterHelper::toString(lwjglIs64Bit) + string("\n") + string("lwjglPlatformName: ") + split(lwjglPlatformName) + string("\n") + string("numCPUs: ") + numCPUs + string("\n") + string("totalMemory: ") + totalMemory + string("\n") + string("maxMemory: ") + maxMemory + string("\n") + string("numControllersFound: ") + numControllersFound + string("\n") + string("controllersNames: ") + split(controllersNames) + string("\n") + string("glVendor: ") + split(glVendor) + string("\n") + string("glVersion: ") + split(glVersion) + string("\n") + string("glRenderer: ") + split(glRenderer) + string("\n") + string("shaderVersion: ") + split(shaderVersion) + string("\n") + string("glExtensions: ") + split(glExtensions))->toString())->toString())->toString())->toString();
+	string s = "";// +"browserUserAgentString: " + split(browserUserAgentString) + "\n" + "browserAppNameVersionString: " + split(browserAppNameVersionString) + "\n" + "browserReferrerString: " + split(browserReferrerString) + "\n" + "getEnvProcessorIdentifier: " + split(getEnvProcessorIdentifier) + "\n" + "getEnvProcessorArchitecture: " + split(getEnvProcessorArchitecture) + "\n" + "getEnvNumberOfProcessors: " + split(getEnvNumberOfProcessors) + "\n" + "internetProviderString: " + split(internetProviderString) + "\n" + "timeZoneGMTOffset: " + timeZoneGMTOffset + "\n" + "jreVersion: " + split(jreVersion) + "\n" + "jreVendor: " + split(jreVendor) + "\n" + "jreHomeDir: " + split(jreHomeDir) + "\n" + "jvmVersion: " + split(jvmVersion) + "\n" + "jvmName: " + split(jvmName) + "\n" + "javaClassVersion: " + split(javaClassVersion) + "\n" + "javaClassPath: " + split(javaClassPath) + "\n" + "javaLibraryPath: " + split(javaLibraryPath) + "\n" + "javaTempDir: " + split(javaTempDir) + "\n" + "osName: " + split(osName) + "\n" + "osArch: " + split(osArch) + "\n" + "osVersion: " + split(osVersion) + "\n" + "osUserAccountName: " + split(osUserAccountName) + "\n" + "osHomeDir: " + split(osHomeDir) + "\n" + "workingDir: " + split(workingDir) + "\n" + "displayWidth: " + displayWidth + "\n" + "displayHeight: " + displayHeight + "\n" + "displayBPP: " + displayBPP + "\n" + "displayFreq: " + displayFreq + "\n" + "shaderCompiled: " + (StringConverterHelper::toString(shaderCompiled) + "\n" + "canUseFBO: " + (StringConverterHelper::toString(canUseFBO) + "\n" + "usingVSync: " + (StringConverterHelper::toString(usingVSync) + "\n" + "displayAdapter: " + split(displayAdapter) + "\n" + "displayDriver: " + split(displayDriver) + "\n" + "lwjglVersion: " + split(lwjglVersion) + "\n" + "lwjglIs64Bit: " + (StringConverterHelper::toString(lwjglIs64Bit) + "\n" + "lwjglPlatformName: " + split(lwjglPlatformName) + "\n" + "numCPUs: " + numCPUs + "\n" + "totalMemory: " + totalMemory + "\n" + "maxMemory: " + maxMemory + "\n" + "numControllersFound: " + numControllersFound + "\n" + "controllersNames: " + split(controllersNames) + "\n" + "glVendor: " + split(glVendor) + "\n" + "glVersion: " + split(glVersion) + "\n" + "glRenderer: " + split(glRenderer) + "\n" + "shaderVersion: " + split(shaderVersion) + "\n" + "glExtensions: " + split(glExtensions))->toString())->toString())->toString())->toString();
 
 
 	//"jreVendorURL: "+split(jreVendorURL)+"\n"+
@@ -814,8 +814,8 @@ string System::encode()
 { //=========================================================================================================================
 
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
-	string s = string("");
-	// +string("`") + timeZoneGMTOffset + string("`") + string(",") + string("`") + browserUserAgentString + string("`") + string(",") + string("`") + browserAppNameVersionString + string("`") + string(",") + string("`") + browserReferrerString + string("`") + string(",") + string("`") + getEnvProcessorIdentifier + string("`") + string(",") + string("`") + getEnvProcessorArchitecture + string("`") + string(",") + string("`") + getEnvNumberOfProcessors + string("`") + string(",") + string("`") + internetProviderString + string("`") + string(",") + string("`") + jreVersion + string("`") + string(",") + string("`") + jreVendor + string("`") + string(",") + string("`") + jreHomeDir + string("`") + string(",") + string("`") + jvmVersion + string("`") + string(",") + string("`") + jvmName + string("`") + string(",") + string("`") + javaClassVersion + string("`") + string(",") + string("`") + javaClassPath + string("`") + string(",") + string("`") + javaLibraryPath + string("`") + string(",") + string("`") + javaTempDir + string("`") + string(",") + string("`") + osName + string("`") + string(",") + string("`") + osArch + string("`") + string(",") + string("`") + osVersion + string("`") + string(",") + string("`") + osUserAccountName + string("`") + string(",") + string("`") + osHomeDir + string("`") + string(",") + string("`") + workingDir + string("`") + string(",") + string("`") + displayWidth + string("`") + string(",") + string("`") + displayHeight + string("`") + string(",") + string("`") + displayBPP + string("`") + string(",") + string("`") + displayFreq + string("`") + string(",") + string("`") + (StringConverterHelper::toString(shaderCompiled) + string("`") + string(",") + string("`") + (StringConverterHelper::toString(canUseFBO) + string("`") + string(",") + string("`") + (StringConverterHelper::toString(usingVSync) + string("`") + string(",") + string("`") + displayAdapter + string("`") + string(",") + string("`") + displayDriver + string("`") + string(",") + string("`") + lwjglVersion + string("`") + string(",") + string("`") + (StringConverterHelper::toString(lwjglIs64Bit) + string("`") + string(",") + string("`") + lwjglPlatformName + string("`") + string(",") + string("`") + numCPUs + string("`") + string(",") + string("`") + totalMemory + string("`") + string(",") + string("`") + maxMemory + string("`") + string(",") + string("`") + numControllersFound + string("`") + string(",") + string("`") + controllersNames + string("`") + string(",") + string("`") + glVendor + string("`") + string(",") + string("`") + glVersion + string("`") + string(",") + string("`") + glRenderer + string("`") + string(",") + string("`") + shaderVersion + string("`") + string(",") + string("`") + glExtensions + string("`"))->toString())->toString())->toString())->toString();
+	string s = "";
+	// +"`" + timeZoneGMTOffset + "`" + "," + "`" + browserUserAgentString + "`" + "," + "`" + browserAppNameVersionString + "`" + "," + "`" + browserReferrerString + "`" + "," + "`" + getEnvProcessorIdentifier + "`" + "," + "`" + getEnvProcessorArchitecture + "`" + "," + "`" + getEnvNumberOfProcessors + "`" + "," + "`" + internetProviderString + "`" + "," + "`" + jreVersion + "`" + "," + "`" + jreVendor + "`" + "," + "`" + jreHomeDir + "`" + "," + "`" + jvmVersion + "`" + "," + "`" + jvmName + "`" + "," + "`" + javaClassVersion + "`" + "," + "`" + javaClassPath + "`" + "," + "`" + javaLibraryPath + "`" + "," + "`" + javaTempDir + "`" + "," + "`" + osName + "`" + "," + "`" + osArch + "`" + "," + "`" + osVersion + "`" + "," + "`" + osUserAccountName + "`" + "," + "`" + osHomeDir + "`" + "," + "`" + workingDir + "`" + "," + "`" + displayWidth + "`" + "," + "`" + displayHeight + "`" + "," + "`" + displayBPP + "`" + "," + "`" + displayFreq + "`" + "," + "`" + (StringConverterHelper::toString(shaderCompiled) + "`" + "," + "`" + (StringConverterHelper::toString(canUseFBO) + "`" + "," + "`" + (StringConverterHelper::toString(usingVSync) + "`" + "," + "`" + displayAdapter + "`" + "," + "`" + displayDriver + "`" + "," + "`" + lwjglVersion + "`" + "," + "`" + (StringConverterHelper::toString(lwjglIs64Bit) + "`" + "," + "`" + lwjglPlatformName + "`" + "," + "`" + numCPUs + "`" + "," + "`" + totalMemory + "`" + "," + "`" + maxMemory + "`" + "," + "`" + numControllersFound + "`" + "," + "`" + controllersNames + "`" + "," + "`" + glVendor + "`" + "," + "`" + glVersion + "`" + "," + "`" + glRenderer + "`" + "," + "`" + shaderVersion + "`" + "," + "`" + glExtensions + "`")->toString())->toString())->toString())->toString();
 
 
 	//"`"+jreVendorURL+"`"+","+
@@ -1448,10 +1448,10 @@ void System::decode(string& s)
 //
 //				if (jreVersion.length() > 0)
 //				{
-//					shaderCompiledString = string("") + StringConverterHelper::toString(shaderCompiled);
-//					canUseFBOString = string("") + StringConverterHelper::toString(canUseFBO);
-//					usingVSyncString = string("") + StringConverterHelper::toString(usingVSync);
-//					lwjglIs64BitString = string("") + StringConverterHelper::toString(lwjglIs64Bit);
+//					shaderCompiledString = "" + StringConverterHelper::toString(shaderCompiled);
+//					canUseFBOString = "" + StringConverterHelper::toString(canUseFBO);
+//					usingVSyncString = "" + StringConverterHelper::toString(usingVSync);
+//					lwjglIs64BitString = "" + StringConverterHelper::toString(lwjglIs64Bit);
 //				}
 //
 //
@@ -1459,7 +1459,7 @@ void System::decode(string& s)
 //
 //				try
 //				{
-//					ps = databaseConnection->prepareStatement(string("INSERT INTO connections ( ") + string("browserUserAgentString , ") + string("browserAppNameVersionString , ") + string("browserReferrerString , ") + string("getEnvProcessorIdentifier , ") + string("getEnvProcessorArchitecture , ") + string("getEnvNumberOfProcessors , ") + string("internetProviderString , ") + string("emailAddress , ") + string("userID , ") + string("sessionToken , ") + string("encryptionKey , ") + string("startTime , ") + string("ipAddress , ") + string("jreVersion , ") + string("jreVendor , ") + string("jreHomeDir , ") + string("jvmVersion , ") + string("jvmName , ") + string("javaClassVersion , ") + string("javaClassPath , ") + string("javaLibraryPath , ") + string("javaTempDir , ") + string("osName , ") + string("osArch , ") + string("osVersion , ") + string("osUserAccountName , ") + string("osHomeDir , ") + string("workingDir , ") + string("displayWidth , ") + string("displayHeight , ") + string("displayBPP , ") + string("displayFreq , ") + string("shaderCompiled , ") + string("canUseFBO , ") + string("usingVSync , ") + string("displayAdapter , ") + string("displayDriver , ") + string("lwjglVersion , ") + string("lwjglIs64Bit , ") + string("lwjglPlatformName , ") + string("numCPUs , ") + string("totalMemory , ") + string("maxMemory , ") + string("numControllersFound , ") + string("controllersNames , ") + string("timeZoneGMTOffset , ") + string("glVendor , ") + string("glVersion , ") + string("glRenderer , ") + string("shaderVersion , ") + string("glExtensions") + string(" ) VALUES ( ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?, ?, ?, ?, ?, ") + string("?") + string(")"));
+//					ps = databaseConnection->prepareStatement("INSERT INTO connections ( " + "browserUserAgentString , " + "browserAppNameVersionString , " + "browserReferrerString , " + "getEnvProcessorIdentifier , " + "getEnvProcessorArchitecture , " + "getEnvNumberOfProcessors , " + "internetProviderString , " + "emailAddress , " + "userID , " + "sessionToken , " + "encryptionKey , " + "startTime , " + "ipAddress , " + "jreVersion , " + "jreVendor , " + "jreHomeDir , " + "jvmVersion , " + "jvmName , " + "javaClassVersion , " + "javaClassPath , " + "javaLibraryPath , " + "javaTempDir , " + "osName , " + "osArch , " + "osVersion , " + "osUserAccountName , " + "osHomeDir , " + "workingDir , " + "displayWidth , " + "displayHeight , " + "displayBPP , " + "displayFreq , " + "shaderCompiled , " + "canUseFBO , " + "usingVSync , " + "displayAdapter , " + "displayDriver , " + "lwjglVersion , " + "lwjglIs64Bit , " + "lwjglPlatformName , " + "numCPUs , " + "totalMemory , " + "maxMemory , " + "numControllersFound , " + "controllersNames , " + "timeZoneGMTOffset , " + "glVendor , " + "glVersion , " + "glRenderer , " + "shaderVersion , " + "glExtensions" + " ) VALUES ( " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, " + "?" + ")");
 //
 //				int c = 1;
 //
@@ -1527,7 +1527,7 @@ void System::decode(string& s)
 //				}
 //				catch (exception &ex)
 //				{
-//					System::err::println(string("DB ERROR: ") + ex.what());
+//					System::err::println("DB ERROR: " + ex.what());
 //				}
 //
 //				//statement = statement.replace("\\", "\\\\");
@@ -1541,72 +1541,72 @@ void System::decode(string& s)
 
 void System::logSystemInfo()
 {
-//	log.log(string("browserUserAgentString: ") + (browserUserAgentString));
-//	log.log(string("browserAppNameVersionString: ") + (browserAppNameVersionString));
-//	log.log(string("browserReferrerString: ") + (browserReferrerString));
+//	log.log("browserUserAgentString: " + (browserUserAgentString));
+//	log.log("browserAppNameVersionString: " + (browserAppNameVersionString));
+//	log.log("browserReferrerString: " + (browserReferrerString));
 //
-//	log.log(string("getEnvProcessorIdentifier: ") + (getEnvProcessorIdentifier));
-//	log.log(string("getEnvProcessorArchitecture: ") + (getEnvProcessorArchitecture));
-//	log.log(string("getEnvNumberOfProcessors: ") + (getEnvNumberOfProcessors));
+//	log.log("getEnvProcessorIdentifier: " + (getEnvProcessorIdentifier));
+//	log.log("getEnvProcessorArchitecture: " + (getEnvProcessorArchitecture));
+//	log.log("getEnvNumberOfProcessors: " + (getEnvNumberOfProcessors));
 //
-//	log.log(string("internetProviderString: ") + (internetProviderString));
+//	log.log("internetProviderString: " + (internetProviderString));
 //
-//	log.log(string("timeZoneGMTOffset: ") + to_string(timeZoneGMTOffset));
+//	log.log("timeZoneGMTOffset: " + to_string(timeZoneGMTOffset));
 //
-//	log.log(string("jreVersion: ") + (jreVersion));
-//	log.log(string("jreVendor: ") + (jreVendor));
+//	log.log("jreVersion: " + (jreVersion));
+//	log.log("jreVendor: " + (jreVendor));
 //	//"jreVendorURL: "+split(jreVendorURL));
 //
-//	log.log(string("jreHomeDir: ") + (jreHomeDir));
+//	log.log("jreHomeDir: " + (jreHomeDir));
 //	//"jvmSpecVersion: "+split(jvmSpecVersion));
 //	//"jvmSpecVendor: "+split(jvmSpecVendor	));
 //	//"jvmSpecName: "+split(jvmSpecName));
-//	log.log(string("jvmVersion: ") + (jvmVersion));
+//	log.log("jvmVersion: " + (jvmVersion));
 //
 //	//"jvmVendor: "+split(jvmVendor	));
-//	log.log(string("jvmName: ") + (jvmName));
+//	log.log("jvmName: " + (jvmName));
 //	//"jreSpecVersion: "+split(jreSpecVersion));
 //	//"jreSpecVendor: "+split(jreSpecVendor	));
 //	//"jreSpecName: "+split(jreSpecName));
 //
-//	log.log(string("javaClassVersion: ") + (javaClassVersion));
-//	log.log(string("javaClassPath: ") + (javaClassPath));
-//	log.log(string("javaLibraryPath: ") + (javaLibraryPath));
-//	log.log(string("javaTempDir: ") + (javaTempDir));
+//	log.log("javaClassVersion: " + (javaClassVersion));
+//	log.log("javaClassPath: " + (javaClassPath));
+//	log.log("javaLibraryPath: " + (javaLibraryPath));
+//	log.log("javaTempDir: " + (javaTempDir));
 //	//"javaJITCompiler: "+split(javaJITCompiler));
 //
 //	//"javaExtensionPath: "+split(javaExtensionPath));
-//	log.log(string("osName: ") + (osName));
-//	log.log(string("osArch: ") + (osArch));
-//	log.log(string("osVersion: ") + (osVersion));
-//	log.log(string("osUserAccountName: ") + (osUserAccountName));
+//	log.log("osName: " + (osName));
+//	log.log("osArch: " + (osArch));
+//	log.log("osVersion: " + (osVersion));
+//	log.log("osUserAccountName: " + (osUserAccountName));
 //
-//	log.log(string("osHomeDir: ") + (osHomeDir));
-//	log.log(string("workingDir: ") + (workingDir));
+//	log.log("osHomeDir: " + (osHomeDir));
+//	log.log("workingDir: " + (workingDir));
 //
-//	log.log(string("displayWidth: ") + to_string(displayWidth));
-//	log.log(string("displayHeight: ") + to_string(displayHeight));
-//	log.log(string("displayBPP: ") + to_string(displayBPP));
-//	log.log(string("displayFreq: ") + to_string(displayFreq));
-//	log.log(string("shaderCompiled: ") + StringConverterHelper::toString(shaderCompiled));
-//	log.log(string("canUseFBO: ") + StringConverterHelper::toString(canUseFBO));
-//	log.log(string("usingVSync: ") + StringConverterHelper::toString(usingVSync));
-//	log.log(string("displayAdapter: ") + (displayAdapter));
-//	log.log(string("displayDriver: ") + (displayDriver));
-//	log.log(string("lwjglVersion: ") + (lwjglVersion));
-//	log.log(string("lwjglIs64Bit: ") + StringConverterHelper::toString(lwjglIs64Bit));
-//	log.log(string("lwjglPlatformName: ") + (lwjglPlatformName));
-//	log.log(string("numCPUs: ") + to_string(numCPUs));
-//	log.log(string("totalMemory: ") + to_string(totalMemory));
-//	log.log(string("maxMemory: ") + to_string(maxMemory));
-//	log.log(string("numControllersFound: ") + to_string(numControllersFound));
-//	log.log(string("controllersNames: ") + (controllersNames));
+//	log.log("displayWidth: " + to_string(displayWidth));
+//	log.log("displayHeight: " + to_string(displayHeight));
+//	log.log("displayBPP: " + to_string(displayBPP));
+//	log.log("displayFreq: " + to_string(displayFreq));
+//	log.log("shaderCompiled: " + StringConverterHelper::toString(shaderCompiled));
+//	log.log("canUseFBO: " + StringConverterHelper::toString(canUseFBO));
+//	log.log("usingVSync: " + StringConverterHelper::toString(usingVSync));
+//	log.log("displayAdapter: " + (displayAdapter));
+//	log.log("displayDriver: " + (displayDriver));
+//	log.log("lwjglVersion: " + (lwjglVersion));
+//	log.log("lwjglIs64Bit: " + StringConverterHelper::toString(lwjglIs64Bit));
+//	log.log("lwjglPlatformName: " + (lwjglPlatformName));
+//	log.log("numCPUs: " + to_string(numCPUs));
+//	log.log("totalMemory: " + to_string(totalMemory));
+//	log.log("maxMemory: " + to_string(maxMemory));
+//	log.log("numControllersFound: " + to_string(numControllersFound));
+//	log.log("controllersNames: " + (controllersNames));
 
-	//log.log(string("glVendor: ") + (glVendor));
-	//log.log(string("glVersion: ") + (glVersion));
-	//log.log(string("glRenderer: ") + (glRenderer));
-	//log.log(string("shaderVersion: ") + (shaderVersion));
-	//log.log(string("glExtensions: ") + (glExtensions));
+	//log.log("glVendor: " + (glVendor));
+	//log.log("glVersion: " + (glVersion));
+	//log.log("glRenderer: " + (glRenderer));
+	//log.log("shaderVersion: " + (shaderVersion));
+	//log.log("glExtensions: " + (glExtensions));
 }
 
 
@@ -1638,7 +1638,7 @@ void System::updateThreadStats()
 ////	log.info("Proc Idle:" + to_string(procstat.idle));
 ////	log.info("Proc Threads:" + to_string(procstat.threads));
 //
-//	mxThreadCountText->text = string("Thread Count: "+ to_string(procstat.threads));// +ManagementFactory::getThreadMXBean().getThreadCount() + string(" | Daemon Thread Count: ") + ManagementFactory::getThreadMXBean().getDaemonThreadCount() + string(" | Peak Thread Count: ") + ManagementFactory::getThreadMXBean().getPeakThreadCount() + string(" | Total Started: ") + ManagementFactory::getThreadMXBean().getTotalStartedThreadCount();
+//	mxThreadCountText->text = string("Thread Count: "+ to_string(procstat.threads));// +ManagementFactory::getThreadMXBean().getThreadCount() + " | Daemon Thread Count: " + ManagementFactory::getThreadMXBean().getDaemonThreadCount() + " | Peak Thread Count: " + ManagementFactory::getThreadMXBean().getPeakThreadCount() + " | Total Started: " + ManagementFactory::getThreadMXBean().getTotalStartedThreadCount();
 //
 //#endif
 
@@ -1714,7 +1714,7 @@ void System::updateMemoryStats()
 //		maxUsedMemory = usedMemory;
 //	}
 //
-//	memoryText->text = string("Memory Used: ") + to_string(usedMemory) + string(" MB") + string(" | Max Used: ") + to_string(maxUsedMemory) + string(" MB") + string(" | Free: ") + to_string(freeMemory / mb) + string(" MB") + string(" | Total: ") + to_string(totalMemory / mb) + string(" MB") + string(" | Max: ") + to_string(maxMemory / mb) + string(" MB");
+//	memoryText->text = "Memory Used: " + to_string(usedMemory) + " MB" + " | Max Used: " + to_string(maxUsedMemory) + " MB" + " | Free: " + to_string(freeMemory / mb) + " MB" + " | Total: " + to_string(totalMemory / mb) + " MB" + " | Max: " + to_string(maxMemory / mb) + " MB";
 //
 //#endif
 
@@ -1723,8 +1723,8 @@ void System::updateMemoryStats()
 	//vramText.getText = "Available VRAM: "+gd.getAvailableAcceleratedMemory()/1024 +" KB";
 	//last100Ticks+=100;
 
-	texturesLoadedText->text = string("Textures Loaded: ") + to_string(GLUtils::texturesLoaded);
-	textureBytesLoadedText->text = string("Texture MBs Loaded: ") + to_string(GLUtils::textureBytesLoaded / 1024 / 1024);
+	texturesLoadedText->text = "Textures Loaded: " + to_string(GLUtils::texturesLoaded);
+	textureBytesLoadedText->text = "Texture MBs Loaded: " + to_string(GLUtils::textureBytesLoaded / 1024 / 1024);
 	
 }
 
@@ -1747,7 +1747,7 @@ void System::initDebugInfo()
 
 	//		Console.debug("Display Adapter: " + Display.getAdapter());
 	//		Console.debug("Display Driver Version: " + Display.getVersion());
-	//Console::debug(string("LWJGL Version: "));// +System::getVersion() + string(" | 64 Bit: ") + Sys::is64Bit());
+	//Console::debug("LWJGL Version: ");// +System::getVersion() + " | 64 Bit: " + Sys::is64Bit());
 	//		Console.debug("LWJGL Platform: " + LWJGLUtil.getPlatformName());
 	//		Console.debug("Num CPUs: " +rt.availableProcessors());
 
@@ -1981,14 +1981,14 @@ void System::initFrameStats()
 void System::updateFrameStats()
 { //=========================================================================================================================
 
-	upTimeText->text = string("Uptime: ") + to_string(totalUpdateTicks / 1000) + string("s (") + to_string(totalUpdateTicks) + string("ms)");
+	upTimeText->text = "Uptime: " + to_string(totalUpdateTicks / 1000) + "s (" + to_string(totalUpdateTicks) + "ms)";
 
 
-	totalRendersText->text = string("Total Renders: ") + to_string(totalRenders);
-	totalUpdatesText->text = string("Total Updates: ") + to_string(totalUpdates);
+	totalRendersText->text = "Total Renders: " + to_string(totalRenders);
+	totalUpdatesText->text = "Total Updates: " + to_string(totalUpdates);
 
-	rendersSkippedText->text = string("Renders Skipped: ") + to_string(rendersSkipped);
-	updatesSkippedText->text = string("Updates Skipped: ") + to_string(updatesSkipped);
+	rendersSkippedText->text = "Renders Skipped: " + to_string(rendersSkipped);
+	updatesSkippedText->text = "Updates Skipped: " + to_string(updatesSkipped);
 
 
 
@@ -2004,7 +2004,7 @@ void System::updateFrameStats()
 
 		if (rendersThisSecond >= 60)
 		{
-			rendersPerSecondText->color = BobColor::gray;
+			rendersPerSecondText->color = ConsoleText::defaultColor;
 		}
 		else
 		if (rendersThisSecond >= 30)
@@ -2019,7 +2019,7 @@ void System::updateFrameStats()
 
 		if (updatesThisSecond >= 60)
 		{
-			updatesPerSecondText->color = BobColor::gray;
+			updatesPerSecondText->color = ConsoleText::defaultColor;
 		}
 		else
 			if (updatesThisSecond >= 30)
@@ -2032,12 +2032,12 @@ void System::updateFrameStats()
 			}
 
 		
-		rendersPerSecondText->text = string("FPS: ") + to_string(rendersThisSecond);
-		updatesPerSecondText->text = string("Updates/sec: ") + to_string(updatesThisSecond);
-		averageRendersPerSecondText->text = string("Average FPS: ") + to_string(averageRendersPerSecond);
+		rendersPerSecondText->text = "FPS: " + to_string(rendersThisSecond);
+		updatesPerSecondText->text = "Updates/sec: " + to_string(updatesThisSecond);
+		averageRendersPerSecondText->text = "Average FPS: " + to_string(averageRendersPerSecond);
 
-		averageTicksPerFrameText->text = string("Average Ticks Per Frame (Last Second): ") + to_string(averageTicksPerRenderLastSecond);
-		averageTicksPerUpdateText->text = string("Average Ticks Per Update (Last Second): ") + to_string(averageTicksPerUpdateLastSecond);
+		averageTicksPerFrameText->text = "Average Ticks Per Frame (Last Second): " + to_string(averageTicksPerRenderLastSecond);
+		averageTicksPerUpdateText->text = "Average Ticks Per Update (Last Second): " + to_string(averageTicksPerUpdateLastSecond);
 
 		lastSecondTime += (long long)(1000 * cpuFreq);
 		rendersThisSecond = 0;
@@ -2109,7 +2109,7 @@ void System::updateFrameStats()
 			}
 			else
 			{
-				ticksText[i]->color = BobColor::gray;
+				ticksText[i]->color = ConsoleText::defaultColor;
 			}
 		}
 	}

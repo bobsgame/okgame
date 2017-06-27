@@ -68,66 +68,15 @@ public:
 
 	Console();
 	virtual void update();
-	static ConsoleText* error(const string& s);
-	static ConsoleText* error(const string& s, int ticks);
-	static ConsoleText* error(const string& s, BobColor* c);
-	static ConsoleText* error(const string& s, BobColor* c, int ticks);
-	static ConsoleText* error(const string& s, int x, int y);
-	static ConsoleText* error(const string& s, BobColor* c, int x, int y);
 
+	static ConsoleText* error(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
+	static ConsoleText* debug(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
 
-	static ConsoleText* debug(const string& s);
-
-	static ConsoleText* debug(const string& s, int ticks);
-
-
-	static ConsoleText* debug(const string& s, BobColor* c);
-
-
-	static ConsoleText* debug(const string& s, BobColor* c, int ticks);
-
-
-	static ConsoleText* debug(const string& s, int x, int y);
-
-
-	static ConsoleText* debug(const string& s, BobColor* c, int x, int y);
-
-
-	static ConsoleText* add(const string& s);
-
-
-	static ConsoleText* add(const string& s, int ticks);
-
-
+	/// <summary>
+	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
+	static ConsoleText* add(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr, bool isDebug = false);
+	static ConsoleText* add(const string& s, int ticks, BobColor* c);
 	static ConsoleText* add(const string& s, BobColor* c);
-
-
-	static ConsoleText* add(const string& s, BobColor* c, int ticks);
-
-
-	/// <summary>
-	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	static ConsoleText* add(const string& s, int x, int y);
-
-
-	/// <summary>
-	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	static ConsoleText* add(const string& s, int x, int y, int ticks);
-
-
-	/// <summary>
-	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	static ConsoleText* add(const string& s, BobColor* c, int x, int y);
-
-
-	/// <summary>
-	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	static ConsoleText* add(const string& s, BobColor* c, int x, int y, int ticks);
-
-
-	/// <summary>
-	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	static ConsoleText* add(const string& s, BobColor* c, int x, int y, int ticks, bool isDebug);
 
 
 

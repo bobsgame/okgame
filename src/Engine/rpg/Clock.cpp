@@ -116,10 +116,10 @@ void Clock::updateCaptions()
 	string clockString = "";
 	string dayString = "";
 
-	string minuteString = string("") + to_string(minute);
+	string minuteString = "" + to_string(minute);
 	if (minute < 10)
 	{
-		minuteString = string("0") + to_string(minute);
+		minuteString = "0" + to_string(minute);
 	}
 
 
@@ -127,122 +127,122 @@ void Clock::updateCaptions()
 	{
 	case 0:
 		{
-			clockString = string(" 12:") + minuteString + string(" AM ");
+			clockString = " 12:" + minuteString + " AM ";
 			break;
 		}
 	case 1:
 		{
-			clockString = string(" 01:") + minuteString + string(" AM ");
+			clockString = " 01:" + minuteString + " AM ";
 			break;
 		}
 	case 2:
 		{
-			clockString = string(" 02:") + minuteString + string(" AM ");
+			clockString = " 02:" + minuteString + " AM ";
 			break;
 		}
 	case 3:
 		{
-			clockString = string(" 03:") + minuteString + string(" AM ");
+			clockString = " 03:" + minuteString + " AM ";
 			break;
 		}
 	case 4:
 		{
-			clockString = string(" 04:") + minuteString + string(" AM ");
+			clockString = " 04:" + minuteString + " AM ";
 			break;
 		}
 	case 5:
 		{
-			clockString = string(" 05:") + minuteString + string(" AM ");
+			clockString = " 05:" + minuteString + " AM ";
 			break;
 		}
 	case 6:
 		{
-			clockString = string(" 06:") + minuteString + string(" AM ");
+			clockString = " 06:" + minuteString + " AM ";
 			break;
 		}
 	case 7:
 		{
-			clockString = string(" 07:") + minuteString + string(" AM ");
+			clockString = " 07:" + minuteString + " AM ";
 			break;
 		}
 	case 8:
 		{
-			clockString = string(" 08:") + minuteString + string(" AM ");
+			clockString = " 08:" + minuteString + " AM ";
 			break;
 		}
 	case 9:
 		{
-			clockString = string(" 09:") + minuteString + string(" AM ");
+			clockString = " 09:" + minuteString + " AM ";
 			break;
 		}
 	case 10:
 		{
-			clockString = string(" 10:") + minuteString + string(" AM ");
+			clockString = " 10:" + minuteString + " AM ";
 			break;
 		}
 	case 11:
 		{
-			clockString = string(" 11:") + minuteString + string(" AM ");
+			clockString = " 11:" + minuteString + " AM ";
 			break;
 		}
 	case 12:
 		{
-			clockString = string(" 12:") + minuteString + string(" PM ");
+			clockString = " 12:" + minuteString + " PM ";
 			break;
 		}
 	case 13:
 		{
-			clockString = string(" 01:") + minuteString + string(" PM ");
+			clockString = " 01:" + minuteString + " PM ";
 			break;
 		}
 	case 14:
 		{
-			clockString = string(" 02:") + minuteString + string(" PM ");
+			clockString = " 02:" + minuteString + " PM ";
 			break;
 		}
 	case 15:
 		{
-			clockString = string(" 03:") + minuteString + string(" PM ");
+			clockString = " 03:" + minuteString + " PM ";
 			break;
 		}
 	case 16:
 		{
-			clockString = string(" 04:") + minuteString + string(" PM ");
+			clockString = " 04:" + minuteString + " PM ";
 			break;
 		}
 	case 17:
 		{
-			clockString = string(" 05:") + minuteString + string(" PM ");
+			clockString = " 05:" + minuteString + " PM ";
 			break;
 		}
 	case 18:
 		{
-			clockString = string(" 06:") + minuteString + string(" PM ");
+			clockString = " 06:" + minuteString + " PM ";
 			break;
 		}
 	case 19:
 		{
-			clockString = string(" 07:") + minuteString + string(" PM ");
+			clockString = " 07:" + minuteString + " PM ";
 			break;
 		}
 	case 20:
 		{
-			clockString = string(" 08:") + minuteString + string(" PM ");
+			clockString = " 08:" + minuteString + " PM ";
 			break;
 		}
 	case 21:
 		{
-			clockString = string(" 09:") + minuteString + string(" PM ");
+			clockString = " 09:" + minuteString + " PM ";
 			break;
 		}
 	case 22:
 		{
-			clockString = string(" 10:") + minuteString + string(" PM ");
+			clockString = " 10:" + minuteString + " PM ";
 			break;
 		}
 	case 23:
 		{
-			clockString = string(" 11:") + minuteString + string(" PM ");
+			clockString = " 11:" + minuteString + " PM ";
 			break;
 		}
 	default:

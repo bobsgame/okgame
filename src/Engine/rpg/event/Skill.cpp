@@ -24,7 +24,7 @@ Skill::Skill(Engine* g, int id)
 	{
 		if (getEventManager()->skillList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Skill already exists:") + data->getName());
+			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
@@ -42,7 +42,7 @@ Skill::Skill(Engine* g, SkillData* data)
 	{
 		if (getEventManager()->skillList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Skill already exists:") + data->getName());
+			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
@@ -91,14 +91,14 @@ void Skill::setValue_S(float f)
 { //=========================================================================================================================
 	timeSet = System::currentHighResTimer();
 	value = f;
-	getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("skillValues:`") + to_string(data->getID()) + string(":") + to_string(f) + string(":") + to_string(timeSet) + string("`"));
+	getServerConnection()->addQueuedGameSaveUpdateRequest_S("skillValues:`" + to_string(data->getID()) + ":" + to_string(f) + ":" + to_string(timeSet) + "`");
 }
 
 void Skill::setValue_S(int i)
 { //=========================================================================================================================
 	timeSet = System::currentHighResTimer();
 	value = (float)i;
-	getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("skillValues:`") + to_string(data->getID()) + string(":") + to_string(i) + string(":") + to_string(timeSet) + string("`"));
+	getServerConnection()->addQueuedGameSaveUpdateRequest_S("skillValues:`" + to_string(data->getID()) + ":" + to_string(i) + ":" + to_string(timeSet) + "`");
 }
 
 //The following method was originally marked 'synchronized':

@@ -133,7 +133,7 @@ V HashMap<K, V>::get(K k)
 	}
 	catch(const exception&)
 	{
-		log.error(string("get() out of range exception"));
+		log.error("get() out of range exception");
 	}
 	return v;
 }

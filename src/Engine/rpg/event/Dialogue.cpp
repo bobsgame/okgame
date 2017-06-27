@@ -24,7 +24,7 @@ Dialogue::Dialogue(Engine* g, int id)
 	{
 		if (getEventManager()->dialogueList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Dialogue already exists:") + data->getName());
+			log.error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}
@@ -42,7 +42,7 @@ Dialogue::Dialogue(Engine* g, DialogueData* data)
 	{
 		if (getEventManager()->dialogueList.get(i)->getID() == data->getID())
 		{
-			log.error(string("Dialogue already exists:") + data->getName());
+			log.error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}
@@ -129,11 +129,11 @@ void Dialogue::setDialogueDoneValue_S(bool b)
 
 	if (b == true)
 	{
-		getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("dialoguesDone:`") + to_string(getID()) + string(":true:") + to_string(timeSet) + string("`"));
+		getServerConnection()->addQueuedGameSaveUpdateRequest_S("dialoguesDone:`" + to_string(getID()) + ":true:" + to_string(timeSet) + "`");
 	}
 	if (b == false)
 	{
-		getServerConnection()->addQueuedGameSaveUpdateRequest_S(string("dialoguesDone:`") + to_string(getID()) + string(":false:") + to_string(timeSet) + string("`"));
+		getServerConnection()->addQueuedGameSaveUpdateRequest_S("dialoguesDone:`" + to_string(getID()) + ":false:" + to_string(timeSet) + "`");
 	}
 
 

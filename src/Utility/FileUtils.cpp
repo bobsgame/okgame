@@ -70,11 +70,11 @@ void test()
 
 
 	//some file stuff
-	File tmpFile(Path(tmpPath, string("PocoFileSample.dat")));
+	File tmpFile(Path(tmpPath, "PocoFileSample.dat"));
 	if (tmpFile.createFile())
 	{
 		tmpFile.setSize(10000);
-		File tmpFile2(Path(tmpPath, string("PocoFileSample2.dat")));
+		File tmpFile2(Path(tmpPath, "PocoFileSample2.dat"));
 		tmpFile.copyTo(tmpFile2.path());
 		Poco::Timestamp now;
 		tmpFile.setLastModified(now);
@@ -194,7 +194,7 @@ void* HARDWARE_load_file(string filename)
 		if (filepointer == NULL)
 		{
 			ERROR_set_error(filename);
-			ERROR_set_error(string(" malloc failed\n"));
+			ERROR_set_error(" malloc failed\n");
 		}
 
 		//size_t bytesRead =
@@ -203,7 +203,7 @@ void* HARDWARE_load_file(string filename)
 	if (file == NULL)
 	{
 		ERROR_set_error(filename);
-		ERROR_set_error(string(" was not found\n"));
+		ERROR_set_error(" was not found\n");
 	}
 
 	fclose(file);
@@ -247,7 +247,7 @@ long HARDWARE_get_file_size(string filename)//HARDWARE_FSFile[HARDWARE_FSGetFile
 	if (file == NULL)
 	{
 		ERROR_set_error(filename);
-		ERROR_set_error(string(" was not found\n"));
+		ERROR_set_error(" was not found\n");
 	}
 
 	fclose(file);
@@ -286,7 +286,7 @@ FileUtils::FileUtils()
 
 
 	//slash = "/";// prop->getProperty("file.separator"); //also File.separatorChar, File.separator
-	//cacheDir = "";// prop->getProperty("user.home") + slash + string(".bobsGame") + slash;
+	//cacheDir = "";// prop->getProperty("user.home") + slash + ".bobsGame" + slash;
 	//fileUtils = this;
 	appDataPath = string(SDL_GetPrefPath("Bob Corporation", "bob's game"));
 	cacheDir = appDataPath+"cache/";
@@ -350,7 +350,7 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//      if (is == nullptr)
 //	//      {
-//	//         log.error(string("Could not find file in ClassLoader: ") + filename);
+//	//         log.error("Could not find file in ClassLoader: " + filename);
 //	//      }
 //	//
 //	//      return is;
@@ -369,7 +369,7 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//         if (!file->exists())
 //	//         {
-//	//            log.error(string("Could not find file: ") + filename);
+//	//            log.error("Could not find file: " + filename);
 //	//            return nullptr;
 //	//         }
 //	//         else
@@ -379,7 +379,7 @@ void FileUtils::makeDir(const string& cs)
 //	//      }
 //	//      catch (IOException e)
 //	//      {
-//	//         log.error(string("Error opening file: ") + filename);
+//	//         log.error("Error opening file: " + filename);
 //	//         //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
 //	//         delete stream;
 //	//      }
@@ -415,7 +415,7 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//      if (is == nullptr)
 //	//      {
-//	//         log.error(string("Could not find file in ClassLoader: ") + filename);
+//	//         log.error("Could not find file in ClassLoader: " + filename);
 //	//      }
 //	//
 //	//      return is;
@@ -433,7 +433,7 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//         if (file->exists() == false)
 //	//         {
-//	//            log.error(string("Could not find file: ") + filename);
+//	//            log.error("Could not find file: " + filename);
 //	//
 //	//            //if(BobNet.debugMode)new Exception().printStackTrace();
 //	//
@@ -446,7 +446,7 @@ void FileUtils::makeDir(const string& cs)
 //	//      }
 //	//      catch (IOException e)
 //	//      {
-//	//         log.error(string("Error opening file: ") + filename);
+//	//         log.error("Error opening file: " + filename);
 //	//         return nullptr;
 //	//      }
 //	//   }
@@ -1554,7 +1554,7 @@ void FileUtils::saveImage(const string& s, BufferedImage* i)
 void FileUtils::writeSessionTokenToCache(long long userID, const string& sessionToken, bool statsAllowed)
 { //===============================================================================================
 
-//	File* sessionFile = new File(cacheDir + string("session.txt"));
+//	File* sessionFile = new File(cacheDir + "session.txt");
 //	
 //	if (sessionFile->exists() == false)
 //	{
@@ -1563,7 +1563,7 @@ void FileUtils::writeSessionTokenToCache(long long userID, const string& session
 //	
 //	try
 //	{
-//		sessionFile->write(string("") + to_string(userID) + string(",`") + sessionToken + string("`,") + StringConverterHelper::toString(statsAllowed));
+//		sessionFile->write("" + to_string(userID) + ",`" + sessionToken + "`," + StringConverterHelper::toString(statsAllowed));
 //		sessionFile->closeFile();
 //	}
 //	catch (exception)
@@ -1573,14 +1573,14 @@ void FileUtils::writeSessionTokenToCache(long long userID, const string& session
 
 	ofstream outputFile;
 	outputFile.open(appDataPath + "session.txt", ofstream::out);//leave this without runpath, will always be run in windows debug in the proper cwd /bobsgame/
-	outputFile << string("") + to_string(userID) + string(",`") + sessionToken + string("`,") + StringConverterHelper::toString(statsAllowed);
+	outputFile << "" + to_string(userID) + ",`" + sessionToken + "`," + StringConverterHelper::toString(statsAllowed);
 	outputFile.close();
 }
 
 string FileUtils::readSessionTokenFromCache()
 { //===============================================================================================
 
-//	File* sessionFile = new File(cacheDir + string("session.txt"));
+//	File* sessionFile = new File(cacheDir + "session.txt");
 //	
 //	if (sessionFile->exists() == false)
 //	{
@@ -1610,10 +1610,10 @@ string FileUtils::readSessionTokenFromCache()
 //	    }
 //	}
 
-	File f(appDataPath + string("session.txt"));
+	File f(appDataPath + "session.txt");
 	if (f.exists())
 	{
-		ifstream t(appDataPath + string("session.txt"));
+		ifstream t(appDataPath + "session.txt");
 		string str;
 
 		t.seekg(0, ios::end);
@@ -1633,7 +1633,7 @@ string FileUtils::readSessionTokenFromCache()
 void FileUtils::deleteSessionTokenFromCache()
 { //===============================================================================================
 
-	File* sessionFile = new File(appDataPath + string("session.txt"));
+	File* sessionFile = new File(appDataPath + "session.txt");
 	if(sessionFile->exists())sessionFile->remove();
 
 
@@ -1646,7 +1646,7 @@ void FileUtils::setStatusText(const string& text)
 
 	   if (statusConsoleText == nullptr)
 	   {
-	      statusConsoleText = Console::add("", GLUtils::getViewportWidth() / 2 - 50, GLUtils::getViewportHeight() / 2 - 10);
+	      statusConsoleText = Console::add("", -1, GLUtils::getViewportWidth() / 2 - 50, GLUtils::getViewportHeight() / 2 - 10);
 	   }
 	
 	   statusConsoleText->x = (int)(GLUtils::getViewportWidth() / 2 - ((statusConsoleText->getWidth() + 3) / 2));
@@ -1718,7 +1718,7 @@ void FileUtils::deleteStatusText()
 //void FileUtils::ProgressListener::actionPerformed(ActionEvent* e)
 //{
 //   // e.getSource() gives you the object of DownloadCountingOutputStream because you set it in the overriden method, afterWrite().
-//   outerInstance->setStatusText(string("Downloading ") + outerInstance->downloadingDataNiceName + string(": ") + (static_cast<DownloadCountingOutputStream*>(e->getSource()))->getByteCount() / 1024 + string(" kB / ") + outerInstance->downloadingFileSize / 1024 + string(" kB"));
+//   outerInstance->setStatusText("Downloading " + outerInstance->downloadingDataNiceName + ": " + (static_cast<DownloadCountingOutputStream*>(e->getSource()))->getByteCount() / 1024 + " kB / " + outerInstance->downloadingFileSize / 1024 + " kB");
 //}
 //
 //FileUtils::DownloadCountingOutputStream::DownloadCountingOutputStream(FileUtils* outerInstance, OutputStream* out) : org::apache::commons::io::output::CountingOutputStream(out), outerInstance(outerInstance)
@@ -1810,7 +1810,7 @@ void FileUtils::downloadFileToCacheWithProgressListener(const string& fileName, 
 	//   }
 	//   catch (exception& e)
 	//   {
-	//      log.error(string("Error downloading file to cache! File: ") + getFileName + string(" Error: ") + e.what());
+	//      log.error("Error downloading file to cache! File: " + getFileName + " Error: " + e.what());
 	//      e.printStackTrace();
 	//   }
 	//   //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to the exception 'finally' clause:
@@ -1841,7 +1841,7 @@ void FileUtils::downloadFileToCacheWithProgressListener(const string& fileName, 
 void FileUtils::decompressZipInCache(const string& fileName, const string& niceName)
 { //===============================================================================================
 	//
-	//   setStatusText(string("Decompressing ") + niceName + string("..."));
+	//   setStatusText("Decompressing " + niceName + "...");
 	//
 	//   try
 	//   {
@@ -1980,8 +1980,8 @@ void FileUtils::downloadAndDecompressZIPFileIfDifferentFromServer(const string& 
 	//   long long serverSize = getFileSizeOnServer(getFileName);
 	//   long long localSize = getFileSizeInCache(getFileName);
 	//
-	//   log.debug(string("") + getFileName + string(" size on server: ") + to_string(serverSize));
-	//   log.debug(string("") + getFileName + string(" size in cache: ") + to_string(localSize));
+	//   log.debug("" + getFileName + " size on server: " + to_string(serverSize));
+	//   log.debug("" + getFileName + " size in cache: " + to_string(localSize));
 	//
 	//   if (localSize != serverSize && serverSize > 16)
 	//   {
@@ -1999,8 +1999,8 @@ void FileUtils::downloadFileIfDifferentFromServer(const string& fileName, const 
 	//   long long serverSize = getFileSizeOnServer(getFileName);
 	//   long long localSize = getFileSizeInCache(getFileName);
 	//
-	//   log.debug(string("") + getFileName + string(" size on server: ") + to_string(serverSize));
-	//   log.debug(string("") + getFileName + string(" size in cache: ") + to_string(localSize));
+	//   log.debug("" + getFileName + " size on server: " + to_string(serverSize));
+	//   log.debug("" + getFileName + " size in cache: " + to_string(localSize));
 	//
 	//   if (localSize != serverSize && serverSize > 16)
 	//   {
@@ -2014,7 +2014,7 @@ void FileUtils::downloadFileIfDifferentFromServer(const string& fileName, const 
 void FileUtils::initCache()
 { //===============================================================================================
 
-	   log.info("Init FileUtils...");
+	   //log.info("Init FileUtils...");
 	
 	   FileUtils::makeDir(cacheDir);
 
@@ -2027,12 +2027,12 @@ void FileUtils::initCache()
 			// check filesize of sprites.zip on server
 			//if different, delete sprites.zip locally, download sprites.zip, decompress.
 	
-	
+	   //log.info("Initializing cache data...");
 	   downloadAndDecompressZIPFileIfDifferentFromServer("sprites.zip", "Sprite Graphics");
 	   downloadAndDecompressZIPFileIfDifferentFromServer("maps.zip", "Background Graphics");
 	   downloadAndDecompressZIPFileIfDifferentFromServer("sounds.zip", "Sound Effects");
 	   downloadAndDecompressZIPFileIfDifferentFromServer("music.zip", "Initial Music Data");
-	   downloadFileIfDifferentFromServer("gameData", "Initial Game Data");
+	   //downloadFileIfDifferentFromServer("gameData", "Initial Game Data"); //old bobs game puzzle assets
 	
 	   deleteStatusText();
 
@@ -2053,14 +2053,14 @@ void FileUtils::initCache()
 	   //			}
 	   //}
 	
-	   log.info("FileUtils Complete.");
+	   // log.info("FileUtils Complete.");
 }
 
 void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	//
-	//   if (FileUtils::getResource(string("") + FileUtils::cacheDir + getFileName) == nullptr)
+	//   if (FileUtils::getResource("" + FileUtils::cacheDir + getFileName) == nullptr)
 	//   {
 	//      File* outputFile = new File(cacheDir + getFileName);
 	//
@@ -2095,7 +2095,7 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//      }
 	//      catch (exception& e)
 	//      {
-	//         log.error(string("Error downloading file to cache! File: ") + getFileName + string(" Error: ") + e.what());
+	//         log.error("Error downloading file to cache! File: " + getFileName + " Error: " + e.what());
 	//         e.printStackTrace();
 	//      }
 	//      //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to the exception 'finally' clause:
@@ -2161,7 +2161,7 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 { //===============================================================================================
 
 
-	//   if (FileUtils::getResource(string("") + FileUtils::cacheDir + getFileName) == nullptr)
+	//   if (FileUtils::getResource("" + FileUtils::cacheDir + getFileName) == nullptr)
 	//   {
 	//      URL* fileURL = nullptr;
 	//
@@ -2176,7 +2176,7 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 	//
 	//      try
 	//      {
-	//         FileUtils::copyURLToFile(fileURL, new File(string("") + FileUtils::cacheDir + getFileName), 60000, 60000);
+	//         FileUtils::copyURLToFile(fileURL, new File("" + FileUtils::cacheDir + getFileName), 60000, 60000);
 	//      }
 	//      catch (IOException e1)
 	//      {
@@ -2291,7 +2291,7 @@ void FileUtils::writeByteArrayToFile(vector<u8>* byteArray, const string& fileNa
 
 bool FileUtils::doesDidIntroFileExist()
 { //===============================================================================================
-	//   File* introCheckFile = new File(FileUtils::cacheDir + string(".didIntro"));
+	//   File* introCheckFile = new File(FileUtils::cacheDir + ".didIntro");
 	//   if (introCheckFile->exists())
 	//   {
 	//      return true;
@@ -2301,7 +2301,7 @@ bool FileUtils::doesDidIntroFileExist()
 
 void FileUtils::writeDidIntroFile()
 { //===============================================================================================
-	//   File* introCheckFile = new File(FileUtils::cacheDir + string(".didIntro"));
+	//   File* introCheckFile = new File(FileUtils::cacheDir + ".didIntro");
 	//   try
 	//   {
 	//      introCheckFile->createNewFile();

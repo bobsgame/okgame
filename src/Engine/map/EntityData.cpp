@@ -324,7 +324,7 @@ string EntityData::initFromString(string t)
 
 string EntityData::getTYPEIDString()
 { //===============================================================================================
-	return string("ENTITY.") + to_string(getID());
+	return "ENTITY." + to_string(getID());
 }
 
 float EntityData::getSpawnXPixels1X()

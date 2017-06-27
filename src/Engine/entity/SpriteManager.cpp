@@ -259,7 +259,7 @@ Sprite* SpriteManager::getSpriteByName(const string& spriteAssetName)
 
 	if (s == nullptr)
 	{
-		log.error(string("getSpriteByName not found in spriteByNameHashMap:") + spriteAssetName);
+		log.error("getSpriteByName not found in spriteByNameHashMap:" + spriteAssetName);
 	}
 
 
