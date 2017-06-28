@@ -29,7 +29,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 		//type=TYPE_BOOL;
 		try
 		{
-			this->b = StringConverterHelper::fromString<bool>(primitiveValueString);
+			this->b = Boolean::parseBoolean(primitiveValueString);
 		}
 		catch (exception)
 		{

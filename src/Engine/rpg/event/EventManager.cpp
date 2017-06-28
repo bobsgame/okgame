@@ -52,9 +52,9 @@ void EventManager::update()
 		skillList.get(i)->update();
 	}
 
-	for (int i = 0; i < itemList.size(); i++)
+	for (int i = 0; i < cutsceneEventList.size(); i++)
 	{
-		itemList.get(i)->update();
+		cutsceneEventList.get(i)->update();
 	}
 
 

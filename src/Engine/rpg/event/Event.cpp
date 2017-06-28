@@ -27,10 +27,10 @@ Event::Event(Engine* g, EventData* eventData, string s)
 	this->e = g;
 	this->data = eventData;
 	
-	setInitialized_S(true);
+	initEvent();
 
 	getEventManager()->cutsceneEventList.add(this);
-	//initEvent();
+
 }
 
 
@@ -75,37 +75,37 @@ void Event::initEvent()
 {
 	setInitialized_S(true);
 
-	for(int i=0;getData()->dialogueDataList->size();i++)
+	for(int i=0;i<getData()->dialogueDataList->size();i++)
 	{
 		DialogueData* data = getData()->dialogueDataList->get(i);
 		Dialogue* d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0;getData()->flagDataList->size();i++)
+	for(int i=0; i<getData()->flagDataList->size();i++)
 	{
 		FlagData* data = getData()->flagDataList->get(i);
 		Flag* d = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0;getData()->gameStringDataList->size();i++)
+	for(int i=0; i<getData()->gameStringDataList->size();i++)
 	{
 		GameStringData* data = getData()->gameStringDataList->get(i);
 		GameString* d = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0;getData()->skillDataList->size();i++)
+	for(int i=0; i<getData()->skillDataList->size();i++)
 	{
 		SkillData* data = getData()->skillDataList->get(i);
 		Skill* d = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0;getData()->musicDataList->size();i++)
+	for(int i=0; i<getData()->musicDataList->size();i++)
 	{
 		MusicData* data = getData()->musicDataList->get(i);
 		Music* d = getAudioManager()->getMusicByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0;getData()->soundDataList->size();i++)
+	for(int i=0; i<getData()->soundDataList->size();i++)
 	{
 		SoundData* data = getData()->soundDataList->get(i);
 		Sound* d = getAudioManager()->getSoundByIDCreateIfNotExist(data->getID());

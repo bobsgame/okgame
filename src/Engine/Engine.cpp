@@ -393,12 +393,12 @@ bool Engine::serverMessageReceived(string e)// ChannelHandlerContext* ctx, Messa
 		incomingSkill(s);
 		return true;
 	}
-//	else
-//	if (String::startsWith(s, BobNet::Event_Response))
-//	{
-//		incomingEvent(s);
-//		return true;
-//	}
+	else
+	if (String::startsWith(s, BobNet::Event_Response))
+	{
+		incomingCutsceneEvent(s);
+		return true;
+	}
 	else
 	if (String::startsWith(s, BobNet::GameString_Response))
 	{
@@ -558,32 +558,32 @@ void Engine::incomingDialogue(string s)
 	}
 }
 
-//
-//void Engine::sendEventRequest(int id)
-//{ //=========================================================================================================================
-//	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Event_Request + to_string(id) + BobNet::endline);
-//}
-//
-//void Engine::incomingEvent(string s)
-//{ //=========================================================================================================================
-//
-//  //Event:id-name:eventData
-//	s = s.substr(s.find(":") + 1);
-//	s = s.substr(s.find(":") + 1); //intentional ::
-//
-//
-//	EventData* data = new EventData(); data->initFromString(s);
-//
-//	if (data == nullptr)
-//	{
-//		log.error("Event could not be decompressed.");
-//	}
-//	else
-//	{
-//		Event* d = getEventManager()->getCutsceneEventByID(data->getID());
-//		if (d == nullptr)d = new Event(this, data, "cutscene");
-//	}
-//}
+
+void Engine::sendCutsceneEventRequest(int id)
+{ //=========================================================================================================================
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Event_Request + to_string(id) + BobNet::endline);
+}
+
+void Engine::incomingCutsceneEvent(string s)
+{ //=========================================================================================================================
+
+  //Event:id-name:eventData
+	s = s.substr(s.find(":") + 1);
+	s = s.substr(s.find(":") + 1); //intentional ::
+
+
+	EventData* data = new EventData(); data->initFromString(s);
+
+	if (data == nullptr)
+	{
+		log.error("Event could not be decompressed.");
+	}
+	else
+	{
+		Event* d = getEventManager()->getCutsceneEventByID(data->getID());
+		if (d == nullptr)d = new Event(this, data, "cutscene");
+	}
+}
 
 void Engine::sendGameStringRequest(int id)
 { //=========================================================================================================================
