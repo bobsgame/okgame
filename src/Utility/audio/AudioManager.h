@@ -58,22 +58,20 @@ public:
 
 	//virtual Sound* loadSoundFileByName(const string& name);
 	
-	void setPlayingMusicVolume(float v);
+	
 	void update();
-	Music* getMusicByName(const string& musicName);
-	Music* getMusicByID(int musicID);
-	bool isAnyMusicPlaying();
 
+	static Music* getMusicByName(const string& musicName);
+	void setAllPlayingMusicVolume(float v);
+	bool isAnyMusicPlaying();
 	void pauseAnyPlayingMusic();
 	void playAnyPausedMusic();
-
 	bool isMusicPlaying(Music* m);
 	bool isMusicPlaying(const string& musicName);
 	void playMusic(Music* m);
-	void playMusic(const string& musicName);
+	Music* playMusic(const string& musicName);
 	void playMusic(Music* m, float volume, float pitch, bool loop);
-	void playMusicByName(const string& musicName);
-	void playMusic(const string& musicName, float volume, float pitch, bool loop);
+	Music* playMusic(const string& musicName, float volume, float pitch, bool loop);
 	void stopMusic(Music* m);
 	void stopMusic(const string& musicName);
 	void fadeOutMusic(const string& musicName, int ticks);
@@ -83,7 +81,10 @@ public:
 	void setAllLoopingMusicThatIsNotFadingOutToNotLoop();
 	void pauseAllMusic();
 	void unpauseAllMusic();
-	Sound* getSoundByName(const string& soundName);
+
+
+
+	static Sound* getSoundByName(const string& soundName);
 	void playSound(const string& soundName, float volume, float pitch); //, int times)
 	void playSound(const string& soundName, float volume, float pitch, int times);
 	void playSound(const string& soundName);

@@ -99,60 +99,41 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapData.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapData.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\AreaData.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\AreaData.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\Event.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\Event.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\DoorData.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\DoorData.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\BGClientEngine.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\EntityData.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\EntityData.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\LightData.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\LightData.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\SpriteData.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\SpriteData.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\Engine.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\Engine.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventData.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventData.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventCommand.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapManager.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Area.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Area.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\AudioManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\AudioManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\WarpArea.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\Sound.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\Sound.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Door.cpp</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Entity.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Entity.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Sprite.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Sprite.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\SpriteManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\Music.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\Music.h</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

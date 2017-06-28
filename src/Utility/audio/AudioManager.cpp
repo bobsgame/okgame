@@ -244,17 +244,6 @@ Music* AudioManager::getMusicByName(const string& musicName)
 	return nullptr;
 }
 
-Music* AudioManager::getMusicByID(int musicID)
-{ //=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
-	{
-		if (musicList->get(i)->getID() == musicID)
-		{
-			return musicList->get(i);
-		}
-	}
-	return nullptr;
-}
 
 bool AudioManager::isAnyMusicPlaying()
 { //=========================================================================================================================
@@ -295,7 +284,7 @@ void AudioManager::playAnyPausedMusic()
 
 }
 //=========================================================================================================================
-void AudioManager::setPlayingMusicVolume(float v)
+void AudioManager::setAllPlayingMusicVolume(float v)
 {//=========================================================================================================================
 	for (int i = 0; i < playingMusicList->size(); i++)
 	{
@@ -330,14 +319,16 @@ void AudioManager::playMusic(Music* m)
 	if (playingMusicList->contains(m) == false)playingMusicList->add(m);
 }
 
-void AudioManager::playMusic(const string& musicName)
+Music* AudioManager::playMusic(const string& musicName)
 { //=========================================================================================================================
 	Music* m = getMusicByName(musicName);
 	if (m != nullptr)
 	{
 		m->play();
 		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
+		return m;
 	}
+	return nullptr;
 }
 
 void AudioManager::playMusic(Music* m, float volume, float pitch, bool loop)
@@ -350,24 +341,17 @@ void AudioManager::playMusic(Music* m, float volume, float pitch, bool loop)
 	}
 }
 
-void AudioManager::playMusicByName(const string& musicName)
-{ //=========================================================================================================================
-	Music* m = getMusicByName(musicName);
-	if (m != nullptr)
-	{
-		m->play();
-		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
-	}
-}
 
-void AudioManager::playMusic(const string& musicName, float volume, float pitch, bool loop)
+Music* AudioManager::playMusic(const string& musicName, float volume, float pitch, bool loop)
 { //=========================================================================================================================
 	Music* m = getMusicByName(musicName);
 	if (m != nullptr)
 	{
 		m->play(pitch, volume, loop);
 		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
+		return m;
 	}
+	return nullptr;
 }
 
 void AudioManager::stopMusic(Music* m)
@@ -619,6 +603,7 @@ void AudioManager::playSound(Sound* s, float vol, float pitch, int times)
 }
 
 
+
 //=========================================================================================================================
 Music* AudioManager::getMusicByIDCreateIfNotExist(int id)
 {//=========================================================================================================================
@@ -627,7 +612,7 @@ Music* AudioManager::getMusicByIDCreateIfNotExist(int id)
 		Music* s = musicList->get(i);
 		if (s->getID() == id)return s;
 	}
-	return nullptr;
+	return new Music(e,new MusicData(id, "", ""));
 }
 
 //=========================================================================================================================
@@ -638,7 +623,7 @@ Sound* AudioManager::getSoundByIDCreateIfNotExist(int id)
 		Sound* s = soundList->get(i);
 		if (s->getID() == id)return s;
 	}
-	return nullptr;
+	return new Sound(e, new SoundData(id, "", ""));
 }
 
 

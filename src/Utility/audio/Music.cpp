@@ -184,7 +184,7 @@ void Music::update()
 	}
 
 	//download the file to the cache if it doesnt exist
-	if (fileExists == false && getByteData() != nullptr)
+	if (fileExists == false && getByteData() == nullptr)
 	{
 		if (getFileExists() == false)
 		{

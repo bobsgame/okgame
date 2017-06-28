@@ -738,8 +738,15 @@ void BGClientEngine::loadPreCachedObjectData()
 			{
 				SoundData* data = new SoundData(); data->initFromString(s);
 
-				//Sound* m =
-                new Sound(this, data);
+				Sound* m = AudioManager::getSoundByName(data->getName());
+				if (m == nullptr)
+				{
+					new Sound(this, data);
+				}
+				else
+				{
+					m->setID(data->getID());
+				}
 
 				//just adding the md5 names for the sounds in sounds.zip to the soundList so they can be immediately accessed without server calls
 				//getAudioManager()->soundList.add(m);
@@ -775,8 +782,15 @@ void BGClientEngine::loadPreCachedObjectData()
 			{
 				MusicData* data = new MusicData(); data->initFromString(s);
 
-				//Music* m =
-                new Music(this, data);
+				Music* m = AudioManager::getMusicByName(data->getName());
+				if (m == nullptr)
+				{
+					new Music(this, data);
+				}
+				else
+				{
+					m->setID(data->getID());
+				}
 
 				//just adding the md5 names for PRELOADED music in music.zip to the musicList so they can be immediately accessed without server calls
 				//getAudioManager()->musicList.add(m);
