@@ -53,6 +53,7 @@ private:
 	float volume = 1.0f;
 	bool loop = false;
 
+	bool paused = false;
 
 	bool shouldBePlaying = false;
 	bool playingStarted = false;

@@ -41,6 +41,8 @@ public:
 	static ArrayList<Sound*>* soundList;
 	static HashMap<string, Sound*>* soundByNameHashMap;
 
+	//not global, used to do stop all music for only this engine etc
+	ArrayList<Music*>* playingMusicList = new ArrayList<Music*>();
 
 #ifdef USE_SOLOUD
 	static SoLoud::Soloud *soLoud;// = nullptr;
@@ -49,41 +51,46 @@ public:
 
 
 	AudioManager();
-	AudioManager(Engine* g);	
-	static void initAudio();
+	AudioManager(Engine* g);
+	void init();
+	static void initAudioLibrary();
 	static void cleanup();
 
 	//virtual Sound* loadSoundFileByName(const string& name);
-	int getMusicVolume();
-	void setMusicVolume();
-	virtual void update();
-	virtual Music* getMusicByName(const string& musicName);
-	virtual Music* getMusicByID(int musicID);
-	virtual bool isAnyMusicPlaying();
-	virtual bool isMusicPlaying(Music* m);
-	virtual bool isMusicPlaying(const string& musicName);
-	virtual void playMusic(Music* m);
-	virtual void playMusic(const string& musicName);
-	virtual void playMusic(Music* m, float volume, float pitch, bool loop);
-	virtual void playMusicByName(const string& musicName);
-	virtual void playMusic(const string& musicName, float volume, float pitch, bool loop);
-	virtual void stopMusic(Music* m);
-	virtual void stopMusic(const string& musicName);
-	virtual void fadeOutMusic(const string& musicName, int ticks);
-	virtual void fadeOutMusic(Music* m, int ticks);
-	virtual void stopAllMusic();
-	virtual void fadeOutAllMusic(int ticks);
-	virtual void setAllLoopingMusicThatIsNotFadingOutToNotLoop();
-	virtual void pauseAllMusic();
-	virtual void unpauseAllMusic();
-	virtual Sound* getSoundByName(const string& soundName);
-	virtual void playSound(const string& soundName, float volume, float pitch); //, int times)
-	virtual void playSound(const string& soundName, float volume, float pitch, int times);
-	virtual void playSound(const string& soundName);
-	virtual void playSound(Sound* s);
-	virtual void playSound(Sound* s, float vol);
-	virtual void playSound(Sound* s, float vol, float pitch); //, int times)
-	virtual void playSound(Sound* s, float vol, float pitch, int times);
+	
+	void setPlayingMusicVolume(float v);
+	void update();
+	Music* getMusicByName(const string& musicName);
+	Music* getMusicByID(int musicID);
+	bool isAnyMusicPlaying();
+
+	void pauseAnyPlayingMusic();
+	void playAnyPausedMusic();
+
+	bool isMusicPlaying(Music* m);
+	bool isMusicPlaying(const string& musicName);
+	void playMusic(Music* m);
+	void playMusic(const string& musicName);
+	void playMusic(Music* m, float volume, float pitch, bool loop);
+	void playMusicByName(const string& musicName);
+	void playMusic(const string& musicName, float volume, float pitch, bool loop);
+	void stopMusic(Music* m);
+	void stopMusic(const string& musicName);
+	void fadeOutMusic(const string& musicName, int ticks);
+	void fadeOutMusic(Music* m, int ticks);
+	void stopAllMusic();
+	void fadeOutAllMusic(int ticks);
+	void setAllLoopingMusicThatIsNotFadingOutToNotLoop();
+	void pauseAllMusic();
+	void unpauseAllMusic();
+	Sound* getSoundByName(const string& soundName);
+	void playSound(const string& soundName, float volume, float pitch); //, int times)
+	void playSound(const string& soundName, float volume, float pitch, int times);
+	void playSound(const string& soundName);
+	void playSound(Sound* s);
+	void playSound(Sound* s, float vol);
+	void playSound(Sound* s, float vol, float pitch); //, int times)
+	void playSound(Sound* s, float vol, float pitch, int times);
 	Music* getMusicByIDCreateIfNotExist(int id);
 	Sound* getSoundByIDCreateIfNotExist(int id);
 };

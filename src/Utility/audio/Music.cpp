@@ -39,16 +39,16 @@ Music::Music(Engine* g, MusicData* data)
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)Main::audioManager->musicList->size(); i++)
+	for (int i = 0; i < (int)AudioManager::musicList->size(); i++)
 	{
-		if (Main::audioManager->musicList->get(i)->getName() == data->getName())
+		if (AudioManager::musicList->get(i)->getName() == data->getName())
 		{
-			if (Main::audioManager->musicList->get(i)->getID() == -1)Main::audioManager->musicList->get(i)->setID(data->getID());
+			if(AudioManager::musicList->get(i)->getID() == -1)AudioManager::musicList->get(i)->setID(data->getID());
 			//log.warn("Music already exists:" + data->getName());
 			return;
 		}
 	}
-	Main::audioManager->musicList->add(this);
+	AudioManager::musicList->add(this);
 }
 
 
@@ -94,7 +94,7 @@ Music::Music(Engine *g, string filename)
 	fileExists = true;
 	setInitialized_S(true);
 
-	Main::audioManager->musicList->add(this);
+	AudioManager::musicList->add(this);
 
 }
 
@@ -243,6 +243,14 @@ void Music::update()
 
 	if (fileExists == true || getByteData() != nullptr)
 	{
+
+		if(paused)
+		{
+			
+			stop();
+			playingStarted = false;
+		}
+		else
 		if (shouldBePlaying == true)
 		{
 
@@ -264,7 +272,7 @@ void Music::update()
 			            {
 			               if (playingStarted == true)
 			               {
-			                  
+							   stop();
 			               }
 			            }
 			//
@@ -370,7 +378,7 @@ void Music::pause()
 	//      channel->pause();
 	//   }
 
-	shouldBePlaying = false;
+	paused = true;
 }
 
 void Music::unpause()
@@ -379,7 +387,7 @@ void Music::unpause()
 	//   {
 	//      channel->unPause();
 	//   }
-	shouldBePlaying = true;
+	paused = false;
 }
 
 void Music::stop()

@@ -609,7 +609,7 @@ void Map::update()
 				{
 					//int eventID = mapEventList.get(i);
 					Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
-					//event->map = this;
+					event->map = this;
 					if (event->getInitialized_S() == false)
 					{
 						eventsAllLoadedThisTime = false;

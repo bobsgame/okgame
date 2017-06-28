@@ -59,7 +59,7 @@ void Engine::init()
 
 	controlsManager = Main::controlsManager;
 
-
+	audioManager->init();
 	textManager->init();
 	cinematicsManager->init();
 

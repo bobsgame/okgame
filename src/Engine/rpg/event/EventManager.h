@@ -23,8 +23,8 @@ public:
 	static Logger log;
 
 
-	ArrayList<Event*> cutsceneEventList;//project events?
-	//ArrayList<Event*> eventList;
+	ArrayList<Event*> cutsceneEventList;//project events and unattached events
+	//ArrayList<Event*> eventList;//all events get put here for global lookup
 	ArrayList<Dialogue*> dialogueList;
 	ArrayList<GameString*> gameStringList;
 	ArrayList<Flag*> flagList;

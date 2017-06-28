@@ -127,7 +127,7 @@ public:
 	//ORIGINAL LINE: public volatile boolean exit = false;
 	static bool quit;// = false;
 
-	static AudioManager* audioManager;
+	//static AudioManager* audioManager;
 	static FileUtils* cacheManager;
 	static StateManager* stateManager;
 	static System* systemUtils;

@@ -16,290 +16,12 @@
 Logger AudioManager::log = Logger("AudioManager");
 
 
-int G_mute = 0;//GLOBAL MUTE
-
-int current_bgm_volume = 0;
-
-Mix_Music* song_playing = nullptr;
-
-
-int* current_mod_data_pointer = nullptr;
-
-
-string playingname = "";// [128];
-
-
-Mix_Chunk* mixchunks[32] = { nullptr };
-string mixchunkfilename[32] = { "" };
-
-
-
-//==========================================================================================================================
-char* HARDWARE_get_sound_filename_from_name(string &name, int freq)
-{//==========================================================================================================================
-
-	char* filename = NULL;
-
-	//if(strcmp(name,"footstep")==0)filename=footstep_FileName;
-
-	return filename;
-}
-
-
-//==========================================================================================================================
-Mix_Chunk* HARDWARE_get_sound_data_pointer_from_name(string &name, int freq)
-{//==========================================================================================================================
-
-	char* filename = NULL;
-
-
-	filename = HARDWARE_get_sound_filename_from_name(name, freq);
-	if (filename == NULL)return NULL;
-
-	//search mixchunkfilenames 0-31 for matches with filename
-	int d = -1;
-	int x = 0;
-	for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
-	{
-		if (mixchunkfilename[x] == filename)
-		{
-			d = x;
-			x = MAX_SOUNDS_PLAYING;
-			break;
-		}
-	}
-
-	if (d == -1)
-	{
-		//find open filename slot
-		for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
-		{
-			if (mixchunkfilename[x] == "")
-			{
-				d = x;
-				mixchunkfilename[d] = filename;//set slot to filename
-				mixchunks[d] = Mix_LoadWAV(mixchunkfilename[d].c_str());//load wav
-				x = MAX_SOUNDS_PLAYING;
-				break;
-			}
-		}
-	}
-
-	return mixchunks[d];
-}
-
-
-//==========================================================================================================================
-bool HARDWARE_play_sound(string &name, int vol, int freq, int loop)//if(!HARDWARE_is_sound_channel_busy(chan))//HARDWARE_PlayFSSoundEx2(chan,HARDWARE_FSGetFile(0,name,""),vol,freq,0,loop,0);
-{//==========================================================================================================================
-
-	if (G_mute)vol = 0;
-
-
-	Mix_Chunk* data = NULL;
-	data = HARDWARE_get_sound_data_pointer_from_name(name, freq);
-
-	if (data != NULL)
-	{
-		if (loop == 1)loop = -1;//infinite loops
-		Mix_VolumeChunk(data, (int)(MIX_MAX_VOLUME * ((float)((float)vol / 256.0f))));
-		Mix_PlayChannel(-1, data, loop);
-	}
-	else
-	{
-		ERROR_set_error(name);
-		ERROR_set_error(" could not be played.\n");
-	}
-
-
-	return true;
-}
-
-//==========================================================================================================================
-bool HARDWARE_play_sound_if_not_playing(string &name, int vol, int freq, int loop)
-{//==========================================================================================================================
-
-
-	if (G_mute)vol = 0;
-
-
-	char* filename = nullptr;
-	filename = HARDWARE_get_sound_filename_from_name(name, freq);
-	if (filename == nullptr)return 0;
-
-	int x = 0;
-	for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
-	{
-		if (mixchunkfilename[x] != "")
-			if (mixchunkfilename[x]==filename)
-			{
-				return 0;
-			}
-	}
-
-	HARDWARE_play_sound(name, vol, freq, loop);
-
-
-	return 1;
-}
-
-//==========================================================================================================================
-void HARDWARE_stop_sound(string &name)//if(HARDWARE_is_sound_channel_busy(chan))HARDWARE_StopSound(chan);
-{//==========================================================================================================================
-
-	Mix_Chunk* data = NULL;
-	data = HARDWARE_get_sound_data_pointer_from_name(name, 44100);
-
-	//go through all playing channels, if channel is playing data, stop channel
-	if (data != NULL)
-	{
-		int channel = 0;
-		int maxchannels = Mix_AllocateChannels(-1);
-
-		for (channel = 0; channel < maxchannels; channel++)
-		{
-			if (data == Mix_GetChunk(channel))Mix_HaltChannel(channel);
-		}
-	}
-}
-
-//==========================================================================================================================
-void HARDWARE_unload_wavs_done_playing()
-{//==========================================================================================================================
-
-	//go through each mixchunk->get(d)
-	//see if still playing
-	//if not playing, unload mixchunk->get(d) and set mixchunkfilename->get(d) to NULL
-
-	int x = 0;
-	for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
-	{
-		if (mixchunks[x] != nullptr && mixchunkfilename[x] != "")
-		{
-			int channel = 0;
-			int playing = 0;
-			int maxchannels = Mix_AllocateChannels(-1);
-			for (channel = 0; channel < maxchannels; channel++)
-			{
-				if (mixchunks[x] == Mix_GetChunk(channel))playing = 1;
-			}
-
-			if (playing == 0)
-			{
-				if (
-					mixchunkfilename[x]=="data/sfx/footstepnormal.wav"//dont unload footstep, its used a lot
-				)
-				{
-					Mix_FreeChunk(mixchunks[x]);
-					mixchunks[x] = nullptr;
-					mixchunkfilename[x] = "";
-				}
-			}
-		}
-	}
-}
-
-//==========================================================================================================================
-void HARDWARE_set_channel_volume(int chan, int vol)//if(HARDWARE_is_sound_channel_busy(chan))HARDWARE_StopSound(chan);
-{//==========================================================================================================================
-
-	if (G_mute)vol = 0;
-	else
-		Mix_Volume(chan, (int)(MIX_MAX_VOLUME * ((float)((float)vol / 256.0f))));
-}
-
-
-//==========================================================================================================================
-void HARDWARE_set_music_volume(int vol)//if(HARDWARE_is_sound_channel_busy(chan))HARDWARE_StopSound(chan);
-{//==========================================================================================================================
-
-	if (G_mute)vol = 0;
-
-	if (current_bgm_volume != vol)
-	{
-		current_bgm_volume = vol;
-		if (song_playing != NULL)Mix_VolumeMusic((int)(MIX_MAX_VOLUME * ((float)((float)vol / 64.0f))));
-	}
-}
-
-
-//==========================================================================================================================
-void HARDWARE_play_music(string &name, int vol)//HARDWARE_PlayFSMod(mod);
-{//==========================================================================================================================
-
-	if (G_mute)vol = 0;
-
-
-	if (name==playingname || song_playing == NULL)
-	{
-		//copy string into playing string
-		//strcpy(playingname, name);
-		playingname = name;
-
-		//free the previous song
-		if (song_playing != NULL)
-		{
-			Mix_HookMusicFinished(NULL);
-			Mix_HaltMusic();
-			while (Mix_PlayingMusic())
-			{
-			};
-			Mix_FreeMusic(song_playing);
-			while (Mix_PlayingMusic())
-			{
-			};
-			song_playing = NULL;
-		}
-
-		//load the new one
-		if (name=="nice") song_playing = Mix_LoadMUS("data/bgm/snappy_nice_v01.s3m");
-
-		if (song_playing == NULL)
-		{
-			ERROR_set_error(name);
-			ERROR_set_error(" could not be loaded.\n");
-		}
-		else
-			Mix_PlayMusic(song_playing, -1);
-	}
-
-
-	if (vol != current_bgm_volume)
-	{
-		current_bgm_volume = vol;
-		if (song_playing != NULL)Mix_VolumeMusic((int)(MIX_MAX_VOLUME * ((float)((float)vol / 64.0f))));
-	}
-}
-
-
-//==========================================================================================================================
-void HARDWARE_stop_music()//HARDWARE_StopMod();
-{//==========================================================================================================================
-
-	if (song_playing != NULL)
-	{
-		Mix_HookMusicFinished(NULL);
-		Mix_HaltMusic();
-		while (Mix_PlayingMusic())
-		{
-
-		}
-
-		Mix_FreeMusic(song_playing);
-		while (Mix_PlayingMusic())
-		{
-
-		}
-
-		song_playing = NULL;
-	}
-}
 
 #ifdef USE_SOLOUD
 SoLoud::Soloud *AudioManager::soLoud = nullptr;
 #endif
 
-
+//global and static, shared between all audiomanagers
 ArrayList<Music*>* AudioManager::musicList = new ArrayList<Music*>();
 ArrayList<Sound*>* AudioManager::soundList = new ArrayList<Sound*>();
 HashMap<string, Sound*>* AudioManager::soundByNameHashMap = new HashMap<string, Sound*>();
@@ -335,18 +57,18 @@ using Poco::Path;
 
 
 //=========================================================================================================================
-void AudioManager::initAudio()
+void AudioManager::initAudioLibrary()
 {//=========================================================================================================================
 
 
 
 
 #ifdef USE_SDL_MIXER
-		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
-		{
-			log.error("Couldn't set up audio: " + string(SDL_GetError()));
-		}
-		Mix_AllocateChannels(32);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
+	{
+		log.error("Couldn't set up audio: " + string(SDL_GetError()));
+	}
+	Mix_AllocateChannels(32);
 #endif
 
 
@@ -354,6 +76,13 @@ void AudioManager::initAudio()
 	soLoud = new SoLoud::Soloud();
 	soLoud->init();
 #endif
+}
+
+
+
+//=========================================================================================================================
+void AudioManager::init()
+{//=========================================================================================================================
 
 
 	{
@@ -370,7 +99,7 @@ void AudioManager::initAudio()
 			string name = *it;
 			if (name.find(".ogg") != string::npos)
 			{
-				new Sound(nullptr, "data/sounds/" + name);
+				new Sound(e, "data/sounds/" + name);
 			}
 		}
 	}
@@ -389,7 +118,7 @@ void AudioManager::initAudio()
 			string name = *it;
 			if (name.find(".ogg") != string::npos)
 			{
-				new Music(nullptr, "data/music/" + name);
+				new Music(e, "data/music/" + name);
 			}
 		}
 	}
@@ -461,6 +190,7 @@ void AudioManager::cleanup()
 //	return s;
 //}
 
+
 void AudioManager::update()
 { //=========================================================================================================================
 
@@ -528,9 +258,9 @@ Music* AudioManager::getMusicByID(int musicID)
 
 bool AudioManager::isAnyMusicPlaying()
 { //=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
+	for (int i = 0; i < playingMusicList->size(); i++)
 	{
-		Music* m = musicList->get(i);
+		Music* m = playingMusicList->get(i);
 		if (m->isPlaying())
 		{
 			return true;
@@ -538,9 +268,48 @@ bool AudioManager::isAnyMusicPlaying()
 	}
 	return false;
 }
+//=========================================================================================================================
+void AudioManager::pauseAnyPlayingMusic()
+{//=========================================================================================================================
+	
+	for (int i = 0; i < playingMusicList->size(); i++)
+	{
+		Music* m = playingMusicList->get(i);
+		if (m->isPlaying())
+		{
+			m->pause();
+		}
+	}
+}
+//=========================================================================================================================
+void AudioManager::playAnyPausedMusic()
+{//=========================================================================================================================
+	for (int i = 0; i < playingMusicList->size(); i++)
+	{
+		Music* m = playingMusicList->get(i);
+		if (m->isPlaying())
+		{
+			m->unpause();
+		}
+	}
 
+}
+//=========================================================================================================================
+void AudioManager::setPlayingMusicVolume(float v)
+{//=========================================================================================================================
+	for (int i = 0; i < playingMusicList->size(); i++)
+	{
+		Music* m = playingMusicList->get(i);
+		if (m->isPlaying())
+		{
+			m->setVolume(v);
+		}
+	}
+}
 bool AudioManager::isMusicPlaying(Music* m)
 { //=========================================================================================================================
+
+	if (playingMusicList->contains(m) == false)return false;
 	return m->isPlaying();
 }
 
@@ -549,6 +318,7 @@ bool AudioManager::isMusicPlaying(const string& musicName)
 	Music* m = getMusicByName(musicName);
 	if (m != nullptr)
 	{
+		if (playingMusicList->contains(m) == false)return false;
 		return m->isPlaying();
 	}
 	return false;
@@ -557,6 +327,7 @@ bool AudioManager::isMusicPlaying(const string& musicName)
 void AudioManager::playMusic(Music* m)
 { //=========================================================================================================================
 	m->play();
+	if (playingMusicList->contains(m) == false)playingMusicList->add(m);
 }
 
 void AudioManager::playMusic(const string& musicName)
@@ -565,6 +336,7 @@ void AudioManager::playMusic(const string& musicName)
 	if (m != nullptr)
 	{
 		m->play();
+		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
 	}
 }
 
@@ -574,6 +346,7 @@ void AudioManager::playMusic(Music* m, float volume, float pitch, bool loop)
 	if (m != nullptr)
 	{
 		m->play(pitch, volume, loop);
+		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
 	}
 }
 
@@ -583,6 +356,7 @@ void AudioManager::playMusicByName(const string& musicName)
 	if (m != nullptr)
 	{
 		m->play();
+		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
 	}
 }
 
@@ -592,59 +366,83 @@ void AudioManager::playMusic(const string& musicName, float volume, float pitch,
 	if (m != nullptr)
 	{
 		m->play(pitch, volume, loop);
+		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
 	}
 }
 
 void AudioManager::stopMusic(Music* m)
 { //=========================================================================================================================
 	m->stop();
+	if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
 }
 
 void AudioManager::stopMusic(const string& musicName)
 { //=========================================================================================================================
 	Music* m = getMusicByName(musicName);
+
 	if (m != nullptr)
 	{
+		if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
+		else return;
+
 		m->stop();
+
 	}
 }
 
 void AudioManager::fadeOutMusic(const string& musicName, int ticks)
 { //=========================================================================================================================
 	Music* m = getMusicByName(musicName);
-	m->fadeOutAndStop(ticks);
+
+	if (m != nullptr)
+	{
+		if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
+		else return;
+
+		m->fadeOutAndStop(ticks);
+
+	}
+	
 }
 
 void AudioManager::fadeOutMusic(Music* m, int ticks)
 { //=========================================================================================================================
-	m->fadeOutAndStop(ticks);
+	if (m != nullptr)
+	{
+		if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
+		else return;
+
+		m->fadeOutAndStop(ticks);
+
+	}
 }
 
 void AudioManager::stopAllMusic()
 { //=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
+	for (int i = 0; i < playingMusicList->size(); i++)
 	{
-		musicList->get(i)->stop();
+		playingMusicList->get(i)->stop();
 	}
+	playingMusicList->clear();
 }
 
 void AudioManager::fadeOutAllMusic(int ticks)
 { //=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
+	for (int i = 0; i < playingMusicList->size(); i++)
 	{
-		Music* m = musicList->get(i);
-		if (m->isPlaying() == true)
-		{
-			m->fadeOutAndStop(ticks);
-		}
+		Music* m = playingMusicList->get(i);
+
+		m->fadeOutAndStop(ticks);
+		
 	}
+	playingMusicList->clear();
 }
 
 void AudioManager::setAllLoopingMusicThatIsNotFadingOutToNotLoop()
 { //=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
+	for (int i = 0; i < playingMusicList->size(); i++)
 	{
-		Music* m = musicList->get(i);
+		Music* m = playingMusicList->get(i);
 		if (m->isPlaying() == true && m->getLoop() == true)
 		{
 			if (m->isFadingOut() == false)
@@ -657,17 +455,17 @@ void AudioManager::setAllLoopingMusicThatIsNotFadingOutToNotLoop()
 
 void AudioManager::pauseAllMusic()
 { //=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
+	for (int i = 0; i < playingMusicList->size(); i++)
 	{
-		musicList->get(i)->stop();
+		playingMusicList->get(i)->pause();
 	}
 }
 
 void AudioManager::unpauseAllMusic()
 { //=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
+	for (int i = 0; i < playingMusicList->size(); i++)
 	{
-		musicList->get(i)->stop();
+		playingMusicList->get(i)->unpause();
 	}
 }
 
@@ -844,3 +642,348 @@ Sound* AudioManager::getSoundByIDCreateIfNotExist(int id)
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int G_mute = 0;//GLOBAL MUTE
+
+int current_bgm_volume = 0;
+
+Mix_Music* song_playing = nullptr;
+
+
+int* current_mod_data_pointer = nullptr;
+
+
+string playingname = "";// [128];
+
+
+Mix_Chunk* mixchunks[32] = { nullptr };
+string mixchunkfilename[32] = { "" };
+
+
+
+//==========================================================================================================================
+char* HARDWARE_get_sound_filename_from_name(string &name, int freq)
+{//==========================================================================================================================
+
+	char* filename = NULL;
+
+	//if(strcmp(name,"footstep")==0)filename=footstep_FileName;
+
+	return filename;
+}
+
+
+//==========================================================================================================================
+Mix_Chunk* HARDWARE_get_sound_data_pointer_from_name(string &name, int freq)
+{//==========================================================================================================================
+
+	char* filename = NULL;
+
+
+	filename = HARDWARE_get_sound_filename_from_name(name, freq);
+	if (filename == NULL)return NULL;
+
+	//search mixchunkfilenames 0-31 for matches with filename
+	int d = -1;
+	int x = 0;
+	for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
+	{
+		if (mixchunkfilename[x] == filename)
+		{
+			d = x;
+			x = MAX_SOUNDS_PLAYING;
+			break;
+		}
+	}
+
+	if (d == -1)
+	{
+		//find open filename slot
+		for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
+		{
+			if (mixchunkfilename[x] == "")
+			{
+				d = x;
+				mixchunkfilename[d] = filename;//set slot to filename
+				mixchunks[d] = Mix_LoadWAV(mixchunkfilename[d].c_str());//load wav
+				x = MAX_SOUNDS_PLAYING;
+				break;
+			}
+		}
+	}
+
+	return mixchunks[d];
+}
+
+
+//==========================================================================================================================
+bool HARDWARE_play_sound(string &name, int vol, int freq, int loop)//if(!HARDWARE_is_sound_channel_busy(chan))//HARDWARE_PlayFSSoundEx2(chan,HARDWARE_FSGetFile(0,name,""),vol,freq,0,loop,0);
+{//==========================================================================================================================
+
+	if (G_mute)vol = 0;
+
+
+	Mix_Chunk* data = NULL;
+	data = HARDWARE_get_sound_data_pointer_from_name(name, freq);
+
+	if (data != NULL)
+	{
+		if (loop == 1)loop = -1;//infinite loops
+		Mix_VolumeChunk(data, (int)(MIX_MAX_VOLUME * ((float)((float)vol / 256.0f))));
+		Mix_PlayChannel(-1, data, loop);
+	}
+	else
+	{
+		ERROR_set_error(name);
+		ERROR_set_error(" could not be played.\n");
+	}
+
+
+	return true;
+}
+
+//==========================================================================================================================
+bool HARDWARE_play_sound_if_not_playing(string &name, int vol, int freq, int loop)
+{//==========================================================================================================================
+
+
+	if (G_mute)vol = 0;
+
+
+	char* filename = nullptr;
+	filename = HARDWARE_get_sound_filename_from_name(name, freq);
+	if (filename == nullptr)return 0;
+
+	int x = 0;
+	for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
+	{
+		if (mixchunkfilename[x] != "")
+			if (mixchunkfilename[x] == filename)
+			{
+				return 0;
+			}
+	}
+
+	HARDWARE_play_sound(name, vol, freq, loop);
+
+
+	return 1;
+}
+
+//==========================================================================================================================
+void HARDWARE_stop_sound(string &name)//if(HARDWARE_is_sound_channel_busy(chan))HARDWARE_StopSound(chan);
+{//==========================================================================================================================
+
+	Mix_Chunk* data = NULL;
+	data = HARDWARE_get_sound_data_pointer_from_name(name, 44100);
+
+	//go through all playing channels, if channel is playing data, stop channel
+	if (data != NULL)
+	{
+		int channel = 0;
+		int maxchannels = Mix_AllocateChannels(-1);
+
+		for (channel = 0; channel < maxchannels; channel++)
+		{
+			if (data == Mix_GetChunk(channel))Mix_HaltChannel(channel);
+		}
+	}
+}
+
+//==========================================================================================================================
+void HARDWARE_unload_wavs_done_playing()
+{//==========================================================================================================================
+
+ //go through each mixchunk->get(d)
+ //see if still playing
+ //if not playing, unload mixchunk->get(d) and set mixchunkfilename->get(d) to NULL
+
+	int x = 0;
+	for (x = 0; x < MAX_SOUNDS_PLAYING; x++)
+	{
+		if (mixchunks[x] != nullptr && mixchunkfilename[x] != "")
+		{
+			int channel = 0;
+			int playing = 0;
+			int maxchannels = Mix_AllocateChannels(-1);
+			for (channel = 0; channel < maxchannels; channel++)
+			{
+				if (mixchunks[x] == Mix_GetChunk(channel))playing = 1;
+			}
+
+			if (playing == 0)
+			{
+				if (
+					mixchunkfilename[x] == "data/sfx/footstepnormal.wav"//dont unload footstep, its used a lot
+					)
+				{
+					Mix_FreeChunk(mixchunks[x]);
+					mixchunks[x] = nullptr;
+					mixchunkfilename[x] = "";
+				}
+			}
+		}
+	}
+}
+
+//==========================================================================================================================
+void HARDWARE_set_channel_volume(int chan, int vol)//if(HARDWARE_is_sound_channel_busy(chan))HARDWARE_StopSound(chan);
+{//==========================================================================================================================
+
+	if (G_mute)vol = 0;
+	else
+		Mix_Volume(chan, (int)(MIX_MAX_VOLUME * ((float)((float)vol / 256.0f))));
+}
+
+
+//==========================================================================================================================
+void HARDWARE_set_music_volume(int vol)//if(HARDWARE_is_sound_channel_busy(chan))HARDWARE_StopSound(chan);
+{//==========================================================================================================================
+
+	if (G_mute)vol = 0;
+
+	if (current_bgm_volume != vol)
+	{
+		current_bgm_volume = vol;
+		if (song_playing != NULL)Mix_VolumeMusic((int)(MIX_MAX_VOLUME * ((float)((float)vol / 64.0f))));
+	}
+}
+
+
+//==========================================================================================================================
+void HARDWARE_play_music(string &name, int vol)//HARDWARE_PlayFSMod(mod);
+{//==========================================================================================================================
+
+	if (G_mute)vol = 0;
+
+
+	if (name == playingname || song_playing == NULL)
+	{
+		//copy string into playing string
+		//strcpy(playingname, name);
+		playingname = name;
+
+		//free the previous song
+		if (song_playing != NULL)
+		{
+			Mix_HookMusicFinished(NULL);
+			Mix_HaltMusic();
+			while (Mix_PlayingMusic())
+			{
+			};
+			Mix_FreeMusic(song_playing);
+			while (Mix_PlayingMusic())
+			{
+			};
+			song_playing = NULL;
+		}
+
+		//load the new one
+		if (name == "nice") song_playing = Mix_LoadMUS("data/bgm/snappy_nice_v01.s3m");
+
+		if (song_playing == NULL)
+		{
+			ERROR_set_error(name);
+			ERROR_set_error(" could not be loaded.\n");
+		}
+		else
+			Mix_PlayMusic(song_playing, -1);
+	}
+
+
+	if (vol != current_bgm_volume)
+	{
+		current_bgm_volume = vol;
+		if (song_playing != NULL)Mix_VolumeMusic((int)(MIX_MAX_VOLUME * ((float)((float)vol / 64.0f))));
+	}
+}
+
+
+//==========================================================================================================================
+void HARDWARE_stop_music()//HARDWARE_StopMod();
+{//==========================================================================================================================
+
+	if (song_playing != NULL)
+	{
+		Mix_HookMusicFinished(NULL);
+		Mix_HaltMusic();
+		while (Mix_PlayingMusic())
+		{
+
+		}
+
+		Mix_FreeMusic(song_playing);
+		while (Mix_PlayingMusic())
+		{
+
+		}
+
+		song_playing = NULL;
+	}
+}

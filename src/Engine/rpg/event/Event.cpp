@@ -112,6 +112,8 @@ void Event::initEvent()
 		d->setData_S(data);
 	}
 
+
+
 //	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
 //	{
 //		if (getEventManager()->eventList.get(i)->getID() == data->getID())

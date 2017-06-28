@@ -29,6 +29,7 @@ public:
 
 	ArrayList<MapState*> stateList;
 	ArrayList<Event*> mapEventList;
+	//ArrayList<int> mapEventIDList;
 
 
 	float lastKnownScreenX = 0;

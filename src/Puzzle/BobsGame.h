@@ -63,7 +63,7 @@ protected:
 public:
 
 	//static BobsGame* b;
-	Music *music = nullptr;
+	//Music *music = nullptr;
 	BobTexture* keyboardTexture = nullptr;
 	BobTexture* controllerTexture = nullptr;
 	BobTexture* controllerIconTexture = nullptr;

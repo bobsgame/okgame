@@ -123,7 +123,7 @@ string Main::version = "";
 
 BobNet* Main::bobNet = nullptr;
 Console* Main::console = nullptr;
-AudioManager* Main::audioManager = nullptr;
+//AudioManager* Main::audioManager = nullptr;
 FileUtils* Main::cacheManager = nullptr;
 StateManager* Main::stateManager = nullptr;
 System* Main::systemUtils = nullptr;
@@ -199,10 +199,9 @@ void Main::mainInit()
 	//atexit(SDL_Quit);
 	
 	new GLUtils();
-	audioManager = new AudioManager();
 	new Logger();
 
-	AudioManager::initAudio();
+	AudioManager::initAudioLibrary();
 
 	GLUtils::checkSDLError("");
 

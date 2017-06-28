@@ -269,8 +269,9 @@ void BobsGame::initAssets()
 
 	
 
-	music = new Music(this, "data/music/slick_v10.ogg");
-	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
+	//music = new Music(this, "data/music/slick_v10.ogg");
+	getAudioManager()->playMusicByName("slick_v10");
+	getAudioManager()->setPlayingMusicVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
 
 }
 
@@ -931,17 +932,17 @@ void BobsGame::update()
 
 	if(networkMultiplayerLobbyMenuShowing || networkMultiplayerPlayerJoinMenuShowing)
 	{
-		if (music->isPlaying() == true)
+		if (getAudioManager()->isAnyMusicPlaying() == true)
 		{
-			music->pause();
+			getAudioManager()->pauseAnyPlayingMusic();
 		}
 
 	}
 	else
 	{
-		if (music->isPlaying() == false)
+		if (getAudioManager()->isAnyMusicPlaying() == false)
 		{
-			music->play();
+			getAudioManager()->playAnyPausedMusic();
 		}
 	}
 

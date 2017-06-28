@@ -28,11 +28,11 @@ protected:
 
 public:
 	//The following method was originally marked 'synchronized':
-	virtual bool getInitialized_S();
+	bool getInitialized_S();
 
 public:
 	//The following method was originally marked 'synchronized':
-	virtual void setInitialized_S(bool i);
+	void setInitialized_S(bool i);
 
 private:
 	void sendServerRequest();
