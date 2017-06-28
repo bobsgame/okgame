@@ -79,6 +79,76 @@ string EventData::initFromString(string t)
 	t = t.substr(t.find("`,") + 2);
 
 
+	//ONLY FOR USE ON CLIENT, IGNORE THIS
+	if (String::startsWith(t,"dialogueDataList"))
+	{
+		t = t.substr(t.find("dialogueDataList:{") + 1);
+		t = t.substr(t.find("{") + 1);
+		while (String::startsWith(t,"}") == false)
+		{
+			DialogueData* data = new DialogueData();
+			t = data->initFromString(t);
+			dialogueDataList->add(data);
+		}
+		t = t.substr(t.find("}") + 1);
+		t = t.substr(t.find(",") + 1);
+
+		t = t.substr(t.find("flagDataList:{") + 1);
+		t = t.substr(t.find("{") + 1);
+		while (String::startsWith(t,"}") == false)
+		{
+			FlagData* data = new FlagData();
+			t = data->initFromString(t);
+			flagDataList->add(data);
+		}
+		t = t.substr(t.find("}") + 1);
+		t = t.substr(t.find(",") + 1);
+
+		t = t.substr(t.find("skillDataList:{") + 1);
+		t = t.substr(t.find("{") + 1);
+		while (String::startsWith(t,"}") == false)
+		{
+			SkillData* data = new SkillData();
+			t = data->initFromString(t);
+			skillDataList->add(data);
+		}
+		t = t.substr(t.find("}") + 1);
+		t = t.substr(t.find(",") + 1);
+
+		t = t.substr(t.find("gameStringDataList:{") + 1);
+		t = t.substr(t.find("{") + 1);
+		while (String::startsWith(t,"}") == false)
+		{
+			GameStringData* data = new GameStringData();
+			t = data->initFromString(t);
+			gameStringDataList->add(data);
+		}
+		t = t.substr(t.find("}") + 1);
+		t = t.substr(t.find(",") + 1);
+
+		t = t.substr(t.find("musicDataList:{") + 1);
+		t = t.substr(t.find("{") + 1);
+		while (String::startsWith(t,"}") == false)
+		{
+			MusicData* data = new MusicData();
+			t = data->initFromString(t);
+			musicDataList->add(data);
+		}
+		t = t.substr(t.find("}") + 1);
+		t = t.substr(t.find(",") + 1);
+
+		t = t.substr(t.find("soundDataList:{") + 1);
+		t = t.substr(t.find("{") + 1);
+		while (String::startsWith(t,"}") == false)
+		{
+			SoundData* data = new SoundData();
+			t = data->initFromString(t);
+			soundDataList->add(data);
+		}
+		t = t.substr(t.find("}") + 1);
+		t = t.substr(t.find(",") + 1);
+	}
+
 	return t;
 }
 

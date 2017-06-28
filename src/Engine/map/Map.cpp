@@ -93,28 +93,23 @@ void Map::initMap(Engine* g, MapData* mapData)
 	//need to run through mapData structure and create entities, events, lights, areas, doors, states, warpareas
 
 
-	for (int i = 0; i < (int)mapData->getEventDataList()->size(); i++)
+	for (int i = 0; i < (int)mapData->getEventIDList()->size(); i++)
 	{
 		//create event, add to eventList
-		EventData* eventData = mapData->getEventDataList()->get(i);
+		int eventID = mapData->getEventIDList()->get(i);
 
 
 		Event* event = nullptr;
 
 		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
 		{
-			if (getEventManager()->eventList.get(k)->getID() == eventData->getID())
+			if (getEventManager()->eventList.get(k)->getID() == eventID)
 			{
 				event = getEventManager()->eventList.get(k);
 			}
 		}
 
-		if (event == nullptr)
-		{
-			event = new Event(getEngine(), eventData);
-		}
 
-		mapEventIDList.add(event->getID());
 	}
 
 
@@ -566,10 +561,28 @@ void Map::update()
 	long long currentTime = System::currentHighResTimer();
 
 
-	//this should always be true now that we are loading the mapData from the server.
-	//the mapData contains the full data for the actual map Events so they are ready at load.
 
-	//area, entity, door events, however, are simply held as eventID in those objects and they will load themselves after map is running.
+	//TODO: the server should always send all events related to a map before sending the map so the client will have the map on load
+	//maybe do the same for sprites etc
+	//could also look up all areas, entities, doors referenced by the map and send those events too
+	//the point of doing this is so i can update map events without changing the md5
+	//actually that doesnt matter because i will always get map data from server anyway
+	//ok the server should probably fill event structures into maps, areas, entities, doors, etc before sending that data, instead of sending it separately
+	//i guess looking at all the references and sending everything in a batch is fine
+	//but maybe i could create a new object with the event structure filled in etc
+	//and the map data structure itself could contain all its data
+	//yeah why am i not doing that?
+	//ok i think i know why, it was because i wanted to see all the events in one place in the project file
+	//so i should export all events twice, once in the map data along with the event ID, and once in linear order in the project file
+	//those should be exported from the same pointer data, so it's always the same
+	//but i ignore the event data inside the map data on loading the project file so its easily editable?
+	//or maybe i should just have events attached only to its appropriate object like i used to have?
+
+	//ok, export mapdata which contains events, and areas which contain events, and sprites which contain events, and events can contain dialogues, flags, skills, music, sound, etc.
+	//when those get loaded on the client it puts them in global arrays and then accesses the global array by ID
+
+
+	//map, area, entity, door, sprite, cutscene events are held as eventID in those objects and they will load themselves after map is running.
 	if (eventsAllLoadedFromServer == false)
 	{
 		long long startTime = lastLoadEventRequestTime;

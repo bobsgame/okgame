@@ -48,7 +48,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	int eventID,
+	EventData* eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -77,7 +77,7 @@ AreaData::AreaData
 	this->autoPilot = autoPilot;
 	this->playerFaceDirection = playerFaceDirection;
 	this->suckPlayerIntoMiddle = suckPlayerIntoMiddle;
-	this->eventID = eventID;
+	this->eventData = eventData;
 
 
 	this->destinationTYPEID = destinationTYPEID;
@@ -118,7 +118,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	int eventID,
+	EventData* eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -150,7 +150,7 @@ AreaData::AreaData
 	this->autoPilot = autoPilot;
 	this->playerFaceDirection = playerFaceDirection;
 	this->suckPlayerIntoMiddle = suckPlayerIntoMiddle;
-	this->eventID = eventID;
+	this->eventData = eventData;
 }
 
 void AreaData::addConnectionString(const string& s)
@@ -406,25 +406,25 @@ string AreaData::initFromString(string t)
 	suckPlayerIntoMiddle = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
-	t = t.substr(t.find("eventID:`") + 1);
-	t = t.substr(t.find("`") + 1);
-	eventID = stoi(t.substr(0, t.find("`")));
-	t = t.substr(t.find("`,") + 2);
+//	t = t.substr(t.find("eventID:`") + 1);
+//	t = t.substr(t.find("`") + 1);
+//	eventID = stoi(t.substr(0, t.find("`")));
+//	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("comment:`") + 1);
 	t = t.substr(t.find("`") + 1);
 	comment = t.substr(0, t.find("`"));
 	t = t.substr(t.find("`,") + 2);
 
-	t = t.substr(t.find("mapID:`") + 1);
-	t = t.substr(t.find("`") + 1);
-	mapID = stoi(t.substr(0, t.find("`")));
-	t = t.substr(t.find("`,") + 2);
-
-	t = t.substr(t.find("stateID:`") + 1);
-	t = t.substr(t.find("`") + 1);
-	stateID = stoi(t.substr(0, t.find("`")));
-	t = t.substr(t.find("`,") + 2);
+//	t = t.substr(t.find("mapID:`") + 1);
+//	t = t.substr(t.find("`") + 1);
+//	mapID = stoi(t.substr(0, t.find("`")));
+//	t = t.substr(t.find("`,") + 2);
+//
+//	t = t.substr(t.find("stateID:`") + 1);
+//	t = t.substr(t.find("`") + 1);
+//	stateID = stoi(t.substr(0, t.find("`")));
+//	t = t.substr(t.find("`,") + 2);
 
 	while(String::startsWith(t,"connectionTYPEIDList:`"))
 	{
@@ -463,6 +463,18 @@ string AreaData::initFromString(string t)
 	t = t.substr(t.find("`") + 1);
 	destinationWarpAreaName = t.substr(0, t.find("`"));
 	t = t.substr(t.find("`,") + 2);
+
+
+	t = t.substr(t.find("eventData:{") + 1);
+	t = t.substr(t.find("{") + 1);
+	while (String::startsWith(t,"}") == false)
+	{
+		EventData* data = new EventData();
+		t = data->initFromString(t);
+		eventData = data;
+	}
+	t = t.substr(t.find("}") + 1);
+	t = t.substr(t.find(",") + 1);
 
 	return t;
 }
@@ -639,9 +651,9 @@ bool AreaData::getSuckPlayerIntoMiddle()
 	return suckPlayerIntoMiddle;
 }
 
-int AreaData::getEventID()
+EventData* AreaData::getEventData()
 {
-	return eventID;
+	return eventData;
 }
 
 ArrayList<string>* AreaData::getConnectionTYPEIDList()
@@ -669,15 +681,15 @@ string AreaData::getDestinationWarpAreaName()
 	return destinationWarpAreaName;
 }
 
-int AreaData::getMapID()
-{
-	return mapID;
-}
-
-int AreaData::getStateID()
-{
-	return stateID;
-}
+//int AreaData::getMapID()
+//{
+//	return mapID;
+//}
+//
+//int AreaData::getStateID()
+//{
+//	return stateID;
+//}
 
 void AreaData::setDestinationMapName(const string& s)
 {
@@ -794,10 +806,10 @@ void AreaData::setIsWarpArea(bool s)
 	isWarpArea = s;
 }
 
-void AreaData::setEventID(int s)
-{
-	eventID = s;
-}
+//void AreaData::setEventID(int s)
+//{
+//	eventID = s;
+//}
 
 void AreaData::setComment(const string& s)
 {
@@ -834,13 +846,13 @@ void AreaData::setHeightPixels1X(int s)
 	heightPixels1X = s;
 }
 
-void AreaData::setMapID(int s)
-{
-	mapID = s;
-}
-
-void AreaData::setStateID(int s)
-{
-	stateID = s;
-}
+//void AreaData::setMapID(int s)
+//{
+//	mapID = s;
+//}
+//
+//void AreaData::setStateID(int s)
+//{
+//	stateID = s;
+//}
 

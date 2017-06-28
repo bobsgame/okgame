@@ -272,7 +272,7 @@ string MapData::initFromString(string t)
 
 	t = t.substr(t.find("eventDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t,"}") == false)
+	while (String::startsWith(t, "}") == false)
 	{
 		EventData *data = new EventData();
 		t = data->initFromString(t);

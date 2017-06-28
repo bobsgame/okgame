@@ -6,6 +6,7 @@
 
 #pragma once
 #include "bobtypes.h"
+#include <src/Engine/rpg/event/EventData.h>
 class Logger;
 
 
@@ -83,7 +84,7 @@ private:
 	bool forceMD5Export = false;
 
 	
-	int eventID = -1;
+	//int eventID = -1;
 	
 	string itemGameDescription = "";
 	
@@ -105,6 +106,7 @@ private:
 	
 	ArrayList<SpriteAnimationSequence*>* animationList = new ArrayList<SpriteAnimationSequence*>();
 
+	EventData* eventData = nullptr;
 
 public:
 
@@ -145,7 +147,7 @@ public:
 	virtual bool getIsGame();
 	virtual bool getIsItem();
 	virtual bool getForceHQ2X();
-	virtual int getEventID();
+	virtual EventData* getEventData();
 	virtual string getItemGameDescription();
 	virtual float getGamePrice();
 	virtual int getUtilityOffsetXPixels1X();
@@ -178,7 +180,7 @@ public:
 	virtual void setIsItem(bool s);
 	virtual void setForceHQ2X(bool s);
 	virtual void setForceMD5Export(bool s);
-	virtual void setEventID(int s);
+	//virtual void setEventID(int s);
 	virtual void setItemGameDescription(const string& s);
 	virtual void setGamePrice(float s);
 	virtual void setUtilityOffsetXPixels1X(int s);

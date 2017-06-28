@@ -14,9 +14,9 @@ class Logger;
 class MapManager : public EnginePart
 {
 public:
-	static ArrayList<Map*> mapList;
-	static HashMap<string, Map*> mapByNameHashMap;//new HashMap<string, Map*>();
-	static HashMap<int, Map*> mapByIDHashMap;//new HashMap<int, Map*>();
+	ArrayList<Map*> mapList;
+	HashMap<string, Map*> mapByNameHashMap;//new HashMap<string, Map*>();
+	HashMap<int, Map*> mapByIDHashMap;//new HashMap<int, Map*>();
 
 	static Logger log;
 	

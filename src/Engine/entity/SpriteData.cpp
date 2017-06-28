@@ -35,7 +35,7 @@ SpriteData::SpriteData
 	bool isItem,// = false, 
 	bool forceHQ2X,// = false, 
 	bool forceClientMD5Export,// = false, 
-	int eventID,// = -1, 
+	EventData* eventData,// = -1, 
 	const string& itemGameDescription,// = "",
 	float gamePrice,// = 0, 
 	int utilityOffsetXPixels1X,// = 0, 
@@ -78,7 +78,7 @@ SpriteData::SpriteData
 	this->forceHQ2X = forceHQ2X;
 	this->forceMD5Export = forceClientMD5Export;
 
-	this->eventID = eventID;
+	this->eventData = eventData;
 	this->itemGameDescription = itemGameDescription;
 	this->gamePrice = gamePrice;
 
@@ -275,11 +275,11 @@ string SpriteData::initFromString(string t)
 	t = t.substr(t.find("`") + 1);
 	forceMD5Export = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
-
-	t = t.substr(t.find("eventID:`") + 1);
-	t = t.substr(t.find("`") + 1);
-	eventID = stoi(t.substr(0, t.find("`")));
-	t = t.substr(t.find("`,") + 2);
+//
+//	t = t.substr(t.find("eventID:`") + 1);
+//	t = t.substr(t.find("`") + 1);
+//	eventID = stoi(t.substr(0, t.find("`")));
+//	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("itemGameDescription:`") + 1);
 	t = t.substr(t.find("`") + 1);
@@ -354,6 +354,18 @@ string SpriteData::initFromString(string t)
 		SpriteAnimationSequence *s = new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
 		animationList->add(s);
 	}
+
+
+	t = t.substr(t.find("eventData:{") + 1);
+	t = t.substr(t.find("{") + 1);
+	while (String::startsWith(t, "}") == false)
+	{
+		EventData* data = new EventData();
+		t = data->initFromString(t);
+		eventData = data;
+	}
+	t = t.substr(t.find("}") + 1);
+	t = t.substr(t.find(",") + 1);
 
 	return t;
 
@@ -474,9 +486,9 @@ bool SpriteData::getForceHQ2X()
 	return forceHQ2X;
 }
 
-int SpriteData::getEventID()
+EventData* SpriteData::getEventData()
 {
-	return eventID;
+	return eventData;
 }
 
 string SpriteData::getItemGameDescription()
@@ -629,10 +641,10 @@ void SpriteData::setForceMD5Export(bool s)
 	forceMD5Export = s;
 }
 
-void SpriteData::setEventID(int s)
-{
-	eventID = s;
-}
+//void SpriteData::setEventID(int s)
+//{
+//	eventID = s;
+//}
 
 void SpriteData::setItemGameDescription(const string& s)
 {

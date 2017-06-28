@@ -43,10 +43,10 @@ private:
 	bool autoPilot = false; //player will enable autopilot, show autopilot getCaption, follow connections
 	bool playerFaceDirection = false; //for couches, chairs
 	bool suckPlayerIntoMiddle = false; //for chairs
-	int eventID = -1;
+	//int eventID = -1;
 	string comment = "";
-	int mapID = -1;
-	int stateID = -1;
+	//int mapID = -1;
+	//int stateID = -1;
 
 
 	//can pull connections from sprites to areas and doors, should add these to points of interest list inside sprite.
@@ -66,18 +66,19 @@ private:
 	string destinationMapName = "";
 	string destinationWarpAreaName = "";
 
+	EventData* eventData = nullptr;
 
 public:
 	AreaData();
 
 
-	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, const string& destinationTYPEID, int arrivalXPixels1X, int arrivalYPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, int eventID, const string& comment);
+	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, const string& destinationTYPEID, int arrivalXPixels1X, int arrivalYPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, EventData* eventData, const string& comment);
 
 
 	AreaData(int id, const string& name);
 
 
-	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, int eventID, const string& comment);
+	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, EventData* eventData, const string& comment);
 
 
 	virtual void addConnectionString(const string& s);
@@ -134,8 +135,8 @@ public:
 	virtual string getDestinationTYPEIDString();
 	virtual string getDestinationMapName();
 	virtual string getDestinationWarpAreaName();
-	virtual int getMapID();
-	virtual int getStateID();
+	//virtual int getMapID();
+	//virtual int getStateID();
 
 
 	virtual void setDestinationMapName(const string& s);
@@ -161,7 +162,7 @@ public:
 	virtual void setPlayerFaceDirection(bool s);
 	virtual void setSuckPlayerIntoMiddle(bool s);
 	virtual void setIsWarpArea(bool s);
-	virtual void setEventID(int s);
+	//virtual void setEventID(int s);
 	virtual void setComment(const string& s);
 	virtual void setMapXPixels1X(int s);
 	virtual void setMapYPixels1X(int s);
@@ -169,7 +170,7 @@ public:
 	virtual void setArrivalYPixels1X(int s);
 	virtual void setWidthPixels1X(int s);
 	virtual void setHeightPixels1X(int s);
-	virtual void setMapID(int s);
-	virtual void setStateID(int s);
+	//virtual void setMapID(int s);
+	//virtual void setStateID(int s);
 };
 

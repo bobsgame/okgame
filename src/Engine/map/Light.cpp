@@ -64,9 +64,9 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 
 		BobTexture* t = nullptr;
 
-		if (Main::mapManager->lightTextureHashMap.containsKey(getFileName()))
+		if (getMapManager()->lightTextureHashMap.containsKey(getFileName()))
 		{
-			t = Main::mapManager->lightTextureHashMap.get(getFileName());
+			t = getMapManager()->lightTextureHashMap.get(getFileName());
 
 		}
 
@@ -94,7 +94,7 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 			//
 			//				}
 
-			Main::mapManager->lightTextureHashMap.put(getFileName(), t);
+			getMapManager()->lightTextureHashMap.put(getFileName(), t);
 		}
 
 

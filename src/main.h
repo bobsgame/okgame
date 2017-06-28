@@ -134,7 +134,7 @@ public:
 	static ControlsManager* controlsManager;// = nullptr;
 
 	static BGClientEngine* gameEngine;// = nullptr;
-	static MapManager* mapManager;
+	
 	//BGClientEngine* getGameEngine();
 
 	//ArrayDeque<BGClientEngine*> *gameStack = new ArrayDeque<BGClientEngine*>();

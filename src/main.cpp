@@ -130,7 +130,7 @@ System* Main::systemUtils = nullptr;
 GlobalSettings* Main::globalSettings = nullptr;
 ControlsManager* Main::controlsManager = nullptr;
 BGClientEngine* Main::gameEngine = nullptr;
-MapManager* Main::mapManager = nullptr;
+
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
 Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
@@ -271,12 +271,11 @@ void Main::mainInit()
 	youWillBeNotifiedState = new YouWillBeNotifiedState();
 	GLUtils::e();
 
-	mapManager = new MapManager(nullptr);
 
 	//-------------------
 	//init game
 	//-------------------
-	log.info("Init Client...");
+	log.info("Init System...");
 
 	systemUtils = new System();
 	GLUtils::e();
@@ -298,7 +297,7 @@ void Main::mainInit()
 
 
 
-	log.info("Init GUI");
+	log.info("Init GUI...");
 
 	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
 	gwenRenderer->Init();
@@ -375,7 +374,7 @@ void Main::mainInit()
 
 
 	
-	log.info("Init BobNet");
+	log.info("Init BobNet...");
 	bobNet = new BobNet();
 	bobNet->addEngineToForwardMessagesTo(stateManager->getState());
 
@@ -387,7 +386,7 @@ void Main::mainInit()
 
 
 
-	log.info("Version Check");
+	log.info("Version Check...");
 	checkVersion();
 
 	System::initTimers();

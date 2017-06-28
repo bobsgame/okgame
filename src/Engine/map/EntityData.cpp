@@ -18,16 +18,16 @@ EntityData::EntityData()
 { //=========================================================================================================================
 }
 //=========================================================================================================================
-EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, int eventID, const string& comment)
+EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
 { //=========================================================================================================================
 
 
-	initEntityData(id, name, spriteAssetName, spawnXPixels1X, spawnYPixels1X, initialFrame, pushable, nonWalkable, alphaByte, scale, ticksPerPixelMoved, aboveTopLayer, aboveWhenEqual, alwaysOnBottom, animateThroughFrames, randomTimeBetweenAnimation, ticksBetweenFrames, ticksBetweenAnimation, onlyHereDuringEvent, randomFrames, disableShadow, eventID, comment);
+	initEntityData(id, name, spriteAssetName, spawnXPixels1X, spawnYPixels1X, initialFrame, pushable, nonWalkable, alphaByte, scale, ticksPerPixelMoved, aboveTopLayer, aboveWhenEqual, alwaysOnBottom, animateThroughFrames, randomTimeBetweenAnimation, ticksBetweenFrames, ticksBetweenAnimation, onlyHereDuringEvent, randomFrames, disableShadow, eventData, comment);
 }
 
 
 //=========================================================================================================================
-void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, int eventID, const string& comment)
+void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
 {//=========================================================================================================================
 	this->id = id;
 	this->name = name;
@@ -70,7 +70,7 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 	this->ticksBetweenAnimation = ticksBetweenAnimation;
 
 
-	this->eventID = eventID;
+	this->eventData = eventData;
 	this->onlyHereDuringEvent = onlyHereDuringEvent;
 
 	this->comment = comment;
@@ -220,25 +220,25 @@ string EntityData::initFromString(string t)
 	ticksPerPixelMoved = stof(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
-	t = t.substr(t.find("eventID:`") + 1);
-	t = t.substr(t.find("`") + 1);
-	eventID = stoi(t.substr(0, t.find("`")));
-	t = t.substr(t.find("`,") + 2);
+//	t = t.substr(t.find("eventID:`") + 1);
+//	t = t.substr(t.find("`") + 1);
+//	eventID = stoi(t.substr(0, t.find("`")));
+//	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("onlyHereDuringEvent:`") + 1);
 	t = t.substr(t.find("`") + 1);
 	onlyHereDuringEvent = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
-
-	t = t.substr(t.find("mapID:`") + 1);
-	t = t.substr(t.find("`") + 1);
-	mapID = stoi(t.substr(0, t.find("`")));
-	t = t.substr(t.find("`,") + 2);
-
-	t = t.substr(t.find("stateID:`") + 1);
-	t = t.substr(t.find("`") + 1);
-	stateID = stoi(t.substr(0, t.find("`")));
-	t = t.substr(t.find("`,") + 2);
+//
+//	t = t.substr(t.find("mapID:`") + 1);
+//	t = t.substr(t.find("`") + 1);
+//	mapID = stoi(t.substr(0, t.find("`")));
+//	t = t.substr(t.find("`,") + 2);
+//
+//	t = t.substr(t.find("stateID:`") + 1);
+//	t = t.substr(t.find("`") + 1);
+//	stateID = stoi(t.substr(0, t.find("`")));
+//	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("animateThroughCurrentAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
@@ -315,6 +315,20 @@ string EntityData::initFromString(string t)
 	t = t.substr(t.find("`") + 1);
 	isNPC = Boolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
+
+
+
+	t = t.substr(t.find("eventData:{") + 1);
+	t = t.substr(t.find("{") + 1);
+	while (String::startsWith(t, "}") == false)
+	{
+		EventData* data = new EventData();
+		t = data->initFromString(t);
+		eventData = data;
+	}
+	t = t.substr(t.find("}") + 1);
+	t = t.substr(t.find(",") + 1);
+
 
 	return t;
 
@@ -512,20 +526,20 @@ bool EntityData::getPushPlayer()
 	return pushPlayer;
 }
 
-int EntityData::getEventID()
+EventData* EntityData::getEventData()
 {
-	return eventID;
+	return eventData;
 }
 
-int EntityData::getMapID()
-{
-	return mapID;
-}
-
-int EntityData::getStateID()
-{
-	return stateID;
-}
+//int EntityData::getMapID()
+//{
+//	return mapID;
+//}
+//
+//int EntityData::getStateID()
+//{
+//	return stateID;
+//}
 
 ArrayList<string>* EntityData::getConnectionTYPEIDList()
 {
@@ -685,20 +699,20 @@ void EntityData::setSpawnYPixels1X(float s)
 	spawnYPixels1X = s;
 }
 
-void EntityData::setMapID(int s)
-{
-	mapID = s;
-}
-
-void EntityData::setStateID(int s)
-{
-	stateID = s;
-}
-
-void EntityData::setEventID(int s)
-{
-	eventID = s;
-}
+//void EntityData::setMapID(int s)
+//{
+//	mapID = s;
+//}
+//
+//void EntityData::setStateID(int s)
+//{
+//	stateID = s;
+//}
+//
+//void EntityData::setEventID(int s)
+//{
+//	eventID = s;
+//}
 
 void EntityData::setComment(const string& s)
 {

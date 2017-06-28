@@ -6,6 +6,10 @@
 
 #pragma once
 #include "bobtypes.h"
+#include "GameStringData.h"
+#include "DialogueData.h"
+#include "FlagData.h"
+#include "SkillData.h"
 class Logger;
 
 
@@ -46,19 +50,7 @@ public:
 };
 
 
-class EventScriptTree
-{
-private:
-	EventData* outerInstance = nullptr;
 
-public:
-	EventScriptTree(EventData* outerInstance);
-
-
-	//public String toEventText();
-
-	//TODO: should unify all the event parsing stuff into a class here instead of having basically the same thing in both client and editor.
-};
 
 
 class EventData : public AssetData
@@ -93,6 +85,19 @@ private:
 	string comment = "";
 	
 	string text = "";
+
+
+
+	//these are used for the client to preload dialogues, flags, music, etc without doing a server lookup.  USED FOR EXPORT ONLY IN TOOLS. not stored in data structure.
+	ArrayList<DialogueData*>* dialogueDataList = new ArrayList<DialogueData*>();
+	ArrayList<FlagData*>* flagDataList = new ArrayList<FlagData*>();
+	ArrayList<SkillData*>* skillDataList = new ArrayList<SkillData*>();
+	ArrayList<GameStringData*>* gameStringDataList = new ArrayList<GameStringData*>();
+	ArrayList<MusicData*>* musicDataList = new ArrayList<MusicData*>();
+	ArrayList<SoundData*>* soundDataList = new ArrayList<SoundData*>();
+
+
+
 
 
 public:
@@ -575,3 +580,16 @@ public:
 	//	static final EventScriptCommand e042 = new EventScriptCommand();
 };
 
+class EventScriptTree
+{
+private:
+	EventData* outerInstance = nullptr;
+
+public:
+	EventScriptTree(EventData* outerInstance);
+
+
+	//public String toEventText();
+
+	//TODO: should unify all the event parsing stuff into a class here instead of having basically the same thing in both client and editor.
+};

@@ -163,7 +163,7 @@ Event* EventManager::getEventByIDCreateIfNotExist(int id)
 		}
 	}
 
-
+	log.error("Could not find event with ID " + to_string(id));
 	Event* d = new Event(getEngine(), id);
 
 	return d;
