@@ -43,7 +43,7 @@ Area::Area(Engine* g, AreaData* a, Map* m)
 	{
 
 		this->event = new Event(g, getEventData(), this);
-		//Event* event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//this->event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		//event->area = this;
 	}
 }
@@ -201,10 +201,10 @@ void Area::update()
 
 	//if(getEngine()==null)setGame(map.getEngine());
 
-	if (getEventData() != nullptr)
+	if (event != nullptr)
 	{
-		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
-		getEventManager()->addToEventQueueIfNotThere(e); //events update their own network data inside their run function
+		//Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
 
 

@@ -203,7 +203,7 @@ public:
 	virtual bool autoPilot();
 	virtual bool playerFaceDirection();
 	virtual bool suckPlayerIntoMiddle();
-	virtual EventData* getEventData();
+	EventData* getEventData();
 	virtual ArrayList<string>* connectionTYPEIDList();
 
 	virtual string getTYPEIDString();

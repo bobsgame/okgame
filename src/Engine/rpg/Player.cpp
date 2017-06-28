@@ -23,6 +23,8 @@ Player::Player(Engine* g, const string& spriteName)
 	initEntity(data);
 	initCharacter();
 	initPlayer();
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void Player::initPlayer()
@@ -40,6 +42,8 @@ Player::Player(Engine* g)
 	initEntity(data);
 	initCharacter();
 	initPlayer();
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void Player::update()

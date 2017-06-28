@@ -75,6 +75,43 @@ void Event::initEvent()
 {
 	setInitialized_S(true);
 
+	for(int i=0;getData()->dialogueDataList->size();i++)
+	{
+		DialogueData* data = getData()->dialogueDataList->get(i);
+		Dialogue* d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
+		d->setData_S(data);
+	}
+	for(int i=0;getData()->flagDataList->size();i++)
+	{
+		FlagData* data = getData()->flagDataList->get(i);
+		Flag* d = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
+		d->setData_S(data);
+	}
+	for(int i=0;getData()->gameStringDataList->size();i++)
+	{
+		GameStringData* data = getData()->gameStringDataList->get(i);
+		GameString* d = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
+		d->setData_S(data);
+	}
+	for(int i=0;getData()->skillDataList->size();i++)
+	{
+		SkillData* data = getData()->skillDataList->get(i);
+		Skill* d = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
+		d->setData_S(data);
+	}
+	for(int i=0;getData()->musicDataList->size();i++)
+	{
+		MusicData* data = getData()->musicDataList->get(i);
+		Music* d = getAudioManager()->getMusicByIDCreateIfNotExist(data->getID());
+		d->setData_S(data);
+	}
+	for(int i=0;getData()->soundDataList->size();i++)
+	{
+		SoundData* data = getData()->soundDataList->get(i);
+		Sound* d = getAudioManager()->getSoundByIDCreateIfNotExist(data->getID());
+		d->setData_S(data);
+	}
+
 //	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
 //	{
 //		if (getEventManager()->eventList.get(i)->getID() == data->getID())
@@ -85,7 +122,7 @@ void Event::initEvent()
 //	}
 //	getEventManager()->eventList.add(this); 
 	//this tracks events created for areas and entities that don't exist after the map is unloaded, so they don't have to be loaded from the server and parsed again.
-	//TODO: need to make sure that areas and entities keep their events since i got rid of this`
+
 
 }
 

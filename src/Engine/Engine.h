@@ -166,11 +166,11 @@ private:
 	//EVENT
 	//====================================================
 
-public:
-	virtual void sendEventRequest(int id);
-
-private:
-	void incomingEvent(string s);
+//public:
+//	virtual void sendEventRequest(int id);
+//
+//private:
+//	void incomingEvent(string s);
 
 	//====================================================
 	//GAMESTRING

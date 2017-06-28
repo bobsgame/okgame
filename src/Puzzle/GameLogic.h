@@ -478,7 +478,7 @@ private:
 	void lostSequence();
 	void diedSequence();
 	void creditsSequence();
-	CaptionManager* getCaptionManager();
+
 
 	//---------------------------------------------------
 	// captions
@@ -628,8 +628,7 @@ public:
 
 public:
 	void updateScore();
-	ControlsManager* getControlsManager();
-	AudioManager* getAudioManager();
+
 	//long long engineTicksPassed();
 	//GameType* getGameType();
 	//void setCurrentGameType(GameType* settings);
@@ -647,7 +646,6 @@ public:
 	long long ticks();
 	FrameState* getFrameState();
 
-	Engine* getEngine();
 
 
 

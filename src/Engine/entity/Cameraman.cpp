@@ -37,6 +37,8 @@ Cameraman::Cameraman(Engine* g)
 	targetEntity = this;
 
 	getData()->setDisableShadow(true);
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void Cameraman::initCurrentAnimationFromSprite()
@@ -954,12 +956,12 @@ void Cameraman::setTarget(Entity* t)
 
 void Cameraman::setTarget(float mapXPixelsHQ, float mapYPixelsHQ)
 { //=========================================================================================================================
-	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2));
+	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2), nullptr);
 }
 
 void Cameraman::setTarget(Area* area)
 { //=========================================================================================================================
-	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2));
+	targetEntity = new Entity(getEngine(), new EntityData(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2), nullptr);
 }
 
 void Cameraman::setDummyTarget()

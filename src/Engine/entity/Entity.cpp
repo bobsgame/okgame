@@ -34,6 +34,8 @@ Entity::Entity(Engine* g, Map* m)
 	this->e = g;
 
 	this->map = m;
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 Entity::Entity(Engine* g, EntityData* entityData, Map* m)
@@ -44,6 +46,8 @@ Entity::Entity(Engine* g, EntityData* entityData, Map* m)
 	initEntity(entityData);
 
 	this->map = m;
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void Entity::initEntity(EntityData* entityData)
@@ -67,11 +71,7 @@ void Entity::initEntity(EntityData* entityData)
 	this->setFrame(entityData->getInitialFrame());
 
 
-	if (entityData->getEventData() != nullptr)
-	{
-		Event* event = getEventManager()->getEventByIDCreateIfNotExist(entityData->getEventData()->getID());
-		event->entity = this;
-	}
+
 
 
 	//initSpriteAsset();
@@ -105,11 +105,11 @@ void Entity::update()
 	//if(getEngine()==null)setGame(mapAsset.getEngine());
 
 
-	if (getEventData() != nullptr)
+	if (event != nullptr)
 	{
-		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 
-		getEventManager()->addToEventQueueIfNotThere(e); //events update their own network data inside their run function
+		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
 
 

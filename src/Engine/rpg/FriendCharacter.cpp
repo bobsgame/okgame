@@ -27,6 +27,9 @@ FriendCharacter::FriendCharacter(BGClientEngine* g)
 
 	setScale(1.25f);
 	rotationAnimationSpeedTicks = 100; //80;
+
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friendType)
@@ -49,6 +52,9 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 //
 //
 //	connection = new FriendUDPConnection(g, friendManager->getNextUDPPort(), this);
+
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort)
@@ -75,6 +81,8 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 //
 //	connection = new FriendUDPConnection(g, myUDPPort, this);
 //	connection->setPeerIPAddress_S("127.0.0.1", theirUDPPort);
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void FriendCharacter::setGameToForwardPacketsTo(MiniGameEngine* game)

@@ -86,7 +86,7 @@ private:
 	
 	string text = "";
 
-
+public:
 
 	//these are used for the client to preload dialogues, flags, music, etc without doing a server lookup.  USED FOR EXPORT ONLY IN TOOLS. not stored in data structure.
 	ArrayList<DialogueData*>* dialogueDataList = new ArrayList<DialogueData*>();

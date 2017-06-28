@@ -24,7 +24,7 @@ class Sprite : public EnginePart
 public:
 	static Logger log;
 
-	
+	Event* event = nullptr;
 
 	//static ExecutorService *generatePNGExecutorService;
 

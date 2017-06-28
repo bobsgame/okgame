@@ -31,6 +31,8 @@ public:
 
 	Map* map = nullptr;
 
+	Event* event = nullptr;
+
 	static int DOWN;
 	static int UP;
 	static int LEFT;
@@ -614,7 +616,7 @@ public:
 
 	virtual float getTicksPerPixelMoved();
 
-	virtual EventData* getEventData();
+	EventData* getEventData();
 	virtual bool getOnlyHereDuringEvent();
 	virtual float getVoicePitch();
 	virtual bool getMovementAnimationDisabled();

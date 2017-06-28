@@ -24,6 +24,8 @@ ScreenSprite::ScreenSprite(Engine* g, const string& name, const string& spriteNa
 	setRenderOrder(RenderOrder::OVER_TEXT);
 
 	getSpriteManager()->screenSpriteList.add(this);
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 float ScreenSprite::getScreenLeft()

@@ -648,7 +648,7 @@ void Map::update()
 			for (int i = 0; i < mapEventList.size(); i++)
 			{
 				Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
-				//event->map = this;
+				event->map = this;
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
 					getEventManager()->addToEventQueueIfNotThere(event);
@@ -707,7 +707,7 @@ void Map::update()
 		for (int i = 0; i < mapEventList.size(); i++)
 		{
 			Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
-			//event->map = this;
+			event->map = this;
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
 				getEventManager()->addToEventQueueIfNotThere(event);

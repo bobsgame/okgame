@@ -27,8 +27,10 @@ Door::Door(Engine* g, DoorData* doorAsset, Map* m)
 
 	if (getEventData() != nullptr)
 	{
-		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
-		e->door = this;
+		this->event = new Event(g, getEventData(), this);
+		//Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//event->door = this;
+		//event->entity = this;
 	}
 }
 

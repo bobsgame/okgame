@@ -27,6 +27,8 @@ RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int sp
 	initCharacter();
 
 
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+
 	ArrayList<string>* spriteNameList = new ArrayList<string>;
 
 	if (kid == true)

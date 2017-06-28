@@ -30,6 +30,8 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 	initEntity(data);
 	initLight(data);
 
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+
 
 	isScreenLight = true;
 
@@ -110,6 +112,8 @@ Light::Light(Engine* g, LightData* lightAsset, Map* m)
 
 	initEntity(lightAsset);
 	initLight(lightAsset);
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void Light::initLight(LightData* lightAsset)

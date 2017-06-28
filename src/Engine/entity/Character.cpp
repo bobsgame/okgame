@@ -35,6 +35,8 @@ Character::Character(Engine* g, EntityData* data, Map *m)
 	initEntity(data);
 
 	initCharacter();
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void Character::initCharacter()
@@ -74,6 +76,8 @@ Character::Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m)
 
 	getCurrentMap()->currentState->characterList.add(this);
 	getCurrentMap()->currentState->characterByNameHashtable.put(name, this);
+
+	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
 }
 
 void Character::initCurrentAnimationFromSprite()

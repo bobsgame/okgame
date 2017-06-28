@@ -185,7 +185,7 @@ Event* EventManager::getCutsceneEventByID(int id)
 //	//but i think the object should request the event from the server instead of making an empty event
 //	//or at least the object should create the event itself so it can be associated with the correct object
 //	log.error("Could not find event with ID " + to_string(id));
-//	Event* d = new Event(getEngine(), new EventData(id, "", 0, "", ""));
+//	Event* d = new Event(getEngine(), new EventData(id, "", 0, "", ""), "");
 //	d->setInitialized_S(false);
 //
 //	return d;

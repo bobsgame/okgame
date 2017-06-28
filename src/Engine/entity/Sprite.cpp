@@ -117,7 +117,7 @@ void Sprite::preloadFromDataFile(string name)
 	texture = GLUtils::getTextureFromPNGExePath("data/sprite/" + name + ".png");
 
 
-
+	if (getEventData() != nullptr)this->event = new Event(e, getEventData(), this);
 	//System.out.println("Texture Size:"+texture.getWidth()+","+texture.getHeight());
 
 	//      
@@ -197,6 +197,8 @@ void Sprite::initializeWithSpriteData(SpriteData* spriteData)
 	{
 		new Item(getEngine(), this);
 	}
+
+	if (getEventData() != nullptr)this->event = new Event(e, getEventData(), this);
 }
 
 
@@ -432,9 +434,9 @@ void Sprite::draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1
 void Sprite::update()
 { //=========================================================================================================================
 
-	if (getEventData() != nullptr)
+	if (event != nullptr)
 	{
-		Event* event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//Event* event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
 

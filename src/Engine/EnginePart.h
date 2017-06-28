@@ -75,26 +75,26 @@ public:
 	virtual void toggleActivated();
 	virtual void setActivated(bool b);
 	virtual bool getIsActivated();
-	virtual bool getWasEverActivated();
-	virtual int getSecondsSinceActivated();
-	virtual bool getWasEverHere();
-	virtual void resetLastTimeHere();
-	virtual void setLastTimeHere();
-	virtual long long getLastTimeHere();
-	virtual int getSecondsSinceLastHere();
-	virtual int getMinutesSinceLastHere();
+	bool getWasEverActivated();
+	int getSecondsSinceActivated();
+	bool getWasEverHere();
+	void resetLastTimeHere();
+	void setLastTimeHere();
+	long long getLastTimeHere();
+	int getSecondsSinceLastHere();
+	int getMinutesSinceLastHere();
 
 
-	virtual Engine* getEngine();
-	virtual Cameraman* getCameraman();
-	virtual MapManager* getMapManager();
-	virtual SpriteManager* getSpriteManager();
-	virtual ActionManager* getActionManager();
-	virtual TextManager* getTextManager();
-	virtual AudioManager* getAudioManager();
-	virtual CaptionManager* getCaptionManager();
-	virtual EventManager* getEventManager();
-	virtual CinematicsManager* getCinematicsManager();
+	Engine* getEngine();
+	Cameraman* getCameraman();
+	MapManager* getMapManager();
+	SpriteManager* getSpriteManager();
+	ActionManager* getActionManager();
+	TextManager* getTextManager();
+	AudioManager* getAudioManager();
+	CaptionManager* getCaptionManager();
+	EventManager* getEventManager();
+	CinematicsManager* getCinematicsManager();
 
 	virtual Map* getCurrentMap();
 
