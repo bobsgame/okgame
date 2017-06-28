@@ -31,7 +31,7 @@ public:
 	bool showActionIcon = true;
 
 
-	Door(Engine* g, DoorData* doorAsset);
+	Door(Engine* g, DoorData* doorAsset, Map* m);
 
 
 	virtual bool isOpen();

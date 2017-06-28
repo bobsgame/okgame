@@ -25,11 +25,12 @@ Character::Character()
 //
 //}
 
-Character::Character(Engine* g, EntityData* data)
+Character::Character(Engine* g, EntityData* data, Map *m)
 { //=========================================================================================================================
 
 
 	this->e = g;
+	this->map = m;
 
 	initEntity(data);
 
@@ -60,13 +61,15 @@ void Character::initCharacter()
 /**
 This is specifically for something, not sure what
 */
-Character::Character(Engine* g, string name, Sprite* sprite, Area* a)
+Character::Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m)
 { //=========================================================================================================================
 	this->e = g;
 
 	EntityData* data = new EntityData(-1, name, sprite->getName(), (int)a->middleX() / 2, (int)a->middleY() / 2, 0, false, true, 255, 1.25f, 8);
 
 	initEntity(data);
+
+	this->map = m;
 
 
 	getCurrentMap()->currentState->characterList.add(this);

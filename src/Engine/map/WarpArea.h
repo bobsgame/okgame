@@ -20,7 +20,7 @@ public:
 
 	static Logger log;
 
-	WarpArea(Engine* g, AreaData* a);
+	WarpArea(Engine* g, AreaData* a, Map* m);
 
 
 	long long lastRequestedMapDataTime = 0;

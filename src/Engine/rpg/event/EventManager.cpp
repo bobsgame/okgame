@@ -99,10 +99,10 @@ bool EventManager::isEventInQueue(Event* event)
 void EventManager::unloadCurrentMapEvents()
 { //=========================================================================================================================
 
-	for (int i = 0; i < (int)getCurrentMap()->mapEventIDList.size(); i++)
+	for (int i = 0; i < (int)getCurrentMap()->mapEventList.size(); i++)
 	{
-		Event* s = getEventManager()->getEventByIDCreateIfNotExist(getCurrentMap()->mapEventIDList.get(i));
-		s->reset();
+		Event* s = getCurrentMap()->mapEventList.get(i);// getEventManager()->getEventByID(getCurrentMap()->mapEventIDList.get(i));
+		if(s!=nullptr)s->reset();
 	}
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
@@ -150,24 +150,46 @@ Dialogue* EventManager::getDialogueByIDCreateIfNotExist(int id)
 	return new Dialogue(getEngine(), id);
 }
 
-Event* EventManager::getEventByIDCreateIfNotExist(int id)
+
+Event* EventManager::getCutsceneEventByID(int id)
 { //=========================================================================================================================
 	//go through list
 	//if event doesn't exist, make new one
-	for (int i = 0; i < eventList.size(); i++)
+	for (int i = 0; i < cutsceneEventList.size(); i++)
 	{
-		Event* d = eventList.get(i);
+		Event* d = cutsceneEventList.get(i);
 		if (d->getID() == id)
 		{
 			return d;
 		}
 	}
 
-	log.error("Could not find event with ID " + to_string(id));
-	Event* d = new Event(getEngine(), id);
-
-	return d;
+	return nullptr;
 }
+
+
+//Event* EventManager::getEventByIDCreateIfNotExist(int id)
+//{ //=========================================================================================================================
+//	//go through list
+//	//if event doesn't exist, make new one
+//	for (int i = 0; i < eventList.size(); i++)
+//	{
+//		Event* d = eventList.get(i);
+//		if (d->getID() == id)
+//		{
+//			return d;
+//		}
+//	}
+//
+//	//first of all this should never happen because events are embedded in objects now
+//	//but i think the object should request the event from the server instead of making an empty event
+//	//or at least the object should create the event itself so it can be associated with the correct object
+//	log.error("Could not find event with ID " + to_string(id));
+//	Event* d = new Event(getEngine(), new EventData(id, "", 0, "", ""));
+//	d->setInitialized_S(false);
+//
+//	return d;
+//}
 
 Skill* EventManager::getSkillByIDCreateIfNotExist(int id)
 { //=========================================================================================================================

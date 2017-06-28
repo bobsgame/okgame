@@ -23,7 +23,8 @@ public:
 	static Logger log;
 
 
-	ArrayList<Event*> eventList;
+	ArrayList<Event*> cutsceneEventList;//project events?
+	//ArrayList<Event*> eventList;
 	ArrayList<Dialogue*> dialogueList;
 	ArrayList<GameString*> gameStringList;
 	ArrayList<Flag*> flagList;
@@ -56,7 +57,8 @@ public:
 	virtual Dialogue* getDialogueByIDCreateIfNotExist(int id);
 
 
-	virtual Event* getEventByIDCreateIfNotExist(int id);
+	virtual Event* getCutsceneEventByID(int id);
+	//virtual Event* getEventByIDCreateIfNotExist(int id);
 
 
 	virtual Skill* getSkillByIDCreateIfNotExist(int id);

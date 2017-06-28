@@ -24,6 +24,8 @@ Sprite::Sprite()
 Sprite::Sprite(Engine* g)
 { //=========================================================================================================================
 	this->e = g;
+
+
 }
 
 //=========================================================================================================================
@@ -31,7 +33,7 @@ void Sprite::preloadFromDataFile(string name)
 {//=========================================================================================================================
 
 	//log.info("new SpriteData "+name);
-	this->data = new SpriteData(-1, name, name, 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, -1, "", 0, 0, 0, "", "");
+	this->data = new SpriteData(-1, name, name, 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
 
 
 	int width = 0;
@@ -430,9 +432,9 @@ void Sprite::draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1
 void Sprite::update()
 { //=========================================================================================================================
 
-	if (getEventID() != -1)
+	if (getEventData() != nullptr)
 	{
-		Event* event = getEventManager()->getEventByIDCreateIfNotExist(getEventID());
+		Event* event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
 
@@ -1686,10 +1688,10 @@ bool Sprite::getForceMD5Export()
 	return s->getForceMD5Export();
 }
 
-int Sprite::getEventID()
+EventData* Sprite::getEventData()
 {
 	SpriteData* s = getData();
-	return s->getEventID();
+	return s->getEventData();
 }
 
 string Sprite::getItemGameDescription()

@@ -156,11 +156,11 @@ Sprite* SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(string sprit
 			SpriteData* d = nullptr;
 			if (spriteAssetName == "Camera")
 			{
-				d = new SpriteData(-1, "Camera", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, -1, "", 0, 0, 0, "", "");
+				d = new SpriteData(-1, "Camera", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
 			}
 			if (spriteAssetName == "none")
 			{
-				d = new SpriteData(-1, "none", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, -1, "", 0, 0, 0, "", "");
+				d = new SpriteData(-1, "none", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
 			}
 
 			s->initializeWithSpriteData(d);

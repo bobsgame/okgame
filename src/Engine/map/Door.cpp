@@ -14,7 +14,7 @@
 Logger Door::log = Logger("Door");
 
 
-Door::Door(Engine* g, DoorData* doorAsset)
+Door::Door(Engine* g, DoorData* doorAsset, Map* m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -23,10 +23,11 @@ Door::Door(Engine* g, DoorData* doorAsset)
 
 	this->data = doorAsset;
 
+	this->map = m;
 
-	if (getEventID() != -1)
+	if (getEventData() != nullptr)
 	{
-		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventID());
+		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		e->door = this;
 	}
 }

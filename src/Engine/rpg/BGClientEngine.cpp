@@ -163,7 +163,7 @@ int BGClientEngine::getProjectLoadEventID_S()
 
 bool BGClientEngine::getFinishedLoadEvent()
 {
-	return finishedLoadEvent;
+	return finishedProjectLoadEvent;
 }
 
 void BGClientEngine::update()
@@ -227,24 +227,24 @@ void BGClientEngine::update()
 		}
 
 
-		if (isLoadEventInitialized_nonThreaded == false)
+		if (isProjectLoadEventInitialized_nonThreaded == false)
 		{
-			long long startTime = lastSentLoadEventRequestTime;
+			long long startTime = lastSentProjectLoadEventRequestTime;
 			int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
 			if (ticksPassed > 200)
 			{
-				lastSentLoadEventRequestTime = currentTime;
+				lastSentProjectLoadEventRequestTime = currentTime;
 
 				if (getProjectLoadEventID_S() == -1)
 				{
-					sendLoadEventRequest();
+					sendProjectLoadEventRequest();
 				}
 				else
 				{
-					isLoadEventInitialized_nonThreaded = true;
+					isProjectLoadEventInitialized_nonThreaded = true;
 
-					loadEvent = getEventManager()->getEventByIDCreateIfNotExist(getProjectLoadEventID_S());
-					getEventManager()->addToEventQueueIfNotThere(loadEvent); //events update their own network data inside their run function
+					projectLoadEvent = getEventManager()->getCutsceneEventByID(getProjectLoadEventID_S());
+					if(projectLoadEvent!=nullptr)getEventManager()->addToEventQueueIfNotThere(projectLoadEvent); //events update their own network data inside their run function
 				}
 			}
 
@@ -252,12 +252,12 @@ void BGClientEngine::update()
 		}
 
 
-		if (finishedLoadEvent == false)
+		if (finishedProjectLoadEvent == false)
 		{
 			//wait for load event to finish
-			if (getEventManager()->isEventInQueue(loadEvent) == false)
+			if (getEventManager()->isEventInQueue(projectLoadEvent) == false)
 			{
-				finishedLoadEvent = true;
+				finishedProjectLoadEvent = true;
 
 				GameSave g = getGameSave_S();
 
@@ -668,7 +668,7 @@ void BGClientEngine::loadPreCachedObjectData()
 			{
 				EventData* data = new EventData(); data->initFromString(s);
 				//Event* m =
-                new Event(this, data);
+                new Event(this, data, "cutscene");
 				//getEventManager()->eventList.add(m);
 				if (debug)
 				{
@@ -1286,7 +1286,7 @@ bool BGClientEngine::serverMessageReceived(string e)// ChannelHandlerContext* ct
 	return false;
 
 }
-void BGClientEngine::sendLoadEventRequest()
+void BGClientEngine::sendProjectLoadEventRequest()
 { //=========================================================================================================================
 	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Load_Event_Request + BobNet::endline);
 }
@@ -1299,7 +1299,8 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 	s = s.substr(s.find(":") + 1); //intentional ::
 
 
-	EventData* data = new EventData(); data->initFromString(s);
+	EventData* data = new EventData(); 
+	data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -1307,7 +1308,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 	}
 	else
 	{
-		Event* d = getEventManager()->getEventByIDCreateIfNotExist(data->getID());
+		Event* d = getEventManager()->getCutsceneEventByID(data->getID());
 		d->setData_S(data);
 
 		setProjectLoadEventID_S(data->getID());

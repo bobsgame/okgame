@@ -22,7 +22,7 @@ LightData::LightData(int id, const string& mapName, const string& stateName, con
 { //=========================================================================================================================
 
 
-	initEntityData(id, name, "", spawnXPixels1X, spawnYPixels1X, 0, false, false, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, -1, ""); //spriteAssetName
+	initEntityData(id, name, "", spawnXPixels1X, spawnYPixels1X, 0, false, false, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, ""); //spriteAssetName
 
 
 	this->widthPixels1X = widthPixels1X;
@@ -54,7 +54,7 @@ LightData::LightData(int id, const string& mapName, const string& stateName, con
 
 LightData::LightData(int id, const string& name)
 { //=========================================================================================================================
-	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, -1, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
+	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
 }
 
 //LightData* LightData::fromBase64ZippedJSON(const string& b64)

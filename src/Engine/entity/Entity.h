@@ -8,6 +8,7 @@
 #include "bobtypes.h"
 #include "../../Utility/BobBool.h"
 #include "Sprite.h"
+#include "../rpg/event/EventData.h"
 class Logger;
 
 
@@ -27,6 +28,8 @@ class Entity : public EnginePart
 public:
 
 	static Logger log;
+
+	Map* map = nullptr;
 
 	static int DOWN;
 	static int UP;
@@ -131,10 +134,10 @@ private:
 
 public:
 	Entity();
-	Entity(Engine* g);
+	Entity(Engine* g, Map* m);
 
 
-	Entity(Engine* g, EntityData* entityData);
+	Entity(Engine* g, EntityData* entityData, Map* m);
 
 
 	void initEntity(EntityData* entityData);
@@ -586,7 +589,7 @@ public:
 	virtual string getName();
 	virtual string getComment();
 	virtual int getID();
-	virtual int getMapID();
+	//virtual int getMapID();
 	virtual string getSpriteName();
 
 
@@ -611,7 +614,7 @@ public:
 
 	virtual float getTicksPerPixelMoved();
 
-	virtual int getEventID();
+	virtual EventData* getEventData();
 	virtual bool getOnlyHereDuringEvent();
 	virtual float getVoicePitch();
 	virtual bool getMovementAnimationDisabled();
@@ -660,7 +663,7 @@ public:
 	virtual void setAnimationDisabled(bool s);
 	virtual void setHitLayerDisabled(bool s);
 	virtual void setIgnoreHitPlayer(bool s);
-	virtual void setEventID(int s);
+	//virtual void setEventID(int s);
 
 	virtual void setAnimateThroughAllFrames(bool s);
 	virtual void setAnimateThroughCurrentAnimation(bool s);

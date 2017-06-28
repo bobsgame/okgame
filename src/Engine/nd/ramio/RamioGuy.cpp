@@ -14,9 +14,9 @@
 Logger RamioGuy::log = Logger("RamioGuy");
 
 
-RamioGuy::RamioGuy(Engine* g)
+RamioGuy::RamioGuy(Engine* g, Map* m)
 { // =========================================================================================================================
-	Entity(g, new EntityData(-1, "ramio", "ramio", 0, 0));
+	Entity(g, new EntityData(-1, "ramio", "ramio", 0, 0), m);
 }
 
 bool RamioGuy::jumping = false;

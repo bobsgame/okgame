@@ -146,7 +146,7 @@ public:
 	virtual bool getDontUsePathfinding();
 	virtual bool getPullPlayer();
 	virtual bool getPushPlayer();
-	//virtual int getEventID();
+	virtual EventData* getEventData();
 	//virtual int getMapID();
 	//virtual int getStateID();
 	virtual ArrayList<string>* getConnectionTYPEIDList();

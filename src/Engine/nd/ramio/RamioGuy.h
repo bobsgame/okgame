@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	RamioGuy(Engine* g);
+	RamioGuy(Engine* g, Map *m);
 
 
 	int framesSincePressedA = 0;

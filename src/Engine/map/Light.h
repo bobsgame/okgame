@@ -92,7 +92,7 @@ public:
 	Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight);
 
 
-	Light(Engine* g, LightData* lightAsset);
+	Light(Engine* g, LightData* lightAsset, Map* m);
 
 
 	bool flickerOnOffToggle = true;

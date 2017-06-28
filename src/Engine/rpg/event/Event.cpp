@@ -15,42 +15,81 @@
 Logger Event::log = Logger("Event");
 
 
-Event::Event(Engine* g, int id)
+//Event::Event(Engine* g, int id)
+//{ //=========================================================================================================================
+//	this->e = g;
+//	this->data = new EventData(id, "", 0, "", "");
+//	initEvent();
+//}
+
+Event::Event(Engine* g, EventData* eventData, string s)
 { //=========================================================================================================================
-
 	this->e = g;
-
-	this->data = new EventData(id, "", 0, "", "");
-
-	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
-	{
-		if (getEventManager()->eventList.get(i)->getID() == data->getID())
-		{
-			log.error("Event already exists:" + data->getName());
-			return;
-		}
-	}
-	getEventManager()->eventList.add(this); //this tracks events created for areas and entities that don't exist after the map is unloaded, so they don't have to be loaded from the server and parsed again.
-}
-
-Event::Event(Engine* g, EventData* eventData)
-{ //=========================================================================================================================
-
-	this->e = g;
-
 	this->data = eventData;
+	
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
-	{
-		if (getEventManager()->eventList.get(i)->getID() == data->getID())
-		{
-			log.error("Event already exists:" + data->getName());
-			return;
-		}
-	}
-	getEventManager()->eventList.add(this); //this tracks events created for areas and entities that don't exist after the map is unloaded, so they don't have to be loaded from the server and parsed again.
+	getEventManager()->cutsceneEventList.add(this);
+	//initEvent();
 }
+
+
+Event::Event(Engine* g, EventData* eventData, Map* m)
+{ //=========================================================================================================================
+	this->e = g;
+	this->data = eventData;
+	this->map = m;
+	initEvent();
+}
+Event::Event(Engine* g, EventData* eventData, Door *d)
+{ //=========================================================================================================================
+	this->e = g;
+	this->data = eventData;
+	this->door = d;
+	initEvent();
+}
+Event::Event(Engine* g, EventData* eventData, Area* a)
+{ //=========================================================================================================================
+	this->e = g;
+	this->data = eventData;
+	this->area = a;
+	initEvent();
+}
+Event::Event(Engine* g, EventData* eventData, Entity* e)
+{ //=========================================================================================================================
+	this->e = g;
+	this->data = eventData;
+	this->entity = e;
+	initEvent();
+}
+Event::Event(Engine* g, EventData* eventData, Sprite* s)
+{ //=========================================================================================================================
+	this->e = g;
+	this->data = eventData;
+	this->sprite = s;
+	initEvent();
+}
+
+
+void Event::initEvent()
+{
+	setInitialized_S(true);
+
+//	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
+//	{
+//		if (getEventManager()->eventList.get(i)->getID() == data->getID())
+//		{
+//			log.error("Event already exists:" + data->getName());
+//			return;
+//		}
+//	}
+//	getEventManager()->eventList.add(this); 
+	//this tracks events created for areas and entities that don't exist after the map is unloaded, so they don't have to be loaded from the server and parsed again.
+	//TODO: need to make sure that areas and entities keep their events since i got rid of this`
+
+}
+
+
 
 EventData* Event::getData()
 {
@@ -4937,7 +4976,7 @@ void Event::spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA()
 	}
 	else
 	{
-		Entity* m = getMap()->createEntityAtArea(getMap(), gameString->text(), sprite, a);
+		Entity* m = getMap()->createEntityAtArea(gameString->text(), sprite, a);
 
 		m->setAlphaImmediately(1.0f);
 
@@ -4964,7 +5003,7 @@ void Event::spawnSpriteAsEntityFadeIn_SPRITE_STRINGentityIdent_AREA()
 	}
 	else
 	{
-		getMap()->createEntityAtArea(getMap(), gameString->text(), sprite, a);
+		getMap()->createEntityAtArea(gameString->text(), sprite, a);
 
 
 		getNextCommand();
@@ -4990,7 +5029,12 @@ void Event::spawnSpriteAsNPC_SPRITE_STRINGentityIdent_AREA()
 	}
 	else
 	{
-		Character* character = new Character(getEngine(), gameString->text(), sprite, a);
+
+		Map* m = nullptr;
+		if (map != nullptr)m = map;
+		if (m == nullptr && a != nullptr && a->map != nullptr) m = a->map;
+
+		Character* character = new Character(getEngine(), gameString->text(), sprite, a, m);
 
 		character->setAlphaImmediately(1.0f);
 
@@ -5018,7 +5062,10 @@ void Event::spawnSpriteAsNPCFadeIn_SPRITE_STRINGentityIdent_AREA()
 	}
 	else
 	{
-		new Character(getEngine(), gameString->text(), sprite, a);
+		Map* m = nullptr;
+		if (map != nullptr)m = map;
+		if (m == nullptr && a != nullptr && a->map != nullptr) m = a->map;
+		new Character(getEngine(), gameString->text(), sprite, a, m);
 
 		getNextCommand();
 	}

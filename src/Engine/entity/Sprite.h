@@ -10,6 +10,7 @@ class Logger;
 
 #include "../../Utility/gl/GLUtils.h"
 #include "../EnginePart.h"
+#include "../rpg/event/EventData.h"
 
 class SpriteAnimationSequence;
 class SpriteData;
@@ -22,6 +23,8 @@ class Sprite : public EnginePart
 {
 public:
 	static Logger log;
+
+	
 
 	//static ExecutorService *generatePNGExecutorService;
 
@@ -200,7 +203,7 @@ public:
 	virtual bool getIsItem();
 	virtual bool getForceHQ2X();
 	virtual bool getForceMD5Export();
-	virtual int getEventID();
+	virtual EventData* getEventData();
 	virtual string getItemGameDescription();
 	virtual float getGamePrice();
 	virtual int getUtilityOffsetXPixelsHQ();

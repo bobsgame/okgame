@@ -19,12 +19,15 @@ Area::Area()
 }
 
 
-Area::Area(Engine* g)
+Area::Area(Engine* g, Map* m)
 { //=========================================================================================================================
 	this->e = g;
+
+	this->map = m;
+
 }
 
-Area::Area(Engine* g, AreaData* a)
+Area::Area(Engine* g, AreaData* a, Map* m)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -33,11 +36,15 @@ Area::Area(Engine* g, AreaData* a)
 	this->mapX = a->getMapXPixelsHQ();
 	this->mapY = a->getMapYPixelsHQ();
 
+	this->map = m;
 
-	if (getEventID() != -1)
+
+	if (getEventData() != nullptr)
 	{
-		Event* event = getEventManager()->getEventByIDCreateIfNotExist(getEventID());
-		event->area = this;
+
+		this->event = new Event(g, getEventData(), this);
+		//Event* event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//event->area = this;
 	}
 }
 
@@ -45,9 +52,9 @@ Map* Area::getMap()
 { //=========================================================================================================================
 
 
-	Map* map = getMapManager()->getMapByIDBlockUntilLoaded(mapID());
+	//Map* map = getMapManager()->getMapByIDBlockUntilLoaded(mapID());
 
-	return map;
+	return this->map;
 }
 
 void Area::renderActionIcon()
@@ -58,7 +65,7 @@ void Area::renderActionIcon()
 		return;
 	}
 
-	if (getEventID() == -1)
+	if (getEventData() == nullptr)
 	{
 		return;
 	}
@@ -194,9 +201,9 @@ void Area::update()
 
 	//if(getEngine()==null)setGame(map.getEngine());
 
-	if (getEventID() != -1)
+	if (getEventData() != nullptr)
 	{
-		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventID());
+		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		getEventManager()->addToEventQueueIfNotThere(e); //events update their own network data inside their run function
 	}
 
@@ -517,9 +524,9 @@ void Area::renderDebugInfo()
 
 
 	//if(isAnAction)GL.drawOutlinedString("Is An Action", x, y+(++strings*9),Color.red);
-	if (getEventID() != -1)
+	if (getEventData() != nullptr)
 	{
-		GLUtils::drawOutlinedString("Event ID: " + to_string(getEventID()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Event ID: " + to_string(getEventData()->getID()), x, y + (++strings * 9), BobColor::white);
 	}
 	if (waitHereTicks() == -1)
 	{
@@ -947,10 +954,10 @@ int Area::getID()
 	return getData()->getID();
 }
 
-int Area::mapID()
-{
-	return getData()->getMapID();
-}
+//int Area::mapID()
+//{
+//	return getData()->getMapID();
+//}
 
 float Area::arrivalXPixelsHQ()
 {
@@ -1062,9 +1069,9 @@ bool Area::suckPlayerIntoMiddle()
 	return getData()->getSuckPlayerIntoMiddle();
 }
 
-int Area::getEventID()
+EventData* Area::getEventData()
 {
-	return getData()->getEventID();
+	return getData()->getEventData();
 }
 
 ArrayList<string>* Area::connectionTYPEIDList()

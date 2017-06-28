@@ -28,7 +28,7 @@ public:
 
 
 	ArrayList<MapState*> stateList;
-	//ArrayList<int> mapEventIDList;
+	ArrayList<Event*> mapEventList;
 
 
 	float lastKnownScreenX = 0;
@@ -463,16 +463,16 @@ public:
 	virtual ArrayList<Entity*>* getAllEntitiesUsingSpriteAsset(Sprite* s);
 
 
-	virtual Entity* createEntity(Map* map, const string& spriteName, Sprite* spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
+	virtual Entity* createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
 
 
-	virtual Entity* createEntityFeetAtXY(Map* map, const string& spriteName, Sprite* sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
+	virtual Entity* createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
 
 
-	virtual Entity* createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Map* map, Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt);
+	virtual Entity* createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt);
 
 
-	virtual Entity* createEntityAtArea(Map* map, const string& spriteName, Sprite* spriteAsset, Area* a);
+	virtual Entity* createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a);
 
 
 	virtual MapData* getData();

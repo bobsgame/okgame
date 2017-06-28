@@ -36,12 +36,16 @@ public:
 
 	bool showActionIcon = true;
 
+	Map* map = nullptr;
+
 
 	Area();
-	Area(Engine* g);
+	Area(Engine* g, Map* m);
 
 
-	Area(Engine* g, AreaData* a);
+	Area(Engine* g, AreaData* a, Map* m);
+
+	Event* event = nullptr;
 
 
 	virtual Map* getMap();
@@ -173,7 +177,7 @@ public:
 	virtual string getComment();
 	virtual int getID();
 
-	virtual int mapID();
+	//virtual int mapID();
 
 
 	virtual float arrivalXPixelsHQ();
@@ -199,7 +203,7 @@ public:
 	virtual bool autoPilot();
 	virtual bool playerFaceDirection();
 	virtual bool suckPlayerIntoMiddle();
-	virtual int getEventID();
+	virtual EventData* getEventData();
 	virtual ArrayList<string>* connectionTYPEIDList();
 
 	virtual string getTYPEIDString();

@@ -32,12 +32,15 @@ public:
 	HashMap<string, Area*> areaByTYPEIDHashtable;//new HashMap<string, Area*>();
 
 
+
+	Map* map = nullptr;
+
 private:
 	MapStateData* data = nullptr;
 
 
 public:
-	MapState(MapStateData* mapStateData);
+	MapState(MapStateData* mapStateData, Map* m);
 
 
 	virtual MapStateData* getData();

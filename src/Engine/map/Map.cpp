@@ -93,22 +93,30 @@ void Map::initMap(Engine* g, MapData* mapData)
 	//need to run through mapData structure and create entities, events, lights, areas, doors, states, warpareas
 
 
-	for (int i = 0; i < (int)mapData->getEventIDList()->size(); i++)
+	for (int i = 0; i < (int)mapData->getEventDataList()->size(); i++)
 	{
 		//create event, add to eventList
-		int eventID = mapData->getEventIDList()->get(i);
+		EventData* eventData = mapData->getEventDataList()->get(i);
 
 
 		Event* event = nullptr;
 
-		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
-		{
-			if (getEventManager()->eventList.get(k)->getID() == eventID)
-			{
-				event = getEventManager()->eventList.get(k);
-			}
-		}
+//		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
+//		{
+//			if (getEventManager()->eventList.get(k)->getID() == eventData->getID())
+//			{
+//				event = getEventManager()->eventList.get(k);
+//			}
+//		}
+//
+//		if (event == nullptr)
+//		{
+//			event = new Event(getEngine(), eventData, this);
+//		}
 
+		event = new Event(getEngine(), eventData, this);
+
+		mapEventList.add(event);
 
 	}
 
@@ -118,7 +126,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 		//create door, add to doorList,
 
 		DoorData* doorData = mapData->getDoorDataList()->get(i);
-		Door* door = new Door(getEngine(), doorData);
+		Door* door = new Door(getEngine(), doorData, this);
 
 
 		//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
@@ -134,7 +142,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 
 		//create state, add to state list.
-		MapState* mapState = new MapState(mapStateData);
+		MapState* mapState = new MapState(mapStateData, this);
 
 		stateList.add(mapState);
 
@@ -146,7 +154,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 			if (areaData->getIsWarpArea())
 			{
 				//create warparea, add to warpAreaList
-				WarpArea* warpArea = new WarpArea(getEngine(), areaData);
+				WarpArea* warpArea = new WarpArea(getEngine(), areaData, this);
 
 				//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 				//also check and make sure it is sending event update
@@ -157,7 +165,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 			}
 			else
 			{
-				Area* area = new Area(getEngine(), areaData);
+				Area* area = new Area(getEngine(), areaData, this);
 				mapState->areaByNameHashtable.put(area->getName(), area);
 				mapState->areaByTYPEIDHashtable.put(area->getTYPEIDString(), area);
 				mapState->areaList.add(area);
@@ -168,7 +176,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 		for (int n = 0; n < (int)mapStateData->getLightDataList()->size(); n++)
 		{
 			LightData* lightData = mapStateData->getLightDataList()->get(n);
-			Light* light = new Light(getEngine(), lightData);
+			Light* light = new Light(getEngine(), lightData, this);
 
 
 			mapState->lightList.add(light);
@@ -182,14 +190,14 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 			if (entityData->getIsNPC())
 			{
-				Character* character = new Character(getEngine(), entityData);
+				Character* character = new Character(getEngine(), entityData, this);
 
 				mapState->characterList.add(character);
 				mapState->characterByNameHashtable.put(character->getName(), character);
 			}
 			else
 			{
-				Entity* entity = new Entity(getEngine(), entityData);
+				Entity* entity = new Entity(getEngine(), entityData, this);
 
 				mapState->entityList.add(entity);
 				mapState->entityByNameHashtable.put(entity->getName(), entity);
@@ -594,14 +602,14 @@ void Map::update()
 
 			bool eventsAllLoadedThisTime = false;
 
-			if (mapEventIDList.size() > 0)
+			if (mapEventList.size() > 0)
 			{
 				eventsAllLoadedThisTime = true;
-				for (int i = 0; i < mapEventIDList.size(); i++)
+				for (int i = 0; i < mapEventList.size(); i++)
 				{
-					int eventID = mapEventIDList.get(i);
-					Event* event = getEventManager()->getEventByIDCreateIfNotExist(eventID);
-					event->map = this;
+					//int eventID = mapEventList.get(i);
+					Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
+					//event->map = this;
 					if (event->getInitialized_S() == false)
 					{
 						eventsAllLoadedThisTime = false;
@@ -637,10 +645,10 @@ void Map::update()
 		if (ticksPassed > 200)
 		{
 			lastLoadEventRequestTime = currentTime;
-			for (int i = 0; i < mapEventIDList.size(); i++)
+			for (int i = 0; i < mapEventList.size(); i++)
 			{
-				Event* event = getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
-				event->map = this;
+				Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+				//event->map = this;
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
 					getEventManager()->addToEventQueueIfNotThere(event);
@@ -696,10 +704,10 @@ void Map::update()
 	{
 		lastLoadEventRequestTime = currentTime;
 		//run all events, **this will also run post-load events for this map, which stop executing after one loop.
-		for (int i = 0; i < mapEventIDList.size(); i++)
+		for (int i = 0; i < mapEventList.size(); i++)
 		{
-			Event* event = getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
-			event->map = this;
+			Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+			//event->map = this;
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
 				getEventManager()->addToEventQueueIfNotThere(event);
@@ -4553,13 +4561,13 @@ ArrayList<Entity*>* Map::getAllEntitiesUsingSpriteAsset(Sprite* s)
 	return entitiesUsingSprite;
 }
 
-Entity* Map::createEntity(Map* map, const string& spriteName, Sprite* spriteAsset, float mapX, float mapY)
+Entity* Map::createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY)
 { //=========================================================================================================================
 
 
 	EntityData* entityData = new EntityData(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
 
-	Entity* e = new Entity(getEngine(), entityData);
+	Entity* e = new Entity(getEngine(), entityData, this);
 
 	getCurrentMap()->currentState->entityList.add(e);
 	getCurrentMap()->currentState->entityByNameHashtable.put(e->getName(),e);
@@ -4567,24 +4575,24 @@ Entity* Map::createEntity(Map* map, const string& spriteName, Sprite* spriteAsse
 	return e;
 }
 
-Entity* Map::createEntityFeetAtXY(Map* map, const string& spriteName, Sprite* sprite, float mapX, float mapY)
+Entity* Map::createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY)
 { //=========================================================================================================================
 
 	// use hitbox center instead of arbitrary offset
 	SpriteAnimationSequence* a = sprite->getFirstAnimation();
 	int hitBoxYCenter = (a->hitBoxFromTopPixels1X) + (((sprite->getImageHeight() - (a->hitBoxFromTopPixels1X)) - (a->hitBoxFromBottomPixels1X)) / 2);
 
-	return createEntity(map, spriteName, sprite, mapX - (sprite->getImageWidth() / 2), mapY - (hitBoxYCenter));
+	return createEntity(spriteName, sprite, mapX - (sprite->getImageWidth() / 2), mapY - (hitBoxYCenter));
 }
 
-Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Map* map, Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt)
+Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt)
 { //=========================================================================================================================
 
-	if (map->isXYWithinScreenByAmt(mapX + sprite->getImageWidth() / 2, mapY + sprite->getImageHeight() / 2, amt) == true)
+	if (isXYWithinScreenByAmt(mapX + sprite->getImageWidth() / 2, mapY + sprite->getImageHeight() / 2, amt) == true)
 	{
 		if (e == nullptr)
 		{
-			return createEntity(map, spriteName, sprite, mapX, mapY);
+			return createEntity(spriteName, sprite, mapX, mapY);
 		}
 		else
 		{
@@ -4603,12 +4611,12 @@ Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Map* map, En
 	}
 }
 
-Entity* Map::createEntityAtArea(Map* map, const string& spriteName, Sprite* spriteAsset, Area* a)
+Entity* Map::createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a)
 { //=========================================================================================================================
 	float x = a->middleX();
 	float y = a->middleY();
 
-	return createEntityFeetAtXY(map, spriteName, spriteAsset, x, y);
+	return createEntityFeetAtXY(spriteName, spriteAsset, x, y);
 }
 
 MapData* Map::getData()

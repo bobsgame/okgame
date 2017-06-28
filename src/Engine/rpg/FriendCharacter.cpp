@@ -20,7 +20,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g)
 
 
 	//Character(g, new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, -1, ""));
-	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, -1, "");
+	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -34,7 +34,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 
 
 	//this(g); //does NOT add to entityList
-	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, -1, "");
+	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();
@@ -60,7 +60,7 @@ FriendCharacter::FriendCharacter(BGClientEngine* g, int friendUserID, int friend
 	//FOR DEBUG
 
 	//this(g); //does NOT add to entityList
-	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, -1, "");
+	EntityData* data = new EntityData(-1, "Camera", "Camera", 0, 0, 0, false, true, 255, 1.25f, 8, false, false, false, false, false, 0, 0, false, false, false, nullptr, "");
 	this->e = g;
 	initEntity(data);
 	initCharacter();

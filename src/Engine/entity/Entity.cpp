@@ -29,17 +29,21 @@ Entity::Entity()
 }
 
 
-Entity::Entity(Engine* g)
+Entity::Entity(Engine* g, Map* m)
 { //=========================================================================================================================
 	this->e = g;
+
+	this->map = m;
 }
 
-Entity::Entity(Engine* g, EntityData* entityData)
+Entity::Entity(Engine* g, EntityData* entityData, Map* m)
 { //=========================================================================================================================
 
 	this->e = g;
 
 	initEntity(entityData);
+
+	this->map = m;
 }
 
 void Entity::initEntity(EntityData* entityData)
@@ -48,7 +52,7 @@ void Entity::initEntity(EntityData* entityData)
 
 	if (entityData == nullptr)
 	{
-		entityData = new EntityData(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, -1, "");
+		entityData = new EntityData(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
 		log.warn("entityData was null in Entity.init()");
 	}
 	this->data = entityData;
@@ -63,9 +67,9 @@ void Entity::initEntity(EntityData* entityData)
 	this->setFrame(entityData->getInitialFrame());
 
 
-	if (entityData->getEventID() != -1)
+	if (entityData->getEventData() != nullptr)
 	{
-		Event* event = getEventManager()->getEventByIDCreateIfNotExist(entityData->getEventID());
+		Event* event = getEventManager()->getEventByIDCreateIfNotExist(entityData->getEventData()->getID());
 		event->entity = this;
 	}
 
@@ -101,9 +105,9 @@ void Entity::update()
 	//if(getEngine()==null)setGame(mapAsset.getEngine());
 
 
-	if (getEventID() != -1)
+	if (getEventData() != nullptr)
 	{
-		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventID());
+		Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 
 		getEventManager()->addToEventQueueIfNotThere(e); //events update their own network data inside their run function
 	}
@@ -307,9 +311,9 @@ void Entity::renderDebugInfo()
 	GLUtils::drawOutlinedString("SpriteAsset Name: " + sprite->getName(), x, y - 9, BobColor::white);
 
 
-	if (getEventID() != -1)
+	if (getEventData() != nullptr)
 	{
-		GLUtils::drawOutlinedString("Has Event: " + to_string(getEventID()), x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("Has Event: " + to_string(getEventData()->getID()), x, y + (++strings * 9), BobColor::red);
 	}
 
 	//GL.drawOutlinedString("mapX: "+getMapXPixelsHQ+" mapY: "+getMapYPixelsHQ, x, y+(++strings*9),Color.white);
@@ -611,15 +615,15 @@ Map* Entity::getMap()
 { //=========================================================================================================================
 
 
-	if (getMapID() == -1)
+	if (this->map == nullptr)
 	{
 		return EnginePart::getCurrentMap();
 	}
 
-	Map* map = getMapManager()->getMapByIDBlockUntilLoaded(getMapID());
+	//Map* map = getMapManager()->getMapByIDBlockUntilLoaded(getMapID());
 
 
-	return map;
+	return this->map;
 }
 
 bool Entity::shouldDraw()
@@ -2287,10 +2291,10 @@ int Entity::getID()
 	return getData()->getID();
 }
 
-int Entity::getMapID()
-{
-	return getData()->getMapID();
-}
+//int Entity::getMapID()
+//{
+//	return getData()->getMapID();
+//}
 
 string Entity::getSpriteName()
 {
@@ -2392,9 +2396,9 @@ float Entity::getTicksPerPixelMoved()
 	return getData()->getTicksPerPixelMoved();
 }
 
-int Entity::getEventID()
+EventData* Entity::getEventData()
 {
-	return getData()->getEventID();
+	return getData()->getEventData();
 }
 
 bool Entity::getOnlyHereDuringEvent()
@@ -2600,10 +2604,10 @@ void Entity::setIgnoreHitPlayer(bool s)
 	getData()->setIgnoreHitPlayer(s);
 }
 
-void Entity::setEventID(int s)
-{
-	getData()->setEventID(s);
-}
+//void Entity::setEventID(int s)
+//{
+//	getData()->setEventID(s);
+//}
 
 void Entity::setAnimateThroughAllFrames(bool s)
 {

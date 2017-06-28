@@ -30,7 +30,7 @@ public:
 	//The following method was originally marked 'synchronized':
 	virtual bool getInitialized_S();
 
-protected:
+public:
 	//The following method was originally marked 'synchronized':
 	virtual void setInitialized_S(bool i);
 

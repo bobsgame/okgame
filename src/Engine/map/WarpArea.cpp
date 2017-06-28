@@ -14,7 +14,7 @@
 Logger WarpArea::log = Logger("WarpArea");
 
 
-WarpArea::WarpArea(Engine* g, AreaData* a)
+WarpArea::WarpArea(Engine* g, AreaData* a, Map* m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -24,10 +24,14 @@ WarpArea::WarpArea(Engine* g, AreaData* a)
 	this->mapX = a->getMapXPixelsHQ();
 	this->mapY = a->getMapYPixelsHQ();
 
-	if (Area::getEventID() != -1)
+	this->map = m;
+
+
+	if (getEventData() != nullptr)
 	{
-		Event* event = EnginePart::getEventManager()->getEventByIDCreateIfNotExist(Area::getEventID());
-		event->area = this;
+		this->event = new Event(g, getEventData(), this);
+		//Event* event = EnginePart::getEventManager()->getEventByIDCreateIfNotExist(Area::getEventData()->getID());
+		//event->area = this;
 	}
 }
 

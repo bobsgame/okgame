@@ -80,12 +80,12 @@ public:
 	//Character(Engine* g);
 
 
-	Character(Engine* g, EntityData* data);
+	Character(Engine* g, EntityData* data, Map* m);
 
 	void initCharacter();
 
 
-	Character(Engine* g, string name, Sprite* sprite, Area* a);
+	Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m);
 
 
 	virtual void initCurrentAnimationFromSprite() override;

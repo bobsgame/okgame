@@ -143,8 +143,8 @@ public:
 
 
 private:
-	long long lastSentLoadEventRequestTime = 0;
-	bool isLoadEventInitialized_nonThreaded = false;
+	long long lastSentProjectLoadEventRequestTime = 0;
+	bool isProjectLoadEventInitialized_nonThreaded = false;
 	int _projectLoadEventID = -1;
 
 public:
@@ -156,13 +156,13 @@ public:
 
 
 	virtual bool getFinishedLoadEvent();
-	Event* loadEvent = nullptr;
+	Event* projectLoadEvent = nullptr;
 
-	bool finishedLoadEvent = false;
+	bool finishedProjectLoadEvent = false;
 
 
 	public:
-		virtual void sendLoadEventRequest();
+		virtual void sendProjectLoadEventRequest();
 
 private:
 	void incomingLoadEventResponse(string s);

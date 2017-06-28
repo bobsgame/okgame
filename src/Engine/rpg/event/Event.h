@@ -51,11 +51,18 @@ private:
 
 
 public:
-	Event(Engine* g, int id);
+	//Event(Engine* g, int id);
+
+	//for cutscenes only, string is not used, only to make unambiguous
+	Event(Engine* g, EventData* eventData, string s);
 
 
-	Event(Engine* g, EventData* eventData);
-
+	Event(Engine* g, EventData* eventData, Map* m);
+	Event(Engine* g, EventData* eventData, Area* a);
+	Event(Engine* g, EventData* eventData, Entity* e);
+	Event(Engine* g, EventData* eventData, Sprite* s);
+	Event(Engine* g, EventData* eventData, Door* d);
+	void initEvent();
 
 	virtual EventData* getData();
 

@@ -128,7 +128,7 @@ public:
 	virtual bool getAutoPilot();
 	virtual bool getPlayerFaceDirection();
 	virtual bool getSuckPlayerIntoMiddle();
-	virtual int getEventID();
+	virtual EventData* getEventData();
 	//public String stateName(){return data.stateName;}
 	virtual ArrayList<string>* getConnectionTYPEIDList();
 	virtual string getComment();

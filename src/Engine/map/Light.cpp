@@ -102,9 +102,11 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 	}
 }
 
-Light::Light(Engine* g, LightData* lightAsset)
+Light::Light(Engine* g, LightData* lightAsset, Map* m)
 { //=========================================================================================================================
 	this->e = g;
+
+	this->map = m;
 
 	initEntity(lightAsset);
 	initLight(lightAsset);

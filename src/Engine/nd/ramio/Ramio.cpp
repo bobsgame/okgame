@@ -97,7 +97,7 @@ void Ramio::initGame()
 
 	getMapManager()->changeMap("MINIGAMERAMIOramiolevel1", 16, 0);
 
-	guy = new RamioGuy(this);
+	guy = new RamioGuy(this, getCurrentMap());
 	getCurrentMap()->activeEntityList.add(guy);
 
 	getCurrentMap()->defaultDisableFloorOffset = true;
