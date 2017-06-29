@@ -1332,7 +1332,8 @@ int Sprite::getAnimationIndexByFrame(int frame)
 	return getAnimationIndexByAnimation(getAnimationByFrame(frame));
 }
 
-string Sprite::getAnimationNameByIndex(int index)
+
+string& Sprite::getAnimationNameByIndex(int index)
 { //=========================================================================================================================
 	if (index < 0 || index >= getAnimationList()->size())
 	{
@@ -1342,7 +1343,8 @@ string Sprite::getAnimationNameByIndex(int index)
 	return getAnimationList()->get(index)->frameSequenceName;
 }
 
-string Sprite::getAnimationNameByFrame(int frame)
+
+string& Sprite::getAnimationNameByFrame(int frame)
 { //=========================================================================================================================
 
 	return getAnimationNameByIndex(getAnimationIndexByFrame(frame));
@@ -1562,27 +1564,32 @@ int Sprite::getID()
 	return getData()->getID();
 }
 
-string Sprite::getName()
+
+string& Sprite::getName()
 {
 	return getData()->getName();
 }
 
-string Sprite::getTYPEIDString()
+
+string& Sprite::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }
 
-string Sprite::getDataMD5()
+
+string& Sprite::getDataMD5()
 {
 	return getData()->getDataMD5();
 }
 
-string Sprite::getPaletteMD5()
+
+string& Sprite::getPaletteMD5()
 {
 	return getData()->getPaletteMD5();
 }
 
-string Sprite::getComment()
+
+string& Sprite::getComment()
 {
 	return getData()->getComment();
 }
@@ -1614,7 +1621,8 @@ int Sprite::getNumFrames()
 	return getData()->getNumFrames();
 }
 
-string Sprite::getDisplayName()
+
+string& Sprite::getDisplayName()
 {
 	return getData()->getDisplayName();
 }
@@ -1696,7 +1704,8 @@ EventData* Sprite::getEventData()
 	return s->getEventData();
 }
 
-string Sprite::getItemGameDescription()
+
+string& Sprite::getItemGameDescription()
 {
 	SpriteData* s = getData();
 	return s->getItemGameDescription();

@@ -16,7 +16,7 @@ class StringConverterHelper
 {
 public:
 	template <typename T>
-	static string toString(const T& subject)
+	static string& toString(const T& subject)
 	{
 		ostringstream ss;
 		ss << subject;

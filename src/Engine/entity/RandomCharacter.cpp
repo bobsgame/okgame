@@ -673,7 +673,7 @@ void RandomCharacter::update()
 	doCharacterAnimation();
 }
 
-string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
+string& RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 { //=========================================================================================================================
 
 
@@ -748,7 +748,7 @@ string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 	return nextTYPEIDTarget;
 }
 
-string RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
+string& RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
 { //=========================================================================================================================
 
 

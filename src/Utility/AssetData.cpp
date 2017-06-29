@@ -24,7 +24,7 @@ AssetData::AssetData(int id, const string& name)
 	this->name = name;
 }
 
-string AssetData::getName()
+string& AssetData::getName()
 {
 	return name;
 }

@@ -51,7 +51,8 @@ FlagData::FlagData(int id, const string& name)
 //}
 
 
-string FlagData::initFromString(string t)
+
+string& FlagData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -59,7 +60,8 @@ string FlagData::initFromString(string t)
 }
 
 
-string FlagData::getTYPEIDString()
+
+string& FlagData::getTYPEIDString()
 { //===============================================================================================
 	return "FLAG." + to_string(getID());
 }

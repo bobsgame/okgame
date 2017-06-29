@@ -480,8 +480,8 @@ public:
 
 
 	virtual int getID();
-	virtual string getName();
-	virtual string getMapNote();
+	virtual string& getName();
+	virtual string& getMapNote();
 
 	virtual int getWidthTiles1X();
 	virtual int getHeightTiles1X();
@@ -493,24 +493,24 @@ public:
 	virtual int getMaxRandoms();
 	virtual bool getIsOutside();
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
-	virtual string getGroundLayerMD5();
-	virtual string getGroundObjectsMD5();
-	virtual string getGroundShadowMD5();
-	virtual string getObjectsMD5();
-	virtual string getObjects2MD5();
-	virtual string getObjectShadowMD5();
-	virtual string getAboveMD5();
-	virtual string getAbove2MD5();
-	virtual string getSpriteShadowMD5();
-	virtual string getGroundShaderMD5();
-	virtual string getCameraBoundsMD5();
-	virtual string getHitBoundsMD5();
-	virtual string getLightMaskMD5();
+	virtual string& getGroundLayerMD5();
+	virtual string& getGroundObjectsMD5();
+	virtual string& getGroundShadowMD5();
+	virtual string& getObjectsMD5();
+	virtual string& getObjects2MD5();
+	virtual string& getObjectShadowMD5();
+	virtual string& getAboveMD5();
+	virtual string& getAbove2MD5();
+	virtual string& getSpriteShadowMD5();
+	virtual string& getGroundShaderMD5();
+	virtual string& getCameraBoundsMD5();
+	virtual string& getHitBoundsMD5();
+	virtual string& getLightMaskMD5();
 
-	virtual string getPaletteMD5();
-	virtual string getTilesMD5();
+	virtual string& getPaletteMD5();
+	virtual string& getTilesMD5();
 
 	//	public Vector<MapStateData> getStateDataList(){return getData().getStateDataList();}
 	//	public Vector<EventData> getEventDataList(){return getData().getEventDataList();}

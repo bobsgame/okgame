@@ -764,7 +764,8 @@ void System::initClockAndTimeZone()
 }
 
 
-string System::split(const string& in)
+
+string& System::split(const string& in)
 { //=========================================================================================================================
 
 	//		int l = 300;
@@ -789,7 +790,8 @@ string System::split(const string& in)
 	return in;
 }
 
-string System::printString()
+
+string& System::printString()
 { //=========================================================================================================================
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
 	string s = "";// +"browserUserAgentString: " + split(browserUserAgentString) + "\n" + "browserAppNameVersionString: " + split(browserAppNameVersionString) + "\n" + "browserReferrerString: " + split(browserReferrerString) + "\n" + "getEnvProcessorIdentifier: " + split(getEnvProcessorIdentifier) + "\n" + "getEnvProcessorArchitecture: " + split(getEnvProcessorArchitecture) + "\n" + "getEnvNumberOfProcessors: " + split(getEnvNumberOfProcessors) + "\n" + "internetProviderString: " + split(internetProviderString) + "\n" + "timeZoneGMTOffset: " + timeZoneGMTOffset + "\n" + "jreVersion: " + split(jreVersion) + "\n" + "jreVendor: " + split(jreVendor) + "\n" + "jreHomeDir: " + split(jreHomeDir) + "\n" + "jvmVersion: " + split(jvmVersion) + "\n" + "jvmName: " + split(jvmName) + "\n" + "javaClassVersion: " + split(javaClassVersion) + "\n" + "javaClassPath: " + split(javaClassPath) + "\n" + "javaLibraryPath: " + split(javaLibraryPath) + "\n" + "javaTempDir: " + split(javaTempDir) + "\n" + "osName: " + split(osName) + "\n" + "osArch: " + split(osArch) + "\n" + "osVersion: " + split(osVersion) + "\n" + "osUserAccountName: " + split(osUserAccountName) + "\n" + "osHomeDir: " + split(osHomeDir) + "\n" + "workingDir: " + split(workingDir) + "\n" + "displayWidth: " + displayWidth + "\n" + "displayHeight: " + displayHeight + "\n" + "displayBPP: " + displayBPP + "\n" + "displayFreq: " + displayFreq + "\n" + "shaderCompiled: " + (StringConverterHelper::toString(shaderCompiled) + "\n" + "canUseFBO: " + (StringConverterHelper::toString(canUseFBO) + "\n" + "usingVSync: " + (StringConverterHelper::toString(usingVSync) + "\n" + "displayAdapter: " + split(displayAdapter) + "\n" + "displayDriver: " + split(displayDriver) + "\n" + "lwjglVersion: " + split(lwjglVersion) + "\n" + "lwjglIs64Bit: " + (StringConverterHelper::toString(lwjglIs64Bit) + "\n" + "lwjglPlatformName: " + split(lwjglPlatformName) + "\n" + "numCPUs: " + numCPUs + "\n" + "totalMemory: " + totalMemory + "\n" + "maxMemory: " + maxMemory + "\n" + "numControllersFound: " + numControllersFound + "\n" + "controllersNames: " + split(controllersNames) + "\n" + "glVendor: " + split(glVendor) + "\n" + "glVersion: " + split(glVersion) + "\n" + "glRenderer: " + split(glRenderer) + "\n" + "shaderVersion: " + split(shaderVersion) + "\n" + "glExtensions: " + split(glExtensions))->toString())->toString())->toString())->toString();
@@ -810,7 +812,8 @@ string System::printString()
 	return s;
 }
 
-string System::encode()
+
+string& System::encode()
 { //=========================================================================================================================
 
 	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':

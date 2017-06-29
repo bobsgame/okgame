@@ -71,7 +71,8 @@ DoorData::DoorData(int id, const string& name)
 //}
 
 
-string DoorData::initFromString(string t)
+
+string& DoorData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -149,22 +150,26 @@ string DoorData::initFromString(string t)
 
 
 
-string DoorData::getTYPEIDString()
+
+string& DoorData::getTYPEIDString()
 { //===============================================================================================
 	return "DOOR." + to_string(getID());
 }
 
-string DoorData::getDestinationTYPEIDString()
+
+string& DoorData::getDestinationTYPEIDString()
 {
 	return destinationTYPEID;
 }
 
-string DoorData::getDestinationMapName()
+
+string& DoorData::getDestinationMapName()
 {
 	return destinationMapName;
 }
 
-string DoorData::getDestinationDoorName()
+
+string& DoorData::getDestinationDoorName()
 {
 	return destinationDoorName;
 }

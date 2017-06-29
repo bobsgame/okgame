@@ -136,12 +136,14 @@ void WarpArea::setDestinationTYPEIDString(const string& typeID)
 	getData()->setDestinationTYPEIDString(typeID);
 }
 
-string WarpArea::getDestinationMapName()
+
+string& WarpArea::getDestinationMapName()
 {
 	return getData()->getDestinationMapName();
 }
 
-string WarpArea::getDestinationWarpAreaName()
+
+string& WarpArea::getDestinationWarpAreaName()
 {
 	return getData()->getDestinationWarpAreaName();
 }

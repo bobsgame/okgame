@@ -68,12 +68,14 @@ void Item::sendServerRequest()
 	}
 }
 
-string Item::getName()
+
+string& Item::getName()
 {
 	return spriteAssetName;
 }
 
-string Item::description()
+
+string& Item::description()
 {
 	if (_initialized)
 	{

@@ -179,7 +179,7 @@ public:
 	virtual void renderDebugInfo();
 
 
-	virtual string getCurrentAreaTargetName();
+	virtual string& getCurrentAreaTargetName();
 
 
 	//	
@@ -341,7 +341,7 @@ public:
 	virtual int getCurrentAnimationLastFrame();
 
 
-	virtual string getCurrentAnimationName();
+	virtual string& getCurrentAnimationName();
 
 
 	virtual int getCurrentFrameOffsetInCurrentAnimation();
@@ -588,11 +588,11 @@ public:
 	virtual EntityData* getData();
 
 
-	virtual string getName();
-	virtual string getComment();
+	virtual string& getName();
+	virtual string& getComment();
 	virtual int getID();
 	//virtual int getMapID();
-	virtual string getSpriteName();
+	virtual string& getSpriteName();
 
 
 	virtual bool getIsNPC();
@@ -631,7 +631,7 @@ public:
 	virtual ArrayList<string>* getConnectionTYPEIDList();
 	virtual ArrayList<string>* getBehaviorList();
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
 	//set

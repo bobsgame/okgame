@@ -180,6 +180,8 @@ void Entity::updateTimers()
 	//add change in time to remaining time from last movement
 	ticksSinceLastMovement += (int)getEngine()->engineTicksPassed();
 
+
+
 	if (ticksSinceLastMovement >= getTicksPerPixelMoved())
 	{
 		pixelsToMoveThisFrame = ((float)(ticksSinceLastMovement) / (float)(getTicksPerPixelMoved()));
@@ -2276,7 +2278,7 @@ EntityData* Entity::getData()
 	return data;
 }
 
-string Entity::getName()
+string& Entity::getName()
 {
 	return getData()->getName();
 }

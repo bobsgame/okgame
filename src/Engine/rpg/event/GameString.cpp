@@ -66,17 +66,20 @@ int GameString::getID()
 	return getData()->getID();
 }
 
-string GameString::getName()
+
+string& GameString::getName()
 {
 	return getData()->getName();
 }
 
-string GameString::text()
+
+string& GameString::text()
 {
 	return getData()->getText();
 }
 
-string GameString::getTYPEIDString()
+
+string& GameString::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

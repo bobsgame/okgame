@@ -307,7 +307,7 @@ bool Light::checkEdgeAgainstHitLayerAndOtherLightsInDirection(int dir)
 	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
 	{
 		Light* l = getMap()->currentState->lightList.get(i);
-		if (l != this && l->getName() == getName() == false && l->getName().find("mover") != string::npos)
+		if (l != this  && l->getName().find("mover") != string::npos)//&& l->getName() != getName()
 		{
 			int r = 8 + Math::randLessThan(16);
 
@@ -413,9 +413,9 @@ void Light::bounceAroundRoom()
 { //=========================================================================================================================
 
 
-	while (pixelsToMoveThisFrame > 1)
+	while (pixelsToMoveThisFrame >= 1)
 	{
-		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
+		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == false)
 		{
 			if (movementDirection == UPLEFT)
 			{
@@ -518,6 +518,7 @@ void Light::bounceAroundRoom()
 				}
 			}
 		}
+
 	}
 }
 

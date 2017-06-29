@@ -49,7 +49,7 @@ public:
 
 	string initFromString(string t);
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 	virtual ArrayList<LightData*>* getLightDataList();
 	virtual ArrayList<EntityData*>* getEntityDataList();

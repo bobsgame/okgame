@@ -91,7 +91,9 @@ void BGClientEngine::init()
 
 	friendManager->init();
 
-	//mapManager.changeMap("TOWNYUUDownstairs",30,18);
+	//mapManager->changeMap("ALPHABobsApartment","atDesk");
+	//mapManager->changeMap("ALPHABobElevator","center");
+	//mapManager->changeMap("TOWNYUUDownstairs",30,18);
 	//mapManager.changeMap("TOWNVideoRentAdultRoom",10,10);
 	//mapManager.changeMap("CITYTheCafe",10,10);
 	//mapManager.changeMap("TOWNTacoBurger",53,110);

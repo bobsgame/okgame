@@ -173,8 +173,8 @@ public:
 	virtual int getHeight();
 
 
-	virtual string getName();
-	virtual string getComment();
+	virtual string& getName();
+	virtual string& getComment();
 	virtual int getID();
 
 	//virtual int mapID();
@@ -206,8 +206,8 @@ public:
 	EventData* getEventData();
 	virtual ArrayList<string>* connectionTYPEIDList();
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
-	virtual string destinationTYPEIDString();
+	virtual string& destinationTYPEIDString();
 };
 

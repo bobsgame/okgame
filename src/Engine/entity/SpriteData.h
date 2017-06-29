@@ -125,10 +125,10 @@ public:
 	string initFromString(string t);
 
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
-	virtual string getDisplayName();
+	virtual string& getDisplayName();
 	virtual int getWidthPixels1X();
 	virtual int getHeightPixels1X();
 //	virtual int getWidthPixelsHQ();
@@ -148,16 +148,16 @@ public:
 	virtual bool getIsItem();
 	virtual bool getForceHQ2X();
 	virtual EventData* getEventData();
-	virtual string getItemGameDescription();
+	virtual string& getItemGameDescription();
 	virtual float getGamePrice();
 	virtual int getUtilityOffsetXPixels1X();
 	virtual int getUtilityOffsetYPixels1X();
 	virtual int getUtilityOffsetXPixelsHQ();
 	virtual int getUtilityOffsetYPixelsHQ();
-	virtual string getDataMD5();
-	virtual string getPaletteMD5();
+	virtual string& getDataMD5();
+	virtual string& getPaletteMD5();
 	virtual ArrayList<SpriteAnimationSequence*>* getAnimationList();
-	virtual string getComment();
+	virtual string& getComment();
 	virtual bool getForceMD5Export();
 
 

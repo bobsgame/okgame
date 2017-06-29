@@ -41,8 +41,8 @@ public:
 	virtual void sendServerRequest();
 
 
-	virtual string getName();
-	virtual string description();
+	virtual string& getName();
+	virtual string& description();
 	virtual int getID();
 
 

@@ -74,7 +74,7 @@ public:
 	static TCPServerConnection* getServerConnection();
 
 	static long long getUserID_S();
-	static string getUserName_S();
+	static string& getUserName_S();
 	static GameSave getGameSave_S();
 	static void setGameSave_S(GameSave &g);
 	

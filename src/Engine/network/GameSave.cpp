@@ -136,7 +136,8 @@ bool GameSave::wasPlayerCreatedYet()
 	return true;
 }
 
-string GameSave::addOrUpdateValueToCommaSeparatedList(string list, string value)
+
+string& GameSave::addOrUpdateValueToCommaSeparatedList(string list, string value)
 { //===============================================================================================
 
 	//value looks like id:thing:time
@@ -555,7 +556,8 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 	return nullptr;
 }
 
-string GameSave::encodeGameSave()
+
+string& GameSave::encodeGameSave()
 { //===============================================================================================
 
 	string gameSaveString = string("") + 
@@ -1550,7 +1552,8 @@ void GameSave::decodeGameSave(string s)
 
 }
 
-string GameSave::getCountryStringFromCode(const string& countryCode)
+
+string& GameSave::getCountryStringFromCode(const string& countryCode)
 {
 	string countryString = "United States";
 
@@ -2566,7 +2569,8 @@ string GameSave::getCountryStringFromCode(const string& countryCode)
 	return countryString;
 }
 
-string GameSave::getCountryCodeFromCountryString(const string& countryString)
+
+string& GameSave::getCountryCodeFromCountryString(const string& countryString)
 {
 	string countryCode = "US";
 

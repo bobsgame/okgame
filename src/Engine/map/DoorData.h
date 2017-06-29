@@ -70,12 +70,12 @@ public:
 	string initFromString(string t);
 
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
-	virtual string getDestinationTYPEIDString();
-	virtual string getDestinationMapName();
-	virtual string getDestinationDoorName();
+	virtual string& getDestinationTYPEIDString();
+	virtual string& getDestinationMapName();
+	virtual string& getDestinationDoorName();
 
 	virtual int getArrivalXPixels1X();
 	virtual int getArrivalYPixels1X();

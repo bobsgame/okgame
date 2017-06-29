@@ -149,7 +149,8 @@ MapData::MapData(int id, const string& name, int widthTiles1X, int heightTiles1X
 
 
 
-string MapData::initFromString(string t)
+
+string& MapData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -301,7 +302,8 @@ string MapData::initFromString(string t)
 
 
 
-string MapData::getTYPEIDString()
+
+string& MapData::getTYPEIDString()
 { //===============================================================================================
 	return "MAP." + to_string(getID());
 }
@@ -331,82 +333,98 @@ bool MapData::getPreload()
 	return preload;
 }
 
-string MapData::getMapNote()
+
+string& MapData::getMapNote()
 {
 	return mapNote;
 }
 
-string MapData::getGroundLayerMD5()
+
+string& MapData::getGroundLayerMD5()
 {
 	return groundLayerMD5;
 }
 
-string MapData::getGroundObjectsMD5()
+
+string& MapData::getGroundObjectsMD5()
 {
 	return groundObjectsMD5;
 }
 
-string MapData::getGroundShadowMD5()
+
+string& MapData::getGroundShadowMD5()
 {
 	return groundShadowMD5;
 }
 
-string MapData::getObjectsMD5()
+
+string& MapData::getObjectsMD5()
 {
 	return objectsMD5;
 }
 
-string MapData::getObjects2MD5()
+
+string& MapData::getObjects2MD5()
 {
 	return objects2MD5;
 }
 
-string MapData::getObjectShadowMD5()
+
+string& MapData::getObjectShadowMD5()
 {
 	return objectShadowMD5;
 }
 
-string MapData::getAboveMD5()
+
+string& MapData::getAboveMD5()
 {
 	return aboveMD5;
 }
 
-string MapData::getAbove2MD5()
+
+string& MapData::getAbove2MD5()
 {
 	return above2MD5;
 }
 
-string MapData::getSpriteShadowMD5()
+
+string& MapData::getSpriteShadowMD5()
 {
 	return spriteShadowMD5;
 }
 
-string MapData::getGroundShaderMD5()
+
+string& MapData::getGroundShaderMD5()
 {
 	return groundShaderMD5;
 }
 
-string MapData::getCameraBoundsMD5()
+
+string& MapData::getCameraBoundsMD5()
 {
 	return cameraBoundsMD5;
 }
 
-string MapData::getHitBoundsMD5()
+
+string& MapData::getHitBoundsMD5()
 {
 	return hitBoundsMD5;
 }
 
-string MapData::getLightMaskMD5()
+
+string& MapData::getLightMaskMD5()
 {
 	return lightMaskMD5;
 }
 
-string MapData::getPaletteMD5()
+
+string& MapData::getPaletteMD5()
 {
 	return paletteMD5;
 }
 
-string MapData::getTilesMD5()
+
+string& MapData::getTilesMD5()
 {
 	return tilesMD5;
 }

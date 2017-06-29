@@ -122,13 +122,13 @@ public:
 	static void initSystemInfo();
 	static void initClockAndTimeZone();
 
-	virtual string split(const string& in);
+	virtual string& split(const string& in);
 
 
-	virtual string printString();
+	virtual string& printString();
 
 
-	virtual string encode();
+	virtual string& encode();
 
 
 	virtual void decode(string& s);

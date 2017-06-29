@@ -86,7 +86,7 @@ public:
 	string initFromString(string t);
 
 
-	virtual string getTYPEIDString() override;
+	virtual string& getTYPEIDString() override;
 
 
 	virtual int getWidthPixels1X();

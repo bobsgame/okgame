@@ -90,9 +90,9 @@ public:
 //	static AreaData* fromJSON(const string& json);
 
 
-	virtual string initFromString(string t);
+	virtual string& initFromString(string t);
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
 	virtual int getMapXPixels1X();
@@ -131,10 +131,10 @@ public:
 	virtual EventData* getEventData();
 	//public String stateName(){return data.stateName;}
 	virtual ArrayList<string>* getConnectionTYPEIDList();
-	virtual string getComment();
-	virtual string getDestinationTYPEIDString();
-	virtual string getDestinationMapName();
-	virtual string getDestinationWarpAreaName();
+	virtual string& getComment();
+	virtual string& getDestinationTYPEIDString();
+	virtual string& getDestinationMapName();
+	virtual string& getDestinationWarpAreaName();
 	//virtual int getMapID();
 	//virtual int getStateID();
 

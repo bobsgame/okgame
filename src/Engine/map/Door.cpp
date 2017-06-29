@@ -254,7 +254,7 @@ void Door::enter()
 
 	//if(open==false&&spriteAsset.frames>1)setDoorAnim("opening");
 
-
+	//if it has no destination or if its destination is itself just open the door.
 	if (destinationTYPEIDString() == "" || destinationTYPEIDString().length() == 0 || destinationTYPEIDString() == "DOOR." + to_string(getID()))
 	{
 		//if action held

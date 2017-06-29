@@ -47,7 +47,8 @@ void MiniGameEngine::init()
 }
 
 
-string MiniGameEngine::getGameName()
+
+string& MiniGameEngine::getGameName()
 { //=========================================================================================================================
 	return name;
 }

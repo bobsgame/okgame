@@ -60,11 +60,11 @@ public:
 	string initFromString(string t);
 
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
-	virtual string getFileName();
-	virtual string getFullFilePath();
-	virtual string getMD5Name();
+	virtual string& getFileName();
+	virtual string& getFullFilePath();
+	virtual string& getMD5Name();
 
 
 	virtual void setFileName(const string& s);

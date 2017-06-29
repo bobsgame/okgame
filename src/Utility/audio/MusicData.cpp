@@ -48,7 +48,8 @@ MusicData::MusicData(int id, const string& name, const string& filename)
 //}
 
 
-string MusicData::initFromString(string t)
+
+string& MusicData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -85,23 +86,27 @@ string MusicData::initFromString(string t)
 
 
 
-string MusicData::getTYPEIDString()
+
+string& MusicData::getTYPEIDString()
 { //===============================================================================================
 	return "MUSIC." + to_string(getID());
 }
 
 
-string MusicData::getFileName()
+
+string& MusicData::getFileName()
 {
 	return fileName;
 }
 
-string MusicData::getFullFilePath()
+
+string& MusicData::getFullFilePath()
 {
 	return fullFilePath;
 }
 
-string MusicData::getMD5Name()
+
+string& MusicData::getMD5Name()
 {
 	return md5Name;
 }

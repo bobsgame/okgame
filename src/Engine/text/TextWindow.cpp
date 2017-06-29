@@ -362,7 +362,7 @@ void TextWindow::updateSpriteWindowTexture()
 	// go through each pixel
 	// if a pixel isn't transparent and isn't completely white (so it ignores already-outlined areas)
 	// if the surrounding pixels are transparent, set it to white.
-	for (u8 t = 127 - 32; t >= 0; t -= 16)
+	for (int t = 127 - 32; t >= 0; t -= 16)
 	{
 		for (int x = 0; x < 64; x++)
 		{

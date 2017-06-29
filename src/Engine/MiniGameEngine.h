@@ -31,7 +31,7 @@ public:
 	virtual ~MiniGameEngine();
 	virtual void init();
 
-	virtual string getGameName();
+	virtual string& getGameName();
 
 	virtual void shakeSmall();
 	virtual void shakeHard();

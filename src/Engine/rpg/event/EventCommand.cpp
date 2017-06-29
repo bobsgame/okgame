@@ -24,7 +24,7 @@ EventCommand::EventCommand(Engine* g, const string& command, ArrayList<EventPara
 
 	this->type = type;
 
-	this->parameterList = parameterList;
+	if(parameterList!=nullptr)this->parameterList = parameterList;
 
 	this->commandString = command;
 }

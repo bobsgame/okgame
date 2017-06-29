@@ -70,10 +70,10 @@ public:
 	virtual float arrivalXPixelsHQ();
 	virtual float arrivalYPixelsHQ();
 
-	virtual string destinationTYPEIDString();
+	virtual string& destinationTYPEIDString();
 
-	virtual string destinationMapName();
-	virtual string destinationDoorName();
+	virtual string& destinationMapName();
+	virtual string& destinationDoorName();
 
 
 	virtual bool randomPointOfInterestOrExit();

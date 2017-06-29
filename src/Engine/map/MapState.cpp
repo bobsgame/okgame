@@ -38,7 +38,8 @@ int MapState::getID()
 	return getData()->getID();
 }
 
-string MapState::getName()
+
+string& MapState::getName()
 {
 	return getData()->getName();
 }

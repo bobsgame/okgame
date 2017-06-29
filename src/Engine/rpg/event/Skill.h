@@ -34,9 +34,9 @@ public:
 
 
 	virtual int getID();
-	virtual string getName();
+	virtual string& getName();
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
 	virtual void setID(int id);

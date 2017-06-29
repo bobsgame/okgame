@@ -175,7 +175,8 @@ void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, i
 
 
 
-string SpriteData::initFromString(string t)
+
+string& SpriteData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -386,12 +387,14 @@ string SpriteData::initFromString(string t)
 
 
 
-string SpriteData::getTYPEIDString()
+
+string& SpriteData::getTYPEIDString()
 { //===============================================================================================
 	return "SPRITE." + to_string(getID());
 }
 
-string SpriteData::getDisplayName()
+
+string& SpriteData::getDisplayName()
 {
 	return displayName;
 }
@@ -491,7 +494,8 @@ EventData* SpriteData::getEventData()
 	return eventData;
 }
 
-string SpriteData::getItemGameDescription()
+
+string& SpriteData::getItemGameDescription()
 {
 	return itemGameDescription;
 }
@@ -521,12 +525,14 @@ int SpriteData::getUtilityOffsetYPixelsHQ()
 	return utilityOffsetYPixels1X * 2;
 }
 
-string SpriteData::getDataMD5()
+
+string& SpriteData::getDataMD5()
 {
 	return dataMD5;
 }
 
-string SpriteData::getPaletteMD5()
+
+string& SpriteData::getPaletteMD5()
 {
 	return paletteMD5;
 }
@@ -536,7 +542,8 @@ ArrayList<SpriteAnimationSequence*>* SpriteData::getAnimationList()
 	return animationList;
 }
 
-string SpriteData::getComment()
+
+string& SpriteData::getComment()
 {
 	return comment;
 }

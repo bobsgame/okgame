@@ -37,10 +37,10 @@ public:
 	virtual GameStringData* getData();
 
 	virtual int getID();
-	virtual string getName();
-	virtual string text();
+	virtual string& getName();
+	virtual string& text();
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 	virtual void id(int id);
 	virtual void setName(const string& name);

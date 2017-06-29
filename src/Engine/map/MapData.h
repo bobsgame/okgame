@@ -203,10 +203,10 @@ public:
 	//static MapData* fromBase64ZippedJSON(const string& b64);
 	//static MapData* fromJSON(const string& json);
 
-	virtual string initFromString(string t);
+	virtual string& initFromString(string t);
 
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
 	virtual int getWidthTiles1X();
@@ -217,23 +217,23 @@ public:
 	virtual bool getIsOutside();
 	virtual bool getPreload();
 
-	virtual string getMapNote();
+	virtual string& getMapNote();
 
-	virtual string getGroundLayerMD5();
-	virtual string getGroundObjectsMD5();
-	virtual string getGroundShadowMD5();
-	virtual string getObjectsMD5();
-	virtual string getObjects2MD5();
-	virtual string getObjectShadowMD5();
-	virtual string getAboveMD5();
-	virtual string getAbove2MD5();
-	virtual string getSpriteShadowMD5();
-	virtual string getGroundShaderMD5();
-	virtual string getCameraBoundsMD5();
-	virtual string getHitBoundsMD5();
-	virtual string getLightMaskMD5();
-	virtual string getPaletteMD5();
-	virtual string getTilesMD5();
+	virtual string& getGroundLayerMD5();
+	virtual string& getGroundObjectsMD5();
+	virtual string& getGroundShadowMD5();
+	virtual string& getObjectsMD5();
+	virtual string& getObjects2MD5();
+	virtual string& getObjectShadowMD5();
+	virtual string& getAboveMD5();
+	virtual string& getAbove2MD5();
+	virtual string& getSpriteShadowMD5();
+	virtual string& getGroundShaderMD5();
+	virtual string& getCameraBoundsMD5();
+	virtual string& getHitBoundsMD5();
+	virtual string& getLightMaskMD5();
+	virtual string& getPaletteMD5();
+	virtual string& getTilesMD5();
 
 
 	virtual int getWidthPixelsHQ();

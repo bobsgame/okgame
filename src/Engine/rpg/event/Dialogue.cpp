@@ -67,27 +67,32 @@ int Dialogue::getID()
 	return getData()->getID();
 }
 
-string Dialogue::getName()
+
+string& Dialogue::getName()
 {
 	return getData()->getName();
 }
 
-string Dialogue::caption()
+
+string& Dialogue::caption()
 {
 	return getData()->getCaption();
 }
 
-string Dialogue::getComment()
+
+string& Dialogue::getComment()
 {
 	return getData()->getComment();
 }
 
-string Dialogue::text()
+
+string& Dialogue::text()
 {
 	return getData()->getText();
 }
 
-string Dialogue::getTYPEIDString()
+
+string& Dialogue::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

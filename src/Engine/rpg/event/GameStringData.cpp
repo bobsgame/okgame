@@ -51,7 +51,8 @@ GameStringData::GameStringData(int id, const string& name, const string& text)
 //	return data;
 //}
 
-string GameStringData::initFromString(string t)
+
+string& GameStringData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -66,12 +67,14 @@ string GameStringData::initFromString(string t)
 
 
 
-string GameStringData::getTYPEIDString()
+
+string& GameStringData::getTYPEIDString()
 { //===============================================================================================
 	return "GAMESTRING." + to_string(getID());
 }
 
-string GameStringData::getText()
+
+string& GameStringData::getText()
 {
 	return text;
 }

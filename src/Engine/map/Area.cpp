@@ -939,12 +939,14 @@ int Area::getHeight()
 	return getData()->getHeightPixelsHQ();
 }
 
-string Area::getName()
+
+string& Area::getName()
 {
 	return getData()->getName();
 }
 
-string Area::getComment()
+
+string& Area::getComment()
 {
 	return getData()->getComment();
 }
@@ -1079,12 +1081,14 @@ ArrayList<string>* Area::connectionTYPEIDList()
 	return getData()->getConnectionTYPEIDList();
 }
 
-string Area::getTYPEIDString()
+
+string& Area::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }
 
-string Area::destinationTYPEIDString()
+
+string& Area::destinationTYPEIDString()
 {
 	if (getData()->getDestinationTYPEIDString() == "" || getData()->getDestinationTYPEIDString().length() == 0)
 	{

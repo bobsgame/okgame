@@ -63,7 +63,7 @@ public:
 	virtual void updateParameterVariablesFromString(Event* event);
 
 
-	virtual string toString();
+	virtual string& toString();
 
 
 	//	

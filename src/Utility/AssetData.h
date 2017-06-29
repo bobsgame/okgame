@@ -103,7 +103,7 @@ public:
 	//	}
 
 
-	virtual string getName();
+	virtual string& getName();
 	virtual int getID();
 
 

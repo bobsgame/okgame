@@ -59,12 +59,14 @@ int Skill::getID()
 	return getData()->getID();
 }
 
-string Skill::getName()
+
+string& Skill::getName()
 {
 	return getData()->getName();
 }
 
-string Skill::getTYPEIDString()
+
+string& Skill::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

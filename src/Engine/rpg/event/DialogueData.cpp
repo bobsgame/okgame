@@ -55,7 +55,8 @@ DialogueData::DialogueData(int id, const string& name, const string& caption, co
 
 
 
-string DialogueData::initFromString(string t)
+
+string& DialogueData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -81,22 +82,26 @@ string DialogueData::initFromString(string t)
 
 
 
-string DialogueData::getTYPEIDString()
+
+string& DialogueData::getTYPEIDString()
 { //===============================================================================================
 	return "DIALOGUE." + to_string(getID());
 }
 
-string DialogueData::getCaption()
+
+string& DialogueData::getCaption()
 {
 	return caption;
 }
 
-string DialogueData::getComment()
+
+string& DialogueData::getComment()
 {
 	return comment;
 }
 
-string DialogueData::getText()
+
+string& DialogueData::getText()
 {
 	return text;
 }

@@ -99,12 +99,12 @@ public:
 	//	}
 
 
-	virtual string initFromString(string t);
+	virtual string& initFromString(string t);
 	//static EntityData* fromBase64ZippedJSON(const string& b64);
 	//static EntityData* fromJSON(const string& json);
 
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
 	virtual float getSpawnXPixels1X();
@@ -112,8 +112,8 @@ public:
 	virtual float getSpawnXPixelsHQ();
 	virtual float getSpawnYPixelsHQ();
 
-	virtual string getSpriteName();
-	virtual string getComment();
+	virtual string& getSpriteName();
+	virtual string& getComment();
 	virtual int getInitialFrame();
 	virtual bool getPushable();
 	virtual bool getNonWalkable();

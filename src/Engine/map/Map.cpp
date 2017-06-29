@@ -284,6 +284,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 	Area* a = nullptr;
 	if (currentState != nullptr)
 	{
+		if (currentState->areaByNameHashtable.containsKey(name))
 		a = currentState->areaByNameHashtable.get(name);
 	}
 
@@ -292,6 +293,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 		for (int i = 0; i < stateList.size(); i++)
 		{
 			MapState* s = stateList.get(i);
+			if (s->areaByNameHashtable.containsKey(name))
 			a = s->areaByNameHashtable.get(name);
 			if (a != nullptr)
 			{
@@ -335,6 +337,7 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	Area* a = nullptr;
 	if (currentState != nullptr)
 	{
+		if (currentState->areaByTYPEIDHashtable.containsKey(typeID))
 		a = currentState->areaByTYPEIDHashtable.get(typeID);
 	}
 
@@ -354,7 +357,10 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 		for (int i = 0; i < stateList.size(); i++)
 		{
 			MapState* s = stateList.get(i);
+
+			if (s->areaByTYPEIDHashtable.containsKey(typeID))
 			a = s->areaByTYPEIDHashtable.get(typeID);
+
 			if (a != nullptr)
 			{
 				break;

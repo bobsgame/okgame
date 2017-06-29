@@ -286,7 +286,8 @@ void AreaData::addConnectionString(const string& s)
 
 
 
-string AreaData::initFromString(string t)
+
+string& AreaData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -481,7 +482,8 @@ string AreaData::initFromString(string t)
 
 
 
-string AreaData::getTYPEIDString()
+
+string& AreaData::getTYPEIDString()
 { //===============================================================================================
 
 	if (isWarpArea == true)
@@ -661,22 +663,26 @@ ArrayList<string>* AreaData::getConnectionTYPEIDList()
 	return connectionTYPEIDList;
 }
 
-string AreaData::getComment()
+
+string& AreaData::getComment()
 {
 	return comment;
 }
 
-string AreaData::getDestinationTYPEIDString()
+
+string& AreaData::getDestinationTYPEIDString()
 {
 	return destinationTYPEID;
 }
 
-string AreaData::getDestinationMapName()
+
+string& AreaData::getDestinationMapName()
 {
 	return destinationMapName;
 }
 
-string AreaData::getDestinationWarpAreaName()
+
+string& AreaData::getDestinationWarpAreaName()
 {
 	return destinationWarpAreaName;
 }

@@ -70,12 +70,14 @@ int Flag::getID()
 	return getData()->getID();
 }
 
-string Flag::getName()
+
+string& Flag::getName()
 {
 	return getData()->getName();
 }
 
-string Flag::getTYPEIDString()
+
+string& Flag::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

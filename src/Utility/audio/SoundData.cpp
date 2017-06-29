@@ -52,7 +52,8 @@ SoundData::SoundData(int id, const string& name, const string& filename)
 //}
 
 
-string SoundData::initFromString(string t)
+
+string& SoundData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -83,22 +84,26 @@ string SoundData::initFromString(string t)
 
 
 
-string SoundData::getTYPEIDString()
+
+string& SoundData::getTYPEIDString()
 { //===============================================================================================
 	return "SOUND." + to_string(getID());
 }
 
-string SoundData::getFileName()
+
+string& SoundData::getFileName()
 {
 	return fileName;
 }
 
-string SoundData::getFullFilePath()
+
+string& SoundData::getFullFilePath()
 {
 	return fullFilePath;
 }
 
-string SoundData::getMD5Name()
+
+string& SoundData::getMD5Name()
 {
 	return md5Name;
 }

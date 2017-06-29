@@ -51,7 +51,8 @@ SkillData::SkillData(int id, const string& name)
 
 
 
-string SkillData::initFromString(string t)
+
+string& SkillData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -60,7 +61,8 @@ string SkillData::initFromString(string t)
 
 
 
-string SkillData::getTYPEIDString()
+
+string& SkillData::getTYPEIDString()
 { //===============================================================================================
 	return "SKILL." + to_string(getID());
 }

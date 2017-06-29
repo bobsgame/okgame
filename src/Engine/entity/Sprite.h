@@ -165,8 +165,8 @@ public:
 	virtual int getAnimationIndexByName(const string& name);
 	virtual int getAnimationIndexByAnimation(SpriteAnimationSequence* a);
 	virtual int getAnimationIndexByFrame(int frame);
-	virtual string getAnimationNameByIndex(int index);
-	virtual string getAnimationNameByFrame(int frame);
+	virtual string& getAnimationNameByIndex(int index);
+	virtual string& getAnimationNameByFrame(int frame);
 	virtual void antialiasBufferedImage(BufferedImage* bufferedImage);
 	virtual void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
 
@@ -176,19 +176,19 @@ public:
 	virtual SpriteData* getData();
 
 	virtual int getID();
-	virtual string getName();
-	virtual string getTYPEIDString();
-	virtual string getDataMD5();
-	virtual string getPaletteMD5();
+	virtual string& getName();
+	virtual string& getTYPEIDString();
+	virtual string& getDataMD5();
+	virtual string& getPaletteMD5();
 
-	virtual string getComment();
+	virtual string& getComment();
 
 	virtual int getImageWidth();
 	virtual int getImageHeight();	
 //	virtual int getScreenWidth();
 //	virtual int getScreenHeight();
 	virtual int getNumFrames();
-	virtual string getDisplayName();
+	virtual string& getDisplayName();
 	virtual bool getIsNPC();
 	virtual bool getIsKid();
 	virtual bool getIsAdult();
@@ -204,7 +204,7 @@ public:
 	virtual bool getForceHQ2X();
 	virtual bool getForceMD5Export();
 	virtual EventData* getEventData();
-	virtual string getItemGameDescription();
+	virtual string& getItemGameDescription();
 	virtual float getGamePrice();
 	virtual int getUtilityOffsetXPixelsHQ();
 	virtual int getUtilityOffsetYPixelsHQ();

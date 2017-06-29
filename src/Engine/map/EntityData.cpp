@@ -99,7 +99,8 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 
 
 
-string EntityData::initFromString(string t)
+
+string& EntityData::initFromString(string t)
 {
 	t = super::initFromString(t);
 
@@ -336,7 +337,8 @@ string EntityData::initFromString(string t)
 }
 
 
-string EntityData::getTYPEIDString()
+
+string& EntityData::getTYPEIDString()
 { //===============================================================================================
 	return "ENTITY." + to_string(getID());
 }
@@ -361,12 +363,14 @@ float EntityData::getSpawnYPixelsHQ()
 	return spawnYPixels1X * 2;
 }
 
-string EntityData::getSpriteName()
+
+string& EntityData::getSpriteName()
 {
 	return spriteName;
 }
 
-string EntityData::getComment()
+
+string& EntityData::getComment()
 {
 	return comment;
 }

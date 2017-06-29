@@ -71,9 +71,9 @@ public:
 	virtual void update() override;
 
 
-	virtual string getRandomAreaWarpOrDoorTYPEID();
+	virtual string& getRandomAreaWarpOrDoorTYPEID();
 
 
-	virtual string getRandomConnectionTYPEIDFromCurrentPoint();
+	virtual string& getRandomConnectionTYPEIDFromCurrentPoint();
 };
 

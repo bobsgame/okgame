@@ -72,7 +72,7 @@ Event::Event(Engine* g, EventData* eventData, Sprite* s)
 
 
 void Event::initEvent()
-{
+{//=========================================================================================================================
 	setInitialized_S(true);
 
 	for(int i=0;i<getData()->dialogueDataList->size();i++)
@@ -511,13 +511,15 @@ void Event::getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(bool b)
 void Event::doCommand()
 { //=========================================================================================================================
 
-	//log.debug("Current Command: "+currentCommand.commandString);
+	
 
 
 	if (currentCommand == nullptr)
 	{
 		return;
 	}
+
+	log.debug("Current Command: " + currentCommand->commandString);
 
 	//qualifiers. check if TRUE or FALSE. skip children if false.
 

@@ -116,21 +116,21 @@ public:
 	virtual bool wasPlayerCreatedYet();
 
 
-	virtual string addOrUpdateValueToCommaSeparatedList(string list, string value);
+	virtual string& addOrUpdateValueToCommaSeparatedList(string list, string value);
 
 
 	virtual void* updateGameSaveValue(const string& variableName, const string& value);
 
 
-	virtual string encodeGameSave();
+	virtual string& encodeGameSave();
 
 
 	virtual void decodeGameSave(string s);
 
 
-	static string getCountryStringFromCode(const string& countryCode);
+	static string& getCountryStringFromCode(const string& countryCode);
 
 
-	static string getCountryCodeFromCountryString(const string& countryString);
+	static string& getCountryCodeFromCountryString(const string& countryString);
 };
 

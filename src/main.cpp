@@ -262,12 +262,12 @@ void Main::mainInit()
 		glowTileBackground = new GlowTileBackground();
 	}
 
-	loginState = new LoginState();
-	loggedOutState = new LoggedOutState();
-	serversHaveShutDownState = new ServersHaveShutDownState();
-	createNewAccountState = new CreateNewAccountState();
-	titleScreenState = new TitleScreenState();
-	youWillBeNotifiedState = new YouWillBeNotifiedState();
+	//loginState = new LoginState();
+	//loggedOutState = new LoggedOutState();
+	//serversHaveShutDownState = new ServersHaveShutDownState();
+	//createNewAccountState = new CreateNewAccountState();
+	//titleScreenState = new TitleScreenState();
+	//youWillBeNotifiedState = new YouWillBeNotifiedState();
 	GLUtils::e();
 
 
@@ -315,9 +315,10 @@ void Main::mainInit()
 
 	//log.info("Create BobsGame");
 	//bobsGame = new BobsGame();
+	//stateManager->setState(bobsGame);
 	//log.info("Init BobsGame");
 	//bobsGame->init();
-	//stateManager->setState(bobsGame);
+	
 
 
 
@@ -330,9 +331,10 @@ void Main::mainInit()
 		}
 
 		gameEngine = new BGClientEngine();
+		stateManager->setState(gameEngine);
 		//Engine::setClientGameEngine(gameEngine);
 		gameEngine->init();
-		stateManager->setState(gameEngine);
+		
 
 		if (previewClientInEditor == false)
 		{
@@ -350,10 +352,10 @@ void Main::mainInit()
 				gameEngine->statusBar->moneyCaption->setEnabled(false);
 				gameEngine->statusBar->dayCaption->setEnabled(false);
 
-				stateManager->setState(gameEngine);
 				gameEngine->cinematicsManager->fadeFromBlack(10000);
 
 
+				//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
 				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
 				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
 				//gameEngine.textManager.getText("Yep \"Yuu\" yay. <.><1>bob! yay, \"bob\" yay! <.><0>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");

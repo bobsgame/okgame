@@ -36,7 +36,7 @@ public:
 
 	virtual void setDestinationTYPEIDString(const string& typeID);
 
-	virtual string getDestinationMapName();
-	virtual string getDestinationWarpAreaName();
+	virtual string& getDestinationMapName();
+	virtual string& getDestinationWarpAreaName();
 };
 

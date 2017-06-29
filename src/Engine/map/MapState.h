@@ -46,6 +46,6 @@ public:
 	virtual MapStateData* getData();
 
 	virtual int getID();
-	virtual string getName();
+	virtual string& getName();
 };
 
