@@ -75,7 +75,7 @@ string& Item::getName()
 }
 
 
-string& Item::description()
+string Item::description()
 {
 	if (_initialized)
 	{

@@ -689,9 +689,8 @@ Map* MapManager::getMapByIDBlockUntilLoaded(int id)
 	Map* m = nullptr;
 
 	if (mapByIDHashMap.containsKey(id))
-	{
 		m = mapByIDHashMap.get(id);
-	}
+	
 
 	if (m == nullptr)
 	{
@@ -769,9 +768,8 @@ Map* MapManager::getMapByNameBlockUntilLoaded(const string& name)
 
 
 			if (mapByNameHashMap.containsKey(name))
-			{
 				m = mapByNameHashMap.get(name);
-			}
+			
 		}
 
 		log.warn(string("Map NAME: \"") + name + string("\" finished loading from network."));

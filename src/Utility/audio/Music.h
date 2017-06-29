@@ -78,7 +78,7 @@ public:
 	virtual string& getMD5Name();
 
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 
 	virtual void setID(int id);

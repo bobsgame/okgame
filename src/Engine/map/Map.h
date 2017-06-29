@@ -493,7 +493,7 @@ public:
 	virtual int getMaxRandoms();
 	virtual bool getIsOutside();
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 	virtual string& getGroundLayerMD5();
 	virtual string& getGroundObjectsMD5();

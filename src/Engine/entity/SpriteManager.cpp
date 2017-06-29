@@ -94,7 +94,9 @@ Sprite* SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExist(int id)
 
 	if (id == -1)
 	{
-		Sprite* s = spriteByIDHashMap.get(id);
+		Sprite* s = nullptr;
+		if(spriteByIDHashMap.containsKey(id))
+		s = spriteByIDHashMap.get(id);
 		if (s == nullptr)
 		{
 			s = new Sprite(getEngine());
@@ -106,7 +108,9 @@ Sprite* SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExist(int id)
 	}
 
 
-	Sprite* s = spriteByIDHashMap.get(id);
+	Sprite* s = nullptr;
+	if (spriteByIDHashMap.containsKey(id))
+		s = spriteByIDHashMap.get(id);
 	if (s != nullptr)
 	{
 		if (s->getInitialized_S() == true)
@@ -254,7 +258,7 @@ Sprite* SpriteManager::getSpriteByName(const string& spriteAssetName)
 
 	Sprite* s = nullptr;
 
-	//if (spriteByNameHashMap.containsKey(spriteAssetName))
+	if (spriteByNameHashMap.containsKey(spriteAssetName))
 		s = spriteByNameHashMap.get(spriteAssetName);
 
 	if (s == nullptr)

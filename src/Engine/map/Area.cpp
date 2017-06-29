@@ -1082,7 +1082,7 @@ ArrayList<string>* Area::connectionTYPEIDList()
 }
 
 
-string& Area::getTYPEIDString()
+string Area::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

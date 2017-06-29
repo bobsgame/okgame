@@ -48,7 +48,7 @@ public:
 	virtual string& getComment();
 	virtual string& text();
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 	virtual void setID(int id);
 	virtual void setName(const string& name);

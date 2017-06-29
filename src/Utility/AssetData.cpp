@@ -71,7 +71,7 @@ void AssetData::setID(int s)
 
 
 
-string& AssetData::initFromString(string t)
+string& AssetData::initFromString(string& t)
 {
 
 	t = t.substr(t.find("name:`") + 1);

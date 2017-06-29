@@ -451,7 +451,9 @@ void Engine::incomingSpriteData(string s)
 	}
 	else
 	{
-		Sprite* sprite = getSpriteManager()->spriteByNameHashMap.get(data->getName());
+		Sprite* sprite = nullptr;
+		if(getSpriteManager()->spriteByNameHashMap.containsKey(data->getName()))
+		sprite = getSpriteManager()->spriteByNameHashMap.get(data->getName());
 
 		if (sprite == nullptr)
 		{
@@ -490,7 +492,7 @@ void Engine::incomingMapData(string s)
 	}
 	else
 	{
-		if (getMapManager()->mapByNameHashMap.get(data->getName()) == nullptr)
+		if (getMapManager()->mapByNameHashMap.containsKey(data->getName()) == false)
 		{
 			Map* m = new Map(this, data);
 			getMapManager()->mapList.add(m);

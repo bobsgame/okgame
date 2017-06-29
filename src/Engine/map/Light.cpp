@@ -67,10 +67,9 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 		BobTexture* t = nullptr;
 
 		if (getMapManager()->lightTextureHashMap.containsKey(getFileName()))
-		{
 			t = getMapManager()->lightTextureHashMap.get(getFileName());
 
-		}
+		
 
 		if (t == nullptr)
 		{
@@ -145,14 +144,14 @@ void Light::initLight(LightData* lightAsset)
 void Light::update()
 { //===============================================================================================
 
-	setTicksPerPixelMoved(1);
+	setTicksPerPixelMoved(10);
 
 	updateTimers();
 
 
 	if (getName().find("mover") != string::npos)
 	{
-		bounceAroundRoom();
+		//bounceAroundRoom();
 	}
 
 
@@ -277,7 +276,7 @@ bool Light::getLightTexturePNGFileExists_S()
 
 }
 
-string& Light::getFileName()
+string Light::getFileName()
 { //===============================================================================================
 
 	return 

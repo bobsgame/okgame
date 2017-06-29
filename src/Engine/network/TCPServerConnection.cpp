@@ -1433,38 +1433,38 @@ void TCPServerConnection::incomingBobsGameRoomListResponse(string &s)
 
 
 //===============================================================================================
-void TCPServerConnection::tellBobsGameRoomHostMyUserID_S(string roomUUID)
+void TCPServerConnection::tellBobsGameRoomHostMyUserID_S(const string& roomUUID)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_TellRoomHostToAddMyUserID+roomUUID +":"+ BobNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameHostingPublicGameUpdate_S(string roomDescription)
+void TCPServerConnection::tellServerBobsGameHostingPublicGameUpdate_S(const string& roomDescription)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomUpdate + roomDescription + ":" + BobNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameIHaveCanceledTheGame_S(string roomUUID)
+void TCPServerConnection::tellServerBobsGameIHaveCanceledTheGame_S(const string& roomUUID)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomCanceled + roomUUID + ":" + BobNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameIHaveStartedTheGame_S(string roomUUID)
+void TCPServerConnection::tellServerBobsGameIHaveStartedTheGame_S(const string& roomUUID)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomStarted + roomUUID + ":" + BobNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameTheGameHasEnded_S(string roomUUID, string& results)
+void TCPServerConnection::tellServerBobsGameTheGameHasEnded_S(const string& roomUUID, const string& results)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomEnded + roomUUID + ":" + results + ":" + BobNet::endline);
 }
 
 
 //===============================================================================================
-void TCPServerConnection::sendBobsGameGameStats_S(string & statsString)
+void TCPServerConnection::sendBobsGameGameStats_S(const string& statsString)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameStats + statsString + ":" + BobNet::endline);
 }
@@ -2667,7 +2667,7 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 
 
 //=========================================================================================================================
-bool TCPServerConnection::doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, string& &friendUserName)
+bool TCPServerConnection::doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, const string& friendUserName)
 {//=========================================================================================================================
 
 	statusLabel->setText(" ");

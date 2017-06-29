@@ -188,7 +188,7 @@ long long State::getUserID_S()
 }
 
 
-string& State::getUserName_S()
+string State::getUserName_S()
 {
 	return getGameSave_S().userName;
 }

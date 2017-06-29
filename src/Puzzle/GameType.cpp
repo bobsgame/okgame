@@ -440,7 +440,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 
 //=========================================================================================================================
-string& GameType::toBase64GZippedXML()
+string GameType::toBase64GZippedXML()
 {//=========================================================================================================================
 	GameType *s = this;
 	GameType gs = GameType();

@@ -1333,7 +1333,7 @@ int Sprite::getAnimationIndexByFrame(int frame)
 }
 
 
-string& Sprite::getAnimationNameByIndex(int index)
+string Sprite::getAnimationNameByIndex(int index)
 { //=========================================================================================================================
 	if (index < 0 || index >= getAnimationList()->size())
 	{
@@ -1344,10 +1344,14 @@ string& Sprite::getAnimationNameByIndex(int index)
 }
 
 
-string& Sprite::getAnimationNameByFrame(int frame)
+string Sprite::getAnimationNameByFrame(int frame)
 { //=========================================================================================================================
 
+
+
 	return getAnimationNameByIndex(getAnimationIndexByFrame(frame));
+
+
 }
 
 void Sprite::antialiasBufferedImage(BufferedImage* bufferedImage)
@@ -1571,7 +1575,7 @@ string& Sprite::getName()
 }
 
 
-string& Sprite::getTYPEIDString()
+string Sprite::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

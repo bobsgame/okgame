@@ -58,7 +58,7 @@ EventData::EventData(int id, const string& name, int type, const string& comment
 
 
 //===============================================================================================
-string& EventData::initFromString(string t)
+string& EventData::initFromString(string& t)
 {//===============================================================================================
 
 	t = super::initFromString(t);
@@ -153,7 +153,7 @@ string& EventData::initFromString(string t)
 }
 
 
-string& EventData::getTYPEIDString()
+string EventData::getTYPEIDString()
 { //===============================================================================================
 	return "EVENT." + to_string(getID());
 }
@@ -199,7 +199,7 @@ EventScriptTree::EventScriptTree(EventData* outerInstance) : outerInstance(outer
 {
 }
 
-string& EventScriptCommand::toString()
+string EventScriptCommand::toString()
 {
 	return getCommandWithArguments();
 }
@@ -217,7 +217,7 @@ EventScriptCommand::EventScriptCommand(const string& command, const string& comm
 	EventData::commandList->add(this);
 }
 
-string& EventScriptCommand::getCommand()
+string EventScriptCommand::getCommand()
 {
 	if (command.find("_") != string::npos)
 	{
@@ -226,12 +226,12 @@ string& EventScriptCommand::getCommand()
 	return command;
 }
 
-string& EventScriptCommand::getCommandWithArguments()
+string EventScriptCommand::getCommandWithArguments()
 {
 	return command;
 }
 
-string& EventScriptCommand::getComment()
+string EventScriptCommand::getComment()
 {
 	return comment;
 }

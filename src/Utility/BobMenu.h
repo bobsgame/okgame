@@ -112,7 +112,7 @@ public:
 
 	MenuItem* topMenuItemDrawn = nullptr;
 
-	BobMenu(Engine *g, string& title);
+	BobMenu(Engine *g, string title);
 	~BobMenu();
 
 	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0);

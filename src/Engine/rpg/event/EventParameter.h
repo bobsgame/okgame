@@ -57,13 +57,13 @@ public:
 	EventParameter(Engine* g, const string& parameterString);
 
 
-	virtual void parsePrimitive(const string& typeString, const string& primitiveValueString);
+	void parsePrimitive(const string& typeString, const string& primitiveValueString);
 
 
-	virtual void updateParameterVariablesFromString(Event* event);
+	void updateParameterVariablesFromString(Event* event);
 
 
-	virtual string& toString();
+	string toString();
 
 
 	//	

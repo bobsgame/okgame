@@ -27,7 +27,7 @@ protected:
 	//ArrayList<EventParameter> eventParameters
 
 public:
-	virtual string& toString();
+	string toString();
 	//public EventCommand toEventCommandWithParameters(){return null;}
 
 	EventScriptCommand();
@@ -35,11 +35,11 @@ public:
 	EventScriptCommand(const string& command, const string& comment);
 
 
-	virtual string& getCommand();
+	string getCommand();
 
-	virtual string& getCommandWithArguments();
+	string getCommandWithArguments();
 
-	virtual string& getComment(); //TODO: handle comments in editor event editor
+	string getComment(); //TODO: handle comments in editor event editor
 };
 
 
@@ -110,7 +110,7 @@ public:
 
 	EventData(int id, const string& name, int type, const string& comment, const string& text);
 
-	virtual string& initFromString(string t);
+	virtual string& initFromString(string& t);
 
 	//static EventData* fromBase64ZippedJSON(const string& b64);
 
@@ -118,7 +118,7 @@ public:
 	//static EventData* fromJSON(const string& json);
 
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 
 	virtual int getType();

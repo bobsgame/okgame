@@ -194,7 +194,7 @@ void Entity::updateTimers()
 
 		//however, the Player uses float based values for everything and moves fractions of pixels.
 		//Player should set ticksSinceLastMovement to zero for correct timing.
-		if (dynamic_cast<Player*>(this) != NULL)
+		if (dynamic_cast<Player*>(this) != nullptr)
 		{
 			ticksSinceLastMovement = 0;
 		}
@@ -331,7 +331,7 @@ void Entity::renderDebugInfo()
 	//if(movementDirection==RIGHT)GL.drawOutlinedString("movementDirection: Right", x, y+(++strings*9),Color.white);
 
 	//if (this->getClass().equals(char::typeid) || this->getClass().equals(Player::typeid) || this->getClass().equals(RandomCharacter::typeid))
-	if (dynamic_cast<Character*>(this) != NULL || dynamic_cast<Player*>(this) != NULL || dynamic_cast<RandomCharacter*>(this) != NULL)
+	if (dynamic_cast<Character*>(this) != nullptr || dynamic_cast<Player*>(this) != nullptr || dynamic_cast<RandomCharacter*>(this) != nullptr)
 	{
 		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), BobColor::white);
 		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), BobColor::white);
@@ -446,7 +446,7 @@ void Entity::renderDebugInfo()
 	               */
 }
 
-string& Entity::getCurrentAreaTargetName()
+string Entity::getCurrentAreaTargetName()
 { //=========================================================================================================================
 	Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 	if (a == nullptr)
@@ -1236,7 +1236,7 @@ int Entity::getCurrentAnimationLastFrame()
 	return getCurrentAnimationStartFrame() + getCurrentAnimationNumberOfFrames() - 1;
 }
 
-string& Entity::getCurrentAnimationName()
+string Entity::getCurrentAnimationName()
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
@@ -2461,7 +2461,7 @@ ArrayList<string>* Entity::getBehaviorList()
 	return getData()->getBehaviorList();
 }
 
-string& Entity::getTYPEIDString()
+string Entity::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

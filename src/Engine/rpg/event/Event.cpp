@@ -160,7 +160,7 @@ string& Event::text()
 	return data->getText();
 }
 
-string& Event::getTYPEIDString()
+string Event::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }

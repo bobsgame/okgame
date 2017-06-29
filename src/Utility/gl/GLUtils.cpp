@@ -1065,7 +1065,7 @@ void GLUtils::checkGLError(const string &whereErrorOccurredString)
 }
 
 //===========================================================================================================================
-void GLUtils::e(const string& &whereErrorOccurredString)
+void GLUtils::e(const string& whereErrorOccurredString)
 {//===========================================================================================================================
 
 	checkGLError(whereErrorOccurredString);
@@ -2341,7 +2341,7 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 //}
 
 //=========================================================================================================================
-void GLUtils::drawOutlinedString(string text, float screenX0, float screenY0, BobColor* color)//static
+void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, BobColor* color)//static
 {//=========================================================================================================================
 
 	screenX0 *= globalDrawScale;

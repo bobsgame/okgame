@@ -94,15 +94,15 @@ void FriendCharacter::setGameToForwardPacketsTo(MiniGameEngine* game)
 bool FriendCharacter::udpPeerMessageReceived(UDPPeerConnection *c, string e)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
 
-	string s = e;// static_cast<string>(e->getMessage());
+	//string s = e;// static_cast<string>(e->getMessage());
 
-	if (String::startsWith(s, BobNet::Friend_LocationStatus_Update))
+	if (String::startsWith(e, BobNet::Friend_LocationStatus_Update))
 	{
 		incomingFriendLocationStatusUpdate(e);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Game_Challenge_Request))
+	if (String::startsWith(e, BobNet::Game_Challenge_Request))
 	{
 		incomingGameChallengeRequest(e);
 		return true;

@@ -26,7 +26,7 @@ public:
 //	{
 //		this->s = s;
 //	}
-//	string getString()
+//	string& getString()
 //	{
 //		return s;
 //	}

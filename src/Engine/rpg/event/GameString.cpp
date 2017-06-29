@@ -79,7 +79,7 @@ string& GameString::text()
 }
 
 
-string& GameString::getTYPEIDString()
+string GameString::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

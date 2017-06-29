@@ -165,8 +165,8 @@ public:
 	virtual int getAnimationIndexByName(const string& name);
 	virtual int getAnimationIndexByAnimation(SpriteAnimationSequence* a);
 	virtual int getAnimationIndexByFrame(int frame);
-	virtual string& getAnimationNameByIndex(int index);
-	virtual string& getAnimationNameByFrame(int frame);
+	virtual string getAnimationNameByIndex(int index);
+	virtual string getAnimationNameByFrame(int frame);
 	virtual void antialiasBufferedImage(BufferedImage* bufferedImage);
 	virtual void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
 
@@ -177,7 +177,7 @@ public:
 
 	virtual int getID();
 	virtual string& getName();
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 	virtual string& getDataMD5();
 	virtual string& getPaletteMD5();
 

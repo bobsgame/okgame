@@ -287,7 +287,7 @@ void AreaData::addConnectionString(const string& s)
 
 
 
-string& AreaData::initFromString(string t)
+string& AreaData::initFromString(string& t)
 {
 	t = super::initFromString(t);
 
@@ -483,7 +483,7 @@ string& AreaData::initFromString(string t)
 
 
 
-string& AreaData::getTYPEIDString()
+string AreaData::getTYPEIDString()
 { //===============================================================================================
 
 	if (isWarpArea == true)

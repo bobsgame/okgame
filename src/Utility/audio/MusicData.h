@@ -59,10 +59,10 @@ public:
 	//static MusicData* fromBase64ZippedJSON(const string& b64);
 	//static MusicData* fromJSON(const string& json);
 
-	string initFromString(string t);
+	string& initFromString(string& t);
 
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 
 	virtual string& getFileName();

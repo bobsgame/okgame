@@ -92,7 +92,7 @@ string& Dialogue::text()
 }
 
 
-string& Dialogue::getTYPEIDString()
+string Dialogue::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

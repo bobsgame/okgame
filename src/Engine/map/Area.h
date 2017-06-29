@@ -206,7 +206,7 @@ public:
 	EventData* getEventData();
 	virtual ArrayList<string>* connectionTYPEIDList();
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 	virtual string& destinationTYPEIDString();
 };

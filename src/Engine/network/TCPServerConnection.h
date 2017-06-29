@@ -832,12 +832,12 @@ public:
 
 	void sendBobsGameRoomListRequest_S();
 	void incomingBobsGameRoomListResponse(string &s);
-	void tellBobsGameRoomHostMyUserID_S(string roomUUID);
-	void tellServerBobsGameHostingPublicGameUpdate_S(string roomDescription);
-	void tellServerBobsGameIHaveCanceledTheGame_S(string roomUUID);
-	void tellServerBobsGameIHaveStartedTheGame_S(string roomUUID);
-	void tellServerBobsGameTheGameHasEnded_S(string roomUUID, string results);
-	void sendBobsGameGameStats_S(string &statsString);
+	void tellBobsGameRoomHostMyUserID_S(const string& roomUUID);
+	void tellServerBobsGameHostingPublicGameUpdate_S(const string& roomDescription);
+	void tellServerBobsGameIHaveCanceledTheGame_S(const string& roomUUID);
+	void tellServerBobsGameIHaveStartedTheGame_S(const string& roomUUID);
+	void tellServerBobsGameTheGameHasEnded_S(const string& roomUUID, const string& results);
+	void sendBobsGameGameStats_S(const string& statsString);
 	void incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s);
 	void incomingBobsGameLeaderBoardByTotalTimePlayed(string &s);
 	void incomingBobsGameLeaderBoardByTotalBlocksCleared(string &s);
@@ -873,7 +873,7 @@ private:
 public:
 	void sendAddFriendByUserNameRequest_S(string friendUserName);
 	void incomingAddFriendByUserNameResponse(string s);
-	string getAddFriendByUserNameResponse();
+	string& getAddFriendByUserNameResponse();
 	void setAddFriendByUserNameResponse(string b);
 	string addFriendByUserNameResponse = "";
 
@@ -884,5 +884,5 @@ public:
 	bool checkForSessionTokenAndLogInIfExists();
 	bool doForgotPassword(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail);
 	bool linkFacebookAccount(Caption *statusLabel, Caption *errorLabel);
-	bool doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, string &friendUserName);
+	bool doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, const string& friendUserName);
 };

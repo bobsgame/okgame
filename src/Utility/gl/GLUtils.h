@@ -82,8 +82,8 @@ public:
 	static void drawTexture(float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
 	static void drawTexture(BobTexture* texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter);
 	static void drawTexture(float textureX0, float textureX1, float textureY0, float textureY1, float screenX0, float screenX1, float screenY0, float screenY1, float r, float g, float b, float a, int filter);
-	static void drawOutlinedString(string text, float screenX, float screenY, BobColor* color);
-	static void drawOutlinedString(float screenX0, float screenY0, string text, BobColor* color);
+	static void drawOutlinedString(const string& text, float screenX, float screenY, BobColor* color);
+	//static void drawOutlinedString(float screenX0, float screenY0, const string& text, BobColor* color);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, int r, int g, int b);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, float r, float g, float b);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, float r, float g, float b, float a);

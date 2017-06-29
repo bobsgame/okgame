@@ -50,7 +50,7 @@ MapStateData::MapStateData(int id, const string& name)
 
 
 
-string& MapStateData::initFromString(string t)
+string& MapStateData::initFromString(string& t)
 {
 	t = super::initFromString(t);
 
@@ -108,7 +108,7 @@ string& MapStateData::initFromString(string t)
 
 
 
-string& MapStateData::getTYPEIDString()
+string MapStateData::getTYPEIDString()
 { //===============================================================================================
 	return "STATE." + to_string(getID());
 }

@@ -455,9 +455,9 @@ public:
 
 
 
-	void sendAllJoinedPeers(string s);
-	void sendPeer(UDPPeerConnection *c, string s);
-	void sendAllPeers(string s);
+	void sendAllJoinedPeers(const string& s);
+	void sendPeer(UDPPeerConnection *c, const string& s);
+	void sendAllPeers(const string& s);
 
 	static const string lobbyCommand_STARTGAME;
 	static const string lobbyCommand_CANCELGAME;
@@ -495,11 +495,11 @@ public:
 	void tellPeerThatPlayerHasJoined(UDPPeerConnection* peerToTell, PuzzlePlayer *p);
 	void tellPeerThatPlayerHasConfirmedAndSendGameSequence(UDPPeerConnection* peerToTell, PuzzlePlayer *p);
 	void tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(PuzzlePlayer *p);
-	void tellServerIAmHostingOrUpdateRoomStatus(string roomDescription);
-	void tellServerIHaveCanceledTheGame(string roomUUID);
-	void tellServerIHaveStartedTheGame(string roomUUID);
-	void tellServerTheGameHasEnded(string roomUUID, string results);
-	static void getUserIDAndRandomSeedAndUUIDFromPlayerIDString(string s, long long &userID, long long &randomSeed, string &uuid);
+	void tellServerIAmHostingOrUpdateRoomStatus(const string& roomDescription);
+	void tellServerIHaveCanceledTheGame(const string& roomUUID);
+	void tellServerIHaveStartedTheGame(const string& roomUUID);
+	void tellServerTheGameHasEnded(const string& roomUUID, const string& results);
+	static void getUserIDAndRandomSeedAndUUIDFromPlayerIDString(string s, long long &userID, long long &randomSeed, string& uuid);
 	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s) override;
 
   

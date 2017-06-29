@@ -90,9 +90,9 @@ public:
 //	static AreaData* fromJSON(const string& json);
 
 
-	virtual string& initFromString(string t);
+	virtual string& initFromString(string& t);
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 
 	virtual int getMapXPixels1X();

@@ -47,9 +47,9 @@ public:
 	//static MapStateData* fromBase64ZippedJSON(const string& b64);
 	//static MapStateData* fromJSON(const string& json);
 
-	string initFromString(string t);
+	string& initFromString(string& t);
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 	virtual ArrayList<LightData*>* getLightDataList();
 	virtual ArrayList<EntityData*>* getEntityDataList();

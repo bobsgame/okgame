@@ -203,10 +203,10 @@ public:
 	//static MapData* fromBase64ZippedJSON(const string& b64);
 	//static MapData* fromJSON(const string& json);
 
-	virtual string& initFromString(string t);
+	virtual string& initFromString(string& t);
 
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 
 	virtual int getWidthTiles1X();

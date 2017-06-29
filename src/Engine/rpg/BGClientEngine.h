@@ -96,7 +96,7 @@ public:
 	virtual BobColor* getNameColor(int accountType);
 
 
-	virtual string& getAccountRankString(int accountRank);
+	virtual string getAccountRankString(int accountRank);
 	virtual BobColor* getAccountRankColor(int accountRank);
 
 

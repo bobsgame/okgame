@@ -150,7 +150,7 @@ MapData::MapData(int id, const string& name, int widthTiles1X, int heightTiles1X
 
 
 
-string& MapData::initFromString(string t)
+string& MapData::initFromString(string& t)
 {
 	t = super::initFromString(t);
 
@@ -303,7 +303,7 @@ string& MapData::initFromString(string t)
 
 
 
-string& MapData::getTYPEIDString()
+string MapData::getTYPEIDString()
 { //===============================================================================================
 	return "MAP." + to_string(getID());
 }

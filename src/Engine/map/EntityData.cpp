@@ -100,7 +100,7 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 
 
 
-string& EntityData::initFromString(string t)
+string& EntityData::initFromString(string& t)
 {
 	t = super::initFromString(t);
 
@@ -338,7 +338,7 @@ string& EntityData::initFromString(string t)
 
 
 
-string& EntityData::getTYPEIDString()
+string EntityData::getTYPEIDString()
 { //===============================================================================================
 	return "ENTITY." + to_string(getID());
 }

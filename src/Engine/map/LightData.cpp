@@ -83,7 +83,7 @@ LightData::LightData(int id, const string& name)
 //}
 
 //===============================================================================================
-string& LightData::initFromString(string t)
+string& LightData::initFromString(string& t)
 {//===============================================================================================
 	t = super::initFromString(t);
 
@@ -204,7 +204,7 @@ string& LightData::initFromString(string t)
 
 
 
-string& LightData::getTYPEIDString()
+string LightData::getTYPEIDString()
 { //===============================================================================================
 	return "LIGHT." + to_string(getID());
 }

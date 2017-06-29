@@ -57,10 +57,10 @@ public:
 
 	//static SoundData* fromJSON(const string& json);
 
-	string initFromString(string t);
+	string& initFromString(string& t);
 
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 	virtual string& getFileName();
 	virtual string& getFullFilePath();

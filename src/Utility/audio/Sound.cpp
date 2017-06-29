@@ -118,7 +118,7 @@ string& Sound::getMD5Name()
 	return data->getMD5Name();
 }
 
-string& Sound::getTYPEIDString()
+string Sound::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }

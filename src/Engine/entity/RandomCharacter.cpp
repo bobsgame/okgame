@@ -614,7 +614,7 @@ void RandomCharacter::update()
 								currentAreaTYPEIDTarget = "stayHere";
 							}
 
-							if ((dynamic_cast<WarpArea*>(a) != NULL) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
+							if ((dynamic_cast<WarpArea*>(a) != nullptr) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
 							{
 								fadeOutAndDelete();
 							}
@@ -673,7 +673,7 @@ void RandomCharacter::update()
 	doCharacterAnimation();
 }
 
-string& RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
+string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 { //=========================================================================================================================
 
 
@@ -748,7 +748,7 @@ string& RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 	return nextTYPEIDTarget;
 }
 
-string& RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
+string RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
 { //=========================================================================================================================
 
 

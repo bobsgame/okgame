@@ -30,7 +30,7 @@ const string BobsGame::netCommand_FORFEIT = "FORFEIT:";
 
 
 //=========================================================================================================================
-void BobsGame::sendAllJoinedPeers(string s)
+void BobsGame::sendAllJoinedPeers(const string& s)
 {//=========================================================================================================================
 
 	for (int i = 0; i<joinedPeers->size(); i++)
@@ -41,13 +41,13 @@ void BobsGame::sendAllJoinedPeers(string s)
 }
 
 //=========================================================================================================================
-void BobsGame::sendPeer(UDPPeerConnection *c, string& s)
+void BobsGame::sendPeer(UDPPeerConnection *c, const string& s)
 {//=========================================================================================================================
 	c->writeReliable_S("BOBSGAME:" + s + ":" + BobNet::endline);
 }
 
 //=========================================================================================================================
-void BobsGame::sendAllPeers(string s)
+void BobsGame::sendAllPeers(const string& s)
 {//=========================================================================================================================
 	BobNet::sendAllPeers("BOBSGAME:" + s + ":" + BobNet::endline);
 }
@@ -163,32 +163,32 @@ void BobsGame::tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(PuzzlePlaye
 }
 
 //=========================================================================================================================
-void BobsGame::tellServerIAmHostingOrUpdateRoomStatus(string roomDescription)
+void BobsGame::tellServerIAmHostingOrUpdateRoomStatus(const string& roomDescription)
 {//=========================================================================================================================
 
 	getServerConnection()->tellServerBobsGameHostingPublicGameUpdate_S(roomDescription);
 }
 
 //=========================================================================================================================
-void BobsGame::tellServerIHaveCanceledTheGame(string roomUUID)
+void BobsGame::tellServerIHaveCanceledTheGame(const string& roomUUID)
 {//=========================================================================================================================
 	getServerConnection()->tellServerBobsGameIHaveCanceledTheGame_S(roomUUID);
 }
 
 //=========================================================================================================================
-void BobsGame::tellServerIHaveStartedTheGame(string roomUUID)
+void BobsGame::tellServerIHaveStartedTheGame(const string& roomUUID)
 {//=========================================================================================================================
 	getServerConnection()->tellServerBobsGameIHaveStartedTheGame_S(roomUUID);
 }
 
 //=========================================================================================================================
-void BobsGame::tellServerTheGameHasEnded(string roomUUID, string& results)
+void BobsGame::tellServerTheGameHasEnded(const string& roomUUID, const string& results)
 {//=========================================================================================================================
 	getServerConnection()->tellServerBobsGameTheGameHasEnded_S(roomUUID, results);
 }
 
 //=========================================================================================================================
-void BobsGame::getUserIDAndRandomSeedAndUUIDFromPlayerIDString(string s, long long &userID, long long &randomSeed, string &uuid)
+void BobsGame::getUserIDAndRandomSeedAndUUIDFromPlayerIDString(string s, long long &userID, long long &randomSeed, string& uuid)
 {//=========================================================================================================================
 
 	string userIDString = s.substr(0, s.find("."));
@@ -789,7 +789,7 @@ void BobsGame::populateRoomsMenu()
 }
 
 //=========================================================================================================================
-string& BobsGame::cycleDots(int tries)
+string BobsGame::cycleDots(int tries)
 {//=========================================================================================================================
 	//make dots cycle
 	string dots = "";

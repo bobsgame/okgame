@@ -134,6 +134,7 @@ V HashMap<K, V>::get(K k)
 	catch(const exception&)
 	{
 		log.error("get() out of range exception");
+		//return nullptr;
 	}
 	return v;
 }

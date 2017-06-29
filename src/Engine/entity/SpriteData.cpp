@@ -176,7 +176,7 @@ void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, i
 
 
 
-string& SpriteData::initFromString(string t)
+string& SpriteData::initFromString(string& t)
 {
 	t = super::initFromString(t);
 
@@ -388,7 +388,7 @@ string& SpriteData::initFromString(string t)
 
 
 
-string& SpriteData::getTYPEIDString()
+string SpriteData::getTYPEIDString()
 { //===============================================================================================
 	return "SPRITE." + to_string(getID());
 }

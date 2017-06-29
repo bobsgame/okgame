@@ -27,8 +27,8 @@ public:
 	//static FlagData* fromBase64ZippedJSON(const string& b64);
 	//static FlagData* fromJSON(const string& json);
 
-	virtual string& initFromString(string t);
+	virtual string& initFromString(string& t);
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 };
 

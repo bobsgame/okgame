@@ -125,7 +125,7 @@ string& Music::getMD5Name()
 	return data->getMD5Name();
 }
 
-string& Music::getTYPEIDString()
+string Music::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }

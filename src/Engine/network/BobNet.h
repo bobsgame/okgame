@@ -220,7 +220,7 @@ private:
 	static queue<string> _stunMessageQueue;
 	static mutex _stunMessageQueue_Mutex;
 public:
-	static string& stunMessageQueueFront_S()
+	static string stunMessageQueueFront_S()
 	{
 		lock_guard<mutex> lock(_stunMessageQueue_Mutex);
 		return _stunMessageQueue.front();

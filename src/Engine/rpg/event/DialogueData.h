@@ -91,13 +91,13 @@ public:
 	DialogueData(int id, const string& name, const string& caption, const string& comment, const string& text);
 
 
-	virtual string& initFromString(string t);
+	virtual string& initFromString(string& t);
 
 	//static DialogueData* fromBase64ZippedJSON(const string& b64);
 	//static DialogueData* fromJSON(const string& json);
 
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 
 	virtual string& getCaption();

@@ -72,7 +72,7 @@ DoorData::DoorData(int id, const string& name)
 
 
 
-string& DoorData::initFromString(string t)
+string& DoorData::initFromString(string& t)
 {
 	t = super::initFromString(t);
 
@@ -151,7 +151,7 @@ string& DoorData::initFromString(string t)
 
 
 
-string& DoorData::getTYPEIDString()
+string DoorData::getTYPEIDString()
 { //===============================================================================================
 	return "DOOR." + to_string(getID());
 }

@@ -213,7 +213,10 @@ void Map::initMap(Engine* g, MapData* mapData)
 //=========================================================================================================================
 Entity* Map::getEntityByName(const string& name)
 { //=========================================================================================================================
-	Entity* e = currentState->entityByNameHashtable.get(name);
+	Entity* e = nullptr;
+
+	if(currentState->entityByNameHashtable.containsKey(name))
+	e = currentState->entityByNameHashtable.get(name);
 
 	if (e == nullptr)
 	{
@@ -2053,9 +2056,16 @@ void Map::unloadArea(const string& s)
 
 	//public Hashtable<String, Area> areaHashtable = new Hashtable<String, Area>();
 
-	Area* a = currentState->areaByNameHashtable.get(s);
+	Area* a = nullptr;
+	if(currentState->areaByNameHashtable.containsKey(s))
+	a = currentState->areaByNameHashtable.get(s);
+
 	currentState->areaByNameHashtable.removeAt(s);
+
+	if(currentState->areaByTYPEIDHashtable.containsKey(a->getTYPEIDString()))
 	currentState->areaByTYPEIDHashtable.removeAt(a->getTYPEIDString());
+
+
 	currentState->areaList.remove(a);
 }
 
@@ -4675,7 +4685,7 @@ bool Map::getIsOutside()
 	return data->getIsOutside();
 }
 
-string& Map::getTYPEIDString()
+string Map::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }

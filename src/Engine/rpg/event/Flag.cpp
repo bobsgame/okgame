@@ -77,7 +77,7 @@ string& Flag::getName()
 }
 
 
-string& Flag::getTYPEIDString()
+string Flag::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

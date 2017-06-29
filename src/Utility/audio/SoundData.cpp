@@ -53,7 +53,7 @@ SoundData::SoundData(int id, const string& name, const string& filename)
 
 
 
-string& SoundData::initFromString(string t)
+string& SoundData::initFromString(string& t)
 {
 	t = super::initFromString(t);
 
@@ -85,7 +85,7 @@ string& SoundData::initFromString(string t)
 
 
 
-string& SoundData::getTYPEIDString()
+string SoundData::getTYPEIDString()
 { //===============================================================================================
 	return "SOUND." + to_string(getID());
 }

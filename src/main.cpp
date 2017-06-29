@@ -1265,7 +1265,7 @@ using Poco::Zip::Decompress;
 
 
 //==========================================================================================================================
-string& Main::getPath()
+string Main::getPath()
 {//==========================================================================================================================
 
 	string exePath = string(SDL_GetBasePath());//this is where the .exe is run from.i.e. bobsgame/DebugVS/

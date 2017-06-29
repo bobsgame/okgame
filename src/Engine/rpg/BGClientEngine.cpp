@@ -1038,7 +1038,7 @@ BobColor* BGClientEngine::getNameColor(int accountType)
 	return getAccountRankColor(accountType);
 }
 
-string& BGClientEngine::getAccountRankString(int accountRank)
+string BGClientEngine::getAccountRankString(int accountRank)
 { //=========================================================================================================================
 	string accountRankString = "Free";
 	if (accountRank == 0)

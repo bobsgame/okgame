@@ -83,10 +83,10 @@ public:
 
 	//static LightData* fromJSON(const string& json);
 
-	string initFromString(string t);
+	string& initFromString(string& t);
 
 
-	virtual string& getTYPEIDString() override;
+	virtual string getTYPEIDString() override;
 
 
 	virtual int getWidthPixels1X();

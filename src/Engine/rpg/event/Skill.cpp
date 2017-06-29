@@ -66,7 +66,7 @@ string& Skill::getName()
 }
 
 
-string& Skill::getTYPEIDString()
+string Skill::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

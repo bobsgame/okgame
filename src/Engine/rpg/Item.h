@@ -41,27 +41,27 @@ public:
 	virtual void sendServerRequest();
 
 
-	virtual string& getName();
-	virtual string& description();
-	virtual int getID();
+	string& getName();
+	string description();
+	int getID();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void getWithCaption_S();
+	void getWithCaption_S();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setHaveItemValue_S(bool b);
+	void setHaveItemValue_S(bool b);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void initHaveItemValue_S(bool b, long long timeSet);
+	void initHaveItemValue_S(bool b, long long timeSet);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getHaveItemValue_S();
+	bool getHaveItemValue_S();
 
 
-	virtual long long getTimeSet();
+	long long getTimeSet();
 };
 

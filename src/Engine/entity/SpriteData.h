@@ -122,10 +122,10 @@ public:
 //	static SpriteData* fromJSON(const string& json);
 //
 	//string toString();
-	string initFromString(string t);
+	string& initFromString(string& t);
 
 
-	virtual string& getTYPEIDString();
+	virtual string getTYPEIDString();
 
 
 	virtual string& getDisplayName();
