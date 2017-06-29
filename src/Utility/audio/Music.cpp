@@ -109,23 +109,23 @@ int Music::getID()
 {
 	return data->getID();
 }
-
-string Music::getName()
+
+string& Music::getName()
 {
 	return data->getName();
 }
-
-string Music::getFileName()
+
+string& Music::getFileName()
 {
 	return data->getFileName();
 }
-
-string Music::getMD5Name()
+
+string& Music::getMD5Name()
 {
 	return data->getMD5Name();
 }
-
-string Music::getTYPEIDString()
+
+string& Music::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }

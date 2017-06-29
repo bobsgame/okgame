@@ -558,8 +558,8 @@ float Door::arrivalYPixelsHQ()
 {
 	return getDoorData()->getArrivalYPixelsHQ();
 }
-
-string Door::destinationTYPEIDString()
+
+string& Door::destinationTYPEIDString()
 {
 	if (getDoorData()->getDestinationTYPEIDString() == "" || getDoorData()->getDestinationTYPEIDString().length() == 0)
 	{
@@ -567,13 +567,13 @@ string Door::destinationTYPEIDString()
 	}
 	return getDoorData()->getDestinationTYPEIDString();
 }
-
-string Door::destinationMapName()
+
+string& Door::destinationMapName()
 {
 	return getDoorData()->getDestinationMapName();
 }
-
-string Door::destinationDoorName()
+
+string& Door::destinationDoorName()
 {
 	return getDoorData()->getDestinationDoorName();
 }

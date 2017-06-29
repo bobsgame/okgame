@@ -107,7 +107,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	static string getFrameStatesAsBase64GZippedXML(ArrayList<FrameState> &n)
+	static string& getFrameStatesAsBase64GZippedXML(ArrayList<FrameState> &n)
 	{ //=========================================================================================================================
 
 		std::stringstream ss;

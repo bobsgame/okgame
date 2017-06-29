@@ -2280,7 +2280,7 @@ void BobsGame::statsMenuRender()
 //	//set current difficulty type
 //}
 //
-//void selectedObjective(BobsGame *b, string name)
+//void selectedObjective(BobsGame *b, string& name)
 //{
 //	if(name=="End At Credits Level")
 //	{
@@ -3240,8 +3240,8 @@ void BobsGame::populateGameSequencesMenu(BobMenu *menu)
 
 
 
-//=========================================================================================================================
-string getNiceTime(long long ms)
+//=========================================================================================================================
+string& getNiceTime(long long ms)
 {//=========================================================================================================================
 	int sec = ms / 1000;
 	int min = sec / 60;
@@ -3263,8 +3263,8 @@ string getNiceTime(long long ms)
 
 #include <time.h>
 
-//=========================================================================================================================
-string getDateFromEpochTime(long long ms)
+//=========================================================================================================================
+string& getDateFromEpochTime(long long ms)
 {//=========================================================================================================================
 	std::time_t seconds = ms / 1000;
 	tm * time = localtime(&seconds);

@@ -139,8 +139,8 @@ int Event::getID()
 {
 	return data->getID();
 }
-
-string Event::getName()
+
+string& Event::getName()
 {
 	return data->getName();
 }
@@ -149,18 +149,18 @@ int Event::type()
 {
 	return data->getType();
 }
-
-string Event::getComment()
+
+string& Event::getComment()
 {
 	return data->getComment();
 }
-
-string Event::text()
+
+string& Event::text()
 {
 	return data->getText();
 }
-
-string Event::getTYPEIDString()
+
+string& Event::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }

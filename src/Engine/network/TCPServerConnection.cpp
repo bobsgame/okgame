@@ -1457,7 +1457,7 @@ void TCPServerConnection::tellServerBobsGameIHaveStartedTheGame_S(string roomUUI
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameTheGameHasEnded_S(string roomUUID, string results)
+void TCPServerConnection::tellServerBobsGameTheGameHasEnded_S(string roomUUID, string& results)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomEnded + roomUUID + ":" + results + ":" + BobNet::endline);
 }
@@ -1692,8 +1692,8 @@ void TCPServerConnection::setAddFriendByUserNameResponse(string b)
 {
 	addFriendByUserNameResponse = b;
 }
-
-string TCPServerConnection::getAddFriendByUserNameResponse()
+
+string& TCPServerConnection::getAddFriendByUserNameResponse()
 {
 	return addFriendByUserNameResponse;
 }
@@ -2667,7 +2667,7 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 
 
 //=========================================================================================================================
-bool TCPServerConnection::doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, string &friendUserName)
+bool TCPServerConnection::doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, string& &friendUserName)
 {//=========================================================================================================================
 
 	statusLabel->setText(" ");

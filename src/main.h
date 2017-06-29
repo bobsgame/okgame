@@ -95,7 +95,7 @@ public:
 
 	Main();
 	static void openURL(string url);
-	static string getPath();
+	static string& getPath();
 
 
 	System* clientInfo = new System();

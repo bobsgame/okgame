@@ -142,8 +142,8 @@ void EventParameter::updateParameterVariablesFromString(Event* event)
 		}
 	}
 }
-
-string EventParameter::toString()
+
+string& EventParameter::toString()
 { //===============================================================================================
 
 

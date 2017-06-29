@@ -55,13 +55,13 @@ public:
 	virtual SoundData* getData();
 
 	virtual int getID();
-	virtual string getName();
-	virtual string getFileName();
+	virtual string& getName();
+	virtual string& getFileName();
 	//public String getFullFilePath(){return data.getFullFilePath();}
-	virtual string getMD5Name();
+	virtual string& getMD5Name();
 
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 
 	virtual void setID(int id);

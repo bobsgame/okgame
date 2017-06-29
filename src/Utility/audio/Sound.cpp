@@ -102,23 +102,23 @@ int Sound::getID()
 {
 	return data->getID();
 }
-
-string Sound::getName()
+
+string& Sound::getName()
 {
 	return data->getName();
 }
-
-string Sound::getFileName()
+
+string& Sound::getFileName()
 {
 	return data->getFileName();
 }
-
-string Sound::getMD5Name()
+
+string& Sound::getMD5Name()
 {
 	return data->getMD5Name();
 }
-
-string Sound::getTYPEIDString()
+
+string& Sound::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }

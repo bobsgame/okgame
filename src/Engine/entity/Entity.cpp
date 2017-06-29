@@ -445,8 +445,8 @@ void Entity::renderDebugInfo()
 	               
 	               */
 }
-
-string Entity::getCurrentAreaTargetName()
+
+string& Entity::getCurrentAreaTargetName()
 { //=========================================================================================================================
 	Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 	if (a == nullptr)
@@ -1235,8 +1235,8 @@ int Entity::getCurrentAnimationLastFrame()
 	}
 	return getCurrentAnimationStartFrame() + getCurrentAnimationNumberOfFrames() - 1;
 }
-
-string Entity::getCurrentAnimationName()
+
+string& Entity::getCurrentAnimationName()
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
@@ -2282,8 +2282,8 @@ string& Entity::getName()
 {
 	return getData()->getName();
 }
-
-string Entity::getComment()
+
+string& Entity::getComment()
 {
 	return getData()->getComment();
 }
@@ -2297,8 +2297,8 @@ int Entity::getID()
 //{
 //	return getData()->getMapID();
 //}
-
-string Entity::getSpriteName()
+
+string& Entity::getSpriteName()
 {
 	return getData()->getSpriteName();
 }
@@ -2460,8 +2460,8 @@ ArrayList<string>* Entity::getBehaviorList()
 {
 	return getData()->getBehaviorList();
 }
-
-string Entity::getTYPEIDString()
+
+string& Entity::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }

@@ -276,8 +276,8 @@ bool Light::getLightTexturePNGFileExists_S()
 	return existsInHashtable;
 
 }
-
-string Light::getFileName()
+
+string& Light::getFileName()
 { //===============================================================================================
 
 	return 

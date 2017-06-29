@@ -54,7 +54,7 @@ public:
 	//Event(Engine* g, int id);
 
 	//for cutscenes only, string is not used, only to make unambiguous
-	Event(Engine* g, EventData* eventData, string s);
+	Event(Engine* g, EventData* eventData, string& s);
 
 
 	Event(Engine* g, EventData* eventData, Map* m);
@@ -67,12 +67,12 @@ public:
 	virtual EventData* getData();
 
 	virtual int getID();
-	virtual string getName();
+	virtual string& getName();
 	virtual int type();
-	virtual string getComment();
-	virtual string text();
+	virtual string& getComment();
+	virtual string& text();
 
-	virtual string getTYPEIDString();
+	virtual string& getTYPEIDString();
 
 	virtual void setID(int id);
 	virtual void setName(const string& name);

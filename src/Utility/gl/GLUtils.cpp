@@ -1065,7 +1065,7 @@ void GLUtils::checkGLError(const string &whereErrorOccurredString)
 }
 
 //===========================================================================================================================
-void GLUtils::e(const string &whereErrorOccurredString)
+void GLUtils::e(const string& &whereErrorOccurredString)
 {//===========================================================================================================================
 
 	checkGLError(whereErrorOccurredString);

@@ -114,8 +114,8 @@ void test()
 }
 
 
-//==========================================================================================================================
-string FileUtils::removeIllegalFilenameChars(string filename)
+//==========================================================================================================================
+string& FileUtils::removeIllegalFilenameChars(string filename)
 {//==========================================================================================================================
 
 	string *s = &filename;
@@ -632,29 +632,29 @@ void FileUtils::trim(std::string &s)
 	rtrim(s);
 }
 //=========================================================================================================================
-// trim from start (copying)
-string FileUtils::ltrimmed(std::string s) 
+// trim from start (copying)
+string& FileUtils::ltrimmed(std::string s) 
 {//=========================================================================================================================
 	ltrim(s);
 	return s;
 }
 //=========================================================================================================================
-// trim from end (copying)
-string FileUtils::rtrimmed(std::string s) 
+// trim from end (copying)
+string& FileUtils::rtrimmed(std::string s) 
 {//=========================================================================================================================
 	rtrim(s);
 	return s;
 }
 //=========================================================================================================================
-// trim from both ends (copying)
-string FileUtils::trimmed(std::string s) 
+// trim from both ends (copying)
+string& FileUtils::trimmed(std::string s) 
 {//=========================================================================================================================
 	trim(s);
 	return s;
 }
 
-//=========================================================================================================================
-string FileUtils::loadTextFileAndTrim(string filename)
+//=========================================================================================================================
+string& FileUtils::loadTextFileAndTrim(string filename)
 {//=========================================================================================================================
 
 
@@ -676,8 +676,8 @@ string FileUtils::loadTextFileAndTrim(string filename)
 }
 
 
-//=========================================================================================================================
-string FileUtils::loadTextFileFromExePathAndTrim(string filename)
+//=========================================================================================================================
+string& FileUtils::loadTextFileFromExePathAndTrim(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -1012,8 +1012,8 @@ typedef unsigned int uint;
 bool zip = false;
 bool lzo = true;
 
-// ===============================================================================================
-string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength)
+// ===============================================================================================
+string& FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength)
 { // ===============================================================================================
 
 
@@ -1397,8 +1397,8 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 	return nullptr;
 }
 
-
-string FileUtils::zipStringToBase64String(const string& s)
+
+string& FileUtils::zipStringToBase64String(const string& s)
 { // ===============================================================================================
 
 	if (s == "" || s.length() == 0)
@@ -1411,8 +1411,8 @@ string FileUtils::zipStringToBase64String(const string& s)
 
 	return zipByteArrayToBase64String(val, s.length());
 }
-
-string FileUtils::unzipBase64StringToString(const string& s)
+
+string& FileUtils::unzipBase64StringToString(const string& s)
 { // ===============================================================================================
 
 	if (s == "" || s.length() == 0)
@@ -1435,8 +1435,8 @@ string FileUtils::unzipBase64StringToString(const string& s)
 using Poco::MD5Engine;
 
 
-
-string FileUtils::getFileMD5Checksum(const string& filename)
+
+string& FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
 
 
@@ -1449,8 +1449,8 @@ string FileUtils::getFileMD5Checksum(const string& filename)
 }
 
 #include "md5.h"
-
-string FileUtils::getByteArrayMD5Checksum(vector<u8>* bytes)
+
+string& FileUtils::getByteArrayMD5Checksum(vector<u8>* bytes)
 { //===============================================================================================
 
 
@@ -1462,8 +1462,8 @@ string FileUtils::getByteArrayMD5Checksum(vector<u8>* bytes)
 
 
 }
-
-string FileUtils::getStringMD5(const string& stringToMD5)
+
+string& FileUtils::getStringMD5(const string& stringToMD5)
 { //===============================================================================================
 
 	return md5(stringToMD5);
@@ -1576,8 +1576,8 @@ void FileUtils::writeSessionTokenToCache(long long userID, const string& session
 	outputFile << "" + to_string(userID) + ",`" + sessionToken + "`," + StringConverterHelper::toString(statsAllowed);
 	outputFile.close();
 }
-
-string FileUtils::readSessionTokenFromCache()
+
+string& FileUtils::readSessionTokenFromCache()
 { //===============================================================================================
 
 //	File* sessionFile = new File(cacheDir + "session.txt");
@@ -2348,8 +2348,8 @@ int BobFile::length()
 	return 0;
 }
 
-//includes filename, so just path???
-string BobFile::getAbsolutePath()
+//includes filename, so just path???
+string& BobFile::getAbsolutePath()
 {
 //	string fullPath = string(path);
 //	string absPath;
@@ -2373,8 +2373,8 @@ void BobFile::createNewFile()
 		f.createFile();
 	}
 }
-
-string BobFile::getName()
+
+string& BobFile::getName()
 {
 	string name = string(path);
 	int found = (int)name.find('/');

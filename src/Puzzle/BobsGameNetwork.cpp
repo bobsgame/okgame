@@ -41,7 +41,7 @@ void BobsGame::sendAllJoinedPeers(string s)
 }
 
 //=========================================================================================================================
-void BobsGame::sendPeer(UDPPeerConnection *c, string s)
+void BobsGame::sendPeer(UDPPeerConnection *c, string& s)
 {//=========================================================================================================================
 	c->writeReliable_S("BOBSGAME:" + s + ":" + BobNet::endline);
 }
@@ -182,7 +182,7 @@ void BobsGame::tellServerIHaveStartedTheGame(string roomUUID)
 }
 
 //=========================================================================================================================
-void BobsGame::tellServerTheGameHasEnded(string roomUUID, string results)
+void BobsGame::tellServerTheGameHasEnded(string roomUUID, string& results)
 {//=========================================================================================================================
 	getServerConnection()->tellServerBobsGameTheGameHasEnded_S(roomUUID, results);
 }
@@ -788,8 +788,8 @@ void BobsGame::populateRoomsMenu()
 
 }
 
-//=========================================================================================================================
-string BobsGame::cycleDots(int tries)
+//=========================================================================================================================
+string& BobsGame::cycleDots(int tries)
 {//=========================================================================================================================
 	//make dots cycle
 	string dots = "";
