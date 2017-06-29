@@ -245,7 +245,7 @@ void BGClientEngine::update()
 				{
 					isProjectLoadEventInitialized_nonThreaded = true;
 
-					projectLoadEvent = getEventManager()->getCutsceneEventByID(getProjectLoadEventID_S());
+					projectLoadEvent = getEventManager()->getEventByIDCreateIfNotExist(getProjectLoadEventID_S());
 					if(projectLoadEvent!=nullptr)getEventManager()->addToEventQueueIfNotThere(projectLoadEvent); //events update their own network data inside their run function
 				}
 			}
@@ -1324,7 +1324,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 	}
 	else
 	{
-		Event* d = getEventManager()->getCutsceneEventByID(data->getID());
+		Event* d = getEventManager()->getEventByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 
 		setProjectLoadEventID_S(data->getID());

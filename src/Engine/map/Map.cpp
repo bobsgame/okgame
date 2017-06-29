@@ -101,20 +101,19 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 		Event* event = nullptr;
 
-//		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
-//		{
-//			if (getEventManager()->eventList.get(k)->getID() == eventData->getID())
-//			{
-//				event = getEventManager()->eventList.get(k);
-//			}
-//		}
-//
-//		if (event == nullptr)
-//		{
-//			event = new Event(getEngine(), eventData, this);
-//		}
+		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
+		{
+			if (getEventManager()->eventList.get(k)->getID() == eventData->getID())
+			{
+				event = getEventManager()->eventList.get(k);
+			}
+		}
 
-		event = new Event(getEngine(), eventData, this);
+		if (event == nullptr)
+		{
+			event = new Event(getEngine(), eventData, this);
+		}
+
 
 		mapEventList.add(event);
 

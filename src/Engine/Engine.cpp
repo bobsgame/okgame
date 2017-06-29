@@ -194,15 +194,11 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	}
 	if (String::startsWith(typeIDName, "CUTSCENEEVENT."))
 	{
-		return getEventManager()->getCutsceneEventByID(id);
+		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "EVENT."))
 	{
-
-		log.error("Should not look up events by typeID");//TODO: but maybe could support this if events want to call other events?
-		//might have to put back the global event list or hashtable or maybe look through all loaded objects until i find it?
-
-		return nullptr;// getEventManager()->getEventByIDCreateIfNotExist(id);
+		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "FLAG."))
 	{
@@ -396,7 +392,7 @@ bool Engine::serverMessageReceived(string e)// ChannelHandlerContext* ctx, Messa
 	else
 	if (String::startsWith(s, BobNet::Event_Response))
 	{
-		incomingCutsceneEvent(s);
+		incomingEvent(s);
 		return true;
 	}
 	else
@@ -561,12 +557,12 @@ void Engine::incomingDialogue(string s)
 }
 
 
-void Engine::sendCutsceneEventRequest(int id)
+void Engine::sendEventRequest(int id)
 { //=========================================================================================================================
 	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Event_Request + to_string(id) + BobNet::endline);
 }
 
-void Engine::incomingCutsceneEvent(string s)
+void Engine::incomingEvent(string s)
 { //=========================================================================================================================
 
   //Event:id-name:eventData
@@ -582,8 +578,9 @@ void Engine::incomingCutsceneEvent(string s)
 	}
 	else
 	{
-		Event* d = getEventManager()->getCutsceneEventByID(data->getID());
-		if (d == nullptr)d = new Event(this, data, "cutscene");
+		//Event* d = 
+			getEventManager()->getEventByIDCreateIfNotExist(data->getID());
+		//if (d == nullptr)d = new Event(this, data, "cutscene");
 	}
 }
 

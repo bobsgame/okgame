@@ -29,8 +29,6 @@ Event::Event(Engine* g, EventData* eventData, string s)
 	
 	initEvent();
 
-	getEventManager()->cutsceneEventList.add(this);
-
 }
 
 
@@ -113,16 +111,25 @@ void Event::initEvent()
 	}
 
 
+	bool exists = false;
 
-//	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
-//	{
-//		if (getEventManager()->eventList.get(i)->getID() == data->getID())
-//		{
-//			log.error("Event already exists:" + data->getName());
-//			return;
-//		}
-//	}
-//	getEventManager()->eventList.add(this); 
+	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
+	{
+
+		Event *e = getEventManager()->eventList.get(i);
+		if (e->getID() == data->getID())
+		{
+			log.error("Event already exists:" + data->getName());
+			exists = true;
+
+			e->setData_S(data);
+			e->setInitialized_S(true);
+
+		}
+	}
+	
+	if(exists == false)
+	getEventManager()->eventList.add(this); 
 	//this tracks events created for areas and entities that don't exist after the map is unloaded, so they don't have to be loaded from the server and parsed again.
 
 

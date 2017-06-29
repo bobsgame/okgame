@@ -25,7 +25,7 @@ EventManager::EventManager(Engine* g)
 void EventManager::update()
 { //=========================================================================================================================
 
-	//for(int i=0;i<eventList.size();i++)eventList.get(i).update();//only update running events, otherwise we update events that we might not have access to yet.
+	for(int i=0;i<eventList.size();i++)eventList.get(i)->update();//only update running events, otherwise we update events that we might not have access to yet.
 
 	for (int i = 0; i < itemList.size(); i++)
 	{
@@ -52,10 +52,10 @@ void EventManager::update()
 		skillList.get(i)->update();
 	}
 
-	for (int i = 0; i < cutsceneEventList.size(); i++)
-	{
-		cutsceneEventList.get(i)->update();
-	}
+//	for (int i = 0; i < cutsceneEventList.size(); i++)
+//	{
+//		cutsceneEventList.get(i)->update();
+//	}
 
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
@@ -151,45 +151,45 @@ Dialogue* EventManager::getDialogueByIDCreateIfNotExist(int id)
 }
 
 
-Event* EventManager::getCutsceneEventByID(int id)
-{ //=========================================================================================================================
-	//go through list
-	//if event doesn't exist, make new one
-	for (int i = 0; i < cutsceneEventList.size(); i++)
-	{
-		Event* d = cutsceneEventList.get(i);
-		if (d->getID() == id)
-		{
-			return d;
-		}
-	}
-
-	return nullptr;
-}
-
-//
-//Event* EventManager::getEventByIDCreateIfNotExist(int id)
+//Event* EventManager::getCutsceneEventByID(int id)
 //{ //=========================================================================================================================
 //	//go through list
 //	//if event doesn't exist, make new one
-//	for (int i = 0; i < eventList.size(); i++)
+//	for (int i = 0; i < cutsceneEventList.size(); i++)
 //	{
-//		Event* d = eventList.get(i);
+//		Event* d = cutsceneEventList.get(i);
 //		if (d->getID() == id)
 //		{
 //			return d;
 //		}
 //	}
 //
-//	//first of all this should never happen because events are embedded in objects now
-//	//but i think the object should request the event from the server instead of making an empty event
-//	//or at least the object should create the event itself so it can be associated with the correct object
-//	log.error("Could not find event with ID " + to_string(id));
-//	Event* d = new Event(getEngine(), new EventData(id, "", 0, "", ""), "");
-//	d->setInitialized_S(false);
-//
-//	return d;
+//	return nullptr;
 //}
+
+
+Event* EventManager::getEventByIDCreateIfNotExist(int id)
+{ //=========================================================================================================================
+	//go through list
+	//if event doesn't exist, make new one
+	for (int i = 0; i < eventList.size(); i++)
+	{
+		Event* d = eventList.get(i);
+		if (d->getID() == id)
+		{
+			return d;
+		}
+	}
+
+	//first of all this should never happen because events are embedded in objects now
+	//but i think the object should request the event from the server instead of making an empty event
+	//or at least the object should create the event itself so it can be associated with the correct object
+	//log.error("Could not find event with ID " + to_string(id));
+	Event* d = new Event(getEngine(), new EventData(id, "", 0, "", ""), "");
+	d->setInitialized_S(false);
+
+	return d;
+}
 
 Skill* EventManager::getSkillByIDCreateIfNotExist(int id)
 { //=========================================================================================================================

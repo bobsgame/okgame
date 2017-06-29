@@ -167,10 +167,10 @@ private:
 	//====================================================
 
 public:
-	virtual void sendCutsceneEventRequest(int id);
+	virtual void sendEventRequest(int id);
 
 private:
-	void incomingCutsceneEvent(string s);
+	void incomingEvent(string s);
 
 	//====================================================
 	//GAMESTRING
