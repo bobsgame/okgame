@@ -295,10 +295,13 @@ void TextWindow::updateSpriteWindowTexture()
 	int size_y = spriteWindowTexture->getTextureHeight();
 
 
+	int boxXY = 64;
+
+
 	// go through sprite texture data, which should be 32 x 64 or 32 x 32
 	// find top pixel by shooting rays down from top to bottom for 0-32
 	int top_filled_pixel = size_y;
-	for (int x = 0; x < 32; x++)
+	for (int x = 0; x < size_x; x++)
 	{
 		for (int y = 0; y < size_y; y++)
 		{
@@ -321,10 +324,10 @@ void TextWindow::updateSpriteWindowTexture()
 
 
 	// make 64 * 64 pixel box
-	vector<u8>* newtex = new vector<u8>(64 * 64 * 4);
+	vector<u8>* newtex = new vector<u8>(boxXY * boxXY * 4);
 
 	// fill with transparent
-	for (int i = 0; i < 64 * 64 * 4; i++)
+	for (int i = 0; i < boxXY * boxXY * 4; i++)
 	{
 		(*newtex)[i] = 0;
 	}
@@ -333,9 +336,12 @@ void TextWindow::updateSpriteWindowTexture()
 	// take 32 x 32 pixels starting at line *above* top pixel (so there is one empty line), draw them float sized into 64 * 64 box
 	// if (top pixel-1) + 32 is more than bottom, break and leave transparent.
 
-	for (int y = top_filled_pixel; y < top_filled_pixel + 31 && y < size_y; y++)
+	int clipY = 32;
+	if (clipY > size_x)clipY = size_x;
+
+	for (int y = top_filled_pixel; y < top_filled_pixel + clipY - 1 && y < size_y; y++)
 	{
-		for (int x = 0; x < 32; x++)
+		for (int x = 0; x < size_x; x++)
 		{
 			char r = oldtex[((size_x * y) + x) * 4 + 0];
 			char g = oldtex[((size_x * y) + x) * 4 + 1];
@@ -343,16 +349,18 @@ void TextWindow::updateSpriteWindowTexture()
 			char a = oldtex[((size_x * y) + x) * 4 + 3];
 
 
-			for (int xx = 0; xx < 2; xx++)
+			int mult = boxXY / size_x;
+
+			for (int xx = 0; xx < mult; xx++)
 			{
-				for (int yy = 0; yy < 2; yy++)
+				for (int yy = 0; yy < mult; yy++)
 				{
 					int newy = (y + 1) - top_filled_pixel;
 
-					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 0] = r;
-					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 1] = g;
-					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 2] = b;
-					(*newtex)[(((64 * (((newy) * 2) + yy)) + ((x * 2) + xx)) * 4) + 3] = a;
+					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 0] = r;
+					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 1] = g;
+					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 2] = b;
+					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 3] = a;
 				}
 			}
 		}
@@ -364,11 +372,11 @@ void TextWindow::updateSpriteWindowTexture()
 	// if the surrounding pixels are transparent, set it to white.
 	for (int t = 127 - 32; t >= 0; t -= 16)
 	{
-		for (int x = 0; x < 64; x++)
+		for (int x = 0; x < boxXY; x++)
 		{
-			for (int y = 0; y < 64; y++)
+			for (int y = 0; y < boxXY; y++)
 			{
-				if ((*newtex)[((64 * y) + x) * 4 + 3] != 0 && ((*newtex)[((64 * y) + x) * 4 + 0] != t || (*newtex)[((64 * y) + x) * 4 + 1] != t || (*newtex)[((64 * y) + x) * 4 + 2] != t)) // b -  g -  r
+				if ((*newtex)[((boxXY * y) + x) * 4 + 3] != 0 && ((*newtex)[((boxXY * y) + x) * 4 + 0] != t || (*newtex)[((boxXY * y) + x) * 4 + 1] != t || (*newtex)[((boxXY * y) + x) * 4 + 2] != t)) // b -  g -  r
 				{
 					for (int i = 0; i < 8; i++)
 					{
@@ -417,14 +425,14 @@ void TextWindow::updateSpriteWindowTexture()
 							yy = 1;
 						}
 
-						if (y + yy >= 0 && y + yy < 64 && x + xx >= 0 && x + xx < 64)
+						if (y + yy >= 0 && y + yy < boxXY && x + xx >= 0 && x + xx < boxXY)
 						{
-							if ((*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 3] == 0)
+							if ((*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 3] == 0)
 							{
-								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 0] = t;
-								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 1] = t;
-								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 2] = t;
-								(*newtex)[((64 * (y + yy)) + (x + xx)) * 4 + 3] = t;
+								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 0] = t;
+								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 1] = t;
+								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 2] = t;
+								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 3] = t;
 							}
 						}
 					}

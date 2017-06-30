@@ -610,16 +610,12 @@ int BobFont::getFontIndexForChar(char c)
 			break;
 		}
 
-
-		/*
-		case '?':
-		{
-		   i = CHAR_QUESTIONMARK;
-		   break;
-		}
-		*/
-
-
+	case '?':
+	{
+		i = CHAR_QUESTIONMARK;
+		break;
+	}
+		
 	case '=':
 		{
 			i = CHAR_EQUALS;

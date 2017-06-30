@@ -335,7 +335,8 @@ void Main::mainInit()
 				//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
 				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
 				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
-				//gameEngine.textManager.getText("Yep \"Yuu\" yay. <.><1>bob! yay, \"bob\" yay! <.><0>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
+				
+				gameEngine->textManager->text("<PLAYER>Yep \"Yuu\" yay. <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
 			}
 			//		else
 			//		{
