@@ -125,13 +125,13 @@ bool SortedList::contains(PotentialTile* o)
 }
 
 PotentialTile::PotentialTile(int x, int y)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	this->x = x;
 	this->y = y;
 }
 
 int PotentialTile::setParentTile(PotentialTile* parent)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	depth = parent->depth + 1;
 	this->parent = parent;
 
@@ -139,7 +139,7 @@ int PotentialTile::setParentTile(PotentialTile* parent)
 }
 
 int PotentialTile::compareTo(PotentialTile* o)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	float f = heuristicCost + cumulativePathCost;
 	float of = o->heuristicCost + o->cumulativePathCost;
@@ -159,7 +159,7 @@ int PotentialTile::compareTo(PotentialTile* o)
 }
 
 PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	this->e = e;
@@ -435,7 +435,7 @@ PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartY
 }
 
 TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int toTileY)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	// easy first check, if the destination is blocked, we can't get there
@@ -569,7 +569,7 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 }
 
 bool PathFinder::isTileBlocked(int tileX, int tileY)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	if (e->checkPathBlockedXY((float)tileX * 8 * 2 + 8, (float)tileY * 8 * 2 + 8) == true)
 	// ||
@@ -588,29 +588,29 @@ bool PathFinder::isTileBlocked(int tileX, int tileY)
 }
 
 int PathFinder::getHeuristicCost(int tileX, int tileY, int endTileX, int endTileY)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	return minCost * (abs(tileX - endTileX) + abs(tileY - endTileY));
 }
 
 int PathFinder::getTileTypeCost(int fromTileX, int fromTileY, int toTileX, int toTileY)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	// TODO: check if tile is marked as being grass, cement, near a guard rail, etc, and increase cost to avoid those areas unless necessary.
 
 	return 1;
 }
 
 void PathFinder::setTileChecked(int tileX, int tileY)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	checkedTileArray[tileY * w + tileX] = true;
 }
 
 bool PathFinder::wasTileChecked(int tileX, int tileY)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	return checkedTileArray[tileY * w + tileX];
 }
 
 bool PathFinder::isValidLocation(int currentTileX, int currentTileY, int checkTileX, int checkTileY)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	bool invalid = (checkTileX < 0) || (checkTileY < 0) || (checkTileX >= w) || (checkTileY >= h);
 
 	if ((!invalid) && ((currentTileX != checkTileX) || (currentTileY != checkTileY)))

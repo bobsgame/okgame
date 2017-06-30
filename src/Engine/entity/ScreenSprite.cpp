@@ -91,6 +91,38 @@ void ScreenSprite::setYPercent(float y)
 	}
 }
 
+float ScreenSprite::getWidth()
+{ //=========================================================================================================================
+
+	if (sprite != nullptr)
+	{
+		int w = sprite->getImageWidth();
+		
+
+		return (w * getScale());
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+float ScreenSprite::getHeight()
+{ //=========================================================================================================================
+	if (sprite != nullptr)
+	{
+		int h = sprite->getImageHeight();
+		
+		return (h * getScale());
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
+
 void ScreenSprite::checkIfOnscreen()
 { //=========================================================================================================================
 	//don't do anything, manually control draw
@@ -133,15 +165,28 @@ void ScreenSprite::render(float alpha, BobTexture* texture, BobTexture* shadowTe
 	float y1 = 0;
 
 
+
+
 	//------------------
 	//now draw actual sprite
 	//------------------
 	if (texture != nullptr)
 	{
+
+		int w = 0;
+		int h = 0;
+		if (sprite != nullptr)
+		{
+			w = sprite->getImageWidth();
+			h = sprite->getImageHeight();
+		}
+
+
 		tx0 = 0.0f;
-		tx1 = ((float)(getWidth()) / (float)(texture->getTextureWidth()));
-		ty0 = (((float)(getHeight())) * getFrame()) / (float)(texture->getTextureHeight());
-		ty1 = (((float)(getHeight())) * (getFrame() + 1)) / (float)(texture->getTextureHeight());
+		tx1 = ((float)(w) / (float)(texture->getTextureWidth()));
+
+		ty0 = (((float)(h)) * getFrame()) / (float)(texture->getTextureHeight());
+		ty1 = (((float)(h)) * (getFrame() + 1)) / (float)(texture->getTextureHeight());
 
 
 		//x0 = (float)Math.floor(getScreenLeft());

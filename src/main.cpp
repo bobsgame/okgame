@@ -336,8 +336,10 @@ void Main::mainInit()
 				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
 				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
 				
-				gameEngine->textManager->text("<PLAYER>Yep \"Yuu\" yay. <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
-			}
+				gameEngine->textManager->text("yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay <PLAYER>Yep  \"Yuu\" yay. Yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay. a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
+			}//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
 			//		else
 			//		{
 			//			if (System::debugMode == false)
@@ -847,7 +849,7 @@ void Main::doScreenShotCheck()
 	if (takeScreenShot)
 	{
 
-		if (mainObject->gameEngine != nullptr)mainObject->gameEngine->audioManager->playSound("screenShot", 1.0f, 1.0f, 1);
+		//if (mainObject->gameEngine != nullptr)mainObject->gameEngine->audioManager->playSound("screenShot", 1.0f, 1.0f, 1);
 
 		time_t t = time(0); // get time now 
 		struct tm * now = localtime( & t ); 
@@ -858,7 +860,7 @@ void Main::doScreenShotCheck()
 
 		//if (System::getProperty("os.name")->contains("Win"))
 		{
-			Console::add("Saved screenshot to "+ Main::getPath()+fileName, 3000, BobColor::green);
+			Console::add("Saved screenshot to "+ fileName, 3000, BobColor::green);
 			//getFileName = System::getProperty("user.home") + "/" + "Desktop" + "/" + imageName;
 		}
 		//  				else

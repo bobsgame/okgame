@@ -3,45 +3,38 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
 
 
-
 class TextWindow;
 
 class TextManager : public EnginePart
-{ // =========================================================================================================================
-
+{ 
 
 public:
 	static Logger log;
 
 	//static TrueTypeFont* ttfFont;
 
-
 	static string debugtext1;
 	static string debugtext2;
 	static string debugtext3;
 	static string debugtext4;
 
-
 private:
 	bool antiAlias = true;
-
 
 public:
 	ArrayList<TextWindow*>* textBox = new ArrayList<TextWindow*>();
 
 
-
 	int width = 64 * 6 * 2; // *2 because we draw everything at 2x to allow for scaling (and higher res 1x unicode fonts)
 	int height = 64 * 2;
 
-	int pow2TexWidth = 0;
-	int pow2TexHeight = 0;
+	//int pow2TexWidth = 0;
+	//int pow2TexHeight = 0;
 
 	int spriteWindowWidth = 64 * 2;
 
@@ -49,11 +42,9 @@ public:
 
 	int MAX_LINES = 4;
 
-
 	string currentText = "";
 	int length = 0;
 	int position = 0;
-
 
 	const static int CLOSED = 0;
 	const static int OPEN = 1;
@@ -65,14 +56,12 @@ public:
 
 	int textEngineState = CLOSED;
 
-
 	const static int BOTTOM = 0;
 	const static int TOP = 1;
 
 	int selectedTextbox = BOTTOM;
 
 	bool topBoxActivated = false;
-
 
 	bool keepOpenForNewText = false;
 	bool waitingForButtonForNewPage = false;
@@ -85,10 +74,8 @@ public:
 	bool buttonIconIsOn = false;
 	bool scrollingUp = false;
 
-
 	bool delay = false;
 	int delayTicks = 0;
-
 
 	BobFont* font = nullptr; // this isn't per-getText window because we want to share the state across the boxes. is that right, or would per-box be better?
 	BobColor* textColor = BobColor::white;
@@ -103,15 +90,12 @@ public:
 
 	bool skipText = false;
 
-
 	bool buttonIconUpDownToggle = false;
 	int buttonTimer = 0;
 	BobTexture* buttonTexture = nullptr;
 	// TODO: load button texture, draw where appropriate during render
 
-
 	int MAX_ANSWER_LENGTH = 255;
-
 
 	Entity* optionTargetEntity1 = nullptr;
 	Entity* optionTargetEntity2 = nullptr;
@@ -119,7 +103,6 @@ public:
 	Entity* optionTargetEntity4 = nullptr;
 	Entity* optionTargetEntity5 = nullptr;
 	Entity* optionTargetEntity6 = nullptr;
-
 
 	int cursorTicks = 0;
 	bool cursorPixelUpDownToggle = true;
@@ -133,7 +116,6 @@ public:
 	ScreenSprite* actionIconScreenSprite = nullptr;
 	string optionBuffer;
 
-
 	//public float BOTTOM_ACTIVE_POSITION_Y=5000;
 	//public float BOTTOM_INACTIVE_POSITION_Y=5000;
 	//public float TOP_ACTIVE_POSITION_Y=5000;
@@ -142,75 +124,58 @@ public:
 
 	static BobTexture* questionMarkTexture;
 
-
 	//public long textEngineSpeedTicksPerLetter=10;
 	//public long drawLetterTicksCounter=100;
 
-
-	// =========================================================================================================================
+	
 	TextManager(Engine* g);
 
-
-	// =========================================================================================================================
+	
 	bool isTextBoxOpen();
 
-
-	// =========================================================================================================================
+	
 	bool isTextAnswerBoxOpen();
 
-
-	// =========================================================================================================================
+	
 	void init();
 
-
-	// =========================================================================================================================
+	
 	void reset();
 
-
-	// =========================================================================================================================
+	
 	void text(const string& s);
 
-
-	// =========================================================================================================================
+	
 	void render();
 
-
-	// =========================================================================================================================
+	
 	int getLineSizeX();
 
-
-	// =========================================================================================================================
+	
 	void update();
 
-
-	// =========================================================================================================================
+	void parseColorizedTags();
+	void postparseColorizedTags();
+	
 	void drawText();
 
-
-	// =========================================================================================================================
+	
 	void handleInput();
 
-
-	// =========================================================================================================================
+	
 	void doScrolling();
 
-
-	// =========================================================================================================================
+	
 	void drawLetter();
 
-
-	// =========================================================================================================================
+	
 	void parseOption();
-
 
 	void dialogue(Dialogue* d);
 
-
 	void getTextFromOnscreenKeyboard();
 
-
 	void getNumberFromOnscreenNumpad();
-
 
 	void getAnswerToQuestionWithQuestionBox(const string& s, int i);
 };

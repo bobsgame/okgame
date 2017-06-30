@@ -43,7 +43,7 @@ void TextWindow::init()
 		textBoxTextureByteArray = nullptr;
 	}
 
-	textBoxTextureByteArray = new vector<u8>(getTextManager()->pow2TexWidth * getTextManager()->pow2TexHeight * 4);
+	textBoxTextureByteArray = new vector<u8>(getTextManager()->width * getTextManager()->height * 4);
 
 
 	//		for(int i=0;i<getTextManager()->textureWidth*getTextManager()->textureHeight;i++)
@@ -57,7 +57,7 @@ void TextWindow::init()
 	clearByteArray();
 
 
-	textBoxTexture = GLUtils::getTextureFromData("textBox", getTextManager()->pow2TexWidth, getTextManager()->pow2TexHeight, textBoxTextureByteArray);
+	textBoxTexture = GLUtils::getTextureFromData("textBox", getTextManager()->width, getTextManager()->height, textBoxTextureByteArray);
 
 
 	// ----------------------------
@@ -86,7 +86,7 @@ void TextWindow::init()
 }
 
 void TextWindow::render()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	//render getText window at 25% screen height, let's make "scroll in" a float where 1.0 is height + 16px or whatever
@@ -287,7 +287,7 @@ void TextWindow::render()
 }
 
 void TextWindow::updateSpriteWindowTexture()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	u8* oldtex = spriteWindowTexture->getTextureData();
@@ -469,7 +469,7 @@ void TextWindow::updateSpriteWindowTexture()
 }
 
 void TextWindow::setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	if (entity != nullptr || texture != nullptr)
 	{
@@ -552,7 +552,7 @@ void TextWindow::setSpriteWindow(Entity* entity, BobTexture* texture, const stri
 }
 
 void TextWindow::updateTextureFromByteArray()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	if (redraw == true)
 	{
@@ -560,33 +560,58 @@ void TextWindow::updateTextureFromByteArray()
 
 		textBoxTexture->release();
 
-		textBoxTexture = GLUtils::getTextureFromData("textBox", getTextManager()->pow2TexWidth, getTextManager()->pow2TexHeight, textBoxTextureByteArray);
+		textBoxTexture = GLUtils::getTextureFromData("textBox", getTextManager()->width, getTextManager()->height, textBoxTextureByteArray);
 
 		redraw = false;
 	}
 }
 
 void TextWindow::clearByteArray()
-{ // =========================================================================================================================
-	for (int x = 0; x < getTextManager()->pow2TexWidth; x++)
+{ //=========================================================================================================================
+
+
+
+	for (int x = 0; x < getTextManager()->width; x++)
 	{
-		for (int y = 0; y < getTextManager()->pow2TexHeight; y++)
+		for (int y = 0; y < getTextManager()->height; y++)
 		{
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 0] = 0;
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 1] = 0;
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 2] = 0;
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 3] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 0] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 1] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 2] = 0;
+			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 3] = 0;
 
 			if (x < getTextManager()->width && y < getTextManager()->height)
 			{
-				(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 3] = 255;
+				(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 3] = 255;
 			}
 		}
 	}
+
+
+//	for (int x = 0; x < getTextManager()->width; x++)
+//	{
+//
+//		int r = 0;
+//		if (x < 64 * 2 * 6)r = 192;
+//		if (x < 64 * 2 * 5)r = 160;
+//		if (x < 64 * 2 * 4)r = 128;
+//		if (x < 64 * 2 * 3)r = 96;
+//		if (x < 64 * 2 * 2)r = 64;
+//		if (x < 64 * 2 * 1)r = 32;
+//		for (int y = 0; y < getTextManager()->height; y++)
+//		{
+//			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 0] = r;
+//			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 1] = 0;
+//			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 2] = 255;
+//			(*textBoxTextureByteArray)[((x + (y * getTextManager()->pow2TexWidth)) * 4) + 3] = 255;
+//
+//		}
+//	}
+
 }
 
 int TextWindow::getPixelValue(int letter_index, int y, int x_in_letter, bool blank)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	if (blank == true)
@@ -600,19 +625,19 @@ int TextWindow::getPixelValue(int letter_index, int y, int x_in_letter, bool bla
 }
 
 void TextWindow::setPixel(int index, BobColor* c)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
-	(*textBoxTextureByteArray)[index + 0] = static_cast<char>(c->ri());
-	(*textBoxTextureByteArray)[index + 1] = static_cast<char>(c->gi());
-	(*textBoxTextureByteArray)[index + 2] = static_cast<char>(c->bi());
-	(*textBoxTextureByteArray)[index + 3] = static_cast<char>(c->ai()); // was 255
+	(*textBoxTextureByteArray)[index + 0] = c->ri();
+	(*textBoxTextureByteArray)[index + 1] = c->gi();
+	(*textBoxTextureByteArray)[index + 2] = c->bi();
+	(*textBoxTextureByteArray)[index + 3] = c->ai(); // was 255
 }
 
 vector<u8>* BobFont::font_Palette_ByteArray = nullptr;
 
 void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	int y = 0;
@@ -701,102 +726,109 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 				{
 					for (int xx = 0; xx < 2; xx++)
 					{
-						setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight * 2) + (((getTextManager()->pow2TexWidth * ((y * 2) + yy)) + ((xInLine * 2) + xx)) * 4), pixelColor);
+						setPixel((getTextManager()->width * 4 * line * lineHeight * 2) + (((getTextManager()->width * ((y * 2) + yy)) + ((xInLine * 2) + xx)) * 4), pixelColor);
 					}
 				}
 			}
 			else
 			{
-				setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight) + (((getTextManager()->pow2TexWidth * ((y))) + ((xInLine))) * 4), pixelColor);
+				setPixel((getTextManager()->width * 4 * line * lineHeight) + (((getTextManager()->width * ((y))) + ((xInLine))) * 4), pixelColor);
 			}
 		}
 
 
 		// do shadow
 
-		// if this value is 1 and the value of x_in_letter+1 is 0, set x_in_letter+1 to 3
-		if (index == 1)
+		bool shadow = true;
+
+		//if (draw2X)shadow = false;
+
+		if (shadow)
 		{
-			BobColor* shadowColor = getTextManager()->textShadowColor;
-
-			if (draw2X)
+			// if this value is 1 and the value of x_in_letter+1 is 0, set x_in_letter+1 to 3
+			if (index == 1)
 			{
-				if (getPixelValue(letter_index, y, x_in_letter + 1, blank) == 0)
+				BobColor* shadowColor = getTextManager()->textShadowColor;
+
+				if (draw2X)
 				{
-					for (int yy = 0; yy < 2; yy++)
+					if (getPixelValue(letter_index, y, x_in_letter + 1, blank) == 0)
 					{
-						for (int xx = 0; xx < 2; xx++)
+						for (int yy = 0; yy < 2; yy++)
 						{
-							setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight) + (((getTextManager()->pow2TexWidth * ((y) + yy)) + (((xInLine + 1)) + xx)) * 4), shadowColor);
+							for (int xx = 0; xx < 2; xx++)
+							{
+								setPixel((getTextManager()->width * 4 * line * lineHeight*2) + (((getTextManager()->width * ((y*2)+yy)) + (((xInLine + 1)*2) + xx)) * 4), shadowColor);
+							}
+						}
+					}
+
+
+					if (getPixelValue(letter_index, y + 1, x_in_letter, blank) == 0)
+					{
+						for (int yy = 0; yy < 2; yy++)
+						{
+							for (int xx = 0; xx < 2; xx++)
+							{
+								setPixel((getTextManager()->width * 4 * line * lineHeight*2) + (((getTextManager()->width * (((y + 1)*2) + yy)) + (((xInLine)*2) + xx)) * 4), shadowColor);
+							}
+						}
+					}
+
+
+					if (getPixelValue(letter_index, y + 1, x_in_letter + 1, blank) == 0)
+					{
+						for (int yy = 0; yy < 2; yy++)
+						{
+							for (int xx = 0; xx < 2; xx++)
+							{
+								setPixel((getTextManager()->width * 4 * line * lineHeight*2) + (((getTextManager()->width * (((y + 1)*2) + yy)) + (((xInLine + 1)*2) + xx)) * 4), shadowColor);
+							}
 						}
 					}
 				}
-
-
-				if (getPixelValue(letter_index, y + 1, x_in_letter, blank) == 0)
+				else
 				{
-					for (int yy = 0; yy < 2; yy++)
+					if (getPixelValue(letter_index, y, x_in_letter + 1, blank) == 0)
 					{
-						for (int xx = 0; xx < 2; xx++)
+						for (int yy = 0; yy < 2; yy++)
 						{
-							setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight) + (((getTextManager()->pow2TexWidth * (((y + 1)) + yy)) + (((xInLine)) + xx)) * 4), shadowColor);
+							for (int xx = 0; xx < 2; xx++)
+							{
+								setPixel((getTextManager()->width * 4 * line * lineHeight) + (((getTextManager()->width * ((y)+yy)) + (((xInLine + 1)) + xx)) * 4), shadowColor);
+							}
 						}
 					}
-				}
 
 
-				if (getPixelValue(letter_index, y + 1, x_in_letter + 1, blank) == 0)
-				{
-					for (int yy = 0; yy < 2; yy++)
+					if (getPixelValue(letter_index, y + 1, x_in_letter, blank) == 0)
 					{
-						for (int xx = 0; xx < 2; xx++)
+						for (int yy = 0; yy < 2; yy++)
 						{
-							setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight) + (((getTextManager()->pow2TexWidth * (((y + 1)) + yy)) + (((xInLine + 1)) + xx)) * 4), shadowColor);
+							for (int xx = 0; xx < 2; xx++)
+							{
+								setPixel((getTextManager()->width * 4 * line * lineHeight) + (((getTextManager()->width * (((y + 1)) + yy)) + (((xInLine)) + xx)) * 4), shadowColor);
+							}
 						}
 					}
-				}
-			}
-			else
-			{
-				if (getPixelValue(letter_index, y, x_in_letter + 1, blank) == 0)
-				{
-					for (int yy = 0; yy < 2; yy++)
+
+
+					if (getPixelValue(letter_index, y + 1, x_in_letter + 1, blank) == 0)
 					{
-						for (int xx = 0; xx < 2; xx++)
+						for (int yy = 0; yy < 2; yy++)
 						{
-							setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight) + (((getTextManager()->pow2TexWidth * ((y) + yy)) + (((xInLine + 1)) + xx)) * 4), shadowColor);
+							for (int xx = 0; xx < 2; xx++)
+							{
+								setPixel((getTextManager()->width * 4 * line * lineHeight) + (((getTextManager()->width * (((y + 1)) + yy)) + (((xInLine + 1)) + xx)) * 4), shadowColor);
+							}
 						}
 					}
+
+
+					// if(TEXT_get_letter_pixel_color(letter_index,y,x_in_letter+1,blank)==0)TEXT_set_pixel((textMan().size_x*4*line*lineHeight)+(((textMan().size_x*((y)))+(((x_in_line+1))))*4),c2);
+					// if(TEXT_get_letter_pixel_color(letter_index,y+1,x_in_letter,blank)==0)TEXT_set_pixel((textMan().size_x*4*line*lineHeight)+(((textMan().size_x*(((y+1))))+(((x_in_line))))*4),c2);
+					// if(TEXT_get_letter_pixel_color(letter_index,y+1,x_in_letter+1,blank)==0)TEXT_set_pixel((textMan().size_x*4*line*lineHeight)+(((textMan().size_x*(((y+1))))+(((x_in_line+1))))*4),c2);
 				}
-
-
-				if (getPixelValue(letter_index, y + 1, x_in_letter, blank) == 0)
-				{
-					for (int yy = 0; yy < 2; yy++)
-					{
-						for (int xx = 0; xx < 2; xx++)
-						{
-							setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight) + (((getTextManager()->pow2TexWidth * (((y + 1)) + yy)) + (((xInLine)) + xx)) * 4), shadowColor);
-						}
-					}
-				}
-
-
-				if (getPixelValue(letter_index, y + 1, x_in_letter + 1, blank) == 0)
-				{
-					for (int yy = 0; yy < 2; yy++)
-					{
-						for (int xx = 0; xx < 2; xx++)
-						{
-							setPixel((getTextManager()->pow2TexWidth * 4 * line * lineHeight) + (((getTextManager()->pow2TexWidth * (((y + 1)) + yy)) + (((xInLine + 1)) + xx)) * 4), shadowColor);
-						}
-					}
-				}
-
-
-				// if(TEXT_get_letter_pixel_color(letter_index,y,x_in_letter+1,blank)==0)TEXT_set_pixel((textMan().size_x*4*line*lineHeight)+(((textMan().size_x*((y)))+(((x_in_line+1))))*4),c2);
-				// if(TEXT_get_letter_pixel_color(letter_index,y+1,x_in_letter,blank)==0)TEXT_set_pixel((textMan().size_x*4*line*lineHeight)+(((textMan().size_x*(((y+1))))+(((x_in_line))))*4),c2);
-				// if(TEXT_get_letter_pixel_color(letter_index,y+1,x_in_letter+1,blank)==0)TEXT_set_pixel((textMan().size_x*4*line*lineHeight)+(((textMan().size_x*(((y+1))))+(((x_in_line+1))))*4),c2);
 			}
 		}
 	}

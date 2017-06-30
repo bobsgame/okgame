@@ -19,7 +19,7 @@ Logger TextManager::log = Logger("TextManager");
 BobTexture* TextManager::questionMarkTexture = nullptr;
 
 TextManager::TextManager(Engine* g)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	this->e = g;
 
 
@@ -27,6 +27,8 @@ TextManager::TextManager(Engine* g)
 	{
 		actionIconScreenSprite = new ScreenSprite(g, "button", "actionIcon"); //HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,actionx-8,actiony+1,255);
 		actionIconScreenSprite->draw = false;
+
+		actionIconScreenSprite->setScale(2);
 
 		actionIconScreenSprite->setAnimateLoopThroughAllFrames();
 		actionIconScreenSprite->setRandomUpToTicksBetweenAnimationLoop(false);
@@ -36,7 +38,7 @@ TextManager::TextManager(Engine* g)
 }
 
 bool TextManager::isTextBoxOpen()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	if (textEngineState != 0)
 	{
@@ -47,7 +49,7 @@ bool TextManager::isTextBoxOpen()
 }
 
 bool TextManager::isTextAnswerBoxOpen()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	if (textEngineState > 2)
 	{
@@ -58,7 +60,7 @@ bool TextManager::isTextAnswerBoxOpen()
 }
 
 void TextManager::init()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	log.info("Init TextManager");
 	/*
@@ -96,8 +98,8 @@ void TextManager::init()
 
 	//width = (int)((getEngine()->getWidth()*0.66f)/(64*2))*(64*2);
 
-	pow2TexWidth = Math::getClosestPowerOfTwo(width);
-	pow2TexHeight = Math::getClosestPowerOfTwo(height);
+	//pow2TexWidth = Math::getClosestPowerOfTwo(width);
+	//pow2TexHeight = Math::getClosestPowerOfTwo(height);
 
 	textBox->clear();
 	textBox->add(new TextWindow(getEngine()));
@@ -108,15 +110,15 @@ void TextManager::init()
 }
 
 void TextManager::reset()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
-	font = BobFont::font_normal_16;
+	font = BobFont::font_normal_8;
 
 	textBGColor = BobColor::black;
 	textColor = BobColor::white;
-	textAAColor = BobColor::gray;
-	textShadowColor = BobColor::darkGray;
+	textAAColor = BobColor::darkerGray;
+	textShadowColor = BobColor::darkerGray;
 
 	selectedTextbox = BOTTOM;
 	topBoxActivated = false;
@@ -146,7 +148,7 @@ void TextManager::reset()
 }
 
 void TextManager::text(const string& s)
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	if (currentText == "")
 	{
 		length = (int)s.length();
@@ -160,7 +162,7 @@ void TextManager::text(const string& s)
 }
 
 void TextManager::render()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 	if (textEngineState != CLOSED)
 	{
@@ -176,7 +178,7 @@ void TextManager::render()
 }
 
 int TextManager::getLineSizeX()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	// check font. if height is greater than 12, we aren't drawing at 2x, so return full length.
 
 	int h = getTextManager()->font->maxCharHeight;
@@ -201,7 +203,7 @@ int TextManager::getLineSizeX()
 }
 
 void TextManager::update()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	//BOTTOM_ACTIVE_POSITION_Y=((getEngine()->getHeight()-textWindowHeight)-16)-16;
@@ -310,14 +312,10 @@ void TextManager::update()
 	actionIconScreenSprite->draw = buttonIconIsOn;
 }
 
-void TextManager::drawText()
-{ // =========================================================================================================================
 
-	// -----------------------------
-	// draw getText
-	// -----------------------------
-	if (position < length && waitingForButtonForNewPage == false && pausedUntilButtonPress == false)
-	{
+void TextManager::parseColorizedTags()
+{
+
 		// automatically colorize "Yuu"
 
 		if (position < length - 2 && String::startsWith(currentText.substr(position), "Yuu"))
@@ -330,7 +328,7 @@ void TextManager::drawText()
 			textColor = BobColor::purple;
 			if (textBGColor == BobColor::black)
 			{
-				textAAColor = BobColor::darkPurple;
+				textAAColor = BobColor::darkerPurple;
 			}
 			else
 			{
@@ -359,7 +357,7 @@ void TextManager::drawText()
 				textColor = BobColor::green;
 				if (textBGColor == BobColor::black)
 				{
-					textAAColor = BobColor::darkGreen;
+					textAAColor = BobColor::darkerGreen;
 				}
 				else
 				{
@@ -387,7 +385,7 @@ void TextManager::drawText()
 					textColor = BobColor::green;
 					if (textBGColor == BobColor::black)
 					{
-						textAAColor = BobColor::darkGreen;
+						textAAColor = BobColor::darkerGreen;
 					}
 					else
 					{
@@ -443,7 +441,7 @@ void TextManager::drawText()
 							textColor = BobColor::green;
 							if (textBGColor == BobColor::black)
 							{
-								textAAColor = BobColor::darkGreen;
+								textAAColor = BobColor::darkerGreen;
 							}
 							else
 							{
@@ -471,7 +469,7 @@ void TextManager::drawText()
 								textColor = BobColor::green;
 								if (textBGColor == BobColor::black)
 								{
-									textAAColor = BobColor::darkGreen;
+									textAAColor = BobColor::darkerGreen;
 								}
 								else
 								{
@@ -492,6 +490,109 @@ void TextManager::drawText()
 				}
 			}
 		}
+	
+}
+
+void TextManager::postparseColorizedTags()
+{
+
+	// automatically colorize "Yuu" back to white
+
+	if (position >= 2 && String::startsWith(currentText.substr(position - 2), "Yuu"))
+	{
+		textBGColor = tC0;
+		textColor = tC1;
+		textAAColor = tC2;
+		textShadowColor = tC3;
+	}
+
+	//"bob's game"
+	else
+	{
+		if (position >= 11 && String::startsWith(currentText.substr(position - 11), "\"bob's game\""))
+		{
+			textBGColor = tC0;
+			textColor = tC1;
+			textAAColor = tC2;
+			textShadowColor = tC3;
+		}
+		else
+		{
+			if (position >= 9 && String::startsWith(currentText.substr(position - 9), "bob's game") && (position >= length - 1 || String::startsWith(currentText.substr(position - 9), "bob's game\"") == false))
+			{
+				textBGColor = tC0;
+				textColor = tC1;
+				textAAColor = tC2;
+				textShadowColor = tC3;
+			}
+			else
+			{
+				if (position >= 4 && String::startsWith(currentText.substr(position - 4), "bob's") && (position >= length - 5 || String::startsWith(currentText.substr(position - 4), "bob's game") == false))
+				{
+					textBGColor = tC0;
+					textColor = tC1;
+					textAAColor = tC2;
+					textShadowColor = tC3;
+				}
+				else
+				{
+					if (position >= 2 && String::startsWith(currentText.substr(position - 2), "bob") && (position >= length - 2 || String::startsWith(currentText.substr(position - 2), "bob's") == false))
+					{
+						textBGColor = tC0;
+						textColor = tC1;
+						textAAColor = tC2;
+						textShadowColor = tC3;
+					}
+					else
+					{
+						if (position >= 1 && String::startsWith(currentText.substr(position - 1), "nD"))
+						{
+							textBGColor = tC0;
+							textColor = tC1;
+							textAAColor = tC2;
+							textShadowColor = tC3;
+						}
+						else
+						{
+							if (String::startsWith(currentText.substr(position), "nD"))
+							{
+								textColor = BobColor::purple;
+								if (textBGColor == BobColor::black)
+								{
+									textAAColor = BobColor::darkerPurple;
+								}
+								else
+								{
+									textAAColor = BobColor::lightPurple;
+								}
+								if (textBGColor == BobColor::black)
+								{
+									textShadowColor = BobColor::darkerPurple;
+								}
+								else
+								{
+									textShadowColor = BobColor::lightPurple;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
+void TextManager::drawText()
+{ //=========================================================================================================================
+
+	// -----------------------------
+	// draw getText
+	// -----------------------------
+
+	if (position < length && waitingForButtonForNewPage == false && pausedUntilButtonPress == false)
+	{
+		parseColorizedTags();
 
 		// parse option tags
 		// this should never happen, it should be parsed above.
@@ -518,7 +619,7 @@ void TextManager::drawText()
 				// THIS SKIPS WORDS LONGER THEN THE MAXIMUM LENGTH
 				if (nextWordLength > getLineSizeX())
 				{
-					// TODO: skip next word
+					//TODO: skip next word
 
 					string e = "A word was too long for the getText engine.";
 					Console::error(e);
@@ -531,7 +632,7 @@ void TextManager::drawText()
 				int pixelsLeftInLine = getLineSizeX() - textBox->get(selectedTextbox)->xInLine;
 				if (textBox->get(selectedTextbox)->line == MAX_LINES)
 				{
-					pixelsLeftInLine -= 8; // for the getText button icon
+					pixelsLeftInLine -= 32; // for the getText button icon
 				}
 
 				// if it doesnt fit, go to the next line
@@ -563,91 +664,8 @@ void TextManager::drawText()
 				drawLetter();
 			}
 		}
-
-		// automatically colorize "Yuu" back to white
-
-		if (position >= 2 && String::startsWith(currentText.substr(position - 2), "Yuu"))
-		{
-			textBGColor = tC0;
-			textColor = tC1;
-			textAAColor = tC2;
-			textShadowColor = tC3;
-		}
-
-		//"bob's game"
-		else
-		{
-			if (position >= 11 && String::startsWith(currentText.substr(position - 11), "\"bob's game\""))
-			{
-				textBGColor = tC0;
-				textColor = tC1;
-				textAAColor = tC2;
-				textShadowColor = tC3;
-			}
-			else
-			{
-				if (position >= 9 && String::startsWith(currentText.substr(position - 9), "bob's game") && (position >= length - 1 || String::startsWith(currentText.substr(position - 9), "bob's game\"") == false))
-				{
-					textBGColor = tC0;
-					textColor = tC1;
-					textAAColor = tC2;
-					textShadowColor = tC3;
-				}
-				else
-				{
-					if (position >= 4 && String::startsWith(currentText.substr(position - 4), "bob's") && (position >= length - 5 || String::startsWith(currentText.substr(position - 4), "bob's game") == false))
-					{
-						textBGColor = tC0;
-						textColor = tC1;
-						textAAColor = tC2;
-						textShadowColor = tC3;
-					}
-					else
-					{
-						if (position >= 2 && String::startsWith(currentText.substr(position - 2), "bob") && (position >= length - 2 || String::startsWith(currentText.substr(position - 2), "bob's") == false))
-						{
-							textBGColor = tC0;
-							textColor = tC1;
-							textAAColor = tC2;
-							textShadowColor = tC3;
-						}
-						else
-						{
-							if (position >= 1 && String::startsWith(currentText.substr(position - 1), "nD"))
-							{
-								textBGColor = tC0;
-								textColor = tC1;
-								textAAColor = tC2;
-								textShadowColor = tC3;
-							}
-							else
-							{
-								if (String::startsWith(currentText.substr(position), "nD"))
-								{
-									textColor = BobColor::purple;
-									if (textBGColor == BobColor::black)
-									{
-										textAAColor = BobColor::darkPurple;
-									}
-									else
-									{
-										textAAColor = BobColor::lightPurple;
-									}
-									if (textBGColor == BobColor::black)
-									{
-										textShadowColor = BobColor::darkerPurple;
-									}
-									else
-									{
-										textShadowColor = BobColor::lightPurple;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+	
+		postparseColorizedTags();
 
 
 		if (position + 1 < length - 3 && String::startsWith(currentText.substr(position + 1), "<.") == false)
@@ -689,7 +707,7 @@ void TextManager::drawText()
 }
 
 void TextManager::handleInput()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	if (waitingForButtonForNewPage == true)
@@ -871,7 +889,7 @@ void TextManager::handleInput()
 }
 
 void TextManager::doScrolling()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	long long ticksPassed = getEngine()->realWorldTicksPassed();
@@ -1201,7 +1219,7 @@ void TextManager::doScrolling()
 }
 
 void TextManager::drawLetter()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 
 
 	int letterIndex = BobFont::getFontIndexForChar(currentText[position]);
@@ -1282,6 +1300,10 @@ void TextManager::drawLetter()
 	{
 		textBox->get(selectedTextbox)->drawColumn(0, 0, true);
 		textBox->get(selectedTextbox)->xInLine++;
+
+//		textBox->get(selectedTextbox)->drawColumn(0, 0, true);
+//		textBox->get(selectedTextbox)->xInLine++;
+
 		putInSpaceAlready = true;
 	}
 
@@ -1305,7 +1327,7 @@ void TextManager::drawLetter()
 }
 
 void TextManager::parseOption()
-{ // =========================================================================================================================
+{ //=========================================================================================================================
 	int optionLength = 0;
 	// char TEXT_option_buffer[] = new char[MAX_ANSWER_LENGTH*6+5+2];
 

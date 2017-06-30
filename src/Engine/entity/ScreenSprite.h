@@ -40,6 +40,10 @@ public:
 
 	void setYPercent(float y);
 
+	virtual float getWidth() override;
+
+	virtual float getHeight() override;
+
 	void checkIfOnscreen();
 
 	virtual bool shouldDraw() override;
