@@ -320,7 +320,6 @@ void Sound::handlePlaying()
 						 stop();
 					 }
 
-
 				 }
 	         }	      
 	   }

@@ -264,7 +264,7 @@ void Music::update()
 #endif
 #ifdef USE_SDL_MIXER
 		
-				channel = Mix_PlayChannel(-1, mixChunk, 1);		
+				channel = Mix_PlayChannel(-1, mixChunk, 0);		
 
 				//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
 #endif
@@ -313,22 +313,6 @@ void Music::update()
 	}
 }
 
-
-void Music::loadDataIntoChannel()
-{ //=========================================================================================================================
-	//
-	//   if (channel == nullptr)
-	//   {
-	//      if (getByteData()->empty())
-	//      {
-	//         channel = AudioUtils::open(getFileName(), Cache::cacheDir + getMD5Name());
-	//      }
-	//      else
-	//      {
-	//         channel = AudioUtils::open(getFileName(), getMD5Name(), getByteData());
-	//      }
-	//   }
-}
 
 
 void Music::play()

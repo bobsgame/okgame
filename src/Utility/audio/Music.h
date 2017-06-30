@@ -106,14 +106,8 @@ public:
 	//Thread* downloadThread = nullptr;
 
 
-	void playLoop(int channel);
-
-	//void (Music::*playLoop)(int) = &Music::playLoop;
-
 	virtual void update() override;
 
-
-	virtual void loadDataIntoChannel();
 
 
 	virtual void play();

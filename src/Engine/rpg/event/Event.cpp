@@ -5587,7 +5587,6 @@ void Event::blockUntilLoopingMusicDoneWithLoopAndReplaceWith_MUSIC_MUSIC()
 		currentPlaying->setLoop(false);
 	}
 
-	replaceWith->loadDataIntoChannel();
 
 	if (currentPlaying->isPlaying() == false)
 	{
