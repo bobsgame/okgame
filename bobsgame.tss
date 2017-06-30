@@ -143,6 +143,7 @@
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Door.cpp</string>
@@ -157,6 +158,7 @@
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Light.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Light.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Entity.cpp</string>
@@ -176,6 +178,7 @@
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\RandomCharacter.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\RandomCharacter.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\MusicData.cpp</string>
@@ -209,17 +212,37 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Sprite.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Logger.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\network\GameSave.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\network\GameSave.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\crt\src\i386\memcpy.asm</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\State.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\State.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\SkillData.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\EntityData.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\Skill.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\Skill.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\SpriteManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\SpriteManager.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\HashMap.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\BobMath.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\MiniGameEngine.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextManager.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Area.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\Player.cpp</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

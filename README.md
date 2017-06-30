@@ -4,6 +4,11 @@ That means **no forks** except to create pull requests!
 
 Also see:
 
+
+https://github.com/bobsgame/bobsgame
+
+https://github.com/bobsgame/bgEditor
+
 https://github.com/bobsgame/BobsGameServer
 
 https://github.com/bobsgame/BobSharedLibs
@@ -14,6 +19,7 @@ https://github.com/bobsgame/BobsSTUNServer
 
 https://github.com/bobsgame/BobNetLibs
 
+To build: Import as project in Eclipse, add IvyDE to project, resolve Ivy dependencies. 
 --
 
 #*bob's game* is:
