@@ -9,8 +9,6 @@ enum class MovementType;
 class Logger;
 
 
-
-//C# TO C++ CONVERTER NOTE: Forward class declarations:
 class GameLogic;
 class Block;
 class Piece;

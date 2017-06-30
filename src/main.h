@@ -112,8 +112,8 @@ public:
 	void loadGlobalSettingsFromXML();
 	void saveGlobalSettingsToXML();
 
-	//JAVA TO C++ CONVERTER TODO TASK: 'volatile' has a different meaning in C++:
-	//ORIGINAL LINE: public volatile boolean exit = false;
+	
+	//public volatile boolean exit = false;
 	static bool quit;// = false;
 
 	//static AudioManager* audioManager;

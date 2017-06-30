@@ -4196,7 +4196,7 @@ void Event::entityMoveToArea_ENTITY_AREA_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidO
 	bool bAnimate = currentCommand->parameterList->get(p++)->b;
 	bool bMoveDiagonally = currentCommand->parameterList->get(p++)->b;
 
-	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	
 	e->addEventBehavior(
 		"MoveToArea:" +
 		to_string(a->getID()) + "," +
@@ -4226,7 +4226,7 @@ void Event::entityMoveToDoor_ENTITY_DOOR_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidO
 	bool bAnimate = currentCommand->parameterList->get(p++)->b;
 	bool bMoveDiagonally = currentCommand->parameterList->get(p++)->b;
 
-	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	
 	e->addEventBehavior(
 		"MoveToDoor:" +
 		to_string(e2->getID()) + "," +
@@ -4256,7 +4256,7 @@ void Event::entityMoveToEntity_ENTITY_ENTITY_BOOLwalkOrSlide_BOOLcheckHit_BOOLav
 	bool bAnimate = currentCommand->parameterList->get(p++)->b;
 	bool bMoveDiagonally = currentCommand->parameterList->get(p++)->b;
 
-	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	
 	e->addEventBehavior(
 		"MoveToEntity:" +
 		to_string(e2->getID()) + "," +
@@ -4287,7 +4287,7 @@ void Event::entityMoveToTileXY_ENTITY_INTxTile1X_INTyTile1X_BOOLwalkOrSlide_BOOL
 	bool bAnimate = currentCommand->parameterList->get(p++)->b;
 	bool bMoveDiagonally = currentCommand->parameterList->get(p++)->b;
 
-	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	
 	e->addEventBehavior(
 		"MoveToMapXY:" +
 		to_string(tX * 8 * 2) + "," +

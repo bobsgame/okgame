@@ -405,17 +405,17 @@ PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartY
 	// System.out.println("End: "+finishTileX+","+finishTileY);
 
 
-	//JAVA TO C++ CONVERTER NOTE: The following call to the 'RectangularVectors' helper class reproduces the rectangular array initialization that is automatic in Java:
+
 	//ORIGINAL LINE: checkedTileArray = new boolean[w][h];
-	checkedTileArray = new bool[w * h];// = RectangularVectors::ReturnRectangularBoolVector(w, h);
+	checkedTileArray = new bool[w * h];
 
 
 	this->maxSearchDistance = w + h;
 	this->allowDiagMovement = false;
 
-	//JAVA TO C++ CONVERTER NOTE: The following call to the 'RectangularVectors' helper class reproduces the rectangular array initialization that is automatic in Java:
+
 	//ORIGINAL LINE: potentialTiles = new PotentialTile[w][h];
-	potentialTiles = new vector<PotentialTile*>(w*h);// RectangularVectors::ReturnRectangularPotentialTileVector(w, h);
+	potentialTiles = new vector<PotentialTile*>(w*h);
 
 
 	for (int x = 0; x < w; x++)

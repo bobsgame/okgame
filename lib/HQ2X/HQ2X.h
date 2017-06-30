@@ -20,8 +20,7 @@ private:
 
 	int Interp2(int c1, int c2, int c3);
 
-	//JAVA TO C++ CONVERTER TODO TASK: Most Java annotations will not have direct C++ equivalents:
-	//ORIGINAL LINE: @SuppressWarnings("unused") private int Interp5(int c1, int c2)
+
 	int Interp5(int c1, int c2);
 
 	int Interp6(int c1, int c2, int c3);

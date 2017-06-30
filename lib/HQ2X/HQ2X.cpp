@@ -22,8 +22,7 @@ int HQ2X::Interp2(int c1, int c2, int c3)
 	return ((c1 * 2 + c2 + c3) >> 2) | 0xFF000000;
 }
 
-//JAVA TO C++ CONVERTER TODO TASK: Most Java annotations will not have direct C++ equivalents:
-//ORIGINAL LINE: @SuppressWarnings("unused") private int Interp5(int c1, int c2)
+
 int HQ2X::Interp5(int c1, int c2)
 {
 	return ((c1 + c2) >> 1) | 0xFF000000;

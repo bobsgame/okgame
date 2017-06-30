@@ -948,7 +948,7 @@ void UDPPeerConnection::sendPeerConnectResponse()
 void UDPPeerConnection::incomingPeerConnectResponse(string e)//MessageEvent* e)
 {
 
-  //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+  
 	string s = e;// e->getMessage()->toString();
 
 	//FriendConnectResponse:userID:
@@ -1000,7 +1000,7 @@ void UDPPeerConnection::incomingFriendDataRequest(string e)//MessageEvent* e)
 void UDPPeerConnection::incomingFriendDataResponse(string e)//MessageEvent* e)
 { //===============================================================================================
 
-  //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+  
 	string s = e;// ->getMessage()->toString();
 	s = s.substr(s.find(":") + 1);
 

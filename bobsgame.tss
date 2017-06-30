@@ -86,9 +86,6 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Stats\LeaderBoardAndHighScoreBoardEntry.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ControlsManager.cpp</string>
-    </ArrayOfString>
-    <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Legacy.h</string>
     </ArrayOfString>
     <ArrayOfString>
@@ -110,6 +107,42 @@
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\Music.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\Music.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextManager.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextWindow.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextWindow.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\BobFont.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\ScreenSprite.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\ScreenSprite.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Entity.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\stringconverter.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\lib\HQ2X\HQ2X.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\lib\HQ2X\HQ2X.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\PathFinder.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\PlayerEditMenu.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\CaptionManager.h</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

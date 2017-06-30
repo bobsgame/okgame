@@ -14,7 +14,7 @@ class Logger;
 #include "src/Utility/Color.h"
 #include "src/Utility/BobFont.h"
 
-//C# TO C++ CONVERTER NOTE: Forward class declarations:
+
 class Engine;
 class Entity;
 class Caption;

@@ -211,7 +211,7 @@ void FriendCharacter::incomingFriendLocationStatusUpdate(string e)//MessageEvent
 { //===============================================================================================
 
 	//FriendLocationUpdate:mapName,x,y,status
-	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	
 	string s = e;// ->getMessage()->toString();
 	s = s.substr(s.find(":") + 1);
 
@@ -318,7 +318,7 @@ void FriendCharacter::incomingGameChallengeRequest(string e)//MessageEvent* e)
 { //===============================================================================================
 
 
-	//JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	
 	string s = e;// ->getMessage()->toString();
 	s = s.substr(s.find(":") + 1);
 	string gameName = s;

@@ -536,7 +536,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//      e->printStackTrace();
 	//      return nullptr;
 	//   }
-	//   //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to the exception 'finally' clause:
+	//   
 	//   finally
 	//      {
 	//         conn->disconnect();
@@ -607,7 +607,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	//      
 	//      log.debug("No errormessage in Yahoo GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }
@@ -832,7 +832,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//      e->printStackTrace();
 	//      return nullptr;
 	//   }
-	//   //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to the exception 'finally' clause:
+	//   
 	//   finally
 	//      {
 	//         conn->disconnect();
@@ -894,7 +894,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	//      
 	//      log.debug("No status in Google GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }

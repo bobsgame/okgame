@@ -992,7 +992,7 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 	//      gzip->write(byteArray);
 	//      gzip->close();
 	//
-	//      //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to 'toString':
+	//      
 	//      outStr = out->toString("ISO-8859-1");
 	//   }
 	//   catch (exception& e)
@@ -1753,7 +1753,7 @@ void FileUtils::downloadFileToCacheWithProgressListener(const string& fileName, 
 	//      log.error("Error downloading file to cache! File: " + getFileName + " Error: " + e.what());
 	//      e.printStackTrace();
 	//   }
-	//   //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to the exception 'finally' clause:
+	//   
 	//   finally
 	//      {
 	//
@@ -2034,7 +2034,7 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//         log.error("Error downloading file to cache! File: " + getFileName + " Error: " + e.what());
 	//         e.printStackTrace();
 	//      }
-	//      //JAVA TO C++ CONVERTER TODO TASK: There is no native C++ equivalent to the exception 'finally' clause:
+	//      
 	//      finally
 	//         {
 	//
