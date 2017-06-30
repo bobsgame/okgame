@@ -18,6 +18,6 @@ public:
 	static Logger log;
 
 
-	virtual void init();
+	void init();
 };
 

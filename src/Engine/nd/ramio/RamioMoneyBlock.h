@@ -25,6 +25,6 @@ public:
 	bool contains = false;
 
 
-	virtual void getHit();
+	void getHit();
 };
 

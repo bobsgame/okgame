@@ -93,34 +93,34 @@ public:
 	ConsoleText* textOptionText = Console::debug("textOptionText");
 
 	Engine();
-	virtual ~Engine();
-	virtual void init();
+	virtual ~Engine() override;
+	virtual void init() override;
 
 	virtual void update() override;
 	virtual void render() override;
 	virtual void updateDebugText();
-	virtual void* getGameObjectByTYPEIDName(const string& typeIDName);
+	void* getGameObjectByTYPEIDName(const string& typeIDName);
 
 
-	virtual Cameraman* getCameraman();
-	virtual MapManager* getMapManager();
-	virtual SpriteManager* getSpriteManager();
-	virtual ActionManager* getActionManager();
-	virtual TextManager* getTextManager();
-	virtual AudioManager* getAudioManager();
-	virtual CaptionManager* getCaptionManager();
-	virtual EventManager* getEventManager();
+	Cameraman* getCameraman();
+	MapManager* getMapManager();
+	SpriteManager* getSpriteManager();
+	ActionManager* getActionManager();
+	TextManager* getTextManager();
+	AudioManager* getAudioManager();
+	CaptionManager* getCaptionManager();
+	EventManager* getEventManager();
 
-	virtual CinematicsManager* getCinematicsManager();
-	virtual Map* getCurrentMap();
+	CinematicsManager* getCinematicsManager();
+	Map* getCurrentMap();
 
 public:
 	//static void setClientGameEngine(BGClientEngine* clientGameEngine);
 	//void setControlsManager(ControlsManager* controlsManager);
 	//static BGClientEngine* getClientGameEngine();
 
-	virtual float getWidthRelativeToZoom();
-	virtual float getHeightRelativeToZoom();
+	float getWidthRelativeToZoom();
+	float getHeightRelativeToZoom();
 
 
 
@@ -128,14 +128,14 @@ public:
 
 
 
-	virtual bool serverMessageReceived(string e);
+	virtual bool serverMessageReceived(string e) override;
 
 	//====================================================
 	//SPRITE
 	//====================================================
 public:
-	virtual void sendSpriteDataRequestByName(string spriteAssetName);
-	virtual void sendSpriteDataRequestByID(int id);
+	void sendSpriteDataRequestByName(string spriteAssetName);
+	void sendSpriteDataRequestByID(int id);
 
 private:
 	void incomingSpriteData(string s);
@@ -144,20 +144,20 @@ private:
 	//MAP
 	//====================================================
 public:
-	virtual void sendMapDataRequestByName(string mapName);
-	virtual void sendMapDataRequestByID(int id);
+	void sendMapDataRequestByName(string mapName);
+	void sendMapDataRequestByID(int id);
 
 private:
 	void incomingMapData(string s);
 
 	//====================================================
 public:
-	virtual void sendServerObjectRequest(ServerObject* serverObject);
+	void sendServerObjectRequest(ServerObject* serverObject);
 
 	//====================================================
 	//DIALOGUE
 	//====================================================
-	virtual void sendDialogueRequest(int id);
+	void sendDialogueRequest(int id);
 
 private:
 	void incomingDialogue(string s);
@@ -167,7 +167,7 @@ private:
 	//====================================================
 
 public:
-	virtual void sendEventRequest(int id);
+	void sendEventRequest(int id);
 
 private:
 	void incomingEvent(string s);
@@ -176,7 +176,7 @@ private:
 	//GAMESTRING
 	//====================================================
 public:
-	virtual void sendGameStringRequest(int id);
+	void sendGameStringRequest(int id);
 
 private:
 	void incomingGameString(string s);
@@ -185,7 +185,7 @@ private:
 	//FLAG
 	//====================================================
 public:
-	virtual void sendFlagRequest(int id);
+	void sendFlagRequest(int id);
 
 private:
 	void incomingFlag(string s);
@@ -194,7 +194,7 @@ private:
 	//SKILL
 	//====================================================
 public:
-	virtual void sendSkillRequest(int id);
+	void sendSkillRequest(int id);
 
 private:
 	void incomingSkill(string s);
@@ -202,7 +202,7 @@ private:
 	//MUSIC
 	//====================================================
 public:
-	virtual void sendMusicRequest(int id);
+	void sendMusicRequest(int id);
 
 private:
 	void incomingMusic(string s);
@@ -211,7 +211,7 @@ private:
 	//SOUND
 	//====================================================
 public:
-	virtual void sendSoundRequest(int id);
+	void sendSoundRequest(int id);
 
 private:
 	void incomingSound(string s);

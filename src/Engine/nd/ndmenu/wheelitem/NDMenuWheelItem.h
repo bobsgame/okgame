@@ -48,12 +48,12 @@ public:
 	NDMenuWheelItem(Engine* g, NDGameEngine* game, const string& name, BobColor* color);
 
 
-	virtual float top();
+	float top();
 
-	virtual float middleY();
+	float middleY();
 
-	virtual float bottom();
+	float bottom();
 
-	virtual void render(bool isSelected);
+	void render(bool isSelected);
 };
 

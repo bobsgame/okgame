@@ -60,22 +60,22 @@ public:
 	ScreenOverlay(Engine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void doTransition(BobColor* color, float fromAlpha, float toAlpha, int ticks);
+	void doTransition(BobColor* color, float fromAlpha, float toAlpha, int ticks);
 
 
-	virtual void doToAndFromTransition(BobColor* color, int ticks, float toAlpha);
+	void doToAndFromTransition(BobColor* color, int ticks, float toAlpha);
 
-	virtual void setInstantOverlay(BobColor* color, float alpha);
-
-
-	virtual void update();
-
-	virtual void clearOverlays();
+	void setInstantOverlay(BobColor* color, float alpha);
 
 
-	virtual void render();
+	void update();
+
+	void clearOverlays();
+
+
+	void render();
 };
 

@@ -62,28 +62,28 @@ public:
 	Sprite(Engine* g);
 	void preloadFromDataFile(string name);
 	//The following method was originally marked 'synchronized':
-	virtual void initializeWithSpriteData(SpriteData* spriteData);
-	virtual void sendDataRequest(const string& getSpriteName);
-	virtual void sendDataRequest(int id);
+	void initializeWithSpriteData(SpriteData* spriteData);
+	void sendDataRequest(const string& getSpriteName);
+	void sendDataRequest(int id);
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getInitialized_S();
+	bool getInitialized_S();
 protected:
 	//The following method was originally marked 'synchronized':
-	virtual void setInitialized_S(bool i);
+	void setInitialized_S(bool i);
 public:
-	virtual void drawFrame(const string& animationName, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	virtual void drawFrameXYWH(const string& animationName, float x, float y, float w, float h, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	virtual void drawFrame(int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	virtual void drawFrame(BobTexture* texture, int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	virtual void drawFrame(int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	virtual void drawFrame(BobTexture* texture, int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(const string& animationName, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrameXYWH(const string& animationName, float x, float y, float w, float h, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(BobTexture* texture, int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(BobTexture* texture, int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 
 
 
 public:
-	virtual void update();
+	void update();
 	//	long lastTimeRequestedDataMD5s=0;
 	//
 	//	
@@ -103,16 +103,16 @@ public:
 	//		}
 	//	}
 
-	virtual void loadTextures();
-	virtual vector<u8>* getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set);
+	void loadTextures();
+	vector<u8>* getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set);
 	//The following method was originally marked 'synchronized':
-	virtual vector<u8>* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
+	vector<u8>* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
 	//The following method was originally marked 'synchronized':
-	virtual void createSpriteTexturePNG_S();
+	void createSpriteTexturePNG_S();
 	//The following method was originally marked 'synchronized':
-	virtual void createSpriteShadowTexturePNG_S();
+	void createSpriteShadowTexturePNG_S();
 	//The following method was originally marked 'synchronized':
-	virtual void releaseSpriteTexture_S();
+	void releaseSpriteTexture_S();
 
 	
 
@@ -123,10 +123,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getSpritePNGFileExists_S();
+	bool getSpritePNGFileExists_S();
 
 	//The following method was originally marked 'synchronized':
-	virtual void setSpritePNGFileExists_S(bool done);
+	void setSpritePNGFileExists_S(bool done);
 
 
 	//	
@@ -153,62 +153,62 @@ public:
 	//		spriteThreadsCreated--;
 	//	}
 
-	virtual int getNumberOfAnimations();
-	virtual SpriteAnimationSequence* getFirstAnimation();
-	virtual SpriteAnimationSequence* getAnimationByName(const string& name);
-	virtual SpriteAnimationSequence* getAnimationByFrame(int frame);
-	virtual SpriteAnimationSequence* getAnimationByIndex(int index);
-	virtual int getAnimationNumFramesByIndex(int index);
-	virtual int getAnimationNumFramesByName(const string& name);
-	virtual int getAnimationNumFramesByFrame(int frame);
-	virtual int getAnimationNumFramesByAnimation(SpriteAnimationSequence* a);
-	virtual int getAnimationIndexByName(const string& name);
-	virtual int getAnimationIndexByAnimation(SpriteAnimationSequence* a);
-	virtual int getAnimationIndexByFrame(int frame);
-	virtual string getAnimationNameByIndex(int index);
-	virtual string getAnimationNameByFrame(int frame);
-	virtual void antialiasBufferedImage(BufferedImage* bufferedImage);
-	virtual void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
+	int getNumberOfAnimations();
+	SpriteAnimationSequence* getFirstAnimation();
+	SpriteAnimationSequence* getAnimationByName(const string& name);
+	SpriteAnimationSequence* getAnimationByFrame(int frame);
+	SpriteAnimationSequence* getAnimationByIndex(int index);
+	int getAnimationNumFramesByIndex(int index);
+	int getAnimationNumFramesByName(const string& name);
+	int getAnimationNumFramesByFrame(int frame);
+	int getAnimationNumFramesByAnimation(SpriteAnimationSequence* a);
+	int getAnimationIndexByName(const string& name);
+	int getAnimationIndexByAnimation(SpriteAnimationSequence* a);
+	int getAnimationIndexByFrame(int frame);
+	string getAnimationNameByIndex(int index);
+	string getAnimationNameByFrame(int frame);
+	void antialiasBufferedImage(BufferedImage* bufferedImage);
+	void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
 
 
 	
 
-	virtual SpriteData* getData();
+	SpriteData* getData();
 
-	virtual int getID();
-	virtual string& getName();
-	virtual string getTYPEIDString();
-	virtual string& getDataMD5();
-	virtual string& getPaletteMD5();
+	int getID();
+	string& getName();
+	string getTYPEIDString();
+	string& getDataMD5();
+	string& getPaletteMD5();
 
-	virtual string& getComment();
+	string& getComment();
 
-	virtual int getImageWidth();
-	virtual int getImageHeight();	
-//	virtual int getScreenWidth();
-//	virtual int getScreenHeight();
-	virtual int getNumFrames();
-	virtual string& getDisplayName();
-	virtual bool getIsNPC();
-	virtual bool getIsKid();
-	virtual bool getIsAdult();
-	virtual bool getIsMale();
-	virtual bool getIsFemale();
-	virtual bool getIsCar();
-	virtual bool getIsAnimal();
-	virtual bool getHasShadow();
-	virtual bool getIsRandom();
-	virtual bool getIsDoor();
-	virtual bool getIsGame();
-	virtual bool getIsItem();
-	virtual bool getForceHQ2X();
-	virtual bool getForceMD5Export();
-	virtual EventData* getEventData();
-	virtual string& getItemGameDescription();
-	virtual float getGamePrice();
-	virtual int getUtilityOffsetXPixelsHQ();
-	virtual int getUtilityOffsetYPixelsHQ();
-	virtual ArrayList<SpriteAnimationSequence*>* getAnimationList();
+	int getImageWidth();
+	int getImageHeight();	
+//	int getScreenWidth();
+//	int getScreenHeight();
+	int getNumFrames();
+	string& getDisplayName();
+	bool getIsNPC();
+	bool getIsKid();
+	bool getIsAdult();
+	bool getIsMale();
+	bool getIsFemale();
+	bool getIsCar();
+	bool getIsAnimal();
+	bool getHasShadow();
+	bool getIsRandom();
+	bool getIsDoor();
+	bool getIsGame();
+	bool getIsItem();
+	bool getForceHQ2X();
+	bool getForceMD5Export();
+	EventData* getEventData();
+	string& getItemGameDescription();
+	float getGamePrice();
+	int getUtilityOffsetXPixelsHQ();
+	int getUtilityOffsetYPixelsHQ();
+	ArrayList<SpriteAnimationSequence*>* getAnimationList();
 
 
 	//	public void setName(String s){getData().setName(s);}

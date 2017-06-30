@@ -103,11 +103,11 @@ public:
 	//	}
 
 
-	virtual string& getName();
-	virtual int getID();
+	string& getName();
+	int getID();
 
 
-	virtual void setName(const string& s);
-	virtual void setID(int s);
+	void setName(const string& s);
+	void setID(int s);
 };
 

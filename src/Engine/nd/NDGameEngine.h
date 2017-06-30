@@ -33,11 +33,11 @@ protected:
 public:
 	
 	NDGameEngine();
-	virtual ~NDGameEngine();
+	~NDGameEngine();
 	NDGameEngine(ND* nD);
-	virtual void init();
+	void init();
 
-	virtual void tryToCloseGame();
+	void tryToCloseGame();
 
 };
 

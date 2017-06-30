@@ -65,24 +65,24 @@ public:
 	bool autopilotActive = false; //TODO: handle this
 
 
-	virtual void setAutoPilot(bool b);
+	void setAutoPilot(bool b);
 
 
-	virtual bool isAutoPilotOn();
+	bool isAutoPilotOn();
 
 
-	virtual void handleAreas();
+	void handleAreas();
 
 
 	long long lastPlayedFootstepSoundTicksCounter = 0;
 
-	virtual void doPlayerSound();
+	void doPlayerSound();
 
 
-	virtual void setSpeed();
+	void setSpeed();
 
 
-	virtual void handlePlayerControls();
+	void handlePlayerControls();
 
 
 	virtual bool checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(int direction) override;
@@ -96,6 +96,6 @@ public:
 	/// Moving diagonally counts as one pixel.
 	/// </summary>
 
-	virtual void move(int direction, float pixels); //move_check_hit_animate_set_fx_layer
+	void move(int direction, float pixels); //move_check_hit_animate_set_fx_layer
 };
 

@@ -84,13 +84,13 @@ public:
 	SettingsPanel();
 
 
-	virtual void initGameSettingsSubPanel();
+	void initGameSettingsSubPanel();
 
 
-	virtual void initGUISettingsSubPanel();
+	void initGUISettingsSubPanel();
 
 
-	virtual void initGraphicsSettingsSubPanel();
+	void initGraphicsSettingsSubPanel();
 
 
 	virtual void layout() override;

@@ -24,15 +24,15 @@ public:
 	StateManager();
 
 
-	virtual State* getState();
+	State* getState();
 
 
-	virtual void setState(State* s);
+	void setState(State* s);
 
 
-	virtual void update();
+	void update();
 
-	virtual void render();
+	void render();
 
 
 };

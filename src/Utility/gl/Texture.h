@@ -44,10 +44,10 @@ class Logger;
 		BobTexture(const string &ref, GLuint textureID);
 
 
-		virtual bool hasAlpha();
+		bool hasAlpha();
 
 
-		virtual void setAlpha(bool alpha);
+		void setAlpha(bool alpha);
 
 
 		//Clear the binding of the texture
@@ -57,31 +57,31 @@ class Logger;
 		//Clear caching of the last bound texture so that an external texture binder can play with the context before returning control to slick.
 		static void unbind();
 
-		virtual void bind();
+		void bind();
 
 		//Set the height of the image
-		virtual void setImageHeight(int height);
+		void setImageHeight(int height);
 
 
 		//Set the width of the image
-		virtual void setImageWidth(int width);
+		void setImageWidth(int width);
 
-		virtual int getImageHeight();
+		int getImageHeight();
 
-		virtual int getImageWidth();
+		int getImageWidth();
 
-		virtual float getHeightRatio();
+		float getHeightRatio();
 
 
-		virtual float getWidthRatio();
+		float getWidthRatio();
 
-		virtual int getTextureHeight();
+		int getTextureHeight();
 
-		virtual int getTextureWidth();
+		int getTextureWidth();
 
-		virtual void setTextureHeight(int texHeight);
+		void setTextureHeight(int texHeight);
 
-		virtual void setTextureWidth(int texWidth);
+		void setTextureWidth(int texWidth);
 
 		
 
@@ -94,11 +94,11 @@ class Logger;
 		void setWidthRatio();
 
 	public:
-		virtual void release();
+		void release();
 
-		virtual GLuint getTextureID();
+		GLuint getTextureID();
 
-		virtual void setTextureID(GLuint textureID);
+		void setTextureID(GLuint textureID);
 
 
 	public:

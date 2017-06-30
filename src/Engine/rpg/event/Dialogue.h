@@ -37,38 +37,38 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setData_S(DialogueData* data);
+	void setData_S(DialogueData* data);
 
 
-	virtual DialogueData* getData();
+	DialogueData* getData();
 
-	virtual int getID();
-	virtual string& getName();
-	virtual string& caption();
-	virtual string& getComment();
-	virtual string& text();
+	int getID();
+	string& getName();
+	string& caption();
+	string& getComment();
+	string& text();
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
-	virtual void setID(int id);
-	virtual void setName(const string& name);
-	virtual void setCaption(const string& caption);
-	virtual void setComment(const string& comment);
-	virtual void setText(const string& text);
-
-
-	//The following method was originally marked 'synchronized':
-	virtual void setDialogueDoneValue_S(bool b); //sendServerDialogueDoneValueUpdate(boolean b)
+	void setID(int id);
+	void setName(const string& name);
+	void setCaption(const string& caption);
+	void setComment(const string& comment);
+	void setText(const string& text);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void initDialogueDoneValueFromGameSave_S(bool b, long long timeSet);
+	void setDialogueDoneValue_S(bool b); //sendServerDialogueDoneValueUpdate(boolean b)
 
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getDialogueDoneValue_S();
+	void initDialogueDoneValueFromGameSave_S(bool b, long long timeSet);
 
 
-	virtual long long getTimeSet();
+	//The following method was originally marked 'synchronized':
+	bool getDialogueDoneValue_S();
+
+
+	long long getTimeSet();
 };
 

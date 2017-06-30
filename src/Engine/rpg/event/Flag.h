@@ -35,33 +35,33 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setData_S(FlagData* data);
+	void setData_S(FlagData* data);
 
 
-	virtual FlagData* getData();
+	FlagData* getData();
 
 
-	virtual int getID();
-	virtual string& getName();
-	virtual string getTYPEIDString();
+	int getID();
+	string& getName();
+	string getTYPEIDString();
 
 
-	virtual void setID(int id);
-	virtual void setName(const string& name);
-
-
-	//The following method was originally marked 'synchronized':
-	virtual void setValue_S(bool b); //sendServerValueUpdate(boolean b)
+	void setID(int id);
+	void setName(const string& name);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void initValueFromGameSave_S(bool b, long long timeSet); //sendServerValueUpdate(boolean b)
+	void setValue_S(bool b); //sendServerValueUpdate(boolean b)
 
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getValue_S();
+	void initValueFromGameSave_S(bool b, long long timeSet); //sendServerValueUpdate(boolean b)
 
 
-	virtual long long getTimeSet();
+	//The following method was originally marked 'synchronized':
+	bool getValue_S();
+
+
+	long long getTimeSet();
 };
 

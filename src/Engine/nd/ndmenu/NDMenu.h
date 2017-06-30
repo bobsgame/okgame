@@ -20,9 +20,9 @@ public:
 	static Logger log;
 
 	NDMenu();
-	virtual ~NDMenu();
+	~NDMenu();
 	NDMenu(ND* nD);
-	virtual void init();
+	void init();
 
 	bool runSelectedGame = false;
 	int quit = 0;
@@ -76,15 +76,15 @@ public:
 	long long fadeOutTicks = 0;
 
 
-	virtual void addGame(NDGameEngine* game, const string& name, BobColor* color);
+	void addGame(NDGameEngine* game, const string& name, BobColor* color);
 	virtual void update() override;
 	virtual void cleanup() override;
 	virtual void render() override;
-	virtual void handleInput();
-	virtual void updateVideo();
-	virtual void renderVideo();
-	virtual void fillScreenBlack(float a);
-	virtual void fillScreenWhite(float a);
-	virtual void drawScreenOverlayFade();
+	void handleInput();
+	void updateVideo();
+	void renderVideo();
+	void fillScreenBlack(float a);
+	void fillScreenWhite(float a);
+	void drawScreenOverlayFade();
 };
 

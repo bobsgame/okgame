@@ -90,8 +90,8 @@ public:
 	virtual void render() override;
 
 	BobsGame();
-	virtual ~BobsGame();
-	virtual void init();
+	virtual ~BobsGame() override;
+	virtual void init() override;
 
 
 
@@ -103,9 +103,9 @@ public:
 	long long timeRenderBegan = 0;
 
 
-	bool isNetworkGame() override;
+	virtual bool isNetworkGame() override;
 	void debugKeys();
-	void update() override;
+	virtual void update() override;
 
 
 	

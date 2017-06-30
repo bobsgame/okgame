@@ -152,66 +152,66 @@ public:
 
 
 	// =========================================================================================================================
-	virtual bool isTextBoxOpen();
+	bool isTextBoxOpen();
 
 
 	// =========================================================================================================================
-	virtual bool isTextAnswerBoxOpen();
+	bool isTextAnswerBoxOpen();
 
 
 	// =========================================================================================================================
-	virtual void init();
+	void init();
 
 
 	// =========================================================================================================================
-	virtual void reset();
+	void reset();
 
 
 	// =========================================================================================================================
-	virtual void text(const string& s);
+	void text(const string& s);
 
 
 	// =========================================================================================================================
-	virtual void render();
+	void render();
 
 
 	// =========================================================================================================================
-	virtual int getLineSizeX();
+	int getLineSizeX();
 
 
 	// =========================================================================================================================
-	virtual void update();
+	void update();
 
 
 	// =========================================================================================================================
-	virtual void drawText();
+	void drawText();
 
 
 	// =========================================================================================================================
-	virtual void handleInput();
+	void handleInput();
 
 
 	// =========================================================================================================================
-	virtual void doScrolling();
+	void doScrolling();
 
 
 	// =========================================================================================================================
-	virtual void drawLetter();
+	void drawLetter();
 
 
 	// =========================================================================================================================
-	virtual void parseOption();
+	void parseOption();
 
 
-	virtual void dialogue(Dialogue* d);
+	void dialogue(Dialogue* d);
 
 
-	virtual void getTextFromOnscreenKeyboard();
+	void getTextFromOnscreenKeyboard();
 
 
-	virtual void getNumberFromOnscreenNumpad();
+	void getNumberFromOnscreenNumpad();
 
 
-	virtual void getAnswerToQuestionWithQuestionBox(const string& s, int i);
+	void getAnswerToQuestionWithQuestionBox(const string& s, int i);
 };
 

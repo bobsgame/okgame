@@ -54,24 +54,24 @@ public:
 	virtual void update();
 
 
-	virtual void setEnabled(bool b);
+	void setEnabled(bool b);
 
-	virtual bool getEnabled();
-
-
-	virtual bool getIsActivated();
+	bool getEnabled();
 
 
-	virtual bool getIsScrollingDown();
+	virtual bool getIsActivated() override;
 
 
-	virtual bool getIsScrolledUp();
+	bool getIsScrollingDown();
 
 
-	virtual void setActivated(bool b);
+	bool getIsScrolledUp();
 
 
-	virtual void toggleActivated();
+	virtual void setActivated(bool b) override;
+
+
+	virtual void toggleActivated() override;
 
 
 	virtual void onScrolledUp();

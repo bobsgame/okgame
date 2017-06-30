@@ -49,15 +49,15 @@ public:
 		static const char* ident = "Base" ":" "GameSequenceEditorControl";
 		return ident;
 	};
-	virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
+	Gwen::Controls::Base* DynamicCast(const char* Variable)
 	{
 		if (GetIdentifier() == Variable)
 			return this;
         
 		return Gwen::Controls::Base::DynamicCast(Variable);
 	}
-	virtual const char* GetTypeName() { return "GameSequenceEditorControl"; }
-	virtual const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
+	const char* GetTypeName() { return "GameSequenceEditorControl"; }
+	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
 	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",BobsGame *b = nullptr);
     
     

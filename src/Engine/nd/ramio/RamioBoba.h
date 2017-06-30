@@ -26,15 +26,15 @@ public:
 	bool dead = false;
 
 
-	virtual bool checkHitLayerBlocksAndOtherBobas(int dir);
+	bool checkHitLayerBlocksAndOtherBobas(int dir);
 
 
 	virtual void update() override;
 
 
-	virtual bool checkStomp(RamioGuy* guy);
+	bool checkStomp(RamioGuy* guy);
 
 
-	virtual bool checkRunningInto(RamioGuy* guy);
+	bool checkRunningInto(RamioGuy* guy);
 };
 

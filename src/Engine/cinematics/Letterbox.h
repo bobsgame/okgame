@@ -55,29 +55,29 @@ public:
 	Letterbox(Engine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void setAlpha();
+	void setAlpha();
 
-	virtual void setColor();
-
-
-	virtual void setLayer();
+	void setColor();
 
 
-	virtual void setOn(int ticksSlideDuration, float percentY);
+	void setLayer();
 
 
-	virtual void setOn(int ticksSlideDuration, int sizeY);
+	void setOn(int ticksSlideDuration, float percentY);
 
 
-	virtual void setOff(int ticksSlideDuration);
+	void setOn(int ticksSlideDuration, int sizeY);
 
 
-	virtual void update();
+	void setOff(int ticksSlideDuration);
 
 
-	virtual void render();
+	void update();
+
+
+	void render();
 };
 

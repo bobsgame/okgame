@@ -43,9 +43,9 @@ private:
 
 
 public:
-	virtual BufferedImage* hq2x(BufferedImage* image);// unsigned char* in, int w, int h);
+	BufferedImage* hq2x(BufferedImage* image);// unsigned char* in, int w, int h);
 
 
-	//virtual unsigned char* hq2x(unsigned char* rgbIntArray, int w, int h);
+	//unsigned char* hq2x(unsigned char* rgbIntArray, int w, int h);
 };
 

@@ -54,6 +54,6 @@ public:
 	virtual void render(int layer) override;
 
 
-	virtual Notification* fadeOutAndDelete();
+	Notification* fadeOutAndDelete();
 };
 

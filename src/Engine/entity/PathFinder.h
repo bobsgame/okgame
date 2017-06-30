@@ -30,16 +30,16 @@ public:
 	PathTile(TilePath* outerInstance, int tileX, int tileY);
 
 
-	virtual int getX();
+	int getX();
 
 
-	virtual int getY();
+	int getY();
 
 
-	virtual int hashCode();
+	int hashCode();
 
 
-	//virtual bool equals(void* other);
+	//bool equals(void* other);
 };
 
 // =========================================================================================================================
@@ -57,25 +57,25 @@ public:
 	TilePath(PathFinder* outerInstance);
 
 
-	virtual int getLength();
+	int getLength();
 
 
-	virtual PathTile* getTileForPathIndex(int index);
+	PathTile* getTileForPathIndex(int index);
 
 
-	virtual int getTileXForPathIndex(int index);
+	int getTileXForPathIndex(int index);
 
 
-	virtual int getTileYForPathIndex(int index);
+	int getTileYForPathIndex(int index);
 
 
-	virtual void addPathTileToEnd(int x, int y);
+	void addPathTileToEnd(int x, int y);
 
 
-	virtual void addPathTileToBeginning(int x, int y);
+	void addPathTileToBeginning(int x, int y);
 
 
-	virtual bool doesPathContain(int tileX, int tileY);
+	bool doesPathContain(int tileX, int tileY);
 
 	// =========================================================================================================================
 public:
@@ -100,25 +100,25 @@ private:
 	/// </summary>
 	/// <returns> The first element from the list </returns>
 public:
-	virtual PotentialTile* first();
+	PotentialTile* first();
 
 
 	/// <summary>
 	/// Empty the list
 	/// </summary>
-	virtual void clear();
+	void clear();
 
 
-	virtual void addAndSort(PotentialTile* o);
+	void addAndSort(PotentialTile* o);
 
 
-	virtual void remove(PotentialTile* o);
+	void remove(PotentialTile* o);
 
 
-	virtual int size();
+	int size();
 
 
-	virtual bool contains(PotentialTile* o);
+	bool contains(PotentialTile* o);
 };
 
 class PotentialTile
@@ -153,12 +153,12 @@ public:
 
 
 	// =========================================================================================================================
-	virtual int setParentTile(PotentialTile* parent);
+	int setParentTile(PotentialTile* parent);
 
 
 	/// <seealso cref= Comparable#compareTo(Object) </seealso>
 	// =========================================================================================================================
-	virtual int compareTo(PotentialTile* o);
+	int compareTo(PotentialTile* o);
 };
 
 
@@ -204,33 +204,33 @@ public:
 
 
 	// =========================================================================================================================
-	virtual TilePath* findPath(int startTileX, int startTileY, int toTileX, int toTileY);
+	TilePath* findPath(int startTileX, int startTileY, int toTileX, int toTileY);
 
 
 	// =========================================================================================================================
-	virtual bool isTileBlocked(int tileX, int tileY);
+	bool isTileBlocked(int tileX, int tileY);
 
 
 private:
 	int minCost = 0;
 	// =========================================================================================================================
 public:
-	virtual int getHeuristicCost(int tileX, int tileY, int endTileX, int endTileY);
+	int getHeuristicCost(int tileX, int tileY, int endTileX, int endTileY);
 
 	// =========================================================================================================================
-	virtual int getTileTypeCost(int fromTileX, int fromTileY, int toTileX, int toTileY);
-
-
-	// =========================================================================================================================
-	virtual void setTileChecked(int tileX, int tileY);
+	int getTileTypeCost(int fromTileX, int fromTileY, int toTileX, int toTileY);
 
 
 	// =========================================================================================================================
-	virtual bool wasTileChecked(int tileX, int tileY);
+	void setTileChecked(int tileX, int tileY);
+
+
+	// =========================================================================================================================
+	bool wasTileChecked(int tileX, int tileY);
 
 
 	// =========================================================================================================================
 protected:
-	virtual bool isValidLocation(int currentTileX, int currentTileY, int checkTileX, int checkTileY);
+	bool isValidLocation(int currentTileX, int currentTileY, int checkTileX, int checkTileY);
 };
 

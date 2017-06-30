@@ -122,19 +122,19 @@ public:
 	static void initSystemInfo();
 	static void initClockAndTimeZone();
 
-	virtual string split(const string& in);
+	string split(const string& in);
 
 
-	virtual string printString();
+	string printString();
 
 
-	virtual string encode();
+	string encode();
 
 
-	virtual void decode(string& s);
+	void decode(string& s);
 
 
-	//virtual PreparedStatement *getInsertStatement(Connection *databaseConnection, const string &emailAddress, Client *cc, const string &ipAddress);
+	//PreparedStatement *getInsertStatement(Connection *databaseConnection, const string &emailAddress, Client *cc, const string &ipAddress);
 
 	static void logSystemInfo();
 

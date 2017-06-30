@@ -30,34 +30,34 @@ public:
 	Skill(Engine* g, SkillData* data);
 
 
-	virtual SkillData* getData();
+	SkillData* getData();
 
 
-	virtual int getID();
-	virtual string& getName();
+	int getID();
+	string& getName();
 
-	virtual string getTYPEIDString();
-
-
-	virtual void setID(int id);
-	virtual void setName(const string& name);
+	string getTYPEIDString();
 
 
-	//The following method was originally marked 'synchronized':
-	virtual void setData_S(SkillData* data);
+	void setID(int id);
+	void setName(const string& name);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setValue_S(float f);
-	virtual void setValue_S(int i);
+	void setData_S(SkillData* data);
+
 
 	//The following method was originally marked 'synchronized':
-	virtual void initValueFromGameSave_S(float f, long long timeSet);
+	void setValue_S(float f);
+	void setValue_S(int i);
 
 	//The following method was originally marked 'synchronized':
-	virtual float getValue_S();
+	void initValueFromGameSave_S(float f, long long timeSet);
 
-	virtual long long getTimeSet();
+	//The following method was originally marked 'synchronized':
+	float getValue_S();
+
+	long long getTimeSet();
 
 
 	//	

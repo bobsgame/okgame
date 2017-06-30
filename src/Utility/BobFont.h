@@ -182,7 +182,7 @@ public:
 	static void cleanup();
 
 
-	virtual void change_font();
+	void change_font();
 
 
 	static bool is_a_vowel(char c);

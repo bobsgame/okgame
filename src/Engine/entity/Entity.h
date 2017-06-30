@@ -3,16 +3,12 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include "../../Utility/BobBool.h"
 #include "Sprite.h"
 #include "../rpg/event/EventData.h"
 class Logger;
-
-
-
 
 class SpriteAnimationSequence;
 class EnginePart;
@@ -21,7 +17,6 @@ class EntityData;
 class MapData;
 class Map;
 class Area;
-
 
 class Entity : public EnginePart
 {
@@ -43,9 +38,7 @@ public:
 	static int DOWNLEFT;
 	static int UPRIGHT;
 
-
 	int SPEED_ACCEL_INCREMENT_AMOUNT = 1;
-
 
 	//these are ticks per pixel moved
 	int ticksPerPixel_CAR = 2;
@@ -57,10 +50,8 @@ public:
 	int ticksPerPixel_SLOWER = 20;
 	int ticksPerPixel_SLOWEST = 30;
 
-
 	int ticksPerPixel_CAMERA_CONVERSATION = 4;
 	int ticksPerPixel_CAMERA_STOPPED = 30;// ticksPerPixel_SLOWEST;
-
 
 	int YUU_WALKING_SPEED_KEYBOARD = 24;
 	int YUU_RUNNING_SPEED_KEYBOARD = 3;// ticksPerPixel_FASTEST;
@@ -70,33 +61,27 @@ public:
 	int YUU_RUNNING_SPEED_JOYSTICK = 3;// ticksPerPixel_FASTEST;
 	int YUU_STANDING_SPEED_JOYSTICK = 20;// ticksPerPixel_SLOWER;
 
-
 	bool disableMovementAnimationForAllEntities = false;
 	bool isPlayerBeingDraggedThisFrame = false;
 	int numberOfEntitiesPullingPlayerThisFrame = 0;
 	bool isWalkingIntoPlayerThisFrame = false;
 	bool isWalkingIntoWallThisFrame = false;
 
-
 	Sprite* sprite = nullptr;
 
 protected:
 	EntityData* data = nullptr;
 
-
 public:
 	float mapX = 0;
 	float mapY = 0;
 
-
 	float standJitterX = 0; //used when characters are standing to give them a little extra movement
 	float standJitterY = 0;
-
 
 	float alpha = 1.0f;
 
 	bool draw = false;
-
 
 private:
 	int animationTicksCounter = 0; // was vbl_animation_timer
@@ -108,51 +93,39 @@ private:
 public:
 	int movementDirection = 0; //was walk_dir
 
-
 	float* shadowClipPerPixel = nullptr;
 	bool clipShadow = false;
 	float shadowSize = 0.65f;
 	//public float getShadowStart = 0.75f;
 	float shadowAlpha = 0.60f;
 
-
 	int ticksSinceLastMovement = 0;
 public:
 	float pixelsToMoveThisFrame = 0;
-
 
 	bool behaviorEnabled = true;
 
 	ArrayList<string>* eventBehaviorList = new ArrayList<string>(); //TODO: do something with this!
 	ArrayList<string>* eventTargetTYPEIDList = new ArrayList<string>(); //TODO: do something with this!
 
-
 	string currentAreaTYPEIDTarget = "";
-
 
 private:
 	bool deleteWhenAlphaZero = false;
-
 
 public:
 	Entity();
 	Entity(Engine* g, Map* m);
 
-
 	Entity(Engine* g, EntityData* entityData, Map* m);
-
 
 	void initEntity(EntityData* entityData);
 
-
 	virtual void initCurrentAnimationFromSprite();
-
 
 	virtual void update();
 
-
-	virtual void updateTimers();
-
+	void updateTimers();
 
 	//	
 	//	public void addDialogue(String dialogueIDString)
@@ -172,15 +145,11 @@ public:
 	//		}
 	//	}
 
-
 	virtual void renderDebugBoxes();
-
 
 	virtual void renderDebugInfo();
 
-
-	virtual string getCurrentAreaTargetName();
-
+	string getCurrentAreaTargetName();
 
 	//	
 	//	public void render()
@@ -189,24 +158,17 @@ public:
 	//		//overrode this so i can send in arbitrary alpha, really only used for fading sprites out with the last map.
 	//	}
 
-
 	virtual void render(float mapAlpha);
-
 
 	virtual void render(float alpha, BobTexture* texture, BobTexture* shadowTexture);
 
+	virtual Map* getCurrentMap();
 
-	virtual Map* getCurrentMap() override;
-
-
-	virtual Map* getMap();
-
+	Map* getMap();
 
 	virtual bool shouldDraw();
 
-
-	virtual bool isWithinScreenBounds();
-
+	bool isWithinScreenBounds();
 
 	//
 	//	
@@ -258,153 +220,106 @@ public:
 	//		return return_this;
 	//	}
 
-
 	virtual bool checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(int dir);
 
-
-	virtual bool checkMiddlePixelAgainstHitLayerAndNonWalkableEntitiesInDirection(int dir);
-
+	bool checkMiddlePixelAgainstHitLayerAndNonWalkableEntitiesInDirection(int dir);
 
 	/// 
 	/// <summary>
 	/// this is used for PATHFINDING so it ignores doors (so sprites can go through doors) and walkable sprites!!
 	/// 
 	/// </summary>
-	virtual bool checkPathBlockedXY(float x, float y);
+	bool checkPathBlockedXY(float x, float y);
 
+	bool checkXYAgainstNonWalkableEntities(float x, float y);
 
-	virtual bool checkXYAgainstNonWalkableEntities(float x, float y);
+	bool checkXYAgainstHitLayerAndNonWalkableEntities(float x, float y);
 
+	bool checkHitBoxAndMovePixelInDirection(int dir); //returns 0 if getHit wall   ( DOES HIT DETECTION/WALL DETECTION,HIT WITH SPRITE DETECTION )
 
-	virtual bool checkXYAgainstHitLayerAndNonWalkableEntities(float x, float y);
+	bool checkMiddlePixelHitAndMovePixelInDirection(int dir); //returns 0 if getHit wall   ( DOES HIT DETECTION/WALL DETECTION,HIT WITH SPRITE DETECTION )
 
+	void movePixelInDirection(int dir);
 
-	virtual bool checkHitBoxAndMovePixelInDirection(int dir); //returns 0 if getHit wall   ( DOES HIT DETECTION/WALL DETECTION,HIT WITH SPRITE DETECTION )
+	bool ifCanMoveAPixelThisFrameSubtractAndReturnTrue();
 
+	bool canCreateAtXY(float x, float y);
 
-	virtual bool checkMiddlePixelHitAndMovePixelInDirection(int dir); //returns 0 if getHit wall   ( DOES HIT DETECTION/WALL DETECTION,HIT WITH SPRITE DETECTION )
+	void setFeetAtMapXY(float mapXPixels2X, float mapYPixels2X);
 
+	int getFrame();
 
-	virtual void movePixelInDirection(int dir);
-
-
-	virtual bool ifCanMoveAPixelThisFrameSubtractAndReturnTrue();
-
-
-	virtual bool canCreateAtXY(float x, float y);
-
-
-	virtual void setFeetAtMapXY(float mapXPixels2X, float mapYPixels2X);
-
-
-	virtual int getFrame();
-
-
-	virtual void setFrame(int f);
-
+	void setFrame(int f);
 
 protected:
-	virtual void resetAnimationTimer();
-
+	void resetAnimationTimer();
 
 public:
-	virtual bool haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks);
+	bool haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks);
 
+	SpriteAnimationSequence* getCurrentAnimation();
 
-	virtual SpriteAnimationSequence* getCurrentAnimation();
+	void setCurrentAnimation(SpriteAnimationSequence* a);
 
+	void setCurrentAnimationByName(const string& name);
 
-	virtual void setCurrentAnimation(SpriteAnimationSequence* a);
+	void setCurrentAnimationByDirection(int dir);
 
+	int getSpriteLastFrame();
 
-	virtual void setCurrentAnimationByName(const string& name);
+	SpriteAnimationSequence* getAnimationBySpriteFrame(int frame);
 
+	void setCurrentAnimationBySpriteFrame(int frame);
 
-	virtual void setCurrentAnimationByDirection(int dir);
+	int getCurrentAnimationNumberOfFrames();
 
+	int getCurrentAnimationStartFrame();
 
-	virtual int getSpriteLastFrame();
+	int getCurrentAnimationLastFrame();
 
+	string getCurrentAnimationName();
 
-	virtual SpriteAnimationSequence* getAnimationBySpriteFrame(int frame);
+	int getCurrentFrameOffsetInCurrentAnimation();
 
+	void setFrameOffsetInCurrentAnimation(int frameOffset);
 
-	virtual void setCurrentAnimationBySpriteFrame(int frame);
+	void setFrameInAllFrames(int frame);
 
+	void selectRandomFrame(int from, int toIncluding);
 
-	virtual int getCurrentAnimationNumberOfFrames();
+	void selectRandomFrameInAllFrames();
 
+	void selectRandomFrameInCurrentAnimation();
 
-	virtual int getCurrentAnimationStartFrame();
+	void incrementAnimationFrame(int from, int toIncluding); //increments the frame in the current walking direction
 
+	void incrementAnimationFrameInAllFrames(); //increments the frame in the current walking direction
 
-	virtual int getCurrentAnimationLastFrame();
+	void incrementAnimationFrameInCurrentAnimation(); //increments the frame in the current walking direction
 
+	void stopAnimation();
 
-	virtual string getCurrentAnimationName();
+	void setAnimateLoopThroughCurrentAnimation();
 
+	void setAnimateLoopThroughAllFrames();
 
-	virtual int getCurrentFrameOffsetInCurrentAnimation();
+	void setFrameToAllFramesZero();
 
+	void setFrameToCurrentAnimationStart();
 
-	virtual void setFrameOffsetInCurrentAnimation(int frameOffset);
+	void setAnimateOnceThroughCurrentAnimation();
 
+	void setAnimateOnceThroughAllFrames();
 
-	virtual void setFrameInAllFrames(int frame);
+	void doAnimation();
 
+	void setAlphaImmediately(float a);
 
-	virtual void selectRandomFrame(int from, int toIncluding);
-
-
-	virtual void selectRandomFrameInAllFrames();
-
-
-	virtual void selectRandomFrameInCurrentAnimation();
-
-
-	virtual void incrementAnimationFrame(int from, int toIncluding); //increments the frame in the current walking direction
-
-
-	virtual void incrementAnimationFrameInAllFrames(); //increments the frame in the current walking direction
-
-
-	virtual void incrementAnimationFrameInCurrentAnimation(); //increments the frame in the current walking direction
-
-
-	virtual void stopAnimation();
-
-
-	virtual void setAnimateLoopThroughCurrentAnimation();
-
-
-	virtual void setAnimateLoopThroughAllFrames();
-
-
-	virtual void setFrameToAllFramesZero();
-
-
-	virtual void setFrameToCurrentAnimationStart();
-
-
-	virtual void setAnimateOnceThroughCurrentAnimation();
-
-
-	virtual void setAnimateOnceThroughAllFrames();
-
-
-	virtual void doAnimation();
-
-
-	virtual void setAlphaImmediately(float a);
-
-
-	virtual void fadeOutAndDelete();
-
+	void fadeOutAndDelete();
 
 	virtual void deleteFromMapEntityListAndReleaseTexture();
 
-
-	virtual void addEventBehavior(const string& s);
+	void addEventBehavior(const string& s);
 
 	//	
 	//	public void addBehavior(String s)
@@ -419,87 +334,76 @@ public:
 	//		getConnectionTYPEIDList().add(s);
 	//	}
 
-
 	/// <summary>
 	/// This gets called repeatedly in events, until it returns a non-null value, at which point the event continues and does not ask again.
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	virtual BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
+	void tellServerTalkedToToday();
 
-	virtual void tellServerTalkedToToday();
+	float getDistanceFromEntity(Entity* e);
 
+	Entity* findNearestEntity();
 
-	virtual float getDistanceFromEntity(Entity* e);
+	Entity* findNearestEntityInDirection(int dir);
 
+	bool isWalkingIntoEntity(Entity* entity);
 
-	virtual Entity* findNearestEntity();
+	bool isWalkingIntoArea(Area* area);
 
+	bool isEntityHitBoxTouchingMyHitBox(Entity* e);
 
-	virtual Entity* findNearestEntityInDirection(int dir);
+	bool isNearestEntityHitBoxTouchingMyHitBox();
 
+	bool isAreaCenterTouchingMyHitBox(Area* a);
 
-	virtual bool isWalkingIntoEntity(Entity* entity);
+	bool isAreaBoundaryTouchingMyHitBox(Area* a);
 
+	bool isXYTouchingMyHitBox(float x, float y);
 
-	virtual bool isWalkingIntoArea(Area* area);
+	bool isXYXYTouchingMyHitBox(float left, float top, float right, float bottom);
 
+	bool isAreaBoundaryTouchingMyMiddleXY(Area* a);
 
-	virtual bool isEntityHitBoxTouchingMyHitBox(Entity* e);
+	bool isEntityMiddleXYTouchingMyMiddleXY(Entity* e);
 
-	virtual bool isNearestEntityHitBoxTouchingMyHitBox();
+	bool isAreaCenterTouchingMyMiddleXY(Area* a);
 
-	virtual bool isAreaCenterTouchingMyHitBox(Area* a);
+	bool isXYTouchingMyMiddleXY(float x, float y);
 
-	virtual bool isAreaBoundaryTouchingMyHitBox(Area* a);
+	bool isXYXYTouchingMyMiddleXY(float left, float top, float right, float bottom);
 
-	virtual bool isXYTouchingMyHitBox(float x, float y);
+	bool isEntityHitBoxTouchingMyHitBoxByAmount(Entity* e, int amt);
 
-	virtual bool isXYXYTouchingMyHitBox(float left, float top, float right, float bottom);
+	bool isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt);
 
-	virtual bool isAreaBoundaryTouchingMyMiddleXY(Area* a);
+	bool isAreaCenterTouchingMyHitBoxByAmount(Area* a, int amt);
 
-	virtual bool isEntityMiddleXYTouchingMyMiddleXY(Entity* e);
+	bool isAreaBoundaryTouchingMyHitBoxByAmount(Area* a, int amt);
 
-	virtual bool isAreaCenterTouchingMyMiddleXY(Area* a);
+	bool isXYTouchingMyHitBoxByAmount(float x, float y, int amt);
 
-	virtual bool isXYTouchingMyMiddleXY(float x, float y);
+	bool isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, float bottom, int amt);
 
-	virtual bool isXYXYTouchingMyMiddleXY(float left, float top, float right, float bottom);
+	bool isAreaBoundaryTouchingMyMiddleXYByAmount(Area* a, int amt);
 
-	virtual bool isEntityHitBoxTouchingMyHitBoxByAmount(Entity* e, int amt);
+	bool isEntityMiddleXYTouchingMyMiddleXYByAmount(Entity* e, int amt);
 
-	virtual bool isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt);
+	bool isAreaCenterTouchingMyMiddleXYByAmount(Area* a, int amt);
 
-	virtual bool isAreaCenterTouchingMyHitBoxByAmount(Area* a, int amt);
+	bool isXYTouchingMyMiddleXYByAmount(float x, float y, int amt);
 
-	virtual bool isAreaBoundaryTouchingMyHitBoxByAmount(Area* a, int amt);
+	bool isXYXYTouchingMyMiddleXYByAmount(float left, float top, float right, float bottom, int amt);
 
-	virtual bool isXYTouchingMyHitBoxByAmount(float x, float y, int amt);
+	bool isTouchingPlayerInDirection(int dir);
 
-	virtual bool isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, float bottom, int amt);
+	bool isHitBoxTouchingEntityInDirectionByAmount(Entity* e, int direction, int amt);
 
-	virtual bool isAreaBoundaryTouchingMyMiddleXYByAmount(Area* a, int amt);
+	bool isHitBoxTouchingXYInDirectionByAmount(float x, float y, int direction, int amt);
 
-	virtual bool isEntityMiddleXYTouchingMyMiddleXYByAmount(Entity* e, int amt);
-
-	virtual bool isAreaCenterTouchingMyMiddleXYByAmount(Area* a, int amt);
-
-	virtual bool isXYTouchingMyMiddleXYByAmount(float x, float y, int amt);
-
-	virtual bool isXYXYTouchingMyMiddleXYByAmount(float left, float top, float right, float bottom, int amt);
-
-
-	virtual bool isTouchingPlayerInDirection(int dir);
-
-
-	virtual bool isHitBoxTouchingEntityInDirectionByAmount(Entity* e, int direction, int amt);
-
-	virtual bool isHitBoxTouchingXYInDirectionByAmount(float x, float y, int direction, int amt);
-
-	virtual bool isHitBoxTouchingXYXYInDirectionByAmount(float left, float top, float right, float bottom, int direction, int amt);
-
+	bool isHitBoxTouchingXYXYInDirectionByAmount(float left, float top, float right, float bottom, int direction, int amt);
 
 	virtual float getTop();
 
@@ -513,162 +417,141 @@ public:
 
 	float getMiddleY();
 
+	float getRoundedMiddleX();
 
-	virtual float getRoundedMiddleX();
+	float getRoundedMiddleY();
 
-	virtual float getRoundedMiddleY();
+	float getMiddleOffsetX();
 
-	virtual float getMiddleOffsetX();
-
-	virtual float getMiddleOffsetY();
-
+	float getMiddleOffsetY();
 
 private:
 	float getScreenX();
 
-
 	float getScreenY();
-
 
 public:
 	virtual float getScreenLeft();
 
-
 	virtual float getScreenTop();
 
-
 	float getScreenMiddleHitboxY();
-
 
 	/// <summary>
 	/// This is the offset from x to the hitbox </summary>
 	virtual float getHitBoxFromLeft();
 
-
 	/// <summary>
 	/// This is the offset from x + width to the hitbox, it is a positive number but subtracted: x + width - hitbox </summary>
 	virtual float getHitBoxFromRight();
-
 
 	/// <summary>
 	/// This is the offset from y to the hitbox, this is larger for people as it offsets down to the feet </summary>
 	virtual float getHitBoxFromTop();
 
-
 	/// <summary>
 	/// This is the offset from y + height to the hitbox, it is a positive number but subtracted: y + height - hitbox </summary>
 	virtual float getHitBoxFromBottom();
 
-
-	virtual float getShadowStart();
-
+	float getShadowStart();
 
 	virtual float getX();
 	virtual float getY();
 
-
 	virtual void setX(float x);
-
 
 	virtual void setY(float y);
 
-
-	virtual void incX();
-	virtual void incY();
-	virtual void decX();
-	virtual void decY();
-
+	void incX();
+	void incY();
+	void decX();
+	void decY();
 
 	virtual float getWidth();
 
-
 	virtual float getHeight();
-
 
 	virtual EntityData* getData();
 
+	string& getName();
+	string& getComment();
+	int getID();
+	//int getMapID();
+	string& getSpriteName();
 
-	virtual string& getName();
-	virtual string& getComment();
-	virtual int getID();
-	//virtual int getMapID();
-	virtual string& getSpriteName();
+	bool getIsNPC();
+	bool getPushable();
+	bool getNonWalkable();
+	float getToAlpha();
+	float getScale();
+	bool getDisableShadow();
+	bool getAboveWhenEqual();
+	bool getAlwaysOnTop();
+	bool getAlwaysOnBottom();
+	RenderOrder getRenderOrder();
+	bool getAboveTopLayer();
+	int getInitialFrame();
+	bool getAnimatingThroughAllFrames();
+	bool getRandomFrames();
+	bool getRandomUpToTicksBetweenFrames();
+	bool getRandomUpToTicksBetweenAnimationLoop();
+	int getTicksBetweenFrames();
+	int getTicksBetweenAnimationLoop();
 
-
-	virtual bool getIsNPC();
-	virtual bool getPushable();
-	virtual bool getNonWalkable();
-	virtual float getToAlpha();
-	virtual float getScale();
-	virtual bool getDisableShadow();
-	virtual bool getAboveWhenEqual();
-	virtual bool getAlwaysOnTop();
-	virtual bool getAlwaysOnBottom();
-	virtual RenderOrder getRenderOrder();
-	virtual bool getAboveTopLayer();
-	virtual int getInitialFrame();
-	virtual bool getAnimatingThroughAllFrames();
-	virtual bool getRandomFrames();
-	virtual bool getRandomUpToTicksBetweenFrames();
-	virtual bool getRandomUpToTicksBetweenAnimationLoop();
-	virtual int getTicksBetweenFrames();
-	virtual int getTicksBetweenAnimationLoop();
-
-	virtual float getTicksPerPixelMoved();
+	float getTicksPerPixelMoved();
 
 	EventData* getEventData();
-	virtual bool getOnlyHereDuringEvent();
-	virtual float getVoicePitch();
-	virtual bool getMovementAnimationDisabled();
-	virtual bool getIgnoreHitLayer();
-	virtual bool getIgnoreHitPlayer();
-	virtual bool getPullPlayer();
-	virtual bool getPushPlayer();
+	bool getOnlyHereDuringEvent();
+	float getVoicePitch();
+	bool getMovementAnimationDisabled();
+	bool getIgnoreHitLayer();
+	bool getIgnoreHitPlayer();
+	bool getPullPlayer();
+	bool getPushPlayer();
 
-	virtual bool getAnimatingThroughCurrentAnimation();
-	virtual bool getLoopAnimation();
+	bool getAnimatingThroughCurrentAnimation();
+	bool getLoopAnimation();
 
-	virtual ArrayList<string>* getConnectionTYPEIDList();
-	virtual ArrayList<string>* getBehaviorList();
+	ArrayList<string>* getConnectionTYPEIDList();
+	ArrayList<string>* getBehaviorList();
 
-	virtual string getTYPEIDString();
-
+	string getTYPEIDString();
 
 	//set
-	virtual void setID(int s);
-	virtual void setName(const string& s);
-	virtual void setComment(const string& s);
+	void setID(int s);
+	void setName(const string& s);
+	void setComment(const string& s);
 
-	virtual void setSpawnXPixelsHQ(float s);
-	virtual void setSpawnYPixelsHQ(float s);
-	virtual void setIsNPC(bool s);
-	virtual void setPushable(bool s);
-	virtual void setNonWalkable(bool s);
-	virtual void setToAlpha(float alpha);
-	virtual void setScale(float s);
-	virtual void setDisableShadow(bool s);
-	virtual void setInitialFrame(int f);
-	virtual void setRandomFrames(bool s);
-	virtual void setRandomUpToTicksBetweenFrames(bool s);
-	virtual void setRandomUpToTicksBetweenAnimationLoop(bool s);
-	virtual void setTicksBetweenFrames(int s);
-	virtual void setTicksBetweenAnimationLoop(int s);
+	void setSpawnXPixelsHQ(float s);
+	void setSpawnYPixelsHQ(float s);
+	void setIsNPC(bool s);
+	void setPushable(bool s);
+	void setNonWalkable(bool s);
+	void setToAlpha(float alpha);
+	void setScale(float s);
+	void setDisableShadow(bool s);
+	void setInitialFrame(int f);
+	void setRandomFrames(bool s);
+	void setRandomUpToTicksBetweenFrames(bool s);
+	void setRandomUpToTicksBetweenAnimationLoop(bool s);
+	void setTicksBetweenFrames(int s);
+	void setTicksBetweenAnimationLoop(int s);
 
-	virtual void setTicksPerPixelMoved(float s);
-	virtual void setRenderOrder(RenderOrder s);
-	virtual void setAboveTopLayer(bool s);
-	virtual void setAboveWhenEqual(bool s);
-	virtual void setAlwaysOnBottom(bool s);
-	virtual void setAlwaysOnTop(bool s);
-	virtual void setOnlyHereDuringEvent(bool s);
-	virtual void setVoicePitch(float s);
-	virtual void setAnimationDisabled(bool s);
-	virtual void setHitLayerDisabled(bool s);
-	virtual void setIgnoreHitPlayer(bool s);
-	//virtual void setEventID(int s);
+	void setTicksPerPixelMoved(float s);
+	void setRenderOrder(RenderOrder s);
+	void setAboveTopLayer(bool s);
+	void setAboveWhenEqual(bool s);
+	void setAlwaysOnBottom(bool s);
+	void setAlwaysOnTop(bool s);
+	void setOnlyHereDuringEvent(bool s);
+	void setVoicePitch(float s);
+	void setAnimationDisabled(bool s);
+	void setHitLayerDisabled(bool s);
+	void setIgnoreHitPlayer(bool s);
+	//void setEventID(int s);
 
-	virtual void setAnimateThroughAllFrames(bool s);
-	virtual void setAnimateThroughCurrentAnimation(bool s);
-	virtual void setLoopAnimation(bool s);
+	void setAnimateThroughAllFrames(bool s);
+	void setAnimateThroughCurrentAnimation(bool s);
+	void setLoopAnimation(bool s);
 };
 

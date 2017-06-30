@@ -64,39 +64,39 @@ public:
 	Event(Engine* g, EventData* eventData, Door* d);
 	void initEvent();
 
-	virtual EventData* getData();
+	EventData* getData();
 
-	virtual int getID();
-	virtual string& getName();
-	virtual int type();
-	virtual string& getComment();
-	virtual string& text();
+	int getID();
+	string& getName();
+	int type();
+	string& getComment();
+	string& text();
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
-	virtual void setID(int id);
-	virtual void setName(const string& name);
-	virtual void setType(int type);
-	virtual void setComment(const string& comment);
-	virtual void setText(const string& text);
+	void setID(int id);
+	void setName(const string& name);
+	void setType(int type);
+	void setComment(const string& comment);
+	void setText(const string& text);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setData_S(EventData* eventData);
+	void setData_S(EventData* eventData);
 
 
-	virtual Map* getMap();
+	Map* getMap();
 
 
 	virtual Map* getCurrentMap() override;
 
 
-	virtual bool getWasAddedToQueue();
+	bool getWasAddedToQueue();
 
-	virtual void setAddedToQueue();
+	void setAddedToQueue();
 
 
-	virtual void reset();
+	void reset();
 
 
 private:
@@ -104,13 +104,13 @@ private:
 
 
 public:
-	virtual void run();
+	void run();
 
 
-	virtual void getNextCommandInParent();
+	void getNextCommandInParent();
 
 
-	virtual void getNextCommand();
+	void getNextCommand();
 
 
 private:
@@ -118,7 +118,7 @@ private:
 
 
 public:
-	virtual void doCommand();
+	void doCommand();
 
 
 private:

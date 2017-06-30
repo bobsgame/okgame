@@ -34,15 +34,15 @@ public:
 	StadiumScreen(Engine* g);
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void setGame(MiniGameEngine* game, Area* area);
+	void setGame(MiniGameEngine* game, Area* area);
 
 
-	virtual MiniGameEngine* getGame();
+	MiniGameEngine* getGame();
 
 
-	virtual void render();
+	void render();
 };
 

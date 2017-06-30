@@ -56,7 +56,7 @@ public:
 	//   public:
 	//      CallbackAnonymousInnerClassHelper(LoginScreen* outerInstance);
 	//
-	//      virtual void callback(int key);
+	//      void callback(int key);
 	//   };
 
 
@@ -72,19 +72,19 @@ protected:
 
 
 public:
-	virtual void setButtonsVisible(bool b);
+	void setButtonsVisible(bool b);
 
 
-	virtual void doLoginWithFacebook();
+	void doLoginWithFacebook();
 
 
-	virtual void doCreateNewAccount();
+	void doCreateNewAccount();
 
 
-	virtual void doForgotPassword();
+	void doForgotPassword();
 
 
-	virtual void doLogin();
+	void doLogin();
 
 
 	//TODO: write these to a cookie and an applet ini if the user wants to remain logged in.
@@ -112,10 +112,10 @@ public:
 	//applet login should set a browser cookie, can do this through JSObject or maybe through CookieManager? check this.
 
 
-	virtual void checkForSessionTokenAndLogInIfExists();
+	void checkForSessionTokenAndLogInIfExists();
 
 
-	virtual void showStatsDialogue();
+	void showStatsDialogue();
 
 
 	virtual void renderBefore() override;

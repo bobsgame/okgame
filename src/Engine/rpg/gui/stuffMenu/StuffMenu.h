@@ -51,13 +51,13 @@ public:
 	virtual void setActivated(bool b) override;
 
 
-	virtual void setAllInvisible();
+	void setAllInvisible();
 
 
-	virtual void openSubMenu();// SubPanel* subPanel);
+	void openSubMenu();// SubPanel* subPanel);
 
 
-	virtual void init();
+	void init();
 
 
 	virtual void update() override;

@@ -48,20 +48,20 @@ public:
 	Event* event = nullptr;
 
 
-	virtual Map* getMap();
+	Map* getMap();
 
 
 	bool fadingInOut = false;
 	float fadeAlpha = 0.0f;
 
 
-	virtual void renderActionIcon();
+	void renderActionIcon();
 
 
 	virtual void update();
 
 
-	virtual void renderDebugBoxes();
+	void renderDebugBoxes();
 
 
 	virtual void renderDebugInfo();
@@ -72,75 +72,75 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	virtual BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
-	virtual void tellServerTalkedToToday();
-
-
-	virtual bool isWithinScreenBounds();
+	void tellServerTalkedToToday();
 
 
-	virtual bool inRangeOfEntityByAmount(Entity* e, int amt);
+	bool isWithinScreenBounds();
 
 
-	virtual float getDistanceFromEntity(Entity* e);
+	bool inRangeOfEntityByAmount(Entity* e, int amt);
 
 
-	virtual bool isEntityHitBoxTouchingMyBoundary(Entity* e);
-
-	virtual bool isAreaCenterTouchingMyBoundary(Area* a);
-
-	virtual bool isAreaBoundaryTouchingMyBoundary(Area* a);
-
-	virtual bool isXYTouchingMyBoundary(float x, float y);
-
-	virtual bool isXYXYTouchingMyBoundary(float left, float top, float right, float bottom);
-
-	virtual bool isAreaBoundaryTouchingMyCenter(Area* a);
-
-	virtual bool isEntityMiddleXYTouchingMyCenter(Entity* e);
-
-	virtual bool isAreaCenterTouchingMyCenter(Area* a);
-
-	virtual bool isXYTouchingMyCenter(float x, float y);
-
-	virtual bool isXYXYTouchingMyCenter(float left, float top, float right, float bottom);
-
-	virtual bool isEntityHitBoxTouchingMyBoundaryByAmount(Entity* e, int amt);
-
-	virtual bool isAreaCenterTouchingMyBoundaryByAmount(Area* a, int amt);
-
-	virtual bool isAreaBoundaryTouchingMyBoundaryByAmount(Area* a, int amt);
-
-	virtual bool isXYTouchingMyBoundaryByAmount(float x, float y, int amt);
-
-	virtual bool isXYXYTouchingMyBoundaryByAmount(float left, float top, float right, float bottom, int amt);
-
-	virtual bool isAreaBoundaryTouchingMyCenterByAmount(Area* a, int amt);
-
-	virtual bool isEntityMiddleXYTouchingMyCenterByAmount(Entity* e, int amt);
-
-	virtual bool isAreaCenterTouchingMyCenterByAmount(Area* a, int amt);
-
-	virtual bool isXYTouchingMyCenterByAmount(float x, float y, int amt);
-
-	virtual bool isXYXYTouchingMyCenterByAmount(float left, float top, float right, float bottom, int amt);
+	float getDistanceFromEntity(Entity* e);
 
 
-	virtual float getTop();
+	bool isEntityHitBoxTouchingMyBoundary(Entity* e);
 
-	virtual float getLeft();
+	bool isAreaCenterTouchingMyBoundary(Area* a);
 
-	virtual float getRight();
+	bool isAreaBoundaryTouchingMyBoundary(Area* a);
 
-	virtual float getBottom();
+	bool isXYTouchingMyBoundary(float x, float y);
 
-	virtual float middleX();
+	bool isXYXYTouchingMyBoundary(float left, float top, float right, float bottom);
 
-	virtual float middleY();
-	virtual float roundedMiddleX();
+	bool isAreaBoundaryTouchingMyCenter(Area* a);
 
-	virtual float roundedMiddleY();
+	bool isEntityMiddleXYTouchingMyCenter(Entity* e);
+
+	bool isAreaCenterTouchingMyCenter(Area* a);
+
+	bool isXYTouchingMyCenter(float x, float y);
+
+	bool isXYXYTouchingMyCenter(float left, float top, float right, float bottom);
+
+	bool isEntityHitBoxTouchingMyBoundaryByAmount(Entity* e, int amt);
+
+	bool isAreaCenterTouchingMyBoundaryByAmount(Area* a, int amt);
+
+	bool isAreaBoundaryTouchingMyBoundaryByAmount(Area* a, int amt);
+
+	bool isXYTouchingMyBoundaryByAmount(float x, float y, int amt);
+
+	bool isXYXYTouchingMyBoundaryByAmount(float left, float top, float right, float bottom, int amt);
+
+	bool isAreaBoundaryTouchingMyCenterByAmount(Area* a, int amt);
+
+	bool isEntityMiddleXYTouchingMyCenterByAmount(Entity* e, int amt);
+
+	bool isAreaCenterTouchingMyCenterByAmount(Area* a, int amt);
+
+	bool isXYTouchingMyCenterByAmount(float x, float y, int amt);
+
+	bool isXYXYTouchingMyCenterByAmount(float left, float top, float right, float bottom, int amt);
+
+
+	float getTop();
+
+	float getLeft();
+
+	float getRight();
+
+	float getBottom();
+
+	float middleX();
+
+	float middleY();
+	float roundedMiddleX();
+
+	float roundedMiddleY();
 
 
 private:
@@ -151,63 +151,63 @@ private:
 
 
 public:
-	virtual float screenLeft();
+	float screenLeft();
 
 
-	virtual float screenRight();
+	float screenRight();
 
 
-	virtual float screenTop();
+	float screenTop();
 
 
-	virtual float screenBottom();
+	float screenBottom();
 
 
-	virtual AreaData* getData();
+	AreaData* getData();
 
 
-	virtual float getX();
-	virtual float getY();
+	float getX();
+	float getY();
 
-	virtual int getWidth();
-	virtual int getHeight();
-
-
-	virtual string& getName();
-	virtual string& getComment();
-	virtual int getID();
-
-	//virtual int mapID();
+	int getWidth();
+	int getHeight();
 
 
-	virtual float arrivalXPixelsHQ();
-	virtual float arrivalYPixelsHQ();
+	string& getName();
+	string& getComment();
+	int getID();
 
-	virtual bool isWarpArea();
-	virtual bool randomPointOfInterestOrExit();
-	virtual bool randomNPCSpawnPoint();
-	virtual int standSpawnDirection();
-	virtual int waitHereTicks();
-	virtual bool randomWaitTime();
-	virtual bool onlyOneAllowed();
-	virtual bool randomNPCStayHere();
-	virtual float randomSpawnChance();
-	virtual bool randomSpawnOnlyTryOnce();
-	virtual bool randomSpawnOnlyOffscreen();
-	virtual int randomSpawnDelay();
-	virtual bool randomSpawnKids();
-	virtual bool randomSpawnAdults();
-	virtual bool randomSpawnMales();
-	virtual bool randomSpawnFemales();
-	virtual bool randomSpawnCars();
-	virtual bool autoPilot();
-	virtual bool playerFaceDirection();
-	virtual bool suckPlayerIntoMiddle();
+	//int mapID();
+
+
+	float arrivalXPixelsHQ();
+	float arrivalYPixelsHQ();
+
+	bool isWarpArea();
+	bool randomPointOfInterestOrExit();
+	bool randomNPCSpawnPoint();
+	int standSpawnDirection();
+	int waitHereTicks();
+	bool randomWaitTime();
+	bool onlyOneAllowed();
+	bool randomNPCStayHere();
+	float randomSpawnChance();
+	bool randomSpawnOnlyTryOnce();
+	bool randomSpawnOnlyOffscreen();
+	int randomSpawnDelay();
+	bool randomSpawnKids();
+	bool randomSpawnAdults();
+	bool randomSpawnMales();
+	bool randomSpawnFemales();
+	bool randomSpawnCars();
+	bool autoPilot();
+	bool playerFaceDirection();
+	bool suckPlayerIntoMiddle();
 	EventData* getEventData();
-	virtual ArrayList<string>* connectionTYPEIDList();
+	ArrayList<string>* connectionTYPEIDList();
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
-	virtual string& destinationTYPEIDString();
+	string& destinationTYPEIDString();
 };
 

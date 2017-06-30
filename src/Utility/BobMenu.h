@@ -127,8 +127,8 @@ public:
 	void up(bool noSound = false);
 	void down(bool noSound = false);
 	MenuItem* addInfo(string caption, string id = "", BobColor *color = nullptr);
-	virtual MenuItem* add(string caption, string id = "", BobColor *color = nullptr);
-	virtual MenuItem* addYesNo(string caption, bool yesNo);
+	MenuItem* add(string caption, string id = "", BobColor *color = nullptr);
+	MenuItem* addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
 
@@ -190,7 +190,7 @@ public:
 //	{
 //		
 //	}
-//	virtual MenuItem* add(string caption, string id = "", BobColor *color = menuColor)
+//	MenuItem* add(string caption, string id = "", BobColor *color = menuColor)
 //	{
 //		MenuItem * m = BobMenu::add(caption, id, color);
 //		menuItems->get(menuItems->size()-1)->caption->visible = false;

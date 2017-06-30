@@ -3,14 +3,10 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include "Entity.h"
 class Logger;
-
-
-
 
 class PathFinder;
 class Engine;
@@ -19,7 +15,6 @@ class BobTexture;
 class Caption;
 class Sprite;
 class Area;
-
 
 class Character : public Entity
 {
@@ -34,16 +29,13 @@ public:
 
 	int ticksToStand = 0;
 
-
 	int animationDirection = 0;
 
 	PathFinder* pathfinder = nullptr;
 
-
 	int pathPosition = 0;
 
 	int pathFindWaitTicks = 0;
-
 
 	float lastMapX = 0;
 	float lastMapY = 0;
@@ -53,9 +45,7 @@ public:
 	bool standing = false;
 	bool running = false;
 
-
 	BobTexture* uniqueTexture = nullptr; //if this is set it will render with this, otherwise it will try to render the normal spriteAsset.texture in Entity.render()
-
 
 	bool showName = false;
 	Caption* nameCaption = nullptr;
@@ -67,71 +57,50 @@ public:
 	BobColor* accountTypeNameColor = BobColor::white;
 	string accountTypeName = "";
 
-
 	bool isMale = false;
 	bool isFemale = false;
-
 
 	int standingTicksBetweenFrames = 0;
 	int rotationAnimationSpeedTicks = 160;
 
-
 	Character();
 	//Character(Engine* g);
-
 
 	Character(Engine* g, EntityData* data, Map* m);
 
 	void initCharacter();
 
-
 	Character(Engine* g, string name, Sprite* sprite, Area* a, Map* m);
-
 
 	virtual void initCurrentAnimationFromSprite() override;
 
-
 	virtual void render(float alpha) override;
-
 
 	virtual void update() override;
 
+	void setAnimationByDirection(int dir);
 
-	virtual void setAnimationByDirection(int dir);
+	bool canDoCharacterMovementOrStandingAnimation();
 
+	void doCharacterAnimation(); //does animation and turns if needed
 
-	virtual bool canDoCharacterMovementOrStandingAnimation();
+	void checkIfMoved();
 
+	void dontLookAtEntity(Entity* e); //first id is entity to be avoiding LOOKING,second id is one to NOT BE LOOKED AT
 
-	virtual void doCharacterAnimation(); //does animation and turns if needed
+	void lookAtEntity(Entity* e);
 
+	void lookAtEntityButNotOppositeWalkingDirection(Entity* stared_at_entity);
 
-	virtual void checkIfMoved();
+	void setAppearanceFromCharacterAppearanceString(string s);
 
+	void generateUniqueTexture(int genderIndex, int archetypeIndex, int shoeColorIndex, int shirtColorIndex, int pantsColorIndex, int skinColorIndex, int eyeColorIndex, int hairColorIndex);
 
-	virtual void dontLookAtEntity(Entity* e); //first id is entity to be avoiding LOOKING,second id is one to NOT BE LOOKED AT
+	void setShowName(bool b);
 
+	void setShowAccountType(bool b);
 
-	virtual void lookAtEntity(Entity* e);
-
-
-	virtual void lookAtEntityButNotOppositeWalkingDirection(Entity* stared_at_entity);
-
-
-	virtual void setAppearanceFromCharacterAppearanceString(string s);
-
-
-	virtual void generateUniqueTexture(int genderIndex, int archetypeIndex, int shoeColorIndex, int shirtColorIndex, int pantsColorIndex, int skinColorIndex, int eyeColorIndex, int hairColorIndex);
-
-
-	virtual void setShowName(bool b);
-
-
-	virtual void setShowAccountType(bool b);
-
-
-	virtual void setCharacterNameAndCaption(BobColor* nameColor, const string& name, BobColor* accountTypeNameColor, const string& accountTypeName);
-
+	void setCharacterNameAndCaption(BobColor* nameColor, const string& name, BobColor* accountTypeNameColor, const string& accountTypeName);
 
 	//
 	//	
@@ -171,26 +140,20 @@ public:
 	//
 	//	}
 
+	ArrayList<Entity*>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 
-	virtual ArrayList<Entity*>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
+	bool checkTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y);
 
-	virtual bool checkTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y);
+	bool checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y);
 
+	bool checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y);
 
-	virtual bool checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<Entity*>* list, float x, float y);
-
-
-	virtual bool checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y);
-
-
-	virtual void setShadowClip();
-
+	void setShadowClip();
 
 	int pathTried = 0;
 
 	float finalPathX = 0;
 	float finalPathY = 0;
-
 
 	/// <summary>
 	/// return 0 if not there.
@@ -198,92 +161,63 @@ public:
 	/// return 1 if there.
 	/// 
 	/// </summary>
-	virtual int walkToXYWithPathFinding(float x, float y);
+	int walkToXYWithPathFinding(float x, float y);
 
+	void checkHitBoxAndWalkDirection(int dir);
 
-	virtual void checkHitBoxAndWalkDirection(int dir);
+	void walkDirectionNoCheckHit(int direction);
 
+	void walkRandomlyAroundRoomAndStop();
 
-	virtual void walkDirectionNoCheckHit(int direction);
+	void walkRandomlyAroundRoom();
 
+	int walkRandomlyWithinXYXY(float x1, float y1, float x2, float y2);
 
-	virtual void walkRandomlyAroundRoomAndStop();
+	void twitchAroundRoom();
 
+	Character* findNearestCharacter();
 
-	virtual void walkRandomlyAroundRoom();
+	int walkToXYLRToUD(float x, float y);
 
+	int walkToXYUDToLR(float toX, float toY);
 
-	virtual int walkRandomlyWithinXYXY(float x1, float y1, float x2, float y2);
+	bool walkToXYNoCheckHit(float toX, float toY);
 
+	bool walkToXYNoCheckHitOLD(float x, float y);
 
-	virtual void twitchAroundRoom();
+	bool walkToXYUntilHitWall(float x, float y);
 
+	int walkToXYWithBasicHitCheck(float x, float y);
 
-	virtual Character* findNearestCharacter();
+	int walkToXYNoHitAvoidOthersPushMain(float x, float y);
 
+	int walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt); //walk_to_xy_stop_for_other_entitys_amt
 
-	virtual int walkToXYLRToUD(float x, float y);
-
-
-	virtual int walkToXYUDToLR(float toX, float toY);
-
-
-	virtual bool walkToXYNoCheckHit(float toX, float toY);
-
-
-	virtual bool walkToXYNoCheckHitOLD(float x, float y);
-
-
-	virtual bool walkToXYUntilHitWall(float x, float y);
-
-
-	virtual int walkToXYWithBasicHitCheck(float x, float y);
-
-
-	virtual int walkToXYNoHitAvoidOthersPushMain(float x, float y);
-
-
-	virtual int walkToXYStopForOtherEntitiesWithinAmt(float x, float y, int amt); //walk_to_xy_stop_for_other_entitys_amt
-
-
-	virtual void walkDirectionAvoidOtherEntities(int direction);
-
+	void walkDirectionAvoidOtherEntities(int direction);
 
 	///TEMP TEMP TEMP
 
+	bool walkToXYIntelligentHitPushOthers(float x, float y);
 
-	virtual bool walkToXYIntelligentHitPushOthers(float x, float y);
+	bool walkToXYIntelligentHitAvoidOthers(float x, float y);
 
+	int walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y);
 
-	virtual bool walkToXYIntelligentHitAvoidOthers(float x, float y);
+	void walkStraightFromPointToPoint(float x1, float y1, float x2, float y2);
 
+	void walkStraightFromPointToPointAndStop(float x1, float y1, float x2, float y2);
 
-	virtual int walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y);
+	void walkAwayFromPoint(float x, float y);
 
+	int walkDistance(int direction);
 
-	virtual void walkStraightFromPointToPoint(float x1, float y1, float x2, float y2);
+	int avoidEntity(Entity* e, int amt); //returns 1 if not in entity area,use it to do something else outside,standing,staring,walking randomly etc
 
+	int avoidNearestEntity(int avoid_amt);
 
-	virtual void walkStraightFromPointToPointAndStop(float x1, float y1, float x2, float y2);
+	int avoidNearestCharacter(int avoid_amt);
 
-
-	virtual void walkAwayFromPoint(float x, float y);
-
-
-	virtual int walkDistance(int direction);
-
-
-	virtual int avoidEntity(Entity* e, int amt); //returns 1 if not in entity area,use it to do something else outside,standing,staring,walking randomly etc
-
-
-	virtual int avoidNearestEntity(int avoid_amt);
-
-
-	virtual int avoidNearestCharacter(int avoid_amt);
-
-
-	virtual void pushableCrowdBehavior();
-
+	void pushableCrowdBehavior();
 
 	///================================================
 	///================================================
@@ -306,13 +240,11 @@ public:
 	///================================================
 	///================================================
 
-
 	//TODO: problems:
 
 	//entity still gets stuck facing down sometimes
 	//entitys are too jittery
 	//walking into corners back and forth looks bad.
-
 
 	//solutions:
 	//entity can stop momentarily if there is someone in their way, unless they are walking faster
@@ -323,9 +255,7 @@ public:
 
 	//jitter is caused by pushing back and forth. entitys should communicate to decide who is pushing and who is being pushed?
 
-
-	virtual int walk_to_xy_intelligenthit_avoidothers_pushmain(float x, float y);
-
+	int walk_to_xy_intelligenthit_avoidothers_pushmain(float x, float y);
 
 	virtual void renderDebugBoxes() override;
 };

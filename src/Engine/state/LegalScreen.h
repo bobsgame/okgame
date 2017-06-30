@@ -29,14 +29,14 @@ public:
 	bool _clickedCancel = false;
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getClickedOK_S();
+	bool getClickedOK_S();
 	//The following method was originally marked 'synchronized':
-	virtual bool getClickedCancel_S();
+	bool getClickedCancel_S();
 
 	//The following method was originally marked 'synchronized':
-	virtual void setClickedOK_S(bool b);
+	void setClickedOK_S(bool b);
 	//The following method was originally marked 'synchronized':
-	virtual void setClickedCancel_S(bool b);
+	void setClickedCancel_S(bool b);
 
 
 	virtual void update() override;
@@ -50,16 +50,16 @@ protected:
 
 
 public:
-	virtual void setButtonsVisible(bool b);
+	void setButtonsVisible(bool b);
 
 
 	virtual void scrollDown() override;
 
 
-	virtual void doDisagree();
+	void doDisagree();
 
 
-	virtual void doAgree();
+	void doAgree();
 
 
 	virtual void renderBefore() override;

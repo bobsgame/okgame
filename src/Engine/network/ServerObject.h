@@ -35,14 +35,14 @@ public:
 	void setInitialized_S(bool i);
 
 private:
-	void sendServerRequest();
+	virtual void sendServerRequest();
 
 
 protected:
 	bool loadedInfoDataFromServer = false; //non-threaded check
 	long long lastCheckedInitializedTime = 0;
 
-	virtual bool getLoadedFromServerSendRequestIfFalse();
+	bool getLoadedFromServerSendRequestIfFalse();
 
 public:
 	virtual void update();

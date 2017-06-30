@@ -118,7 +118,7 @@ private:
 	public:
 		CallbackAnonymousInnerClassHelper(PlayerEditMenu* outerInstance);
 
-		virtual void callback(int key);// override;
+		virtual void callback(int key);//;
 	};
 
 private:
@@ -130,15 +130,15 @@ private:
 	public:
 		CallbackAnonymousInnerClassHelper2(PlayerEditMenu* outerInstance);
 
-		virtual void callback(int key);// override;
+		virtual void callback(int key);//;
 	};
 
 
 public:
-	virtual void init();
+	void init();
 
 
-	virtual void setButtonsVisible(bool b);
+	void setButtonsVisible(bool b);
 
 
 public:
@@ -161,34 +161,34 @@ public:
 
 
 public:
-	virtual AddressInfo* queryYahooGeocodingAPI(const string& address);
+	AddressInfo* queryYahooGeocodingAPI(const string& address);
 
 
-	virtual AddressInfo* queryGoogleGeocodingAPI(const string& address);
+	AddressInfo* queryGoogleGeocodingAPI(const string& address);
 
 
-	virtual void doOKButton();
+	void doOKButton();
 
 
-	virtual void linkFacebookAccount();
+	void linkFacebookAccount();
 
 
-	virtual void redrawPlayer();
+	void redrawPlayer();
 
 
-	virtual void setRandomOptions();
+	void setRandomOptions();
 
 
 protected:
-	virtual void layout() override;
+	virtual void layout();
 
 
 public:
-	virtual void setActivated(bool b) override;
+	virtual void setActivated(bool b);
 
 
-	virtual void update() override;
+	virtual void update();
 
-	virtual void render() override;
+	virtual void render();
 };
 

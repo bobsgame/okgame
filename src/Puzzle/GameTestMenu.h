@@ -48,15 +48,15 @@ public:
 		static const char* ident = "Rectangle" ":" "PreviewRectangle";
 		return ident;
 	};
-	virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
+	Gwen::Controls::Base* DynamicCast(const char* Variable)
 	{
 		if (GetIdentifier() == Variable)
 			return this;
 
 		return Gwen::Controls::Rectangle::DynamicCast(Variable);
 	}
-	virtual const char* GetTypeName() { return "PreviewRectangle"; }
-	virtual const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
+	const char* GetTypeName() { return "PreviewRectangle"; }
+	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
 	//GWEN_CONTROL_CONSTRUCTOR(PreviewRectangle)
 	GameTestPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame* b) : Gwen::Controls::Rectangle(pParent, pName)
 	{
@@ -64,7 +64,7 @@ public:
 		m_Color = Gwen::Color(255, 255, 0, 255);
 	}
 
-	virtual void Render(Gwen::Skin::Base* skin);
+	void Render(Gwen::Skin::Base* skin);
 
 	BobsGame *bobsGame = nullptr;
 };
@@ -82,15 +82,15 @@ public:
 		static const char* ident = "Base" ":" "GameTestMenuControl";
 		return ident;
 	};
-	virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
+	Gwen::Controls::Base* DynamicCast(const char* Variable)
 	{
 		if (GetIdentifier() == Variable)
 			return this;
 
 		return Gwen::Controls::Base::DynamicCast(Variable);
 	}
-	virtual const char* GetTypeName() { return "GameTestMenuControl"; }
-	virtual const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
+	const char* GetTypeName() { return "GameTestMenuControl"; }
+	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
 	GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "", BobsGame *b = nullptr);
 
 

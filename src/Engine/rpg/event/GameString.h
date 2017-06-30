@@ -31,19 +31,19 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setData_S(GameStringData* data);
+	void setData_S(GameStringData* data);
 
 
-	virtual GameStringData* getData();
+	GameStringData* getData();
 
-	virtual int getID();
-	virtual string& getName();
-	virtual string& text();
+	int getID();
+	string& getName();
+	string& text();
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
-	virtual void id(int id);
-	virtual void setName(const string& name);
-	virtual void text(const string& text);
+	void id(int id);
+	void setName(const string& name);
+	void text(const string& text);
 };
 

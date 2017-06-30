@@ -49,15 +49,15 @@ public:
 
 	string& initFromString(string& t);
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
-	virtual ArrayList<LightData*>* getLightDataList();
-	virtual ArrayList<EntityData*>* getEntityDataList();
-	virtual ArrayList<AreaData*>* getAreaDataList();
+	ArrayList<LightData*>* getLightDataList();
+	ArrayList<EntityData*>* getEntityDataList();
+	ArrayList<AreaData*>* getAreaDataList();
 
 
-	virtual int getMapID();
+	int getMapID();
 
-	virtual void setMapID(int s);
+	void setMapID(int s);
 };
 

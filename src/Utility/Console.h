@@ -67,7 +67,7 @@ public:
 	static mutex _consoleTextList_Mutex;
 
 	Console();
-	virtual void update();
+	void update();
 
 	static ConsoleText* error(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
 	static ConsoleText* debug(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);

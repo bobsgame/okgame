@@ -40,21 +40,21 @@ public:
 
 	EventCommand(Engine* g, const string& command, ArrayList<EventParameter*>* parameterList, int type);
 
-	virtual int getNumParams();
+	int getNumParams();
 
 
 	static EventCommand* parseEventCommandFromCommandString(Engine* g, Event* event, string commandString);
 
 
-	virtual EventCommand* getParent();
+	EventCommand* getParent();
 
 
-	virtual void addChild(EventCommand* e);
+	void addChild(EventCommand* e);
 
 
 	int currentChildIndex = 0;
 
 
-	virtual EventCommand* getNextChild();
+	EventCommand* getNextChild();
 };
 

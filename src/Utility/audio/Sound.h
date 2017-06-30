@@ -55,37 +55,37 @@ public:
 	Sound(Engine* g, string filename);
 
 
-	virtual SoundData* getData();
+	SoundData* getData();
 
-	virtual int getID();
-	virtual string& getName();
-	virtual string& getFileName();
+	int getID();
+	string& getName();
+	string& getFileName();
 	//public String getFullFilePath(){return data.getFullFilePath();}
-	virtual string& getMD5Name();
+	string& getMD5Name();
 
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
 
-	virtual void setID(int id);
-	virtual void setName(const string& name);
-	virtual void setFileName(const string& fileName);
+	void setID(int id);
+	void setName(const string& name);
+	void setFileName(const string& fileName);
 	//public void setFullFilePath(String getFullFilePath){data.setFullFilePath(getFullFilePath);}
-	virtual void setMD5Name(const string& s);
+	void setMD5Name(const string& s);
 
 
 protected:
-	virtual bool getFileExists();
+	bool getFileExists();
 
-	virtual void setFileExists(bool i);
+	void setFileExists(bool i);
 
 
 public:
-	virtual vector<u8>* getByteData();
+	vector<u8>* getByteData();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setData_S(SoundData* data);
+	void setData_S(SoundData* data);
 
 	//Thread* downloadThread = nullptr;
 
@@ -93,10 +93,10 @@ public:
 	virtual void update() override;
 
 
-	virtual void play();
+	void play();
 
 
-	virtual void play(float pitch, float volume, int timesToPlay);
+	void play(float pitch, float volume, int timesToPlay);
 
 
 
@@ -115,7 +115,7 @@ public:
 
 
 
-		virtual void handlePlaying();
+		void handlePlaying();
 
 		void stop();
 

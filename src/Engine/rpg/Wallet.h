@@ -26,9 +26,9 @@ public:
 	Wallet(BGClientEngine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void update();
+	void update();
 };
 

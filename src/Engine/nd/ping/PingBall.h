@@ -32,21 +32,21 @@ public:
 	PingBall(Engine* g);
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void render();
+	void render();
 
-	virtual float left();
+	float left();
 
-	virtual float right();
+	float right();
 
-	virtual float top();
+	float top();
 
-	virtual float bottom();
+	float bottom();
 
-	virtual float middleX();
+	float middleX();
 
-	virtual float middleY();
+	float middleY();
 };
 

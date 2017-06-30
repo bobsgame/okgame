@@ -25,6 +25,6 @@ public:
 	int contains = 0;
 
 
-	virtual void getHit();
+	void getHit();
 };
 

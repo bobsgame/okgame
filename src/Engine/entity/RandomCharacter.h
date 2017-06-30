@@ -37,15 +37,15 @@ public:
 	RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car);
 
 
-	virtual Map* getCurrentMap();
+	Map* getCurrentMap();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual vector<u8>* getByteBuffer_S();
+	vector<u8>* getByteBuffer_S();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void setByteBuffer_S(vector<u8>* bb);
+	void setByteBuffer_S(vector<u8>* bb);
 
 
 	vector<u8>* textureByteBuffer_S = nullptr;
@@ -59,21 +59,21 @@ public:
 	int carSet = -1;
 
 
-	virtual int selectRandomSet(Sprite* s);
+	int selectRandomSet(Sprite* s);
 
 
 	bool createdThread = false;
 
 
-	virtual void createRandomTexture();
+	void createRandomTexture();
 
 
 	virtual void update() override;
 
 
-	virtual string getRandomAreaWarpOrDoorTYPEID();
+	string getRandomAreaWarpOrDoorTYPEID();
 
 
-	virtual string getRandomConnectionTYPEIDFromCurrentPoint();
+	string getRandomConnectionTYPEIDFromCurrentPoint();
 };
 

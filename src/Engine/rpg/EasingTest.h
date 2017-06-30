@@ -48,6 +48,6 @@ public:
 	static float beginningValue;
 	static float changeInValue;
 
-	virtual void update();
+	void update();
 };
 

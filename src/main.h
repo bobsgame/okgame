@@ -101,21 +101,21 @@ public:
 	System* clientInfo = new System();
 
 
-	//virtual void initSystemInfo();
+	//void initSystemInfo();
 
 
 	float timeZoneGMTOffset = 0.0f;
 	float DSTOffset = 0.0f;
-	//virtual void initClockAndTimeZone();
+	//void initClockAndTimeZone();
 
 
-	virtual void doLegalScreen();
+	void doLegalScreen();
 
 
-	virtual void showControlsImage();
+	void showControlsImage();
 
 
-	virtual void makeGhostThread();
+	void makeGhostThread();
 
 
 
@@ -176,10 +176,10 @@ public:
 
 
 
-	virtual void mainInit();
+	void mainInit();
 
 
-	virtual void initClientEngine();
+	void initClientEngine();
 
 
 	static bool introMode;
@@ -222,15 +222,15 @@ public:
 	//
 	//
 	//   //this is called from the browser javascript after we call the facebook JS SDK
-	//   virtual void setFacebookCredentials(const string& facebookID, const string& accessToken);
+	//   void setFacebookCredentials(const string& facebookID, const string& accessToken);
 
 
-	virtual void mainLoop();
+	void mainLoop();
 
 
 
 
-	virtual void cleanup();
+	void cleanup();
 
 	//int unZip(string file);
 };

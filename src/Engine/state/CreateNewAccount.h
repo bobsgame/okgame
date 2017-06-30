@@ -68,7 +68,7 @@ public:
 	//   public:
 	//      CallbackAnonymousInnerClassHelper2(CreateNewAccount* outerInstance);
 	//
-	//      virtual void callback(int key);
+	//      void callback(int key);
 	//   };
 	//
 	//private:
@@ -80,24 +80,24 @@ public:
 	//   public:
 	//      CallbackAnonymousInnerClassHelper3(CreateNewAccount* outerInstance);
 	//
-	//      virtual void callback(int key);
+	//      void callback(int key);
 	//   };
 
 
 public:
-	virtual void init();
+	void init();
 
 
-	virtual void setButtonsVisible(bool b);
+	void setButtonsVisible(bool b);
 
 
 	virtual void onScrolledUp() override;
 
 
-	virtual void doCancel();
+	void doCancel();
 
 
-	virtual void doCreateAccount();
+	void doCreateAccount();
 
 
 protected:

@@ -31,9 +31,9 @@ public:
 	virtual void update() override;
 
 
-	virtual void getHit();
+	void getHit();
 
 
-	virtual void checkHit(float x, float y);
+	void checkHit(float x, float y);
 };
 

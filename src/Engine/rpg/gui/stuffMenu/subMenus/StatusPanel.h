@@ -290,13 +290,13 @@ public:
 
 
 protected:
-	virtual void doGoPremiumButton();
+	void doGoPremiumButton();
 
 
-	virtual void doAddMoneyButton();
+	void doAddMoneyButton();
 
 
-	virtual void doEditCharacterButton();
+	void doEditCharacterButton();
 
 
 public:

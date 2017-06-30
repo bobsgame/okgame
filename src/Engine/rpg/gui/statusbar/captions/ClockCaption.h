@@ -28,9 +28,9 @@ public:
 	virtual void update() override;
 
 
-	virtual void setDarkTheme();
+	void setDarkTheme();
 
-	virtual void setLightTheme();
+	void setLightTheme();
 
 
 	BobColor* pausedFGColor = BobColor::darkGray;
@@ -46,15 +46,15 @@ public:
 	BobColor* unknownBGColor = BobColor::black;
 
 
-	virtual void setPausedColor();
+	void setPausedColor();
 
 
-	virtual void setUnknownColor();
+	void setUnknownColor();
 
 
-	virtual void setFastColor();
+	void setFastColor();
 
 
-	virtual void setColors(BobColor* fg, BobColor* aa, BobColor* bg);
+	void setColors(BobColor* fg, BobColor* aa, BobColor* bg);
 };
 

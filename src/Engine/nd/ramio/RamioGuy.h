@@ -76,22 +76,22 @@ public:
 	bool running = false;
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void jump();
+	void jump();
 
 
-	virtual void fall();
+	void fall();
 
 
 	virtual void update() override;
 
 
-	virtual bool checkHit(int dir);
+	bool checkHit(int dir);
 
 
-	virtual void move(int direction, float floatPixels);
+	void move(int direction, float floatPixels);
 
 
 	virtual void render(float alpha, BobTexture* texture, BobTexture* shadowTexture) override;

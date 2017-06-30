@@ -3,7 +3,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
@@ -39,13 +38,11 @@ public:
 	ConsoleText* playerMapText = Console::debug("playerMapText");
 	ConsoleText* playerScreenText = Console::debug("playerScreenText");
 
-
 	GUIManager* guiManager = nullptr;
 	StatusBar* statusBar = nullptr;
 	Wallet* wallet = nullptr;
 
 	Clock* clock = nullptr;
-
 
 	Player* normalPlayer = nullptr;
 	Player* player = nullptr;
@@ -55,55 +52,37 @@ public:
 	ND* nD = nullptr;
 	StadiumScreen* stadiumScreen = nullptr;
 
-
 	bool controlsEnabled = true;
 	bool playerExistsInMap = true;
 
-
 	BGClientEngine();
-	virtual ~BGClientEngine();
-	virtual void init();
-
-
-
-
-
+	virtual ~BGClientEngine() override;
+	virtual void init() override;
 
 	virtual void update() override;
 
-
 	virtual void cleanup() override;
-
 
 	virtual void render() override;
 
+	bool areAnyMenusOpen();
 
-	virtual bool areAnyMenusOpen();
-
-
-	virtual void handleGameEngineOptionKeys();
-
+	void handleGameEngineOptionKeys();
 
 	virtual void updateDebugText() override;
 
+	void loadPreCachedObjectData();
 
-	virtual void loadPreCachedObjectData();
+	void initializeGameFromSave_S();
+	void setPlayerAppearanceFromGameSave_S();
 
-	virtual void initializeGameFromSave_S();
-	virtual void setPlayerAppearanceFromGameSave_S();
+	BobColor* getNameColor(int accountType);
 
+	string getAccountRankString(int accountRank);
+	BobColor* getAccountRankColor(int accountRank);
 
-	virtual BobColor* getNameColor(int accountType);
-
-
-	virtual string getAccountRankString(int accountRank);
-	virtual BobColor* getAccountRankColor(int accountRank);
-
-
-	virtual void setPlayerToTempPlayerWithSprite(Sprite* s);
-	virtual void setPlayerToNormalPlayer();
-
-
+	void setPlayerToTempPlayerWithSprite(Sprite* s);
+	void setPlayerToNormalPlayer();
 
 	Clock* getClock();
 	GUIManager* getGUIManager();
@@ -118,8 +97,6 @@ public:
 	NotificationManager* getNotificationManager();
 	//The following method was originally marked 'synchronized':
 
-
-
 	//====================================================
 	//NETWORKING
 	//====================================================
@@ -133,14 +110,11 @@ public:
 		bool _isGameInitializedFromSave = false; //synchronized
 public:
 	//The following method was originally marked 'synchronized':
-	virtual void setGameInitializedFromSave_S(bool b);
+	void setGameInitializedFromSave_S(bool b);
 	//The following method was originally marked 'synchronized':
-	virtual bool getGameInitializedFromSave_S();
+	bool getGameInitializedFromSave_S();
 
-
-
-	virtual bool serverMessageReceived(string e);
-
+	virtual bool serverMessageReceived(string e) override;
 
 private:
 	long long lastSentProjectLoadEventRequestTime = 0;
@@ -149,24 +123,21 @@ private:
 
 public:
 	//The following method was originally marked 'synchronized':
-	virtual void setProjectLoadEventID_S(int id);
+	void setProjectLoadEventID_S(int id);
 
 	//The following method was originally marked 'synchronized':
-	virtual int getProjectLoadEventID_S();
+	int getProjectLoadEventID_S();
 
-
-	virtual bool getFinishedLoadEvent();
+	bool getFinishedLoadEvent();
 	Event* projectLoadEvent = nullptr;
 
 	bool finishedProjectLoadEvent = false;
 
-
 	public:
-		virtual void sendProjectLoadEventRequest();
+		void sendProjectLoadEventRequest();
 
 private:
 	void incomingLoadEventResponse(string s);
-
 
 };
 

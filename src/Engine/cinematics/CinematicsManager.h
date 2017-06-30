@@ -90,28 +90,28 @@ public:
 
 	CinematicsManager(Engine* g);
 
-	virtual void init();
+	void init();
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void render(RenderOrder renderOrder);
+	void render(RenderOrder renderOrder);
 
 
-	virtual void setLetterbox(bool on, int slideDurationTicks, int size);
+	void setLetterbox(bool on, int slideDurationTicks, int size);
 
-	virtual void setLetterbox(bool on, int slideDurationTicks, float sizePercent);
-
-
-	virtual void fadeToWhite(int ticks);
-
-	virtual void fadeFromWhite(int ticks);
+	void setLetterbox(bool on, int slideDurationTicks, float sizePercent);
 
 
-	virtual void fadeToBlack(int ticks);
+	void fadeToWhite(int ticks);
 
-	virtual void fadeFromBlack(int ticks);
+	void fadeFromWhite(int ticks);
+
+
+	void fadeToBlack(int ticks);
+
+	void fadeFromBlack(int ticks);
 
 
 	//	
@@ -126,9 +126,9 @@ public:
 	//	}
 
 
-	virtual void fadeColorFromCurrentAlphaToAlpha(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromCurrentAlphaToAlpha(int ticks, int ri, int gi, int bi, float toAlpha);
 
-	virtual void fadeColorFromAlphaToAlpha(int ticks, int ri, int gi, int bi, float fromAlpha, float toAlpha);
+	void fadeColorFromAlphaToAlpha(int ticks, int ri, int gi, int bi, float fromAlpha, float toAlpha);
 
 	//	
 	//	public void fadeFromTransparentToBlackOpaqueAndBackToTransparent(int ticks)
@@ -148,74 +148,74 @@ public:
 	//		screenOverlay.doToAndFromTransition(new Color(ri,gi,bi),ticks,1.0f);
 	//	}
 
-	virtual void fadeColorFromTransparentToAlphaBackToTransparent(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromTransparentToAlphaBackToTransparent(int ticks, int ri, int gi, int bi, float toAlpha);
 	//	
 	//	public void fadeColorFromCurrentAlphaToAlphaBackToCurrentAlpha(int ticks, int ri, int gi, int bi, float getToAlpha)
 	//	{
 	//		screenOverlay.doToAndFromTransition(new Color(ri,gi,bi),ticks, getToAlpha);
 	//	}
 
-	virtual void setInstantOverlayColor(int ri, int gi, int bi, float a);
+	void setInstantOverlayColor(int ri, int gi, int bi, float a);
 
 
-	virtual void clearOverlay();
+	void clearOverlay();
 
 	//TODO eventually redo overlay system to make disposable events that i can combine, i.e. flash red while fading to black, etc.
 
 
-	virtual void fadeColorFromCurrentAlphaToAlphaUnderLights(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromCurrentAlphaToAlphaUnderLights(int ticks, int ri, int gi, int bi, float toAlpha);
 
 
-	virtual void setInstantOverlayColorUnderLights(int ri, int gi, int bi, float a);
+	void setInstantOverlayColorUnderLights(int ri, int gi, int bi, float a);
 
 
-	virtual void clearOverlayUnderLights();
+	void clearOverlayUnderLights();
 
 
-	virtual void fadeColorFromCurrentAlphaToAlphaGroundLayer(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromCurrentAlphaToAlphaGroundLayer(int ticks, int ri, int gi, int bi, float toAlpha);
 
 
-	virtual void setInstantOverlayColorGroundLayer(int ri, int gi, int bi, float a);
+	void setInstantOverlayColorGroundLayer(int ri, int gi, int bi, float a);
 
 
-	virtual void clearOverlayGroundLayer();
+	void clearOverlayGroundLayer();
 
 
-	virtual void set8BitMode(bool b);
+	void set8BitMode(bool b);
 
 
-	virtual void setInvertedColors(bool b);
+	void setInvertedColors(bool b);
 
 
-	virtual void setBlackAndWhite(bool b);
+	void setBlackAndWhite(bool b);
 
 
-	virtual void setRotate(bool b);
+	void setRotate(bool b);
 
 
-	virtual void setHBlankWave(bool b);
+	void setHBlankWave(bool b);
 
 
-	virtual void setMosaic(bool b);
+	void setMosaic(bool b);
 
 
-	virtual void setBlur(bool b);
+	void setBlur(bool b);
 
 
-	virtual void openEyes(int ticksDuration);
+	void openEyes(int ticksDuration);
 
-	virtual void closeEyes(int ticksDuration);
-
-
-	virtual void shakeScreenForTicksDurationEaseInAndOutToMaxAmountWithEasingBetweenShakes(int ticksDuration, int maxX, int maxY, int ticksPerShake);
+	void closeEyes(int ticksDuration);
 
 
-	virtual void shakeScreenForTicksDurationConstantRateEasingBetweenShakes(bool onOff, int maxX, int maxY, int ticksPerShake);
+	void shakeScreenForTicksDurationEaseInAndOutToMaxAmountWithEasingBetweenShakes(int ticksDuration, int maxX, int maxY, int ticksPerShake);
 
 
-	virtual void shakeScreenOnOffConstantRateEasingBetweenShakesMustTurnOff(bool onOff, int maxX, int maxY, int ticksPerShake);
+	void shakeScreenForTicksDurationConstantRateEasingBetweenShakes(bool onOff, int maxX, int maxY, int ticksPerShake);
 
 
-	virtual void setGameSpeed(float multiplier);
+	void shakeScreenOnOffConstantRateEasingBetweenShakesMustTurnOff(bool onOff, int maxX, int maxY, int ticksPerShake);
+
+
+	void setGameSpeed(float multiplier);
 };
 

@@ -32,11 +32,11 @@ private:
 	public:
 		WidgetAnonymousInnerClassHelper(ControlsPanel* outerInstance);
 
-		virtual void layout();
+		void layout();
 	};
 
 
 public:
-	virtual void setButton(int index, int value);
+	void setButton(int index, int value);
 };
 

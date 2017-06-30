@@ -34,17 +34,17 @@ private:
 	public:
 		WidgetAnonymousInnerClassHelper(KeyboardScreen* outerInstance);
 
-		virtual void layout();
+		void layout();
 	};
 
 public:
 	bool _clickedOK = false;
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getClickedOK_S();
+	bool getClickedOK_S();
 
 	//The following method was originally marked 'synchronized':
-	virtual void setClickedOK_S(bool b);
+	void setClickedOK_S(bool b);
 
 
 	virtual void update() override;
@@ -61,10 +61,10 @@ protected:
 
 
 public:
-	virtual void setButtonsVisible(bool b);
+	void setButtonsVisible(bool b);
 
 
-	virtual void doOK();
+	void doOK();
 
 
 	virtual void renderBefore() override;

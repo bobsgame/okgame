@@ -14,7 +14,7 @@ public:
 	static Logger log;
 
 	TCPServerConnection();
-	virtual ~TCPServerConnection();
+	~TCPServerConnection();
 
 	void update();
 
@@ -555,7 +555,7 @@ public:
 	}
 
 
-	virtual void sendCreateAccountRequest(string userName, string email, string password);
+	void sendCreateAccountRequest(string userName, string email, string password);
 
 private:
 	void incomingCreateAccountResponse(string s);
@@ -582,7 +582,7 @@ public:
 
 
 
-	virtual void sendPasswordRecoveryRequest(string email);
+	void sendPasswordRecoveryRequest(string email);
 private:
 	void incomingPasswordRecoveryResponse(string s);
 
@@ -596,7 +596,7 @@ private:
 	//------------------------------------
 public:
 	long long lastInitialGameSaveRequestTime = 0;
-	virtual void sendInitialGameSaveRequest();
+	void sendInitialGameSaveRequest();
 
 private:
 	void incomingInitialGameSaveResponse(string s);
@@ -672,7 +672,7 @@ public:
 		lock_guard<mutex> lock(_encryptedGameSave_Mutex);
 		_encryptedGameSave = s;
 	}
-	virtual void sendQueuedGameSaveUpdates();
+	void sendQueuedGameSaveUpdates();
 private:
 	void incomingGameSaveUpdateResponse(string s);
 	

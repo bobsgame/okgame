@@ -306,10 +306,8 @@ void Sound::handlePlaying()
 	         }
 	         else
 	         {
-
-				 if (Mix_Playing(channel) == false) //this should never happen for looping music, the channel just repeats
+				 if (Mix_Playing(channel) == false) 
 				 {
-
 					 if (timesToPlay > 0)
 					 {
 					    timesToPlay--;
@@ -332,8 +330,9 @@ void Sound::handlePlaying()
 	   }
 }
 
+//=========================================================================================================================
 void Sound::stop()
-{
+{//=========================================================================================================================
 
 	pitch = 1.0f;
 	volume = 1.0f;

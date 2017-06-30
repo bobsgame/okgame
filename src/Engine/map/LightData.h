@@ -89,74 +89,74 @@ public:
 	virtual string getTYPEIDString() override;
 
 
-	virtual int getWidthPixels1X();
-	virtual int getHeightPixels1X();
-	virtual int getWidthPixelsHQ();
-	virtual int getHeightPixelsHQ();
+	int getWidthPixels1X();
+	int getHeightPixels1X();
+	int getWidthPixelsHQ();
+	int getHeightPixelsHQ();
 
-	virtual int getRadiusPixels1X();
-	virtual int getRadiusPixelsHQ();
+	int getRadiusPixels1X();
+	int getRadiusPixelsHQ();
 
-	virtual int getFocusRadiusPixels1X();
-	virtual int getFocusRadiusPixelsHQ();
-
-
-	virtual int getToggleXPixels1X();
-	virtual int getToggleYPixels1X();
-	virtual int getToggleXPixelsHQ();
-	virtual int getToggleYPixelsHQ();
-
-	virtual u8 getRedColorByte();
-	virtual u8 getGreenColorByte();
-	virtual u8 getBlueColorByte();
-	virtual u8 getAlphaColorByte();
-
-	virtual u8 r();
-	virtual u8 g();
-	virtual u8 b();
-	virtual u8 a();
+	int getFocusRadiusPixels1X();
+	int getFocusRadiusPixelsHQ();
 
 
-	virtual float getBlendFalloff();
-	virtual float getDecayExponent();
-	virtual bool getIsDayLight();
-	virtual bool getIsNightLight();
-	virtual bool getFlickers();
-	virtual bool getChangesColor();
-	virtual bool getToggleable();
-	virtual int getFlickerOnTicks();
-	virtual int getFlickerOffTicks();
-	virtual bool getFlickerRandomUpToOnTicks();
-	virtual bool getFlickerRandomUpToOffTicks();
+	int getToggleXPixels1X();
+	int getToggleYPixels1X();
+	int getToggleXPixelsHQ();
+	int getToggleYPixelsHQ();
+
+	u8 getRedColorByte();
+	u8 getGreenColorByte();
+	u8 getBlueColorByte();
+	u8 getAlphaColorByte();
+
+	u8 r();
+	u8 g();
+	u8 b();
+	u8 a();
+
+
+	float getBlendFalloff();
+	float getDecayExponent();
+	bool getIsDayLight();
+	bool getIsNightLight();
+	bool getFlickers();
+	bool getChangesColor();
+	bool getToggleable();
+	int getFlickerOnTicks();
+	int getFlickerOffTicks();
+	bool getFlickerRandomUpToOnTicks();
+	bool getFlickerRandomUpToOffTicks();
 
 
 	//set
 
-	virtual void setWidthPixels1X(int s);
-	virtual void setHeightPixels1X(int s);
+	void setWidthPixels1X(int s);
+	void setHeightPixels1X(int s);
 
-	virtual void setRadiusPixels1X(int s);
+	void setRadiusPixels1X(int s);
 
-	virtual void setFocusRadiusPixels1X(int s);
+	void setFocusRadiusPixels1X(int s);
 
-	virtual void setToggleXPixels1X(int s);
-	virtual void setToggleYPixels1X(int s);
+	void setToggleXPixels1X(int s);
+	void setToggleYPixels1X(int s);
 
-	virtual void setRedColorByte(u8 s);
-	virtual void setGreenColorByte(u8 s);
-	virtual void setBlueColorByte(u8 s);
-	virtual void setAlphaColorByte(u8 s);
+	void setRedColorByte(u8 s);
+	void setGreenColorByte(u8 s);
+	void setBlueColorByte(u8 s);
+	void setAlphaColorByte(u8 s);
 
-	virtual void setBlendFalloff(float s);
-	virtual void setDecayExponent(float s);
-	virtual void setIsDayLight(bool s);
-	virtual void setIsNightLight(bool s);
-	virtual void setFlickers(bool s);
-	virtual void setChangesColor(bool s);
-	virtual void setToggleable(bool s);
-	virtual void setFlickerOnTicks(int s);
-	virtual void setFlickerOffTicks(int s);
-	virtual void setFlickerRandomUpToOnTicks(bool s);
-	virtual void setFlickerRandomUpToOffTicks(bool s);
+	void setBlendFalloff(float s);
+	void setDecayExponent(float s);
+	void setIsDayLight(bool s);
+	void setIsNightLight(bool s);
+	void setFlickers(bool s);
+	void setChangesColor(bool s);
+	void setToggleable(bool s);
+	void setFlickerOnTicks(int s);
+	void setFlickerOffTicks(int s);
+	void setFlickerRandomUpToOnTicks(bool s);
+	void setFlickerRandomUpToOffTicks(bool s);
 };
 

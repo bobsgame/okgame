@@ -56,7 +56,7 @@ public:
 	static void initAudioLibrary();
 	static void cleanup();
 
-	//virtual Sound* loadSoundFileByName(const string& name);
+	//Sound* loadSoundFileByName(const string& name);
 	
 	
 	void update();

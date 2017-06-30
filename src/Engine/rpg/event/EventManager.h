@@ -39,34 +39,34 @@ public:
 
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void addToEventQueueIfNotThere(Event* event);
+	void addToEventQueueIfNotThere(Event* event);
 
 
-	virtual bool isEventInQueue(Event* event);
+	bool isEventInQueue(Event* event);
 
 
-	virtual void unloadCurrentMapEvents();
+	void unloadCurrentMapEvents();
 
 
-	virtual Item* getItemByID(int id);
+	Item* getItemByID(int id);
 
 
-	virtual Dialogue* getDialogueByIDCreateIfNotExist(int id);
+	Dialogue* getDialogueByIDCreateIfNotExist(int id);
 
 
-	//virtual Event* getCutsceneEventByID(int id);
-	virtual Event* getEventByIDCreateIfNotExist(int id);
+	//Event* getCutsceneEventByID(int id);
+	Event* getEventByIDCreateIfNotExist(int id);
 
 
-	virtual Skill* getSkillByIDCreateIfNotExist(int id);
+	Skill* getSkillByIDCreateIfNotExist(int id);
 
 
-	virtual GameString* getGameStringByIDCreateIfNotExist(int id);
+	GameString* getGameStringByIDCreateIfNotExist(int id);
 
 
-	virtual Flag* getFlagByIDCreateIfNotExist(int id);
+	Flag* getFlagByIDCreateIfNotExist(int id);
 };
 

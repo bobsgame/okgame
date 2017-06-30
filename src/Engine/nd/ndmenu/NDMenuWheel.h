@@ -58,23 +58,23 @@ public:
 	bool wheelSpinning = false;
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void addGame(NDGameEngine* game, const string& name, BobColor* color);
+	void addGame(NDGameEngine* game, const string& name, BobColor* color);
 
 
-	virtual void render();
+	void render();
 
 
-	virtual void renderGameTitleCentered();
+	void renderGameTitleCentered();
 
-	virtual void renderGameTitleCenteredGlow();
-
-
-	virtual void spinWheel(int dir);
+	void renderGameTitleCenteredGlow();
 
 
-	virtual void update();
+	void spinWheel(int dir);
+
+
+	void update();
 };
 

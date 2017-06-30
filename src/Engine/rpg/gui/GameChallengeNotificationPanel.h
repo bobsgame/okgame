@@ -54,13 +54,13 @@ protected:
 
 
 public:
-	virtual void setButtonsVisible(bool b);
+	void setButtonsVisible(bool b);
 
 
-	virtual void doNo();
+	void doNo();
 
 
-	virtual void doYes();
+	void doYes();
 
 
 	virtual void renderBefore() override;

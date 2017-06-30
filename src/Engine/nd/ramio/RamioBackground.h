@@ -46,12 +46,12 @@ public:
 	bool fadeInOutPulseToggle = false;
 
 
-	virtual void RAMIO_shakeplayingfield();
+	void RAMIO_shakeplayingfield();
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void update();
+	void update();
 };
 

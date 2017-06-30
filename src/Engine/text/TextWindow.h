@@ -66,30 +66,30 @@ public:
 	TextWindow(Engine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void render();
+	void render();
 
 
-	virtual void updateSpriteWindowTexture();
+	void updateSpriteWindowTexture();
 
 
-	virtual void setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel);
+	void setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel);
 
 
-	virtual void updateTextureFromByteArray();
+	void updateTextureFromByteArray();
 
 
-	virtual void clearByteArray();
+	void clearByteArray();
 
 
-	virtual int getPixelValue(int letter_index, int y, int x_in_letter, bool blank);
+	int getPixelValue(int letter_index, int y, int x_in_letter, bool blank);
 
 
-	virtual void setPixel(int index, BobColor* c);
+	void setPixel(int index, BobColor* c);
 
 
-	virtual void drawColumn(int letter_index, int x_in_letter, bool blank);
+	void drawColumn(int letter_index, int x_in_letter, bool blank);
 };
 

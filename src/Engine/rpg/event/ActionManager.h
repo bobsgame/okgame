@@ -61,7 +61,7 @@ public:
 
 
 
-	virtual void deleteIfNoAction();
+	void deleteIfNoAction();
 
 
 	/*
@@ -119,33 +119,33 @@ public:
 	   }*/
 
 
-	virtual bool xy(int x, int y, const string& label);
+	bool xy(int x, int y, const string& label);
 
 
-	virtual bool area(Area* a, const string& label);
+	bool area(Area* a, const string& label);
 
 
-	virtual bool xyxy(int x, int y, int x2, int y2, const string& label);
+	bool xyxy(int x, int y, int x2, int y2, const string& label);
 
 
-	virtual bool entity(Entity* e, const string& label);
+	bool entity(Entity* e, const string& label);
 
 
-	virtual bool checkAll(int x, int y, int x2, int y2, const string& label, int type, Entity* e, Area* a);
+	bool checkAll(int x, int y, int x2, int y2, const string& label, int type, Entity* e, Area* a);
 
 
-	virtual void deleteCaptionNoSound();
+	void deleteCaptionNoSound();
 
 
-	virtual void deleteCaptionWithBlipSound();
+	void deleteCaptionWithBlipSound();
 
 
-	virtual void makeCaption(const string& label);
+	void makeCaption(const string& label);
 
 
-	virtual void replaceCaptionText(const string& label);
+	void replaceCaptionText(const string& label);
 
 
-	virtual void update();
+	void update();
 };
 

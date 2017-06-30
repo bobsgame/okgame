@@ -203,73 +203,73 @@ public:
 	//static MapData* fromBase64ZippedJSON(const string& b64);
 	//static MapData* fromJSON(const string& json);
 
-	virtual string& initFromString(string& t);
+	string& initFromString(string& t);
 
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
 
-	virtual int getWidthTiles1X();
-	virtual int getHeightTiles1X();
+	int getWidthTiles1X();
+	int getHeightTiles1X();
 
 
-	virtual int getMaxRandoms();
-	virtual bool getIsOutside();
-	virtual bool getPreload();
+	int getMaxRandoms();
+	bool getIsOutside();
+	bool getPreload();
 
-	virtual string& getMapNote();
+	string& getMapNote();
 
-	virtual string& getGroundLayerMD5();
-	virtual string& getGroundObjectsMD5();
-	virtual string& getGroundShadowMD5();
-	virtual string& getObjectsMD5();
-	virtual string& getObjects2MD5();
-	virtual string& getObjectShadowMD5();
-	virtual string& getAboveMD5();
-	virtual string& getAbove2MD5();
-	virtual string& getSpriteShadowMD5();
-	virtual string& getGroundShaderMD5();
-	virtual string& getCameraBoundsMD5();
-	virtual string& getHitBoundsMD5();
-	virtual string& getLightMaskMD5();
-	virtual string& getPaletteMD5();
-	virtual string& getTilesMD5();
-
-
-	virtual int getWidthPixelsHQ();
-	virtual int getHeightPixelsHQ();
+	string& getGroundLayerMD5();
+	string& getGroundObjectsMD5();
+	string& getGroundShadowMD5();
+	string& getObjectsMD5();
+	string& getObjects2MD5();
+	string& getObjectShadowMD5();
+	string& getAboveMD5();
+	string& getAbove2MD5();
+	string& getSpriteShadowMD5();
+	string& getGroundShaderMD5();
+	string& getCameraBoundsMD5();
+	string& getHitBoundsMD5();
+	string& getLightMaskMD5();
+	string& getPaletteMD5();
+	string& getTilesMD5();
 
 
-	virtual ArrayList<MapStateData*>* getStateDataList();
-	virtual ArrayList<EventData*>* getEventDataList();
-	virtual ArrayList<DoorData*>* getDoorDataList();
+	int getWidthPixelsHQ();
+	int getHeightPixelsHQ();
 
 
-	virtual void setGroundLayerMD5(const string& s);
-	virtual void setGroundObjectsMD5(const string& s);
-	virtual void setGroundShadowMD5(const string& s);
-	virtual void setObjectsMD5(const string& s);
-	virtual void setObjects2MD5(const string& s);
-	virtual void setObjectShadowMD5(const string& s);
-	virtual void setAboveMD5(const string& s);
-	virtual void setAbove2MD5(const string& s);
-	virtual void setSpriteShadowMD5(const string& s);
-	virtual void setGroundShaderMD5(const string& s);
-	virtual void setCameraBoundsMD5(const string& s);
-	virtual void setHitBoundsMD5(const string& s);
-	virtual void setLightMaskMD5(const string& s);
-	virtual void setPaletteMD5(const string& s);
-	virtual void setTilesMD5(const string& s);
+	ArrayList<MapStateData*>* getStateDataList();
+	ArrayList<EventData*>* getEventDataList();
+	ArrayList<DoorData*>* getDoorDataList();
 
 
-	virtual void setMapNote(const string& s);
+	void setGroundLayerMD5(const string& s);
+	void setGroundObjectsMD5(const string& s);
+	void setGroundShadowMD5(const string& s);
+	void setObjectsMD5(const string& s);
+	void setObjects2MD5(const string& s);
+	void setObjectShadowMD5(const string& s);
+	void setAboveMD5(const string& s);
+	void setAbove2MD5(const string& s);
+	void setSpriteShadowMD5(const string& s);
+	void setGroundShaderMD5(const string& s);
+	void setCameraBoundsMD5(const string& s);
+	void setHitBoundsMD5(const string& s);
+	void setLightMaskMD5(const string& s);
+	void setPaletteMD5(const string& s);
+	void setTilesMD5(const string& s);
 
-	virtual void setWidthTiles1X(int s);
-	virtual void setHeightTiles1X(int s);
+
+	void setMapNote(const string& s);
+
+	void setWidthTiles1X(int s);
+	void setHeightTiles1X(int s);
 
 
-	virtual void setMaxRandoms(int s);
-	virtual void setIsOutside(bool s);
-	virtual void setPreload(bool s);
+	void setMaxRandoms(int s);
+	void setIsOutside(bool s);
+	void setPreload(bool s);
 };
 

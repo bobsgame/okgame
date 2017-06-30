@@ -57,10 +57,10 @@ public:
 	FriendCharacter(BGClientEngine* g, int friendUserID, int friendType, int myUDPPort, int theirUDPPort);
 
 
-	virtual void setGameToForwardPacketsTo(MiniGameEngine* game);
+	void setGameToForwardPacketsTo(MiniGameEngine* game);
 
 
-	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string e);
+	bool udpPeerMessageReceived(UDPPeerConnection *c, string e);
 
 
 
@@ -71,10 +71,10 @@ public:
 
 	//TODO: no idea if synchronized functions that access non-synchronized variables works the way I want.
 
-	virtual void setMapName_S(const string& mapName);
+	void setMapName_S(const string& mapName);
 
-	virtual void setX_S(float x);
-	virtual void setY_S(float y);
+	void setX_S(float x);
+	void setY_S(float y);
 
 
 
@@ -85,7 +85,7 @@ private:
 
 
 public:
-	virtual void incomingFriendLocationStatusUpdate(string e);
+	void incomingFriendLocationStatusUpdate(string e);
 
 
 private:
@@ -94,13 +94,13 @@ private:
 public:
 	GameChallengeNotificationPanel* gameChallengeNotification = nullptr;
 
-	virtual void setOutgoingGameChallengeResponse(int i);
-	virtual int getOutgoingGameChallengeResponse();
-	virtual void sendGameChallengeResponse(bool b);
-	virtual void incomingGameChallengeRequest(string e);
+	void setOutgoingGameChallengeResponse(int i);
+	int getOutgoingGameChallengeResponse();
+	void sendGameChallengeResponse(bool b);
+	void incomingGameChallengeRequest(string e);
 
 
-	virtual void cleanup();
+	void cleanup();
 
 };
 

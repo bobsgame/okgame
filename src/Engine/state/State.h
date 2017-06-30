@@ -49,8 +49,8 @@ private:
 
 public:
 	static void updateTimers();
-	virtual void setEngineSpeed(double f);
-	virtual int engineTicksPassed();
+	void setEngineSpeed(double f);
+	int engineTicksPassed();
 	static int realWorldTicksPassed();
 
 	virtual void update();
@@ -78,9 +78,9 @@ public:
 	static GameSave getGameSave_S();
 	static void setGameSave_S(GameSave &g);
 	
-	virtual int getWidth();
+	int getWidth();
 
-	virtual int getHeight();
+	int getHeight();
 
 	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s);
 	virtual bool serverMessageReceived(string cs);

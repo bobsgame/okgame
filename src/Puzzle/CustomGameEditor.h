@@ -56,15 +56,15 @@ public:
 		static const char* ident = "Rectangle" ":" "EditRectangle";
 		return ident;
 	};
-	virtual Gwen::Controls::Base* DynamicCast( const char* Variable )
+	Gwen::Controls::Base* DynamicCast( const char* Variable )
 	{
 		if ( GetIdentifier() == Variable )
             return this;
         
 		return Gwen::Controls::Rectangle::DynamicCast( Variable);
 	}
-	virtual const char* GetTypeName(){ return "EditRectangle"; }
-	virtual const char* GetBaseTypeName(){ return Gwen::Controls::Rectangle::GetTypeName(); }
+	const char* GetTypeName(){ return "EditRectangle"; }
+	const char* GetBaseTypeName(){ return Gwen::Controls::Rectangle::GetTypeName(); }
     //GWEN_CONTROL_CONSTRUCTOR(EditRectangle)
     EditRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame* b) : Gwen::Controls::Rectangle(pParent, pName)
     {
@@ -73,10 +73,10 @@ public:
     }
     
     
-	virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown);
+	void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown);
     
     BobsGame* bobsGame = nullptr;
-	//virtual void Render(Skin::Base* skin);
+	//void Render(Skin::Base* skin);
 };
 
 
@@ -96,15 +96,15 @@ public:
 		static const char* ident = "Rectangle" ":" "RotationPreviewRectangle";
 		return ident;
 	};
-	virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
+	Gwen::Controls::Base* DynamicCast(const char* Variable)
 	{
 		if (GetIdentifier() == Variable)
 			return this;
         
 		return Gwen::Controls::Rectangle::DynamicCast(Variable);
 	}
-	virtual const char* GetTypeName() { return "RotationPreviewRectangle"; }
-	virtual const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
+	const char* GetTypeName() { return "RotationPreviewRectangle"; }
+	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
     //GWEN_CONTROL_CONSTRUCTOR(RotationPreviewRectangle)
     RotationPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame* b) : Gwen::Controls::Rectangle(pParent, pName)
     {
@@ -114,7 +114,7 @@ public:
     
     BobsGame* bobsGame = nullptr;
     
-	//virtual void Render(Skin::Base* skin);
+	//void Render(Skin::Base* skin);
 };
 
 
@@ -133,15 +133,15 @@ public:
 		static const char* ident = "Rectangle" ":" "PreviewRectangle";
 		return ident;
 	};
-	virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
+	Gwen::Controls::Base* DynamicCast(const char* Variable)
 	{
 		if (GetIdentifier() == Variable)
 			return this;
         
 		return Gwen::Controls::Rectangle::DynamicCast(Variable);
 	}
-	virtual const char* GetTypeName() { return "PreviewRectangle"; }
-	virtual const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
+	const char* GetTypeName() { return "PreviewRectangle"; }
+	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
 	//GWEN_CONTROL_CONSTRUCTOR(PreviewRectangle)
     PreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame* b) : Gwen::Controls::Rectangle(pParent, pName)
     {
@@ -149,7 +149,7 @@ public:
         m_Color = Gwen::Color(255, 255, 0, 255);
     }
     
-	virtual void Render(Gwen::Skin::Base* skin);
+	void Render(Gwen::Skin::Base* skin);
     
 	BobsGame *bobsGame = nullptr;
 };
@@ -170,15 +170,15 @@ public:
 		static const char* ident = "Base" ":" "CustomGameEditorControl";
 		return ident;
 	};
-	virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
+	Gwen::Controls::Base* DynamicCast(const char* Variable)
 	{
 		if (GetIdentifier() == Variable)
 			return this;
         
 		return Gwen::Controls::Base::DynamicCast(Variable);
 	}
-	virtual const char* GetTypeName() { return "CustomGameEditorControl"; }
-	virtual const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
+	const char* GetTypeName() { return "CustomGameEditorControl"; }
+	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
 	CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame *b);
     
     

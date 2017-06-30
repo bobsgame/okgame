@@ -31,18 +31,18 @@ public:
 	NotificationManager(BGClientEngine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void render(int layer);
+	void render(int layer);
 
 
-	virtual void add(Notification* n);
+	void add(Notification* n);
 
 
-	virtual void remove(Notification* n);
+	void remove(Notification* n);
 };
 

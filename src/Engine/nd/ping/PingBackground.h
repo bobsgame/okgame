@@ -36,12 +36,12 @@ public:
 	long long rollTicks = 0;
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void render();
+	void render();
 };
 

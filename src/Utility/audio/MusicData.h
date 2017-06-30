@@ -62,18 +62,18 @@ public:
 	string& initFromString(string& t);
 
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
 
-	virtual string& getFileName();
-	virtual string& getFullFilePath();
-	virtual string& getMD5Name();
-	virtual bool getPreload();
+	string& getFileName();
+	string& getFullFilePath();
+	string& getMD5Name();
+	bool getPreload();
 
 
-	virtual void setFileName(const string& s);
-	virtual void setFullFilePath(const string& s);
-	virtual void setMD5Name(const string& s);
-	virtual void setPreload(bool s);
+	void setFileName(const string& s);
+	void setFullFilePath(const string& s);
+	void setMD5Name(const string& s);
+	void setPreload(bool s);
 };
 

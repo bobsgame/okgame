@@ -128,7 +128,7 @@ public:
 	void setTextColor(BobColor* fg, BobColor* aa = nullptr, BobColor* bg = nullptr);
 	void initTTF(Engine* g, float screenX, float screenY, long long ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline);
 	void init(Engine* g, float screenX, float screenY, long long ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines);
-	virtual void render();
+	void render();
 private:
 	void increaseMaxWidthToLongestWord();
 	int skipNextWord(int position);
@@ -139,24 +139,24 @@ private:
 	int getLetterPixelColor(int letterIndex, int y, int xInLetter, bool blank);
 	void setPixel(int index, BobColor* c);
 public:
-	virtual float getAlphaTo();
-	virtual float getAlpha();
-	virtual void setAlphaTo(float a);
-	virtual void setAlphaImmediately(float a);
-	virtual float getWidth();
-	virtual int reduceHeightByOne();
-	virtual int increaseHeightByOne();
-	virtual float getHeight();
+	float getAlphaTo();
+	float getAlpha();
+	void setAlphaTo(float a);
+	void setAlphaImmediately(float a);
+	float getWidth();
+	int reduceHeightByOne();
+	int increaseHeightByOne();
+	float getHeight();
 private:
 	void drawBlankColumn();
 	void drawColumn(int xInLetter, int letterIndex, bool blank);
 	void drawLetter(int letterIndex);
 public:
-	virtual void updateScreenXY();
-	virtual void setToFadeOutAndBeDeleted();
-	virtual void setToBeDeletedImmediately();
-	virtual bool getBeingDeletedWhenFadeOutStatus();
-	virtual void update();
-	virtual void setEntity(Entity* e);
+	void updateScreenXY();
+	void setToFadeOutAndBeDeleted();
+	void setToBeDeletedImmediately();
+	bool getBeingDeletedWhenFadeOutStatus();
+	void update();
+	void setEntity(Entity* e);
 };
 

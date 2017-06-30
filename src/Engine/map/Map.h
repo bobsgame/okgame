@@ -134,32 +134,32 @@ public:
 	void initMap(Engine* g, MapData* mapData);
 
 
-	virtual Entity* getEntityByName(const string& name);
+	Entity* getEntityByName(const string& name);
 
-	virtual Character* getCharacterByName(const string& name);
-
-
-	virtual Light* getLightByName(const string& name);
+	Character* getCharacterByName(const string& name);
 
 
-	virtual Area* getAreaOrWarpAreaByName(string name);
+	Light* getLightByName(const string& name);
 
 
-	virtual Area* getAreaOrWarpAreaByTYPEID(string typeID);
+	Area* getAreaOrWarpAreaByName(string name);
 
-	virtual Door* getDoorByTYPEID(const string& typeID);
 
-	virtual Door* getDoorByName(const string& name);
+	Area* getAreaOrWarpAreaByTYPEID(string typeID);
+
+	Door* getDoorByTYPEID(const string& typeID);
+
+	Door* getDoorByName(const string& name);
 
 	//public MapState getStateByName(String name){return getMapStateByName(name);}
 
-	virtual MapState* getMapStateByName(const string& name);
+	MapState* getMapStateByName(const string& name);
 
 
-	virtual MapState* getMapStateByID(int id);
+	MapState* getMapStateByID(int id);
 
 
-	virtual ArrayList<string>* getListOfRandomPointsOfInterestTYPEIDs();
+	ArrayList<string>* getListOfRandomPointsOfInterestTYPEIDs();
 
 
 	//public Tile getTileByName(String name)
@@ -168,86 +168,86 @@ public:
 	//}
 
 
-	virtual void fadeIn();
+	void fadeIn();
 
 
-	virtual void fadeOut();
+	void fadeOut();
 
 
-	virtual void loadMapState(MapState* s);
+	void loadMapState(MapState* s);
 
 
 private:
 	long long lastLoadEventRequestTime = 0;
 
 public:
-	virtual void update();
+	void update();
 
 
-	virtual void updateLoadingStatus();
+	void updateLoadingStatus();
 
 
-	virtual void updateEntities();
+	void updateEntities();
 
 
-	virtual void updateDoors();
+	void updateDoors();
 
 
-	virtual void updateAreas();
+	void updateAreas();
 
 
-	virtual void updateWarpAreas();
+	void updateWarpAreas();
 
 
-	virtual void updateLights();
+	void updateLights();
 
 
-	virtual void zOrderEntities();
+	void zOrderEntities();
 
 
-	virtual void sortLightLayers();
+	void sortLightLayers();
 
 
 	bool defaultDisableClip = false;
 	bool defaultDisableFloorOffset = false;
 
 
-	virtual void render(RenderOrder renderOrder);
+	void render(RenderOrder renderOrder);
 
 
-	virtual void render(RenderOrder renderOrder, bool disableClip);
+	void render(RenderOrder renderOrder, bool disableClip);
 
 
-	virtual void render(RenderOrder renderOrder, bool disableClip, bool disableFloorOffset);
+	void render(RenderOrder renderOrder, bool disableClip, bool disableFloorOffset);
 
 
-	virtual void renderEntities(RenderOrder layer);
+	void renderEntities(RenderOrder layer);
 
 
-	virtual void renderAllLightsUnsorted();
+	void renderAllLightsUnsorted();
 
 
-	virtual void renderAreaActionIcons();
+	void renderAreaActionIcons();
 
 
-	virtual void renderChunkBoxes();
+	void renderChunkBoxes();
 
-	virtual void renderHitLayer();
-
-
-	virtual void renderLightBoxes();
+	void renderHitLayer();
 
 
-	virtual void renderAreaDebugBoxes();
+	void renderLightBoxes();
 
 
-	virtual void renderAreaDebugInfo();
+	void renderAreaDebugBoxes();
 
 
-	virtual void renderWarpAreaDebugBoxes();
+	void renderAreaDebugInfo();
 
 
-	virtual void renderWarpAreaDebugInfo();
+	void renderWarpAreaDebugBoxes();
+
+
+	void renderWarpAreaDebugInfo();
 
 
 	//
@@ -271,246 +271,246 @@ public:
 	//	}
 
 
-	virtual void loadUtilityLayers();
+	void loadUtilityLayers();
 
 
-	virtual void saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, vector<u8>* pal);
+	void saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, vector<u8>* pal);
 
 
-	virtual void unloadArea(const string& s);
+	void unloadArea(const string& s);
 
-	virtual void unloadLight(const string& s);
+	void unloadLight(const string& s);
 
-	virtual void unloadMapEntity(const string& s);
-
-
-	virtual void releaseAllTextures();
+	void unloadMapEntity(const string& s);
 
 
-	/// <summary>
-	/// Returns the position of the upper left of the screen relative to the map, in HQ2X equivalent pixels.
-	/// If the camera is left of the map, it is negative.
-	/// </summary>
-	virtual float mapCamX();
+	void releaseAllTextures();
 
 
 	/// <summary>
 	/// Returns the position of the upper left of the screen relative to the map, in HQ2X equivalent pixels.
 	/// If the camera is left of the map, it is negative.
 	/// </summary>
-	virtual float mapCamY();
+	float mapCamX();
 
 
-	virtual float getScreenX(float mapX, float width);
+	/// <summary>
+	/// Returns the position of the upper left of the screen relative to the map, in HQ2X equivalent pixels.
+	/// If the camera is left of the map, it is negative.
+	/// </summary>
+	float mapCamY();
 
 
-	virtual float getScreenY(float mapY, float height);
+	float getScreenX(float mapX, float width);
 
 
-	virtual float screenX();
-
-	virtual float screenY();
+	float getScreenY(float mapY, float height);
 
 
-	virtual void updateLastKnownScreenXYBasedOnCamera();
+	float screenX();
+
+	float screenY();
 
 
-	virtual bool getHitLayerValueAtXYTile1X(int xTile1X, int yTile1X);
+	void updateLastKnownScreenXYBasedOnCamera();
 
 
-	virtual bool getHitLayerValueAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ);
+	bool getHitLayerValueAtXYTile1X(int xTile1X, int yTile1X);
 
 
-	virtual int getCameraBoundsFXLayerAtXYTile1X(int xTile1X, int yTile1X);
+	bool getHitLayerValueAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ);
 
 
-	virtual int getCameraBoundsFXLayerAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ);
+	int getCameraBoundsFXLayerAtXYTile1X(int xTile1X, int yTile1X);
 
 
-	virtual bool isXYWithinScreenByAmt(float x, float y, int amt);
+	int getCameraBoundsFXLayerAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ);
 
 
-	virtual bool isXYXYWithinScreenByAmount(float x, float y, float x2, float y2, float amt);
+	bool isXYWithinScreenByAmt(float x, float y, int amt);
 
 
-	virtual bool isXYWithinScreen(float x, float y);
+	bool isXYXYWithinScreenByAmount(float x, float y, float x2, float y2, float amt);
 
 
-	//The following method was originally marked 'synchronized':
-	virtual BobTexture* getChunkTexture(int index);
-
-	//The following method was originally marked 'synchronized':
-	virtual void setChunkTexture(int index, BobTexture* t);
-
-
-	//The following method was originally marked 'synchronized':
-	virtual void releaseChunkTexture(int index);
+	bool isXYWithinScreen(float x, float y);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual bool getChunkPNGFileExists(int index);
+	BobTexture* getChunkTexture(int index);
 
 	//The following method was originally marked 'synchronized':
-	virtual void setChunkPNGFileExists_S(int index, bool done);
-
-
-	//The following method was originally marked 'synchronized':
-	virtual bool getHQ2XChunkPNGFileExists(int index);
-
-	//The following method was originally marked 'synchronized':
-	virtual void setHQ2XChunkFileExists_S(int index, bool done);
+	void setChunkTexture(int index, BobTexture* t);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void incrementChunkTexturesLoaded();
-
-	//The following method was originally marked 'synchronized':
-	virtual void decrementChunkTexturesLoaded();
-
-	virtual bool loadChunkTexturesFromCachePNGs();
-
-
-	virtual bool loadLightTexturesFromCachePNGs();
-
-
-	virtual bool loadHQ2XTexturesFromCachePNGs();
+	void releaseChunkTexture(int index);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void incrementChunkPNGThreadsCreated();
+	bool getChunkPNGFileExists(int index);
+
+	//The following method was originally marked 'synchronized':
+	void setChunkPNGFileExists_S(int index, bool done);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void decrementChunkPNGThreadsCreated_S();
+	bool getHQ2XChunkPNGFileExists(int index);
 
-
-	virtual void startThreadsForMissingChunkPNGs();
+	//The following method was originally marked 'synchronized':
+	void setHQ2XChunkFileExists_S(int index, bool done);
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void incrementLightPNGThreadsCreated();
+	void incrementChunkTexturesLoaded();
+
+	//The following method was originally marked 'synchronized':
+	void decrementChunkTexturesLoaded();
+
+	bool loadChunkTexturesFromCachePNGs();
+
+
+	bool loadLightTexturesFromCachePNGs();
+
+
+	bool loadHQ2XTexturesFromCachePNGs();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void decrementLightPNGThreadsCreated_S();
-
-
-	virtual void startThreadsForMissingLightPNGs();
+	void incrementChunkPNGThreadsCreated();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void incrementHQ2XChunkPNGThreadsCreated();
+	void decrementChunkPNGThreadsCreated_S();
+
+
+	void startThreadsForMissingChunkPNGs();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual void decrementHQ2XChunkPNGThreadsCreated();
+	void incrementLightPNGThreadsCreated();
 
 
-	virtual void startThreadsForMissingHQ2XChunkPNGs();
+	//The following method was originally marked 'synchronized':
+	void decrementLightPNGThreadsCreated_S();
 
 
-	virtual void createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
+	void startThreadsForMissingLightPNGs();
+
+
+	//The following method was originally marked 'synchronized':
+	void incrementHQ2XChunkPNGThreadsCreated();
+
+
+	//The following method was originally marked 'synchronized':
+	void decrementHQ2XChunkPNGThreadsCreated();
+
+
+	void startThreadsForMissingHQ2XChunkPNGs();
+
+
+	void createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
 
 
 	/// <summary>
 	/// returns false if no image is needed
 	/// </summary>
-	virtual bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
+	bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
 
 
-	virtual void createHQ2XTexturePNG_THREAD(int chunkX, int chunkY);
+	void createHQ2XTexturePNG_THREAD(int chunkX, int chunkY);
 
 
-	virtual void antialiasBufferedImage(BufferedImage* bufferedImage);
+	void antialiasBufferedImage(BufferedImage* bufferedImage);
 
-	virtual void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
-
-
-	virtual void addEntitiesAndCharactersFromCurrentStateToActiveEntityList();
+	void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
 
 
-	virtual void clearActiveEntityList();
+	void addEntitiesAndCharactersFromCurrentStateToActiveEntityList();
 
 
-	virtual bool isAnyoneOverlappingXY(float x, float y);
-
-	virtual bool isAnyoneOverlappingXYXY(float x, float y, float x2, float y2);
+	void clearActiveEntityList();
 
 
-	virtual bool isAnyRandomCharacterTryingToGoToXY(float x, float y);
+	bool isAnyoneOverlappingXY(float x, float y);
+
+	bool isAnyoneOverlappingXYXY(float x, float y, float x2, float y2);
 
 
-	virtual int* findOpenSpaceInArea(Area* a, int w, int h);
+	bool isAnyRandomCharacterTryingToGoToXY(float x, float y);
 
 
-	virtual bool isAnyCharacterTouchingArea(Area* a);
+	int* findOpenSpaceInArea(Area* a, int w, int h);
 
 
-	virtual bool isAnyEntityTouchingArea(Area* a);
+	bool isAnyCharacterTouchingArea(Area* a);
 
 
-	virtual ArrayList<Entity*>* getAllEntitiesTouchingArea(Area* a);
+	bool isAnyEntityTouchingArea(Area* a);
 
 
-	virtual ArrayList<Entity*>* getAllEntitiesPlayerIsTouching();
+	ArrayList<Entity*>* getAllEntitiesTouchingArea(Area* a);
 
 
-	virtual bool isAnyoneTryingToGoToArea(Area* a);
+	ArrayList<Entity*>* getAllEntitiesPlayerIsTouching();
 
 
-	virtual bool isAnyEntityUsingSpriteAsset(Sprite* s);
+	bool isAnyoneTryingToGoToArea(Area* a);
 
 
-	virtual ArrayList<Entity*>* getAllEntitiesUsingSpriteAsset(Sprite* s);
+	bool isAnyEntityUsingSpriteAsset(Sprite* s);
 
 
-	virtual Entity* createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
+	ArrayList<Entity*>* getAllEntitiesUsingSpriteAsset(Sprite* s);
 
 
-	virtual Entity* createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
+	Entity* createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
 
 
-	virtual Entity* createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt);
+	Entity* createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
 
 
-	virtual Entity* createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a);
+	Entity* createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt);
 
 
-	virtual MapData* getData();
+	Entity* createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a);
 
 
-	virtual int getID();
-	virtual string& getName();
-	virtual string& getMapNote();
-
-	virtual int getWidthTiles1X();
-	virtual int getHeightTiles1X();
-
-	virtual int getWidthPixelsHQ();
-	virtual int getHeightPixelsHQ();
+	MapData* getData();
 
 
-	virtual int getMaxRandoms();
-	virtual bool getIsOutside();
+	int getID();
+	string& getName();
+	string& getMapNote();
 
-	virtual string getTYPEIDString();
+	int getWidthTiles1X();
+	int getHeightTiles1X();
 
-	virtual string& getGroundLayerMD5();
-	virtual string& getGroundObjectsMD5();
-	virtual string& getGroundShadowMD5();
-	virtual string& getObjectsMD5();
-	virtual string& getObjects2MD5();
-	virtual string& getObjectShadowMD5();
-	virtual string& getAboveMD5();
-	virtual string& getAbove2MD5();
-	virtual string& getSpriteShadowMD5();
-	virtual string& getGroundShaderMD5();
-	virtual string& getCameraBoundsMD5();
-	virtual string& getHitBoundsMD5();
-	virtual string& getLightMaskMD5();
+	int getWidthPixelsHQ();
+	int getHeightPixelsHQ();
 
-	virtual string& getPaletteMD5();
-	virtual string& getTilesMD5();
+
+	int getMaxRandoms();
+	bool getIsOutside();
+
+	string getTYPEIDString();
+
+	string& getGroundLayerMD5();
+	string& getGroundObjectsMD5();
+	string& getGroundShadowMD5();
+	string& getObjectsMD5();
+	string& getObjects2MD5();
+	string& getObjectShadowMD5();
+	string& getAboveMD5();
+	string& getAbove2MD5();
+	string& getSpriteShadowMD5();
+	string& getGroundShaderMD5();
+	string& getCameraBoundsMD5();
+	string& getHitBoundsMD5();
+	string& getLightMaskMD5();
+
+	string& getPaletteMD5();
+	string& getTilesMD5();
 
 	//	public Vector<MapStateData> getStateDataList(){return getData().getStateDataList();}
 	//	public Vector<EventData> getEventDataList(){return getData().getEventDataList();}
@@ -530,21 +530,21 @@ public:
 	//	public void setIsOutside(boolean s){getData().setIsOutside(s);}
 	//
 
-	virtual void setGroundLayerMD5(const string& s);
-	virtual void setGroundObjectsMD5(const string& s);
-	virtual void setGroundShadowMD5(const string& s);
-	virtual void setObjectsMD5(const string& s);
-	virtual void setObjects2MD5(const string& s);
-	virtual void setObjectShadowMD5(const string& s);
-	virtual void setAboveMD5(const string& s);
-	virtual void setAbove2MD5(const string& s);
-	virtual void setSpriteShadowMD5(const string& s);
-	virtual void setGroundShaderMD5(const string& s);
-	virtual void setCameraBoundsMD5(const string& s);
-	virtual void setHitBoundsMD5(const string& s);
-	virtual void setLightMaskMD5(const string& s);
+	void setGroundLayerMD5(const string& s);
+	void setGroundObjectsMD5(const string& s);
+	void setGroundShadowMD5(const string& s);
+	void setObjectsMD5(const string& s);
+	void setObjects2MD5(const string& s);
+	void setObjectShadowMD5(const string& s);
+	void setAboveMD5(const string& s);
+	void setAbove2MD5(const string& s);
+	void setSpriteShadowMD5(const string& s);
+	void setGroundShaderMD5(const string& s);
+	void setCameraBoundsMD5(const string& s);
+	void setHitBoundsMD5(const string& s);
+	void setLightMaskMD5(const string& s);
 
-	virtual void setPaletteMD5(const string& s);
-	virtual void setTilesMD5(const string& s);
+	void setPaletteMD5(const string& s);
+	void setTilesMD5(const string& s);
 };
 

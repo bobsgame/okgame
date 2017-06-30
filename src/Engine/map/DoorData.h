@@ -70,43 +70,43 @@ public:
 	string& initFromString(string& t);
 
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
 
-	virtual string& getDestinationTYPEIDString();
-	virtual string& getDestinationMapName();
-	virtual string& getDestinationDoorName();
+	string& getDestinationTYPEIDString();
+	string& getDestinationMapName();
+	string& getDestinationDoorName();
 
-	virtual int getArrivalXPixels1X();
-	virtual int getArrivalYPixels1X();
-	virtual float getArrivalXPixelsHQ();
-	virtual float getArrivalYPixelsHQ();
+	int getArrivalXPixels1X();
+	int getArrivalYPixels1X();
+	float getArrivalXPixelsHQ();
+	float getArrivalYPixelsHQ();
 
-	virtual bool getRandomNPCSpawnPoint();
-	virtual float getRandomSpawnChance();
-	virtual bool getRandomPointOfInterestOrExit();
-	virtual int getRandomSpawnDelay();
-	virtual bool getRandomSpawnKids();
-	virtual bool getRandomSpawnAdults();
-	virtual bool getRandomSpawnMales();
-	virtual bool getRandomSpawnFemales();
-
-
-	virtual void setDestinationTYPEIDString(const string& s);
-	virtual void setDestinationMapName(const string& s);
-	virtual void setDestinationDoorName(const string& s);
-
-	virtual void setRandomPointOfInterestOrExit(bool s);
-	virtual void setRandomNPCSpawnPoint(bool s);
-	virtual void setRandomSpawnChance(float s);
-	virtual void setRandomSpawnDelay(int s);
-	virtual void setRandomSpawnKids(bool s);
-	virtual void setRandomSpawnAdults(bool s);
-	virtual void setRandomSpawnMales(bool s);
-	virtual void setRandomSpawnFemales(bool s);
+	bool getRandomNPCSpawnPoint();
+	float getRandomSpawnChance();
+	bool getRandomPointOfInterestOrExit();
+	int getRandomSpawnDelay();
+	bool getRandomSpawnKids();
+	bool getRandomSpawnAdults();
+	bool getRandomSpawnMales();
+	bool getRandomSpawnFemales();
 
 
-	virtual void setArrivalXPixels1X(int s);
-	virtual void setArrivalYPixels1X(int s);
+	void setDestinationTYPEIDString(const string& s);
+	void setDestinationMapName(const string& s);
+	void setDestinationDoorName(const string& s);
+
+	void setRandomPointOfInterestOrExit(bool s);
+	void setRandomNPCSpawnPoint(bool s);
+	void setRandomSpawnChance(float s);
+	void setRandomSpawnDelay(int s);
+	void setRandomSpawnKids(bool s);
+	void setRandomSpawnAdults(bool s);
+	void setRandomSpawnMales(bool s);
+	void setRandomSpawnFemales(bool s);
+
+
+	void setArrivalXPixels1X(int s);
+	void setArrivalYPixels1X(int s);
 };
 

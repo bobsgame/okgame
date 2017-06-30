@@ -38,11 +38,11 @@ public:
 
 	string& initFromString(string& t);
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
 
-	virtual string& getText();
+	string& getText();
 
-	virtual void setText(const string& s);
+	void setText(const string& s);
 };
 

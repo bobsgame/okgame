@@ -100,8 +100,8 @@ public:
 	static void writeSessionTokenToCache(long long userID, const string& sessionToken, bool statsAllowed);
 	static string readSessionTokenFromCache();
 	static void deleteSessionTokenFromCache();
-	//virtual void writeCookie(const string& s);
-	//virtual ArrayList<string>* readCookies();
+	//void writeCookie(const string& s);
+	//ArrayList<string>* readCookies();
 	//static void writeBrowserSessionCookieAndRefreshIFrame();
 	//static void deleteBrowserSessionCookieAndRefreshIFrame();
 	//static void writeBrowserSessionAndRefreshIFrame();
@@ -110,18 +110,18 @@ public:
 	ConsoleText* statusConsoleText = nullptr;
 	long long downloadingFileSize = 0;
 
-	virtual void setStatusText(const string& text);
-	virtual void deleteStatusText();
+	void setStatusText(const string& text);
+	void deleteStatusText();
 
-	virtual void downloadFileToCacheWithProgressListener(const string& fileName, const string& niceName);
-	virtual void decompressZipInCache(const string& fileName, const string& niceName);
-	virtual void deleteFileFromCache(const string& fileName);
+	void downloadFileToCacheWithProgressListener(const string& fileName, const string& niceName);
+	void decompressZipInCache(const string& fileName, const string& niceName);
+	void deleteFileFromCache(const string& fileName);
 	static bool checkIfFileExistsInCache(const string& fileName);
-	virtual long long getFileSizeInCache(const string& fileName);
-	virtual long long getFileSizeOnServer(const string& fileName);
-	virtual void downloadAndDecompressZIPFileIfDifferentFromServer(const string& fileName, const string& niceName);
-	virtual void downloadFileIfDifferentFromServer(const string& fileName, const string& niceName);
-	virtual void initCache();
+	long long getFileSizeInCache(const string& fileName);
+	long long getFileSizeOnServer(const string& fileName);
+	void downloadAndDecompressZIPFileIfDifferentFromServer(const string& fileName, const string& niceName);
+	void downloadFileIfDifferentFromServer(const string& fileName, const string& niceName);
+	void initCache();
 	static void downloadBigFileToCacheIfNotExist(const string& fileName);
 	static void downloadSmallFileToCacheIfNotExist(const string& fileName);
 	static vector<u8>* loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName);

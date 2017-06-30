@@ -128,79 +128,79 @@ public:
 	virtual float getTop() override;
 	virtual float getBottom() override;
 	virtual float getScreenLeft() override;
-	virtual float screenRight();
+	float screenRight();
 	virtual float getScreenTop() override;
-	virtual float screenBottom();
-	virtual float screenMiddleX();
-	virtual float screenMiddleY();
+	float screenBottom();
+	float screenMiddleX();
+	float screenMiddleY();
 	virtual float getHitBoxFromLeft() final override;
 	virtual float getHitBoxFromRight() final override;
 	virtual float getHitBoxFromTop() final override;
 	virtual float getHitBoxFromBottom() final override;
 
 	//virtual EntityData* getData() override;
-	virtual LightData* getLightData();
+	LightData* getLightData();
 
 
 	virtual float getWidth() override;
 	virtual float getHeight() override;
 
 
-	virtual int getRadiusPixelsHQ();
-	virtual int focusRadiusPixelsHQ();
-	virtual int toggleXPixelsHQ();
-	virtual int toggleYPixelsHQ();
+	int getRadiusPixelsHQ();
+	int focusRadiusPixelsHQ();
+	int toggleXPixelsHQ();
+	int toggleYPixelsHQ();
 
-	virtual u8 redColorByte();
-	virtual u8 greenColorByte();
-	virtual u8 blueColorByte();
-	virtual u8 alphaColorByte();
+	u8 redColorByte();
+	u8 greenColorByte();
+	u8 blueColorByte();
+	u8 alphaColorByte();
 
-	virtual u8 r();
-	virtual u8 g();
-	virtual u8 b();
-	virtual u8 a();
+	u8 r();
+	u8 g();
+	u8 b();
+	u8 a();
 
-	virtual float blendFalloff();
-	virtual float decayExponent();
-	virtual bool isDayLight();
-	virtual bool isNightLight();
-	virtual bool flickers();
-	virtual bool changesColor();
-	virtual bool toggleable();
-	virtual int flickerOnTicks();
-	virtual int flickerOffTicks();
-	virtual bool flickerRandomUpToOnTicks();
-	virtual bool flickerRandomUpToOffTicks();
+	float blendFalloff();
+	float decayExponent();
+	bool isDayLight();
+	bool isNightLight();
+	bool flickers();
+	bool changesColor();
+	bool toggleable();
+	int flickerOnTicks();
+	int flickerOffTicks();
+	bool flickerRandomUpToOnTicks();
+	bool flickerRandomUpToOffTicks();
 
 	//public String getTYPEIDString(){return getData().getTYPEIDString();}
 
 
 	//set
 
-	virtual void setWidthPixels(int s);
-	virtual void setHeightPixels(int s);
-	virtual void setRadiusPixels(int s);
-	virtual void setFocusRadiusPixels(int s);
-	virtual void setToggleXPixels(int s);
-	virtual void setToggleYPixels(int s);
+	void setWidthPixels(int s);
+	void setHeightPixels(int s);
+	void setRadiusPixels(int s);
+	void setFocusRadiusPixels(int s);
+	void setToggleXPixels(int s);
+	void setToggleYPixels(int s);
 
-	virtual void setRedColorByte(u8 s);
-	virtual void setGreenColorByte(u8 s);
-	virtual void setBlueColorByte(u8 s);
-	virtual void setAlphaColorByte(u8 s);
+	void setRedColorByte(u8 s);
+	void setGreenColorByte(u8 s);
+	void setBlueColorByte(u8 s);
+	void setAlphaColorByte(u8 s);
 
 
-	virtual void setBlendFalloff(float s);
-	virtual void setDecayExponent(float s);
-	virtual void setIsDayLight(bool s);
-	virtual void setIsNightLight(bool s);
-	virtual void setFlickers(bool s);
-	virtual void setChangesColor(bool s);
-	virtual void setToggleable(bool s);
-	virtual void setFlickerOnTicks(int s);
-	virtual void setFlickerOffTicks(int s);
-	virtual void setFlickerRandomUpToOnTicks(bool s);
-	virtual void setFlickerRandomUpToOffTicks(bool s);
+	void setBlendFalloff(float s);
+	void setDecayExponent(float s);
+	void setIsDayLight(bool s);
+	void setIsNightLight(bool s);
+	void setFlickers(bool s);
+	void setChangesColor(bool s);
+	void setToggleable(bool s);
+	void setFlickerOnTicks(int s);
+	void setFlickerOffTicks(int s);
+	void setFlickerRandomUpToOnTicks(bool s);
+	void setFlickerRandomUpToOffTicks(bool s);
 };
 

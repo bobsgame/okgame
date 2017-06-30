@@ -73,7 +73,7 @@ public:
 	virtual void update();
 
 
-	virtual void setEnabled(bool b);
+	void setEnabled(bool b);
 
 
 	virtual void render(int layer);

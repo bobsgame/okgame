@@ -38,7 +38,7 @@ public:
 	Item(Engine* g, Sprite* sprite);
 
 
-	virtual void sendServerRequest();
+	void sendServerRequest();
 
 
 	string& getName();

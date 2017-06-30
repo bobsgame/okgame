@@ -110,7 +110,7 @@ public:
 
 	EventData(int id, const string& name, int type, const string& comment, const string& text);
 
-	virtual string& initFromString(string& t);
+	string& initFromString(string& t);
 
 	//static EventData* fromBase64ZippedJSON(const string& b64);
 
@@ -118,16 +118,16 @@ public:
 	//static EventData* fromJSON(const string& json);
 
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 
 
-	virtual int getType();
-	virtual string& getComment();
-	virtual string& getText();
+	int getType();
+	string& getComment();
+	string& getText();
 
-	virtual void setType(int s);
-	virtual void setComment(const string& s);
-	virtual void setText(const string& s);
+	void setType(int s);
+	void setComment(const string& s);
+	void setText(const string& s);
 
 
 	static int TYPE_PROJECT_INITIAL_LOADER; //project cutscene loader, one per project

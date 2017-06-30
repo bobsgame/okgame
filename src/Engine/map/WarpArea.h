@@ -29,14 +29,14 @@ public:
 	virtual void update() override;
 
 
-	virtual void enter();
+	void enter();
 
 	virtual void renderDebugInfo() override;
 
 
-	virtual void setDestinationTYPEIDString(const string& typeID);
+	void setDestinationTYPEIDString(const string& typeID);
 
-	virtual string& getDestinationMapName();
-	virtual string& getDestinationWarpAreaName();
+	string& getDestinationMapName();
+	string& getDestinationWarpAreaName();
 };
 

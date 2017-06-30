@@ -62,10 +62,10 @@ public:
 
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void renderScreenSprites(RenderOrder layer);
+	void renderScreenSprites(RenderOrder layer);
 
 
 	//
@@ -207,10 +207,10 @@ public:
 	//	}
 
 
-	virtual Sprite* getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
+	Sprite* getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
 
 
-	virtual Sprite* getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
+	Sprite* getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
 	Sprite * preloadSpriteFromDataFile(const string & spriteAssetName);
 	Sprite * getSpriteByName(const string & spriteAssetName);
 };

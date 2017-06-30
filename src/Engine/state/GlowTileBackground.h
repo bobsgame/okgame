@@ -63,10 +63,10 @@ public:
 	GlowTileBackground(Engine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void cleanup();
+	void cleanup();
 
 
 	virtual void update() override;

@@ -78,11 +78,11 @@ public:
 
 	PingBackground* background = new PingBackground(this);
 
-	virtual void reset();
-	virtual void initGame();
+	void reset();
+	void initGame();
 	virtual void update() override;
 	virtual void render() override;
-	virtual void game();
-	virtual void updateScore();
+	void game();
+	void updateScore();
 };
 

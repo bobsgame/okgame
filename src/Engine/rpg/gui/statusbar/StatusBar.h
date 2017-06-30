@@ -61,23 +61,23 @@ public:
 	StatusBar(BGClientEngine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void setLightTheme();
+	void setLightTheme();
 
-	virtual void setDarkTheme();
-
-
-	virtual void setEnabled(bool b);
+	void setDarkTheme();
 
 
-	virtual void render();
+	void setEnabled(bool b);
 
 
-	virtual void render(int layer);
+	void render();
+
+
+	void render(int layer);
 };
 

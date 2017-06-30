@@ -105,30 +105,30 @@ public:
 	Cameraman(Engine* g);
 
 
-	virtual void initCurrentAnimationFromSprite();
+	void initCurrentAnimationFromSprite();
 
 
-	//virtual Map* getMap();
+	//Map* getMap();
 
 
-	virtual Map* getCurrentMap();
+	Map* getCurrentMap();
 
 
-	virtual void render(float alpha);
+	void render(float alpha);
 
 
-	virtual float getX();
+	float getX();
 
-	virtual float getY();
-
-
-	virtual void setShakeScreen(int ticksDuration, int maxX, int maxY, int ticksPerShake);
+	float getY();
 
 
-	virtual void updateScreenShake();
+	void setShakeScreen(int ticksDuration, int maxX, int maxY, int ticksPerShake);
 
 
-	virtual void update();
+	void updateScreenShake();
+
+
+	void update();
 
 
 	static float ZOOMINCREMENT;
@@ -156,64 +156,64 @@ public:
 	float popZOOMto = 0.0f;
 
 
-	virtual float getZoom();
-	virtual void setZoomTO(float ZOOMto);
+	float getZoom();
+	void setZoomTO(float ZOOMto);
 
 
-	virtual void setZoomToFitArea(Area* a);
+	void setZoomToFitArea(Area* a);
 
 
-	virtual void updateZoom();
+	void updateZoom();
 
 
-	virtual void zoomOut();
+	void zoomOut();
 
-	virtual void zoomIn();
+	void zoomIn();
 
-	virtual void resetZoom();
+	void resetZoom();
 
-	virtual void quickZoomOut();
+	void quickZoomOut();
 
-	virtual void quickZoomIn();
+	void quickZoomIn();
 
-	virtual void resetQuickZoom();
-
-
-	virtual int getXTarget();
+	void resetQuickZoom();
 
 
-	virtual int getYTarget();
+	int getXTarget();
 
 
-	virtual int getMaxCameraBoundaryWidth();
+	int getYTarget();
 
 
-	virtual int getMaxCameraBoundaryHeight();
+	int getMaxCameraBoundaryWidth();
 
 
-	virtual int getMapWidthBasedOnCameraBoundsFromEdge();
-
-	virtual int getMapHeightBasedOnCameraBoundsFromEdge();
+	int getMaxCameraBoundaryHeight();
 
 
-	virtual void setXYToTarget();
+	int getMapWidthBasedOnCameraBoundsFromEdge();
+
+	int getMapHeightBasedOnCameraBoundsFromEdge();
 
 
-	virtual void setTarget(Entity* t);
+	void setXYToTarget();
 
 
-	virtual void setTarget(float mapXPixelsHQ, float mapYPixelsHQ);
+	void setTarget(Entity* t);
 
 
-	virtual void setTarget(Area* area);
+	void setTarget(float mapXPixelsHQ, float mapYPixelsHQ);
 
 
-	virtual void setDummyTarget();
+	void setTarget(Area* area);
 
 
-	virtual void setAutoZoomByPlayerMovement(bool b);
+	void setDummyTarget();
 
 
-	virtual void setPlayerCanZoomManuallyWithKeyboard(bool b);
+	void setAutoZoomByPlayerMovement(bool b);
+
+
+	void setPlayerCanZoomManuallyWithKeyboard(bool b);
 };
 

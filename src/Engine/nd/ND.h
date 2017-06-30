@@ -61,15 +61,15 @@ public:
 	ND();
 
 
-	virtual void init();
+	void init();
 
 
 	virtual void update() override;
 
 
-	virtual void setGame(NDGameEngine* game);
+	void setGame(NDGameEngine* game);
 
-	virtual NDGameEngine* getGame();
+	NDGameEngine* getGame();
 
 
 	virtual void toggleActivated() override;

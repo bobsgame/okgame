@@ -33,34 +33,34 @@ public:
 	Clock(Engine* g);
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void setTime(int day, int hour, int minute, int second);
+	void setTime(int day, int hour, int minute, int second);
 
 
-	virtual void updateCaptions();
+	void updateCaptions();
 
 
-	virtual void setPaused(bool b);
+	void setPaused(bool b);
 
 
-	virtual void setPausedOn();
+	void setPausedOn();
 
-	virtual void setPausedOff();
-
-
-	virtual void setUnknown(bool b);
-
-	virtual void setUnknownOn();
-
-	virtual void setUnknownOff();
+	void setPausedOff();
 
 
-	virtual void setFast(bool b);
+	void setUnknown(bool b);
 
-	virtual void setFastOn();
+	void setUnknownOn();
 
-	virtual void setFastOff();
+	void setUnknownOff();
+
+
+	void setFast(bool b);
+
+	void setFastOn();
+
+	void setFastOff();
 };
 

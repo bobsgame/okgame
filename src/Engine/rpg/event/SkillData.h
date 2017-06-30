@@ -31,6 +31,6 @@ public:
 
 	string& initFromString(string& t);
 
-	virtual string getTYPEIDString();
+	string getTYPEIDString();
 };
 

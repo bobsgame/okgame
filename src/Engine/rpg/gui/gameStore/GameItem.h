@@ -36,7 +36,7 @@ public:
 
 
 public:
-	//virtual void setText(const string& getText);
+	//void setText(const string& getText);
 
 
 	/*

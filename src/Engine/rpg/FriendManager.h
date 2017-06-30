@@ -28,10 +28,10 @@ public:
 	FriendManager(BGClientEngine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void cleanup();
+	void cleanup();
 
 
 	//this should keep a list of all the friends online
@@ -39,12 +39,12 @@ public:
 	//go through the list and update those.
 
 
-	virtual void update();
+	void update();
 
 
 
 
 	//The following method was originally marked 'synchronized':
-	//virtual void addNewOnlineFriendIfNotExist(int userID, int peerType);
+	//void addNewOnlineFriendIfNotExist(int userID, int peerType);
 };
 

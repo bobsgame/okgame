@@ -31,12 +31,12 @@ public:
 	virtual ~MiniGameEngine();
 	virtual void init();
 
-	virtual string& getGameName();
+	string& getGameName();
 
 	virtual void shakeSmall();
 	virtual void shakeHard();
 
-	//virtual void update();
+	//void update();
 
 
 
@@ -135,11 +135,11 @@ public:
 	long long gameChallengeRequestSentTime = -1;
 
 	//The following method was originally marked 'synchronized':
-	virtual int getIncomingGameChallengeResponse();
+	int getIncomingGameChallengeResponse();
 	//The following method was originally marked 'synchronized':
-	virtual void setIncomingGameChallengeResponse(int s);
+	void setIncomingGameChallengeResponse(int s);
 
-	//virtual void setConnection(UDPPeerConnection* connection);
+	//void setConnection(UDPPeerConnection* connection);
 	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string e);
 
 

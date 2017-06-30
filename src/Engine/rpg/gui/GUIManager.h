@@ -61,64 +61,64 @@ public:
 	GUIManager(BGClientEngine* g);
 
 
-	virtual void init();
+	void init();
 
 
-	virtual void update();
+	void update();
 
 
-	virtual void render();
+	void render();
 
 
 	//The following method was originally marked 'synchronized':
-	virtual GameChallengeNotificationPanel* makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName);
+	GameChallengeNotificationPanel* makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName);
 
 
-	virtual void removeGameNotification(GameChallengeNotificationPanel* g);
+	void removeGameNotification(GameChallengeNotificationPanel* g);
 
 
-	virtual void cleanup();
+	void cleanup();
 
 
-	virtual void setDarkTheme();
+	void setDarkTheme();
 
 
-	virtual void setLightTheme();
+	void setLightTheme();
 
 
-	virtual void openND();
+	void openND();
 
 
-	virtual void closeND();
+	void closeND();
 
 
-	virtual void openGameStore();
+	void openGameStore();
 
 
-	virtual void openSettingsMenu();
+	void openSettingsMenu();
 
 
-	virtual void openFriendsMenu();
+	void openFriendsMenu();
 
 
-	virtual void openStatusMenu();
+	void openStatusMenu();
 
 
-	virtual void openLogMenu();
+	void openLogMenu();
 
 
-	virtual void openItemsMenu();
+	void openItemsMenu();
 
 
-	virtual void openStuffMenu();
+	void openStuffMenu();
 
 
-	virtual void enableAllMenusAndND();
+	void enableAllMenusAndND();
 
 
-	virtual void disableAllMenusAndND();
+	void disableAllMenusAndND();
 
 
-	virtual void closeAllMenusAndND();
+	void closeAllMenusAndND();
 };
 

@@ -34,11 +34,11 @@ public:
 	Door(Engine* g, DoorData* doorAsset, Map* m);
 
 
-	virtual bool isOpen();
+	bool isOpen();
 
-	virtual void setOpenManually(bool b);
+	void setOpenManually(bool b);
 
-	virtual void setOpenAnimation(bool b);
+	void setOpenAnimation(bool b);
 
 	long long lastRequestedMapDataTime = 0;
 
@@ -51,10 +51,10 @@ public:
 	bool openingButtonHeld = false;
 
 
-	virtual void enter();
+	void enter();
 
 
-	virtual void renderActionIcon();
+	void renderActionIcon();
 
 
 	virtual void renderDebugBoxes() override;
@@ -64,41 +64,41 @@ public:
 
 
 	virtual EntityData* getData() override;//was return DoorData but covarient problem
-	virtual DoorData* getDoorData();
+	DoorData* getDoorData();
 
 
-	virtual float arrivalXPixelsHQ();
-	virtual float arrivalYPixelsHQ();
+	float arrivalXPixelsHQ();
+	float arrivalYPixelsHQ();
 
-	virtual string& destinationTYPEIDString();
+	string& destinationTYPEIDString();
 
-	virtual string& destinationMapName();
-	virtual string& destinationDoorName();
-
-
-	virtual bool randomPointOfInterestOrExit();
-	virtual bool randomNPCSpawnPoint();
-	virtual float randomSpawnChance();
-	virtual int randomSpawnDelay();
-	virtual bool randomSpawnKids();
-	virtual bool randomSpawnAdults();
-	virtual bool randomSpawnMales();
-	virtual bool randomSpawnFemales();
+	string& destinationMapName();
+	string& destinationDoorName();
 
 
-	virtual void setDestinationTYPEIDString(const string& typeID);
-
-	virtual void setRandomPointOfInterestOrExit(bool s);
-	virtual void setRandomNPCSpawnPoint(bool s);
-	virtual void setRandomSpawnChance(float s);
-	virtual void setRandomSpawnDelay(int s);
-	virtual void setRandomSpawnKids(bool s);
-	virtual void setRandomSpawnAdults(bool s);
-	virtual void setRandomSpawnMales(bool s);
-	virtual void setRandomSpawnFemales(bool s);
+	bool randomPointOfInterestOrExit();
+	bool randomNPCSpawnPoint();
+	float randomSpawnChance();
+	int randomSpawnDelay();
+	bool randomSpawnKids();
+	bool randomSpawnAdults();
+	bool randomSpawnMales();
+	bool randomSpawnFemales();
 
 
-	virtual void setArrivalXPixels(int s);
-	virtual void setArrivalYPixels(int s);
+	void setDestinationTYPEIDString(const string& typeID);
+
+	void setRandomPointOfInterestOrExit(bool s);
+	void setRandomNPCSpawnPoint(bool s);
+	void setRandomSpawnChance(float s);
+	void setRandomSpawnDelay(int s);
+	void setRandomSpawnKids(bool s);
+	void setRandomSpawnAdults(bool s);
+	void setRandomSpawnMales(bool s);
+	void setRandomSpawnFemales(bool s);
+
+
+	void setArrivalXPixels(int s);
+	void setArrivalYPixels(int s);
 };
 

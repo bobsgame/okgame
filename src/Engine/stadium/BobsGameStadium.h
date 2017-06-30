@@ -25,8 +25,8 @@ public:
 
 
 	BobsGameStadium();
-	virtual ~BobsGameStadium();
-	virtual void init();
+	~BobsGameStadium();
+	void init();
 	BobsGameStadium(StadiumScreen* stadiumScreen, Area* area);
 
 

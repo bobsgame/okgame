@@ -64,19 +64,19 @@ public:
 	RamioGuy* guy = nullptr;
 
 
-	virtual void updateScore();
+	void updateScore();
 
 
-	virtual bool checkHit(int dir);
+	bool checkHit(int dir);
 
 
-	virtual void initGame();
+	void initGame();
 
 
-	virtual void doWinSequence();
+	void doWinSequence();
 
 
-	virtual void doDeathSequence();
+	void doDeathSequence();
 
 
 	ConsoleText* ramioText = Console::add("ramioText", BobColor::green);

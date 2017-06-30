@@ -99,7 +99,7 @@ public:
 	//	}
 
 
-	virtual string& initFromString(string& t);
+	virtual string& initFromString(string& t) override;
 	//static EntityData* fromBase64ZippedJSON(const string& b64);
 	//static EntityData* fromJSON(const string& json);
 
@@ -107,92 +107,92 @@ public:
 	virtual string getTYPEIDString();
 
 
-	virtual float getSpawnXPixels1X();
-	virtual float getSpawnYPixels1X();
-	virtual float getSpawnXPixelsHQ();
-	virtual float getSpawnYPixelsHQ();
+	float getSpawnXPixels1X();
+	float getSpawnYPixels1X();
+	float getSpawnXPixelsHQ();
+	float getSpawnYPixelsHQ();
 
-	virtual string& getSpriteName();
-	virtual string& getComment();
-	virtual int getInitialFrame();
-	virtual bool getPushable();
-	virtual bool getNonWalkable();
-	virtual float getToAlpha();
-	virtual float getScale();
-	virtual bool getDisableShadow();
-	virtual int getLayer();
-	virtual RenderOrder getRenderOrder();
-	virtual bool getAboveWhenEqual();
-	virtual bool getAboveTopLayer();
-	virtual bool getAlwaysOnBottom();
-	virtual bool getAlwaysOnTop();
-	virtual bool getIsNPC();
-	virtual bool getAnimatingThroughAllFrames();
-	virtual bool getAnimatingThroughCurrentAnimation();
-	virtual bool getLoopAnimation();
-	virtual bool getRandomFrames();
-	virtual bool getRandomUpToTicksBetweenAnimationLoop();
-	virtual int getTicksBetweenFrames();
-	virtual bool getRandomUpToTicksBetweenFrames();
-	virtual int getTicksBetweenAnimationLoop();
+	string& getSpriteName();
+	string& getComment();
+	int getInitialFrame();
+	bool getPushable();
+	bool getNonWalkable();
+	float getToAlpha();
+	float getScale();
+	bool getDisableShadow();
+	int getLayer();
+	RenderOrder getRenderOrder();
+	bool getAboveWhenEqual();
+	bool getAboveTopLayer();
+	bool getAlwaysOnBottom();
+	bool getAlwaysOnTop();
+	bool getIsNPC();
+	bool getAnimatingThroughAllFrames();
+	bool getAnimatingThroughCurrentAnimation();
+	bool getLoopAnimation();
+	bool getRandomFrames();
+	bool getRandomUpToTicksBetweenAnimationLoop();
+	int getTicksBetweenFrames();
+	bool getRandomUpToTicksBetweenFrames();
+	int getTicksBetweenAnimationLoop();
 
-	virtual float getTicksPerPixelMoved();
-	virtual bool getOnlyHereDuringEvent();
-	virtual float getVoicePitch();
-	virtual bool getMovementAnimationDisabled();
-	virtual bool getHitLayerDisabled();
-	virtual bool getIgnoreHitPlayer();
-	virtual bool getIgnoreHitEntities();
-	virtual bool getDontUsePathfinding();
-	virtual bool getPullPlayer();
-	virtual bool getPushPlayer();
-	virtual EventData* getEventData();
-	//virtual int getMapID();
-	//virtual int getStateID();
-	virtual ArrayList<string>* getConnectionTYPEIDList();
-	virtual ArrayList<string>* getBehaviorList();
+	float getTicksPerPixelMoved();
+	bool getOnlyHereDuringEvent();
+	float getVoicePitch();
+	bool getMovementAnimationDisabled();
+	bool getHitLayerDisabled();
+	bool getIgnoreHitPlayer();
+	bool getIgnoreHitEntities();
+	bool getDontUsePathfinding();
+	bool getPullPlayer();
+	bool getPushPlayer();
+	EventData* getEventData();
+	//int getMapID();
+	//int getStateID();
+	ArrayList<string>* getConnectionTYPEIDList();
+	ArrayList<string>* getBehaviorList();
 
 
 	//set
 
-	virtual void setSpriteName(const string& s);
-	virtual void setInitialFrame(int s);
-	virtual void setPushable(bool s);
-	virtual void setNonWalkable(bool s);
-	virtual void setToAlpha(float s);
-	virtual void setScale(float s);
-	virtual void setDisableShadow(bool s);
-	virtual void setRenderOrder(RenderOrder s);
-	virtual void setAboveTopLayer(bool s);
-	virtual void setAboveWhenEqual(bool s);
-	virtual void setAlwaysOnBottom(bool s);
-	virtual void setAlwaysOnTop(bool s);
-	virtual void setIsNPC(bool s);
-	virtual void setOnlyHereDuringEvent(bool s);
-	virtual void setVoicePitch(float s);
-	virtual void setAnimationDisabled(bool s);
-	virtual void setHitLayerDisabled(bool s);
-	virtual void setIgnoreHitPlayer(bool s);
-	virtual void setIgnoreHitEntities(bool s);
-	virtual void setDontUsePathfinding(bool s);
+	void setSpriteName(const string& s);
+	void setInitialFrame(int s);
+	void setPushable(bool s);
+	void setNonWalkable(bool s);
+	void setToAlpha(float s);
+	void setScale(float s);
+	void setDisableShadow(bool s);
+	void setRenderOrder(RenderOrder s);
+	void setAboveTopLayer(bool s);
+	void setAboveWhenEqual(bool s);
+	void setAlwaysOnBottom(bool s);
+	void setAlwaysOnTop(bool s);
+	void setIsNPC(bool s);
+	void setOnlyHereDuringEvent(bool s);
+	void setVoicePitch(float s);
+	void setAnimationDisabled(bool s);
+	void setHitLayerDisabled(bool s);
+	void setIgnoreHitPlayer(bool s);
+	void setIgnoreHitEntities(bool s);
+	void setDontUsePathfinding(bool s);
 
-	virtual void setRandomFrames(bool s);
-	virtual void setRandomUpToTicksBetweenAnimationLoop(bool s);
-	virtual void setTicksBetweenFrames(int s);
-	virtual void setRandomUpToTicksBetweenFrames(bool s);
-	virtual void setTicksBetweenAnimationLoop(int s);
+	void setRandomFrames(bool s);
+	void setRandomUpToTicksBetweenAnimationLoop(bool s);
+	void setTicksBetweenFrames(int s);
+	void setRandomUpToTicksBetweenFrames(bool s);
+	void setTicksBetweenAnimationLoop(int s);
 
-	virtual void setTicksPerPixelMoved(float s);
-	virtual void setSpawnXPixels1X(float s);
-	virtual void setSpawnYPixels1X(float s);
-	//virtual void setMapID(int s);
-	//virtual void setStateID(int s);
-	//virtual void setEventID(int s);
-	virtual void setComment(const string& s);
+	void setTicksPerPixelMoved(float s);
+	void setSpawnXPixels1X(float s);
+	void setSpawnYPixels1X(float s);
+	//void setMapID(int s);
+	//void setStateID(int s);
+	//void setEventID(int s);
+	void setComment(const string& s);
 
 
-	virtual void setAnimateThroughAllFrames(bool s);
-	virtual void setAnimateThroughCurrentAnimation(bool s);
-	virtual void setLoopAnimation(bool s);
+	void setAnimateThroughAllFrames(bool s);
+	void setAnimateThroughCurrentAnimation(bool s);
+	void setLoopAnimation(bool s);
 };
 

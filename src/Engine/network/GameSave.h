@@ -113,19 +113,19 @@ public:
 	GameSave();
 
 
-	virtual bool wasPlayerCreatedYet();
+	bool wasPlayerCreatedYet();
 
 
-	virtual string addOrUpdateValueToCommaSeparatedList(string list, string value);
+	string addOrUpdateValueToCommaSeparatedList(string list, string value);
 
 
-	virtual void* updateGameSaveValue(const string& variableName, const string& value);
+	void* updateGameSaveValue(const string& variableName, const string& value);
 
 
-	virtual string encodeGameSave();
+	string encodeGameSave();
 
 
-	virtual void decodeGameSave(string s);
+	void decodeGameSave(string s);
 
 
 	static string getCountryStringFromCode(const string& countryCode);

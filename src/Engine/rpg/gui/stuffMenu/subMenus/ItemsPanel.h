@@ -27,7 +27,7 @@ public:
 	ItemsPanel();
 
 
-	virtual void updateItems();
+	void updateItems();
 
 
 	virtual void layout() override;

@@ -40,12 +40,12 @@ public:
 	BobColor* unknownBGColor = BobColor::black;
 
 
-	virtual void setPausedColor();
+	void setPausedColor();
 
 
-	virtual void setUnknownColor();
+	void setUnknownColor();
 
 
-	virtual void setFastSpeedColor();
+	void setFastSpeedColor();
 };
 

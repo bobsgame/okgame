@@ -40,7 +40,7 @@ public:
 	StatusBarCaption(BGClientEngine* g);
 
 
-	virtual void setEnabled(bool b);
+	void setEnabled(bool b);
 
 
 	virtual void init();
@@ -52,12 +52,12 @@ public:
 	virtual void render(int layer);
 
 
-	virtual void updateCaption(const string& s);
+	void updateCaption(const string& s);
 
 
 	virtual void setColors(BobColor* fg, BobColor* aa, BobColor* bg);
 
 
-	virtual void setDefaultColor();
+	void setDefaultColor();
 };
 

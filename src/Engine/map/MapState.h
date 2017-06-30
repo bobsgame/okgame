@@ -43,9 +43,9 @@ public:
 	MapState(MapStateData* mapStateData, Map* m);
 
 
-	virtual MapStateData* getData();
+	MapStateData* getData();
 
-	virtual int getID();
-	virtual string& getName();
+	int getID();
+	string& getName();
 };
 

@@ -27,6 +27,6 @@ public:
 	GameDataLoader(Engine* g);
 
 
-	virtual void loadGameData();
+	void loadGameData();
 };
 
