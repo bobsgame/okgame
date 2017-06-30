@@ -31,6 +31,9 @@ public:
 	vector<u8>* byteData = nullptr;
 
 
+private:
+	int channel = 0;
+
 #ifdef USE_SOLOUD
 	SoLoud::Wav *soLoudWave = nullptr;
 #endif
@@ -104,15 +107,17 @@ public:
 		bool playingStarted = false;
 		float pitch = 1.0f;
 		float volume = 1.0f;
-		bool loop = false;
+		//bool loop = false;
 	public:
 		int timesToPlay = 1;
-		bool deleting = false;
+		//bool deleting = false;
 
 
 
 
 		virtual void handlePlaying();
+
+		void stop();
 
 };
 

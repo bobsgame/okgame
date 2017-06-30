@@ -41,7 +41,7 @@ public:
 		SoLoud::Modplug *soLoudMod = nullptr;
 #endif
 #ifdef USE_SDL_MIXER
-	Mix_Music* mixMusic = nullptr;
+		Mix_Chunk* mixChunk = nullptr;
 #endif
 
 
@@ -61,6 +61,8 @@ private:
 	int ticksToFadeOutCounter = -1;
 	float volumeWhenStartedFade = 0;
 
+
+	int channel = -1;
 
 public:
 	//Music(Engine* g, int id);
@@ -104,6 +106,10 @@ public:
 	//Thread* downloadThread = nullptr;
 
 
+	void playLoop(int channel);
+
+	//void (Music::*playLoop)(int) = &Music::playLoop;
+
 	virtual void update() override;
 
 
@@ -135,6 +141,7 @@ public:
 
 
 	virtual bool getLoop();
+
 
 
 	virtual bool isPlaying();

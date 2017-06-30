@@ -87,7 +87,7 @@ Music::Music(Engine *g, string filename)
 #endif
 #ifdef USE_SDL_MIXER
 	filename = Main::getPath() + filename;
-	mixMusic = Mix_LoadMUS(filename.c_str());
+	mixChunk = Mix_LoadWAV(filename.c_str());
 #endif
 
 	loadedInfoDataFromServer = true;
@@ -172,6 +172,11 @@ void Music::setData_S(MusicData* data)
 	setInitialized_S(true);
 }
 
+
+
+
+
+
 void Music::update()
 { //=========================================================================================================================
 
@@ -246,49 +251,49 @@ void Music::update()
 
 		if(paused)
 		{
-			
-			stop();
-			playingStarted = false;
+	
 		}
 		else
 		if (shouldBePlaying == true)
 		{
 
-
-
-
-			            if (playingStarted == false)
-			            {
+			if (playingStarted == false)
+			{
 #ifdef USE_SOLOUD
-							AudioManager::soLoud->play(*soLoudMod);
+				AudioManager::soLoud->play(*soLoudMod);
 #endif
 #ifdef USE_SDL_MIXER
-							Mix_PlayMusic(mixMusic, -1);
+		
+				channel = Mix_PlayChannel(-1, mixChunk, 1);		
+
+				//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
 #endif
 
-			               playingStarted = true;
-			            }
-			            else
-			            {
-			               if (playingStarted == true)
-			               {
-							   stop();
-			               }
-			            }
-			//
-			//            //resetOrLoopAudioIfDonePlaying();
-			//            if (channel->isDone() == true) //this should never happen for looping music, the channel just repeats
-			//            {
-			//               if (loop == false)
-			//               {
-			//                  stop();
-			//               }
-			//            }
-			//         }
+			    playingStarted = true;
+			}
+			else
+			{
+
+				if (Mix_Playing(channel) == false) //this should never happen for looping music, the channel just repeats
+				{
+					if (loop == false)
+					{
+						stop();
+					}
+					else
+					{
+						channel = Mix_PlayChannel(-1, mixChunk, 1);
+					}
+				}
+			}
+			
 		}
 		else
 		{
-			stop();
+			if (playingStarted == true)
+			{
+				stop();
+			}
 		}
 
 
@@ -339,13 +344,6 @@ void Music::play(float pitch, float volume, bool loop)
 		this->pitch = pitch;
 		this->volume = volume;
 		this->loop = loop;
-
-		//      if (channel != nullptr)
-		//      {
-		//         channel->setVolume(volume);
-		//         channel->setLoop(loop);
-		//         channel->setPitch(pitch);
-		//      }
 	}
 
 	shouldBePlaying = true;
@@ -373,21 +371,18 @@ bool Music::isFadingOut()
 
 void Music::pause()
 { //=========================================================================================================================
-	//   if (channel != nullptr)
-	//   {
-	//      channel->pause();
-	//   }
 
+	Mix_Pause(channel);
 	paused = true;
+
 }
 
 void Music::unpause()
 { //=========================================================================================================================
-	//   if (channel != nullptr)
-	//   {
-	//      channel->unPause();
-	//   }
+
+	Mix_Resume(channel);
 	paused = false;
+
 }
 
 void Music::stop()
@@ -404,21 +399,22 @@ void Music::stop()
 
 	if (playingStarted)
 	{
-		//      if (channel != nullptr)
-		//      {
-		//         channel->closeChannelAndFlushBuffers();
-		//         playingStarted = false;
-		//      }
+		if (channel != -1)
+		{
+			Mix_HaltChannel(channel);
+		}
+
+		playingStarted = false;
 	}
+
+	channel = -1;
 }
+
+
 
 void Music::setLoop(bool b)
 { //=========================================================================================================================
 	this->loop = b;
-	//   if (channel != nullptr)
-	//   {
-	//      channel->setLoop(b);
-	//   }
 }
 
 bool Music::getLoop()
@@ -429,27 +425,15 @@ bool Music::getLoop()
 bool Music::isPlaying()
 { //=========================================================================================================================
 
-	//   if (channel != nullptr)
-	//   {
-	//      if (channel->isPaused())
-	//      {
-	//         return false;
-	//      }
-	//
-	//      if (channel->isPlaying())
-	//      {
-	//         return true;
-	//      }
-	//   }
-
 	return shouldBePlaying;
+
 }
 
 void Music::setVolume(float v)
 { //=========================================================================================================================
 	volume = v;
 #ifdef USE_SDL_MIXER
-	Mix_VolumeMusic((int)(volume*128));
+	if (isPlaying()) Mix_Volume(channel, (int)(volume * 128));
 	
 #endif
 }

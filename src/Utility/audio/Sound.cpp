@@ -290,58 +290,68 @@ void Sound::handlePlaying()
 	            //channel = AudioUtils::open(outerInstance->getFileName(), outerInstance->getMD5Name(), outerInstance->getByteData());
 	         }
 	      
-	
-	
-	    
+
 	         if (playingStarted == false)
 	         {
-
-				
-				
 
 #ifdef USE_SOLOUD
 				 AudioManager::soLoud->play(*soLoudWave);
 #endif
 #ifdef USE_SDL_MIXER
-				 Mix_PlayChannel(-1, mixChunk, false);
+				 channel = Mix_PlayChannel(-1, mixChunk, false);
 #endif
 				
-
-
 	            playingStarted = true;
-				shouldBePlaying = false;
+				
 	         }
 	         else
 	         {
-	            if (playingStarted == true)
-	            {
-	               //channel->updateBufferAndPlay();
-	            }
-	         }
-	
-	
-//	         if (isDone() == true)
-//	         {
-//	            if (timesToPlay > 0)
-//	            {
-//	               timesToPlay--;
-//	               playingStarted = false;
-//	            }
-//	            else
-//	            {
-//	               shouldBePlaying = false;
-//	               playingStarted = false;
-//	            }
-//	         }
-	      
-	   }
-	
-	   if (shouldBePlaying == false)
-	   {
 
-	         playingStarted = false;
-	         //deleting = true;
-	      
+				 if (Mix_Playing(channel) == false) //this should never happen for looping music, the channel just repeats
+				 {
+
+					 if (timesToPlay > 0)
+					 {
+					    timesToPlay--;
+					    playingStarted = false;
+					 }
+					 else
+					 {
+						 stop();
+					 }
+
+
+				 }
+	         }	      
+	   }
+	   else
+	   {
+		   if (playingStarted == true)
+		   {
+			   stop();
+		   }
 	   }
 }
 
+void Sound::stop()
+{
+
+	pitch = 1.0f;
+	volume = 1.0f;
+	timesToPlay = 1;
+
+
+	shouldBePlaying = false;
+
+	if (playingStarted)
+	{
+		if (channel != -1)
+		{
+			Mix_HaltChannel(channel);
+		}
+
+		playingStarted = false;
+	}
+
+	channel = -1;
+}
