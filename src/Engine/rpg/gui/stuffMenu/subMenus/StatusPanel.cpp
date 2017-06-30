@@ -5,20 +5,16 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
-
 
 
 
 Logger StatusPanel::log = Logger("StatusPanel");
 
-
 StatusPanel::StatusPanel()
 { //=========================================================================================================================
 
 	SubPanel();
-
 
 	//
 	//   Label* statusPanelLabel = new Label("Status");
@@ -801,7 +797,6 @@ void StatusPanel::layout()
 void StatusPanel::setVisible(bool b)
 { //=========================================================================================================================
 	SubPanel::setVisible(b);
-
 
 	//
 	//   if (b == true)

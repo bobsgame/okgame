@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -16,7 +14,6 @@ class SettingsPanel : public SubPanel
 public:
 
 	static Logger log;
-
 
 	//   Label* autoZoomLabel;
 	//   ToggleButton*const autoZoomToggleButton = new ToggleButton("");
@@ -80,21 +77,15 @@ public:
 	//
 	//   DialogLayout* graphicsSettingsDialogLayout;
 
-
 	SettingsPanel();
-
 
 	void initGameSettingsSubPanel();
 
-
 	void initGUISettingsSubPanel();
-
 
 	void initGraphicsSettingsSubPanel();
 
-
 	virtual void layout() override;
-
 
 	virtual void setVisible(bool b) override;
 };

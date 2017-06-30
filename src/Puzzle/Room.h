@@ -4,7 +4,6 @@
 //------------------------------------------------------------------------------
 
 
-
 #pragma once
 #include <string>
 #include "bobtypes.h"
@@ -16,7 +15,6 @@
 class Room
 {//=========================================================================================================================
 public:
-
 
 	UDPPeerConnection *hostPeer = nullptr;
 
@@ -73,7 +71,6 @@ public:
 		string endOnCredits = "Endless Mode";
 		if (multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)endOnCredits = "Race To Credits";
 
-
 		string roomDescription = game;
 		if (visibility != "")roomDescription += " | " + visibility;
 		if (scoreMode != "")roomDescription += " | " + scoreMode;
@@ -81,7 +78,6 @@ public:
 		//if (garbage != "")roomDescription += " | " + garbage;
 		//if (endWhenLose != "")roomDescription += " | " + endWhenLose;
 		//if (endOnCredits != "")roomDescription += " | " + endOnCredits;
-
 
 		string playersString = to_string(currentNumPlayers);
 		if (maxPlayers > 1)playersString += "/" + to_string(maxPlayers) + " players";
@@ -100,7 +96,6 @@ public:
 			to_string(hostUserID) +
 			"," + uuid;
 
-
 		s += ",`" + multiplayer_SelectedGameSequence->name + "`";
 
 		if (multiplayer_SelectedGameSequence->gameTypes.size() == 1)
@@ -111,7 +106,6 @@ public:
 		{
 			s += ",GameSequence," + multiplayer_SelectedGameSequence->uuid;
 		}
-
 
 		s +=
 
@@ -127,7 +121,6 @@ public:
 			"," + to_string((int)multiplayer_DisableVSGarbage) +
 			",";
 
-
 		if (includeXMLGameSequence)
 		{
 			if (multiplayer_SelectedGameSequence != nullptr)
@@ -139,11 +132,9 @@ public:
 		return s;
 	}
 
-
 	//=========================================================================================================================
 	static Room* decodeRoomData(string s, bool decodeGameSequenceXML)
 	{//=========================================================================================================================
-
 
 		string hostUserIDString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
@@ -186,9 +177,7 @@ public:
 			if (multiplayer_SelectedGameSequenceString.length() < 10)multiplayer_SelectedGameSequenceString = "";
 		}
 
-
 		Room *newRoom = new Room();
-
 
 
 
@@ -347,8 +336,6 @@ public:
 
 		return newRoom;
 	}
-
-
 
 
 

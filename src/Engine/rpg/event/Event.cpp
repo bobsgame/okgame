@@ -6,14 +6,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
 
-
 Logger Event::log = Logger("Event");
-
 
 //Event::Event(Engine* g, int id)
 //{ //=========================================================================================================================
@@ -30,7 +27,6 @@ Event::Event(Engine* g, EventData* eventData, string s)
 	initEvent();
 
 }
-
 
 Event::Event(Engine* g, EventData* eventData, Map* m)
 { //=========================================================================================================================
@@ -67,7 +63,6 @@ Event::Event(Engine* g, EventData* eventData, Sprite* s)
 	this->sprite = s;
 	initEvent();
 }
-
 
 void Event::initEvent()
 {//=========================================================================================================================
@@ -110,7 +105,6 @@ void Event::initEvent()
 		d->setData_S(data);
 	}
 
-
 	bool exists = false;
 
 	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
@@ -132,9 +126,7 @@ void Event::initEvent()
 	getEventManager()->eventList.add(this); 
 	//this tracks events created for areas and entities that don't exist after the map is unloaded, so they don't have to be loaded from the server and parsed again.
 
-
 }
-
 
 
 EventData* Event::getData()
@@ -271,17 +263,14 @@ void Event::reset()
 void Event::parseEventString(string s)
 { //===============================================================================================
 
-
 	commandTree = new EventCommand(getEngine(), "none", nullptr, 0);
 
 	EventCommand* currentParent = commandTree;
-
 
 	s = s.substr(1, s.length() - 1 - 1); //split off { }, string now looks like "command,command,if(qualifier == TRUE){command,command}"
 
 	//fadeFromBlack(INT.10000),
 	//if(isFlagSet(FLAG.0) == TRUE){},if(isFlagSet(FLAG.0) == FALSE){setPlayerToTempPlayerWithSprite(SPRITE.938)}
-
 
 	while (s.length() > 0)
 	{
@@ -313,9 +302,7 @@ void Event::parseEventString(string s)
 
 				EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, qualifier);
 
-
 				currentParent->addChild(e);
-
 
 				currentParent = e;
 			}
@@ -428,12 +415,10 @@ void Event::run()
 			//do i really need to do this? it is actually better to load the dialogues on-demand, so people can't hack the memory and see dialogue they can't access...
 		}
 
-
 		if (currentCommand != nullptr)
 		{
 			doCommand();
 		}
-
 
 		if (commandTree != nullptr) //set to null if the command changes the map, which clears the event queue and resets this event: but it's still running!
 		{
@@ -520,7 +505,6 @@ void Event::doCommand()
 
 	
 
-
 	if (currentCommand == nullptr)
 	{
 		return;
@@ -538,7 +522,6 @@ void Event::doCommand()
 			e->updateParameterVariablesFromString(this);
 		}
 	}
-
 
 	if (currentCommand->commandString == EventData::isPlayerTouchingThisArea->getCommand())
 	{
@@ -843,7 +826,6 @@ void Event::doCommand()
 		return;
 	}
 
-
 	//commands
 	if (currentCommand->commandString == EventData::alwaysBlockWhileNotStandingHere->getCommand())
 	{
@@ -1058,7 +1040,6 @@ void Event::doCommand()
 	}
 	// if(currentCommand.commandString.equals(EventData.playVideo_VIDEO.getCommand())){playVideo_VIDEO();return; }
 
-
 	if (currentCommand->commandString == EventData::setDoorOpenAnimation_DOOR_BOOLopenClose->getCommand())
 	{
 		setDoorOpenAnimation_DOOR_BOOLopenClose();
@@ -1084,7 +1065,6 @@ void Event::doCommand()
 		setWarpDestination_WARP_WARPdestination();
 		return;
 	}
-
 
 	if (currentCommand->commandString == EventData::setCameraNoTarget->getCommand())
 	{
@@ -1176,7 +1156,6 @@ void Event::doCommand()
 		setCameraSpeed_FLOAT();
 		return;
 	}
-
 
 	if (currentCommand->commandString == EventData::setPlayerToTempPlayerWithSprite_SPRITE->getCommand())
 	{
@@ -1373,7 +1352,6 @@ void Event::doCommand()
 	}
 	//		 if(currentCommand.commandString.equals(EventData.playerFadeOutDelete.getCommand())){playerFadeOutDelete();return; }
 	//		 if(currentCommand.commandString.equals(EventData.playerDeleteInstantly.getCommand())){playerDeleteInstantly();return; }
-
 
 	if (currentCommand->commandString == EventData::entitySetBehaviorQueueOnOff_ENTITY_BOOL->getCommand())
 	{
@@ -1587,7 +1565,6 @@ void Event::doCommand()
 		return;
 	}
 
-
 	if (currentCommand->commandString == EventData::spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA->getCommand())
 	{
 		spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA();
@@ -1630,7 +1607,6 @@ void Event::doCommand()
 		return;
 	}
 
-
 	if (currentCommand->commandString == EventData::giveItem_ITEM->getCommand())
 	{
 		giveItem_ITEM();
@@ -1656,7 +1632,6 @@ void Event::doCommand()
 		giveMoney_FLOAT();
 		return;
 	}
-
 
 	if (currentCommand->commandString == EventData::playSound_SOUND->getCommand())
 	{
@@ -1723,7 +1698,6 @@ void Event::doCommand()
 		blockUntilAllMusicDone();
 		return;
 	}
-
 
 	if (currentCommand->commandString == EventData::shakeScreen_INTticks_INTxpixels_INTypixels_INTticksPerShake->getCommand())
 	{
@@ -1959,7 +1933,6 @@ void Event::doCommand()
 		return;
 	}
 
-
 	if (currentCommand->commandString == EventData::setShowNDButton_BOOL->getCommand())
 	{
 		setShowNDButton_BOOL();
@@ -1981,7 +1954,6 @@ void Event::doCommand()
 		return;
 	}
 
-
 	if (currentCommand->commandString == EventData::setNDEnabled_BOOL->getCommand())
 	{
 		setNDEnabled_BOOL();
@@ -2002,7 +1974,6 @@ void Event::doCommand()
 		setAllMenusAndNDEnabled_BOOL();
 		return;
 	}
-
 
 	if (currentCommand->commandString == EventData::setClockUnknown->getCommand())
 	{
@@ -2056,7 +2027,6 @@ void Event::doCommand()
 		return;
 	}
 
-
 	if (currentCommand->commandString == EventData::closeAllMenusAndND->getCommand())
 	{
 		closeAllMenusAndND();
@@ -2108,7 +2078,6 @@ void Event::doCommand()
 	//		 if(currentCommand.commandString.equals(EventData.showCinemaEvent.getCommand())){showCinemaEvent();return; }
 	//		 if(currentCommand.commandString.equals(EventData.runGlobalEvent.getCommand())){runGlobalEvent();return; }
 
-
 	{
 		log.error("Error! Unknown Command: " + currentCommand->commandString);
 		getNextCommandInParent();
@@ -2118,7 +2087,6 @@ void Event::doCommand()
 
 void Event::isPlayerTouchingThisArea()
 { //===============================================================================================
-
 
 	if (this->area == nullptr)
 	{
@@ -2159,7 +2127,6 @@ void Event::isPlayerTouchingThisEntity()
 
 void Event::isPlayerTouchingAnyEntityUsingThisSprite()
 { //===============================================================================================
-
 
 	if (this->sprite == nullptr)
 	{
@@ -2206,13 +2173,11 @@ void Event::isPlayerWalkingIntoWarp_WARP()
 void Event::isPlayerAutoPilotOn()
 { //===============================================================================================
 
-
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isAutoPilotOn());
 }
 
 void Event::isActionButtonHeld()
 { //===============================================================================================
-
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getControlsManager()->BGCLIENT_ACTION_HELD);
 }
@@ -2237,7 +2202,6 @@ void Event::isFlagSet_FLAG()
 void Event::hasSkillAtLeast_SKILL_FLOAT1()
 { //===============================================================================================
 	int p = 0;
-
 
 	if (currentCommand->parameterList->size() > 1)
 	{
@@ -2362,13 +2326,11 @@ void Event::hasGame_GAME()
 void Event::isPlayerMale()
 { //===============================================================================================
 
-
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isMale);
 }
 
 void Event::isPlayerFemale()
 { //===============================================================================================
-
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isFemale);
 }
@@ -2377,7 +2339,6 @@ void Event::isAnyEntityUsingSprite_SPRITE()
 { //===============================================================================================
 	int p = 0;
 
-
 	Sprite* sprite = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
@@ -2385,7 +2346,6 @@ void Event::isAnyEntityUsingSprite_SPRITE()
 	{
 		return; //block until sprite has loaded.
 	}
-
 
 	bool b = getMap()->isAnyEntityUsingSpriteAsset(sprite);
 
@@ -2410,7 +2370,6 @@ void Event::isAnyEntityUsingSpriteAtArea_SPRITE_AREA()
 
 	ArrayList<Entity*>* e = a->getMap()->getAllEntitiesTouchingArea(a);
 
-
 	bool b = false;
 
 	for (int i = 0; i < e->size(); i++)
@@ -2431,7 +2390,6 @@ void Event::isEntitySpawned_ENTITY()
 { //===============================================================================================
 	int p = 0;
 
-
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 
 	//will be null if it couldn't find the object ID after searching the entityList
@@ -2444,7 +2402,6 @@ void Event::isEntityAtArea_ENTITY_AREA()
 	int p = 0;
 
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-
 
 	if (e != nullptr)
 	{
@@ -2460,7 +2417,6 @@ void Event::isAreaEmpty_AREA()
 { //===============================================================================================
 	int p = 0;
 	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
-
 
 	if (a != nullptr)
 	{
@@ -2491,13 +2447,11 @@ void Event::hasFinishedDialogue_DIALOGUE()
 void Event::isTextBoxOpen()
 { //===============================================================================================
 
-
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getTextManager()->isTextBoxOpen());
 }
 
 void Event::isTextAnswerBoxOpen()
 { //===============================================================================================
-
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getTextManager()->isTextAnswerBoxOpen());
 }
@@ -2507,7 +2461,6 @@ void Event::isTextAnswerSelected_INT4()
 
 	// TODO Auto-generated method stub
 
-
 	//handle both string and int, can have two different parameters
 }
 
@@ -2515,7 +2468,6 @@ void Event::isTextAnswerSelected_STRING()
 { //===============================================================================================
 
 	// TODO Auto-generated method stub
-
 
 	//handle both string and int, can have two different parameters
 }
@@ -2541,7 +2493,6 @@ void Event::randomEqualsOneOutOfIncluding_INT()
 void Event::isAnyMusicPlaying()
 { //===============================================================================================
 
-
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getAudioManager()->isAnyMusicPlaying());
 }
 
@@ -2557,13 +2508,11 @@ void Event::isMusicPlaying()
 void Event::isRaining()
 { //===============================================================================================
 
-
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getMapManager()->isRaining());
 }
 
 void Event::isWindy()
 { //===============================================================================================
-
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getMapManager()->isWindy());
 }
@@ -2571,13 +2520,11 @@ void Event::isWindy()
 void Event::isSnowing()
 { //===============================================================================================
 
-
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getMapManager()->isSnowing());
 }
 
 void Event::isFoggy()
 { //===============================================================================================
-
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getMapManager()->isFoggy());
 }
@@ -2585,13 +2532,11 @@ void Event::isFoggy()
 void Event::isMapOutside()
 { //===============================================================================================
 
-
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getMap()->getIsOutside());
 }
 
 void Event::hasTalkedToThisToday()
 { //===============================================================================================
-
 
 	bool gotServerValue = false;
 	bool hasTalkedTo = true;
@@ -2633,7 +2578,6 @@ void Event::hasTalkedToThisToday()
 		}
 	}
 
-
 	if (gotServerValue)
 	{
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(hasTalkedTo);
@@ -2646,7 +2590,6 @@ void Event::hasBeenMinutesSinceFlagSet_FLAG_INT()
 	Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object);
 
 	int i = currentCommand->parameterList->get(p++)->i;
-
 
 	long long startTime = f->getTimeSet();
 	long long currentTime = System::currentHighResTimer();
@@ -2757,7 +2700,6 @@ void Event::hasActivatedThisEver()
 void Event::hasActivatedThisSinceEnterRoom()
 { //===============================================================================================
 
-
 	//TODO: make this "since logged on"
 
 	if (sprite != nullptr)
@@ -2785,16 +2727,13 @@ void Event::hasActivatedThisSinceEnterRoom()
 void Event::hasBeenHereEver()
 { //===============================================================================================
 
-
 	// TODO Auto-generated method stub
 }
 
 void Event::hasBeenHereSinceEnterRoom()
 { //===============================================================================================
 
-
 	//TODO: make this "since logged on"
-
 
 	if (sprite != nullptr)
 	{
@@ -2917,7 +2856,6 @@ void Event::blockForTicks_INT()
 
 	int i = currentCommand->parameterList->get(p++)->i;
 
-
 	ticksCounter += getEngine()->realWorldTicksPassed();
 
 	if (ticksCounter >= i)
@@ -3003,7 +2941,6 @@ void Event::setThisActivated_BOOL()
 { //===============================================================================================
 	int p = 0;
 	bool b = currentCommand->parameterList->get(p++)->b;
-
 
 	if (sprite != nullptr)
 	{
@@ -3199,7 +3136,6 @@ void Event::enterDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
 	Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
-
 
 	if (d != nullptr)
 	{
@@ -3465,7 +3401,6 @@ void Event::blockUntilTextAnswerBoxClosed()
 void Event::doCinematicTextNoBorder_DIALOGUE_INTy()
 { //===============================================================================================
 
-
 	//TODO
 
 	//shouldnt really need INTy, just center in middle of screen, transparent getText box background
@@ -3525,7 +3460,6 @@ void Event::setWarpDestination_WARP_WARPdestination()
 
 	d->setDestinationTYPEIDString(d2->getTYPEIDString());
 
-
 	getNextCommand();
 }
 
@@ -3545,7 +3479,6 @@ void Event::setPlayerToTempPlayerWithSprite_SPRITE()
 
 void Event::setPlayerToNormalPlayer()
 { //===============================================================================================
-
 
 	getClientGameEngine()->setPlayerToNormalPlayer();
 	getNextCommand();
@@ -3602,7 +3535,6 @@ void Event::setPlayerShowNameCaption_BOOL()
 	int p = 0;
 	bool b = currentCommand->parameterList->get(p++)->b;
 
-
 	getPlayer()->setShowName(b);
 	getNextCommand();
 }
@@ -3611,7 +3543,6 @@ void Event::setPlayerShowAccountTypeCaption_BOOL()
 { //===============================================================================================
 	int p = 0;
 	bool b = currentCommand->parameterList->get(p++)->b;
-
 
 	getPlayer()->setShowAccountType(b);
 	getNextCommand();
@@ -3867,7 +3798,6 @@ void Event::playerWalkToTileXYAndBlockUntilThere_INTxTile1X_INTyTile1X()
 	int x = tx * 8 * 2;
 	int y = ty * 8 * 2;
 
-
 	//walk to area, use pathfinding always
 	int there = getPlayer()->walkToXYWithPathFinding((float)x, (float)y);
 	if (there == -1)
@@ -3921,7 +3851,6 @@ void Event::playerSetFaceMovementDirection_STRINGdirection()
 	//int dir = currentCommand.parameterList.get(p++).i;
 	//((Character)e).setAnimationByDirection(dir);
 	//getNextCommand();
-
 
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
 	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
@@ -3980,7 +3909,6 @@ void Event::playerSetFaceMovementDirection_STRINGdirection()
 		//getPlayer().doCharacterAnimation();
 	}
 
-
 	getNextCommand();
 }
 
@@ -4002,10 +3930,8 @@ void Event::playerDoAnimationByNameOnce_STRINGanimationName_INTticksPerFrame_BOO
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
 	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
 
-
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
-
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
 	{
@@ -4027,7 +3953,6 @@ void Event::playerDoAnimationByNameOnce_STRINGanimationName_INTticksPerFrame_BOO
 		getPlayer()->setTicksBetweenFrames(ticksBetweenFrames);
 		getPlayer()->setRandomUpToTicksBetweenFrames(randomUpToTicksBetweenFrames);
 
-
 		getNextCommand();
 	}
 }
@@ -4041,7 +3966,6 @@ void Event::playerDoAnimationByNameLoop_STRINGanimationName_INTticksPerFrame_BOO
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->get(p++)->b;
-
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
 	{
@@ -4077,7 +4001,6 @@ void Event::playerDoAnimationByNameOnce_STRINGanimationName_INTticksPerFrame()
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
 	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
-
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
 	{
@@ -4534,7 +4457,6 @@ void Event::entityWalkToTileXYAndBlockUntilThere_ENTITY_INTxTile1X_INTyTile1X()
 	int x = tx * 8 * 2;
 	int y = ty * 8 * 2;
 
-
 	//walk to area, use pathfinding always
 	int there = e->walkToXYWithPathFinding((float)x, (float)y);
 	if (there == -1)
@@ -4575,7 +4497,6 @@ void Event::entityStandAndShuffleAndFacePlayer_ENTITY()
 	int p = 0;
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 
-
 	e->addEventBehavior("StandAndShuffleAndFacePlayer"); //TODO:
 
 	getNextCommand();
@@ -4599,7 +4520,6 @@ void Event::entitySetFaceMovementDirection_ENTITY_STRINGdirection()
 	//int dir = currentCommand.parameterList.get(p++).i;
 	//((Character)e).setAnimationByDirection(dir);
 	//getNextCommand();
-
 
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
@@ -4692,13 +4612,11 @@ void Event::entityAnimateOnceThroughCurrentAnimationFrames_ENTITY_INTticksPerFra
 	int ticks = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 
-
 	e->setAnimateOnceThroughCurrentAnimation();
 
 	e->setRandomFrames(false);
 	e->setTicksBetweenFrames(ticks);
 	e->setRandomUpToTicksBetweenFrames(randomUpToTicksBetweenFrames);
-
 
 	getNextCommand();
 }
@@ -4711,7 +4629,6 @@ void Event::entityAnimateLoopThroughCurrentAnimationFrames_ENTITY_INTticksPerFra
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->get(p++)->b;
-
 
 	e->setAnimateLoopThroughCurrentAnimation();
 
@@ -4732,14 +4649,12 @@ void Event::entityAnimateOnceThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandom
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 
-
 	e->setAnimateOnceThroughAllFrames();
 
 	e->setRandomFrames(false);
 
 	e->setTicksBetweenFrames(ticksBetweenFrames);
 	e->setRandomUpToTicksBetweenFrames(randomUpToTicksBetweenFrames);
-
 
 	getNextCommand();
 }
@@ -4752,7 +4667,6 @@ void Event::entityAnimateLoopThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandom
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->get(p++)->b;
-
 
 	e->setAnimateLoopThroughAllFrames();
 
@@ -4773,7 +4687,6 @@ void Event::entitySetAnimationByNameFirstFrame_ENTITY_STRINGanimationName()
 
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
-
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4801,7 +4714,6 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
-
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4862,10 +4774,8 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
 
-
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
-
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4887,7 +4797,6 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 		e->setTicksBetweenFrames(ticksBetweenFrames);
 		e->setRandomUpToTicksBetweenFrames(randomUpToTicksBetweenFrames);
 
-
 		getNextCommand();
 	}
 }
@@ -4901,7 +4810,6 @@ void Event::entityDoAnimationByNameLoop_ENTITY_STRINGanimationName_INTticksPerFr
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->get(p++)->b;
-
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -5053,7 +4961,6 @@ void Event::spawnSpriteAsEntityFadeIn_SPRITE_STRINGentityIdent_AREA()
 	{
 		getMap()->createEntityAtArea(gameString->text(), sprite, a);
 
-
 		getNextCommand();
 	}
 }
@@ -5097,7 +5004,6 @@ void Event::spawnSpriteAsNPCFadeIn_SPRITE_STRINGentityIdent_AREA()
 	GameString* gameString = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
 	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
 
-
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
 	{
@@ -5127,7 +5033,6 @@ void Event::createScreenSpriteUnderTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 	float screenX = currentCommand->parameterList->get(p++)->f;
 	float screenY = currentCommand->parameterList->get(p++)->f;
 
-
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
 	{
@@ -5153,7 +5058,6 @@ void Event::createScreenSpriteUnderTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 
 	screenSprite->setRenderOrder(RenderOrder::ABOVE_TOP);
 
-
 	getNextCommand();
 }
 
@@ -5164,7 +5068,6 @@ void Event::createScreenSpriteOverTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
 	float screenX = currentCommand->parameterList->get(p++)->f;
 	float screenY = currentCommand->parameterList->get(p++)->f;
-
 
 	//no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
@@ -5200,7 +5103,6 @@ void Event::createScreenSpriteUnderText_SPRITE_INTx_INTy()
 	int screenX = currentCommand->parameterList->get(p++)->i;
 	int screenY = currentCommand->parameterList->get(p++)->i;
 
-
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
 	{
@@ -5222,7 +5124,6 @@ void Event::createScreenSpriteUnderText_SPRITE_INTx_INTy()
 
 	screenSprite->setRenderOrder(RenderOrder::ABOVE_TOP);
 
-
 	getNextCommand();
 }
 
@@ -5236,7 +5137,6 @@ void Event::createScreenSpriteOverText_SPRITE_INTx_INTy()
 	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
 	int screenX = currentCommand->parameterList->get(p++)->i;
 	int screenY = currentCommand->parameterList->get(p++)->i;
-
 
 	//no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
@@ -5449,7 +5349,6 @@ void Event::takeItem_ITEM()
 	//confirm this action with the server
 	i->setHaveItemValue_S(false);
 
-
 	getNextCommand();
 }
 
@@ -5490,9 +5389,7 @@ void Event::giveMoney_FLOAT()
 
 	//confirm this action with the server
 
-
 	// TODO
-
 
 	getNextCommand();
 }
@@ -5587,7 +5484,6 @@ void Event::blockUntilLoopingMusicDoneWithLoopAndReplaceWith_MUSIC_MUSIC()
 		currentPlaying->setLoop(false);
 	}
 
-
 	if (currentPlaying->isPlaying() == false)
 	{
 		getAudioManager()->playMusic(replaceWith, currentPlaying->getVolume(), currentPlaying->getPitch(), true);
@@ -5620,7 +5516,6 @@ void Event::blockUntilMusicDone_MUSIC()
 void Event::blockUntilAllMusicDone()
 { //===============================================================================================
 	//int p=0;
-
 
 	//if music is LOOPING this will always block
 	getAudioManager()->setAllLoopingMusicThatIsNotFadingOutToNotLoop();
@@ -5754,7 +5649,6 @@ void Event::setInstantOverlay_INTr_INTg_INTb_FLOATa()
 	int bi = currentCommand->parameterList->get(p++)->i;
 	float a = currentCommand->parameterList->get(p++)->f;
 
-
 	getCinematicsManager()->setInstantOverlayColor(ri, gi, bi, a);
 
 	getNextCommand();
@@ -5763,7 +5657,6 @@ void Event::setInstantOverlay_INTr_INTg_INTb_FLOATa()
 void Event::clearOverlay()
 { //===============================================================================================
 	//int p=0;
-
 
 	getCinematicsManager()->clearOverlay();
 
@@ -5792,7 +5685,6 @@ void Event::setInstantOverlayUnderLights_INTr_INTg_INTb_FLOATa()
 	int bi = currentCommand->parameterList->get(p++)->i;
 	float a = currentCommand->parameterList->get(p++)->f;
 
-
 	getCinematicsManager()->setInstantOverlayColorUnderLights(ri, gi, bi, a);
 
 	getNextCommand();
@@ -5801,7 +5693,6 @@ void Event::setInstantOverlayUnderLights_INTr_INTg_INTb_FLOATa()
 void Event::clearOverlayUnderLights()
 { //===============================================================================================
 	//int p=0;
-
 
 	getCinematicsManager()->clearOverlayUnderLights();
 
@@ -5830,7 +5721,6 @@ void Event::setInstantOverlayGroundLayer_INTr_INTg_INTb_FLOATa()
 	int bi = currentCommand->parameterList->get(p++)->i;
 	float a = currentCommand->parameterList->get(p++)->f;
 
-
 	getCinematicsManager()->setInstantOverlayColorGroundLayer(ri, gi, bi, a);
 
 	getNextCommand();
@@ -5839,7 +5729,6 @@ void Event::setInstantOverlayGroundLayer_INTr_INTg_INTb_FLOATa()
 void Event::clearOverlayGroundLayer()
 { //===============================================================================================
 	//int p=0;
-
 
 	getCinematicsManager()->clearOverlayGroundLayer();
 
@@ -5861,7 +5750,6 @@ void Event::setLetterbox_BOOL_INTticks()
 	int p = 0;
 	bool b = currentCommand->parameterList->get(p++)->b;
 	int slideDurationTicks = currentCommand->parameterList->get(p++)->i;
-
 
 	getCinematicsManager()->setLetterbox(b, slideDurationTicks, 0.25f);
 
@@ -5886,7 +5774,6 @@ void Event::setLetterbox_BOOL_INTticks_FLOATsize()
 	bool b = currentCommand->parameterList->get(p++)->b;
 	int slideDurationTicks = currentCommand->parameterList->get(p++)->i;
 	float sizePercent = currentCommand->parameterList->get(p++)->f;
-
 
 	getCinematicsManager()->setLetterbox(b, slideDurationTicks, sizePercent);
 
@@ -6024,7 +5911,6 @@ void Event::setRandomSpawn_BOOL()
 
 	bool b = currentCommand->parameterList->get(p++)->b;
 
-
 	getMap()->randomSpawnEnabled = b;
 
 	getNextCommand();
@@ -6058,7 +5944,6 @@ void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 	int g = currentCommand->parameterList->get(p++)->i;
 	int b = currentCommand->parameterList->get(p++)->i;
 
-
 	if (s->getInitialized_S() == false)
 	{
 		return; //wait for object to receive server data in its update() function
@@ -6078,7 +5963,6 @@ void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 	int r = currentCommand->parameterList->get(p++)->i;
 	int g = currentCommand->parameterList->get(p++)->i;
 	int b = currentCommand->parameterList->get(p++)->i;
-
 
 	if (s->getInitialized_S() == false)
 	{
@@ -6101,7 +5985,6 @@ void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 	int r = currentCommand->parameterList->get(p++)->i;
 	int g = currentCommand->parameterList->get(p++)->i;
 	int b = currentCommand->parameterList->get(p++)->i;
-
 
 	if (s->getInitialized_S() == false)
 	{
@@ -6149,7 +6032,6 @@ void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
 	Console::add(gameString->text(), ticks, new BobColor(r, g, b));
-
 
 	getNextCommand();
 }
@@ -6300,7 +6182,6 @@ void Event::setTimePaused_BOOL()
 
 	bool b = currentCommand->parameterList->get(p++)->b;
 
-
 	getClock()->setPaused(b);
 
 	getNextCommand();
@@ -6361,14 +6242,12 @@ void Event::startBobsGameOnStadiumScreen_AREA()
 
 	FileUtils::writeDidIntroFile();
 
-
 	getNextCommand();
 }
 
 void Event::blockUntilBobsGameDead()
 { //===============================================================================================
 	//int p=0;
-
 
 	BobsGameStadium* bobsGameStadium = static_cast<BobsGameStadium*>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getState());
 
@@ -6390,7 +6269,6 @@ void Event::showLoginScreen()
 
 	//Main.mainObject.makeNewClientEngine();
 	Main::getMain()->stateManager->setState(Main::getMain()->titleScreenState);
-
 
 	//Main.mainObject.showControlsImage();
 

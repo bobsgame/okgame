@@ -3,12 +3,10 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 enum class MovementType;
 class Logger;
-
 
 
 
@@ -34,7 +32,6 @@ public:
 
 	GameLogic* game = nullptr;
 
-
 	float screenX = 0;
 	float screenY = 0;
 
@@ -56,7 +53,6 @@ private:
 	float wigglePlayingFieldY = 0;
 	long long wigglePlayingFieldTicks = 0;
 	bool wigglePlayingFieldLeftRightToggle = false;
-
 
 	int shakePlayingFieldScreenTicksCounter = 0;
 	long long shakePlayingFieldStartTime = 0;
@@ -80,7 +76,6 @@ private:
 //	int effectShakeX = 0;
 //	int effectShakeY = 0;
 
-
 public:
 	float scrollPlayingFieldY = 0; //for stack based games
 	float scrollBlockIncrement = 60; //for stack based games
@@ -91,10 +86,8 @@ private:
 	int backgroundScrollY = 0;
 	long long scrollPlayingFieldBackgroundTicks = 0;
 
-
 	int deadX = 0;
 	int deadY = 0;
-
 
 public:
 	int lastGarbageHoleX = 0;

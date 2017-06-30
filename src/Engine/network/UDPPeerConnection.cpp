@@ -7,15 +7,12 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 Logger FriendData::log = Logger("FriendData");
 Logger UDPPeerConnection::log = Logger("UDPPeerConnection");
 Logger* UDPPeerConnection::_threadLog = new Logger("UDPPeerConnection");
 
 
-
 int UDPPeerConnection::lastUsedUDPPort = BobNet::clientUDPPortStartRange;
-
 
 
 UDPPeerConnection::UDPPeerConnection(long long friendUserID, int type)
@@ -52,7 +49,6 @@ void UDPPeerConnection::removeEnginePartToForwardMessagesTo(EnginePart* e)
 }
 
 
-
 void UDPPeerConnection::update()
 { //===============================================================================================
 
@@ -64,13 +60,11 @@ void UDPPeerConnection::update()
 	}
 
 
-
 	//handle incoming messages queue which is populated from the thread
 	while(peerMessageQueueSize_S()>0)
 	{
 		string s = peerMessageQueueFront_S();
 		peerMessageQueuePop_S();
-
 
 		if (String::startsWith(s, "PARTIAL:"))
 		{
@@ -143,7 +137,6 @@ void UDPPeerConnection::updateThreadLoop(UDPPeerConnection *u)
 			//makes request to stun server
 			//stun server replies with udp with friends IP/port
 
-
 			//client pings other clients, vice versa, open tunnel
 			//connections made
 
@@ -151,13 +144,11 @@ void UDPPeerConnection::updateThreadLoop(UDPPeerConnection *u)
 			//if the stun server replies with their ip/udp port, start sending packets on the same udp connection to that ip/port.
 			//if we receive a packet from the friends, the connection is established.
 
-
 			//TODO: server should send TCP friend offline, remove this from friendManager
 
 		}
 	}
 }
-
 
 //===============================================================================================
 bool UDPPeerConnection::_ensureSocketIsOpen()
@@ -223,7 +214,6 @@ bool UDPPeerConnection::_ensureSocketIsOpen()
 	return true;
 }
 
-
 //===============================================================================================
 void UDPPeerConnection::_checkForIncomingPeerTraffic()
 {//===============================================================================================
@@ -236,7 +226,6 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 			threadLogDebug_S("SDLNet_CheckSockets: " + string(SDLNet_GetError()) + string(SDL_GetError()));
 			SDL_ClearError();
 		}
-
 
 		int numPacketsReceived = 1;
 		if (numReady > 0)
@@ -300,7 +289,6 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						s = *sp;
 						_truncatedPacketString = "";
 					}
-
 
 					if (s.find(BobNet::endline) == string::npos)
 					{
@@ -394,7 +382,6 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 							delete sp;
 							continue;
 						}
-
 
 						//if starts with id, send ACK without queueing, went to udpPeerMessageReceived
 						string packetIDString = s.substr(0, s.find(":"));
@@ -508,7 +495,6 @@ UDPpacket* UDPPeerConnection::makePacket(string s)
 }
 
 
-
 //===============================================================================================
 void UDPPeerConnection::_processQueuedMessagesIntoPackets()
 {//===============================================================================================
@@ -598,7 +584,6 @@ void UDPPeerConnection::_writeQueuedPackets()
 
 		string s = packetMessageQueueFront_S();
 
-
 		UDPpacket *packet = makePacket(s);
 		if (packet == nullptr)
 		{
@@ -618,7 +603,6 @@ void UDPPeerConnection::_writeQueuedPackets()
 			packetMessageQueuePop_S();
 			sentPacketQueuePush_S(packet);
 #ifdef _DEBUG
-
 
 			if (s.find("PARTIAL:")!=string::npos || s.find("FINAL:") != string::npos || s.find("BOBSGAME:FRAME:") != string::npos)
 			{
@@ -761,7 +745,6 @@ void UDPPeerConnection::_getFriendData()
 }
 
 
-
 //===============================================================================================
 void UDPPeerConnection::setDisconnectedFromPeer_S(string reason)
 {//===============================================================================================
@@ -785,15 +768,12 @@ void UDPPeerConnection::setDisconnectedFromPeer_S(string reason)
 	}
 	setSocketIsOpen_S(false);
 
-
 }
-
 
 
 //===============================================================================================
 bool UDPPeerConnection::udpPeerMessageReceived(string s)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
-
 
 #ifdef _DEBUG
 
@@ -863,7 +843,6 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// ChannelHandlerContext
 		if (BobNet::engines.get(i)->udpPeerMessageReceived(this, s))return true;
 	}
 
-
 	for (int i = 0; i < engineParts.size(); i++)
 	{
 		if (engineParts.get(i)->udpPeerMessageReceived(this, s))return true;
@@ -873,7 +852,6 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// ChannelHandlerContext
 	return false;
 
 }
-
 
 
 void UDPPeerConnection::writeUnreliable_S(string s)
@@ -913,7 +891,6 @@ bool UDPPeerConnection::writeReliable_S(string s)
 { //===============================================================================================
 
 
-
    if (s.find(BobNet::endline) == string::npos)
    {
       threadLogError_S("Packet doesn't end with endline");
@@ -948,7 +925,6 @@ bool UDPPeerConnection::writeReliable_S(string s)
    unjoinedMessageQueuePush_S(s);
 
 
-
 //   if (SDLNet_UDP_Send(socket, -1, packet) == 0)
 //   {
 //	   log.warn("Could not send UDP packet");
@@ -956,13 +932,9 @@ bool UDPPeerConnection::writeReliable_S(string s)
 //   }
 //   lastSentPacketTime = System::currentHighResTimer();
 
-
    return true;
 
 }
-
-
-
 
 
 
@@ -1000,10 +972,8 @@ void UDPPeerConnection::incomingPeerConnectResponse(string e)//MessageEvent* e)
 		return;
 	}
 
-
 	setGotPeerConnectResponse_S(true);
 }
-
 
 
 void UDPPeerConnection::incomingFriendDataRequest(string e)//MessageEvent* e)
@@ -1011,7 +981,6 @@ void UDPPeerConnection::incomingFriendDataRequest(string e)//MessageEvent* e)
 
   //allowed info depends on type of friend, zip code friends should not get full name, etc.
   // send name,charAppearance, etc
-
 
 	if (getServerConnection()->getInitialGameSaveReceived_S() == false)
 	{
@@ -1043,7 +1012,6 @@ void UDPPeerConnection::incomingFriendDataResponse(string e)//MessageEvent* e)
 	setFriendData_S(f);
 	setGotFriendData_S(true);
 }
-
 
 void FriendData::initWithGameSave(GameSave &g)
 { //===============================================================================================
@@ -1343,7 +1311,6 @@ void FriendData::decode(string s)
 		s = s.substr(s.find('`') + 1);
 	}
 
-
 	{
 		//",miniGamesTimesPlayed:"+
 		s = s.substr(s.find('`') + 1);
@@ -1470,12 +1437,10 @@ void FriendData::decode(string s)
 		s = s.substr(s.find('`') + 1);
 	}
 
-
 	if (friendType == UDPPeerConnection::ZIP_TYPE)
 	{
 		return;
 	}
-
 
 	{
 		//",facebookID:"+
@@ -1606,7 +1571,6 @@ void FriendData::decode(string s)
 //		s = s.substr(s.find('`') + 1);
 //	}
 }
-
 
 TCPServerConnection* UDPPeerConnection::getServerConnection()
 {

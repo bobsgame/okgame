@@ -15,10 +15,8 @@ TCPServerConnection::TCPServerConnection()
 
 }
 
-
 TCPServerConnection::~TCPServerConnection()
 {//===============================================================================================
-
 
 	if (threadStarted)
 	{
@@ -32,7 +30,6 @@ TCPServerConnection::~TCPServerConnection()
 void TCPServerConnection::update()
 {//===============================================================================================
 
-
 	if (threadStarted == false)
 	{
 		log.debug("Created server thread");
@@ -45,7 +42,6 @@ void TCPServerConnection::update()
 	{
 		string s = incomingMessageQueueFront_S();
 		incomingMessageQueuePop_S();
-
 
 		if (String::startsWith(s, "PARTIAL:"))
 		{
@@ -82,7 +78,6 @@ void TCPServerConnection::updateThreadLoop(TCPServerConnection *u)
 	long long _sendOnlineFriendListRequestTime = 0;
 	long long _sendOutgoingAuthorizedMessageQueueTime = 0;
 	long long _lastCheckedSessionToken = -20000;
-
 
 	while (u->getStopThread_S() == false)
 	{
@@ -166,7 +161,6 @@ void TCPServerConnection::_sendKeepAlivePing()
 		}
 	}
 }
-
 
 //===============================================================================================
 void TCPServerConnection::_checkForTimeout()
@@ -300,7 +294,6 @@ void TCPServerConnection::_checkForIncomingTraffic()
 				}
 			}
 
-
 			numReady = SDLNet_CheckSockets(getSocketSet_S(), 0);
 			if (numReady < 0)
 			{
@@ -311,7 +304,6 @@ void TCPServerConnection::_checkForIncomingTraffic()
 
 		while (packetsToProcess.size() > 0)
 		{
-
 
 			string *sp = packetsToProcess.front();
 			packetsToProcess.pop();
@@ -325,7 +317,6 @@ void TCPServerConnection::_checkForIncomingTraffic()
 				s = *sp;
 				_truncatedPacketString = "";
 			}
-
 
 			if (s.find(BobNet::endline) == string::npos)
 			{
@@ -349,7 +340,6 @@ void TCPServerConnection::_checkForIncomingTraffic()
 
 					setLastReceivedDataTime_S(System::currentHighResTimer());
 
-
 					if (String::startsWith(packet, "ping"))
 					{
 						//log.debug("SERVER: ping");
@@ -363,7 +353,6 @@ void TCPServerConnection::_checkForIncomingTraffic()
 						delete sp;
 						return;
 					}
-
 
 #ifdef _DEBUG
 					if (String::startsWith(packet, "PARTIAL:") || String::startsWith(packet, "FINAL:"))
@@ -394,7 +383,6 @@ void TCPServerConnection::_checkForIncomingTraffic()
 }
 
 
-
 //when this goes bad, cant reconnect, get a new one from the load balancer.
 
 //when i connect to a server, it checks its hashtable and determines whether i am registered there right now.
@@ -409,12 +397,10 @@ void TCPServerConnection::_checkForIncomingTraffic()
 
 //if i already have a gameState, just proceed normally, auth with the sessionToken to register with the server
 
-
 //yeah, should pause the game on every channel.write, put transparency over screen and say waiting to reconnect to server
 //this should be very infrequent and it will allow for reconnecting to a different server.
 
 //nD should be on a different thread, so minigames can keep going
-
 
 //===============================================================================================
 bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
@@ -495,9 +481,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 			}
 
-
 			//wait for load balancer to respond (we are connected to a server)
-
 
 			//when connected to load balancer, send getServerIPCommand to get the servers real IP behind the load balancer
 			long long currentTime = System::currentHighResTimer();
@@ -537,7 +521,6 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 			//if (getServerIPAddress_S() == nullptr)return false;
 		}
 
-
 		//disconnecting from the LB will set the address to null again, so we store it.
 
 		if(getSocketIsOpen_S())
@@ -546,7 +529,6 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 			SDLNet_TCP_Close(getSocket_S());
 			setSocketIsOpen_S(false);
 		}
-
 
 		if (_serverAddress == nullptr)
 		{
@@ -569,7 +551,6 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 			setSocketAddedToSet_S(false);
 		}
-
 
 		if (_couldNotOpenConnectionToServerCount > 10)
 		{
@@ -603,7 +584,6 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 			else
 				setSocketAddedToSet_S(true);
 
-
 			threadLogDebug_S("Connected to server.");
 			Console::add("Connected to server.", 5000, BobColor::green);
 
@@ -616,7 +596,6 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 	return true;
 
 }
-
 
 ////===============================================================================================
 //bool TCPServerConnection::ensureAuthorizedOnServerThreadBlock_S()
@@ -664,10 +643,8 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 //	return true;
 //}
 
-
 bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
-
 
 	if (String::startsWith(s, BobNet::Server_IP_Address_Response))
 	{
@@ -784,7 +761,6 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 	}
 
 
-
 	if (String::startsWith(s, BobNet::Bobs_Game_UserStatsForSpecificGameAndDifficulty))
 	{
 		incomingBobsGameUserStatsForSpecificGameAndDifficulty(s);
@@ -820,7 +796,6 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 		incomingBobsGameHighScoreBoardsByBlocksCleared(s);
 		return true;
 	}
-
 
 
 
@@ -870,9 +845,6 @@ bool TCPServerConnection::write_S(string s)
 
 
 
-
-
-
 void TCPServerConnection::incomingServerIPAddressResponse(string s)
 { //=========================================================================================================================
 
@@ -880,7 +852,6 @@ void TCPServerConnection::incomingServerIPAddressResponse(string s)
 	s = s.substr(s.find(":") + 1); //ip
 	setServerIPAddressString_S(s);
 }
-
 
 
 bool TCPServerConnection::connectAndWriteToChannelBeforeAuthorization_S(string s)
@@ -911,13 +882,11 @@ bool TCPServerConnection::connectAndWriteToChannelBeforeAuthorization_S(string s
 bool TCPServerConnection::connectAndAuthorizeAndQueueWriteToChannel_S(string s)
 { //=========================================================================================================================
 
-
 	if (Main::previewClientInEditor || Main::introMode)
 	{
 		threadLogDebug_S("Blocked writing to network: " + s);
 		return false;
 	}
-
 
 	//queue in outgoingAuthorizedMessageQueue
 
@@ -944,7 +913,6 @@ bool TCPServerConnection::connectAndAuthorizeAndQueueWriteToChannel_S(string s)
 
 	return true;
 }
-
 
 
 void TCPServerConnection::sendLoginRequest(string email, string password, bool stats)
@@ -1053,7 +1021,6 @@ void TCPServerConnection::incomingReconnectResponse(string s)
 			log.error("Could not parse userID in reconnect response");
 		}
 
-
 		s = s.substr(s.find("`") + 1); //sessionToken`
 		string sessionToken = s.substr(0, s.find("`"));
 
@@ -1061,8 +1028,6 @@ void TCPServerConnection::incomingReconnectResponse(string s)
 		setSessionToken_S(sessionToken);
 	}
 }
-
-
 
 
 
@@ -1091,8 +1056,6 @@ void TCPServerConnection::incomingServersHaveShutDown(string s)
 
 
 
-
-
 void TCPServerConnection::sendInitialGameSaveRequest()
 { //=========================================================================================================================
   //the game should wait until this is received.
@@ -1117,7 +1080,6 @@ void TCPServerConnection::incomingInitialGameSaveResponse(string s)
 
   //parse gamesave
 
-
   //InitialGameSave:userID:`1`,thing:`thing`,,etc.
 	string gameSaveString = s.substr(s.find(":") + 1);
 
@@ -1128,10 +1090,7 @@ void TCPServerConnection::incomingInitialGameSaveResponse(string s)
 	//setGameSave_S(g);
 	setInitialGameSaveReceived_S(true);
 
-
 }
-
-
 
 
 
@@ -1171,11 +1130,9 @@ void TCPServerConnection::sendQueuedGameSaveUpdates()
 void TCPServerConnection::incomingGameSaveUpdateResponse(string s)
 { //=========================================================================================================================
 
-
   //EncryptedGameSave:id,blob
 	s = s.substr(s.find(":") + 1); //id,blob
 	int gameSaveID = -1;
-
 
 	try
 	{
@@ -1197,7 +1154,6 @@ void TCPServerConnection::incomingGameSaveUpdateResponse(string s)
 	//parse off ID, remove from queue
 	removeQueuedGameSaveUpdateRequestByID_S(gameSaveID);
 }
-
 
 
 //void TCPServerConnection::sendFacebookLoginCreateAccountIfNotExist(string facebookID, string accessToken, bool stats)
@@ -1258,7 +1214,6 @@ void TCPServerConnection::incomingGameSaveUpdateResponse(string s)
 
 
 
-
 void TCPServerConnection::sendCreateAccountRequest(string userName, string email, string password)
 { //=========================================================================================================================
 
@@ -1278,7 +1233,6 @@ void TCPServerConnection::incomingCreateAccountResponse(string s)
 
 
 
-
 void TCPServerConnection::sendPasswordRecoveryRequest(string email)
 {
 	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Password_Recovery_Request + "`" + email + "`" + BobNet::endline);
@@ -1290,8 +1244,6 @@ void TCPServerConnection::incomingPasswordRecoveryResponse(string s)
 
 	setGotPasswordRecoveryResponse_S(true);
 }
-
-
 
 
 
@@ -1307,11 +1259,9 @@ void TCPServerConnection::incomingUpdateFacebookAccountInDBResponse(string s)
 
 	s = s.substr(s.find(":") + 1); //Success
 
-
 	if (String::startsWith(s, "Success") == true)
 	{
 		setFacebookAccountUpdateResponseState_S(true, true);
-
 
 		//	BobNet.UpdateFacebookAccountInDBResponse+"Success:`"+
 		//	facebookID+"`,`"+
@@ -1361,7 +1311,6 @@ void TCPServerConnection::incomingUpdateFacebookAccountInDBResponse(string s)
 	}
 }
 
-
 //===============================================================================================
 void TCPServerConnection::sendOnlineFriendListRequest_S()
 {//===============================================================================================
@@ -1377,7 +1326,6 @@ void TCPServerConnection::sendBobsGameGameTypesAndSequencesDownloadRequest_S()
 	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Bobs_Game_GameTypesAndSequences_Download_Request + BobNet::endline);
 
 }
-
 
 //===============================================================================================
 void TCPServerConnection::incomingBobsGameGameTypesAndSequencesDownloadResponse(string &s)
@@ -1414,7 +1362,6 @@ void TCPServerConnection::incomingBobsGameGameTypesAndSequencesVoteResponse(stri
 	setGotBobsGameGameTypesAndSequencesVoteResponse_S(s);
 }
 
-
 //===============================================================================================
 void TCPServerConnection::sendBobsGameRoomListRequest_S()
 {//===============================================================================================
@@ -1430,7 +1377,6 @@ void TCPServerConnection::incomingBobsGameRoomListResponse(string &s)
 
 	setBobsGameRoomListResponse_S(s);
 }
-
 
 //===============================================================================================
 void TCPServerConnection::tellBobsGameRoomHostMyUserID_S(const string& roomUUID)
@@ -1462,13 +1408,11 @@ void TCPServerConnection::tellServerBobsGameTheGameHasEnded_S(const string& room
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomEnded + roomUUID + ":" + results + ":" + BobNet::endline);
 }
 
-
 //===============================================================================================
 void TCPServerConnection::sendBobsGameGameStats_S(const string& statsString)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameStats + statsString + ":" + BobNet::endline);
 }
-
 
 
 
@@ -1537,7 +1481,6 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByTotalBlocksCleared(string
 	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
 	addToLeaderboard(BobsGame::topPlayersByTotalBlocksCleared, leaderBoard);
 
-
 }
 
 //===============================================================================================
@@ -1571,7 +1514,6 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByTimeLasted(string &s)
 	addToLeaderboard(BobsGame::topGamesByTimeLasted, leaderBoard);
 
 
-
 }
 
 //===============================================================================================
@@ -1587,14 +1529,12 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByBlocksCleared(string 
 
 
 
-
 //===============================================================================================
 void TCPServerConnection::incomingOnlineFriendsListResponse(string s)
 { //==============================================================================================
   //OnlineFriendsListResponse:type:id,type:id
   //type can be fb, g+, t, zip
 	s = s.substr(s.find(":") + 1);
-
 
 	//parse each friend, do incomingFriendOnlineNotification for each
 	while (s.length() > 0)
@@ -1643,7 +1583,6 @@ void TCPServerConnection::incomingFriendOnlineNotification(string s)
 
   //FriendOnlineNotification:type:id
 
-
   //make a new friendConnection and add it to the friend manager
   //check existing friends to see if userID already exists
 
@@ -1687,7 +1626,6 @@ void TCPServerConnection::incomingFriendOnlineNotification(string s)
 
 
 
-
 void TCPServerConnection::setAddFriendByUserNameResponse(string b)
 {
 	addFriendByUserNameResponse = b;
@@ -1703,12 +1641,10 @@ void TCPServerConnection::sendAddFriendByUserNameRequest_S(string friendUserName
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Add_Friend_By_UserName_Request + "`" + friendUserName + "`" + BobNet::endline);
 }
 
-
 void TCPServerConnection::incomingAddFriendByUserNameResponse(string s)
 { //=========================================================================================================================
 
 	s = s.substr(s.find(":") + 1); //Success
-
 
 	if (String::startsWith(s, "Success") == true)
 	{
@@ -1722,10 +1658,8 @@ void TCPServerConnection::incomingAddFriendByUserNameResponse(string s)
 
 
 
-
 bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &password, bool stayLoggedIn)
 { //=========================================================================================================================
-
 
 
 //
@@ -1801,7 +1735,6 @@ bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &pa
 				//if (statusLabel != nullptr)statusLabel->setText("Connecting to server" + dots);
 				//if (errorLabel != nullptr)errorLabel->setText(" ");
 
-
 				if (tries > 10)
 				{
 					tries = 0;
@@ -1825,7 +1758,6 @@ bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &pa
 	}
 
 	sendLoginRequest(userNameOrEmail, password, false);// sendStatsToggleButton->isActive());
-
 
 	//-------------------------------
 	//check to see if password response every 1 second
@@ -1851,7 +1783,6 @@ bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &pa
 
 			this_thread::sleep_for(chrono::milliseconds(100));
 			//Main::delay(1000);
-
 
 		}
 	}
@@ -1885,7 +1816,6 @@ bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &pa
 
 		//-------------------------------------------------------
 
-
 		//setEnabled(false);
 		//setActivated(false);
 
@@ -1907,10 +1837,8 @@ bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &pa
 
 }
 
-
 bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn)
 { //=========================================================================================================================
-
 
 
 
@@ -1985,7 +1913,6 @@ bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, str
 				}
 				if (statusLabel != nullptr)statusLabel->setText("Connecting to server" + dots);
 				if (errorLabel != nullptr)errorLabel->setText(" ");
-
 
 				if (tries > 10)
 				{
@@ -2065,7 +1992,6 @@ bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, str
 
 		//-------------------------------------------------------
 
-
 		//setEnabled(false);
 		//setActivated(false);
 
@@ -2087,10 +2013,8 @@ bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, str
 
 }
 
-
 bool TCPServerConnection::doCreateAccount(Caption *statusLabel, Caption *errorLabel, string &userName, string &email, string &password, string &confirmPassword)
 { //=========================================================================================================================
-
 
 	statusLabel->setText(" ");
 	errorLabel->setText(" ");
@@ -2187,7 +2111,6 @@ bool TCPServerConnection::doCreateAccount(Caption *statusLabel, Caption *errorLa
 			statusLabel->setText("Connecting to server" + dots);
 			errorLabel->setText(" ");
 
-
 			if (tries > 10)
 			{
 				tries = 0;
@@ -2239,7 +2162,6 @@ bool TCPServerConnection::doCreateAccount(Caption *statusLabel, Caption *errorLa
 			return false;
 		}
 
-
 		if (gotResponse == false)
 		{
 			createAccountTries++;
@@ -2260,10 +2182,8 @@ bool TCPServerConnection::doCreateAccount(Caption *statusLabel, Caption *errorLa
 
 
 
-
 bool TCPServerConnection::checkForSessionTokenAndLogInIfExists()
 { //=========================================================================================================================
-
 
 
   //check cache for session token
@@ -2303,7 +2223,6 @@ bool TCPServerConnection::checkForSessionTokenAndLogInIfExists()
 		string sessionToken = s.substr(0, s.find("`"));
 		s = s.substr(s.find(",") + 1); //statsAllowed
 		bool statsAllowed = StringConverterHelper::fromString<bool>(s);
-
 
 		//errorLabel->replaceText(" ");
 		//statusLabel->replaceText("Existing session found! Connecting to server...");
@@ -2415,11 +2334,9 @@ bool TCPServerConnection::checkForSessionTokenAndLogInIfExists()
 			return false;
 		}
 
-
 	}
 	return false;
 }
-
 
 bool TCPServerConnection::doForgotPassword(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail)
 { //=========================================================================================================================
@@ -2477,7 +2394,6 @@ bool TCPServerConnection::doForgotPassword(Caption *statusLabel, Caption *errorL
 				}
 				statusLabel->setText("Connecting to server" + dots);
 				errorLabel->setText(" ");
-
 
 				if (tries > 10)
 				{
@@ -2539,7 +2455,6 @@ bool TCPServerConnection::doForgotPassword(Caption *statusLabel, Caption *errorL
 }
 
 
-
 bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *errorLabel)
 { //=========================================================================================================================
 
@@ -2578,10 +2493,7 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 		//              }
 	}
 
-
 	//if we have facebook accessToken already, let's not bother the user
-
-
 
 
 
@@ -2596,7 +2508,6 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 
 	}
 
-
 	while (Main::getMain()->controlsManager->miniGame_CONFIRM_Pressed() == false)
 	{
 		Main::whilefix();
@@ -2604,7 +2515,6 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 
 	//if we are a desktop app, we should just tell the server to update from the database, since the authorization happened there.
 	//we could keep asking the server if we have the token yet
-
 
 	statusLabel->setText("Checking to see if account was authorized. Please wait for 10 seconds...");
 
@@ -2665,14 +2575,12 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 
 }
 
-
 //=========================================================================================================================
 bool TCPServerConnection::doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, const string& friendUserName)
 {//=========================================================================================================================
 
 	statusLabel->setText(" ");
 	errorLabel->setText(" ");
-
 
 	if (friendUserName.find("`") != string::npos)
 	{

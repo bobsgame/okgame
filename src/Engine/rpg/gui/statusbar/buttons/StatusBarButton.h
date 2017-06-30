@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -17,19 +15,15 @@ public:
 
 	static Logger log;
 
-
 	BobTexture* texture = nullptr;
-
 
 	bool pulse = false;
 	bool pulseInOut = false;
 	int pulseTicks = 0;
 	int lastPulseTicks = 0;
 
-
 	float glowAlpha = 1.0f;
 	bool glow = false;
-
 
 	int offsetX0 = 0;
 	int offsetX1 = 0; //offset0+60;
@@ -50,31 +44,22 @@ public:
 	int clickX0 = 0;
 	int clickX1 = 0;
 
-
 	bool enabled = true;
-
 
 	StatusBarButton();
 	StatusBarButton(BGClientEngine* g);
 
-
 	virtual void init();
-
 
 	virtual void setOffsets();
 
-
 	virtual void clicked();
-
 
 	virtual bool isAssociatedMenuActive();
 
-
 	virtual void update();
 
-
 	void setEnabled(bool b);
-
 
 	virtual void render(int layer);
 };

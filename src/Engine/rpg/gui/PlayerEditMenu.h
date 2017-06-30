@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -15,7 +13,6 @@ class PlayerEditMenu : public MenuPanel
 {
 public:
 	static Logger log;
-
 
 	//   DialogLayout* editPanel;
 	//   DialogLayout* animPanel;
@@ -80,7 +77,6 @@ public:
 	//   Button* randomButton;
 	//   Button* okButton;
 
-
 	string nameString = "";
 
 	int genderIndex = 0;
@@ -93,19 +89,15 @@ public:
 	int pantsColorIndex = 0;
 	int shoeColorIndex = 0;
 
-
 	Caption* playerNameCaption = nullptr;
 
-
 	bool initRandom = false;
-
 
 	long long lastTime = 0;
 	int frame = 0;
 
 	int direction = 0;
 	int loopCount = 0;
-
 
 	PlayerEditMenu();
 
@@ -133,13 +125,10 @@ private:
 		virtual void callback(int key);//;
 	};
 
-
 public:
 	void init();
 
-
 	void setButtonsVisible(bool b);
-
 
 public:
 	class AddressInfo
@@ -159,33 +148,24 @@ public:
 		float timeZone = 0.0f;
 	};
 
-
 public:
 	AddressInfo* queryYahooGeocodingAPI(const string& address);
 
-
 	AddressInfo* queryGoogleGeocodingAPI(const string& address);
-
 
 	void doOKButton();
 
-
 	void linkFacebookAccount();
-
 
 	void redrawPlayer();
 
-
 	void setRandomOptions();
-
 
 protected:
 	virtual void layout();
 
-
 public:
 	virtual void setActivated(bool b);
-
 
 	virtual void update();
 

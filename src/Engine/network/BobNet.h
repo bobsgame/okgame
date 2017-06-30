@@ -3,14 +3,12 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class UDPPeerConnection;
 class TCPServerConnection;
 class State;
 class Logger;
-
 
 class BobNet
 {
@@ -42,10 +40,8 @@ public:
 	static ArrayList<State*>engines;// = new ArrayList<State*>();
 
 
-
 	static bool udpSTUNMessageReceived(string e);
 	static void sendSTUNRequest(long long myUserID, long long friendUserID, int myPort);
-
 
 	static bool threadStarted;
 	static thread t;
@@ -268,19 +264,6 @@ public:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	const static string endline;
 
 	//=========================================================================================
@@ -325,7 +308,6 @@ public:
 	const static string debugSmallDataURL;
 	const static string releaseSmallDataURL; //dreamhost storage
 
-
 	//================================
 	// HUB ADDRESS/PORT, should only be used by servers.
 	//================================
@@ -334,14 +316,11 @@ public:
 	const static string releaseINDEXServerAddress;
 	const static int INDEXServerTCPPort;
 
-
 	static const string Server_IP_Address_Request;
 	static const string Server_IP_Address_Response;
 
-
 	static const string Login_Request;
 	static const string Login_Response;
-
 
 	static const string Reconnect_Request;
 	static const string Reconnect_Response;
@@ -349,41 +328,32 @@ public:
 	static const string Facebook_Login_Request;
 	static const string Facebook_Login_Response;
 
-
 	static const string Password_Recovery_Request;
 	static const string Password_Recovery_Response;
-
 
 	static const string Create_Account_Request;
 	static const string Create_Account_Response;
 
-
 	static const string Initial_GameSave_Request;
 	static const string Initial_GameSave_Response;
 
-
 	static const string Encrypted_GameSave_Update_Request;
 	static const string Encrypted_GameSave_Update_Response;
-
 
 	//deprecated, client side geolookup using google/yahoo API now.
 	static const string Postal_Code_Update_Request;
 	static const string Postal_Code_Update_Response;
 
-
 	static const string Player_Coords;
 	//no server response
-
 
 	static const string Map_Request_By_Name;
 	static const string Map_Request_By_ID;
 	static const string Map_Response;
 
-
 	static const string Sprite_Request_By_Name;
 	static const string Sprite_Request_By_ID;
 	static const string Sprite_Response;
-
 
 	static const string Dialogue_Request;
 	static const string Dialogue_Response;
@@ -391,10 +361,8 @@ public:
 	static const string Load_Event_Request;
 	static const string Load_Event_Response;
 
-
 	static const string Event_Request;
 	static const string Event_Response;
-
 
 	static const string GameString_Request;
 	static const string GameString_Response;
@@ -408,10 +376,8 @@ public:
 	static const string Music_Request;
 	static const string Music_Response;
 
-
 	static const string Sound_Request;
 	static const string Sound_Response;
-
 
 	static const string Update_Facebook_Account_In_DB_Request; //this is sent from the client to the server with the FB sessionToken
 	static const string Update_Facebook_Account_In_DB_Response;
@@ -419,39 +385,30 @@ public:
 	static const string Add_Friend_By_UserName_Request;
 	static const string Add_Friend_By_UserName_Response;
 
-
 	static const string Online_Friends_List_Request;
 	static const string Online_Friends_List_Response;
-
 
 	//no client request
 	static const string Friend_Is_Online_Notification;
 
-
 	//no client request
 	static const string Tell_Client_Their_Session_Was_Logged_On_Somewhere_Else;
-
 
 	//no client request
 	static const string Tell_Client_Servers_Are_Shutting_Down;
 	static const string Tell_Client_Servers_Have_Shut_Down;
 
-
 	//UDP
 	static const string STUN_Request;
 	static const string STUN_Response;
 
-
 	static const string Friend_Connect_Request;
 	static const string Friend_Connect_Response;
-
 
 	static const string Friend_Data_Request;
 	static const string Friend_Data_Response;
 
-
 	static const string Friend_LocationStatus_Update;
-
 
 	static const string Game_Connect_Request;
 	static const string Game_Connect_Response;
@@ -459,13 +416,11 @@ public:
 	static const string Game_Challenge_Request;
 	static const string Game_Challenge_Response;
 
-
 	//SERVER TO INDEX
 	static const string INDEX_Register_Server_With_INDEX_Request;
 	static const string INDEX_Tell_ServerID_To_Tell_UserID_That_UserIDs_Are_Online;
 	static const string INDEX_Tell_All_Servers_To_Tell_FacebookIDs_That_UserID_Is_Online;
 	static const string INDEX_UserID_Logged_On_This_Server_Log_Them_Off_Other_Servers;
-
 
 	//INDEX TO SERVER
 	static const string Server_Register_Server_With_INDEX_Response;
@@ -474,7 +429,6 @@ public:
 	static const string Server_UserID_Logged_On_Other_Server_So_Log_Them_Off;
 	static const string Server_Tell_All_Users_Servers_Are_Shutting_Down;
 	static const string Server_Tell_All_Users_Servers_Have_Shut_Down;
-
 
 	//BOBS GAME
 	static const string Bobs_Game_GameTypesAndSequences_Download_Request;
@@ -497,7 +451,6 @@ public:
 
 	static const string Bobs_Game_GameStats;
 
-
 	static const string Bobs_Game_UserStatsForSpecificGameAndDifficulty;
 	static const string Bobs_Game_LeaderBoardsByTotalTimePlayed;
 	static const string Bobs_Game_LeaderBoardsByTotalBlocksCleared;
@@ -505,13 +458,6 @@ public:
 	static const string Bobs_Game_LeaderBoardsByEloScore;
 	static const string Bobs_Game_HighScoreBoardsByTimeLasted;
 	static const string Bobs_Game_HighScoreBoardsByBlocksCleared;
-
-
-
-
-
-
-
 
 
 

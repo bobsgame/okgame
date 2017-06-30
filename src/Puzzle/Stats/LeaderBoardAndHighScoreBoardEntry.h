@@ -4,7 +4,6 @@
 //------------------------------------------------------------------------------
 
 
-
 #pragma once
 #include "bobtypes.h"
 #include <src/Utility/Logger.h>
@@ -55,14 +54,12 @@ public:
 
 	Logger log = Logger("BobsGameLeaderBoardAndHighScoreBoard");
 
-
 	string isGameTypeOrSequence = "";
 	string gameTypeName = "";
 	string gameTypeUUID = "";
 	string gameSequenceName = "";
 	string gameSequenceUUID = "";
 	string difficultyName = "";
-
 
 	class BobsGameLeaderBoardAndHighScoreBoardEntry
 	{
@@ -92,14 +89,11 @@ public:
 		int mostBlocksClearedInOneGame = 0;
 		string statsUUID = "";
 
-
 	};
 
 	ArrayList<BobsGameLeaderBoardAndHighScoreBoardEntry*> entries;
 
 	int maxEntries = 10;
-
-
 
 
 
@@ -1040,13 +1034,11 @@ public:
 //		}
 //	}
 
-
 	//===============================================================================================
 	string& encode()
 	{//===============================================================================================
 
 		string gameSavestring = "";
-
 
 		gameSavestring += ",isGameTypeOrSequence:`" + isGameTypeOrSequence + "`";
 		gameSavestring += ",gameTypeName:`" + gameTypeName + "`";
@@ -1059,7 +1051,6 @@ public:
 		{
 			string diff = "_" + to_string(i);
 			BobsGameLeaderBoardAndHighScoreBoardEntry *s = entries.get(i);
-
 
 			gameSavestring += ",userName:`" + s->userName + "`";
 			gameSavestring += ",userID:`" + to_string(s->userID) + "`";
@@ -1083,7 +1074,6 @@ public:
 			gameSavestring += ",biggestCombo" + diff + ":" + to_string(s->biggestCombo);
 			gameSavestring += ",mostBlocksClearedInOneGame" + diff + ":" + to_string(s->mostBlocksClearedInOneGame);
 			gameSavestring += ",statsUUID" + diff + ":" + s->statsUUID;
-
 
 
 		}
@@ -1110,7 +1100,6 @@ public:
 		y = x;
 
 	}
-
 
 	//===============================================================================================
 	void decode(string &s)
@@ -1153,12 +1142,10 @@ public:
 			//string diff = "_" + to_string(i);
 			BobsGameLeaderBoardAndHighScoreBoardEntry *stats = entries.get(i);
 
-
 			s = s.substr(s.find('`') + 1);
 			t = s.substr(0, s.find('`'));
 			if (t.length()>0)stats->userName = t;
 			s = s.substr(s.find('`') + 1);
-
 
 			s = s.substr(s.find('`') + 1);
 			t = s.substr(0, s.find('`'));
@@ -1166,13 +1153,11 @@ public:
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find('`') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->totalGamesPlayed = stoi(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
-
 
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
@@ -1180,13 +1165,11 @@ public:
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->tournamentGamesPlayed = stoi(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
-
 
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
@@ -1194,13 +1177,11 @@ public:
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->tournamentGamesWon = stoi(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
-
 
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
@@ -1208,20 +1189,17 @@ public:
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->singlePlayerGamesCompleted = stoi(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->singlePlayerGamesLost = stoi(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
-
 
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
@@ -1230,20 +1208,17 @@ public:
 			s = s.substr(s.find(',') + 1);
 
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->totalTimePlayed = stoll(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->longestGameLength = stoll(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
-
 
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
@@ -1264,20 +1239,17 @@ public:
 			s = s.substr(s.find(',') + 1);
 
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->eloScore = stod(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->planesWalkerPoints = stol(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
-
 
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
@@ -1297,14 +1269,12 @@ public:
 			catch (exception) { log.error("Could not parse stats");  return; }
 			s = s.substr(s.find(',') + 1);
 
-
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)stats->statsUUID = t;
 			s = s.substr(s.find(',') + 1);
 
 		}
-
 
 	}
 //

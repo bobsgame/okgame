@@ -6,8 +6,6 @@
 
 
 
-
-
 Logger BobsGame::log = Logger("BobsGame");
 //BobsGame* BobsGame::b = nullptr;
 
@@ -29,7 +27,6 @@ mutex BobsGame::_incomingGameSequences_Mutex;
 ArrayList<GameType*> BobsGame::loadedGameTypes;
 ArrayList<GameSequence*> BobsGame::loadedGameSequences;
 ArrayList<Sprite*> BobsGame::loadedSprites;
-
 
 
 ArrayList<BobsGameUserStatsForSpecificGameAndDifficulty*> BobsGame::userStatsPerGameAndDifficulty;
@@ -91,17 +88,14 @@ void BobsGame::init()
 	log.info("BobsGame::init()");
 #endif
 
-
 	//the reason why i have an init function is because i can control the order of the subclass/superclass calling
 	//in the regular constructor, it calls the base class first, so it will always be called State->Engine->GameEngine->BobsGame
 	//but by using the init function I can call them specifically in any order that I want
 
   //oh it is also so that i can call init code from multiple constructors, oops
 
-
 	log.info("Init Assets");
 	initAssets();
-
 
 
 
@@ -113,7 +107,6 @@ void BobsGame::init()
 	updateVersion0ToVersion1();
 
 
-
 	log.info("Init Player");
 	initPlayer();
 
@@ -123,7 +116,6 @@ void BobsGame::init()
 	//	games.add(player2);
 
 }
-
 
 //=========================================================================================================================
 void BobsGame::initPlayer()
@@ -171,7 +163,6 @@ void BobsGame::initPlayer()
 	//originalSettings = p->game->getCurrentGameType();
 }
 
-
 //=========================================================================================================================
 bool BobsGame::isMultiplayer()
 {//=========================================================================================================================
@@ -180,7 +171,6 @@ bool BobsGame::isMultiplayer()
 	if (players.size() > 1)return true;
 	return false;
 }
-
 
 
 
@@ -236,7 +226,6 @@ void BobsGame::initAssets()
 
 
 
-
 	//done: load sprite text files regardless of names
 	//load all txt files from sprites folder
 	string spriteFolderString = Main::getPath() + "data/sprite/";
@@ -258,9 +247,7 @@ void BobsGame::initAssets()
 	}
 
 
-
 	//spriteManager.preloadSpriteFromFile("bobsGameLogoSmall");
-
 
 
 
@@ -271,11 +258,9 @@ void BobsGame::initAssets()
 }
 
 
-
 //=========================================================================================================================
 Sprite* BobsGame::getSpriteFromName(const string& name)
 {//=========================================================================================================================
-
 
 	return spriteManager->getSpriteByName(name);
 
@@ -319,19 +304,15 @@ void BobsGame::setBobsGameFBOSize()
 void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 {//=========================================================================================================================
 
-
 	GLUtils::bindFBO(GLUtils::bobsGame_mainGameFBO);
 	GLUtils::drawIntoFBOAttachment(0); //draw to mainGameFBO texture
 	GLUtils::setBobsGameMainFBOFilterViewport();
-
 
 	//clear the main game FBO since we used it to draw the previous game
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
 	g->renderBackground();//draw the background into the main fbo
-
 
 	//render the playing field blocks to a FBO
 	//draw the FBO to the screen with blur shader and 50% alpha
@@ -343,9 +324,7 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-
 	g->renderBlocks(); //draw blocks into bloom mask texture
-
 
 	if (GLUtils::useShaders)
 	{
@@ -354,21 +333,17 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		//GLUtils::drawIntoFBOAttachment(0);
 		GLUtils::setBloomViewport();
 
-
 		glDisable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 		glDepthMask(false);
-
 
 		GLUtils::drawIntoFBOAttachment(1);
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);//this is correct
 		glClear(GL_COLOR_BUFFER_BIT);//clear both ping pong textures
 
-
 		GLUtils::drawIntoFBOAttachment(0); //draw to bloom FBO texture 0
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);//this is correct
 		glClear(GL_COLOR_BUFFER_BIT);
-
 
 
 		GLUtils::useShader(GLUtils::bloomMaskShader);
@@ -381,7 +356,6 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment1_BloomMask, 0, 1, 0, 1, -1, 1, -1, 1, 1.0f, GLUtils::DEFAULT_BLOOM_FBO_FILTER);//draw the blocks into ping pong 0
 
 		GLUtils::useShader(0);
-
 
 
 		int blurPasses = g->currentGameType->bloomTimes;
@@ -414,15 +388,12 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		}
 
 
-
 		GLUtils::bindFBO(GLUtils::bobsGame_mainGameFBO);
 		GLUtils::drawIntoFBOAttachment(0); //draw to mainFBO texture 0, has the playing field
 		GLUtils::setBobsGameMainFBOFilterViewport();
 
-
 		glEnable(GL_BLEND);
 		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-
 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment0);//has blurred blocks in it
@@ -430,9 +401,7 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, GLUtils::bobsGame_mainGameFBO_Texture_Attachment1_BloomMask);//has original blocks in it
 
-
 		float bloomIntensity = g->currentGameType->bloomIntensity;
-
 
 //		float w = g->playingFieldX1 - g->playingFieldX0;
 //		float h = g->playingFieldY1 - g->playingFieldY0;
@@ -451,7 +420,6 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		}
 		GLUtils::useShader(0);
 
-
 		//disable texture2D on texture unit 1
 		glActiveTexture(GL_TEXTURE1);
 		glDisable(GL_TEXTURE_2D);
@@ -462,13 +430,11 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 
 		glEnable(GL_TEXTURE_2D);
 
-
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	}
 
 	g->renderForeground();
-
 
 	if (useColorFilter)
 	{
@@ -482,7 +448,6 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 		GLUtils::drawTexture(GLUtils::bobsGame_mainGameFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0, GLUtils::bobsGameFBO_Width, 0, GLUtils::bobsGameFBO_Height, 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 
 		GLUtils::drawIntoFBOAttachment(0);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -568,14 +533,12 @@ void BobsGame::render()
 {//=========================================================================================================================
 
 
-
 	GLUtils::bindFBO(GLUtils::preColorFilterFBO);
 	GLUtils::drawIntoFBOAttachment(0); //draw to nD FBO screen texture
 	GLUtils::setPreColorFilterViewport();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);//this is correct
 	glClear(GL_COLOR_BUFFER_BIT);
-
 
 	if (renderMenus() == true)
 	{
@@ -597,7 +560,6 @@ void BobsGame::render()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);//this is correct
 		glClear(GL_COLOR_BUFFER_BIT);
 
-
 		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 		GLUtils::drawTexture(GLUtils::preColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getRealWindowWidth()), 0, (float)(GLUtils::getRealWindowHeight()), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -614,7 +576,6 @@ void BobsGame::render()
 			glLoadIdentity();
 			glEnable(GL_DEPTH_TEST);
 
-
 			bgShaderFBOTextureToggle = !bgShaderFBOTextureToggle;
 
 			GLUtils::bindFBO(GLUtils::bobsGame_bgShaderFBO);
@@ -627,11 +588,9 @@ void BobsGame::render()
 				GLUtils::drawIntoFBOAttachment(1);
 			}
 
-
 			GLUtils::setShaderViewport();
 			float tempDrawScale = GLUtils::globalDrawScale;
 			GLUtils::globalDrawScale = 1.0f;
-
 
 			glActiveTexture(GL_TEXTURE1);
 			glEnable(GL_TEXTURE_2D);
@@ -648,11 +607,9 @@ void BobsGame::render()
 			glActiveTexture(GL_TEXTURE0);
 			glEnable(GL_TEXTURE_2D);
 
-
 			//clear the shader bg
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);//this is correct
 			glClear(GL_COLOR_BUFFER_BIT);
-
 
 
 			long long startTime = timeRenderBegan;
@@ -660,7 +617,6 @@ void BobsGame::render()
 			int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
 
 			float time = (float)(ticksPassed / 2000.0f);
-
 
 			int shaderInt = GLUtils::bgShaders.get(shaderCount)->value();
 
@@ -677,7 +633,6 @@ void BobsGame::render()
 
 			GLUtils::useShader(0);
 
-
 			glDisable(GL_DEPTH_TEST);
 
 			//disable texture2D on texture unit 1
@@ -688,7 +643,6 @@ void BobsGame::render()
 			glActiveTexture(GL_TEXTURE0);
 			glDisable(GL_TEXTURE_2D);
 
-
 			GLUtils::bindFBO(GLUtils::preColorFilterFBO);
 			GLUtils::drawIntoFBOAttachment(0); //draw to nD FBO screen texture
 			GLUtils::setPreColorFilterViewport();
@@ -697,7 +651,6 @@ void BobsGame::render()
 			//clear the preColor FBO
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
-
 
 			if (bgShaderFBOTextureToggle)
 			{
@@ -712,9 +665,7 @@ void BobsGame::render()
 			GLUtils::drawFilledRect(0, 0, 0, 0, (float)getWidth(), 0, (float)getHeight(), 0.3f);
 		}
 
-
 		setBobsGameFBOSize();
-
 
 		for (int i = 0; i < players.size(); i++)
 		{
@@ -732,7 +683,6 @@ void BobsGame::render()
 
 			drawBobsGameFBO(g->playingFieldX0, g->playingFieldX1, g->playingFieldY0, g->playingFieldY1);
 		}
-
 
 		//--------------------------
 		//set main FBO
@@ -762,11 +712,9 @@ void BobsGame::render()
 			GLUtils::setShaderVar1i(GLUtils::colorShader, (char*)"Tex0", 0);
 		}
 
-
 		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 		GLUtils::drawTexture(GLUtils::preColorFilterFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0, (float)(GLUtils::getViewportWidth()), 0, (float)(GLUtils::getViewportHeight()), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 
 		if (GLUtils::useShaders)
 		{
@@ -789,7 +737,6 @@ void BobsGame::render()
 			if (p->gameLogic->pauseMiniMenuShowing)playerPauseMiniMenuRender(p, p->gameLogic->playingFieldX0, p->gameLogic->playingFieldX1, p->gameLogic->playingFieldY0, p->gameLogic->playingFieldY1);;
 		}
 
-
 		if (pauseMenuShowing == true)
 		{
 			pauseMenuRender();
@@ -808,7 +755,6 @@ void BobsGame::render()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-
 		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); //this fixes the small shadow problems, and also makes the doorknob glow brighter.
 		GLUtils::drawTexture(GLUtils::postColorFilterFBO_Texture_Attachment0, 0, 1, 1, 0, 0, (float)(GLUtils::getRealWindowWidth()), 0, (float)(GLUtils::getRealWindowHeight()), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
 		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -817,11 +763,9 @@ void BobsGame::render()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::debugKeys()
 {//=========================================================================================================================
-
 
 
 	if (getControlsManager()->key_F1_Pressed())
@@ -918,11 +862,9 @@ void BobsGame::debugKeys()
 
 
 
-
 //=========================================================================================================================
 void BobsGame::update()
 {//=========================================================================================================================
-
 
 
 	if(networkMultiplayerLobbyMenuShowing || networkMultiplayerPlayerJoinMenuShowing)
@@ -942,7 +884,6 @@ void BobsGame::update()
 	}
 
 
-
 	debugKeys();
 
 	//super::update();
@@ -952,16 +893,13 @@ void BobsGame::update()
 		spriteManager->update();
 	}
 
-
 	getGameTypesAndSequencesFromServer();
-
 
 
 	if (updateMenus() == true)
 	{
 		return;
 	}
-
 
 
 	if(pauseMenuShowing==true)
@@ -972,18 +910,14 @@ void BobsGame::update()
 	}
 
 
-
 	for (int i = 0; i < players.size(); i++)
 	{
 		PuzzlePlayer *p = players.get(i);
 
 		GameLogic *g = p->gameLogic;
 
-
 		//actual game update
 		g->update(p,i,players.size());
-
-
 
 
 
@@ -1006,7 +940,6 @@ void BobsGame::update()
 
 	bool gameOver = false;
 
-
 	if (players.size() == 1 && players.get(0)->gameLogic->complete)
 	{
 		gameOver = true;
@@ -1025,7 +958,6 @@ void BobsGame::update()
 	{
 		gameOver = true;
 	}
-
 
 	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains && players.size()>1)
 	{
@@ -1052,7 +984,6 @@ void BobsGame::update()
 			gameOver = true;
 		}
 	}
-
 
 	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel && players.size()>1)
 	{
@@ -1081,7 +1012,6 @@ void BobsGame::update()
 		}
 	}
 
-
 	if(gameOver)
 	{
 
@@ -1091,7 +1021,6 @@ void BobsGame::update()
 		//if sequence, check
 		//if connected to server, make menu to vote up or down
 		//has to be single player game because its tied to account
-
 
 		if(doVoting()==false)
 		{
@@ -1159,7 +1088,6 @@ void BobsGame::sendGameStatsToServer()
 	if (getServerConnection()->getConnectedToServer_S() == false)return;
 
 	if (getServerConnection()->getAuthorizedOnServer_S() == false)return;
-
 
 	{
 		
@@ -1271,9 +1199,7 @@ void BobsGame::sendGameStatsToServer()
 		}
 	}
 
-
 }
-
 
 //=========================================================================================================================
 bool BobsGame::doVoting()
@@ -1284,7 +1210,6 @@ bool BobsGame::doVoting()
 	if (getServerConnection()->getAuthorizedOnServer_S() == false)return false;
 
 	if (players.size() > 1)return false;
-
 
 	if (voting == false)
 	{
@@ -1403,8 +1328,6 @@ bool BobsGame::doVoting()
 
 
 
-
-
 }
 
 //=========================================================================================================================
@@ -1442,7 +1365,6 @@ void BobsGame::tryToCloseGame()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::changeBG()
 {//=========================================================================================================================
@@ -1457,7 +1379,6 @@ void BobsGame::changeBG()
 }
 
 
-
 //
 ////=========================================================================================================================
 //BobsGame* BobsGame::getThis()
@@ -1467,7 +1388,6 @@ void BobsGame::changeBG()
 //
 //}
 //
-
 
 
 void BobsGame::updateControls()
@@ -1487,7 +1407,6 @@ void BobsGame::resetPressedButtons()
 	}
 
 
-
 	getControlsManager()->resetPressedButtons();
 }
 
@@ -1499,9 +1418,7 @@ void BobsGame::setButtonStates()
 		p->setButtonStates();
 	}
 
-
 	getControlsManager()->setButtonStates();
-
 
 
 	//puzzlegame
@@ -1573,7 +1490,6 @@ void BobsGame::setButtonStates()
 				if (getControlsManager()->KEY_LSHIFT_HELD == true)p->ROTATECCW_HELD = true;
 				if (getControlsManager()->KEY_LCTRL_HELD == true)p->HOLDRAISE_HELD = true;
 
-
 				//if (getControlsManager()->KEY_RETURN_HELD == true)p->START_HELD = true;
 
 				if (getControlsManager()->KEY_ESC_HELD == true)p->PAUSE_HELD = true;
@@ -1583,7 +1499,6 @@ void BobsGame::setButtonStates()
 
 				//if (getControlsManager()->KEY_ESC_HELD == true)p->CANCEL_HELD = true;
 				if (getControlsManager()->KEY_LSHIFT_HELD == true)p->CANCEL_HELD = true;
-
 
 				if (p->slamWithUp)
 				{
@@ -1681,7 +1596,6 @@ void BobsGame::shakeHard()
 //}
 
 
-
 //=========================================================================================================================
 void BobsGame::loadGameTypesFromXML()
 {//=========================================================================================================================
@@ -1703,7 +1617,6 @@ void BobsGame::loadGameTypesFromXML()
 	if (downloadedDataPathDir.exists() == false)downloadedDataPathDir.createDirectories();
 
 	loadedGameTypes.clear();
-
 
 	bool found = false;
 
@@ -1753,7 +1666,6 @@ void BobsGame::loadGameTypesFromXML()
 					if(i==1) { s->builtInType = false; s->creatorUserName = "(You)"; }
 					if(i==2)s->downloaded = true;
 
-
 					loadedGameTypes.add(s);
 				}
 				catch(exception)
@@ -1765,9 +1677,7 @@ void BobsGame::loadGameTypesFromXML()
 
 	}
 
-
 }
-
 
 //=========================================================================================================================
 void BobsGame::loadGameSequencesFromXML()
@@ -1788,7 +1698,6 @@ void BobsGame::loadGameSequencesFromXML()
 	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
 	if (builtInDataPathDir.exists() == false)builtInDataPathDir.createDirectories();
 	if (downloadedDataPathDir.exists() == false)downloadedDataPathDir.createDirectories();
-
 
 	loadedGameSequences.clear();
 
@@ -1854,11 +1763,9 @@ void BobsGame::loadGameSequencesFromXML()
 	}
 
 
-
 	{
 
 		//initialize actual games from game names in game sequences, this should be improved using game IDs so it can download missing games and sequences can be shared
-
 
 
 		for(int i=0;i<loadedGameSequences.size();i++)
@@ -2007,7 +1914,6 @@ void BobsGame::saveGameSequenceToXML(GameSequence *gs, bool downloaded)
 		file.renameTo(userDataPathString + gs->uuid + "." + to_string(version));
 	}
 
-
 	{
 		GameSequence g;
 		g = *gs;
@@ -2032,7 +1938,6 @@ void BobsGame::saveGameTypeToXML(GameType *gs, bool downloaded)
 	File userDataPathDir(userDataPath);
 	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
 
-
 	//if type exists, do we overwrite?
 	//let's rename the old file to .000
 
@@ -2056,7 +1961,6 @@ void BobsGame::saveGameTypeToXML(GameType *gs, bool downloaded)
 		file.renameTo(userDataPathString + gs->uuid + "." + to_string(version));
 	}
 
-
 	{
 
 		GameType g;
@@ -2073,7 +1977,6 @@ void BobsGame::saveGameTypeToXML(GameType *gs, bool downloaded)
 		outputFile.close();
 	}
 }
-
 
 //=========================================================================================================================
 void BobsGame::getGameTypesAndSequencesFromServer()
@@ -2116,7 +2019,6 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 			else
 			{
 
-
 				long long currentTime = System::currentHighResTimer();
 				long long startTime = lastCheckedGotIncomingGamesFromServerTime;
 				int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
@@ -2130,7 +2032,6 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 						gotGamesFromServer = false;
 						sentServerGamesRequest = false;
 					}
-
 
 					if (getAndResetGotIncomingGamesFromServer_S() == true)
 					{
@@ -2195,11 +2096,9 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 {//=========================================================================================================================
-
 
 	//GameType:MD5:XML:userid:username:name:uuid:datecreated:lastmodified:howmanytimesupdated:upvotes:downvotes:haveyouvoted
 	//					GameSequence:MD5
@@ -2301,7 +2200,6 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 
 
-
 		long long howManyTimesUpdated = -1;
 		try
 		{
@@ -2312,7 +2210,6 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			log.error("howManyTimesUpdated could not be parsed");
 			return;
 		}
-
 
 
 		long long upVotes = -1;
@@ -2327,7 +2224,6 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 
 
-
 		long long downVotes = -1;
 		try
 		{
@@ -2338,7 +2234,6 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			log.error("downVotes could not be parsed");
 			return;
 		}
-
 
 
 		//check xml string with md5
@@ -2434,7 +2329,6 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 void BobsGame::updateVersion0ToVersion1()
 {//=========================================================================================================================
 
-
  //after load, if makePieceTypeWhenCleared>0 but UUID==0 get piece types by name and add uuids
  //search and replace using makePieceTypeWhenCleared with UUID everywhere
 
@@ -2451,7 +2345,6 @@ void BobsGame::updateVersion0ToVersion1()
 //PieceType::overrideBlockTypes
 //GameType::getBlockTypeByName
 //GameType::getPieceTypeByName
-
 
 	//fix for loading version 0 game types before moved to using uuid
 	bool resave = false;
@@ -2597,7 +2490,6 @@ void BobsGame::updateVersion0ToVersion1()
 				}
 			}
 		}
-
 
 	}
 	if (resave)

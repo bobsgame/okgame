@@ -8,8 +8,6 @@
 
 
 
-
-
 BobTexture* BobMenu::rectangleCursorTexture = nullptr;
 BobTexture* BobMenu::cursorTexture = nullptr;
 BobTexture* BobMenu::upCursorTexture = nullptr;
@@ -29,7 +27,6 @@ BobColor* BobMenu::errorColor = nullptr;
 BobColor* BobMenu::bgColor = nullptr;
 
 ArrayList<BobMenu*> BobMenu::activeMenus;
-
 
 
 //=========================================================================================================================
@@ -83,7 +80,6 @@ void BobMenu::MenuItem::setText(string s)
 	caption->setText(s);
 }
 
-
 //BobSubMenu* BobMenu::addSubMenu(string caption, string id, BobsGame *b, void(*f) (BobsGame*, string))
 //{
 //	MenuItem *m = new MenuItem();
@@ -100,7 +96,6 @@ void BobMenu::MenuItem::setText(string s)
 //
 //	return m->subMenu;
 //}
-
 
 //=========================================================================================================================
 BobMenu::BobMenu(Engine *g, string title)
@@ -123,7 +118,6 @@ BobMenu::BobMenu(Engine *g, string title)
 	if (errorColor == nullptr)errorColor = BobColor::lightRed;
 	if (bgColor == nullptr)bgColor = BobColor::white;
 
-
 	if (defaultMenuColor == nullptr)defaultMenuColor = menuColor;
 
 	if (title != "")
@@ -142,7 +136,6 @@ BobMenu::~BobMenu()
 	activeMenus.remove(this);
 }
 
-
 int graphicWidth = 0;
 int graphicYStartPosition = 0;
 //=========================================================================================================================
@@ -154,7 +147,6 @@ void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosit
 	this->maxGraphicHeight = maxGraphicHeight;
 
 }
-
 
 //=========================================================================================================================
 void BobMenu::clear()
@@ -204,7 +196,6 @@ void BobMenu::update(int ticksPassed)
 			if (mi->hidden)continue;
 
 
-
 			Caption *c = mi->caption;
 			if (c->visible == false)continue;
 
@@ -225,7 +216,6 @@ void BobMenu::update(int ticksPassed)
 
 }
 
-
 //=========================================================================================================================
 bool BobMenu::areAllMenusDisabled()
 {//=========================================================================================================================
@@ -242,7 +232,6 @@ bool BobMenu::areAllMenusDisabled()
 	return false;
 }
 
-
 //=========================================================================================================================
 void BobMenu::up(bool noSound)
 {//=========================================================================================================================
@@ -257,7 +246,6 @@ void BobMenu::up(bool noSound)
 
 }
 
-
 //=========================================================================================================================
 void BobMenu::down(bool noSound)
 {//=========================================================================================================================
@@ -270,7 +258,6 @@ void BobMenu::down(bool noSound)
 	rectangleCursorMovementLastTime = System::currentHighResTimer();
 	if (noSound == false)getAudioManager()->playSound("tick", 0.5f, 1.0f);
 }
-
 
 //=========================================================================================================================
 BobMenu::MenuItem* BobMenu::addInfo(string caption, string id, BobColor *color)
@@ -293,7 +280,6 @@ BobMenu::MenuItem* BobMenu::addInfo(string caption, string id, BobColor *color)
 	return m;
 }
 
-
 //=========================================================================================================================
 BobMenu::MenuItem* BobMenu::add(string caption, string id, BobColor *color)
 {//=========================================================================================================================
@@ -310,7 +296,6 @@ BobMenu::MenuItem* BobMenu::add(string caption, string id, BobColor *color)
 	menuItems.add(m);
 	return m;
 }
-
 
 //=========================================================================================================================
 BobMenu::MenuItem* BobMenu::addYesNo(string caption, bool yesNo)
@@ -329,7 +314,6 @@ BobMenu::MenuItem* BobMenu::addYesNo(string caption, bool yesNo)
 	return m;
 }
 
-
 //=========================================================================================================================
 void BobMenu::setHidden(string id, bool b)
 {//=========================================================================================================================
@@ -344,7 +328,6 @@ void BobMenu::setHidden(string id, bool b)
 	}
 }
 
-
 //=========================================================================================================================
 void BobMenu::setAllInvisible()
 {//=========================================================================================================================
@@ -355,7 +338,6 @@ void BobMenu::setAllInvisible()
 	}
 }
 
-
 //=========================================================================================================================
 void BobMenu::setAllVisible()
 {//=========================================================================================================================
@@ -365,7 +347,6 @@ void BobMenu::setAllVisible()
 		if (m->caption != nullptr)m->caption->visible = true;
 	}
 }
-
 
 //=========================================================================================================================
 bool BobMenu::isSelectedID(string id, bool clicked, int mx, int my)
@@ -407,10 +388,8 @@ bool BobMenu::isSelectedID(string id, bool clicked, int mx, int my)
 		else return false;
 	}
 
-
 	
 }
-
 
 //=========================================================================================================================
 void BobMenu::setSelectedID(string id)
@@ -441,7 +420,6 @@ Caption* BobMenu::getCaptionByID(string id)
 	return nullptr;
 }
 
-
 //=========================================================================================================================
 BobMenu::MenuItem* BobMenu::getMenuItemByID(string id)
 {//=========================================================================================================================
@@ -458,14 +436,12 @@ BobMenu::MenuItem* BobMenu::getMenuItemByID(string id)
 	return nullptr;
 }
 
-
 //=========================================================================================================================
 BobMenu::MenuItem* BobMenu::getSelectedMenuItem()
 {//=========================================================================================================================
 	if (cursorPosition >= menuItems.size())return nullptr;
 	return menuItems.get(cursorPosition);
 }
-
 
 
 //=========================================================================================================================
@@ -507,17 +483,13 @@ void BobMenu::setFontSize(int size)
 
 	fontSize = size;
 
-
 }
-
 
 
 int BobMenu::getAmountOfMenuItems()
 {
 	return menuItems.size();
 }
-
-
 
 
 
@@ -541,7 +513,6 @@ void BobMenu::render
 {//=========================================================================================================================
 
 	if (y == 0 && titleCaption != nullptr)y = titleCaption->getHeight() + 8;
-
 
 	float leftX = (float)GLUtils::getViewportWidth();
 	float rightX = 0;
@@ -573,7 +544,6 @@ void BobMenu::render
 			screenWidth = graphic->getImageWidth() * widthToHeightRatio;
 		}
 
-
 		float sx0 = (float)((int)((getEngine()->getWidth() - screenWidth) / 2));
 		float sx1 = (float)floor((int)(sx0 + screenWidth));
 
@@ -581,7 +551,6 @@ void BobMenu::render
 		float sy1 = (float)floor((int)(sy0 + (float)(screenHeight)));
 
 		y = (int)(sy1 + 40);
-
 
 		GLUtils::drawTexture(graphic, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
 	}
@@ -621,7 +590,6 @@ void BobMenu::render
 				}
 			}
 		}
-
 
 
 		int menuItemsToShow = 0;
@@ -681,7 +649,6 @@ void BobMenu::render
 				}
 			}
 
-
 			stillIncreasingSize = false;
 
 			if(scaleFontSizeToFit && menuItemsToShow == visibleMenuItems.size() && scaledFontSize < fontSize && pastEnd == false && endY - lowestHeight >= captionHeight*2)
@@ -708,8 +675,6 @@ void BobMenu::render
 					(menuItemsToShow == visibleMenuItems.size() && stillIncreasingSize)
 				)
 			);
-
-
 
 
 
@@ -753,7 +718,6 @@ void BobMenu::render
 		int topVisibleMenuItemIndex = 0;
 
 
-
 		//get index of last menu item drawn
 		if (topMenuItemDrawn != nullptr)
 		{
@@ -772,7 +736,6 @@ void BobMenu::render
 
 		
 
-
 		int selectedVisibleMenuItemIndex = 0;
 		for (int i = 0; i < visibleMenuItems.size(); i++)
 		{
@@ -787,7 +750,6 @@ void BobMenu::render
 		if (topVisibleMenuItemIndex < 0)topVisibleMenuItemIndex = 0;
 
 		
-
 
 
 
@@ -870,7 +832,6 @@ void BobMenu::render
 			bottomOfCaptions += 16;
 		}
 
-
 		if (returnBottomOfCaptions != nullptr)*returnBottomOfCaptions = bottomOfCaptions;
 
 		bottomY = (float)bottomOfCaptions;
@@ -888,7 +849,6 @@ void BobMenu::render
 		//interpolate cursor rectangle location
 		//pulse fade
 		if(menuItems.get(cursorPosition)->info==false)menuItems.get(cursorPosition)->caption->setTextColor(BobColor::green);
-
 
 		if (areAllMenusDisabled() == false && drawCursor)
 		{
@@ -942,8 +902,6 @@ void BobMenu::render
 
 				if (rectangleCursorCurrentY == rectangleCursorToY)rectangleCursorFromY = rectangleCursorToY;
 			}
-
-
 
 
 
@@ -1036,5 +994,4 @@ void BobMenu::render
 	}
 
 }
-
 

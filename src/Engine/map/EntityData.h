@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -32,7 +30,6 @@ private:
 	//eventually it will be replaced when i move to objectData save/load in editor.
 	//TODO: phase this out for just "set layer" above/below
 
-
 	int layer = 0; //ground
 	RenderOrder renderOrder = RenderOrder::GROUND;
 	bool aboveWhenEqual = false; //if two entities are on the same layer and the bottom lines up, render this one after
@@ -44,7 +41,6 @@ private:
 	bool randomFrames = false; //initial frame will be randomized too. applies to both animateThroughAllFrames and animateThroughCurrentAnimation
 	int ticksBetweenAnimation = 0; //will be random up to this if checked random up to ticks between animation loop
 	bool randomTimeBetweenAnimation = false;
-
 
 public:
 	int walkSpeed = 1; //DONE: phase this out for a getTicksPerPixelMoved edit box // THIS VARIABLE IS OBSOLETE, keeping it for backwards compatibility.
@@ -81,7 +77,6 @@ private:
 public:
 	EntityData();
 
-
 	EntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, EventData* eventData = nullptr, const string& comment = "");
 	void initEntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, EventData* eventData = nullptr, const string& comment = "");
 
@@ -91,21 +86,17 @@ public:
 	//		getConnectionTYPEIDList.add(s);
 	//	}
 
-
 	//	
 	//	public void addBehavior(String s)
 	//	{
 	//		getBehaviorList.add(s);
 	//	}
 
-
 	virtual string& initFromString(string& t) override;
 	//static EntityData* fromBase64ZippedJSON(const string& b64);
 	//static EntityData* fromJSON(const string& json);
 
-
 	virtual string getTYPEIDString();
-
 
 	float getSpawnXPixels1X();
 	float getSpawnYPixels1X();
@@ -152,7 +143,6 @@ public:
 	ArrayList<string>* getConnectionTYPEIDList();
 	ArrayList<string>* getBehaviorList();
 
-
 	//set
 
 	void setSpriteName(const string& s);
@@ -189,7 +179,6 @@ public:
 	//void setStateID(int s);
 	//void setEventID(int s);
 	void setComment(const string& s);
-
 
 	void setAnimateThroughAllFrames(bool s);
 	void setAnimateThroughCurrentAnimation(bool s);

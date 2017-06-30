@@ -15,7 +15,6 @@ class Logger;
 class ControlsManager;
 
 
-
 class State
 {
 public:
@@ -57,18 +56,14 @@ public:
 	virtual void render();
 	virtual void cleanup();
 
-
 	static ControlsManager* getControlsManager();
-
 
 	//static void setClientGameEngine(BGClientEngine* gameEngine);
 	static BGClientEngine* getClientGameEngine();
 
-
 	virtual void updateControls();
 	virtual void resetPressedButtons();
 	virtual void setButtonStates();
-
 
 
 	static TCPServerConnection* getServerConnection();

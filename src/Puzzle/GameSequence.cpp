@@ -1,19 +1,15 @@
 #include "stdafx.h"
 
-
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 
-
 template void NetworkGameSequence::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive &ar, const unsigned int);
 template void NetworkGameSequence::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive &ar, const unsigned int);
-
 
 template <typename Archive>
 void NetworkGameSequence::serialize(Archive & ar, const unsigned int version)
@@ -27,7 +23,6 @@ void NetworkGameSequence::serialize(Archive & ar, const unsigned int version)
 	ar & BOOST_SERIALIZATION_NVP(endlessMode);
 	ar & BOOST_SERIALIZATION_NVP(currentDifficultyName);
 	ar & BOOST_SERIALIZATION_NVP(builtInType);
-
 
 	importExport_games.clear();
 	{

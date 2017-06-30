@@ -5,14 +5,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
 
-
 Logger MenuPanel::log = Logger("MenuPanel");
-
 
 MenuPanel::MenuPanel()
 { //=========================================================================================================================
@@ -209,7 +206,6 @@ void MenuPanel::scrollDown()
 void MenuPanel::layout()
 { //=========================================================================================================================
 
-
 	//   mainPanelLayout->adjustSize();
 	//   mainPanelLayout->setSize((int)(GLUtils::getViewportWidth() * 0.90f), (int)(GLUtils::getViewportHeight() * 0.90f));
 	//
@@ -228,7 +224,6 @@ void MenuPanel::layout()
 void MenuPanel::renderBefore()
 { //=========================================================================================================================
 
-
 	if (isScrollingDown == true)
 	{
 		return;
@@ -237,7 +232,6 @@ void MenuPanel::renderBefore()
 	{
 		return;
 	}
-
 
 	GLUtils::drawFilledRect(0, 0, 0, 0, (float)GLUtils::getViewportWidth(), 0, (float)GLUtils::getViewportHeight(), 0.5f);
 }
@@ -245,7 +239,6 @@ void MenuPanel::renderBefore()
 void MenuPanel::render()
 { //=========================================================================================================================
 
-
 	if (isScrollingDown == true)
 	{
 		return;
@@ -255,7 +248,6 @@ void MenuPanel::render()
 		return;
 	}
 }
-
 
 //
 //BGClientEngine* MenuPanel::getClientGameEngine()

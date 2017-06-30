@@ -12,7 +12,6 @@
 #include "gl/GLUtils.h"
 
 
-
 //class BobSubMenu;
 //=========================================================================================================================
 class BobMenu : public EnginePart
@@ -34,7 +33,6 @@ private:
 public:
 
 
-
 	static BobColor* menuColor;
 	static BobColor* disabledMenuColor;
 	static BobColor* warningMenuColor;
@@ -45,7 +43,6 @@ public:
 	static BobColor* bgColor;
 
 	BobColor* defaultMenuColor = nullptr;
-
 
 	Caption* titleCaption = nullptr;
 	
@@ -61,7 +58,6 @@ public:
 	static bool cursorInOutToggle;
 	static int lastMX;
 	static int lastMY;
-
 
 	long long rectangleCursorPulseLastTime = 0;
 	int rectangleCursorPulsePeriodTicks = 300;
@@ -156,11 +152,9 @@ public:
 
 	void setFontSize(int size);
 
-
 	//bool cancelToQuit = true;
 	//bool confirmToConfirm = true;
 	//bool *onQuitToggle;
-
 
 	//	//=========================================================================================================================
 	//	BobSubMenu* addSubMenu(string caption, string id, BobsGame *b, void(*f) (BobsGame*, string))
@@ -204,5 +198,4 @@ public:
 //
 //
 //};
-
 

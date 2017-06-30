@@ -7,7 +7,6 @@
 
 
 
-
 Logger Piece::log = Logger("Piece");
 
 shared_ptr<PieceType> PieceType::emptyPieceType(new PieceType());
@@ -17,7 +16,6 @@ shared_ptr<PieceType> PieceType::twoBlockVerticalCursorPieceType(new PieceType("
 shared_ptr<PieceType> PieceType::threeBlockHorizontalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockHorizontalCursorRotationSet()));
 shared_ptr<PieceType> PieceType::threeBlockVerticalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockVerticalCursorRotationSet()));
 shared_ptr<PieceType> PieceType::fourBlockCursorPieceType(new PieceType("cursorPiece", "", nullptr, 4, Piece::get4BlockCursorRotationSet()));
-
 
 //=========================================================================================================================
 bool PieceType::operator==(const PieceType& rhs) const
@@ -58,7 +56,6 @@ bool PieceType::operator!=(const PieceType& rhs) const
 
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/archive/xml_iarchive.hpp>
-
 
 template void PieceType::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive &ar, const unsigned int);
 template void PieceType::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive &ar, const unsigned int);
@@ -147,7 +144,6 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 	}
 }
 
-
 //=========================================================================================================================
 Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
@@ -187,14 +183,11 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 	setRotation(0);
 
 
-
 }
-
 
 //=========================================================================================================================
 Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType)
 {//=========================================================================================================================
-
 
 	this->game = gameInstance;
 
@@ -224,18 +217,14 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 		blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, nullptr, blockType)));
 	}
 
-
 	setRotation(0);
 
-
 }
-
 
 //=========================================================================================================================
 //must call this after constructor because of shared_ptr problem
 void Piece::init()
 {//=========================================================================================================================
-
 
 	//initialize piece shared_ptr hack since can't do shared_from_this in constructor
 	for (int i = 0; i<blocks.size(); i++)
@@ -247,7 +236,6 @@ void Piece::init()
 	setPieceBlockConnections();
 	setBlockColorConnectionsInPiece();
 }
-
 
 
 
@@ -273,7 +261,6 @@ void Piece::initColors()
 			}
 		}
 	}
-
 
 	if (getGameType()->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor)
 	{
@@ -384,7 +371,6 @@ void Piece::initColors()
 	}
 }
 
-
 //=========================================================================================================================
 void Piece::setPieceBlockConnections()
 {//=========================================================================================================================
@@ -408,7 +394,6 @@ void Piece::setPieceBlockConnections()
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void Piece::setBlockColorConnectionsInPiece()
@@ -465,7 +450,6 @@ void Piece::update()
 		cursorAlpha = cursorAlphaTo - ((float)(cursorFadeTicks) / (float)(cursorFadeTicksPerPhase)) * (cursorAlphaTo - cursorAlphaFrom);
 	}
 
-
 	ghostFadeTicks += getGameLogic()->ticks();
 
 	if (ghostFadeTicks > ghostFadeTicksPerPhase)
@@ -482,7 +466,6 @@ void Piece::update()
 		ghostAlpha = ghostAlphaTo - ((float)(ghostFadeTicks) / (float)(ghostFadeTicksPerPhase)) * (ghostAlphaTo - ghostAlphaFrom);
 	}
 
-
 	for (int i = 0; i < blocks.size(); i++)
 	{
 		shared_ptr<Block> b = blocks.get(i);
@@ -496,7 +479,6 @@ void Piece::update()
 	}
 
 
-
 	if (setInGrid)
 	{
 		if (pieceType->turnBackToNormalPieceAfterNPiecesLock != -1)
@@ -506,7 +488,6 @@ void Piece::update()
 				overrideAnySpecialBehavior = true;
 			}
 		}
-
 
 
 		ArrayList<shared_ptr<BlockType>> blockTypes;//special case, this is slow so we don't fill it unless we need it
@@ -542,7 +523,6 @@ void Piece::update()
 		}
 	}
 
-
 	for (int i = 0; i < blocks.size(); i++)
 	{
 		blocks.get(i)->update();
@@ -553,20 +533,17 @@ void Piece::update()
 	}
 }
 
-
 //=========================================================================================================================
 float Piece::getScreenX()
 {//=========================================================================================================================
 	return grid->getXInFBO() + xGrid * cellW();
 }
 
-
 //=========================================================================================================================
 float Piece::getScreenY()
 {//=========================================================================================================================
 	return grid->getYInFBO() + yGrid * cellH() + (grid->scrollPlayingFieldY / grid->scrollBlockIncrement)*cellH();
 }
-
 
 //=========================================================================================================================
 void Piece::renderOutlineFirstBlock(float x, float y, float alpha, bool asGhost)
@@ -576,7 +553,6 @@ void Piece::renderOutlineFirstBlock(float x, float y, float alpha, bool asGhost)
 	float h = (float)cellH();
 
 	shared_ptr<Block> b = blocks.get(0);
-
 
 	float bx = x + b->xInPiece * w;
 	float by = y + b->yInPiece * h;
@@ -591,15 +567,12 @@ void Piece::renderOutlineFirstBlock(float x, float y, float alpha, bool asGhost)
 		delete xy;
 	}
 
-
 	for (int p = 0; p < 5; p++) //TODO: getScale with screen res
 	{
 		float a = alpha;
 
-
 		//this was commented
 		//if(p==1)a = 1.0f / alpha;//TODO: shift alpha through cycle?
-
 
 		//top
 		GLUtils::drawFilledRectXYWH(bx, by - p, w, 1.0f, 1.0f, 1.0f, 1.0f, a);
@@ -612,7 +585,6 @@ void Piece::renderOutlineFirstBlock(float x, float y, float alpha, bool asGhost)
 	}
 }
 
-
 //=========================================================================================================================
 void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGhost)
 {//=========================================================================================================================
@@ -620,11 +592,9 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 	float w = (float)cellW();
 	float h = (float)cellH();
 
-
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
 	{
 		shared_ptr<Block> b = blocks.get(i);
-
 
 		//outline main piece
 		if (b->xInPiece == 0 && b->yInPiece == 0)
@@ -636,7 +606,6 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 			{
 				float* xy = b->getInterpolatedScreenXY(bx, by);
 
-
 				bx = xy[0];
 				by = xy[1];
 
@@ -647,10 +616,8 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 			{
 				float a = alpha;
 
-
 				//this was commented
 				//if(p==1)a = 1.0f / alpha;
-
 
 				//top
 				GLUtils::drawFilledRectXYWH(bx, by - p, w, 1, 1.0f, 1.0f, 1.0f, a);
@@ -665,7 +632,6 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 	}
 }
 
-
 //=========================================================================================================================
 void Piece::renderAsCurrentPiece()
 {//=========================================================================================================================
@@ -675,10 +641,8 @@ void Piece::renderAsCurrentPiece()
 void Piece::renderAsCurrentPiece(float x, float y)
 {//=========================================================================================================================
 
-
 	float w = (float)cellW();
 	float h = (float)cellH();
-
 
 	if (getGameType()->gameMode == GameMode::STACK && getGameType()->stackCursorType==CursorType::ONE_BLOCK_PICK_UP)
 	{
@@ -700,7 +664,6 @@ void Piece::renderAsCurrentPiece(float x, float y)
 		renderOutlineFirstBlock(x, y, cursorAlpha, false);
 	}
 
-
 	if (getGameType()->gameMode == GameMode::STACK && getGameType()->stackCursorType == CursorType::ONE_BLOCK_PICK_UP)
 	{
 		if (holdingBlock != nullptr)
@@ -720,7 +683,6 @@ void Piece::renderAsCurrentPiece(float x, float y)
 			float bx = x + b->xInPiece * w + b->xInPiece * ox;
 			float by = y + b->yInPiece * h + b->yInPiece * oy;
 
-
 			//this was commented
 			//				float[] xy = b->getInterpolatedScreenXY(bx,by);
 			//
@@ -731,7 +693,6 @@ void Piece::renderAsCurrentPiece(float x, float y)
 			{
 				float a = cursorAlpha;
 				if (p == 1)a = 1.0f / cursorAlpha;
-
 
 				//top
 				GLUtils::drawFilledRectXYWH(bx, by - p, w, 1, 1.0f, 1.0f, 1.0f, a);
@@ -746,7 +707,6 @@ void Piece::renderAsCurrentPiece(float x, float y)
 	}
 }
 
-
 //=========================================================================================================================
 void Piece::render(float x, float y)
 {//=========================================================================================================================
@@ -757,7 +717,6 @@ void Piece::render(float x, float y)
 	}
 }
 
-
 //=========================================================================================================================
 void Piece::renderGhost(float x, float y, float alpha)
 {//=========================================================================================================================
@@ -766,13 +725,10 @@ void Piece::renderGhost(float x, float y, float alpha)
 	{
 		shared_ptr<Block> b = blocks.get(i);
 
-
 		BobColor *c = getGameLogic()->player->gridCheckeredBackgroundColor1;
-
 
 		// fill in black square so background doesnt show through alpha
 		GLUtils::drawFilledRectXYWH(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), (float)cellW(), (float)cellH(), c->rf(), c->gf(), c->bf(), 1.0f);
-
 
 		b->render(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), ghostAlpha * alpha, 1.0f, false, true);
 	}
@@ -788,7 +744,6 @@ void Piece::renderGhost(float x, float y, float alpha)
 	}
 }
 
-
 //=========================================================================================================================
 void Piece::setBlocksSlamming()
 {//=========================================================================================================================
@@ -801,11 +756,9 @@ void Piece::setBlocksSlamming()
 	}
 }
 
-
 //=========================================================================================================================
 int Piece::getWidth()
 {//=========================================================================================================================
-
 
 	int lowestXOffset = 4;
 	int highestXOffset = -4;
@@ -827,7 +780,6 @@ int Piece::getWidth()
 	//1+ for 0,0 piece
 	return 1 + abs(highestXOffset) + abs(lowestXOffset);
 }
-
 
 //=========================================================================================================================
 int Piece::getHeight()
@@ -853,7 +805,6 @@ int Piece::getHeight()
 	return 1 + abs(highestYOffset) + abs(lowestYOffset);
 }
 
-
 //=========================================================================================================================
 int Piece::getLowestOffsetX()
 {//=========================================================================================================================
@@ -868,7 +819,6 @@ int Piece::getLowestOffsetX()
 
 	return lowestXOffset;
 }
-
 
 //=========================================================================================================================
 int Piece::getLowestOffsetY()
@@ -885,7 +835,6 @@ int Piece::getLowestOffsetY()
 	return lowestYOffset;
 }
 
-
 //=========================================================================================================================
 int Piece::getHighestOffsetX()
 {//=========================================================================================================================
@@ -900,7 +849,6 @@ int Piece::getHighestOffsetX()
 
 	return highestXOffset;
 }
-
 
 //=========================================================================================================================
 int Piece::getHighestOffsetY()
@@ -917,7 +865,6 @@ int Piece::getHighestOffsetY()
 	return highestYOffset;
 }
 
-
 //=========================================================================================================================
 void Piece::rotateCCW()
 {//=========================================================================================================================
@@ -931,7 +878,6 @@ void Piece::rotateCCW()
 	}
 	setRotation(currentRotation);
 }
-
 
 //=========================================================================================================================
 void Piece::rotateCW()
@@ -947,11 +893,9 @@ void Piece::rotateCW()
 	setRotation(currentRotation);
 }
 
-
 //=========================================================================================================================
 void Piece::setRandomPieceColors(bool grayscale)
 {//=========================================================================================================================
-
 
 	//TODO:
 	//TODO:
@@ -982,7 +926,6 @@ void Piece::setRandomPieceColors(bool grayscale)
 	//		}
 }
 
-
 //=========================================================================================================================
 void Piece::setRotation(int rotation)
 {//=========================================================================================================================
@@ -1003,11 +946,9 @@ void Piece::setRotation(int rotation)
 	}
 }
 
-
 //=========================================================================================================================
 RotationSet Piece::get2BlockRotateAround00RotationSet()
 {//=========================================================================================================================
-
 
 	RotationSet rotations("2 Block Rotate Around 0,0");
 
@@ -1049,11 +990,9 @@ RotationSet Piece::get2BlockRotateAround00RotationSet()
 	return rotations;
 }
 
-
 //=========================================================================================================================
 RotationSet Piece::get2BlockBottomLeftAlwaysFilledRotationSet()
 {//=========================================================================================================================
-
 
 	RotationSet rotations("2 Block BottomLeft Always Filled");
 
@@ -1098,7 +1037,6 @@ RotationSet Piece::get2BlockBottomLeftAlwaysFilledRotationSet()
 
 	return rotations;
 }
-
 
 
 //=========================================================================================================================
@@ -1228,7 +1166,6 @@ RotationSet Piece::get4BlockCursorRotationSet()
 
 	return rotations;
 }
-
 
 //=========================================================================================================================
 RotationSet Piece::get3BlockVerticalRotationSet()
@@ -1382,7 +1319,6 @@ RotationSet Piece::get3BlockTRotationSet()
 	return rotations;
 }
 
-
 //=========================================================================================================================
 RotationSet Piece::get3BlockLRotationSet()
 {//=========================================================================================================================
@@ -1450,17 +1386,14 @@ RotationSet Piece::get3BlockLRotationSet()
 		}
 	}
 
-
 	return rotations;
 }
-
 
 //=========================================================================================================================
 RotationSet Piece::get3BlockJRotationSet()
 {//=========================================================================================================================
 
 	RotationSet rotations("3 Block J");
-
 
 	{
 		//if(pieceType->name->equals("TETRID_J"))
@@ -1523,7 +1456,6 @@ RotationSet Piece::get3BlockJRotationSet()
 		}
 	}
 
-
 	return rotations;
 }
 
@@ -1532,7 +1464,6 @@ RotationSet Piece::get3BlockIRotationSet()
 {//=========================================================================================================================
 
 	RotationSet rotations("3 Block I");
-
 
 	{
 		//if(pieceType->name->equals("TETRID_I"))
@@ -1594,7 +1525,6 @@ RotationSet Piece::get3BlockIRotationSet()
 		}
 	}
 
-
 	return rotations;
 }
 
@@ -1603,7 +1533,6 @@ RotationSet Piece::get3BlockCRotationSet()
 {//=========================================================================================================================
 
 	RotationSet rotations("3 Block C");
-
 
 	{
 		//if(pieceType->name->equals("TETRID_C"))
@@ -1663,7 +1592,6 @@ RotationSet Piece::get3BlockCRotationSet()
 			rotations.add(r);
 		}
 	}
-
 
 	return rotations;
 }
@@ -1816,7 +1744,6 @@ RotationSet Piece::get4BlockSolidRotationSet()
 	return rotations;
 }
 
-
 //=========================================================================================================================
 RotationSet Piece::get9BlockSolidRotationSet()
 {//=========================================================================================================================
@@ -1845,7 +1772,6 @@ RotationSet Piece::get9BlockSolidRotationSet()
 	return rotations;
 }
 
-
 //=========================================================================================================================
 RotationSet Piece::get4BlockIRotationSet(RotationType type)
 {//=========================================================================================================================
@@ -1857,7 +1783,6 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 	if (type == RotationType::NES)name += " (NES)";
 	if (type == RotationType::GB)name += " (GB)";
 	RotationSet rotations(name);
-
 
 	if (type == RotationType::SRS || type == RotationType::DTET || type == RotationType::SEGA) //unique for SRS: 4 position ISZ rotation
 	{
@@ -1885,7 +1810,6 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 			r->add(new BlockOffset(1, 1));
 			rotations.add(r);
 		}
-
 
 		{
 			//if(rotation==1)
@@ -1950,7 +1874,6 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 		}
 	}
 
-
 	if (type == RotationType::GB)
 	{
 		{
@@ -1999,7 +1922,6 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 		}
 	}
 
-
 	if (type == RotationType::NES)
 	{
 		{
@@ -2046,15 +1968,12 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 		}
 	}
 
-
 	return rotations;
 }
-
 
 //=========================================================================================================================
 RotationSet Piece::get4BlockJRotationSet(RotationType type)
 {//=========================================================================================================================
-
 
 	//RotationSet rotations("4 Block J");
 	string name = "4 Block J";
@@ -2096,7 +2015,6 @@ RotationSet Piece::get4BlockJRotationSet(RotationType type)
 			r->add(new BlockOffset(0, 0));
 			r->add(new BlockOffset(1, 1));
 
-
 			r->add(new BlockOffset(1, 0));
 			r->add(new BlockOffset(-1, 0));
 			rotations.add(r);
@@ -2106,7 +2024,6 @@ RotationSet Piece::get4BlockJRotationSet(RotationType type)
 			Rotation *r = new Rotation();
 			
 			r->add(new BlockOffset(0, 0));
-
 
 			r->add(new BlockOffset(-1, 1));
 			r->add(new BlockOffset(0, 1));
@@ -2160,11 +2077,9 @@ RotationSet Piece::get4BlockJRotationSet(RotationType type)
 			r->add(new BlockOffset(1, 0));
 			r->add(new BlockOffset(-1, 0));
 
-
 			r->add(new BlockOffset(-1, -1));
 			rotations.add(r);
 		}
-
 
 		{
 			//if(rotation==3)//SRS rotation 1
@@ -2178,15 +2093,12 @@ RotationSet Piece::get4BlockJRotationSet(RotationType type)
 		}
 	}
 
-
 	return rotations;
 }
-
 
 //=========================================================================================================================
 RotationSet Piece::get4BlockLRotationSet(RotationType type)
 {//=========================================================================================================================
-
 
 	//RotationSet rotations("4 Block L");
 	string name = "4 Block L";
@@ -2244,7 +2156,6 @@ RotationSet Piece::get4BlockLRotationSet(RotationType type)
 		}
 	}
 
-
 	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES || type == RotationType::DTET)
 	{
 		{
@@ -2284,13 +2195,11 @@ RotationSet Piece::get4BlockLRotationSet(RotationType type)
 			rotations.add(r);
 		}
 
-
 		{
 			//if(rotation==2)//down one from other games, on floor
 			Rotation *r = new Rotation();
 			
 			r->add(new BlockOffset(0, 1));
-
 
 			r->add(new BlockOffset(-1, 1));
 			r->add(new BlockOffset(1, 1));
@@ -2311,10 +2220,8 @@ RotationSet Piece::get4BlockLRotationSet(RotationType type)
 		}
 	}
 
-
 	return rotations;
 }
-
 
 //=========================================================================================================================
 RotationSet Piece::get4BlockSRotationSet(RotationType type)
@@ -2378,7 +2285,6 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 			Rotation *r = new Rotation();
 			
 
-
 			r->add(new BlockOffset(-1, 1));
 			r->add(new BlockOffset(0, 1));
 
@@ -2391,7 +2297,6 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 			Rotation *r = new Rotation();
 			
 
-
 			r->add(new BlockOffset(-1, -1));
 			r->add(new BlockOffset(-1, 0));
 			r->add(new BlockOffset(0, 0));
@@ -2399,7 +2304,6 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 			rotations.add(r);
 		}
 	}
-
 
 	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES)
 	{
@@ -2477,15 +2381,12 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 		}
 	}
 
-
 	return rotations;
 }
-
 
 //=========================================================================================================================
 RotationSet Piece::get4BlockTRotationSet(RotationType type)
 {//=========================================================================================================================
-
 
 	//RotationSet rotations("4 Block T");
 	string name = "4 Block T";
@@ -2543,7 +2444,6 @@ RotationSet Piece::get4BlockTRotationSet(RotationType type)
 		}
 	}
 
-
 	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES || type == RotationType::DTET)
 	{
 		{
@@ -2595,7 +2495,6 @@ RotationSet Piece::get4BlockTRotationSet(RotationType type)
 			rotations.add(r);
 		}
 
-
 		{
 			//if(rotation==3)//STS rotation 1, same as NES,GB
 			Rotation *r = new Rotation();
@@ -2608,10 +2507,8 @@ RotationSet Piece::get4BlockTRotationSet(RotationType type)
 		}
 	}
 
-
 	return rotations;
 }
-
 
 //=========================================================================================================================
 RotationSet Piece::get4BlockZRotationSet(RotationType type)
@@ -2691,7 +2588,6 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 		}
 	}
 
-
 	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES)
 	{
 		{
@@ -2705,7 +2601,6 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 			rotations.add(r);
 		}
 
-
 		if (type == RotationType::SEGA || type == RotationType::NES)
 		{
 			//if(rotation==1 || rotation==3)//same as STS rotation 1, same as NES
@@ -2713,7 +2608,6 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 			
 			r->add(new BlockOffset(1, -1));
 			r->add(new BlockOffset(1, 0));
-
 
 			r->add(new BlockOffset(0, 0));
 			r->add(new BlockOffset(0, 1));
@@ -2770,10 +2664,8 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 		}
 	}
 
-
 	return rotations;
 }
-
 
 //=========================================================================================================================
 int Piece::cellW()

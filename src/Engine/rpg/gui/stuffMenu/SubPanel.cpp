@@ -5,18 +5,14 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
-
 
 
 
 Logger SubPanel::log = Logger("SubPanel");
 
-
 SubPanel::SubPanel()
 { //=========================================================================================================================
-
 
 	//   thisDialogLayout = this;
 	//
@@ -68,7 +64,6 @@ void SubPanel::setVisible(bool b)
 
 void SubPanel::layout()
 { //=========================================================================================================================
-
 
 	//   scrollPane->setMinSize((int)(StuffMenu()->insideScrollPaneLayout->getInnerWidth() * StuffMenu()->subPanelScreenWidthPercent), (int)(StuffMenu()->insideScrollPaneLayout->getInnerHeight() * StuffMenu()->subPanelScreenHeightPercent));
 	//   scrollPane->setSize((int)(StuffMenu()->insideScrollPaneLayout->getInnerWidth() * StuffMenu()->subPanelScreenWidthPercent), (int)(StuffMenu()->insideScrollPaneLayout->getInnerHeight() * StuffMenu()->subPanelScreenHeightPercent));

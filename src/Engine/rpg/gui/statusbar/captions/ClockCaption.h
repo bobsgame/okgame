@@ -3,14 +3,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
 
-
 #include "StatusBarCaption.h"
-
 
 class ClockCaption : public StatusBarCaption
 {
@@ -18,20 +15,15 @@ public:
 
 	static Logger log;
 
-
 	ClockCaption(BGClientEngine* g);
-
 
 	virtual void init() override;
 
-
 	virtual void update() override;
-
 
 	void setDarkTheme();
 
 	void setLightTheme();
-
 
 	BobColor* pausedFGColor = BobColor::darkGray;
 	BobColor* pausedAAColor = BobColor::gray;
@@ -45,15 +37,11 @@ public:
 	BobColor* unknownAAColor = BobColor::lightGray;
 	BobColor* unknownBGColor = BobColor::black;
 
-
 	void setPausedColor();
-
 
 	void setUnknownColor();
 
-
 	void setFastColor();
-
 
 	void setColors(BobColor* fg, BobColor* aa, BobColor* bg);
 };

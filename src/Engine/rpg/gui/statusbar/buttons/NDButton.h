@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -17,15 +15,11 @@ public:
 
 	static Logger log;
 
-
 	NDButton(BGClientEngine* g);
-
 
 	virtual void init() override;
 
-
 	virtual void setOffsets() override;
-
 
 	virtual void clicked() override;
 

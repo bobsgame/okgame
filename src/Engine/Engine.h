@@ -3,12 +3,10 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 
 class Logger;
-
 
 #include "./state/State.h"
 #include "src/Utility/Console.h"
@@ -51,7 +49,6 @@ public:
 
 	static Logger log;
 
-
 	AudioManager* audioManager = nullptr;
 	Cameraman* cameraman = nullptr;
 	SpriteManager* spriteManager = nullptr;
@@ -62,13 +59,11 @@ public:
 	TextManager* textManager = nullptr;
 	EventManager* eventManager = nullptr;
 
-
 private:
 	ControlsManager* controlsManager = nullptr;
 
 	//static BGClientEngine* clientGameEngine;
 	//ArrayDeque<Cameraman*> *cameramanStack = new ArrayDeque<Cameraman*>();
-
 
 public:
 
@@ -78,7 +73,6 @@ public:
 	bool entityLayerEnabled = true;
 	bool lightsLayerEnabled = true;
 	bool debugLayerEnabled = false;
-
 
 	//DebugText cameraSpeedText = DebugConsole.add("cameraSpeedText");
 	ConsoleText* zoomText = Console::debug("zoomText");
@@ -101,7 +95,6 @@ public:
 	virtual void updateDebugText();
 	void* getGameObjectByTYPEIDName(const string& typeIDName);
 
-
 	Cameraman* getCameraman();
 	MapManager* getMapManager();
 	SpriteManager* getSpriteManager();
@@ -121,8 +114,6 @@ public:
 
 	float getWidthRelativeToZoom();
 	float getHeightRelativeToZoom();
-
-
 
 
 

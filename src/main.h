@@ -20,7 +20,6 @@
 
 class Logger;
 
-
 class BGClientTCP;
 class Console;
 class ControlsManager;
@@ -38,7 +37,6 @@ class GlowTileBackground;
 class Main
 {
 public:
-
 
 	static string serverAddressString;
 	static string STUNServerAddressString;
@@ -77,7 +75,6 @@ public:
 	//static int easymode;
 	//static int cheater;
 
-
 	BobsGame* bobsGame = nullptr;
 
 	static Gwen::Controls::Canvas* gwenCanvas;
@@ -92,31 +89,23 @@ public:
 	static Main* getMain();
 	static void setMain(Main* c);
 
-
 	Main();
 	static void openURL(string url);
 	static string getPath();
 
-
 	System* clientInfo = new System();
 
-
 	//void initSystemInfo();
-
 
 	float timeZoneGMTOffset = 0.0f;
 	float DSTOffset = 0.0f;
 	//void initClockAndTimeZone();
 
-
 	void doLegalScreen();
-
 
 	void showControlsImage();
 
-
 	void makeGhostThread();
-
 
 
 	static GlobalSettings* globalSettings;
@@ -150,9 +139,7 @@ public:
 	YouWillBeNotifiedState* youWillBeNotifiedState = nullptr;
 	static GlowTileBackground* glowTileBackground;
 
-
 	bool serversAreShuttingDown = false;
-
 
 	string slash = "/";// System::getProperties().getProperty("file.separator");
 
@@ -170,27 +157,21 @@ public:
 
 
 
-
 	//ClientUDP clientUDP;
-
 
 
 
 	void mainInit();
 
-
 	void initClientEngine();
-
 
 	static bool introMode;
 	static bool previewClientInEditor;
-
 
 	bool debugKeyPressed = false;
 
 	static bool screenShotKeyPressed;// = false;
 	static bool resize;// = false;
-
 
 	static void doResizeCheck();
 	static void doScreenShotCheck();
@@ -224,9 +205,7 @@ public:
 	//   //this is called from the browser javascript after we call the facebook JS SDK
 	//   void setFacebookCredentials(const string& facebookID, const string& accessToken);
 
-
 	void mainLoop();
-
 
 
 

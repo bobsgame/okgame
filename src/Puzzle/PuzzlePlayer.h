@@ -72,7 +72,6 @@ public:
 	long long downLastTime = 0;
 
 
-
 	bool allowAnalogControls = true;
 	bool slamWithY = true;
 	bool slamWithR = false;
@@ -90,18 +89,11 @@ public:
 
 
 
-
-
 	BobColor *gridBorderColor = new BobColor(255, 255, 255);//TODO: move these to user settings!
 	BobColor *gridCheckeredBackgroundColor1 = BobColor::black;
 	BobColor *gridCheckeredBackgroundColor2 = new BobColor(8, 8, 8);
 	BobColor *screenBackgroundColor = BobColor::black;
 	bool gridRule_showWarningForFieldThreeQuartersFilled = true;//TODO: move these to user settings!
-
-
-
-
-
 
 
 
@@ -125,7 +117,6 @@ public:
 	bool CONFIRM_HELD = false;
 	bool CANCEL_HELD = false;
 	//bool START_HELD = false;
-
 
 
 	bool LAST_UP_HELD = false;
@@ -203,7 +194,6 @@ public:
 		LAST_PAUSE_HELD = PAUSE_HELD;
 		LAST_CONFIRM_HELD = CONFIRM_HELD;
 		LAST_CANCEL_HELD = CANCEL_HELD;
-
 
 
 		UP_HELD = false;

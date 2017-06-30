@@ -8,9 +8,7 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #include "Room.h"
-
 
 Logger GameLogic::log = Logger("GameLogic");
 
@@ -18,13 +16,11 @@ int GameLogic::aboveGridBuffer = 4;
 //int GameLogic::gameTypeCount = (int)(GameType::LAST);
 
 
-
 //===============================================================================================
 BobsGame* GameLogic::getBobsGame()
 {//===============================================================================================
 	return (BobsGame*)getEngine();
 }
-
 
 
 
@@ -44,7 +40,6 @@ GameLogic::GameLogic(Engine* g, long long seed)
 	announcementCaptionFontSize = 32;
 	resultCaptionFontSize = 64;
 	mediumCaptionFontSize = 16;
-
 
 
 	this->e = g;
@@ -76,7 +71,6 @@ GameLogic::~GameLogic()
 
 
 
-
 //=========================================================================================================================
 void GameLogic::initializeRandomGenerator()
 {//=========================================================================================================================
@@ -97,11 +91,9 @@ void GameLogic::initializeRandomGenerator()
 	randomGenerator = mt19937((unsigned int)randomSeed);
 }
 
-
 //=========================================================================================================================
 void GameLogic::fillGameTypeRandomBag()
 {//=========================================================================================================================
-
 
 
 	if (currentGameSequence->randomizeSequence)
@@ -159,7 +151,6 @@ GameType* GameLogic::getGameTypeFromRandomBag()
 	return value;
 }
 
-
 //=========================================================================================================================
 DifficultyType* GameLogic::getCurrentDifficulty()
 {//=========================================================================================================================
@@ -177,14 +168,12 @@ void GameLogic::setGameType(GameType* gameType)
 	currentGameType = (gameType);
 	
 
-
 }
 
 #define INIT 1
 //=========================================================================================================================
 void GameLogic::initGame()
 {//=========================================================================================================================
-
 
 	//set all variables to initial state, in case when switching games
 	//currentGameType = new GameType();
@@ -205,18 +194,15 @@ void GameLogic::initGame()
 	}
 	grid->randomBag.clear();
 
-
 	//log.warn("Number of cells before: "+grid.getNumberOfFilledCells());
 
 	int oldWidth = gridW();
 	int oldHeight = gridH();
 
-
 	
 	//if (dontResetNextPieces == false)
 	//{
 		//clear arrays and reset settings variables
-
 
 
 		//{
@@ -242,13 +228,10 @@ void GameLogic::initGame()
 	//force gravity first to fill in any gaps
 	manuallyApplyGravityWithoutChainChecking();
 
-
 	//log.warn("Number of cells after move down: "+grid.getNumberOfFilledCells());
-
 
 	//go through playing field, change all blocks to acceptable playing field blocks if exist, otherwise normal pieces
 	grid->replaceAllBlocksWithNewGameBlocks();
-
 
 	//log.warn("Number of cells after replace: "+grid.getNumberOfFilledCells());
 
@@ -258,8 +241,6 @@ void GameLogic::initGame()
 	//log.warn("Number of cells after move down again: "+grid.getNumberOfFilledCells());
 
 	//possibly adding blocks or gaps to playing field i.e. dr
-
-
 
 
 
@@ -274,7 +255,6 @@ void GameLogic::initGame()
 
 	//TODO: maximum spawn/line clear delay
 
-
 	lockDelayTicksCounter = currentGameType->maxLockDelayTicks;
 	currentLineDropSpeedTicks = getCurrentDifficulty()->initialLineDropSpeedTicks;
 	stopStackRiseTicksCounter = 1000;
@@ -284,12 +264,10 @@ void GameLogic::initGame()
 	blocksClearedThisGame = 0;
 	linesClearedThisGame = 0;
 
-
 	//TODO: 
 	//maybe do this, it was commented out and i dont remember why
 	//if(ME!=null)ME.deleteAllCaptions();
 	//if(THEM!=null)THEM.deleteAllCaptions();
-
 
 
 //
@@ -297,7 +275,6 @@ void GameLogic::initGame()
 //	{
 //		getCurrentGameType()->chainRule_AmountPerChain = gridW();
 //	}
-
 
 	if (currentGameType->randomlyFillGrid)
 	{
@@ -327,7 +304,6 @@ void GameLogic::initGame()
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
 
-
 		if (currentGameType->stackCursorType == CursorType::TWO_BLOCK_HORIZONTAL)
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockHorizontalCursorPieceType);
@@ -338,7 +314,6 @@ void GameLogic::initGame()
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
 
-
 		if (currentGameType->stackCursorType == CursorType::TWO_BLOCK_VERTICAL)
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockVerticalCursorPieceType);
@@ -348,7 +323,6 @@ void GameLogic::initGame()
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
 		}
-
 
 		if (currentGameType->stackCursorType == CursorType::THREE_BLOCK_HORIZONTAL)
 		{
@@ -381,7 +355,6 @@ void GameLogic::initGame()
 		
 	}
 
-
 //	if (getCurrentDifficulty() == Difficulty::BEGINNER)
 //	{
 //		difficultyCaptionText = "Difficulty: Beginner";
@@ -404,11 +377,9 @@ void GameLogic::initGame()
 //	}
 	
 
-
 	getAudioManager()->stopMusic(playingMusic);
 	playingMusic = currentGameType->normalMusic;
 	getAudioManager()->playMusic(playingMusic);
-
 
 	//		Writer output = null;
 	//		try
@@ -425,7 +396,6 @@ void GameLogic::initGame()
 	//			e.printStackTrace();
 	//		}
 }
-
 
 
 //=========================================================================================================================
@@ -457,7 +427,6 @@ void GameLogic::waitForPressStart()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::waitForReady()
 {//=========================================================================================================================
@@ -466,11 +435,9 @@ void GameLogic::waitForReady()
 		getAudioManager()->playSound(currentGameType->readySound, getVolume(), 1.0f);
 		playedReadySound = true;
 
-
 		Caption* c = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 30, currentGameType->readyTicksAmount, "READY", announcementCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::ABOVE, 2.0f);
 		c->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - c->getWidth() / 2;
 	}
-
 
 	readyTicksCounter += getEngine()->engineTicksPassed();
 	if (readyTicksCounter > currentGameType->readyTicksAmount)
@@ -543,7 +510,6 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 			}
 		}
 
-
 		int gamesPerRow = (int)ceil((float)numGames / (float)rows);
 		int row = ((int)floor((float)(gameIndex) / (float)gamesPerRow));
 		int indexInRow = 0;
@@ -582,7 +548,6 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 	}
 
 
-
 	updateCaptionFadeValues();
 
 	if (isNetworkPlayer == false)
@@ -606,7 +571,6 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 		frameState = FrameState();
 		frameState.ticksPassed = getEngine()->engineTicksPassed();
 
-
 		if(p->pausePressed())
 		{
 			if(numGames==1)
@@ -629,14 +593,12 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 			setControlsState(p);
 		}
 
-
 		//log.debug("New frame");
 
 		if (didInit == false)initGame();
 		
 		processFrame();
 		
-
 
 
 		if (getBobsGame()->isNetworkGame() == false)
@@ -684,7 +646,6 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 			}
 			frameState.gridString = gridString;
 			frameState.randomInt = randomGenerator();
-
 
 
 			sendPacketsToOtherPlayers(p);
@@ -832,7 +793,6 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 
 
 
-
 				}
 			}
 		}
@@ -858,7 +818,6 @@ void GameLogic::sendPacketsToOtherPlayers(PuzzlePlayer *p)
 
 			ArrayList<FrameState> packetToSplit = framesArray;
 			framesArray = ArrayList<FrameState>();
-
 
 			int maxFramesInPacket = 800/16;
 
@@ -919,7 +878,6 @@ void GameLogic::sendPacketsToOtherPlayers(PuzzlePlayer *p)
 	}
 
 
-
 	//send our local players network packets to all peers
 	//send_QueuedPacket()
 	{
@@ -929,7 +887,6 @@ void GameLogic::sendPacketsToOtherPlayers(PuzzlePlayer *p)
 		{
 			string idAndMD5String = outboundPacketQueueVector.get(0);
 			string b64zip = outboundPacketQueueHashMap.get(idAndMD5String);
-
 
 			getBobsGame()->sendAllJoinedPeers(BobsGame::netCommand_FRAME + p->getID() + ":" + idAndMD5String + ":" + b64zip);
 
@@ -944,7 +901,6 @@ void GameLogic::sendPacketsToOtherPlayers(PuzzlePlayer *p)
 
 	
 }
-
 
 
 
@@ -1048,7 +1004,6 @@ void GameLogic::_processIncomingPackets()
 }
 
 
-
 //=========================================================================================================================
 //void GameLogic::incoming_Forfeit(string s)
 //{ //=========================================================================================================================
@@ -1088,7 +1043,6 @@ void GameLogic::_processIncomingPackets()
 
 
 
-
 long long GameLogic::getLastTimeGotIncomingTraffic()
 {
 	return lastIncomingTrafficTime;
@@ -1124,14 +1078,11 @@ void GameLogic::setControlsState(PuzzlePlayer *p)
 }
 
 
-
 //=========================================================================================================================
 void GameLogic::processFrame()
 {//=========================================================================================================================
 
-
 	updateCaptions();
-
 
 	if(won || lost || complete || died)
 	{
@@ -1162,11 +1113,9 @@ void GameLogic::processFrame()
 		return;
 	}
 
-
 	totalTicksPassed += ticks();
 
 	updateSpecialPiecesAndBlocks();
-
 
 	if (currentGameType->playingFieldGarbageSpawnRule != GarbageSpawnRule::NONE)
 	{
@@ -1180,7 +1129,6 @@ void GameLogic::processFrame()
 	grid->scrollBackground();
 
 	doExtraStageEffects();
-
 
 	lockInputCountdownTicks -= ticks();
 	if (lockInputCountdownTicks < 0)
@@ -1212,7 +1160,6 @@ void GameLogic::processFrame()
 		spawnDelayTicksCounter = 0;
 	}
 
-
 	if (currentGameType->gameMode == GameMode::STACK)
 	{
 		doStackRiseGame();
@@ -1222,7 +1169,6 @@ void GameLogic::processFrame()
 	{
 		doFallingBlockGame();
 	}
-
 
 	moveDownLineTicksCounter += ticks();
 
@@ -1253,15 +1199,11 @@ void GameLogic::processFrame()
 
 			gravityThisFrame = false;
 
-
 			checkForChain();
-
 
 			handleNewChain();
 
-
 			checkForFastMusic();
-
 
 			if (detectedChain() == false && checkForChainAgainIfNoBlocksPopping == false)
 			{
@@ -1290,7 +1232,6 @@ void GameLogic::processFrame()
 
 
 
-
 //=========================================================================================================================
 void GameLogic::flashScreen()
 {//=========================================================================================================================
@@ -1308,7 +1249,6 @@ void GameLogic::flashScreen()
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void GameLogic::flashChainBlocks()
@@ -1335,7 +1275,6 @@ void GameLogic::flashChainBlocks()
 //=========================================================================================================================
 void GameLogic::removeFlashedChainBlocks()
 {//=========================================================================================================================
-
 
 	int linesCleared = 0;
 	int blocksCleared = 0;
@@ -1413,7 +1352,6 @@ void GameLogic::removeFlashedChainBlocks()
 			}
 		}
 
-
 		removeBlocksTicksCounter += ticks();
 
 		while 
@@ -1479,7 +1417,6 @@ void GameLogic::removeFlashedChainBlocks()
 				linesClearedTotal++;
 			}
 
-
 			currentChainBlocks.remove(a);
 
 			grid->remove(a, true, true);
@@ -1511,7 +1448,6 @@ void GameLogic::removeFlashedChainBlocks()
 		makeAnnouncementCaption("SOSUMI!", BobColor::green);
 	}
 
-
 	if (currentGameType->chainRule_CheckEntireLine)
 	{
 		lineClearDelayTicksCounter += linesCleared * currentGameType->lineClearDelayTicksAmountPerLine;
@@ -1521,10 +1457,8 @@ void GameLogic::removeFlashedChainBlocks()
 		lineClearDelayTicksCounter += blocksCleared * currentGameType->lineClearDelayTicksAmountPerBlock;
 	}
 
-
 	currentChain = currentChainBlocks.size();
 }
-
 
 //=========================================================================================================================
 void GameLogic::updateSpecialPiecesAndBlocks()
@@ -1547,7 +1481,6 @@ void GameLogic::updateSpecialPiecesAndBlocks()
 		}
 	}
 
-
 	if (nextPieceSpecialBuffer.size() > 0)
 	{
 		for (int i = 0; i < nextPieceSpecialBuffer.size(); i++)
@@ -1564,7 +1497,6 @@ void GameLogic::updateSpecialPiecesAndBlocks()
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void GameLogic::addToChainBlocks(ArrayList<shared_ptr<Block>> &arr)
@@ -1583,7 +1515,6 @@ void GameLogic::addToChainBlocks(ArrayList<shared_ptr<Block>> &arr)
 	}
 }
 
-
 //=========================================================================================================================
 bool GameLogic::detectedChain()
 {//=========================================================================================================================
@@ -1596,24 +1527,20 @@ bool GameLogic::detectedChain()
 }
 
 
-
 //=========================================================================================================================
 void GameLogic::checkForChain()
 {//=========================================================================================================================
-
 
 	currentChainBlocks.clear();
 
 	ArrayList<shared_ptr<BlockType>> ignoreTypes = currentGameType->getBlockTypesToIgnoreWhenCheckingChain(getCurrentDifficulty());
 	ArrayList<shared_ptr<BlockType>> mustContainAtLeastOneTypes = currentGameType->getBlockTypesChainMustContain(getCurrentDifficulty());
 
-
 	//can use this while blocks are falling to detect sticky colors
 	//while blocks are falling we can make them visually appear joined if they are the same color and are supposed to glob together
 	grid->setColorConnections(ignoreTypes);
 
 	
-
 
 
 	int toRow = grid->getHeight();
@@ -1673,7 +1600,6 @@ void GameLogic::checkForChain()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::handleNewChain()
 {//=========================================================================================================================
@@ -1689,7 +1615,6 @@ void GameLogic::handleNewChain()
 			currentChain = currentChainBlocks.size();
 
 			makeAnnouncementCaption("Chain: " + to_string(currentChain));
-
 
 			int bonusAmount = (currentChain - chainMinimum);
 			if (currentGameType->chainRule_CheckEntireLine)
@@ -1739,7 +1664,6 @@ void GameLogic::handleNewChain()
 			grid->shakeHard();
 		}
 
-
 		//add any gray blobs touching the chain to the chain
 		ArrayList<shared_ptr<Block>> addToChain;
 		for (int i = 0; i < currentChainBlocks.size(); i++)
@@ -1764,7 +1688,6 @@ void GameLogic::handleNewChain()
 			}
 		}
 
-
 		for (int i = 0; i < addToChain.size(); i++)
 		{
 			shared_ptr<Block> a = addToChain.get(i);
@@ -1773,7 +1696,6 @@ void GameLogic::handleNewChain()
 				currentChainBlocks.add(a);
 			}
 		}
-
 
 		for (int i = 0; i < currentChainBlocks.size(); i++)
 		{
@@ -1795,14 +1717,12 @@ void GameLogic::handleNewChain()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::doStackRiseGame()
 {//=========================================================================================================================
 
 	//stack rise game lets you continue manipulating pieces while there is a chain completing, falling block games don't.
 	//so notice here it does not return from flashing detected chain blocks, and that it also detects one chain at a time.
-
 
 	pieceSetAtBottom = true; //we dont use this and it should be true for the check below.
 
@@ -1839,7 +1759,6 @@ void GameLogic::doStackRiseGame()
 		}
 	}
 
-
 	if (timesToFlashScreenQueue > 0)
 	{
 		flashScreen();
@@ -1858,7 +1777,6 @@ void GameLogic::doStackRiseGame()
 		stopCounterCaptionText = "Go!";
 		stackRiseTicksCounter += ticks();
 
-
 		//stackrise 300 was default, was too slow
 		//200-300 is a good speed
 
@@ -1869,9 +1787,7 @@ void GameLogic::doStackRiseGame()
 		//stackrise = minStackRise
 
 
-
 		int stackRiseDiff = getCurrentDifficulty()->maxStackRise - getCurrentDifficulty()->minStackRise;
-
 
 		long long dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks;
 
@@ -1882,7 +1798,6 @@ void GameLogic::doStackRiseGame()
 		if (stackRiseTicksCounter > currentStackRise/3)//TODO: make better
 		{
 			stackRiseTicksCounter = 0;
-
 
 			bool scrolled = grid->scrollUpStack(currentPiece, 1);
 			if (scrolled == false)
@@ -1901,7 +1816,6 @@ void GameLogic::doStackRiseGame()
 	updateKeyInput();
 }
 
-
 //=========================================================================================================================
 void GameLogic::doFallingBlockGame()
 {//=========================================================================================================================
@@ -1911,7 +1825,6 @@ void GameLogic::doFallingBlockGame()
 		flashChainBlocks();
 		return;
 	}
-
 
 	if (detectedChain())
 	{
@@ -1923,7 +1836,6 @@ void GameLogic::doFallingBlockGame()
 	{
 		flashScreen();
 	}
-
 
 	//apply gravity to current piece
 	if (pieceSetAtBottom == false)
@@ -1949,7 +1861,6 @@ void GameLogic::doFallingBlockGame()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::manuallyApplyGravityWithoutChainChecking()
 {//=========================================================================================================================
@@ -1959,11 +1870,9 @@ void GameLogic::manuallyApplyGravityWithoutChainChecking()
 	}
 }
 
-
 //=========================================================================================================================
 bool GameLogic::moveDownBlocksOverBlankSpaces()
 {//=========================================================================================================================
-
 
 	ArrayList<shared_ptr<BlockType>> ignoreMovingBlockTypes = currentGameType->getBlockTypesToIgnoreWhenMovingDown(getCurrentDifficulty());
 	bool movedDownBlocks = true;
@@ -2027,7 +1936,6 @@ bool GameLogic::movePiece(MovementType move)
 			//so we can't repeatedly use it
 			switchedHoldPieceAlready = true;
 
-
 			//make new piece, not new block
 			//this is so the colors get initialized and the block can be updated by getting arrayOfPiecesInGrid
 			shared_ptr<Piece> p(new Piece(this, grid, PieceType::emptyPieceType, shared_ptr<BlockType>(BlockType::shotPieceBlockType)));
@@ -2068,7 +1976,6 @@ bool GameLogic::movePiece(MovementType move)
 			return false;
 		}
 
-
 		if (currentPiece->pieceType->pieceRemovalShooterPiece)
 		{
 			//so we can't repeatedly use it
@@ -2101,7 +2008,6 @@ bool GameLogic::movePiece(MovementType move)
 		}
 	}
 
-
 	if (move == MovementType::ROTATE_COUNTERCLOCKWISE)
 	{
 		currentPiece->rotateCCW();
@@ -2126,7 +2032,6 @@ bool GameLogic::movePiece(MovementType move)
 	{
 		currentPiece->xGrid--;
 	}
-
 
 	if (grid->doesPieceFit(currentPiece))
 	{
@@ -2185,7 +2090,6 @@ bool GameLogic::movePiece(MovementType move)
 					currentPiece->xGrid--;
 				}
 			}
-
 
 			// try pushing off the wall
 
@@ -2397,7 +2301,6 @@ bool GameLogic::movePiece(MovementType move)
 			}
 		}
 
-
 		if (move == MovementType::ROTATE_COUNTERCLOCKWISE)
 		{
 			currentPiece->rotateCW();
@@ -2423,7 +2326,6 @@ bool GameLogic::movePiece(MovementType move)
 			currentPiece->xGrid++;
 		}
 
-
 		if (move == MovementType::DOWN || move == MovementType::HARD_DROP)
 		{
 			if (move == MovementType::HARD_DROP && currentGameType->hardDropPunchThroughToLowestValidGridPosition)
@@ -2443,18 +2345,15 @@ bool GameLogic::movePiece(MovementType move)
 				}
 			}
 
-
 			if (lockDelayTicksCounter == 0)
 			{
 				setPiece();
 			}
 		}
 
-
 		return false;
 	}
 }
-
 
 //=========================================================================================================================
 void GameLogic::setCurrentPieceAtTop()
@@ -2468,12 +2367,10 @@ void GameLogic::setCurrentPieceAtTop()
 	currentPiece->yGrid = -2 + GameLogic::aboveGridBuffer;
 	//TODO: make starting y position variable.  why does the long piece start at -1?  must be +1 in the rotation
 
-
 	if (grid->doesPieceFit(currentPiece) == false)
 	{
 		died = true;
 	}
-
 
 	spawnDelayTicksCounter = currentGameType->spawnDelayTicksAmountPerPiece;
 
@@ -2484,7 +2381,6 @@ void GameLogic::setCurrentPieceAtTop()
 void GameLogic::setPiece()
 {//=========================================================================================================================
 
-
 	if (currentPiece->pieceType->bombPiece)
 	{
 		//get pieces down, left, right of bomb piece
@@ -2492,7 +2388,6 @@ void GameLogic::setPiece()
 		//grid.delete all those pieces
 
 		ArrayList<shared_ptr<Block>> explodeBlocks;
-
 
 		int startX = (currentPiece->xGrid - abs(currentPiece->getLowestOffsetX())) - 1;
 		int endX = currentPiece->xGrid + currentPiece->getWidth() + 1;
@@ -2512,7 +2407,6 @@ void GameLogic::setPiece()
 			}
 		}
 
-
 		for (int i = 0; i < explodeBlocks.size(); i++)
 		{
 			grid->remove(explodeBlocks.get(i), true, true);
@@ -2524,7 +2418,6 @@ void GameLogic::setPiece()
 
 	}
 
-
 	if (currentPiece->pieceType->weightPiece)
 	{
 		//set weight piece blocks lastx,y
@@ -2535,7 +2428,6 @@ void GameLogic::setPiece()
 			b->lastScreenY = grid->getYInFBO() + (currentPiece->yGrid + b->yInPiece) * cellH();
 			b->ticksSinceLastMovement = 0;
 		}
-
 
 		//grid.delete all blocks underneath weight
 		for (int y = currentPiece->yGrid; y < gridH(); y++)
@@ -2550,7 +2442,6 @@ void GameLogic::setPiece()
 			}
 		}
 
-
 		//set weight piece at bottom
 		while (grid->doesPieceFit(currentPiece))
 		{
@@ -2563,9 +2454,7 @@ void GameLogic::setPiece()
 		grid->shakeHard();
 	}
 
-
 	grid->setPiece(currentPiece);
-
 
 	//make it so all blocks in piece must be less than 0
 	//if(currentPiece.yGrid<0+GameLogic.aboveGridBuffer)
@@ -2574,11 +2463,9 @@ void GameLogic::setPiece()
 		died = true;
 	}
 
-
 	//TODO: size grid buffer based on largest piece... 
 	//OR start grid at 0 on the bottom, and have the grid expand infinitely 
 	//as pieces rise above the death line, must also pull back camera to fit grid
-
 
 	pieceSetAtBottom = true;
 
@@ -2589,13 +2476,11 @@ void GameLogic::setPiece()
 	getAudioManager()->playSound(currentGameType->pieceSetSound, getVolume(), getSoundEffectSpeed());
 }
 
-
 //=========================================================================================================================
 void GameLogic::newRandomPiece()
 {//=========================================================================================================================
 
 	pieceSetAtBottom = false;
-
 
 
 	//fill last nextPiece from bag
@@ -2619,7 +2504,6 @@ void GameLogic::newRandomPiece()
 	nextPieces.removeAt(0);
 
 
-
 	setCurrentPieceAtTop();
 
 	switchedHoldPieceAlready = false;
@@ -2635,7 +2519,6 @@ void GameLogic::newRandomPiece()
 	}
 
 	getAudioManager()->playSound(getRandomMakePieceSound(), getVolume(), getSoundEffectSpeed());
-
 
 	ArrayList<shared_ptr<Piece>> piecesOnGrid = grid->getArrayOfPiecesOnGrid();
 	for (int i = 0; i < piecesOnGrid.size(); i++)
@@ -2656,13 +2539,11 @@ void GameLogic::newRandomPiece()
 		}
 	}
 
-
 	//clear lineClearDelay if special piece
 	if (currentPiece->pieceType->bombPiece || currentPiece->pieceType->weightPiece || currentPiece->pieceType->pieceShooterPiece || currentPiece->pieceType->pieceRemovalShooterPiece)
 	{
 		lineClearDelayTicksCounter = 0;
 	}
-
 
 //	//immediately skip bomb, weight, pieceShooter if playing field is empty
 //	if (currentPiece->pieceType->bombPiece || currentPiece->pieceType->weightPiece || currentPiece->pieceType->pieceRemovalShooterPiece)
@@ -2682,7 +2563,6 @@ void GameLogic::newRandomPiece()
 //		}
 //	}
 
-
 }
 
 //=========================================================================================================================
@@ -2691,13 +2571,11 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 
 	frameState.receivedGarbageAmount += amount;
 
-
 	garbageWaitPieces += 3;
 	if (garbageWaitPieces > 4)
 	{
 		garbageWaitPieces = 4;
 	}
-
 
 	queuedVSGarbageAmountFromOtherPlayer += amount;
 
@@ -2716,19 +2594,16 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 void GameLogic::processQueuedGarbageSentFromOtherPlayer()
 {//=========================================================================================================================
 
-
 	if (queuedVSGarbageAmountFromOtherPlayer > 0)
 	{
 		if (garbageWaitPieces == 0)
 		{
 			//makeAnnouncementCaption("Processed VS Garbage: " + to_string(queuedGarbageAmountFromOtherPlayer));
 
-
 			int garbageMultiplier = 2;
 			//TODO: if garbageRuleMax, drop one line per garbageAmount
 			//garbageRuleMultiplier, divide gridWidth times amount
 			//could also drop indiviual garbage instead of lines
-
 
 			while (queuedVSGarbageAmountFromOtherPlayer/(grid->getWidth()/garbageMultiplier) > 0)
 			{
@@ -2751,7 +2626,6 @@ void GameLogic::processQueuedGarbageSentFromOtherPlayer()
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void GameLogic::queueVSGarbage(int amount)
@@ -2791,7 +2665,6 @@ void GameLogic::queueVSGarbage(int amount)
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void GameLogic::processGarbageRules()
@@ -2886,7 +2759,6 @@ void GameLogic::renderQueuedGarbage()
 		garbageWaitCaption->flashingTicksPerFlash = 500;
 		garbageWaitCaption->setText("Wait: " + to_string(garbageWaitPieces));
 
-
 		for (int i = 0; i < queuedVSGarbageAmountFromOtherPlayer; i++)
 		{
 			if (garbageBlock != nullptr)
@@ -2904,7 +2776,6 @@ void GameLogic::renderQueuedGarbage()
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void GameLogic::renderHoldPiece()
@@ -2931,7 +2802,6 @@ void GameLogic::renderHoldPiece()
 		holdCaption->screenY = holdBoxY - captionYSize;
 	}
 
-
 	//draw hold box
 	GLUtils::drawFilledRectXYWH(holdBoxX, holdBoxY, holdBoxW, holdBoxH, 1, 1, 1, 1.0f);
 	GLUtils::drawFilledRectXYWH(holdBoxX + 1, holdBoxY + 1, holdBoxW - 2, holdBoxH - 2, 0, 0, 0, 1.0f);
@@ -2956,7 +2826,6 @@ void GameLogic::renderHoldPiece()
 			holdX -= 1 * w * scale;
 		}
 
-
 		for (int i = 0; i < (int)holdPiece->getNumBlocksInCurrentRotation() && i < holdPiece->blocks.size(); i++)
 		{
 			float blockX = (holdPiece->blocks.get(i)->xInPiece - holdPiece->getLowestOffsetX()) * w * scale;
@@ -2969,7 +2838,6 @@ void GameLogic::renderHoldPiece()
 	}
 }
 
-
 //=========================================================================================================================
 bool GameLogic::nextPieceEnabled()
 {//=========================================================================================================================
@@ -2979,7 +2847,6 @@ bool GameLogic::nextPieceEnabled()
 	}
 	return false;
 }
-
 
 //=========================================================================================================================
 void GameLogic::renderNextPiece()
@@ -3034,7 +2901,6 @@ void GameLogic::renderNextPiece()
 				}
 			}
 
-
 			for (int i = 0; i < nextPieces.size(); i++)
 			{
 				shared_ptr<Piece> nextPiece = nextPieces.get(i);
@@ -3053,11 +2919,9 @@ void GameLogic::renderNextPiece()
 							x -= cellW();
 						}
 
-
 						float blockY = (float)(nextPiece->blocks.get(b)->yInPiece * cellH());
 
 						float y = (float)(grid->getYOnScreenNoShake() - (cellH() * (nextPiece->getHeight())) + blockY);
-
 
 						nextPiece->blocks.get(b)->render(x, y, 1.0f, 1.0f, true, false);
 
@@ -3073,10 +2937,8 @@ void GameLogic::renderNextPiece()
 						float blockX = nextPiece->blocks.get(b)->xInPiece * cellW() * s;
 						float x = startPieceX + (abs(nextPiece->getLowestOffsetX()) + 1) * cellW() * s + blockX;
 
-
 						float blockY = nextPiece->blocks.get(b)->yInPiece * cellH() * s;
 						float y = grid->getYOnScreenNoShake() - (cellH() * 3) + blockY;
-
 
 						nextPiece->blocks.get(b)->render(x, y, 1.0f, s, true, false);
 
@@ -3090,9 +2952,7 @@ void GameLogic::renderNextPiece()
 		}
 	}
 
-
 }
-
 
 //=========================================================================================================================
 void GameLogic::renderCurrentPiece()
@@ -3112,17 +2972,14 @@ void GameLogic::renderCurrentPiece()
 			}
 		}
 
-
 		// render currentPiece
 		currentPiece->renderAsCurrentPiece();
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::renderOverlays()
 {//=========================================================================================================================
-
 
 	// flash screen if flashing
 	if (timesToFlashScreenQueue > 0)
@@ -3135,7 +2992,6 @@ void GameLogic::renderOverlays()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::renderBackground()
 {//=========================================================================================================================
@@ -3143,18 +2999,15 @@ void GameLogic::renderBackground()
 	//GameType().gridBorderColor = Color.yellow;
 	//GameType().gridBorderColor = Color.getHSBColor(captionColorCycleHueValue,1.0f,1.0f);
 
-
 	// fill in checkered background
 	grid->renderBackground();
 
 	grid->renderBorder();
 }
 
-
 //=========================================================================================================================
 void GameLogic::renderBlocks()
 {//=========================================================================================================================
-
 
 	renderQueuedGarbage();
 
@@ -3166,14 +3019,12 @@ void GameLogic::renderBlocks()
 	//render blocks
 	grid->render();
 
-
 	renderHoldPiece();
 
 	renderNextPiece();
 
 	renderCurrentPiece();
 }
-
 
 //=========================================================================================================================
 void GameLogic::renderForeground()
@@ -3186,17 +3037,14 @@ void GameLogic::renderForeground()
 		grid->renderTransparentOverLastRow();
 	}
 
-
 	renderOverlays();
 
 	
 }
 
-
 //=========================================================================================================================
 void GameLogic::doExtraStageEffects()
 {//=========================================================================================================================
-
 
 	if (currentLevel >= getCurrentDifficulty()->extraStage1Level)
 	{
@@ -3253,11 +3101,9 @@ void GameLogic::doExtraStageEffects()
 	//		}
 }
 
-
 //=========================================================================================================================
 string GameLogic::getRandomMakePieceSound()
 {//=========================================================================================================================
-
 
 	int r = Math::randLessThan(7);//doesn't matter
 	if (r == 0)
@@ -3317,11 +3163,9 @@ float GameLogic::getVolume()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::checkForFastMusic()
 {//=========================================================================================================================
-
 
 	bool anythingAboveThreeQuarters = grid->isAnythingAboveThreeQuarters();
 
@@ -3365,21 +3209,17 @@ void GameLogic::checkForFastMusic()
 	return;
 }
 
-
 //=========================================================================================================================
 void GameLogic::updateKeyInput()
 {//=========================================================================================================================
 
-
 	//DONE: autopress buttons getEnabled per game()
 	//DONE: timing for buttons per game()
-
 
 	if (lockInputCountdownTicks > 0)
 	{
 		return;
 	}
-
 
 	if (!getFrameState()->ROTATECW_HELD)
 	{
@@ -3469,7 +3309,6 @@ void GameLogic::updateKeyInput()
 		repeatStartDelayDown = 150;
 	}
 
-
 	if (getFrameState()->ROTATECW_HELD && ((repeatEnabledRotateCW && repeatStartedRotateCW == false && ticksHoldingRotateCW >= repeatStartDelayRotateCW) || (repeatStartedRotateCW && ticksHoldingRotateCW >= repeatDelayRotateCW)))
 	{
 		canPressRotateCW = true;
@@ -3480,7 +3319,6 @@ void GameLogic::updateKeyInput()
 	{
 		ticksHoldingRotateCW += ticks();
 	}
-
 
 	if (getFrameState()->ROTATECCW_HELD && ((repeatEnabledRotateCCW && repeatStartedRotateCCW == false && ticksHoldingRotateCCW >= repeatStartDelayRotateCCW) || (repeatStartedRotateCCW && ticksHoldingRotateCCW >= repeatDelayRotateCCW)))
 	{
@@ -3493,7 +3331,6 @@ void GameLogic::updateKeyInput()
 		ticksHoldingRotateCCW += ticks();
 	}
 
-
 	if (getFrameState()->RIGHT_HELD && ((repeatEnabledRight && repeatStartedRight == false && ticksHoldingRight >= repeatStartDelayRight)||(repeatStartedRight && ticksHoldingRight >= repeatDelayRight)))
 	{
 		canPressRight = true;
@@ -3504,7 +3341,6 @@ void GameLogic::updateKeyInput()
 	{
 		ticksHoldingRight += ticks();
 	}
-
 
 	if (getFrameState()->LEFT_HELD && ((repeatEnabledLeft && repeatStartedLeft == false && ticksHoldingLeft >= repeatStartDelayLeft) || (repeatStartedLeft && ticksHoldingLeft >= repeatDelayLeft)))
 	{
@@ -3517,7 +3353,6 @@ void GameLogic::updateKeyInput()
 		ticksHoldingLeft += ticks();
 	}
 
-
 	if (getFrameState()->DOWN_HELD && ((repeatEnabledDown && repeatStartedDown == false && ticksHoldingDown >= repeatStartDelayDown) || (repeatStartedDown && ticksHoldingDown >= repeatDelayDown)))
 	{
 		canPressDown = true;
@@ -3529,7 +3364,6 @@ void GameLogic::updateKeyInput()
 		ticksHoldingDown += ticks();
 	}
 
-
 	if (getFrameState()->UP_HELD && ((repeatEnabledUp && repeatStartedUp == false && ticksHoldingUp >= repeatStartDelayUp) || (repeatStartedUp && ticksHoldingUp >= repeatDelayUp)))
 	{
 		canPressUp = true;
@@ -3540,7 +3374,6 @@ void GameLogic::updateKeyInput()
 	{
 		ticksHoldingUp += ticks();
 	}
-
 
 	if (getFrameState()->HOLDRAISE_HELD && ((repeatEnabledHoldRaise && repeatStartedHoldRaise == false && ticksHoldingHoldRaise >= repeatStartDelayHoldRaise) || (repeatStartedHoldRaise && ticksHoldingHoldRaise >= repeatDelayHoldRaise)))
 	{
@@ -3570,7 +3403,6 @@ void GameLogic::updateKeyInput()
 	{
 		if (currentGameType->gameMode == GameMode::STACK)
 		{
-
 
 			if (currentGameType->stackCursorType == CursorType::ONE_BLOCK_PICK_UP)
 			{
@@ -3624,7 +3456,6 @@ void GameLogic::updateKeyInput()
 	{
 		if (currentGameType->gameMode == GameMode::STACK)
 		{
-
 
 			if (currentGameType->stackCursorType == CursorType::ONE_BLOCK_PICK_UP)
 			{
@@ -3694,7 +3525,6 @@ void GameLogic::updateKeyInput()
 		ticksHoldingRight = 0;
 	}
 
-
 	if ((getFrameState()->LEFT_HELD) && (canPressLeft == true) && !getFrameState()->RIGHT_HELD)
 	{
 		if (currentGameType->gameMode == GameMode::STACK)
@@ -3715,7 +3545,6 @@ void GameLogic::updateKeyInput()
 		canPressLeft = false;
 		ticksHoldingLeft = 0;
 	}
-
 
 	if ((getFrameState()->DOWN_HELD) && (canPressDown == true) && !getFrameState()->UP_HELD)
 	{
@@ -3746,7 +3575,6 @@ void GameLogic::updateKeyInput()
 		canPressDown = false;
 		ticksHoldingDown = 0;
 	}
-
 
 	if ((getFrameState()->UP_HELD) && (canPressUp == true && !getFrameState()->DOWN_HELD))
 	{
@@ -3786,7 +3614,6 @@ void GameLogic::updateKeyInput()
 					currentPiece->setBlocksSlamming();
 				}
 
-
 				while (movePiece(MovementType::HARD_DROP) == true)
 				{
 					if (getFrameState()->dropLockType == DropLockType::HARD_DROP_INSTANT_LOCK)
@@ -3794,7 +3621,6 @@ void GameLogic::updateKeyInput()
 						lockDelayTicksCounter = 0;
 					}
 				}
-
 
 				grid->shakeSmall();
 
@@ -3805,7 +3631,6 @@ void GameLogic::updateKeyInput()
 		canPressSlam = false;
 		ticksHoldingSlam = 0;
 	}
-
 
 	if ((getFrameState()->HOLDRAISE_HELD) && (canPressHoldRaise == true))
 	{
@@ -3862,7 +3687,6 @@ void GameLogic::updateKeyInput()
 		ticksHoldingHoldRaise = 0;
 	}
 
-
 	if (currentGameType->gameMode == GameMode::STACK)
 	{
 		if (getFrameState()->HOLDRAISE_HELD)
@@ -3883,14 +3707,11 @@ void GameLogic::updateKeyInput()
 	}
 
 
-
 }
-
 
 //=========================================================================================================================
 void GameLogic::wonSequence()
 {//=========================================================================================================================
-
 
 	if (startedWinSequence == false)
 	{
@@ -3914,11 +3735,9 @@ void GameLogic::wonSequence()
 	updateSpecialPiecesAndBlocks();
 }
 
-
 //=========================================================================================================================
 void GameLogic::lostSequence()
 {//=========================================================================================================================
-
 
 	if (startedLoseSequence == false)
 	{
@@ -3942,18 +3761,15 @@ void GameLogic::lostSequence()
 	updateSpecialPiecesAndBlocks();
 }
 
-
 //=========================================================================================================================
 void GameLogic::diedSequence()
 {//=========================================================================================================================
-
 
 	if (startedDeathSequence == false)
 	{
 		startedDeathSequence = true;
 
 		getAudioManager()->playSound(currentGameType->deadSound, getVolume(), 1.0f);
-
 
 		getAudioManager()->stopMusic(playingMusic);
 		playingMusic = currentGameType->deadMusic;
@@ -3988,12 +3804,10 @@ void GameLogic::diedSequence()
 		}
 	}
 
-
 	updateSpecialPiecesAndBlocks();
 
 	grid->doDeathSequence();
 }
-
 
 //=========================================================================================================================
 void GameLogic::creditsSequence()
@@ -4002,7 +3816,6 @@ void GameLogic::creditsSequence()
 	if (creditScreenInitialized == false)
 	{
 		creditScreenInitialized = true;
-
 
 		getAudioManager()->stopMusic(playingMusic);
 
@@ -4021,13 +3834,11 @@ void GameLogic::creditsSequence()
 
 
 
-
 //=========================================================================================================================
 void GameLogic::makeAnnouncementCaption(const string& text)
 {//=========================================================================================================================
 	makeAnnouncementCaption(text, nullptr);
 }
-
 
 //=========================================================================================================================
 void GameLogic::makeAnnouncementCaption(const string& text, BobColor* color)
@@ -4042,7 +3853,6 @@ void GameLogic::makeAnnouncementCaption(const string& text, BobColor* color)
 	//c->drawAbove = true;
 	announcementCaptions->add(c);
 }
-
 
 //=========================================================================================================================
 void GameLogic::makeRandomLevelUpCaption()
@@ -4071,11 +3881,9 @@ void GameLogic::makeRandomLevelUpCaption()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::updateCaptionFadeValues()
 {//=========================================================================================================================
-
 
 	if (captionColorCycleHueInOutToggle == true)
 	{
@@ -4097,11 +3905,9 @@ void GameLogic::updateCaptionFadeValues()
 	}
 }
 
-
 //=========================================================================================================================
 Caption* GameLogic::makeInfoCaption(const string& text)
 {//=========================================================================================================================
-
 
 	Caption* c = getCaptionManager()->newManagedCaption(0, (int)++captionY * captionYSize, -1, string("" + text), captionFontSize, captionTextColor, captionBGColor, RenderOrder::ABOVE, captionScale);
 	if (infoCaptions->contains(c) == false)
@@ -4111,11 +3917,9 @@ Caption* GameLogic::makeInfoCaption(const string& text)
 	return c;
 }
 
-
 //=========================================================================================================================
 void GameLogic::deleteAllCaptions()
 {//=========================================================================================================================
-
 
 	if (totalTicksPassedCaption != nullptr)
 	{
@@ -4167,7 +3971,6 @@ void GameLogic::deleteAllCaptions()
 		}
 	}
 
-
 	for (int i = 0; i < announcementCaptions->size(); i++)
 	{
 		Caption* c = announcementCaptions->get(i);
@@ -4178,11 +3981,9 @@ void GameLogic::deleteAllCaptions()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::updateInfoCaptionsXY()
 {//=========================================================================================================================
-
 
 	int counterY = -1;
 	float gridY = grid->getYInFBO();
@@ -4205,20 +4006,16 @@ void GameLogic::updateInfoCaptionsXY()
 	}
 }
 
-
 //=========================================================================================================================
 void GameLogic::updateCaptions()
 {//=========================================================================================================================
 
-
 	captionY = -1;
-
 
 	if (levelCaption == nullptr)
 	{
 		levelCaption = makeInfoCaption("levelCaption");
 	}
-
 
 	if (gameTypeCaption == nullptr)
 	{
@@ -4230,12 +4027,10 @@ void GameLogic::updateCaptions()
 		rulesCaption = makeInfoCaption("rulesCaption");
 	}
 
-
 	if (difficultyCaption == nullptr)
 	{
 		difficultyCaption = makeInfoCaption("difficultyCaption");
 	}
-
 
 
 	if (linesClearedThisGameCaption == nullptr)
@@ -4266,8 +4061,6 @@ void GameLogic::updateCaptions()
 
 
 
-
-
 	if (currentChainCaption == nullptr)
 	{
 		currentChainCaption = makeInfoCaption("currentChainCaption");
@@ -4280,7 +4073,6 @@ void GameLogic::updateCaptions()
 	{
 		comboChainTotalCaption = makeInfoCaption("comboChainTotalCaption");
 	}
-
 
 	if (lineDropTicksCaption == nullptr)
 	{
@@ -4311,7 +4103,6 @@ void GameLogic::updateCaptions()
 			stopCounterCaption = makeInfoCaption("stopCounterCaption");
 		}
 	}
-
 
 
 
@@ -4346,8 +4137,6 @@ void GameLogic::updateCaptions()
 
 
 
-
-
 	if (totalTicksPassedCaption == nullptr)
 	{
 		totalTicksPassedCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "00:00:000", announcementCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE_TOP, captionScale);
@@ -4362,7 +4151,6 @@ void GameLogic::updateCaptions()
 	{
 		nextCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "NEXT", mediumCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE, captionScale);
 	}
-
 
 	updateInfoCaptionsXY();
 
@@ -4385,7 +4173,6 @@ void GameLogic::updateCaptions()
 		stopCounterCaption->setText(stopCounterCaptionText);
 	}
 
-
 	if (currentLevel == getCurrentDifficulty()->extraStage1Level)
 	{
 		levelCaptionText = "Level: EX1";
@@ -4406,7 +4193,6 @@ void GameLogic::updateCaptions()
 	{
 		levelCaptionText = "Level: " + to_string(currentLevel);
 	}
-
 
 	levelCaption->setText(levelCaptionText);
 	gameTypeCaption->setText("Game: "+currentGameType->name);
@@ -4432,7 +4218,6 @@ void GameLogic::updateCaptions()
 	comboChainTotalCaption->setText("Combo Chain Total: " + to_string(comboChainTotal));
 
 
-
 	ostringstream oss1;
 	string ms = "000";
 	oss1 << setfill('0') << setw(3) << (totalTicksPassed % 1000);
@@ -4455,14 +4240,12 @@ void GameLogic::updateCaptions()
 
 	levelCaption->setTextColor(new BobColor(captionColorCycleHueValue, 0.5f, 1.0f, 1.0f, true));
 
-
 	if (announcementCaptions->size() > 15)
 	{
 		Caption* c = announcementCaptions->get(0);
 		c->setToFadeOutAndBeDeleted();
 		announcementCaptions->removeAt(0);
 	}
-
 
 	//defaults for original font
 	//		float centerStartScale = 3.25f;
@@ -4475,11 +4258,9 @@ void GameLogic::updateCaptions()
 	float centerMinScale = 0.5f;
 	float sideMinScale = 0.5f;
 
-
 	for (int i = 0; i < announcementCaptions->size(); i++)
 	{
 		Caption* c = announcementCaptions->get(i);
-
 
 		int stayInCenterTicks = 1000;
 		int transitionTime = 200;
@@ -4531,11 +4312,9 @@ void GameLogic::updateCaptions()
 				yMod = 1.0f;
 			}
 
-
 			c->screenX = xFrom - xMod * xDiff;
 			c->screenY = yFrom - yMod * yDiff;
 		}
-
 
 		if (c->getBeingDeletedWhenFadeOutStatus() == true && c->getAlpha() == 0.0f)
 		{
@@ -4546,7 +4325,6 @@ void GameLogic::updateCaptions()
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void GameLogic::resetNextPieces()
@@ -4577,7 +4355,6 @@ void GameLogic::resetNextPieces()
 	currentPiece = nullptr;
 	holdPiece = nullptr;
 
-
 	nextPieces.clear();//MEMORY
 	nextPieceSpecialBuffer.clear();//MEMORY
 }
@@ -4587,13 +4364,10 @@ void GameLogic::resetNextPieces()
 void GameLogic::changeGame()
 {//=========================================================================================================================
 
-
 	//TODO: play sound, delay, fix captions to show scoring type, etc
-
 
 	int piecesMade = piecesMadeThisGame;
 	long long dropSpeed = currentLineDropSpeedTicks;
-
 
 	
 
@@ -4604,14 +4378,12 @@ void GameLogic::changeGame()
 	piecesMadeThisGame = piecesMade;
 	lastPiecesMadeThisGame = piecesMade;
 
-
 	//log.warn("Number of cells after init: "+grid.getNumberOfFilledCells());
 
 	//forceBlockGravity = true;
 
 	lockInputCountdownTicks = 500;
 }
-
 
 //=========================================================================================================================
 void GameLogic::updateScore()
@@ -4633,7 +4405,6 @@ void GameLogic::updateScore()
 		}
 
 	}
-
 
 
 	if (currentGameType->scoreType == ScoreType::LINES_CLEARED)
@@ -4676,7 +4447,6 @@ void GameLogic::updateScore()
 //		currentLevel++;
 //	}
 
-
 	if (currentLevel != lastKnownLevel)
 	{
 
@@ -4693,7 +4463,6 @@ void GameLogic::updateScore()
 
 		timesToFlashScreenQueue = flashScreenTimesPerLevel;
 
-
 		if (currentLevel > 0)
 		{
 			if (currentLevel < getCurrentDifficulty()->extraStage1Level)
@@ -4708,7 +4477,6 @@ void GameLogic::updateScore()
 			getAudioManager()->playSound(currentGameType->levelUpSound, getVolume(), 1.0f);
 		}
 
-
 		if (currentGameSequence->endlessMode == false)
 		{
 			if (currentLevel == getCurrentDifficulty()->extraStage1Level && extraStage1 == false)
@@ -4719,7 +4487,6 @@ void GameLogic::updateScore()
 				getAudioManager()->playSound(currentGameType->extraStage1Sound, getVolume(), 1.0f);
 			}
 
-
 			if (currentLevel == getCurrentDifficulty()->extraStage2Level && extraStage2 == false)
 			{
 				extraStage2 = true;
@@ -4727,7 +4494,6 @@ void GameLogic::updateScore()
 
 				getAudioManager()->playSound(currentGameType->extraStage2Sound, getVolume(), 1.0f);
 			}
-
 
 			if (currentLevel == getCurrentDifficulty()->extraStage3Level && extraStage3 == false)
 			{
@@ -4737,7 +4503,6 @@ void GameLogic::updateScore()
 				getAudioManager()->playSound(currentGameType->extraStage3Sound, getVolume(), 1.0f);
 			}
 
-
 			if (currentLevel == getCurrentDifficulty()->extraStage4Level && extraStage4 == false)
 			{
 				extraStage4 = true;
@@ -4745,7 +4510,6 @@ void GameLogic::updateScore()
 
 				getAudioManager()->playSound(currentGameType->extraStage4Sound, getVolume(), 1.0f);
 			}
-
 
 			if (currentLevel > getCurrentDifficulty()->creditsLevel)
 			{
@@ -4757,7 +4521,6 @@ void GameLogic::updateScore()
 		}
 	}
 }
-
 
 
 
@@ -4775,7 +4538,6 @@ void GameLogic::updateScore()
 //	this->currentGameType = settings;
 //}
 
-
 //=========================================================================================================================
 int GameLogic::getRandomIntLessThan(int i, string whereCalledFrom)
 {//=========================================================================================================================
@@ -4791,13 +4553,11 @@ int GameLogic::getRandomIntLessThan(int i, string whereCalledFrom)
 	// return randomGenerator.nextInt(i);
 }
 
-
 //=========================================================================================================================
 int GameLogic::cellW()
 {//=========================================================================================================================
 	return blockWidth + currentGameType->gridPixelsBetweenColumns;
 }
-
 
 //=========================================================================================================================
 int GameLogic::cellH()
@@ -4805,13 +4565,11 @@ int GameLogic::cellH()
 	return blockHeight + currentGameType->gridPixelsBetweenRows;
 }
 
-
 //=========================================================================================================================
 int GameLogic::gridW()
 {//=========================================================================================================================
 	return currentGameType->gridWidth;
 }
-
 
 //=========================================================================================================================
 int GameLogic::gridH()
@@ -4819,19 +4577,16 @@ int GameLogic::gridH()
 	return currentGameType->gridHeight + GameLogic::aboveGridBuffer;
 }
 
-
 //=========================================================================================================================
 long long GameLogic::ticks()
 {//=========================================================================================================================
 	return frameState.ticksPassed;
 }
 
-
 //=========================================================================================================================
 FrameState* GameLogic::getFrameState()
 {//=========================================================================================================================
 	return &(frameState);
 }
-
 
 

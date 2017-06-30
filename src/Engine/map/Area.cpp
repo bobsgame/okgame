@@ -5,19 +5,15 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
-
 
 
 
 Logger Area::log = Logger("Area");
 
-
 Area::Area()
 { //=========================================================================================================================
 }
-
 
 Area::Area(Engine* g, Map* m)
 { //=========================================================================================================================
@@ -38,7 +34,6 @@ Area::Area(Engine* g, AreaData* a, Map* m)
 
 	this->map = m;
 
-
 	if (getEventData() != nullptr)
 	{
 
@@ -50,7 +45,6 @@ Area::Area(Engine* g, AreaData* a, Map* m)
 
 Map* Area::getMap()
 { //=========================================================================================================================
-
 
 	//Map* map = getMapManager()->getMapByIDBlockUntilLoaded(mapID());
 
@@ -174,7 +168,6 @@ void Area::renderActionIcon()
 		}
 	}
 
-
 	doorAlpha = distanceAlpha * (fadeAlpha / 63.0f);
 	//doorAlpha+=(Engine.lastRenderHighResTime%1000)/3000.0f;
 
@@ -182,7 +175,6 @@ void Area::renderActionIcon()
 	{
 		doorAlpha = 1.0f;
 	}
-
 
 	BobTexture* actionTexture = getSpriteManager()->actionTexture;
 	float tx0 = 0.0f;
@@ -198,7 +190,6 @@ void Area::renderActionIcon()
 void Area::update()
 { //=========================================================================================================================
 
-
 	//if(getEngine()==null)setGame(map.getEngine());
 
 	if (event != nullptr)
@@ -206,7 +197,6 @@ void Area::update()
 		//Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
-
 
 	Map* map = getMap();
 
@@ -231,7 +221,6 @@ void Area::update()
 						if (Math::random() < randomSpawnChance()) //this is correct.
 						{
 							//TODO: don't spawn if there are too many randoms, have map limit?
-
 
 							if (randomNPCStayHere() == true)
 							{
@@ -279,7 +268,6 @@ void Area::update()
 								{
 									targetTYPEIDList = map->getListOfRandomPointsOfInterestTYPEIDs();
 								}
-
 
 								if (targetTYPEIDList->size() > 0)
 								{
@@ -336,7 +324,6 @@ void Area::update()
 
 											r->currentAreaTYPEIDTarget = targetTYPEIDList->get(i);
 											r->cameFrom = getName();
-
 
 											if (standSpawnDirection() != -1)
 											{
@@ -419,7 +406,6 @@ void Area::renderDebugBoxes()
 		b = 0;
 	} //orange
 
-
 	//outline
 	GLUtils::drawBox(screenLeft(), screenRight() - 1, screenTop(), screenBottom() - 1, r, g, b); //-1 so the box is inside one pixel
 
@@ -429,12 +415,10 @@ void Area::renderDebugBoxes()
 		float ax = map->getScreenX((static_cast<WarpArea*>(this))->arrivalXPixelsHQ(), 16);
 		float ay = map->getScreenY((static_cast<WarpArea*>(this))->arrivalYPixelsHQ(), 16);
 
-
 		GLUtils::drawBox(ax, ax + (16 * zoom) - 1, ay, ay + (16 * zoom) - 1, 200, 0, 255);
 
 		GLUtils::drawLine(screenLeft() + (getWidth() / 2) * zoom, screenTop() + (getHeight() / 2) * zoom, ax + (8 * zoom), ay + (8 * zoom), 255, 255, 255);
 	}
-
 
 	for (int i = 0; i < connectionTYPEIDList()->size(); i++)
 	{
@@ -473,7 +457,6 @@ void Area::renderDebugBoxes()
 			//            }
 			//         }
 
-
 			ArrayList<Area*> *areas = map->currentState->areaByNameHashtable.getAllValues();
 			for (int n = 0; n<areas->size(); n++)
 			{
@@ -487,7 +470,6 @@ void Area::renderDebugBoxes()
 					GLUtils::drawArrowLine(screenLeft() + (getWidth() / 2) * zoom, screenTop() + (getHeight() / 2) * zoom, ax, ay, 0, 255, 0);
 				}
 			}
-
 
 			//if not found, go through warparea list
 			for (int j = 0; j < (int)map->warpAreaList.size(); j++)
@@ -509,19 +491,15 @@ void Area::renderDebugBoxes()
 void Area::renderDebugInfo()
 { //=========================================================================================================================
 
-
 	float x = screenLeft();
 	float y = screenTop();
 
-
 	int strings = -1;
-
 
 	if ((dynamic_cast<WarpArea*>(this) != nullptr) == false)
 	{
 		GLUtils::drawOutlinedString(getName(), x, y - 9, BobColor::white);
 	}
-
 
 	//if(isAnAction)GL.drawOutlinedString("Is An Action", x, y+(++strings*9),Color.red);
 	if (getEventData() != nullptr)
@@ -579,7 +557,6 @@ void Area::renderDebugInfo()
 		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
 	}
 
-
 	if (randomNPCSpawnPoint())
 	{
 		string allowedTypes = "";
@@ -633,7 +610,6 @@ void Area::tellServerTalkedToToday()
 bool Area::isWithinScreenBounds()
 { //=========================================================================================================================
 
-
 	//float zoom = getCameraman()->getZoom();
 
 	float mapCameraXPixelsHQ = (float)(getMap()->mapCamX());
@@ -652,7 +628,6 @@ bool Area::isWithinScreenBounds()
 	float screenright = mapCameraXPixelsHQ + getEngine()->getWidthRelativeToZoom(); //actual game rendering is done at 2x so half screen dimensions
 	float screentop = mapCameraYPixelsHQ;
 	float screenbottom = mapCameraYPixelsHQ + getEngine()->getHeightRelativeToZoom();
-
 
 	if (right < screenleft || left > screenright || bottom < screentop || top > screenbottom) //so shadow can show even if sprite walks above screen
 	{
@@ -685,7 +660,6 @@ float Area::getDistanceFromEntity(Entity* e)
 
 	float eX = e->getMiddleX();
 	float eY = e->getMiddleY();
-
 
 	return Math::distance(middleX(), middleY(), eX, eY);
 }
@@ -868,7 +842,6 @@ float Area::screenY()
 
 	float mapCameraYPixelsHQ = getMap()->mapCamY();
 
-
 	//flooring these fixes the jitter for lights
 	float top = (float)(floor(getY()));
 	float bottom = (float)(floor(getY() + getHeight()));
@@ -939,12 +912,10 @@ int Area::getHeight()
 	return getData()->getHeightPixelsHQ();
 }
 
-
 string& Area::getName()
 {
 	return getData()->getName();
 }
-
 
 string& Area::getComment()
 {
@@ -1081,12 +1052,10 @@ ArrayList<string>* Area::connectionTYPEIDList()
 	return getData()->getConnectionTYPEIDList();
 }
 
-
 string Area::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();
 }
-
 
 string& Area::destinationTYPEIDString()
 {

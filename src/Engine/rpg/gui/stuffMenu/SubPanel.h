@@ -39,6 +39,5 @@ public:
 //	static GameSave* getGameSave();
 //	static TCPServerConnection* getServerConnection();
 
-
 };
 

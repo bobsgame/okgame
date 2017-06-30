@@ -5,7 +5,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 Logger State::log = Logger("State");
 
 //bool State::callNanoTimeForEachCall = false;
@@ -20,7 +19,6 @@ long long State::ticksThisSecond = 0;
 int State::framesSkipped = 0;
 
 ArrayList<UDPPeerConnection*> State::onlineFriends;
-
 
 //BGClientEngine* State::clientGameEngine = nullptr;
 
@@ -47,13 +45,11 @@ void State::init()
 #endif
 }
 
-
 //=========================================================================================================================
 void State::updateTimers()
 {//=========================================================================================================================
 	framesThisSecond++;
 	totalFrames++;
-
 
 	totalTicks += realWorldTicksPassed();
 	ticksThisSecond += realWorldTicksPassed();
@@ -72,7 +68,6 @@ void State::updateTimers()
 		framesSkipped++; //= ticksPassedThisUpdate/16;
 	}
 }
-
 
 void State::setEngineSpeed(double f)
 { //=========================================================================================================================
@@ -97,7 +92,6 @@ int State::engineTicksPassed()
 		return (int)(System::ticksPassedThisUpdate * engineSpeed);
 	}
 
-
 	//DONE: can multiply this to speed up game, divide it to slow game down!
 }
 
@@ -116,7 +110,6 @@ int State::realWorldTicksPassed()
 	{
 		return (int)(System::ticksPassedThisUpdate);
 	}
-
 
 	//DONE: can multiply this to speed up game, divide it to slow game down!
 }
@@ -165,7 +158,6 @@ ControlsManager* State::getControlsManager()
 	return Main::controlsManager;
 }
 
-
 //
 //void State::setClientGameEngine(BGClientEngine* gameEngine)
 //{
@@ -186,7 +178,6 @@ long long State::getUserID_S()
 {
 	return getGameSave_S().userID;
 }
-
 
 string State::getUserName_S()
 {
@@ -213,12 +204,10 @@ int State::getHeight()
 	return GLUtils::getViewportHeight();
 }
 
-
 bool State::udpPeerMessageReceived(UDPPeerConnection* c, string s)
 {
 	return false;
 }
-
 
 bool State::serverMessageReceived(string cs)
 {

@@ -3,19 +3,15 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
-
 
 #include "BobsGame.h"
 #include "GameType.h"
 
-
 #include <iostream>
 #include <sstream>
 #include <src/main.h>
-
 
 //=========================================================================================================================
 class GameSequence
@@ -59,7 +55,6 @@ public:
 	string yourVote = "none";
 
 public:
-
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version)

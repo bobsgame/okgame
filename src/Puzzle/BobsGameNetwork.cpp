@@ -2,12 +2,10 @@
 
 #include "stdafx.h"
 
-
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
 //------------------------------------------------------------------------------
-
 
 const string BobsGame::lobbyCommand_STARTGAME = "STARTGAME:";
 const string BobsGame::lobbyCommand_CANCELGAME = "CANCELGAME:";
@@ -27,7 +25,6 @@ const string BobsGame::netCommand_FRAME = "FRAME:";
 const string BobsGame::netCommand_FORFEIT = "FORFEIT:";
 
 #include "Room.h"
-
 
 //=========================================================================================================================
 void BobsGame::sendAllJoinedPeers(const string& s)
@@ -52,7 +49,6 @@ void BobsGame::sendAllPeers(const string& s)
 	BobNet::sendAllPeers("BOBSGAME:" + s + ":" + BobNet::endline);
 }
 
-
 //=========================================================================================================================
 void BobsGame::tellAllPeersOneOfMyPlayersForfeitsGame(PuzzlePlayer *p)
 {//=========================================================================================================================
@@ -61,14 +57,12 @@ void BobsGame::tellAllPeersOneOfMyPlayersForfeitsGame(PuzzlePlayer *p)
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::tellHostPeerIAmJoiningTheirGame()
 {//=========================================================================================================================
 	
 	sendPeer(currentRoom->hostPeer,lobbyCommand_PEERGAMEJOIN);
 }
-
 
 //=========================================================================================================================
 void BobsGame::tellAllPeersIAmHosting()
@@ -235,7 +229,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 		string command = s.substr(0, s.find(":") + 1);
 		s = s.substr(s.find(":") + 1);
 
-
 		/*
 		when player joins host, send them a list of all other joined players
 
@@ -256,7 +249,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 
 				//tell everyone else this peer has joined
 				tellAllJoinedPeersThatANewPeerHasJoinedMyHostedGame(newPeer);
-
 
 				//tell the new peer about all the other peers
 				//need the host to send the other network players userIDs to each other to add each other as peers because they might not be friends
@@ -326,7 +318,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				return false;
 			}
 
-
 			bool found = false;
 
 			if (getUserID_S() == peerUserID)found = true;
@@ -365,12 +356,10 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				}
 			}
 
-
 			if (joinedPeers->contains(c) == false)joinedPeers->add(c);
 
 			return true;
 		}
-
 
 
 		//BOBSGAME:PLAYERJOIN:randomSeed:endline
@@ -469,7 +458,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				string gameSequenceString = s.substr(0, s.find(":"));
 				s = s.substr(s.find(":") + 1);
 
-
 				NetworkGameSequence *gs = NetworkGameSequence::fromBase64GZippedXML(gameSequenceString);
 				
 				if (gs == nullptr)
@@ -479,7 +467,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				}
 
 				saveUnknownGameSequencesAndTypesToXML(gs);
-
 
 				bool found = false;
 				for (int i = 0; i < players.size(); i++)
@@ -501,7 +488,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				}
 			}
 
-
 			return true;
 		}
 
@@ -522,12 +508,10 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				return false;
 			}
 
-
 			if (String::startsWith(command, lobbyCommand_STARTGAME))
 			{
 				hostStartedGame = true;
 			}
-
 
 			if (String::startsWith(command, lobbyCommand_CANCELGAME))
 			{
@@ -546,7 +530,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 			return true;
 		}
 
-
 		//string lobbyCommandAllPeers_PLAYING = "PLAYING:";
 		//string lobbyCommandAllPeers_HOSTING = "HOSTING:";
 		//string lobbyCommandAllPeers_NOT_HOSTING = "NOT_HOSTING:";
@@ -559,7 +542,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 			String::startsWith(command, lobbyCommandAllPeers_NOT_HOSTING)
 			)
 		{
-
 
 			if (String::startsWith(command, lobbyCommandAllPeers_PLAYING))
 			{
@@ -596,7 +578,6 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				{
 					rooms.add(newRoom);
 				}
-
 
 
 				//c->bobsGameHosting = true;
@@ -652,10 +633,8 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				log.debug("Could not find network player with playerIDString to set incoming_FramePacket for!");
 			}
 
-
 			return true;
 		}
-
 
 
 		//	if (String::startsWith(command, netCommand_FORFEIT))
@@ -664,10 +643,8 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 		//		return true;
 		//	}
 
-
 	}
 	return false;
-
 
 }
 
@@ -712,7 +689,6 @@ const string FilterByKeyword = "Filter By Keyword";
 void BobsGame::populateRoomsMenu()
 {//=========================================================================================================================
 
-
  //show private/public rooms
  //sort by game type
  //sort by num players in room
@@ -722,7 +698,6 @@ void BobsGame::populateRoomsMenu()
  //create new room
  //room is tournament (one player per PC, counts towards ELO record)
  //max players
-
 
 	roomsMenu->clear();
 	roomsMenu->addInfo(" ");
@@ -750,7 +725,6 @@ void BobsGame::populateRoomsMenu()
 		}
 		roomsMenu->addInfo(" ");
 	}
-
 
 	if (hidePublicRooms == false)
 	{
@@ -805,7 +779,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 {//=========================================================================================================================
 
 
-
 	if (networkMultiplayerLobbyMenu == nullptr)
 	{
 		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 0, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
@@ -829,7 +802,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		networkMultiplayerLobbyMenu->add("Join room");
 		networkMultiplayerLobbyMenu->add("Create new room", "Create room");
 		networkMultiplayerLobbyMenu->addInfo(" ");
-
 
 //		networkMultiplayerLobbyMenu->addYesNo(HidePrivateRooms, hidePrivateRooms);
 //		networkMultiplayerLobbyMenu->addYesNo(HidePublicRooms, hidePublicRooms);
@@ -856,7 +828,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		yourStatsMenu->setFontSize(12);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
-
 
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL");
 		//populateLeaderBoardOrHighScoreBoardMenu
@@ -892,12 +863,10 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		//statusLabel->setText("Joining room...");
 		//errorLabel->setText("");
 
-
 		//tell the server i am joining room, which tells all the other peers i have joined, who send friend requests to me
 		//no longer have the host pc organize the clients
 
 		//tell the host i'm joining them
-
 
 		int tries = 0;
 
@@ -992,7 +961,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					leaveMenu = true;
 				}
 			}
-
 
 		}
 
@@ -1100,14 +1068,12 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		}
 	}
 
-
 	currentTime = System::currentHighResTimer();
 	startTime = updateFriendsTime;
 	ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
 	if (ticksPassed > 2000)
 	{
 		updateFriendsTime = currentTime;
-
 
 		onlineFriends.clear();
 		for (int i = 0; i < (int)BobNet::udpConnections.size(); i++)
@@ -1119,7 +1085,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					onlineFriends.add(f);
 			}
 		}
-
 
 		friendsOnlineMenu->clear();
 		friendsOnlineMenu->addInfo("Friends Online:");
@@ -1156,7 +1121,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 		populateRoomsMenu();
 	}
-
 
 
 
@@ -1236,7 +1200,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 	if (filterByKeyword != "")roomsMenu->getMenuItemByID(FilterByKeyword)->setText("Filter By Keyword: " + filterByKeyword);
 	else roomsMenu->getMenuItemByID(FilterByKeyword)->setText("Filter By Keyword: ");
-
 
 	
 
@@ -1344,7 +1307,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 				bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
 				bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
 
-
 				if (confirm || clicked)
 				{
 
@@ -1366,7 +1328,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					if (selectingHostedGame == true || (clicked == true && confirm == false))
 					{
 
-
 						{
 
 							//BobMenu::MenuItem *m = networkMultiplayerLobbyRoomsMenu->getSelectedMenuItem();
@@ -1386,7 +1347,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 								}
 							}
 							//}
-
 
 							if (roomsMenu->isSelectedID(HidePrivateRooms, clicked, mx, my))
 							{
@@ -1459,7 +1419,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 						}
 
 
-
 						if (networkMultiplayerLobbyMenu->isSelectedID("Create room", clicked, mx, my))
 						{
 							leaveMenu = true;
@@ -1473,7 +1432,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 							//let's move the multiplayer options into the hosted room so they can be changed in realtime??
 							//
-
 
 							hosting = true;
 							currentRoom = new Room();
@@ -1494,7 +1452,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 							leaveMenu = true;
 							startScreenMenuShowing = true;
 						}
-
 
 
 					}
@@ -1589,7 +1546,6 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::networkMultiplayerLobbyMenuRender()
 {//=========================================================================================================================
@@ -1604,7 +1560,6 @@ void BobsGame::networkMultiplayerLobbyMenuRender()
 	{
 		networkMultiplayerLobbyMenu->setGraphic(t, getWidth() / 8 * 3, 60);
 	}
-
 
 	if (statusLabel != nullptr && errorLabel != nullptr)
 	{
@@ -1642,7 +1597,6 @@ void BobsGame::networkMultiplayerLobbyMenuRender()
 		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
 	}
 }
-
 
 
 //=========================================================================================================================
@@ -1892,11 +1846,9 @@ void BobsGame::selectSingleGameTypeFilterMenuUpdate()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 {//=========================================================================================================================
-
 
 
 	if (networkMultiplayerPlayerJoinMenu == nullptr)
@@ -1919,7 +1871,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		networkMultiplayerRoomRulesMenu = new BobMenu(this, "");
 		networkMultiplayerRoomRulesMenu->setFontSize(12);
 		networkMultiplayerRoomRulesMenu->center = false;
-
 
 		networkMultiplayerRoomRulesMenu->addInfo("Host: ","Host");
 
@@ -1972,7 +1923,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		
 	}
 
-
 	//TODO tell server when the game has ended, who won, stats, etc
 	//TODO handle client timeout, disconnect, etc on server
 	//TODO also if client logs off or times out room is removed
@@ -1984,7 +1934,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 	//otherwise you can only see a few messages
 	//have the chatroom available both in the multiplayer screen and in chat
 	//also have a separate one in the multiplayer screen that sends to all connected friends
-
 
 
 	{
@@ -2005,7 +1954,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 			networkMultiplayerJoinedPeersMenu->clear();
 
 			BobMenu::MenuItem* m = networkMultiplayerJoinedPeersMenu->addInfo("Peers In Room:");
-
 
 			string name = "You";
 			if (hosting)name += " (Host)";
@@ -2035,7 +1983,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-
 	{
 
 		//if game is public tell server about the room constantly
@@ -2058,7 +2005,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-
 	{
 		//need to tell all peers our hosting state because new peers might have connected
 		long long currentTime = System::currentHighResTimer();
@@ -2077,7 +2023,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 	
 
 
-
 	bool leaveMenu = false;
 
 	bool allPlayersConfirmed = true;
@@ -2087,7 +2032,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		if (p->confirmed == false)
 		{
 			allPlayersConfirmed = false;
-
 
 			if (p->isNetworkPlayer() == false)
 			{
@@ -2130,7 +2074,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 			}
 		}
 	}
-
 
 	if (getControlsManager()->key_SPACE_Pressed())
 	{
@@ -2203,7 +2146,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-
 	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers.size(); controllerNum++)
 	{
 		GameController *g = getControlsManager()->gameControllers.get(controllerNum);
@@ -2256,7 +2198,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 						}
 						p->nameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
-
 						tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(p);
 					}
 				}
@@ -2279,7 +2220,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 			}
 		}
 	}
-
 
 
 	//dont have scores yet, score and ranking is only for tournament play one on one
@@ -2328,7 +2268,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-
 	if (hosting)
 	{
 		if (players.size() > 1)
@@ -2365,7 +2304,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-
 	if (hostStartedGame)
 	{
 		hostStartedGame = false;
@@ -2387,7 +2325,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 			delete networkMultiplayerJoinedPeersMenu;
 			networkMultiplayerJoinedPeersMenu = nullptr;
-
 
 			if (networkMultiplayerPlayerJoinMenuPressStartCaption != nullptr)
 			{
@@ -2416,7 +2353,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuRender()
 {//=========================================================================================================================
 
 	GLUtils::drawFilledRect(BobMenu::bgColor->ri(), BobMenu::bgColor->gi(), BobMenu::bgColor->bi(), 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
-
 
 	BobTexture* kt = keyboardIconTexture;
 	BobTexture* gt = controllerIconTexture;
@@ -2511,7 +2447,6 @@ void BobsGame::networkMultiplayerPlayerJoinMenuRender()
 				//p->nameCaption->render();
 			}
 	}
-
 
 
 }

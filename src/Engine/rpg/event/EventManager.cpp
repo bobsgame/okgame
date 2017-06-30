@@ -5,21 +5,17 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
 
-
 Logger EventManager::log = Logger("EventManager");
-
 
 EventManager::EventManager(Engine* g)
 { //=========================================================================================================================
 
 	this->e = g;
 }
-
 
 
 void EventManager::update()
@@ -57,7 +53,6 @@ void EventManager::update()
 //		cutsceneEventList.get(i)->update();
 //	}
 
-
 	for (int i = 0; i < runningEventQueue.size(); i++)
 	{
 		Event* s = runningEventQueue.get(i);
@@ -68,7 +63,6 @@ void EventManager::update()
 void EventManager::addToEventQueueIfNotThere(Event* event)
 { //=========================================================================================================================
 
-
 	if (event->getWasAddedToQueue() == false)
 	{
 		runningEventQueue.add(event);
@@ -76,7 +70,6 @@ void EventManager::addToEventQueueIfNotThere(Event* event)
 	}
 
 	//if it isn't in the event queue, add a fresh stack to the event queue.
-
 
 	//if it is in the event queue, run the next instruction.
 }
@@ -129,7 +122,6 @@ Item* EventManager::getItemByID(int id)
 		}
 	}
 
-
 	string e = "Item not found! getItemByID():" + to_string(id);
 	Console::error(e);
 	log.error(e);
@@ -150,7 +142,6 @@ Dialogue* EventManager::getDialogueByIDCreateIfNotExist(int id)
 	return new Dialogue(getEngine(), id);
 }
 
-
 //Event* EventManager::getCutsceneEventByID(int id)
 //{ //=========================================================================================================================
 //	//go through list
@@ -166,7 +157,6 @@ Dialogue* EventManager::getDialogueByIDCreateIfNotExist(int id)
 //
 //	return nullptr;
 //}
-
 
 Event* EventManager::getEventByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
@@ -207,7 +197,6 @@ Skill* EventManager::getSkillByIDCreateIfNotExist(int id)
 	string e = "Skill not found! getSkillByID():" + to_string(id);
 	Console::error(e);
 	log.error(e);
-
 
 	return new Skill(getEngine(), id);
 }

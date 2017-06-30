@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 #include "../../Engine/Engine.h"
 #include "../../Engine/EnginePart.h"
@@ -15,12 +13,9 @@ class Logger;
 #include "./Music.h"
 class Logger;
 
-
 #define MAX_SOUNDS_PLAYING 32
 
-
 extern int G_mute;//GLOBAL MUTE
-
 
 bool HARDWARE_play_sound(string &name, int vol, int freq, int loop);
 void HARDWARE_stop_music();
@@ -30,7 +25,6 @@ void HARDWARE_set_music_volume(int vol);
 bool HARDWARE_play_sound_if_not_playing(string &name, int vol, int freq, int loop);
 void HARDWARE_unload_wavs_done_playing();
 void HARDWARE_sound_init();
-
 
 class AudioManager : EnginePart
 {
@@ -47,7 +41,6 @@ public:
 #ifdef USE_SOLOUD
 	static SoLoud::Soloud *soLoud;// = nullptr;
 #endif
-
 
 
 	AudioManager();
@@ -81,7 +74,6 @@ public:
 	void setAllLoopingMusicThatIsNotFadingOutToNotLoop();
 	void pauseAllMusic();
 	void unpauseAllMusic();
-
 
 
 	static Sound* getSoundByName(const string& soundName);

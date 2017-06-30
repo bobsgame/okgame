@@ -5,13 +5,10 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
-
 Logger StatusBarCaption::log = Logger("StatusBarCaption");
-
 
 StatusBarCaption::StatusBarCaption()
 { //=========================================================================================================================
@@ -37,7 +34,6 @@ void StatusBarCaption::update()
 
 void StatusBarCaption::render(int layer)
 { //=========================================================================================================================
-
 
 	if (enabled == false)
 	{
@@ -79,7 +75,6 @@ void StatusBarCaption::setColors(BobColor* fg, BobColor* aa, BobColor* bg)
 	currentFGColor = fg;
 	currentAAColor = aa;
 	currentBGColor = bg;
-
 
 	if (caption != nullptr)
 	{

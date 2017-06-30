@@ -3,7 +3,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include "Piece.h"
@@ -16,9 +15,7 @@
 class Logger;
 
 
-
 class GameLogic;
-
 
 //enum class Difficulty
 //{
@@ -53,7 +50,6 @@ public:
 	int randomlyFillGridAmount = 30;												Info randomlyFillGridAmount_Info = Info("Drop: Randomly Fill Grid Amount", "How many blocks to fill the playing field with.");
 	int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
 
-
 	ArrayList<shared_ptr<PieceType> > pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
 	ArrayList<shared_ptr<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
 	//ArrayList<BobColor*> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
@@ -72,7 +68,6 @@ public:
 };
 BOOST_CLASS_VERSION(DifficultyType, 1)
 BOOST_CLASS_TRACKING(DifficultyType, boost::serialization::track_never)
-
 
 //=========================================================================================================================
 enum class ScoreType
@@ -156,7 +151,6 @@ enum class VSGarbageRule
 	   //		FALL_IN_DIAGONAL_STEPS_INCREASING_FROM_SIDES_TO_MIDDLE, // \/
 };
 
-
 //=========================================================================================================================
 class GameType
 {//=========================================================================================================================
@@ -185,9 +179,7 @@ public:
 	static DifficultyType* difficulty_INSANE;
 	static DifficultyType* difficulty_IMPOSSIBLE;
 
-
 	static Logger log;
-
 
 	string toBase64GZippedXML();
 	shared_ptr<BlockType> getBlockTypeByName(string s);
@@ -269,7 +261,6 @@ public:
 //	const BobColor burgandy = *BobColor::burgandy;
 //	const BobColor wine = *BobColor::wine;
 
-
 	//---------------------------------------------------
 	// music and sound
 	//----------------------------------------------------
@@ -297,7 +288,6 @@ public:
 	string moveLeftSound = "tick";
 	string moveRightSound = "tick";
 
-
 	string pieceSetSound = "lock";
 	string touchBottomSound = "touchblock";
 	string wallKickSound = "wallkick";
@@ -306,10 +296,8 @@ public:
 	string floorKickSound = "floorkick";
 	string pieceFlip180Sound = "flip";
 
-
 	string rotateSound = "rotate";
 	string levelUpSound = "levelup";
-
 
 	string extraStage1Sound = "gtbling";
 	string extraStage2Sound = "gtbling";
@@ -332,16 +320,13 @@ public:
 	string flashingClearSound = "flashingClear";
 	string scanlineClearSound = "scanlineClear";
 
-
 	bool useRandomSoundModulation = false;
-
 
 
 
 	//---------------------------------------------------
 	//game rules
 	//---------------------------------------------------
-
 
 	string name = "My New Game Type";								Info name_Info = Info("Game Type Name", "The name of the game type.");
 	string rules = "Make a line of matching colors to score!";		Info rules_Info = Info("Rules Description", "A short description of the rules.");
@@ -360,7 +345,6 @@ public:
 	bool chainRule_CheckEntireLine = false;									Info chainRule_CheckEntireLine_Info = Info("Chain Rule: Check Entire Line", "If checking for chains, entire horizontal line must match to be cleared.");
 	int chainRule_AmountPerChain = 0;										Info chainRule_AmountPerChain_Info = Info("Chain Rule: Amount Per Chain", "If checking for chains, how many matching blocks needed in order to be cleared.");
 	//TODO: match by color, match by type
-
 
 	bool chainRule_CheckRowOrColumn = false;//deprecated!!								//Info chainRule_CheckRowOrColumn_Info = Info("Chain Rule: Check Row Or Column", "If checking for chains, check both up and down and left and right.");
 	bool chainRule_CheckRow = false;								Info chainRule_CheckRow_Info = Info("Chain Rule: Check Row", "If checking for chains, check left and right.");
@@ -387,9 +371,7 @@ public:
 	bool flip180Allowed = true;												Info flip180Allowed_Info = Info("Flip 180 Allowed", "Whether when rotating a piece it can flip itself 180 degrees even if obstructed.");
 	bool floorKickAllowed = true;											Info floorKickAllowed_Info = Info("Floor Kick Allowed", "Whether when rotating a piece it can kick off of the ground.");
 
-
 	int readyTicksAmount = 2000;//TODO: should this be a game settings?  should it allow to pause between games?
-
 
 
 
@@ -410,7 +392,6 @@ public:
 
 	int gridPixelsBetweenRows = 0;												Info gridPixelsBetweenRows_Info = Info("Grid Pixels Between Rows", "If there should be spacing between the block rows.");
 	int gridPixelsBetweenColumns = 0;											Info gridPixelsBetweenColumns_Info = Info("Grid Pixels Between Columns", "If there should be spacing between the block columns.");
-
 
 	
 	GameMode gameMode = GameMode::DROP;											Info gameMode_Info = Info("Game Mode", "Whether this is a falling block type game (where blocks fall from the top) or a stack based game (where a stack rises from the floor).  More game modes will be implemented in the future.");
@@ -436,13 +417,10 @@ public:
 
 
 
-
-
 	bool blockRule_drawDotToSquareOffBlockCorners = false;					//Info blockRule_drawDotToSquareOffBlockCorners_Info = Info("Draw Dot To Square Off Block Corners", "This is used for block games");
 																			//TODO: make this automatic when using square sprites and joined blocks
 	bool drawDotOnCenterOfRotation = false;									//Info drawDotOnCenterOfRotation_Info = Info("DrawDotOnCenterOfRotation", "");
 																			//TODO: move to user options, this is just a debug mode thing
-
 
 
 	//---------------------------------------------------
@@ -469,12 +447,10 @@ public:
 	long long blockMovementInterpolationTicks = 100;						Info blockMovementInterpolationTicks_Info = Info("Visual: Block Movement Interpolation Ticks", "How many milliseconds to animate transitions between one movement to the next.");
 	int blockAnimationTicksRandomUpToBetweenLoop = 0;						Info blockAnimationTicksRandomUpToBetweenLoop_Info = Info("Visual: Block Animation Ticks Random Up To Between Loop", "If a block sprite has animation, maximum amount of milliseconds to wait before triggering animation cycle.");//drbob
 
-
 	ArrayList<shared_ptr<BlockType>> blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
 	private:
 	ArrayList<BlockType> importExport_blockTypes;
 	public:
-
 
 
 	//---------------------------------------------------
@@ -489,7 +465,6 @@ public:
 	//bool drawCursorInsteadOfCurrentPiece = false;													Info drawCursorInsteadOfCurrentPiece_Info = Info("Draw Cursor Instead Of Current Piece", ""); //used for cursors //was currentPieceOutlineAllPieces
 	bool currentPieceOutlineFirstBlockRegardlessOfPosition = false;								Info currentPieceOutlineFirstBlockRegardlessOfPosition_Info = Info("Current Piece Outline First Block Regardless Of Position", "Draw an outline around the first block of a piece."); //used in columns
 	bool currentPieceRule_OutlineBlockAtZeroZero = false;										Info currentPieceRule_OutlineBlockAtZeroZero_Info = Info("Current Piece Outline Block At Zero Zero", "Draw an outline around the center block of a piece.");
-
 
 	//bool currentPieceRenderHoldingBlock = false;												Info currentPieceRenderHoldingBlock_Info = Info("Current Piece Render Holding Block", "");
 	//bool currentPieceMoveUpHalfABlock = false;													Info currentPieceMoveUpHalfABlock_Info = Info("Current Piece Move Up Half A Block", "");
@@ -530,11 +505,9 @@ public:
 	//void setTimingBasedOnDifficulty(DifficultyType d);
 
 
-
 	float bloomIntensity = 1.5f;															Info bloomIntensity_Info = Info("Bloom Intensity", "Intensity of the bloom effect.");
 	int bloomTimes = 4;/*blur passes!!*/															Info bloomTimes_Info = Info("Bloom Blur Passes", "How many times to blur the bloom filter.");
 	//--------------------------------------------
-
 
 	//TODO: max stack wait delay
 	long long maxLockDelayTicks = 17 * 30;															Info maxLockDelayTicks_Info = Info("Max Lock Delay Ticks", "Maximum milliseconds a piece can be set at the bottom before locking.");
@@ -625,11 +598,8 @@ public:
 
 
 
-
-
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version);
-
 
 	ArrayList<shared_ptr<BlockType>> getNormalBlockTypes(DifficultyType *d);
 	ArrayList<shared_ptr<BlockType>> getGarbageBlockTypes(DifficultyType *d);
@@ -641,9 +611,7 @@ public:
 	ArrayList<shared_ptr<PieceType> > getGarbagePieceTypes(DifficultyType *d);
 	ArrayList<shared_ptr<PieceType> > getPlayingFieldPieceTypes(DifficultyType *d);
 
-
 };
-
 
 BOOST_CLASS_VERSION(GameType, 5)
 BOOST_CLASS_TRACKING(GameType, boost::serialization::track_never)

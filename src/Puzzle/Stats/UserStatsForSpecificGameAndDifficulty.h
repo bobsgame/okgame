@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include <src/Utility/Logger.h>
-
 
 //===============================================================================================
 //high score collects stats per user for a specific game or sequence at a specific difficulty in order to track their progress and high score
@@ -26,7 +24,6 @@ public:
 	string gameSequenceName = "";
 	string gameSequenceUUID = "";
 	string difficultyName = "";
-
 
 	int totalGamesPlayed = 0;
 	int singlePlayerGamesPlayed = 0;
@@ -53,12 +50,9 @@ public:
 	int biggestCombo = 0;
 
 
-
 	int mostBlocksCleared = 0;
 	string longestTimeStatsUUID = "";
 	string mostBlocksClearedStatsUUID = "";
-
-
 
 
 
@@ -67,9 +61,7 @@ public:
 	BobsGameUserStatsForSpecificGameAndDifficulty()
 	{//===============================================================================================
 
-
 	}
-
 
 
 
@@ -87,7 +79,6 @@ public:
 		gameSaveString += ",gameSequenceName:`" + gameSequenceName + "`";
 		gameSaveString += ",gameSequenceUUID:`" + gameSequenceUUID + "`";
 		gameSaveString += ",difficultyName:`" + difficultyName + "`";
-
 
 		gameSaveString += ",totalGamesPlayed:" + to_string(totalGamesPlayed);
 		gameSaveString += ",singlePlayerGamesPlayed:" + to_string(singlePlayerGamesPlayed);
@@ -117,8 +108,6 @@ public:
 
 
 
-
-
 		gameSaveString += ",";
 
 		return gameSaveString;
@@ -130,7 +119,6 @@ public:
 
 		decode(s);
 	}
-
 
 	//===============================================================================================
 	void decode(string &s)
@@ -188,7 +176,6 @@ public:
 		s = s.substr(s.find('`') + 1);
 
 
-
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
 		if (t.length()>0)try { totalGamesPlayed = stoi(t); }
@@ -243,7 +230,6 @@ public:
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
 
-
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
 		if (t.length()>0)try { totalTimePlayed = stoll(t); }
@@ -280,13 +266,11 @@ public:
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
 
-
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
 		if (t.length()>0)try { planesWalkerPoints = stoll(t); }
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
-
 
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
@@ -294,13 +278,11 @@ public:
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
 
-
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
 		if (t.length()>0)try { totalPiecesMade = stoll(t); }
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
-
 
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
@@ -308,20 +290,17 @@ public:
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
 
-
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
 		if (t.length()>0)try { totalPiecesPlaced = stoll(t); }
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
 
-
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
 		if (t.length()>0)try { totalCombosMade = stoll(t); }
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
-
 
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
@@ -346,8 +325,6 @@ public:
 		s = s.substr(s.find(',') + 1);
 
 
-
 	}
-
 
 };

@@ -3,13 +3,10 @@
 #include <iomanip>
 #include <fstream>
 
-
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
 //------------------------------------------------------------------------------
-
-
 
 
 
@@ -34,10 +31,6 @@ Logger FileUtils::log = Logger("FileUtils");
 
 
 
-
-
-
-
 #include <iostream>
 
 #include "Poco/File.h"
@@ -53,7 +46,6 @@ using Poco::Path;
 using Poco::Delegate;
 using Poco::Zip::Decompress;
 
-
 void test()
 {
 
@@ -67,7 +59,6 @@ void test()
 	//bool isDir = tmpDir.isDirectory();
 	//bool canRead = tmpDir.canRead();
 	bool canWrite = tmpDir.canWrite();
-
 
 	//some file stuff
 	File tmpFile(Path(tmpPath, "PocoFileSample.dat"));
@@ -112,7 +103,6 @@ void test()
 		}
 	}
 }
-
 
 //==========================================================================================================================
 
@@ -164,7 +154,6 @@ string FileUtils::removeIllegalFilenameChars(string filename)
 //	return content;
 //}
 
-
 //==========================================================================================================================
 void* HARDWARE_load_file(string filename)
 {//==========================================================================================================================
@@ -174,7 +163,6 @@ void* HARDWARE_load_file(string filename)
 	char* filepointer = NULL;
 	FILE* file = nullptr;
 	long size;
-
 
 
 	//FileUtils::fixPath(filename);
@@ -210,7 +198,6 @@ void* HARDWARE_load_file(string filename)
 	fclose(file);
 	//HARDWARE_wait_for_vbl();
 
-
 	return (void*)filepointer;
 }
 
@@ -236,7 +223,6 @@ long HARDWARE_get_file_size(string filename)//HARDWARE_FSFile[HARDWARE_FSGetFile
 	FILE* file = nullptr;
 	long size = 0;
 
-
 	file = fopen(filename.c_str(), "rb");
 	if (file != NULL)
 	{
@@ -256,9 +242,7 @@ long HARDWARE_get_file_size(string filename)//HARDWARE_FSFile[HARDWARE_FSGetFile
 	return size;
 }
 
-
 //FileUtils* FileUtils::fileUtils = nullptr;
-
 
 string FileUtils::appDataPath = "";
 string FileUtils::cacheDir = "";
@@ -266,10 +250,8 @@ string FileUtils::cacheDir = "";
 string FileUtils::bigDataURL = "";
 string FileUtils::smallDataURL = "";
 
-
 FileUtils::FileUtils()
 { //=========================================================================================================================
-
 
 //	   if (Main::debugMode == true) //DEBUG
 //	   {
@@ -284,7 +266,6 @@ FileUtils::FileUtils()
 	//
 	//   //cacheDir = "C:\\bobsGameCache\\";
 	//
-
 
 	//slash = "/";// prop->getProperty("file.separator"); //also File.separatorChar, File.separator
 	//cacheDir = "";// prop->getProperty("user.home") + slash + ".bobsGame" + slash;
@@ -327,7 +308,6 @@ void FileUtils::makeDir(const string& cs)
 
 	
 }
-
 
 //
 //
@@ -494,7 +474,6 @@ void FileUtils::makeDir(const string& cs)
 //	return new short;
 //}
 
-
 //=========================================================================================================================
 vector<uint16_t>* FileUtils::loadShortFile(string filename)
 {//=========================================================================================================================
@@ -542,7 +521,6 @@ vector<int>* FileUtils::loadIntFile(string filename)
 		u8 sbyte3 = (*byteArray)[x * 4 + 2];
 		u8 sbyte4 = (*byteArray)[x * 4 + 3];
 
-
 		u8 ubyte1 = sbyte1 & 0xFF;
 		u8 ubyte2 = sbyte2 & 0xFF;
 		u8 ubyte3 = sbyte3 & 0xFF;
@@ -570,7 +548,6 @@ vector<int>* FileUtils::loadIntFileFromExePath(string filename)
 	return loadIntFile(filename);
 }
 
-
 // ===============================================================================================
 vector<u8>* FileUtils::getByteArrayFromIntArray(vector<int>*intArray)
 {// ===============================================================================================
@@ -593,10 +570,8 @@ vector<u8>* FileUtils::getByteArrayFromIntArray(vector<int>*intArray)
 
 
 
-
 //save 16 bit to binary
 //load 16 bit
-
 
 //load text file into read buffer?
 //load text file into chars?
@@ -605,7 +580,6 @@ vector<u8>* FileUtils::getByteArrayFromIntArray(vector<int>*intArray)
 //save strings to text file
 //save string to text file
 //save binary to text file
-
 
 #include <algorithm> 
 #include <functional> 
@@ -662,7 +636,6 @@ string FileUtils::trimmed(std::string s)
 string FileUtils::loadTextFileAndTrim(string filename)
 {//=========================================================================================================================
 
-
 	ifstream t(filename);
 	string str;
 
@@ -680,7 +653,6 @@ string FileUtils::loadTextFileAndTrim(string filename)
 	return str;
 }
 
-
 //=========================================================================================================================
 
 string FileUtils::loadTextFileFromExePathAndTrim(string filename)
@@ -690,11 +662,9 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 	return loadTextFileAndTrim(filename);
 }
 
-
 //=========================================================================================================================
 ArrayList<string>* FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
-
 
 	ArrayList<string>* lines = new ArrayList<string>();
 
@@ -718,7 +688,6 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 	filename = Main::getPath() + filename;
 	return loadTextFileIntoVectorOfStringsAndTrim(filename);
 }
-
 
 
 ////=========================================================================================================================
@@ -789,11 +758,9 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 //}
 
 
-
 //=========================================================================================================================
 vector<u8>* FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
-
 
 
 	// open the file:
@@ -820,7 +787,6 @@ vector<u8>* FileUtils::loadByteFile(string filename)
 
 	return vec;
 
-
 }
 
 //=========================================================================================================================
@@ -830,7 +796,6 @@ vector<u8>* FileUtils::loadByteFileFromExePath(string filename)
 	filename = Main::getPath() + filename;
 	return loadByteFile(filename);
 }
-
 
 //=========================================================================================================================
 std::string FileUtils::byteArrayToHexString(u8 *data, unsigned long len)
@@ -857,7 +822,6 @@ u8* FileUtils::hexStringToByteArray(const string &hex)
 
 	return bytes;
 }
-
 
 //#include <zip.h>
 
@@ -892,7 +856,6 @@ static const std::string base64_chars =
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "abcdefghijklmnopqrstuvwxyz"
 "0123456789+/";
-
 
 static inline bool is_base64(u8 c) {
 	return (isalnum(c) || (c == '+') || (c == '/'));
@@ -995,7 +958,6 @@ vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_
 }
 
 
-
 #include "minilzo.h"
 /* Work-memory needed for compression. Allocate memory in units
 * of 'lzo_align_t' (instead of 'char') to make sure it is properly aligned.
@@ -1008,12 +970,10 @@ static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
 
 
 
-
 #include "miniz.c"
 typedef u8 uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint;
-
 
 bool zip = false;
 bool lzo = true;
@@ -1022,7 +982,6 @@ bool lzo = true;
 
 string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength)
 { // ===============================================================================================
-
 
 	//   string outStr = "";
 	//   try
@@ -1041,7 +1000,6 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 	//      e.printStackTrace();
 	//   }
 	//   return outStr;
-
 
 
 //
@@ -1132,7 +1090,6 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 		u8 *compressedBytes = nullptr;
 		//uint total_succeeded = 0;
 
-
 		//printf("miniz.c version: %s\n", MZ_VERSION);
 
 		// Allocate buffers to hold compressed and uncompressed data.
@@ -1161,13 +1118,11 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 		free(compressedBytes);
 	}
 
-
 	if (lzo)
 	{
 		const unsigned long maximumCompressedLength = (sourceLength + sourceLength / 16 + 64 + 3);
 
 		u8 * __LZO_MMODEL compressedBytes = new u8[maximumCompressedLength];
-
 
 		int r;
 		//lzo_uint in_len;
@@ -1201,7 +1156,6 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 	return zipDataHexString;
 }
 
-
 // ===============================================================================================
 u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength)
 {// ===============================================================================================
@@ -1221,7 +1175,6 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 	//      e.printStackTrace();
 	//   }
 	//   return null;
-
 
 
 //
@@ -1300,7 +1253,6 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 //	zip_source_free(src);
 	
 
-
 	//unsigned long zippedLength;
 	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsString);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
@@ -1313,7 +1265,6 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 		//uLong src_len = sourceLength;// (uLong)strlen(s_pStr);
 		uLong uncompressedLength = zippedBytes->size() * 40;
 		//uint total_succeeded = 0;
-
 
 		u8 *uncompressedBytes = new u8[uncompressedLength];
 		//uncompressedBytes = (mz_uint8 *)malloc((size_t)uncompressedLength);
@@ -1361,7 +1312,6 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 
 	}
 
-
 	if(lzo)
 	{
 		int compressStatus;
@@ -1405,7 +1355,6 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 }
 
 
-
 string FileUtils::zipStringToBase64String(const string& s)
 { // ===============================================================================================
 
@@ -1419,7 +1368,6 @@ string FileUtils::zipStringToBase64String(const string& s)
 
 	return zipByteArrayToBase64String(val, s.length());
 }
-
 
 string FileUtils::unzipBase64StringToString(const string& s)
 { // ===============================================================================================
@@ -1438,42 +1386,33 @@ string FileUtils::unzipBase64StringToString(const string& s)
 	return out;
 }
 
-
 #include "Poco/MD5Engine.h"
 #include "Poco/DigestStream.h"
 using Poco::MD5Engine;
 
 
 
-
 string FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
-
 
 	vector<u8>* bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
 	delete bytes;
 	return md5;
 
-
 }
 
 #include "md5.h"
 
-
 string FileUtils::getByteArrayMD5Checksum(vector<u8>* bytes)
 { //===============================================================================================
 
-
 	return md5(bytes->data(), bytes->size());
-
 
 	//std::stringstream stringStream((char*)bytes);
 	//return getStringMD5(stringStream.str());
 
-
 }
-
 
 string FileUtils::getStringMD5(const string& stringToMD5)
 { //===============================================================================================
@@ -1543,8 +1482,6 @@ void FileUtils::saveImage(const string& s, BufferedImage* i)
 
 
 
-
-
 	stbi_write_png(s.c_str(), i->getWidth(), i->getHeight(), 4, i->getData(), i->getWidth() *4);
 
 
@@ -1553,12 +1490,7 @@ void FileUtils::saveImage(const string& s, BufferedImage* i)
 
 
 
-
-
-
 }
-
-
 
 
 
@@ -1588,7 +1520,6 @@ void FileUtils::writeSessionTokenToCache(long long userID, const string& session
 	outputFile << "" + to_string(userID) + ",`" + sessionToken + "`," + StringConverterHelper::toString(statsAllowed);
 	outputFile.close();
 }
-
 
 string FileUtils::readSessionTokenFromCache()
 { //===============================================================================================
@@ -1649,13 +1580,10 @@ void FileUtils::deleteSessionTokenFromCache()
 	File* sessionFile = new File(appDataPath + "session.txt");
 	if(sessionFile->exists())sessionFile->remove();
 
-
 }
-
 
 void FileUtils::setStatusText(const string& text)
 { //===============================================================================================
-
 
 	   if (statusConsoleText == nullptr)
 	   {
@@ -1692,7 +1620,6 @@ void FileUtils::deleteStatusText()
 		  Main::mainObject->whilefix();
 	   }
 }
-
 
 
 //private:
@@ -1924,7 +1851,6 @@ bool FileUtils::checkIfFileExistsInCache(const string& fileName)
 long long FileUtils::getFileSizeInCache(const string& fileName)
 { //===============================================================================================
 
-
 	//   if (checkIfFileExistsInCache(getFileName) == true)
 	//   {
 	//      return FileUtils::sizeOf(new File(cacheDir + getFileName));
@@ -1989,7 +1915,6 @@ long long FileUtils::getFileSizeOnServer(const string& fileName)
 void FileUtils::downloadAndDecompressZIPFileIfDifferentFromServer(const string& fileName, const string& niceName)
 { //===============================================================================================
 
-
 	//   long long serverSize = getFileSizeOnServer(getFileName);
 	//   long long localSize = getFileSizeInCache(getFileName);
 	//
@@ -2007,7 +1932,6 @@ void FileUtils::downloadAndDecompressZIPFileIfDifferentFromServer(const string& 
 
 void FileUtils::downloadFileIfDifferentFromServer(const string& fileName, const string& niceName)
 { //===============================================================================================
-
 
 	//   long long serverSize = getFileSizeOnServer(getFileName);
 	//   long long localSize = getFileSizeInCache(getFileName);
@@ -2048,7 +1972,6 @@ void FileUtils::initCache()
 	   //downloadFileIfDifferentFromServer("gameData", "Initial Game Data"); //old bobs game puzzle assets
 	
 	   deleteStatusText();
-
 
 	   //FileUtils::listFiles(new File(cacheDir),null,true);
 	
@@ -2135,7 +2058,6 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//   }
 }
 
-
 #undef INADDR_ANY       
 #undef INADDR_LOOPBACK  
 #undef INADDR_BROADCAST 
@@ -2169,10 +2091,8 @@ using Poco::URIStreamOpener;
 using Poco::Net::HTTPStreamFactory;
 using Poco::Net::FTPStreamFactory;
 
-
 void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 { //===============================================================================================
-
 
 	//   if (FileUtils::getResource("" + FileUtils::cacheDir + getFileName) == nullptr)
 	//   {
@@ -2206,7 +2126,6 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 
 			HTTPStreamFactory::registerFactory();
 
-
 			URI zipuri(smallDataURL+fileName);
 
 			HTTPClientSession session(zipuri.getHost(), zipuri.getPort());
@@ -2218,7 +2137,6 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 			//std::istream& rs =
 			session.receiveResponse(response);
 			//int contentlen = (int)response.getContentLength();
-
 
 			FileStream fs(cacheDir + fileName, ios::out | ios::trunc | ios::binary);
 			std::auto_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
@@ -2243,7 +2161,6 @@ vector<u8>* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& f
 	return loadByteFile(cacheDir + fileName);
 }
 
-
 vector<int>* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
@@ -2262,13 +2179,11 @@ void FileUtils::saveByteArrayToCache(vector<u8>* byteArray, const string& md5Fil
 void FileUtils::writeByteArrayToFile(vector<u8>* byteArray, const string& fileName)
 { //===============================================================================================
 
-
 	std::ofstream file(fileName, std::ios::binary);
 	if (file)
 	{
 		file.write((char*)byteArray->data(), byteArray->size());
 	}
-
 
 
 //	r - open for reading
@@ -2293,7 +2208,6 @@ void FileUtils::writeByteArrayToFile(vector<u8>* byteArray, const string& fileNa
 	//size_t fwrite(const void *ptr, size_t size_of_elements, size_t number_of_elements, FILE *a_file);
 	//int fputc( int c, FILE *fp );
 //	fclose(f);
-
 
 
 //	Poco::FileOutputStream fos(file, std::ios::binary);
@@ -2324,7 +2238,6 @@ void FileUtils::writeDidIntroFile()
 	//      e->printStackTrace();
 	//   }
 }
-
 
 
 
@@ -2388,7 +2301,6 @@ void BobFile::createNewFile()
 	}
 }
 
-
 string BobFile::getName()
 {
 	string name = string(path);
@@ -2415,10 +2327,7 @@ void BobFile::deleteFile()
 
 
 
-
-
 /*
-
 
 Constructor
 
@@ -2429,8 +2338,6 @@ int capacity = myVec.capacity();
 In this first case, using the constructor, size and numberOfElementsToStart will be equal and capacity will be greater than or equal to them.
 
 Think of myVec as a vector containing a number of items of MyType which can be accessed and modified, push_back(anotherInstanceOfMyType) will append it the the end of the vector.
-
-
 
 
 
@@ -2446,10 +2353,6 @@ When using the reserve function, size will be 0 until you add an element to the 
 Think of myVec as an empty vector which can have new items appended to it using push_back with no overhead for the first numberOfElementsToStart elements.
 
 */
-
-
-
-
 
 
 

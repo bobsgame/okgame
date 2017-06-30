@@ -36,15 +36,12 @@ private:
 
 	void hq2x_32(unsigned char* in, unsigned char* out, int Xres, int Yres);
 
-
 	void InitLUTs();
 
 	int RGB8888toRGB565(int rgb);
 
-
 public:
 	BufferedImage* hq2x(BufferedImage* image);// unsigned char* in, int w, int h);
-
 
 	//unsigned char* hq2x(unsigned char* rgbIntArray, int w, int h);
 };

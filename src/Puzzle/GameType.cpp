@@ -75,8 +75,6 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 
 
 
-
-
 //=========================================================================================================================
 template <typename Archive>
 void GameType::serialize(Archive & ar, const unsigned int version)
@@ -438,7 +436,6 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     
 }
 
-
 //=========================================================================================================================
 string GameType::toBase64GZippedXML()
 {//=========================================================================================================================
@@ -484,7 +481,6 @@ GameType *GameType::fromBase64GZippedXML(string b64GZipJSON)
 }
 
 
-
 //	public void addRandomSpecialPieceType(shared_ptr<PieceType> pieceType)
 //	{
 //
@@ -499,7 +495,6 @@ GameType *GameType::fromBase64GZippedXML(string b64GZipJSON)
 //
 //		regularFrequencySpecialPieceTypes.Add(pieceType);
 //	}
-
 
 ArrayList<shared_ptr<BlockType>> GameType::getNormalBlockTypes(DifficultyType *d)
 {//=========================================================================================================================
@@ -626,7 +621,6 @@ ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesChainMustContain(Difficu
 }
 
 
-
 ArrayList<shared_ptr<PieceType> > GameType::getNormalPieceTypes(DifficultyType *d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<PieceType> > arr;
@@ -687,7 +681,6 @@ ArrayList<shared_ptr<PieceType> > GameType::getPlayingFieldPieceTypes(Difficulty
 	}
 	return arr;
 }
-
 
 GameType::GameType()
 {//=========================================================================================================================
@@ -796,7 +789,6 @@ GameType::GameType()
 	//currentDifficulty = normal;
 }
 
-
 shared_ptr<BlockType> GameType::getBlockTypeByName(string s)
 {//=========================================================================================================================
 	for (int i = 0; i<blockTypes.size(); i++)
@@ -812,7 +804,6 @@ shared_ptr<BlockType> GameType::getBlockTypeByName(string s)
 
 	return nullptr;
 }
-
 
 shared_ptr<PieceType> GameType::getPieceTypeByName(string s)
 {//=========================================================================================================================
@@ -846,7 +837,6 @@ shared_ptr<BlockType> GameType::getBlockTypeByUUID(string s)
 	return nullptr;
 }
 
-
 shared_ptr<PieceType> GameType::getPieceTypeByUUID(string s)
 {//=========================================================================================================================
 	for (int i = 0; i<pieceTypes.size(); i++)
@@ -876,12 +866,10 @@ DifficultyType* GameType::getDifficultyByName(string s)
 		}
 	}
 
-
 	log.error("Could not find difficulty: " + s + " in " + name);
 	
 	return nullptr;
 }
-
 
 
 //GameType::GameType(DifficultyType* d)
@@ -889,7 +877,6 @@ DifficultyType* GameType::getDifficultyByName(string s)
 //	currentDifficulty = d;
 //	//setTimingBasedOnDifficulty(d);
 //}
-
 
 //void GameType::setTimingBasedOnDifficulty(DifficultyType* d)
 //{
@@ -963,7 +950,6 @@ DifficultyType* GameType::getDifficultyByName(string s)
 //
 //	garbageBlockTypes.add(blockClass);
 //}
-
 
 //	//=========================================================================================================================
 //	public void addRandomSpecialBlockType(shared_ptr<BlockType> blockClass)

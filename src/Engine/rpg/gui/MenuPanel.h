@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -17,11 +15,9 @@ public:
 
 	static Logger log;
 
-
 	//DialogLayout* mainPanelLayout = nullptr;
 	//ScrollPane* scrollPane = nullptr;
 	//DialogLayout* insideScrollPaneLayout = nullptr;
-
 
 protected:
 	
@@ -37,59 +33,43 @@ public:
 
 	float screenY = 0;
 
-
 	float fadeInTime = 600.0f;
 	float fadeOutTime = 1000.0f;
-
 
 private:
 	
 	bool enabled = true;
 
-
 public:
 	MenuPanel();
 
-
 	virtual void update();
-
 
 	void setEnabled(bool b);
 
 	bool getEnabled();
 
-
 	virtual bool getIsActivated() override;
-
 
 	bool getIsScrollingDown();
 
-
 	bool getIsScrolledUp();
-
 
 	virtual void setActivated(bool b) override;
 
-
 	virtual void toggleActivated() override;
-
 
 	virtual void onScrolledUp();
 
-
 	virtual void scrollUp();
 
-
 	virtual void scrollDown();
-
 
 protected:
 	virtual void layout();
 
-
 public:
 	virtual void renderBefore();
-
 
 	virtual void render();
 

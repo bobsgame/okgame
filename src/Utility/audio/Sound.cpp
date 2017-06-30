@@ -8,10 +8,7 @@
 
 
 
-
-
 Logger Sound::log = Logger("Sound");
-
 
 //Sound::Sound(Engine* g, int id)
 //{ //=========================================================================================================================
@@ -50,7 +47,6 @@ Sound::Sound(Engine* g, SoundData* data)
 }
 
 
-
 Sound::Sound(Engine *g, string filename)
 { //=========================================================================================================================
 	
@@ -72,7 +68,6 @@ Sound::Sound(Engine *g, string filename)
 
 	byteData = FileUtils::loadByteFileFromExePath(filename);
 
-
 #ifdef USE_SOLOUD
 	filename = Main::getPath() + filename;
 	soLoudWave = new SoLoud::Wav();
@@ -91,7 +86,6 @@ Sound::Sound(Engine *g, string filename)
 	AudioManager::soundList->add(this);
 
 }
-
 
 SoundData* Sound::getData()
 { //=========================================================================================================================
@@ -169,7 +163,6 @@ void Sound::setData_S(SoundData* data)
 void Sound::update()
 { //=========================================================================================================================
 
-
 	//get the name and filename from the server
 	ServerObject::update();
 
@@ -235,13 +228,11 @@ void Sound::update()
 		}
 	}
 
-
 	if (fileExists == true || getByteData() != nullptr)
 	{
 		handlePlaying();
 
 	}
-
 
 
 }
@@ -250,7 +241,6 @@ void Sound::play()
 { //=========================================================================================================================
 	play(1.0f, 1.0f, 0);
 }
-
 
 
 
@@ -337,7 +327,6 @@ void Sound::stop()
 	pitch = 1.0f;
 	volume = 1.0f;
 	timesToPlay = 1;
-
 
 	shouldBePlaying = false;
 

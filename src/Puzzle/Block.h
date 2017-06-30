@@ -3,7 +3,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include <Gwen/ControlList.h>
@@ -11,7 +10,6 @@
 #include "../Utility/Color.h"
 #include "BobsGame.h"
 class Logger;
-
 
 
 
@@ -32,7 +30,6 @@ class GameType;
 class Sprite;
 class SpriteAnimationSequence;
 
-
 enum class AnimationState //static
 {
 	NORMAL,
@@ -43,7 +40,6 @@ enum class AnimationState //static
 	REMOVING,
 	PRESSURE,
 };
-
 
 
 
@@ -286,8 +282,6 @@ public:
 
 
 
-
-
 	shared_ptr<Piece> piece = nullptr;
 	ArrayList<shared_ptr<Block>> connectedBlocksByPiece;
 	ArrayList<shared_ptr<Block>> connectedBlocksByColor;
@@ -311,7 +305,6 @@ private:
 	float effectAlpha = 0.5f; //effectAlphaFrom;
 	long long effectFadeTicks = 0;
 	bool effectFadeInOutToggle = false;
-
 
 public:
 	float colorFlashFrom = 0.0f;
@@ -377,7 +370,6 @@ public:
 	bool panic = false;
 
 
-
 	bool connectedUp = false;
 	bool connectedDown = false;
 	bool connectedLeft = false;
@@ -387,7 +379,6 @@ public:
 	bool connectedDownRight = false;
 	bool connectedUpLeft = false;
 	bool connectedDownLeft = false;
-
 
 	SpriteAnimationSequence* anim = nullptr;
 

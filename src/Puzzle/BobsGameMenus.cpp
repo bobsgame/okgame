@@ -154,7 +154,6 @@ bool BobsGame::updateMenus()
 		updatedMenu = true;
 	}
 
-
 //	if (gameSetupMenuShowing)
 //	{
 //		gameSetupMenuUpdate();
@@ -171,7 +170,6 @@ bool BobsGame::renderMenus()
 	bool renderedMenu = false;
 
 	if (super::renderMenus() == true)renderedMenu = true;
-
 
 	if (startScreenMenuShowing)
 	{
@@ -293,7 +291,6 @@ bool BobsGame::renderMenus()
 //		renderedMenu = true;
 //	}
 
-
 	if (multiplayerOptionsMenuShowing)
 	{
 		multiplayerOptionsMenuRender();
@@ -307,7 +304,6 @@ bool BobsGame::renderMenus()
 	return renderedMenu;
 
 }
-
 
 //=========================================================================================================================
 void BobsGame::updateTitleScreenLogo()
@@ -340,18 +336,15 @@ void BobsGame::updateTitleScreenLogo()
 	}
 }
 
-
 //=========================================================================================================================
 void BobsGame::updateTitleMenuLogoTexture()
 {//=========================================================================================================================
-
 
 //	if(titleScreenTexture!= nullptr)
 //	{
 //		titleScreenTexture->release();
 //		titleScreenTexture= nullptr;
 //	}
-
 
 //	string numString = ""+to_string(currentTitleScreenTextureFrame);
 //	int len = numString.length();
@@ -377,12 +370,10 @@ void BobsGame::updateTitleMenuLogoTexture()
 void BobsGame::titleMenuUpdate()
 {//=========================================================================================================================
 
-
 	if (titleMenu == nullptr)
 	{
 		titleMenu = new BobMenu(this, "");
 		titleMenu->spacing = 1.2f;
-
 
 		titleMenu->addInfo("Connecting to server...","Login");
 		titleMenu->add("Play Offline");
@@ -470,12 +461,10 @@ void BobsGame::titleMenuUpdate()
 	}
 }
 
-
 void BobsGame::titleMenuRender()
 { //=========================================================================================================================
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
-
 
 	BobTexture *t = nullptr;
 
@@ -491,7 +480,6 @@ void BobsGame::titleMenuRender()
 	}
 
 }
-
 
 void BobsGame::startScreenMenuUpdate()
 { //=========================================================================================================================
@@ -524,7 +512,6 @@ void BobsGame::startScreenMenuUpdate()
 		startScreenMenu->cursorPosition = startScreenMenuCursorPosition;
 	}
 
-
 	if (infoMenu == nullptr)
 	{
 		infoMenu = new BobMenu(this, "");
@@ -539,7 +526,6 @@ void BobsGame::startScreenMenuUpdate()
 	}
 
 
-
 //	if (patreonMenu == nullptr)
 //	{
 //		patreonMenu = new BobMenu(this, "");
@@ -548,7 +534,6 @@ void BobsGame::startScreenMenuUpdate()
 //		patreonMenu->outline = false;
 //		patreonMenu->addInfo("https://patreon.com/bobsgame", "Patreon", BobColor::lightBlue);
 //	}
-
 
 
 //	if (forumMenu == nullptr)
@@ -711,12 +696,10 @@ void BobsGame::startScreenMenuUpdate()
 	}
 }
 
-
 void BobsGame::startScreenMenuRender()
 { //=========================================================================================================================
 
 	GLUtils::drawFilledRect(255,255,255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
-
 
 	BobTexture *t = nullptr;
 
@@ -751,7 +734,6 @@ void BobsGame::startScreenMenuRender()
 }
 
 
-
 void BobsGame::gettingGamesFromServerMenuUpdate()
 { //=========================================================================================================================
 
@@ -777,12 +759,10 @@ void BobsGame::gettingGamesFromServerMenuUpdate()
 	
 }
 
-
 void BobsGame::gettingGamesFromServerMenuRender()
 { //=========================================================================================================================
 
 	GLUtils::drawFilledRect(255,255,255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
-
 
 	BobTexture *t = nullptr;
 
@@ -799,7 +779,6 @@ void BobsGame::gettingGamesFromServerMenuRender()
 
 }
 
-
 void BobsGame::decreaseVolume()
 {//=========================================================================================================================
 	if (Main::globalSettings->musicVolume > 0)Main::globalSettings->musicVolume -= 1;
@@ -807,14 +786,12 @@ void BobsGame::decreaseVolume()
 	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
 }
 
-
 void BobsGame::increaseVolume()
 {//=========================================================================================================================
 	if (Main::globalSettings->musicVolume < 100)Main::globalSettings->musicVolume += 1;
 	if (Main::globalSettings->musicVolume > 100)Main::globalSettings->musicVolume = 100;
 	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
 }
-
 
 //=========================================================================================================================
 void BobsGame::pauseMenuUpdate()
@@ -852,7 +829,6 @@ void BobsGame::pauseMenuUpdate()
 	{
 		settingsMenuRight(pauseMenu);
 	}
-
 
 	bool leaveMenu = false;
 
@@ -900,7 +876,6 @@ void BobsGame::pauseMenuUpdate()
 	}
 }
 
-
 //=========================================================================================================================
 void BobsGame::pauseMenuRender()
 {//=========================================================================================================================
@@ -928,7 +903,6 @@ void BobsGame::pauseMenuRender()
 
 	pauseMenu->render(0, 0, getHeight(), true, nullptr, nullptr, true);
 }
-
 
 
 //=========================================================================================================================
@@ -1021,7 +995,6 @@ void BobsGame::controllerMenuUpdate()
 			controllerMenu->down();
 		}
 
-
 		bool leaveMenu = false;
 
 		bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
@@ -1070,7 +1043,6 @@ void BobsGame::controllerMenuUpdate()
 	}
 }
 
-
 //=========================================================================================================================
 void BobsGame::controllerMenuRender()
 {//=========================================================================================================================
@@ -1088,7 +1060,6 @@ void BobsGame::controllerMenuRender()
 
 	controllerMenu->render();
 }
-
 
 
 //=========================================================================================================================
@@ -1128,7 +1099,6 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 		bool leaveMenu = false;
 		//bool deletePlayer = false;
 
-
 		if (p->confirmPressed())
 		{
 
@@ -1141,7 +1111,6 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 			{
 				leaveMenu = true;
 			}
-
 
 			if (p->menu->isSelectedID("Forfeit"))
 			{
@@ -1234,7 +1203,6 @@ void BobsGame::playerPauseMiniMenuRender(PuzzlePlayer *p, float x0, float x1, fl
 void BobsGame::loginMenuUpdate()
 {//=========================================================================================================================
 
-
 	//log in
 	//save login
 	//create account
@@ -1243,7 +1211,6 @@ void BobsGame::loginMenuUpdate()
 
 	if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 	if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-
 
 	if (loginMenu == nullptr)
 	{
@@ -1286,7 +1253,6 @@ void BobsGame::loginMenuUpdate()
 		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 	}
 
-
 	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
 	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
 
@@ -1320,7 +1286,6 @@ void BobsGame::loginMenuUpdate()
 
 	bool leaveMenu = false;
 
-
 	if (confirm || clicked)
 	{
 
@@ -1348,7 +1313,6 @@ void BobsGame::loginMenuUpdate()
 		}
 
 	}
-
 
 	if (getServerConnection()->getAuthorizedOnServer_S())
 	{
@@ -1393,7 +1357,6 @@ void BobsGame::loginMenuUpdate()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::loginMenuRender()
 {//=========================================================================================================================
@@ -1409,7 +1372,6 @@ void BobsGame::loginMenuRender()
 		loginMenu->setGraphic(t, getWidth() / 8 * 4, 100);
 	}
 
-
 	if (statusLabel != nullptr && errorLabel != nullptr)
 	{
 		errorLabel->screenY = (float)(getHeight() / 4 * 3);
@@ -1418,7 +1380,6 @@ void BobsGame::loginMenuRender()
 
 	loginMenu->render();
 }
-
 
 //=========================================================================================================================
 void BobsGame::createAccountMenuUpdate()
@@ -1473,7 +1434,6 @@ void BobsGame::createAccountMenuUpdate()
 
 		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 	}
-
 
 	if (createAccountMenu->isSelectedID("Username"))
 	{
@@ -1530,7 +1490,6 @@ void BobsGame::createAccountMenuUpdate()
 		}
 	}
 
-
 	if (getControlsManager()->key_ESC_Pressed() || getControlsManager()->miniGame_SELECT_Pressed())
 	{
 		leaveMenu = true;
@@ -1566,7 +1525,6 @@ void BobsGame::createAccountMenuUpdate()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::createAccountMenuRender()
 {//=========================================================================================================================
@@ -1591,7 +1549,6 @@ void BobsGame::createAccountMenuRender()
 	createAccountMenu->render();
 
 }
-
 
 //=========================================================================================================================
 void BobsGame::settingsMenuInit(BobMenu* m)
@@ -1681,7 +1638,6 @@ void BobsGame::settingsMenuLeft(BobMenu* m)
 //		}
 //	}
 }
-
 
 //=========================================================================================================================
 void BobsGame::settingsMenuRight(BobMenu* m)
@@ -1792,7 +1748,6 @@ void BobsGame::globalSettingsMenuUpdate()
 		globalSettingsMenu->cursorPosition = globalSettingsMenuCursorPosition;
 	}
 
-
 	if (getControlsManager()->miniGame_UP_Pressed())
 	{
 		globalSettingsMenu->up();
@@ -1811,7 +1766,6 @@ void BobsGame::globalSettingsMenuUpdate()
 	{
 		settingsMenuRight(globalSettingsMenu);
 	}
-
 
 	bool leaveMenu = false;
 
@@ -1849,10 +1803,8 @@ void BobsGame::globalSettingsMenuUpdate()
 			globalSettingsMenu = nullptr;
 		}
 
-
 	}
 }
-
 
 //=========================================================================================================================
 void BobsGame::globalSettingsMenuRender()
@@ -1900,7 +1852,6 @@ void BobsGame::whichStatsMiniMenuUpdate()
 		whichStatsMiniMenu->add("Top Games By Time Lasted", "timeLasted");
 		whichStatsMiniMenu->add("Top Games By Blocks Cleared", "blocksCleared");
 	}
-
 
 	if (getControlsManager()->miniGame_UP_Pressed())
 	{
@@ -1975,7 +1926,6 @@ void BobsGame::whichStatsMiniMenuUpdate()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::statsMenuUpdate()
 {//=========================================================================================================================
@@ -1989,7 +1939,6 @@ void BobsGame::statsMenuUpdate()
 		statsMenu->add("Difficulty: All Difficulties", "Difficulty");
 		statsMenu->addInfo(" ");
 		statsMenu->add("Back To Title Screen", "Back To Title Screen");
-
 
 		statsMenu->cursorPosition = statsMenuCursorPosition;
 	}
@@ -2007,9 +1956,7 @@ void BobsGame::statsMenuUpdate()
 	c = statsMenu->getCaptionByID("Game");
 	if (c != nullptr)c->setText("Game: " + statsMenu_gameSequenceOrTypeName);
 
-
 	bool leaveMenu = false;
-
 
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
@@ -2060,10 +2007,8 @@ void BobsGame::statsMenuUpdate()
 								statsMenu->down();
 							}
 
-
 							bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
 							bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
-
 
 
 							if (clicked == true && confirm == false)
@@ -2134,7 +2079,6 @@ void BobsGame::statsMenuUpdate()
 			statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
 	}
 
-
 	long long currentTime = System::currentHighResTimer();
 	long long startTime = updateStatsTime;
 	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
@@ -2145,7 +2089,6 @@ void BobsGame::statsMenuUpdate()
 		yourStatsMenu->clear();
 		leaderBoardMenu->clear();
 
-
 		if (whichDifficultyToShow > 5)whichDifficultyToShow = 0;
 		if (whichDifficultyToShow == 0)statsMenu_difficultyName = "OVERALL";
 		if (whichDifficultyToShow == 1)statsMenu_difficultyName = "Beginner";
@@ -2153,7 +2096,6 @@ void BobsGame::statsMenuUpdate()
 		if (whichDifficultyToShow == 3)statsMenu_difficultyName = "Normal";
 		if (whichDifficultyToShow == 4)statsMenu_difficultyName = "Hard";
 		if (whichDifficultyToShow == 5)statsMenu_difficultyName = "Insane";
-
 
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName);
 
@@ -2163,8 +2105,6 @@ void BobsGame::statsMenuUpdate()
 		yourStatsMenu->setAllCaptionsToFullAlpha();
 		leaderBoardMenu->setAllCaptionsToFullAlpha();
 	}
-
-
 
 
 
@@ -2199,7 +2139,6 @@ void BobsGame::statsMenuUpdate()
 	}
 }
 
-
 //=========================================================================================================================
 void BobsGame::statsMenuRender()
 {//=========================================================================================================================
@@ -2223,7 +2162,6 @@ void BobsGame::statsMenuRender()
 	statsMenu->render(0, getWidth() / 6 * 1, getHeight(), true, &startHeight, &bottomHeight, false, &leftX, &rightX);
 	yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false, nullptr, &rightX);
 	leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false);
-
 
 	if (whichStatsMiniMenuShowing && whichStatsMiniMenu != nullptr)
 	{
@@ -2249,16 +2187,13 @@ void BobsGame::statsMenuRender()
 		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
 	}
 
-
 	if (difficultyMenuShowing && difficultyMenu != nullptr)
 	{
 		Caption *c = statsMenu->getCaptionByID("Difficulty");
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
 	}
 
-
 }
-
 
 
 //
@@ -2294,7 +2229,6 @@ void BobsGame::statsMenuRender()
 //}
 //
 
-
 //enum class StartWithOption
 //{
 //	FIRST_GAME,
@@ -2310,8 +2244,6 @@ void BobsGame::statsMenuRender()
 
 
 
-
-
 enum class GameObjective
 {
 	PLAY_TO_CREDITS_LEVEL,
@@ -2322,7 +2254,6 @@ enum class GameObjective
 //=========================================================================================================================
 void BobsGame::gameSetupMenuUpdate()
 {//=========================================================================================================================
-
 
 	if (gameSetupMenu == nullptr)
 	{
@@ -2339,7 +2270,6 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSetupMenu->cursorPosition = gameSetupMenuCursorPosition;
 
 	}
-
 
 	{
 		string selectedDifficultyName = "";
@@ -2375,7 +2305,6 @@ void BobsGame::gameSetupMenuUpdate()
 			if (c != nullptr)c->setText("Difficulty: " + selectedDifficultyName);
 		}
 	}
-
 
 
 	{
@@ -2431,7 +2360,6 @@ void BobsGame::gameSetupMenuUpdate()
 
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
-
 
 
 
@@ -2576,7 +2504,6 @@ void BobsGame::gameSetupMenuUpdate()
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
-
 				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
 				{
 					if (getPlayer1Game()->currentGameSequence != nullptr)getPlayer1Game()->currentGameSequence->endlessMode = false;
@@ -2619,11 +2546,9 @@ void BobsGame::gameSetupMenuUpdate()
 				gameSetupMenu = nullptr;
 			}
 
-
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void BobsGame::gameSetupMenuRender()
@@ -2641,7 +2566,6 @@ void BobsGame::gameSetupMenuRender()
 	}
 
 	gameSetupMenu->render();
-
 
 	if(selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
@@ -2680,15 +2604,12 @@ void BobsGame::gameSetupMenuRender()
 	}
 }
 
-
 //=========================================================================================================================
 void BobsGame::selectGameSequenceOrSingleGameTypeMenuUpdate()
 {//=========================================================================================================================
 
 
-
 	//TODO: store default difficulty in GlobalSettings
-
 
 	if (selectGameSequenceOrSingleGameTypeMenu == nullptr)
 	{
@@ -2713,7 +2634,6 @@ void BobsGame::selectGameSequenceOrSingleGameTypeMenuUpdate()
 		
 		selectGameSequenceOrSingleGameTypeMenu->cursorPosition = selectGameSequenceOrSingleGameTypeMenuCursorPosition;
 	}
-
 
 
 	if (getControlsManager()->miniGame_UP_Pressed())
@@ -2797,7 +2717,6 @@ void BobsGame::selectGameSequenceOrSingleGameTypeMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::selectGameSequenceOrSingleGameTypeMenuRender()
 {//=========================================================================================================================
@@ -2817,7 +2736,6 @@ void BobsGame::selectGameSequenceOrSingleGameTypeMenuRender()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::selectGameSequenceMenuUpdate()
 {//=========================================================================================================================
@@ -2828,7 +2746,6 @@ void BobsGame::selectGameSequenceMenuUpdate()
 		selectGameSequenceMenu->center = false;
 
 		populateGameSequencesMenu(selectGameSequenceMenu);
-
 
 		selectGameSequenceMenu->cursorPosition = selectGameSequenceMenuCursorPosition;
 	}
@@ -2894,7 +2811,6 @@ void BobsGame::selectGameSequenceMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::selectGameSequenceMenuRender()
 {//=========================================================================================================================
@@ -2914,7 +2830,6 @@ void BobsGame::selectGameSequenceMenuRender()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::gameSequenceOptionsMenuUpdate()
 {//=========================================================================================================================
@@ -2931,7 +2846,6 @@ void BobsGame::gameSequenceOptionsMenuUpdate()
 		
 		gameSequenceOptionsMenu->cursorPosition = gameSequenceOptionsMenuCursorPosition;
 	}
-
 
 
 	if (getControlsManager()->miniGame_UP_Pressed())
@@ -2967,7 +2881,6 @@ void BobsGame::gameSequenceOptionsMenuUpdate()
 
 		//gameObjectiveMenuShowing = true;
 
-
 		leaveMenu = true;
 	}
 
@@ -2991,7 +2904,6 @@ void BobsGame::gameSequenceOptionsMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::gameSequenceOptionsMenuRender()
 {//=========================================================================================================================
@@ -3009,7 +2921,6 @@ void BobsGame::gameSequenceOptionsMenuRender()
 
 	gameSequenceOptionsMenu->render();
 }
-
 
 
 //=========================================================================================================================
@@ -3236,10 +3147,6 @@ void BobsGame::populateGameSequencesMenu(BobMenu *menu)
 
 
 
-
-
-
-
 //=========================================================================================================================
 string getNiceTime(long long ms)
 {//=========================================================================================================================
@@ -3260,7 +3167,6 @@ string getNiceTime(long long ms)
 }
 
 
-
 #include <time.h>
 
 //=========================================================================================================================
@@ -3274,7 +3180,6 @@ string getDateFromEpochTime(long long ms)
 		s.erase(i, s.length());
 	return s;
 }
-
 
 
 //=========================================================================================================================
@@ -3301,7 +3206,6 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 		stats = new BobsGameUserStatsForSpecificGameAndDifficulty(); 
 		deleteStats = true;
 	}
-
 
 	string gameName = "";
 	if (gameTypeOrSequenceUUID == "OVERALL")
@@ -3352,7 +3256,6 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 	menu->add("Biggest Combo: " + to_string(stats->biggestCombo));
 	menu->add("Elo Score: " + to_string(stats->eloScore));
 	menu->add("Planeswalker Score: " + to_string(stats->planesWalkerPoints));
-
 
 	if (deleteStats)delete stats;
 }
@@ -3411,7 +3314,6 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 		stats = new BobsGameLeaderBoardAndHighScoreBoard();
 		deleteStats = true;
 	}
-
 
 	string gameName = "";
 	if (gameTypeOrSequenceUUID == "OVERALL")
@@ -3489,7 +3391,6 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 		BobsGameLeaderBoardAndHighScoreBoard::BobsGameLeaderBoardAndHighScoreBoardEntry* e = stats->entries.get(i);
 		string s = to_string(i)+") " + e->userName + " | ";
 
-
 		if (totalTimePlayed)
 		{
 			menu->add(s+"Total Time Played: " + getNiceTime(e->totalTimePlayed));
@@ -3540,7 +3441,6 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::selectSingleGameTypeMenuUpdate()
 {//=========================================================================================================================
@@ -3550,7 +3450,6 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 		selectSingleGameTypeMenu = new BobMenu(this, "");
 		selectSingleGameTypeMenu->center = false;
 		selectSingleGameTypeMenu->setFontSize(12);
-
 
 		populateGameTypesMenu(selectSingleGameTypeMenu);
 		
@@ -3672,7 +3571,6 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 			}
 		}
 
-
 		//gameObjectiveMenuShowing = true;
 		
 
@@ -3699,7 +3597,6 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::selectSingleGameTypeMenuRender()
 {//=========================================================================================================================
@@ -3720,8 +3617,6 @@ void BobsGame::selectSingleGameTypeMenuRender()
 
 
 
-
-
 //=========================================================================================================================
 void BobsGame::gameObjectiveMenuUpdate()
 {//=========================================================================================================================
@@ -3733,14 +3628,12 @@ void BobsGame::gameObjectiveMenuUpdate()
 	{
 		gameObjectiveMenu = new BobMenu(this, "");
 
-
 		gameObjectiveMenu->add(PLAY_TO_CREDITS_LEVEL);
 		gameObjectiveMenu->add(ENDLESS);
 		
 
 		gameObjectiveMenu->cursorPosition = gameObjectiveMenuCursorPosition;
 	}
-
 
 
 	if (getControlsManager()->miniGame_UP_Pressed())
@@ -3762,7 +3655,6 @@ void BobsGame::gameObjectiveMenuUpdate()
 	if (confirm || clicked)
 	{
 
-
 		if (gameObjectiveMenu->isSelectedID(PLAY_TO_CREDITS_LEVEL, clicked, mx, my))
 		{
 			selectedObjectiveIndex = (int)GameObjective::PLAY_TO_CREDITS_LEVEL;
@@ -3778,7 +3670,6 @@ void BobsGame::gameObjectiveMenuUpdate()
 			if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->endlessMode = true;
 
 		}
-
 
 //		if (localMultiplayer || networkMultiplayer)
 //		{
@@ -3832,7 +3723,6 @@ void BobsGame::gameObjectiveMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::gameObjectiveMenuRender()
 {//=========================================================================================================================
@@ -3852,13 +3742,11 @@ void BobsGame::gameObjectiveMenuRender()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::difficultyMenuUpdate()
 {//=========================================================================================================================
 
 	GameType gt;
-
 
 	if (difficultyMenu == nullptr)
 	{
@@ -3882,7 +3770,6 @@ void BobsGame::difficultyMenuUpdate()
 
 		difficultyMenu->cursorPosition = difficultyMenuCursorPosition;
 	}
-
 
 
 	if (getControlsManager()->miniGame_UP_Pressed())
@@ -3984,7 +3871,6 @@ void BobsGame::difficultyMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::difficultyMenuRender()
 {//=========================================================================================================================
@@ -4004,11 +3890,9 @@ void BobsGame::difficultyMenuRender()
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::multiplayerOptionsMenuUpdate()
 {//=========================================================================================================================
-
 
 	//const string ALLOW_DIFFERENT_GAME_SEQUENCES_OR_TYPES = "Game Sequence: Allow Different Game Sequences Or Types";
 	//const string ALLOW_DIFFERENT_DIFFICULTIES = "Difficulty: Allow Different Difficulties";
@@ -4019,7 +3903,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 	if (multiplayerOptionsMenu == nullptr)
 	{
-
 
 		if(networkMultiplayer)
 		{
@@ -4052,7 +3935,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		multiplayerOptionsMenu->cursorPosition = multiplayerOptionsMenuCursorPosition;
 	}
 
-
 	if(currentRoom==nullptr)
 	{
 		currentRoom = new Room();
@@ -4063,7 +3945,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		currentRoom->multiplayer_SelectedGameSequence = new GameSequence();
 		currentRoom->multiplayer_SelectedGameSequence->gameTypes.add(new GameType());
 	}
-
 
 	if(currentRoom->multiplayer_AllowDifferentGameSequences)
 	{
@@ -4081,7 +3962,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 			}
 		}
 	}
-
 
 	if (currentRoom->multiplayer_AllowDifferentDifficulties)
 	{
@@ -4109,7 +3989,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		if (c != nullptr)c->setText("Difficulty: " + difficultyName);
 	}
 
-
 	if (networkMultiplayer)
 	{
 		if (currentRoom->privateRoom)multiplayerOptionsMenu->getMenuItemByID("Public Or Private")->setText("Visibility: Private (Friends Only)");
@@ -4125,14 +4004,11 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 	if (currentRoom->multiplayer_DisableVSGarbage)multiplayerOptionsMenu->getMenuItemByID("Garbage Rule")->setText("Garbage Rule: Disable VS Garbage");
 	else multiplayerOptionsMenu->getMenuItemByID("Garbage Rule")->setText("Garbage Rule: VS Garbage Allowed");
 
-
 	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)multiplayerOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Race To Credits Level");
 	else multiplayerOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
 
-
 	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains)multiplayerOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Game Ends When One Player Remains");
 	else multiplayerOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Continue Until All Players Lose");
-
 
 
 
@@ -4174,7 +4050,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		}
 
 		bool leaveMenu = false;
-
 
 		bool left = getControlsManager()->miniGame_LEFT_Pressed();
 		bool right = getControlsManager()->miniGame_RIGHT_Pressed();
@@ -4312,7 +4187,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 						networkMultiplayerPlayerJoinMenuShowing = true;
 					}
 
-
 				leaveMenu = true;
 			}
 
@@ -4330,7 +4204,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				leaveMenu = true;
 			}
 		}
-
 
 		if (getControlsManager()->miniGame_CANCEL_Pressed())
 		{
@@ -4355,7 +4228,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::multiplayerOptionsMenuRender()
 {//=========================================================================================================================
@@ -4372,7 +4244,6 @@ void BobsGame::multiplayerOptionsMenuRender()
 	}
 
 	multiplayerOptionsMenu->render(getHeight() / 2, getWidth() / 2 - 50);
-
 
 	if (selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
@@ -4409,8 +4280,6 @@ void BobsGame::multiplayerOptionsMenuRender()
 
 
 
-
-
 //=========================================================================================================================
 void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 {//=========================================================================================================================
@@ -4420,7 +4289,6 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 		localMultiplayerPlayerJoinMenu = new BobMenu(this, "Local Multiplayer Host/Join Menu");
 		localMultiplayerPlayerJoinMenu->addInfo("Press the Space key or A on your controller to join");
 		localMultiplayerPlayerJoinMenu->addInfo("Press Esc or Select on your controller to return to Title Screen");
-
 
 		players.deleteAll();
 //		while (players.size()>0)
@@ -4548,7 +4416,6 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-
 	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers.size(); controllerNum++)
 	{
 		GameController *g = getControlsManager()->gameControllers.get(controllerNum);
@@ -4589,7 +4456,6 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-
 	if (getControlsManager()->key_ESC_Pressed() || getControlsManager()->miniGame_SELECT_Pressed())
 	{
 		leaveMenu = true;
@@ -4617,7 +4483,6 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 
 }
 
-
 //=========================================================================================================================
 void BobsGame::localMultiplayerPlayerJoinMenuRender()
 {//=========================================================================================================================
@@ -4626,7 +4491,6 @@ void BobsGame::localMultiplayerPlayerJoinMenuRender()
 
 	BobTexture* kt = keyboardIconTexture;
 	BobTexture* gt = controllerIconTexture;
-
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -4702,7 +4566,6 @@ void BobsGame::localMultiplayerPlayerJoinMenuRender()
 	localMultiplayerPlayerJoinMenu->render(getHeight() / 4 * 3);
 
 }
-
 
 
 //=========================================================================================================================
@@ -4801,14 +4664,11 @@ void BobsGame::playerDifficultyMiniMenuRender(PuzzlePlayer *p, float x, float y)
 void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 {//=========================================================================================================================
 
-
 	const string PLAY_GAME_SEQUENCE = "Play Game Sequence";
 	const string PLAY_SINGLE_GAME_TYPE = "Play Single Game Type";
 
-
 	const string RANDOMIZE_SEQUENCE = "Randomize Sequence";
 	const string PLAY_THROUGH_SEQUENCE_IN_ORDER = "Play Through Sequence In Order";
-
 
 	if (p != nullptr)
 	{
@@ -4993,12 +4853,10 @@ void BobsGame::playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p)
 					p->setGameSequence = true;
 					p->gameSequenceOptionsMiniMenuShowing = false;
 
-
 				}
 				else
 				if(p->selectSingleGameTypeMiniMenuShowing)
 				{
-
 
 					for (int i = 0; i<loadedGameTypes.size(); i++)
 					{

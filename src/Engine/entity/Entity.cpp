@@ -5,14 +5,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
 
-
 Logger Entity::log = Logger("Entity");
-
 
 int Entity::DOWN = 0;
 int Entity::UP = 1;
@@ -23,11 +20,9 @@ int Entity::DOWNRIGHT = 6;
 int Entity::DOWNLEFT = 7;
 int Entity::UPRIGHT = 5;
 
-
 Entity::Entity()
 { //=========================================================================================================================
 }
-
 
 Entity::Entity(Engine* g, Map* m)
 { //=========================================================================================================================
@@ -53,7 +48,6 @@ Entity::Entity(Engine* g, EntityData* entityData, Map* m)
 void Entity::initEntity(EntityData* entityData)
 { //=========================================================================================================================
 
-
 	if (entityData == nullptr)
 	{
 		entityData = new EntityData(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
@@ -61,16 +55,12 @@ void Entity::initEntity(EntityData* entityData)
 	}
 	this->data = entityData;
 
-
 	this->mapX = entityData->getSpawnXPixelsHQ();
 	this->mapY = entityData->getSpawnYPixelsHQ();
-
 
 	this->alpha = entityData->getToAlpha();
 
 	this->setFrame(entityData->getInitialFrame());
-
-
 
 
 
@@ -79,7 +69,6 @@ void Entity::initEntity(EntityData* entityData)
 
 void Entity::initCurrentAnimationFromSprite()
 { //=========================================================================================================================
-
 
 	setCurrentAnimationBySpriteFrame(getInitialFrame());
 
@@ -101,9 +90,7 @@ void Entity::initCurrentAnimationFromSprite()
 void Entity::update()
 { //=========================================================================================================================
 
-
 	//if(getEngine()==null)setGame(mapAsset.getEngine());
-
 
 	if (event != nullptr)
 	{
@@ -111,7 +98,6 @@ void Entity::update()
 
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
-
 
 	if (sprite == nullptr)
 	{
@@ -128,7 +114,6 @@ void Entity::update()
 	}
 
 	sprite->update();
-
 
 	if (alpha != getToAlpha())
 	{
@@ -158,7 +143,6 @@ void Entity::update()
 		}
 	}
 
-
 	//TODO: handle eventBehavior
 	//"MoveToArea:"+a.getID()+","+bWalk+","+bHit+","+bPath+","+bAnim+","+bDiag);
 	//"MoveToEntity:"+e.getID()+","+bWalk+","+bHit+","+bPath+","+bAnim+","+bDiag);
@@ -167,9 +151,7 @@ void Entity::update()
 
 	//TODO: handle normal behavior
 
-
 	updateTimers();
-
 
 	//do animation if was scripted in tools
 	doAnimation();
@@ -179,7 +161,6 @@ void Entity::updateTimers()
 { //=========================================================================================================================
 	//add change in time to remaining time from last movement
 	ticksSinceLastMovement += (int)getEngine()->engineTicksPassed();
-
 
 
 	if (ticksSinceLastMovement >= getTicksPerPixelMoved())
@@ -204,9 +185,7 @@ void Entity::updateTimers()
 		pixelsToMoveThisFrame = 0;
 	}
 
-
 	//if(pixelsToMoveThisFrame>20)pixelsToMoveThisFrame=1;
-
 
 	animationTicksCounter += (int)getEngine()->engineTicksPassed();
 }
@@ -224,7 +203,6 @@ void Entity::renderDebugBoxes()
 
 	//hitbox
 	GLUtils::drawBox(getScreenLeft() + (getHitBoxFromLeft() * zoom), (screenRight - (getHitBoxFromRight() * zoom)) - 1, getScreenTop() + (getHitBoxFromTop() * zoom), (screenBottom - (getHitBoxFromBottom() * zoom)) - 1, 255, 0, 0);
-
 
 	for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 	{
@@ -291,13 +269,10 @@ void Entity::renderDebugBoxes()
 void Entity::renderDebugInfo()
 { //=========================================================================================================================
 
-
 	float x = getScreenLeft();
 	float y = getScreenTop();
 
-
 	int strings = -1;
-
 
 	if (sprite->getDisplayName() == "No Name" == false)
 	{
@@ -312,7 +287,6 @@ void Entity::renderDebugInfo()
 	GLUtils::drawOutlinedString("id: " + to_string(getID()), x, y - 18, BobColor::white);
 	GLUtils::drawOutlinedString("SpriteAsset Name: " + sprite->getName(), x, y - 9, BobColor::white);
 
-
 	if (getEventData() != nullptr)
 	{
 		GLUtils::drawOutlinedString("Has Event: " + to_string(getEventData()->getID()), x, y + (++strings * 9), BobColor::red);
@@ -323,7 +297,6 @@ void Entity::renderDebugInfo()
 	//GL.drawOutlinedString("w: "+width()+" h: "+height(), x, y+(++strings*9),Color.white);
 	//GL.drawOutlinedString("getScale: "+getScale, x, y+(++strings*9),Color.white);
 	//GL.drawOutlinedString("alpha: "+alpha, x, y+(++strings*9),Color.white);
-
 
 	//if(movementDirection==UP)GL.drawOutlinedString("movementDirection: Up", x, y+(++strings*9),Color.white);
 	//if(movementDirection==DOWN)GL.drawOutlinedString("movementDirection: Down", x, y+(++strings*9),Color.white);
@@ -409,7 +382,6 @@ void Entity::renderDebugInfo()
 		GLUtils::drawOutlinedString("Current Target Name: " + getCurrentAreaTargetName(), x, y + (++strings * 9), BobColor::green);
 	}
 
-
 	/*
 	public int voice_pitch=0;
 	               
@@ -484,14 +456,12 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	float y0 = 0;
 	float y1 = 0;
 
-
 	//YAY
 	//SPRITE JITTERING IS COMPLETELY FIXED!
 	//had to base it on the OFFSET of the floored scaled mapScreenX vs non-floored, since the map drawing itself is based on that to begin with to prevent shimmering
 
 	float offsetX = (getMap()->screenX() * zoom) - ((float)(floor(getMap()->screenX() * zoom)));
 	float offsetY = (getMap()->screenY() * zoom) - ((float)(floor(getMap()->screenY() * zoom)));
-
 
 	
 	//------------------------
@@ -511,7 +481,6 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 			y0 = (getScreenTop() - offsetY) + ((getHeight() * getShadowStart()) * zoom);
 			y1 = y0 + ((getHeight() * shadowSize) * zoom);
 
-
 			GLUtils::drawTexture(shadowTexture, tx0, tx1, ty0, ty1, x0, x1, y0, y1, shadowAlpha, GLUtils::FILTER_LINEAR);
 		}
 		else
@@ -529,7 +498,6 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 					tx1 = ((float)(x + 1.0f) / (float)(texture->getTextureWidth()));
 					ty0 = (((float)(sprite->getImageHeight())) * getFrame()) / texture->getTextureHeight();
 					ty1 = ((((float)(sprite->getImageHeight())) * (getFrame() + 1)) - 1) / texture->getTextureHeight();
-
 
 					float pixelSize = 2.0f;
 					if (sprite->useHQ2X)pixelSize = 1.0f;
@@ -551,11 +519,9 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 		}
 	}
 
-
 	//------------------
 	//now draw actual sprite
 	//------------------
-
 
 
 	x0 = getScreenLeft() - offsetX;
@@ -592,7 +558,6 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	//			GLUtils.drawTexture(texture,tx0,tx1,ty0,ty1,x0,x1,y0,y1,alpha,GLUtils.FILTER_NEAREST);
 	//		}
 
-
 	//------------------
 	//special case for rendering doors action icon doorknob glow thing. maybe should override render in door for this.
 	//------------------
@@ -616,14 +581,12 @@ Map* Entity::getCurrentMap()
 Map* Entity::getMap()
 { //=========================================================================================================================
 
-
 	if (this->map == nullptr)
 	{
 		return EnginePart::getCurrentMap();
 	}
 
 	//Map* map = getMapManager()->getMapByIDBlockUntilLoaded(getMapID());
-
 
 	return this->map;
 }
@@ -663,7 +626,6 @@ bool Entity::isWithinScreenBounds()
 	float screentop = mapCameraYPixelsHQ;
 	float screenbottom = mapCameraYPixelsHQ + getEngine()->getHeightRelativeToZoom();
 
-
 	float shadowLength = ((getHeight() * getShadowStart()) + (getHeight() * shadowSize)) - getHeight();
 
 	if (right < screenleft || left > screenright || bottom + shadowLength < screentop || top > screenbottom) //so shadow can show even if sprite walks above screen
@@ -679,7 +641,6 @@ bool Entity::isWithinScreenBounds()
 bool Entity::checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(int dir)
 { //=========================================================================================================================
 	bool hitting_wall = true;
-
 
 	if (getIgnoreHitLayer() == true)
 	{
@@ -724,7 +685,6 @@ bool Entity::checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(int dir
 		}
 	}
 
-
 	///todo: i split off the check against player() into its own function above, also need to call this separately.
 	isWalkingIntoPlayerThisFrame = isTouchingPlayerInDirection(dir);
 
@@ -739,7 +699,6 @@ bool Entity::checkHitBoxAgainstHitLayerAndNonWalkableEntitiesInDirection(int dir
 bool Entity::checkMiddlePixelAgainstHitLayerAndNonWalkableEntitiesInDirection(int dir)
 { //=========================================================================================================================
 	bool hitting_wall = true;
-
 
 	if (getIgnoreHitLayer() == true)
 	{
@@ -784,7 +743,6 @@ bool Entity::checkMiddlePixelAgainstHitLayerAndNonWalkableEntitiesInDirection(in
 		}
 	}
 
-
 	///todo: i split off the check against player() into its own function above, also need to call this separately.
 	isWalkingIntoPlayerThisFrame = isTouchingPlayerInDirection(dir);
 
@@ -809,7 +767,6 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 	//float topHit = y - ((getMiddleY() - getY()) - (16 * 3)) - 8;
 	//float bottomHit = y + (getHeight() - (getMiddleY() - getY()));
 
-
 	if (getMap()->getHitLayerValueAtXYPixels(x, y) || getMap()->getHitLayerValueAtXYPixels(x, y + 16) || getMap()->getHitLayerValueAtXYPixels(x, y - 16) || getMap()->getHitLayerValueAtXYPixels(x - w, y) || getMap()->getHitLayerValueAtXYPixels(x + w, y))
 	//getHit += getMap()->check_hit_layer_xy(x,topHit);
 	//getHit += getMap()->check_hit_layer_xy(x,bottomHit);
@@ -824,7 +781,6 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 		for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
 		{
 			Entity* m = getMap()->activeEntityList.get(i);
-
 
 			if (m != this &&
 				(dynamic_cast<Door*>(m) != NULL) == false &&
@@ -882,7 +838,6 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 			return true; //TODO use touching functions
 		}
 	}
-
 
 	for (int s = 0; s < (int)getMap()->doorList.size(); s++)
 	{
@@ -1003,12 +958,10 @@ void Entity::movePixelInDirection(int dir)
 bool Entity::ifCanMoveAPixelThisFrameSubtractAndReturnTrue()
 { //=========================================================================================================================
 
-
 	if (pixelsToMoveThisFrame < 0.0f)
 	{
 		pixelsToMoveThisFrame = 0.0f;
 	}
-
 
 	if (pixelsToMoveThisFrame > 1.0f)
 	{
@@ -1016,7 +969,6 @@ bool Entity::ifCanMoveAPixelThisFrameSubtractAndReturnTrue()
 		return true;
 	}
 	return false;
-
 
 	/*if(can_walk()==true)
 	{
@@ -1147,7 +1099,6 @@ void Entity::setCurrentAnimationByDirection(int dir)
 	{
 		sequenceName = "DownRight";
 	}
-
 
 	if (sprite == nullptr)
 	{
@@ -1377,7 +1328,6 @@ void Entity::setAnimateOnceThroughAllFrames()
 void Entity::doAnimation()
 { //=========================================================================================================================
 
-
 	if (sprite == nullptr)
 	{
 		return;
@@ -1393,7 +1343,6 @@ void Entity::doAnimation()
 		//
 		//			}
 
-
 		int startFrame = 0;
 		int lastFrame = getSpriteLastFrame();
 
@@ -1408,7 +1357,6 @@ void Entity::doAnimation()
 			setFrame(startFrame);
 		}
 
-
 		//initialize ticks between loop for this loop (done once on the first frame)
 		if (getFrame() == startFrame)
 		{
@@ -1421,7 +1369,6 @@ void Entity::doAnimation()
 				ticksBetweenAnimationLoopThisLoop = getTicksBetweenAnimationLoop();
 			}
 		}
-
 
 		//set ticks to wait on this frame
 		int count = getTicksBetweenFrames();
@@ -1436,7 +1383,6 @@ void Entity::doAnimation()
 				count = ticksBetweenAnimationLoopThisLoop;
 			}
 		}
-
 
 		if (haveTicksPassedSinceLastAnimated_ResetIfTrue(count))
 		{
@@ -1544,7 +1490,6 @@ Entity* Entity::findNearestEntity()
 
 	int shortestdist = 65535;
 
-
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
 		Entity* currentEntity = getMap()->activeEntityList.get(n);
@@ -1572,7 +1517,6 @@ Entity* Entity::findNearestEntity()
 
 Entity* Entity::findNearestEntityInDirection(int dir)
 { //=========================================================================================================================
-
 
 	//this checks a direction and finds the closest entity within the entity boundaries in that direction
 
@@ -1869,12 +1813,10 @@ bool Entity::isTouchingPlayerInDirection(int dir)
 
 	bool touching_player_entity = false;
 
-
 	float pTop = getPlayer()->getTop();
 	float pBottom = getPlayer()->getBottom();
 	float pLeft = getPlayer()->getLeft();
 	float pRight = getPlayer()->getRight();
-
 
 	if (getPlayer() == nullptr)
 	{
@@ -1884,7 +1826,6 @@ bool Entity::isTouchingPlayerInDirection(int dir)
 	{
 		return false;
 	}
-
 
 	if (dir == UP)
 	{
@@ -1963,7 +1904,6 @@ bool Entity::isHitBoxTouchingXYXYInDirectionByAmount(float left, float top, floa
 	{
 		bottom = getMiddleY();
 	}
-
 
 	bool detected = false;
 
@@ -2090,7 +2030,6 @@ float Entity::getScreenX()
 	float right = left + getWidth();
 	float screenleft = mapCameraXPixelsHQ;
 	float screenright = mapCameraXPixelsHQ + getEngine()->getWidthRelativeToZoom();
-
 
 	float screenXPixelsHQ = (left - screenleft);
 

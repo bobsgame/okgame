@@ -4,7 +4,6 @@
 //------------------------------------------------------------------------------
 
 
-
 #pragma once
 #include <string>
 #include "bobtypes.h"
@@ -13,7 +12,6 @@
 #include "GameSequence.h"
 #include <src/Engine/network/GameSave.h>
 #include <src/Engine/network/UDPPeerConnection.h>
-
 
 class Logger;
 
@@ -28,7 +26,6 @@ class Logger;
 
 #include "CustomGameEditor.h"
 #include "GameSequenceEditor.h"
-
 
 #include "Stats/GameStats.h"
 #include "Stats/UserStatsForSpecificGameAndDifficulty.h"
@@ -46,7 +43,6 @@ class PreloadedSprite;
 class BobFont;
 class CaptionManager;
 class Room;
-
 
 
 //=========================================================================================================================
@@ -94,7 +90,6 @@ public:
 	virtual void init() override;
 
 
-
 	void initPlayer();
 	bool isMultiplayer();
 	
@@ -102,11 +97,9 @@ public:
 	//GameType* originalSettings = nullptr;
 	long long timeRenderBegan = 0;
 
-
 	virtual bool isNetworkGame() override;
 	void debugKeys();
 	virtual void update() override;
-
 
 	
 	int shaderCount = rand() % GLUtils::bgShaderCount;
@@ -125,10 +118,8 @@ public:
 	virtual void resetPressedButtons() override;
 	virtual void setButtonStates() override;
 
-
 	ArrayList<PuzzlePlayer*> players;
 	
-
 
 
 	//-----------------
@@ -171,13 +162,11 @@ public:
 	virtual void pauseMenuRender() override;
 	long long timeLastChangedSetting = 0;
 
-
 	void difficultyMenuUpdate();
 	void difficultyMenuRender();
 	bool difficultyMenuShowing = false;
 	BobMenu *difficultyMenu = nullptr;
 	int difficultyMenuCursorPosition = 0;
-
 
 	void controllerMenuUpdate();
 	void controllerMenuRender();
@@ -185,7 +174,6 @@ public:
 	BobMenu *controllerMenu = nullptr;
 	int controllerMenuCursorPosition = 0;
 	bool controllerMenuTestingButtons = false;
-
 
 	void localMultiplayerPlayerJoinMenuUpdate();
 	void localMultiplayerPlayerJoinMenuRender();
@@ -198,7 +186,6 @@ public:
 	void playerDifficultyMiniMenuRender(PuzzlePlayer *p, float x, float y);
 	void playerPauseMiniMenuUpdate(PuzzlePlayer *p);
 	void playerPauseMiniMenuRender(PuzzlePlayer *p, float x0, float x1, float y0, float y1);
-
 
 	void loginMenuUpdate();
 	void loginMenuRender();
@@ -258,7 +245,6 @@ public:
 	bool hostStartedGame = false;
 	string friendUserName = "";
 
-
 	void networkMultiplayerPlayerJoinMenuUpdate();
 	void networkMultiplayerPlayerJoinMenuRender();
 	BobMenu *networkMultiplayerPlayerJoinMenu = nullptr;
@@ -280,7 +266,6 @@ public:
 	string filterByKeyword = "";
 	int filterByMaxPlayers = -1;
 
-
 	long long lastSentPlayersUpdateTime = 0;
 	long long lastSentServerRoomUpdateTime = 0;
 	long long updatedJoinedPeersListTime = 0;
@@ -288,7 +273,6 @@ public:
 
 	long long lastTimeTriedToCloseGame = 0;
 	virtual void tryToCloseGame() override;
-
 
 	CustomGameEditorControl *customGameEditor = nullptr;
 	GameSequenceEditorControl *gameSequenceEditor = nullptr;
@@ -312,7 +296,6 @@ public:
 	//BobMenu *gameTestMenu = nullptr;
 	bool gameTestMenuShowing = false;
 	int gameTestMenuCursorPosition = 0;
-
 
 
 	void settingsMenuInit(BobMenu* m);
@@ -442,8 +425,6 @@ public:
 
 
 
-
-
 	static ArrayList<BobsGameUserStatsForSpecificGameAndDifficulty*> userStatsPerGameAndDifficulty;
 	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topPlayersByTotalTimePlayed;
 	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topPlayersByTotalBlocksCleared;
@@ -451,7 +432,6 @@ public:
 	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topPlayersByEloScore;
 	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByTimeLasted;
 	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByBlocksCleared;
-
 
 
 
@@ -517,7 +497,6 @@ public:
 	static GameType* getGameTypeByUUID(string uuid);
 	static GameSequence* getGameSequenceByName(string name);
 	static GameSequence* getGameSequenceByUUID(string uuid);
-
 
 	void increaseVolume();
 	void decreaseVolume();
@@ -612,6 +591,5 @@ public:
 
 	long long lastCheckedGotIncomingGamesFromServerTime = 0;
 };
-
 
 

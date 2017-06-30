@@ -1,6 +1,5 @@
 #include "stdafx.h"
 
-
 #include "Gwen/Platform.h"
 #include <Gwen/Controls/Base.h>
 #include <Gwen/Controls/DockBase.h>
@@ -40,8 +39,6 @@ using namespace Gwen::Controls;
 
 
 
-
-
 //GWEN_CONTROL_CONSTRUCTOR(GameSequenceEditorControl)
 GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame *b) : Base(pParent, pName)
 {//=========================================================================================================================
@@ -65,7 +62,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 	*/
 	//int w = GLUtils::getViewportWidth();
 	//int h = GLUtils::getViewportHeight();
-
 
 
 
@@ -110,7 +106,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 
 
 
-
 	mainWindowSplitter = new Gwen::Controls::HorizontalSplitter(this);
 	mainWindowSplitter->GetSplitter()->onDragged.Add(this, &GameSequenceEditorControl::doResize);
 	mainWindowSplitter->Dock(Pos::Top);
@@ -139,7 +134,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 				gameTypesListBox->SetAllowMultiSelect(false);
 				
 
-
 				populateGameTypesListBox();
 
 //				gameTypesButtonBase = new Base(gameTypesListBoxBase);
@@ -162,7 +156,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 				gameTypesAddRemoveButtonsPositioner = new Layout::Position(gameTypesAddRemoveButtonsBase);
 				gameTypesAddRemoveButtonsPositioner->Dock(Pos::Top);
 
-
 				selectAddButton = new Button(gameTypesAddRemoveButtonsBase);
 				selectAddButton->SetText(L"Add ->");
 				//selectAddButton->SetToolTip(b->_Info.tip);
@@ -184,11 +177,9 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 		}
 	}
 
-
 	rightBase = new Base(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(1, rightBase);
 	{
-
 
 		//window control current game sequence
 		//splitter
@@ -203,7 +194,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 			positioner->Dock(Pos::Top);
 			positioner->SetSize(currentGameSequenceTextBoxesBase->Width(),10);
 
-
 			currentGameSequenceNameTextBoxBase = new Base(currentGameSequenceTextBoxesBase);
 			currentGameSequenceNameTextBoxBase->Dock(Pos::Top);
 			{
@@ -217,7 +207,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 				currentGameSequenceNameTextBox->SetSize(currentGameSequenceNameTextBoxBase->Width() - 150, 20);
 			}
 
-
 			currentGameSequenceDescriptionTextBoxBase = new Base(currentGameSequenceTextBoxesBase);
 			currentGameSequenceDescriptionTextBoxBase->Dock(Pos::Top);
 			{
@@ -230,7 +219,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 				currentGameSequenceDescriptionTextBox->Dock(Pos::Left);
 				currentGameSequenceDescriptionTextBox->SetSize(currentGameSequenceDescriptionTextBoxBase->Width() - 150, 20);
 			}
-
 
 		}
 
@@ -248,8 +236,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 			currentGameSequenceListBox->SetSize(currentGameSequenceWindow->Width() - 30, currentGameSequenceWindow->Height() - 60);
 
 		}
-
-
 
 
 
@@ -273,8 +259,6 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 
 	GetParent()->SizeToChildren();
 	SizeToChildren();
-
-
 
 
 
@@ -302,13 +286,11 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 //	applyButtonsBase->SetSize(previewBase->Width(), 20);
 //	darkRectangle->SetSize(previewBase->Width(), previewBase->Height() - 20);
 
-
 	doResize();
 
 	//mainWindowSplitter->SetSplitterWidth(w/2);
 	//doResize();
 }
-
 
 
 
@@ -326,7 +308,6 @@ void GameSequenceEditorControl::checkResize()
 }
 void GameSequenceEditorControl::doResize()
 {//=========================================================================================================================
-
 
 	SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
 	GetParent()->SizeToChildren();
@@ -361,7 +342,6 @@ void GameSequenceEditorControl::doResize()
 				}
 			}
 
-
 			rightBase->SetSize(w - mainWindowSplitter->GetSplitter()->X(), mainWindowSplitter->Height());
 			{
 				currentGameSequenceWindow->SetSize(rightBase->Width(), rightBase->Height() - 80);
@@ -387,16 +367,13 @@ void GameSequenceEditorControl::doResize()
 					}
 				}
 
-
 			}
 		}
 	}
 
 	SizeToChildren(true, true);
 
-
 }
-
 
 #include <fstream>
 #include <iostream>
@@ -410,7 +387,6 @@ using Poco::DirectoryIterator;
 using Poco::File;
 using Poco::Process;
 using Poco::Path;
-
 
 
 //GameSequence* GameSequenceEditorControl::getGameSequenceByName(string name)
@@ -441,7 +417,6 @@ void GameSequenceEditorControl::populateGameTypesListBox()
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
 
-
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		//row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameTypesListSelect);
 		if (g->yourVote!="none")row->SetTextColor(Gwen::Color(128, 128, 128));
@@ -461,7 +436,6 @@ void GameSequenceEditorControl::populateGameSequencesListBox()
 		pair<string, BobColor*> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
-
 
 		Layout::TableRow *row = gameSequencesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameSequencesListSelect);
@@ -520,9 +494,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	if (desc == "")desc = "This is my new game sequence description.";
 	currentGameSequence->description = desc;
 
-
 }
-
 
 void GameSequenceEditorControl::onGameSequencesListSelect(Base* control)
 {//=========================================================================================================================
@@ -554,9 +526,7 @@ void GameSequenceEditorControl::onGameSequencesListSelect(Base* control)
 	currentGameSequenceNameTextBox->SetText(s->name);
 	currentGameSequenceDescriptionTextBox->SetText(s->description);
 
-
 }
-
 
 void GameSequenceEditorControl::saveCurrentGameSequenceToXML()
 {//=========================================================================================================================
@@ -565,7 +535,6 @@ void GameSequenceEditorControl::saveCurrentGameSequenceToXML()
 	bobsGame->loadGameSequenceUUIDsToGamesArray(currentGameSequence);
 
 }
-
 
 void GameSequenceEditorControl::onLoadOrCreateButton(Base* control)
 {//=========================================================================================================================
@@ -593,7 +562,6 @@ void GameSequenceEditorControl::onLoadOrCreateButton(Base* control)
 		askToSaveYesButton->SetWidth(80);
 		askToSaveYesButton->onPress.Add(this, &GameSequenceEditorControl::saveAndOpen);
 
-
 		askToSaveNoButton = new Button(askToSaveBase);
 		askToSaveNoButton->SetText(L"Don't Save");
 		//askToSaveNoButton->SetToolTip(b->_Info.tip);
@@ -610,12 +578,10 @@ void GameSequenceEditorControl::saveAndOpen(Base* control)
 
 	askToSaveBase->CloseButtonPressed();
 
-
 	saveGameSequenceListToCurrentGameSequence();
 
 	//save to xml
 	saveCurrentGameSequenceToXML();
-
 
 	openLoadOrCreateDialog(true);
 
@@ -628,13 +594,11 @@ void GameSequenceEditorControl::dontSaveAndOpen(Base* control)
 
 	askToSaveBase->CloseButtonPressed();
 
-
 	openLoadOrCreateDialog(true);
 
 	windowOpen = false;
 
 }
-
 
 
 
@@ -663,7 +627,6 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 			loadOrCreateGameSequenceWindow->SetClosable(false);
 		}
 
-
 		gameSequencesListBox = new ListBox(loadOrCreateGameSequenceWindow);
 		{
 			gameSequencesListBox->SetMargin(Margin(0, 0, 0, 0));
@@ -674,10 +637,8 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 			//Layout::TableRow* row;
 			gameSequencesListBox->SetSize(w, h - 75);
 
-
 			//populate list with existing game types
 			populateGameSequencesListBox();
-
 
 		}
 
@@ -699,7 +660,6 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 			//editSelectedGameSequenceButton->SetWidth(160);
 			editSelectedGameSequenceButton->onPress.Add(this, &GameSequenceEditorControl::editSelectedGameSequence);
 
-
 			createNewGameSequenceButton = new Button(gameSequenceSelectButtonBase);
 			createNewGameSequenceButton->SetText(L"Create new");
 			//createNewGameSequenceButton->SetToolTip(b->_Info.tip);
@@ -707,14 +667,12 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 			//createNewGameSequenceButton->SetWidth(160);
 			createNewGameSequenceButton->onPress.Add(this, &GameSequenceEditorControl::createNewGameSequence);
 
-
 			duplicateGameSequenceButton = new Button(gameSequenceSelectButtonBase);
 			duplicateGameSequenceButton->SetText(L"Duplicate");
 			//duplicateGameSequenceButton->SetToolTip(b->_Info.tip);
 			duplicateGameSequenceButton->Dock(Pos::Left | Pos::CenterV);
 			//duplicateGameSequenceButton->SetWidth(240);
 			duplicateGameSequenceButton->onPress.Add(this, &GameSequenceEditorControl::duplicateGameSequence);
-
 
 			deleteGameSequenceButton = new Button(gameSequenceSelectButtonBase);
 			deleteGameSequenceButton->SetText(L"Delete");
@@ -726,7 +684,6 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 	}
 
 }
-
 
 
 void GameSequenceEditorControl::editSelectedGameSequence(Base* control)
@@ -760,14 +717,12 @@ void GameSequenceEditorControl::editSelectedGameSequence(Base* control)
 	}
 }
 
-
 void GameSequenceEditorControl::createNewGameSequence(Base* control)
 {//=========================================================================================================================
  //create new currentGameType with defaults and close the list
 	GameSequence *s = new GameSequence();
 	s->name += to_string(bobsGame->loadedGameSequences.size());
 	bobsGame->loadedGameSequences.add(s);
-
 
 	//add to list and select it
 
@@ -781,7 +736,6 @@ void GameSequenceEditorControl::createNewGameSequence(Base* control)
 	windowOpen = false;
 
 }
-
 
 void GameSequenceEditorControl::duplicateGameSequence(Base* control)
 {//=========================================================================================================================
@@ -807,7 +761,6 @@ void GameSequenceEditorControl::duplicateGameSequence(Base* control)
 	gameSequencesListBox->SetSelectedRow(row);
 	onGameSequencesListSelect(row);
 
-
 	loadOrCreateGameSequenceWindow->CloseButtonPressed();
 
 	windowOpen = false;
@@ -816,14 +769,12 @@ void GameSequenceEditorControl::duplicateGameSequence(Base* control)
 void GameSequenceEditorControl::deleteGameSequence(Base* control)
 {//=========================================================================================================================
 
-
 	if (gameSequencesListBox->IsAnyRowSelected() == false)return;
 
 	Layout::TableRow* row = gameSequencesListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
 
 	GameSequence *bt = bobsGame->getGameSequenceByUUID(uuid);
-
 
 	if (bt == nullptr)
 	{
@@ -840,7 +791,6 @@ void GameSequenceEditorControl::deleteGameSequence(Base* control)
 	if (bobsGame->loadedGameSequences.contains(bt))bobsGame->loadedGameSequences.remove(bt);
 
 	gameSequenceSelectLabel->SetText("");
-
 
 	gameSequencesListBox->UnselectAll();
 
@@ -877,9 +827,7 @@ void GameSequenceEditorControl::deleteGameSequence(Base* control)
 		onGameSequencesListSelect((Controls::Base*)gameSequencesListBox->GetRow(0));
 	}
 
-
 }
-
 
 
 void GameSequenceEditorControl::onSaveButton(Base* control)
@@ -942,12 +890,10 @@ void GameSequenceEditorControl::onUploadButton(Base* control)
 
 }
 
-
 void GameSequenceEditorControl::onExitButton(Base* control)
 {//=========================================================================================================================
 
  //Utility::Format(L"Window %i", m_iWindowCount)
-
 
 	askToSaveBase = new WindowControl(GetCanvas());
 	askToSaveBase->SetTitle("Save changes?");
@@ -966,14 +912,12 @@ void GameSequenceEditorControl::onExitButton(Base* control)
 		askToSaveYesButton->SetWidth(120);
 		askToSaveYesButton->onPress.Add(this, &GameSequenceEditorControl::saveAndExit);
 
-
 		askToSaveNoButton = new Button(askToSaveBase);
 		askToSaveNoButton->SetText(L"Leave without saving");
 		//askToSaveNoButton->SetToolTip(b->_Info.tip);
 		askToSaveNoButton->Dock(Pos::Left | Pos::Center);
 		askToSaveNoButton->SetWidth(150);
 		askToSaveNoButton->onPress.Add(this, &GameSequenceEditorControl::dontSaveAndExit);
-
 
 		//		cancelExitButton = new Button(askToSaveBase);
 		//		cancelExitButton->SetText(L"Cancel");
@@ -983,9 +927,7 @@ void GameSequenceEditorControl::onExitButton(Base* control)
 		//		cancelExitButton->onPress.Add(this, &GameSequenceEditorControl::cancelExit);
 	}
 
-
 }
-
 
 void GameSequenceEditorControl::saveAndExit(Base* control)
 {//=========================================================================================================================
@@ -1003,7 +945,6 @@ void GameSequenceEditorControl::saveAndExit(Base* control)
 	exit = true;
 }
 
-
 void GameSequenceEditorControl::dontSaveAndExit(Base* control)
 {//=========================================================================================================================
  //go back to title screen
@@ -1013,14 +954,12 @@ void GameSequenceEditorControl::dontSaveAndExit(Base* control)
 }
 
 
-
 void GameSequenceEditorControl::onCurrentGameSequenceListRowSelect(Base* control)
 {//=========================================================================================================================
 	
 	//don't need to do anything for this i don't think
 
 }
-
 
 
 void GameSequenceEditorControl::onAddButton(Base* control)
@@ -1040,7 +979,6 @@ void GameSequenceEditorControl::onAddButton(Base* control)
 	currentGameSequenceListBox->SetSelectedRow(newRow);
 
 }
-
 
 void GameSequenceEditorControl::onRemoveButton(Base* control)
 {//=========================================================================================================================
@@ -1063,10 +1001,8 @@ void GameSequenceEditorControl::onRemoveButton(Base* control)
 
 }
 
-
 void GameSequenceEditorControl::onUpButton(Base* control)
 {//=========================================================================================================================
-
 
 	if (currentGameSequenceListBox->IsAnyRowSelected() == false)return;
 
@@ -1102,7 +1038,6 @@ void GameSequenceEditorControl::onUpButton(Base* control)
 	
 
 }
-
 
 void GameSequenceEditorControl::onDownButton(Base* control)
 {//=========================================================================================================================
@@ -1147,8 +1082,6 @@ void GameSequenceEditorControl::onDownButton(Base* control)
 
 
 
-
-
 //=========================================================================================================================
 void BobsGame::gameSequenceEditorMenuUpdate()
 {//=========================================================================================================================
@@ -1169,10 +1102,8 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 		gameSequenceEditor = new GameSequenceEditorControl(Main::gwenCanvas,"GameSequenceEditorControl",this);
 
 
-
 		gameSequenceEditor->openLoadOrCreateDialog(false);
 	}
-
 
 
 
@@ -1201,8 +1132,6 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 			gameSequenceEditor = nullptr;
 		}
 	}
-
-
 
 
 
@@ -1236,7 +1165,6 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 	//		leaveMenu = true;
 	//	}
 
-
 	if (leaveMenu)
 	{
 		initPlayer();
@@ -1253,7 +1181,6 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 		}
 	}
 }
-
 
 //=========================================================================================================================
 void BobsGame::gameSequenceEditorMenuRender()
@@ -1272,12 +1199,9 @@ void BobsGame::gameSequenceEditorMenuRender()
 	//
 	//	gameSequenceEditorMenu->render();
 
-
 	Main::gwenCanvas->RenderCanvas();
 
 
-
 }
-
 
 

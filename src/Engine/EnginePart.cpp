@@ -5,14 +5,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
 
-
 Logger EnginePart::log = Logger("EnginePart");
-
 
 //BGClientEngine* EnginePart::clientGameEngine = nullptr;
 //ControlsManager* EnginePart::controlsManager = nullptr;
@@ -28,7 +25,6 @@ EnginePart::EnginePart(Engine* g)
 	//if(g==null)log.error("e is null");
 }
 
-
 //
 //void EnginePart::setControlsManager(ControlsManager* controlsManager)
 //{
@@ -39,7 +35,6 @@ void EnginePart::toggleActivated()
 {
 	isActivated = !isActivated;
 	timeActivated = System::currentHighResTimer();
-
 
 	//TODO: send flag update with this game object TYPEID
 
@@ -202,8 +197,6 @@ Map* EnginePart::getCurrentMap()
 
 
 
-
-
 //void EnginePart::setClientGameEngine(BGClientEngine* gameEngine)
 //{
 //	EnginePart::clientGameEngine = gameEngine;
@@ -218,7 +211,6 @@ ControlsManager* EnginePart::getControlsManager()
 {
 	return Main::controlsManager;
 }
-
 
 
 Clock* EnginePart::getClock()
@@ -296,7 +288,6 @@ GameSave EnginePart::getGameSave()
 {
 	return getServerConnection()->getGameSave_S();
 }
-
 
 //=========================================================================================================================
 bool EnginePart::udpPeerMessageReceived(UDPPeerConnection* c, string e)

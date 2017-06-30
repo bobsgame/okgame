@@ -1,15 +1,10 @@
 #include "stdafx.h"
 
 
-
 #include "GameTestMenu.h"
-
 
 using namespace Gwen;
 using namespace Gwen::Controls;
-
-
-
 
 
 
@@ -41,7 +36,6 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 	//int h = GLUtils::getViewportHeight();
 
 
-
 	Controls::Label *label = new Controls::Label(this);
 	label->SetText("You can test and vote on new game types and sequences in this sandbox.");
 	label->Dock(Pos::Top);
@@ -69,11 +63,9 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 	mainWindowSplitter->GetSplitter()->onDragged.Add(this, &GameTestMenuControl::doResize);
 	mainWindowSplitter->Dock(Pos::Top);
 
-
 	leftBase = new Gwen::Controls::Base(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(0, leftBase);
 	{
-
 
 		leftBaseTabControl = new Controls::TabControl(leftBase);
 		leftBaseTabControl->Dock(Pos::Fill);
@@ -100,7 +92,6 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 
 		}
 
-
 		gameSequencesTab = leftBaseTabControl->AddPage(L"Game Sequences");
 		gameSequencesPage = gameSequencesTab->GetPage();
 		gameSequencesPage->Dock(Pos::Fill);
@@ -123,7 +114,6 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 
 		}
 	}
-
 
 	previewBase = new Base(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(1, previewBase);
@@ -211,7 +201,6 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 
 
 
-
 void GameTestMenuControl::checkResize()
 {//=========================================================================================================================
 	if (lastW != GLUtils::getViewportWidth() || lastH != GLUtils::getViewportHeight())
@@ -226,7 +215,6 @@ void GameTestMenuControl::checkResize()
 }
 void GameTestMenuControl::doResize()
 {//=========================================================================================================================
-
 
 	SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
 	GetParent()->SizeToChildren();
@@ -257,7 +245,6 @@ void GameTestMenuControl::doResize()
 				}
 			}
 
-
 			previewBase->SetSize(w * 2 / 5, h - 20);
 			{
 				applyButtonsBase->SetSize(previewBase->Width(), 40);
@@ -268,9 +255,7 @@ void GameTestMenuControl::doResize()
 
 	SizeToChildren(true, true);
 
-
 }
-
 
 #include <fstream>
 #include <iostream>
@@ -284,7 +269,6 @@ using Poco::DirectoryIterator;
 using Poco::File;
 using Poco::Process;
 using Poco::Path;
-
 
 
 //GameSequence* GameTestMenuControl::getGameSequenceByName(string name)
@@ -308,7 +292,6 @@ void GameTestMenuControl::populateGameTypesListBox()
 
 	gameTypesListBox->Clear();
 	GetCanvas()->DoThink();
-
 
 	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor.size(); i++)
@@ -338,7 +321,6 @@ void GameTestMenuControl::populateGameTypesListBox()
 		else row->SetTextColor(Gwen::Color(color->ri(), color->gi(), color->bi()));
 
 	}
-
 
 }
 
@@ -421,7 +403,6 @@ void GameTestMenuControl::onGameSequencesListSelect(Base* control)
 }
 
 
-
 void GameTestMenuControl::onExitButton(Base* control)
 {//=========================================================================================================================
 	exit = true;
@@ -497,9 +478,7 @@ void GameTestMenuControl::onUpVoteButton(Base* control)
 
 	vote(true);
 
-
 }
-
 
 void GameTestMenuControl::onDownVoteButton(Base* control)
 {//=========================================================================================================================
@@ -600,7 +579,6 @@ void GameTestPreviewRectangle::Render(Skin::Base* skin)
 }
 
 
-
 //=========================================================================================================================
 void BobsGame::gameTestMenuUpdate()
 {//=========================================================================================================================
@@ -627,14 +605,12 @@ void BobsGame::gameTestMenuUpdate()
 
 
 
-
 	bool leaveMenu = false;
 
 	if (gameTestMenu != nullptr)
 	{
 
 		gameTestMenu->checkResize();
-
 
 		if (gameTestMenu->windowOpen == false)
 		{
@@ -659,8 +635,6 @@ void BobsGame::gameTestMenuUpdate()
 			gameTestMenu = nullptr;
 		}
 	}
-
-
 
 
 
@@ -694,7 +668,6 @@ void BobsGame::gameTestMenuUpdate()
 	//		leaveMenu = true;
 	//	}
 
-
 	if (leaveMenu)
 	{
 		initPlayer();
@@ -703,10 +676,8 @@ void BobsGame::gameTestMenuUpdate()
 
 		startScreenMenuShowing = true;
 
-
 	}
 }
-
 
 //=========================================================================================================================
 void BobsGame::gameTestMenuRender()
@@ -724,7 +695,6 @@ void BobsGame::gameTestMenuRender()
 	//	}
 	//
 	//	gameTestMenuMenu->render();
-
 
 	Main::gwenCanvas->RenderCanvas();
 
@@ -756,6 +726,5 @@ void BobsGame::gameTestMenuRender()
 	}
 
 }
-
 
 

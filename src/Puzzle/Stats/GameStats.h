@@ -3,12 +3,10 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 
 #include <src/Utility/Logger.h>
-
 
 //===============================================================================================
 //game stats logs stats for every single game that every user plays
@@ -40,7 +38,6 @@ public:
 	int isNetworkMultiplayer = 0;
 	int numPlayers = 1;
 
-
 	int level = 0;
 	long long timeLasted = 0;
 	long long timeStarted = 0;
@@ -52,7 +49,6 @@ public:
 	int combosMade = 0;
 	int biggestCombo = 0;
 
-
 	int maxPlayers = -1;
 	int privateRoom = 0;
 	int tournamentRoom = 0;
@@ -62,7 +58,6 @@ public:
 	int multiplayer_GameEndsWhenOnePlayerRemains = 1;
 	int multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = 1;
 	int multiplayer_DisableVSGarbage = 0;
-
 
 	string allFrameStatesZipped = "";
 	string playerIDsCSV = "";//id:`userName`:lost,id:`userName`:won,:
@@ -132,7 +127,6 @@ public:
 			+ statsUUID + ","
 			+ playerIDsCSV + ":";
 
-
 		return s;
 	}
 
@@ -145,7 +139,6 @@ public:
 
 		decode(s);
 	}
-
 
 	//===============================================================================================
 	void decode(string s)
@@ -244,7 +237,6 @@ public:
 			playerIDsCSV += s.substr(0, s.find(",") + 1);
 			s = s.substr(s.find(",") + 1);
 		}
-
 
 		try
 		{
@@ -517,7 +509,6 @@ public:
 		}
 
 	}
-
 
 
 

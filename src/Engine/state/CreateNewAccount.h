@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -17,7 +15,6 @@ class CreateNewAccount : public MenuPanel
 public:
 
 	static Logger log;
-
 
 	//   EditField* emailEditField;
 	//
@@ -83,36 +80,26 @@ public:
 	//      void callback(int key);
 	//   };
 
-
 public:
 	void init();
 
-
 	void setButtonsVisible(bool b);
-
 
 	virtual void onScrolledUp() override;
 
-
 	void doCancel();
 
-
 	void doCreateAccount();
-
 
 protected:
 	virtual void layout() override;
 
-
 public:
 	virtual void update() override;
 
-
 	virtual void setActivated(bool b) override;
 
-
 	virtual void renderBefore() override;
-
 
 	virtual void render() override;
 };

@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -17,13 +15,11 @@ class LightData : public EntityData
 private:
 	typedef EntityData super;
 
-
 private:
 	
 	int widthPixels1X = 2;
 	
 	int heightPixels1X = 2;
-
 
 	
 	u8 redColorByte = 0;
@@ -67,27 +63,20 @@ private:
 	
 	bool flickerRandomUpToOffTicks = false;
 
-
 public:
 	LightData();
 
-
 	LightData(int id, const string& mapName, const string& stateName, const string& name, int spawnXPixels1X, int spawnYPixels1X, int widthPixels1X, int heightPixels1X, int redColorByte, int greenColorByte, int blueColorByte, int alphaColorByte, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight, bool flickers, bool changesColor, bool toggleable, int toggleXPixels1X, int toggleYPixels1X, int flickerOnTicks, int flickerOffTicks, bool flickerRandomUpToOnTicks, bool flickerRandomUpToOffTicks);
-
 
 	LightData(int id, const string& name);
 
-
 	//static LightData* fromBase64ZippedJSON(const string& b64);
-
 
 	//static LightData* fromJSON(const string& json);
 
 	string& initFromString(string& t);
 
-
 	virtual string getTYPEIDString() override;
-
 
 	int getWidthPixels1X();
 	int getHeightPixels1X();
@@ -99,7 +88,6 @@ public:
 
 	int getFocusRadiusPixels1X();
 	int getFocusRadiusPixelsHQ();
-
 
 	int getToggleXPixels1X();
 	int getToggleYPixels1X();
@@ -116,7 +104,6 @@ public:
 	u8 b();
 	u8 a();
 
-
 	float getBlendFalloff();
 	float getDecayExponent();
 	bool getIsDayLight();
@@ -128,7 +115,6 @@ public:
 	int getFlickerOffTicks();
 	bool getFlickerRandomUpToOnTicks();
 	bool getFlickerRandomUpToOffTicks();
-
 
 	//set
 

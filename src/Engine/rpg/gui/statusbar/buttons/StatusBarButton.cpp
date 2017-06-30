@@ -5,14 +5,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
 
-
 Logger StatusBarButton::log = Logger("StatusBarButton");
-
 
 StatusBarButton::StatusBarButton()
 { //=========================================================================================================================
@@ -50,7 +47,6 @@ void StatusBarButton::update()
 
 	setOffsets();
 
-
 	if (getControlsManager()->getMouseX() > clickX0 && getControlsManager()->getMouseX() < clickX1 && getControlsManager()->getMouseY() > (GLUtils::getViewportHeight() - StatusBar::sizeY))
 	{
 		glow = true;
@@ -78,7 +74,6 @@ void StatusBarButton::update()
 	{
 		glow = false;
 	}
-
 
 	if (pulse == true)
 	{
@@ -124,7 +119,6 @@ void StatusBarButton::setEnabled(bool b)
 void StatusBarButton::render(int layer)
 { //=========================================================================================================================
 
-
 	if (enabled == false)
 	{
 		return;
@@ -135,7 +129,6 @@ void StatusBarButton::render(int layer)
 		return;
 	}
 
-
 	if (layer == 0)
 	{
 		if (glow)
@@ -143,9 +136,7 @@ void StatusBarButton::render(int layer)
 			GLUtils::drawTexture(StatusBar::glowTexture, (float)glowX0, (float)glowX1, (float)glowY0, (float)glowY1, glowAlpha, GLUtils::FILTER_LINEAR);
 		}
 
-
 		GLUtils::drawTexture(texture, (float)offsetX0, (float)offsetX1, (float)offsetY0 + pressedOffsetY, (float)(StatusBar::sizeY - offsetY1) + pressedOffsetY, 1.0f, GLUtils::FILTER_LINEAR);
-
 
 		if (glow)
 		{

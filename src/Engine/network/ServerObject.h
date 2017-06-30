@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 #include "../EnginePart.h"
 
@@ -20,7 +18,6 @@ public:
 	static Logger log;
 	ServerObject();
 	ServerObject(Engine* g);
-
 
 protected:
 	bool _initialized = false;
@@ -36,7 +33,6 @@ public:
 
 private:
 	virtual void sendServerRequest();
-
 
 protected:
 	bool loadedInfoDataFromServer = false; //non-threaded check

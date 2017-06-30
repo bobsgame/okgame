@@ -3,13 +3,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class UDPPeerConnection;
 class TCPServerConnection;
 class Logger;
-
 
 
 
@@ -40,7 +38,6 @@ class FriendManager;
 class StatusBar;
 class NotificationManager;
 
-
 class EnginePart
 {
 public:
@@ -57,20 +54,16 @@ private:
 	//static BGClientEngine* clientGameEngine;
 	//ControlsManager* controlsManager = nullptr;
 
-
 	
 	bool isActivated = false;
 	long long lastTimeHere = -1;
 	long long timeActivated = -1;
 
-
 public:
 	EnginePart();
 	EnginePart(Engine* e);
 
-
 	//void setControlsManager(ControlsManager* controlsManager);
-
 
 	virtual void toggleActivated();
 	virtual void setActivated(bool b);
@@ -84,7 +77,6 @@ public:
 	int getSecondsSinceLastHere();
 	int getMinutesSinceLastHere();
 
-
 	Engine* getEngine();
 	Cameraman* getCameraman();
 	MapManager* getMapManager();
@@ -97,7 +89,6 @@ public:
 	CinematicsManager* getCinematicsManager();
 
 	virtual Map* getCurrentMap();
-
 
 	static ControlsManager* getControlsManager();
 

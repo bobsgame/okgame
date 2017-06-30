@@ -1,7 +1,6 @@
 ﻿
 #include "stdafx.h"
 
-
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
 //All Rights Reserved.
@@ -11,9 +10,7 @@
 
 #include <complex>
 
-
 Logger ControlsManager::log = Logger("ControlsManager");
-
 
 int ControlsManager::DEADZONE = 8000;
 
@@ -33,7 +30,6 @@ ControlsManager::ControlsManager()
 {
 
 }
-
 
 
 //			case SDLK_w:
@@ -132,14 +128,11 @@ ControlsManager::ControlsManager()
 
 
 
-
-
 //==========================================================================================================================
 void ControlsManager::cleanup()
 {//==========================================================================================================================
 
 	log.info("Cleaning up controls...");
-
 
 	if (controllersByJoystickID.size()>0)
 	{
@@ -162,7 +155,6 @@ void ControlsManager::initControllers()
 { //=========================================================================================================================
 
 	log.info("Init Controllers...");
-
 
 	//   try
 	//   {
@@ -202,7 +194,6 @@ void ControlsManager::initControllers()
 
 
 
-
 	string s = Main::getPath();
 	SDL_GameControllerAddMappingsFromFile(string(s+"data/gamecontrollerdb.txt").c_str());
 	//-----------------------------
@@ -227,7 +218,6 @@ void ControlsManager::initControllers()
 			g->id = id;
 			gameControllers.add(g);
 
-
 			char* mapping = SDL_GameControllerMapping(controller);
 			log.info("Controller " + to_string(i) + " is mapped as " + string(mapping));
 
@@ -244,17 +234,13 @@ void ControlsManager::initControllers()
 
 
 
-
 	string path = string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + "controls.cfg";
 
-
 }
-
 
 //=========================================================================================================================
 void ControlsManager::resetPressedButtons()
 {//=========================================================================================================================
-
 
 
 	//------------------------------------
@@ -329,7 +315,6 @@ void ControlsManager::resetPressedButtons()
 	}
 
 
-
 	//------------------------------------
 	//reset game button pressed
 	//------------------------------------
@@ -349,7 +334,6 @@ void ControlsManager::resetPressedButtons()
 	BGCLIENT_OPENMENU_PRESSED = false;
 	BGCLIENT_QUICKZOOMOUT_PRESSED = false;
 	BGCLIENT_QUICKZOOMIN_PRESSED = false;
-
 
 
 	MINIGAME_UP_PRESSED = false;
@@ -376,7 +360,6 @@ void ControlsManager::resetPressedButtons()
 void ControlsManager::setButtonStates()
 {//=========================================================================================================================
 
-
 	//------------------------------------
 	//see if button was held last frame
 	//if it wasnt, pressed = 1
@@ -385,7 +368,6 @@ void ControlsManager::setButtonStates()
 	//------------------------------------
 	//store held
 	//------------------------------------
-
 
 	bool LAST_KEY_UP_HELD = KEY_UP_HELD;
 	bool LAST_KEY_DOWN_HELD = KEY_DOWN_HELD;
@@ -444,13 +426,11 @@ void ControlsManager::setButtonStates()
 	bool LAST_KEY_NUM9_HELD = KEY_NUM9_HELD;
 
 
-
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
 		GameController *g = gameControllers.get(i);
 		g->setButtonStates();
 	}
-
 
 
 
@@ -469,7 +449,6 @@ void ControlsManager::setButtonStates()
 	bool LAST_BGCLIENT_OPENMENU_HELD = BGCLIENT_OPENMENU_HELD;
 	bool LAST_BGCLIENT_QUICKZOOMOUT_HELD = BGCLIENT_QUICKZOOMOUT_HELD;
 	bool LAST_BGCLIENT_QUICKZOOMIN_HELD = BGCLIENT_QUICKZOOMIN_HELD;
-
 
 
 
@@ -496,7 +475,6 @@ void ControlsManager::setButtonStates()
 	//reset held
 	//------------------------------------
 
-
 	//only reset held for game buttons, hardware buttons get set by SDL events
 
 	BGCLIENT_UP_HELD = false;
@@ -514,7 +492,6 @@ void ControlsManager::setButtonStates()
 	BGCLIENT_OPENMENU_HELD = false;
 	BGCLIENT_QUICKZOOMOUT_HELD = false;
 	BGCLIENT_QUICKZOOMIN_HELD = false;
-
 
 
 	MINIGAME_UP_HELD = false;
@@ -583,7 +560,6 @@ SDL_GameControllerName
 SDL_GameControllerNameForIndex
 SDL_GameControllerOpen
 SDL_GameControllerUpdate
-
 
 SDL_ControllerAxisEvent
 SDL_ControllerButtonEvent
@@ -684,7 +660,6 @@ SDL_JoyHatEvent
 //int16 StickX = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTX);
 //int16 StickY = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTY);
 
-
 //SDL_Joystick *JoystickHandle = SDL_GameControllerGetJoystick(ControllerHandles[ControllerIndex]);
 //RumbleHandles[ControllerIndex] = SDL_HapticOpenFromJoystick(JoystickHandle);
 //
@@ -710,8 +685,6 @@ SDL_JoyHatEvent
 	//set key held
 	//------------------------------------
 	//if(Mouse.isButtonDown(0))MOUSEBGCLIENT_0_HELD=true;else MOUSEBGCLIENT_0_HELD=false;
-
-
 
 
 
@@ -787,13 +760,11 @@ SDL_JoyHatEvent
 
 
 
-
 	//While there are events to handle
 	while (Main::events.size()>0)
 	{
 		SDL_Event event = Main::events.get(0);
 		Main::events.removeAt(0);
-
 
 		if (event.type == SDL_CONTROLLERDEVICEADDED) 
 		{
@@ -832,12 +803,10 @@ SDL_JoyHatEvent
 				g->id = joystickID;
 				gameControllers.add(g);
 
-
 				char* mapping = SDL_GameControllerMapping(controller);
 				log.debug("Controller " + to_string(joystickDeviceIndex) + " is mapped as " + string(mapping));
 
 			}
-
 
 		}
 		else
@@ -861,7 +830,6 @@ SDL_JoyHatEvent
 					}
 				}
 
-
 			 }
 			 else
 			if (event.type == SDL_CONTROLLERBUTTONDOWN)
@@ -873,7 +841,6 @@ SDL_JoyHatEvent
 					SDL_GameController *controller = controllersByJoystickID.get(joystickID);
 					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
 					int value = event.cbutton.state;
-
 
 
 					string s = string("Controller Button Down Event: " + string(SDL_GameControllerName(controller)));
@@ -935,7 +902,6 @@ SDL_JoyHatEvent
 					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
 					int value = event.cbutton.state;
 
-
 					string s = string("Controller Button Up Event: " + string(SDL_GameControllerName(controller)));
 					if (b == SDL_CONTROLLER_BUTTON_A)s += (" Button: SDL_CONTROLLER_BUTTON_A");
 					if (b == SDL_CONTROLLER_BUTTON_B)s += (" Button: SDL_CONTROLLER_BUTTON_B");
@@ -987,7 +953,6 @@ SDL_JoyHatEvent
 				int id = event.caxis.which;
 
 
-
 				//Unfortunately, this is easier to idenfity because it says "lefttrigger" and is correct, but it ONLY fires an axis down event and not an axis-up event.
 				//Oh, it does register an axis up event, it's just value 0 and not -
 				if (controllersByJoystickID.containsKey(id))
@@ -1034,9 +999,7 @@ SDL_JoyHatEvent
 							}
 						}
 
-
 					}
-
 
 					//none of this works, have to check axis manually:
 					for (int i = 0; i < gameControllers.size(); i++)
@@ -1070,7 +1033,6 @@ SDL_JoyHatEvent
 				}
 				
 
-
 			 }
 			else
 			 if (event.type == SDL_JOYAXISMOTION)
@@ -1078,7 +1040,6 @@ SDL_JoyHatEvent
 				 SDL_JoystickID id = event.jaxis.which;
 				// SDL_Joystick *joy = SDL_JoystickFromInstanceID(id);
 				 
-
 
 				if (controllersByJoystickID.containsKey(id))
 				{
@@ -1098,7 +1059,6 @@ SDL_JoyHatEvent
 						log.debug(s);
 #endif
 
-
 						//this is wrong, SDL_CONTROLLER_AXIS_TRIGGERLEFT does not correspond to joystick axis
 						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= 32768)CONTROLLER1_L_HELD = true;
 						//if (axis == SDL_CONTROLLER_AXIS_RIGHTX&&value<=-30000)CONTROLLER1_L_HELD = false;
@@ -1106,14 +1066,12 @@ SDL_JoyHatEvent
 						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= 32768)CONTROLLER1_R_HELD = true;
 						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value<=-30000)CONTROLLER1_R_HELD = false;
 
-
 						//SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
 						//get GUID mapping for axis number
 						//buffer in which to write the ASCII string
 						//int cbGUID = 4096; //the size of pszGUID
 						//SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), pszGUID, cbGUID);
 						//log.debug("GUIDString: " + string(pszGUID));
-
 
 						char* mappingChar = SDL_GameControllerMapping(controller);
 						string mapping = string(mappingChar);
@@ -1131,7 +1089,6 @@ SDL_JoyHatEvent
 						bool leftX = false;
 						bool leftY = false;
 						//search for lefttrigger:___,
-
 
 						if (mapping.find("lefttrigger:" + axisString + ",") != string::npos)leftTrigger = true;
 						else if (mapping.find("righttrigger:" + axisString + ",") != string::npos)rightTrigger = true;
@@ -1154,7 +1111,6 @@ SDL_JoyHatEvent
 								if (rightTrigger&&value >= 32000)log.debug("Right trigger held");
 								if (rightTrigger&&value <= -32000)log.debug("Right trigger released");
 #endif
-
 
 								//none of this works, have to check axis manually:
 
@@ -1184,7 +1140,6 @@ SDL_JoyHatEvent
 					}
 				}
 				 
-
 
 			 }
 			else
@@ -1405,12 +1360,9 @@ SDL_JoyHatEvent
 
 
 
-
-
 	//------------------------------------
 	//set keys and controllers pressed states based on LAST_HELD
 	//------------------------------------
-
 
 
 	if(KEY_UP_HELD			&&LAST_KEY_UP_HELD			==false)KEY_UP_PRESSED=true;
@@ -1470,7 +1422,6 @@ SDL_JoyHatEvent
 	if(KEY_NUM9_HELD		&&LAST_KEY_NUM9_HELD		==false)KEY_NUM9_PRESSED=true;
 
 
-
 	//------------------------------------
 	//set controller pressed
 	//------------------------------------
@@ -1484,7 +1435,6 @@ SDL_JoyHatEvent
 	//------------------------------------
 	//map keys and joysticks to game button
 	//------------------------------------
-
 
 	//bgclient
 
@@ -1529,7 +1479,6 @@ SDL_JoyHatEvent
 	}
 
 
-
 	//generic minigame
 
 	if (KEY_UP_HELD == true)MINIGAME_UP_HELD = true;
@@ -1568,7 +1517,6 @@ SDL_JoyHatEvent
 
 
 
-
 	//------------------------------------
 	//set whether game button was just pressed
 	//------------------------------------
@@ -1588,7 +1536,6 @@ SDL_JoyHatEvent
 	if (BGCLIENT_OPENMENU_HELD == true		&& LAST_BGCLIENT_OPENMENU_HELD == false)BGCLIENT_OPENMENU_PRESSED = true;
 	if (BGCLIENT_QUICKZOOMOUT_HELD == true	&& LAST_BGCLIENT_QUICKZOOMOUT_HELD == false)BGCLIENT_QUICKZOOMOUT_PRESSED = true;
 	if (BGCLIENT_QUICKZOOMIN_HELD == true	&& LAST_BGCLIENT_QUICKZOOMIN_HELD == false)BGCLIENT_QUICKZOOMIN_PRESSED = true;
-
 
 
 	if (MINIGAME_UP_HELD						&&LAST_MINIGAME_UP_HELD == false)			 MINIGAME_UP_PRESSED = true;

@@ -24,7 +24,6 @@ enum class RotationType //static
 	DTET,
 };
 
-
 //=========================================================================================================================
 class BlockOffset //static
 {//=========================================================================================================================
@@ -134,7 +133,6 @@ public:
 BOOST_CLASS_VERSION(Rotation, 1)
 BOOST_CLASS_TRACKING(Rotation, boost::serialization::track_never)
 
-
 //=========================================================================================================================
 class RotationSet
 {//=========================================================================================================================
@@ -174,7 +172,6 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(name);
 		//ar & BOOST_SERIALIZATION_NVP(rotationSet);
 
-
 		importExport_rotationSet.clear();
 		{
 			for (int i = 0; i<rotationSet.size(); i++)
@@ -196,7 +193,6 @@ public:
 		}
 		importExport_rotationSet.clear();
 	}
-
 
 };
 BOOST_CLASS_VERSION(RotationSet, 1)
@@ -230,7 +226,6 @@ public:
 	bool useAsGarbagePiece = false;											Info useAsGarbagePiece_Info = Info("Use As Garbage Piece", "One block from this piece type and its properties will be used when creating garbage blocks from the bottom of the screen.");
 	bool useAsPlayingFieldFillerPiece = false;								Info useAsPlayingFieldFillerPiece_Info = Info("Use As Playing Field Filler Piece", "One block from this piece type and its properties will be used when filling the playing field.");
 	bool disallowAsFirstPiece = false;										Info disallowAsFirstPiece_Info = Info("Disallow As First Piece", "This piece cannot be the first piece.");
-
 
 	string spriteName = "";													Info spriteName_Info = Info("Sprite Name", "The preset sprite graphics that this piece should use.  The sprite will cover the entire piece, overriding the individual block sprites.");
 
@@ -293,7 +288,6 @@ public:
 		boost::uuids::random_generator generator;
 		uuid = to_string(generator());
 
-
 		this->spriteName = spriteName;
 		this->color = color;
 		//this->numBlocks = numBlocks;
@@ -302,7 +296,6 @@ public:
 		this->randomSpecialPieceChanceOneOutOf = randomSpecialPieceChanceOneOutOf;
 		this->frequencySpecialPieceTypeOnceEveryNPieces = frequencySpecialPieceTypeOnceEveryNPieces;
 	}
-
 
 
 };
@@ -321,7 +314,6 @@ public:
 	//BlockType noBlockType;
 	//ArrayList<Color> emptyColors;
 
-
 	Grid* grid = nullptr;
 	GameLogic* game = nullptr;
 
@@ -332,7 +324,6 @@ public:
 
 	ArrayList<shared_ptr<Block>> blocks;
 
-
 	float cursorAlphaFrom = 0.3f;
 	float cursorAlphaTo = 1.0f;
 	long long cursorFadeTicksPerPhase = 200;
@@ -340,7 +331,6 @@ private:
 	float cursorAlpha = 0.3f; // cursorAlphaFrom;
 	long long cursorFadeTicks = 0;
 	bool cursorFadeInOutToggle = false;
-
 
 public:
 	float ghostAlphaFrom = 0.5f;
@@ -351,14 +341,12 @@ private:
 	long long ghostFadeTicks = 0;
 	bool ghostFadeInOutToggle = false;
 
-
 public:
 	shared_ptr<Block> holdingBlock = nullptr;
 	shared_ptr<PieceType> pieceType = nullptr;
 	bool overrideAnySpecialBehavior = false;
 	int piecesSetSinceThisPieceSet = 0;
 	bool setInGrid = false;
-
 
 //	bool operator==(const Piece& rhs) const
 //	{

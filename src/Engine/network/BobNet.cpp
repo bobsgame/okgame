@@ -5,9 +5,7 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 const int BobNet::clientUDPPortStartRange = 6434;
-
 
 const string BobNet::endline = ":END:\r\n";
 //const bool BobNet::debugMode = true;
@@ -105,7 +103,6 @@ const string BobNet::Bobs_Game_GameTypesAndSequences_Vote_Request = "Bobs_Game_G
 const string BobNet::Bobs_Game_GameTypesAndSequences_Vote_Response = "Bobs_Game_GameTypesAndSequences_Vote_Response:";
 
 
-
 const string BobNet::Bobs_Game_RoomList_Request = "Bobs_Game_RoomList_Request:";
 const string BobNet::Bobs_Game_RoomList_Response = "Bobs_Game_RoomList_Response:";
 const string BobNet::Bobs_Game_TellRoomHostToAddMyUserID = "Bobs_Game_TellRoomHostToAddMyUserID:";
@@ -116,7 +113,6 @@ const string BobNet::Bobs_Game_HostingPublicRoomCanceled = "Bobs_Game_HostingPub
 const string BobNet::Bobs_Game_HostingPublicRoomEnded = "Bobs_Game_HostingPublicRoomEnded:";
 
 const string BobNet::Bobs_Game_GameStats = "Bobs_Game_GameStats:";
-
 
 const string BobNet::Bobs_Game_UserStatsForSpecificGameAndDifficulty = "Bobs_Game_UserStatsForSpecificGameAndDifficulty:";
 const string BobNet::Bobs_Game_LeaderBoardsByTotalTimePlayed = "Bobs_Game_LeaderBoardsByTotalTimePlayed:";
@@ -131,9 +127,6 @@ const string BobNet::Bobs_Game_HighScoreBoardsByBlocksCleared = "Bobs_Game_HighS
 
 
 
-
-
-
 Logger BobNet::log = Logger("BobNet");
 Logger* BobNet::_threadLog = new Logger("BobNet");
 
@@ -141,7 +134,6 @@ ArrayList<UDPPeerConnection*> BobNet::udpConnections;
 TCPServerConnection BobNet::tcpServerConnection;
 int BobNet::myStatus = status_AVAILABLE;
 ArrayList<State*> BobNet::engines;
-
 
 bool BobNet::threadStarted = false;
 
@@ -167,7 +159,6 @@ BobNet::~BobNet()
 
 	//delete tcpServerConnection;
 }
-
 
 mutex BobNet::threadLog_Mutex;
 thread BobNet::t;
@@ -221,7 +212,6 @@ void BobNet::update()
 		udpSTUNMessageReceived(s);
 	}
 
-
 	tcpServerConnection.update();
 
 	for (int i = 0; i < udpConnections.size(); i++)
@@ -230,7 +220,6 @@ void BobNet::update()
 		p->update();
 	}
 }
-
 
 
 //===============================================================================================
@@ -251,7 +240,6 @@ void BobNet::updateThreadLoop()
 
 	}
 }
-
 
 //===============================================================================================
 bool BobNet::_ensureSocketIsOpen()
@@ -469,7 +457,6 @@ bool BobNet::udpSTUNMessageReceived(string e)
 	return false;
 }
 
-
 //===============================================================================================
 void BobNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myPort)
 { //===============================================================================================
@@ -501,7 +488,6 @@ void BobNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myP
 		log.error("Could not send UDP packet to STUN server");
 	}
 }
-
 
 //===============================================================================================
 UDPPeerConnection* BobNet::addFriendID(long long friendID, int type)

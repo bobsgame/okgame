@@ -7,7 +7,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#undef INADDR_ANY       
 //#undef INADDR_LOOPBACK  
 //#undef INADDR_BROADCAST 
@@ -40,7 +39,6 @@ int main(int argc, char* argv[])//int argc, char **argv)
 
 	cout << "Starting..." << endl;
 
-
 	Main::setMain(new Main());
 	Main::getMain()->mainInit();
 	Main::getMain()->mainLoop();
@@ -49,14 +47,11 @@ int main(int argc, char* argv[])//int argc, char **argv)
 	return 0;
 }
 
-
 Logger Main::log = Logger("Main");
-
 
 Main* Main::mainObject = nullptr;
 
 ArrayList<SDL_Event> Main::events;
-
 
 bool Main::quit = false;
 
@@ -64,11 +59,9 @@ bool Main::quit = false;
 bool Main::GLOBAL_hq2x_is_on = false;
 //int Main::fpsmeter = true;
 
-
 //==========================================================================================================================
 Main::Main()
 {//=========================================================================================================================
-
 
 }
 
@@ -113,7 +106,6 @@ void Main::openURL(string url)
 #endif
 }
 
-
 //FileUtils *Main::cacheManager = new FileUtils();
 //bool Main::isApplet = false;
 
@@ -131,7 +123,6 @@ GlobalSettings* Main::globalSettings = nullptr;
 ControlsManager* Main::controlsManager = nullptr;
 BGClientEngine* Main::gameEngine = nullptr;
 
-
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
 Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
 Gwen::Renderer::OpenGL* Main::gwenRenderer = nullptr;
@@ -141,7 +132,6 @@ Gwen::Skin::TexturedBase* Main::gwenSkin = nullptr;
 //==========================================================================================================================
 void Main::mainInit()
 {//=========================================================================================================================
-
 
  //easy mode
  //debug/skiptext
@@ -170,12 +160,10 @@ void Main::mainInit()
 	cacheManager = new FileUtils();
 	cacheManager->initCache();
 
-
 	loadGlobalSettingsFromXML();
 
 	if (globalSettings->useXInput == false)SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
-
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
@@ -188,13 +176,11 @@ void Main::mainInit()
 		std::cerr << "SDLNet_Init: " << SDLNet_GetError() << std::endl;
 	}
 
-
 	if (lzo_init() != LZO_E_OK)
 	{
 		printf("internal error - lzo_init() failed !!!\n");
 		printf("(this usually indicates a compiler bug - try recompiling\nwithout optimizations, and enable '-DLZO_DEBUG' for diagnostics)\n");
 	}
-
 
 	//atexit(SDL_Quit);
 	
@@ -204,7 +190,6 @@ void Main::mainInit()
 	AudioManager::initAudioLibrary();
 
 	GLUtils::checkSDLError("");
-
 
 	//	bool debugOnLiveServer = true;
 	//	if (debugOnLiveServer == false)
@@ -217,7 +202,6 @@ void Main::mainInit()
 		serverAddressString = BobNet::releaseServerAddress;
 		STUNServerAddressString = BobNet::releaseSTUNServerAddress;
 	}
-
 
 
 
@@ -234,7 +218,6 @@ void Main::mainInit()
 	//GLUtils::initTWL();
 	GLUtils::e();
 
-
 	controlsManager = new ControlsManager();
 	ControlsManager::initControllers();
 	GLUtils::e();
@@ -246,7 +229,6 @@ void Main::mainInit()
 	{
 		doLegalScreen();
 	}
-
 
 
 	stateManager = new StateManager();
@@ -269,7 +251,6 @@ void Main::mainInit()
 	//titleScreenState = new TitleScreenState();
 	//youWillBeNotifiedState = new YouWillBeNotifiedState();
 	GLUtils::e();
-
 
 	//-------------------
 	//init game
@@ -295,7 +276,6 @@ void Main::mainInit()
 	srand((int)(time(nullptr)));
 
 
-
 	log.info("Init GUI...");
 
 	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
@@ -312,14 +292,12 @@ void Main::mainInit()
 	gwenInput->Initialize(gwenCanvas);
 
 
-
 	//log.info("Create BobsGame");
 	//bobsGame = new BobsGame();
 	//stateManager->setState(bobsGame);
 	//log.info("Init BobsGame");
 	//bobsGame->init();
 	
-
 
 
 
@@ -354,7 +332,6 @@ void Main::mainInit()
 
 				gameEngine->cinematicsManager->fadeFromBlack(10000);
 
-
 				//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
 				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
 				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
@@ -373,7 +350,6 @@ void Main::mainInit()
 
 	}
 
-
 	
 	log.info("Init BobNet...");
 	bobNet = new BobNet();
@@ -385,15 +361,11 @@ void Main::mainInit()
 
 
 
-
-
 	log.info("Version Check...");
 	checkVersion();
 
 	System::initTimers();
 	GLUtils::e();
-
-
 
 
 
@@ -422,9 +394,7 @@ void Main::mainInit()
 #endif
 
 
-
 	//ImGui_ImplSdl_Init(GLUtils::window);
-
 
 
 
@@ -450,7 +420,6 @@ void Main::loadGlobalSettingsFromXML()
 	Path userDataPath(userDataPathString);
 	File userDataPathDir(userDataPath);
 	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
-
 
 	string filename = "globalSettings.xml";
 	File f = File(userDataPathString + filename);
@@ -492,9 +461,7 @@ void Main::loadGlobalSettingsFromXML()
 
 
 
-
 }
-
 
 //=========================================================================================================================
 void Main::saveGlobalSettingsToXML()
@@ -504,7 +471,6 @@ void Main::saveGlobalSettingsToXML()
 	Path userDataPath(userDataPathString);
 	File userDataPathDir(userDataPath);
 	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
-
 
 	string filename = "globalSettings.xml";
 
@@ -532,7 +498,6 @@ void Main::saveGlobalSettingsToXML()
 
 }
 
-
 ////===========================================================================================================================
 //void Main::e(const string& &whereErrorOccurredString)
 //{//===========================================================================================================================
@@ -550,7 +515,6 @@ void Main::saveGlobalSettingsToXML()
 //
 //}
 
-
 bool Main::introMode = false;
 bool Main::previewClientInEditor = false;
 
@@ -558,9 +522,7 @@ bool Main::previewClientInEditor = false;
 void Main::initClientEngine()
 {//=========================================================================================================================
 
-
 }
-
 
 
 //      string Main::facebookID = "";
@@ -586,7 +548,6 @@ void Main::initClientEngine()
 //
 //         setGotFacebookResponse_S(true);
 //      }
-
 
 //==========================================================================================================================
 void Main::whilefix()
@@ -630,7 +591,6 @@ void Main::whilefix()
 void Main::delay(int ticks)
 {//==========================================================================================================================
 
-
  	long long startTime = System::currentHighResTimer();
  	int ticksPassed = 0;
 
@@ -657,13 +617,11 @@ void Main::oldrender()
 void Main::update()
 {//=========================================================================================================================
 
-
 //	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 //	{
 //		// .. give it to the input handler to process
 //		GwenInput.ProcessMessage(msg);
 //	}
-
 
 	processEvents();
 	//GLUtils::e();
@@ -678,7 +636,6 @@ void Main::update()
 	console->update();
 	//GLUtils::e();
 	bobNet->update();
-
 
 //	ImGui_ImplSdl_NewFrame(GLUtils::window);
 //
@@ -712,7 +669,6 @@ void Main::update()
 
 
 
-
 }
 
 //=========================================================================================================================
@@ -736,7 +692,6 @@ void Main::render()
 
 }
 
-
 //=========================================================================================================================
 void Main::mainLoop()
 { //=========================================================================================================================
@@ -758,7 +713,6 @@ void Main::mainLoop()
 		//            GLUtils::drawFilledRect(0, 0, 0, 0, GLUtils::getViewportWidth(), 0, GLUtils::getViewportHeight(), 0.2f);
 		//            GLUtils::drawOutlinedString("The servers are shutting down soon for updating.", GLUtils::getViewportWidth() / 2 - 60, GLUtils::getViewportHeight() / 2 - 12, Color::white);
 		//        }
-
 
 		//		if (GLUtils::isActive() == false && debugMode == false)
 		//		{
@@ -874,7 +828,6 @@ void Main::doResizeCheck()
 void Main::doScreenShotCheck()
 { //=========================================================================================================================
 
-
 	bool takeScreenShot = false;
 
 	if (controlsManager->key_PRINTSCREEN_Pressed() || controlsManager->key_F12_Pressed())
@@ -889,7 +842,6 @@ void Main::doScreenShotCheck()
 	{
 		screenShotKeyPressed = false;
 	}
-
 
 	if (takeScreenShot)
 	{
@@ -914,7 +866,6 @@ void Main::doScreenShotCheck()
 		//  					//getFileName = System::getProperty("user.home") + "/" + imageName;
 		//  				}
 
-
 		int w = GLUtils::getRealWindowWidth();
 		int h = GLUtils::getRealWindowHeight();
 		glReadBuffer(GL_FRONT);
@@ -938,9 +889,7 @@ void Main::doScreenShotCheck()
 		delete[] flipdata;
 	}
 
-
 }
-
 
 //==========================================================================================================================
 void Main::printEvent(const SDL_Event* e)
@@ -1009,11 +958,9 @@ void Main::printEvent(const SDL_Event* e)
 }
 
 
-
 //==========================================================================================================================
 void Main::processEvents()
 {//==========================================================================================================================
-
 
 	SDL_Event event;
 
@@ -1022,7 +969,6 @@ void Main::processEvents()
 	{
 
 		//printEvent(&event);
-
 
 		//If the user has Xed out the window
 		if (event.type == SDL_QUIT)
@@ -1092,7 +1038,6 @@ void Main::processEvents()
 }
 
 
-
 //void OnResize(int w, int h) {
 //
 //   //textureWidth = (float)w;
@@ -1126,11 +1071,9 @@ void Main::processEvents()
 //   return true;
 //}
 
-
 //==========================================================================================================================
 void Main::doLegalScreen()
 { //=========================================================================================================================
-
 
   //
   //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
@@ -1182,7 +1125,6 @@ void Main::doLegalScreen()
 //==========================================================================================================================
 void Main::showControlsImage()
 { //=========================================================================================================================
-
 
   //
   //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
@@ -1263,7 +1205,6 @@ using Poco::Delegate;
 using Poco::Zip::Decompress;
 
 
-
 //==========================================================================================================================
 string Main::getPath()
 {//==========================================================================================================================
@@ -1271,7 +1212,6 @@ string Main::getPath()
 	string exePath = string(SDL_GetBasePath());//this is where the .exe is run from.i.e. bobsgame/DebugVS/
 
 	string cwd = Path::current();//this is the current working dir i.e. bobsgame/
-
 
 	string versionTextPath = exePath + "version.txt";
 	if (File(versionTextPath).exists() == false)
@@ -1340,7 +1280,6 @@ void Main::checkVersion()
      Expected in: /usr/lib/libSystem.B.dylib
      */
 
-
 	//if not in itch
 	string exePath = string(SDL_GetBasePath());
 	log.debug("SDL_GetBasePath(): " + exePath);//this is where the .exe is run from.i.e. bobsgame/DebugVS/
@@ -1348,10 +1287,8 @@ void Main::checkVersion()
 	string pocoPath = Path::current();
 	log.debug("Poco::Path::current():" + pocoPath);//this is the current working dir i.e. bobsgame/
 
-
 	log.debug("SDL_GetPrefPath():" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
 	log.debug("Poco::Path::home():" + Path::home());
-
 
 	if (exePath.find("itch") != std::string::npos) 
 	{
@@ -1493,14 +1430,12 @@ void Main::checkVersion()
 				zipname = "http://bobsgame.com/latestLinux.zip";
 			}
 
-
 			//if not in correct path quit
 			if(File(exePath + exename).exists()==false)
 			{
 				log.error(exename+" not found in path:"+exePath);
 				return;
 			}
-
 
 			//Caption* c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", BobFont::ttf_oswald_16, BobColor::white, BobColor::clear);
 			Caption* c = new Caption(nullptr, (int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", 16, BobColor::white, BobColor::clear);
@@ -1550,7 +1485,6 @@ void Main::checkVersion()
 			c->render();
 			SDL_GL_SwapWindow(GLUtils::window);
 
-
 			//download bobsgame.com/latestWindows.zip to working dir
 			try
 			{
@@ -1569,7 +1503,6 @@ void Main::checkVersion()
 				//std::istream& rs =
                 session.receiveResponse(response);
 				//int contentlen = (int)response.getContentLength();
-
 
 				FileStream fs(exePath + "update.zip", ios::out | ios::trunc | ios::binary);
 				std::auto_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
@@ -1608,7 +1541,6 @@ void Main::checkVersion()
 			{
 				//unzip latestZip to temp
 
-
 #if defined(__LINUX__)
 				int result = system(string("unzip \"" + exePath + "update.zip\"").c_str());
 #else
@@ -1626,8 +1558,6 @@ void Main::checkVersion()
 				inp.close();
 				//log.info("close()");
 #endif
-
-
 
 
 
@@ -1689,7 +1619,6 @@ void Main::checkVersion()
 #endif
 
 
-
 #if defined(__WINDOWS__) && defined(_DEBUG)
 	//open version.txt
 	//increment it
@@ -1745,22 +1674,17 @@ void Main::makeGhostThread()
 }
 
 
-
 //==========================================================================================================================
 void Main::cleanup()
 {//=========================================================================================================================
 
 
-
 	log.info("Cleaning up...");
-
 
 	AudioManager::cleanup();
 
 
-
 	ControlsManager::cleanup();
-
 
 	if (gameEngine != nullptr)
 	{
@@ -1784,7 +1708,6 @@ void Main::cleanup()
 	log.info("Exiting...");
 	SDL_Quit();
 
-
 }
 
 ////==========================================================================================================================
@@ -1792,7 +1715,6 @@ void Main::cleanup()
 //{//==========================================================================================================================
 //	return gameEngine;
 //}
-
 
 //==========================================================================================================================
 Main* Main::getMain()

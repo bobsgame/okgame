@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 #include "src/Engine/network/ServerObject.h"
 
@@ -24,12 +22,10 @@ protected:
 	bool _fileExists = false;
 	bool startedDownloadThread = false;
 
-
 private:
 	SoundData* data = nullptr;
 public:
 	vector<u8>* byteData = nullptr;
-
 
 private:
 	int channel = 0;
@@ -43,17 +39,13 @@ private:
 protected:
 	//ArrayList<SoundChannel*>* soundChannels;
 
-
 public:
 	//Sound(Engine* g, int id);
 
-
 	Sound(Engine* g, SoundData* data);
-
 
 	//Only for use for preloading sound files not on server, they do not have IDs
 	Sound(Engine* g, string filename);
-
 
 	SoundData* getData();
 
@@ -63,9 +55,7 @@ public:
 	//public String getFullFilePath(){return data.getFullFilePath();}
 	string& getMD5Name();
 
-
 	string getTYPEIDString();
-
 
 	void setID(int id);
 	void setName(const string& name);
@@ -73,32 +63,24 @@ public:
 	//public void setFullFilePath(String getFullFilePath){data.setFullFilePath(getFullFilePath);}
 	void setMD5Name(const string& s);
 
-
 protected:
 	bool getFileExists();
 
 	void setFileExists(bool i);
 
-
 public:
 	vector<u8>* getByteData();
-
 
 	//The following method was originally marked 'synchronized':
 	void setData_S(SoundData* data);
 
 	//Thread* downloadThread = nullptr;
 
-
 	virtual void update() override;
-
 
 	void play();
 
-
 	void play(float pitch, float volume, int timesToPlay);
-
-
 
 
 
@@ -111,7 +93,6 @@ public:
 	public:
 		int timesToPlay = 1;
 		//bool deleting = false;
-
 
 
 

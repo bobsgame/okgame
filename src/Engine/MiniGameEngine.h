@@ -3,7 +3,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include "Engine.h"
@@ -40,7 +39,6 @@ public:
 
 
 
-
 	int numTitleMenuTextureFrames = 0;
 	ArrayList<BobTexture*> *titleMenuTextures = new ArrayList<BobTexture*>();
 	BobTexture* titleMenuTexture = nullptr;
@@ -56,7 +54,6 @@ public:
 
 	BobMenu *titleMenu = nullptr;
 	int titleMenuCursorPosition = 0;
-
 
 	virtual void setupMenus();
 	virtual bool updateMenus();
@@ -75,7 +72,6 @@ public:
 
 	virtual void tryToCloseGame();
 	virtual bool isNetworkGame();
-
 
 protected:
 
@@ -101,7 +97,6 @@ protected:
 	void multiplayerScreenUpdate();
 
 
-
 public:
 	//	bool throttle30fps = false;
 	//	long long ticksPassed = 0;
@@ -124,7 +119,6 @@ public:
 	static int gameChallengeResponse_ACCEPT;
 	static int gameChallengeResponse_DECLINE;
 
-
 private:
 	int _incomingGameChallengeResponse = gameChallengeResponse_NONE;
 public:
@@ -141,7 +135,6 @@ public:
 
 	//void setConnection(UDPPeerConnection* connection);
 	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string e);
-
 
 private:
 	void incoming_GameChallengeResponse(const string& s);

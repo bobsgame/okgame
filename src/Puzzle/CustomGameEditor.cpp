@@ -3208,7 +3208,6 @@ void CustomGameEditorControl::populateGameTypesListBox()
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
 
-
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &CustomGameEditorControl::onGameTypesListSelect);
 		if (g->yourVote!="none")row->SetTextColor(Gwen::Color(128, 128, 128));

@@ -5,9 +5,7 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
-
 
 
 
@@ -21,10 +19,8 @@ EntityData::EntityData()
 EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
 { //=========================================================================================================================
 
-
 	initEntityData(id, name, spriteAssetName, spawnXPixels1X, spawnYPixels1X, initialFrame, pushable, nonWalkable, alphaByte, scale, ticksPerPixelMoved, aboveTopLayer, aboveWhenEqual, alwaysOnBottom, animateThroughFrames, randomTimeBetweenAnimation, ticksBetweenFrames, ticksBetweenAnimation, onlyHereDuringEvent, randomFrames, disableShadow, eventData, comment);
 }
-
 
 //=========================================================================================================================
 void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, EventData* eventData, const string& comment)
@@ -34,10 +30,8 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 
 	this->spriteName = spriteAssetName;
 
-
 	this->spawnXPixels1X = (float)spawnXPixels1X;
 	this->spawnYPixels1X = (float)spawnYPixels1X;
-
 
 	this->initialFrame = initialFrame;
 
@@ -45,7 +39,6 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 	this->nonWalkable = nonWalkable;
 
 	this->toAlpha = ((float)(alphaByte) / 255.0f); //NOTICE, USING getToAlpha NOT alpha, alpha is wrong!
-
 
 	this->scale = (float)(scale);
 
@@ -62,13 +55,11 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 	this->aboveWhenEqual = aboveWhenEqual;
 	this->alwaysOnBottom = alwaysOnBottom;
 
-
 	this->animateThroughFrames = animateThroughFrames;
 	this->randomFrames = randomFrames;
 	this->randomTimeBetweenAnimation = randomTimeBetweenAnimation;
 	this->ticksBetweenFrames = ticksBetweenFrames;
 	this->ticksBetweenAnimation = ticksBetweenAnimation;
-
 
 	this->eventData = eventData;
 	this->onlyHereDuringEvent = onlyHereDuringEvent;
@@ -99,11 +90,9 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 
 
 
-
 string& EntityData::initFromString(string& t)
 {
 	t = super::initFromString(t);
-
 
 
 	t = t.substr(t.find("spriteName:`") + 1);
@@ -318,7 +307,6 @@ string& EntityData::initFromString(string& t)
 	t = t.substr(t.find("`,") + 2);
 
 
-
 	t = t.substr(t.find("eventData:{") + 1);
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t, "}") == false)
@@ -330,12 +318,9 @@ string& EntityData::initFromString(string& t)
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
 
-
 	return t;
 
-
 }
-
 
 
 string EntityData::getTYPEIDString()
@@ -363,12 +348,10 @@ float EntityData::getSpawnYPixelsHQ()
 	return spawnYPixels1X * 2;
 }
 
-
 string& EntityData::getSpriteName()
 {
 	return spriteName;
 }
-
 
 string& EntityData::getComment()
 {

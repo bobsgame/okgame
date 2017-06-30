@@ -3,15 +3,12 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
 
 
-
 class AreaData;
-
 
 class Area : public EnginePart
 {
@@ -19,17 +16,14 @@ public:
 
 	static Logger log;
 
-
 protected:
 	AreaData* data = nullptr;
-
 
 public:
 	long long ticksSinceSpawnTry = 0;
 
 	bool spawned = false;
 	bool triedSpawn = false;
-
 
 	float mapX = 0;
 	float mapY = 0;
@@ -38,34 +32,25 @@ public:
 
 	Map* map = nullptr;
 
-
 	Area();
 	Area(Engine* g, Map* m);
-
 
 	Area(Engine* g, AreaData* a, Map* m);
 
 	Event* event = nullptr;
 
-
 	Map* getMap();
-
 
 	bool fadingInOut = false;
 	float fadeAlpha = 0.0f;
 
-
 	void renderActionIcon();
-
 
 	virtual void update();
 
-
 	void renderDebugBoxes();
 
-
 	virtual void renderDebugInfo();
-
 
 	/// <summary>
 	/// This gets called repeatedly in events, until it returns a non-null value, at which point the event continues and does not ask again.
@@ -76,15 +61,11 @@ public:
 
 	void tellServerTalkedToToday();
 
-
 	bool isWithinScreenBounds();
-
 
 	bool inRangeOfEntityByAmount(Entity* e, int amt);
 
-
 	float getDistanceFromEntity(Entity* e);
-
 
 	bool isEntityHitBoxTouchingMyBoundary(Entity* e);
 
@@ -126,7 +107,6 @@ public:
 
 	bool isXYXYTouchingMyCenterByAmount(float left, float top, float right, float bottom, int amt);
 
-
 	float getTop();
 
 	float getLeft();
@@ -142,29 +122,21 @@ public:
 
 	float roundedMiddleY();
 
-
 private:
 	float screenX();
 
-
 	float screenY();
-
 
 public:
 	float screenLeft();
 
-
 	float screenRight();
-
 
 	float screenTop();
 
-
 	float screenBottom();
 
-
 	AreaData* getData();
-
 
 	float getX();
 	float getY();
@@ -172,13 +144,11 @@ public:
 	int getWidth();
 	int getHeight();
 
-
 	string& getName();
 	string& getComment();
 	int getID();
 
 	//int mapID();
-
 
 	float arrivalXPixelsHQ();
 	float arrivalYPixelsHQ();

@@ -5,14 +5,11 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 //#pragma once
 
 
 
-
 Logger Music::log = Logger("Music");
-
 
 //Music::Music(Engine* g, int id)
 //{ //=========================================================================================================================
@@ -51,7 +48,6 @@ Music::Music(Engine* g, MusicData* data)
 	AudioManager::musicList->add(this);
 }
 
-
 Music::Music(Engine *g, string filename)
 { //=========================================================================================================================
 	
@@ -75,7 +71,6 @@ Music::Music(Engine *g, string filename)
 
 	byteData = FileUtils::loadByteFileFromExePath(filename);
 
-
 #ifdef USE_SOLOUD
 	filename = Main::getPath() + filename;
 	//soLoudWave = new SoLoud::WavStream();
@@ -97,7 +92,6 @@ Music::Music(Engine *g, string filename)
 	AudioManager::musicList->add(this);
 
 }
-
 
 
 MusicData* Music::getData()
@@ -175,8 +169,6 @@ void Music::setData_S(MusicData* data)
 
 
 
-
-
 void Music::update()
 { //=========================================================================================================================
 
@@ -245,7 +237,6 @@ void Music::update()
 		}
 	}
 
-
 	if (fileExists == true || getByteData() != nullptr)
 	{
 
@@ -296,7 +287,6 @@ void Music::update()
 			}
 		}
 
-
 		if (ticksToFadeOutTotal != -1)
 		{
 			ticksToFadeOutCounter -= (int)getEngine()->engineTicksPassed();
@@ -312,7 +302,6 @@ void Music::update()
 		}
 	}
 }
-
 
 
 void Music::play()
@@ -378,7 +367,6 @@ void Music::stop()
 	ticksToFadeOutTotal = -1;
 	volumeWhenStartedFade = 0;
 
-
 	shouldBePlaying = false;
 
 	if (playingStarted)
@@ -393,7 +381,6 @@ void Music::stop()
 
 	channel = -1;
 }
-
 
 
 void Music::setLoop(bool b)

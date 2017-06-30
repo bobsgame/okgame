@@ -8,7 +8,6 @@
 class Logger;
 
 
-
 class ScreenSprite : public Entity
 {
 public:

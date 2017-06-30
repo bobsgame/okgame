@@ -7,8 +7,6 @@
 
 
 
-
-
 Logger Block::log = Logger("Block");
 
 class BobsGame;
@@ -124,7 +122,6 @@ bool BlockType::operator!=(const BlockType& rhs) const
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 
-
 template void BlockType::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive &ar, const unsigned int);
 template void BlockType::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive &ar, const unsigned int);
 //=========================================================================================================================
@@ -142,7 +139,6 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	ar & BOOST_SERIALIZATION_NVP(ignoreWhenMovingDownBlocks);
 	ar & BOOST_SERIALIZATION_NVP(chainConnectionsMustContainAtLeastOneBlockWithThisTrue);
 	ar & BOOST_SERIALIZATION_NVP(ignoreWhenCheckingChainConnections);
-
 
 	//ar & BOOST_SERIALIZATION_NVP(colors);
 	importExport_colors.clear();
@@ -181,7 +177,6 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		}
 	}
 	importExport_colors.clear();
-
 
 
 	//ar & BOOST_SERIALIZATION_NVP(specialColor);
@@ -231,7 +226,6 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 			makePieceTypeWhenCleared_DEPRECATED.add(bp);
 		}
 		importExport_makePieceTypeWhenCleared.clear();
-
 
 	}
 	else
@@ -308,7 +302,6 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 }
 
 
-
 //=========================================================================================================================
 Block::Block()
 {//=========================================================================================================================
@@ -325,11 +318,9 @@ Block::Block(GameLogic* game, Grid* grid, shared_ptr<Piece> piece, shared_ptr<Bl
 	this->blockType = blockType;
 }
 
-
 //=========================================================================================================================
 void Block::update()
 {//=========================================================================================================================
-
 
 
 	if(blockType->sprite==nullptr && blockType->spriteName.length() > 0)
@@ -345,7 +336,6 @@ void Block::update()
 	effectFadeTicks += getGameLogic()->ticks();
 
 	ticksSinceLastMovement += getGameLogic()->ticks();
-
 
 	if (slamming)
 	{
@@ -594,13 +584,11 @@ void Block::update()
 			//if (grid->contains(xGrid, yGrid))
 			grid->remove(this->shared_from_this(), true, true);
 
-
 			getGameLogic()->manuallyApplyGravityWithoutChainChecking();//TODO: probably only apply gravity to the relevant blocks
 			getGameLogic()->forceGravityThisFrame = true;//TODO: doubt i need to do this because of above
 			didFlashingColoredDiamond = true;
 		}
 	}
-
 
 	colorFlashTicks += getGameLogic()->ticks();
 
@@ -618,13 +606,11 @@ void Block::update()
 		colorFlash = colorFlashTo - ((float)(colorFlashTicks) / (float)(colorFlashTicksPerPhase)) * (colorFlashTo - colorFlashFrom);
 	}
 
-
 	if (effectFadeTicks > effectFadeTicksPerPhase)
 	{
 		effectFadeTicks = 0;
 		effectFadeInOutToggle = !effectFadeInOutToggle;
 	}
-
 
 	if (effectFadeInOutToggle == true)
 	{
@@ -634,8 +620,6 @@ void Block::update()
 	{
 		effectAlpha = effectAlphaTo - ((float)(effectFadeTicks) / (float)(effectFadeTicksPerPhase)) * (effectAlphaTo - effectAlphaFrom);
 	}
-
-
 
 
 
@@ -735,7 +719,6 @@ void Block::update()
 					connectedDownRight = true;
 				}
 
-
 				if (c->xGrid == xGrid && c->yGrid == yGrid - 1)
 				{
 					connectedUp = true;
@@ -774,7 +757,6 @@ void Block::update()
 	}
 
 	//BobColor noColor;
-
 
 	if (getSettings()->blockRule_drawBlocksConnectedByColorInPiece)
 	{
@@ -856,11 +838,9 @@ void Block::update()
 	}
 
 
-
 	if (blockType->sprite != nullptr)
 	{
 		string animationName = "";
-
 
 		if (connectedUp && connectedDown && connectedLeft && connectedRight)
 		{
@@ -926,7 +906,6 @@ void Block::update()
 			animationName = ("ConnectedDown");
 		}
 
-
 		if (direction != -1)
 		{
 			if (direction == UP)
@@ -947,12 +926,10 @@ void Block::update()
 			}
 		}
 
-
 		if (counterCount > -1)
 		{
 			if (blockType->sprite->getAnimationByName("" + to_string(counterCount)) != nullptr)animationName = "" + to_string(counterCount);
 		}
-
 
 		if (panic)
 		{
@@ -968,7 +945,6 @@ void Block::update()
 		{
 			if (blockType->sprite->getAnimationByName("Flashing") != nullptr)animationName = "Flashing";
 		}
-
 
 		//if (anim == nullptr)anim = blockType->sprite->getFirstAnimation();
 		if (animationName.length() > 0)
@@ -986,14 +962,12 @@ void Block::update()
 	}
 }
 
-
 //=========================================================================================================================
 void Block::setXYOffsetInPiece(int x, int y)
 {//=========================================================================================================================
 	this->xInPiece = x;
 	this->yInPiece = y;
 }
-
 
 //=========================================================================================================================
 void Block::breakConnectionsInPiece()
@@ -1007,7 +981,6 @@ void Block::breakConnectionsInPiece()
 	}
 	connectedBlocksByColor.clear();
 
-
 	for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
@@ -1015,7 +988,6 @@ void Block::breakConnectionsInPiece()
 		connectedBlock->connectedBlocksByPiece.remove(this->shared_from_this());
 	}
 	connectedBlocksByPiece.clear();
-
 
 	if (piece != nullptr)
 	{
@@ -1036,7 +1008,6 @@ void Block::breakConnectionsInPiece()
 			}
 		}
 
-
 		for (int i = 0; i < (int)piece->blocks.size(); i++)
 		{
 			if (piece->blocks.get(i) == this->shared_from_this())
@@ -1056,20 +1027,17 @@ void Block::breakConnectionsInPiece()
 	}
 }
 
-
 //=========================================================================================================================
 float Block::getScreenX()
 {//=========================================================================================================================
 	return grid->getXInFBO() + xGrid * cellW();
 }
 
-
 //=========================================================================================================================
 float Block::getScreenY()
 {//=========================================================================================================================
 	return grid->getYInFBO() + yGrid * cellH() + (grid->scrollPlayingFieldY/grid->scrollBlockIncrement)*cellH();
 }
-
 
 //=========================================================================================================================
 float* Block::getInterpolatedScreenXY(float screenX, float screenY)
@@ -1148,7 +1116,6 @@ float* Block::getInterpolatedScreenXY(float screenX, float screenY)
 			float betweenX = ((float)(ticksSinceLastMovement) / (float)(ticks)) * xDiff;
 			float betweenY = ((float)(ticksSinceLastMovement) / (float)(ticks)) * yDiff;
 
-
 			//added this to try and fix skipping
 			if (abs(betweenX) > abs(xDiff))
 			{
@@ -1158,7 +1125,6 @@ float* Block::getInterpolatedScreenXY(float screenX, float screenY)
 			{
 				betweenY = yDiff;
 			}
-
 
 			screenX = lastScreenX + betweenX;
 			screenY = lastScreenY + betweenY;
@@ -1179,11 +1145,9 @@ float* Block::getInterpolatedScreenXY(float screenX, float screenY)
 		ticksSinceLastMovement = 0;
 	}
 
-
 	float* xy = new float[2]{screenX,screenY};
 	return xy;
 }
-
 
 //=========================================================================================================================
 void Block::renderDisappearing()
@@ -1192,11 +1156,9 @@ void Block::renderDisappearing()
 	render(getScreenX(), getScreenY(), disappearingAlpha, 1.0f + (2.0f - (disappearingAlpha * 2.0f)), true, false);
 }
 
-
 //=========================================================================================================================
 void Block::render(float screenX, float screenY, float a, float scale, bool interpolate, bool ghost)
 {//=========================================================================================================================
-
 
 	BobColor *renderColor = nullptr;
 
@@ -1241,7 +1203,6 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 			renderColor = new BobColor(*BobColor::black);
 		}
 	}
-
 
 	
 	float w = blockW() * scale;
@@ -1311,7 +1272,6 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		delete[] xy;
 	}
 
-
 	//-------------------------------------------------
 	//do locking animation, draw darker if locked into Grid()
 	//-------------------------------------------------
@@ -1337,7 +1297,6 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		}
 	}
 
-
 	if (flashingToBeRemoved)
 	{
 		if (flashingToBeRemovedLightDarkToggle == true)
@@ -1354,11 +1313,9 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		}
 	}
 
-
 	float r = textureColor->rf();
 	float g = textureColor->gf();
 	float b = textureColor->bf();
-
 
 	if (slamming)
 	{
@@ -1377,7 +1334,6 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 
 
-
 	//-------------------------------------------------
 	//if Piece() has color, draw color to background before draw Piece()
 	//so that special blocks like spark balls inside of square pieces don't look so disconnected.
@@ -1392,14 +1348,12 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	//			}
 	//		}
 
-
 	//for special blocks that are larger than one tile (like the weight), we need to draw just the part of the frame we need
 	if (overrideAnySpecialBehavior == false && piece != nullptr && piece->pieceType != nullptr && piece->pieceType->spriteName != "" && piece->overrideAnySpecialBehavior == false)
 	{
 		//figure out what block we are in the piece
 
 		//draw that part of the sprite
-
 
 		float blocksWidth = (float)piece->getWidth();
 		float blocksHeight = (float)piece->getHeight();
@@ -1408,20 +1362,16 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float lowestY = (float)piece->getLowestOffsetY();
 		float thisY = (float)yInPiece - lowestY;
 
-
 		Sprite* sprite = getBobsGame()->getSpriteFromName(piece->pieceType->spriteName);
 		BobTexture* texture = sprite->texture;
-
 
 		float x0InImage = (thisX / blocksWidth) + 1.0f/ sprite->getImageWidth();
 		float x1InImage = ((thisX + 1) / blocksWidth) + 1.0f / sprite->getImageWidth();
 		float y0InImage = (thisY / blocksHeight) + 1.0f / sprite->getImageHeight();
 		float y1InImage = ((thisY + 1) / blocksHeight) + 1.0f / sprite->getImageHeight();
 
-
 		float spriteImageWidth = (float)sprite->getImageWidth();
 		float spriteImageHeight = (float)sprite->getImageHeight();
-
 
 		float imageToTextureRatioX = (spriteImageWidth / (float)texture->getTextureWidth());
 		float tx0 = x0InImage * imageToTextureRatioX;
@@ -1430,9 +1380,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float ty0 = y0InImage * imageToTextureRatioY;
 		float ty1 = y1InImage * imageToTextureRatioY;
 
-
 		//log.info(""+tx0+" "+tx1+" "+ty0+" "+ty1);
-
 
 		float x0 = screenX;
 		float x1 = screenX + w;
@@ -1446,7 +1394,6 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	}
 
 
-
 	if (blockType->specialSprite != nullptr && overrideAnySpecialBehavior == false)
 	{
 		blockType->specialSprite->drawFrame(0, screenX, screenX + w, screenY, screenY + h, r, g, b, a, GLUtils::FILTER_LINEAR);
@@ -1458,7 +1405,6 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		if(anim!=nullptr)blockType->sprite->drawFrame(anim->frameStart + frame, screenX, screenX + w, screenY, screenY + h, r, g, b, a, GLUtils::FILTER_LINEAR);
 	}
 
-
 	if (getSettings()->blockRule_drawDotToSquareOffBlockCorners)
 	{
 		if (connectedDown && connectedRight && !connectedDownRight)GLUtils::drawFilledRectXYWH(screenX + w - 1.0f, screenY + h - 1.0f, 1.0f * scale, 1.0f * scale, r, g, b, a);
@@ -1467,14 +1413,12 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		if (connectedUp && connectedRight && !connectedUpRight)GLUtils::drawFilledRectXYWH(screenX + w - 1.0f, screenY, 1.0f * scale, 1.0f * scale, r, g, b, a);
 	}
 
-
 	if (getSettings()->blockRule_fillSolidSquareWhenSetInGrid && setInGrid && flashingToBeRemoved == false)
 	{
 		BobColor c = BobColor(*renderColor, 0.1f);
 		GLUtils::drawFilledRectXYWH(screenX, screenY, w, h, c.rf(), c.gf(), c.bf(), c.af());
 		//delete c;
 	}
-
 
 	if (getSettings()->drawDotOnCenterOfRotation)
 	{
@@ -1519,7 +1463,6 @@ void Block::renderOutlines(float screenX, float screenY, float s)
 				//down
 				if (yGrid + 1 <= grid->getHeight() - 1 && grid->get(xGrid, yGrid + 1) == nullptr)GLUtils::drawFilledRectXYWH(screenX, screenY + h, w, i, 1.0f, 1.0f, 1.0f, gridAlpha);
 
-
 				//if left and up is clear, draw pixel there
 				if (xGrid - 1 >= 0)
 					if (yGrid - 1 >= 0 && grid->get(xGrid - 1, yGrid - 1) == nullptr)
@@ -1556,13 +1499,11 @@ void Block::renderOutlines(float screenX, float screenY, float s)
 	//		}
 }
 
-
 //=========================================================================================================================
 void Block::setColor(BobColor *color)
 {//=========================================================================================================================
 	this->color = color;
 }
-
 
 //=========================================================================================================================
 void Block::setRandomBlockTypeColor()
@@ -1802,7 +1743,6 @@ BobColor* Block::getColor()
 //=========================================================================================================================
 BobColor* Block::specialColor()
 {//=========================================================================================================================
-
 
 
 	if (blockType == nullptr)

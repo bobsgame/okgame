@@ -3,7 +3,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include <src/Engine/rpg/FriendCharacter.h>
@@ -12,7 +11,6 @@
 #include <queue>
 #include <mutex>
 class Logger;
-
 
 
 class FriendData
@@ -45,7 +43,6 @@ public:
 	int miniGamesTimesLost = 0;
 	int miniGamesTimesTied = 0;
 
-
 	string facebookID = "";
 	string facebookEmail = "";
 	//string facebookBirthday = "";
@@ -58,7 +55,6 @@ public:
 	//string facebookWebsite = "";
 	//string googlePlusID = "";
 
-
 	void initWithGameSave(GameSave &g);
 
 	string encode(int friendType);
@@ -66,7 +62,6 @@ public:
 	void decode(string s);
 
 };
-
 
 
 
@@ -82,7 +77,6 @@ public:
 	UDPPeerConnection(long long friendUserID, int type);
 	~UDPPeerConnection();
 
-
 	void setDisconnectedFromPeer_S(string reason);
 	bool udpPeerMessageReceived(string e);
 	void writeUnreliable_S(string s);
@@ -92,7 +86,6 @@ public:
 	int peerType = -1;
 	int peerStatus = BobNet::status_AVAILABLE;// TODO need to send current status, away, busy, private, do not disturb, playing nD game, etc.
 
-
 	static const int FACEBOOK_TYPE = 0;
 	static const int USERNAME_TYPE = 1;
 	static const int EMAIL_TYPE = 2;
@@ -101,7 +94,6 @@ public:
 
 	void update();
 	
-
 
 private:
 	static int lastUsedUDPPort;
@@ -376,7 +368,6 @@ public:
 		_connectedToPeer = b;
 	}
 
-
 	//------------------------------------
 private:
 	bool _gotPeerConnectResponse = false;
@@ -529,7 +520,6 @@ private:
 	void _checkForTimeout();
 	void _getFriendData();
 
-
 	//------------------------------------
 	//non-threaded
 	//------------------------------------
@@ -553,7 +543,6 @@ public:
 	//bool multiplayer_DisableVSGarbage = false;
 	//GameSequence *multiplayer_SelectedGameSequence = nullptr;
 	//string multiplayer_SelectedDifficultyName = "Beginner";
-
 
 	//engine parts to forward udp messages to, they also get forwarded to engines which dispatch them
 	ArrayList<EnginePart*> engineParts;

@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -17,13 +15,10 @@ protected:
 	string name;
 	int id = -1;
 
-
 public:
 	AssetData();
 
-
 	AssetData(int id, const string& name);
-
 
 	virtual string& initFromString(string& t);
 
@@ -102,10 +97,8 @@ public:
 	//
 	//	}
 
-
 	string& getName();
 	int getID();
-
 
 	void setName(const string& s);
 	void setID(int s);

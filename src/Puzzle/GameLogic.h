@@ -3,7 +3,6 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 #include <thread>
@@ -45,7 +44,6 @@ enum class MovementType
 //	MIDDLE
 //};
 
-
 //
 //class ControlsState
 //{
@@ -59,7 +57,6 @@ enum class MovementType
 //
 //	}
 //};
-
 
 //=========================================================================================================================
 class FrameState
@@ -151,7 +148,6 @@ BOOST_CLASS_VERSION(FrameState, 1)
 BOOST_CLASS_TRACKING(FrameState, boost::serialization::track_never)
 
 
-
 //=========================================================================================================================
 class GameLogic : public EnginePart
 {//=========================================================================================================================
@@ -162,7 +158,6 @@ public:
 	//static BobColor noColor;
 	//static ArrayList<BobColor> emptyColors;
 
-
 	GameSequence *currentGameSequence = nullptr;
 	PuzzlePlayer* player = nullptr;
 
@@ -171,7 +166,6 @@ public:
 	
 	ArrayList<GameType*> gameTypeRandomBag;
 	GameType* currentGameType = nullptr;//currentGameType
-
 
 	Grid* grid = nullptr;
 
@@ -183,14 +177,12 @@ public:
 	static int aboveGridBuffer;
 	//static int gameTypeCount;
 
-
 	GameLogic(Engine* g, long long seed);
 	~GameLogic();
 
 	void initializeRandomGenerator();
 	void fillGameTypeRandomBag();
 	GameType* getGameTypeFromRandomBag();
-
 
 	bool dontResetNextPieces = false;
 
@@ -224,7 +216,6 @@ private:
 	bool repeatStartedRight = false;
 	bool repeatStartedSlam = false;
 
-
 	int timesToFlashBlocks = 20;
 	long long flashBlockSpeedTicks = 30;
 
@@ -256,7 +247,6 @@ private:
 	bool extraStage4 = false;
 	long extraStageTicksPassed = 0;//TODO:
 
-
 	bool gravityThisFrame = false;
 
 	bool pieceSetAtBottom = false;
@@ -264,14 +254,12 @@ private:
 	bool playingFastMusic = false;
 	bool firstDeath = false;
 
-
 	long long currentLineDropSpeedTicks = 0;
 	long long lockDelayTicksCounter = 0;
 	long long lineDropTicksCounter = 0;
 	long long spawnDelayTicksCounter = 0;
 	long long lineClearDelayTicksCounter = 0;
 	long long moveDownLineTicksCounter = 0;
-
 
 	string playingMusic = "";
 
@@ -281,11 +269,9 @@ private:
 	long long manualStackRiseTicksCounter = 0;
 	int manualStackRiseSoundToggle = 0;
 
-
 	int timesToFlashScreenQueue = 0;
 	long long flashScreenTicksCounter = 0;
 	bool flashScreenOnOffToggle = false;
-
 
 	long long flashBlocksTicksCounter = 0;
 	int timesToFlashBlocksQueue = 0;
@@ -294,17 +280,14 @@ private:
 public:
 	ArrayList<shared_ptr<Block>> fadingOutBlocks;
 
-
 	shared_ptr<Piece> currentPiece = nullptr;
 
 	shared_ptr<Piece> holdPiece = nullptr;
 	ArrayList<shared_ptr<Piece>> nextPieces;
 	ArrayList<shared_ptr<Piece>> nextPieceSpecialBuffer;
 
-
 	int lastKnownLevel = 0;
 	int currentLevel = 0;
-
 
 	int piecesMadeThisGame = 0;
 	int lastPiecesMadeThisGame = 0;
@@ -329,7 +312,6 @@ public:
 public:
 	int createdPiecesCounterForFrequencyPieces = 0;
 
-
 private:
 	bool waitingForStart = true;
 	bool waitingForReady = true;
@@ -346,7 +328,6 @@ private:
 	//GameType currentGameType = (GameType)0;
 
 	bool mute = false;
-
 
 	int currentChain = 0;
 	int currentCombo = 0;
@@ -366,7 +347,6 @@ private:
 	shared_ptr<Block> garbageBlock = nullptr;
 
 	bool checkForChainAgainIfNoBlocksPopping = false;
-
 
 public:
 	void setGameType(GameType* gameType);
@@ -391,7 +371,6 @@ public:
 
 private:
 	void setControlsState(PuzzlePlayer *p);
-
 
 
 private:
@@ -479,7 +458,6 @@ private:
 	void diedSequence();
 	void creditsSequence();
 
-
 	//---------------------------------------------------
 	// captions
 	//----------------------------------------------------
@@ -497,15 +475,12 @@ private:
 	float captionColorCycleHueValue = 0;
 	bool captionColorCycleHueInOutToggle = false;
 
-
 	float captionScale = 1.0f;
 	int captionYSize = (int)(14 * 1.0f); // captionScale);
-
 
 	BobColor* captionTextColor = nullptr;// = Color::white;
 	BobColor* captionBGColor = nullptr;// = Color::black;
 	int captionFontSize = 0;// = BobFont::font_normal_8;
-
 
 	float announcementCaptionScale = 0.3f;
 	BobColor* announcementCaptionTextColor = nullptr;// = Color::white;
@@ -514,7 +489,6 @@ private:
 	int resultCaptionFontSize = 0;// = BobFont::font_32;
 
 	int mediumCaptionFontSize = 0;// = BobFont::font_normal_16_outlined_smooth;
-
 
 public:
 	Caption* levelCaption = nullptr;
@@ -559,7 +533,6 @@ private:
 	ArrayList<Caption*>* infoCaptions = new ArrayList<Caption*>();
 	ArrayList<Caption*>* announcementCaptions = new ArrayList<Caption*>();
 
-
 public:
 	Caption* totalTicksPassedCaption = nullptr;
 private:
@@ -574,13 +547,11 @@ public:
 	Caption* loseCaption = nullptr;
 	Caption* garbageWaitCaption = nullptr;
 
-
 	//lines cleared
 	//blocks cleared
 	//dobules
 	//triples
 	//tetrises
-
 
 	//pieces
 	//blocks
@@ -607,7 +578,6 @@ public:
 
 	//garbage
 
-
 private:
 	void makeAnnouncementCaption(const string& text);
 	void makeAnnouncementCaption(const string& text, BobColor* color);
@@ -617,7 +587,6 @@ private:
 
 public:
 	void deleteAllCaptions();
-
 
 	void updateInfoCaptionsXY();
 	void updateCaptions();
@@ -638,14 +607,11 @@ public:
 	int gridW();
 	int gridH();
 
-
 public:
-
 
 
 	long long ticks();
 	FrameState* getFrameState();
-
 
 
 
@@ -680,7 +646,6 @@ public:
 	void sendPacketsToOtherPlayers(PuzzlePlayer *p);
 	bool waitingForNetworkFrames = true;
 
-
 	void incoming_FramePacket(const string &s);
 
 	long long checkLastTrafficTime = 0;
@@ -691,9 +656,7 @@ public:
 	bool getTheyForfeit();
 	void setTheyForfeit(bool b);
 
-
 	bool pauseMiniMenuShowing = false;
-
 
 
 	//------------------------------------
@@ -719,7 +682,6 @@ public:
 		lock_guard<mutex> lock(_stopThread_Mutex);
 		_stopThread = b;
 	}
-
 
 	//------------------------------------
 

@@ -3,16 +3,13 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
 
 
-
 class LightData;
 class Light;
-
 
 class ImageData
 {
@@ -23,7 +20,6 @@ class BufferedImageData : public ImageData
 private:
 	Light* outerInstance = nullptr;
 
-
 	int width = 0;
 	int height = 0;
 
@@ -32,7 +28,6 @@ private:
 
 	int texWidth = 0;
 	int texHeight = 0;
-
 
 public:
 	BufferedImageData(Light* outerInstance, BufferedImage* bufferedImage);
@@ -56,24 +51,19 @@ public:
 	int getWidth();
 };
 
-
 class Light : public Entity
 {
 public:
 	static Logger log;
-
 
 	static int NOT_DRAWN;
 	static int DRAWING;
 	static int OVERLAPS_SOMETHING;
 	static int DRAWN;
 
-
 	BobTexture* texture = nullptr;
 
-
 	int sortingState = 0;
-
 
 	//private LightData data;
 
@@ -82,18 +72,14 @@ public:
 	//public int id = -1;
 	//public String stateName = "";
 
-
 	bool isScreenLight = false;
-
 
 	/// <summary>
 	/// This constructor is specifically for creating lights not bound to the map, but to the screen instead. The mapX and mapY coords will be used as screen coords.
 	/// </summary>
 	Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight);
 
-
 	Light(Engine* g, LightData* lightAsset, Map* m);
-
 
 	bool flickerOnOffToggle = true;
 	int onTicks = 0;
@@ -102,7 +88,6 @@ public:
 	bool toggleOnOffToggle = true;
 
 	bool drawLightThisFrame = true;
-
 
 	virtual void update() override;	
 	void initLight(LightData* lightAsset);
@@ -141,10 +126,8 @@ public:
 	//virtual EntityData* getData() override;
 	LightData* getLightData();
 
-
 	virtual float getWidth() override;
 	virtual float getHeight() override;
-
 
 	int getRadiusPixelsHQ();
 	int focusRadiusPixelsHQ();
@@ -175,7 +158,6 @@ public:
 
 	//public String getTYPEIDString(){return getData().getTYPEIDString();}
 
-
 	//set
 
 	void setWidthPixels(int s);
@@ -189,7 +171,6 @@ public:
 	void setGreenColorByte(u8 s);
 	void setBlueColorByte(u8 s);
 	void setAlphaColorByte(u8 s);
-
 
 	void setBlendFalloff(float s);
 	void setDecayExponent(float s);

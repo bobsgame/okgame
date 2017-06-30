@@ -10,7 +10,6 @@ class TCPServerConnection
 public:
 	
 
-
 	static Logger log;
 
 	TCPServerConnection();
@@ -81,7 +80,6 @@ public:
 		lock_guard<mutex> lock(_lastReceivedDataTime_Mutex);
 		_lastReceivedDataTime = b;
 	}
-
 
 	//------------------------------------
 private:
@@ -242,7 +240,6 @@ public:
 	//------------------------------------
 
 
-
 	IPaddress * _serverAddress = nullptr;
 	mutex _serverAddress_Mutex;
 	IPaddress* getServerAddress_S()
@@ -312,9 +309,6 @@ private:
 
 
 
-
-
-
 	//------------------------------------
 
 	//------------------------------------
@@ -322,7 +316,6 @@ private:
 	//------------------------------------
 private:
 	bool statsAllowed = false;
-
 
 
 	//------------------------------------
@@ -341,7 +334,6 @@ public:
 		return _gotLoginResponse_S;
 	}
 
-
 	//------------------------------------
 private:
 	bool _loginWasValid_S = false;
@@ -359,7 +351,6 @@ public:
 		return _loginWasValid_S;
 	}
 
-
 	//------------------------------------
 private:
 	bool _gotReconnectResponse_S = false;
@@ -375,7 +366,6 @@ public:
 		lock_guard<mutex> lock(_gotReconnectResponse_Mutex);
 		return _gotReconnectResponse_S;
 	}
-
 
 
 	//------------------------------------
@@ -396,7 +386,6 @@ public:
 	}
 
 
-
 	//------------------------------------
 private:
 	string _sessionToken = "";
@@ -413,7 +402,6 @@ public:
 		return _sessionToken;
 	}
 	//------------------------------------
-
 
 
 	//------------------------------------
@@ -450,7 +438,6 @@ public:
 	}
 	//------------------------------------
 
-
 	void setNotAuthorizedOnServer_S()
 	{//===============================================================================================
 		setLoginResponse_S(false, false); //may have to reinitialize if we connect to a different server
@@ -475,7 +462,6 @@ public:
 	void sendLoginRequest(string email, string password, bool stats);
 	void sendReconnectRequest(long long userID, string sessionToken, bool stats);
 
-
 private:
 	void incomingLoginResponse(string s);
 	void incomingReconnectResponse(string s);
@@ -493,7 +479,6 @@ public:
 		return g.userID;
 	}
 
-
 private:
 	void incomingSessionWasLoggedOnSomewhereElse(string s);
 	void incomingServersAreShuttingDown(string s);
@@ -501,13 +486,10 @@ private:
 
 
 
-
-
 	
 	
 
 public:
-
 
 
 //	bool gotFacebookLoginResponse_S = false;
@@ -536,7 +518,6 @@ private:
 	//void incomingFacebookCreateAccountOrLoginResponse(string s);
 
 
-
 	//------------------------------------
 	//CREATE ACCOUNT
 	//------------------------------------
@@ -554,12 +535,10 @@ public:
 		return _gotCreateAccountResponse;
 	}
 
-
 	void sendCreateAccountRequest(string userName, string email, string password);
 
 private:
 	void incomingCreateAccountResponse(string s);
-
 
 
 	//------------------------------------
@@ -581,11 +560,9 @@ public:
 
 
 
-
 	void sendPasswordRecoveryRequest(string email);
 private:
 	void incomingPasswordRecoveryResponse(string s);
-
 
 
 
@@ -618,7 +595,6 @@ public:
 			this->requestString = request;
 			this->requestID = requestID;
 		}
-
 
 	};
 
@@ -658,7 +634,6 @@ public:
 
 
 
-
 	//------------------------------------
 	string _encryptedGameSave = "";
 	mutex _encryptedGameSave_Mutex;
@@ -681,7 +656,6 @@ private:
 
 
 
-
 	
 	//------------------------------------
 private:
@@ -700,7 +674,6 @@ public:
 	}
 
 
-
 	//------------------------------------
 private:
 	GameSave _gameSave;
@@ -716,8 +689,6 @@ public:
 		lock_guard<mutex> lock(_gameSave_Mutex);
 		_gameSave = s;
 	}
-
-
 
 
 
@@ -765,10 +736,8 @@ private:
 	void incomingUpdateFacebookAccountInDBResponse(string s);
 
 
-
 public:
 	void sendOnlineFriendListRequest_S();
-
 
 	void sendBobsGameGameTypesAndSequencesDownloadRequest_S();
 	void incomingBobsGameGameTypesAndSequencesDownloadResponse(string &s);
@@ -829,7 +798,6 @@ public:
 	//------------------------------------
 
 
-
 	void sendBobsGameRoomListRequest_S();
 	void incomingBobsGameRoomListResponse(string &s);
 	void tellBobsGameRoomHostMyUserID_S(const string& roomUUID);
@@ -865,7 +833,6 @@ public:
 	//------------------------------------
 	
 
-
 private:
 	void incomingOnlineFriendsListResponse(string s);
 	void incomingFriendOnlineNotification(string s);
@@ -876,7 +843,6 @@ public:
 	string& getAddFriendByUserNameResponse();
 	void setAddFriendByUserNameResponse(string b);
 	string addFriendByUserNameResponse = "";
-
 
 	bool _doLoginNoCaptions(string &userNameOrEmail, string &password, bool stayLoggedIn);
 	bool doLogin(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);

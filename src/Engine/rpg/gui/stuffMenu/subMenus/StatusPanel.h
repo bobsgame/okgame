@@ -3,11 +3,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-
 #pragma once
 #include "bobtypes.h"
 class Logger;
-
 
 
 
@@ -285,26 +283,19 @@ public:
 	//   //Label buttonsPushedDescriptionLabel = null;
 	//   //Label buttonsPushedLabel = null;
 
-
 	StatusPanel();
-
 
 protected:
 	void doGoPremiumButton();
 
-
 	void doAddMoneyButton();
 
-
 	void doEditCharacterButton();
-
 
 public:
 	virtual void init() override;
 
-
 	virtual void layout() override;
-
 
 	virtual void setVisible(bool b) override;
 };
