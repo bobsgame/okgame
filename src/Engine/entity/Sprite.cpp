@@ -319,10 +319,10 @@ void Sprite::drawFrame(BobTexture* texture, int frame, float x0, float x1, float
 		int framesPerRow = texture->getTextureWidth() / (w);
 
 
-		int px0 = (frame % framesPerRow)*(w);
-		int px1 = px0 + w;
-		int py0 = (frame / framesPerRow)*(h);
-		int py1 = py0 + h;
+		int fx0 = (frame % framesPerRow)*(w);
+		int fx1 = fx0 + w;
+		int fy0 = (frame / framesPerRow)*(h);
+		int fy1 = fy0 + h;
 
 		//this is because i outlined all the sprite frames with 1 transparent pixel but it really didn't help so ???
 		//best way to handle this might be to 2x all sprites upon loading like i had before...  then i can clip off more of the texture?
@@ -330,10 +330,10 @@ void Sprite::drawFrame(BobTexture* texture, int frame, float x0, float x1, float
 		{
 			framesPerRow = texture->getTextureWidth() / (w + 1);
 
-			px0 = 1 + (frame % framesPerRow)*(w + 1);
-			px1 = px0 + w;
-			py0 = 1 + (frame / framesPerRow)*(h + 1);
-			py1 = py0 + h;
+			fx0 = 1 + (frame % framesPerRow)*(w + 1);
+			fx1 = fx0 + w;
+			fy0 = 1 + (frame / framesPerRow)*(h + 1);
+			fy1 = fy0 + h;
 		}
 
 		//tx0=0;
@@ -342,10 +342,10 @@ void Sprite::drawFrame(BobTexture* texture, int frame, float x0, float x1, float
 		//ty0=0;
 		//ty1=getHeight();
 
-		float tx0 = ((float)px0 / (float)texture->getTextureWidth());
-		float tx1 = ((float)px1 / (float)texture->getTextureWidth());
-		float ty0 = ((float)py0 / (float)texture->getTextureHeight());
-		float ty1 = ((float)py1 / (float)texture->getTextureHeight());
+		float tx0 = ((float)fx0 / (float)texture->getTextureWidth());
+		float tx1 = ((float)fx1 / (float)texture->getTextureWidth());
+		float ty0 = ((float)fy0 / (float)texture->getTextureHeight());
+		float ty1 = ((float)fy1 / (float)texture->getTextureHeight());
 
 		float tw = tx1 - tx0;
 		float th = ty1 - ty0;

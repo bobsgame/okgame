@@ -504,9 +504,9 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 
 					float pixelSize = 2.0f;
 					if (sprite->useHQ2X)pixelSize = 1.0f;
-					x0 = (getScreenLeft() - offsetX) + (x * pixelSize * getScale() * zoom);
+					x0 = (float)((getScreenLeft() - offsetX) + (x * pixelSize * getScale() * zoom));
 					x1 = x0 + (pixelSize * getScale() * zoom);
-					y0 = (getScreenTop() - offsetY) + ((getHeight() * getShadowStart()) * zoom);
+					y0 = (float)((getScreenTop() - offsetY) + ((getHeight() * getShadowStart()) * zoom));
 					y1 = y0 + ((getHeight() * shadowSize) * zoom);
 
 					if (shadowClipPerPixel[x] < 1.0f)
@@ -527,10 +527,10 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	//------------------
 
 
-	x0 = getScreenLeft() - offsetX;
-	y0 = getScreenTop() - offsetY;
-	x1 = (float)(x0 + getWidth() * zoom);
-	y1 = (float)(y0 + getHeight() * zoom);
+	x0 = (float)((getScreenLeft() - offsetX));
+	y0 = (float)((getScreenTop() - offsetY));
+	x1 = (float)((x0 + getWidth() * zoom));
+	y1 = (float)((y0 + getHeight() * zoom));
 
 	sprite->drawFrame(texture, getFrame(), x0, x1, y0, y1, alpha, GLUtils::FILTER_NEAREST);
 

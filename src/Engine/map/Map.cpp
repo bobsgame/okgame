@@ -1149,8 +1149,7 @@ void Map::sortLightLayers()
 { //=========================================================================================================================
 
 
-	//TODO: redo this algorithm so splarka doesn't get pissy
-	//even though it was sent without a license written in javascript and i ported, rewrote, and optimised it :P
+	//splarka wrote this in javascript and i ported, rewrote, and optimised it
 
 
 	//for all lights
@@ -1282,6 +1281,8 @@ void Map::render(RenderOrder renderOrder, bool disableClip, bool disableFloorOff
 	{
 		filter = GLUtils::FILTER_NEAREST;
 	}
+
+
 
 
 	float tx0 = 0.0f;

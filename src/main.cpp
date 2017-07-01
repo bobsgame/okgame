@@ -244,12 +244,12 @@ void Main::mainInit()
 		glowTileBackground = new GlowTileBackground();
 	}
 
-	//loginState = new LoginState();
-	//loggedOutState = new LoggedOutState();
-	//serversHaveShutDownState = new ServersHaveShutDownState();
-	//createNewAccountState = new CreateNewAccountState();
-	//titleScreenState = new TitleScreenState();
-	//youWillBeNotifiedState = new YouWillBeNotifiedState();
+	loginState = new LoginState();
+	loggedOutState = new LoggedOutState();
+	serversHaveShutDownState = new ServersHaveShutDownState();
+	createNewAccountState = new CreateNewAccountState();
+	titleScreenState = new TitleScreenState();
+	youWillBeNotifiedState = new YouWillBeNotifiedState();
 	GLUtils::e();
 
 	//-------------------
@@ -316,7 +316,7 @@ void Main::mainInit()
 
 		if (previewClientInEditor == false)
 		{
-			bool didIntro = false; //FileUtils.doesDidIntroFileExist();
+			bool didIntro = true; //FileUtils.doesDidIntroFileExist();
 
 			if (didIntro == false)
 			{
@@ -340,17 +340,13 @@ void Main::mainInit()
 
 
 			}
+			else
+			{
 
-
-			//		else
-			//		{
-			//			if (System::debugMode == false)
-			//			{
-			//				showControlsImage();
-			//			}
-			//		
-			//			stateManager->setState(loginState);
-			//		}
+				showControlsImage();
+				
+				stateManager->setState(loginState);
+			}
 		}
 
 	}
@@ -835,6 +831,21 @@ void Main::doScreenShotCheck()
 
 	bool takeScreenShot = false;
 
+	
+#ifdef _DEBUG
+	if (controlsManager->key_PRINTSCREEN_Pressed() || controlsManager->key_F10_Pressed())
+	{
+		if (screenShotKeyPressed == false)
+		{
+			screenShotKeyPressed = true;
+			takeScreenShot = true;
+		}
+	}
+	else
+	{
+		screenShotKeyPressed = false;
+	}
+#elif
 	if (controlsManager->key_PRINTSCREEN_Pressed() || controlsManager->key_F12_Pressed())
 	{
 		if (screenShotKeyPressed == false)
@@ -847,11 +858,14 @@ void Main::doScreenShotCheck()
 	{
 		screenShotKeyPressed = false;
 	}
+#endif
+
+
 
 	if (takeScreenShot)
 	{
 
-		//if (mainObject->gameEngine != nullptr)mainObject->gameEngine->audioManager->playSound("screenShot", 1.0f, 1.0f, 1);
+		if (mainObject->gameEngine != nullptr)mainObject->gameEngine->audioManager->playSound("screenShot", 1.0f, 1.0f, 1);
 
 		time_t t = time(0); // get time now 
 		struct tm * now = localtime( & t ); 
