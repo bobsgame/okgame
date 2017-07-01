@@ -144,14 +144,14 @@ void Light::initLight(LightData* lightAsset)
 void Light::update()
 { //===============================================================================================
 
-	setTicksPerPixelMoved(10);
+	setTicksPerPixelMoved(1);
 
 	updateTimers();
 
 
 	if (getName().find("mover") != string::npos)
 	{
-		//bounceAroundRoom();
+		bounceAroundRoom();
 	}
 
 
@@ -414,7 +414,7 @@ void Light::bounceAroundRoom()
 
 	while (pixelsToMoveThisFrame >= 1)
 	{
-		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == false)
+		if (ifCanMoveAPixelThisFrameSubtractAndReturnTrue() == true)
 		{
 			if (movementDirection == UPLEFT)
 			{

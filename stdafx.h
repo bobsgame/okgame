@@ -15,7 +15,6 @@
 #include "src/Utility/Logger.h"
 #include "src/Utility/Color.h"
 #include "src/Utility/stringconverter.h"
-#include "src/Utility/RectangularVectors.h"
 #include "src/Utility/Easing.h"
 #include "src/Utility/BobMath.h"
 #include "src/Utility/BobString.h"

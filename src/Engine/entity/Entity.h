@@ -28,15 +28,14 @@ public:
 
 	Event* event = nullptr;
 
-	static int DOWN;
-	static int UP;
-	static int LEFT;
-	static int RIGHT;
-
-	static int UPLEFT;
-	static int DOWNRIGHT;
-	static int DOWNLEFT;
-	static int UPRIGHT;
+	const static int DOWN;
+	const static int UP;
+	const static int LEFT;
+	const static int RIGHT;
+	const static int UPLEFT;
+	const static int DOWNRIGHT;
+	const static int DOWNLEFT;
+	const static int UPRIGHT;
 
 	int SPEED_ACCEL_INCREMENT_AMOUNT = 1;
 
@@ -84,7 +83,7 @@ public:
 	bool draw = false;
 
 private:
-	int animationTicksCounter = 0; // was vbl_animation_timer
+	long long animationTicksCounter = 0; // was vbl_animation_timer
 	int frameIndexInTexture = 0; //based on current sequence (getAnimDirection()) and currentAnimationFrameInSequence, this is what will be rendered
 	SpriteAnimationSequence* currentAnimation = nullptr;
 
@@ -99,7 +98,7 @@ public:
 	//public float getShadowStart = 0.75f;
 	float shadowAlpha = 0.60f;
 
-	int ticksSinceLastMovement = 0;
+	long long ticksSinceLastMovement = 0;
 public:
 	float pixelsToMoveThisFrame = 0;
 

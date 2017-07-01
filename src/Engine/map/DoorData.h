@@ -67,10 +67,10 @@ public:
 	//static DoorData* fromJSON(const string& json);
 
 
-	string& initFromString(string& t);
+	string& initFromString(string& t) override;
 
 
-	string getTYPEIDString();
+	string getTYPEIDString() override;
 
 
 	string& getDestinationTYPEIDString();

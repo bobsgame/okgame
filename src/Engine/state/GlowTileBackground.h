@@ -63,7 +63,7 @@ public:
 	GlowTileBackground(Engine* g);
 
 
-	void init();
+	virtual void init();
 
 
 	void cleanup();

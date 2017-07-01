@@ -51,9 +51,6 @@
     <ClInclude Include="src\Utility\gl\GLUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\RectangularVectors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\cinematics\CinematicsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

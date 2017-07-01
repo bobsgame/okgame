@@ -278,7 +278,6 @@
     <ClInclude Include="src\Utility\Logger.h" />
     <ClInclude Include="src\Utility\Easing.h" />
     <ClInclude Include="src\Utility\FileUtils.h" />
-    <ClInclude Include="src\Utility\RectangularVectors.h" />
     <ClInclude Include="src\Utility\stringconverter.h" />
     <ClInclude Include="src\Puzzle\Block.h" />
     <ClInclude Include="src\Puzzle\BobsGame.h" />

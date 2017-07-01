@@ -22,7 +22,7 @@ public:
 	NDMenu();
 	~NDMenu();
 	NDMenu(ND* nD);
-	void init();
+	void init() override;
 
 	bool runSelectedGame = false;
 	int quit = 0;

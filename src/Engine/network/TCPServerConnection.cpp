@@ -833,7 +833,7 @@ bool TCPServerConnection::write_S(string s)
 
 		if(bytesSent<(int)s.length())
 		{
-			threadLogError_S("Could not sent full string, sent: " + s.substr(0, bytesSent));
+			threadLogWarn_S("Could not sent full string, sent: " + s.substr(0, bytesSent));
 			return false;
 		}
 	//delete buf;

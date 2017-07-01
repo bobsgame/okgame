@@ -110,7 +110,7 @@ public:
 
 	EventData(int id, const string& name, int type, const string& comment, const string& text);
 
-	string& initFromString(string& t);
+	string& initFromString(string& t) override;
 
 	//static EventData* fromBase64ZippedJSON(const string& b64);
 

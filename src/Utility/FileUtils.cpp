@@ -1290,7 +1290,8 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 		if (compressStatus != Z_OK)
 		{
 			log.error("Uncompress failed.");
-			free(uncompressedBytes);
+			delete[] uncompressedBytes;
+			//free(uncompressedBytes);
 			return nullptr;
 		}
 

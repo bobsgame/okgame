@@ -25,6 +25,6 @@ public:
 	NDMenuBackground(Engine* g);
 
 
-	void init();
+	virtual void init() override;
 };
 

@@ -35,9 +35,9 @@ public:
 	NDGameEngine();
 	~NDGameEngine();
 	NDGameEngine(ND* nD);
-	void init();
+	void init() override;
 
-	void tryToCloseGame();
+	void tryToCloseGame() override;
 
 };
 

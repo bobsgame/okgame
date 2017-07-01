@@ -11,14 +11,14 @@
 
 Logger Entity::log = Logger("Entity");
 
-int Entity::DOWN = 0;
-int Entity::UP = 1;
-int Entity::LEFT = 2;
-int Entity::RIGHT = 3;
-int Entity::UPLEFT = 4;
-int Entity::DOWNRIGHT = 6;
-int Entity::DOWNLEFT = 7;
-int Entity::UPRIGHT = 5;
+const int Entity::DOWN = 0;
+const int Entity::UP = 1;
+const int Entity::LEFT = 2;
+const int Entity::RIGHT = 3;
+const int Entity::UPLEFT = 4;
+const int Entity::DOWNRIGHT = 6;
+const int Entity::DOWNLEFT = 7;
+const int Entity::UPRIGHT = 5;
 
 Entity::Entity()
 { //=========================================================================================================================
@@ -159,6 +159,9 @@ void Entity::update()
 
 void Entity::updateTimers()
 { //=========================================================================================================================
+
+	if (ticksSinceLastMovement < 0)ticksSinceLastMovement = 0;
+
 	//add change in time to remaining time from last movement
 	ticksSinceLastMovement += (int)getEngine()->engineTicksPassed();
 
@@ -963,9 +966,15 @@ bool Entity::ifCanMoveAPixelThisFrameSubtractAndReturnTrue()
 		pixelsToMoveThisFrame = 0.0f;
 	}
 
-	if (pixelsToMoveThisFrame > 1.0f)
+	if (pixelsToMoveThisFrame >= 1.0f)
 	{
 		pixelsToMoveThisFrame -= 1.0f;
+
+		if (pixelsToMoveThisFrame < 0.0f)
+		{
+			pixelsToMoveThisFrame = 0.0f;
+		}
+
 		return true;
 	}
 	return false;
@@ -1606,44 +1615,153 @@ bool Entity::isWalkingIntoEntity(Entity* entity)
 
 	bool walkingIntoDoor = false;
 
-	if (movementDirection == UP)
+	switch(movementDirection)
 	{
-		if (entity->isXYTouchingMyHitBox(getMiddleX() - 1, getTop() - 2) || entity->isXYTouchingMyHitBox(getMiddleX(), getTop() - 2))
+		case UP: 
 		{
-			walkingIntoDoor = true;
-		}
-	}
-	else
-	{
-		if (movementDirection == DOWN)
-		{
-			if (entity->isXYTouchingMyHitBox(getMiddleX() - 1, getBottom() + 1) || entity->isXYTouchingMyHitBox(getMiddleX(), getBottom() + 1))
+			if (
+				entity->isXYTouchingMyHitBox(getMiddleX() - 1, getTop() - 2) || 
+				entity->isXYTouchingMyHitBox(getMiddleX(), getTop() - 2)
+				)
 			{
 				walkingIntoDoor = true;
 			}
+			break;
 		}
-		else
+		case DOWN: 
 		{
-			if (movementDirection == LEFT)
+			if (
+				entity->isXYTouchingMyHitBox(getMiddleX() - 1, getBottom() + 1) || 
+				entity->isXYTouchingMyHitBox(getMiddleX(), getBottom() + 1) ||
+				entity->isXYTouchingMyHitBox(getMiddleX(), getBottom())//added this for elevator, might break some stuff?
+				)
 			{
-				if (entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY()) || entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
-				{
-					//TODO: should check middle for hitBoxLeft() and hitBoxRight() too, in case the player NPC is ever big enough to "straddle" a block. actually, i should check every %8 (%16 now i guess)
-					walkingIntoDoor = true;
-				}
+				walkingIntoDoor = true;
 			}
-			else
-			{
-				if (movementDirection == RIGHT)
-				{
-					if (entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY()) || entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
-					{
-						walkingIntoDoor = true;
-					}
-				}
-			}
+			break;
 		}
+		case LEFT: 
+		{
+			if (
+				entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY()) || 
+				entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY() - 1)
+				) //getTop()+2) - getBottom()-1)
+			{
+				//TODO: should check middle for hitBoxLeft() and hitBoxRight() too, in case the player NPC is ever big enough to "straddle" a block. actually, i should check every %8 (%16 now i guess)
+				walkingIntoDoor = true;
+			}
+			break;
+		}
+		case RIGHT: 
+		{
+			if (
+				entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY()) || 
+				entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY() - 1)
+				) //getTop()+2) - getBottom()-1)
+			{
+				walkingIntoDoor = true;
+			}
+			break;
+		}
+		case UPLEFT: 
+		{
+			if (
+				entity->isXYTouchingMyHitBox(getMiddleX() - 1, getTop() - 2) || 
+				entity->isXYTouchingMyHitBox(getMiddleX(), getTop() - 2) ||
+				entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY()) ||
+				entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY() - 1) ||
+				entity->isXYTouchingMyHitBox(getLeft(), getTop())//upleft corner
+				)
+			{
+				walkingIntoDoor = true;
+			}
+			break;
+		}
+		case UPRIGHT: 
+		{
+			if (
+				entity->isXYTouchingMyHitBox(getMiddleX() - 1, getTop() - 2) || 
+				entity->isXYTouchingMyHitBox(getMiddleX(), getTop() - 2) ||
+				entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY()) ||
+				entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY() - 1) ||
+				entity->isXYTouchingMyHitBox(getRight(), getTop())//ur corner
+				)
+			{
+				walkingIntoDoor = true;
+			}
+			break;
+		}
+		case DOWNLEFT: 
+		{
+			if (
+				entity->isXYTouchingMyHitBox(getMiddleX() - 1, getBottom() + 1) ||
+				entity->isXYTouchingMyHitBox(getMiddleX(), getBottom() + 1) ||
+				entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY()) ||
+				entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY() - 1) ||
+				entity->isXYTouchingMyHitBox(getLeft(), getBottom())//dl corner
+				)
+			{
+				walkingIntoDoor = true;
+			}
+			break;
+		}
+		case DOWNRIGHT: 
+		{
+			if (
+				entity->isXYTouchingMyHitBox(getMiddleX() - 1, getBottom() + 1) || 
+				entity->isXYTouchingMyHitBox(getMiddleX(), getBottom() + 1) ||
+				entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY()) ||
+				entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY() - 1) ||
+				entity->isXYTouchingMyHitBox(getRight(), getBottom())//dr corner
+				)
+			{
+				walkingIntoDoor = true;
+			}
+			break;
+		}
+
+
 	}
+
+
+//	if (movementDirection == UP)
+//	{
+//		if (entity->isXYTouchingMyHitBox(getMiddleX() - 1, getTop() - 2) || entity->isXYTouchingMyHitBox(getMiddleX(), getTop() - 2))
+//		{
+//			walkingIntoDoor = true;
+//		}
+//	}
+//	else
+//	{
+//		if (movementDirection == DOWN)
+//		{
+//			if (entity->isXYTouchingMyHitBox(getMiddleX() - 1, getBottom() + 1) || entity->isXYTouchingMyHitBox(getMiddleX(), getBottom() + 1))
+//			{
+//				walkingIntoDoor = true;
+//			}
+//		}
+//		else
+//		{
+//			if (movementDirection == LEFT)
+//			{
+//				if (entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY()) || entity->isXYTouchingMyHitBox(getLeft() - 2, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
+//				{
+//					//TODO: should check middle for hitBoxLeft() and hitBoxRight() too, in case the player NPC is ever big enough to "straddle" a block. actually, i should check every %8 (%16 now i guess)
+//					walkingIntoDoor = true;
+//				}
+//			}
+//			else
+//			{
+//				if (movementDirection == RIGHT)
+//				{
+//					if (entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY()) || entity->isXYTouchingMyHitBox(getRight() + 1, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
+//					{
+//						walkingIntoDoor = true;
+//					}
+//				}
+//			}
+//		}
+//	}
 	return walkingIntoDoor;
 }
 
@@ -1652,44 +1770,156 @@ bool Entity::isWalkingIntoArea(Area* area)
 
 	bool walkingIntoArea = false;
 
-	if (movementDirection == UP)
+
+	switch (movementDirection)
 	{
-		if (area->isXYTouchingMyBoundary(getMiddleX() - 1, getTop() - 2) || area->isXYTouchingMyBoundary(getMiddleX(), getTop() - 2))
+		case UP:
 		{
-			walkingIntoArea = true;
-		}
-	}
-	else
-	{
-		if (movementDirection == DOWN)
-		{
-			if (area->isXYTouchingMyBoundary(getMiddleX() - 1, getBottom() + 1) || area->isXYTouchingMyBoundary(getMiddleX(), getBottom() + 1))
+			if (
+				area->isXYTouchingMyBoundary(getMiddleX() - 1, getTop() - 2) ||
+				area->isXYTouchingMyBoundary(getMiddleX(), getTop() - 2)
+				)
 			{
 				walkingIntoArea = true;
 			}
+			break;
 		}
-		else
+		case DOWN:
 		{
-			if (movementDirection == LEFT)
+			if (
+				area->isXYTouchingMyBoundary(getMiddleX() - 1, getBottom() + 1) ||
+				area->isXYTouchingMyBoundary(getMiddleX(), getBottom() + 1)
+				)
 			{
-				if (area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY()) || area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
-				{
-					//TODO: should check middle for hitBoxLeft() and hitBoxRight() too, in case the player NPC is ever big enough to "straddle" a block. actually, i should check every %8 (%16 now i guess)
-					walkingIntoArea = true;
-				}
+				walkingIntoArea = true;
 			}
-			else
-			{
-				if (movementDirection == RIGHT)
-				{
-					if (area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY()) || area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
-					{
-						walkingIntoArea = true;
-					}
-				}
-			}
+			break;
 		}
+		case LEFT:
+		{
+			if (
+				area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY()) ||
+				area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY() - 1)
+				) //getTop()+2) - getBottom()-1)
+			{
+				//TODO: should check middle for hitBoxLeft() and hitBoxRight() too, in case the player NPC is ever big enough to "straddle" a block. actually, i should check every %8 (%16 now i guess)
+				walkingIntoArea = true;
+			}
+			break;
+		}
+		case RIGHT:
+		{
+			if (
+				area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY()) ||
+				area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY() - 1)
+				) //getTop()+2) - getBottom()-1)
+			{
+				walkingIntoArea = true;
+			}
+			break;
+		}
+		case UPLEFT:
+		{
+			if (
+				area->isXYTouchingMyBoundary(getMiddleX() - 1, getTop() - 2) ||
+				area->isXYTouchingMyBoundary(getMiddleX(), getTop() - 2) ||
+				area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY()) ||
+				area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY() - 1) ||
+				area->isXYTouchingMyBoundary(getLeft(), getTop())//upleft corner
+				)
+			{
+				walkingIntoArea = true;
+			}
+			break;
+		}
+		case UPRIGHT:
+		{
+			if (
+				area->isXYTouchingMyBoundary(getMiddleX() - 1, getTop() - 2) ||
+				area->isXYTouchingMyBoundary(getMiddleX(), getTop() - 2) ||
+				area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY()) ||
+				area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY() - 1) ||
+				area->isXYTouchingMyBoundary(getRight(), getTop())//ur corner
+				)
+			{
+				walkingIntoArea = true;
+			}
+			break;
+		}
+		case DOWNLEFT:
+		{
+			if (
+				area->isXYTouchingMyBoundary(getMiddleX() - 1, getBottom() + 1) ||
+				area->isXYTouchingMyBoundary(getMiddleX(), getBottom() + 1) ||
+				area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY()) ||
+				area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY() - 1) ||
+				area->isXYTouchingMyBoundary(getLeft(), getBottom())//dl corner
+				)
+			{
+				walkingIntoArea = true;
+			}
+			break;
+		}
+		case DOWNRIGHT:
+		{
+			if (
+				area->isXYTouchingMyBoundary(getMiddleX() - 1, getBottom() + 1) ||
+				area->isXYTouchingMyBoundary(getMiddleX(), getBottom() + 1) ||
+				area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY()) ||
+				area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY() - 1) ||
+				area->isXYTouchingMyBoundary(getRight(), getBottom())//dr corner
+				)
+			{
+				walkingIntoArea = true;
+			}
+			break;
+		}
+
+
 	}
+
+
+
+//	if (movementDirection == UP)
+//	{
+//		if (area->isXYTouchingMyBoundary(getMiddleX() - 1, getTop() - 2) || area->isXYTouchingMyBoundary(getMiddleX(), getTop() - 2))
+//		{
+//			walkingIntoArea = true;
+//		}
+//	}
+//	else
+//	{
+//		if (movementDirection == DOWN)
+//		{
+//			if (area->isXYTouchingMyBoundary(getMiddleX() - 1, getBottom() + 1) || area->isXYTouchingMyBoundary(getMiddleX(), getBottom() + 1))
+//			{
+//				walkingIntoArea = true;
+//			}
+//		}
+//		else
+//		{
+//			if (movementDirection == LEFT)
+//			{
+//				if (area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY()) || area->isXYTouchingMyBoundary(getLeft() - 2, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
+//				{
+//					//TODO: should check middle for hitBoxLeft() and hitBoxRight() too, in case the player NPC is ever big enough to "straddle" a block. actually, i should check every %8 (%16 now i guess)
+//					walkingIntoArea = true;
+//				}
+//			}
+//			else
+//			{
+//				if (movementDirection == RIGHT)
+//				{
+//					if (area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY()) || area->isXYTouchingMyBoundary(getRight() + 1, getMiddleY() - 1)) //getTop()+2) - getBottom()-1)
+//					{
+//						walkingIntoArea = true;
+//					}
+//				}
+//			}
+//		}
+//	}
+
+
 	return walkingIntoArea;
 }
 
