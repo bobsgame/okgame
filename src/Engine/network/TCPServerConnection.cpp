@@ -843,8 +843,6 @@ bool TCPServerConnection::write_S(string s)
 
 
 
-
-
 void TCPServerConnection::incomingServerIPAddressResponse(string s)
 { //=========================================================================================================================
 
