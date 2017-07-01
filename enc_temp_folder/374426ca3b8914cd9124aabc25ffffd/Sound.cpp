@@ -288,7 +288,7 @@ void Sound::handlePlaying()
 				 AudioManager::soLoud->play(*soLoudWave);
 #endif
 #ifdef USE_SDL_MIXER
-				 channel = Mix_PlayChannel(-1, mixChunk, 0);
+				 channel = Mix_PlayChannel(-1, mixChunk, false);
 #endif
 				
 	            playingStarted = true;

@@ -113,7 +113,7 @@ void Event::initEvent()
 		Event *e = getEventManager()->eventList.get(i);
 		if (e->getID() == data->getID())
 		{
-			log.warn("Event already exists:" + data->getName());
+			log.error("Event already exists:" + data->getName());
 			exists = true;
 
 			e->setData_S(data);

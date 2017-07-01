@@ -121,8 +121,8 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 	}
 	else
 	{
-		// if (this.font.outlined == true) { tempAA = Color.BLACK; }
-		// else
+		if (font->outlined == true) { tempAA = BobColor::black; }
+		else
 		if (tempBG == BobColor::white)
 		{
 			tempAA = new BobColor(*fg);

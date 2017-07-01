@@ -273,7 +273,7 @@ void Music::update()
 					}
 					else
 					{
-						channel = Mix_PlayChannel(-1, mixChunk, 0);
+						channel = Mix_PlayChannel(-1, mixChunk, 1);
 					}
 				}
 			}
