@@ -1,0 +1,1172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="bobsgame"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/bob/bobsgame/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/bob/bobsgame/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/bob/bobsgame/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="bobsgame">
+				<Option output="/home/bob/bobsgame/linux/bobsgame" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/bob/bobsgame/linux"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_LIB_DIAGNOSTIC=1"/>
+					<Add directory="/usr/local/include/SDL2"/>
+					<Add directory="/home/bob/bobsgame/lib/glew-2.0.0/include"/>
+					<Add directory="/home/bob/bobsgame/lib"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Foundation/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/JSON/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Net/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Util/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/XML/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Zip/include"/>
+					<Add directory="/home/bob/bobsgame/lib/miniz-master"/>
+					<Add directory="/home/bob/bobsgame/lib/minilzo-2.09"/>
+					<Add directory="/home/bob/bobsgame/lib/GWEN-master/gwen/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/home/bob/bobsgame"/>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 bobsgame"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="bobsgame/fast">
+				<Option output="/home/bob/bobsgame/linux/bobsgame" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/bob/bobsgame/linux"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_LIB_DIAGNOSTIC=1"/>
+					<Add directory="/usr/local/include/SDL2"/>
+					<Add directory="/home/bob/bobsgame/lib/glew-2.0.0/include"/>
+					<Add directory="/home/bob/bobsgame/lib"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Foundation/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/JSON/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Net/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Util/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/XML/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Zip/include"/>
+					<Add directory="/home/bob/bobsgame/lib/miniz-master"/>
+					<Add directory="/home/bob/bobsgame/lib/minilzo-2.09"/>
+					<Add directory="/home/bob/bobsgame/lib/GWEN-master/gwen/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/home/bob/bobsgame"/>
+					<Add directory="/usr/include/c++/4.8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8"/>
+					<Add directory="/usr/include/c++/4.8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 bobsgame/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/bob/bobsgame/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/bob/bobsgame/bobtypes.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/DG_misc.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/HQ2X/HQ2X.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/HQ2X/HQ2X.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/SDL_platform.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/SDL_stbimage.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/glew-2.0.0/include/GL/eglew.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/glew-2.0.0/include/GL/glew.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/glew-2.0.0/include/GL/glxew.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/glew-2.0.0/src/glew.c">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/minilzo-2.09/minilzo.c">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/minilzo-2.09/minilzo.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/stb_image.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/stb_image_resize.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/stb_image_write.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/stb_truetype.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/stb_vorbis.c">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/Engine.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/Engine.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/EnginePart.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/EnginePart.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/MiniGameEngine.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/MiniGameEngine.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/cinematics/CinematicsManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/cinematics/CinematicsManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/cinematics/Letterbox.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/cinematics/Letterbox.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/cinematics/ScreenOverlay.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/cinematics/ScreenOverlay.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Cameraman.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Cameraman.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Character.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Character.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Entity.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Entity.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/PathFinder.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/PathFinder.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/RandomCharacter.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/RandomCharacter.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/ScreenSprite.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/ScreenSprite.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Sprite.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/Sprite.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/SpriteAnimationSequence.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/SpriteAnimationSequence.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/SpriteData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/SpriteData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/SpriteManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/entity/SpriteManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Area.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Area.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/AreaData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/AreaData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Door.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Door.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/DoorData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/DoorData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/EntityData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/EntityData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Light.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Light.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/LightData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/LightData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Map.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/Map.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapState.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapStateData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/MapStateData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/WarpArea.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/map/WarpArea.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/GameDataLoader.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/GameDataLoader.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ND.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ND.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/NDGameEngine.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/NDGameEngine.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenu.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenu.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenuBackground.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenuBackground.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenuWheel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenuWheel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/Ping.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/Ping.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/PingBackground.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/PingBackground.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/PingBall.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/PingBall.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/PingPaddle.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ping/PingPaddle.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/Ramio.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/Ramio.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBackground.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBackground.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBlock.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBlock.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBoba.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBoba.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBrickBlock.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioBrickBlock.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioGuy.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioGuy.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioMoneyBlock.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/nd/ramio/RamioMoneyBlock.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/BobNet.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/BobNet.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/GameSave.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/GameSave.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/ServerObject.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/ServerObject.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/TCPServerConnection.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/TCPServerConnection.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/UDPPeerConnection.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/network/UDPPeerConnection.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/BGClientEngine.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/BGClientEngine.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Clock.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Clock.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/EasingTest.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/EasingTest.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/FriendCharacter.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/FriendCharacter.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/FriendManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/FriendManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Item.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Item.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Player.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Player.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Wallet.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/Wallet.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/ActionManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/ActionManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Dialogue.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Dialogue.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/DialogueData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/DialogueData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Event.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Event.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventCommand.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventCommand.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventParameter.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/EventParameter.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Flag.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Flag.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/FlagData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/FlagData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/GameString.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/GameString.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/GameStringData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/GameStringData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Skill.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/Skill.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/SkillData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/event/SkillData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/CountryCodes.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/CountryCodes.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/GUIManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/GUIManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/GameChallengeNotificationPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/MenuPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/MenuPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/PlayerEditMenu.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/PlayerEditMenu.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/gameStore/GameItem.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/gameStore/GameItem.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/gameStore/GameStore.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/gameStore/GameStore.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/NotificationManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/NotificationManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/StatusBar.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/StatusBar.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/NDButton.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/StuffButton.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/ClockCaption.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/DayCaption.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/notification/Notification.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/statusbar/notification/Notification.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/StuffMenu.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/SubPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/stadium/BobsGameStadium.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/stadium/BobsGameStadium.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/stadium/StadiumScreen.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/stadium/StadiumScreen.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccount.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccount.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccountState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccountState.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/GlowTileBackground.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/GlowTileBackground.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/KeyboardScreen.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/KeyboardScreen.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LegalScreen.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LegalScreen.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoggedOutState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoggedOutState.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginScreen.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginScreen.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginState.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/ServersHaveShutDownState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/ServersHaveShutDownState.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/State.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/State.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/StateManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/StateManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/TitleScreenState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/TitleScreenState.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/YouWillBeNotifiedState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/YouWillBeNotifiedState.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/text/TextManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/text/TextManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/text/TextWindow.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/text/TextWindow.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Block.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Block.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/BobsGame.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/BobsGame.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/BobsGameMenus.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/BobsGameNetwork.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/CustomGameEditor.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/CustomGameEditor.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameLogic.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameLogic.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameSequence.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameSequence.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameSequenceEditor.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameSequenceEditor.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameTestMenu.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameTestMenu.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameType.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GameType.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/GlobalSettings.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Grid.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Grid.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Piece.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Piece.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/PuzzlePlayer.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Room.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Stats/GameStats.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Stats/LeaderBoardAndHighScoreBoardEntry.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Puzzle/Stats/UserStatsForSpecificGameAndDifficulty.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/ArrayList.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/AssetData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/AssetData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobBool.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobBool.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobFont.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobFont.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobMath.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobMath.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobMenu.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobMenu.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobString.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BobString.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BufferedImage.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/BufferedImage.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Caption.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Caption.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/CaptionManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/CaptionManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Color.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Color.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Console.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Console.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/ConsoleText.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/ConsoleText.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/ControlsManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/ControlsManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Easing.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Easing.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/FileUtils.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/FileUtils.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/HashMap.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Logger.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/Logger.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/RectangularVectors.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/System.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/System.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioManager.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioManager.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Music.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Music.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/MusicData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/MusicData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Sound.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Sound.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/SoundData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/SoundData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/gl/GLUtils.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/gl/GLUtils.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/gl/Texture.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/gl/Texture.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/stringconverter.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/main.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/main.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/stdafx.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/stdafx.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/cmake/FindOpenGL.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/cmake/FindX11.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/cmake/FindSDL2.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/cmake/FindSDL2_image.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/cmake/FindSDL2_mixer.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/cmake/FindSDL2_ttf.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/cmake/FindSDL2_net.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

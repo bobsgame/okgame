@@ -1,0 +1,3 @@
+/home/bob/bobsgame/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/bob/bobsgame/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir
