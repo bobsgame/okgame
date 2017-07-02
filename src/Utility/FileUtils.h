@@ -77,6 +77,8 @@ public:
 	static u8* unlzoBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
 	static string zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
 	static u8* unzipBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
+	static string lzoStringToBase64String(const string& s);
+	static string unlzoBase64StringToString(const string& s);
 	static string zipStringToBase64String(const string& s);
 	static string unzipBase64StringToString(const string& s);
 	static string getFileMD5Checksum(const string& filename);
@@ -88,7 +90,10 @@ public:
 	static std::string byteArrayToHexString(u8 *data, unsigned long len);
 	static u8* hexStringToByteArray(const string &hex);
 	static std::string encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned long in_len);
-	static vector<u8>* decodeBase64StringToByteArray(std::string const& encoded_string);//, unsigned long &returnLength);
+	static vector<u8>* decodeBase64StringToByteArray(std::string const& encoded_string);//, unsigned long &returnLength);	
+	static std::string encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encode, unsigned long in_len);
+	static vector<u8>* decodeBase64StringToByteArrayAlt(std::string const& encoded_string);//, unsigned long &returnLength);
+
 
 	static string appDataPath;
 	static string cacheDir;

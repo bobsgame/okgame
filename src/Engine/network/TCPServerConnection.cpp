@@ -55,7 +55,7 @@ void TCPServerConnection::update()
 			partialPacketString += s;
 
 
-			string p = FileUtils::unzipBase64StringToString(partialPacketString);
+			string p = FileUtils::unlzoBase64StringToString(partialPacketString);
 			partialPacketString = "";
 			messageReceived(p);
 
@@ -72,7 +72,7 @@ void TCPServerConnection::update()
 		else
 		{
 
-			string p = FileUtils::unzipBase64StringToString(s);
+			string p = FileUtils::unlzoBase64StringToString(s);
 			s = "";
 			messageReceived(p);
 

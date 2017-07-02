@@ -446,14 +446,14 @@ string GameType::toBase64GZippedXML()
 	boost::archive::xml_oarchive oarchive(ss);
 	oarchive << BOOST_SERIALIZATION_NVP(gs);
 	log.debug(ss.str());
-	string zip = FileUtils::zipStringToBase64String(ss.str());
+	string zip = FileUtils::lzoStringToBase64String(ss.str());
 	return zip;
 }
 
 //=========================================================================================================================
 GameType *GameType::fromBase64GZippedXML(string b64GZipJSON)
 {//=========================================================================================================================
-	string json = FileUtils::unzipBase64StringToString(b64GZipJSON);
+	string json = FileUtils::unlzoBase64StringToString(b64GZipJSON);
 
 	if (json == "" || json.length() == 0)
 	{

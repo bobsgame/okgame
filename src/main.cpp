@@ -155,6 +155,8 @@ void Main::mainInit()
  }
  */
 
+	new Logger();
+
 	BobColor::initPresetColors();
 
 	cacheManager = new FileUtils();
@@ -182,10 +184,67 @@ void Main::mainInit()
 		printf("(this usually indicates a compiler bug - try recompiling\nwithout optimizations, and enable '-DLZO_DEBUG' for diagnostics)\n");
 	}
 
+	
+
+//	string s = "Server_IP_Address_Response:34.201.250.43"+BobNet::endline;
+//	s = "a really long test string with repeating words to test. a really long test string with repeating words to test. a really long test string with repeating words to test.";
+//
+//	string lzo = FileUtils::lzoStringToBase64String(s);
+//
+//	//log.error(lzo);
+//
+//	string javalzo = "AAAAwqcAAAA6KGEgcmVhbGx5IGxvbmcgdGVzdCBzdHJpTAEBd2l0aFEDcAkHdMKYAQRvcmRzIHRvwo4ELiAgTsOcABEAAA==";
+//	string clzo = "ABRhIHJlYWxseSBsb25nIHRlc3Qgc3RyaW5nIHdpdGggcmVwZWF0aXgBBG9yZHMgdG+OBC4gIDvcAAABdGluZyB3b3JkcyB0byB0ZXN0LhEAAA==";
+//
+//	vector<u8>* javabytes = FileUtils::decodeBase64StringToByteArray(javalzo);
+//	vector<u8>* cbytes = FileUtils::decodeBase64StringToByteArray(clzo);
+//
+//
+//	string cdone = FileUtils::unlzoBase64StringToString(clzo);
+//	string javadone = FileUtils::unlzoBase64StringToString(javalzo);
+
+
+
+
+
+
+	//string s = "a really long test string with repeating words to test. a really long test string with repeating words to test. a really long test string with repeating words to test.";
+
+	//string zipped = FileUtils::zipStringToBase64String(s);
+
+	//string javazipped = "H8KLCAAAAAAAAMO/S1QoSk3DjMOJwqlUw4jDicOPS1coSS0uUSguKcOKBMKyw4szSzLCgMKSBcKpwoklYG5+UUrCsUJJPljCjcKeQiJ9w7UBAG1RbS7CpwAAAA==";
+	string javazipped = "eMKcS1QoSk3DjMOJwqlUw4jDicOPS1coSS0uUSguKcOKBMKyw4szSzLCgMKSBcKpwoklYG5+UUrCsUJJPljCjcKeQiJ9w7UBAE/Cnj3DpQ==";
+	
+	string czipped = "eAG9i9EJQCEMA1fJBG+nwisqFCttQNxecQj/Eu5OECpmC+a9gJpEMtrZs7EeOFR4r8efoF/ng7ztNk+ePeU=";
+
+
+	vector<u8>* javabytes = FileUtils::decodeBase64StringToByteArray(javazipped);
+	vector<u8>* javabytes2 = FileUtils::decodeBase64StringToByteArrayAlt(javazipped);
+
+	vector<u8>* cbytes = FileUtils::decodeBase64StringToByteArray(czipped);
+	vector<u8>* cbytes2 = FileUtils::decodeBase64StringToByteArrayAlt(czipped);
+
+
+
+	for(int i=0;i<javabytes->size();i++)
+	{
+		if (javabytes->at(i) != javabytes2->at(i))log.error("no");
+
+	}
+	for(int i=0;i<cbytes->size();i++)
+	{
+		if (cbytes->at(i) != cbytes2->at(i))log.error("no");
+	}
+
+	string cunzipped = FileUtils::unzipBase64StringToString(czipped);
+	string javaunzipped = FileUtils::unzipBase64StringToString(javazipped);
+
+
+
 	//atexit(SDL_Quit);
 	
 	new GLUtils();
-	new Logger();
+	
 
 	AudioManager::initAudioLibrary();
 

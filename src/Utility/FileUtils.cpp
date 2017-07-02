@@ -860,9 +860,71 @@ static const std::string base64_chars =
 static inline bool is_base64(u8 c) {
 	return (isalnum(c) || (c == '+') || (c == '/'));
 }
+
+
+#include "base64.h"
+
+//=========================================================================================================================
+std::string FileUtils::encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encode, unsigned long in_len)
+{//=========================================================================================================================
+
+	char* out = new char[in_len];
+	Base64::Encode((char*)bytes_to_encode, in_len, out, in_len);
+
+	string outs(out, in_len);
+
+	return outs;
+}
+
+#include "Poco/Base64Decoder.h";
+
+//=========================================================================================================================
+vector<u8>* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
+{//=========================================================================================================================
+
+	{
+		string outs;
+		string in(encoded_string);
+		Base64::Decode(in, &outs);
+
+
+		vector<u8>* outv = new vector<u8>();
+		for (int i = 0; i < outs.length(); i++)
+		{
+			outv->push_back(outs[i]);
+
+		}
+		return outv;
+	}
+
+	{
+		istringstream istr(encoded_string);
+		ostringstream ostr;
+		Poco::Base64Decoder b64in(istr);
+		copy(std::istreambuf_iterator<char>(b64in),
+			std::istreambuf_iterator<char>(),
+			std::ostreambuf_iterator<char>(ostr));
+		//cout << ostr.str(); // returns full decoded output
+
+		string outs = ostr.str();
+
+		vector<u8>* outv = new vector<u8>();
+		for (int i = 0; i < outs.length(); i++)
+		{
+			outv->push_back(outs[i]);
+
+		}
+		return outv;
+	}
+
+
+}
+
 //=========================================================================================================================
 std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned long in_len)
 {//=========================================================================================================================
+
+
 
 	std::string ret;
 	int i = 0;
@@ -908,6 +970,11 @@ std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, 
 //=========================================================================================================================
 vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
+
+
+
+
+
 	long in_len = (long)encoded_string.size();
 	int i = 0;
 	int j = 0;
@@ -1025,11 +1092,11 @@ string FileUtils::lzoByteArrayToBase64String(const u8* byteArray, unsigned long 
 }
 
 // ===============================================================================================
-u8* FileUtils::unlzoBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength)
+u8* FileUtils::unlzoBase64StringToByteArray(const string &zippedBytesAsBase64String, unsigned long &returnLength)
 {// ===============================================================================================
 
 	//unsigned long zippedLength;
-	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsString);// , zippedLength);
+	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1213,7 +1280,7 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 }
 
 // ===============================================================================================
-u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength)
+u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64String, unsigned long &returnLength)
 {// ===============================================================================================
 
 	//   GZIPInputStream gis = null;
@@ -1310,7 +1377,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 	
 
 	//unsigned long zippedLength;
-	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsString);// , zippedLength);
+	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1328,7 +1395,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 		return nullptr;
 	}
 
-	compressStatus = uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
+	compressStatus = mz_uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
 	//total_succeeded += (compressStatus == Z_OK);
 
 	while(compressStatus == Z_BUF_ERROR)
@@ -1338,7 +1405,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 		uncompressedLength *= 2;
 		//uncompressedBytes = (mz_uint8 *)malloc((size_t)uncompressedLength);
 		uncompressedBytes = new u8[uncompressedLength];
-		compressStatus = uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
+		compressStatus = mz_uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
 	}
 
 	if (compressStatus != Z_OK)
@@ -1370,7 +1437,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsString, u
 }
 
 
-string FileUtils::zipStringToBase64String(const string& s)
+string FileUtils::lzoStringToBase64String(const string& s)
 { // ===============================================================================================
 
 	if (s == "" || s.length() == 0)
@@ -1384,7 +1451,7 @@ string FileUtils::zipStringToBase64String(const string& s)
 	return lzoByteArrayToBase64String(val, s.length());
 }
 
-string FileUtils::unzipBase64StringToString(const string& s)
+string FileUtils::unlzoBase64StringToString(const string& s)
 { // ===============================================================================================
 
 	if (s == "" || s.length() == 0)
@@ -1394,6 +1461,37 @@ string FileUtils::unzipBase64StringToString(const string& s)
 
 	unsigned long returnLength = 0;
 	u8* bytes = unlzoBase64StringToByteArray(s, returnLength);
+	string out((char*)bytes,returnLength);
+
+	delete[] bytes;
+
+	return out;
+}
+
+string FileUtils::zipStringToBase64String(const string& s)
+{ // ===============================================================================================
+
+	if (s == "" || s.length() == 0)
+	{
+	    return s;
+	}
+
+	u8 *val = new u8[s.length() + 1];
+	strcpy((char *)val, s.c_str());
+
+	return zipByteArrayToBase64String(val, s.length());
+}
+
+string FileUtils::unzipBase64StringToString(const string& s)
+{ // ===============================================================================================
+
+	if (s == "" || s.length() == 0)
+	{
+	    return s;
+	}
+
+	unsigned long returnLength = 0;
+	u8* bytes = unzipBase64StringToByteArray(s, returnLength);
 	string out((char*)bytes,returnLength);
 
 	delete[] bytes;
