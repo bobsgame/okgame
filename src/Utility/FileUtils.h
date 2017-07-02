@@ -73,6 +73,8 @@ public:
 	static vector<u8>* loadByteFile(string filename);
 	static vector<u8>* loadByteFileFromExePath(string filename);
 	//static vector<u8>* loadByteFileFromExePathIntoVector(string filename);
+	static string lzoByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
+	static u8* unlzoBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
 	static string zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
 	static u8* unzipBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
 	static string zipStringToBase64String(const string& s);

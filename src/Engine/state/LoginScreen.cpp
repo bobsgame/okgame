@@ -19,7 +19,7 @@ LoginScreen::LoginScreen()
 
 	//MenuPanel();
 
-	//
+	
 	//   loginPanel = new DialogLayout();
 	//   loginPanel->setTheme("loginpanel");
 	//

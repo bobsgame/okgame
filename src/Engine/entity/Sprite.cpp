@@ -518,13 +518,15 @@ void Sprite::loadTextures()
 			checkedIfExist = true;
 
 			BobFile* textureFile = nullptr;
-			if (useHQ2X)
+
+
+			if (useHQ2X == true)
 			{
-				textureFile = new BobFile(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5() + "s");
+				textureFile = new BobFile(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5());
 			}
 			else
 			{
-				textureFile = new BobFile(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5() + "s");
+				textureFile = new BobFile(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5());
 			}
 
 			if (textureFile->exists())

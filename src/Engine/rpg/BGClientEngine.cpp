@@ -194,7 +194,7 @@ void BGClientEngine::update()
 
 		if (isGameInitializedFromSave_nonThreaded == false)
 		{
-			if (getGameInitializedFromSave_S() == true)
+			if (getGameInitializedFromSave_S() == false)
 			{
 				isGameInitializedFromSave_nonThreaded = true;
 
@@ -229,35 +229,35 @@ void BGClientEngine::update()
 		}
 
 
-		if (isProjectLoadEventInitialized_nonThreaded == false)
-		{
-			long long startTime = lastSentProjectLoadEventRequestTime;
-			int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-			if (ticksPassed > 200)
-			{
-				lastSentProjectLoadEventRequestTime = currentTime;
-
-				if (getProjectLoadEventID_S() == -1)
-				{
-					sendProjectLoadEventRequest();
-				}
-				else
-				{
-					isProjectLoadEventInitialized_nonThreaded = true;
-
-					projectLoadEvent = getEventManager()->getEventByIDCreateIfNotExist(getProjectLoadEventID_S());
-					if(projectLoadEvent!=nullptr)getEventManager()->addToEventQueueIfNotThere(projectLoadEvent); //events update their own network data inside their run function
-				}
-			}
-
-			return;
-		}
+//		if (isProjectLoadEventInitialized_nonThreaded == false)
+//		{
+//			long long startTime = lastSentProjectLoadEventRequestTime;
+//			int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+//			if (ticksPassed > 200)
+//			{
+//				lastSentProjectLoadEventRequestTime = currentTime;
+//
+//				if (getProjectLoadEventID_S() == -1)
+//				{
+//					sendProjectLoadEventRequest();
+//				}
+//				else
+//				{
+//					isProjectLoadEventInitialized_nonThreaded = true;
+//
+//					projectLoadEvent = getEventManager()->getEventByIDCreateIfNotExist(getProjectLoadEventID_S());
+//					if(projectLoadEvent!=nullptr)getEventManager()->addToEventQueueIfNotThere(projectLoadEvent); //events update their own network data inside their run function
+//				}
+//			}
+//
+//			return;
+//		}
 
 
 		if (finishedProjectLoadEvent == false)
 		{
 			//wait for load event to finish
-			if (getEventManager()->isEventInQueue(projectLoadEvent) == false)
+			//if (getEventManager()->isEventInQueue(projectLoadEvent) == false)
 			{
 				finishedProjectLoadEvent = true;
 
@@ -285,7 +285,7 @@ void BGClientEngine::update()
 	handleGameEngineOptionKeys();
 
 
-	Engine::update();
+	super::update();
 
 
 	clock->update();
@@ -306,7 +306,7 @@ void BGClientEngine::update()
 void BGClientEngine::cleanup()
 { //=========================================================================================================================
 
-	Engine::cleanup();
+	super::cleanup();
 
 	guiManager->cleanup();
 
@@ -319,7 +319,7 @@ void BGClientEngine::render()
 
 	if (nD->getIsScrolledUp() == false)
 	{
-		Engine::render();
+		super::render();
 	}
 
 

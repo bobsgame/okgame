@@ -53,18 +53,31 @@ void TCPServerConnection::update()
 		{
 			s = s.substr(s.find(":") + 1);
 			partialPacketString += s;
-			messageReceived(partialPacketString);
+
+
+			string p = FileUtils::unzipBase64StringToString(partialPacketString);
 			partialPacketString = "";
+			messageReceived(p);
+
+
+			//messageReceived(partialPacketString);
+			
 		}
 		else
 		if(partialPacketString.length()>0)
 		{
 			log.warn("Partial packet from server was not completed before got another packet");
-			messageReceived(s);
+			//messageReceived(s);
 		}
 		else
 		{
-			messageReceived(s);
+
+			string p = FileUtils::unzipBase64StringToString(s);
+			s = "";
+			messageReceived(p);
+
+
+			//messageReceived(s);
 		}
 	}
 
@@ -645,6 +658,10 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ctx, MessageEvent* e)
 { //===============================================================================================
+
+
+
+
 
 	if (String::startsWith(s, BobNet::Server_IP_Address_Response))
 	{
