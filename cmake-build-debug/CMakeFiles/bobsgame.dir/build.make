@@ -204,9 +204,33 @@ CMakeFiles/bobsgame.dir/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp.o.pro
 CMakeFiles/bobsgame.dir/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp.o.provides.build: CMakeFiles/bobsgame.dir/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp.o
 
 
+CMakeFiles/bobsgame.dir/lib/md5.cpp.o: CMakeFiles/bobsgame.dir/flags.make
+CMakeFiles/bobsgame.dir/lib/md5.cpp.o: ../lib/md5.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bobsgame.dir/lib/md5.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/lib/md5.cpp.o -c /home/bob/bobsgame/lib/md5.cpp
+
+CMakeFiles/bobsgame.dir/lib/md5.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bobsgame.dir/lib/md5.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bob/bobsgame/lib/md5.cpp > CMakeFiles/bobsgame.dir/lib/md5.cpp.i
+
+CMakeFiles/bobsgame.dir/lib/md5.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bobsgame.dir/lib/md5.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bob/bobsgame/lib/md5.cpp -o CMakeFiles/bobsgame.dir/lib/md5.cpp.s
+
+CMakeFiles/bobsgame.dir/lib/md5.cpp.o.requires:
+
+.PHONY : CMakeFiles/bobsgame.dir/lib/md5.cpp.o.requires
+
+CMakeFiles/bobsgame.dir/lib/md5.cpp.o.provides: CMakeFiles/bobsgame.dir/lib/md5.cpp.o.requires
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/md5.cpp.o.provides.build
+.PHONY : CMakeFiles/bobsgame.dir/lib/md5.cpp.o.provides
+
+CMakeFiles/bobsgame.dir/lib/md5.cpp.o.provides.build: CMakeFiles/bobsgame.dir/lib/md5.cpp.o
+
+
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o: ../src/Engine/cinematics/CinematicsManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o -c /home/bob/bobsgame/src/Engine/cinematics/CinematicsManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.i: cmake_force
@@ -230,7 +254,7 @@ CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o.provides.b
 
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o: ../src/Engine/cinematics/Letterbox.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o -c /home/bob/bobsgame/src/Engine/cinematics/Letterbox.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.i: cmake_force
@@ -254,7 +278,7 @@ CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o.provides.build: CM
 
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o: ../src/Engine/cinematics/ScreenOverlay.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o -c /home/bob/bobsgame/src/Engine/cinematics/ScreenOverlay.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.i: cmake_force
@@ -278,7 +302,7 @@ CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o.provides.build
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Cameraman.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/Cameraman.cpp.o: ../src/Engine/entity/Cameraman.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Cameraman.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Cameraman.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/Cameraman.cpp.o -c /home/bob/bobsgame/src/Engine/entity/Cameraman.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Cameraman.cpp.i: cmake_force
@@ -302,7 +326,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/Cameraman.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Character.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/Character.cpp.o: ../src/Engine/entity/Character.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Character.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Character.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/Character.cpp.o -c /home/bob/bobsgame/src/Engine/entity/Character.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Character.cpp.i: cmake_force
@@ -326,7 +350,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/Character.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Entity.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/Entity.cpp.o: ../src/Engine/entity/Entity.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Entity.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Entity.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/Entity.cpp.o -c /home/bob/bobsgame/src/Engine/entity/Entity.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Entity.cpp.i: cmake_force
@@ -350,7 +374,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/Entity.cpp.o.provides.build: CMakeFile
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/PathFinder.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/PathFinder.cpp.o: ../src/Engine/entity/PathFinder.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/PathFinder.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/PathFinder.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/PathFinder.cpp.o -c /home/bob/bobsgame/src/Engine/entity/PathFinder.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/PathFinder.cpp.i: cmake_force
@@ -374,7 +398,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/PathFinder.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/RandomCharacter.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/RandomCharacter.cpp.o: ../src/Engine/entity/RandomCharacter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/RandomCharacter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/RandomCharacter.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/RandomCharacter.cpp.o -c /home/bob/bobsgame/src/Engine/entity/RandomCharacter.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/RandomCharacter.cpp.i: cmake_force
@@ -398,7 +422,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/RandomCharacter.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/ScreenSprite.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/ScreenSprite.cpp.o: ../src/Engine/entity/ScreenSprite.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/ScreenSprite.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/ScreenSprite.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/ScreenSprite.cpp.o -c /home/bob/bobsgame/src/Engine/entity/ScreenSprite.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/ScreenSprite.cpp.i: cmake_force
@@ -422,7 +446,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/ScreenSprite.cpp.o.provides.build: CMa
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Sprite.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/Sprite.cpp.o: ../src/Engine/entity/Sprite.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Sprite.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/Sprite.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/Sprite.cpp.o -c /home/bob/bobsgame/src/Engine/entity/Sprite.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/Sprite.cpp.i: cmake_force
@@ -446,7 +470,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/Sprite.cpp.o.provides.build: CMakeFile
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteAnimationSequence.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteAnimationSequence.cpp.o: ../src/Engine/entity/SpriteAnimationSequence.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteAnimationSequence.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteAnimationSequence.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteAnimationSequence.cpp.o -c /home/bob/bobsgame/src/Engine/entity/SpriteAnimationSequence.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteAnimationSequence.cpp.i: cmake_force
@@ -470,7 +494,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteAnimationSequence.cpp.o.provides
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteData.cpp.o: ../src/Engine/entity/SpriteData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteData.cpp.o -c /home/bob/bobsgame/src/Engine/entity/SpriteData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteData.cpp.i: cmake_force
@@ -494,7 +518,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteData.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteManager.cpp.o: ../src/Engine/entity/SpriteManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteManager.cpp.o -c /home/bob/bobsgame/src/Engine/entity/SpriteManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteManager.cpp.i: cmake_force
@@ -518,7 +542,7 @@ CMakeFiles/bobsgame.dir/src/Engine/entity/SpriteManager.cpp.o.provides.build: CM
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Area.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/Area.cpp.o: ../src/Engine/map/Area.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Area.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Area.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/Area.cpp.o -c /home/bob/bobsgame/src/Engine/map/Area.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Area.cpp.i: cmake_force
@@ -542,7 +566,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/Area.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Engine/map/AreaData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/AreaData.cpp.o: ../src/Engine/map/AreaData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/AreaData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/AreaData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/AreaData.cpp.o -c /home/bob/bobsgame/src/Engine/map/AreaData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/AreaData.cpp.i: cmake_force
@@ -566,7 +590,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/AreaData.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Door.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/Door.cpp.o: ../src/Engine/map/Door.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Door.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Door.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/Door.cpp.o -c /home/bob/bobsgame/src/Engine/map/Door.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Door.cpp.i: cmake_force
@@ -590,7 +614,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/Door.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Engine/map/DoorData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/DoorData.cpp.o: ../src/Engine/map/DoorData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/DoorData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/DoorData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/DoorData.cpp.o -c /home/bob/bobsgame/src/Engine/map/DoorData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/DoorData.cpp.i: cmake_force
@@ -614,7 +638,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/DoorData.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Engine/map/EntityData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/EntityData.cpp.o: ../src/Engine/map/EntityData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/EntityData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/EntityData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/EntityData.cpp.o -c /home/bob/bobsgame/src/Engine/map/EntityData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/EntityData.cpp.i: cmake_force
@@ -638,7 +662,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/EntityData.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Light.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/Light.cpp.o: ../src/Engine/map/Light.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Light.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Light.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/Light.cpp.o -c /home/bob/bobsgame/src/Engine/map/Light.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Light.cpp.i: cmake_force
@@ -662,7 +686,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/Light.cpp.o.provides.build: CMakeFiles/bo
 
 CMakeFiles/bobsgame.dir/src/Engine/map/LightData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/LightData.cpp.o: ../src/Engine/map/LightData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/LightData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/LightData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/LightData.cpp.o -c /home/bob/bobsgame/src/Engine/map/LightData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/LightData.cpp.i: cmake_force
@@ -686,7 +710,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/LightData.cpp.o.provides.build: CMakeFile
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Map.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/Map.cpp.o: ../src/Engine/map/Map.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Map.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/Map.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/Map.cpp.o -c /home/bob/bobsgame/src/Engine/map/Map.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/Map.cpp.i: cmake_force
@@ -710,7 +734,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/Map.cpp.o.provides.build: CMakeFiles/bobs
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/MapData.cpp.o: ../src/Engine/map/MapData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/MapData.cpp.o -c /home/bob/bobsgame/src/Engine/map/MapData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapData.cpp.i: cmake_force
@@ -734,7 +758,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/MapData.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/MapManager.cpp.o: ../src/Engine/map/MapManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/MapManager.cpp.o -c /home/bob/bobsgame/src/Engine/map/MapManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapManager.cpp.i: cmake_force
@@ -758,7 +782,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/MapManager.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapState.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/MapState.cpp.o: ../src/Engine/map/MapState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/MapState.cpp.o -c /home/bob/bobsgame/src/Engine/map/MapState.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapState.cpp.i: cmake_force
@@ -782,7 +806,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/MapState.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapStateData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/MapStateData.cpp.o: ../src/Engine/map/MapStateData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapStateData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/MapStateData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/MapStateData.cpp.o -c /home/bob/bobsgame/src/Engine/map/MapStateData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/MapStateData.cpp.i: cmake_force
@@ -806,7 +830,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/MapStateData.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/map/WarpArea.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/map/WarpArea.cpp.o: ../src/Engine/map/WarpArea.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/WarpArea.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/map/WarpArea.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/map/WarpArea.cpp.o -c /home/bob/bobsgame/src/Engine/map/WarpArea.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/map/WarpArea.cpp.i: cmake_force
@@ -830,7 +854,7 @@ CMakeFiles/bobsgame.dir/src/Engine/map/WarpArea.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp.o: ../src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp.i: cmake_force
@@ -854,7 +878,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuInfoPanel.cpp.o.pro
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp.o: ../src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp.i: cmake_force
@@ -878,7 +902,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuMovie.cpp.o.provide
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp.o: ../src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp.i: cmake_force
@@ -902,7 +926,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/wheelitem/NDMenuWheelItem.cpp.o.pro
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenu.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenu.cpp.o: ../src/Engine/nd/ndmenu/NDMenu.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenu.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenu.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenu.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenu.cpp.i: cmake_force
@@ -926,7 +950,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenu.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuBackground.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuBackground.cpp.o: ../src/Engine/nd/ndmenu/NDMenuBackground.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuBackground.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuBackground.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuBackground.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenuBackground.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuBackground.cpp.i: cmake_force
@@ -950,7 +974,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuBackground.cpp.o.provides.bui
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuWheel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuWheel.cpp.o: ../src/Engine/nd/ndmenu/NDMenuWheel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuWheel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuWheel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuWheel.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ndmenu/NDMenuWheel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuWheel.cpp.i: cmake_force
@@ -974,7 +998,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ndmenu/NDMenuWheel.cpp.o.provides.build: C
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/Ping.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/Ping.cpp.o: ../src/Engine/nd/ping/Ping.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/Ping.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/Ping.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ping/Ping.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ping/Ping.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/Ping.cpp.i: cmake_force
@@ -998,7 +1022,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ping/Ping.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBackground.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBackground.cpp.o: ../src/Engine/nd/ping/PingBackground.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBackground.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBackground.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBackground.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ping/PingBackground.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBackground.cpp.i: cmake_force
@@ -1022,7 +1046,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBackground.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBall.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBall.cpp.o: ../src/Engine/nd/ping/PingBall.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBall.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBall.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBall.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ping/PingBall.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBall.cpp.i: cmake_force
@@ -1046,7 +1070,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingBall.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingPaddle.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingPaddle.cpp.o: ../src/Engine/nd/ping/PingPaddle.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingPaddle.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingPaddle.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingPaddle.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ping/PingPaddle.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingPaddle.cpp.i: cmake_force
@@ -1070,7 +1094,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ping/PingPaddle.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/Ramio.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/Ramio.cpp.o: ../src/Engine/nd/ramio/Ramio.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/Ramio.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/Ramio.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/Ramio.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ramio/Ramio.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/Ramio.cpp.i: cmake_force
@@ -1094,7 +1118,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/Ramio.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBackground.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBackground.cpp.o: ../src/Engine/nd/ramio/RamioBackground.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBackground.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBackground.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBackground.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ramio/RamioBackground.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBackground.cpp.i: cmake_force
@@ -1118,7 +1142,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBackground.cpp.o.provides.build
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBlock.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBlock.cpp.o: ../src/Engine/nd/ramio/RamioBlock.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBlock.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBlock.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBlock.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ramio/RamioBlock.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBlock.cpp.i: cmake_force
@@ -1142,7 +1166,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBlock.cpp.o.provides.build: CMa
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBoba.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBoba.cpp.o: ../src/Engine/nd/ramio/RamioBoba.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBoba.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBoba.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBoba.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ramio/RamioBoba.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBoba.cpp.i: cmake_force
@@ -1166,7 +1190,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBoba.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBrickBlock.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBrickBlock.cpp.o: ../src/Engine/nd/ramio/RamioBrickBlock.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBrickBlock.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBrickBlock.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBrickBlock.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ramio/RamioBrickBlock.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBrickBlock.cpp.i: cmake_force
@@ -1190,7 +1214,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioBrickBlock.cpp.o.provides.build
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioGuy.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioGuy.cpp.o: ../src/Engine/nd/ramio/RamioGuy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioGuy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioGuy.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioGuy.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ramio/RamioGuy.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioGuy.cpp.i: cmake_force
@@ -1214,7 +1238,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioGuy.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioMoneyBlock.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioMoneyBlock.cpp.o: ../src/Engine/nd/ramio/RamioMoneyBlock.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioMoneyBlock.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioMoneyBlock.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioMoneyBlock.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ramio/RamioMoneyBlock.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioMoneyBlock.cpp.i: cmake_force
@@ -1238,7 +1262,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ramio/RamioMoneyBlock.cpp.o.provides.build
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/GameDataLoader.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/GameDataLoader.cpp.o: ../src/Engine/nd/GameDataLoader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/GameDataLoader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/GameDataLoader.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/GameDataLoader.cpp.o -c /home/bob/bobsgame/src/Engine/nd/GameDataLoader.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/GameDataLoader.cpp.i: cmake_force
@@ -1262,7 +1286,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/GameDataLoader.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ND.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/ND.cpp.o: ../src/Engine/nd/ND.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ND.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/ND.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/ND.cpp.o -c /home/bob/bobsgame/src/Engine/nd/ND.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/ND.cpp.i: cmake_force
@@ -1286,7 +1310,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/ND.cpp.o.provides.build: CMakeFiles/bobsga
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/NDGameEngine.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/nd/NDGameEngine.cpp.o: ../src/Engine/nd/NDGameEngine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/NDGameEngine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/nd/NDGameEngine.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/nd/NDGameEngine.cpp.o -c /home/bob/bobsgame/src/Engine/nd/NDGameEngine.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/nd/NDGameEngine.cpp.i: cmake_force
@@ -1310,7 +1334,7 @@ CMakeFiles/bobsgame.dir/src/Engine/nd/NDGameEngine.cpp.o.provides.build: CMakeFi
 
 CMakeFiles/bobsgame.dir/src/Engine/network/BobNet.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/network/BobNet.cpp.o: ../src/Engine/network/BobNet.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/BobNet.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/BobNet.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/network/BobNet.cpp.o -c /home/bob/bobsgame/src/Engine/network/BobNet.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/network/BobNet.cpp.i: cmake_force
@@ -1334,7 +1358,7 @@ CMakeFiles/bobsgame.dir/src/Engine/network/BobNet.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Engine/network/GameSave.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/network/GameSave.cpp.o: ../src/Engine/network/GameSave.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/GameSave.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/GameSave.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/network/GameSave.cpp.o -c /home/bob/bobsgame/src/Engine/network/GameSave.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/network/GameSave.cpp.i: cmake_force
@@ -1358,7 +1382,7 @@ CMakeFiles/bobsgame.dir/src/Engine/network/GameSave.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/network/ServerObject.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/network/ServerObject.cpp.o: ../src/Engine/network/ServerObject.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/ServerObject.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/ServerObject.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/network/ServerObject.cpp.o -c /home/bob/bobsgame/src/Engine/network/ServerObject.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/network/ServerObject.cpp.i: cmake_force
@@ -1382,7 +1406,7 @@ CMakeFiles/bobsgame.dir/src/Engine/network/ServerObject.cpp.o.provides.build: CM
 
 CMakeFiles/bobsgame.dir/src/Engine/network/TCPServerConnection.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/network/TCPServerConnection.cpp.o: ../src/Engine/network/TCPServerConnection.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/TCPServerConnection.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/TCPServerConnection.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/network/TCPServerConnection.cpp.o -c /home/bob/bobsgame/src/Engine/network/TCPServerConnection.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/network/TCPServerConnection.cpp.i: cmake_force
@@ -1406,7 +1430,7 @@ CMakeFiles/bobsgame.dir/src/Engine/network/TCPServerConnection.cpp.o.provides.bu
 
 CMakeFiles/bobsgame.dir/src/Engine/network/UDPPeerConnection.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/network/UDPPeerConnection.cpp.o: ../src/Engine/network/UDPPeerConnection.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/UDPPeerConnection.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/network/UDPPeerConnection.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/network/UDPPeerConnection.cpp.o -c /home/bob/bobsgame/src/Engine/network/UDPPeerConnection.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/network/UDPPeerConnection.cpp.i: cmake_force
@@ -1430,7 +1454,7 @@ CMakeFiles/bobsgame.dir/src/Engine/network/UDPPeerConnection.cpp.o.provides.buil
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/ActionManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/ActionManager.cpp.o: ../src/Engine/rpg/event/ActionManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/ActionManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/ActionManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/ActionManager.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/ActionManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/ActionManager.cpp.i: cmake_force
@@ -1454,7 +1478,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/ActionManager.cpp.o.provides.build:
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Dialogue.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Dialogue.cpp.o: ../src/Engine/rpg/event/Dialogue.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Dialogue.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Dialogue.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Dialogue.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/Dialogue.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Dialogue.cpp.i: cmake_force
@@ -1478,7 +1502,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Dialogue.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/DialogueData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/DialogueData.cpp.o: ../src/Engine/rpg/event/DialogueData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/DialogueData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/DialogueData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/DialogueData.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/DialogueData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/DialogueData.cpp.i: cmake_force
@@ -1502,7 +1526,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/DialogueData.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Event.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Event.cpp.o: ../src/Engine/rpg/event/Event.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Event.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Event.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Event.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/Event.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Event.cpp.i: cmake_force
@@ -1526,7 +1550,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Event.cpp.o.provides.build: CMakeFi
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventCommand.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventCommand.cpp.o: ../src/Engine/rpg/event/EventCommand.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventCommand.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventCommand.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventCommand.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/EventCommand.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventCommand.cpp.i: cmake_force
@@ -1550,7 +1574,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventCommand.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventData.cpp.o: ../src/Engine/rpg/event/EventData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventData.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/EventData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventData.cpp.i: cmake_force
@@ -1574,7 +1598,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventData.cpp.o.provides.build: CMa
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventManager.cpp.o: ../src/Engine/rpg/event/EventManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventManager.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/EventManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventManager.cpp.i: cmake_force
@@ -1598,7 +1622,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventManager.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventParameter.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventParameter.cpp.o: ../src/Engine/rpg/event/EventParameter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventParameter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventParameter.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventParameter.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/EventParameter.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventParameter.cpp.i: cmake_force
@@ -1622,7 +1646,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/EventParameter.cpp.o.provides.build
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Flag.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Flag.cpp.o: ../src/Engine/rpg/event/Flag.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Flag.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Flag.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Flag.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/Flag.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Flag.cpp.i: cmake_force
@@ -1646,7 +1670,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Flag.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/FlagData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/FlagData.cpp.o: ../src/Engine/rpg/event/FlagData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/FlagData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/FlagData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/FlagData.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/FlagData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/FlagData.cpp.i: cmake_force
@@ -1670,7 +1694,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/FlagData.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameString.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameString.cpp.o: ../src/Engine/rpg/event/GameString.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameString.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameString.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameString.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/GameString.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameString.cpp.i: cmake_force
@@ -1694,7 +1718,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameString.cpp.o.provides.build: CM
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameStringData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameStringData.cpp.o: ../src/Engine/rpg/event/GameStringData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameStringData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameStringData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameStringData.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/GameStringData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameStringData.cpp.i: cmake_force
@@ -1718,7 +1742,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/GameStringData.cpp.o.provides.build
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Skill.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Skill.cpp.o: ../src/Engine/rpg/event/Skill.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Skill.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Skill.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Skill.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/Skill.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Skill.cpp.i: cmake_force
@@ -1742,7 +1766,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/Skill.cpp.o.provides.build: CMakeFi
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/SkillData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/SkillData.cpp.o: ../src/Engine/rpg/event/SkillData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/SkillData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/event/SkillData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/event/SkillData.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/event/SkillData.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/event/SkillData.cpp.i: cmake_force
@@ -1766,7 +1790,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/event/SkillData.cpp.o.provides.build: CMa
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameItem.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameItem.cpp.o: ../src/Engine/rpg/gui/gameStore/GameItem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameItem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameItem.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameItem.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/gameStore/GameItem.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameItem.cpp.i: cmake_force
@@ -1790,7 +1814,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameItem.cpp.o.provides.bui
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameStore.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameStore.cpp.o: ../src/Engine/rpg/gui/gameStore/GameStore.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameStore.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameStore.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameStore.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/gameStore/GameStore.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameStore.cpp.i: cmake_force
@@ -1814,7 +1838,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/gameStore/GameStore.cpp.o.provides.bu
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp.o: ../src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp.i: cmake_force
@@ -1838,7 +1862,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/GameStoreButton.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp.o: ../src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_76) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp.i: cmake_force
@@ -1862,7 +1886,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/NDButton.cpp.o.prov
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp.o: ../src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_76) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_77) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp.i: cmake_force
@@ -1886,7 +1910,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StatusBarButton.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp.o: ../src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_77) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_78) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp.i: cmake_force
@@ -1910,7 +1934,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/buttons/StuffButton.cpp.o.p
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp.o: ../src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_78) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_79) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp.i: cmake_force
@@ -1934,7 +1958,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/ClockCaption.cpp.o
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp.o: ../src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_79) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_80) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp.i: cmake_force
@@ -1958,7 +1982,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/DayCaption.cpp.o.p
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp.o: ../src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_80) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_81) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp.i: cmake_force
@@ -1982,7 +2006,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/MoneyCaption.cpp.o
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp.o: ../src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_81) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_82) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.cpp.i: cmake_force
@@ -2006,7 +2030,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/captions/StatusBarCaption.c
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/notification/Notification.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/notification/Notification.cpp.o: ../src/Engine/rpg/gui/statusbar/notification/Notification.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_82) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/notification/Notification.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_83) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/notification/Notification.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/notification/Notification.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/notification/Notification.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/notification/Notification.cpp.i: cmake_force
@@ -2030,7 +2054,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/notification/Notification.c
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/NotificationManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/NotificationManager.cpp.o: ../src/Engine/rpg/gui/statusbar/NotificationManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_83) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/NotificationManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_84) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/NotificationManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/NotificationManager.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/NotificationManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/NotificationManager.cpp.i: cmake_force
@@ -2054,7 +2078,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/NotificationManager.cpp.o.p
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/StatusBar.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/StatusBar.cpp.o: ../src/Engine/rpg/gui/statusbar/StatusBar.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_84) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/StatusBar.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_85) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/StatusBar.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/StatusBar.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/statusbar/StatusBar.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/StatusBar.cpp.i: cmake_force
@@ -2078,7 +2102,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/statusbar/StatusBar.cpp.o.provides.bu
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_85) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_86) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp.i: cmake_force
@@ -2102,7 +2126,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ControlsPanel.cpp.
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_86) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_87) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp.i: cmake_force
@@ -2126,7 +2150,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/DebugInfoPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_87) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_88) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp.i: cmake_force
@@ -2150,7 +2174,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/FriendsPanel.cpp.o
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_88) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_89) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp.i: cmake_force
@@ -2174,7 +2198,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/ItemsPanel.cpp.o.p
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_89) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_90) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp.i: cmake_force
@@ -2198,7 +2222,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/LogsPanel.cpp.o.pr
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_90) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_91) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp.i: cmake_force
@@ -2222,7 +2246,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/MessagesPanel.cpp.
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_91) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_92) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp.i: cmake_force
@@ -2246,7 +2270,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/SettingsPanel.cpp.
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_92) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_93) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp.i: cmake_force
@@ -2270,7 +2294,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/subMenus/StatusPanel.cpp.o.
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp.o: ../src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_93) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_94) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp.i: cmake_force
@@ -2294,7 +2318,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/StuffMenu.cpp.o.provides.bu
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp.o: ../src/Engine/rpg/gui/stuffMenu/SubPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_94) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_95) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp.i: cmake_force
@@ -2318,7 +2342,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/stuffMenu/SubPanel.cpp.o.provides.bui
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/CountryCodes.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/CountryCodes.cpp.o: ../src/Engine/rpg/gui/CountryCodes.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_95) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/CountryCodes.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_96) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/CountryCodes.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/CountryCodes.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/CountryCodes.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/CountryCodes.cpp.i: cmake_force
@@ -2342,7 +2366,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/CountryCodes.cpp.o.provides.build: CM
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp.o: ../src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_96) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_97) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp.i: cmake_force
@@ -2366,7 +2390,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GameChallengeNotificationPanel.cpp.o.
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GUIManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GUIManager.cpp.o: ../src/Engine/rpg/gui/GUIManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_97) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GUIManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_98) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GUIManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GUIManager.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/GUIManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GUIManager.cpp.i: cmake_force
@@ -2390,7 +2414,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/GUIManager.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/MenuPanel.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/MenuPanel.cpp.o: ../src/Engine/rpg/gui/MenuPanel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_98) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/MenuPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_99) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/MenuPanel.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/MenuPanel.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/MenuPanel.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/MenuPanel.cpp.i: cmake_force
@@ -2414,7 +2438,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/MenuPanel.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/PlayerEditMenu.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/PlayerEditMenu.cpp.o: ../src/Engine/rpg/gui/PlayerEditMenu.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_99) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/PlayerEditMenu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_100) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/PlayerEditMenu.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/PlayerEditMenu.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/gui/PlayerEditMenu.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/PlayerEditMenu.cpp.i: cmake_force
@@ -2438,7 +2462,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/gui/PlayerEditMenu.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/BGClientEngine.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/BGClientEngine.cpp.o: ../src/Engine/rpg/BGClientEngine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_100) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/BGClientEngine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_101) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/BGClientEngine.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/BGClientEngine.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/BGClientEngine.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/BGClientEngine.cpp.i: cmake_force
@@ -2462,7 +2486,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/BGClientEngine.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Clock.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Clock.cpp.o: ../src/Engine/rpg/Clock.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_101) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Clock.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_102) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Clock.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/Clock.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/Clock.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Clock.cpp.i: cmake_force
@@ -2486,7 +2510,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/Clock.cpp.o.provides.build: CMakeFiles/bo
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/EasingTest.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/EasingTest.cpp.o: ../src/Engine/rpg/EasingTest.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_102) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/EasingTest.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_103) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/EasingTest.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/EasingTest.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/EasingTest.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/EasingTest.cpp.i: cmake_force
@@ -2510,7 +2534,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/EasingTest.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendCharacter.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendCharacter.cpp.o: ../src/Engine/rpg/FriendCharacter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_103) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendCharacter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_104) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendCharacter.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendCharacter.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/FriendCharacter.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendCharacter.cpp.i: cmake_force
@@ -2534,7 +2558,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendCharacter.cpp.o.provides.build: CMa
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendManager.cpp.o: ../src/Engine/rpg/FriendManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_104) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_105) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendManager.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/FriendManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendManager.cpp.i: cmake_force
@@ -2558,7 +2582,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/FriendManager.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Item.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Item.cpp.o: ../src/Engine/rpg/Item.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_105) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Item.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_106) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Item.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/Item.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/Item.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Item.cpp.i: cmake_force
@@ -2582,7 +2606,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/Item.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Player.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Player.cpp.o: ../src/Engine/rpg/Player.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_106) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Player.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_107) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Player.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/Player.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/Player.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Player.cpp.i: cmake_force
@@ -2606,7 +2630,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/Player.cpp.o.provides.build: CMakeFiles/b
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Wallet.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Wallet.cpp.o: ../src/Engine/rpg/Wallet.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_107) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Wallet.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_108) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/rpg/Wallet.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/rpg/Wallet.cpp.o -c /home/bob/bobsgame/src/Engine/rpg/Wallet.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/rpg/Wallet.cpp.i: cmake_force
@@ -2630,7 +2654,7 @@ CMakeFiles/bobsgame.dir/src/Engine/rpg/Wallet.cpp.o.provides.build: CMakeFiles/b
 
 CMakeFiles/bobsgame.dir/src/Engine/stadium/BobsGameStadium.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/stadium/BobsGameStadium.cpp.o: ../src/Engine/stadium/BobsGameStadium.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_108) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/stadium/BobsGameStadium.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_109) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/stadium/BobsGameStadium.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/stadium/BobsGameStadium.cpp.o -c /home/bob/bobsgame/src/Engine/stadium/BobsGameStadium.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/stadium/BobsGameStadium.cpp.i: cmake_force
@@ -2654,7 +2678,7 @@ CMakeFiles/bobsgame.dir/src/Engine/stadium/BobsGameStadium.cpp.o.provides.build:
 
 CMakeFiles/bobsgame.dir/src/Engine/stadium/StadiumScreen.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/stadium/StadiumScreen.cpp.o: ../src/Engine/stadium/StadiumScreen.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_109) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/stadium/StadiumScreen.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_110) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/stadium/StadiumScreen.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/stadium/StadiumScreen.cpp.o -c /home/bob/bobsgame/src/Engine/stadium/StadiumScreen.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/stadium/StadiumScreen.cpp.i: cmake_force
@@ -2678,7 +2702,7 @@ CMakeFiles/bobsgame.dir/src/Engine/stadium/StadiumScreen.cpp.o.provides.build: C
 
 CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccount.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccount.cpp.o: ../src/Engine/state/CreateNewAccount.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_110) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccount.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_111) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccount.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccount.cpp.o -c /home/bob/bobsgame/src/Engine/state/CreateNewAccount.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccount.cpp.i: cmake_force
@@ -2702,7 +2726,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccount.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccountState.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccountState.cpp.o: ../src/Engine/state/CreateNewAccountState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_111) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccountState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_112) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccountState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccountState.cpp.o -c /home/bob/bobsgame/src/Engine/state/CreateNewAccountState.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccountState.cpp.i: cmake_force
@@ -2726,7 +2750,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/CreateNewAccountState.cpp.o.provides.bu
 
 CMakeFiles/bobsgame.dir/src/Engine/state/GlowTileBackground.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/GlowTileBackground.cpp.o: ../src/Engine/state/GlowTileBackground.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_112) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/GlowTileBackground.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_113) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/GlowTileBackground.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/GlowTileBackground.cpp.o -c /home/bob/bobsgame/src/Engine/state/GlowTileBackground.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/GlowTileBackground.cpp.i: cmake_force
@@ -2750,7 +2774,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/GlowTileBackground.cpp.o.provides.build
 
 CMakeFiles/bobsgame.dir/src/Engine/state/KeyboardScreen.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/KeyboardScreen.cpp.o: ../src/Engine/state/KeyboardScreen.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_113) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/KeyboardScreen.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_114) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/KeyboardScreen.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/KeyboardScreen.cpp.o -c /home/bob/bobsgame/src/Engine/state/KeyboardScreen.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/KeyboardScreen.cpp.i: cmake_force
@@ -2774,7 +2798,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/KeyboardScreen.cpp.o.provides.build: CM
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LegalScreen.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/LegalScreen.cpp.o: ../src/Engine/state/LegalScreen.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_114) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LegalScreen.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_115) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LegalScreen.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/LegalScreen.cpp.o -c /home/bob/bobsgame/src/Engine/state/LegalScreen.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LegalScreen.cpp.i: cmake_force
@@ -2798,7 +2822,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/LegalScreen.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LoggedOutState.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/LoggedOutState.cpp.o: ../src/Engine/state/LoggedOutState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_115) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LoggedOutState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_116) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LoggedOutState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/LoggedOutState.cpp.o -c /home/bob/bobsgame/src/Engine/state/LoggedOutState.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LoggedOutState.cpp.i: cmake_force
@@ -2822,7 +2846,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/LoggedOutState.cpp.o.provides.build: CM
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LoginScreen.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/LoginScreen.cpp.o: ../src/Engine/state/LoginScreen.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_116) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LoginScreen.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_117) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LoginScreen.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/LoginScreen.cpp.o -c /home/bob/bobsgame/src/Engine/state/LoginScreen.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LoginScreen.cpp.i: cmake_force
@@ -2846,7 +2870,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/LoginScreen.cpp.o.provides.build: CMake
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LoginState.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/LoginState.cpp.o: ../src/Engine/state/LoginState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_117) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LoginState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_118) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/LoginState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/LoginState.cpp.o -c /home/bob/bobsgame/src/Engine/state/LoginState.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/LoginState.cpp.i: cmake_force
@@ -2870,7 +2894,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/LoginState.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/state/ServersHaveShutDownState.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/ServersHaveShutDownState.cpp.o: ../src/Engine/state/ServersHaveShutDownState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_118) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/ServersHaveShutDownState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_119) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/ServersHaveShutDownState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/ServersHaveShutDownState.cpp.o -c /home/bob/bobsgame/src/Engine/state/ServersHaveShutDownState.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/ServersHaveShutDownState.cpp.i: cmake_force
@@ -2894,7 +2918,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/ServersHaveShutDownState.cpp.o.provides
 
 CMakeFiles/bobsgame.dir/src/Engine/state/State.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/State.cpp.o: ../src/Engine/state/State.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_119) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/State.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_120) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/State.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/State.cpp.o -c /home/bob/bobsgame/src/Engine/state/State.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/State.cpp.i: cmake_force
@@ -2918,7 +2942,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/State.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/bobsgame.dir/src/Engine/state/StateManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/StateManager.cpp.o: ../src/Engine/state/StateManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_120) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/StateManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_121) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/StateManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/StateManager.cpp.o -c /home/bob/bobsgame/src/Engine/state/StateManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/StateManager.cpp.i: cmake_force
@@ -2942,7 +2966,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/StateManager.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Engine/state/TitleScreenState.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/TitleScreenState.cpp.o: ../src/Engine/state/TitleScreenState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_121) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/TitleScreenState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_122) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/TitleScreenState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/TitleScreenState.cpp.o -c /home/bob/bobsgame/src/Engine/state/TitleScreenState.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/TitleScreenState.cpp.i: cmake_force
@@ -2966,7 +2990,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/TitleScreenState.cpp.o.provides.build: 
 
 CMakeFiles/bobsgame.dir/src/Engine/state/YouWillBeNotifiedState.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/state/YouWillBeNotifiedState.cpp.o: ../src/Engine/state/YouWillBeNotifiedState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_122) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/YouWillBeNotifiedState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_123) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/state/YouWillBeNotifiedState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/state/YouWillBeNotifiedState.cpp.o -c /home/bob/bobsgame/src/Engine/state/YouWillBeNotifiedState.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/state/YouWillBeNotifiedState.cpp.i: cmake_force
@@ -2990,7 +3014,7 @@ CMakeFiles/bobsgame.dir/src/Engine/state/YouWillBeNotifiedState.cpp.o.provides.b
 
 CMakeFiles/bobsgame.dir/src/Engine/text/TextManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/text/TextManager.cpp.o: ../src/Engine/text/TextManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_123) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/text/TextManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_124) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/text/TextManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/text/TextManager.cpp.o -c /home/bob/bobsgame/src/Engine/text/TextManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/text/TextManager.cpp.i: cmake_force
@@ -3014,7 +3038,7 @@ CMakeFiles/bobsgame.dir/src/Engine/text/TextManager.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Engine/text/TextWindow.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/text/TextWindow.cpp.o: ../src/Engine/text/TextWindow.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_124) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/text/TextWindow.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_125) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/text/TextWindow.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/text/TextWindow.cpp.o -c /home/bob/bobsgame/src/Engine/text/TextWindow.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/text/TextWindow.cpp.i: cmake_force
@@ -3038,7 +3062,7 @@ CMakeFiles/bobsgame.dir/src/Engine/text/TextWindow.cpp.o.provides.build: CMakeFi
 
 CMakeFiles/bobsgame.dir/src/Engine/Engine.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/Engine.cpp.o: ../src/Engine/Engine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_125) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/Engine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_126) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/Engine.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/Engine.cpp.o -c /home/bob/bobsgame/src/Engine/Engine.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/Engine.cpp.i: cmake_force
@@ -3062,7 +3086,7 @@ CMakeFiles/bobsgame.dir/src/Engine/Engine.cpp.o.provides.build: CMakeFiles/bobsg
 
 CMakeFiles/bobsgame.dir/src/Engine/EnginePart.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/EnginePart.cpp.o: ../src/Engine/EnginePart.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_126) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/EnginePart.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_127) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/EnginePart.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/EnginePart.cpp.o -c /home/bob/bobsgame/src/Engine/EnginePart.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/EnginePart.cpp.i: cmake_force
@@ -3086,7 +3110,7 @@ CMakeFiles/bobsgame.dir/src/Engine/EnginePart.cpp.o.provides.build: CMakeFiles/b
 
 CMakeFiles/bobsgame.dir/src/Engine/MiniGameEngine.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Engine/MiniGameEngine.cpp.o: ../src/Engine/MiniGameEngine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_127) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/MiniGameEngine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_128) "Building CXX object CMakeFiles/bobsgame.dir/src/Engine/MiniGameEngine.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Engine/MiniGameEngine.cpp.o -c /home/bob/bobsgame/src/Engine/MiniGameEngine.cpp
 
 CMakeFiles/bobsgame.dir/src/Engine/MiniGameEngine.cpp.i: cmake_force
@@ -3110,7 +3134,7 @@ CMakeFiles/bobsgame.dir/src/Engine/MiniGameEngine.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Puzzle/Block.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/Block.cpp.o: ../src/Puzzle/Block.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_128) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/Block.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_129) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/Block.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/Block.cpp.o -c /home/bob/bobsgame/src/Puzzle/Block.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/Block.cpp.i: cmake_force
@@ -3134,7 +3158,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/Block.cpp.o.provides.build: CMakeFiles/bobsga
 
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGame.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGame.cpp.o: ../src/Puzzle/BobsGame.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_129) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/BobsGame.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_130) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/BobsGame.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/BobsGame.cpp.o -c /home/bob/bobsgame/src/Puzzle/BobsGame.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGame.cpp.i: cmake_force
@@ -3158,7 +3182,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/BobsGame.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameTestMenu.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/GameTestMenu.cpp.o: ../src/Puzzle/GameTestMenu.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_130) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameTestMenu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_131) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameTestMenu.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/GameTestMenu.cpp.o -c /home/bob/bobsgame/src/Puzzle/GameTestMenu.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameTestMenu.cpp.i: cmake_force
@@ -3182,7 +3206,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/GameTestMenu.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameMenus.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameMenus.cpp.o: ../src/Puzzle/BobsGameMenus.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_131) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameMenus.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_132) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameMenus.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameMenus.cpp.o -c /home/bob/bobsgame/src/Puzzle/BobsGameMenus.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameMenus.cpp.i: cmake_force
@@ -3206,7 +3230,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameMenus.cpp.o.provides.build: CMakeFile
 
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameNetwork.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameNetwork.cpp.o: ../src/Puzzle/BobsGameNetwork.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_132) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameNetwork.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_133) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameNetwork.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameNetwork.cpp.o -c /home/bob/bobsgame/src/Puzzle/BobsGameNetwork.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameNetwork.cpp.i: cmake_force
@@ -3230,7 +3254,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/BobsGameNetwork.cpp.o.provides.build: CMakeFi
 
 CMakeFiles/bobsgame.dir/src/Puzzle/CustomGameEditor.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/CustomGameEditor.cpp.o: ../src/Puzzle/CustomGameEditor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_133) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/CustomGameEditor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_134) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/CustomGameEditor.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/CustomGameEditor.cpp.o -c /home/bob/bobsgame/src/Puzzle/CustomGameEditor.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/CustomGameEditor.cpp.i: cmake_force
@@ -3254,7 +3278,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/CustomGameEditor.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameSequence.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/GameSequence.cpp.o: ../src/Puzzle/GameSequence.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_134) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameSequence.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_135) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameSequence.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/GameSequence.cpp.o -c /home/bob/bobsgame/src/Puzzle/GameSequence.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameSequence.cpp.i: cmake_force
@@ -3278,7 +3302,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/GameSequence.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameSequenceEditor.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/GameSequenceEditor.cpp.o: ../src/Puzzle/GameSequenceEditor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_135) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameSequenceEditor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_136) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameSequenceEditor.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/GameSequenceEditor.cpp.o -c /home/bob/bobsgame/src/Puzzle/GameSequenceEditor.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameSequenceEditor.cpp.i: cmake_force
@@ -3302,7 +3326,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/GameSequenceEditor.cpp.o.provides.build: CMak
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameLogic.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/GameLogic.cpp.o: ../src/Puzzle/GameLogic.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_136) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameLogic.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_137) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameLogic.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/GameLogic.cpp.o -c /home/bob/bobsgame/src/Puzzle/GameLogic.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameLogic.cpp.i: cmake_force
@@ -3326,7 +3350,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/GameLogic.cpp.o.provides.build: CMakeFiles/bo
 
 CMakeFiles/bobsgame.dir/src/Puzzle/Grid.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/Grid.cpp.o: ../src/Puzzle/Grid.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_137) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/Grid.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_138) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/Grid.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/Grid.cpp.o -c /home/bob/bobsgame/src/Puzzle/Grid.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/Grid.cpp.i: cmake_force
@@ -3350,7 +3374,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/Grid.cpp.o.provides.build: CMakeFiles/bobsgam
 
 CMakeFiles/bobsgame.dir/src/Puzzle/Piece.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/Piece.cpp.o: ../src/Puzzle/Piece.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_138) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/Piece.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_139) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/Piece.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/Piece.cpp.o -c /home/bob/bobsgame/src/Puzzle/Piece.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/Piece.cpp.i: cmake_force
@@ -3374,7 +3398,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/Piece.cpp.o.provides.build: CMakeFiles/bobsga
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameType.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Puzzle/GameType.cpp.o: ../src/Puzzle/GameType.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_139) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameType.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_140) "Building CXX object CMakeFiles/bobsgame.dir/src/Puzzle/GameType.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Puzzle/GameType.cpp.o -c /home/bob/bobsgame/src/Puzzle/GameType.cpp
 
 CMakeFiles/bobsgame.dir/src/Puzzle/GameType.cpp.i: cmake_force
@@ -3398,7 +3422,7 @@ CMakeFiles/bobsgame.dir/src/Puzzle/GameType.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/AudioManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/audio/AudioManager.cpp.o: ../src/Utility/audio/AudioManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_140) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/AudioManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_141) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/AudioManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/audio/AudioManager.cpp.o -c /home/bob/bobsgame/src/Utility/audio/AudioManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/AudioManager.cpp.i: cmake_force
@@ -3422,7 +3446,7 @@ CMakeFiles/bobsgame.dir/src/Utility/audio/AudioManager.cpp.o.provides.build: CMa
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/Music.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/audio/Music.cpp.o: ../src/Utility/audio/Music.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_141) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/Music.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_142) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/Music.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/audio/Music.cpp.o -c /home/bob/bobsgame/src/Utility/audio/Music.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/Music.cpp.i: cmake_force
@@ -3446,7 +3470,7 @@ CMakeFiles/bobsgame.dir/src/Utility/audio/Music.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/MusicData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/audio/MusicData.cpp.o: ../src/Utility/audio/MusicData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_142) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/MusicData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_143) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/MusicData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/audio/MusicData.cpp.o -c /home/bob/bobsgame/src/Utility/audio/MusicData.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/MusicData.cpp.i: cmake_force
@@ -3470,7 +3494,7 @@ CMakeFiles/bobsgame.dir/src/Utility/audio/MusicData.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/Sound.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/audio/Sound.cpp.o: ../src/Utility/audio/Sound.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_143) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/Sound.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_144) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/Sound.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/audio/Sound.cpp.o -c /home/bob/bobsgame/src/Utility/audio/Sound.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/Sound.cpp.i: cmake_force
@@ -3494,7 +3518,7 @@ CMakeFiles/bobsgame.dir/src/Utility/audio/Sound.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/SoundData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/audio/SoundData.cpp.o: ../src/Utility/audio/SoundData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_144) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/SoundData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_145) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/audio/SoundData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/audio/SoundData.cpp.o -c /home/bob/bobsgame/src/Utility/audio/SoundData.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/audio/SoundData.cpp.i: cmake_force
@@ -3518,7 +3542,7 @@ CMakeFiles/bobsgame.dir/src/Utility/audio/SoundData.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Utility/gl/GLUtils.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/gl/GLUtils.cpp.o: ../src/Utility/gl/GLUtils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_145) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/gl/GLUtils.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_146) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/gl/GLUtils.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/gl/GLUtils.cpp.o -c /home/bob/bobsgame/src/Utility/gl/GLUtils.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/gl/GLUtils.cpp.i: cmake_force
@@ -3542,7 +3566,7 @@ CMakeFiles/bobsgame.dir/src/Utility/gl/GLUtils.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/bobsgame.dir/src/Utility/gl/Texture.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/gl/Texture.cpp.o: ../src/Utility/gl/Texture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_146) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/gl/Texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_147) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/gl/Texture.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/gl/Texture.cpp.o -c /home/bob/bobsgame/src/Utility/gl/Texture.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/gl/Texture.cpp.i: cmake_force
@@ -3566,7 +3590,7 @@ CMakeFiles/bobsgame.dir/src/Utility/gl/Texture.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/bobsgame.dir/src/Utility/AssetData.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/AssetData.cpp.o: ../src/Utility/AssetData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_147) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/AssetData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_148) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/AssetData.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/AssetData.cpp.o -c /home/bob/bobsgame/src/Utility/AssetData.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/AssetData.cpp.i: cmake_force
@@ -3590,7 +3614,7 @@ CMakeFiles/bobsgame.dir/src/Utility/AssetData.cpp.o.provides.build: CMakeFiles/b
 
 CMakeFiles/bobsgame.dir/src/Utility/BobBool.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/BobBool.cpp.o: ../src/Utility/BobBool.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_148) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobBool.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_149) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobBool.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/BobBool.cpp.o -c /home/bob/bobsgame/src/Utility/BobBool.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/BobBool.cpp.i: cmake_force
@@ -3614,7 +3638,7 @@ CMakeFiles/bobsgame.dir/src/Utility/BobBool.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Utility/BobFont.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/BobFont.cpp.o: ../src/Utility/BobFont.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_149) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobFont.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_150) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobFont.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/BobFont.cpp.o -c /home/bob/bobsgame/src/Utility/BobFont.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/BobFont.cpp.i: cmake_force
@@ -3638,7 +3662,7 @@ CMakeFiles/bobsgame.dir/src/Utility/BobFont.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Utility/BobMenu.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/BobMenu.cpp.o: ../src/Utility/BobMenu.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_150) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobMenu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_151) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobMenu.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/BobMenu.cpp.o -c /home/bob/bobsgame/src/Utility/BobMenu.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/BobMenu.cpp.i: cmake_force
@@ -3662,7 +3686,7 @@ CMakeFiles/bobsgame.dir/src/Utility/BobMenu.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Utility/BobMath.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/BobMath.cpp.o: ../src/Utility/BobMath.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_151) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobMath.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_152) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobMath.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/BobMath.cpp.o -c /home/bob/bobsgame/src/Utility/BobMath.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/BobMath.cpp.i: cmake_force
@@ -3686,7 +3710,7 @@ CMakeFiles/bobsgame.dir/src/Utility/BobMath.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Utility/BobString.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/BobString.cpp.o: ../src/Utility/BobString.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_152) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobString.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_153) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BobString.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/BobString.cpp.o -c /home/bob/bobsgame/src/Utility/BobString.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/BobString.cpp.i: cmake_force
@@ -3710,7 +3734,7 @@ CMakeFiles/bobsgame.dir/src/Utility/BobString.cpp.o.provides.build: CMakeFiles/b
 
 CMakeFiles/bobsgame.dir/src/Utility/BufferedImage.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/BufferedImage.cpp.o: ../src/Utility/BufferedImage.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_153) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BufferedImage.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_154) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/BufferedImage.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/BufferedImage.cpp.o -c /home/bob/bobsgame/src/Utility/BufferedImage.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/BufferedImage.cpp.i: cmake_force
@@ -3734,7 +3758,7 @@ CMakeFiles/bobsgame.dir/src/Utility/BufferedImage.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/bobsgame.dir/src/Utility/Caption.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/Caption.cpp.o: ../src/Utility/Caption.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_154) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Caption.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_155) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Caption.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/Caption.cpp.o -c /home/bob/bobsgame/src/Utility/Caption.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/Caption.cpp.i: cmake_force
@@ -3758,7 +3782,7 @@ CMakeFiles/bobsgame.dir/src/Utility/Caption.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Utility/CaptionManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/CaptionManager.cpp.o: ../src/Utility/CaptionManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_155) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/CaptionManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_156) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/CaptionManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/CaptionManager.cpp.o -c /home/bob/bobsgame/src/Utility/CaptionManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/CaptionManager.cpp.i: cmake_force
@@ -3782,7 +3806,7 @@ CMakeFiles/bobsgame.dir/src/Utility/CaptionManager.cpp.o.provides.build: CMakeFi
 
 CMakeFiles/bobsgame.dir/src/Utility/Color.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/Color.cpp.o: ../src/Utility/Color.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_156) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Color.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_157) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Color.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/Color.cpp.o -c /home/bob/bobsgame/src/Utility/Color.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/Color.cpp.i: cmake_force
@@ -3806,7 +3830,7 @@ CMakeFiles/bobsgame.dir/src/Utility/Color.cpp.o.provides.build: CMakeFiles/bobsg
 
 CMakeFiles/bobsgame.dir/src/Utility/Console.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/Console.cpp.o: ../src/Utility/Console.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_157) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Console.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_158) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Console.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/Console.cpp.o -c /home/bob/bobsgame/src/Utility/Console.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/Console.cpp.i: cmake_force
@@ -3830,7 +3854,7 @@ CMakeFiles/bobsgame.dir/src/Utility/Console.cpp.o.provides.build: CMakeFiles/bob
 
 CMakeFiles/bobsgame.dir/src/Utility/ConsoleText.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/ConsoleText.cpp.o: ../src/Utility/ConsoleText.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_158) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/ConsoleText.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_159) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/ConsoleText.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/ConsoleText.cpp.o -c /home/bob/bobsgame/src/Utility/ConsoleText.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/ConsoleText.cpp.i: cmake_force
@@ -3854,7 +3878,7 @@ CMakeFiles/bobsgame.dir/src/Utility/ConsoleText.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/bobsgame.dir/src/Utility/ControlsManager.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/ControlsManager.cpp.o: ../src/Utility/ControlsManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_159) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/ControlsManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_160) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/ControlsManager.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/ControlsManager.cpp.o -c /home/bob/bobsgame/src/Utility/ControlsManager.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/ControlsManager.cpp.i: cmake_force
@@ -3878,7 +3902,7 @@ CMakeFiles/bobsgame.dir/src/Utility/ControlsManager.cpp.o.provides.build: CMakeF
 
 CMakeFiles/bobsgame.dir/src/Utility/Easing.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/Easing.cpp.o: ../src/Utility/Easing.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_160) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Easing.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_161) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Easing.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/Easing.cpp.o -c /home/bob/bobsgame/src/Utility/Easing.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/Easing.cpp.i: cmake_force
@@ -3902,7 +3926,7 @@ CMakeFiles/bobsgame.dir/src/Utility/Easing.cpp.o.provides.build: CMakeFiles/bobs
 
 CMakeFiles/bobsgame.dir/src/Utility/FileUtils.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/FileUtils.cpp.o: ../src/Utility/FileUtils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_161) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/FileUtils.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_162) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/FileUtils.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/FileUtils.cpp.o -c /home/bob/bobsgame/src/Utility/FileUtils.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/FileUtils.cpp.i: cmake_force
@@ -3926,7 +3950,7 @@ CMakeFiles/bobsgame.dir/src/Utility/FileUtils.cpp.o.provides.build: CMakeFiles/b
 
 CMakeFiles/bobsgame.dir/src/Utility/Logger.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/Logger.cpp.o: ../src/Utility/Logger.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_162) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Logger.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_163) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/Logger.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/Logger.cpp.o -c /home/bob/bobsgame/src/Utility/Logger.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/Logger.cpp.i: cmake_force
@@ -3950,7 +3974,7 @@ CMakeFiles/bobsgame.dir/src/Utility/Logger.cpp.o.provides.build: CMakeFiles/bobs
 
 CMakeFiles/bobsgame.dir/src/Utility/System.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/Utility/System.cpp.o: ../src/Utility/System.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_163) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/System.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_164) "Building CXX object CMakeFiles/bobsgame.dir/src/Utility/System.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/Utility/System.cpp.o -c /home/bob/bobsgame/src/Utility/System.cpp
 
 CMakeFiles/bobsgame.dir/src/Utility/System.cpp.i: cmake_force
@@ -3974,7 +3998,7 @@ CMakeFiles/bobsgame.dir/src/Utility/System.cpp.o.provides.build: CMakeFiles/bobs
 
 CMakeFiles/bobsgame.dir/src/main.cpp.o: CMakeFiles/bobsgame.dir/flags.make
 CMakeFiles/bobsgame.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_164) "Building CXX object CMakeFiles/bobsgame.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_165) "Building CXX object CMakeFiles/bobsgame.dir/src/main.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bobsgame.dir/src/main.cpp.o -c /home/bob/bobsgame/src/main.cpp
 
 CMakeFiles/bobsgame.dir/src/main.cpp.i: cmake_force
@@ -4004,6 +4028,7 @@ bobsgame_OBJECTS = \
 "CMakeFiles/bobsgame.dir/lib/stb_vorbis.c.o" \
 "CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.o" \
 "CMakeFiles/bobsgame.dir/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp.o" \
+"CMakeFiles/bobsgame.dir/lib/md5.cpp.o" \
 "CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o" \
 "CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o" \
 "CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o" \
@@ -4172,6 +4197,7 @@ bobsgame_EXTERNAL_OBJECTS =
 ../linux/bobsgame: CMakeFiles/bobsgame.dir/lib/stb_vorbis.c.o
 ../linux/bobsgame: CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.o
 ../linux/bobsgame: CMakeFiles/bobsgame.dir/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp.o
+../linux/bobsgame: CMakeFiles/bobsgame.dir/lib/md5.cpp.o
 ../linux/bobsgame: CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o
 ../linux/bobsgame: CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o
 ../linux/bobsgame: CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o
@@ -4348,7 +4374,7 @@ bobsgame_EXTERNAL_OBJECTS =
 ../linux/bobsgame: ../lib/GWEN-master/gwen/lib/linux/gmake/libgwen_static.a
 ../linux/bobsgame: ../lib/GWEN-master/gwen/lib/linux/gmake/libGWEN-Renderer-OpenGL_TruetypeFont.a
 ../linux/bobsgame: CMakeFiles/bobsgame.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_165) "Linking CXX executable ../linux/bobsgame"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bob/bobsgame/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_166) "Linking CXX executable ../linux/bobsgame"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bobsgame.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -4362,6 +4388,7 @@ CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/lib/HQ2X/HQ2X.cpp.o.re
 CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/lib/stb_vorbis.c.o.requires
 CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.o.requires
 CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp.o.requires
+CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/lib/md5.cpp.o.requires
 CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o.requires
 CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o.requires
 CMakeFiles/bobsgame.dir/requires: CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o.requires

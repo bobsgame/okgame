@@ -851,7 +851,7 @@ void Main::doScreenShotCheck()
 	{
 		screenShotKeyPressed = false;
 	}
-#elif
+#else
 	if (controlsManager->key_PRINTSCREEN_Pressed() || controlsManager->key_F12_Pressed())
 	{
 		if (screenShotKeyPressed == false)
@@ -1230,7 +1230,8 @@ using Poco::Delegate;
 using Poco::Zip::Decompress;
 
 
-//==========================================================================================================================
+//==========================================================================================================================
+
 string Main::getPath()
 {//==========================================================================================================================
 

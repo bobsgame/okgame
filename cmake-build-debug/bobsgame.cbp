@@ -145,6 +145,12 @@
 		<Unit filename="/home/bob/bobsgame/lib/glew-2.0.0/src/glew.c">
 			<Option target="bobsgame"/>
 		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/md5.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/md5.h">
+			<Option target="bobsgame"/>
+		</Unit>
 		<Unit filename="/home/bob/bobsgame/lib/minilzo-2.09/minilzo.c">
 			<Option target="bobsgame"/>
 		</Unit>
@@ -1076,9 +1082,6 @@
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Utility/Logger.h">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Utility/RectangularVectors.h">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Utility/System.cpp">

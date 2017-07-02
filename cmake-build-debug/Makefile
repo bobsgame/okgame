@@ -207,6 +207,33 @@ lib/glew-2.0.0/src/glew.c.s:
 	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/glew-2.0.0/src/glew.c.s
 .PHONY : lib/glew-2.0.0/src/glew.c.s
 
+lib/md5.o: lib/md5.cpp.o
+
+.PHONY : lib/md5.o
+
+# target to build an object file
+lib/md5.cpp.o:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/md5.cpp.o
+.PHONY : lib/md5.cpp.o
+
+lib/md5.i: lib/md5.cpp.i
+
+.PHONY : lib/md5.i
+
+# target to preprocess a source file
+lib/md5.cpp.i:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/md5.cpp.i
+.PHONY : lib/md5.cpp.i
+
+lib/md5.s: lib/md5.cpp.s
+
+.PHONY : lib/md5.s
+
+# target to generate assembly for a file
+lib/md5.cpp.s:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/md5.cpp.s
+.PHONY : lib/md5.cpp.s
+
 lib/minilzo-2.09/minilzo.o: lib/minilzo-2.09/minilzo.c.o
 
 .PHONY : lib/minilzo-2.09/minilzo.o
@@ -4572,6 +4599,9 @@ help:
 	@echo "... lib/glew-2.0.0/src/glew.o"
 	@echo "... lib/glew-2.0.0/src/glew.i"
 	@echo "... lib/glew-2.0.0/src/glew.s"
+	@echo "... lib/md5.o"
+	@echo "... lib/md5.i"
+	@echo "... lib/md5.s"
 	@echo "... lib/minilzo-2.09/minilzo.o"
 	@echo "... lib/minilzo-2.09/minilzo.i"
 	@echo "... lib/minilzo-2.09/minilzo.s"

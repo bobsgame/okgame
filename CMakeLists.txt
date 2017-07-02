@@ -137,6 +137,8 @@ set(SOURCE_FILES
         lib/stb_vorbis.c
         lib/minilzo-2.09/minilzo.c
         lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp
+        lib/md5.cpp
+        lib/md5.h
         #lib/miniz-master/miniz.c
     src/Engine/cinematics/CinematicsManager.cpp
     src/Engine/cinematics/CinematicsManager.h
@@ -456,7 +458,7 @@ set(SOURCE_FILES
     src/Utility/HashMap.h
     src/Utility/Logger.cpp
     src/Utility/Logger.h
-    src/Utility/RectangularVectors.h
+    #src/Utility/RectangularVectors.h
     src/Utility/stringconverter.h
     src/Utility/System.cpp
     src/Utility/System.h

@@ -25,22 +25,21 @@ rm libm.so.6
 rm libpthread.so.0
 rm libresolv.so.2
 
-rm libasyncns.so.0 #libasyncns is a C library for Linux/Unix for executing name service queries asynchronously
-rm libdbus-1.so.3 #D-Bus supplies both a system daemon (for events such as "new hardware device added" or "printer queue changed") and a per-user-login-session daemon (for general IPC needs among user applications).
-rm libffi.so.6 #The libffi library provides a portable, high level programming interface to various calling conventions
-rm libgcc_s.so.1 #GCC provides a low-level runtime library, libgcc.a or libgcc_s.so.1 on some platforms
-rm libglib-2.0.so.0 #GTK General purpose utility library
-rm libnsl.so.1 #libnsl - This library contains the public client interface for NIS(YP) and NIS+ in a IPv6 ready version
-rm libreadline.so.6 #The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in
-rm librt.so.1 #librt, libposix4 - POSIX.1b Realtime Extensions library 
-rm libstdc++.so.6 #libc++ is a new implementation of the C++ standard library, targeting C++11
-rm libtinfo.so.5 #symlink to ncurses for use in cuda and other packages
+rm libasyncns* #libasyncns is a C library for Linux/Unix for executing name service queries asynchronously
+rm libdbus* #D-Bus supplies both a system daemon (for events such as "new hardware device added" or "printer queue changed") and a per-user-login-session daemon (for general IPC needs among user applications).
+rm libffi* #The libffi library provides a portable, high level programming interface to various calling conventions
+rm libgcc_s* #GCC provides a low-level runtime library, libgcc.a or libgcc_s.so.1 on some platforms
+rm libglib* #GTK General purpose utility library
+rm libnsl* #libnsl - This library contains the public client interface for NIS(YP) and NIS+ in a IPv6 ready version
+rm libreadline* #The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in
+rm librt* #librt, libposix4 - POSIX.1b Realtime Extensions library 
+rm libstdc++* #libc++ is a new implementation of the C++ standard library, targeting C++11
+rm libtinfo* #symlink to ncurses for use in cuda and other packages
 rm libway*
-rm libwrap.so.0 #TCP Wrapper is a host-based networking ACL system
+rm libwrap* #TCP Wrapper is a host-based networking ACL system
 rm libX*
-rm libxcb.so.1 # The libxcb package provides an interface to the X Window System protocol
-rm libxkbcommon.so.0
-rm libxcb*
+rm libxcb* # The libxcb package provides an interface to the X Window System protocol
+rm libxkbcommon*
 rm libxshm*
 
 rm libasound.so.2

@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bobsgame.dir/lib/stb_vorbis.c.o"
   "CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.o"
   "CMakeFiles/bobsgame.dir/lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp.o"
+  "CMakeFiles/bobsgame.dir/lib/md5.cpp.o"
   "CMakeFiles/bobsgame.dir/src/Engine/cinematics/CinematicsManager.cpp.o"
   "CMakeFiles/bobsgame.dir/src/Engine/cinematics/Letterbox.cpp.o"
   "CMakeFiles/bobsgame.dir/src/Engine/cinematics/ScreenOverlay.cpp.o"

@@ -328,7 +328,10 @@ MD5& MD5::finalize()
  
   return *this;
 }
- 
+
+
+#include "SDL_platform.h"
+
 //////////////////////////////
  
 // return hex representation of digest as string
@@ -339,7 +342,13 @@ std::string MD5::hexdigest() const
  
   char buf[33];
   for (int i=0; i<16; i++)
+
+#ifdef __LINUX__
+    sprintf(buf+i*2, "%02x", digest[i]);
+
+#else
     sprintf_s(buf+i*2, 3, "%02x", digest[i]);
+#endif
   buf[32]=0;
  
   return std::string(buf);
