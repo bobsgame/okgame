@@ -265,6 +265,7 @@ public:
 
 
 	const static string endline;
+	const static string batch;
 
 	//=========================================================================================
 	// GLOBAL DEBUG FOR BOTH CLIENT AND SERVER
@@ -451,6 +452,10 @@ public:
 
 	static const string Bobs_Game_GameStats;
 
+
+
+
+	static const string Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched;
 	static const string Bobs_Game_UserStatsForSpecificGameAndDifficulty;
 	static const string Bobs_Game_LeaderBoardsByTotalTimePlayed;
 	static const string Bobs_Game_LeaderBoardsByTotalBlocksCleared;

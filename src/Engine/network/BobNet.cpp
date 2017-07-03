@@ -8,6 +8,7 @@
 const int BobNet::clientUDPPortStartRange = 6434;
 
 const string BobNet::endline = ":END:\r\n";
+const string BobNet::batch = ":BATCH:";
 //const bool BobNet::debugMode = true;
 const string BobNet::debugServerAddress = "localhost";
 const string BobNet::releaseServerAddress = "server.bobsgame.com";
@@ -114,6 +115,8 @@ const string BobNet::Bobs_Game_HostingPublicRoomEnded = "Bobs_Game_HostingPublic
 
 const string BobNet::Bobs_Game_GameStats = "Bobs_Game_GameStats:";
 
+
+const string BobNet::Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched = "Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched:";
 const string BobNet::Bobs_Game_UserStatsForSpecificGameAndDifficulty = "Bobs_Game_UserStatsForSpecificGameAndDifficulty:";
 const string BobNet::Bobs_Game_LeaderBoardsByTotalTimePlayed = "Bobs_Game_LeaderBoardsByTotalTimePlayed:";
 const string BobNet::Bobs_Game_LeaderBoardsByTotalBlocksCleared = "Bobs_Game_LeaderBoardsByTotalBlocksCleared:";

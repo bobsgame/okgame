@@ -787,42 +787,70 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 	}
 
 
-	if (String::startsWith(s, BobNet::Bobs_Game_UserStatsForSpecificGameAndDifficulty))
-	{
-		incomingBobsGameUserStatsForSpecificGameAndDifficulty(s);
-		return true;
-	}
-	if (String::startsWith(s, BobNet::Bobs_Game_LeaderBoardsByTotalTimePlayed))
-	{
-		incomingBobsGameLeaderBoardByTotalTimePlayed(s);
-		return true;
-	}
-	if (String::startsWith(s, BobNet::Bobs_Game_LeaderBoardsByTotalBlocksCleared))
-	{
-		incomingBobsGameLeaderBoardByTotalBlocksCleared(s);
-		return true;
-	}
-	if (String::startsWith(s, BobNet::Bobs_Game_LeaderBoardsByPlaneswalkerPoints))
-	{
-		incomingBobsGameLeaderBoardByPlaneswalkerPoints(s);
-		return true;
-	}
-	if (String::startsWith(s, BobNet::Bobs_Game_LeaderBoardsByEloScore))
-	{
-		incomingBobsGameLeaderBoardByEloScore(s);
-		return true;
-	}
-	if (String::startsWith(s, BobNet::Bobs_Game_HighScoreBoardsByTimeLasted))
-	{
-		incomingBobsGameHighScoreBoardsByTimeLasted(s);
-		return true;
-	}
-	if (String::startsWith(s, BobNet::Bobs_Game_HighScoreBoardsByBlocksCleared))
-	{
-		incomingBobsGameHighScoreBoardsByBlocksCleared(s);
-		return true;
-	}
 
+	if (String::startsWith(s, BobNet::Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched))
+	{
+		//cut off first command
+		s = s.substr(s.find(":") + 1);
+
+		while (s.length() > 0)
+		{
+			string stats = "";
+			if (s.find(BobNet::batch) != string::npos)
+			{
+				stats = s.substr(0, s.find(BobNet::batch));
+				s = s.substr(s.find(BobNet::batch) + BobNet::batch.length());
+			}
+			else
+			{
+				stats = s;
+				s = "";
+			}
+
+			if (String::startsWith(stats, BobNet::Bobs_Game_UserStatsForSpecificGameAndDifficulty))
+			{
+				incomingBobsGameUserStatsForSpecificGameAndDifficulty(stats);
+			}
+			else
+			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByTotalTimePlayed))
+			{
+				incomingBobsGameLeaderBoardByTotalTimePlayed(stats);
+
+			}
+			else
+			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByTotalBlocksCleared))
+			{
+				incomingBobsGameLeaderBoardByTotalBlocksCleared(stats);
+
+			}
+			else
+			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByPlaneswalkerPoints))
+			{
+				incomingBobsGameLeaderBoardByPlaneswalkerPoints(stats);
+
+			}
+			else
+			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByEloScore))
+			{
+				incomingBobsGameLeaderBoardByEloScore(stats);
+
+			}
+			else
+			if (String::startsWith(stats, BobNet::Bobs_Game_HighScoreBoardsByTimeLasted))
+			{
+				incomingBobsGameHighScoreBoardsByTimeLasted(stats);
+
+			}
+			else
+			if (String::startsWith(stats, BobNet::Bobs_Game_HighScoreBoardsByBlocksCleared))
+			{
+				incomingBobsGameHighScoreBoardsByBlocksCleared(stats);
+
+			}
+		}
+		return true;
+
+	}
 
 
 	for (int i = 0; i < BobNet::engines.size(); i++)
