@@ -29,7 +29,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 		//type=TYPE_BOOL;
 		try
 		{
-			this->b = Boolean::parseBoolean(primitiveValueString);
+			this->b = BobBoolean::parseBoolean(primitiveValueString);
 		}
 		catch (exception)
 		{
@@ -142,7 +142,8 @@ void EventParameter::updateParameterVariablesFromString(Event* event)
 		}
 	}
 }
-
+
+
 string EventParameter::toString()
 { //===============================================================================================
 

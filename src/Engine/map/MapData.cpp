@@ -177,12 +177,12 @@ string& MapData::initFromString(string& t)
 
 	t = t.substr(t.find("isOutside:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isOutside = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isOutside = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("preload:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	preload = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	preload = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("groundLayerMD5:`") + 1);

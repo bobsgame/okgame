@@ -209,72 +209,72 @@ string& SpriteData::initFromString(string& t)
 
 	t = t.substr(t.find("isNPC:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNPC = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isNPC = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isKid:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isKid = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isKid = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAdult:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAdult = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isAdult = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isMale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isMale = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isMale = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isFemale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isFemale = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isFemale = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isCar:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isCar = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isCar = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAnimal:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAnimal = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isAnimal = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("hasShadow:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	hasShadow = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	hasShadow = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isRandom:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isRandom = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isRandom = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isDoor:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isDoor = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isDoor = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isGame:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isGame = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isGame = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isItem:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isItem = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isItem = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceHQ2X:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceHQ2X = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	forceHQ2X = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceMD5Export:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceMD5Export = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	forceMD5Export = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 //
 //	t = t.substr(t.find("eventID:`") + 1);

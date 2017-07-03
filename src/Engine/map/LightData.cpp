@@ -82,7 +82,8 @@ LightData::LightData(int id, const string& name)
 //	return data;
 //}
 
-//===============================================================================================
+//===============================================================================================
+
 string& LightData::initFromString(string& t)
 {//===============================================================================================
 	t = super::initFromString(t);
@@ -141,27 +142,27 @@ string& LightData::initFromString(string& t)
 
 	t = t.substr(t.find("isDayLight:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isDayLight = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isDayLight = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isNightLight:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNightLight = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isNightLight = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("flickers:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickers = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	flickers = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("changesColor:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	changesColor = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	changesColor = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toggleable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	toggleable = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	toggleable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toggleXPixels1X:`") + 1);
@@ -186,12 +187,12 @@ string& LightData::initFromString(string& t)
 
 	t = t.substr(t.find("flickerRandomUpToOnTicks:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickerRandomUpToOnTicks = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	flickerRandomUpToOnTicks = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("flickerRandomUpToOffTicks:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickerRandomUpToOffTicks = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	flickerRandomUpToOffTicks = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 
@@ -203,7 +204,8 @@ string& LightData::initFromString(string& t)
 
 
 
-
+
+
 string LightData::getTYPEIDString()
 { //===============================================================================================
 	return "LIGHT." + to_string(getID());

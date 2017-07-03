@@ -343,7 +343,7 @@ std::string MD5::hexdigest() const
   char buf[33];
   for (int i=0; i<16; i++)
 
-#ifdef __LINUX__
+#if defined(__LINUX__) || defined(__MACOSX__)
     sprintf(buf+i*2, "%02x", digest[i]);
 
 #else

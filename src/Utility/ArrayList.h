@@ -35,7 +35,7 @@ public:
 //{
 //	return 0 != stoi(s);
 //}
-class Boolean
+class BobBoolean
 {
 public:
 	//Parses the string argument as a boolean. The boolean returned represents the value true if the string argument is not null and is equal, ignoring case, to the string "true". 

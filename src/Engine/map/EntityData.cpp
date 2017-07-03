@@ -117,12 +117,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("pushable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pushable = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	pushable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("nonWalkable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	nonWalkable = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	nonWalkable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toAlpha:`") + 1);
@@ -137,12 +137,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("disableShadow:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	disableShadow = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	disableShadow = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("aboveTopLayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	aboveTopLayer = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	aboveTopLayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("layer:`") + 1);
@@ -157,22 +157,22 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("aboveWhenEqual:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	aboveWhenEqual = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	aboveWhenEqual = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("alwaysOnBottom:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	alwaysOnBottom = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	alwaysOnBottom = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("alwaysOnTop:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	alwaysOnTop = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	alwaysOnTop = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("animateThroughFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animateThroughFrames = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	animateThroughFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ticksBetweenFrames:`") + 1);
@@ -182,12 +182,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("randomUpToTicksBetweenFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomUpToTicksBetweenFrames = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	randomUpToTicksBetweenFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomFrames = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	randomFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ticksBetweenAnimation:`") + 1);
@@ -197,7 +197,7 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("randomTimeBetweenAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomTimeBetweenAnimation = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	randomTimeBetweenAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("walkSpeed:`") + 1);
@@ -217,7 +217,7 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("onlyHereDuringEvent:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	onlyHereDuringEvent = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	onlyHereDuringEvent = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 //
 //	t = t.substr(t.find("mapID:`") + 1);
@@ -232,12 +232,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("animateThroughCurrentAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animateThroughCurrentAnimation = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	animateThroughCurrentAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("loopAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	loopAnimation = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	loopAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("voicePitch:`") + 1);
@@ -247,37 +247,37 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("animationDisabled:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animationDisabled = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	animationDisabled = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("hitLayerDisabled:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	hitLayerDisabled = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	hitLayerDisabled = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ignoreHitPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	ignoreHitPlayer = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	ignoreHitPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ignoreHitEntities:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	ignoreHitEntities = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	ignoreHitEntities = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("dontUsePathfinding:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	dontUsePathfinding = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	dontUsePathfinding = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("pullPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pullPlayer = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	pullPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("pushPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pushPlayer = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	pushPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	while (String::startsWith(t,"behaviorList:`"))
@@ -303,7 +303,7 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("isNPC:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNPC = Boolean::parseBoolean(t.substr(0, t.find("`")));
+	isNPC = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 

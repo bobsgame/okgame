@@ -6,6 +6,7 @@
 
 #pragma once
 #include "bobtypes.h"
+#include "AssetData.h"
 class Logger;
 
 

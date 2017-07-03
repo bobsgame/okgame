@@ -10,6 +10,11 @@
 #include "DialogueData.h"
 #include "FlagData.h"
 #include "SkillData.h"
+#include "AssetData.h"
+#include "MusicData.h"
+#include "SoundData.h"
+
+
 class Logger;
 
 
@@ -110,7 +115,7 @@ public:
 
 	EventData(int id, const string& name, int type, const string& comment, const string& text);
 
-	string& initFromString(string& t) override;
+	virtual string& initFromString(string& t) override;
 
 	//static EventData* fromBase64ZippedJSON(const string& b64);
 
