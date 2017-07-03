@@ -16,6 +16,7 @@ public:
 	~TCPServerConnection();
 
 	void update();
+	void cleanup();
 
 	
 

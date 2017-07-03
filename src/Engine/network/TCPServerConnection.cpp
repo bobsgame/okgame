@@ -18,12 +18,19 @@ TCPServerConnection::TCPServerConnection()
 TCPServerConnection::~TCPServerConnection()
 {//===============================================================================================
 
+	cleanup();
+
+}
+
+void TCPServerConnection::cleanup()
+{//===============================================================================================
+
 	if (threadStarted)
 	{
 		setStopThread_S(true);
 		t.join();
+		threadStarted = false;
 	}
-
 }
 
 //===============================================================================================
@@ -275,12 +282,15 @@ void TCPServerConnection::_checkForIncomingTraffic()
 			SDL_ClearError();
 		}
 
+
+
 		queue<string*> packetsToProcess;
 
 		int bytesReceived = 1;
 
-		while (numReady > 0)
+		while (numReady > 0 && getStopThread_S() == false)
 		{
+
 
 			int rd = SDLNet_SocketReady(getSocket_S());
 
@@ -289,7 +299,7 @@ void TCPServerConnection::_checkForIncomingTraffic()
 				threadLogWarn_S("SDLNet_TCP_Recv Error: " + string(SDLNet_GetError()) + string(SDL_GetError()));
 				SDL_ClearError();
 			}
-			else
+
 			while (rd > 0)
 			{
 				rd--;
@@ -313,7 +323,9 @@ void TCPServerConnection::_checkForIncomingTraffic()
 					{
 						delete[] buf;
 						//connection to server lost
+						threadLogWarn_S("SDLNet_TCP_Recv:" + to_string(bytesReceived));
 						setDisconnectedFromServer_S("Error receiving data.");
+						
 					}
 					else
 						delete[] buf;
@@ -326,6 +338,8 @@ void TCPServerConnection::_checkForIncomingTraffic()
 				threadLogWarn_S("SDLNet_CheckSockets: " + string(SDLNet_GetError()) + string(SDL_GetError()));
 				SDL_ClearError();
 			}
+
+
 		}
 
 		while (packetsToProcess.size() > 0)
