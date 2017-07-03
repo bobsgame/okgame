@@ -74,8 +74,8 @@ public:
 	static vector<u8>* loadByteFileFromExePath(string filename);
 	//static vector<u8>* loadByteFileFromExePathIntoVector(string filename);
 
-	static string lzoByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
-	static u8* unlzoBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
+	//static string lzoByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
+	//static u8* unlzoBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
 
 	static string lz4ByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
 	static u8* unlz4Base64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
@@ -83,8 +83,8 @@ public:
 	static string zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
 	static u8* unzipBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
 
-	static string lzoStringToBase64String(const string& s);
-	static string unlzoBase64StringToString(const string& s);
+	//static string lzoStringToBase64String(const string& s);
+	//static string unlzoBase64StringToString(const string& s);
 
 	static string lz4StringToBase64String(const string& s);
 	static string unlz4Base64StringToString(const string& s);

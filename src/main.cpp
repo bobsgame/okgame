@@ -21,7 +21,7 @@
 //#include <imgui.h>
 //#include "imgui_impl_sdl.h"
 
-#include "minilzo-2.10/minilzo.h"
+//#include "minilzo-2.10/minilzo.h"
 
 #include "Gwen/Gwen.h"
 #include "Gwen/Skins/Simple.h"
