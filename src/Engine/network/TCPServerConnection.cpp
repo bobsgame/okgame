@@ -67,7 +67,7 @@ void TCPServerConnection::update()
 			packet = packet.substr(0, packet.find(BobNet::endline));
 
 #ifdef _DEBUG
-			log.info("TEXT: " + packet.substr(0, 200));
+			log.info("TEXT: " + packet.substr(0, 230));
 #endif
 			messageReceived(packet);
 
@@ -86,7 +86,7 @@ void TCPServerConnection::update()
 			packet = packet.substr(0, packet.find(BobNet::endline));
 
 #ifdef _DEBUG
-			log.info("TEXT: " + packet.substr(0, 200));
+			log.info("TEXT: " + packet.substr(0, 230));
 #endif
 
 			messageReceived(packet);
