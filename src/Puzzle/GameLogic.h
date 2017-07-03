@@ -110,7 +110,7 @@ public:
 		std::stringstream ss;
 		boost::archive::xml_oarchive oarchive(ss);
 		oarchive << BOOST_SERIALIZATION_NVP(n);
-		string zip = FileUtils::lzoStringToBase64String(ss.str());
+		string zip = FileUtils::lz4StringToBase64String(ss.str());
 		return zip;
 
 	}
@@ -119,7 +119,7 @@ public:
 	static ArrayList<FrameState> getFramesArrayFromBase64GZippedXML(const string &b64GZipJSON)
 	{ //=========================================================================================================================
 
-		string json = FileUtils::unlzoBase64StringToString(b64GZipJSON);
+		string json = FileUtils::unlz4Base64StringToString(b64GZipJSON);
 
 		if (json == "" || json.length() == 0)
 		{

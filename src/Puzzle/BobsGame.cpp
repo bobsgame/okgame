@@ -2245,7 +2245,7 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 
 		//unzip to xml
-		string xmlString = FileUtils::unlzoBase64StringToString(zippedXMLString);
+		string xmlString = FileUtils::unlz4Base64StringToString(zippedXMLString);
 
 		if (xmlString == "" || xmlString.length() == 0)
 		{

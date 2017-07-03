@@ -3646,7 +3646,7 @@ void CustomGameEditorControl::onUploadButton(Base* control)
 	boost::archive::xml_oarchive oarchive(ss);
 	oarchive << BOOST_SERIALIZATION_NVP(g);
 
-	string zip = FileUtils::lzoStringToBase64String(ss.str());
+	string zip = FileUtils::lz4StringToBase64String(ss.str());
 
 
 	//GameType:XML:name:uuid

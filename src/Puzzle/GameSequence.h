@@ -160,14 +160,14 @@ public:
 		boost::archive::xml_oarchive oarchive(ss);
 		oarchive << BOOST_SERIALIZATION_NVP(gs);
 		//Main::log.debug(ss.str());
-		string zip = FileUtils::lzoStringToBase64String(ss.str());
+		string zip = FileUtils::lz4StringToBase64String(ss.str());
 		return zip;
 	}
 
 	//=========================================================================================================================
 	static NetworkGameSequence *fromBase64GZippedXML(string b64GZipJSON)
 	{//=========================================================================================================================
-		string json = FileUtils::unlzoBase64StringToString(b64GZipJSON);
+		string json = FileUtils::unlz4Base64StringToString(b64GZipJSON);
 
 		if (json == "" || json.length() == 0)
 		{
