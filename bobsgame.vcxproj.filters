@@ -1091,6 +1091,9 @@
     <ClCompile Include="lib\lz4-1.7.5\lib\xxhash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\minilzo-2.10\minilzo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="bobsgame.rc">

@@ -104,30 +104,30 @@ public:
 	}
 
 	//=========================================================================================================================
-	static string getFrameStatesAsBase64GZippedXML(ArrayList<FrameState> &n)
+	static string getFrameStatesAsBase64LZ4XML(ArrayList<FrameState> &n)
 	{ //=========================================================================================================================
 
 		std::stringstream ss;
 		boost::archive::xml_oarchive oarchive(ss);
 		oarchive << BOOST_SERIALIZATION_NVP(n);
-		string zip = FileUtils::lz4StringToBase64String(ss.str());
-		return zip;
+		string b64lz4 = FileUtils::lz4StringToBase64String(ss.str());
+		return b64lz4;
 
 	}
 
 	//=========================================================================================================================
-	static ArrayList<FrameState> getFramesArrayFromBase64GZippedXML(const string &b64GZipJSON)
+	static ArrayList<FrameState> getFramesArrayFromBase64LZ4XML(const string &b64LZ4XML)
 	{ //=========================================================================================================================
 
-		string json = FileUtils::unlz4Base64StringToString(b64GZipJSON);
+		string xml = FileUtils::unlz4Base64StringToString(b64LZ4XML);
 
-		if (json == "" || json.length() == 0)
+		if (xml == "" || xml.length() == 0)
 		{
 			return ArrayList<FrameState>();
 		}
 
 		stringstream ss;
-		ss << json;
+		ss << xml;
 
 		boost::archive::xml_iarchive ia(ss);
 		ArrayList<FrameState> n;

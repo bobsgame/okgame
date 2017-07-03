@@ -2106,7 +2106,7 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 	while(s.length()>0)
 	{
 		string md5String;
-		string zippedXMLString;
+		string b64zippedXMLString;
 		string userIDString;
 		string userNameString;
 		string gameNameString;
@@ -2139,7 +2139,7 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		s = s.substr(s.find(":") + 1);
 		md5String = s.substr(0,s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		zippedXMLString = s.substr(0, s.find(":"));
+		b64zippedXMLString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
 		userIDString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
@@ -2237,7 +2237,7 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 
 
 		//check xml string with md5
-		string compMD5 = FileUtils::getStringMD5(zippedXMLString);
+		string compMD5 = FileUtils::getStringMD5(b64zippedXMLString);
 		if (md5String == compMD5 == false)
 		{
 			log.error("GameType MD5 did not match in "+ gameNameString);
@@ -2245,7 +2245,7 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 
 		//unzip to xml
-		string xmlString = FileUtils::unlz4Base64StringToString(zippedXMLString);
+		string xmlString = FileUtils::unzipBase64StringToString(b64zippedXMLString);
 
 		if (xmlString == "" || xmlString.length() == 0)
 		{

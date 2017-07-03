@@ -2,7 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "lz4-1.7.5/lib/lz4.h"
+
 
 //------------------------------------------------------------------------------
 //Copyright Robert Pelloni.
@@ -1026,119 +1026,117 @@ vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_
 }
 
 
-//#include "minilzo.h"
-///* Work-memory needed for compression. Allocate memory in units
-//* of 'lzo_align_t' (instead of 'char') to make sure it is properly aligned.
-//*/
-//
-//#define HEAP_ALLOC(var,size) \
-//    lzo_align_t __LZO_MMODEL var [ ((size) + (sizeof(lzo_align_t) - 1)) / sizeof(lzo_align_t) ]
-//
-//static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
-//
+#include <minilzo-2.10/minilzo.h>
+/* Work-memory needed for compression. Allocate memory in units
+* of 'lzo_align_t' (instead of 'char') to make sure it is properly aligned.
+*/
+
+#define HEAP_ALLOC(var,size) \
+    lzo_align_t __LZO_MMODEL var [ ((size) + (sizeof(lzo_align_t) - 1)) / sizeof(lzo_align_t) ]
+
+static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
 
 
-#include "miniz.c"
-typedef u8 uint8;
-typedef unsigned short uint16;
-typedef unsigned int uint;
 
 //bool zip = false;
 //bool lzo = true;
 //
-//// ===============================================================================================
-//
-//string FileUtils::lzoByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength)
-//{ // ===============================================================================================
-//
-//
-//	string zipDataHexString = "";
-//
-//	
-//	
-//	const unsigned long maximumCompressedLength = (sourceLength + sourceLength / 16 + 64 + 3);
-//
-//	u8 * __LZO_MMODEL compressedBytes = new u8[maximumCompressedLength];
-//
-//	int r;
-//	//lzo_uint in_len;
-//	lzo_uint compressedLength;
-//	//lzo_uint new_len;
-//
-//	r = lzo1x_1_compress(byteArray, sourceLength, compressedBytes, &compressedLength, wrkmem);
-//	if (r == LZO_E_OK)
-//	{
-//		//log.debug("Compressed " + to_string(sourceLength) + " bytes into " + to_string(compressedLength) + " bytes");
-//	}
-//	else
-//	{
-//		/* this should NEVER happen */
-//		log.error("Compression failed:" + to_string(r));
-//		return  "";
-//	}
-//	/* check for an incompressible block */
-//	if (compressedLength >= sourceLength)
-//	{
-//		//log.debug("This block contains incompressible data.");
-//		//return "";
-//	}
-//
-//	zipDataHexString = encodeByteArrayToBase64String(compressedBytes, compressedLength);
-//	//log.debug("Encoded from " + to_string(compressedLength) + " to " + to_string(zipDataHexString.length()) + " bytes");
-//
-//	delete[] compressedBytes;
-//	
-//
-//	return zipDataHexString;
-//}
-//
-//// ===============================================================================================
-//u8* FileUtils::unlzoBase64StringToByteArray(const string &zippedBytesAsBase64String, unsigned long &returnLength)
-//{// ===============================================================================================
-//
-//	//unsigned long zippedLength;
-//	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
-//	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
-//
-//
-//	int compressStatus;
-//	//lzo_uint in_len;
-//	lzo_uint uncompressedLength = zippedBytes->size() * 100;
-//	//lzo_uint new_len;
-//
-//	u8 *uncompressedBytes = new u8[uncompressedLength];
-//	//u8 * __LZO_MMODEL uncompressedBytes = new u8[uncompressedLength];
-//
-//	//new_len = in_len;
-//	compressStatus = lzo1x_decompress(zippedBytes->data(), zippedBytes->size(), uncompressedBytes, &uncompressedLength, NULL);
-//
-//	while (compressStatus == LZO_E_INPUT_OVERRUN)
-//	{
-//		delete[] uncompressedBytes;
-//		log.error("Decompression failed, increasing buffer.");
-//		uncompressedLength *= 2;
-//		uncompressedBytes = new u8[uncompressedLength];
-//		compressStatus = lzo1x_decompress(zippedBytes->data(), zippedBytes->size(), uncompressedBytes, &uncompressedLength, NULL);
-//	}
-//
-//	if (compressStatus == LZO_E_OK)
-//	{
-//		//log.debug("Decompressed " + to_string(zippedLength) + " bytes into " + to_string(out_len) + " bytes");
-//	}
-//	else
-//	{
-//		// this should NEVER happen 
-//		log.error("Decompression failed:" + to_string(compressStatus));
-//		return nullptr;
-//	}
-//
-//	delete zippedBytes;
-//
-//	returnLength = uncompressedLength;
-//	return uncompressedBytes;
-//	
-//
-//}
+// ===============================================================================================
+
+string FileUtils::lzoByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength)
+{ // ===============================================================================================
+
+
+	string zipDataHexString = "";
+
+	
+	
+	const unsigned long maximumCompressedLength = (sourceLength + sourceLength / 16 + 64 + 3);
+
+	u8 * __LZO_MMODEL compressedBytes = new u8[maximumCompressedLength];
+
+	int r;
+	//lzo_uint in_len;
+	lzo_uint compressedLength;
+	//lzo_uint new_len;
+
+	r = lzo1x_1_compress(byteArray, sourceLength, compressedBytes, &compressedLength, wrkmem);
+	if (r == LZO_E_OK)
+	{
+		//log.debug("Compressed " + to_string(sourceLength) + " bytes into " + to_string(compressedLength) + " bytes");
+	}
+	else
+	{
+		/* this should NEVER happen */
+		log.error("Compression failed:" + to_string(r));
+		return  "";
+	}
+	/* check for an incompressible block */
+	if (compressedLength >= sourceLength)
+	{
+		//log.debug("This block contains incompressible data.");
+		//return "";
+	}
+
+	zipDataHexString = encodeByteArrayToBase64String(compressedBytes, compressedLength);
+	//log.debug("Encoded from " + to_string(compressedLength) + " to " + to_string(zipDataHexString.length()) + " bytes");
+
+	delete[] compressedBytes;
+	
+
+	return zipDataHexString;
+}
+
+// ===============================================================================================
+u8* FileUtils::unlzoBase64StringToByteArray(const string &zippedBytesAsBase64String, unsigned long &returnLength)
+{// ===============================================================================================
+
+	//unsigned long zippedLength;
+	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
+
+
+	int compressStatus;
+	//lzo_uint in_len;
+	lzo_uint uncompressedLength = zippedBytes->size() * 100;
+	//lzo_uint new_len;
+
+	u8 *uncompressedBytes = new u8[uncompressedLength];
+	//u8 * __LZO_MMODEL uncompressedBytes = new u8[uncompressedLength];
+
+	//new_len = in_len;
+	compressStatus = lzo1x_decompress(zippedBytes->data(), zippedBytes->size(), uncompressedBytes, &uncompressedLength, NULL);
+
+	while (compressStatus == LZO_E_INPUT_OVERRUN)
+	{
+		delete[] uncompressedBytes;
+		log.error("Decompression failed, increasing buffer.");
+		uncompressedLength *= 2;
+		uncompressedBytes = new u8[uncompressedLength];
+		compressStatus = lzo1x_decompress(zippedBytes->data(), zippedBytes->size(), uncompressedBytes, &uncompressedLength, NULL);
+	}
+
+	if (compressStatus == LZO_E_OK)
+	{
+		//log.debug("Decompressed " + to_string(zippedLength) + " bytes into " + to_string(out_len) + " bytes");
+	}
+	else
+	{
+		// this should NEVER happen 
+		log.error("Decompression failed:" + to_string(compressStatus));
+		return nullptr;
+	}
+
+	delete zippedBytes;
+
+	returnLength = uncompressedLength;
+	return uncompressedBytes;
+	
+
+}
+
+
+#include "lz4-1.7.5/lib/lz4.h"
 
 // ===============================================================================================
 
@@ -1191,22 +1189,25 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 
 
 
-	int uncompressedLength = zippedBytes->size() * 100;
-	u8 *uncompressedBytesBuffer = new u8[uncompressedLength];
+	int maxUncompressedBufferLength = zippedBytes->size() * 100;
+	u8 *uncompressedBytesBuffer = new u8[maxUncompressedBufferLength];
 
-	int return_value = LZ4_decompress_safe((char*)(zippedBytes->data()), (char*)uncompressedBytesBuffer, zippedBytes->size(), uncompressedLength);
-	while (return_value < 0)
+	int statusOrUncompressedSize = LZ4_decompress_safe((char*)(zippedBytes->data()), (char*)uncompressedBytesBuffer, zippedBytes->size(), maxUncompressedBufferLength);
+	int retries = 0;
+	while (statusOrUncompressedSize < 0 && retries < 4)
 	{
 		//log.error("A negative result from LZ4_decompress_fast indicates a failure trying to decompress the data.");
 
+		retries++;
+
 		delete[] uncompressedBytesBuffer;
 		log.error("Decompression failed, increasing buffer.");
-		uncompressedLength *= 2;
-		uncompressedBytesBuffer = new u8[uncompressedLength];
-		return_value = LZ4_decompress_safe((char*)(zippedBytes->data()), (char*)uncompressedBytesBuffer, zippedBytes->size(), uncompressedLength);
+		maxUncompressedBufferLength *= 2;
+		uncompressedBytesBuffer = new u8[maxUncompressedBufferLength];
+		statusOrUncompressedSize = LZ4_decompress_safe((char*)(zippedBytes->data()), (char*)uncompressedBytesBuffer, zippedBytes->size(), maxUncompressedBufferLength);
 	}
 
-	if (return_value == 0)
+	if (statusOrUncompressedSize == 0)
 		log.error("I'm not sure this function can ever return 0.  Documentation in lz4.h doesn't indicate so.");
 
 
@@ -1216,23 +1217,37 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 
 	delete zippedBytes;
 
-	u8* returnByteArray = new u8[return_value];
-
-	for(int i=0;i<return_value;i++)
+	if(statusOrUncompressedSize < 0)
 	{
-		
+		delete[] uncompressedBytesBuffer;
+		returnLength = 0;
+		return nullptr;
+	}
+
+	u8* returnByteArray = new u8[statusOrUncompressedSize];
+
+	for(int i=0;i<statusOrUncompressedSize;i++)
+	{
 		returnByteArray[i] = uncompressedBytesBuffer[i];
 	}
 
 	delete[] uncompressedBytesBuffer;
 
 
-	returnLength = return_value;
+	returnLength = statusOrUncompressedSize;
 	return returnByteArray;
 
 
 
 }
+
+
+
+
+#include "miniz.c"
+typedef u8 uint8;
+typedef unsigned short uint16;
+typedef unsigned int uint;
 
 string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength)
 { // ===============================================================================================
@@ -1492,9 +1507,10 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 
 	compressStatus = mz_uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
 	//total_succeeded += (compressStatus == Z_OK);
-
-	while(compressStatus == Z_BUF_ERROR)
+	int retries = 0;
+	while(compressStatus == Z_BUF_ERROR && retries < 4)
 	{
+		retries++;
 		//free(uncompressedBytes);
 		delete[] uncompressedBytes;
 		uncompressedLength *= 2;
@@ -1503,11 +1519,15 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 		compressStatus = mz_uncompress(uncompressedBytes, &uncompressedLength, zippedBytes->data(), zippedBytes->size());
 	}
 
+	
+
 	if (compressStatus != Z_OK)
 	{
 		log.error("Uncompress failed.");
+		delete zippedBytes;
 		delete[] uncompressedBytes;
 		//free(uncompressedBytes);
+		returnLength = 0;
 		return nullptr;
 	}
 
@@ -1531,6 +1551,37 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 
 }
 
+
+string FileUtils::lzoStringToBase64String(const string& s)
+{ // ===============================================================================================
+
+	if (s == "" || s.length() == 0)
+	{
+	    return s;
+	}
+
+	u8 *val = new u8[s.length() + 1];
+	strcpy((char *)val, s.c_str());
+
+	return lzoByteArrayToBase64String(val, s.length());
+}
+
+string FileUtils::unlzoBase64StringToString(const string& s)
+{ // ===============================================================================================
+
+	if (s == "" || s.length() == 0)
+	{
+	    return s;
+	}
+
+	unsigned long returnLength = 0;
+	u8* bytes = unlzoBase64StringToByteArray(s, returnLength);
+	string out((char*)bytes,returnLength);
+
+	delete[] bytes;
+
+	return out;
+}
 
 string FileUtils::lz4StringToBase64String(const string& s)
 { // ===============================================================================================

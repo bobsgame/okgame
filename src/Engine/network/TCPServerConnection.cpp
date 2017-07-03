@@ -43,41 +43,54 @@ void TCPServerConnection::update()
 		string s = incomingMessageQueueFront_S();
 		incomingMessageQueuePop_S();
 
+		//log.info("LZ4: " + s.substr(0, min(s.length(),160)));
+
 		if (String::startsWith(s, "PARTIAL:"))
 		{
 			s = s.substr(s.find(":") + 1);
+
+
 			partialPacketString += s;
 		}
 		else
 		if (String::startsWith(s, "FINAL:"))
 		{
 			s = s.substr(s.find(":") + 1);
+
 			partialPacketString += s;
 
+			string packet = FileUtils::unlz4Base64StringToString(partialPacketString);
 
-			string p = FileUtils::unlz4Base64StringToString(partialPacketString);
 			partialPacketString = "";
-			messageReceived(p);
 
+			//strip off endline
+			packet = packet.substr(0, packet.find(BobNet::endline));
 
-			//messageReceived(partialPacketString);
-			
-		}
-		else
-		if(partialPacketString.length()>0)
-		{
-			log.warn("Partial packet from server was not completed before got another packet");
-			//messageReceived(s);
+#ifdef _DEBUG
+			log.info("TEXT: " + packet.substr(0, 200));
+#endif
+			messageReceived(packet);
+
 		}
 		else
 		{
+			if (partialPacketString.length()>0)
+			{
+				log.warn("Partial packet from server was not completed before got another packet");
+			}
 
-			string p = FileUtils::unlz4Base64StringToString(s);
-			s = "";
-			messageReceived(p);
 
+			string packet = FileUtils::unlz4Base64StringToString(s);
 
-			//messageReceived(s);
+			//strip off endline
+			packet = packet.substr(0, packet.find(BobNet::endline));
+
+#ifdef _DEBUG
+			log.info("TEXT: " + packet.substr(0, 200));
+#endif
+
+			messageReceived(packet);
+
 		}
 	}
 
@@ -353,6 +366,11 @@ void TCPServerConnection::_checkForIncomingTraffic()
 
 					setLastReceivedDataTime_S(System::currentHighResTimer());
 
+
+//#ifdef _DEBUG
+//					threadLogInfo_S("RAW FROM SERVER: " + packet.substr(0, min(packet.length(), 160)));
+//#endif
+
 					if (String::startsWith(packet, "ping"))
 					{
 						//log.debug("SERVER: ping");
@@ -367,15 +385,6 @@ void TCPServerConnection::_checkForIncomingTraffic()
 						return;
 					}
 
-#ifdef _DEBUG
-					if (String::startsWith(packet, "PARTIAL:") || String::startsWith(packet, "FINAL:"))
-					{
-						string c = packet.substr(0, 160);
-						threadLogInfo_S("FROM SERVER: " + c);
-					}
-					else
-					threadLogInfo_S("FROM SERVER:" + packet);// +e->getChannel().getId()
-#endif
 
 					incomingMessageQueuePush_S(packet);
 
@@ -836,9 +845,9 @@ bool TCPServerConnection::write_S(string s)
 	}
 
 #ifdef _DEBUG
-	if (String::startsWith(s, "ping")==false && String::startsWith(s, "pong") == false)
+	//if (String::startsWith(s, "ping")==false && String::startsWith(s, "pong") == false)
 	{
-		threadLogDebug_S("SEND SERVER:" + s.substr(0, s.length() - BobNet::endline.length()));
+		threadLogDebug_S("SEND SERVER: " + s.substr(0, s.length() - BobNet::endline.length()));
 	}
 #endif
 

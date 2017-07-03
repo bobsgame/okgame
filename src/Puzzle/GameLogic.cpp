@@ -863,7 +863,7 @@ void GameLogic::sendPacketsToOtherPlayers(PuzzlePlayer *p)
 
 			ArrayList<FrameState> networkPacket = allNetworkPacketsSentUpUntilNow.get(j);
 
-			string b64zip = FrameState::getFrameStatesAsBase64GZippedXML(networkPacket);
+			string b64zip = FrameState::getFrameStatesAsBase64LZ4XML(networkPacket);
 			string md5 = FileUtils::getStringMD5(b64zip);
 
 			//log.debug("Packet Size: "+b64zip.length());
@@ -980,7 +980,7 @@ void GameLogic::_processIncomingPackets()
 		{
 
 			//if not in log, add to log, add frames to queue, send back id, md5 as confirmation
-			ArrayList<FrameState> packet = FrameState::getFramesArrayFromBase64GZippedXML(frameData);
+			ArrayList<FrameState> packet = FrameState::getFramesArrayFromBase64LZ4XML(frameData);
 
 			//queue<FrameState> frames = packet.frameStates;
 
