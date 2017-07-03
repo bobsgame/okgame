@@ -2855,6 +2855,12 @@ FlagData.h
 ../src/Engine/rpg/event/FlagData.h
 SkillData.h
 ../src/Engine/rpg/event/SkillData.h
+src/Utility/AssetData.h
+../src/Engine/rpg/event/src/Utility/AssetData.h
+src/Utility/audio/MusicData.h
+../src/Engine/rpg/event/src/Utility/audio/MusicData.h
+src/Utility/audio/SoundData.h
+../src/Engine/rpg/event/src/Utility/audio/SoundData.h
 
 ../src/Engine/rpg/event/EventManager.h
 bobtypes.h
@@ -2883,6 +2889,8 @@ src/Engine/network/ServerObject.h
 ../src/Engine/rpg/event/GameStringData.h
 bobtypes.h
 ../src/Engine/rpg/event/bobtypes.h
+src/Utility/AssetData.h
+../src/Engine/rpg/event/src/Utility/AssetData.h
 
 ../src/Engine/rpg/event/Skill.h
 bobtypes.h
@@ -2891,6 +2899,8 @@ bobtypes.h
 ../src/Engine/rpg/event/SkillData.h
 bobtypes.h
 ../src/Engine/rpg/event/bobtypes.h
+src/Utility/AssetData.h
+../src/Engine/rpg/event/src/Utility/AssetData.h
 
 ../src/Engine/rpg/gui/CountryCodes.h
 bobtypes.h
@@ -4381,6 +4391,12 @@ FlagData.h
 /home/bob/bobsgame/src/Engine/rpg/event/FlagData.h
 SkillData.h
 /home/bob/bobsgame/src/Engine/rpg/event/SkillData.h
+src/Utility/AssetData.h
+/home/bob/bobsgame/src/Engine/rpg/event/src/Utility/AssetData.h
+src/Utility/audio/MusicData.h
+/home/bob/bobsgame/src/Engine/rpg/event/src/Utility/audio/MusicData.h
+src/Utility/audio/SoundData.h
+/home/bob/bobsgame/src/Engine/rpg/event/src/Utility/audio/SoundData.h
 
 /home/bob/bobsgame/src/Engine/rpg/event/EventManager.cpp
 stdafx.h
@@ -4433,6 +4449,8 @@ stdafx.h
 /home/bob/bobsgame/src/Engine/rpg/event/GameStringData.h
 bobtypes.h
 /home/bob/bobsgame/src/Engine/rpg/event/bobtypes.h
+src/Utility/AssetData.h
+/home/bob/bobsgame/src/Engine/rpg/event/src/Utility/AssetData.h
 
 /home/bob/bobsgame/src/Engine/rpg/event/Skill.cpp
 stdafx.h
@@ -4449,6 +4467,8 @@ stdafx.h
 /home/bob/bobsgame/src/Engine/rpg/event/SkillData.h
 bobtypes.h
 /home/bob/bobsgame/src/Engine/rpg/event/bobtypes.h
+src/Utility/AssetData.h
+/home/bob/bobsgame/src/Engine/rpg/event/src/Utility/AssetData.h
 
 /home/bob/bobsgame/src/Engine/rpg/gui/CountryCodes.cpp
 stdafx.h
@@ -5653,8 +5673,6 @@ iomanip
 -
 fstream
 -
-lz4-1.7.5/lib/lz4.h
-/home/bob/bobsgame/src/Utility/lz4-1.7.5/lib/lz4.h
 iostream
 -
 Poco/File.h
@@ -5693,6 +5711,8 @@ base64.h
 /home/bob/bobsgame/src/Utility/base64.h
 Poco/Base64Decoder.h
 /home/bob/bobsgame/src/Utility/Poco/Base64Decoder.h
+lz4-1.7.5/lib/lz4.h
+/home/bob/bobsgame/src/Utility/lz4-1.7.5/lib/lz4.h
 miniz.c
 /home/bob/bobsgame/src/Utility/miniz.c
 Poco/MD5Engine.h
