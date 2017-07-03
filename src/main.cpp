@@ -294,17 +294,26 @@ void Main::mainInit()
 	gwenInput->Initialize(gwenCanvas);
 
 
-	//log.info("Create BobsGame");
-	//bobsGame = new BobsGame();
-	//stateManager->setState(bobsGame);
-	//log.info("Init BobsGame");
-	//bobsGame->init();
+#define PUZZLE 1
+
+#ifdef PUZZLE
+
+	log.info("Create BobsGame");
+	bobsGame = new BobsGame();
+	stateManager->setState(bobsGame);
+	log.info("Init BobsGame");
+	bobsGame->init();
 	
+	bobNet->addEngineToForwardMessagesTo(stateManager->getState());
+#endif
+
+
 
 
 	log.info("Init BobNet...");
 	bobNet = new BobNet();
 	
+#ifndef PUZZLE
 
 	if (gameEngine != nullptr)
 	{
@@ -357,7 +366,7 @@ void Main::mainInit()
 
 
 	}
-
+#endif
 	
 
 	

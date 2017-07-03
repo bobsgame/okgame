@@ -877,7 +877,7 @@ std::string FileUtils::encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encod
 	return outs;
 }
 
-#include "Poco/Base64Decoder.h";
+#include "Poco/Base64Decoder.h"
 
 //=========================================================================================================================
 vector<u8>* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)

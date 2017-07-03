@@ -291,7 +291,7 @@ void Console::update()
 		if (cy == -1)cy = 0;//-1 is a magic num for captions, dont use it  //TODO: change that so all instances
 		if (d->caption == nullptr)
 		{
-			d->caption = Console::captionManager->newManagedCaption(cx, cy, -1, d->text, 10, d->color, BobColor::clear, RenderOrder::CONSOLE);
+			d->caption = Console::captionManager->newManagedCaption(cx, cy, -1, d->text, 12, d->color, BobColor::clear, RenderOrder::CONSOLE);
 			d->caption->outline = true;
 			d->caption->setText(d->text, true);
 		}
