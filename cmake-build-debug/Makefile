@@ -207,6 +207,114 @@ lib/glew-2.0.0/src/glew.c.s:
 	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/glew-2.0.0/src/glew.c.s
 .PHONY : lib/glew-2.0.0/src/glew.c.s
 
+lib/lz4-1.7.5/lib/lz4.o: lib/lz4-1.7.5/lib/lz4.c.o
+
+.PHONY : lib/lz4-1.7.5/lib/lz4.o
+
+# target to build an object file
+lib/lz4-1.7.5/lib/lz4.c.o:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4.c.o
+.PHONY : lib/lz4-1.7.5/lib/lz4.c.o
+
+lib/lz4-1.7.5/lib/lz4.i: lib/lz4-1.7.5/lib/lz4.c.i
+
+.PHONY : lib/lz4-1.7.5/lib/lz4.i
+
+# target to preprocess a source file
+lib/lz4-1.7.5/lib/lz4.c.i:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4.c.i
+.PHONY : lib/lz4-1.7.5/lib/lz4.c.i
+
+lib/lz4-1.7.5/lib/lz4.s: lib/lz4-1.7.5/lib/lz4.c.s
+
+.PHONY : lib/lz4-1.7.5/lib/lz4.s
+
+# target to generate assembly for a file
+lib/lz4-1.7.5/lib/lz4.c.s:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4.c.s
+.PHONY : lib/lz4-1.7.5/lib/lz4.c.s
+
+lib/lz4-1.7.5/lib/lz4frame.o: lib/lz4-1.7.5/lib/lz4frame.c.o
+
+.PHONY : lib/lz4-1.7.5/lib/lz4frame.o
+
+# target to build an object file
+lib/lz4-1.7.5/lib/lz4frame.c.o:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4frame.c.o
+.PHONY : lib/lz4-1.7.5/lib/lz4frame.c.o
+
+lib/lz4-1.7.5/lib/lz4frame.i: lib/lz4-1.7.5/lib/lz4frame.c.i
+
+.PHONY : lib/lz4-1.7.5/lib/lz4frame.i
+
+# target to preprocess a source file
+lib/lz4-1.7.5/lib/lz4frame.c.i:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4frame.c.i
+.PHONY : lib/lz4-1.7.5/lib/lz4frame.c.i
+
+lib/lz4-1.7.5/lib/lz4frame.s: lib/lz4-1.7.5/lib/lz4frame.c.s
+
+.PHONY : lib/lz4-1.7.5/lib/lz4frame.s
+
+# target to generate assembly for a file
+lib/lz4-1.7.5/lib/lz4frame.c.s:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4frame.c.s
+.PHONY : lib/lz4-1.7.5/lib/lz4frame.c.s
+
+lib/lz4-1.7.5/lib/lz4hc.o: lib/lz4-1.7.5/lib/lz4hc.c.o
+
+.PHONY : lib/lz4-1.7.5/lib/lz4hc.o
+
+# target to build an object file
+lib/lz4-1.7.5/lib/lz4hc.c.o:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4hc.c.o
+.PHONY : lib/lz4-1.7.5/lib/lz4hc.c.o
+
+lib/lz4-1.7.5/lib/lz4hc.i: lib/lz4-1.7.5/lib/lz4hc.c.i
+
+.PHONY : lib/lz4-1.7.5/lib/lz4hc.i
+
+# target to preprocess a source file
+lib/lz4-1.7.5/lib/lz4hc.c.i:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4hc.c.i
+.PHONY : lib/lz4-1.7.5/lib/lz4hc.c.i
+
+lib/lz4-1.7.5/lib/lz4hc.s: lib/lz4-1.7.5/lib/lz4hc.c.s
+
+.PHONY : lib/lz4-1.7.5/lib/lz4hc.s
+
+# target to generate assembly for a file
+lib/lz4-1.7.5/lib/lz4hc.c.s:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4hc.c.s
+.PHONY : lib/lz4-1.7.5/lib/lz4hc.c.s
+
+lib/lz4-1.7.5/lib/xxhash.o: lib/lz4-1.7.5/lib/xxhash.c.o
+
+.PHONY : lib/lz4-1.7.5/lib/xxhash.o
+
+# target to build an object file
+lib/lz4-1.7.5/lib/xxhash.c.o:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/xxhash.c.o
+.PHONY : lib/lz4-1.7.5/lib/xxhash.c.o
+
+lib/lz4-1.7.5/lib/xxhash.i: lib/lz4-1.7.5/lib/xxhash.c.i
+
+.PHONY : lib/lz4-1.7.5/lib/xxhash.i
+
+# target to preprocess a source file
+lib/lz4-1.7.5/lib/xxhash.c.i:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/xxhash.c.i
+.PHONY : lib/lz4-1.7.5/lib/xxhash.c.i
+
+lib/lz4-1.7.5/lib/xxhash.s: lib/lz4-1.7.5/lib/xxhash.c.s
+
+.PHONY : lib/lz4-1.7.5/lib/xxhash.s
+
+# target to generate assembly for a file
+lib/lz4-1.7.5/lib/xxhash.c.s:
+	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/xxhash.c.s
+.PHONY : lib/lz4-1.7.5/lib/xxhash.c.s
+
 lib/md5.o: lib/md5.cpp.o
 
 .PHONY : lib/md5.o
@@ -233,33 +341,6 @@ lib/md5.s: lib/md5.cpp.s
 lib/md5.cpp.s:
 	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/md5.cpp.s
 .PHONY : lib/md5.cpp.s
-
-lib/minilzo-2.09/minilzo.o: lib/minilzo-2.09/minilzo.c.o
-
-.PHONY : lib/minilzo-2.09/minilzo.o
-
-# target to build an object file
-lib/minilzo-2.09/minilzo.c.o:
-	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.o
-.PHONY : lib/minilzo-2.09/minilzo.c.o
-
-lib/minilzo-2.09/minilzo.i: lib/minilzo-2.09/minilzo.c.i
-
-.PHONY : lib/minilzo-2.09/minilzo.i
-
-# target to preprocess a source file
-lib/minilzo-2.09/minilzo.c.i:
-	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.i
-.PHONY : lib/minilzo-2.09/minilzo.c.i
-
-lib/minilzo-2.09/minilzo.s: lib/minilzo-2.09/minilzo.c.s
-
-.PHONY : lib/minilzo-2.09/minilzo.s
-
-# target to generate assembly for a file
-lib/minilzo-2.09/minilzo.c.s:
-	$(MAKE) -f CMakeFiles/bobsgame.dir/build.make CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.s
-.PHONY : lib/minilzo-2.09/minilzo.c.s
 
 lib/stb_vorbis.o: lib/stb_vorbis.c.o
 
@@ -4599,12 +4680,21 @@ help:
 	@echo "... lib/glew-2.0.0/src/glew.o"
 	@echo "... lib/glew-2.0.0/src/glew.i"
 	@echo "... lib/glew-2.0.0/src/glew.s"
+	@echo "... lib/lz4-1.7.5/lib/lz4.o"
+	@echo "... lib/lz4-1.7.5/lib/lz4.i"
+	@echo "... lib/lz4-1.7.5/lib/lz4.s"
+	@echo "... lib/lz4-1.7.5/lib/lz4frame.o"
+	@echo "... lib/lz4-1.7.5/lib/lz4frame.i"
+	@echo "... lib/lz4-1.7.5/lib/lz4frame.s"
+	@echo "... lib/lz4-1.7.5/lib/lz4hc.o"
+	@echo "... lib/lz4-1.7.5/lib/lz4hc.i"
+	@echo "... lib/lz4-1.7.5/lib/lz4hc.s"
+	@echo "... lib/lz4-1.7.5/lib/xxhash.o"
+	@echo "... lib/lz4-1.7.5/lib/xxhash.i"
+	@echo "... lib/lz4-1.7.5/lib/xxhash.s"
 	@echo "... lib/md5.o"
 	@echo "... lib/md5.i"
 	@echo "... lib/md5.s"
-	@echo "... lib/minilzo-2.09/minilzo.o"
-	@echo "... lib/minilzo-2.09/minilzo.i"
-	@echo "... lib/minilzo-2.09/minilzo.s"
 	@echo "... lib/stb_vorbis.o"
 	@echo "... lib/stb_vorbis.i"
 	@echo "... lib/stb_vorbis.s"

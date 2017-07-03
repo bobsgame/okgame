@@ -145,16 +145,40 @@
 		<Unit filename="/home/bob/bobsgame/lib/glew-2.0.0/src/glew.c">
 			<Option target="bobsgame"/>
 		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4.c">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4frame.c">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4frame.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4frame_static.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4hc.c">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4hc.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4opt.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/xxhash.c">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/lib/lz4-1.7.5/lib/xxhash.h">
+			<Option target="bobsgame"/>
+		</Unit>
 		<Unit filename="/home/bob/bobsgame/lib/md5.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/lib/md5.h">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/lib/minilzo-2.09/minilzo.c">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/lib/minilzo-2.09/minilzo.h">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/lib/stb_image.h">

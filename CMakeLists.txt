@@ -135,10 +135,20 @@ set(SOURCE_FILES
         lib/stb_image_write.h
         lib/stb_truetype.h
         lib/stb_vorbis.c
-        lib/minilzo-2.09/minilzo.c
+        #lib/minilzo-2.09/minilzo.c
         lib/GWEN-master/gwen/src/Input/gwen_input_sdl2.cpp
         lib/md5.cpp
         lib/md5.h
+        lib/lz4-1.7.5/lib/lz4.c
+        lib/lz4-1.7.5/lib/lz4.h
+        lib/lz4-1.7.5/lib/lz4frame.c
+        lib/lz4-1.7.5/lib/lz4frame.h
+        lib/lz4-1.7.5/lib/lz4frame_static.h
+        lib/lz4-1.7.5/lib/lz4hc.c
+        lib/lz4-1.7.5/lib/lz4hc.h
+        lib/lz4-1.7.5/lib/lz4opt.h
+        lib/lz4-1.7.5/lib/xxhash.c
+        lib/lz4-1.7.5/lib/xxhash.h
         #lib/miniz-master/miniz.c
     src/Engine/cinematics/CinematicsManager.cpp
     src/Engine/cinematics/CinematicsManager.h

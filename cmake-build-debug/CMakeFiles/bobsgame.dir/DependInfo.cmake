@@ -6,7 +6,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/bob/bobsgame/lib/glew-2.0.0/src/glew.c" "/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir/lib/glew-2.0.0/src/glew.c.o"
-  "/home/bob/bobsgame/lib/minilzo-2.09/minilzo.c" "/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir/lib/minilzo-2.09/minilzo.c.o"
+  "/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4.c" "/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4.c.o"
+  "/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4frame.c" "/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4frame.c.o"
+  "/home/bob/bobsgame/lib/lz4-1.7.5/lib/lz4hc.c" "/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/lz4hc.c.o"
+  "/home/bob/bobsgame/lib/lz4-1.7.5/lib/xxhash.c" "/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir/lib/lz4-1.7.5/lib/xxhash.c.o"
   "/home/bob/bobsgame/lib/stb_vorbis.c" "/home/bob/bobsgame/cmake-build-debug/CMakeFiles/bobsgame.dir/lib/stb_vorbis.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

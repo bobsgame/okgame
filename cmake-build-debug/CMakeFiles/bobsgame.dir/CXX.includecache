@@ -1222,6 +1222,10 @@ vector
 Gwen/Structures.h
 ../lib/GWEN-master/gwen/include/Gwen/Gwen/Structures.h
 
+../lib/base64.h
+string
+-
+
 ../lib/glew-2.0.0/include/GL/glew.h
 stddef.h
 -
@@ -1252,35 +1256,17 @@ GL/glew.h
 windows.h
 -
 
+../lib/lz4-1.7.5/lib/lz4.h
+stddef.h
+-
+stdint.h
+-
+
 ../lib/md5.h
 cstring
 -
 iostream
 -
-
-../lib/minilzo-2.09/lzoconf.h
-config.h
--
-limits.h
--
-stddef.h
--
-lzo/lzodefs.h
--
-
-../lib/minilzo-2.09/lzodefs.h
-
-../lib/minilzo-2.09/minilzo.h
-config.h
--
-limits.h
--
-stddef.h
--
-lzodefs.h
-../lib/minilzo-2.09/lzodefs.h
-lzoconf.h
-../lib/minilzo-2.09/lzoconf.h
 
 ../lib/miniz-master/miniz.c
 stdlib.h
@@ -1410,6 +1396,14 @@ Poco/Foundation.h
 Poco/Exception.h
 ../lib/poco-1.7.5/Foundation/include/Poco/Poco/Exception.h
 algorithm
+-
+
+../lib/poco-1.7.5/Foundation/include/Poco/Base64Decoder.h
+Poco/Foundation.h
+../lib/poco-1.7.5/Foundation/include/Poco/Poco/Foundation.h
+Poco/UnbufferedStreamBuf.h
+../lib/poco-1.7.5/Foundation/include/Poco/Poco/UnbufferedStreamBuf.h
+istream
 -
 
 ../lib/poco-1.7.5/Foundation/include/Poco/BasicEvent.h
@@ -5659,6 +5653,8 @@ iomanip
 -
 fstream
 -
+lz4-1.7.5/lib/lz4.h
+/home/bob/bobsgame/src/Utility/lz4-1.7.5/lib/lz4.h
 iostream
 -
 Poco/File.h
@@ -5693,8 +5689,10 @@ cctype
 -
 locale
 -
-minilzo.h
-/home/bob/bobsgame/src/Utility/minilzo.h
+base64.h
+/home/bob/bobsgame/src/Utility/base64.h
+Poco/Base64Decoder.h
+/home/bob/bobsgame/src/Utility/Poco/Base64Decoder.h
 miniz.c
 /home/bob/bobsgame/src/Utility/miniz.c
 Poco/MD5Engine.h
@@ -5909,8 +5907,6 @@ fstream
 -
 iostream
 -
-minilzo.h
-/home/bob/bobsgame/src/minilzo.h
 Gwen/Gwen.h
 /home/bob/bobsgame/src/Gwen/Gwen.h
 Gwen/Skins/Simple.h
