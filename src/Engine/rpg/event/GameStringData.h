@@ -6,7 +6,7 @@
 
 #pragma once
 #include "bobtypes.h"
-#include "AssetData.h"
+#include "src/Utility/AssetData.h"
 class Logger;
 
 
@@ -27,20 +27,15 @@ private:
 public:
 	GameStringData();
 
-
 	GameStringData(int id, const string& name, const string& text);
-
 
 	//static GameStringData* fromBase64ZippedJSON(const string& b64);
 
-
 	//static GameStringData* fromJSON(const string& json);
-
 
 	string& initFromString(string& t);
 
 	string getTYPEIDString();
-
 
 	string& getText();
 

@@ -10,9 +10,9 @@
 #include "DialogueData.h"
 #include "FlagData.h"
 #include "SkillData.h"
-#include "AssetData.h"
-#include "MusicData.h"
-#include "SoundData.h"
+#include "src/Utility/AssetData.h"
+#include "src/Utility/audio/MusicData.h"
+#include "src/Utility/audio/SoundData.h"
 
 
 class Logger;

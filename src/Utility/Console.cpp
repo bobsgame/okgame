@@ -262,8 +262,6 @@ void DEBUG_draw_text(float screenX0, float screenY0, string text, BobColor* colo
 		error_TEXTURE->release();
 		error_TEXTURE = NULL;
 	}
-		
-	
 }
 
 
@@ -272,6 +270,7 @@ mutex Console::_consoleTextList_Mutex;
 
 Console::Console()
 { //=========================================================================================================================
+
 	captionManager = new CaptionManager(nullptr);
 
 }
@@ -312,8 +311,6 @@ void Console::update()
 		}
 	}
 }
-
-
 
 ConsoleText* Console::error(const string& s, int ticks, int x, int y, BobColor* c)
 { //=========================================================================================================================
@@ -358,62 +355,60 @@ bool debugConsoleOff = true;
 void Console::render()
 { //=========================================================================================================================
 
+	int numStrings = consoleTextList->size();
 
+	int messagesCounter = 0;
 
-		int numStrings = consoleTextList->size();
+	for (int n = numStrings; n > 0; n--)
+	{
+		ConsoleText* dt = consoleTextList->get(n - 1);
 
-		int messagesCounter = 0;
+		if (dt->caption == nullptr)continue;
 
-		for (int n = numStrings; n > 0; n--)
+		if (debugConsoleOff == true && dt->isDebug == true)
 		{
-			ConsoleText* dt = consoleTextList->get(n - 1);
-
-			if (dt->caption == nullptr)continue;
-
-			if (debugConsoleOff == true && dt->isDebug == true)
-			{
-				dt->caption->visible = false;
-				continue;
-			}
-
-
-			if (dt->x != -1 || dt->y != -1)
-			{
-				int x = dt->x;
-				int y = dt->y;
-
-				if (x == -1)
-				{
-					//x=GLUtils.getViewportWidth()/2;// make this get width of string to center it
-					x = GLUtils::getRealWindowWidth() / 2 - ((GLUtils::getOutlinedTextWidth(dt->text) + 3) / 2);
-				}
-
-
-				if (y == -1)
-				{
-					y = GLUtils::getRealWindowHeight() / 2;
-				}
-
-
-				//GLUtils::drawOutlinedString((float)x, (float)y, dt->text, dt->color);
-				//DEBUG_draw_text((float)x, (float)y, dt->text, dt->color);
-				dt->caption->screenX = (float)x;
-				dt->caption->screenY = (float)y;
-			}
-			else
-			{
-				messagesCounter++;
-				//GLUtils::drawOutlinedString((float)8, (float)GLUtils::getViewportHeight() - (12 * messagesCounter), dt->text, dt->color);
-				//DEBUG_draw_text((float)8, (float)GLUtils::getRealWindowHeight() - (12 * messagesCounter), dt->text, dt->color);
-
-				float x = 8;
-				float y = (float)GLUtils::getRealWindowHeight() - (16 * messagesCounter);
-				dt->caption->screenX = x;
-				dt->caption->screenY = y;
-			}
+			dt->caption->visible = false;
+			continue;
 		}
 
-		captionManager->render(RenderOrder::CONSOLE);
+
+		if (dt->x != -1 || dt->y != -1)
+		{
+			int x = dt->x;
+			int y = dt->y;
+
+			if (x == -1)
+			{
+				//x=GLUtils.getViewportWidth()/2;// make this get width of string to center it
+				x = GLUtils::getRealWindowWidth() / 2 - ((GLUtils::getOutlinedTextWidth(dt->text) + 3) / 2);
+			}
+
+
+			if (y == -1)
+			{
+				y = GLUtils::getRealWindowHeight() / 2;
+			}
+
+
+			//GLUtils::drawOutlinedString((float)x, (float)y, dt->text, dt->color);
+			//DEBUG_draw_text((float)x, (float)y, dt->text, dt->color);
+			dt->caption->screenX = (float)x;
+			dt->caption->screenY = (float)y;
+		}
+		else
+		{
+			messagesCounter++;
+			//GLUtils::drawOutlinedString((float)8, (float)GLUtils::getViewportHeight() - (12 * messagesCounter), dt->text, dt->color);
+			//DEBUG_draw_text((float)8, (float)GLUtils::getRealWindowHeight() - (12 * messagesCounter), dt->text, dt->color);
+
+			float x = 8;
+			float y = (float)GLUtils::getRealWindowHeight() - (16 * messagesCounter);
+			dt->caption->screenX = x;
+			dt->caption->screenY = y;
+		}
+	}
+
+	captionManager->render(RenderOrder::CONSOLE);
 
 }
 
