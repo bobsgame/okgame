@@ -40,6 +40,10 @@ public:
 
 	static string serverAddressString;
 	static string STUNServerAddressString;
+	static int serverTCPPort;
+	static int STUNServerUDPPort;
+	static int clientUDPPortStartRange;
+
 
 	static string version;
 	//-----------------------------

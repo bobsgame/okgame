@@ -12,7 +12,7 @@ Logger UDPPeerConnection::log = Logger("UDPPeerConnection");
 Logger* UDPPeerConnection::_threadLog = new Logger("UDPPeerConnection");
 
 
-int UDPPeerConnection::lastUsedUDPPort = BobNet::clientUDPPortStartRange;
+int UDPPeerConnection::lastUsedUDPPort = Main::clientUDPPortStartRange;
 
 
 UDPPeerConnection::UDPPeerConnection(long long friendUserID, int type)

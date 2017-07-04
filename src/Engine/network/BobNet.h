@@ -286,7 +286,7 @@ public:
 	//================================
 	// used to connect to STUN and then for CLIENT P2P
 	//================================
-	static int clientUDPPortStartRange;
+	const static int clientUDPPortStartRange;
 
 	const static string debugSTUNServerAddress;
 	const static string releaseSTUNServerAddress;

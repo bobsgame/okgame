@@ -179,20 +179,24 @@ void TCPServerConnection::updateThreadLoop(TCPServerConnection *u)
 //===============================================================================================
 void TCPServerConnection::_sendKeepAlivePing()
 {//===============================================================================================
-	//send keepalive
-	//keep last got friend keepalive ping/pong
-	long long currentTime = System::currentHighResTimer();
-	long long startTime = getLastReceivedDataTime_S();
-	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-	if (ticksPassed > 10000) //10 seconds
+
+	if (ensureConnectedToServerThreadBlock_S())
 	{
-		//send ping
-		startTime = _lastSentPingTime;
-		int pingTicksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-		if (pingTicksPassed > 10000)
+		//send keepalive
+		//keep last got friend keepalive ping/pong
+		long long currentTime = System::currentHighResTimer();
+		long long startTime = getLastReceivedDataTime_S();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+		if (ticksPassed > 10000) //10 seconds
 		{
-			_lastSentPingTime = currentTime;
-			write_S("ping" + BobNet::endline);
+			//send ping
+			startTime = _lastSentPingTime;
+			int pingTicksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+			if (pingTicksPassed > 10000)
+			{
+				_lastSentPingTime = currentTime;
+				write_S("ping" + BobNet::endline);
+			}
 		}
 	}
 }
@@ -465,7 +469,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 					threadLogDebug_S("Resolving host to load balancer...");
 
 					_loadBalancerAddress = new IPaddress();
-					if (SDLNet_ResolveHost(_loadBalancerAddress, Main::serverAddressString.c_str(), BobNet::serverTCPPort) < 0 )
+					if (SDLNet_ResolveHost(_loadBalancerAddress, Main::serverAddressString.c_str(), Main::serverTCPPort) < 0 )
 					{
 						threadLogWarn_S("Could not resolve load balancer IP: " + string(SDLNet_GetError()) + string(SDL_GetError()));
 						SDL_ClearError();
@@ -561,6 +565,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 		//disconnecting from the LB will set the address to null again, so we store it.
 
+
 		if(getSocketIsOpen_S())
 		{
 			//close the connection to the load balancer
@@ -570,8 +575,12 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 		if (_serverAddress == nullptr)
 		{
+
+			//for running server locally
+			if (Main::serverAddressString == "localhost")setServerIPAddressString_S("localhost");
+
 			_serverAddress = new IPaddress();
-			if (SDLNet_ResolveHost(_serverAddress, getServerIPAddressString_S().c_str(), BobNet::serverTCPPort) < 0)
+			if (SDLNet_ResolveHost(_serverAddress, getServerIPAddressString_S().c_str(), Main::serverTCPPort) < 0)
 			{
 				threadLogError_S("Could not resolve server address: " + string(SDL_GetError()));
 				setDisconnectedFromServer_S("Could not resolve server address.");

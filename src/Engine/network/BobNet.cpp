@@ -5,7 +5,7 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-int BobNet::clientUDPPortStartRange = 6434;
+const int BobNet::clientUDPPortStartRange = 6435;
 
 const string BobNet::endline = ":END:\r\n";
 const string BobNet::batch = ":BATCH:";
@@ -249,7 +249,7 @@ bool BobNet::_ensureSocketIsOpen()
 {//===============================================================================================
 	if (getStunServerIPAddress_S() == nullptr)
 	{
-		setStunServerIPAddress_S(Main::STUNServerAddressString.c_str(), BobNet::STUNServerUDPPort);
+		setStunServerIPAddress_S(Main::STUNServerAddressString.c_str(), Main::STUNServerUDPPort);
 
 		if (getStunServerIPAddress_S() == nullptr)return false;
 	}
@@ -266,8 +266,8 @@ bool BobNet::_ensureSocketIsOpen()
 			setSocketAddedToSet_S(false);
 		}
 
-		setSocket_S(SDLNet_UDP_Open(BobNet::STUNServerUDPPort));
-		log.debug("Opened socket to STUN server on port " + to_string(BobNet::STUNServerUDPPort));
+		setSocket_S(SDLNet_UDP_Open(Main::STUNServerUDPPort));
+		log.debug("Opened socket to STUN server on port " + to_string(Main::STUNServerUDPPort));
 		if (!getSocket_S())
 		{
 			//SDLNet_FreeSocketSet(set);
