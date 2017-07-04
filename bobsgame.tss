@@ -166,14 +166,7 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\BGClientEngine.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\MenuPanel.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\MenuPanel.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapManager.cpp</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\Engine.cpp</string>
+      <string>C:\Program Files (x86)\Windows Kits\10\Source\10.0.10240.0\ucrt\heap\debug_heap.cpp</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

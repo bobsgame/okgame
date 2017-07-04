@@ -74,7 +74,8 @@ void TCPServerConnection::update()
 			packet = packet.substr(0, packet.find(BobNet::endline));
 
 #ifdef _DEBUG
-			log.info("TEXT: " + packet.substr(0, 230));
+			if(packet.find("Login")==string::npos && packet.find("Reconnect") == string::npos)log.info("TEXT: " + packet.substr(0, packet.find(":")+1));
+			else log.info("TEXT: " + packet.substr(0, 230));
 #endif
 			messageReceived(packet);
 
@@ -93,7 +94,8 @@ void TCPServerConnection::update()
 			packet = packet.substr(0, packet.find(BobNet::endline));
 
 #ifdef _DEBUG
-			log.info("TEXT: " + packet.substr(0, 230));
+			if (packet.find("Login") == string::npos && packet.find("Reconnect") == string::npos)log.info("TEXT: " + packet.substr(0, packet.find(":") + 1));
+			else log.info("TEXT: " + packet.substr(0, 230));
 #endif
 
 			messageReceived(packet);
