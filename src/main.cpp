@@ -108,6 +108,21 @@ void Main::openURL(string url)
 #endif
 }
 
+
+#include <fstream>
+#include <iostream>
+#include "Poco/File.h"
+#include "Poco/Path.h"
+#include "Poco/Delegate.h"
+#include "Poco/Zip/Decompress.h"
+#include "Poco/Process.h"
+#include "Poco/DirectoryIterator.h"
+using Poco::DirectoryIterator;
+using Poco::File;
+using Poco::Process;
+using Poco::Path;
+
+
 //FileUtils *Main::cacheManager = new FileUtils();
 //bool Main::isApplet = false;
 
@@ -344,6 +359,15 @@ void Main::mainInit()
 
 	log.info("Init BobNet...");
 	bobNet = new BobNet();
+
+
+	//for testing on second PC locally
+	File f("/oldbob");
+	if(f.exists())
+	{
+		BobNet::clientUDPPortStartRange = 6499;
+	}
+
 	
 #ifndef PUZZLE
 
@@ -450,18 +474,7 @@ void Main::mainInit()
 
 }
 
-#include <fstream>
-#include <iostream>
-#include "Poco/File.h"
-#include "Poco/Path.h"
-#include "Poco/Delegate.h"
-#include "Poco/Zip/Decompress.h"
-#include "Poco/Process.h"
-#include "Poco/DirectoryIterator.h"
-using Poco::DirectoryIterator;
-using Poco::File;
-using Poco::Process;
-using Poco::Path;
+
 
 //=========================================================================================================================
 void Main::loadGlobalSettingsFromXML()

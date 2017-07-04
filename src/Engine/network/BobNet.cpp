@@ -5,7 +5,7 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-const int BobNet::clientUDPPortStartRange = 6434;
+int BobNet::clientUDPPortStartRange = 6434;
 
 const string BobNet::endline = ":END:\r\n";
 const string BobNet::batch = ":BATCH:";
