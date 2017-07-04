@@ -74,8 +74,8 @@ void TCPServerConnection::update()
 			packet = packet.substr(0, packet.find(BobNet::endline));
 
 #ifdef _DEBUG
-			if(packet.find("Login")!=string::npos || packet.find("Reconnect") != string::npos || packet.find("Create_Account") != string::npos)log.info("TEXT: " + packet.substr(0, packet.find(":")+1));
-			else log.info("TEXT: " + packet.substr(0, 230));
+			if(packet.find("Login")!=string::npos || packet.find("Reconnect") != string::npos || packet.find("Create_Account") != string::npos)log.info("FROM SERVER: " + packet.substr(0, packet.find(":")+1));
+			else log.info("FROM SERVER: " + packet.substr(0, 230));
 #endif
 			messageReceived(packet);
 
@@ -94,8 +94,8 @@ void TCPServerConnection::update()
 			packet = packet.substr(0, packet.find(BobNet::endline));
 
 #ifdef _DEBUG
-			if (packet.find("Login") != string::npos || packet.find("Reconnect") != string::npos || packet.find("Create_Account") != string::npos)log.info("TEXT: " + packet.substr(0, packet.find(":") + 1));
-			else log.info("TEXT: " + packet.substr(0, 230));
+			if (packet.find("Login") != string::npos || packet.find("Reconnect") != string::npos || packet.find("Create_Account") != string::npos)log.info("FROM SERVER: " + packet.substr(0, packet.find(":") + 1));
+			else log.info("FROM SERVER: " + packet.substr(0, 230));
 #endif
 
 			messageReceived(packet);
@@ -900,7 +900,7 @@ bool TCPServerConnection::write_S(string s)
 #ifdef _DEBUG
 	//if (String::startsWith(s, "ping")==false && String::startsWith(s, "pong") == false)
 	{
-		if (s.find("Login") != string::npos || s.find("Reconnect") != string::npos || s.find("Create_Account") != string::npos)log.info("SEND SERVER: " + s.substr(0, s.find(":") + 1));
+		if (s.find("Login") != string::npos || s.find("Reconnect") != string::npos || s.find("Create_Account") != string::npos)threadLogDebug_S("SEND SERVER: " + s.substr(0, s.find(":") + 1));
 		else threadLogDebug_S("SEND SERVER: " + s.substr(0, s.length() - BobNet::endline.length()));
 	}
 #endif

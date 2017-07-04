@@ -368,8 +368,9 @@ void Main::mainInit()
 			serverAddressString = BobNet::debugServerAddress;
 			STUNServerAddressString = BobNet::debugSTUNServerAddress;
 
+			//local ports are incremented by 1 on server side to prevent bind conflict
 			serverTCPPort++;
-			//STUNServerUDPPort++;
+			STUNServerUDPPort++;
 		}
 	}
 

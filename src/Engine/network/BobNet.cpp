@@ -249,7 +249,7 @@ bool BobNet::_ensureSocketIsOpen()
 {//===============================================================================================
 	if (getStunServerIPAddress_S() == nullptr)
 	{
-		setStunServerIPAddress_S(Main::STUNServerAddressString.c_str(), Main::STUNServerUDPPort);
+		setStunServerIPAddress_S(Main::STUNServerAddressString.c_str(), Main::STUNServerUDPPort);//this is server port, so it is +1 if the server is hosted locally
 
 		if (getStunServerIPAddress_S() == nullptr)return false;
 	}
@@ -266,8 +266,8 @@ bool BobNet::_ensureSocketIsOpen()
 			setSocketAddedToSet_S(false);
 		}
 
-		setSocket_S(SDLNet_UDP_Open(Main::STUNServerUDPPort));
-		log.debug("Opened socket to STUN server on port " + to_string(Main::STUNServerUDPPort));
+		setSocket_S(SDLNet_UDP_Open(BobNet::STUNServerUDPPort));//this is client port, not server port, so it will always be original port number
+		log.debug("Opened socket to STUN server on port " + to_string(BobNet::STUNServerUDPPort));
 		if (!getSocket_S())
 		{
 			//SDLNet_FreeSocketSet(set);
