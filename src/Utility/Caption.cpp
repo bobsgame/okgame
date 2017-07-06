@@ -1370,7 +1370,7 @@ void Caption::updateScreenXY()
 				}
 			}
 
-			screenY = (float)floor(entity->getScreenTop()) - (captionOverHeadOffset + (height + 2) * scale);
+			screenY = (float)floor(e->getScreenTop()) - (captionOverHeadOffset + (height + 2) * scale);
 		}
 	}
 	else

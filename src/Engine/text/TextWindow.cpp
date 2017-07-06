@@ -741,7 +741,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 
 		bool shadow = true;
 
-		//if (draw2X)shadow = false;
+		if (draw2X)shadow = false;
 
 		if (shadow)
 		{

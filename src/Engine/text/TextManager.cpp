@@ -215,6 +215,9 @@ void TextManager::update()
 
 	//drawLetterTicksCounter+=getEngine()->engineTicksPassed();
 
+	long long ticksPassed = getEngine()->realWorldTicksPassed();
+
+
 	{
 		//while(drawLetterTicksCounter>=textEngineSpeedTicksPerLetter)
 		//drawLetterTicksCounter-=textEngineSpeedTicksPerLetter;
@@ -288,12 +291,24 @@ void TextManager::update()
 					}
 				}
 
+				if (delay == true)
+				{
+					if (delayTicks > 0)
+					{
+						delayTicks -= (int)ticksPassed;
+					}
+					else
+					{
+						delay = false;
+					}
+				}
+
 				// -----------------------------
 				// draw getText
 				// -----------------------------
 				if (scrollingUp == false && delay == false)
 				{
-					drawText();
+					drawText(ticksPassed);
 					handleInput();
 				}
 			}
@@ -302,7 +317,10 @@ void TextManager::update()
 			// this should never happen, but what if it does?
 		}
 
-		doScrolling();
+
+
+
+		doScrolling(ticksPassed);
 
 		textBox->get(0)->updateTextureFromByteArray();
 		textBox->get(1)->updateTextureFromByteArray();
@@ -583,126 +601,136 @@ void TextManager::postparseColorizedTags()
 
 }
 
-void TextManager::drawText()
+void TextManager::drawText(long long ticksPassed)
 { //=========================================================================================================================
 
-	// -----------------------------
-	// draw getText
-	// -----------------------------
 
-	if (position < length && waitingForButtonForNewPage == false && pausedUntilButtonPress == false)
+	ticksPassed += remainderTicks;
+
+
+	int lettersToDraw = ticksPassed / ticksPerLetter;
+	remainderTicks = ticksPassed % ticksPerLetter;
+
+	for (int i = 0; i <= lettersToDraw; i++)
 	{
-		parseColorizedTags();
-
-		// parse option tags
-		// this should never happen, it should be parsed above.
-		if (currentText[position] == '<')
-		{
-			parseOption();
-
-			string e = "A tag was parsed inside drawText()";
-			Console::error(e);
-			log.error(e);
-		}
-
-		else
-
 		// -----------------------------
-		// handle space
+		// draw getText
 		// -----------------------------
+
+		if (position < length && waitingForButtonForNewPage == false && pausedUntilButtonPress == false)
 		{
-			if (currentText[position] == ' ')
+			parseColorizedTags();
+
+			// parse option tags
+			// this should never happen, it should be parsed above.
+			if (currentText[position] == '<')
 			{
-				// get next word length including the space
-				int nextWordLength = BobFont::getNextWordLength(currentText, position, font);
+				parseOption();
 
-				// THIS SKIPS WORDS LONGER THEN THE MAXIMUM LENGTH
-				if (nextWordLength > getLineSizeX())
+				string e = "A tag was parsed inside drawText()";
+				Console::error(e);
+				log.error(e);
+			}
+
+			else
+
+				// -----------------------------
+				// handle space
+				// -----------------------------
+			{
+				if (currentText[position] == ' ')
 				{
-					//TODO: skip next word
+					// get next word length including the space
+					int nextWordLength = BobFont::getNextWordLength(currentText, position, font);
 
-					string e = "A word was too long for the getText engine.";
-					Console::error(e);
-					log.error(e);
-
-					nextWordLength = BobFont::getNextWordLength(currentText, position, font);
-				}
-
-				// see if it fits on the current line
-				int pixelsLeftInLine = getLineSizeX() - textBox->get(selectedTextbox)->xInLine;
-				if (textBox->get(selectedTextbox)->line == MAX_LINES)
-				{
-					pixelsLeftInLine -= 32; // for the getText button icon
-				}
-
-				// if it doesnt fit, go to the next line
-				if (pixelsLeftInLine < nextWordLength)
-				{
-					textBox->get(selectedTextbox)->xInLine = 0;
-					textBox->get(selectedTextbox)->line++;
-
-					// if we're on the last line, wait for input
-					if (textBox->get(selectedTextbox)->line > MAX_LINES)
+					// THIS SKIPS WORDS LONGER THEN THE MAXIMUM LENGTH
+					if (nextWordLength > getLineSizeX())
 					{
-						waitingForButtonForNewPage = true;
+						//TODO: skip next word
+
+						string e = "A word was too long for the getText engine.";
+						Console::error(e);
+						log.error(e);
+
+						nextWordLength = BobFont::getNextWordLength(currentText, position, font);
+					}
+
+					// see if it fits on the current line
+					int pixelsLeftInLine = getLineSizeX() - textBox->get(selectedTextbox)->xInLine;
+					if (textBox->get(selectedTextbox)->line == MAX_LINES)
+					{
+						pixelsLeftInLine -= 32; // for the getText button icon
+					}
+
+					// if it doesnt fit, go to the next line
+					if (pixelsLeftInLine < nextWordLength)
+					{
+						textBox->get(selectedTextbox)->xInLine = 0;
+						textBox->get(selectedTextbox)->line++;
+
+						// if we're on the last line, wait for input
+						if (textBox->get(selectedTextbox)->line > MAX_LINES)
+						{
+							waitingForButtonForNewPage = true;
+						}
+					}
+
+					// play a sound for each word. if the last word was a question, raise voice.
+					// if(getText[temp_position-1]=='?')MusicAndSoundManager().playSound("blah",127,TEXT_textbox[TEXT_selected_textbox].voice_pitch+(30000),0);
+					// else MusicAndSoundManager().playSound("blah",127,TEXT_textbox[TEXT_selected_textbox].voice_pitch+(rand()%20000),0);
+
+					// only draw the space if we're not at the beginning of the getText box
+					if (textBox->get(selectedTextbox)->xInLine != 0)
+					{
+						drawLetter();
 					}
 				}
-
-				// play a sound for each word. if the last word was a question, raise voice.
-				// if(getText[temp_position-1]=='?')MusicAndSoundManager().playSound("blah",127,TEXT_textbox[TEXT_selected_textbox].voice_pitch+(30000),0);
-				// else MusicAndSoundManager().playSound("blah",127,TEXT_textbox[TEXT_selected_textbox].voice_pitch+(rand()%20000),0);
-
-				// only draw the space if we're not at the beginning of the getText box
-				if (textBox->get(selectedTextbox)->xInLine != 0)
+				else
 				{
+					// if TEXT_font_pointer<FONT_JAPANESE
 					drawLetter();
 				}
 			}
-			else
+
+			postparseColorizedTags();
+
+
+			if (position + 1 < length - 3 && String::startsWith(currentText.substr(position + 1), "<.") == false)
 			{
-				// if TEXT_font_pointer<FONT_JAPANESE
-				drawLetter();
+				//auto delay on punctuation
+				if ((currentText[position] == '.' || currentText[position] == '?' || currentText[position] == '!'))
+				{
+					delay = true;
+					delayTicks = 500;//500
+				}
+
+				if (currentText[position] == ',')
+				{
+					delay = true;
+					delayTicks = 300;//300
+				}
+
+				if (currentText[position] == '-')
+				{
+					delay = true;
+					delayTicks = 400;
+				}
+
+				if (currentText[position] == '!')
+				{
+					textBox->get(selectedTextbox)->shakeTicksYTotal = 300;//300
+					//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
+				}
+
+				if (currentText[position] == '?')
+				{
+					textBox->get(selectedTextbox)->shakeTicksXTotal = 300;//300
+					//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
+				}
 			}
+			// increment the string
+			position++;
 		}
-	
-		postparseColorizedTags();
-
-
-		if (position + 1 < length - 3 && String::startsWith(currentText.substr(position + 1), "<.") == false)
-		{
-			//auto delay on punctuation
-			if ((currentText[position] == '.' || currentText[position] == '?' || currentText[position] == '!'))
-			{
-				delay = true;
-				delayTicks = 500;
-			}
-
-			if (currentText[position] == ',')
-			{
-				delay = true;
-				delayTicks = 300;
-			}
-
-			if (currentText[position] == '-')
-			{
-				delay = true;
-				delayTicks = 300;
-			}
-
-			if (currentText[position] == '!')
-			{
-				textBox->get(selectedTextbox)->shakeTicksYTotal = 300;
-				//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
-			}
-
-			if (currentText[position] == '?')
-			{
-				textBox->get(selectedTextbox)->shakeTicksXTotal = 300;
-				//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
-			}
-		}
-		// increment the string
-		position++;
 	}
 }
 
@@ -888,11 +916,10 @@ void TextManager::handleInput()
 	}
 }
 
-void TextManager::doScrolling()
+void TextManager::doScrolling(long long ticksPassed)
 { //=========================================================================================================================
 
 
-	long long ticksPassed = getEngine()->realWorldTicksPassed();
 
 	/*
 	 * TEXT_scale = 1.0f;
@@ -1062,17 +1089,6 @@ void TextManager::doScrolling()
 			}
 
 
-			if (delay == true)
-			{
-				if (delayTicks > 0)
-				{
-					delayTicks -= (int)ticksPassed;
-				}
-				else
-				{
-					delay = false;
-				}
-			}
 
 			for (int i = 0; i < 2; i++)
 			{

@@ -46,6 +46,9 @@ public:
 	int length = 0;
 	int position = 0;
 
+	int ticksPerLetter = 8;
+	int remainderTicks = 0;
+
 	const static int CLOSED = 0;
 	const static int OPEN = 1;
 	const static int CLOSING = 2;
@@ -157,13 +160,13 @@ public:
 	void parseColorizedTags();
 	void postparseColorizedTags();
 	
-	void drawText();
+	void drawText(long long ticksPassed);
 
 	
 	void handleInput();
 
 	
-	void doScrolling();
+	void doScrolling(long long ticksPassed);
 
 	
 	void drawLetter();
