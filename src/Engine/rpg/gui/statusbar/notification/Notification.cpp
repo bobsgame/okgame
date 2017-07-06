@@ -41,7 +41,7 @@ Notification::Notification(BGClientEngine* g, const string& s)
 
 	if (caption == nullptr)
 	{
-		caption = new Caption(g, 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
+		caption = new Caption(g, Caption::Position::NONE, 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
 		caption->setAlphaImmediately(1.0f);
 	}
 
@@ -58,7 +58,7 @@ void Notification::update()
 
 	if (caption == nullptr)
 	{
-		caption = new Caption(getEngine(), 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
+		caption = new Caption(getEngine(), Caption::Position::NONE, 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
 		caption->setAlphaImmediately(1.0f);
 	}
 

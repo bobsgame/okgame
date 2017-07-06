@@ -19,7 +19,7 @@ https://github.com/bobsgame/BobsSTUNServer
 
 https://github.com/bobsgame/BobNetLibs
 
-To build: Import as project in Eclipse, add IvyDE to project, resolve Ivy dependencies. 
+
 --
 
 #*bob's game* is:

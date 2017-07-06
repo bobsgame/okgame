@@ -1038,7 +1038,7 @@ void BobsGame::update()
 					text = "Press Enter or Start to return to lobby";
 				}
 
-				pressEnterToRestartCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, getHeight() - 100, -1, text, 24, BobColor::white);
+				pressEnterToRestartCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, getHeight() - 100, -1, text, 24, BobColor::white);
 				pressEnterToRestartCaption->flashing = true;
 				pressEnterToRestartCaption->flashingTicksPerFlash = 2000;
 			}

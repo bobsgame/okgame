@@ -43,8 +43,8 @@ public:
 
 	//TODO: add more getCaption creation functions to have lots of nice options?
 
-	Caption* newManagedCaption(int x, int y, int ticks, const string& text, BobFont* font = BobFont::font_normal_8_outlined, BobColor* textColor = BobColor::black, BobColor* textAAColor = nullptr, BobColor* textBGColor = BobColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, int width = 0, Entity* entity = nullptr, Area* area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
-	Caption* newManagedCaption(int x, int y, int ticks, const string& text, int fotnSize = 8, BobColor* textColor = BobColor::black, BobColor* textBGColor = BobColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, Entity* entity = nullptr, Area* area = nullptr);
+	Caption* newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, BobFont* font = BobFont::font_normal_8_outlined, BobColor* textColor = BobColor::black, BobColor* textAAColor = nullptr, BobColor* textBGColor = BobColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, int width = 0, Entity* entity = nullptr, Area* area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
+	Caption* newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize = 8, BobColor* textColor = BobColor::black, BobColor* textBGColor = BobColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, Entity* entity = nullptr, Area* area = nullptr);
 
 };
 

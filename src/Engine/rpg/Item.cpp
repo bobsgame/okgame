@@ -102,11 +102,11 @@ void Item::getWithCaption_S()
 
 	if (getPlayer() != nullptr)
 	{
-		getCaptionManager()->newManagedCaption(Caption::CENTERED_OVER_ENTITY, 0, 5000, name, BobFont::font_normal_11_outlined, BobColor::green);
+		getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, 5000, name, BobFont::font_normal_11_outlined, BobColor::green);
 	}
 	else
 	{
-		getCaptionManager()->newManagedCaption(Caption::CENTERED_SCREEN, 0, 5000, name, BobFont::font_normal_11_outlined, BobColor::green);
+		getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, 5000, name, BobFont::font_normal_11_outlined, BobColor::green);
 	}
 	getAudioManager()->playSound("gotitem", 0.25f, 1.0f, 1);
 }

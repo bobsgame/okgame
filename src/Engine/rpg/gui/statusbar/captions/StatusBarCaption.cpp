@@ -58,7 +58,7 @@ void StatusBarCaption::updateCaption(const string& s)
 
 	if (caption == nullptr)
 	{
-		caption = new Caption(getEngine(), 0, 2, -1, s, BobFont::font_small_16_outlined_smooth, currentFGColor, currentAAColor, currentBGColor, RenderOrder::OVER_TEXT, 1.0f, 0);
+		caption = new Caption(getEngine(), Caption::Position::NONE, 0, 2, -1, s, BobFont::font_small_16_outlined_smooth, currentFGColor, currentAAColor, currentBGColor, RenderOrder::OVER_TEXT, 1.0f, 0);
 	}
 	else
 	{

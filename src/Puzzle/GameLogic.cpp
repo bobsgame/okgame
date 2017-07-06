@@ -404,7 +404,7 @@ void GameLogic::waitForPressStart()
 
 	if (pressStartCaption == nullptr)
 	{
-		pressStartCaption = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 60, -1, "PRESS START", announcementCaptionFontSize, BobColor::yellow, BobColor::clear, RenderOrder::ABOVE, 1.0f);
+		pressStartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "PRESS START", announcementCaptionFontSize, BobColor::yellow, BobColor::clear, RenderOrder::ABOVE, 1.0f);
 	}
 	else
 	{
@@ -435,7 +435,7 @@ void GameLogic::waitForReady()
 		getAudioManager()->playSound(currentGameType->readySound, getVolume(), 1.0f);
 		playedReadySound = true;
 
-		Caption* c = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 30, currentGameType->readyTicksAmount, "READY", announcementCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::ABOVE, 2.0f);
+		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 30, currentGameType->readyTicksAmount, "READY", announcementCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::ABOVE, 2.0f);
 		c->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - c->getWidth() / 2;
 	}
 
@@ -448,7 +448,7 @@ void GameLogic::waitForReady()
 
 		getAudioManager()->playSound(currentGameType->goSound, getVolume(), 1.0f);
 
-		Caption* c = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2), 1000, "GO!", announcementCaptionFontSize, BobColor::green, BobColor::clear, RenderOrder::ABOVE, 2.0f);
+		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2), 1000, "GO!", announcementCaptionFontSize, BobColor::green, BobColor::clear, RenderOrder::ABOVE, 2.0f);
 		c->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - c->getWidth() / 2;
 		c->flashing = true;
 		c->flashingTicksPerFlash = 80;
@@ -2751,7 +2751,7 @@ void GameLogic::renderQueuedGarbage()
 	{
 		if (garbageWaitCaption == nullptr)
 		{
-			garbageWaitCaption = getCaptionManager()->newManagedCaption(0, 0, -1, " ", announcementCaptionFontSize, BobColor::white, BobColor::clear, RenderOrder::ABOVE, 0.5f);
+			garbageWaitCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, " ", announcementCaptionFontSize, BobColor::white, BobColor::clear, RenderOrder::ABOVE, 0.5f);
 		}
 		garbageWaitCaption->screenX = (float)(grid->getXOnScreenNoShake());
 		garbageWaitCaption->screenY = (float)(grid->getYOnScreenNoShake() - (cellH()));
@@ -3101,7 +3101,8 @@ void GameLogic::doExtraStageEffects()
 	//		}
 }
 
-//=========================================================================================================================
+//=========================================================================================================================
+
 string GameLogic::getRandomMakePieceSound()
 {//=========================================================================================================================
 
@@ -3725,7 +3726,7 @@ void GameLogic::wonSequence()
 
 		if (winCaption == nullptr)
 		{
-			winCaption = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 60, -1, "WIN", resultCaptionFontSize, BobColor::green, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+			winCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "WIN", resultCaptionFontSize, BobColor::green, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 			winCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - winCaption->getWidth() / 2;
 			winCaption->flashing = true;
 			winCaption->flashingTicksPerFlash = 500;
@@ -3751,7 +3752,7 @@ void GameLogic::lostSequence()
 
 		if (loseCaption == nullptr)
 		{
-			loseCaption = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 60, -1, "LOSE", resultCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+			loseCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "LOSE", resultCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 			loseCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - loseCaption->getWidth() / 2;
 			loseCaption->flashing = true;
 			loseCaption->flashingTicksPerFlash = 500;
@@ -3781,7 +3782,7 @@ void GameLogic::diedSequence()
 
 			if (deadCaption == nullptr)
 			{
-				deadCaption = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+				deadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 				deadCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - deadCaption->getWidth() / 2;
 				deadCaption->flashing = true;
 				deadCaption->flashingTicksPerFlash = 500;
@@ -3795,7 +3796,7 @@ void GameLogic::diedSequence()
 
 				if (deadCaption == nullptr)
 				{
-					deadCaption = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+					deadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 					deadCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - deadCaption->getWidth() / 2;
 					deadCaption->flashing = true;
 					deadCaption->flashingTicksPerFlash = 500;
@@ -3824,7 +3825,7 @@ void GameLogic::creditsSequence()
 
 		if (creditsCaption == nullptr)
 		{
-			creditsCaption = getCaptionManager()->newManagedCaption(0, (GLUtils::getViewportHeight() / 2) - 60, -1, "COMPLETE", resultCaptionFontSize, BobColor::purple, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+			creditsCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "COMPLETE", resultCaptionFontSize, BobColor::purple, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 			creditsCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - creditsCaption->getWidth() / 2;
 			creditsCaption->flashing = true;
 			creditsCaption->flashingTicksPerFlash = 500;
@@ -3849,7 +3850,7 @@ void GameLogic::makeAnnouncementCaption(const string& text, BobColor* color)
 		color = announcementCaptionTextColor;
 	}
 
-	Caption* c = getCaptionManager()->newManagedCaption(0, 0, -1, text, announcementCaptionFontSize, color, announcementCaptionBGColor, RenderOrder::ABOVE_TOP, announcementCaptionScale);
+	Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, text, announcementCaptionFontSize, color, announcementCaptionBGColor, RenderOrder::ABOVE_TOP, announcementCaptionScale);
 	//c->drawAbove = true;
 	announcementCaptions->add(c);
 }
@@ -3909,7 +3910,7 @@ void GameLogic::updateCaptionFadeValues()
 Caption* GameLogic::makeInfoCaption(const string& text)
 {//=========================================================================================================================
 
-	Caption* c = getCaptionManager()->newManagedCaption(0, (int)++captionY * captionYSize, -1, string("" + text), captionFontSize, captionTextColor, captionBGColor, RenderOrder::ABOVE, captionScale);
+	Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (int)++captionY * captionYSize, -1, string("" + text), captionFontSize, captionTextColor, captionBGColor, RenderOrder::ABOVE, captionScale);
 	if (infoCaptions->contains(c) == false)
 	{
 		infoCaptions->add(c);
@@ -4139,17 +4140,17 @@ void GameLogic::updateCaptions()
 
 	if (totalTicksPassedCaption == nullptr)
 	{
-		totalTicksPassedCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "00:00:000", announcementCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE_TOP, captionScale);
+		totalTicksPassedCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "00:00:000", announcementCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE_TOP, captionScale);
 		timeCaptionStandardizedWidth = (int)(totalTicksPassedCaption->getWidth());
 	}
 
 	if (holdCaption == nullptr)
 	{
-		holdCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "HOLD", mediumCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE, captionScale);
+		holdCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "HOLD", mediumCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE, captionScale);
 	}
 	if (nextCaption == nullptr)
 	{
-		nextCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "NEXT", mediumCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE, captionScale);
+		nextCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "NEXT", mediumCaptionFontSize, captionTextColor, BobColor::clear, RenderOrder::ABOVE, captionScale);
 	}
 
 	updateInfoCaptionsXY();

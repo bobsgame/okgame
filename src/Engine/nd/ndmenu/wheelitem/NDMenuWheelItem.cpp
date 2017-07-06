@@ -27,7 +27,7 @@ NDMenuWheelItem::NDMenuWheelItem(Engine* g, NDGameEngine* game, const string& na
 	this->name = name;
 	this->color = color;
 
-	this->caption = new Caption(g, 0, 0, -1, name, BobFont::font_normal_16_outlined_smooth, color, nullptr, new BobColor(0, 0, 0, 0), RenderOrder::ABOVE_TOP, 1.0f, 0);
+	this->caption = new Caption(g, Caption::Position::NONE, 0, 0, -1, name, BobFont::font_normal_16_outlined_smooth, color, nullptr, new BobColor(0, 0, 0, 0), RenderOrder::ABOVE_TOP, 1.0f, 0);
 	this->caption->setAlphaImmediately(1.0f);
 
 	y = (float)firstCartY + (NDMenuWheel::wheelItems->size() - 1) * wheelItemHeight;

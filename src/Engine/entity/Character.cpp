@@ -1541,7 +1541,7 @@ void Character::setCharacterNameAndCaption(BobColor* nameColor, const string& na
 		{
 			if (name != "" && name.length() > 0)
 			{
-				nameCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_OVER_ENTITY, 0, -1, name, BobFont::font_normal_16_outlined_smooth, nameColor);
+				nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, name, BobFont::font_normal_16_outlined_smooth, nameColor);
 			}
 			nameCaption->setEntity(this);
 		}
@@ -1566,7 +1566,7 @@ void Character::setCharacterNameAndCaption(BobColor* nameColor, const string& na
 		{
 			if (accountTypeName != "" && accountTypeName.length() > 0)
 			{
-				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_OVER_ENTITY, 0, -1, accountTypeName, BobFont::font_normal_8_outlined, accountTypeNameColor);
+				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, accountTypeName, BobFont::font_normal_8_outlined, accountTypeNameColor);
 			}
 			nameCaption->setEntity(this);
 		}

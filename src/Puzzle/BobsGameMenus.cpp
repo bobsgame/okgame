@@ -1209,8 +1209,8 @@ void BobsGame::loginMenuUpdate()
 
 	int y = (int)(getHeight() / 4 * 3);
 
-	if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-	if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+	if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+	if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 	if (loginMenu == nullptr)
 	{
@@ -1389,8 +1389,8 @@ void BobsGame::createAccountMenuUpdate()
 	{
 		int y = (int)(getHeight() / 4 * 3);
 
-		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 		if (userNameOrEmailText.length()>0)
 		{
@@ -3147,7 +3147,8 @@ void BobsGame::populateGameSequencesMenu(BobMenu *menu)
 
 
 
-//=========================================================================================================================
+//=========================================================================================================================
+
 string getNiceTime(long long ms)
 {//=========================================================================================================================
 	int sec = ms / 1000;
@@ -3169,7 +3170,8 @@ string getNiceTime(long long ms)
 
 #include <time.h>
 
-//=========================================================================================================================
+//=========================================================================================================================
+
 string getDateFromEpochTime(long long ms)
 {//=========================================================================================================================
 	std::time_t seconds = ms / 1000;
@@ -4345,8 +4347,8 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 			{
 				p->confirmed = true;
 
-				p->gameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, p->gameLogic->currentGameSequence->name, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-				p->difficultyCaption = getCaptionManager()->newManagedCaption(0, 0, -1, p->gameLogic->currentGameSequence->currentDifficultyName, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				p->gameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, p->gameLogic->currentGameSequence->name, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				p->difficultyCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, p->gameLogic->currentGameSequence->currentDifficultyName, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 			}
 
 			
@@ -4359,7 +4361,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 		{
 			if (localMultiplayerPressStartCaption == nullptr) 
 			{
-				localMultiplayerPressStartCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, (int)(getHeight() - 50), -1, "Press the Enter key or Start on your controller to start game", 16, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				localMultiplayerPressStartCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, (int)(getHeight() - 50), -1, "Press the Enter key or Start on your controller to start game", 16, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 				localMultiplayerPressStartCaption->flashing = true;
 				localMultiplayerPressStartCaption->flashingTicksPerFlash = 1000;
 			}
@@ -4398,7 +4400,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 				PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 				p->useKeyboard = true;
 				players.add(p);
-				p->nameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "Local (Keyboard)", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+				p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 			}
 		}
 	}
@@ -4436,7 +4438,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 					PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 					p->gameController = g;
 					players.add(p);
-					p->nameCaption = getCaptionManager()->newManagedCaption(0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 				}
 			}
 		}

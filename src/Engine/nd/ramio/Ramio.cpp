@@ -92,7 +92,7 @@ void Ramio::initGame()
 	}
 
 
-	getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 20, 3000, "Alright! It works!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
+	getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 20, 3000, "Alright! It works!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
 
 
 	getMapManager()->changeMap("MINIGAMERAMIOramiolevel1", 16, 0);
@@ -122,7 +122,7 @@ void Ramio::doWinSequence()
 
 	if (winSequenceStep == 0)
 	{
-		getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 20, 3000, "Yeah! I did it!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
+		getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 20, 3000, "Yeah! I did it!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
 
 
 		getAudioManager()->stopAllMusic();
@@ -164,23 +164,23 @@ void Ramio::doDeathSequence()
 		int r = Math::randLessThan(5);
 		if (r == 0)
 		{
-			getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 20, 3000, "Let's try this again.", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
+			getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 20, 3000, "Let's try this again.", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
 		}
 		if (r == 1)
 		{
-			getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 20, 3000, "I was so close!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
+			getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 20, 3000, "I was so close!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
 		}
 		if (r == 2)
 		{
-			getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 20, 3000, "Grrr. That was stupid.", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
+			getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 20, 3000, "Grrr. That was stupid.", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
 		}
 		if (r == 3)
 		{
-			getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 20, 3000, "One more try.", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
+			getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 20, 3000, "One more try.", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
 		}
 		if (r == 4)
 		{
-			getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 20, 3000, "Nooooooooo!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
+			getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 20, 3000, "Nooooooooo!", BobFont::font_normal_8, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f, -1);
 		}
 
 		getAudioManager()->stopAllMusic();
@@ -276,7 +276,7 @@ void Ramio::update()
 
 		if (RAMIO_timercaption == nullptr)
 		{
-			RAMIO_timercaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 2, -1, timerString, BobFont::font_normal_16_shadow1, BobColor::green, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f);
+			RAMIO_timercaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 2, -1, timerString, BobFont::font_normal_16_shadow1, BobColor::green, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 0.5f);
 		}
 		else
 		{

@@ -150,7 +150,7 @@ void Player::handleAreas()
 	{
 		if (autopilotCaption == nullptr)
 		{
-			autopilotCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_OVER_ENTITY, 0, -1, "Autopilot", BobFont::font_normal_11_outlined, BobColor::red);
+			autopilotCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, "Autopilot", BobFont::font_normal_11_outlined, BobColor::red);
 		}
 	}
 	else

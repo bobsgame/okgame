@@ -35,22 +35,22 @@ SetWidth is the width to truncate to a newline. It won't truncate words. setWidt
 
 */
 //=========================================================================================================================
-Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
-	init(g, screenX, screenY, ticks, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
+	init(g, fixedPosition, screenX, screenY, ticks, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 }
 //=========================================================================================================================
-Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
+Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
 {//=========================================================================================================================
 
-	initTTF(g, screenX, screenY, ticks, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
+	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
 }
 
 //=========================================================================================================================
-Caption::Caption(Engine* g, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, RenderOrder layer, bool outline)
+Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, RenderOrder layer, bool outline)
 {//=========================================================================================================================
 
-	initTTF(g, screenX, screenY, ticks, text, fontSize, textColor, BobColor::clear, layer, 1, nullptr, nullptr, outline);
+	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, BobColor::clear, layer, 1, nullptr, nullptr, outline);
 }
 //=========================================================================================================================
 void Caption::setText(const string& text, bool force)
@@ -69,8 +69,8 @@ void Caption::setText(const string& text, bool force)
 	}
 
 
-	if (ttfFont != nullptr)initTTF(e, screenX, screenY, ticksToRemain, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
-	else init(e, screenX, screenY, ticksToRemain, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
+	if (ttfFont != nullptr)initTTF(e, fixedPosition, screenX, screenY, ticksToRemain, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
+	else init(e, fixedPosition, screenX, screenY, ticksToRemain, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 	
 	updateScreenXY();
 }
@@ -200,7 +200,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 
 
 //=========================================================================================================================
-void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
+void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -228,9 +228,9 @@ void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, 
 
 
 	//handle fixed positions
-	if (screenX < 0)
+	//if (screenX < 0)
 	{
-		this->fixedPosition = (int)(screenX);
+		this->fixedPosition = fixedPosition;
 	}
 
 
@@ -357,7 +357,7 @@ void Caption::initTTF(Engine* g, float screenX, float screenY, long long ticks, 
 
 
 //=========================================================================================================================
-void Caption::init(Engine* g, float screenX, float screenY, long long ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+void Caption::init(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -387,9 +387,9 @@ void Caption::init(Engine* g, float screenX, float screenY, long long ticks, con
 
 
 	//handle fixed positions
-	if (screenX < 0)
+	//if (screenX < 0)
 	{
-		this->fixedPosition = (int)(screenX);
+		this->fixedPosition = (fixedPosition);
 	}
 
 
@@ -1348,18 +1348,21 @@ void Caption::updateScreenXY()
 	//-----------------------------
 	//set getCaption screen x and y
 	//-----------------------------
-	if (fixedPosition == Caption::CENTERED_OVER_ENTITY)
+	if (fixedPosition == Position::CENTERED_OVER_ENTITY)
 	{
-		//			if(entity!=null)
+		Entity *e = entity;
+		if (e == nullptr)e = getPlayer();
+
+		if(e!=nullptr)
 		{
-			screenX = (float)floor(entity->getScreenLeft() + (entity->getWidth() * getCameraman()->getZoom() / 2.0f)) - (width * scale / 2.0f);//no g.zoom on getCaption width, they arent affected by zoom!
+			screenX = (float)floor(e->getScreenLeft() + (e->getWidth() * getCameraman()->getZoom() / 2.0f)) - (width * scale / 2.0f);//no g.zoom on getCaption width, they arent affected by zoom!
 
 
 			int captionOverHeadOffset = 0;
 			for (int i = getCaptionManager()->captionList->size() - 1; i >= 0; i--)
 			{
 				Caption* tempC = getCaptionManager()->captionList->get(i);
-				if (tempC->fixedPosition == Caption::CENTERED_OVER_ENTITY)
+				if (tempC->fixedPosition == Position::CENTERED_OVER_ENTITY)
 				{
 					if (tempC == this)break;
 
@@ -1372,14 +1375,14 @@ void Caption::updateScreenXY()
 	}
 	else
 	{
-		if (fixedPosition == Caption::CENTERED_SCREEN)
+		if (fixedPosition == Position::CENTERED_SCREEN)
 		{
 			screenX = (float)(((int)(GLUtils::getViewportWidth() / 2.0f)) - (int)((width * scale) / 2.0f));
 			screenY = (float)((int)(GLUtils::getViewportHeight() / 2.0f));
 		}
 		else
 		{
-			if (fixedPosition == Caption::CENTERED_X)
+			if (fixedPosition == Position::CENTERED_X)
 			{
 				screenX = (float)((int)(GLUtils::getViewportWidth() / 2.0f) - (int)((width * scale) / 2.0f));
 			}

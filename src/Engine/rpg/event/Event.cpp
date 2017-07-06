@@ -138,7 +138,8 @@ int Event::getID()
 {
 	return data->getID();
 }
-
+
+
 string& Event::getName()
 {
 	return data->getName();
@@ -148,17 +149,20 @@ int Event::type()
 {
 	return data->getType();
 }
-
+
+
 string& Event::getComment()
 {
 	return data->getComment();
 }
-
+
+
 string& Event::text()
 {
 	return data->getText();
 }
-
+
+
 string Event::getTYPEIDString()
 {
 	return data->getTYPEIDString();
@@ -838,26 +842,31 @@ void Event::doCommand()
 		blockUntilActionButtonPressed();
 		return;
 	}
+
 	if (currentCommand->commandString == EventData::blockUntilActionCaptionButtonPressed_STRING->getCommand())
 	{
 		blockUntilActionCaptionButtonPressed_STRING();
 		return;
 	}
+
 	if (currentCommand->commandString == EventData::blockUntilCancelButtonPressed->getCommand())
 	{
 		blockUntilCancelButtonPressed();
 		return;
 	}
+
 	if (currentCommand->commandString == EventData::blockForTicks_INT->getCommand())
 	{
 		blockForTicks_INT();
 		return;
 	}
+
 	if (currentCommand->commandString == EventData::blockUntilClockHour_INT23->getCommand())
 	{
 		blockUntilClockHour_INT23();
 		return;
 	}
+
 	if (currentCommand->commandString == EventData::blockUntilClockMinute_INT59->getCommand())
 	{
 		blockUntilClockMinute_INT59();
@@ -5950,7 +5959,14 @@ void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 	}
 	else
 	{
-		getCaptionManager()->newManagedCaption(x, y, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		//   int Caption::CENTERED_OVER_ENTITY = -1;
+		//   int Caption::CENTERED_SCREEN = -2;
+		//   int Caption::CENTERED_X = -3;
+		Caption::Position pos = Caption::Position::NONE;
+		if(x==-1)pos = Caption::Position::CENTERED_OVER_ENTITY;
+		if(x==-2)pos = Caption::Position::CENTERED_SCREEN;
+		if(x==-3)pos = Caption::Position::CENTERED_X;
+		getCaptionManager()->newManagedCaption(pos, x, y, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		getNextCommand();
 	}
 }
@@ -5970,7 +5986,7 @@ void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 	}
 	else
 	{
-		Caption* c = getCaptionManager()->newManagedCaption(Caption::CENTERED_OVER_ENTITY, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		c->setEntity(getPlayer()); //not really necessary, it does this automatically
 		getNextCommand();
 	}
@@ -5992,7 +6008,7 @@ void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 	}
 	else
 	{
-		Caption* c = getCaptionManager()->newManagedCaption(Caption::CENTERED_OVER_ENTITY, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		c->setEntity(e);
 		getNextCommand();
 	}

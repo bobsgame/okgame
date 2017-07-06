@@ -187,17 +187,17 @@ void System::initSystemInfo()
 	//log.info("SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING:" + string(SDL_GetHint(SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING)));
 
 
-	log.info("SDL_GetPerformanceCounter" + to_string(SDL_GetPerformanceCounter()));
-	log.info("SDL_GetPerformanceFrequency" + to_string(SDL_GetPerformanceFrequency()));
-	log.info("SDL_GetPlatform" + string(SDL_GetPlatform()));
+	log.info("SDL_GetPerformanceCounter:" + to_string(SDL_GetPerformanceCounter()));
+	log.info("SDL_GetPerformanceFrequency:" + to_string(SDL_GetPerformanceFrequency()));
+	log.info("SDL_GetPlatform:" + string(SDL_GetPlatform()));
 	//log.info("SDL_GetPowerInfo" + to_string(SDL_GetPowerInfo()));
-	log.info("SDL_GetPrefPath" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
-	log.info("SDL_GetRevision" + string(SDL_GetRevision()));
-	log.info("SDL_GetRevisionNumber" + to_string(SDL_GetRevisionNumber()));
-	log.info("SDL_GetSystemRAM" + to_string(SDL_GetSystemRAM()));
+	log.info("SDL_GetPrefPath:" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
+	log.info("SDL_GetRevision:" + string(SDL_GetRevision()));
+	log.info("SDL_GetRevisionNumber:" + to_string(SDL_GetRevisionNumber()));
+	log.info("SDL_GetSystemRAM:" + to_string(SDL_GetSystemRAM()));
 	//log.info("" + to_string(SDL_GetThreadID()));
 	//log.info("SDL_GetThreadName" + string(SDL_GetThreadName()));
-	log.info("SDL_GetTicks" + to_string(SDL_GetTicks()));
+	//log.info("SDL_GetTicks:" + to_string(SDL_GetTicks()));
 
 
 	//log.info("SDL_GetVersion" + string(SDL_GetVersion()));
@@ -213,20 +213,20 @@ void System::initSystemInfo()
 	//SDL_GetGrabbedWindow();
 	log.info("SDL_GetWindowBrightness:" + to_string(SDL_GetWindowBrightness(GLUtils::window)));
 	//log.info(":" + to_string(SDL_GetWindowData()));
-	log.info("SDL_GetWindowDisplayIndex():" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
+	log.info("SDL_GetWindowDisplayIndex:" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
 	//log.info("SDL_GetWindowDisplayMode():" + to_string(SDL_GetWindowDisplayMode(GLUtils::window)));
-	log.info("SDL_GetWindowFlags():" + to_string(SDL_GetWindowFlags(GLUtils::window)));
+	log.info("SDL_GetWindowFlags:" + to_string(SDL_GetWindowFlags(GLUtils::window)));
 	//log.info("SDL_GetWindowFromID():" + to_string(SDL_GetWindowFromID()));
 	//log.info("SDL_GetWindowGammaRamp():" + to_string(SDL_GetWindowGammaRamp(GLUtils::window)));
-	log.info("SDL_GetWindowGrab():" + to_string(SDL_GetWindowGrab(GLUtils::window)));
-	log.info("SDL_GetWindowID():" + to_string(SDL_GetWindowID(GLUtils::window)));
+	log.info("SDL_GetWindowGrab:" + to_string(SDL_GetWindowGrab(GLUtils::window)));
+	log.info("SDL_GetWindowID:" + to_string(SDL_GetWindowID(GLUtils::window)));
 	//log.info("SDL_GetWindowMaximumSize():" + to_string(SDL_GetWindowMaximumSize(GLUtils::window)));
 	//log.info("SDL_GetWindowMinimumSize():" + to_string(SDL_GetWindowMinimumSize(GLUtils::window)));
-	log.info("SDL_GetWindowPixelFormat():" + to_string(SDL_GetWindowPixelFormat(GLUtils::window)));
+	log.info("SDL_GetWindowPixelFormat:" + to_string(SDL_GetWindowPixelFormat(GLUtils::window)));
 	//log.info("SDL_GetWindowPosition():" + to_string(SDL_GetWindowPosition(GLUtils::window)));
 	//log.info("SDL_GetWindowSize():" + to_string(SDL_GetWindowSize(GLUtils::window)));
 	//log.info("SDL_GetWindowSurface():" + to_string(SDL_GetWindowSurface()));
-	log.info("SDL_GetWindowTitle():" + string(SDL_GetWindowTitle(GLUtils::window)));
+	log.info("SDL_GetWindowTitle:" + string(SDL_GetWindowTitle(GLUtils::window)));
 	//SDL_GetWindowWMInfo()));
 
 	//mouse
@@ -235,9 +235,9 @@ void System::initSystemInfo()
 	//log.info("SDL_GetGlobalMouseState():" + to_string(SDL_GetGlobalMouseState()));
 	//log.info("SDL_GetMouseFocus():" + to_string(SDL_GetMouseFocus()));
 	//log.info("SDL_GetMouseState():" + to_string(SDL_GetMouseState()));
-	log.info("SDL_GetNumTouchDevices():" + to_string(SDL_GetNumTouchDevices()));
+	log.info("SDL_GetNumTouchDevices:" + to_string(SDL_GetNumTouchDevices()));
 	//log.info("SDL_GetNumTouchFingers():" + to_string(SDL_GetNumTouchFingers()));
-	log.info("SDL_GetRelativeMouseMode():" + to_string(SDL_GetRelativeMouseMode()));
+	log.info("SDL_GetRelativeMouseMode:" + to_string(SDL_GetRelativeMouseMode()));
 	//log.info("SDL_GetRelativeMouseState():" + to_string(SDL_GetRelativeMouseState()));
 
 	//key
@@ -252,26 +252,26 @@ void System::initSystemInfo()
 	//log.info("SDL_GetScancodeName():" + to_string(SDL_GetScancodeName()));
 	//log.info("SDL_GetTouchDevice():" + to_string(SDL_GetTouchDevice()));
 	//log.info("SDL_GetTouchFinger():" + to_string(SDL_GetTouchFinger()));
-	log.info("SDL_HasScreenKeyboardSupport():" + to_string(SDL_HasScreenKeyboardSupport()));
+	log.info("SDL_HasScreenKeyboardSupport:" + to_string(SDL_HasScreenKeyboardSupport()));
 
 	//cpu
-	log.info("SDL_GetCPUCacheLineSize():" + to_string(SDL_GetCPUCacheLineSize()));
-	log.info("SDL_GetCPUCount():" + to_string(SDL_GetCPUCount()));
-	log.info("SDL_Has3DNow():" + to_string(SDL_Has3DNow()));
-	log.info("SDL_HasAVX():" + to_string(SDL_HasAVX()));
+	log.info("SDL_GetCPUCacheLineSize:" + to_string(SDL_GetCPUCacheLineSize()));
+	log.info("SDL_GetCPUCount:" + to_string(SDL_GetCPUCount()));
+	log.info("SDL_Has3DNow:" + to_string(SDL_Has3DNow()));
+	log.info("SDL_HasAVX:" + to_string(SDL_HasAVX()));
 	//log.info("SDL_HasAVX2():" + to_string(SDL_HasAVX2()));
-	log.info("SDL_HasAltiVec():" + to_string(SDL_HasAltiVec()));
+	log.info("SDL_HasAltiVec:" + to_string(SDL_HasAltiVec()));
 	//log.info("SDL_HasClipboardText():" + to_string(SDL_HasClipboardText()));
 	//log.info("SDL_HasEvent():" + to_string(SDL_HasEvent()));
 	//log.info("SDL_HasEvents():" + to_string(SDL_HasEvents()));
 	//log.info("SDL_HasIntersection():" + to_string(SDL_HasIntersection()));
-	log.info("SDL_HasMMX():" + to_string(SDL_HasMMX()));
-	log.info("SDL_HasRDTSC():" + to_string(SDL_HasRDTSC()));
-	log.info("SDL_HasSSE():" + to_string(SDL_HasSSE()));
-	log.info("SDL_HasSSE2():" + to_string(SDL_HasSSE2()));
-	log.info("SDL_HasSSE3():" + to_string(SDL_HasSSE3()));
-	log.info("SDL_HasSSE41():" + to_string(SDL_HasSSE41()));
-	log.info("SDL_HasSSE42():" + to_string(SDL_HasSSE42()));
+	log.info("SDL_HasMMX:" + to_string(SDL_HasMMX()));
+	log.info("SDL_HasRDTSC:" + to_string(SDL_HasRDTSC()));
+	log.info("SDL_HasSSE:" + to_string(SDL_HasSSE()));
+	log.info("SDL_HasSSE2:" + to_string(SDL_HasSSE2()));
+	log.info("SDL_HasSSE3:" + to_string(SDL_HasSSE3()));
+	log.info("SDL_HasSSE41:" + to_string(SDL_HasSSE41()));
+	log.info("SDL_HasSSE42:" + to_string(SDL_HasSSE42()));
 
 
 	//video
@@ -286,9 +286,9 @@ void System::initSystemInfo()
 	//log.info("SDL_GetDisplayMode():" + to_string(SDL_GetDisplayMode()));
 	//log.info("SDL_GetDisplayName():" + to_string(SDL_GetDisplayName()));
 	//log.info("SDL_GetNumDisplayModes():" + to_string(SDL_GetNumDisplayModes()));
-	log.info("SDL_GetNumRenderDrivers():" + to_string(SDL_GetNumRenderDrivers()));
-	log.info("SDL_GetNumVideoDisplays():" + to_string(SDL_GetNumVideoDisplays()));
-	log.info("SDL_GetNumVideoDrivers():" + to_string(SDL_GetNumVideoDrivers()));
+	log.info("SDL_GetNumRenderDrivers:" + to_string(SDL_GetNumRenderDrivers()));
+	log.info("SDL_GetNumVideoDisplays:" + to_string(SDL_GetNumVideoDisplays()));
+	log.info("SDL_GetNumVideoDrivers:" + to_string(SDL_GetNumVideoDrivers()));
 	//log.info("SDL_GetPixelFormatName():" + to_string(SDL_GetPixelFormatName()));
 	//log.info("SDL_GetRGB():" + to_string(SDL_GetRGB()));
 	//log.info("SDL_GetRGBA():" + to_string(SDL_GetRGBA()));
@@ -308,14 +308,14 @@ void System::initSystemInfo()
 	//log.info("SDL_GetVideoDriver():" + to_string(SDL_GetVideoDriver()));
 
 
-	log.info("Poco::libraryVersion()" + to_string(Environment::libraryVersion()));
+	log.info("Poco::libraryVersion:" + to_string(Environment::libraryVersion()));
 	//log.info("Poco::nodeId()" + string(Environment::nodeId()));
 	//log.info("Poco::nodeName()" + string(Environment::nodeName()));
 	//log.info("Poco::osArchitecture()" + string(Environment::osArchitecture()));
 	//log.info("Poco::osDisplayName()" + string(Environment::osDisplayName()));
-	log.info("Poco::osName()" + string(Environment::osName()));
-	log.info("Poco::osVersion()" + string(Environment::osVersion()));
-	log.info("Poco::processorCount()" + to_string(Environment::processorCount()));
+	log.info("Poco::osName:" + string(Environment::osName()));
+	log.info("Poco::osVersion:" + string(Environment::osVersion()));
+	log.info("Poco::processorCount:" + to_string(Environment::processorCount()));
 
 
 #ifdef USE_SIGAR
