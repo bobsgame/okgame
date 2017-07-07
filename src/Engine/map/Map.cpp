@@ -2157,11 +2157,13 @@ void Map::releaseAllTextures()
 	delete cameraLayer;
 	delete groundShaderLayer;
 	delete lightMaskLayer;
+	
+	hitLayer = nullptr;
+	cameraLayer = nullptr;
+	groundShaderLayer = nullptr;
+	lightMaskLayer = nullptr;
 
-	//   hitLayer = new int[];
-	//   cameraLayer= new int[];
-	//   groundShaderLayer = new int[];
-	//   lightMaskLayer= new int[];
+
 
 	//we need to reload the utility layers
 	utilityLayersLoaded = false;
@@ -2181,10 +2183,14 @@ void Map::releaseAllTextures()
 				if (t != GLUtils::blankTexture)
 				{
 					t->release();
+					delete t;
 				}
+				
 			}
 		}
 	}
+	delete chunks;
+
 	chunkTexture.clear();
 
 
@@ -2207,10 +2213,16 @@ void Map::releaseAllTextures()
 		{
 			(*usingHQ2XTexture)[i] = false;
 		}
+
+		delete usingHQ2XTexture;
+		usingHQ2XTexture = nullptr;
 	}
 
 	delete tilesetIntArray;
 	delete paletteRGBByteArray;
+
+	tilesetIntArray = nullptr;
+	paletteRGBByteArray = nullptr;
 
 	//   tilesetIntArray = new int[];
 	//   paletteRGBByteArray= new u8[];
@@ -4644,12 +4656,14 @@ int Map::getID()
 {
 	return data->getID();
 }
-
+
+
 string& Map::getName()
 {
 	return data->getName();
 }
-
+
+
 string& Map::getMapNote()
 {
 	return data->getMapNote();
@@ -4684,82 +4698,98 @@ bool Map::getIsOutside()
 {
 	return data->getIsOutside();
 }
-
+
+
 string Map::getTYPEIDString()
 {
 	return data->getTYPEIDString();
 }
-
+
+
 string& Map::getGroundLayerMD5()
 {
 	return getData()->getGroundLayerMD5();
 }
-
+
+
 string& Map::getGroundObjectsMD5()
 {
 	return getData()->getGroundObjectsMD5();
 }
-
+
+
 string& Map::getGroundShadowMD5()
 {
 	return getData()->getGroundShadowMD5();
 }
-
+
+
 string& Map::getObjectsMD5()
 {
 	return getData()->getObjectsMD5();
 }
-
+
+
 string& Map::getObjects2MD5()
 {
 	return getData()->getObjects2MD5();
 }
-
+
+
 string& Map::getObjectShadowMD5()
 {
 	return getData()->getObjectShadowMD5();
 }
-
+
+
 string& Map::getAboveMD5()
 {
 	return getData()->getAboveMD5();
 }
-
+
+
 string& Map::getAbove2MD5()
 {
 	return getData()->getAbove2MD5();
 }
-
+
+
 string& Map::getSpriteShadowMD5()
 {
 	return getData()->getSpriteShadowMD5();
 }
-
+
+
 string& Map::getGroundShaderMD5()
 {
 	return getData()->getGroundShaderMD5();
 }
-
+
+
 string& Map::getCameraBoundsMD5()
 {
 	return getData()->getCameraBoundsMD5();
 }
-
+
+
 string& Map::getHitBoundsMD5()
 {
 	return getData()->getHitBoundsMD5();
 }
-
+
+
 string& Map::getLightMaskMD5()
 {
 	return getData()->getLightMaskMD5();
 }
-
+
+
 string& Map::getPaletteMD5()
 {
 	return getData()->getPaletteMD5();
 }
-
+
+
 string& Map::getTilesMD5()
 {
 	return getData()->getTilesMD5();

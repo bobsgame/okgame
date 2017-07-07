@@ -115,7 +115,7 @@ bool ActionManager::checkAll(int x, int y, int x2, int y2, const string& label, 
 		x2 = (int)(a->getRight());
 		y2 = (int)(a->getBottom());
 
-		if (getPlayer()->isAreaBoundaryTouchingMyHitBox(a) == true && getTextManager()->textEngineState == 0 && getPlayer()->GLOBAL_main_sprite_actions_off == 0)
+		if (getPlayer()->isAreaBoundaryTouchingMyHitBox(a) == true && getTextManager()->textEngineState == TextManager::TextEngineState::CLOSED && getPlayer()->GLOBAL_main_sprite_actions_off == 0)
 		{
 			inRange = true;
 		}
@@ -129,7 +129,7 @@ bool ActionManager::checkAll(int x, int y, int x2, int y2, const string& label, 
 			x2 = (int)(a->getRight());
 			y2 = (int)(a->getBottom());
 
-			if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e) == true && getTextManager()->textEngineState == 0 && getPlayer()->GLOBAL_main_sprite_actions_off == 0)
+			if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e) == true && getTextManager()->textEngineState == TextManager::TextEngineState::CLOSED && getPlayer()->GLOBAL_main_sprite_actions_off == 0)
 			{
 				inRange = true;
 			}
@@ -138,7 +138,7 @@ bool ActionManager::checkAll(int x, int y, int x2, int y2, const string& label, 
 		{
 			if (
 				getPlayer()->isHitBoxTouchingXYXYInDirectionByAmount((float)x, (float)y, (float)x2, (float)y2, getPlayer()->animationDirection, 7) == true &&
-				getTextManager()->textEngineState == 0 &&
+				getTextManager()->textEngineState == TextManager::TextEngineState::CLOSED &&
 				getPlayer()->GLOBAL_main_sprite_actions_off == 0
 			)
 			{

@@ -548,7 +548,7 @@ void MapManager::setTransitionOffsets()
 	if (doorExited != nullptr)
 	{
 		//fade in door
-		//doorExited.alpha=0.0f; //TODO: notice that i disabled this, it looks nicer to have the door stay opaque now with animations.
+		//doorExited.alpha=0.0f; //notice that i disabled this, it looks nicer to have the door stay opaque now with animations.
 
 		getCameraman()->setX((doorExited->getX() + doorExited->getHitBoxFromLeft()) - cameraOffsetX);
 		getCameraman()->setY((doorExited->getY() + doorExited->getHitBoxFromTop()) - cameraOffsetY);

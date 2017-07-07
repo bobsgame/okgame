@@ -40,7 +40,7 @@ TextManager::TextManager(Engine* g)
 bool TextManager::isTextBoxOpen()
 { //=========================================================================================================================
 
-	if (textEngineState != 0)
+	if (textEngineState != TextEngineState::CLOSED)
 	{
 		return true;
 	}
@@ -51,7 +51,7 @@ bool TextManager::isTextBoxOpen()
 bool TextManager::isTextAnswerBoxOpen()
 { //=========================================================================================================================
 
-	if (textEngineState > 2)
+	if ((int)textEngineState > (int)TextEngineState::CLOSING)
 	{
 		return true;
 	}
@@ -124,6 +124,7 @@ void TextManager::reset()
 	topBoxActivated = false;
 	delay = false;
 
+	ticksPerLetter = 8;
 
 	waitingForCancelButtonUnpress = false;
 	getActionManager()->deleteCaptionWithBlipSound();
@@ -164,7 +165,7 @@ void TextManager::text(const string& s)
 void TextManager::render()
 { //=========================================================================================================================
 
-	if (textEngineState != CLOSED)
+	if (textEngineState != TextEngineState::CLOSED)
 	{
 		if (textBox->get(0) != nullptr)
 		{
@@ -235,7 +236,7 @@ void TextManager::update()
 				// -----------------------------
 				// if the getText window is offscreen
 				// -----------------------------
-				if (textEngineState == CLOSED)
+				if (textEngineState == TextEngineState::CLOSED)
 				{
 					// -----------------------------
 					// and it's not paused, start the getText engine
@@ -252,10 +253,10 @@ void TextManager::update()
 
 					scrollingUp = true; // wait for the getText box to scroll up before drawing getText in it.
 
-					textEngineState = OPEN; // getText box is open
+					textEngineState = TextEngineState::OPEN; // getText box is open
 				}
 
-				if (textEngineState == OPEN)
+				if (textEngineState == TextEngineState::OPEN)
 				{
 					// -----------------------------
 					// if it's set to stay open, draw the getText into it
@@ -277,7 +278,7 @@ void TextManager::update()
 				}
 			}
 
-			if (textEngineState == OPEN)
+			if (textEngineState == TextEngineState::OPEN)
 			{
 				// -----------------------------
 				// parse options (even if the getText box is paused)
@@ -303,14 +304,11 @@ void TextManager::update()
 					}
 				}
 
-				// -----------------------------
-				// draw getText
-				// -----------------------------
-				if (scrollingUp == false && delay == false)
-				{
-					drawText(ticksPassed);
-					handleInput();
-				}
+
+				drawText(ticksPassed);
+
+				handleInput();
+				
 			}
 
 			// TODO: what if there's getText, it isn't at the beginning of the getText, and the getText box is closed?
@@ -611,7 +609,7 @@ void TextManager::drawText(long long ticksPassed)
 	int lettersToDraw = ticksPassed / ticksPerLetter;
 	remainderTicks = ticksPassed % ticksPerLetter;
 
-	for (int i = 0; i <= lettersToDraw; i++)
+	for (int i = 0; i <= lettersToDraw && delay==false && scrollingUp == false; i++)
 	{
 		// -----------------------------
 		// draw getText
@@ -737,182 +735,185 @@ void TextManager::drawText(long long ticksPassed)
 void TextManager::handleInput()
 { //=========================================================================================================================
 
-
-	if (waitingForButtonForNewPage == true)
+	if (scrollingUp == false && delay == false)
 	{
-		if (getControlsManager()->bgClient_CANCELRUN_Pressed() == true && waitingForCancelButtonUnpress != true)
-		{
-			waitingForCancelButtonUnpress = true;
-			getAudioManager()->playSound("blip", 0.25f, 0.5f, 1);
-		}
 
-		if (waitingForCancelButtonUnpress == true)
+		if (waitingForButtonForNewPage == true)
 		{
-			if (getControlsManager()->bgClient_CANCELRUN_Pressed() == false)
+			if (getControlsManager()->bgClient_CANCELRUN_Pressed() == true && waitingForCancelButtonUnpress != true)
 			{
-				waitingForCancelButtonUnpress = false;
-				if (cannotCancel == false)
+				waitingForCancelButtonUnpress = true;
+				getAudioManager()->playSound("blip", 0.25f, 0.5f, 1);
+			}
+
+			if (waitingForCancelButtonUnpress == true)
+			{
+				if (getControlsManager()->bgClient_CANCELRUN_Pressed() == false)
 				{
-					waitingForButtonPressToClose = true;
-					waitingForUnpress = true;
-					pausedUntilButtonPress = false;
+					waitingForCancelButtonUnpress = false;
+					if (cannotCancel == false)
+					{
+						waitingForButtonPressToClose = true;
+						waitingForUnpress = true;
+						pausedUntilButtonPress = false;
+					}
 				}
 			}
-		}
 
-		if (buttonIconIsOn == false)
-		{
-			if (selectedTextbox == BOTTOM)
+			if (buttonIconIsOn == false)
 			{
-				// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
-			}
-			if (selectedTextbox == TOP)
-			{
-				// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
-			}
-			buttonIconIsOn = true;
-		}
-
-		if ((getControlsManager()->bgClient_ACTION_Pressed() == true || skipText == true) && waitingForUnpress == false)
-		{
-			waitingForUnpress = true;
-			getAudioManager()->playSound("blip", 0.25f, 1.5f, 1);
-		}
-
-		if (waitingForUnpress == true)
-		{
-			if ((getControlsManager()->bgClient_ACTION_Pressed() == false) || skipText == true)
-			{
-				waitingForUnpress = false;
-				buttonAUnpressed = true;
-			}
-		}
-
-		if (buttonAUnpressed == true)
-		{
-			if (buttonIconIsOn == true)
-			{
-				buttonIconIsOn = false;
-				// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
-			}
-
-			buttonAUnpressed = false;
-			textBox->get(selectedTextbox)->clearByteArray();
-
-			if (waitingForButtonPressToClose == false && textEngineState != CLOSING)
-			{
-				textBox->get(selectedTextbox)->redraw = true;
-			}
-
-			textBox->get(selectedTextbox)->line = 0;
-			textBox->get(selectedTextbox)->xInLine = 0;
-			waitingForButtonForNewPage = false;
-		}
-	}
-
-
-	if (pausedUntilButtonPress == true)
-	{
-		if (getControlsManager()->bgClient_CANCELRUN_Pressed() == true && waitingForCancelButtonUnpress != true)
-		{
-			waitingForCancelButtonUnpress = true;
-
-
-			getAudioManager()->playSound("blip", 0.25f, 0.5f, 1);
-		}
-		if (waitingForCancelButtonUnpress == true)
-		{
-			if (getControlsManager()->bgClient_CANCELRUN_Pressed() == false)
-			{
-				waitingForCancelButtonUnpress = false;
-				if (cannotCancel == false)
+				if (selectedTextbox == BOTTOM)
 				{
-					waitingForButtonPressToClose = true;
-					waitingForUnpress = true;
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
+				}
+				if (selectedTextbox == TOP)
+				{
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
+				}
+				buttonIconIsOn = true;
+			}
+
+			if ((getControlsManager()->bgClient_ACTION_Pressed() == true || skipText == true) && waitingForUnpress == false)
+			{
+				waitingForUnpress = true;
+				getAudioManager()->playSound("blip", 0.25f, 1.5f, 1);
+			}
+
+			if (waitingForUnpress == true)
+			{
+				if ((getControlsManager()->bgClient_ACTION_Pressed() == false) || skipText == true)
+				{
+					waitingForUnpress = false;
+					buttonAUnpressed = true;
 				}
 			}
-		}
-		if (buttonIconIsOn == false)
-		{
-			if (selectedTextbox == BOTTOM)
+
+			if (buttonAUnpressed == true)
 			{
-				// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
-			}
+				if (buttonIconIsOn == true)
+				{
+					buttonIconIsOn = false;
+					// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
+				}
 
+				buttonAUnpressed = false;
+				textBox->get(selectedTextbox)->clearByteArray();
 
-			if (selectedTextbox == TOP)
-			{
-				// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
-			}
+				if (waitingForButtonPressToClose == false && textEngineState != TextEngineState::CLOSING)
+				{
+					textBox->get(selectedTextbox)->redraw = true;
+				}
 
-
-			buttonIconIsOn = true;
-		}
-		if ((getControlsManager()->bgClient_ACTION_Pressed() == true || skipText == true) && waitingForUnpress == false)
-		{
-			waitingForUnpress = true;
-
-			getAudioManager()->playSound("blip", 0.25f, 1.5f, 1);
-		}
-		if (waitingForUnpress == true)
-		{
-			if ((getControlsManager()->bgClient_ACTION_Pressed() == false) || skipText == true)
-			{
-				waitingForUnpress = false;
-				buttonAUnpressed = true;
+				textBox->get(selectedTextbox)->line = 0;
+				textBox->get(selectedTextbox)->xInLine = 0;
+				waitingForButtonForNewPage = false;
 			}
 		}
-		if (buttonAUnpressed == true)
+
+
+		if (pausedUntilButtonPress == true)
 		{
-			pausedUntilButtonPress = false;
-			if (buttonIconIsOn == true)
+			if (getControlsManager()->bgClient_CANCELRUN_Pressed() == true && waitingForCancelButtonUnpress != true)
 			{
-				buttonIconIsOn = false;
+				waitingForCancelButtonUnpress = true;
 
-				// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
+
+				getAudioManager()->playSound("blip", 0.25f, 0.5f, 1);
 			}
+			if (waitingForCancelButtonUnpress == true)
+			{
+				if (getControlsManager()->bgClient_CANCELRUN_Pressed() == false)
+				{
+					waitingForCancelButtonUnpress = false;
+					if (cannotCancel == false)
+					{
+						waitingForButtonPressToClose = true;
+						waitingForUnpress = true;
+					}
+				}
+			}
+			if (buttonIconIsOn == false)
+			{
+				if (selectedTextbox == BOTTOM)
+				{
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
+				}
 
-			buttonAUnpressed = false;
+
+				if (selectedTextbox == TOP)
+				{
+					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
+				}
+
+
+				buttonIconIsOn = true;
+			}
+			if ((getControlsManager()->bgClient_ACTION_Pressed() == true || skipText == true) && waitingForUnpress == false)
+			{
+				waitingForUnpress = true;
+
+				getAudioManager()->playSound("blip", 0.25f, 1.5f, 1);
+			}
+			if (waitingForUnpress == true)
+			{
+				if ((getControlsManager()->bgClient_ACTION_Pressed() == false) || skipText == true)
+				{
+					waitingForUnpress = false;
+					buttonAUnpressed = true;
+				}
+			}
+			if (buttonAUnpressed == true)
+			{
+				pausedUntilButtonPress = false;
+				if (buttonIconIsOn == true)
+				{
+					buttonIconIsOn = false;
+
+					// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
+				}
+
+				buttonAUnpressed = false;
+			}
 		}
-	}
 
 
-	if (position >= length && waitingForButtonPressToClose == false)
-	{
-		if (keepOpenForNewText == false)
+		if (position >= length && waitingForButtonPressToClose == false)
 		{
-			waitingForButtonForNewPage = true;
-			waitingForButtonPressToClose = true;
+			if (keepOpenForNewText == false)
+			{
+				waitingForButtonForNewPage = true;
+				waitingForButtonPressToClose = true;
+			}
+			else
+			{
+				// TODO: set getText string to log
+				currentText = "";
+
+				// /log conversations, parse NPC names
+				// /log entered room name
+				// /log items, interactions
+
+				position = 0;
+			}
 		}
-		else
+
+
+		if (waitingForButtonPressToClose == true && waitingForButtonForNewPage == false)
 		{
-			// TODO: set getText string to log
+			waitingForButtonPressToClose = false;
+
+
 			currentText = "";
 
-			// /log conversations, parse NPC names
-			// /log entered room name
-			// /log items, interactions
-
 			position = 0;
+			cannotCancel = false;
+			pausedUntilButtonPress = false;
+
+
+			topBoxActivated = false; // if getText box 2 is on, it will scroll up
+
+			textEngineState = TextEngineState::CLOSING;
 		}
-	}
-
-
-	if (waitingForButtonPressToClose == true && waitingForButtonForNewPage == false)
-	{
-		waitingForButtonPressToClose = false;
-
-
-		currentText = "";
-
-		position = 0;
-		cannotCancel = false;
-		pausedUntilButtonPress = false;
-
-
-		topBoxActivated = false; // if getText box 2 is on, it will scroll up
-
-		textEngineState = CLOSING;
 	}
 }
 
@@ -962,7 +963,7 @@ void TextManager::doScrolling(long long ticksPassed)
 	}
 
 
-	if (textEngineState == ANSWER_BOX_ON) // ANSWER BOX TURNED ON,SCROLL TEXT BOX UP,ANSWER BOX UP
+	if (textEngineState == TextEngineState::ANSWER_BOX_ON) // ANSWER BOX TURNED ON,SCROLL TEXT BOX UP,ANSWER BOX UP
 	{
 		//			if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
 		//			{
@@ -1009,7 +1010,7 @@ void TextManager::doScrolling(long long ticksPassed)
 			}
 		}
 	}
-	else if (textEngineState == ANSWER_BOX_CLOSING) // ANSWER BOX TURNED OFF,SCROLL TEXT BOX DOWN,SCROLL ANSWER BOX DOWN,DELETE ANSWER BOX
+	else if (textEngineState == TextEngineState::ANSWER_BOX_CLOSING) // ANSWER BOX TURNED OFF,SCROLL TEXT BOX DOWN,SCROLL ANSWER BOX DOWN,DELETE ANSWER BOX
 	{
 		if (answerBoxY < getEngine()->getHeight())
 		{
@@ -1027,7 +1028,7 @@ void TextManager::doScrolling(long long ticksPassed)
 		//				textEngineState=OPEN;
 		//			}
 	}
-	else if (textEngineState == KEYBOARD_ON) // KEYBOARD TURNED ON,SCROLL TEXT BOX UP,KEYBOARD BOX UP
+	else if (textEngineState == TextEngineState::KEYBOARD_ON) // KEYBOARD TURNED ON,SCROLL TEXT BOX UP,KEYBOARD BOX UP
 	{
 		//			if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-64-2)
 		//			{
@@ -1046,7 +1047,7 @@ void TextManager::doScrolling(long long ticksPassed)
 		//				}
 		//			}
 	}
-	else if (textEngineState == KEYBOARD_CLOSING) // KEYBOARD TURNED OFF,SCROLL TEXT BOX DOWN,SCROLL KEYBOARD DOWN,DELETE KEYBOARD
+	else if (textEngineState == TextEngineState::KEYBOARD_CLOSING) // KEYBOARD TURNED OFF,SCROLL TEXT BOX DOWN,SCROLL KEYBOARD DOWN,DELETE KEYBOARD
 	{
 		if (keyboardY < getEngine()->getHeight())
 		{
@@ -1068,14 +1069,14 @@ void TextManager::doScrolling(long long ticksPassed)
 		}
 		else
 		{
-			textEngineState = OPEN;
+			textEngineState = TextEngineState::OPEN;
 		}
 	}
 	else
 
 
 	{
-		if (textEngineState == OPEN) // ==================================TEXT BOX IS IN RUNNING STATE==============================
+		if (textEngineState == TextEngineState::OPEN) // ==================================TEXT BOX IS IN RUNNING STATE==============================
 		{
 			if (textBox->get(0)->scrollPercent >= 1.0f)
 			{
@@ -1177,7 +1178,7 @@ void TextManager::doScrolling(long long ticksPassed)
 			}
 		} // END IF TEXT BOX ON
 
-		else if (textEngineState == CLOSING) // ===========================TEXT BOX IS IN SCROLLING DOWN STATE. WHEN FINISHED,DELETE TEXT BOX===================
+		else if (textEngineState == TextEngineState::CLOSING) // ===========================TEXT BOX IS IN SCROLLING DOWN STATE. WHEN FINISHED,DELETE TEXT BOX===================
 		{
 			if (textBox->get(0)->scrollPercent > 0.0f)
 			{
@@ -1194,12 +1195,12 @@ void TextManager::doScrolling(long long ticksPassed)
 				getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 
 
-				textEngineState = CLOSED;
+				textEngineState = TextEngineState::CLOSED;
 			}
 		}
 
 
-		else if (textEngineState == CLOSED)
+		else if (textEngineState == TextEngineState::CLOSED)
 		{
 			textBox->get(0)->scrollPercent = 0.0f;
 			textBox->get(1)->scrollPercent = 0.0f;
@@ -1723,6 +1724,20 @@ void TextManager::parseOption()
 			}
 			delay = true;
 			delayTicks = ticks;
+		}
+		else if (String::startsWith(optionBuffer, "TICKSPERLETTER:"))
+		{
+			int ticks = 0;
+			try
+			{
+				ticks = stoi(optionBuffer.substr(optionBuffer.find(":") + 1));
+			}
+			catch (exception)
+			{
+				log.error("Could not parse ticks in optionBuffer");
+			}
+
+			ticksPerLetter = ticks;
 		}
 		else if (optionBuffer == "KEEPOPENAFTER")
 		{

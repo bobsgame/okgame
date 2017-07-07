@@ -31,7 +31,7 @@ void Clock::update()
 { //=========================================================================================================================
 
 
-	if (paused == false && unknown == false && getTextManager()->textEngineState == 0)
+	if (paused == false && unknown == false && getTextManager()->textEngineState == TextManager::TextEngineState::CLOSED)
 	{
 		ticks += (int)getEngine()->engineTicksPassed();
 

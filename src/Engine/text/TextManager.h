@@ -49,16 +49,21 @@ public:
 	int ticksPerLetter = 8;
 	int remainderTicks = 0;
 
-	const static int CLOSED = 0;
-	const static int OPEN = 1;
-	const static int CLOSING = 2;
-	const static int ANSWER_BOX_ON = 3;
-	const static int ANSWER_BOX_CLOSING = 4;
-	const static int KEYBOARD_CLOSING = 5;
-	const static int KEYBOARD_ON = 6;
 
-	int textEngineState = CLOSED;
+	enum class TextEngineState
+	{
+		CLOSED,
+		OPEN,
+		CLOSING,
+		ANSWER_BOX_ON,
+		ANSWER_BOX_CLOSING,
+		KEYBOARD_CLOSING,
+		KEYBOARD_ON,
+	};
+	TextEngineState textEngineState = TextEngineState::CLOSED;
 
+
+	
 	const static int BOTTOM = 0;
 	const static int TOP = 1;
 
