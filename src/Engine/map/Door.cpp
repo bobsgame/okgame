@@ -84,7 +84,7 @@ void Door::update()
 	long long startTime = lastRequestedMapDataTime;
 	long long currentTime = System::currentHighResTimer();
 	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-	if (ticksPassed > 5000)
+	if (ticksPassed > 2000)
 	{
 		lastRequestedMapDataTime = currentTime;
 
@@ -558,7 +558,8 @@ float Door::arrivalYPixelsHQ()
 {
 	return getDoorData()->getArrivalYPixelsHQ();
 }
-
+
+
 string& Door::destinationTYPEIDString()
 {
 	if (getDoorData()->getDestinationTYPEIDString() == "" || getDoorData()->getDestinationTYPEIDString().length() == 0)
@@ -567,12 +568,14 @@ string& Door::destinationTYPEIDString()
 	}
 	return getDoorData()->getDestinationTYPEIDString();
 }
-
+
+
 string& Door::destinationMapName()
 {
 	return getDoorData()->getDestinationMapName();
 }
-
+
+
 string& Door::destinationDoorName()
 {
 	return getDoorData()->getDestinationDoorName();

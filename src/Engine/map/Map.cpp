@@ -3601,6 +3601,12 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex), chunkImage);
 		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex), chunkImageBorder);
 	}
+
+	delete chunkImage;
+	delete chunkImageBorder;
+	delete layerChunkBuffer;
+
+
 }
 
 #include <fstream>
