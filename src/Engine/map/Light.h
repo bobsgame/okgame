@@ -94,10 +94,21 @@ public:
 	void toggle();
 	void setOnOff(bool b);
 	void setFlicker(bool b);
-	//The following method was originally marked 'synchronized':
-	void setLightTexturePNGFileExists_S(bool exists);
-	//The following method was originally marked 'synchronized':
-	bool getLightTexturePNGFileExists_S();
+
+
+
+	void setLightTexturePNGFileExists_S(bool exists)
+	{ //===============================================================================================
+		MapManager::setLightTexturePNGFileExists_S(getFileName(), exists);
+	}
+
+
+	bool getLightTexturePNGFileExists_S()
+	{ //===============================================================================================
+		return MapManager::getLightTexturePNGFileExists_S(getFileName());
+	}
+
+
 	string getFileName();
 	bool checkEdgeAgainstHitLayerAndOtherLightsInDirection(int dir);
 	void bounceAroundRoom();

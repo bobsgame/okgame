@@ -44,8 +44,36 @@ public:
 	static HashMap<string, BobTexture*> lightTextureHashMap;//new HashMap<string, Texture*>();
 
 
-	//hashtable (threadsafe) mapped to light filename, and boolean array[1] set whether it exists (so multiple threads don't check if file exists at same time)
-	static HashMap<string, BobBool*> lightTextureFileExistsHashtable;//new HashMap<string, BobBool*>();
+
+
+	//threadsafe HashMap mapped to light filename, and boolean set whether it exists (so multiple threads don't check if file exists at same time)
+	static HashMap<string, bool> _lightTextureFileExistsHashtable;
+	static mutex _lightTextureFileExistsHashtable_Mutex;
+																  
+	static void setLightTexturePNGFileExists_S(string filename, bool exists)
+	{ //===============================================================================================
+
+		lock_guard<mutex> lock(_lightTextureFileExistsHashtable_Mutex);
+		_lightTextureFileExistsHashtable.put(filename, exists);
+	}
+
+	static bool getLightTexturePNGFileExists_S(string filename)
+	{ //===============================================================================================
+
+		lock_guard<mutex> lock(_lightTextureFileExistsHashtable_Mutex);
+		bool existsInHashtable = false;
+
+
+		if (_lightTextureFileExistsHashtable.containsKey(filename))
+		{
+			existsInHashtable = _lightTextureFileExistsHashtable.get(filename);
+
+		}
+
+		return existsInHashtable;
+
+	}
+
 
 
 	Door* doorEntered = nullptr;

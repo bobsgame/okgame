@@ -246,36 +246,9 @@ void Light::setFlicker(bool b)
 	setFlickers(b);
 }
 
-//The following method was originally marked 'synchronized':
-void Light::setLightTexturePNGFileExists_S(bool exists)
-{ //===============================================================================================
-	//set hashmap for this filename, boolean exists
-	BobBool* temp = new BobBool();
-	temp->value = exists;
-	getMapManager()->lightTextureFileExistsHashtable.put(getFileName(), temp);
-}
 
-//The following method was originally marked 'synchronized':
-bool Light::getLightTexturePNGFileExists_S()
-{ //===============================================================================================
-	//first check the hashmap for the filename. if it exists, do nothing.
-	bool existsInHashtable = false;
 
-	//this is an array because Hashtables only accept objects
 
-	if (getMapManager()->lightTextureFileExistsHashtable.containsKey(getFileName()))
-	{
-		BobBool* fileExistsArray = getMapManager()->lightTextureFileExistsHashtable.get(getFileName());
-		if (fileExistsArray != nullptr)
-		{
-			existsInHashtable = fileExistsArray->value;
-		}
-	}
-
-	return existsInHashtable;
-
-}
-
 string Light::getFileName()
 { //===============================================================================================
 
