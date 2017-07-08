@@ -1708,7 +1708,8 @@ void TCPServerConnection::setAddFriendByUserNameResponse(string b)
 {
 	addFriendByUserNameResponse = b;
 }
-
+
+
 string& TCPServerConnection::getAddFriendByUserNameResponse()
 {
 	return addFriendByUserNameResponse;

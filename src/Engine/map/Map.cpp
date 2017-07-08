@@ -10,15 +10,18 @@
 
 //#pragma once
 
-
+#include "CTPL-master/ctpl_stl.h"
 
 
 Logger Map::log = Logger("Map");
 
 
+
 //java::util::concurrent::ExecutorService* Map::generatePNGExecutorService = nullptr;
 //java::util::concurrent::ExecutorService* Map::generateLightPNGExecutorService = nullptr;
-
+ctpl::thread_pool* Map::generatePNGThreadPool = nullptr;
+ctpl::thread_pool* Map::generateLightPNGThreadPool = nullptr;
+//ctpl::thread_pool* Map::generateHQ2XPNGThreadPool = nullptr;
 
 //=========================================================================================================================
 Map::Map()
@@ -62,21 +65,23 @@ void Map::initMap(Engine* g, MapData* mapData)
 //	    }
 //	}
 
-	if (chunkPNGFileExists == nullptr)
+
+	//these are thread safe variables but it's OK here because it's only on init
+	if (_chunkPNGFileExists == nullptr)
 	{
-		chunkPNGFileExists = new vector<bool>(chunksWidth * chunksHeight * 2);
+		_chunkPNGFileExists = (new vector<bool>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
-			(*chunkPNGFileExists)[i] = false;
+			(*_chunkPNGFileExists)[i] = false;
 		}
 	}
 
-	if (hq2xChunkPNGFileExists == nullptr)
+	if (_hq2xChunkPNGFileExists == nullptr)
 	{
-		hq2xChunkPNGFileExists = new vector<bool>(chunksWidth * chunksHeight * 2);
+		_hq2xChunkPNGFileExists = (new vector<bool>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
-			(*hq2xChunkPNGFileExists)[i] = false;
+			(*_hq2xChunkPNGFileExists)[i] = false;
 		}
 	}
 
@@ -804,6 +809,19 @@ void Map::update()
 				if (tempAllHQ2XChunkPNGsLoaded == true)
 				{
 					allHQ2XChunkPNGsLoadedAsTextures = true;
+
+					if (tilesetIntArray != nullptr)
+					{
+						delete tilesetIntArray;
+						tilesetIntArray = nullptr;
+					}
+
+					if (paletteRGBByteArray != nullptr)
+					{
+						delete paletteRGBByteArray;
+						paletteRGBByteArray = nullptr;
+					}
+
 				}
 			}
 
@@ -825,26 +843,41 @@ void Map::update()
 				}
 			}
 		}
+		else
+		{
+			if (tilesetIntArray != nullptr)
+			{
+				delete tilesetIntArray;
+				tilesetIntArray = nullptr;
+			}
+
+			if (paletteRGBByteArray != nullptr)
+			{
+				delete paletteRGBByteArray;
+				paletteRGBByteArray = nullptr;
+			}
+
+		}
 	}
 
 	//nice percentage progress of chunk/light/hq2x PNG generation and chunk texture loading
 	updateLoadingStatus();
 
 
-	/*if(
-	      MapManager.useThreads==true&&
-	      generatePNGExecutorService!=null&&
-	      startedMissingLightPNGThreads==true&&
-	      startedMissingChunkPNGThreads==true&&
-	      startedMissingHQ2XChunkPNGThreads==true
-	)
-	{
-	   if(generatePNGExecutorService.isShutdown()==false)
-	   {
-	      generatePNGExecutorService.shutdown();
-	      log.debug("generatePNGExecutorService Shut Down");
-	   }
-	}*/
+//	if(
+//	      MapManager::useThreads==true&&
+//	      generatePNGThreadPool!=nullptr&&
+//	      //startedMissingLightPNGThreads==true&&
+//	      startedMissingChunkPNGThreads==true&&
+//	      //startedMissingHQ2XChunkPNGThreads==true
+//	)
+//	{
+//	   if(generatePNGThreadPool.isShutdown()==false)
+//	   {
+//		   generatePNGThreadPool.shutdown();
+//	      log.debug("generatePNGExecutorService Shut Down");
+//	   }
+//	}
 }
 
 void Map::updateLoadingStatus()
@@ -915,6 +948,7 @@ void Map::updateLoadingStatus()
 	}
 
 
+	int chunkTexturesLoaded = getChunkTexturesLoaded_S();
 	if (chunkTexturesLoaded > 0 && MapManager::loadTexturesOnDemand == false)
 	{
 		int totalChunkTextures = (chunksWidth * chunksHeight * 2);
@@ -938,7 +972,7 @@ void Map::updateLoadingStatus()
 
 		if (chunkTexturesLoaded == totalChunkTextures)
 		{
-			chunkTexturesLoaded = 0;
+			setChunkTexturesLoaded_S(0);
 			texturesLoadedDebugText->ticks = 1000;
 			texturesLoadedDebugText = nullptr;
 
@@ -2142,7 +2176,7 @@ void Map::releaseAllTextures()
 	//startedLightThreads=false;
 
 
-	chunkTexturesLoaded = 0;
+	setChunkTexturesLoaded_S(0);
 
 	//DO reset these, since we unload these textures.
 	allChunkPNGsLoadedAsTextures = false;
@@ -2218,11 +2252,15 @@ void Map::releaseAllTextures()
 		usingHQ2XTexture = nullptr;
 	}
 
-	delete tilesetIntArray;
-	delete paletteRGBByteArray;
+	//TODO: i can only delete these after all threads are done, which right now there is no real way to check this
+	//i might want to continue updating the map and have a separate thread pool per map, and when all threads are finished, then i can delete these
+	//or i can delete them if all png chunks have been generated
 
-	tilesetIntArray = nullptr;
-	paletteRGBByteArray = nullptr;
+	//delete tilesetIntArray;
+	//delete paletteRGBByteArray;
+
+	//tilesetIntArray = nullptr;
+	//paletteRGBByteArray = nullptr;
 
 	//   tilesetIntArray = new int[];
 	//   paletteRGBByteArray= new u8[];
@@ -2565,41 +2603,37 @@ void Map::releaseChunkTexture(int index)
 	chunkTexture.put(index, nullptr);
 }
 
-//The following method was originally marked 'synchronized':
-bool Map::getChunkPNGFileExists(int index)
-{ //=========================================================================================================================
-	return (*chunkPNGFileExists)[index];
-}
 
-//The following method was originally marked 'synchronized':
-void Map::setChunkPNGFileExists_S(int index, bool done)
-{ //=========================================================================================================================
-	(*chunkPNGFileExists)[index] = done;
-}
 
-//The following method was originally marked 'synchronized':
-bool Map::getHQ2XChunkPNGFileExists(int index)
-{ //=========================================================================================================================
-	return (*hq2xChunkPNGFileExists)[index];
-}
 
-//The following method was originally marked 'synchronized':
-void Map::setHQ2XChunkFileExists_S(int index, bool done)
-{ //=========================================================================================================================
-	(*hq2xChunkPNGFileExists)[index] = done;
-}
 
-//The following method was originally marked 'synchronized':
-void Map::incrementChunkTexturesLoaded()
-{ //=========================================================================================================================
-	chunkTexturesLoaded++;
-}
 
-//The following method was originally marked 'synchronized':
-void Map::decrementChunkTexturesLoaded()
-{ //=========================================================================================================================
-	chunkTexturesLoaded--;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 bool Map::loadChunkTexturesFromCachePNGs()
 { //=========================================================================================================================
@@ -2656,11 +2690,11 @@ bool Map::loadChunkTexturesFromCachePNGs()
 						//if it doesnt have a texture, need to load the texture
 						//check for existence of texture in groundMD5
 
-						if (getChunkPNGFileExists(chunkIndex) == true || (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists(chunkIndex) == true))
+						if (getChunkPNGFileExists_S(chunkIndex) == true || (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true))
 						{
 							BobFile* textureFile = nullptr;
 
-							if (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists(chunkIndex) == true)
+							if (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 							{
 								textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 								(*usingHQ2XTexture)[chunkIndex] = true;
@@ -2696,7 +2730,7 @@ bool Map::loadChunkTexturesFromCachePNGs()
 								setChunkTexture(chunkIndex, GLUtils::getTextureFromPNGAbsolutePath(textureFile->getAbsolutePath()));
 							}
 
-							incrementChunkTexturesLoaded();
+							incrementChunkTexturesLoaded_S();
 						}
 					}
 				}
@@ -2721,7 +2755,7 @@ bool Map::loadChunkTexturesFromCachePNGs()
 						releaseChunkTexture(chunkIndex);
 
 
-						decrementChunkTexturesLoaded();
+						decrementChunkTexturesLoaded_S();
 					}
 				}
 			}
@@ -2881,11 +2915,11 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 				{
 					tempAllHQ2XChunksLoaded = false;
 
-					if (getHQ2XChunkPNGFileExists(chunkIndex) == true)
+					if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 					{
 						BobFile* textureFile = nullptr;
 
-						if (getHQ2XChunkPNGFileExists(chunkIndex) == true)
+						if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 						{
 							textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 						}
@@ -2958,11 +2992,11 @@ void Map::startThreadsForMissingChunkPNGs()
 	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/");
 
 
-	//   if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
-	//   {
-	//      generatePNGExecutorService = Executors::newFixedThreadPool(3);
-	//   }
-	//   //if(MapManager.useThreads==true)generatePNGExecutorService = Executors.newFixedThreadPool(3);
+	if (MapManager::useThreads == true && generatePNGThreadPool == nullptr)
+	{
+	    generatePNGThreadPool = new ctpl::thread_pool(3);
+	}
+	 
 
 
 	//for each texture that needs to be on-screen, spiraling clockwise from CAMERA TARGET POSITION
@@ -3026,12 +3060,12 @@ void Map::startThreadsForMissingChunkPNGs()
 
 					if (tilesetIntArray == nullptr)
 					{
-						tilesetIntArray = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getTilesMD5());
+						tilesetIntArray = (FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getTilesMD5()));
 					}
 
 					if (paletteRGBByteArray == nullptr)
 					{
-						paletteRGBByteArray = FileUtils::loadByteFileFromCacheOrDownloadIfNotExist("" + getPaletteMD5());
+						paletteRGBByteArray = (FileUtils::loadByteFileFromCacheOrDownloadIfNotExist("" + getPaletteMD5()));
 					}
 
 
@@ -3040,38 +3074,38 @@ void Map::startThreadsForMissingChunkPNGs()
 					int threadChunkX = chunkX;
 					int threadChunkY = chunkY;
 					int threadChunkIndex = chunkIndex;
-					vector<int>* threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
-					vector<u8>* threadPaletteRGBByteArray = paletteRGBByteArray;
+					//shared_ptr<vector<int>*> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
+					//shared_ptr<vector<u8>*> threadPaletteRGBByteArray = paletteRGBByteArray;
 
 
 					if (MapManager::useThreads == true)
 					{
 						incrementChunkPNGThreadsCreated();
-						//
-						//                  generatePNGExecutorService->execute([&] ()
-						//                     {
-						//                        try
-						//                        {
-						//                           Thread::currentThread().setName("MapAsset_startThreadsForMissingChunkPNGs");
-						//                        }
-						//                        catch (SecurityException e)
-						//                        {
-						//                           e->printStackTrace();
-						//                        }
-						//
-						//
-						//                        createChunkTexturePNG_S(threadChunkLayer, threadChunkX, threadChunkY, threadChunkIndex, threadTilesetIntArray, threadPaletteRGBByteArray);
-						//                        setChunkPNGFileExists_S(threadChunkIndex, true);
-						//                        decrementChunkPNGThreadsCreated_S();
-						//                     }
-						//
-						//
-						//                  );
+						
+
+//						std::vector<std::future<void>> results;
+//						results.push_back
+//						(
+							generatePNGThreadPool->push
+							(
+								[&](int)
+								{
+									//Thread::currentThread().setName("MapAsset_startThreadsForMissingChunkPNGs");
+
+
+									createChunkTexturePNG_S(threadChunkLayer, threadChunkX, threadChunkY, threadChunkIndex);
+									setChunkPNGFileExists_S(threadChunkIndex, true);
+									decrementChunkPNGThreadsCreated_S();
+								}
+							);
+						//);
+
+
 					}
 					else
 					{
 						//do it linearly, waiting for all chunks to finish before continuing
-						createChunkTexturePNG_S(threadChunkLayer, threadChunkX, threadChunkY, threadChunkIndex, threadTilesetIntArray, threadPaletteRGBByteArray);
+						createChunkTexturePNG_S(threadChunkLayer, threadChunkX, threadChunkY, threadChunkIndex);
 						setChunkPNGFileExists_S(threadChunkIndex, true);
 					}
 				}
@@ -3152,14 +3186,14 @@ void Map::startThreadsForMissingChunkPNGs()
 
 	//unload tileset and palette if they were loaded
 
-	delete tilesetIntArray;
-	delete paletteRGBByteArray;
+	//delete tilesetIntArray;//shared_ptr just set to null
+	//delete paletteRGBByteArray;
 
-	tilesetIntArray = nullptr;
-	paletteRGBByteArray = nullptr;
+	//tilesetIntArray = nullptr;
+	//paletteRGBByteArray = nullptr;
 
 
-	//if(MapManager.useThreads==true)generatePNGExecutorService.shutdown();
+	//if(MapManager::useThreads==true && generatePNGThreadPool != nullptr)generatePNGThreadPool.shutdown();
 }
 
 //The following method was originally marked 'synchronized':
@@ -3187,11 +3221,11 @@ void Map::startThreadsForMissingLightPNGs()
 	FileUtils::makeDir(FileUtils::cacheDir + "l" + "/");
 
 
-	//   //if(MapManager.useThreads==true&&generatePNGExecutorService==null)generatePNGExecutorService = Executors.newFixedThreadPool(3);
-	//   if (MapManager::useThreads == true && generateLightPNGExecutorService == nullptr)
-	//   {
-	//      generateLightPNGExecutorService = Executors::newFixedThreadPool(3);
-	//   }
+
+	if (MapManager::useThreads == true && generateLightPNGThreadPool == nullptr)
+	{
+	    generateLightPNGThreadPool = new ctpl::thread_pool(3);
+	}
 
 
 	//go through all the lights in lightList
@@ -3238,26 +3272,26 @@ void Map::startThreadsForMissingLightPNGs()
 						const string threadLightFilename = threadLight->getFileName();
 
 						incrementLightPNGThreadsCreated();
-						//
-						//                  generateLightPNGExecutorService->execute([&] ()
-						//                     {
-						//                        try
-						//                        {
-						//                           Thread::currentThread().setName("MapAsset_startThreadsForMissingLightPNGs");
-						//                        }
-						//                        catch (SecurityException e)
-						//                        {
-						//                           e->printStackTrace();
-						//                        }
-						//
-						//                        threadLight->createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + threadLightFilename);
-						//                        threadLight->setLightTexturePNGFileExists_S(true);
-						//
-						//                        decrementLightPNGThreadsCreated_S();
-						//                     }
-						//
-						//
-						//                  );
+
+
+//						std::vector<std::future<void>> results;
+//						results.push_back
+//						(
+							generateLightPNGThreadPool->push
+							(
+								[&](int)
+								{
+									//Thread::currentThread().setName("MapAsset_startThreadsForMissingLightPNGs");
+
+									threadLight->createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + threadLightFilename);
+									threadLight->setLightTexturePNGFileExists_S(true);
+
+									decrementLightPNGThreadsCreated_S();
+								}
+							);
+						//);
+						
+
 					}
 					else
 					{
@@ -3271,7 +3305,7 @@ void Map::startThreadsForMissingLightPNGs()
 		}
 	}
 
-	//if(MapManager.useThreads==true)generateLightPNGExecutorService.shutdown();
+	//if(MapManager::useThreads==true)generateLightPNGThreadPool.shutdown();
 }
 
 //The following method was originally marked 'synchronized':
@@ -3302,11 +3336,11 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 	FileUtils::makeDir(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/");
 
 
-	//   if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
-	//   {
-	//      generatePNGExecutorService = Executors::newFixedThreadPool(3);
-	//   }
-	//   //if(MapManager.useThreads==true)generateHQ2XPNGExecutorService = Executors.newFixedThreadPool(3);
+	if (MapManager::useThreads == true && generatePNGThreadPool == nullptr)
+	{
+	    generatePNGThreadPool = new ctpl::thread_pool(3);
+	}
+
 
 
 	int startChunkX = (int)(getCameraman()->getX()) / chunkSizePixelsHQ2X;
@@ -3366,27 +3400,25 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 				if (MapManager::useThreads == true)
 				{
 					incrementHQ2XChunkPNGThreadsCreated();
-					//
-					//               generatePNGExecutorService->execute([&] ()
-					//                  {
-					//                     try
-					//                     {
-					//                        Thread::currentThread().setName("MapAsset_startThreadsForMissingHQ2XChunkPNGs");
-					//                     }
-					//                     catch (SecurityException e)
-					//                     {
-					//                        e->printStackTrace();
-					//                     }
-					//
-					//
-					//                     createHQ2XTexturePNG_THREAD(threadChunkX, threadChunkY);
-					//                     setHQ2XChunkFileExists_S(threadChunkIndex, true);
-					//                     setHQ2XChunkFileExists_S(threadChunkIndexOverLayer, true);
-					//
-					//                     decrementHQ2XChunkPNGThreadsCreated();
-					//                  }
-					//
-					//               );
+					
+//					std::vector<std::future<void>> results;
+//					results.push_back
+//					(
+						generatePNGThreadPool->push
+						(
+							[&](int)
+							{
+								//Thread::currentThread().setName("MapAsset_startThreadsForMissingHQ2XChunkPNGs");
+
+								createHQ2XTexturePNG_THREAD(threadChunkX, threadChunkY);
+								setHQ2XChunkFileExists_S(threadChunkIndex, true);
+								setHQ2XChunkFileExists_S(threadChunkIndexOverLayer, true);
+
+								decrementHQ2XChunkPNGThreadsCreated();
+							}
+						);
+					//);
+
 				}
 				else
 				{
@@ -3473,10 +3505,10 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 	}
 
 
-	//if(MapManager.useThreads==true)generateHQ2XPNGExecutorService.shutdown();
+	//if(MapManager::useThreads==true)generateHQ2XPNGThreadPool.shutdown();
 }
 
-void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray)
+void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex)
 { //=========================================================================================================================
 
 	//Thread.yield();
@@ -3542,7 +3574,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 				shadowLayer = true;
 			}
 
-			drawTileLayerIntoBufferedImage(layerFileName, chunkImage, chunkImageBorder, chunkX, chunkY, layerChunkBuffer, shadowLayer, tilesetIntArray, paletteRGBByteArray);
+			drawTileLayerIntoBufferedImage(layerFileName, chunkImage, chunkImageBorder, chunkX, chunkY, layerChunkBuffer, shadowLayer);
 		}
 	}
 	else
@@ -3567,7 +3599,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 					shadowLayer = true;
 				}
 
-				bool changedImage = drawTileLayerIntoBufferedImage(layerFileName, chunkImage, chunkImageBorder, chunkX, chunkY, layerChunkBuffer, shadowLayer, tilesetIntArray, paletteRGBByteArray);
+				bool changedImage = drawTileLayerIntoBufferedImage(layerFileName, chunkImage, chunkImageBorder, chunkX, chunkY, layerChunkBuffer, shadowLayer);
 				if (changedImage == true)
 				{
 					blank = false;
@@ -3611,7 +3643,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 
 #include <fstream>
 
-bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray)
+bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer)
 { //=========================================================================================================================
 
 

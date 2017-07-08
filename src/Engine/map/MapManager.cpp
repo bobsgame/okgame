@@ -14,7 +14,7 @@
 Logger MapManager::log = Logger("MapManager");
 
 
-bool MapManager::useThreads = false;
+bool MapManager::useThreads = true;
 bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
@@ -48,19 +48,21 @@ MapManager::~MapManager()
 
 			if (MapManager::useThreads)
 			{
-				//            if (Map::generatePNGExecutorService != nullptr)
-				//            {
-				//               Map::generatePNGExecutorService->shutdownNow(); //.awaitTermination(30, TimeUnit.SECONDS);
-				//            }
-				//            if (Map::generateLightPNGExecutorService != nullptr)
-				//            {
-				//               Map::generateLightPNGExecutorService->shutdownNow(); //.awaitTermination(30, TimeUnit.SECONDS);
-				//            }
-				//            if (Sprite::generatePNGExecutorService != nullptr)
-				//            {
-				//               Sprite::generatePNGExecutorService->shutdownNow(); //.awaitTermination(30, TimeUnit.SECONDS);
-				//            }
-				//if(m->generateHQ2XPNGExecutorService!=null)m->generateHQ2XPNGExecutorService.shutdownNow();//awaitTermination(30, TimeUnit.SECONDS);
+				if (Map::generatePNGThreadPool != nullptr)
+				{
+					Map::generatePNGThreadPool->stop(false);
+				   
+				}
+				if (Map::generateLightPNGThreadPool != nullptr)
+				{
+				    Map::generateLightPNGThreadPool->stop(false);
+				}
+				if (Sprite::generatePNGThreadPool != nullptr)
+				{
+				    Sprite::generatePNGThreadPool->stop(false);
+				}
+
+
 			}
 		}
 		catch (exception e)

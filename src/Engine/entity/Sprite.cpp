@@ -15,6 +15,8 @@ Logger Sprite::log = Logger("Sprite");
 
 
 //java::util::concurrent::ExecutorService *Sprite::generatePNGExecutorService = nullptr;
+ctpl::thread_pool* Sprite::generatePNGThreadPool = nullptr;
+
 
 Sprite::Sprite()
 { //=========================================================================================================================
@@ -544,12 +546,12 @@ void Sprite::loadTextures()
 				//random bin MD5s are initialized already in the spriteAssetIndex, don't need to get them from the server.
 				//we always need the bin byte arrays loaded for randoms, since we will be using them each time we make a new random
 
-				if (indexDataIntArray == nullptr)
+				if (indexDataIntArray != nullptr)
 				{
 					delete indexDataIntArray;
 					indexDataIntArray = nullptr;
 				}
-				if (paletteRGBByteArray == nullptr)
+				if (paletteRGBByteArray != nullptr)
 				{
 					delete paletteRGBByteArray;
 					paletteRGBByteArray = nullptr;
@@ -618,49 +620,53 @@ void Sprite::loadTextures()
 				FileUtils::makeDir(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/");
 
 
-				//if (MapManager::useThreads == true && generatePNGExecutorService == nullptr)
-				//{
-				//   generatePNGExecutorService = Executors::newFixedThreadPool(3);
-				//}
-				//
-				//if (MapManager::useThreads == true)
-				//{
-				//   //incrementSpritePNGThreadsCreated_S();
-				//
-				//   generatePNGExecutorService->execute([&] ()
-				//      {
-				//         try
-				//         {
-				//				if (getIsRandom() == true)
-				//				{
-				//				   Thread::currentThread().setName("Sprite_createSpriteRandomShadowTexturePNG");
-				//				}
-				//				else
-				//				{
-				//				   Thread::currentThread().setName("Sprite_createSpriteTexturePNG");
-				//				}
-				//         }
-				//         catch (SecurityException e)
-				//         {
-				//            e->printStackTrace();
-				//         }
-				//
-				//			if (getIsRandom() == false)
-				//			{
-				//				createSpriteTexturePNG_S();
-				//			}
-				//
-				//         if (getHasShadow() == true)
-				//         {
-				//            createSpriteShadowTexturePNG_S();
-				//         }
-				//
-				//         setSpritePNGFileExists_S(true);
-				//         //decrementSpritePNGThreadsCreated_S();
-				//      }
-				//   );
-				//}
-				//else
+				if (MapManager::useThreads == true && generatePNGThreadPool == nullptr)
+				{
+				   generatePNGThreadPool = new ctpl::thread_pool(3);
+				}
+				
+				if (MapManager::useThreads == true)
+				{
+
+
+				   //incrementSpritePNGThreadsCreated_S();
+				
+
+//					std::vector<std::future<void>> results;
+//					results.push_back
+//					(
+						generatePNGThreadPool->push
+						(
+							[&](int)
+							{
+		//						if (getIsRandom() == true)
+		//						{
+		//							Thread::currentThread().setName("Sprite_createSpriteRandomShadowTexturePNG");
+		//						}
+		//						else
+		//						{
+		//							Thread::currentThread().setName("Sprite_createSpriteTexturePNG");
+		//						}
+
+								if (getIsRandom() == false)
+								{
+									createSpriteTexturePNG_S();
+								}
+
+								if (getHasShadow() == true)
+								{
+									createSpriteShadowTexturePNG_S();
+								}
+
+								setSpritePNGFileExists_S(true);
+								//decrementSpritePNGThreadsCreated_S();
+							}
+						);
+					//);
+
+
+				}
+				else
 				{
 					//do it linearly, waiting for all chunks to finish before continuing
 					if (getIsRandom() == false)
@@ -1163,17 +1169,28 @@ void Sprite::releaseSpriteTexture_S()
 
 }
 
-//The following method was originally marked 'synchronized':
-bool Sprite::getSpritePNGFileExists_S()
-{ //=========================================================================================================================
-	return _texturePNGExists;
-}
 
-//The following method was originally marked 'synchronized':
-void Sprite::setSpritePNGFileExists_S(bool done)
-{ //=========================================================================================================================
-	_texturePNGExists = done;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int Sprite::getNumberOfAnimations()
 { //=========================================================================================================================

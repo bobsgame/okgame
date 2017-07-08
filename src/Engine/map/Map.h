@@ -6,6 +6,8 @@
 
 #pragma once
 #include "bobtypes.h"
+#include "CTPL-master/ctpl_stl.h"
+
 class Logger;
 
 
@@ -62,12 +64,18 @@ public:
 
 
 	HashMap<int,BobTexture*> chunkTexture;//= new HashMap<int, Texture*>();
-	vector<bool>* chunkPNGFileExists = nullptr;
-	vector<bool>* hq2xChunkPNGFileExists = nullptr;
+
 	vector<bool>* usingHQ2XTexture = nullptr;
 
+
+	//these are accessed by threads but not modified by threads so it's probably OK
 	vector<int>* tilesetIntArray = nullptr;
 	vector<u8>* paletteRGBByteArray = nullptr;
+
+	//when this happens i can delete the indexed data and palette data but until then they are being accessed by threads
+	bool allChunkPNGsLoadedAsTextures = false;
+	bool allLightsLoadedAsTextures = false;
+	bool allHQ2XChunkPNGsLoadedAsTextures = false;
 
 
 	const static int chunkSizePixelsHQ2X = 512;
@@ -80,7 +88,13 @@ public:
 	//public ExecutorService generateHQ2XPNGExecutorService = null;
 
 
-	int chunkTexturesLoaded = 0;
+
+	static ctpl::thread_pool* generatePNGThreadPool;
+	static ctpl::thread_pool* generateLightPNGThreadPool;
+	//static ctpl::thread_pool* generateHQ2XPNGThreadPool;
+
+
+	
 
 	int maxHq2xChunkPNGThreadsCreated = 0;
 	int hq2xChunkPNGThreadsCreated = 0;
@@ -105,9 +119,7 @@ public:
 	bool startedMissingLightPNGThreads = false;
 	bool startedMissingHQ2XChunkPNGThreads = false;
 
-	bool allChunkPNGsLoadedAsTextures = false;
-	bool allLightsLoadedAsTextures = false;
-	bool allHQ2XChunkPNGsLoadedAsTextures = false;
+
 
 	bool utilityLayersLoaded = false;
 
@@ -347,25 +359,85 @@ public:
 	void releaseChunkTexture(int index);
 
 
-	//The following method was originally marked 'synchronized':
-	bool getChunkPNGFileExists(int index);
-
-	//The following method was originally marked 'synchronized':
-	void setChunkPNGFileExists_S(int index, bool done);
 
 
-	//The following method was originally marked 'synchronized':
-	bool getHQ2XChunkPNGFileExists(int index);
-
-	//The following method was originally marked 'synchronized':
-	void setHQ2XChunkFileExists_S(int index, bool done);
 
 
-	//The following method was originally marked 'synchronized':
-	void incrementChunkTexturesLoaded();
 
-	//The following method was originally marked 'synchronized':
-	void decrementChunkTexturesLoaded();
+
+	//------------------------------------
+	vector<bool>* _chunkPNGFileExists = nullptr;
+	mutex _chunkPNGFileExists_Mutex;
+	bool getChunkPNGFileExists_S(int index)
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_chunkPNGFileExists_Mutex);
+		return (*_chunkPNGFileExists)[index];
+	}
+
+
+	void setChunkPNGFileExists_S(int index, bool done)
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_chunkPNGFileExists_Mutex);
+		(*_chunkPNGFileExists)[index] = done;
+	}
+
+
+	//------------------------------------
+	vector<bool>* _hq2xChunkPNGFileExists = nullptr;
+	mutex _hq2xChunkPNGFileExists_Mutex;
+	bool getHQ2XChunkPNGFileExists_S(int index)
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_hq2xChunkPNGFileExists_Mutex);
+		return (*_hq2xChunkPNGFileExists)[index];
+	}
+
+
+	void setHQ2XChunkFileExists_S(int index, bool done)
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_hq2xChunkPNGFileExists_Mutex);
+		(*_hq2xChunkPNGFileExists)[index] = done;
+	}
+
+	//------------------------------------
+	int _chunkTexturesLoaded = 0;
+	mutex _chunkTexturesLoaded_Mutex;
+	void incrementChunkTexturesLoaded_S()
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_chunkTexturesLoaded_Mutex);
+		_chunkTexturesLoaded++;
+	}
+
+
+	void decrementChunkTexturesLoaded_S()
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_chunkTexturesLoaded_Mutex);
+		_chunkTexturesLoaded--;
+	}
+
+	int getChunkTexturesLoaded_S()
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_chunkTexturesLoaded_Mutex);
+		return _chunkTexturesLoaded;
+	}
+
+	void setChunkTexturesLoaded_S(int s)
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_chunkTexturesLoaded_Mutex);
+		_chunkTexturesLoaded = s;
+	}
+	//------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 	bool loadChunkTexturesFromCachePNGs();
 
@@ -409,13 +481,13 @@ public:
 	void startThreadsForMissingHQ2XChunkPNGs();
 
 
-	void createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
+	void createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int chunkIndex);
 
 
 	/// <summary>
 	/// returns false if no image is needed
 	/// </summary>
-	bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer, vector<int>* tilesetIntArray, vector<u8>* paletteRGBByteArray);
+	bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer);
 
 
 	void createHQ2XTexturePNG_THREAD(int chunkX, int chunkY);

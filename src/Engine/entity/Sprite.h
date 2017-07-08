@@ -11,6 +11,7 @@ class Logger;
 #include "../../Utility/gl/GLUtils.h"
 #include "../EnginePart.h"
 #include "../rpg/event/EventData.h"
+#include "CTPL-master/ctpl_stl.h"
 
 class SpriteAnimationSequence;
 class SpriteData;
@@ -27,6 +28,8 @@ public:
 	Event* event = nullptr;
 
 	//static ExecutorService *generatePNGExecutorService;
+	static ctpl::thread_pool* generatePNGThreadPool;
+
 
 	vector<int>* indexDataIntArray = nullptr;
 	vector<u8>* paletteRGBByteArray = nullptr;
@@ -54,7 +57,7 @@ public:
 	bool checkedIfExist = false;
 	bool hasDataMD5 = false; //non-threaded boolean check to avoid locking on synchronized function
 
-	bool _texturePNGExists = false;
+	
 
 	bool preloadedFromData = false;
 
@@ -122,11 +125,24 @@ public:
 	//	public static int maxSpriteThreadsCreated = 0;
 
 
-	//The following method was originally marked 'synchronized':
-	bool getSpritePNGFileExists_S();
 
-	//The following method was originally marked 'synchronized':
-	void setSpritePNGFileExists_S(bool done);
+
+	//------------------------------------
+	bool _texturePNGExists = false;
+	mutex _texturePNGExists_Mutex;
+	bool getSpritePNGFileExists_S()
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_texturePNGExists_Mutex);
+		return _texturePNGExists;
+	}
+
+
+	void setSpritePNGFileExists_S(bool done)
+	{ //=========================================================================================================================
+		lock_guard<mutex> lock(_texturePNGExists_Mutex);
+		_texturePNGExists = done;
+	}
+
 
 
 	//	
