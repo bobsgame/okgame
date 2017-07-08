@@ -1052,7 +1052,7 @@ ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_s
 	int j = 0;
 	int in_ = 0;
 	u8 char_array_4[4], char_array_3[3];
-	ByteArray* ret = new ByteArray(in_len);
+	vector<u8>* vec = new vector<u8>();
 
 	int n = 0;
 	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) 
@@ -1069,7 +1069,7 @@ ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_s
 
 			for (i = 0; (i < 3); i++)
 			{
-				ret->data()[n++] = (char_array_3[i]);
+				vec->push_back(char_array_3[i]);
 			}
 			i = 0;
 		}
@@ -1087,9 +1087,15 @@ ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_s
 		char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
 		char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
 
-		for (j = 0; (j < i - 1); j++) ret->data()[n++] = (char_array_3[j]);
+		for (j = 0; (j < i - 1); j++) vec->push_back(char_array_3[j]);
 	}
 
+	ByteArray* ret = new ByteArray(vec->size());
+	for(int x=0;x<vec->size();x++)
+	{
+		ret->data()[x] = (*vec)[x];
+	}
+	delete vec;
 	return ret;
 
 //	u8* data = new u8[ret.size()];
