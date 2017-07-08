@@ -3070,10 +3070,10 @@ void Map::startThreadsForMissingChunkPNGs()
 
 
 					//create new thread:
-					int threadChunkLayer = chunkLayer;
-					int threadChunkX = chunkX;
-					int threadChunkY = chunkY;
-					int threadChunkIndex = chunkIndex;
+//					int threadChunkLayer = chunkLayer;
+//					int threadChunkX = chunkX;
+//					int threadChunkY = chunkY;
+//					int threadChunkIndex = chunkIndex;
 					//shared_ptr<vector<int>*> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
 					//shared_ptr<vector<u8>*> threadPaletteRGBByteArray = paletteRGBByteArray;
 
@@ -3088,13 +3088,13 @@ void Map::startThreadsForMissingChunkPNGs()
 //						(
 							generatePNGThreadPool->push
 							(
-								[&](int)
+								[&, chunkLayer, chunkX, chunkY, chunkIndex](int)//[=] means capture by value, [&] means capture by reference
 								{
 									//Thread::currentThread().setName("MapAsset_startThreadsForMissingChunkPNGs");
 
 
-									createChunkTexturePNG_S(threadChunkLayer, threadChunkX, threadChunkY, threadChunkIndex);
-									setChunkPNGFileExists_S(threadChunkIndex, true);
+									createChunkTexturePNG_S(chunkLayer, chunkX, chunkY, chunkIndex);
+									setChunkPNGFileExists_S(chunkIndex, true);
 									decrementChunkPNGThreadsCreated_S();
 								}
 							);
@@ -3105,8 +3105,8 @@ void Map::startThreadsForMissingChunkPNGs()
 					else
 					{
 						//do it linearly, waiting for all chunks to finish before continuing
-						createChunkTexturePNG_S(threadChunkLayer, threadChunkX, threadChunkY, threadChunkIndex);
-						setChunkPNGFileExists_S(threadChunkIndex, true);
+						createChunkTexturePNG_S(chunkLayer, chunkX, chunkY, chunkIndex);
+						setChunkPNGFileExists_S(chunkIndex, true);
 					}
 				}
 			}
@@ -3268,8 +3268,17 @@ void Map::startThreadsForMissingLightPNGs()
 				{
 					if (MapManager::useThreads == true)
 					{
-						Light* const threadLight = currentState->lightList.get(i);
-						const string threadLightFilename = threadLight->getFileName();
+						
+						string lightFilename = FileUtils::cacheDir + "l" + "/" + l->getFileName();
+						u8 lr = l->r();
+						u8 lg = l->g();
+						u8 lb = l->b();
+						u8 la = l->a();
+						float lw = l->getWidth();
+						float lh = l->getHeight();
+						float lrad = l->getRadiusPixelsHQ();
+						float lfocusRad = l->focusRadiusPixelsHQ();
+						float ldecayExp = l->decayExponent();
 
 						incrementLightPNGThreadsCreated();
 
@@ -3279,12 +3288,12 @@ void Map::startThreadsForMissingLightPNGs()
 //						(
 							generateLightPNGThreadPool->push
 							(
-								[&](int)
+								[&, lightFilename, lr, lg, lb, la, lw, lh, lrad, lfocusRad, ldecayExp](int)
 								{
 									//Thread::currentThread().setName("MapAsset_startThreadsForMissingLightPNGs");
 
-									threadLight->createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + threadLightFilename);
-									MapManager::setLightTexturePNGFileExists_S(l->getFileName(),true);
+									Light::createLightTexturePNG(lightFilename,lr,lg,lb,la,lw,lh,lrad,lfocusRad,ldecayExp);
+									MapManager::setLightTexturePNGFileExists_S(lightFilename,true);
 
 									decrementLightPNGThreadsCreated_S();
 								}
@@ -3392,10 +3401,10 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 			else
 			{
 				//create new thread:
-				const int threadChunkX = chunkX;
-				const int threadChunkY = chunkY;
-				const int threadChunkIndex = chunkIndex;
-				const int threadChunkIndexOverLayer = chunkIndexOverLayer;
+//				const int threadChunkX = chunkX;
+//				const int threadChunkY = chunkY;
+//				const int threadChunkIndex = chunkIndex;
+//				const int threadChunkIndexOverLayer = chunkIndexOverLayer;
 
 				if (MapManager::useThreads == true)
 				{
@@ -3406,13 +3415,13 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 //					(
 						generatePNGThreadPool->push
 						(
-							[&](int)
+							[&, chunkIndex, chunkIndexOverLayer, chunkX, chunkY](int)
 							{
 								//Thread::currentThread().setName("MapAsset_startThreadsForMissingHQ2XChunkPNGs");
 
-								createHQ2XTexturePNG_THREAD(threadChunkX, threadChunkY);
-								setHQ2XChunkFileExists_S(threadChunkIndex, true);
-								setHQ2XChunkFileExists_S(threadChunkIndexOverLayer, true);
+								createHQ2XTexturePNG_THREAD(chunkX, chunkY);
+								setHQ2XChunkFileExists_S(chunkIndex, true);
+								setHQ2XChunkFileExists_S(chunkIndexOverLayer, true);
 
 								decrementHQ2XChunkPNGThreadsCreated();
 							}
@@ -3423,9 +3432,9 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 				else
 				{
 					//do it linearly, waiting for all chunks to finish before continuing
-					createHQ2XTexturePNG_THREAD(threadChunkX, threadChunkY);
-					setHQ2XChunkFileExists_S(threadChunkIndex, true);
-					setHQ2XChunkFileExists_S(threadChunkIndexOverLayer, true);
+					createHQ2XTexturePNG_THREAD(chunkX, chunkY);
+					setHQ2XChunkFileExists_S(chunkIndex, true);
+					setHQ2XChunkFileExists_S(chunkIndexOverLayer, true);
 				}
 			}
 		}

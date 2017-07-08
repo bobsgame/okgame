@@ -700,14 +700,20 @@ bool Light::renderLight(float screenX0, float screenX1, float screenY0, float sc
 void Light::createLightTexturePNG(const string& fileName)
 { //===============================================================================================
 
+	createLightTexturePNG(fileName, r(), g(), b(), a(), getWidth(), getHeight(), getRadiusPixelsHQ(), focusRadiusPixelsHQ(), decayExponent());
+
+}
+
+void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float w, float h, float rad, float focusRad, float decayExp)
+{
 	//Thread.yield();
 
-	u8 maxBrightness = a();
+	u8 maxBrightness = a;
 
-	int lightBoxWidth = (int)(getWidth() / 2);
-	int lightBoxHeight = (int)(getHeight() / 2);
+	int lightBoxWidth = (int)(w / 2);
+	int lightBoxHeight = (int)(g / 2);
 
-	int maxRadius = (int)(getRadiusPixelsHQ() / 2);
+	int maxRadius = (int)(rad / 2);
 
 	//int red = 255;
 	//int green = 255;
@@ -727,7 +733,7 @@ void Light::createLightTexturePNG(const string& fileName)
 	//instead i'll just use it as an exponent :P
 
 	//float getDecayExponent = getDecayExponent;
-	float focusRadius = (float)(focusRadiusPixelsHQ() / 2);
+	float focusRadius = (float)(focusRad / 2);
 
 	//int lightBoxX = maxRadius;
 	//int lightBoxY = maxRadius;
@@ -812,7 +818,7 @@ void Light::createLightTexturePNG(const string& fileName)
 				}
 				else
 				{
-					alpha = maxBrightness - (int)(pow((distanceFromFocusRadius / (maxRadius - focusRadius)), 1.0f / decayExponent()) * (float)(maxBrightness));
+					alpha = maxBrightness - (int)(pow((distanceFromFocusRadius / (maxRadius - focusRadius)), 1.0f / decayExp) * (float)(maxBrightness));
 					if (alpha > 255)
 					{
 						alpha = 255;
@@ -823,20 +829,26 @@ void Light::createLightTexturePNG(const string& fileName)
 					}
 				}
 
-				lightImage->setColor(new BobColor(r(), g(), b(), alpha));
+				BobColor *c = new BobColor(r, g, b, alpha);
+				lightImage->setColor(c);
 				//set pixel
 				lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
 				//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 				//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 				//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)-yFromCenter),1,1);
+				delete c;
 			}
 		}
 	}
 	else
 	{
-		lightImage->setColor(new BobColor(r(), g(), b(), maxBrightness));
-		//lightImageGraphics.fillRect(lightBoxX, lightBoxY, lightBoxWidth, lightBoxHeight);
-		lightImage->fillRect(centerX, centerY, lightBoxWidth / 2, lightBoxHeight / 2);
+		{
+			BobColor *c = new BobColor(r, g, b, maxBrightness);
+			lightImage->setColor(c);
+			//lightImageGraphics.fillRect(lightBoxX, lightBoxY, lightBoxWidth, lightBoxHeight);
+			lightImage->fillRect(centerX, centerY, lightBoxWidth / 2, lightBoxHeight / 2);
+			delete c;
+		}
 
 		int xFromCenter = 0;
 		int yFromCenter = 0;
@@ -849,14 +861,14 @@ void Light::createLightTexturePNG(const string& fileName)
 				{
 					//get angle from center of box to x,y
 
-					float angle;
+					
 					float distanceFromCenterToBoxEdge;
 					float adjacent = 0;
 
 
 					//if the angle of xy is greater than this, have to use adjacent boxwidth
 					//if it's exactly the angle, it doesnt matter which
-					angle = (float)(atan((float)(xFromCenter) / (float)(yFromCenter)));
+					float angle = (float)(atan((float)(xFromCenter) / (float)(yFromCenter)));
 					if (angle < cornerAngle)
 					{
 						adjacent = (float)lightBoxHeight / 2;
@@ -898,23 +910,26 @@ void Light::createLightTexturePNG(const string& fileName)
 					{
 						//int alpha = maxBrightness-(int)((((d/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 
-						int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExponent()) * (float)(maxBrightness));
+						int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
+						BobColor *c = nullptr;
 
 						if (alpha > 255 || alpha < 0)
 						{
-							lightImage->setColor(new BobColor(255, 0, 255, 255));
+							c = (new BobColor(255, 0, 255, 255));
 						}
 						else
 						{
 							//set color
-							lightImage->setColor(new BobColor(r(), g(), b(), alpha));
+							c = (new BobColor(r, g, b, alpha));
 						}
+						lightImage->setColor(c);
 						//set pixel
 						lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
 						//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 						//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 						//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)-yFromCenter),1,1);
+						delete c;
 					}
 				}
 			}
@@ -928,20 +943,23 @@ void Light::createLightTexturePNG(const string& fileName)
 			totalDistanceFromCenterToXY = (float)xFromCenter;
 
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
-			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExponent()) * (float)(maxBrightness));
+			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
+			BobColor *c = nullptr;
 			if (alpha > 255)
 			{
-				lightImage->setColor(new BobColor(255, 0, 255, 255));
+				c = (new BobColor(255, 0, 255, 255));
 			}
 			else
 			{
-				lightImage->setColor(new BobColor(r(), g(), b(), alpha));
+				c = (new BobColor(r, g, b, alpha));
 			}
+			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
 			//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 			//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)+yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)+yFromCenter),1,1);
+			delete c;
 		}
 
 		xFromCenter = 0;
@@ -956,21 +974,23 @@ void Light::createLightTexturePNG(const string& fileName)
 			totalDistanceFromCenterToXY = (float)yFromCenter;
 
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
-			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExponent()) * (float)(maxBrightness));
+			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-
+			BobColor *c = nullptr;
 			if (alpha > 255)
 			{
-				lightImage->setColor(new BobColor(255, 0, 255, 255));
+				c = (new BobColor(255, 0, 255, 255));
 			}
 			else
 			{
-				lightImage->setColor(new BobColor(r(), g(), b(), alpha));
+				c = (new BobColor(r, g, b, alpha));
 			}
+			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
 			//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)+xFromCenter),(centerY+yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)+xFromCenter),((centerY-1)-yFromCenter),1,1);
+			delete c;
 		}
 	}
 

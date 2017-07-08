@@ -110,6 +110,7 @@ public:
 	bool renderLight();
 	bool renderLight(float screenX0, float screenX1, float screenY0, float screenY1, float alpha);
 	void createLightTexturePNG(const string& fileName);
+	static void createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float w, float h, float rad, float focusRad, float decayExp);
 public:
 	virtual float getLeft() override;
 	virtual float getRight() override;
