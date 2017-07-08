@@ -1899,8 +1899,11 @@ void System::updateRenderTimers()
 { //=========================================================================================================================
 	rendersThisSecond++;
 	totalRenders++;
-	averageFPSTestTotalRenders++;
 
+	if (Main::mainLoopStarted && totalSecondsPassed > 15)
+	{
+		averageFPSTestTotalRenders++;
+	}
 
 	highResTimer = getPerformanceCounter();
 
@@ -2037,7 +2040,7 @@ void System::updateFrameStats()
 		
 		rendersPerSecondText->text = "FPS: " + to_string(rendersThisSecond);
 		updatesPerSecondText->text = "Updates/sec: " + to_string(updatesThisSecond);
-		averageRendersPerSecondText->text = "Average FPS: " + to_string(averageRendersPerSecond);
+		//averageRendersPerSecondText->text = "Average FPS: " + to_string(averageRendersPerSecond);
 
 		averageTicksPerFrameText->text = "Average Ticks Per Frame (Last Second): " + to_string(averageTicksPerRenderLastSecond);
 		averageTicksPerUpdateText->text = "Average Ticks Per Update (Last Second): " + to_string(averageTicksPerUpdateLastSecond);
@@ -2048,50 +2051,60 @@ void System::updateFrameStats()
 
 
 		totalSecondsPassed++;
-		averageFPSTestSecondsPassed++;
-
-		averageRendersPerSecond = totalRenders/totalSecondsPassed;
-		int averageFPSTestRendersPerSecond = averageFPSTestTotalRenders/ averageFPSTestSecondsPassed;
 		
 
-		if (averageFPSTestSecondsPassed>15&&averageFPSTestRendersPerSecond<50)
+		averageRendersPerSecond = totalRenders/totalSecondsPassed;
+
+
+
+		if (Main::mainLoopStarted && totalSecondsPassed > 15)
 		{
-			averageFPSTestTotalRenders = 0;
-			averageFPSTestSecondsPassed = 0;
-			if (GLUtils::SHADER_FBO_SCALE == 1.0f)
+			averageFPSTestSecondsPassed++;
+			int averageFPSTestRendersPerSecond = averageFPSTestTotalRenders / averageFPSTestSecondsPassed;
+
+			averageRendersPerSecondText->text = "Average FPS: " + to_string(averageFPSTestRendersPerSecond);
+
+			if (averageFPSTestRendersPerSecond < 50)
 			{
-				log.debug("Downscaled shaders to try for higher framerate");
-				GLUtils::SHADER_FBO_SCALE = 0.5f;
-				GLUtils::doResize();
+				averageFPSTestTotalRenders = 0;
+				averageFPSTestSecondsPassed = 0;
+				if (GLUtils::SHADER_FBO_SCALE == 1.0f)
+				{
+					log.debug("Downscaled shaders to try for higher framerate");
+					GLUtils::SHADER_FBO_SCALE = 0.5f;
+					GLUtils::doResize();
+				}
+				else
+					if (GLUtils::SHADER_FBO_SCALE == 0.5f)
+					{
+						log.debug("Downscaled shaders again to try for higher framerate");
+						GLUtils::SHADER_FBO_SCALE = 0.25f;
+						GLUtils::doResize();
+					}
+				//GLUtils::DEFAULT_SHADER_FBO_FILTER = GLUtils::FILTER_FBO_LINEAR_NO_MIPMAPPING;
 			}
-			else
-			if (GLUtils::SHADER_FBO_SCALE == 0.5f)
-			{
-				log.debug("Downscaled shaders again to try for higher framerate");
-				GLUtils::SHADER_FBO_SCALE = 0.25f;
-				GLUtils::doResize();
-			}
-			//GLUtils::DEFAULT_SHADER_FBO_FILTER = GLUtils::FILTER_FBO_LINEAR_NO_MIPMAPPING;
+			//		else
+			//		if(averageFPSTestSecondsPassed>15 && averageFPSTestRendersPerSecond>=50)
+			//		{
+			//			averageFPSTestTotalRenders = 0;
+			//			averageFPSTestSecondsPassed = 0;
+			//			if (GLUtils::SHADER_FBO_SCALE == 0.25f)
+			//			{
+			//				log.debug("Upscaled shaders to try for higher framerate");
+			//				GLUtils::SHADER_FBO_SCALE = 0.5f;
+			//				GLUtils::doResize();
+			//			}
+			//			else			
+			//			if (GLUtils::SHADER_FBO_SCALE == 0.5f)
+			//			{
+			//				log.debug("Upscaled shaders to try for higher framerate");
+			//				GLUtils::SHADER_FBO_SCALE = 1.0f;
+			//				GLUtils::doResize();
+			//			}
+			//		}
+
 		}
-//		else
-//		if(averageFPSTestSecondsPassed>15 && averageFPSTestRendersPerSecond>=50)
-//		{
-//			averageFPSTestTotalRenders = 0;
-//			averageFPSTestSecondsPassed = 0;
-//			if (GLUtils::SHADER_FBO_SCALE == 0.25f)
-//			{
-//				log.debug("Upscaled shaders to try for higher framerate");
-//				GLUtils::SHADER_FBO_SCALE = 0.5f;
-//				GLUtils::doResize();
-//			}
-//			else			
-//			if (GLUtils::SHADER_FBO_SCALE == 0.5f)
-//			{
-//				log.debug("Upscaled shaders to try for higher framerate");
-//				GLUtils::SHADER_FBO_SCALE = 1.0f;
-//				GLUtils::doResize();
-//			}
-//		}
+
 
 	}
 

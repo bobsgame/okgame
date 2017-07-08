@@ -79,6 +79,7 @@ public:
 	//static int easymode;
 	//static int cheater;
 
+
 	BobsGame* bobsGame = nullptr;
 
 	static Gwen::Controls::Canvas* gwenCanvas;
@@ -89,6 +90,7 @@ public:
 	static Logger log;
 
 	static Main* mainObject;
+	static bool mainLoopStarted;
 
 	static Main* getMain();
 	static void setMain(Main* c);

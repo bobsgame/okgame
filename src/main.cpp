@@ -52,6 +52,7 @@ int main(int argc, char* argv[])//int argc, char **argv)
 Logger Main::log = Logger("Main");
 
 Main* Main::mainObject = nullptr;
+bool Main::mainLoopStarted = false;
 
 ArrayList<SDL_Event> Main::events;
 
@@ -790,6 +791,8 @@ void Main::mainLoop()
 { //=========================================================================================================================
 
 	log.info("Begin Main Loop...");
+
+	mainLoopStarted = true;
 
 	while (quit == false)
 	{
