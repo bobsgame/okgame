@@ -81,8 +81,12 @@ Music::Music(Engine *g, string filename)
 
 #endif
 #ifdef USE_SDL_MIXER
-	filename = Main::getPath() + filename;
-	mixChunk = Mix_LoadWAV(filename.c_str());
+	string filePath = Main::getPath() + filename;
+
+	SDL_RWops* file = SDL_RWFromMem(byteData->data(), byteData->size());
+	mixChunk = Mix_LoadWAV_RW(file, 0);
+	file->close(file);
+
 #endif
 
 	loadedInfoDataFromServer = true;
@@ -90,6 +94,8 @@ Music::Music(Engine *g, string filename)
 	setInitialized_S(true);
 
 	AudioManager::musicList->add(this);
+
+	log.info("Loaded "+filename);
 
 }
 
@@ -103,22 +109,26 @@ int Music::getID()
 {
 	return data->getID();
 }
-
+
+
 string& Music::getName()
 {
 	return data->getName();
 }
-
+
+
 string& Music::getFileName()
 {
 	return data->getFileName();
 }
-
+
+
 string& Music::getMD5Name()
 {
 	return data->getMD5Name();
 }
-
+
+
 string Music::getTYPEIDString()
 {
 	return data->getTYPEIDString();
@@ -154,7 +164,7 @@ void Music::setFileExists(bool i)
 	_fileExists = i;
 }
 
-vector<u8>* Music::getByteData()
+ByteArray* Music::getByteData()
 { //=========================================================================================================================
 	return byteData;
 }

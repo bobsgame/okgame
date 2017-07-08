@@ -190,11 +190,11 @@ void BobTexture::setTextureID(GLuint textureID)
 }
 
 //=========================================================================================================================
-u8* BobTexture::getTextureData()
+ByteArray* BobTexture::getTextureData()
 {//=========================================================================================================================
-	u8 *buffer = new u8[(hasAlpha() ? 4 : 3) * texWidth * texHeight];
+	ByteArray *buffer = new ByteArray((hasAlpha() ? 4 : 3) * texWidth * texHeight);
 	bind();
-	glGetTexImage(GL_TEXTURE_2D, 0, hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	glGetTexImage(GL_TEXTURE_2D, 0, hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, buffer->data());
 
 
 	return buffer;

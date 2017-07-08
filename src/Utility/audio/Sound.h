@@ -25,7 +25,7 @@ protected:
 private:
 	SoundData* data = nullptr;
 public:
-	vector<u8>* byteData = nullptr;
+	ByteArray* byteData = nullptr;
 
 private:
 	int channel = 0;
@@ -69,7 +69,7 @@ protected:
 	void setFileExists(bool i);
 
 public:
-	vector<u8>* getByteData();
+	ByteArray* getByteData();
 
 	//The following method was originally marked 'synchronized':
 	void setData_S(SoundData* data);

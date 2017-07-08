@@ -57,10 +57,10 @@ public:
 	ArrayList<WarpArea*> warpAreaList;
 
 
-	vector<int>* hitLayer = nullptr;
-	vector<int>* cameraLayer = nullptr;
-	vector<int>* groundShaderLayer = nullptr;
-	vector<int>* lightMaskLayer = nullptr;
+	IntArray* hitLayer = nullptr;
+	IntArray* cameraLayer = nullptr;
+	IntArray* groundShaderLayer = nullptr;
+	IntArray* lightMaskLayer = nullptr;
 
 
 	HashMap<int,BobTexture*> chunkTexture;//= new HashMap<int, Texture*>();
@@ -69,8 +69,8 @@ public:
 
 
 	//these are accessed by threads but not modified by threads so it's probably OK
-	vector<int>* tilesetIntArray = nullptr;
-	vector<u8>* paletteRGBByteArray = nullptr;
+	IntArray* tilesetIntArray = nullptr;
+	ByteArray* paletteRGBByteArray = nullptr;
 
 	//when this happens i can delete the indexed data and palette data but until then they are being accessed by threads
 	bool allChunkPNGsLoadedAsTextures = false;
@@ -286,7 +286,7 @@ public:
 	void loadUtilityLayers();
 
 
-	void saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, vector<u8>* pal);
+	void saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArray* pal);
 
 
 	void unloadArea(const string& s);
@@ -487,7 +487,7 @@ public:
 	/// <summary>
 	/// returns false if no image is needed
 	/// </summary>
-	bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer);
+	bool drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, IntArray* layerChunkBuffer, bool shadowLayer);
 
 
 	void createHQ2XTexturePNG_THREAD(int chunkX, int chunkY);

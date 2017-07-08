@@ -239,13 +239,13 @@ Map* RandomCharacter::getCurrentMap()
 }
 
 //The following method was originally marked 'synchronized':
-vector<u8>* RandomCharacter::getByteBuffer_S()
+ByteArray* RandomCharacter::getByteBuffer_S()
 { //=========================================================================================================================
 	return textureByteBuffer_S;
 }
 
 //The following method was originally marked 'synchronized':
-void RandomCharacter::setByteBuffer_S(vector<u8>* bb)
+void RandomCharacter::setByteBuffer_S(ByteArray* bb)
 { //=========================================================================================================================
 	textureByteBuffer_S = bb;
 }
@@ -263,7 +263,7 @@ int RandomCharacter::selectRandomSet(Sprite* s)
 		int maxSets = 0;
 		for (int v = 1; v < h; v++)
 		{
-			if (((*s->indexDataIntArray)[v * w] & 0xFF) == 0)
+			if ((s->indexDataIntArray->data()[v * w] & 0xFF) == 0)
 			{
 				maxSets = v - 1;
 				break;
@@ -313,14 +313,14 @@ void RandomCharacter::createRandomTexture()
 		//               Thread::currentThread().setName("RandomCharacter_createRandomSpriteTexture");
 		//
 		//
-		//               u8* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
+		//               ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
 		//               setByteBuffer_S(bb);
 		//            }
 		//         );
 		//      }
 		//      else
 		{
-			vector<u8>* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
+			ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
 			setByteBuffer_S(bb);
 		}
 
@@ -368,7 +368,7 @@ void RandomCharacter::update()
 			{
 				//we're waiting for the thread to finish generating the bytebuffer
 
-				vector<u8>* bb = getByteBuffer_S();
+				ByteArray* bb = getByteBuffer_S();
 				if (bb != nullptr)
 				{
 					uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);

@@ -43,7 +43,7 @@ void TextWindow::init()
 		textBoxTextureByteArray = nullptr;
 	}
 
-	textBoxTextureByteArray = new vector<u8>(getTextManager()->width * getTextManager()->height * 4);
+	textBoxTextureByteArray = new ByteArray(getTextManager()->width * getTextManager()->height * 4);
 
 
 	//		for(int i=0;i<getTextManager()->textureWidth*getTextManager()->textureHeight;i++)
@@ -70,15 +70,15 @@ void TextWindow::init()
 		spriteWindowTextureByteArray = nullptr;
 	}
 
-	spriteWindowTextureByteArray = new vector<u8>(((64) * (64)) * 4);
+	spriteWindowTextureByteArray = new ByteArray(((64) * (64)) * 4);
 
 
 	for (int i = 0; i < (64) * (64); i++)
 	{
-		(*spriteWindowTextureByteArray)[(i * 4) + 0] = 0;
-		(*spriteWindowTextureByteArray)[(i * 4) + 1] = 0;
-		(*spriteWindowTextureByteArray)[(i * 4) + 2] = 0;
-		(*spriteWindowTextureByteArray)[(i * 4) + 3] = 255;
+		spriteWindowTextureByteArray->data()[(i * 4) + 0] = 0;
+		spriteWindowTextureByteArray->data()[(i * 4) + 1] = 0;
+		spriteWindowTextureByteArray->data()[(i * 4) + 2] = 0;
+		spriteWindowTextureByteArray->data()[(i * 4) + 3] = 255;
 	}
 
 	spriteBoxTexture = GLUtils::getTextureFromData("spriteWindow", 64, 64, spriteWindowTextureByteArray);
@@ -290,7 +290,7 @@ void TextWindow::updateSpriteWindowTexture()
 { //=========================================================================================================================
 
 
-	u8* oldtex = spriteWindowTexture->getTextureData();
+	ByteArray* oldtex = spriteWindowTexture->getTextureData();
 	int size_x = spriteWindowTexture->getTextureWidth();
 	int size_y = spriteWindowTexture->getTextureHeight();
 
@@ -311,7 +311,10 @@ void TextWindow::updateSpriteWindowTexture()
 				break;
 			}
 
-			if (oldtex[((size_x * y) + x) * 4 + 0] != static_cast<char>(0) || oldtex[((size_x * y) + x) * 4 + 1] != static_cast<char>(0) || oldtex[((size_x * y) + x) * 4 + 2] != static_cast<char>(0)) // b -  g -  r
+			if (
+				oldtex->data()[((size_x * y) + x) * 4 + 0] != static_cast<char>(0) || 
+				oldtex->data()[((size_x * y) + x) * 4 + 1] != static_cast<char>(0) || 
+				oldtex->data()[((size_x * y) + x) * 4 + 2] != static_cast<char>(0)) // b -  g -  r
 			{
 				if (y < top_filled_pixel)
 				{
@@ -324,12 +327,12 @@ void TextWindow::updateSpriteWindowTexture()
 
 
 	// make 64 * 64 pixel box
-	vector<u8>* newtex = new vector<u8>(boxXY * boxXY * 4);
+	ByteArray* newtex = new ByteArray(boxXY * boxXY * 4);
 
 	// fill with transparent
 	for (int i = 0; i < boxXY * boxXY * 4; i++)
 	{
-		(*newtex)[i] = 0;
+		newtex->data()[i] = 0;
 	}
 
 
@@ -343,10 +346,10 @@ void TextWindow::updateSpriteWindowTexture()
 	{
 		for (int x = 0; x < size_x; x++)
 		{
-			char r = oldtex[((size_x * y) + x) * 4 + 0];
-			char g = oldtex[((size_x * y) + x) * 4 + 1];
-			char b = oldtex[((size_x * y) + x) * 4 + 2];
-			char a = oldtex[((size_x * y) + x) * 4 + 3];
+			char r = oldtex->data()[((size_x * y) + x) * 4 + 0];
+			char g = oldtex->data()[((size_x * y) + x) * 4 + 1];
+			char b = oldtex->data()[((size_x * y) + x) * 4 + 2];
+			char a = oldtex->data()[((size_x * y) + x) * 4 + 3];
 
 
 			int mult = boxXY / size_x;
@@ -357,10 +360,10 @@ void TextWindow::updateSpriteWindowTexture()
 				{
 					int newy = (y + 1) - top_filled_pixel;
 
-					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 0] = r;
-					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 1] = g;
-					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 2] = b;
-					(*newtex)[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 3] = a;
+					newtex->data()[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 0] = r;
+					newtex->data()[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 1] = g;
+					newtex->data()[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 2] = b;
+					newtex->data()[(((boxXY * (((newy) * mult) + yy)) + ((x * mult) + xx)) * 4) + 3] = a;
 				}
 			}
 		}
@@ -376,7 +379,14 @@ void TextWindow::updateSpriteWindowTexture()
 		{
 			for (int y = 0; y < boxXY; y++)
 			{
-				if ((*newtex)[((boxXY * y) + x) * 4 + 3] != 0 && ((*newtex)[((boxXY * y) + x) * 4 + 0] != t || (*newtex)[((boxXY * y) + x) * 4 + 1] != t || (*newtex)[((boxXY * y) + x) * 4 + 2] != t)) // b -  g -  r
+				if (
+					newtex->data()[((boxXY * y) + x) * 4 + 3] != 0 && 
+					(
+						newtex->data()[((boxXY * y) + x) * 4 + 0] != t || 
+						newtex->data()[((boxXY * y) + x) * 4 + 1] != t || 
+						newtex->data()[((boxXY * y) + x) * 4 + 2] != t
+					)
+				) // b -  g -  r
 				{
 					for (int i = 0; i < 8; i++)
 					{
@@ -427,12 +437,12 @@ void TextWindow::updateSpriteWindowTexture()
 
 						if (y + yy >= 0 && y + yy < boxXY && x + xx >= 0 && x + xx < boxXY)
 						{
-							if ((*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 3] == 0)
+							if (newtex->data()[((boxXY * (y + yy)) + (x + xx)) * 4 + 3] == 0)
 							{
-								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 0] = t;
-								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 1] = t;
-								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 2] = t;
-								(*newtex)[((boxXY * (y + yy)) + (x + xx)) * 4 + 3] = t;
+								newtex->data()[((boxXY * (y + yy)) + (x + xx)) * 4 + 0] = t;
+								newtex->data()[((boxXY * (y + yy)) + (x + xx)) * 4 + 1] = t;
+								newtex->data()[((boxXY * (y + yy)) + (x + xx)) * 4 + 2] = t;
+								newtex->data()[((boxXY * (y + yy)) + (x + xx)) * 4 + 3] = t;
 							}
 						}
 					}
@@ -575,14 +585,14 @@ void TextWindow::clearByteArray()
 	{
 		for (int y = 0; y < getTextManager()->height; y++)
 		{
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 0] = 0;
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 1] = 0;
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 2] = 0;
-			(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 3] = 0;
+			textBoxTextureByteArray->data()[((x + (y * getTextManager()->width)) * 4) + 0] = 0;
+			textBoxTextureByteArray->data()[((x + (y * getTextManager()->width)) * 4) + 1] = 0;
+			textBoxTextureByteArray->data()[((x + (y * getTextManager()->width)) * 4) + 2] = 0;
+			textBoxTextureByteArray->data()[((x + (y * getTextManager()->width)) * 4) + 3] = 0;
 
 			if (x < getTextManager()->width && y < getTextManager()->height)
 			{
-				(*textBoxTextureByteArray)[((x + (y * getTextManager()->width)) * 4) + 3] = 255;
+				textBoxTextureByteArray->data()[((x + (y * getTextManager()->width)) * 4) + 3] = 255;
 			}
 		}
 	}
@@ -628,13 +638,13 @@ void TextWindow::setPixel(int index, BobColor* c)
 { //=========================================================================================================================
 
 
-	(*textBoxTextureByteArray)[index + 0] = c->ri();
-	(*textBoxTextureByteArray)[index + 1] = c->gi();
-	(*textBoxTextureByteArray)[index + 2] = c->bi();
-	(*textBoxTextureByteArray)[index + 3] = c->ai(); // was 255
+	textBoxTextureByteArray->data()[index + 0] = c->ri();
+	textBoxTextureByteArray->data()[index + 1] = c->gi();
+	textBoxTextureByteArray->data()[index + 2] = c->bi();
+	textBoxTextureByteArray->data()[index + 3] = c->ai(); // was 255
 }
 
-vector<u8>* BobFont::font_Palette_ByteArray = nullptr;
+ByteArray* BobFont::font_Palette_ByteArray = nullptr;
 
 void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 { //=========================================================================================================================
@@ -687,7 +697,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 			if (index > 2)
 			{
 				// get the gray color from the getText palette
-				int byte1 = (int)((*BobFont::font_Palette_ByteArray)[index * 2 + 0] & 255);
+				int byte1 = (int)(BobFont::font_Palette_ByteArray->data()[index * 2 + 0] & 255);
 				//int byte2 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 1] & 255);
 				//int abgr1555 = (byte2 << 8) + byte1;
 				int r = 255 - (int)((((byte1 & 31)) / 32.0f) * 255.0f);

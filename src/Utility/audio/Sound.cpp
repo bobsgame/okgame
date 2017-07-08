@@ -75,8 +75,13 @@ Sound::Sound(Engine *g, string filename)
 	soLoudWave->load(filename.c_str());
 #endif
 #ifdef USE_SDL_MIXER
-	filename = Main::getPath() + filename;
-	mixChunk = Mix_LoadWAV(filename.c_str());
+	string filePath = Main::getPath() + filename;
+	SDL_RWops* file = SDL_RWFromMem(byteData->data(),byteData->size());
+	mixChunk = Mix_LoadWAV_RW(file, 0);
+	file->close(file);
+	
+	
+
 #endif
 
 	loadedInfoDataFromServer = true;
@@ -84,6 +89,8 @@ Sound::Sound(Engine *g, string filename)
 	setInitialized_S(true);
 
 	AudioManager::soundList->add(this);
+
+	log.info("Loaded " + filename);
 
 }
 
@@ -96,22 +103,26 @@ int Sound::getID()
 {
 	return data->getID();
 }
-
+
+
 string& Sound::getName()
 {
 	return data->getName();
 }
-
+
+
 string& Sound::getFileName()
 {
 	return data->getFileName();
 }
-
+
+
 string& Sound::getMD5Name()
 {
 	return data->getMD5Name();
 }
-
+
+
 string Sound::getTYPEIDString()
 {
 	return data->getTYPEIDString();
@@ -147,7 +158,7 @@ void Sound::setFileExists(bool i)
 	_fileExists = i;
 }
 
-vector<u8>* Sound::getByteData()
+ByteArray* Sound::getByteData()
 { //=========================================================================================================================
 	return byteData;
 }

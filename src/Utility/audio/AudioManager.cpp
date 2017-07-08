@@ -83,8 +83,9 @@ void AudioManager::initAudioLibrary()
 //=========================================================================================================================
 void AudioManager::init()
 {//=========================================================================================================================
+	log.info("AudioManager init...");
 
-
+	log.info("Loading built in sounds");
 	{
 		string spriteFolderString = Main::getPath() + "data/sounds/";
 		Path spriteFolderPath(spriteFolderString);
@@ -104,6 +105,7 @@ void AudioManager::init()
 		}
 	}
 
+	log.info("Loading built in music");
 	{
 		string spriteFolderString = Main::getPath() + "data/music/";
 		Path spriteFolderPath(spriteFolderString);

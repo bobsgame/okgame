@@ -234,7 +234,7 @@ void ControlsManager::initControllers()
 
 
 
-	string path = string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + "controls.cfg";
+	//string path = string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + "controls.cfg";
 
 }
 

@@ -31,8 +31,8 @@ public:
 	static ctpl::thread_pool* generatePNGThreadPool;
 
 
-	vector<int>* indexDataIntArray = nullptr;
-	vector<u8>* paletteRGBByteArray = nullptr;
+	IntArray* indexDataIntArray = nullptr;
+	ByteArray* paletteRGBByteArray = nullptr;
 
 	BobTexture* texture = nullptr;
 	BobTexture* shadowTexture = nullptr;
@@ -107,9 +107,9 @@ public:
 	//	}
 
 	void loadTextures();
-	vector<u8>* getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set);
+	ByteArray* getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set);
 	//The following method was originally marked 'synchronized':
-	vector<u8>* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
+	ByteArray* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
 	//The following method was originally marked 'synchronized':
 	void createSpriteTexturePNG_S();
 	//The following method was originally marked 'synchronized':

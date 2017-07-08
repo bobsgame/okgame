@@ -132,7 +132,72 @@ using namespace std;
 using namespace std;
 
 
+class ByteArray
+{
+	u8* bytes = nullptr;
+	unsigned int len = 0;
+public:
 
+	ByteArray(u8* bytes, unsigned int len)
+	{
+		this->bytes = bytes;
+		this->len = len;
+	}
+
+	ByteArray(unsigned int len)
+	{
+		this->bytes = (u8*)malloc(len);// new u8[len];
+		this->len = len;
+	}
+
+	~ByteArray()
+	{
+		free(bytes);
+		//delete[] bytes;
+	}
+
+	u8* data()
+	{
+		return bytes;
+	}
+
+	long long size()
+	{
+		return len;
+	}
+};
+
+class IntArray
+{
+	int* ints = nullptr;
+	unsigned int len = 0;
+public:
+
+	IntArray(int* ints, unsigned int len)
+	{
+		this->ints = ints;
+		this->len = len;
+	}
+	IntArray(unsigned int len)
+	{
+		this->ints = (int*)malloc(len);// new int[len];
+		this->len = len;
+	}
+	~IntArray()
+	{
+		free(ints);
+		//delete[] ints;
+	}
+	int* data()
+	{
+		return ints;
+	}
+
+	long long size()
+	{
+		return len;
+	}
+};
 
 
 typedef struct

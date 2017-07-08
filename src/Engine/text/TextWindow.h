@@ -26,10 +26,10 @@ public:
 
 	float scrollPercent = 0;
 
-	vector<u8>* textBoxTextureByteArray = nullptr;
+	ByteArray* textBoxTextureByteArray = nullptr;
 	//u8* textBoxTexturePixelsByteBuffer;
 
-	vector<u8>* spriteWindowTextureByteArray = nullptr;
+	ByteArray* spriteWindowTextureByteArray = nullptr;
 	//u8* spriteWindowTexturePixelsByteBuffer;
 
 

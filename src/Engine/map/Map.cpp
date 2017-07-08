@@ -1995,7 +1995,7 @@ void Map::loadUtilityLayers()
 	}
 }
 
-void Map::saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, vector<u8>* pal)
+void Map::saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArray* pal)
 { //=========================================================================================================================
 
 	//I should just save each layer as the MD5 in the cache folder
@@ -2006,14 +2006,14 @@ void Map::saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, ve
 		if (MapData::isTileLayer(l))
 		{
 			int index = (getWidthTiles1X() * getHeightTiles1X() * l);
-			vector<int>* layer = new vector<int>(getWidthTiles1X() * getHeightTiles1X());
+			IntArray* layer = new IntArray(getWidthTiles1X() * getHeightTiles1X());
 			for (int i = 0; i < getWidthTiles1X() * getHeightTiles1X(); i++)
 			{
-				(*layer)[i] = (*intArrayAllLayers)[index + i];
+				layer->data()[i] = intArrayAllLayers->data()[index + i];
 			}
 
 			//save to cache folder as md5 name
-			vector<u8>* byteArray = FileUtils::getByteArrayFromIntArray(layer);
+			ByteArray* byteArray = FileUtils::getByteArrayFromIntArray(layer);
 			string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 			FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 
@@ -2073,7 +2073,7 @@ void Map::saveDataToCache(vector<int>* intArrayAllLayers, vector<int>* tiles, ve
 		}
 	}
 	//save tiles
-	vector<u8>* byteArray = FileUtils::getByteArrayFromIntArray(tiles);
+	ByteArray* byteArray = FileUtils::getByteArrayFromIntArray(tiles);
 	string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 	FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 	setTilesMD5(md5FileName);
@@ -2459,7 +2459,7 @@ bool Map::getHitLayerValueAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ)
 	int index = (tiley * tilew) + tilex;
 
 
-	if ((*hitLayer)[index] == 0)
+	if (hitLayer->data()[index] == 0)
 	{
 		return false;
 	}
@@ -2492,7 +2492,7 @@ int Map::getCameraBoundsFXLayerAtXYPixels(float mapXPixelsHQ, float mapYPixelsHQ
 	int tilew = (getWidthPixelsHQ() / 2) / 8;
 	int index = (tiley * tilew) + tilex;
 
-	return (*cameraLayer)[index];
+	return cameraLayer->data()[index];
 }
 
 bool Map::isXYWithinScreenByAmt(float x, float y, int amt)
@@ -3074,8 +3074,8 @@ void Map::startThreadsForMissingChunkPNGs()
 //					int threadChunkX = chunkX;
 //					int threadChunkY = chunkY;
 //					int threadChunkIndex = chunkIndex;
-					//shared_ptr<vector<int>*> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
-					//shared_ptr<vector<u8>*> threadPaletteRGBByteArray = paletteRGBByteArray;
+					//shared_ptr<IntArray*> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
+					//shared_ptr<ByteArray*> threadPaletteRGBByteArray = paletteRGBByteArray;
 
 
 					if (MapManager::useThreads == true)
@@ -3542,7 +3542,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	G.fillRect(0, 0, chunkImageBorder.getWidth(), chunkImageBorder.getHeight());
 	G.dispose();*/
 
-	vector<int>* layerChunkBuffer = new vector<int>((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2));
+	IntArray* layerChunkBuffer = new IntArray((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2));
 
 	string layerFileName = "";
 
@@ -3652,7 +3652,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 
 #include <fstream>
 
-bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, vector<int>* layerChunkBuffer, bool shadowLayer)
+bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, IntArray* layerChunkBuffer, bool shadowLayer)
 { //=========================================================================================================================
 
 
@@ -3735,7 +3735,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 					{
 						if (x >= getWidthTiles1X() || x < 0)
 						{
-							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = 0;
+							layerChunkBuffer->data()[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = 0;
 						}
 						else
 						{
@@ -3760,7 +3760,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 								isBlank = false;
 							}
 
-							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = result;
+							layerChunkBuffer->data()[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + ((x + 1) - startX)] = result;
 						}
 					}
 				}
@@ -3775,7 +3775,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 					{
 						if (x >= getWidthTiles1X() || x < 0)
 						{
-							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = 0;
+							layerChunkBuffer->data()[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = 0;
 						}
 						else
 						{
@@ -3808,7 +3808,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 								isBlank = false;
 							}
 
-							(*layerChunkBuffer)[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = result;
+							layerChunkBuffer->data()[(((y + 1) - startY) * (chunkSizeTiles1X + 2)) + (x - startX)] = result;
 						}
 					}
 				}
@@ -3833,7 +3833,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 	{
 		for (int tx = 0; tx < (chunkSizeTiles1X + 2); tx++)
 		{
-			int tile = (*layerChunkBuffer)[(ty * (chunkSizeTiles1X + 2)) + tx];
+			int tile = layerChunkBuffer->data()[(ty * (chunkSizeTiles1X + 2)) + tx];
 
 			//skip black tiles on the ground layer
 			if (groundLayer == true && tile == 1)
@@ -3866,7 +3866,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 
 					int tilesetIndex = ((tile * 64) + (py * 8 + px)); //*2;
 
-					int paletteIndex = (*tilesetIntArray)[tilesetIndex];
+					int paletteIndex = tilesetIntArray->data()[tilesetIndex];
 
 					//					int byte1 = tileset[tilesetIndex] & 0xFF;
 					//					int byte2 = tileset[tilesetIndex+1] & 0xFF;
@@ -3875,9 +3875,9 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 
 					if (paletteIndex != 0)
 					{
-						u8 paletteR = (*paletteRGBByteArray)[(paletteIndex * 3) + (0)] & 0xFF;
-						u8 paletteG = (*paletteRGBByteArray)[(paletteIndex * 3) + (1)] & 0xFF;
-						u8 paletteB = (*paletteRGBByteArray)[(paletteIndex * 3) + (2)] & 0xFF;
+						u8 paletteR = paletteRGBByteArray->data()[(paletteIndex * 3) + (0)] & 0xFF;
+						u8 paletteG = paletteRGBByteArray->data()[(paletteIndex * 3) + (1)] & 0xFF;
+						u8 paletteB = paletteRGBByteArray->data()[(paletteIndex * 3) + (2)] & 0xFF;
 
 						BobColor* c = new BobColor(paletteR, paletteG, paletteB);
 

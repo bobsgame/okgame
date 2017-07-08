@@ -18,7 +18,7 @@ class BobFont
 public:
 	static Logger log;
 
-	static vector<u8>* font_Palette_ByteArray;
+	static ByteArray* font_Palette_ByteArray;
 
 
 	static TTF_Font* ttf_bobsgame_8;
@@ -91,7 +91,7 @@ public:
 	int blockHeight = 32; //this is the height of each character block, including spacing between glyphs
 	int blockWidth = 32; //this is the width of the input bitmap
 
-	vector<u8>* byteArray = nullptr; //this holds the actual indexed pixel data
+	ByteArray* byteArray = nullptr; //this holds the actual indexed pixel data
 
 	bool outlined = false;
 

@@ -114,7 +114,7 @@ private:
 
 public:
 	BobTexture* texture = nullptr;
-	vector<u8>* textureByteArray = nullptr;
+	ByteArray* textureByteArray = nullptr;
 	int texWidth = 0;
 	int texHeight = 0;
 

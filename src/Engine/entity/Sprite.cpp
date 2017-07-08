@@ -689,33 +689,33 @@ void Sprite::loadTextures()
 
 
 //=========================================================================================================================
-vector<u8>* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set)
+ByteArray* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set)
 { //=========================================================================================================================
 
-	vector<u8>* rgb = new vector<u8>(3);
-	(*rgb)[0] = r;
-	(*rgb)[1] = g;
-	(*rgb)[2] = b;
+	ByteArray* rgb = new ByteArray(3);
+	rgb->data()[0] = r;
+	rgb->data()[1] = g;
+	rgb->data()[2] = b;
 
 
 	int w = s->getImageWidth();
 
 	for (int x = 0; x < w; x++)
 	{
-		int oldIndex = (*s->indexDataIntArray)[x] & 0xFF;
+		int oldIndex = s->indexDataIntArray->data()[x] & 0xFF;
 
-		int oldR = (*s->paletteRGBByteArray)[oldIndex * 3 + 0] & 0xFF;
-		int oldG = (*s->paletteRGBByteArray)[oldIndex * 3 + 1] & 0xFF;
-		int oldB = (*s->paletteRGBByteArray)[oldIndex * 3 + 2] & 0xFF;
+		int oldR = s->paletteRGBByteArray->data()[oldIndex * 3 + 0] & 0xFF;
+		int oldG = s->paletteRGBByteArray->data()[oldIndex * 3 + 1] & 0xFF;
+		int oldB = s->paletteRGBByteArray->data()[oldIndex * 3 + 2] & 0xFF;
 
 		if (r == oldR && g == oldG && b == oldB)
 		{
-			int newIndex = (*s->indexDataIntArray)[(w * set) + x];
+			int newIndex = s->indexDataIntArray->data()[(w * set) + x];
 
 
-			(*rgb)[0] = (*s->paletteRGBByteArray)[newIndex * 3 + 0] & 0xFF;
-			(*rgb)[1] = (*s->paletteRGBByteArray)[newIndex * 3 + 1] & 0xFF;
-			(*rgb)[2] = (*s->paletteRGBByteArray)[newIndex * 3 + 2] & 0xFF;
+			rgb->data()[0] = s->paletteRGBByteArray->data()[newIndex * 3 + 0] & 0xFF;
+			rgb->data()[1] = s->paletteRGBByteArray->data()[newIndex * 3 + 1] & 0xFF;
+			rgb->data()[2] = s->paletteRGBByteArray->data()[newIndex * 3 + 2] & 0xFF;
 
 			return rgb;
 		}
@@ -725,12 +725,12 @@ vector<u8>* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int
 }
 
 //The following method was originally marked 'synchronized':
-vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet)
+ByteArray* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet)
 { //=========================================================================================================================
 
 
-	vector<int>* data = indexDataIntArray;
-	vector<u8>* pal = paletteRGBByteArray;
+	IntArray* data = indexDataIntArray;
+	ByteArray* pal = paletteRGBByteArray;
 
 
 	//create bytebuffer
@@ -747,11 +747,8 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 	int texHeight = Math::getClosestPowerOfTwo(imageHeight);
 
 
-	vector<u8>* textureByteArray = new vector<u8>(texWidth * texHeight * 4);
+	ByteArray* textureByteArray = new ByteArray(texWidth * texHeight * 4);
 
-	//direct method, uses ram outside of the JVM
-	//   u8* textureByteBuffer = ByteBuffer::allocateDirect(textureByteArray->size());
-	//   textureByteBuffer->order(ByteOrder::nativeOrder());
 
 
 	//for each pixel in data
@@ -779,7 +776,7 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 				int a = 255;
 
 
-				int index = (*data)[(f * w * h) + y * w + x]; // & 0xFF;
+				int index = data->data()[(f * w * h) + y * w + x]; // & 0xFF;
 
 
 				if (index == 0)
@@ -804,9 +801,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 						}
 						else
 						{
-							r = (*pal)[index * 3 + 0] & 0xFF;
-							g = (*pal)[index * 3 + 1] & 0xFF;
-							b = (*pal)[index * 3 + 2] & 0xFF;
+							r = pal->data()[index * 3 + 0] & 0xFF;
+							g = pal->data()[index * 3 + 1] & 0xFF;
+							b = pal->data()[index * 3 + 2] & 0xFF;
 
 
 							if (r != g || g != b) //skip gray colors, lots of hair is this color.
@@ -824,7 +821,7 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 								//DONE: have these in memory on load.
 								//random sprites should contain their own data and pal.
 
-								vector<u8>* rgb = nullptr;
+								ByteArray* rgb = nullptr;
 
 								if (carSet != -1)
 								{
@@ -832,9 +829,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 									if (rgb != nullptr)
 									{
-										r = (*rgb)[0];
-										g = (*rgb)[1];
-										b = (*rgb)[2];
+										r = rgb->data()[0];
+										g = rgb->data()[1];
+										b = rgb->data()[2];
 									}
 								}
 								else
@@ -843,9 +840,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 									if (rgb != nullptr)
 									{
-										r = (*rgb)[0];
-										g = (*rgb)[1];
-										b = (*rgb)[2];
+										r = rgb->data()[0];
+										g = rgb->data()[1];
+										b = rgb->data()[2];
 									}
 									else
 									{
@@ -854,9 +851,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 									if (rgb != nullptr)
 									{
-										r = (*rgb)[0];
-										g = (*rgb)[1];
-										b = (*rgb)[2];
+										r = rgb->data()[0];
+										g = rgb->data()[1];
+										b = rgb->data()[2];
 									}
 									else
 									{
@@ -865,9 +862,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 									if (rgb != nullptr)
 									{
-										r = (*rgb)[0];
-										g = (*rgb)[1];
-										b = (*rgb)[2];
+										r = rgb->data()[0];
+										g = rgb->data()[1];
+										b = rgb->data()[2];
 									}
 									else
 									{
@@ -876,9 +873,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 									if (rgb != nullptr)
 									{
-										r = (*rgb)[0];
-										g = (*rgb)[1];
-										b = (*rgb)[2];
+										r = rgb->data()[0];
+										g = rgb->data()[1];
+										b = rgb->data()[2];
 									}
 									else
 									{
@@ -887,9 +884,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 									if (rgb != nullptr)
 									{
-										r = (*rgb)[0];
-										g = (*rgb)[1];
-										b = (*rgb)[2];
+										r = rgb->data()[0];
+										g = rgb->data()[1];
+										b = rgb->data()[2];
 									}
 									else
 									{
@@ -898,9 +895,9 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 
 									if (rgb != nullptr)
 									{
-										r = (*rgb)[0];
-										g = (*rgb)[1];
-										b = (*rgb)[2];
+										r = rgb->data()[0];
+										g = rgb->data()[1];
+										b = rgb->data()[2];
 									}
 								}
 
@@ -918,10 +915,10 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 				{
 					//now fill textureByteArray with this color
 
-					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 0] = static_cast<char>(r);
-					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 1] = static_cast<char>(g);
-					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 2] = static_cast<char>(b);
-					(*textureByteArray)[(f * texWidth * h + (y * texWidth + x)) * 4 + 3] = static_cast<char>(a);
+					textureByteArray->data()[(f * texWidth * h + (y * texWidth + x)) * 4 + 0] = static_cast<char>(r);
+					textureByteArray->data()[(f * texWidth * h + (y * texWidth + x)) * 4 + 1] = static_cast<char>(g);
+					textureByteArray->data()[(f * texWidth * h + (y * texWidth + x)) * 4 + 2] = static_cast<char>(b);
+					textureByteArray->data()[(f * texWidth * h + (y * texWidth + x)) * 4 + 3] = static_cast<char>(a);
 
 				}
 			}
@@ -947,10 +944,10 @@ vector<u8>* Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSe
 			{
 				BobColor* c = new BobColor(hq2xSpriteBufferedImage->getRGBA(x, y));// , true);
 
-				(*textureByteArray)[(y * texWidth + x) * 4 + 0] = static_cast<u8>(c->ri());
-				(*textureByteArray)[(y * texWidth + x) * 4 + 1] = static_cast<u8>(c->gi());
-				(*textureByteArray)[(y * texWidth + x) * 4 + 2] = static_cast<u8>(c->bi());
-				(*textureByteArray)[(y * texWidth + x) * 4 + 3] = static_cast<u8>(c->ai());
+				textureByteArray->data()[(y * texWidth + x) * 4 + 0] = static_cast<u8>(c->ri());
+				textureByteArray->data()[(y * texWidth + x) * 4 + 1] = static_cast<u8>(c->gi());
+				textureByteArray->data()[(y * texWidth + x) * 4 + 2] = static_cast<u8>(c->bi());
+				textureByteArray->data()[(y * texWidth + x) * 4 + 3] = static_cast<u8>(c->ai());
 			}
 		}
 
@@ -1002,7 +999,7 @@ void Sprite::createSpriteTexturePNG_S()
 				u8 a = 255;
 
 
-				int index = (*indexDataIntArray)[(f * w * h) + (y * w) + x]; // & 0xFF;
+				int index = indexDataIntArray->data()[(f * w * h) + (y * w) + x]; // & 0xFF;
 
 
 				if (index == 0)
@@ -1027,9 +1024,9 @@ void Sprite::createSpriteTexturePNG_S()
 						}
 						else
 						{
-							r = (*paletteRGBByteArray)[index * 3 + 0] & 0xFF;
-							g = (*paletteRGBByteArray)[index * 3 + 1] & 0xFF;
-							b = (*paletteRGBByteArray)[index * 3 + 2] & 0xFF;
+							r = paletteRGBByteArray->data()[index * 3 + 0] & 0xFF;
+							g = paletteRGBByteArray->data()[index * 3 + 1] & 0xFF;
+							b = paletteRGBByteArray->data()[index * 3 + 2] & 0xFF;
 						}
 					}
 				}
@@ -1090,7 +1087,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 		{
 			for (int x = 0; x < width; x++)
 			{
-				int index = (*indexDataIntArray)[(f * width * height) + y * width + x]; // & 0xFF;
+				int index = indexDataIntArray->data()[(f * width * height) + y * width + x]; // & 0xFF;
 
 				if (index != 0)
 				{
@@ -1101,7 +1098,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 					{
 						for (int xx = 0; xx < width; xx++)
 						{
-							if (((*indexDataIntArray)[(f * width * height) + yy * width + xx]) != 0) // & 0xFF
+							if ((indexDataIntArray->data()[(f * width * height) + yy * width + xx]) != 0) // & 0xFF
 							{
 								bottom_pixel_y = yy;
 								yy = -1;

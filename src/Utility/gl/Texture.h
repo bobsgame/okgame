@@ -102,5 +102,5 @@ class Logger;
 
 
 	public:
-		u8* getTextureData();
+		ByteArray* getTextureData();
 	};

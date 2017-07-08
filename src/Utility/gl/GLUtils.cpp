@@ -164,9 +164,15 @@ void GLUtils::cleanup()
 void GLUtils::initGL(char* windowName)
 { //=========================================================================================================================
 
+	log.info("GLUtils init...");
+
 	//-----------------------------
 	//set up display mode
 	//-----------------------------
+
+	Uint32 start, now, totalStart, totalNow;
+	start = SDL_GetPerformanceCounter();
+	totalStart = SDL_GetPerformanceCounter();
 
 	SDL_DisplayMode dm;
 	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) 
@@ -177,17 +183,21 @@ void GLUtils::initGL(char* windowName)
 	monitorHeight = dm.h;
 	log.debug("Desktop display mode is "+to_string(dm.w)+"x" + to_string(dm.h) + "px @ " + to_string(dm.refresh_rate) + "hz.");
 
-
 	checkSDLError("Get desktop display mode");
+
 
 	getAvailableDisplayModes();
 
+	now = SDL_GetPerformanceCounter();
+	log.info("Get display modes took "+to_string((double)((now - start)) / SDL_GetPerformanceFrequency())+"s");
+	start = SDL_GetPerformanceCounter();
 	//-----------------------------
 	//set up window
 	//-----------------------------
 
 	//	setTitle(windowName); //ULTRA \"bob's game\" ONLINE");//world of \"bob's game\"");
 
+	
 
 	log.info("Setting up SDL window...");
 
@@ -213,6 +223,8 @@ void GLUtils::initGL(char* windowName)
 		SDL_WINDOW_OPENGL);
 	checkSDLError("SDL_CreateWindow");
 
+
+
 	string path = Main::getPath() + "bobsgame.bmp";
 	SDL_SetWindowIcon(window, SDL_LoadBMP(path.c_str()));
 	checkSDLError("SDL_SetWindowIcon");
@@ -222,6 +234,10 @@ void GLUtils::initGL(char* windowName)
 		cerr << "There was an error creating the window: " << SDL_GetError() << endl;
 		exit(1);
 	}
+
+	now = SDL_GetPerformanceCounter();
+	log.info("Create window took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	start = SDL_GetPerformanceCounter();
 
 	getCurrentDisplayMode();
 
@@ -259,6 +275,8 @@ void GLUtils::initGL(char* windowName)
 		exit(1);
 	}
 
+
+
 	const unsigned char* version = glGetString(GL_VERSION);
 	if (version == nullptr)
 	{
@@ -272,6 +290,11 @@ void GLUtils::initGL(char* windowName)
 
 	e("SDL_GL_MakeCurrent");
 	
+
+	now = SDL_GetPerformanceCounter();
+	log.info("Create GL context took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	start = SDL_GetPerformanceCounter();
+
 
 	SDL_ShowCursor(1);
 
@@ -431,6 +454,9 @@ void GLUtils::initGL(char* windowName)
 
 	e("Set GL state");
 
+	now = SDL_GetPerformanceCounter();
+	log.info("Setup GL state took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	start = SDL_GetPerformanceCounter();
 
 
 	//-----------------------------
@@ -645,6 +671,10 @@ void GLUtils::initGL(char* windowName)
 	if (usingVSync)log.info("Using vsync.");
 	else log.warn("No vsync.");
 
+	now = SDL_GetPerformanceCounter();
+	log.info("Setting up swap took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	start = SDL_GetPerformanceCounter();
+
 
 	//-----------------------------
 	//set up framebuffer
@@ -792,6 +822,9 @@ void GLUtils::initGL(char* windowName)
 
 	}
 
+	now = SDL_GetPerformanceCounter();
+	log.info("Setting up FBO took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	start = SDL_GetPerformanceCounter();
 
 
 
@@ -984,6 +1017,9 @@ void GLUtils::initGL(char* windowName)
 		log.warn("Shaders not supported.");
 	}
 
+	now = SDL_GetPerformanceCounter();
+	log.info("Setting up shaders took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	start = SDL_GetPerformanceCounter();
 
 
 	log.info("GL setup complete.");
@@ -992,6 +1028,10 @@ void GLUtils::initGL(char* windowName)
 	log.info("Loading graphics");
 	blankTexture = GLUtils::getTextureFromPNGExePath("data/misc/blank.png");
 	boxTexture = GLUtils::getTextureFromPNGExePath("data/misc/box.png");
+
+	totalNow = SDL_GetPerformanceCounter();
+	log.info("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "s");
+	
 
 
 }
@@ -1392,7 +1432,7 @@ int GLUtils::setupFBOTexture(int tex, int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-	delete data;
+	delete[] data;
 
 	return tex;
 }
@@ -3259,7 +3299,7 @@ GLuint GLUtils::createTextureID()
 }
 
 //=========================================================================================================================
-BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, vector<u8>* data)
+BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data)
 {//=========================================================================================================================
 
 
@@ -3306,15 +3346,15 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 
 
 
-	vector<u8>* t = new vector<u8>(texWidth*texHeight * 4);
+	ByteArray* t = new ByteArray(texWidth*texHeight * 4);
 
 	for (int y = 0; y<imageHeight; y++)
 		for (int x = 0; x<imageWidth; x++)
 		{
-			(*t)[(((y*texWidth) + x) * 4) + 0] = (*data)[(((y*imageWidth) + x) * 4) + 0];//bgra
-			(*t)[(((y*texWidth) + x) * 4) + 1] = (*data)[(((y*imageWidth) + x) * 4) + 1];
-			(*t)[(((y*texWidth) + x) * 4) + 2] = (*data)[(((y*imageWidth) + x) * 4) + 2];//bgra
-			(*t)[(((y*texWidth) + x) * 4) + 3] = (*data)[(((y*imageWidth) + x) * 4) + 3];
+			t->data()[(((y*texWidth) + x) * 4) + 0] = data->data()[(((y*imageWidth) + x) * 4) + 0];//bgra
+			t->data()[(((y*texWidth) + x) * 4) + 1] = data->data()[(((y*imageWidth) + x) * 4) + 1];
+			t->data()[(((y*texWidth) + x) * 4) + 2] = data->data()[(((y*imageWidth) + x) * 4) + 2];//bgra
+			t->data()[(((y*texWidth) + x) * 4) + 3] = data->data()[(((y*imageWidth) + x) * 4) + 3];
 
 		}
 	GLUtils::setDefaultTextureParams();

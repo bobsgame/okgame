@@ -176,6 +176,9 @@ void Main::mainInit()
  }
  */
 
+
+
+
 	new Logger();
 
 	BobColor::initPresetColors();
@@ -382,14 +385,14 @@ void Main::mainInit()
 
 
 
-//#define PUZZLE 1
+#define PUZZLE 1
 
 #ifdef PUZZLE
 
-	log.info("Create BobsGame");
+	log.info("Create BobsGame...");
 	bobsGame = new BobsGame();
 	stateManager->setState(bobsGame);
-	log.info("Init BobsGame");
+	log.info("Init BobsGame...");
 	bobsGame->init();
 
 	bobNet->addEngineToForwardMessagesTo(stateManager->getState());

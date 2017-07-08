@@ -475,52 +475,52 @@ void FileUtils::makeDir(const string& cs)
 //	return new short;
 //}
 
+////=========================================================================================================================
+//vector<uint16_t>* FileUtils::loadShortFile(string filename)
+//{//=========================================================================================================================
+//
+//	ByteArray *byteArray = loadByteFileFromExePath(filename);
+//	
+//	vector<uint16_t> *shortArray = new vector<uint16_t>(byteArray->size() / 2);
+//	
+//			for(int x=0;x<shortArray->size();x++)
+//			{
+//				u8 sbyte1=(*byteArray)[x*2+0];//signed byte 1
+//				u8 sbyte2=(*byteArray)[x*2+1];
+//	
+//	
+//				u8 ubyte1 = sbyte1 & 0xFF;
+//				u8 ubyte2 = sbyte2 & 0xFF;
+//	
+//				short result = (ubyte1<<8) + ubyte2;
+//	
+//				(*shortArray)[x]=result;
+//			}
+//
+//			delete byteArray;//does this leak? delete[] ?
+//	//-------------------
+//	//alt
+//	//-------------------
+//
+//	//return getIntArrayFromByteArray(loadByteFile(filename));
+//
+//	return shortArray;
+//}
+
 //=========================================================================================================================
-vector<uint16_t>* FileUtils::loadShortFile(string filename)
+IntArray* FileUtils::loadIntFile(string filename)
 {//=========================================================================================================================
 
-	vector<u8> *byteArray = loadByteFileFromExePath(filename);
-	
-	vector<uint16_t> *shortArray = new vector<uint16_t>(byteArray->size() / 2);
-	
-			for(int x=0;x<shortArray->size();x++)
-			{
-				u8 sbyte1=(*byteArray)[x*2+0];//signed byte 1
-				u8 sbyte2=(*byteArray)[x*2+1];
-	
-	
-				u8 ubyte1 = sbyte1 & 0xFF;
-				u8 ubyte2 = sbyte2 & 0xFF;
-	
-				short result = (ubyte1<<8) + ubyte2;
-	
-				(*shortArray)[x]=result;
-			}
+	ByteArray* byteArray = loadByteFile(filename);
 
-			delete byteArray;//does this leak? delete[] ?
-	//-------------------
-	//alt
-	//-------------------
-
-	//return getIntArrayFromByteArray(loadByteFile(filename));
-
-	return shortArray;
-}
-
-//=========================================================================================================================
-vector<int>* FileUtils::loadIntFile(string filename)
-{//=========================================================================================================================
-
-	vector<u8> *byteArray = loadByteFile(filename);
-
-	vector<int> *intArray = new vector<int>(byteArray->size() / 4);
+	IntArray* intArray = new IntArray(byteArray->size() / 4);
 
 	for (int x = 0; x<intArray->size(); x++)
 	{
-		u8 sbyte1 = (*byteArray)[x * 4 + 0];//signed byte 1
-		u8 sbyte2 = (*byteArray)[x * 4 + 1];
-		u8 sbyte3 = (*byteArray)[x * 4 + 2];
-		u8 sbyte4 = (*byteArray)[x * 4 + 3];
+		u8 sbyte1 = byteArray->data()[x * 4 + 0];//signed byte 1
+		u8 sbyte2 = byteArray->data()[x * 4 + 1];
+		u8 sbyte3 = byteArray->data()[x * 4 + 2];
+		u8 sbyte4 = byteArray->data()[x * 4 + 3];
 
 		u8 ubyte1 = sbyte1 & 0xFF;
 		u8 ubyte2 = sbyte2 & 0xFF;
@@ -529,7 +529,7 @@ vector<int>* FileUtils::loadIntFile(string filename)
 
 		int result = (ubyte1 << 24) + (ubyte2 << 16) + (ubyte3 << 8) + ubyte4;
 
-		(*intArray)[x] = result;
+		intArray->data()[x] = result;
 	}
 
 	delete byteArray;//does this leak? delete[] ?
@@ -542,7 +542,7 @@ vector<int>* FileUtils::loadIntFile(string filename)
 	return intArray;
 }
 
-vector<int>* FileUtils::loadIntFileFromExePath(string filename)
+IntArray* FileUtils::loadIntFileFromExePath(string filename)
 {//=========================================================================================================================
 	filename = Main::getPath() + filename;
 
@@ -550,20 +550,20 @@ vector<int>* FileUtils::loadIntFileFromExePath(string filename)
 }
 
 // ===============================================================================================
-vector<u8>* FileUtils::getByteArrayFromIntArray(vector<int>*intArray)
+ByteArray* FileUtils::getByteArrayFromIntArray(IntArray*intArray)
 {// ===============================================================================================
 
-	vector<u8>* byteArray = new vector<u8>(intArray->size() * 4);
+	ByteArray* byteArray = new ByteArray(intArray->size() * 4);
 
 	for (int i = 0; i < intArray->size(); i++)
 	{
 
-		int n = intArray->at(i);
+		int n = intArray->data()[i];
 
-		byteArray->push_back((n >> 24) & 0xFF);
-		byteArray->push_back((n >> 16) & 0xFF);
-		byteArray->push_back((n >> 8) & 0xFF);
-		byteArray->push_back(n & 0xFF);
+		byteArray->data()[i*4+0]=((n >> 24) & 0xFF);
+		byteArray->data()[i*4+1]=((n >> 16) & 0xFF);
+		byteArray->data()[i*4+2]=((n >> 8) & 0xFF);
+		byteArray->data()[i*4+3]=(n & 0xFF);
 	}
 
 	return byteArray;
@@ -760,38 +760,116 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 
 
 //=========================================================================================================================
-vector<u8>* FileUtils::loadByteFile(string filename)
+ByteArray* FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
-	// open the file:
-	std::ifstream file(filename, std::ios::binary);
+//	Uint32 start, now;
+//	start = SDL_GetPerformanceCounter();
 
-	// Stop eating new lines in binary mode!!!
-	file.unsetf(std::ios::skipws);
 
-	// get its size:
-	std::streampos fileSize;
 
-	file.seekg(0, std::ios::end);
-	fileSize = file.tellg();
-	file.seekg(0, std::ios::beg);
+	char* cfilepointer = NULL;
+	FILE* cfile;
+	int csize;
+	
+	cfile = fopen(filename.c_str(), "rb");
+	if (cfile != NULL)
+	{
+		//get file size using stat
+		fseek(cfile, 0, SEEK_END);
+		csize = ftell(cfile);
+		rewind(cfile);
+	
+		//fprintf(stdout,"loaded file: %s size: %d\n",fullname,size);
+	
+		cfilepointer = (char*)malloc(csize * sizeof(char));
+	
+		if (cfilepointer == NULL)
+		{
+			//ERROR_set_error(fullname);
+			//log.error(string(fullname) + " malloc failed");
+		}
+	
+		fread(cfilepointer, 1, csize, cfile);
+	}
+	if (cfile == NULL)
+	{
+		//ERROR_set_error(fullname);
+		log.error(string(filename) + " could not be opened, probably not found");
+	}
+	fclose(cfile);
 
-	// reserve capacity
-	std::vector<u8> *vec = new vector<u8>();
-	vec->reserve(fileSize);
+	ByteArray* byteArray = new ByteArray((u8*)cfilepointer, csize);
 
-	// read the data:
-	vec->insert(vec->begin(),
-		std::istream_iterator<u8>(file),
-		std::istream_iterator<u8>());
+	return byteArray;
 
-	return vec;
+//
+//	now = SDL_GetPerformanceCounter();
+//	log.info("fread took " + to_string((double)((now - start)*1000) / SDL_GetPerformanceFrequency()) + "ms");
+//	start = SDL_GetPerformanceCounter();
+//
+//
+//
+//		char* cppfilepointer = NULL;
+//		streampos cppsize;
+//	
+//		ifstream cppfile(filename, ios::in | ios::binary | ios::ate);
+//		if (cppfile.is_open())
+//		{
+//			cppsize = cppfile.tellg();
+//			cppfilepointer = new char[(int)cppsize];
+//			cppfile.seekg(0, ios::beg);
+//			cppfile.read(cppfilepointer, cppsize);
+//			cppfile.close();
+//	
+//			//if (size_return != nullptr)*size_return = cppsize;
+//			//log.info("Loaded file: " + filename);
+//		}
+//		else
+//		{
+//			log.error("Could not open file: "+filename);
+//		}
+//
+//
+//
+//	now = SDL_GetPerformanceCounter();
+//	log.info("ifstream read took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+//	start = SDL_GetPerformanceCounter();
+
+
+//	// open the file:
+//	std::ifstream file(filename, std::ios::binary);
+//
+//	// Stop eating new lines in binary mode!!!
+//	file.unsetf(std::ios::skipws);
+//
+//	// get its size:
+//	std::streampos fileSize;
+//
+//	file.seekg(0, std::ios::end);
+//	fileSize = file.tellg();
+//	file.seekg(0, std::ios::beg);
+//
+//	// reserve capacity
+//	std::vector<u8> *vec = new vector<u8>();
+//	vec->reserve(fileSize);
+//
+//	// read the data:
+//	vec->insert(vec->begin(),
+//		std::istream_iterator<u8>(file),
+//		std::istream_iterator<u8>());
+//
+//	now = SDL_GetPerformanceCounter();
+//	log.info("vector iterator took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+//	start = SDL_GetPerformanceCounter();
+
+//	return vec;
 
 }
 
 //=========================================================================================================================
-vector<u8>* FileUtils::loadByteFileFromExePath(string filename)
+ByteArray* FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -880,7 +958,7 @@ std::string FileUtils::encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encod
 #include "Poco/Base64Decoder.h"
 
 //=========================================================================================================================
-vector<u8>* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
+ByteArray* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 	{
@@ -889,10 +967,10 @@ vector<u8>* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encod
 		Base64::Decode(in, &outs);
 
 
-		vector<u8>* outv = new vector<u8>();
+		ByteArray* outv = new ByteArray(outs.length());
 		for (int i = 0; i < outs.length(); i++)
 		{
-			outv->push_back(outs[i]);
+			outv->data()[i]=(outs[i]);
 
 		}
 		return outv;
@@ -909,13 +987,6 @@ vector<u8>* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encod
 //
 //		string outs = ostr.str();
 //
-//		vector<u8>* outv = new vector<u8>();
-//		for (int i = 0; i < outs.length(); i++)
-//		{
-//			outv->push_back(outs[i]);
-//
-//		}
-//		return outv;
 //	}
 
 
@@ -969,7 +1040,7 @@ std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, 
 
 }
 //=========================================================================================================================
-vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
+ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 
@@ -981,11 +1052,14 @@ vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_
 	int j = 0;
 	int in_ = 0;
 	u8 char_array_4[4], char_array_3[3];
-	std::vector<u8> *ret = new vector<u8>();
+	ByteArray* ret = new ByteArray(in_len);
 
-	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
+	int n = 0;
+	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) 
+	{
 		char_array_4[i++] = encoded_string[in_]; in_++;
-		if (i == 4) {
+		if (i == 4) 
+		{
 			for (i = 0; i <4; i++)
 				char_array_4[i] = (u8)base64_chars.find(char_array_4[i]);
 
@@ -994,12 +1068,15 @@ vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_
 			char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
 
 			for (i = 0; (i < 3); i++)
-				ret->push_back(char_array_3[i]);
+			{
+				ret->data()[n++] = (char_array_3[i]);
+			}
 			i = 0;
 		}
 	}
 
-	if (i) {
+	if (i) 
+	{
 		for (j = i; j <4; j++)
 			char_array_4[j] = 0;
 
@@ -1010,7 +1087,7 @@ vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_
 		char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
 		char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
 
-		for (j = 0; (j < i - 1); j++) ret->push_back(char_array_3[j]);
+		for (j = 0; (j < i - 1); j++) ret->data()[n++] = (char_array_3[j]);
 	}
 
 	return ret;
@@ -1092,7 +1169,7 @@ vector<u8>* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_
 //{// ===============================================================================================
 //
 //	//unsigned long zippedLength;
-//	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+//	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 //	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 //
 //
@@ -1184,7 +1261,7 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 {// ===============================================================================================
 
  //unsigned long zippedLength;
-	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1487,7 +1564,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	
 
 	//unsigned long zippedLength;
-	vector<u8>* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1654,7 +1731,7 @@ using Poco::MD5Engine;
 string FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
 
-	vector<u8>* bytes = loadByteFileFromExePath(filename);
+	ByteArray* bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
 	delete bytes;
 	return md5;
@@ -1663,7 +1740,7 @@ string FileUtils::getFileMD5Checksum(const string& filename)
 
 #include "md5.h"
 
-string FileUtils::getByteArrayMD5Checksum(vector<u8>* bytes)
+string FileUtils::getByteArrayMD5Checksum(ByteArray* bytes)
 { //===============================================================================================
 
 	return md5(bytes->data(), bytes->size());
@@ -2413,21 +2490,21 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 
 }
 
-vector<u8>* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
+ByteArray* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadByteFile(cacheDir + fileName);
 }
 
-vector<int>* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
+IntArray* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadIntFile(cacheDir + fileName);
 }
 
-void FileUtils::saveByteArrayToCache(vector<u8>* byteArray, const string& md5FileName)
+void FileUtils::saveByteArrayToCache(ByteArray* byteArray, const string& md5FileName)
 { //===============================================================================================
 	
 	
@@ -2435,7 +2512,7 @@ void FileUtils::saveByteArrayToCache(vector<u8>* byteArray, const string& md5Fil
 
 }
 
-void FileUtils::writeByteArrayToFile(vector<u8>* byteArray, const string& fileName)
+void FileUtils::writeByteArrayToFile(ByteArray* byteArray, const string& fileName)
 { //===============================================================================================
 
 	std::ofstream file(fileName, std::ios::binary);

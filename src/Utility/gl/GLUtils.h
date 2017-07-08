@@ -24,7 +24,7 @@ public:
 	static void clearCache(const string &name);// Remove a particular named image from the cache
 	static void clearCache();
 	static GLuint createTextureID();
-	static BobTexture *getTextureFromData(string textureName, int imageWidth, int imageHeight, vector<u8>* data);
+	static BobTexture *getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data);
 	static BobTexture *getTextureFromPNGAbsolutePath(string filename);
 	static BobTexture *getTextureFromPNGExePath(string filename);
 	static void draw_sprite(SPRITE* s);

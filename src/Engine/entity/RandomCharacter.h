@@ -41,14 +41,14 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	vector<u8>* getByteBuffer_S();
+	ByteArray* getByteBuffer_S();
 
 
 	//The following method was originally marked 'synchronized':
-	void setByteBuffer_S(vector<u8>* bb);
+	void setByteBuffer_S(ByteArray* bb);
 
 
-	vector<u8>* textureByteBuffer_S = nullptr;
+	ByteArray* textureByteBuffer_S = nullptr;
 
 	int eyeSet = -1;
 	int skinSet = -1;
