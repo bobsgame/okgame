@@ -19,35 +19,35 @@ public:
 	static Logger log;
 
 
-	string sessionToken = "";
-
+//	string sessionToken = "";
+//
 
 	//InetAddress addr = InetAddress.getByName(refAddr);
 	//String name = addr.getHostName();
 
 
 	//TODO:
-	static int downloadRate;// = 0;
-	static int uploadRate;// = 0;
-	static int ping;// = 0;
-
-
-	static string internetProviderString;// = "";
+//	static int downloadRate;// = 0;
+//	static int uploadRate;// = 0;
+//	static int ping;// = 0;
+//
+//
+//	static string internetProviderString;// = "";
 
 	//TODO: resolve this somehow by the IP somewhere, probably from the client is better.
 	//s.internetProviderString =
 
 
-	static string browserUserAgentString;// = "";
-	static string browserAppNameVersionString;// = "";
-	static string browserReferrerString;// = "";
-
-	static string getEnvProcessorIdentifier;// = "";
-	static string getEnvProcessorArchitecture;// = "";
-	static string getEnvNumberOfProcessors;// = "";
-
-
-	static float timeZoneGMTOffset;// = 0.0f;
+//	static string browserUserAgentString;// = "";
+//	static string browserAppNameVersionString;// = "";
+//	static string browserReferrerString;// = "";
+//
+//	static string getEnvProcessorIdentifier;// = "";
+//	static string getEnvProcessorArchitecture;// = "";
+//	static string getEnvNumberOfProcessors;// = "";
+//
+//
+//	static float timeZoneGMTOffset;// = 0.0f;
 
 
 	//TODO: SIGAR stuff
@@ -55,64 +55,53 @@ public:
 	//actual GPU hardware name, i.e. radeon hd 4700, 512 mb
 
 
-	//public String operatingSystemString = "";
-	//public String javaInfoString = "";
-	//public String cpuString = "";
-	//public String gpuString = "";
-	//public String memoryString = "";
-	//public String joysticksString = "";
-	//public String soundDeviceString = "";
-	//public String webcamString = "";
-	//public String diskSpaceString = "";
-	//public String homeDirString = "";
-	//public String cacheSizeString = "";
 
-
-	//done
-
-	static string jreVersion;
-	static string jreVendor;
-	//public String jreVendorURL;
-	static string jreHomeDir;
-	//public String jvmSpecVersion;
-	//public String jvmSpecVendor	;
-	//public String jvmSpecName;
-	static string jvmVersion;
-	//public String jvmVendor	;
-	static string jvmName;
-	//public String jreSpecVersion;
-	//public String jreSpecVendor	;
-	//public String jreSpecName;
-	static string javaClassVersion;
-	static string javaClassPath;
-	static string javaLibraryPath;
-	static string javaTempDir;
-	//public String javaJITCompiler;
-	//public String javaExtensionPath	;
-	static string osName;
-	static string osArch;
-	static string osVersion;
-	static string osUserAccountName;
-	static string osHomeDir;
-	static string workingDir;
-
-	static int displayWidth;// = -1;
-	static int displayHeight;// = -1;
-	static int displayBPP;// = -1;
-	static int displayFreq;// = -1;
-	static bool shaderCompiled;// = false;
-	static bool canUseFBO;// = false;
-	static bool usingVSync;// = false;
-	static string displayAdapter;
-	static string displayDriver;
-	static string lwjglVersion;
-	static bool lwjglIs64Bit;// = false;
-	static string lwjglPlatformName;
-	static int numCPUs;// = -1;
-
-	static int numControllersFound;// = -1;
-	static string controllersNames;
-
+//
+//	//done
+//
+//	static string jreVersion;
+//	static string jreVendor;
+//	//public String jreVendorURL;
+//	static string jreHomeDir;
+//	//public String jvmSpecVersion;
+//	//public String jvmSpecVendor	;
+//	//public String jvmSpecName;
+//	static string jvmVersion;
+//	//public String jvmVendor	;
+//	static string jvmName;
+//	//public String jreSpecVersion;
+//	//public String jreSpecVendor	;
+//	//public String jreSpecName;
+//	static string javaClassVersion;
+//	static string javaClassPath;
+//	static string javaLibraryPath;
+//	static string javaTempDir;
+//	//public String javaJITCompiler;
+//	//public String javaExtensionPath	;
+//	static string osName;
+//	static string osArch;
+//	static string osVersion;
+//	static string osUserAccountName;
+//	static string osHomeDir;
+//	static string workingDir;
+//
+//	static int displayWidth;// = -1;
+//	static int displayHeight;// = -1;
+//	static int displayBPP;// = -1;
+//	static int displayFreq;// = -1;
+//	static bool shaderCompiled;// = false;
+//	static bool canUseFBO;// = false;
+//	static bool usingVSync;// = false;
+//	static string displayAdapter;
+//	static string displayDriver;
+//	static string lwjglVersion;
+//	static bool lwjglIs64Bit;// = false;
+//	static string lwjglPlatformName;
+//	static int numCPUs;// = -1;
+//
+//	static int numControllersFound;// = -1;
+//	static string controllersNames;
+//
 	static string glVendor;
 	static string glVersion;
 	static string glRenderer;
@@ -122,21 +111,7 @@ public:
 	static void initSystemInfo();
 	static void initClockAndTimeZone();
 
-	string split(const string& in);
 
-
-	string printString();
-
-
-	string encode();
-
-
-	void decode(string& s);
-
-
-	//PreparedStatement *getInsertStatement(Connection *databaseConnection, const string &emailAddress, Client *cc, const string &ipAddress);
-
-	static void logSystemInfo();
 
 
 public:
@@ -169,19 +144,9 @@ private:
 public:
 
 
-	static void initFrameStats();
-
-
-	static void updateFrameStats();
-
 
 	static ConsoleText* mxThreadCountText;
 
-
-	static void initThreadStats();
-
-
-	static void updateThreadStats();
 
 
 	static ConsoleText* memoryText;
@@ -218,16 +183,11 @@ public:
 	//GraphicsDevice gd = gs->get(0);
 
 
-	static void initMemoryStats();
 
 
-	static void updateMemoryStats();
 
-
-	static void initDebugInfo();
-
-
-	static void updateDebugInfo();
+	static void initStats();
+	static void updateStats();
 
 
 private:

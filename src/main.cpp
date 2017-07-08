@@ -307,7 +307,7 @@ void Main::mainInit()
 	systemUtils = new System();
 	GLUtils::e();
 
-	System::initDebugInfo();
+	System::initStats();
 	GLUtils::e();
 	System::initClockAndTimeZone();
 	GLUtils::e();
@@ -654,7 +654,7 @@ void Main::whilefix()
 	while (frame == false)
 	{
 		System::updateRenderTimers();
-		System::updateDebugInfo();
+		System::updateStats();
 
 		if (System::getTotalRenderTicksPassed() >= 16)
 		{
@@ -800,7 +800,7 @@ void Main::mainLoop()
 		//END OLD MAIN LOOP
 		//------------------------------
 		System::updateRenderTimers();
-		System::updateDebugInfo();
+		System::updateStats();
 
 		//GLUtils::e();
 
@@ -905,6 +905,9 @@ void Main::doResizeCheck()
 
 	if ((controlsManager->KEY_RALT_HELD && controlsManager->key_RETURN_Pressed()) || controlsManager->key_F11_Pressed())
 	{
+
+		log.info("Toggled fullscreen");
+
 		GLUtils::toggleFullscreen();
 	}
 
@@ -914,7 +917,7 @@ void Main::doResizeCheck()
 
 		//reset GL model matrix, etc.
 
-		log.info("Resized window.");
+		log.info("Resized window");
 
 		GLUtils::doResize();
 	}
@@ -1437,7 +1440,7 @@ void Main::checkVersion()
 				for (int i = 0; i < 40; i++)
 				{
 					System::updateRenderTimers();
-					System::updateDebugInfo();
+					System::updateStats();
 					System::updateUpdateTimers();
 					c->update();
 					c->render();
@@ -1555,7 +1558,7 @@ void Main::checkVersion()
 			//Caption* c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", BobFont::ttf_oswald_16, BobColor::white, BobColor::clear);
 			Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Update available! Press Space to download, Esc to skip.", 16, BobColor::white, BobColor::clear);
 			System::updateRenderTimers();
-			System::updateDebugInfo();
+			System::updateStats();
 			System::updateUpdateTimers();
 			c->update();
 			c->render();
@@ -1594,7 +1597,7 @@ void Main::checkVersion()
 			glClear(GL_COLOR_BUFFER_BIT);
 			//Main::delay(100); //bobsGame doesn't render captionManager
 			System::updateRenderTimers();
-			System::updateDebugInfo();
+			System::updateStats();
 			System::updateUpdateTimers();
 			c->update();
 			c->render();

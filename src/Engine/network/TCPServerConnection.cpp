@@ -1007,7 +1007,7 @@ void TCPServerConnection::sendLoginRequest(string email, string password, bool s
 	else
 	{
 		//send session info
-		string clientInfoString = Main::mainObject->clientInfo->encode();
+		string clientInfoString = "";// Main::mainObject->clientInfo->encode();
 		message = BobNet::Login_Request + "`" + email + "`,`" + password + "`," + clientInfoString + BobNet::endline;
 	}
 
@@ -1028,7 +1028,7 @@ void TCPServerConnection::sendReconnectRequest(long long userID, string sessionT
 	else
 	{
 		//send session info
-		string clientInfoString = Main::mainObject->clientInfo->encode();
+		string clientInfoString = "";// Main::mainObject->clientInfo->encode();
 
 		message = BobNet::Reconnect_Request + "`" + to_string(userID) + "`,`" + sessionToken + "`," + clientInfoString + BobNet::endline;
 	}

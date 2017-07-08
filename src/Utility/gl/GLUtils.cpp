@@ -713,7 +713,7 @@ void GLUtils::initGL(char* windowName)
 			Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, BobColor::white, BobColor::black);
 
 			System::updateRenderTimers();
-			System::updateDebugInfo();
+			System::updateStats();
 			System::updateUpdateTimers();
 			c->update();
 			c->render();
@@ -1888,6 +1888,8 @@ void GLUtils::doResize()
 	windowWidth = w;
 	windowHeight = h;
 
+	log.info("Window Width: " + to_string(windowWidth));
+	log.info("Window Height: " + to_string(windowHeight));
 
 	//glMatrixMode(GL_MODELVIEW);//worldview transform (how far from 0,0,0 are we)
 	//glLoadIdentity();//reset selected transform matrix
