@@ -18,7 +18,7 @@ NDGameEngine::NDGameEngine()
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("NDGameEngine()");
+	log.debug("NDGameEngine()");
 #endif
 
 }
@@ -26,7 +26,7 @@ NDGameEngine::NDGameEngine()
 NDGameEngine::~NDGameEngine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log.info("~NDGameEngine()");
+	log.debug("~NDGameEngine()");
 #endif
 
 }
@@ -35,7 +35,7 @@ NDGameEngine::NDGameEngine(ND* nD)
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("NDGameEngine(ND* nD)");
+	log.debug("NDGameEngine(ND* nD)");
 #endif
 	this->nD = nD;
 }
@@ -47,7 +47,7 @@ void NDGameEngine::init()
 	super::init();
 
 #ifdef _DEBUG
-	log.info("NDGameEngine::init()");
+	log.debug("NDGameEngine::init()");
 #endif
 
 	

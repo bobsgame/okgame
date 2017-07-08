@@ -271,6 +271,8 @@ mutex Console::_consoleTextList_Mutex;
 Console::Console()
 { //=========================================================================================================================
 
+	log.debug("Init Console...");
+
 	captionManager = new CaptionManager(nullptr);
 
 }

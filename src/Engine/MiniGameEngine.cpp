@@ -14,7 +14,7 @@ Logger MiniGameEngine::log = Logger("MiniGameEngine");
 MiniGameEngine::MiniGameEngine()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log.info("MiniGameEngine()");
+	log.debug("MiniGameEngine()");
 #endif
 
 }
@@ -22,7 +22,7 @@ MiniGameEngine::MiniGameEngine()
 MiniGameEngine::~MiniGameEngine()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log.info("~MiniGameEngine()");
+	log.debug("~MiniGameEngine()");
 #endif
 
 	delete gameDataLoader;
@@ -34,7 +34,7 @@ void MiniGameEngine::init()
 	super::init();
 
 #ifdef _DEBUG
-	log.info("MiniGameEngine::init()");
+	log.debug("MiniGameEngine::init()");
 #endif
 
 	setupMenus();

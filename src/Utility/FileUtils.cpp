@@ -254,6 +254,8 @@ string FileUtils::smallDataURL = "";
 FileUtils::FileUtils()
 { //=========================================================================================================================
 
+	log.debug("Init FileUtils...");
+
 //	   if (Main::debugMode == true) //DEBUG
 //	   {
 //	      bigDataURL = BobNet::debugBigDataURL;
@@ -2293,7 +2295,7 @@ void FileUtils::downloadFileIfDifferentFromServer(const string& fileName, const 
 void FileUtils::initCache()
 { //===============================================================================================
 
-	   //log.info("Init FileUtils...");
+	   log.debug("Init Cache...");
 	
 	   FileUtils::makeDir(cacheDir);
 

@@ -154,7 +154,7 @@ void ControlsManager::cleanup()
 void ControlsManager::initControllers()
 { //=========================================================================================================================
 
-	log.info("Init Controllers...");
+	log.debug("Init controllers...");
 
 	//   try
 	//   {

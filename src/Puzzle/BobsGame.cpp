@@ -44,7 +44,7 @@ BobsGame::BobsGame()
 {//=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("BobsGame()");
+	log.debug("BobsGame()");
 #endif
 
 	//constructors are called from the base class up, so State->Engine->GameEngine->BobsGame
@@ -55,7 +55,7 @@ BobsGame::BobsGame()
 BobsGame::~BobsGame()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log.info("~BobsGame()");
+	log.debug("~BobsGame()");
 #endif
 
 	for (int i = 0; i<players.size(); i++)
@@ -85,7 +85,7 @@ void BobsGame::init()
 	super::init();
 
 #ifdef _DEBUG
-	log.info("BobsGame::init()");
+	log.debug("BobsGame::init()");
 #endif
 
 	//the reason why i have an init function is because i can control the order of the subclass/superclass calling
@@ -94,7 +94,7 @@ void BobsGame::init()
 
   //oh it is also so that i can call init code from multiple constructors, oops
 
-	log.info("Init Assets");
+	log.debug("Init Assets");
 	initAssets();
 
 
@@ -107,7 +107,7 @@ void BobsGame::init()
 	updateVersion0ToVersion1();
 
 
-	log.info("Init Player");
+	log.debug("Init Player");
 	initPlayer();
 
 	//	games.put(randomSeed,ME);
@@ -202,7 +202,7 @@ using Poco::Path;
 void BobsGame::initAssets()
 {//=========================================================================================================================
 
-	log.info("Loading icons");
+	log.debug("Loading icons");
 	keyboardTexture = GLUtils::getTextureFromPNGExePath("data/theme/keyboard.png");
 	controllerTexture = GLUtils::getTextureFromPNGExePath("data/theme/controller.png");
 	controllerIconTexture = GLUtils::getTextureFromPNGExePath("data/theme/controllerIcon.png");
@@ -212,7 +212,7 @@ void BobsGame::initAssets()
 	gearsTexture = GLUtils::getTextureFromPNGExePath("data/theme/gears.png");
 	chartTexture = GLUtils::getTextureFromPNGExePath("data/theme/chart.png");
 
-	log.info("Loading frame");
+	log.debug("Loading frame");
 	upperLeft = GLUtils::getTextureFromPNGExePath("data/frame/frame1-ul.png");
 	top = GLUtils::getTextureFromPNGExePath("data/frame/frame1-u.png");
 	upperRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-ur.png");
@@ -222,7 +222,7 @@ void BobsGame::initAssets()
 	bottom = GLUtils::getTextureFromPNGExePath("data/frame/frame1-d.png");
 	lowerRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-dr.png");
 
-	log.info("Loading sprites");
+	log.debug("Loading sprites");
 
 
 

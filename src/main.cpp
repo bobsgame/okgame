@@ -138,7 +138,7 @@ string Main::version = "";
 BobNet* Main::bobNet = nullptr;
 Console* Main::console = nullptr;
 //AudioManager* Main::audioManager = nullptr;
-FileUtils* Main::cacheManager = nullptr;
+FileUtils* Main::fileUtils = nullptr;
 StateManager* Main::stateManager = nullptr;
 System* Main::systemUtils = nullptr;
 GlobalSettings* Main::globalSettings = nullptr;
@@ -181,26 +181,30 @@ void Main::mainInit()
 
 
 	new Logger();
+	Logger::initLogger();
 
 	BobColor::initPresetColors();
 
-	cacheManager = new FileUtils();
-	cacheManager->initCache();
+
+	fileUtils = new FileUtils();
+	fileUtils->initCache();
 
 	loadGlobalSettingsFromXML();
 
 	if (globalSettings->useXInput == false)SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 
+	log.debug("Init SDL...");
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
-		fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
+		log.error("SDL_Init error: "+string(SDL_GetError()));
 		exit(2);
 	}
 
 	if (SDLNet_Init() < 0)
 	{
-		std::cerr << "SDLNet_Init: " << SDLNet_GetError() << std::endl;
+		log.error("SDLNet_Init error: "+string(SDLNet_GetError()));
 	}
 
 	//
@@ -252,9 +256,9 @@ void Main::mainInit()
 
 
 
-	Logger::initLogger();
+	
 
-	log.info("Main Init...");
+	
 
 	//this is done before init game so we can put debug stuff
 	console = new Console();
@@ -285,7 +289,7 @@ void Main::mainInit()
 	//init login GUI
 	//-------------------
 
-	log.info("Init GUIs...");
+	log.debug("Init GUIs...");
 	if (glowTileBackground == nullptr)
 	{
 		glowTileBackground = new GlowTileBackground();
@@ -302,7 +306,7 @@ void Main::mainInit()
 	//-------------------
 	//init game
 	//-------------------
-	log.info("Init System...");
+	log.debug("Init System...");
 
 	systemUtils = new System();
 	GLUtils::e();
@@ -323,7 +327,7 @@ void Main::mainInit()
 	srand((int)(time(nullptr)));
 
 
-	log.info("Init GUI...");
+	log.debug("Init GWEN...");
 
 	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
 	gwenRenderer->Init();
@@ -342,7 +346,7 @@ void Main::mainInit()
 
 
 
-
+	log.debug("Check for testing environment...");
 
 	//	bool debugOnLiveServer = true;
 	//	if (debugOnLiveServer == false)
@@ -380,7 +384,7 @@ void Main::mainInit()
 
 
 
-	log.info("Init BobNet...");
+	log.debug("Init BobNet...");
 	bobNet = new BobNet();
 
 
@@ -390,10 +394,9 @@ void Main::mainInit()
 
 #ifdef PUZZLE
 
-	log.info("Create BobsGame...");
+	log.debug("Create BobsGame...");
 	bobsGame = new BobsGame();
 	stateManager->setState(bobsGame);
-	log.info("Init BobsGame...");
 	bobsGame->init();
 
 	bobNet->addEngineToForwardMessagesTo(stateManager->getState());
@@ -422,7 +425,7 @@ void Main::mainInit()
 		{
 			introMode = true;
 
-			log.info("Setup Intro...");
+			log.debug("Setup Intro...");
 
 			gameEngine->statusBar->gameStoreButton->setEnabled(false);
 			gameEngine->statusBar->ndButton->setEnabled(false);
@@ -466,7 +469,7 @@ void Main::mainInit()
 
 
 
-	log.info("Version Check...");
+	
 	checkVersion();
 
 	System::initTimers();
@@ -510,6 +513,9 @@ void Main::mainInit()
 //=========================================================================================================================
 void Main::loadGlobalSettingsFromXML()
 {//=========================================================================================================================
+
+	log.debug("Load global settings...");
+
 	string userDataPathString = FileUtils::appDataPath + "";
 	Path userDataPath(userDataPathString);
 	File userDataPathDir(userDataPath);
@@ -537,6 +543,8 @@ void Main::loadGlobalSettingsFromXML()
 		try
 		{
 			ia >> BOOST_SERIALIZATION_NVP(gs);
+
+			log.info("Global settings loaded.");
 		}
 		catch (exception)
 		{
@@ -547,10 +555,13 @@ void Main::loadGlobalSettingsFromXML()
 		GlobalSettings *s = new GlobalSettings();
 		*s = gs;
 		globalSettings = s;
+
 	}
 	else
 	{
 		globalSettings = new GlobalSettings();
+
+		log.warn("Global settings not found.");
 	}
 
 
@@ -790,7 +801,7 @@ void Main::render()
 void Main::mainLoop()
 { //=========================================================================================================================
 
-	log.info("Begin Main Loop...");
+	log.debug("Begin Main Loop...");
 
 	mainLoopStarted = true;
 
@@ -906,7 +917,7 @@ void Main::doResizeCheck()
 	if ((controlsManager->KEY_RALT_HELD && controlsManager->key_RETURN_Pressed()) || controlsManager->key_F11_Pressed())
 	{
 
-		log.info("Toggled fullscreen");
+		log.debug("Toggled fullscreen");
 
 		GLUtils::toggleFullscreen();
 	}
@@ -917,7 +928,7 @@ void Main::doResizeCheck()
 
 		//reset GL model matrix, etc.
 
-		log.info("Resized window");
+		log.debug("Resized window");
 
 		GLUtils::doResize();
 	}
@@ -974,6 +985,8 @@ void Main::doScreenShotCheck()
 
 		//if (System::getProperty("os.name")->contains("Win"))
 		{
+			log.info("Saved screenshot to " + fileName);
+
 			Console::add("Saved screenshot to "+ fileName, 3000, BobColor::green);
 			//getFileName = System::getProperty("user.home") + "/" + "Desktop" + "/" + imageName;
 		}
@@ -1013,62 +1026,54 @@ void Main::printEvent(const SDL_Event* e)
 {//==========================================================================================================================
 	if (e->type == SDL_WINDOWEVENT)
 	{
+		string wid = to_string(e->window.windowID);
+
 		switch (e->window.event)
 		{
 		case SDL_WINDOWEVENT_SHOWN:
-			SDL_Log("Window %d shown", e->window.windowID);
+			log.debug("Window "+wid+" shown");
 			break;
 		case SDL_WINDOWEVENT_HIDDEN:
-			SDL_Log("Window %d hidden", e->window.windowID);
+			log.debug("Window "+wid+" hidden");
 			break;
 		case SDL_WINDOWEVENT_EXPOSED:
-			SDL_Log("Window %d exposed", e->window.windowID);
+			log.debug("Window "+wid+" exposed");
 			break;
 		case SDL_WINDOWEVENT_MOVED:
-			SDL_Log("Window %d moved to %d,%d",
-				e->window.windowID, e->window.data1,
-				e->window.data2);
+			log.debug("Window "+wid+" moved to " + to_string(e->window.data1) + " " + to_string(e->window.data2));
 			break;
 		case SDL_WINDOWEVENT_RESIZED:
-			SDL_Log("Window %d resized to %dx%d",
-				e->window.windowID, e->window.data1,
-				e->window.data2);
+			log.debug("Window "+wid+" resized to " + to_string(e->window.data1) + " " + to_string(e->window.data2));
 			break;
 		case SDL_WINDOWEVENT_SIZE_CHANGED:
-			SDL_Log("Window %d size changed to %dx%d",
-				e->window.windowID, e->window.data1,
-				e->window.data2);
+			log.debug("Window "+wid+" size changed to "+to_string(e->window.data1)+" "+to_string(e->window.data2));
 			break;
 		case SDL_WINDOWEVENT_MINIMIZED:
-			SDL_Log("Window %d minimized", e->window.windowID);
+			log.debug("Window "+wid+" minimized");
 			break;
 		case SDL_WINDOWEVENT_MAXIMIZED:
-			SDL_Log("Window %d maximized", e->window.windowID);
+			log.debug("Window "+wid+" maximized");
 			break;
 		case SDL_WINDOWEVENT_RESTORED:
-			SDL_Log("Window %d restored", e->window.windowID);
+			log.debug("Window "+wid+" restored");
 			break;
 		case SDL_WINDOWEVENT_ENTER:
-			SDL_Log("Mouse entered window %d",
-				e->window.windowID);
+			log.debug("Mouse entered window "+wid);
 			break;
 		case SDL_WINDOWEVENT_LEAVE:
-			SDL_Log("Mouse left window %d", e->window.windowID);
+			log.debug("Mouse left window "+wid);
 			break;
 		case SDL_WINDOWEVENT_FOCUS_GAINED:
-			SDL_Log("Window %d gained keyboard focus",
-				e->window.windowID);
+			log.debug("Window "+wid+" gained keyboard focus");
 			break;
 		case SDL_WINDOWEVENT_FOCUS_LOST:
-			SDL_Log("Window %d lost keyboard focus",
-				e->window.windowID);
+			log.debug("Window "+wid+" lost keyboard focus");
 			break;
 		case SDL_WINDOWEVENT_CLOSE:
-			SDL_Log("Window %d closed", e->window.windowID);
+			log.debug("Window "+wid+" closed");
 			break;
 		default:
-			SDL_Log("Window %d got unknown event %d",
-				e->window.windowID, e->window.event);
+			log.debug("Window "+wid+" got unknown event "+to_string(e->window.event));
 			break;
 		}
 	}
@@ -1322,38 +1327,59 @@ using Poco::Delegate;
 using Poco::Zip::Decompress;
 
 
+string Main::path = "";
+
 //==========================================================================================================================
 
 string Main::getPath()
 {//==========================================================================================================================
 
+	if (path != "")return path;
+
 	string exePath = string(SDL_GetBasePath());//this is where the .exe is run from.i.e. bobsgame/DebugVS/
 
-	string cwd = Path::current();//this is the current working dir i.e. bobsgame/
-
 	string versionTextPath = exePath + "version.txt";
+
+
 	if (File(versionTextPath).exists() == false)
 	{
+
+		string cwd = Path::current();//this is the current working dir i.e. bobsgame/
+
 		versionTextPath = cwd + "version.txt";
+
 		if (File(versionTextPath).exists() == false)
 		{
+
 			versionTextPath = exePath + "../" + "version.txt";
+
 			if (File(versionTextPath).exists() == false)
 			{
+
 				versionTextPath = cwd + "../" + "version.txt";
+
 				if (File(versionTextPath).exists() == false)
 				{
 					log.error("Could not find version.txt in path");
 					return "./";
 				}
-				return cwd + "../";
+				path = cwd + "../";
+				return path;
 			}
-			return exePath + "../";
+			path = exePath + "../";
+			return path;
 		}
 		else
-		return cwd;
+		{
+			path = cwd;
+			return path;
+		}
 	}
-	else return exePath;
+	else
+	{
+		path = exePath;
+		return path;
+	}
 
 }
 
@@ -1374,6 +1400,10 @@ string Main::getPath()
 //==========================================================================================================================
 void Main::checkVersion()
 {//==========================================================================================================================
+
+
+	log.debug("Version Check...");
+
 
 	bool windows = false;
 	bool macos = false;
@@ -1400,13 +1430,13 @@ void Main::checkVersion()
 
 	//if not in itch
 	string exePath = string(SDL_GetBasePath());
-	log.debug("SDL_GetBasePath(): " + exePath);//this is where the .exe is run from.i.e. bobsgame/DebugVS/
+	log.info("SDL_GetBasePath(): " + exePath);//this is where the .exe is run from.i.e. bobsgame/DebugVS/
 
 	string pocoPath = Path::current();
-	log.debug("Poco::Path::current():" + pocoPath);//this is the current working dir i.e. bobsgame/
+	log.info("Poco::Path::current():" + pocoPath);//this is the current working dir i.e. bobsgame/
 
-	log.debug("SDL_GetPrefPath():" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
-	log.debug("Poco::Path::home():" + Path::home());
+	log.info("SDL_GetPrefPath():" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
+	log.info("Poco::Path::home():" + Path::home());
 
 	if (exePath.find("itch") != std::string::npos) 
 	{
@@ -1465,7 +1495,7 @@ void Main::checkVersion()
 
 		//load version.txt, read number
 		string versionString = FileUtils::loadTextFileFromExePathAndTrim("version.txt");
-		log.debug("Local version:" + versionString);
+		log.info("Local version:" + versionString);
 		Main::version = versionString;
 		try
 		{
@@ -1497,7 +1527,7 @@ void Main::checkVersion()
 
 				
 			StreamCopier::copyToString(rs, serverString);
-			log.debug("Server version:" + serverString);
+			log.info("Server version:" + serverString);
 		}
 		catch(Exception)
 		{

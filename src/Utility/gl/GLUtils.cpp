@@ -164,7 +164,7 @@ void GLUtils::cleanup()
 void GLUtils::initGL(char* windowName)
 { //=========================================================================================================================
 
-	log.info("GLUtils init...");
+	log.debug("Init GL...");
 
 	//-----------------------------
 	//set up display mode
@@ -177,11 +177,11 @@ void GLUtils::initGL(char* windowName)
 	SDL_DisplayMode dm;
 	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) 
 	{
-		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+		log.error("SDL_GetDesktopDisplayMode failed: "+string(SDL_GetError()));
 	}
 	monitorWidth = dm.w;
 	monitorHeight = dm.h;
-	log.debug("Desktop display mode is "+to_string(dm.w)+"x" + to_string(dm.h) + "px @ " + to_string(dm.refresh_rate) + "hz.");
+	log.info("Desktop display mode is "+to_string(dm.w)+"x" + to_string(dm.h) + "px @ " + to_string(dm.refresh_rate) + "hz.");
 
 	checkSDLError("Get desktop display mode");
 
@@ -189,7 +189,7 @@ void GLUtils::initGL(char* windowName)
 	getAvailableDisplayModes();
 
 	now = SDL_GetPerformanceCounter();
-	log.info("Get display modes took "+to_string((double)((now - start)) / SDL_GetPerformanceFrequency())+"s");
+	log.debug("Get display modes took "+to_string((double)((now - start)) / SDL_GetPerformanceFrequency())+"s");
 	start = SDL_GetPerformanceCounter();
 	//-----------------------------
 	//set up window
@@ -199,7 +199,7 @@ void GLUtils::initGL(char* windowName)
 
 	
 
-	log.info("Setting up SDL window...");
+	log.debug("Setting up SDL window...");
 
 
 	int w = 1920;
@@ -231,12 +231,12 @@ void GLUtils::initGL(char* windowName)
 
 	if (window == nullptr)
 	{
-		cerr << "There was an error creating the window: " << SDL_GetError() << endl;
+		log.error("There was an error creating the window: "+string(SDL_GetError()));
 		exit(1);
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.info("Create window took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Create window took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
 	start = SDL_GetPerformanceCounter();
 
 	getCurrentDisplayMode();
@@ -251,7 +251,7 @@ void GLUtils::initGL(char* windowName)
 	//set up GL
 	//-----------------------------
 
-	log.info("Setting up GL context...");
+	log.debug("Setting up GL context...");
 
 
 	//						  //if we want to disable deprecated GL functions below GL 3.3
@@ -271,7 +271,7 @@ void GLUtils::initGL(char* windowName)
 
 	if (context == nullptr)
 	{
-		cerr << "There was an error creating OpenGL context: " << SDL_GetError() << endl;
+		log.error("There was an error creating OpenGL context: "+string(SDL_GetError()));
 		exit(1);
 	}
 
@@ -280,7 +280,7 @@ void GLUtils::initGL(char* windowName)
 	const unsigned char* version = glGetString(GL_VERSION);
 	if (version == nullptr)
 	{
-		cerr << "There was an error with OpenGL configuration:" << endl;
+		log.error("There was an error with OpenGL configuration.");
 		exit(1);
 	}
 
@@ -292,7 +292,7 @@ void GLUtils::initGL(char* windowName)
 	
 
 	now = SDL_GetPerformanceCounter();
-	log.info("Create GL context took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Create GL context took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -317,7 +317,7 @@ void GLUtils::initGL(char* windowName)
 #endif
 
 
-	log.info("GL info");
+	log.debug("GL info:");
 
 	//log.info(string((char*)(nullptr)));
 	char* vendorString = (char*)glGetString(GL_VENDOR);
@@ -391,7 +391,7 @@ void GLUtils::initGL(char* windowName)
 	//-----------------------------
 	//set up GL state
 	//-----------------------------
-	log.info("Setting up GL state...");
+	log.debug("Setting up GL state...");
 
 	//NEW GL SETUP---------------------------------------------------------------
 
@@ -455,7 +455,7 @@ void GLUtils::initGL(char* windowName)
 	e("Set GL state");
 
 	now = SDL_GetPerformanceCounter();
-	log.info("Setup GL state took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setup GL state took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -463,7 +463,7 @@ void GLUtils::initGL(char* windowName)
 	//set up swap
 	//-----------------------------
 
-	log.info("Setting up swap...");
+	log.debug("Setting up swap...");
 
 
 	glewInit();
@@ -672,7 +672,7 @@ void GLUtils::initGL(char* windowName)
 	else log.warn("No vsync.");
 
 	now = SDL_GetPerformanceCounter();
-	log.info("Setting up swap took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up swap took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -680,7 +680,7 @@ void GLUtils::initGL(char* windowName)
 	//set up framebuffer
 	//-----------------------------
 
-	log.info("Setting up FBO...");
+	log.debug("Setting up FBO...");
 
 
 	//ARB is newer than EXT for some reason I think, uses glFramebuffer() and not glFramebufferEXT()
@@ -702,14 +702,14 @@ void GLUtils::initGL(char* windowName)
 			//useFBO = true;
 			ARBFBO = false;
 
-			log.info("GL_ARB_framebuffer_object not supported. Using GL_EXT_framebuffer_object.");
+			log.warn("GL_ARB_framebuffer_object not supported. Using GL_EXT_framebuffer_object.");
 		}
 
 		else
 		{
-			log.warn("FBO not supported.");
+			log.error("FBO not supported.");
 
-			log.info("This game requires a newer graphics card that supports FBO.");
+			log.error("This game requires a newer graphics card that supports FBO.");
 			Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, BobColor::white, BobColor::black);
 
 			System::updateRenderTimers();
@@ -823,7 +823,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.info("Setting up FBO took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up FBO took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -832,7 +832,7 @@ void GLUtils::initGL(char* windowName)
 	//set up shaders
 	//-----------------------------
 
-	log.info("Setting up shaders...");
+	log.debug("Setting up shaders...");
 
 
 	string glVersion = string((char*)glGetString(GL_VERSION));
@@ -951,7 +951,7 @@ void GLUtils::initGL(char* windowName)
 
 				if (GLUtils::makeShader(name, bgShaders.get(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
 				{
-					log.debug("Could not make bg shader "+name);
+					log.error("Could not make bg shader "+name);
 					bgShaderCount--;
 					bgShaders.removeAt(i);
 					i--;
@@ -1018,19 +1018,19 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.info("Setting up shaders took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up shaders took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
 	start = SDL_GetPerformanceCounter();
 
 
-	log.info("GL setup complete.");
+	log.debug("GL setup complete.");
 
 
-	log.info("Loading graphics");
+	log.debug("Loading graphics");
 	blankTexture = GLUtils::getTextureFromPNGExePath("data/misc/blank.png");
 	boxTexture = GLUtils::getTextureFromPNGExePath("data/misc/box.png");
 
 	totalNow = SDL_GetPerformanceCounter();
-	log.info("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "s");
 	
 
 
@@ -1286,7 +1286,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 	{
 		SDL_DisplayMode* m = modes.get(i);
 
-		log.debug(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
+		log.info(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
 	}
 
 	//TODO: get the browser window/current frame size using javascript

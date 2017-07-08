@@ -116,6 +116,9 @@ sigar_t *sigar = nullptr;
 void System::initSystemInfo()
 { //=========================================================================================================================
 
+
+	log.debug("Init system info...");
+
 	//audio
 	int numAudioDevices = SDL_GetNumAudioDevices(0);
 	GLUtils::e();
@@ -343,7 +346,7 @@ sigar_close(sigar);
 void System::initClockAndTimeZone()
 { //=========================================================================================================================
 
-	log.info("Init Clock and Time Zone...");
+	log.debug("Init Clock and Time Zone...");
 	//
 	//			//put timezone in connection info
 	//			Calendar *calendar = Calendar::getInstance();

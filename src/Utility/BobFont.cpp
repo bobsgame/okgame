@@ -121,7 +121,7 @@ BobFont::BobFont(const string& filename, int maxCharHeight, int blockHeight, boo
 void BobFont::initFonts()
 {//=========================================================================================================================
 
-	log.info("Init Fonts...");
+	log.debug("Init Fonts...");
 
  //-----------------------------
  //init TTF

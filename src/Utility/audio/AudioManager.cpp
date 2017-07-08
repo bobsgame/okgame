@@ -61,9 +61,12 @@ void AudioManager::initAudioLibrary()
 {//=========================================================================================================================
 
 
-
+	
 
 #ifdef USE_SDL_MIXER
+
+	log.debug("Init SDL Mixer...");
+
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
 	{
 		log.error("Couldn't set up audio: " + string(SDL_GetError()));

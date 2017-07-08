@@ -46,6 +46,7 @@ public:
 
 
 	static string version;
+	static string path;
 	//-----------------------------
 	//variables
 	//-----------------------------
@@ -123,7 +124,7 @@ public:
 	static bool quit;// = false;
 
 	//static AudioManager* audioManager;
-	static FileUtils* cacheManager;
+	static FileUtils* fileUtils;
 	static StateManager* stateManager;
 	static System* systemUtils;
 	static ControlsManager* controlsManager;// = nullptr;

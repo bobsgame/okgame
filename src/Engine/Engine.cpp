@@ -14,7 +14,7 @@ Logger Engine::log = Logger("Engine");
 Engine::Engine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log.info("Engine()");
+	log.debug("Engine()");
 #endif
 
 }
@@ -23,7 +23,7 @@ Engine::Engine()
 Engine::~Engine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log.info("~Engine()");
+	log.debug("~Engine()");
 #endif
 	delete audioManager;
 	delete spriteManager;
@@ -43,7 +43,7 @@ void Engine::init()
 	super::init();
 
 #ifdef _DEBUG
-	log.info("Engine::init()");
+	log.debug("Engine::init()");
 #endif
 
 
