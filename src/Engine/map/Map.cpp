@@ -2865,7 +2865,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 					//check for existence of texture
 
 					//check our PNG file hashmap which was filled when we started threads for missing textures.
-					if (l->getLightTexturePNGFileExists_S() == true)
+					if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == true)
 					{
 						//floatcheck it exists, this should never be false.
 						BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
@@ -3256,13 +3256,13 @@ void Map::startThreadsForMissingLightPNGs()
 			}
 
 
-			if (l->getLightTexturePNGFileExists_S() == false)
+			if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == false)
 			{
 				//check for existence of texture in cache folder
 				BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 				if (textureFile->exists())
 				{
-					l->setLightTexturePNGFileExists_S(true);
+					MapManager::setLightTexturePNGFileExists_S(l->getFileName(),true);
 				}
 				else
 				{
@@ -3284,7 +3284,7 @@ void Map::startThreadsForMissingLightPNGs()
 									//Thread::currentThread().setName("MapAsset_startThreadsForMissingLightPNGs");
 
 									threadLight->createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + threadLightFilename);
-									threadLight->setLightTexturePNGFileExists_S(true);
+									MapManager::setLightTexturePNGFileExists_S(l->getFileName(),true);
 
 									decrementLightPNGThreadsCreated_S();
 								}
@@ -3298,7 +3298,7 @@ void Map::startThreadsForMissingLightPNGs()
 						//do it linearly, waiting for all to finish before continuing
 						l->createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 
-						l->setLightTexturePNGFileExists_S(true);
+						MapManager::setLightTexturePNGFileExists_S(l->getFileName(),true);
 					}
 				}
 			}

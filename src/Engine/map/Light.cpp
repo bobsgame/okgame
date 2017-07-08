@@ -36,22 +36,22 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 	isScreenLight = true;
 
 
-	if (getLightTexturePNGFileExists_S() == false)
+	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == false)
 	{
 		BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + getFileName());
 		if (textureFile->exists())
 		{
-			setLightTexturePNGFileExists_S(true);
+			MapManager::setLightTexturePNGFileExists_S(getFileName(),true);
 		}
 		else
 		{
 			createLightTexturePNG(FileUtils::cacheDir + "l" + "/" + getFileName());
 
-			setLightTexturePNGFileExists_S(true);
+			MapManager::setLightTexturePNGFileExists_S(getFileName(),true);
 		}
 	}
 
-	if (getLightTexturePNGFileExists_S() == true)
+	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == true)
 	{
 		BobFile* textureFile = nullptr;
 
@@ -1012,43 +1012,43 @@ void Light::createLightTexturePNG(const string& fileName)
 	//then figure out how to blend it with alpha shader
 }
 
-BufferedImageData::BufferedImageData(Light* outerInstance, BufferedImage* bufferedImage) : outerInstance(outerInstance)
-{
-	this->width = bufferedImage->getWidth();
-	this->height = bufferedImage->getHeight();
-
-	this->texWidth = Math::getClosestPowerOfTwo(width);
-	this->texHeight = Math::getClosestPowerOfTwo(height);
-
-	byteArray = new u8(texWidth * texHeight * 4);
-
-	//direct method, uses ram outside of the JVM
-	//byteBuffer = ByteBuffer::allocateDirect(byteArray->size());
-	//byteBuffer->order(ByteOrder::nativeOrder());
-
-	for (int y = 0; y < height; y++)
-	{
-		for (int x = 0; x < width; x++)
-		{
-			int argb = bufferedImage->getRGBA(x, y);
-			int alpha = (argb >> 24) % 256;
-			int red = (argb >> 16) % 256;
-			int green = (argb >> 8) % 256;
-			int blue = (argb) % 256;
-
-			int i = (y * texWidth) + x;
-
-			byteArray[(i * 4) + 0] = static_cast<char>(red);
-			byteArray[(i * 4) + 1] = static_cast<char>(green);
-			byteArray[(i * 4) + 2] = static_cast<char>(blue);
-			byteArray[(i * 4) + 3] = static_cast<char>(alpha);
-		}
-	}
-
-	//byteBuffer->put(byteArray);
-	//byteBuffer.flip();
-	//byteBuffer->rewind();
-}
+//BufferedImageData::BufferedImageData(Light* outerInstance, BufferedImage* bufferedImage) : outerInstance(outerInstance)
+//{
+//	this->width = bufferedImage->getWidth();
+//	this->height = bufferedImage->getHeight();
+//
+//	this->texWidth = Math::getClosestPowerOfTwo(width);
+//	this->texHeight = Math::getClosestPowerOfTwo(height);
+//
+//	byteArray = new u8(texWidth * texHeight * 4);
+//
+//	//direct method, uses ram outside of the JVM
+//	//byteBuffer = ByteBuffer::allocateDirect(byteArray->size());
+//	//byteBuffer->order(ByteOrder::nativeOrder());
+//
+//	for (int y = 0; y < height; y++)
+//	{
+//		for (int x = 0; x < width; x++)
+//		{
+//			int argb = bufferedImage->getRGBA(x, y);
+//			int alpha = (argb >> 24) % 256;
+//			int red = (argb >> 16) % 256;
+//			int green = (argb >> 8) % 256;
+//			int blue = (argb) % 256;
+//
+//			int i = (y * texWidth) + x;
+//
+//			byteArray[(i * 4) + 0] = static_cast<char>(red);
+//			byteArray[(i * 4) + 1] = static_cast<char>(green);
+//			byteArray[(i * 4) + 2] = static_cast<char>(blue);
+//			byteArray[(i * 4) + 3] = static_cast<char>(alpha);
+//		}
+//	}
+//
+//	//byteBuffer->put(byteArray);
+//	//byteBuffer.flip();
+//	//byteBuffer->rewind();
+//}
 
 //int Light::BufferedImageData::getDepth()
 //{

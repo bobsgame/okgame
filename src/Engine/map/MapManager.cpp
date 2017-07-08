@@ -20,7 +20,10 @@ bool MapManager::loadTexturesOnDemand = true;
 
 
 HashMap<string, BobTexture*> MapManager::lightTextureHashMap;
+
+
 HashMap<string, bool> MapManager::_lightTextureFileExistsHashtable;
+mutex MapManager::_lightTextureFileExistsHashtable_Mutex;
 
 MapManager::MapManager(Engine* g)
 { //=========================================================================================================================

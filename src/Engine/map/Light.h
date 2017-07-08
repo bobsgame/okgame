@@ -5,8 +5,9 @@
 
 #pragma once
 #include "bobtypes.h"
-class Logger;
 
+class Logger;
+class MapManager;
 
 class LightData;
 class Light;
@@ -15,41 +16,41 @@ class ImageData
 {
 };
 
-class BufferedImageData : public ImageData
-{
-private:
-	Light* outerInstance = nullptr;
-
-	int width = 0;
-	int height = 0;
-
-	u8* byteArray = nullptr;
-	u8* byteBuffer = nullptr;
-
-	int texWidth = 0;
-	int texHeight = 0;
-
-public:
-	BufferedImageData(Light* outerInstance, BufferedImage* bufferedImage);
-
-	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getDepth() </seealso>
-	int getDepth();
-
-	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getHeight() </seealso>
-	int getHeight();
-
-	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getImageBufferData() </seealso>
-	u8* getImageBufferData();
-
-	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getTexHeight() </seealso>
-	int getTexHeight();
-
-	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getTexWidth() </seealso>
-	int getTexWidth();
-
-	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getWidth() </seealso>
-	int getWidth();
-};
+//class BufferedImageData : public ImageData
+//{
+//private:
+//	Light* outerInstance = nullptr;
+//
+//	int width = 0;
+//	int height = 0;
+//
+//	u8* byteArray = nullptr;
+//	u8* byteBuffer = nullptr;
+//
+//	int texWidth = 0;
+//	int texHeight = 0;
+//
+//public:
+//	BufferedImageData(Light* outerInstance, BufferedImage* bufferedImage);
+//
+//	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getDepth() </seealso>
+//	int getDepth();
+//
+//	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getHeight() </seealso>
+//	int getHeight();
+//
+//	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getImageBufferData() </seealso>
+//	u8* getImageBufferData();
+//
+//	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getTexHeight() </seealso>
+//	int getTexHeight();
+//
+//	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getTexWidth() </seealso>
+//	int getTexWidth();
+//
+//	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getWidth() </seealso>
+//	int getWidth();
+//};
 
 class Light : public Entity
 {
@@ -97,16 +98,7 @@ public:
 
 
 
-	void setLightTexturePNGFileExists_S(bool exists)
-	{ //===============================================================================================
-		MapManager::setLightTexturePNGFileExists_S(getFileName(), exists);
-	}
 
-
-	bool getLightTexturePNGFileExists_S()
-	{ //===============================================================================================
-		return MapManager::getLightTexturePNGFileExists_S(getFileName());
-	}
 
 
 	string getFileName();
