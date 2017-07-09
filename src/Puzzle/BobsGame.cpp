@@ -1048,7 +1048,7 @@ void BobsGame::update()
 		//if connected to server, make menu to vote up or down
 		//has to be single player game because its tied to account
 
-		if(doVoting()==false)
+		//if(doVoting()==false)
 		{
 
 			//if connected to server and authorized
