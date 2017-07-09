@@ -505,7 +505,7 @@ void Main::initGWEN()
 	
 	log.debug("Init GWEN");
 
-	Uint32 start, now;
+	Uint64 start, now;
 	start = SDL_GetPerformanceCounter();
 
 	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();

@@ -60,7 +60,7 @@ public:
 	void setGameToForwardPacketsTo(MiniGameEngine* game);
 
 
-	bool udpPeerMessageReceived(UDPPeerConnection *c, string e);
+	bool udpPeerMessageReceived(UDPPeerConnection *c, string e) override;
 
 
 

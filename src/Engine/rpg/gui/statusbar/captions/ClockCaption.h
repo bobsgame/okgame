@@ -43,6 +43,6 @@ public:
 
 	void setFastColor();
 
-	void setColors(BobColor* fg, BobColor* aa, BobColor* bg);
+	void setColors(BobColor* fg, BobColor* aa, BobColor* bg) override;
 };
 
