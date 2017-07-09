@@ -164,7 +164,7 @@ void GLUtils::cleanup()
 void GLUtils::initGL(char* windowName)
 { //=========================================================================================================================
 
-	log.debug("Init GLUtils...");
+	log.debug("Init GL");
 
 	//-----------------------------
 	//set up display mode
@@ -189,7 +189,7 @@ void GLUtils::initGL(char* windowName)
 	getAvailableDisplayModes();
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Get display modes took "+to_string((double)((now - start)) / SDL_GetPerformanceFrequency())+"s");
+	log.debug("Get display modes took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 	//-----------------------------
 	//set up window
@@ -199,7 +199,7 @@ void GLUtils::initGL(char* windowName)
 
 	
 
-	log.debug("Setting up SDL window...");
+	log.debug("Setting up SDL window");
 
 
 	int w = 1920;
@@ -236,7 +236,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Create window took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Create window took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	getCurrentDisplayMode();
@@ -251,7 +251,7 @@ void GLUtils::initGL(char* windowName)
 	//set up GL
 	//-----------------------------
 
-	log.debug("Setting up GL context...");
+	log.debug("Setting up GL context");
 
 
 	//						  //if we want to disable deprecated GL functions below GL 3.3
@@ -292,7 +292,7 @@ void GLUtils::initGL(char* windowName)
 	
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Create GL context took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Create GL context took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -391,7 +391,7 @@ void GLUtils::initGL(char* windowName)
 	//-----------------------------
 	//set up GL state
 	//-----------------------------
-	log.debug("Setting up GL state...");
+	log.debug("Setting up GL state");
 
 	//NEW GL SETUP---------------------------------------------------------------
 
@@ -455,7 +455,7 @@ void GLUtils::initGL(char* windowName)
 	e("Set GL state");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setup GL state took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setup GL state took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -463,7 +463,7 @@ void GLUtils::initGL(char* windowName)
 	//set up swap
 	//-----------------------------
 
-	log.debug("Setting up swap...");
+	log.debug("Setting up swap");
 
 
 	glewInit();
@@ -672,7 +672,7 @@ void GLUtils::initGL(char* windowName)
 	else log.warn("No vsync.");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up swap took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up swap took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -680,7 +680,7 @@ void GLUtils::initGL(char* windowName)
 	//set up framebuffer
 	//-----------------------------
 
-	log.debug("Setting up FBO...");
+	log.debug("Setting up FBO");
 
 
 	//ARB is newer than EXT for some reason I think, uses glFramebuffer() and not glFramebufferEXT()
@@ -823,7 +823,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up FBO took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up FBO took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -832,7 +832,7 @@ void GLUtils::initGL(char* windowName)
 	//set up shaders
 	//-----------------------------
 
-	log.debug("Setting up shaders...");
+	log.debug("Setting up shaders");
 
 
 	string glVersion = string((char*)glGetString(GL_VERSION));
@@ -1018,7 +1018,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up shaders took " + to_string((double)((now - start)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up shaders took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -1030,7 +1030,7 @@ void GLUtils::initGL(char* windowName)
 	boxTexture = GLUtils::getTextureFromPNGExePath("data/misc/box.png");
 
 	totalNow = SDL_GetPerformanceCounter();
-	log.debug("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "s");
+	log.debug("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "ms");
 	
 
 

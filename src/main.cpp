@@ -39,7 +39,7 @@ int main(int argc, char* argv[])//int argc, char **argv)
 //	SetDllDirectory(LPCWSTR("./libs/"));
 //#endif
 
-	cout << "Starting..." << endl;
+	//cout << "Starting..." << endl;
 
 	Main::setMain(new Main());
 	Main::getMain()->mainInit();
@@ -194,7 +194,7 @@ void Main::mainInit()
 	if (globalSettings->useXInput == false)SDL_SetHint(SDL_HINT_XINPUT_ENABLED, "0");
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 
-	log.debug("Init SDL...");
+	log.debug("Init SDL");
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
@@ -289,7 +289,7 @@ void Main::mainInit()
 	//init login GUI
 	//-------------------
 
-	log.debug("Init GUIs...");
+	log.debug("Init GUIs");
 	if (glowTileBackground == nullptr)
 	{
 		glowTileBackground = new GlowTileBackground();
@@ -306,7 +306,7 @@ void Main::mainInit()
 	//-------------------
 	//init game
 	//-------------------
-	log.debug("Init System...");
+	//log.debug("Init System");
 
 	systemUtils = new System();
 	GLUtils::e();
@@ -327,26 +327,17 @@ void Main::mainInit()
 	srand((int)(time(nullptr)));
 
 
-	log.debug("Init GWEN...");
 
-	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
-	gwenRenderer->Init();
-	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
-	gwenSkin = new Gwen::Skin::TexturedBase(gwenRenderer);
-	string path = Main::getPath();
-	gwenSkin->Init(path + "data/DefaultSkin.png");
-	gwenSkin->SetDefaultFont(Gwen::Utility::StringToUnicode(path + "data/fonts/Lato-Medium.ttf"), 16);
-	gwenCanvas = new Gwen::Controls::Canvas(gwenSkin);
-	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
-	gwenCanvas->SetDrawBackground(false);
-	gwenInput = new Gwen::Input::GwenSDL2();
-	gwenInput->Initialize(gwenCanvas);
+
+	initGWEN();
 
 
 
 
 
-	log.debug("Check for testing environment...");
+
+
+	log.debug("Check for testing environment");
 
 	//	bool debugOnLiveServer = true;
 	//	if (debugOnLiveServer == false)
@@ -384,7 +375,7 @@ void Main::mainInit()
 
 
 
-	log.debug("Init BobNet...");
+	log.debug("Init BobNet");
 	bobNet = new BobNet();
 
 
@@ -394,7 +385,7 @@ void Main::mainInit()
 
 #ifdef PUZZLE
 
-	log.debug("Create BobsGame...");
+	log.debug("Create BobsGame");
 	bobsGame = new BobsGame();
 	stateManager->setState(bobsGame);
 	bobsGame->init();
@@ -425,7 +416,7 @@ void Main::mainInit()
 		{
 			introMode = true;
 
-			log.debug("Setup Intro...");
+			log.debug("Setup Intro");
 
 			gameEngine->statusBar->gameStoreButton->setEnabled(false);
 			gameEngine->statusBar->ndButton->setEnabled(false);
@@ -508,13 +499,37 @@ void Main::mainInit()
 
 }
 
+//=========================================================================================================================
+void Main::initGWEN()
+{//=========================================================================================================================
+	
+	log.debug("Init GWEN");
 
+	Uint32 start, now;
+	start = SDL_GetPerformanceCounter();
+
+	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
+	gwenRenderer->Init();
+	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
+	gwenSkin = new Gwen::Skin::TexturedBase(gwenRenderer);
+	string path = Main::getPath();
+	gwenSkin->Init(path + "data/DefaultSkin.png");
+	gwenSkin->SetDefaultFont(Gwen::Utility::StringToUnicode(path + "data/fonts/Lato-Medium.ttf"), 16);
+	gwenCanvas = new Gwen::Controls::Canvas(gwenSkin);
+	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
+	gwenCanvas->SetDrawBackground(false);
+	gwenInput = new Gwen::Input::GwenSDL2();
+	gwenInput->Initialize(gwenCanvas);
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("Init GWEN took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+}
 
 //=========================================================================================================================
 void Main::loadGlobalSettingsFromXML()
 {//=========================================================================================================================
 
-	log.debug("Load global settings...");
+	log.debug("Load global settings");
 
 	string userDataPathString = FileUtils::appDataPath + "";
 	Path userDataPath(userDataPathString);
@@ -801,7 +816,7 @@ void Main::render()
 void Main::mainLoop()
 { //=========================================================================================================================
 
-	log.debug("Begin Main Loop...");
+	log.debug("Begin Main Loop");
 
 	mainLoopStarted = true;
 
@@ -1402,7 +1417,7 @@ void Main::checkVersion()
 {//==========================================================================================================================
 
 
-	log.debug("Version Check...");
+	log.debug("Version Check");
 
 
 	bool windows = false;
@@ -1827,7 +1842,7 @@ void Main::cleanup()
 {//=========================================================================================================================
 
 
-	log.info("Cleaning up...");
+	log.info("Cleaning up");
 
 	AudioManager::cleanup();
 
@@ -1853,7 +1868,7 @@ void Main::cleanup()
 
 	saveGlobalSettingsToXML();
 
-	log.info("Exiting...");
+	log.info("Exiting");
 	SDL_Quit();
 
 }

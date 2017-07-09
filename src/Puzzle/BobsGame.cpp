@@ -94,21 +94,20 @@ void BobsGame::init()
 
   //oh it is also so that i can call init code from multiple constructors, oops
 
-	log.debug("Init Assets");
+	
 	initAssets();
 
 
 
-	
-	
-	loadGameTypesFromXML();
-	loadGameSequencesFromXML();
-
-	updateVersion0ToVersion1();
-
-
 	log.debug("Init Player");
 	initPlayer();
+
+
+
+	//music = new Music(this, "data/music/slick_v10.ogg");
+	music = getAudioManager()->playMusic("slick_v10");
+	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
+
 
 	//	games.put(randomSeed,ME);
 	//	player2 = new Game(this);
@@ -202,6 +201,12 @@ using Poco::Path;
 void BobsGame::initAssets()
 {//=========================================================================================================================
 
+	log.debug("BobsGame::initAssets");
+
+	Uint32 start, now, totalStart, totalNow;
+	start = SDL_GetPerformanceCounter();
+	totalStart = SDL_GetPerformanceCounter();
+
 	log.debug("Loading icons");
 	keyboardTexture = GLUtils::getTextureFromPNGExePath("data/theme/keyboard.png");
 	controllerTexture = GLUtils::getTextureFromPNGExePath("data/theme/controller.png");
@@ -221,6 +226,10 @@ void BobsGame::initAssets()
 	lowerLeft = GLUtils::getTextureFromPNGExePath("data/frame/frame1-dl.png");
 	bottom = GLUtils::getTextureFromPNGExePath("data/frame/frame1-d.png");
 	lowerRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-dr.png");
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("Loading graphics took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
 
 	log.debug("Loading sprites");
 
@@ -246,14 +255,31 @@ void BobsGame::initAssets()
 		}
 	}
 
+	now = SDL_GetPerformanceCounter();
+	log.debug("Loading sprites took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
+
 
 	//spriteManager.preloadSpriteFromFile("bobsGameLogoSmall");
 
 
+	log.debug("Loading GameTypes and GameSequences");
 
-	//music = new Music(this, "data/music/slick_v10.ogg");
-	music = getAudioManager()->playMusic("slick_v10");
-	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
+	loadGameTypesFromXML();
+	loadGameSequencesFromXML();
+
+	updateVersion0ToVersion1();
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("Loading GameTypes and GameSequences took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
+
+	totalNow = SDL_GetPerformanceCounter();
+	log.debug("BobsGame::initAssets took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+
+
 
 }
 

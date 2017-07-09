@@ -121,12 +121,22 @@ BobFont::BobFont(const string& filename, int maxCharHeight, int blockHeight, boo
 void BobFont::initFonts()
 {//=========================================================================================================================
 
-	log.debug("Init Fonts...");
+	log.debug("Init fonts");
+
+	Uint32 start, now, totalStart, totalNow;
+	start = SDL_GetPerformanceCounter();
+	totalStart = SDL_GetPerformanceCounter();
 
  //-----------------------------
  //init TTF
  //-----------------------------
 	TTF_Init();
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("TTF Init took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
+
 	string path = Main::getPath();
 	ttf_bobsgame_8 = TTF_OpenFont(string(path+"data/fonts/bobsgame.ttf").c_str(), 8);
 	ttf_bobsgame_16 = TTF_OpenFont(string(path + "data/fonts/bobsgame.ttf").c_str(), 16);
@@ -160,6 +170,10 @@ void BobFont::initFonts()
 	ttf_32 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 32);
 	ttf_48 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 48);
 	ttf_64 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 64);
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("Load fonts took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
 
 	ttf_outline_6 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 6);
 	ttf_outline_7 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 7);
@@ -221,6 +235,10 @@ void BobFont::initFonts()
 	TTF_SetFontOutline(ttf_outline_48, 1);
 	TTF_SetFontOutline(ttf_outline_64, 1);
 
+	now = SDL_GetPerformanceCounter();
+	log.debug("Load outline fonts took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
 	//FreeTypeFontGenerator *generator = new FreeTypeFontGenerator(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
 	//BitmapFont *font12 = generator->generateFont(12); // font size 12 pixels
 	//BitmapFont *font25 = generator->generateFont(25); // font size 25 pixels
@@ -272,6 +290,17 @@ void BobFont::initFonts()
 	font_small_8 = new BobFont("data/fonts/font_small_8.bin", 9, 16, false);
 	font_small_8_outlined = new BobFont("data/fonts/font_small_8_outlined.bin", 11, 16, true);
 	font_small_8_shadow1 = new BobFont("data/fonts/font_small_8_shadow1.bin", 10, 16, false);
+
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("Load bitmap fonts took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
+
+	totalNow = SDL_GetPerformanceCounter();
+	log.debug("Init fonts took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+
+
 }
 
 

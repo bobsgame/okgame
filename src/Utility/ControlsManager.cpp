@@ -132,7 +132,7 @@ ControlsManager::ControlsManager()
 void ControlsManager::cleanup()
 {//==========================================================================================================================
 
-	log.info("Cleaning up controls...");
+	log.info("Cleaning up controllers");
 
 	if (controllersByJoystickID.size()>0)
 	{
@@ -154,7 +154,14 @@ void ControlsManager::cleanup()
 void ControlsManager::initControllers()
 { //=========================================================================================================================
 
-	log.debug("Init controllers...");
+	log.debug("Init controllers");
+
+
+	Uint32 start, now, totalStart, totalNow;
+	start = SDL_GetPerformanceCounter();
+	totalStart = SDL_GetPerformanceCounter();
+
+
 
 	//   try
 	//   {
@@ -230,8 +237,10 @@ void ControlsManager::initControllers()
 	}
 	SDL_JoystickEventState(SDL_ENABLE);
 
-	log.info("Controllers Loaded.");
+	//log.debug("Controllers Loaded.");
 
+	now = SDL_GetPerformanceCounter();
+	log.debug("Init controllers took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 	//string path = string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + "controls.cfg";

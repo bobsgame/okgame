@@ -21,7 +21,7 @@ public:
 
 	BobTexture* textBoxTexture = nullptr;
 	BobTexture* spriteBoxTexture = nullptr;
-	BobTexture* borderTexture = nullptr;
+	static BobTexture* borderTexture;
 
 
 	float scrollPercent = 0;

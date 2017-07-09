@@ -114,6 +114,7 @@ public:
 
 	void makeGhostThread();
 
+	void initGWEN();
 
 	static GlobalSettings* globalSettings;
 	void loadGlobalSettingsFromXML();

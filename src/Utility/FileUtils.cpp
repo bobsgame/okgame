@@ -254,7 +254,7 @@ string FileUtils::smallDataURL = "";
 FileUtils::FileUtils()
 { //=========================================================================================================================
 
-	log.debug("Init FileUtils...");
+	//log.debug("Init FileUtils...");
 
 //	   if (Main::debugMode == true) //DEBUG
 //	   {
@@ -808,7 +808,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 
 //
 //	now = SDL_GetPerformanceCounter();
-//	log.info("fread took " + to_string((double)((now - start)*1000) / SDL_GetPerformanceFrequency()) + "ms");
+//	log.info("fread took " + to_string((double)((now - start * 1000)*1000) / SDL_GetPerformanceFrequency()) + "ms");
 //	start = SDL_GetPerformanceCounter();
 //
 //
@@ -836,7 +836,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 //
 //
 //	now = SDL_GetPerformanceCounter();
-//	log.info("ifstream read took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+//	log.info("ifstream read took " + to_string((double)((now - start * 1000) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 //	start = SDL_GetPerformanceCounter();
 
 
@@ -863,7 +863,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 //		std::istream_iterator<u8>());
 //
 //	now = SDL_GetPerformanceCounter();
-//	log.info("vector iterator took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+//	log.info("vector iterator took " + to_string((double)((now - start * 1000) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 //	start = SDL_GetPerformanceCounter();
 
 //	return vec;
@@ -2295,7 +2295,7 @@ void FileUtils::downloadFileIfDifferentFromServer(const string& fileName, const 
 void FileUtils::initCache()
 { //===============================================================================================
 
-	   log.debug("Init Cache...");
+	   log.debug("Init Cache");
 	
 	   FileUtils::makeDir(cacheDir);
 

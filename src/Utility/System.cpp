@@ -110,7 +110,13 @@ void System::initSystemInfo()
 { //=========================================================================================================================
 
 
-	log.debug("Init system info...");
+	log.debug("Init system info");
+
+
+
+	Uint32 start, now, totalStart, totalNow;
+	start = SDL_GetPerformanceCounter();
+	totalStart = SDL_GetPerformanceCounter();
 
 	//audio
 	int numAudioDevices = SDL_GetNumAudioDevices(0);
@@ -195,6 +201,11 @@ void System::initSystemInfo()
 	log.info("SDL_GetNumRenderDrivers:" + to_string(SDL_GetNumRenderDrivers()));
 	log.info("SDL_GetNumVideoDisplays:" + to_string(SDL_GetNumVideoDisplays()));
 	log.info("SDL_GetNumVideoDrivers:" + to_string(SDL_GetNumVideoDrivers()));
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("SDL info took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
 
 	log.info("Poco::libraryVersion:" + to_string(Environment::libraryVersion()));
 	log.info("Poco::osName:" + string(Environment::osName()));
@@ -306,6 +317,11 @@ else
 //	log.info("Sigar::Proc Threads:" + to_string(procstat.threads));
 //}
 
+now = SDL_GetPerformanceCounter();
+log.debug("Sigar info took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+start = SDL_GetPerformanceCounter();
+
+
 sigar_close(sigar);
 #endif
 
@@ -331,6 +347,9 @@ sigar_close(sigar);
 	//log.info("Window Height:" + to_string(GLUtils::getRealWindowHeight()));
 
 
+totalNow = SDL_GetPerformanceCounter();
+log.debug("Init system info took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+
 
 }
 
@@ -352,7 +371,7 @@ using namespace Poco::Net;
 void System::initClockAndTimeZone()
 { //=========================================================================================================================
 
-	log.debug("Init Clock and Time Zone...");
+	log.debug("Init clock");
 	
 	time_t t = time(0); // get time now 
 	struct tm * now = localtime(&t);

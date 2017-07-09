@@ -1,10 +1,10 @@
 rem buildwin.cmd 140 clean
 rem buildwin.cmd 140 clean all both
 
-rem buildwin.cmd 140 build static_mt both Win32 nosamples notests devenv
-rem copy /lib/*.lib /_lib/
-rem copy /lib/*.pdb /_lib/
-rem buildwin.cmd 140 clean all both
+buildwin.cmd 140 build shared both Win32 nosamples notests devenv
+copy /lib/*.lib /_lib/
+copy /lib/*.pdb /_lib/
+buildwin.cmd 140 clean all both
 
 cd CppUnit
 del /S *.ilk *.pdb *.exe *.db *.obj

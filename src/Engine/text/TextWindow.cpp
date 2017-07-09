@@ -14,14 +14,14 @@
 
 
 Logger TextWindow::log = Logger("TextWindow");
-
+BobTexture* TextWindow::borderTexture = nullptr;
 
 //=========================================================================================================================
 TextWindow::TextWindow(Engine* g)
 {//=========================================================================================================================
 	this->e = g;
 
-	borderTexture = GLUtils::getTextureFromPNGExePath("data/textbox/border.png");
+	if(borderTexture==nullptr)borderTexture = GLUtils::getTextureFromPNGExePath("data/textbox/border.png");
 
 	scrollPercent = 0;
 }

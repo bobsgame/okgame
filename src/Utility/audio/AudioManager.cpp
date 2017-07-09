@@ -60,12 +60,14 @@ using Poco::Path;
 void AudioManager::initAudioLibrary()
 {//=========================================================================================================================
 
-
+	Uint32 start, now;// , totalStart, totalNow;
+	start = SDL_GetPerformanceCounter();
+	//totalStart = SDL_GetPerformanceCounter();
 	
 
 #ifdef USE_SDL_MIXER
 
-	log.debug("Init SDL Mixer...");
+	log.debug("Init SDL Mixer");
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
 	{
@@ -80,6 +82,11 @@ void AudioManager::initAudioLibrary()
 	soLoud = new SoLoud::Soloud();
 	soLoud->init();
 #endif
+
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("Init sound took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
 }
 
 
@@ -87,7 +94,12 @@ void AudioManager::initAudioLibrary()
 //=========================================================================================================================
 void AudioManager::init()
 {//=========================================================================================================================
-	log.debug("AudioManager init...");
+	log.debug("Init AudioManager");
+
+
+	Uint32 start, now, totalStart, totalNow;
+	start = SDL_GetPerformanceCounter();
+	totalStart = SDL_GetPerformanceCounter();
 
 	log.debug("Loading built in sounds");
 	{
@@ -109,6 +121,11 @@ void AudioManager::init()
 		}
 	}
 
+	now = SDL_GetPerformanceCounter();
+	log.debug("Loading sounds took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
+
 	log.debug("Loading built in music");
 	{
 		string spriteFolderString = Main::getPath() + "data/music/";
@@ -128,6 +145,14 @@ void AudioManager::init()
 			}
 		}
 	}
+
+	now = SDL_GetPerformanceCounter();
+	log.debug("Loading music took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	start = SDL_GetPerformanceCounter();
+
+	totalNow = SDL_GetPerformanceCounter();
+	log.debug("Init AudioManager took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+
 
 	GLUtils::e();
 
@@ -158,7 +183,7 @@ void AudioManager::init()
 void AudioManager::cleanup()
 {//=========================================================================================================================
 
-	log.info("Cleaning up audio...");
+	log.info("Cleaning up audio");
 #ifdef USE_SDL_MIXER
  //	if(Mix_PlayingMusic())
  //	{
