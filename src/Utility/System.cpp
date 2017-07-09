@@ -712,7 +712,13 @@ void System::updateStats()
 		if (Main::bobNet->tcpServerConnection.serverStats != nullptr)
 		{
 			int usersOnline = Main::bobNet->tcpServerConnection.serverStats->usersOnline;
-			onlineStatusText->text = "Connected: " + to_string(usersOnline) + " players online";
+			if(usersOnline==1)onlineStatusText->text = "Connected: " + to_string(usersOnline) + " player online";
+			else onlineStatusText->text = "Connected: " + to_string(usersOnline) + " players online";
+			onlineStatusText->color = BobColor::green;
+		}
+		else
+		{
+			onlineStatusText->text = "Connected";
 			onlineStatusText->color = BobColor::green;
 		}
 	}
