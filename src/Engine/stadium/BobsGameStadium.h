@@ -26,7 +26,7 @@ public:
 
 	BobsGameStadium();
 	~BobsGameStadium();
-	void init();
+	void init() override;
 	BobsGameStadium(StadiumScreen* stadiumScreen, Area* area);
 
 

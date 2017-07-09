@@ -203,7 +203,7 @@ void BobsGame::initAssets()
 
 	log.debug("BobsGame::initAssets");
 
-	Uint32 start, now, totalStart, totalNow;
+	Uint64 start, now, totalStart, totalNow;
 	start = SDL_GetPerformanceCounter();
 	totalStart = SDL_GetPerformanceCounter();
 

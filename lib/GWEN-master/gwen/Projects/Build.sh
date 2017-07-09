@@ -8,11 +8,11 @@ if [ "$UNAME" == "Darwin" ]; then
 #    ./premake4-osx clean
 #    ./premake4-osx gmake
 #    ./premake4-osx xcode3
-#    ./premake4-osx xcode4
+    ./premake4-osx xcode4
     
-    cd macosx/gmake/
-    make config=release
-    make config=debug
+    #cd macosx/gmake/
+    #make config=release
+    #make config=debug
     
 fi
 	

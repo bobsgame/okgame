@@ -3086,8 +3086,8 @@ void Map::startThreadsForMissingChunkPNGs()
 //						std::vector<std::future<void>> results;
 //						results.push_back
 //						(
-							generatePNGThreadPool->push
-							(
+							generatePNGThreadPool->push(
+							
 								[&, chunkLayer, chunkX, chunkY, chunkIndex](int)//[=] means capture by value, [&] means capture by reference
 								{
 									//Thread::currentThread().setName("MapAsset_startThreadsForMissingChunkPNGs");

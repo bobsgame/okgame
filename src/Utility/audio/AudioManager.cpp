@@ -60,7 +60,7 @@ using Poco::Path;
 void AudioManager::initAudioLibrary()
 {//=========================================================================================================================
 
-	Uint32 start, now;// , totalStart, totalNow;
+	Uint64 start, now;// , totalStart, totalNow;
 	start = SDL_GetPerformanceCounter();
 	//totalStart = SDL_GetPerformanceCounter();
 	
@@ -97,7 +97,7 @@ void AudioManager::init()
 	log.debug("Init AudioManager");
 
 
-	Uint32 start, now, totalStart, totalNow;
+	Uint64 start, now, totalStart, totalNow;
 	start = SDL_GetPerformanceCounter();
 	totalStart = SDL_GetPerformanceCounter();
 

@@ -37,7 +37,7 @@ public:
 	RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car);
 
 
-	Map* getCurrentMap();
+	Map* getCurrentMap() override;
 
 
 	//The following method was originally marked 'synchronized':
