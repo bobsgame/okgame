@@ -29,7 +29,9 @@ typedef unsigned char u8;
 //#include <fcntl.h>
 //#include <malloc.h>
 
-
+#ifdef __WINDOWS__
+#include "vcruntime.h"
+#endif
 
 ///-----------------------------
 ///C++ libs

@@ -170,7 +170,7 @@ void GLUtils::initGL(char* windowName)
 	//set up display mode
 	//-----------------------------
 
-	Uint64 start, now, totalStart, totalNow;
+	Uint64 start=0, now=0, totalStart, totalNow;
 	start = SDL_GetPerformanceCounter();
 	totalStart = SDL_GetPerformanceCounter();
 

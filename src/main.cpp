@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <stdlib.h>
 #include <time.h>
 #include <fstream>
 #include <iostream>
@@ -505,7 +506,7 @@ void Main::initGWEN()
 	
 	log.debug("Init GWEN");
 
-	Uint64 start, now;
+	Uint64 start=0, now=0;
 	start = SDL_GetPerformanceCounter();
 
 	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
@@ -524,6 +525,8 @@ void Main::initGWEN()
 	now = SDL_GetPerformanceCounter();
 	log.debug("Init GWEN took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 }
+
+
 
 //=========================================================================================================================
 void Main::loadGlobalSettingsFromXML()
