@@ -122,6 +122,7 @@
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\gl\GLUtils.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\gl\GLUtils.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Entity.cpp</string>
@@ -138,14 +139,20 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Door.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.cpp</string>
-    </ArrayOfString>
-    <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Sprite.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Sprite.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\stuffMenu\subMenus\ControlsPanel.cpp</string>
@@ -166,23 +173,77 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\BGClientEngine.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapManager.cpp</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ArrayList.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\CaptionManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\ActionManager.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Caption.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Caption.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventData.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventData.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Character.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\Clock.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\BufferedImage.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\BufferedImage.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\lib\CTPL-master\ctpl_stl.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Light.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Light.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ControlsManager.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\NDGameEngine.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\MiniGameEngine.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\Engine.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\bobtypes.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\RandomCharacter.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\RandomCharacter.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\gl\Texture.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\gl\Texture.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\lib\HQ2X\HQ2X.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\SpriteManager.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\GameDataLoader.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\System.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\System.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Console.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Console.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\State.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\cinematics\CinematicsManager.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Logger.cpp</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

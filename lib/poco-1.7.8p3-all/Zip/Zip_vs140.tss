@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\lib\poco-1.7.8p3-all\Zip\testsuite\src\PartialStreamTest.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\lib\poco-1.7.8p3-all\Zip\src\ZipUtil.cpp</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

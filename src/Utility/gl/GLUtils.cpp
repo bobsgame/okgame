@@ -164,7 +164,7 @@ void GLUtils::cleanup()
 void GLUtils::initGL(char* windowName)
 { //=========================================================================================================================
 
-	log.debug("Init GL...");
+	log.debug("Init GLUtils...");
 
 	//-----------------------------
 	//set up display mode

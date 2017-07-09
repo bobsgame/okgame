@@ -1051,7 +1051,8 @@ void FriendData::initWithGameSave(GameSave &g)
 	//facebookWebsite = g.facebookWebsite;
 	//googlePlusID = g.googlePlusID;
 }
-
+
+
 string FriendData::encode(int friendType)
 { //===============================================================================================
 

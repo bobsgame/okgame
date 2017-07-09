@@ -84,14 +84,7 @@ ConsoleText* System::texturesLoadedText = nullptr;// = Console::debug("texturesL
 ConsoleText* System::textureBytesLoadedText = nullptr;// = Console::debug("textureBytesLoadedText");
 
 
-//#include "Poco/DateTime.h"
-//using Poco::DateTime;
-//#include "Poco/LocalDateTime.h"
-//using Poco::LocalDateTime;
-//#include "Poco/Timezone.h"
-//#include "Poco/Timestamp.h"
-//using Poco::Timezone;
-//using Poco::Timestamp;
+
 //
 //#include "Poco/Path.h"
 //using Poco::Path;
@@ -294,24 +287,24 @@ else
 	log.info("Sigar::Proc Mem Share:" + to_string(proc.share / 1024 / 1024));
 }
 
-sigar_proc_stat_t procstat;
-status = sigar_proc_stat_get(sigar, &procstat);
-if (status != SIGAR_OK) 
-{
-	printf("sigar_proc_stat_get error: %d (%s)\n",
-		status, sigar_strerror(sigar, status));
-	//exit(1);
-}
-else
-{
-	log.info("Sigar::Proc Total:" + to_string(procstat.total));
-	log.info("Sigar::Proc Sleeping:" + to_string(procstat.sleeping));
-	log.info("Sigar::Proc Running:" + to_string(procstat.running));
-	log.info("Sigar::Proc Zombie:" + to_string(procstat.zombie));
-	log.info("Sigar::Proc Stopped:" + to_string(procstat.stopped));
-	log.info("Sigar::Proc Idle:" + to_string(procstat.idle));
-	log.info("Sigar::Proc Threads:" + to_string(procstat.threads));
-}
+//sigar_proc_stat_t procstat;
+//status = sigar_proc_stat_get(sigar, &procstat);
+//if (status != SIGAR_OK) 
+//{
+//	printf("sigar_proc_stat_get error: %d (%s)\n",
+//		status, sigar_strerror(sigar, status));
+//	//exit(1);
+//}
+//else
+//{
+//	log.info("Sigar::Proc Total:" + to_string(procstat.total));
+//	log.info("Sigar::Proc Sleeping:" + to_string(procstat.sleeping));
+//	log.info("Sigar::Proc Running:" + to_string(procstat.running));
+//	log.info("Sigar::Proc Zombie:" + to_string(procstat.zombie));
+//	log.info("Sigar::Proc Stopped:" + to_string(procstat.stopped));
+//	log.info("Sigar::Proc Idle:" + to_string(procstat.idle));
+//	log.info("Sigar::Proc Threads:" + to_string(procstat.threads));
+//}
 
 sigar_close(sigar);
 #endif
@@ -341,266 +334,140 @@ sigar_close(sigar);
 
 }
 
-
+//#include "Poco/DateTime.h"
+//using Poco::DateTime;
+//#include "Poco/LocalDateTime.h"
+//using Poco::LocalDateTime;
+//#include "Poco/Timezone.h"
+//#include "Poco/Timestamp.h"
+//using Poco::Timezone;
+//using Poco::Timestamp;
+#undef INADDR_ANY       
+#undef INADDR_LOOPBACK  
+#undef INADDR_BROADCAST 
+#undef INADDR_NONE  
+#include <Poco/Net/NTPClient.h>
+using namespace Poco::Net;
 
 void System::initClockAndTimeZone()
 { //=========================================================================================================================
 
 	log.debug("Init Clock and Time Zone...");
-	//
-	//			//put timezone in connection info
-	//			Calendar *calendar = Calendar::getInstance();
-	//
-	//			Date calendarTime = calendar->getTime();
-	//			log.info("Local Adjusted Time: " + calendarTime);
-	//			string gmtOffset = (new SimpleDateFormat("Z"))->format(calendarTime);
-	//			log.info("Local TimeZone GMT offset: " + gmtOffset);
-	//
-	//
-	//
-	//			//get the time zone
-	//			TimeZone *timezone = calendar->getTimeZone();
-	//
-	//
-	//			//get timezone raw millisecond offset
-	//			int offset = timezone->getRawOffset();
-	//			int offsetHrs = offset / 1000 / 60 / 60;
-	//			int offsetMins = offset / 1000 / 60 % 60;
-	//			//log.debug("TimeZone Offset Hours: " + offsetHrs);
-	//			//log.debug("TimeZone Offset Mins: " + offsetMins);
-	//
-	//			timeZoneGMTOffset = offsetHrs + offsetMins / 100.0f;
-	//			//log.debug("TimeZone Offset Float: " + offsetFloat);
-	//
-	//			//add daylight savings offset
-	//			int dstOffset = 0;
-	//			if (timezone->inDaylightTime(Date()))
-	//			{
-	//				dstOffset = timezone->getDSTSavings();
-	//			}
-	//			int dstOffsetHrs = dstOffset / 1000 / 60 / 60;
-	//			int dstOffsetMins = dstOffset / 1000 / 60 % 60;
-	//			//log.debug("DST Offset Hours: " + dstOffsetHrs);
-	//			//log.debug("DST Offset Mins: " + dstOffsetMins);
-	//			DSTOffset = dstOffsetHrs + dstOffsetMins / 100.0f;
-	//
-	//			//combined offset timezone + dst
-	//			int combinedOffset = offset + dstOffset;
-	//			int combinedOffsetHrs = combinedOffset / 1000 / 60 / 60;
-	//			int combinedOffsetMins = combinedOffset / 1000 / 60 % 60;
-	//			//log.debug("Total Offset Hours: " + combinedOffsetHrs);
-	//			//log.debug("Total Offset Mins: " + combinedOffsetMins);
-	//
-	//
-	//			//make an adjusted calendar to getTime from
-	//			Calendar *adjustedCalendar = Calendar::getInstance();
-	//			adjustedCalendar->add(Calendar::HOUR_OF_DAY, (-combinedOffsetHrs));
-	//			adjustedCalendar->add(Calendar::MINUTE, (-combinedOffsetMins));
-	//			//log.debug("GMT Time: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(adjustedCalendar.getTime()) + " + " + combinedOffsetHrs + ":" + combinedOffsetMins);
-	//
-	//
-	//
-	//
-	//
-	//			new Thread([&] ()
-	//			{
-	//
-	//					try
-	//					{
-	//						Thread::currentThread().setName("ClientMain_initTime");
-	//					}
-	//					catch (SecurityException e)
-	//					{
-	//						e->printStackTrace();
-	//					}
-	//
-	//
-	//					string NTPhost = "time.nist.gov"; //this goes through lots of servers in round-robin, so keep trying.
-	//
-	//					NTPUDPClient *ntpUDPClient = new NTPUDPClient();
-	//					ntpUDPClient->setDefaultTimeout(5000);
-	//
-	//					int timeTryCount = 0;
-	//					bool haveTime = false;
-	//					while (haveTime == false && timeTryCount < 5)
-	//					{
-	//
-	//
-	//						if (timeTryCount == 0)
-	//						{
-	//							NTPhost = "time.nist.gov";
-	//						}
-	//						if (timeTryCount == 1)
-	//						{
-	//							NTPhost = "nist1-sj.ustiming.org";
-	//						}
-	//						if (timeTryCount == 2)
-	//						{
-	//							NTPhost = "nisttime.carsoncity.k12.mi.us";
-	//						}
-	//						if (timeTryCount == 3)
-	//						{
-	//							NTPhost = "wwv.nist.gov";
-	//						}
-	//						if (timeTryCount == 4)
-	//						{
-	//							NTPhost = "nist1.symmetricom.com";
-	//						}
-	//
-	//
-	//						timeTryCount++;
-	//
-	//						if (ntpUDPClient->isOpen() == true)
-	//						{
-	//							ntpUDPClient->close();
-	//						}
-	//
-	//						try
-	//						{
-	//							ntpUDPClient->open();
-	//						}
-	//						catch (SocketException e)
-	//						{
-	//							log.debug("Could not open NTP UDP Client: " + e->getMessage());
-	//							continue;
-	//						}
-	//
-	//						InetAddress *hostAddr = nullptr;
-	//						try
-	//						{
-	//							hostAddr = InetAddress::getByName(NTPhost);
-	//						}
-	//						catch (UnknownHostException e)
-	//						{
-	//							log.debug("Could not resolve NTP host: " + NTPhost + " | " + e->getMessage());
-	//							continue;
-	//						}
-	//
-	//						//log.debug("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
-	//
-	//						TimeInfo *timeInfo = nullptr;
-	//
-	//						try
-	//						{
-	//							timeInfo = ntpUDPClient->getTime(hostAddr);
-	//						}
-	//						catch (IOException e)
-	//						{
-	//							log.debug("Could not get time from NTP host: " + hostAddr->getHostAddress() + " | " + e->getMessage());
-	//							continue;
-	//						}
-	//
-	//
-	//						NtpV3Packet *message = timeInfo->getMessage();
-	//
-	//
-	//						// Transmit time is time reply sent by server (t3)
-	//						TimeStamp *xmitNtpTime = message->getTransmitTimeStamp();
-	//						//log.debug(" Transmit Timestamp:\t" + xmitNtpTime + "  "+ xmitNtpTime.toDateString());
-	//
-	//
-	//						Date serverDate = xmitNtpTime->getDate();
-	//						log.info("Server Time (Adjusted by local TimeZone + DST): " + serverDate);
-	//
-	//						// init game clock
-	//
-	//
-	//						Calendar *serverCalendar = Calendar::getInstance();
-	//						serverCalendar->setTime(serverDate);
-	//
-	//
-	//						int hour = serverCalendar->get(Calendar::HOUR_OF_DAY);
-	//						int minute = serverCalendar->get(Calendar::MINUTE);
-	//						int second = serverCalendar->get(Calendar::SECOND);
-	//						int day = serverCalendar->get(Calendar::DAY_OF_WEEK) - 1;
-	//
-	//						gameEngine->clock->setTime(day, hour, minute, second);
-	//
-	//
-	//
-	//						ntpUDPClient->close();
-	//						haveTime = true;
-	//
-	//					}
-	//
-	//					if (haveTime == false)
-	//					{
-	//						log.error("Could not get time from NTP server!");
-	//
-	//						//TODO: just set to local clock time.
-	//					}
-	//
-	//			}
-	//
-	//		   ).start();
+	
+	time_t t = time(0); // get time now 
+	struct tm * now = localtime(&t);
+	//cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
 
 
-//
-//	{
-//		DateTime now; // the current date and time in UTC
-//		int year = now.year();
-//		int month = now.month();
-//		int day = now.day();
-//		int dow = now.dayOfWeek();
-//		int doy = now.dayOfYear();
-//		int hour = now.hour();
-//		int hour12 = now.hourAMPM();
-//		int min = now.minute();
-//		int sec = now.second();
-//		int ms = now.millisecond();
-//		int us = now.microsecond();
-//		double jd = now.julianDay();
-//		Poco::Timestamp ts = now.timestamp();
-//		DateTime xmas(2006, 12, 25);                // 2006-12-25 00:00:00
-//		Poco::Timespan timeToXmas = xmas - now;
-//
-//		DateTime dt(1973, 9, 12, 2, 30, 45);      // 1973-09-12 02:30:45
-//		dt.assign(2006, 10, 13, 13, 45, 12, 345); // 2006-10-13 12:45:12.345
-//		bool isAM = dt.isAM(); // false
-//		bool isPM = dt.isPM(); // true
-//		bool isLeap = DateTime::isLeapYear(2006);     // false
-//		int days = DateTime::daysOfMonth(2006, 2); // 28
-//		bool isValid = DateTime::isValid(2006, 02, 29); // false
-//		dt.assign(2006, DateTime::OCTOBER, 22); // 2006-10-22 00:00:00
-//		if (dt.dayOfWeek() == DateTime::SUNDAY)
+//	char buf[80];
+//	// Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+//	// for more information about date/time format
+//	strftime(buf, sizeof(buf), "%Y-%m-%d.%X", now);
+//	string formattedTime(buf);
+//	//log.info(formattedTime);
+
+	log.info("Local time: "+to_string(now->tm_year + 1900)+"-"+to_string((now->tm_mon + 1))+"-"+to_string(now->tm_mday)+" "+ to_string(now->tm_hour)+":"+ to_string(now->tm_min)+":"+ to_string(now->tm_sec));
+	
+	//time zone
+
+
+
+
+	//general location based on IP, ask server
+
+
+
+//	NTPClient client{ IPAddress::Family::IPv4 };
+//	int responses = 0;
+//		try
 //		{
-//			// ...
+//			
+//			responses = client.request("pool.ntp.org");
+//			
 //		}
-//	}
-//
-//
-//	{
-//		LocalDateTime now; // the current date and local time
-//		int year = now.year();
-//		int month = now.month();
-//		int day = now.day();
-//		int dow = now.dayOfWeek();
-//		int doy = now.dayOfYear();
-//		int hour = now.hour();
-//		int hour12 = now.hourAMPM();
-//		int min = now.minute();
-//		int sec = now.second();
-//		int ms = now.millisecond();
-//		int us = now.microsecond();
-//		int tzd = now.tzd();
-//		double jd = now.julianDay();
-//		Poco::Timestamp ts = now.timestamp();
-//
-//		LocalDateTime dt1(1973, 9, 12, 2, 30, 45); // 1973-09-12 02:30:45
-//		dt1.assign(2006, 10, 13, 13, 45, 12, 345); // 2006-10-13 12:45:12.345
-//		LocalDateTime dt2(3600, 1973, 9, 12, 2, 30, 45, 0, 0); // UTC + 1 hour
-//		dt2.assign(3600, 2006, 10, 13, 13, 45, 12, 345, 0);
-//		Poco::Timestamp nowTS;
-//		LocalDateTime dt3(3600, nowTS); // construct from Timestamp
-//	}
-//
-//	int utcOffset = Timezone::utcOffset();
-//	int dst = Timezone::dst();
-//	bool isDst = Timezone::isDst(Timestamp());
-//	int tzd = Timezone::tzd();
-//	string name = Timezone::name();
-//	string stdName = Timezone::standardName();
-//	string dstName = Timezone::dstName();
+//		catch (std::exception& e)
+//		{
+//			log.error("Error getting NTP time: "+string(e.what()));
+//		}
+//	
+//		if(responses>0)
+//		{
+//			
+//		}
+
+
+
+	//
+	//	{
+	//		DateTime now; // the current date and time in UTC
+	//		int year = now.year();
+	//		int month = now.month();
+	//		int day = now.day();
+	//		int dow = now.dayOfWeek();
+	//		int doy = now.dayOfYear();
+	//		int hour = now.hour();
+	//		int hour12 = now.hourAMPM();
+	//		int min = now.minute();
+	//		int sec = now.second();
+	//		int ms = now.millisecond();
+	//		int us = now.microsecond();
+	//		double jd = now.julianDay();
+	//		Poco::Timestamp ts = now.timestamp();
+	//		DateTime xmas(2006, 12, 25);                // 2006-12-25 00:00:00
+	//		Poco::Timespan timeToXmas = xmas - now;
+	//
+	//		DateTime dt(1973, 9, 12, 2, 30, 45);      // 1973-09-12 02:30:45
+	//		dt.assign(2006, 10, 13, 13, 45, 12, 345); // 2006-10-13 12:45:12.345
+	//		bool isAM = dt.isAM(); // false
+	//		bool isPM = dt.isPM(); // true
+	//		bool isLeap = DateTime::isLeapYear(2006);     // false
+	//		int days = DateTime::daysOfMonth(2006, 2); // 28
+	//		bool isValid = DateTime::isValid(2006, 02, 29); // false
+	//		dt.assign(2006, DateTime::OCTOBER, 22); // 2006-10-22 00:00:00
+	//		if (dt.dayOfWeek() == DateTime::SUNDAY)
+	//		{
+	//			// ...
+	//		}
+	//	}
+	//
+	//
+	//	{
+	//		LocalDateTime now; // the current date and local time
+	//		int year = now.year();
+	//		int month = now.month();
+	//		int day = now.day();
+	//		int dow = now.dayOfWeek();
+	//		int doy = now.dayOfYear();
+	//		int hour = now.hour();
+	//		int hour12 = now.hourAMPM();
+	//		int min = now.minute();
+	//		int sec = now.second();
+	//		int ms = now.millisecond();
+	//		int us = now.microsecond();
+	//		int tzd = now.tzd();
+	//		double jd = now.julianDay();
+	//		Poco::Timestamp ts = now.timestamp();
+	//
+	//		LocalDateTime dt1(1973, 9, 12, 2, 30, 45); // 1973-09-12 02:30:45
+	//		dt1.assign(2006, 10, 13, 13, 45, 12, 345); // 2006-10-13 12:45:12.345
+	//		LocalDateTime dt2(3600, 1973, 9, 12, 2, 30, 45, 0, 0); // UTC + 1 hour
+	//		dt2.assign(3600, 2006, 10, 13, 13, 45, 12, 345, 0);
+	//		Poco::Timestamp nowTS;
+	//		LocalDateTime dt3(3600, nowTS); // construct from Timestamp
+	//	}
+	//
+	//	int utcOffset = Timezone::utcOffset();
+	//	int dst = Timezone::dst();
+	//	bool isDst = Timezone::isDst(Timestamp());
+	//	int tzd = Timezone::tzd();
+	//	string name = Timezone::name();
+	//	string stdName = Timezone::standardName();
+	//	string dstName = Timezone::dstName();
+
+
+
+
+
 
 
 }

@@ -1345,8 +1345,8 @@ SDL_JoyHatEvent
 			//if (event.type == SDL_DROPTEXT				)		log.debug("SDL_DROPTEXT");
 			//if (event.type == SDL_DROPBEGIN				)		log.debug("SDL_DROPBEGIN");
 			//if (event.type == SDL_DROPCOMPLETE			)		log.debug("SDL_DROPCOMPLETE");
-			if (event.type == SDL_AUDIODEVICEADDED		)		log.debug("SDL_AUDIODEVICEADDED");
-			if (event.type == SDL_AUDIODEVICEREMOVED	)			log.debug("SDL_AUDIODEVICEREMOVED");
+			//if (event.type == SDL_AUDIODEVICEADDED		)		log.debug("SDL_AUDIODEVICEADDED");
+			//if (event.type == SDL_AUDIODEVICEREMOVED	)			log.debug("SDL_AUDIODEVICEREMOVED");
 			if (event.type == SDL_RENDER_TARGETS_RESET	)		log.debug("SDL_RENDER_TARGETS_RESET");
 			if (event.type == SDL_RENDER_DEVICE_RESET	)			log.debug("SDL_RENDER_DEVICE_RESET");
 			if (event.type == SDL_USEREVENT				)		log.debug("SDL_USEREVENT");

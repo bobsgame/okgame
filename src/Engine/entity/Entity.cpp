@@ -420,7 +420,8 @@ void Entity::renderDebugInfo()
 	               
 	               */
 }
-
+
+
 string Entity::getCurrentAreaTargetName()
 { //=========================================================================================================================
 	Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
@@ -1195,7 +1196,8 @@ int Entity::getCurrentAnimationLastFrame()
 	}
 	return getCurrentAnimationStartFrame() + getCurrentAnimationNumberOfFrames() - 1;
 }
-
+
+
 string Entity::getCurrentAnimationName()
 { //=========================================================================================================================
 	if (sprite == nullptr)
@@ -2451,7 +2453,8 @@ string& Entity::getName()
 {
 	return getData()->getName();
 }
-
+
+
 string& Entity::getComment()
 {
 	return getData()->getComment();
@@ -2466,7 +2469,8 @@ int Entity::getID()
 //{
 //	return getData()->getMapID();
 //}
-
+
+
 string& Entity::getSpriteName()
 {
 	return getData()->getSpriteName();
@@ -2629,7 +2633,8 @@ ArrayList<string>* Entity::getBehaviorList()
 {
 	return getData()->getBehaviorList();
 }
-
+
+
 string Entity::getTYPEIDString()
 {
 	return getData()->getTYPEIDString();

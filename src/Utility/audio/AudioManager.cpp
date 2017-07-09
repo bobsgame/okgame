@@ -72,6 +72,7 @@ void AudioManager::initAudioLibrary()
 		log.error("Couldn't set up audio: " + string(SDL_GetError()));
 	}
 	Mix_AllocateChannels(32);
+
 #endif
 
 
@@ -86,9 +87,9 @@ void AudioManager::initAudioLibrary()
 //=========================================================================================================================
 void AudioManager::init()
 {//=========================================================================================================================
-	log.info("AudioManager init...");
+	log.debug("AudioManager init...");
 
-	log.info("Loading built in sounds");
+	log.debug("Loading built in sounds");
 	{
 		string spriteFolderString = Main::getPath() + "data/sounds/";
 		Path spriteFolderPath(spriteFolderString);
@@ -108,7 +109,7 @@ void AudioManager::init()
 		}
 	}
 
-	log.info("Loading built in music");
+	log.debug("Loading built in music");
 	{
 		string spriteFolderString = Main::getPath() + "data/music/";
 		Path spriteFolderPath(spriteFolderString);
@@ -127,6 +128,9 @@ void AudioManager::init()
 			}
 		}
 	}
+
+	GLUtils::e();
+
 
 //	//load sounds/index.txt
 //	//for each line, load ogg file

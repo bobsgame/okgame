@@ -65,7 +65,8 @@ void AssetData::setID(int s)
 //}
 
 
-
+
+
 string& AssetData::initFromString(string& t)
 {
 

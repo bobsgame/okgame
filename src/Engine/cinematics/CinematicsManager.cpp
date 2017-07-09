@@ -28,7 +28,7 @@ CinematicsManager::CinematicsManager(Engine* g)
 void CinematicsManager::init()
 { //=========================================================================================================================
 
-	log.info("Init CinematicsManager");
+	log.debug("Init CinematicsManager");
 
 	screenOverlayOverLights->init();
 	screenOverlayUnderLights->init();

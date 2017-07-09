@@ -479,9 +479,9 @@ void Main::mainInit()
 
 
 
-	GLUtils::e();
+	//GLUtils::e();
 	//tcpServerConnection = new BGClientTCP(gameEngine);
-	GLUtils::e();
+	//GLUtils::e();
 
 //#ifdef _DEBUG
 //	string s = "hello this is a test asdu fasigdf aiohsdf aoisbd gab srihagb isrhbagiusrhb gkjbazarhgbszjkhvgaoishb ashgb uaysb gjabs ougyab eriabslkbgvaoisugh kasbgvjahsidf aslkbasdhga isbga isbr gasbd sg jkseba lkgsdboiags ekjaslgbaisueabhs lgkjahsr jagbrsouigbaisbrgabfoiguas rabg riahbg sirhbgalisrbga isrhbgalisrbg iasrbga lisrhb galisrbg lahsbrgiaubse lagijbse rlkaghbsr iugab srlijabg lsrbga lisrubg ailusrbg alisurbg laiusrbilguabisurgliaubsrlgba bg liseba glsgb asiugejhgdrigshrd";
@@ -978,7 +978,7 @@ void Main::doScreenShotCheck()
 
 		time_t t = time(0); // get time now 
 		struct tm * now = localtime( & t ); 
-		cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
+		//cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
 
 		//string imageName = "bobsgame-" + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + ".png";
 		string fileName = string(Main::getPath())+"screenshot"+to_string(now->tm_year + 1900)+to_string(now->tm_mon + 1) +to_string(now->tm_mday)+to_string(now->tm_hour) + to_string(now->tm_min) + to_string(now->tm_sec) +".png";
