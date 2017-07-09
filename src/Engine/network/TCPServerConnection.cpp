@@ -2307,7 +2307,7 @@ bool TCPServerConnection::doCreateAccount(Caption *statusLabel, Caption *errorLa
 		if (response == "Success")
 		{
 			gotResponse = true;
-			statusLabel->setText("Your account was created! Please check your email and confirm your account.");
+			statusLabel->setText("Your account was created!");
 			errorLabel->setText(" ");
 			setGotCreateAccountResponse_S("");
 			Main::delay(2000);

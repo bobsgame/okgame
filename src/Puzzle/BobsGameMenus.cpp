@@ -1477,8 +1477,19 @@ void BobsGame::createAccountMenuUpdate()
 		{
 			if(getServerConnection()->doCreateAccount(statusLabel,errorLabel,userNameText,emailText,passwordText,confirmPasswordText)==true)
 			{
+
+				Main::delay(2000);
+
+				if(getServerConnection()->doLogin(statusLabel, errorLabel, userNameText, passwordText, true)==true)
+				{
+					startScreenMenuShowing = true;
+				}
+				else
+				{
+					loginMenuShowing = true;
+				}
 				leaveMenu = true;
-				loginMenuShowing = true;
+				
 			}
 		}
 
