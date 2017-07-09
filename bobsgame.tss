@@ -248,5 +248,8 @@
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\AssetData.cpp</string>
     </ArrayOfString>
+    <ArrayOfString>
+      <string />
+    </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>
