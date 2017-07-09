@@ -204,7 +204,7 @@ void System::initSystemInfo()
 	log.info("SDL_GetNumVideoDrivers:" + to_string(SDL_GetNumVideoDrivers()));
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("SDL info took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("SDL info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -319,7 +319,7 @@ else
 //}
 
 now = SDL_GetPerformanceCounter();
-log.debug("Sigar info took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+log.debug("Sigar info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 start = SDL_GetPerformanceCounter();
 
 

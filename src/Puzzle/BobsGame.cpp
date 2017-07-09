@@ -228,7 +228,7 @@ void BobsGame::initAssets()
 	lowerRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-dr.png");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Loading graphics took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading graphics took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	log.debug("Loading sprites");
@@ -256,7 +256,7 @@ void BobsGame::initAssets()
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Loading sprites took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading sprites took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -272,7 +272,7 @@ void BobsGame::initAssets()
 	updateVersion0ToVersion1();
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Loading GameTypes and GameSequences took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading GameTypes and GameSequences took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 

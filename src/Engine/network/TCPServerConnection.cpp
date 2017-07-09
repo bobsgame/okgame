@@ -994,7 +994,7 @@ void TCPServerConnection::incomingServerStatsResponse(string s)
 
 	serverStats = stats;
 
-	log.debug("Updated server stats:  Uptime:" + to_string(stats->serverUptime) + " Users online: " + to_string(stats->usersOnline));
+	log.debug("Server uptime:" + to_string(stats->serverUptime) + " Users online:" + to_string(stats->usersOnline));
 }
 
 

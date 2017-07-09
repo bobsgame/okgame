@@ -133,7 +133,7 @@ void BobFont::initFonts()
 	TTF_Init();
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("TTF Init took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("TTF Init took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -172,7 +172,7 @@ void BobFont::initFonts()
 	ttf_64 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 64);
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Load fonts took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Load fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	ttf_outline_6 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 6);
@@ -236,7 +236,7 @@ void BobFont::initFonts()
 	TTF_SetFontOutline(ttf_outline_64, 1);
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Load outline fonts took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Load outline fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	//FreeTypeFontGenerator *generator = new FreeTypeFontGenerator(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
@@ -293,7 +293,7 @@ void BobFont::initFonts()
 
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Load bitmap fonts took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Load bitmap fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 

@@ -240,7 +240,7 @@ void ControlsManager::initControllers()
 	//log.debug("Controllers Loaded.");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Init controllers took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Init controllers took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 	//string path = string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + "controls.cfg";

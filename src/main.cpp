@@ -522,7 +522,7 @@ void Main::initGWEN()
 	gwenInput->Initialize(gwenCanvas);
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Init GWEN took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Init GWEN took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 }
 
 //=========================================================================================================================

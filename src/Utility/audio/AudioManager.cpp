@@ -85,7 +85,7 @@ void AudioManager::initAudioLibrary()
 
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Init sound took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Init sound took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 }
 
@@ -122,7 +122,7 @@ void AudioManager::init()
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Loading sounds took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading sounds took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -147,7 +147,7 @@ void AudioManager::init()
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Loading music took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading music took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	totalNow = SDL_GetPerformanceCounter();

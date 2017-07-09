@@ -189,7 +189,7 @@ void GLUtils::initGL(char* windowName)
 	getAvailableDisplayModes();
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Get display modes took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Get display modes took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 	//-----------------------------
 	//set up window
@@ -236,7 +236,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Create window took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Create window took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	getCurrentDisplayMode();
@@ -292,7 +292,7 @@ void GLUtils::initGL(char* windowName)
 	
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Create GL context took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Create GL context took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -455,7 +455,7 @@ void GLUtils::initGL(char* windowName)
 	e("Set GL state");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setup GL state took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Setup GL state took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -672,7 +672,7 @@ void GLUtils::initGL(char* windowName)
 	else log.warn("No vsync.");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up swap took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Setting up swap took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -823,7 +823,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up FBO took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Setting up FBO took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -1018,7 +1018,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up shaders took " + to_string((double)((now - start * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Setting up shaders took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
