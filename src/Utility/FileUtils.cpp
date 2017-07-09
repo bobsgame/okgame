@@ -766,7 +766,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
-//	Uint32 start, now;
+//	Uint64 start, now;
 //	start = SDL_GetPerformanceCounter();
 
 

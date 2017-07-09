@@ -123,7 +123,7 @@ void BobFont::initFonts()
 
 	log.debug("Init fonts");
 
-	Uint32 start, now, totalStart, totalNow;
+	Uint64 start, now, totalStart, totalNow;
 	start = SDL_GetPerformanceCounter();
 	totalStart = SDL_GetPerformanceCounter();
 

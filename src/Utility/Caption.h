@@ -43,7 +43,7 @@ public:
 	//x position modifiers
 
 
-	const enum class Position
+	enum class Position
 	{
 		NONE,
 		CENTERED_OVER_ENTITY,
