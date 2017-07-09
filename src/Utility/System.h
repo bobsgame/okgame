@@ -126,6 +126,7 @@ public:
 	static ConsoleText* updatesSkippedText;
 	static ConsoleText* averageTicksPerFrameText;
 	static ConsoleText* averageTicksPerUpdateText;
+	static ConsoleText* onlineStatusText;
 
 	static ConsoleText* upTimeText;
 

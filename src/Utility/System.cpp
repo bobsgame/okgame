@@ -71,6 +71,7 @@ ConsoleText* System::rendersSkippedText = nullptr;
 ConsoleText* System::updatesSkippedText = nullptr;
 ConsoleText* System::averageTicksPerFrameText = nullptr;
 ConsoleText* System::averageTicksPerUpdateText = nullptr;
+ConsoleText* System::onlineStatusText = nullptr;
 
 ConsoleText* System::upTimeText = nullptr;
 
@@ -658,6 +659,7 @@ void System::initStats()
 		rendersPerSecondText = Console::add(" ");
 		updatesPerSecondText = Console::debug(" ");
 		averageRendersPerSecondText = Console::add(" ");
+		onlineStatusText = Console::add(" ");
 
 		rendersSkippedText = Console::debug(" ");
 		updatesSkippedText = Console::debug(" ");
@@ -705,6 +707,20 @@ void System::updateStats()
 	updatesSkippedText->text = "Updates Skipped: " + to_string(updatesSkipped);
 
 
+	if(Main::bobNet->tcpServerConnection.getConnectedToServer_S()==true)
+	{
+		if (Main::bobNet->tcpServerConnection.serverStats != nullptr)
+		{
+			int usersOnline = Main::bobNet->tcpServerConnection.serverStats->usersOnline;
+			onlineStatusText->text = "Connected: " + to_string(usersOnline) + " players online";
+			onlineStatusText->color = BobColor::green;
+		}
+	}
+	else
+	{
+		onlineStatusText->text = "Offline";
+		onlineStatusText->color = ConsoleText::defaultColor;
+	}
 
 	//if a second has passed
 	int ticksPassed = (int)(System::getTicksBetweenTimes(lastSecondTime, currentHighResTime));
