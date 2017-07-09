@@ -1,9 +1,9 @@
 rem buildwin.cmd 140 clean
 rem buildwin.cmd 140 clean all both
 
-buildwin.cmd 140 build shared both Win32 nosamples notests devenv
-copy /lib/*.lib /_lib/
-copy /lib/*.pdb /_lib/
+buildwin.cmd 140 build all both Win32 nosamples notests devenv
+rem move /lib/* /_lib/*
+rem move /bin/* /_lib/*
 buildwin.cmd 140 clean all both
 
 cd CppUnit

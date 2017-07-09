@@ -5,8 +5,54 @@
 #include <src/Utility/ArrayList.h>
 class Logger;
 
+
+//=========================================================================================================================
+class ServerStats
+{//=========================================================================================================================
+public:
+	int serversOnline = 0;
+	int usersOnline = 0;
+	long long serverUptime = 0;
+
+	//===============================================================================================
+	string toString()
+	{//===============================================================================================
+
+		string s = "";
+
+		s += "serversOnline:`" + to_string(serversOnline) + "`,";
+		s += "usersOnline:`" + to_string(usersOnline) + "`,";
+		s += "serverUptime:`" + to_string(serverUptime) + "`,";
+
+		return s;
+	}
+
+	string& initFromString(string& t)
+	{
+
+		t = t.substr(t.find("serversOnline:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		serversOnline = stoi(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		t = t.substr(t.find("usersOnline:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		usersOnline = stoi(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		t = t.substr(t.find("serverUptime:`") + 1);
+		t = t.substr(t.find("`") + 1);
+		serverUptime = stoll(t.substr(0, t.find("`")));
+		t = t.substr(t.find("`,") + 2);
+
+		return t;
+	}
+};
+
+
+//=========================================================================================================================
 class TCPServerConnection
-{
+{//=========================================================================================================================
 public:
 	
 
@@ -20,6 +66,11 @@ public:
 
 	
 
+	bool _requestedClientLocation = false;
+	string clientLocation = "";
+	ServerStats* serverStats = nullptr;
+
+
 	bool threadStarted = false;
 	thread t;
 
@@ -31,6 +82,8 @@ public:
 
 private:
 	void _sendKeepAlivePing();
+	void _updateServerStats();
+	void _getClientLocation();
 	void _checkForTimeout();
 	void _getInitialGameSave();
 	void _checkForIncomingTraffic();
@@ -46,6 +99,7 @@ private:
 	long long _lastSentServerIPRequestTime = 0;
 	int _couldNotOpenConnectionToServerCount = 0;
 	long long _lastSentPingTime = 0;
+	long long _lastSentGetServerStatsTime = 0;
 
 	long long _checkInitialGameSaveReceivedDelayTime = 0;
 	
@@ -303,7 +357,8 @@ public:
 	bool write_S(string s);
 private:
 	void incomingServerIPAddressResponse(string s);
-
+	void incomingServerStatsResponse(string s);
+	void incomingClientLocationResponse(string s);
 
 
 

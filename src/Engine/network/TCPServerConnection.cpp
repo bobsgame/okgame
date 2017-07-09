@@ -10,6 +10,8 @@
 Logger TCPServerConnection::log = Logger("TCPServerConnection");
 Logger* TCPServerConnection::_threadLog = new Logger("TCPServerConnection");
 
+
+
 TCPServerConnection::TCPServerConnection()
 {//===============================================================================================
 
@@ -126,6 +128,8 @@ void TCPServerConnection::updateThreadLoop(TCPServerConnection *u)
 
 			u->_checkForIncomingTraffic();
 			u->_sendKeepAlivePing();
+			u->_updateServerStats();
+			u->_getClientLocation();
 			u->_checkForTimeout();
 
 			if (u->getAuthorizedOnServer_S() == false)
@@ -176,6 +180,38 @@ void TCPServerConnection::updateThreadLoop(TCPServerConnection *u)
 
 }
 
+//===============================================================================================
+void TCPServerConnection::_updateServerStats()
+{//===============================================================================================
+
+	if (ensureConnectedToServerThreadBlock_S())
+	{
+		//send keepalive
+		//keep last got friend keepalive ping/pong
+		long long currentTime = System::currentHighResTimer();
+		long long startTime = _lastSentGetServerStatsTime;
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+		if (ticksPassed > 10000) //10 seconds
+		{
+
+			_lastSentGetServerStatsTime = currentTime;
+			write_S(BobNet::Server_Stats_Request + BobNet::endline);
+
+		}
+
+	}
+}
+//===============================================================================================
+void TCPServerConnection::_getClientLocation()
+{//===============================================================================================
+
+	if (ensureConnectedToServerThreadBlock_S() && _requestedClientLocation == false)
+	{
+		_requestedClientLocation = true;
+		write_S(BobNet::Client_Location_Request + BobNet::endline);
+	}
+}
+	
 //===============================================================================================
 void TCPServerConnection::_sendKeepAlivePing()
 {//===============================================================================================
@@ -703,6 +739,18 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 		return true;
 	}
 
+	if (String::startsWith(s, BobNet::Server_Stats_Response))
+	{
+		incomingServerStatsResponse(s);
+		return true;
+	}
+
+	if (String::startsWith(s, BobNet::Client_Location_Response))
+	{
+		incomingClientLocationResponse(s);
+		return true;
+	}
+
 	if (String::startsWith(s, BobNet::Login_Response))
 	{
 		incomingLoginResponse(s);
@@ -929,6 +977,39 @@ void TCPServerConnection::incomingServerIPAddressResponse(string s)
   //ServerIP:ip
 	s = s.substr(s.find(":") + 1); //ip
 	setServerIPAddressString_S(s);
+}
+
+
+
+void TCPServerConnection::incomingServerStatsResponse(string s)
+{ //=========================================================================================================================
+
+
+
+  //Server_Stats_Response:stats object
+	s = s.substr(s.find(":") + 1);
+
+	ServerStats *stats = new ServerStats();
+	stats->initFromString(s);
+
+	serverStats = stats;
+
+	log.debug("Updated server stats:  Uptime:" + to_string(stats->serverUptime) + " Users online: " + to_string(stats->usersOnline));
+}
+
+
+
+void TCPServerConnection::incomingClientLocationResponse(string s)
+{ //=========================================================================================================================
+
+  //Client_Location_Response:State, Country
+	s = s.substr(s.find(":") + 1); //ip
+
+
+	clientLocation = s;
+
+	if (clientLocation != "")log.info("Got client IP location from server:" + clientLocation);
+
 }
 
 

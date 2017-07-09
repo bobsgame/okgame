@@ -157,9 +157,9 @@ void ControlsManager::initControllers()
 	log.debug("Init controllers");
 
 
-	Uint32 start, now, totalStart, totalNow;
+	Uint32 start, now;
 	start = SDL_GetPerformanceCounter();
-	totalStart = SDL_GetPerformanceCounter();
+
 
 
 

@@ -127,6 +127,14 @@ const string BobNet::Bobs_Game_HighScoreBoardsByBlocksCleared = "Bobs_Game_HighS
 
 
 
+const string BobNet::Server_Stats_Request = "Server_Stats_Request:";
+const string BobNet::Server_Stats_Response = "Server_Stats_Response:";
+
+const string BobNet::Client_Location_Request = "Client_Location_Request:";
+const string BobNet::Client_Location_Response = "Client_Location_Response:";
+
+
+
 
 
 

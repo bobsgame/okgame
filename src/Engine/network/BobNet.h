@@ -465,6 +465,13 @@ public:
 	static const string Bobs_Game_HighScoreBoardsByBlocksCleared;
 
 
+	static const string Server_Stats_Request;
+	static const string Server_Stats_Response;
+
+	static const string Client_Location_Request;
+	static const string Client_Location_Response;
+
+
 
 
 
