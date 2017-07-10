@@ -451,23 +451,14 @@ void Main::mainInit()
 #endif
 	
 
-	
-
-	
-
 	System::initTimers();
 
 
-
-
-
-	
 	checkVersion();
+
 
 	System::initTimers();
 	GLUtils::e();
-
-
 
 
 
