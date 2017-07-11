@@ -4,7 +4,6 @@ That means **no forks** except to create pull requests!
 
 Also see:
 
-
 https://github.com/bobsgame/bobsgame
 
 https://github.com/bobsgame/bgEditor
@@ -22,30 +21,31 @@ https://github.com/bobsgame/BobNetLibs
 
 --
 
-#*bob's game* is:
-##*THE GREATEST PUZZLE GAME EVER MADE*
+# *bob's game* is:
 
-##EVERY PUZZLE GAME IN ONE
+## *THE GREATEST PUZZLE GAME EVER MADE*
 
-##A CUSTOM PUZZLE GAME CREATION SYSTEM
+## EVERY PUZZLE GAME IN ONE
 
-##A WORLD TOURNAMENT PLATFORM AND GLOBAL RANKING AND LEADERBOARDS FOR ALL PUZZLE GAMES
+## A CUSTOM PUZZLE GAME CREATION SYSTEM
 
-##LOCAL MULTIPLAYER WITH UNLIMITED PLAYERS
+## A WORLD TOURNAMENT PLATFORM AND GLOBAL RANKING AND LEADERBOARDS FOR ALL PUZZLE GAMES
 
-##ONLINE MULTIPLAYER WITH UNLIMITED PLAYERS
+## LOCAL MULTIPLAYER WITH UNLIMITED PLAYERS
 
-##MIXED MODE ONLINE/LOCAL MULTIPLAYER
+## ONLINE MULTIPLAYER WITH UNLIMITED PLAYERS
 
-##COMPLETELY FREE
+## MIXED MODE ONLINE/LOCAL MULTIPLAYER
 
-##WRITTEN FROM SCRATCH IN C++
+## COMPLETELY FREE
 
-##SOURCE CODE AVAILABLE
+## WRITTEN FROM SCRATCH IN C++
 
-##DOWNLOAD IT RIGHT NOW!
+## SOURCE CODE AVAILABLE
 
-##This game is actively developed. New features are being added constantly and bugs will happen.
+## DOWNLOAD IT RIGHT NOW!
+
+## This game is actively developed. New features are being added constantly and bugs will happen.
 
 [Development Forum](http://bobsgame.com/forum) is open for bug reports. Please report any issues you notice. I rely on your testing.
 
@@ -73,7 +73,7 @@ It will also have the source code available on GitHub so it can grow into a stan
 
 **bob's game is not done- it's quite playable, but I am actively adding many more features.**
 
-##Upcoming feature list:
+## Upcoming feature list:
 * Lots more game mode features, modes, and goals
 * Better multiplayer lobby with chat
 * Tournament features and ladders, regional and global
@@ -83,7 +83,7 @@ It will also have the source code available on GitHub so it can grow into a stan
 * Custom themes, sounds, and music
 * Android, iOS, and Browser support
 
-#License
+# License
 Copyright 2017 BobCorporation, Robert Pelloni
 
 bob's game® is a registered trademark of Robert Pelloni
