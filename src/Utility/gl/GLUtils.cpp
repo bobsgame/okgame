@@ -49,7 +49,7 @@ int GLUtils::GLOBAL_FRAMEBUFFER_FILTER_TYPE = GL_LINEAR;
 SDL_Surface GLUtils::SDLSurface_screen;
 
 
-bool GLUtils::ZOOMlock = 0;
+bool GLUtils::ZOOMlock = false;
 
 float GLUtils::ZOOM = 1.0f;
 float GLUtils::ZOOMto = 1.0f;

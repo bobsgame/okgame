@@ -3541,9 +3541,18 @@ shared_ptr<Piece> Grid::getPieceFromNormalPieceRandomBag()
 			int i = getGameLogic()->getRandomIntLessThan(tempBag.size(),"getPieceFromNormalPieceRandomBag");
 			if (randomBag.isEmpty())
 			{
-				while (tempBag.get(i)->pieceType->disallowAsFirstPiece == false)
+				bool anyAllowedAsFirstPiece = false;
+				for(int n=0;n<tempBag.size();n++)
 				{
-					i = getGameLogic()->getRandomIntLessThan(tempBag.size(),"getPieceFromNormalPieceRandomBag");
+					if (tempBag.get(i)->pieceType->disallowAsFirstPiece == false)anyAllowedAsFirstPiece = true;
+				}
+
+				if (anyAllowedAsFirstPiece)
+				{
+					while (tempBag.get(i)->pieceType->disallowAsFirstPiece == true)
+					{
+						i = getGameLogic()->getRandomIntLessThan(tempBag.size(), "getPieceFromNormalPieceRandomBag");
+					}
 				}
 			}
 

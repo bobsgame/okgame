@@ -1,0 +1,27 @@
+# CMake generation dependency list for this directory.
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/3.9.0-rc5/CMakeSystem.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/3.9.0-rc5/CMakeCCompiler.cmake
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/3.9.0-rc5/CMakeCXXCompiler.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeGenericSystem.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Platform/Windows.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Platform/WindowsPaths.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeCInformation.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeLanguageInformation.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Platform/Windows-MSVC-C.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Platform/Windows-MSVC.cmake
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/3.9.0-rc5/CMakeRCCompiler.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeRCInformation.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeCXXInformation.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeLanguageInformation.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CheckCXXCompilerFlag.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CheckCXXSourceCompiles.cmake
+C:/Program Files (x86)/CMake/share/cmake-3.9/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake

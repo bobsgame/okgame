@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\98afb0a6c89fff52a660d255b0ed5f5f\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{02191100-4D99-31C9-B373-67961E4B26B9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

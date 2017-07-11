@@ -1,0 +1,6 @@
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/bin2c.dir
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/nanogui.dir
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/example1.dir
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/example2.dir
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/ALL_BUILD.dir
+C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/ZERO_CHECK.dir

@@ -7,7 +7,15 @@
 //#endif
 #define _CRT_SECURE_NO_WARNINGS 1
 
-typedef unsigned char u8;
+
+
+
+#include "SDL_platform.h"
+
+
+#ifdef __WINDOWS__
+#include "vcruntime.h"
+#endif
 
 //#define GOOGLE_ARRAYSIZE(a) ((sizeof(a) / sizeof(*(a))) / static_cast<size_t>(!(sizeof(a) % sizeof(*(a)))))
 
@@ -29,9 +37,7 @@ typedef unsigned char u8;
 //#include <fcntl.h>
 //#include <malloc.h>
 
-#ifdef __WINDOWS__
-#include "vcruntime.h"
-#endif
+
 
 ///-----------------------------
 ///C++ libs
@@ -51,11 +57,6 @@ typedef unsigned char u8;
 //#include <cmath>
 
 
-#include "SDL_platform.h"
-
-//#define __WINDOWS__
-
-using namespace std;
 
 
 
@@ -76,6 +77,14 @@ using namespace std;
 #ifdef __LINUX__
 #include "GL/glxew.h"
 #endif
+
+
+
+
+
+//#define __WINDOWS__
+
+
 
 
 //#define USE_SOLOUD
@@ -131,8 +140,10 @@ using namespace std;
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 #pragma warning (pop) 
 
+
 using namespace std;
 
+typedef unsigned char u8;
 
 class ByteArray
 {

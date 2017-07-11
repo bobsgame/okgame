@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AC9D6B22-2ECE-3B7F-B118-B8ADB2DD5C97}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>nanogui</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">nanogui.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">nanogui</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">nanogui.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">nanogui</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">nanogui.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">nanogui</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">nanogui.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">nanogui</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;EIGEN_DONT_ALIGN;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR="Debug";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;EIGEN_DONT_ALIGN;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR=\"Debug\";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;SDL2main.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Administrator\workspace\bobsgame\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/Debug/nanogui.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/Debug/nanogui.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;EIGEN_DONT_ALIGN;NDEBUG;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR="Release";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;EIGEN_DONT_ALIGN;NDEBUG;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR=\"Release\";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;SDL2main.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Administrator\workspace\bobsgame\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/Release/nanogui.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/Release/nanogui.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;EIGEN_DONT_ALIGN;NDEBUG;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR="MinSizeRel";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;EIGEN_DONT_ALIGN;NDEBUG;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR=\"MinSizeRel\";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;SDL2main.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Administrator\workspace\bobsgame\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/MinSizeRel/nanogui.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/MinSizeRel/nanogui.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\glew-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;EIGEN_DONT_ALIGN;NDEBUG;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR="RelWithDebInfo";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;EIGEN_DONT_ALIGN;NDEBUG;_CRT_SECURE_NO_WARNINGS;NANOGUI_BUILD ;NANOVG_GL2_IMPLEMENTATION;NANOGUI_SHARED;CMAKE_INTDIR=\"RelWithDebInfo\";nanogui_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\eigen;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;SDL2main.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Administrator\workspace\bobsgame\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/RelWithDebInfo/nanogui.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/RelWithDebInfo/nanogui.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master -BC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master --check-stamp-file C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCCompiler.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master -BC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master --check-stamp-file C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCCompiler.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master -BC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master --check-stamp-file C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCCompiler.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master -BC:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master --check-stamp-file C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCCompiler.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\3.9.0-rc5\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.9\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\CMakeFiles\98a45c62a9e622d2b37c278bdd9afb79\nanogui_resources.cpp.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running bin2c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+Debug\bin2c.exe nanogui_resources.cpp nanogui_resources.h C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Bold.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Regular.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/entypo.ttf
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/98a45c62a9e622d2b37c278bdd9afb79/nanogui_resources.cpp.rule;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\Debug\bin2c.exe;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Bold.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Regular.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\entypo.ttf;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.cpp;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running bin2c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+Release\bin2c.exe nanogui_resources.cpp nanogui_resources.h C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Bold.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Regular.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/entypo.ttf
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/98a45c62a9e622d2b37c278bdd9afb79/nanogui_resources.cpp.rule;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\Release\bin2c.exe;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Bold.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Regular.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\entypo.ttf;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.cpp;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Running bin2c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+MinSizeRel\bin2c.exe nanogui_resources.cpp nanogui_resources.h C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Bold.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Regular.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/entypo.ttf
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/98a45c62a9e622d2b37c278bdd9afb79/nanogui_resources.cpp.rule;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\MinSizeRel\bin2c.exe;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Bold.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Regular.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\entypo.ttf;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.cpp;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Running bin2c</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+RelWithDebInfo\bin2c.exe nanogui_resources.cpp nanogui_resources.h C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Bold.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/Roboto-Regular.ttf C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/resources/entypo.ttf
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/Users/Administrator/workspace/bobsgame/lib/nanogui-sdl-master/CMakeFiles/98a45c62a9e622d2b37c278bdd9afb79/nanogui_resources.cpp.rule;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\RelWithDebInfo\bin2c.exe;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Bold.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\Roboto-Regular.ttf;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\resources\entypo.ttf;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.cpp;C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.h</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ext\nanovg\nanovg.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\nanogui_resources.cpp" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\serializer.cpp" />
+    <ClCompile Include="src\glew-2.0.0\src\glew.c" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\common.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\common.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\widget.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\widget.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\theme.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\theme.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\layout.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\layout.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\screen.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\screen.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\label.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\label.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\window.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\window.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\popup.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\popup.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\checkbox.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\checkbox.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\button.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\button.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\popupbutton.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\popupbutton.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\combobox.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\combobox.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\progressbar.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\progressbar.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\slider.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\slider.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\messagedialog.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\messagedialog.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\textbox.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\textbox.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\imagepanel.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\imagepanel.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\imageview.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\imageview.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\vscrollpanel.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\vscrollpanel.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\colorwheel.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\colorwheel.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\colorpicker.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\colorpicker.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\graph.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\graph.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\glutil.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\glutil.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\tabheader.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\tabheader.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\tabwidget.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\tabwidget.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\stackedwidget.h" />
+    <ClCompile Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\src\stackedwidget.cpp" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\formhelper.h" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\toolbutton.h" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\opengl.h" />
+    <ClInclude Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\include\nanogui\nanogui.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\ZERO_CHECK.vcxproj">
+      <Project>{B100273C-BE48-3CA1-A2EE-4898D373E0D5}</Project>
+      <Name>ZERO_CHECK</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Administrator\workspace\bobsgame\lib\nanogui-sdl-master\bin2c.vcxproj">
+      <Project>{80166381-D031-3BE0-B040-C89207150F72}</Project>
+      <Name>bin2c</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
