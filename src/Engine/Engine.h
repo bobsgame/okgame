@@ -130,16 +130,16 @@ public:
 	bool debugLayerEnabled = false;
 
 	//DebugText cameraSpeedText = DebugConsole.add("cameraSpeedText");
-	ConsoleText* zoomText = Console::debug("zoomText");
+	ConsoleText* zoomText = nullptr;// Console::debug("zoomText");
 
-	ConsoleText* mapCamText = Console::debug("mapCamText");
-	ConsoleText* mapScreenText = Console::debug("mapScreenText");
+	ConsoleText* mapCamText = nullptr;// = Console::debug("mapCamText");
+	ConsoleText* mapScreenText = nullptr;// = Console::debug("mapScreenText");
 
-	ConsoleText* mapSizeText = Console::debug("mapSizeText");
-	ConsoleText* resolutionText = Console::debug("resolutionText");
+	ConsoleText* mapSizeText = nullptr;// = Console::debug("mapSizeText");
+	ConsoleText* resolutionText = nullptr;// = Console::debug("resolutionText");
 
-	ConsoleText* textText = Console::debug("textText");
-	ConsoleText* textOptionText = Console::debug("textOptionText");
+	ConsoleText* textText = nullptr;// = Console::debug("textText");
+	ConsoleText* textOptionText = nullptr;// = Console::debug("textOptionText");
 
 	Engine();
 	virtual ~Engine();

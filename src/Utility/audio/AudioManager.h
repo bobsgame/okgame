@@ -45,7 +45,7 @@ public:
 
 	AudioManager();
 	AudioManager(Engine* g);
-	void init();
+	
 	static void initAudioLibrary();
 	static void cleanup();
 

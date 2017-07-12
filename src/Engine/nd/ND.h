@@ -49,7 +49,7 @@ public:
 	float lightMinAlpha = 0.70f;
 
 
-	ConsoleText* ndZoomText = Console::debug("ndZoomText");
+	ConsoleText* ndZoomText = nullptr;// = Console::debug("ndZoomText");
 
 
 	long long fadeOutMeshTicks = 0;

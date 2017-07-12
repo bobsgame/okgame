@@ -55,9 +55,9 @@ void Engine::init()
 
 	//super::init();
 
-#ifdef _DEBUG
-	log.debug("Engine::init()");
-#endif
+//#ifdef _DEBUG
+//	log.debug("Engine::init()");
+//#endif
 
 
 
@@ -73,7 +73,7 @@ void Engine::init()
 
 	//controlsManager = Main::controlsManager;
 
-	audioManager->init();
+
 	textManager->init();
 	cinematicsManager->init();
 
@@ -162,8 +162,19 @@ void Engine::render()
 void Engine::updateDebugText()
 { //=========================================================================================================================
 
+
+	if (zoomText == nullptr)zoomText = Console::debug("zoomText");
+	if (mapCamText == nullptr)mapCamText = Console::debug("mapCamText");
+	if (mapScreenText == nullptr)mapScreenText = Console::debug("mapScreenText");
+	if (mapSizeText == nullptr)mapSizeText = Console::debug("mapSizeText");
+	if (resolutionText == nullptr)resolutionText = Console::debug("resolutionText");
+	if (textText == nullptr)textText = Console::debug("textText");
+	if (textOptionText == nullptr)textOptionText = Console::debug("textOptionText");
+
+
 	//playerSpeedText.getText = "Player speed: " + player.pixelsToMoveThisFrame;
 	//cameraSpeedText.getText = "Camera speed: " + cameraman.pixelsToMoveThisFrame;
+
 	zoomText->text = "Zoom level: " + to_string(cameraman->getZoom()) + " ZoomTO: " + to_string(cameraman->ZOOMto);
 
 	mapCamText->text = "Map cam xy: " + to_string(getCurrentMap()->mapCamX()) + "," + to_string(getCurrentMap()->mapCamY());
@@ -171,7 +182,7 @@ void Engine::updateDebugText()
 
 	mapSizeText->text = "Map: " + string(getCurrentMap()->getName()) + " | Size : " + to_string(getCurrentMap()->getWidthPixelsHQ()) + " x " + to_string(getCurrentMap()->getHeightPixelsHQ()) + " PixelsHQ | " + to_string(getCurrentMap()->getWidthTiles1X()) + " x " + to_string(getCurrentMap()->getHeightTiles1X()) + " Tiles 1X ";
 
-	resolutionText->text = "Window res: " + to_string(GLUtils::getViewportWidth()) + " x " + to_string(GLUtils::getViewportHeight()) + " (" + to_string((int)(GLUtils::getViewportWidth()) / 2 / cameraman->getZoom()) + " x " + to_string((int)(GLUtils::getViewportHeight()) / 2 / cameraman->getZoom()) + ")";
+	resolutionText->text = "Viewport res: " + to_string(getWidth()) + " x " + to_string(getHeight()) + " (" + to_string((int)(getWidth()) / 2 / cameraman->getZoom()) + " x " + to_string((int)(getHeight()) / 2 / cameraman->getZoom()) + ")";
 
 	textText->text = "Text: " + textManager->currentText;
 	textOptionText->text = "Text option: " + textManager->optionBuffer;
@@ -676,34 +687,31 @@ void Engine::incomingMapData(string s)
 
 void Engine::sendServerObjectRequest(ServerObject* serverObject)
 { //====================================================
-  //   if (serverObject->getClass() == Dialogue::typeid)
-  //   {
-  //      sendDialogueRequest((static_cast<Dialogue*>(serverObject))->id());
-  //   }
-  //   if (serverObject->getClass() == Flag::typeid)
-  //   {
-  //      sendFlagRequest((static_cast<Flag*>(serverObject))->id());
-  //   }
-  //   if (serverObject->getClass() == GameString::typeid)
-  //   {
-  //      sendGameStringRequest((static_cast<GameString*>(serverObject))->id());
-  //   }
-  //   if (serverObject->getClass() == Skill::typeid)
-  //   {
-  //      sendSkillRequest((static_cast<Skill*>(serverObject))->id());
-  //   }
-  //   if (serverObject->getClass() == Event::typeid)
-  //   {
-  //      sendEventRequest((static_cast<Event*>(serverObject))->id());
-  //   }
-  //   if (serverObject->getClass() == Sound::typeid)
-  //   {
-  //      sendSoundRequest((static_cast<Sound*>(serverObject))->id());
-  //   }
-  //   if (serverObject->getClass() == Music::typeid)
-  //   {
-  //      sendMusicRequest((static_cast<Music*>(serverObject))->id());
-  //   }
+     if(dynamic_cast<Dialogue*>(serverObject) != nullptr)
+     {
+        sendDialogueRequest((static_cast<Dialogue*>(serverObject))->getID());
+     }
+     if (dynamic_cast<Flag*>(serverObject) != nullptr)
+     {
+        sendFlagRequest((static_cast<Flag*>(serverObject))->getID());
+     }
+     if (dynamic_cast<GameString*>(serverObject) != nullptr)
+     {
+        sendGameStringRequest((static_cast<GameString*>(serverObject))->getID());
+     }
+     if (dynamic_cast<Skill*>(serverObject) != nullptr)
+     {
+        sendSkillRequest((static_cast<Skill*>(serverObject))->getID());
+     }
+     if (dynamic_cast<Event*>(serverObject) != nullptr)
+     {
+        sendEventRequest((static_cast<Event*>(serverObject))->getID());
+     }
+     if (dynamic_cast<AudioFile*>(serverObject) != nullptr)
+     {
+        sendSoundRequest((static_cast<AudioFile*>(serverObject))->getID());
+     }
+
 }
 
 void Engine::sendDialogueRequest(int id)

@@ -349,7 +349,7 @@ sigar_close(sigar);
 
 
 totalNow = SDL_GetPerformanceCounter();
-log.debug("Init system info took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+log.debug("Init system info took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 }

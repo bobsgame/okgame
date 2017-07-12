@@ -35,8 +35,8 @@ public:
 
 	static bool debugMode;
 
-	ConsoleText* playerMapText = Console::debug("playerMapText");
-	ConsoleText* playerScreenText = Console::debug("playerScreenText");
+	ConsoleText* playerMapText = nullptr;// = Console::debug("playerMapText");
+	ConsoleText* playerScreenText = nullptr;// = Console::debug("playerScreenText");
 
 	GUIManager* guiManager = nullptr;
 	StatusBar* statusBar = nullptr;

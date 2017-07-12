@@ -529,6 +529,9 @@ void BGClientEngine::updateDebugText()
 { //=========================================================================================================================
 	Engine::updateDebugText();
 
+	if (playerMapText == nullptr)playerMapText = Console::debug("playerMapText");
+	if (playerScreenText == nullptr)playerScreenText = Console::debug("playerScreenText");
+
 	playerMapText->text = "Player map xy: " + to_string(player->getX()) + "," + to_string(player->getY()) + " | Tiles: " + to_string(player->getX() / 8) + "," + to_string(player->getY() / 8);
 	playerScreenText->text = "Player screen xy: " + to_string(player->getScreenLeft()) + "," + to_string(player->getScreenTop()) + " Player layer: " + to_string((int)player->getRenderOrder());
 }

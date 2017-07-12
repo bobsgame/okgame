@@ -261,8 +261,6 @@ void LoginScreen::update()
 
 	int y = (int)(GLUtils::getRealWindowHeight() / 4 * 3);
 
-	if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-	if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 	if (loginMenu == nullptr)
 	{
@@ -280,6 +278,10 @@ void LoginScreen::update()
 
 		loginMenu->cursorPosition = loginMenuCursorPosition;
 	}
+
+	if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+	if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+
 
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
@@ -368,24 +370,24 @@ void LoginScreen::update()
 
 	}
 
-	if (getServerConnection()->getAuthorizedOnServer_S())
-	{
-		leaveMenu = true;
-		
-		//if (networkMultiplayer)networkMultiplayerLobbyMenuShowing = true;
-		//else startScreenMenuShowing = true;
-
-		//if (loggedIn == true)
-		{
-			if (getIsActivated() == false)
-			{
-				if (getIsScrollingDown() == false)
-				{
-					Main::getMain()->stateManager->setState(Main::getMain()->gameEngine);
-				}
-			}
-		}
-	}
+//	if (getServerConnection()->getAuthorizedOnServer_S())
+//	{
+//		leaveMenu = true;
+//		
+//		//if (networkMultiplayer)networkMultiplayerLobbyMenuShowing = true;
+//		//else startScreenMenuShowing = true;
+//
+//		//if (loggedIn == true)
+//		{
+//			if (getIsActivated() == false)
+//			{
+//				if (getIsScrollingDown() == false)
+//				{
+//					Main::getMain()->stateManager->setState(Main::getMain()->gameEngine);
+//				}
+//			}
+//		}
+//	}
 
 //	if (getControlsManager()->key_ESC_Pressed() || getControlsManager()->miniGame_SELECT_Pressed())
 //	{
@@ -427,6 +429,72 @@ void LoginScreen::update()
 
 	Main::glowTileBackground->update();
 }
+
+
+
+void LoginScreen::renderBefore()
+{ //=========================================================================================================================
+
+
+	if (getIsScrollingDown() == true)
+	{
+		return;
+	}
+	if (getIsActivated() == false)
+	{
+		return;
+	}
+	//additional rendering calls go here (after gui is drawn)
+
+
+
+	Main::glowTileBackground->render();
+
+
+
+
+	float w = (float)GLUtils::getRealWindowWidth();
+	float h = (float)GLUtils::getRealWindowHeight();
+
+	GLUtils::drawFilledRect(BobMenu::bgColor->ri(), BobMenu::bgColor->gi(), BobMenu::bgColor->bi(), w / 4 * 1, w / 4 * 3, h / 4 * 1, h / 4 * 3, 0.8f);
+
+	//BobTexture* t = onlineTexture;
+
+	if (loginMenu == nullptr)return;
+
+	//if (t != nullptr)
+	{
+		//loginMenu->setGraphic(t, getWidth() / 8 * 4, 100);
+	}
+
+	if (statusLabel != nullptr && errorLabel != nullptr)
+	{
+		errorLabel->screenY = (float)(h / 8 * 5);
+		statusLabel->screenY = (float)((h / 8 * 5) + 24);
+	}
+
+	loginMenu->render(h/8*3);
+}
+
+
+void LoginScreen::render()
+{ //=========================================================================================================================
+
+
+	if (getIsScrollingDown() == true)
+	{
+		return;
+	}
+	if (getIsActivated() == false)
+	{
+		return;
+	}
+
+	//additional rendering calls go here (after gui is drawn)
+}
+
+
+
 
 void LoginScreen::onScrolledUp()
 { //=========================================================================================================================
@@ -1361,61 +1429,3 @@ void LoginScreen::checkForSessionTokenAndLogInIfExists()
 void LoginScreen::showStatsDialogue()
 { //=========================================================================================================================
 }
-
-void LoginScreen::renderBefore()
-{ //=========================================================================================================================
-
-
-	if (getIsScrollingDown() == true)
-	{
-		return;
-	}
-	if (getIsActivated() == false)
-	{
-		return;
-	}
-	//additional rendering calls go here (after gui is drawn)
-
-
-
-	Main::glowTileBackground->render();
-
-	float w = (float)GLUtils::getRealWindowWidth();
-	float h = (float)GLUtils::getRealWindowHeight();
-
-	GLUtils::drawFilledRect(BobMenu::bgColor->ri(), BobMenu::bgColor->gi(), BobMenu::bgColor->bi(), w/4*1, w/4*3, h/4*1, h/4*3, 1.0f);
-
-	//BobTexture* t = onlineTexture;
-
-	if (loginMenu == nullptr)return;
-
-	//if (t != nullptr)
-	{
-		//loginMenu->setGraphic(t, getWidth() / 8 * 4, 100);
-	}
-
-	if (statusLabel != nullptr && errorLabel != nullptr)
-	{
-		errorLabel->screenY = (float)(h / 8 * 5);
-		statusLabel->screenY = (float)((h / 8 * 5) + 24);
-	}
-
-	loginMenu->render();
-}
-
-void LoginScreen::render()
-{ //=========================================================================================================================
-
-
-	if (getIsScrollingDown() == true)
-	{
-		return;
-	}
-	if (getIsActivated() == false)
-	{
-		return;
-	}
-
-	//additional rendering calls go here (after gui is drawn)
-}
-

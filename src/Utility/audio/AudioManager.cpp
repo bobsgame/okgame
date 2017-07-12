@@ -84,7 +84,7 @@ void AudioManager::initAudioLibrary()
 
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Init sound took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Init SDL Mixer took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -148,10 +148,10 @@ void AudioManager::initAudioLibrary()
 		start = SDL_GetPerformanceCounter();
 
 		totalNow = SDL_GetPerformanceCounter();
-		log.debug("Init AudioManager took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+		log.debug("initAudioLibrary took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
-		GLUtils::e();
+		//GLUtils::e();
 	}
 
 	//	//load sounds/index.txt
@@ -177,15 +177,6 @@ void AudioManager::initAudioLibrary()
 
 
 
-//=========================================================================================================================
-void AudioManager::init()
-{//=========================================================================================================================
-	log.debug("Init AudioManager");
-
-
-
-
-}
 
 
 //=========================================================================================================================

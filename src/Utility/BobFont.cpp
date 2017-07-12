@@ -298,7 +298,7 @@ void BobFont::initFonts()
 
 
 	totalNow = SDL_GetPerformanceCounter();
-	log.debug("Init fonts took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Init fonts took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 }

@@ -277,7 +277,7 @@ void BobsGame::initAssets()
 
 
 	totalNow = SDL_GetPerformanceCounter();
-	log.debug("BobsGame::initAssets took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("BobsGame::initAssets took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 

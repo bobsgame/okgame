@@ -112,7 +112,7 @@ void ND::update()
 		}
 	}
 
-
+	if (ndZoomText == nullptr)ndZoomText = Console::debug("ndZoomText");
 	ndZoomText->text = "nD zoom: " + to_string(nDZoom);
 }
 

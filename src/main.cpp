@@ -208,7 +208,9 @@ void Main::mainInit()
 		log.error("SDLNet_Init error: "+string(SDLNet_GetError()));
 	}
 
-	//
+	
+
+
 	//	if (lzo_init() != LZO_E_OK)
 	//	{
 	//		printf("internal error - lzo_init() failed !!!\n");
@@ -246,8 +248,11 @@ void Main::mainInit()
 	//
 	//	return;
 
-	new GLUtils();
 
+
+
+	new GLUtils();
+	new AudioManager();
 
 	AudioManager::initAudioLibrary();
 
@@ -276,6 +281,9 @@ void Main::mainInit()
 
 	BobFont::initFonts();
 	GLUtils::e();
+
+
+
 
 	if (previewClientInEditor == false)
 	{

@@ -62,7 +62,7 @@ bool TextManager::isTextAnswerBoxOpen()
 void TextManager::init()
 { //=========================================================================================================================
 
-	log.debug("Init TextManager");
+	//log.debug("Init TextManager");
 	/*
 	 * // load a default java font
 	 * try
