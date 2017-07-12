@@ -14,7 +14,7 @@
 Logger MapManager::log = Logger("MapManager");
 
 
-bool MapManager::useThreads = false;
+bool MapManager::useThreads = true;
 bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
