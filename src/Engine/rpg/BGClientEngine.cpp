@@ -77,16 +77,27 @@ void BGClientEngine::init()
 
 
 	nD->init();
-	//nD.setActivated(true);
 
 
-	//BobsGame* bobsgame = new BobsGame();// nD);
-	//bobsgame.setConnection(null);
-	//bobsgame->init();
-	//		nDMenu.addGame(ping,"Ping",Color.BLUE);
-	//		nDMenu.addGame(ramio,"Ramio",Color.RED);
-	//		nDMenu.addGame(bobsgame,"\"bob's game\"",Color.GREEN);
-	//nD->setGame(bobsgame);
+	BobsGame* bobsgame = new BobsGame(nD);
+	bobsgame->init();
+
+
+
+	NDMenu* nDMenu = new NDMenu(nD);
+	nDMenu->init();
+
+	Ping* ping = new Ping(nD);
+	ping->init();
+
+	Ramio* ramio = new Ramio(nD);
+	ramio->init();
+
+	nDMenu->addGame(ping, "Ping", BobColor::blue);
+	nDMenu->addGame(ramio,"Ramio",BobColor::red);
+	nDMenu->addGame(bobsgame,"\"bob's game\"",BobColor::green);
+
+	nD->setGame(nDMenu);
 
 
 	friendManager->init();
@@ -341,10 +352,10 @@ bool BGClientEngine::areAnyMenusOpen()
 { //=========================================================================================================================
 
 
-	//   if (getND()->getIsActivated() || getStuffMenu()->getIsActivated() || getPlayerEditMenu()->getIsActivated() || getGameStore()->getIsActivated())
-	//   {
-	//      return true;
-	//   }
+	if (getND()->getIsActivated() || getStuffMenu()->getIsActivated() || getPlayerEditMenu()->getIsActivated() || getGameStore()->getIsActivated())
+	{
+	    return true;
+	}
 
 	return false;
 }
@@ -355,19 +366,19 @@ void BGClientEngine::handleGameEngineOptionKeys()
 
 	if (getControlsManager()->key_F1_Pressed() == true)
 	{
-		//guiManager->keyboardScreen->toggleActivated();
+		guiManager->keyboardScreen->toggleActivated();
 	}
 
 
 	if (getControlsManager()->bgClient_OPENND_Pressed() == true && nD->getIsActivated() == false)
 	{
-		//nD->toggleActivated();
+		nD->toggleActivated();
 	}
 
 
 	if (getControlsManager()->bgClient_OPENMENU_Pressed() == true)
 	{
-		//guiManager->stuffMenu->toggleActivated();
+		guiManager->stuffMenu->toggleActivated();
 	}
 
 
@@ -398,13 +409,13 @@ void BGClientEngine::handleGameEngineOptionKeys()
 			cameraman->resetZoom();
 		}
 
-		if (getControlsManager()->bgClient_QUICKZOOMOUT_Pressed() == true)
+		if (getControlsManager()->BGCLIENT_QUICKZOOMOUT_HELD == true)
 		{
 			cameraman->quickZoomOut();
 		}
 		else
 		{
-			if (getControlsManager()->bgClient_QUICKZOOMIN_Pressed() == true)
+			if (getControlsManager()->BGCLIENT_QUICKZOOMIN_HELD == true)
 			{
 				cameraman->quickZoomIn();
 			}

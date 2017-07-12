@@ -86,6 +86,7 @@ public:
 	virtual void render() override;
 
 	BobsGame();
+	BobsGame(ND* nD);
 	virtual ~BobsGame() override;
 	virtual void init() override;
 

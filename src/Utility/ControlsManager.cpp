@@ -1210,7 +1210,7 @@ SDL_JoyHatEvent
 				case SDLK_9:KEY_9_HELD = true;break;
 				case SDLK_0:KEY_0_HELD = true;break;
 				case SDLK_PLUS:KEY_PLUS_HELD = true; break;
-				case SDLK_EQUALS:KEY_MINUS_HELD = true; break;
+				case SDLK_MINUS:KEY_MINUS_HELD = true; break;
 				case SDLK_KP_0:KEY_NUM0_HELD = true; break;
 				case SDLK_KP_1:KEY_NUM1_HELD = true; break;
 				case SDLK_KP_2:KEY_NUM2_HELD = true;break;
@@ -1275,7 +1275,7 @@ SDL_JoyHatEvent
 				case SDLK_9:KEY_9_HELD = false; break;
 				case SDLK_0:KEY_0_HELD = false; break;
 				case SDLK_PLUS:KEY_PLUS_HELD = false; break;
-				case SDLK_EQUALS:KEY_MINUS_HELD = false; break;
+				case SDLK_MINUS:KEY_MINUS_HELD = false; break;
 				case SDLK_KP_0:KEY_NUM0_HELD = false; break;
 				case SDLK_KP_1:KEY_NUM1_HELD = false; break;
 				case SDLK_KP_2:KEY_NUM2_HELD = false; break;
