@@ -396,7 +396,7 @@ void Main::mainInit()
 
 
 
-//#define PUZZLE 1
+#define PUZZLE 1
 
 #ifdef PUZZLE
 

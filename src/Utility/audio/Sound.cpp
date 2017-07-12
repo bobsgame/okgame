@@ -111,22 +111,7 @@ void Sound::update()
 
 	
 
-			if (playingStarted == false)
-			{
-
-#ifdef USE_SOLOUD
-				AudioManager::soLoud->play(*soLoudWave);
-#endif
-#ifdef USE_SDL_MIXER
-				channel = Mix_PlayChannel(-1, mixChunk, 0);
-				//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
-
-#endif
-
-				playingStarted = true;
-
-			}
-			else
+			if (playingStarted)
 			{
 				if (Mix_Playing(channel) == false)
 				{
@@ -211,9 +196,7 @@ void Sound::play(float pitch, float volume, int timesToPlay)
 	this->volume = volume;
 	this->timesToPlay = timesToPlay;
 
-	shouldBePlaying = true;
-
-	update();
+	playImmediately();
 }
 
 
@@ -231,7 +214,26 @@ void Sound::play(float pitch, float volume, bool loop)
 
 	shouldBePlaying = true;
 
+	playImmediately();
+}
+
+void Sound::playImmediately()
+{//=========================================================================================================================
+	shouldBePlaying = true;
+
+
+#ifdef USE_SOLOUD
+	AudioManager::soLoud->play(*soLoudWave);
+#endif
+#ifdef USE_SDL_MIXER
+	channel = Mix_PlayChannel(-1, mixChunk, 0);
+	//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
+#endif
+	playingStarted = true;
+
+
 	update();
+
 }
 
 

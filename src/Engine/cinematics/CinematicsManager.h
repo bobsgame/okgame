@@ -126,9 +126,9 @@ public:
 	//	}
 
 
-	void fadeColorFromCurrentAlphaToAlpha(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromCurrentAlphaToAlpha(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha);
 
-	void fadeColorFromAlphaToAlpha(int ticks, int ri, int gi, int bi, float fromAlpha, float toAlpha);
+	void fadeColorFromAlphaToAlpha(int ticks, u8 ri, u8 gi, u8 bi, float fromAlpha, float toAlpha);
 
 	//	
 	//	public void fadeFromTransparentToBlackOpaqueAndBackToTransparent(int ticks)
@@ -148,14 +148,14 @@ public:
 	//		screenOverlay.doToAndFromTransition(new Color(ri,gi,bi),ticks,1.0f);
 	//	}
 
-	void fadeColorFromTransparentToAlphaBackToTransparent(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromTransparentToAlphaBackToTransparent(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha);
 	//	
 	//	public void fadeColorFromCurrentAlphaToAlphaBackToCurrentAlpha(int ticks, int ri, int gi, int bi, float getToAlpha)
 	//	{
 	//		screenOverlay.doToAndFromTransition(new Color(ri,gi,bi),ticks, getToAlpha);
 	//	}
 
-	void setInstantOverlayColor(int ri, int gi, int bi, float a);
+	void setInstantOverlayColor(u8 ri, u8 gi, u8 bi, float af);
 
 
 	void clearOverlay();
@@ -163,19 +163,19 @@ public:
 	//TODO eventually redo overlay system to make disposable events that i can combine, i.e. flash red while fading to black, etc.
 
 
-	void fadeColorFromCurrentAlphaToAlphaUnderLights(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromCurrentAlphaToAlphaUnderLights(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha);
 
 
-	void setInstantOverlayColorUnderLights(int ri, int gi, int bi, float a);
+	void setInstantOverlayColorUnderLights(u8 ri, u8 gi, u8 bi, float af);
 
 
 	void clearOverlayUnderLights();
 
 
-	void fadeColorFromCurrentAlphaToAlphaGroundLayer(int ticks, int ri, int gi, int bi, float toAlpha);
+	void fadeColorFromCurrentAlphaToAlphaGroundLayer(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha);
 
 
-	void setInstantOverlayColorGroundLayer(int ri, int gi, int bi, float a);
+	void setInstantOverlayColorGroundLayer(u8 ri, u8 gi, u8 bi, float af);
 
 
 	void clearOverlayGroundLayer();

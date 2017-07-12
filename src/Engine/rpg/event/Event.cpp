@@ -5949,9 +5949,9 @@ void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 	int sec = currentCommand->parameterList->get(p++)->i;
 	int x = currentCommand->parameterList->get(p++)->i;
 	int y = currentCommand->parameterList->get(p++)->i;
-	int r = currentCommand->parameterList->get(p++)->i;
-	int g = currentCommand->parameterList->get(p++)->i;
-	int b = currentCommand->parameterList->get(p++)->i;
+	u8 r = currentCommand->parameterList->get(p++)->i;
+	u8 g = currentCommand->parameterList->get(p++)->i;
+	u8 b = currentCommand->parameterList->get(p++)->i;
 
 	if (s->getInitialized_S() == false)
 	{
@@ -5976,9 +5976,9 @@ void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 	int p = 0;
 	GameString* s = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
 	int sec = currentCommand->parameterList->get(p++)->i;
-	int r = currentCommand->parameterList->get(p++)->i;
-	int g = currentCommand->parameterList->get(p++)->i;
-	int b = currentCommand->parameterList->get(p++)->i;
+	u8 r = currentCommand->parameterList->get(p++)->i;
+	u8 g = currentCommand->parameterList->get(p++)->i;
+	u8 b = currentCommand->parameterList->get(p++)->i;
 
 	if (s->getInitialized_S() == false)
 	{
@@ -5998,9 +5998,9 @@ void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
 	GameString* s = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
 	int sec = currentCommand->parameterList->get(p++)->i;
-	int r = currentCommand->parameterList->get(p++)->i;
-	int g = currentCommand->parameterList->get(p++)->i;
-	int b = currentCommand->parameterList->get(p++)->i;
+	u8 r = currentCommand->parameterList->get(p++)->i;
+	u8 g = currentCommand->parameterList->get(p++)->i;
+	u8 b = currentCommand->parameterList->get(p++)->i;
 
 	if (s->getInitialized_S() == false)
 	{
@@ -6042,9 +6042,9 @@ void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 { //===============================================================================================
 	int p = 0;
 	GameString* gameString = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
-	int r = currentCommand->parameterList->get(p++)->i;
-	int g = currentCommand->parameterList->get(p++)->i;
-	int b = currentCommand->parameterList->get(p++)->i;
+	u8 r = currentCommand->parameterList->get(p++)->i;
+	u8 g = currentCommand->parameterList->get(p++)->i;
+	u8 b = currentCommand->parameterList->get(p++)->i;
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
 	Console::add(gameString->text(), ticks, new BobColor(r, g, b));

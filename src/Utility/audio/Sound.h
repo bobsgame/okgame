@@ -69,6 +69,8 @@ public:
 
 		void play(float pitch, float volume, bool loop);
 
+
+
 		void fadeOutAndStop(int ticksToFadeOut);
 
 		bool isFadingOut();
@@ -90,6 +92,9 @@ public:
 		float getPitch();
 
 		void setPitch(float p);
+
+private:
+	void playImmediately();
 
 };
 

@@ -166,7 +166,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 				if (tempBG == BobColor::clear)
 				{
 					BobColor* c = fg;
-					tempAA = new BobColor(c->rf(), c->gf(), c->bf(), c->af() / 2.0f);
+					tempAA = new BobColor((c->rf()) * 255, (c->gf()) * 255, (c->bf()) * 255, (c->af() / 2.0f)*255);
 				}
 			}
 		}
@@ -1290,10 +1290,10 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 		{
 			if ((index > 0) && y < maxCharHeight * 0.75f && (index != 2 || outlined == false))
 			{
-				int r = (int)(min(255, (int)(c->ri() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
-				int g = (int)(min(255, (int)(c->gi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
-				int b = (int)(min(255, (int)(c->bi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
-				int a = c->ai();
+				u8 r = (int)(min(255, (int)(c->ri() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
+				u8 g = (int)(min(255, (int)(c->gi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
+				u8 b = (int)(min(255, (int)(c->bi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
+				u8 a = c->ai();
 
 				if (c != nullptr)delete c;
 				c = new BobColor(r, g, b, a);

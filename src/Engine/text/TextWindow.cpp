@@ -720,9 +720,9 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 
 			if (index == 1 && y < h * 0.75f)
 			{
-				int r = (int)(min(255,(int)(pixelColor->ri() + (((float)(h - y) / (float)(h))*255.0f))));
-				int g = (int)(min(255,(int)(pixelColor->gi() + (((float)(h - y) / (float)(h))*255.0f))));
-				int b = (int)(min(255,(int)(pixelColor->bi() + (((float)(h - y) / (float)(h))*255.0f))));
+				u8 r = (int)(min(255,(int)(pixelColor->ri() + (((float)(h - y) / (float)(h))*255.0f))));
+				u8 g = (int)(min(255,(int)(pixelColor->gi() + (((float)(h - y) / (float)(h))*255.0f))));
+				u8 b = (int)(min(255,(int)(pixelColor->bi() + (((float)(h - y) / (float)(h))*255.0f))));
 
 
 				pixelColor = new BobColor(r, g, b);

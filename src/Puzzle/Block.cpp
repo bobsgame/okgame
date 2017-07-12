@@ -1160,6 +1160,9 @@ void Block::renderDisappearing()
 void Block::render(float screenX, float screenY, float a, float scale, bool interpolate, bool ghost)
 {//=========================================================================================================================
 
+
+	//BobColor noColor;
+
 	BobColor *renderColor = nullptr;
 
 	//BobColor noColor;
@@ -1184,10 +1187,22 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		{
 			c = blockType->specialColor;
 		}
-		if (c == nullptr)c = BobColor::gray;//TODO: should never happen?
+		if (c == nullptr)
+		{
+			log.error("Should never happen!");
+			c = BobColor::gray;//TODO: should never happen?
+		}
 
-		//if (renderColor != nullptr)delete renderColor;
-		renderColor = new BobColor(c->rf() + colorFlash, c->gf() + colorFlash, c->bf() + colorFlash, c->af());
+		int ri = (c->rf() + colorFlash) * 255;
+		int gi = (c->gf() + colorFlash) * 255;
+		int bi = (c->bf() + colorFlash) * 255;
+		int ai = (c->af()) * 255;
+		if (ri > 255)ri = 255;
+		if (gi > 255)gi = 255;
+		if (bi > 255)bi = 255;
+		if (ai > 255)ai = 255;
+		
+		renderColor = new BobColor(ri, gi, bi, ai);
 	}
 
 	

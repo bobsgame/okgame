@@ -110,22 +110,22 @@ void CinematicsManager::fadeFromBlack(int ticks)
 	screenOverlayOverLights->doTransition(BobColor::black, 1.0f, 0.0f, ticks);
 }
 
-void CinematicsManager::fadeColorFromCurrentAlphaToAlpha(int ticks, int ri, int gi, int bi, float toAlpha)
+void CinematicsManager::fadeColorFromCurrentAlphaToAlpha(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
 	screenOverlayOverLights->doTransition(new BobColor(ri, gi, bi), -1, toAlpha, ticks);
 }
 
-void CinematicsManager::fadeColorFromAlphaToAlpha(int ticks, int ri, int gi, int bi, float fromAlpha, float toAlpha)
+void CinematicsManager::fadeColorFromAlphaToAlpha(int ticks, u8 ri, u8 gi, u8 bi, float fromAlpha, float toAlpha)
 { //=========================================================================================================================
 	screenOverlayOverLights->doTransition(new BobColor(ri, gi, bi), fromAlpha, toAlpha, ticks);
 }
 
-void CinematicsManager::fadeColorFromTransparentToAlphaBackToTransparent(int ticks, int ri, int gi, int bi, float toAlpha)
+void CinematicsManager::fadeColorFromTransparentToAlphaBackToTransparent(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
 	screenOverlayOverLights->doToAndFromTransition(new BobColor(ri, gi, bi), ticks, toAlpha);
 }
 
-void CinematicsManager::setInstantOverlayColor(int ri, int gi, int bi, float a)
+void CinematicsManager::setInstantOverlayColor(u8 ri, u8 gi, u8 bi, float a)
 { //=========================================================================================================================
 	screenOverlayOverLights->setInstantOverlay(new BobColor(ri, gi, bi), a);
 }
@@ -135,14 +135,14 @@ void CinematicsManager::clearOverlay()
 	screenOverlayOverLights->clearOverlays();
 }
 
-void CinematicsManager::fadeColorFromCurrentAlphaToAlphaUnderLights(int ticks, int ri, int gi, int bi, float toAlpha)
+void CinematicsManager::fadeColorFromCurrentAlphaToAlphaUnderLights(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
 	screenOverlayUnderLights->doTransition(new BobColor(ri, gi, bi), -1, toAlpha, ticks);
 }
 
-void CinematicsManager::setInstantOverlayColorUnderLights(int ri, int gi, int bi, float a)
+void CinematicsManager::setInstantOverlayColorUnderLights(u8 ri, u8 gi, u8 bi, float af)
 { //=========================================================================================================================
-	screenOverlayUnderLights->setInstantOverlay(new BobColor(ri, gi, bi), a);
+	screenOverlayUnderLights->setInstantOverlay(new BobColor(ri, gi, bi), af);
 }
 
 void CinematicsManager::clearOverlayUnderLights()
@@ -150,14 +150,14 @@ void CinematicsManager::clearOverlayUnderLights()
 	screenOverlayUnderLights->clearOverlays();
 }
 
-void CinematicsManager::fadeColorFromCurrentAlphaToAlphaGroundLayer(int ticks, int ri, int gi, int bi, float toAlpha)
+void CinematicsManager::fadeColorFromCurrentAlphaToAlphaGroundLayer(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
 	screenOverlayGroundLayer->doTransition(new BobColor(ri, gi, bi), -1, toAlpha, ticks);
 }
 
-void CinematicsManager::setInstantOverlayColorGroundLayer(int ri, int gi, int bi, float a)
+void CinematicsManager::setInstantOverlayColorGroundLayer(u8 ri, u8 gi, u8 bi, float af)
 { //=========================================================================================================================
-	screenOverlayGroundLayer->setInstantOverlay(new BobColor(ri, gi, bi), a);
+	screenOverlayGroundLayer->setInstantOverlay(new BobColor(ri, gi, bi), af);
 }
 
 void CinematicsManager::clearOverlayGroundLayer()
