@@ -622,9 +622,9 @@ ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesChainMustContain(Difficu
 }
 
 
-ArrayList<shared_ptr<PieceType> > GameType::getNormalPieceTypes(DifficultyType *d)
+ArrayList<shared_ptr<PieceType>> GameType::getNormalPieceTypes(DifficultyType *d)
 {//=========================================================================================================================
-	ArrayList<shared_ptr<PieceType> > arr;
+	ArrayList<shared_ptr<PieceType>> arr;
 	for (int i = 0; i<pieceTypes.size(); i++)
 	{
 		shared_ptr<PieceType> b = pieceTypes.get(i);
@@ -642,9 +642,9 @@ ArrayList<shared_ptr<PieceType> > GameType::getNormalPieceTypes(DifficultyType *
 	return arr;
 }
 
-ArrayList<shared_ptr<PieceType> > GameType::getGarbagePieceTypes(DifficultyType *d)
+ArrayList<shared_ptr<PieceType>> GameType::getGarbagePieceTypes(DifficultyType *d)
 {//=========================================================================================================================
-	ArrayList<shared_ptr<PieceType> > arr;
+	ArrayList<shared_ptr<PieceType>> arr;
 	for (int i = 0; i<pieceTypes.size(); i++)
 	{
 		shared_ptr<PieceType> b = pieceTypes.get(i);
@@ -662,10 +662,10 @@ ArrayList<shared_ptr<PieceType> > GameType::getGarbagePieceTypes(DifficultyType 
 	return arr;
 }
 
-ArrayList<shared_ptr<PieceType> > GameType::getPlayingFieldPieceTypes(DifficultyType *d)
+ArrayList<shared_ptr<PieceType>> GameType::getPlayingFieldPieceTypes(DifficultyType *d)
 {//=========================================================================================================================
 
-	ArrayList<shared_ptr<PieceType> > arr;
+	ArrayList<shared_ptr<PieceType>> arr;
 	for (int i = 0; i<pieceTypes.size(); i++)
 	{
 		shared_ptr<PieceType> b = pieceTypes.get(i);

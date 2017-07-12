@@ -1452,7 +1452,7 @@ void Caption::update()
 	}
 	else
 	{
-		ticksPassed = State::realWorldTicksPassed();
+		ticksPassed = Engine::realWorldTicksPassed();
 	}
 
 	ticksAge += ticksPassed;

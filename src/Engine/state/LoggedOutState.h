@@ -11,7 +11,7 @@ class Logger;
 
 
 
-class LoggedOutState : public State
+class LoggedOutState : public Engine
 {
 public:
 

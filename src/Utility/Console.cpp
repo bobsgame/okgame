@@ -302,7 +302,7 @@ void Console::update()
 
 		if (d->ticks != -1)
 		{
-			d->ticks -= (int)State::realWorldTicksPassed();
+			d->ticks -= (int)Engine::realWorldTicksPassed();
 
 			if (d->ticks <= 0)
 			{

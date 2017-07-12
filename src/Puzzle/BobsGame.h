@@ -18,7 +18,7 @@ class Logger;
 #include "src/Utility/AssetData.h"
 #include "src/Utility/ArrayList.h"
 #include "src/Utility/HashMap.h"
-#include "src/Utility/audio/Music.h"
+#include "src/Utility/audio/Sound.h"
 #include "src/Utility/ControlsManager.h"
 #include "src/Utility/BobMenu.h"
 #include "../Engine/Engine.h"
@@ -59,7 +59,7 @@ protected:
 public:
 
 	//static BobsGame* b;
-	Music *music = nullptr;
+	Sound *music = nullptr;
 	BobTexture* keyboardTexture = nullptr;
 	BobTexture* controllerTexture = nullptr;
 	BobTexture* controllerIconTexture = nullptr;

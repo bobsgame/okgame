@@ -11,7 +11,7 @@ class Logger;
 
 
 
-class CreateNewAccountState : public State
+class CreateNewAccountState : public Engine
 {
 public:
 

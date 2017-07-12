@@ -78,7 +78,7 @@ public:
 	//ArrayList<PieceType> importExport_makePieceTypeWhenCleared;
 public:
 	//don't use!!! use uuid!
-	ArrayList<shared_ptr<PieceType> > makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
+	ArrayList<shared_ptr<PieceType>> makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
 	ArrayList<string> makePieceTypeWhenCleared_UUID;
 
 	bool clearEveryOtherLineOnGridWhenCleared = false;						Info clearEveryOtherLineOnGridWhenCleared_Info = Info("Special: Clear Every Other Line On Grid When Cleared", "When this block is cleared it will remove every other line on the grid.");

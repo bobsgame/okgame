@@ -738,12 +738,12 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				SoundData* data = new SoundData(); data->initFromString(s);
+				AudioData* data = new AudioData(); data->initFromString(s);
 
-				Sound* m = AudioManager::getSoundByName(data->getName());
+				AudioFile* m = AudioManager::getAudioFileByName(data->getName());
 				if (m == nullptr)
 				{
-					new Sound(this, data);
+					new AudioFile(data);
 				}
 				else
 				{
@@ -782,12 +782,12 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				MusicData* data = new MusicData(); data->initFromString(s);
+				AudioData* data = new AudioData(); data->initFromString(s);
 
-				Music* m = AudioManager::getMusicByName(data->getName());
+				AudioFile* m = AudioManager::getAudioFileByName(data->getName());
 				if (m == nullptr)
 				{
-					new Music(this, data);
+					new AudioFile(data);
 				}
 				else
 				{

@@ -41,7 +41,10 @@ private:
 	bool enabled = true;
 
 public:
+
 	MenuPanel();
+
+	MenuPanel(Engine *e);
 
 	virtual void update();
 

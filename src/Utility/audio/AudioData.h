@@ -11,7 +11,7 @@ class Logger;
 
 
 
-class SoundData : public AssetData
+class AudioData : public AssetData
 {
 
 private:
@@ -34,41 +34,43 @@ private:
 	//---------------------------------------------------------
 	//---------------------------------------------------------
 
-private:
-	
+protected:
+
 	string fileName = "";
-	
+
 	string fullFilePath = "";
 
 
-	
+
 	string md5Name = ""; //for use in client
 
 
+	bool preload = false;
+
+
 public:
-	SoundData();
+	AudioData();
 
 
-	SoundData(int id, const string& name, const string& filename);
+	AudioData(int id, const string& name, const string& filename);
 
 
-	//static SoundData* fromBase64ZippedJSON(const string& b64);
+	//static AudioData* fromBase64ZippedJSON(const string& b64);
 
 
-	//static SoundData* fromJSON(const string& json);
+	//static AudioData* fromJSON(const string& json);
 
 	string& initFromString(string& t);
 
 
-	string getTYPEIDString();
-
 	string& getFileName();
 	string& getFullFilePath();
 	string& getMD5Name();
-
+	bool getPreload();
 
 	void setFileName(const string& s);
 	void setFullFilePath(const string& s);
 	void setMD5Name(const string& s);
+	void setPreload(bool s);
 };
 

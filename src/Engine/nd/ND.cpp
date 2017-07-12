@@ -49,7 +49,7 @@ void ND::update()
 	MenuPanel::update();
 
 
-	State* s = nDGameStateManager->getState();
+	Engine* s = nDGameStateManager->getState();
 
 	if (isActivated == true)
 	{

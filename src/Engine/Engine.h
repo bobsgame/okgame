@@ -8,7 +8,7 @@
 
 class Logger;
 
-#include "./state/State.h"
+//#include "./state/State.h"
 #include "src/Utility/Console.h"
 #include "src/Utility/ConsoleText.h"
 //#include "src/Utility/ControlsManager.h"
@@ -39,11 +39,13 @@ class StatusBar;
 class NotificationManager;
 class ServerObject;
 class Event;
+class UDPPeerConnection;
+class TCPServerConnection;
 
-class Engine : public State
+class Engine// : public State
 {
-private:
-	typedef State super;
+//private:
+	//typedef State super;
 public:
 	
 
@@ -59,8 +61,61 @@ public:
 	TextManager* textManager = nullptr;
 	EventManager* eventManager = nullptr;
 
+
+	static ArrayList<UDPPeerConnection*> onlineFriends;
+
+	double engineSpeed = 1.0;
+
 private:
-	ControlsManager* controlsManager = nullptr;
+	static int totalFrames;
+
+	//static long long ticksPassedThisUpdate;
+
+	static int framesThisSecond;
+	//static long long lastSecondTime;
+	//private static long last100Ticks=lastRenderHighResTime;
+
+	static long long totalTicks;
+	static long long ticksThisSecond;
+	static int framesSkipped;
+
+
+public:
+	static void updateTimers();
+	void setEngineSpeed(double f);
+	int engineTicksPassed();
+	static int realWorldTicksPassed();
+
+	virtual void update();
+	virtual void render();
+	virtual void cleanup();
+
+	static ControlsManager* getControlsManager();
+
+	//static void setClientGameEngine(BGClientEngine* gameEngine);
+	static BGClientEngine* getClientGameEngine();
+
+	virtual void updateControls();
+	virtual void resetPressedButtons();
+	virtual void setButtonStates();
+
+
+	static TCPServerConnection* getServerConnection();
+
+	static long long getUserID_S();
+	static string getUserName_S();
+	static GameSave getGameSave_S();
+	static void setGameSave_S(GameSave &g);
+
+	int getWidth();
+
+	int getHeight();
+
+	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s);
+	virtual bool serverMessageReceived(string cs);
+
+private:
+	//ControlsManager* controlsManager = nullptr;
 
 	//static BGClientEngine* clientGameEngine;
 	//ArrayDeque<Cameraman*> *cameramanStack = new ArrayDeque<Cameraman*>();
@@ -87,11 +142,10 @@ public:
 	ConsoleText* textOptionText = Console::debug("textOptionText");
 
 	Engine();
-	virtual ~Engine() override;
-	virtual void init() override;
+	virtual ~Engine();
+	virtual void init();
 
-	virtual void update() override;
-	virtual void render() override;
+
 	virtual void updateDebugText();
 	void* getGameObjectByTYPEIDName(const string& typeIDName);
 
@@ -119,7 +173,6 @@ public:
 
 
 
-	virtual bool serverMessageReceived(string e) override;
 
 	//====================================================
 	//SPRITE

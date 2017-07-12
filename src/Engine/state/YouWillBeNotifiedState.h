@@ -11,7 +11,7 @@ class Logger;
 
 
 
-class YouWillBeNotifiedState : public State
+class YouWillBeNotifiedState : public Engine
 {
 public:
 

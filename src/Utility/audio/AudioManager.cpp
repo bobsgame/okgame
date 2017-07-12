@@ -22,9 +22,8 @@ SoLoud::Soloud *AudioManager::soLoud = nullptr;
 #endif
 
 //global and static, shared between all audiomanagers
-ArrayList<Music*>* AudioManager::musicList = new ArrayList<Music*>();
-ArrayList<Sound*>* AudioManager::soundList = new ArrayList<Sound*>();
-HashMap<string, Sound*>* AudioManager::soundByNameHashMap = new HashMap<string, Sound*>();
+ArrayList<AudioFile*> AudioManager::globalAudioFileList;
+bool AudioManager::loadedBuiltIn = false;
 
 //=========================================================================================================================
 AudioManager::AudioManager()
@@ -87,6 +86,93 @@ void AudioManager::initAudioLibrary()
 	now = SDL_GetPerformanceCounter();
 	log.debug("Init sound took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
+
+
+
+	if (loadedBuiltIn == false)
+	{
+		loadedBuiltIn = true;
+
+
+		Uint64 start, now, totalStart, totalNow;
+		start = SDL_GetPerformanceCounter();
+		totalStart = SDL_GetPerformanceCounter();
+
+		log.debug("Loading built in sounds");
+		{
+			string spriteFolderString = Main::getPath() + "data/sounds/";
+			Path spriteFolderPath(spriteFolderString);
+			File spriteFolderPathDir(spriteFolderPath);
+			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
+			vector<string> files;
+			spriteFolderPathDir.list(files);
+			vector<string>::iterator it = files.begin();
+			for (; it != files.end(); ++it)
+			{
+				//cout << *it << endl;
+				string name = *it;
+				if (name.find(".ogg") != string::npos)
+				{
+					new AudioFile("data/sounds/" + name);
+				}
+			}
+		}
+
+		now = SDL_GetPerformanceCounter();
+		log.debug("Loading sounds took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+		start = SDL_GetPerformanceCounter();
+
+
+		log.debug("Loading built in music");
+		{
+			string spriteFolderString = Main::getPath() + "data/music/";
+			Path spriteFolderPath(spriteFolderString);
+			File spriteFolderPathDir(spriteFolderPath);
+			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
+			vector<string> files;
+			spriteFolderPathDir.list(files);
+			vector<string>::iterator it = files.begin();
+			for (; it != files.end(); ++it)
+			{
+				//cout << *it << endl;
+				string name = *it;
+				if (name.find(".ogg") != string::npos)
+				{
+					new AudioFile("data/music/" + name);
+				}
+			}
+		}
+
+		now = SDL_GetPerformanceCounter();
+		log.debug("Loading music took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+		start = SDL_GetPerformanceCounter();
+
+		totalNow = SDL_GetPerformanceCounter();
+		log.debug("Init AudioManager took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
+
+
+		GLUtils::e();
+	}
+
+	//	//load sounds/index.txt
+	//	//for each line, load ogg file
+	//	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sounds/index.txt");
+	//	if (stringList->size() > 0)
+	//	{
+	//		for (int i = 0; i < stringList->size(); i++)
+	//		{
+	//			string s = stringList->get(i);
+	//
+	//			if (s.length() > 0)
+	//			{
+	//				//Sound *sound =
+	//				new Sound(this, "data/sounds/" + s);
+	//				//sound.byteData = dataFile.readBytes();
+	//			}
+	//		}
+	//	}
+
+
 }
 
 
@@ -97,83 +183,6 @@ void AudioManager::init()
 	log.debug("Init AudioManager");
 
 
-	Uint64 start=0, now=0, totalStart, totalNow;
-	start = SDL_GetPerformanceCounter();
-	totalStart = SDL_GetPerformanceCounter();
-
-	log.debug("Loading built in sounds");
-	{
-		string spriteFolderString = Main::getPath() + "data/sounds/";
-		Path spriteFolderPath(spriteFolderString);
-		File spriteFolderPathDir(spriteFolderPath);
-		if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-		vector<string> files;
-		spriteFolderPathDir.list(files);
-		vector<string>::iterator it = files.begin();
-		for (; it != files.end(); ++it)
-		{
-			//cout << *it << endl;
-			string name = *it;
-			if (name.find(".ogg") != string::npos)
-			{
-				new Sound(e, "data/sounds/" + name);
-			}
-		}
-	}
-
-	now = SDL_GetPerformanceCounter();
-	log.debug("Loading sounds took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
-
-
-	log.debug("Loading built in music");
-	{
-		string spriteFolderString = Main::getPath() + "data/music/";
-		Path spriteFolderPath(spriteFolderString);
-		File spriteFolderPathDir(spriteFolderPath);
-		if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-		vector<string> files;
-		spriteFolderPathDir.list(files);
-		vector<string>::iterator it = files.begin();
-		for (; it != files.end(); ++it)
-		{
-			//cout << *it << endl;
-			string name = *it;
-			if (name.find(".ogg") != string::npos)
-			{
-				new Music(e, "data/music/" + name);
-			}
-		}
-	}
-
-	now = SDL_GetPerformanceCounter();
-	log.debug("Loading music took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
-	start = SDL_GetPerformanceCounter();
-
-	totalNow = SDL_GetPerformanceCounter();
-	log.debug("Init AudioManager took " + to_string((double)((totalNow - totalStart * 1000)) / SDL_GetPerformanceFrequency()) + "ms");
-
-
-	GLUtils::e();
-
-
-//	//load sounds/index.txt
-//	//for each line, load ogg file
-//	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sounds/index.txt");
-//	if (stringList->size() > 0)
-//	{
-//		for (int i = 0; i < stringList->size(); i++)
-//		{
-//			string s = stringList->get(i);
-//
-//			if (s.length() > 0)
-//			{
-//				//Sound *sound =
-//				new Sound(this, "data/sounds/" + s);
-//				//sound.byteData = dataFile.readBytes();
-//			}
-//		}
-//	}
 
 
 }
@@ -206,7 +215,7 @@ void AudioManager::cleanup()
 //
 //	Sound* s = nullptr;
 //
-//	for(int i=0;i<soundList->size();i++)if(soundList->get(i)->getName() == fileName)s = soundList->get(i);
+//	for(int i=0;i<soundList.size();i++)if(soundList.get(i)->getName() == fileName)s = soundList.get(i);
 //
 //	if (s == nullptr)
 //	{
@@ -225,66 +234,247 @@ void AudioManager::cleanup()
 //}
 
 
+
+void AudioManager::globalUpdate()
+{
+	
+	for (int i = 0; i < globalAudioFileList.size(); i++)
+	{
+		globalAudioFileList.get(i)->update();
+	}
+}
+
+
 void AudioManager::update()
 { //=========================================================================================================================
 
 
-	for (int i = 0; i < musicList->size(); i++)
+
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		musicList->get(i)->update();
-	}
-	for (int i = 0; i < soundList->size(); i++)
-	{
-		soundList->get(i)->update();
+		playingAudioList.get(i)->update();
 	}
 }
 
-Music* AudioManager::getMusicByName(const string& musicName)
+Sound* AudioManager::getSoundByName(const string& musicName)
 { //=========================================================================================================================
 	if (musicName == "" || musicName.length() == 0)
 	{
 		return nullptr;
 	}
 
-	for (int i = 0; i < musicList->size(); i++)
-	{
-		if (musicList->get(i)->getName() == musicName)
-		{
-			return musicList->get(i);
-		}
-	}
+
 
 	string clippedName = musicName;
 	if (clippedName.find("_v") != -1)
 	{
 		clippedName.substr(0, clippedName.find("_v"));
-	}
-
-	for (int i = 0; i < musicList->size(); i++)
+	}	
+	
+	if (clippedName.find(".") != -1)
 	{
-		string name = musicList->get(i)->getName();
-		if (name.find("_v") != -1)
-		{
-			name = name.substr(0, name.find("_v"));
-		}
+		clippedName.substr(0, clippedName.find("."));
+	}
 
-		if (name == clippedName)
+	for (int i = 0; i < playingAudioList.size(); i++)
+	{
+		string name = playingAudioList.get(i)->getName();
+
+		if (String::startsWith(name, clippedName))
 		{
-			log.error("Could not find music: " + musicName + " so returned closest match: " + name);
-			return musicList->get(i);
+			
+			return playingAudioList.get(i);
 		}
 	}
+
+
+	for (int i = 0; i < globalAudioFileList.size(); i++)
+	{
+		string name = globalAudioFileList.get(i)->getName();
+
+		if (String::startsWith(name, clippedName))
+		{
+			Sound * s = new Sound(getEngine(), globalAudioFileList.get(i));
+			playingAudioList.add(s);
+			return s;
+		}
+	}
+
+
+
+
+
 
 	return nullptr;
 }
 
 
+//=========================================================================================================================
+void AudioManager::playMusic(Sound* s, float vol, float pitch, bool loop)
+{ //=========================================================================================================================
+	if (s != nullptr)
+	{
+		if (playingAudioList.contains(s) == false)playingAudioList.add(s);
+		s->play(pitch, vol, loop);
+	}
+}
+
+Sound* AudioManager::playMusic(const string& musicName, float volume, float pitch, bool loop)
+{ //=========================================================================================================================
+	Sound* m = getSoundByName(musicName);
+	if (m != nullptr)
+	{
+		m->play(pitch, volume, loop);
+		if (playingAudioList.contains(m) == false)playingAudioList.add(m);
+		return m;
+	}
+	return nullptr;
+}
+
+//=========================================================================================================================
+Sound* AudioManager::playSound(const string& soundName, float volume, float pitch)
+{ //=========================================================================================================================
+
+	return playSound(soundName,volume,pitch,1);
+
+}
+
+//=========================================================================================================================
+Sound* AudioManager::playSound(const string& soundName)
+{ //=========================================================================================================================
+	return playSound(soundName, 1, 1, 1);
+}
+
+//=========================================================================================================================
+Sound* AudioManager::playSound(const string& soundName, float volume, float pitch, int times)
+{ //=========================================================================================================================
+
+	Sound* s = getSoundByName(soundName);
+	if (s != nullptr)
+	{
+		s->play(pitch, volume, times);
+		return s;
+	}
+	return nullptr;
+
+	//Exception e = new Exception();e.printStackTrace();
+}
+
+
+//=========================================================================================================================
+void AudioManager::playSound(Sound* s, float vol, float pitch, int times)
+{ //=========================================================================================================================
+	if (s != nullptr)
+	{
+		if (playingAudioList.contains(s) == false)playingAudioList.add(s);
+		s->play(pitch, vol, times);
+	}
+}
+
+void AudioManager::playMusic(Sound* m)
+{ //=========================================================================================================================
+	playSoundLoop(m);
+}
+void AudioManager::playSoundLoop(Sound* m)
+{ //=========================================================================================================================
+	m->playLoop();
+	if (playingAudioList.contains(m) == false)playingAudioList.add(m);
+}
+
+Sound* AudioManager::playMusic(const string& musicName)
+{ //=========================================================================================================================
+	return playSoundLoop(musicName);
+}
+Sound* AudioManager::playSoundLoop(const string& musicName)
+{ //=========================================================================================================================
+	Sound* m = getSoundByName(musicName);
+	if (m != nullptr)
+	{
+		m->playLoop();
+		return m;
+	}
+	return nullptr;
+}
+
+
+
+
+bool AudioManager::isSoundPlaying(Sound* m)
+{ //=========================================================================================================================
+
+	if (playingAudioList.contains(m) == false)return false;
+	return m->isPlaying();
+}
+
+bool AudioManager::isSoundPlaying(const string& musicName)
+{ //=========================================================================================================================
+	Sound* m = getSoundByName(musicName);
+	if (m != nullptr)
+	{
+		if (playingAudioList.contains(m) == false)return false;
+		return m->isPlaying();
+	}
+	return false;
+}
+
+void AudioManager::stopMusic(Sound* m)
+{ //=========================================================================================================================
+	stopSound(m);
+}
+void AudioManager::stopSound(Sound* m)
+{ //=========================================================================================================================
+	m->stop();
+}
+
+void AudioManager::stopMusic(const string& musicName)
+{ //=========================================================================================================================
+	stopSound(musicName);
+}
+
+void AudioManager::stopSound(const string& musicName)
+{ //=========================================================================================================================
+	Sound* m = getSoundByName(musicName);
+
+	if (m != nullptr)
+	{
+		m->stop();
+	}
+}
+
+
+
+void AudioManager::fadeOutSound(const string& musicName, int ticks)
+{ //=========================================================================================================================
+	Sound* m = getSoundByName(musicName);
+
+	if (m != nullptr)
+	{
+		m->fadeOutAndStop(ticks);
+	}
+	
+}
+
+void AudioManager::fadeOutSound(Sound* m, int ticks)
+{ //=========================================================================================================================
+	if (m != nullptr)
+	{
+		m->fadeOutAndStop(ticks);
+	}
+}
+
+
+
 bool AudioManager::isAnyMusicPlaying()
 { //=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
+	return isAnyLoopingSoundPlaying();
+}
+
+bool AudioManager::isAnyLoopingSoundPlaying()
+{ //=========================================================================================================================
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Music* m = playingMusicList->get(i);
-		if (m->isPlaying())
+		Sound* m = playingAudioList.get(i);
+		if (m->getLoop() && m->isPlaying())
 		{
 			return true;
 		}
@@ -292,25 +482,25 @@ bool AudioManager::isAnyMusicPlaying()
 	return false;
 }
 //=========================================================================================================================
-void AudioManager::pauseAnyPlayingMusic()
+void AudioManager::pauseAnyPlayingLoopingSounds()
 {//=========================================================================================================================
-	
-	for (int i = 0; i < playingMusicList->size(); i++)
+
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Music* m = playingMusicList->get(i);
-		if (m->isPlaying())
+		Sound* m = playingAudioList.get(i);
+		if (m->getLoop() && m->isPlaying())
 		{
 			m->pause();
 		}
 	}
 }
 //=========================================================================================================================
-void AudioManager::playAnyPausedMusic()
+void AudioManager::playAnyPausedLoopingSounds()
 {//=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Music* m = playingMusicList->get(i);
-		if (m->isPlaying())
+		Sound* m = playingAudioList.get(i);
+		if (m->getLoop() && m->isPlaying())
 		{
 			m->unpause();
 		}
@@ -318,150 +508,79 @@ void AudioManager::playAnyPausedMusic()
 
 }
 //=========================================================================================================================
-void AudioManager::setAllPlayingMusicVolume(float v)
+void AudioManager::setAllPlayingSoundsVolume(float v)
 {//=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Music* m = playingMusicList->get(i);
+		Sound* m = playingAudioList.get(i);
 		if (m->isPlaying())
 		{
 			m->setVolume(v);
 		}
 	}
 }
-bool AudioManager::isMusicPlaying(Music* m)
-{ //=========================================================================================================================
-
-	if (playingMusicList->contains(m) == false)return false;
-	return m->isPlaying();
-}
-
-bool AudioManager::isMusicPlaying(const string& musicName)
-{ //=========================================================================================================================
-	Music* m = getMusicByName(musicName);
-	if (m != nullptr)
+//=========================================================================================================================
+void AudioManager::setAllPlayingLoopingSoundsVolume(float v)
+{//=========================================================================================================================
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		if (playingMusicList->contains(m) == false)return false;
-		return m->isPlaying();
-	}
-	return false;
-}
-
-void AudioManager::playMusic(Music* m)
-{ //=========================================================================================================================
-	m->play();
-	if (playingMusicList->contains(m) == false)playingMusicList->add(m);
-}
-
-Music* AudioManager::playMusic(const string& musicName)
-{ //=========================================================================================================================
-	Music* m = getMusicByName(musicName);
-	if (m != nullptr)
-	{
-		m->play();
-		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
-		return m;
-	}
-	return nullptr;
-}
-
-void AudioManager::playMusic(Music* m, float volume, float pitch, bool loop)
-{ //=========================================================================================================================
-
-	if (m != nullptr)
-	{
-		m->play(pitch, volume, loop);
-		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
+		Sound* m = playingAudioList.get(i);
+		if (m->isPlaying() && m->getLoop())
+		{
+			m->setVolume(v);
+		}
 	}
 }
 
 
-Music* AudioManager::playMusic(const string& musicName, float volume, float pitch, bool loop)
+void AudioManager::stopAllMusic()
 { //=========================================================================================================================
-	Music* m = getMusicByName(musicName);
-	if (m != nullptr)
-	{
-		m->play(pitch, volume, loop);
-		if (playingMusicList->contains(m) == false)playingMusicList->add(m);
-		return m;
-	}
-	return nullptr;
+	stopAllLoopingSounds();
 }
-
-void AudioManager::stopMusic(Music* m)
+void AudioManager::stopAllLoopingSounds()
 { //=========================================================================================================================
-	m->stop();
-	if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
-}
-
-void AudioManager::stopMusic(const string& musicName)
-{ //=========================================================================================================================
-	Music* m = getMusicByName(musicName);
-
-	if (m != nullptr)
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
-		else return;
-
-		m->stop();
-
-	}
-}
-
-void AudioManager::fadeOutMusic(const string& musicName, int ticks)
-{ //=========================================================================================================================
-	Music* m = getMusicByName(musicName);
-
-	if (m != nullptr)
-	{
-		if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
-		else return;
-
-		m->fadeOutAndStop(ticks);
-
+		Sound *m = playingAudioList.get(i);
+		if(m->getLoop())m->stop();
 	}
 	
 }
 
-void AudioManager::fadeOutMusic(Music* m, int ticks)
-{ //=========================================================================================================================
-	if (m != nullptr)
-	{
-		if (playingMusicList->contains(m) == true)playingMusicList->remove(m);
-		else return;
-
-		m->fadeOutAndStop(ticks);
-
-	}
-}
-
-void AudioManager::stopAllMusic()
-{ //=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
-	{
-		playingMusicList->get(i)->stop();
-	}
-	playingMusicList->clear();
-}
-
 void AudioManager::fadeOutAllMusic(int ticks)
 { //=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
+	fadeOutAllLoopingSounds(ticks);
+}
+
+void AudioManager::fadeOutAllLoopingSounds(int ticks)
+{ //=========================================================================================================================
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Music* m = playingMusicList->get(i);
+		Sound* m = playingAudioList.get(i);
+
+		if (m->getLoop())m->fadeOutAndStop(ticks);
+		
+	}
+	
+}
+void AudioManager::fadeOutAllSounds(int ticks)
+{ //=========================================================================================================================
+	for (int i = 0; i < playingAudioList.size(); i++)
+	{
+		Sound* m = playingAudioList.get(i);
 
 		m->fadeOutAndStop(ticks);
 		
 	}
-	playingMusicList->clear();
+	
 }
 
-void AudioManager::setAllLoopingMusicThatIsNotFadingOutToNotLoop()
+void AudioManager::setAllLoopingSoundsThatAreNotFadingOutToNotLoop()
 { //=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Music* m = playingMusicList->get(i);
-		if (m->isPlaying() == true && m->getLoop() == true)
+		Sound* m = playingAudioList.get(i);
+		if (m->getLoop() && m->isPlaying() == true)
 		{
 			if (m->isFadingOut() == false)
 			{
@@ -471,193 +590,103 @@ void AudioManager::setAllLoopingMusicThatIsNotFadingOutToNotLoop()
 	}
 }
 
-void AudioManager::pauseAllMusic()
+void AudioManager::setAllLoopingSoundsToNotLoop()
 { //=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		playingMusicList->get(i)->pause();
+		Sound* m = playingAudioList.get(i);
+		if (m->getLoop() && m->isPlaying() == true)
+		{
+			
+				m->setLoop(false);
+			
+		}
 	}
 }
 
-void AudioManager::unpauseAllMusic()
+void AudioManager::pauseAllLoopingSounds()
 { //=========================================================================================================================
-	for (int i = 0; i < playingMusicList->size(); i++)
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		playingMusicList->get(i)->unpause();
+		Sound* m = playingAudioList.get(i);
+		if (m->getLoop())m->pause();
 	}
 }
 
-Sound* AudioManager::getSoundByName(const string& soundName)
+void AudioManager::unpauseAllLoopingSounds()
 { //=========================================================================================================================
-
-	if (soundName == "" || soundName.length() == 0)
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		return nullptr;
+		Sound* m = playingAudioList.get(i);
+		if (m->getLoop())m->unpause();
 	}
-
-	//Sound* s = nullptr;
-
-
-
-
-//	HashMap<string, Sound *>::const_iterator got = soundByNameHashMap->find(soundName);
-//	if (got != soundByNameHashMap->end())
-//		s = soundByNameHashMap->get(soundName);
-//
-//	if (s != nullptr)
-//	{
-//		return s;
-//	}
-
-
-
-	//cheap check for soundname first
-	for (int i = 0; i < soundList->size(); i++)
+}
+void AudioManager::pauseAllSounds()
+{ //=========================================================================================================================
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		if (soundList->get(i)->getName() == soundName)
-		{
-			return soundList->get(i);
-		}
+		Sound* m = playingAudioList.get(i);
+		m->pause();
 	}
+}
 
-
-	//clip the filename of . and _v and look again, more expensive
-	string clippedName = soundName;
-	if (clippedName.find("_v") != -1)
+void AudioManager::unpauseAllSounds()
+{ //=========================================================================================================================
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		clippedName = clippedName.substr(0, clippedName.find("_v"));
+		Sound* m = playingAudioList.get(i);
+		m->unpause();
 	}
+}
 
-	if (clippedName.find(".") != -1)
+
+//=========================================================================================================================
+AudioFile* AudioManager::getAudioFileByName(string name)
+{//=========================================================================================================================
+
+
+	for (int i = 0; i < globalAudioFileList.size(); i++)
 	{
-		clippedName = clippedName.substr(0, clippedName.find("."));
+		AudioFile* s = globalAudioFileList.get(i);
+		if (s->getName() == name)return s;
 	}
-
-	for (int i = 0; i < soundList->size(); i++)
-	{
-		string name = soundList->get(i)->getName();
-
-		if (name.find("_v") != -1)
-		{
-			name = name.substr(0, name.find("_v"));
-		}
-		if (name.find(".") != -1)
-		{
-			name = name.substr(0, name.find("."));
-		}
-
-		if (name == clippedName)
-		{
-			log.error("Could not find sound: " + soundName + " so returned closest match: " + name);
-			return soundList->get(i);
-		}
-	}
-
-	//not found at all
 	return nullptr;
 }
 
 
 //=========================================================================================================================
-void AudioManager::playSound(const string& soundName, float volume, float pitch)
-{ //=========================================================================================================================
-
-	Sound* s = getSoundByName(soundName);
-	if (s != nullptr)
-	{
-		s->play(pitch, volume, 1); //,times);
-	}
-
-	//Exception e = new Exception();e.printStackTrace();
-}
-
-
-//=========================================================================================================================
-void AudioManager::playSound(const string& soundName, float volume, float pitch, int times)
-{ //=========================================================================================================================
-
-	Sound* s = getSoundByName(soundName);
-	if (s != nullptr)
-	{
-		s->play(pitch, volume, times);
-	}
-
-	//Exception e = new Exception();e.printStackTrace();
-}
-
-
-//=========================================================================================================================
-void AudioManager::playSound(const string& soundName)
-{ //=========================================================================================================================
-
-	Sound* s = getSoundByName(soundName);
-	if (s != nullptr)
-	{
-		s->play();
-	}
-}
-
-
-//=========================================================================================================================
-void AudioManager::playSound(Sound* s)
-{ //=========================================================================================================================
-	if (s != nullptr)
-	{
-		s->play();
-	}
-}
-
-//=========================================================================================================================
-void AudioManager::playSound(Sound* s, float vol)
-{ //=========================================================================================================================
-	if (s != nullptr)
-	{
-		s->play(1.0f, vol, 1); //,1);
-	}
-}
-
-
-//=========================================================================================================================
-void AudioManager::playSound(Sound* s, float vol, float pitch)
-{ //=========================================================================================================================
-	if (s != nullptr)
-	{
-		s->play(pitch, vol, 1); //,times);
-	}
-}
-
-
-//=========================================================================================================================
-void AudioManager::playSound(Sound* s, float vol, float pitch, int times)
-{ //=========================================================================================================================
-	if (s != nullptr)
-	{
-		s->play(pitch, vol, times);
-	}
-}
-
-
-
-//=========================================================================================================================
-Music* AudioManager::getMusicByIDCreateIfNotExist(int id)
+AudioFile* AudioManager::getAudioFileByIDCreateIfNotExist(int id)
 {//=========================================================================================================================
-	for (int i = 0; i < musicList->size(); i++)
+
+
+	for (int i = 0; i < globalAudioFileList.size(); i++)
 	{
-		Music* s = musicList->get(i);
+		AudioFile* s = globalAudioFileList.get(i);
 		if (s->getID() == id)return s;
 	}
-	return new Music(e,new MusicData(id, "", ""));
+	return new AudioFile(new AudioData(id,"",""));
 }
 
 //=========================================================================================================================
 Sound* AudioManager::getSoundByIDCreateIfNotExist(int id)
 {//=========================================================================================================================
-	for (int i = 0; i < soundList->size(); i++)
+
+
+	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		Sound* s = soundList->get(i);
-		if (s->getID() == id)return s;
+		if (playingAudioList.get(i)->getID()==id)
+		{
+
+			return playingAudioList.get(i);
+		}
 	}
-	return new Sound(e, new SoundData(id, "", ""));
+
+	for (int i = 0; i < globalAudioFileList.size(); i++)
+	{
+		AudioFile* s = globalAudioFileList.get(i);
+		if (s->getID() == id)return new Sound(e, s);
+	}
+	return new Sound(e, new AudioFile(new AudioData(id,"","")));
 }
 
 

@@ -7,7 +7,6 @@
 #include "bobtypes.h"
 class UDPPeerConnection;
 class TCPServerConnection;
-class State;
 class Logger;
 
 class BobNet
@@ -19,7 +18,7 @@ public:
 	~BobNet();
 	
 
-	static void addEngineToForwardMessagesTo(State* e);
+	static void addEngineToForwardMessagesTo(Engine* e);
 	static void update();
 
 	static ArrayList<UDPPeerConnection*> udpConnections;
@@ -37,7 +36,7 @@ public:
 	static void sendAllPeers(string s);
 	static UDPPeerConnection* addFriendID(long long friendID, int type);
 
-	static ArrayList<State*>engines;// = new ArrayList<State*>();
+	static ArrayList<Engine*>engines;// = new ArrayList<State*>();
 
 
 	static bool udpSTUNMessageReceived(string e);

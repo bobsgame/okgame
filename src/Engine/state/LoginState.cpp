@@ -17,7 +17,7 @@ Logger LoginState::log = Logger("LoginState");
 LoginState::LoginState()
 { //=========================================================================================================================
 
-	loginScreen = new LoginScreen();
+	loginScreen = new LoginScreen((Engine*)this);
 	//
 	//   loginScreenGUI = new GUI(loginScreen, GLUtils::TWLrenderer);
 	//   loginScreenGUI->applyTheme(GLUtils::TWLthemeManager);

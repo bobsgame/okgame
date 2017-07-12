@@ -36,7 +36,7 @@ void CaptionManager::update()
 	}
 	else
 	{
-		ticksPassed = State::realWorldTicksPassed();
+		ticksPassed = Engine::realWorldTicksPassed();
 	}
 	
 

@@ -129,9 +129,6 @@
     <ClInclude Include="src\Engine\map\WarpArea.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\state\State.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\state\StateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -154,9 +151,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility\Easing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utility\audio\Music.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility\audio\Sound.h">
@@ -438,12 +432,6 @@
     <ClInclude Include="src\Engine\rpg\Wallet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\audio\MusicData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utility\audio\SoundData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\network\ServerObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -582,6 +570,12 @@
     <ClInclude Include="lib\CTPL-master\ctpl_stl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utility\audio\AudioFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility\audio\AudioData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -695,9 +689,6 @@
     <ClCompile Include="src\Engine\map\WarpArea.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\state\State.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\state\StateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -720,9 +711,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\Easing.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Utility\audio\Music.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\audio\Sound.cpp">
@@ -968,12 +956,6 @@
     <ClCompile Include="src\Engine\rpg\Wallet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\audio\MusicData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Utility\audio\SoundData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\network\ServerObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1092,6 +1074,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\lz4-1.7.5\lib\xxhash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\audio\AudioFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\audio\AudioData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

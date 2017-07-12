@@ -11,9 +11,7 @@
 #include "FlagData.h"
 #include "SkillData.h"
 #include "src/Utility/AssetData.h"
-#include "src/Utility/audio/MusicData.h"
-#include "src/Utility/audio/SoundData.h"
-
+#include "src/Utility/audio/AudioData.h"
 
 class Logger;
 
@@ -98,8 +96,8 @@ public:
 	ArrayList<FlagData*>* flagDataList = new ArrayList<FlagData*>();
 	ArrayList<SkillData*>* skillDataList = new ArrayList<SkillData*>();
 	ArrayList<GameStringData*>* gameStringDataList = new ArrayList<GameStringData*>();
-	ArrayList<MusicData*>* musicDataList = new ArrayList<MusicData*>();
-	ArrayList<SoundData*>* soundDataList = new ArrayList<SoundData*>();
+	ArrayList<AudioData*>* musicDataList = new ArrayList<AudioData*>();
+	ArrayList<AudioData*>* soundDataList = new ArrayList<AudioData*>();
 
 
 

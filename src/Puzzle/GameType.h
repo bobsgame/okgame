@@ -50,7 +50,7 @@ public:
 	int randomlyFillGridAmount = 30;												Info randomlyFillGridAmount_Info = Info("Drop: Randomly Fill Grid Amount", "How many blocks to fill the playing field with.");
 	int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
 
-	ArrayList<shared_ptr<PieceType> > pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
+	ArrayList<shared_ptr<PieceType>> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
 	ArrayList<shared_ptr<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
 	//ArrayList<BobColor*> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
 
@@ -472,7 +472,7 @@ public:
 	bool currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty = false;		Info currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info = Info("Get New Pieces Randomly Out Of Bag With One Of Each Piece Until Empty", "Get one of each piece type randomly until all of them have been used instead of generating a completely random piece each time.  Prevents many duplicates in a row and guarantees you will get each piece, but reduces randomness.");
 
 	//TODO: can change these to pieceType.garbage, etc
-	ArrayList<shared_ptr<PieceType> > pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
+	ArrayList<shared_ptr<PieceType>> pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
 private:
 	ArrayList<PieceType> importExport_pieceTypes;
 public:
@@ -607,9 +607,9 @@ public:
 	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenCheckingChain(DifficultyType *d);
 	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenMovingDown(DifficultyType *d);
 	ArrayList<shared_ptr<BlockType>> getBlockTypesChainMustContain(DifficultyType *d);
-	ArrayList<shared_ptr<PieceType> > getNormalPieceTypes(DifficultyType *d);
-	ArrayList<shared_ptr<PieceType> > getGarbagePieceTypes(DifficultyType *d);
-	ArrayList<shared_ptr<PieceType> > getPlayingFieldPieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType>> getNormalPieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType>> getGarbagePieceTypes(DifficultyType *d);
+	ArrayList<shared_ptr<PieceType>> getPlayingFieldPieceTypes(DifficultyType *d);
 
 };
 

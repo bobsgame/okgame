@@ -9,6 +9,19 @@ Logger Engine::log = Logger("Engine");
 
 //BGClientEngine* Engine::clientGameEngine = nullptr;
 
+//bool Engine::callNanoTimeForEachCall = false;
+
+int Engine::totalFrames = 0;
+
+//long long Engine::ticksPassedThisUpdate = 0;
+int Engine::framesThisSecond = 0;
+
+long long Engine::totalTicks = 0;
+long long Engine::ticksThisSecond = 0;
+int Engine::framesSkipped = 0;
+
+ArrayList<UDPPeerConnection*> Engine::onlineFriends;
+
 
 //=========================================================================================================================
 Engine::Engine()
@@ -40,7 +53,7 @@ Engine::~Engine()
 void Engine::init()
 {//=========================================================================================================================
 
-	super::init();
+	//super::init();
 
 #ifdef _DEBUG
 	log.debug("Engine::init()");
@@ -58,7 +71,7 @@ void Engine::init()
 	cameraman = new Cameraman(this);
 	actionManager = new ActionManager(this);
 
-	controlsManager = Main::controlsManager;
+	//controlsManager = Main::controlsManager;
 
 	audioManager->init();
 	textManager->init();
@@ -66,10 +79,27 @@ void Engine::init()
 
 	GLUtils::e();
 }
+//=========================================================================================================================
+void Engine::cleanup()
+{//=========================================================================================================================
+	
+
+}
 
 //=========================================================================================================================
 void Engine::update()
 { //=========================================================================================================================
+
+	onlineFriends.clear();
+	for (int i = 0; i < (int)BobNet::udpConnections.size(); i++)
+	{
+		UDPPeerConnection* f = BobNet::udpConnections.get(i);
+		if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true && f->peerStatus == BobNet::status_AVAILABLE)
+		{
+			if (onlineFriends.contains(f) == false)
+				onlineFriends.add(f);
+		}
+	}
 
 
 	audioManager->update();
@@ -98,7 +128,7 @@ void Engine::update()
 void Engine::render()
 { //=========================================================================================================================
 
-	super::render();
+	//super::render();
 
 	getMapManager()->render(); //does entities as well, multi-layered rendering here.
 
@@ -216,7 +246,7 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	}
 	if (String::startsWith(typeIDName, "MUSIC."))
 	{
-		return getAudioManager()->getMusicByIDCreateIfNotExist(id);
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
 	}
 	if (String::startsWith(typeIDName, "SOUND."))
 	{
@@ -325,6 +355,150 @@ Map* Engine::getCurrentMap()
 //}
 
 
+//=========================================================================================================================
+void Engine::updateTimers()
+{//=========================================================================================================================
+	framesThisSecond++;
+	totalFrames++;
+
+	totalTicks += realWorldTicksPassed();
+	ticksThisSecond += realWorldTicksPassed();
+
+	if (ticksThisSecond >= 1000)
+	{
+		ticksThisSecond = 0;
+
+		//log.info("" + to_string(rendersThisSecond));
+		framesThisSecond = 0;
+	}
+
+	//if(ticksPassedThisUpdate>17)ticksPassedThisUpdate=17; //TODO: this is frameskip off, basically. game will slow down instead
+	if (realWorldTicksPassed() > 16 * 2)
+	{
+		framesSkipped++; //= ticksPassedThisUpdate/16;
+	}
+}
+
+
+void Engine::setEngineSpeed(double f)
+{ //=========================================================================================================================
+	engineSpeed = f;
+}
+
+int Engine::engineTicksPassed()
+{ //=========================================================================================================================
+
+  //	if (callNanoTimeForEachCall == true)
+  //	{
+  //
+  //
+  //		long long currentHighResTime = System::currentHighResTimer();
+  //
+  //		int ticksPassed = (long long)((double)(currentHighResTime - lastRenderHighResTime) / System::cpuFreq);
+  //
+  //		return static_cast<long long>(ticksPassed * engineSpeed);
+  //	}
+  //	else
+	{
+		return (int)(System::ticksPassedThisUpdate * engineSpeed);
+	}
+
+	//DONE: can multiply this to speed up game, divide it to slow game down!
+}
+
+int Engine::realWorldTicksPassed()
+{ //=========================================================================================================================
+
+  //	if (callNanoTimeForEachCall == true)
+  //	{
+  //		currentHighResTime = System::currentHighResTimer();
+  //
+  //		int ticksPassed = (long long)((double)(currentHighResTime - lastRenderHighResTime) / System::cpuFreq);
+  //
+  //		return static_cast<long long>(ticksPassed);
+  //	}
+  //	else
+	{
+		return (int)(System::ticksPassedThisUpdate);
+	}
+
+	//DONE: can multiply this to speed up game, divide it to slow game down!
+}
+
+void Engine::updateControls()
+{
+	resetPressedButtons();
+	setButtonStates();
+}
+
+void Engine::resetPressedButtons()
+{
+	getControlsManager()->resetPressedButtons();
+}
+
+void Engine::setButtonStates()
+{
+	getControlsManager()->setButtonStates();
+}
+
+ControlsManager* Engine::getControlsManager()
+{
+	return Main::controlsManager;
+}
+
+BGClientEngine* Engine::getClientGameEngine()
+{
+	return Main::gameEngine;
+}
+
+TCPServerConnection* Engine::getServerConnection()
+{
+	return &(Main::bobNet->tcpServerConnection);
+}
+
+long long Engine::getUserID_S()
+{
+	return getGameSave_S().userID;
+}
+
+string Engine::getUserName_S()
+{
+	return getGameSave_S().userName;
+}
+
+GameSave Engine::getGameSave_S()
+{
+	return getServerConnection()->getGameSave_S();
+}
+
+void Engine::setGameSave_S(GameSave& g)
+{
+	getServerConnection()->setGameSave_S(g);
+}
+
+int Engine::getWidth()
+{
+	return GLUtils::getViewportWidth();
+}
+
+int Engine::getHeight()
+{
+	return GLUtils::getViewportHeight();
+}
+
+bool Engine::udpPeerMessageReceived(UDPPeerConnection* c, string s)
+{
+	return false;
+}
+
+//bool Engine::serverMessageReceived(string cs)
+//{
+//	//override this!
+//	return false;
+//}
+
+
+
 float Engine::getWidthRelativeToZoom()
 {
 	return getWidth() / getCameraman()->getZoom();
@@ -357,11 +531,11 @@ bool Engine::serverMessageReceived(string e)// ChannelHandlerContext* ctx, Messa
 	string s = e;
 
 
-	if (super::serverMessageReceived(e))
-	{
-		return true;
-	}
-	else
+//	if (super::serverMessageReceived(e))
+//	{
+//		return true;
+//	}
+//	else
 	if (String::startsWith(s, BobNet::Sprite_Response))
 	{
 		incomingSpriteData(s);
@@ -676,7 +850,7 @@ void Engine::incomingMusic(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	MusicData* data = new MusicData(); data->initFromString(s);
+	AudioData* data = new AudioData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -684,7 +858,7 @@ void Engine::incomingMusic(string s)
 	}
 	else
 	{
-		Music* music = getAudioManager()->getMusicByIDCreateIfNotExist(data->getID());
+		AudioFile* music = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
 		music->setData_S(data);
 	}
 }
@@ -702,7 +876,7 @@ void Engine::incomingSound(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	SoundData* data = new SoundData(); data->initFromString(s);
+	AudioData* data = new AudioData(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -710,7 +884,7 @@ void Engine::incomingSound(string s)
 	}
 	else
 	{
-		Sound* sound = getAudioManager()->getSoundByIDCreateIfNotExist(data->getID());
+		AudioFile* sound = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
 		sound->setData_S(data);
 	}
 }

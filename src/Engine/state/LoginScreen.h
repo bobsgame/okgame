@@ -18,6 +18,24 @@ public:
 	static Logger log;
 
 
+	BobMenu *loginMenu = nullptr;
+	int loginMenuCursorPosition = 0;
+	bool textStarted = false;
+	string userNameOrEmailText = "";
+	string userNameText = "";
+	string emailText = "";
+	string passwordText = "";
+	string passwordStarsText = "";
+	string confirmPasswordText = "";
+	string confirmPasswordStarsText = "";
+	bool stayLoggedIn = true;
+
+	Caption* errorLabel = nullptr;
+	Caption* statusLabel = nullptr;
+
+	int lastMX = 0;
+	int lastMY = 0;
+
 	//   DialogLayout* loginPanel;
 	//   EditField* emailEditField;
 	//   EditField* passwordEditField;
@@ -45,7 +63,7 @@ public:
 	//   ToggleButton*const sendStatsToggleButton = new ToggleButton("");
 	//
 	//
-	LoginScreen();
+	LoginScreen(Engine* e);
 	//
 	//private:
 	//   class CallbackAnonymousInnerClassHelper : public EditField::Callback
@@ -78,7 +96,7 @@ public:
 	void doLoginWithFacebook();
 
 
-	void doCreateNewAccount();
+	//void doCreateNewAccount();
 
 
 	void doForgotPassword();

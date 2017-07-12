@@ -27,47 +27,32 @@ Logger Sound::log = Logger("Sound");
 //	Main::audioManager->soundList->add(this);
 //}
 
-Sound::Sound(Engine* g, SoundData* data)
+Sound::Sound(Engine* g, AudioFile *f)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = data;
-	setInitialized_S(true);
+	this->audioFile = f;
 
-	for (int i = 0; i < (int)AudioManager::soundList->size(); i++)
+	for (int i = 0; i < (int)getAudioManager()->playingAudioList.size(); i++)
 	{
-		if (AudioManager::soundList->get(i)->getName() == data->getName())
+		if (getAudioManager()->playingAudioList.get(i)->getName() == f->getName())
 		{
-			if (AudioManager::soundList->get(i)->getID() == -1)AudioManager::soundList->get(i)->setID(data->getID());
+			if (getAudioManager()->playingAudioList.get(i)->getID() == -1)getAudioManager()->playingAudioList.get(i)->setID(f->getID());
 			//log.warn("Sound already exists:" + data->getName());
 			return;
 		}
 	}
-	AudioManager::soundList->add(this);
+	getAudioManager()->playingAudioList.add(this);
+
+
+	if (f->getByteData() != nullptr)initFromByteData();
 }
 
 
-Sound::Sound(Engine *g, string filename)
-{ //=========================================================================================================================
+
+void Sound::initFromByteData()
+{//=========================================================================================================================
 	
-	this->e = g;
-
-	string name = string(filename);
-	int found = (int)name.find('/');
-	while (found != string::npos)
-	{
-		name = name.substr(found + 1, name.length());
-		found = (int)name.find('/');
-	}
-
-	found = (int)name.find('.');
-	if (found != string::npos)
-		name = name.substr(0, found);
-
-	this->data = new SoundData(-1, name, filename);
-
-	byteData = FileUtils::loadByteFileFromExePath(filename);
-
 #ifdef USE_SOLOUD
 	filename = Main::getPath() + filename;
 	soLoudWave = new SoLoud::Wav();
@@ -75,184 +60,137 @@ Sound::Sound(Engine *g, string filename)
 	soLoudWave->load(filename.c_str());
 #endif
 #ifdef USE_SDL_MIXER
-	string filePath = Main::getPath() + filename;
-	SDL_RWops* file = SDL_RWFromMem(byteData->data(),byteData->size());
+
+	SDL_RWops* file = SDL_RWFromMem(audioFile->getByteData()->data(), audioFile->getByteData()->size());
 	mixChunk = Mix_LoadWAV_RW(file, 0);
 	file->close(file);
-	
-	
 
 #endif
 
-	loadedInfoDataFromServer = true;
-	fileExists = true;
-	setInitialized_S(true);
-
-	AudioManager::soundList->add(this);
-
-	log.info("Loaded " + filename);
-
 }
 
-SoundData* Sound::getData()
-{ //=========================================================================================================================
-	return data;
+
+string Sound::getName()
+{
+	return audioFile->getName();
+
 }
 
 int Sound::getID()
 {
-	return data->getID();
+	return audioFile->getID();
+
 }
-
-
-string& Sound::getName()
-{
-	return data->getName();
-}
-
-
-string& Sound::getFileName()
-{
-	return data->getFileName();
-}
-
-
-string& Sound::getMD5Name()
-{
-	return data->getMD5Name();
-}
-
-
-string Sound::getTYPEIDString()
-{
-	return data->getTYPEIDString();
-}
-
 void Sound::setID(int id)
 {
-	data->setID(id);
+	return audioFile->setID(id);
+
 }
 
-void Sound::setName(const string& name)
-{
-	data->setName(name);
-}
 
-void Sound::setFileName(const string& fileName)
-{
-	data->setFileName(fileName);
-}
-
-void Sound::setMD5Name(const string& s)
-{
-	data->setMD5Name(s);
-}
-
-bool Sound::getFileExists()
-{ //=========================================================================================================================
-	return _fileExists;
-}
-
-void Sound::setFileExists(bool i)
-{ //=========================================================================================================================
-	_fileExists = i;
-}
-
-ByteArray* Sound::getByteData()
-{ //=========================================================================================================================
-	return byteData;
-}
-
-//The following method was originally marked 'synchronized':
-void Sound::setData_S(SoundData* data)
-{ //=========================================================================================================================
-
-	this->data = data;
-	setInitialized_S(true);
-}
 
 void Sound::update()
 { //=========================================================================================================================
 
 	//get the name and filename from the server
-	ServerObject::update();
 
-	if (loadedInfoDataFromServer == false)
-	{
-		return;
-	}
 
-	//download the file to the cache if it doesnt exist
-	if (fileExists == false && getByteData() == nullptr)
+
+	if (audioFile->getFileExists() == true || audioFile->getByteData() != nullptr)
 	{
-		if (getFileExists() == false)
+
+		if (mixChunk == nullptr)initFromByteData();
+
+		if (paused)
 		{
-			if (startedDownloadThread == false)
-			{
-				startedDownloadThread = true;
 
-				//check cache FIRST before start thread.
-				//only start thread if not in cache.
-				if (FileUtils::checkIfFileExistsInCache(getMD5Name()))
-				{
-					setFileExists(true);
-				}
-				else
-				{
-					//               downloadThread = new Thread([&] ()
-					//                  {
-					//                     try
-					//                     {
-					//                        Thread::currentThread().setName("Sound_downloadToCache");
-					//                     }
-					//                     catch (SecurityException e)
-					//                     {
-					//                        e->printStackTrace();
-					//                     }
-					//                     //now check the cache and download the mp3/ogg/xm/s3m from the s3 bucket in a new thread if not exist.
-					//                     Cache::downloadBigFileToCacheIfNotExist(getMD5Name());
-					//                  }
-					//               );
-					//
-					//               downloadThread->start();
-				}
+		}
+		else
+		if (shouldBePlaying == true)
+		{
+
+	
+
+			if (playingStarted == false)
+			{
+
+#ifdef USE_SOLOUD
+				AudioManager::soLoud->play(*soLoudWave);
+#endif
+#ifdef USE_SDL_MIXER
+				channel = Mix_PlayChannel(-1, mixChunk, 0);
+				//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
+
+#endif
+
+				playingStarted = true;
+
 			}
 			else
 			{
-				//            if (downloadThread != nullptr && downloadThread->isAlive() == false)
-				//            {
-				if (FileUtils::checkIfFileExistsInCache(getMD5Name()))
+				if (Mix_Playing(channel) == false)
 				{
-					setFileExists(true);
+
+
+					//music
+					if (loop == false)
+					{
+						if (timesToPlay > 1)
+						{
+							timesToPlay--;
+							channel = Mix_PlayChannel(-1, mixChunk, 0);
+						}
+						else
+						{
+							stop();
+						}
+					}
+					else
+					{
+						channel = Mix_PlayChannel(-1, mixChunk, 0);
+					}
+
 				}
-				//               else
-				//               {
-				//                  log.warn("Download thread timed out for Sound: " + name());
-				//                  downloadThread->start();
-				//               }
-				//            }
 			}
 		}
 		else
 		{
-			fileExists = true;
+			if (playingStarted == true)
+			{
+				stop();
+			}
 		}
-	}
 
-	if (fileExists == true || getByteData() != nullptr)
-	{
-		handlePlaying();
+		if (ticksToFadeOutTotal != -1)
+		{
+			ticksToFadeOutCounter -= (int)getEngine()->engineTicksPassed();
+
+			if (ticksToFadeOutCounter <= 0)
+			{
+				stop();
+			}
+			else
+			{
+				setVolume(((float)(ticksToFadeOutCounter) / (float)(ticksToFadeOutTotal)) * volumeWhenStartedFade);
+			}
+		}
 
 	}
 
 
 }
 
-void Sound::play()
+
+
+
+void Sound::playOnce()
 { //=========================================================================================================================
-	play(1.0f, 1.0f, 0);
+	play(1.0f, getVolume(), 1);
 }
-
+void Sound::playLoop()
+{ //=========================================================================================================================
+	play(1.0f, getVolume(), true);
+}
 
 
 void Sound::play(float pitch, float volume, int timesToPlay)
@@ -260,12 +198,13 @@ void Sound::play(float pitch, float volume, int timesToPlay)
 
 	if (timesToPlay < 0)
 	{
-		log.error("Trying to play sound -1 times. Sounds cannot be infinitely looped, only music can.");
+		timesToPlay = 1;
+		// log.error("Trying to play sound -1 times. Sounds cannot be infinitely looped, only music can.");
 	}
 
 	if (timesToPlay == 1)
 	{
-		timesToPlay = 0;
+		timesToPlay = 1;
 	}
 
 	this->pitch = pitch;
@@ -277,59 +216,59 @@ void Sound::play(float pitch, float volume, int timesToPlay)
 	update();
 }
 
-void Sound::handlePlaying()
+
+
+
+void Sound::play(float pitch, float volume, bool loop)
 { //=========================================================================================================================
-	   if (shouldBePlaying == true)
-	   {
 
-	         if (getByteData() == nullptr)
-	         {
-	            //channel = AudioUtils::open(outerInstance->getFileName(), Cache::cacheDir + outerInstance->getMD5Name());
-	         }
-	         else
-	         {
-	            //channel = AudioUtils::open(outerInstance->getFileName(), outerInstance->getMD5Name(), outerInstance->getByteData());
-	         }
-	      
+	if (this->pitch != pitch || this->volume != volume || this->loop != loop)
+	{
+		this->pitch = pitch;
+		this->volume = volume;
+		this->loop = loop;
+	}
 
-	         if (playingStarted == false)
-	         {
+	shouldBePlaying = true;
 
-#ifdef USE_SOLOUD
-				 AudioManager::soLoud->play(*soLoudWave);
-#endif
-#ifdef USE_SDL_MIXER
-				 channel = Mix_PlayChannel(-1, mixChunk, 0);
-#endif
-				
-	            playingStarted = true;
-				
-	         }
-	         else
-	         {
-				 if (Mix_Playing(channel) == false) 
-				 {
-					 if (timesToPlay > 0)
-					 {
-					    timesToPlay--;
-					    playingStarted = false;
-					 }
-					 else
-					 {
-						 stop();
-					 }
-
-				 }
-	         }	      
-	   }
-	   else
-	   {
-		   if (playingStarted == true)
-		   {
-			   stop();
-		   }
-	   }
+	update();
 }
+
+
+void Sound::fadeOutAndStop(int ticksToFadeOut)
+{ //=========================================================================================================================
+
+	this->ticksToFadeOutTotal = ticksToFadeOut;
+	this->ticksToFadeOutCounter = ticksToFadeOut;
+	this->volumeWhenStartedFade = volume;
+}
+
+bool Sound::isFadingOut()
+{ //=========================================================================================================================
+	if (ticksToFadeOutTotal != -1)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void Sound::pause()
+{ //=========================================================================================================================
+
+	Mix_Pause(channel);
+	paused = true;
+
+}
+
+void Sound::unpause()
+{ //=========================================================================================================================
+
+	Mix_Resume(channel);
+	paused = false;
+
+}
+
 
 //=========================================================================================================================
 void Sound::stop()
@@ -338,6 +277,11 @@ void Sound::stop()
 	pitch = 1.0f;
 	volume = 1.0f;
 	timesToPlay = 1;
+
+	loop = false;
+	ticksToFadeOutCounter = -1;
+	ticksToFadeOutTotal = -1;
+	volumeWhenStartedFade = 0;
 
 	shouldBePlaying = false;
 
@@ -352,4 +296,58 @@ void Sound::stop()
 	}
 
 	channel = -1;
+
+
+
+
 }
+
+
+
+
+void Sound::setLoop(bool b)
+{ //=========================================================================================================================
+	this->loop = b;
+}
+
+bool Sound::getLoop()
+{ //=========================================================================================================================
+	return loop;
+}
+
+bool Sound::isPlaying()
+{ //=========================================================================================================================
+
+	return shouldBePlaying;
+
+}
+
+void Sound::setVolume(float v)
+{ //=========================================================================================================================
+	volume = v;
+#ifdef USE_SDL_MIXER
+	if (isPlaying()) Mix_Volume(channel, (int)(volume * 128));
+
+#endif
+}
+float Sound::getVolume()
+{
+	return volume;
+
+}
+float Sound::getPitch()
+{
+	return pitch;
+
+}
+void Sound::setPitch(float p)
+{ //=========================================================================================================================
+
+	pitch = p;
+	//   if (channel != nullptr)
+	//   {
+	//      channel->setPitch(p);
+	//   }
+}
+
+

@@ -376,7 +376,7 @@ private:
 	shared_ptr<BlockType> currentBlockType = nullptr;
     
 	//i use these temp arrays because i need to save the modifications to something
-	//ArrayList<shared_ptr<PieceType> > currentBlockType_makePieceTypeWhenCleared;
+	//ArrayList<shared_ptr<PieceType>> currentBlockType_makePieceTypeWhenCleared;
 	//ArrayList<shared_ptr<BlockType>> currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 	//ArrayList<TurnFromBlockTypeToType*> currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
     

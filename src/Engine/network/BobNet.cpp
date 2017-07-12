@@ -144,7 +144,7 @@ Logger* BobNet::_threadLog = new Logger("BobNet");
 ArrayList<UDPPeerConnection*> BobNet::udpConnections;
 TCPServerConnection BobNet::tcpServerConnection;
 int BobNet::myStatus = status_AVAILABLE;
-ArrayList<State*> BobNet::engines;
+ArrayList<Engine*> BobNet::engines;
 
 bool BobNet::threadStarted = false;
 
@@ -200,7 +200,7 @@ queue<string> BobNet::_stunMessageQueue;
 mutex BobNet::_stunMessageQueue_Mutex;
 
 //===============================================================================================
-void BobNet::addEngineToForwardMessagesTo(State* e)
+void BobNet::addEngineToForwardMessagesTo(Engine* e)
 {//===============================================================================================
 	if(engines.contains(e)==false)
 	engines.add(e);

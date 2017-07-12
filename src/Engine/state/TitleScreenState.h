@@ -12,7 +12,7 @@ class Logger;
 
 class Main;
 
-class TitleScreenState : public State
+class TitleScreenState : public Engine
 {
 public:
 

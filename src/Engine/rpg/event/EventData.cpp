@@ -131,7 +131,7 @@ string& EventData::initFromString(string& t)
 		t = t.substr(t.find("{") + 1);
 		while (String::startsWith(t,"}") == false)
 		{
-			MusicData* data = new MusicData();
+			AudioData* data = new AudioData();
 			t = data->initFromString(t);
 			musicDataList->add(data);
 		}
@@ -142,7 +142,7 @@ string& EventData::initFromString(string& t)
 		t = t.substr(t.find("{") + 1);
 		while (String::startsWith(t,"}") == false)
 		{
-			SoundData* data = new SoundData();
+			AudioData* data = new AudioData();
 			t = data->initFromString(t);
 			soundDataList->add(data);
 		}

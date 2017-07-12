@@ -94,14 +94,14 @@ void Event::initEvent()
 	}
 	for(int i=0; i<getData()->musicDataList->size();i++)
 	{
-		MusicData* data = getData()->musicDataList->get(i);
-		Music* d = getAudioManager()->getMusicByIDCreateIfNotExist(data->getID());
+		AudioData* data = getData()->musicDataList->get(i);
+		AudioFile* d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 	for(int i=0; i<getData()->soundDataList->size();i++)
 	{
-		SoundData* data = getData()->soundDataList->get(i);
-		Sound* d = getAudioManager()->getSoundByIDCreateIfNotExist(data->getID());
+		AudioData* data = getData()->soundDataList->get(i);
+		AudioFile* d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 
@@ -2502,16 +2502,16 @@ void Event::randomEqualsOneOutOfIncluding_INT()
 void Event::isAnyMusicPlaying()
 { //===============================================================================================
 
-	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getAudioManager()->isAnyMusicPlaying());
+	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getAudioManager()->isAnyLoopingSoundPlaying());
 }
 
 void Event::isMusicPlaying()
 { //===============================================================================================
 	int p = 0;
 
-	Music* m = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 
-	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getAudioManager()->isMusicPlaying(m));
+	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getAudioManager()->isSoundPlaying(m));
 }
 
 void Event::isRaining()
@@ -5408,7 +5408,7 @@ void Event::playSound_SOUND()
 	int p = 0;
 	Sound* s = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 
-	getAudioManager()->playSound(s);
+	getAudioManager()->playSound(s,1,1,1);
 	getNextCommand();
 }
 
@@ -5418,7 +5418,7 @@ void Event::playSound_SOUND_FLOATvol()
 	Sound* s = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 	float vol = currentCommand->parameterList->get(p++)->f;
 
-	getAudioManager()->playSound(s, vol);
+	getAudioManager()->playSound(s, vol,1,1);
 	getNextCommand();
 }
 
@@ -5437,7 +5437,7 @@ void Event::playSound_SOUND_FLOATvol_FLOATpitch_INTtimes()
 void Event::playMusicOnce_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Music* m = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 
 	getAudioManager()->playMusic(m, 1.0f, 1.0f, false);
 	getNextCommand();
@@ -5446,7 +5446,7 @@ void Event::playMusicOnce_MUSIC()
 void Event::playMusicLoop_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Music* m = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 
 	getAudioManager()->playMusic(m, 1.0f, 1.0f, true);
 	getNextCommand();
@@ -5455,7 +5455,7 @@ void Event::playMusicLoop_MUSIC()
 void Event::playMusic_MUSIC_FLOATvol_FLOATpitch_BOOLloop()
 { //===============================================================================================
 	int p = 0;
-	Music* m = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 	float vol = currentCommand->parameterList->get(p++)->f;
 	float pitch = currentCommand->parameterList->get(p++)->f;
 	bool loop = currentCommand->parameterList->get(p++)->b;
@@ -5467,7 +5467,7 @@ void Event::playMusic_MUSIC_FLOATvol_FLOATpitch_BOOLloop()
 void Event::stopMusic_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Music* m = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 
 	getAudioManager()->stopMusic(m);
 
@@ -5485,8 +5485,8 @@ void Event::stopAllMusic()
 void Event::blockUntilLoopingMusicDoneWithLoopAndReplaceWith_MUSIC_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Music* currentPlaying = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
-	Music* replaceWith = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* currentPlaying = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	Sound* replaceWith = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 
 	if (currentPlaying->getLoop() == true)
 	{
@@ -5505,7 +5505,7 @@ void Event::blockUntilMusicDone_MUSIC()
 { //===============================================================================================
 	int p = 0;
 
-	Music* m = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 
 	//if music is LOOPING this will always block
 	if (m != nullptr)
@@ -5527,7 +5527,7 @@ void Event::blockUntilAllMusicDone()
 	//int p=0;
 
 	//if music is LOOPING this will always block
-	getAudioManager()->setAllLoopingMusicThatIsNotFadingOutToNotLoop();
+	getAudioManager()->setAllLoopingSoundsThatAreNotFadingOutToNotLoop();
 
 	if (getAudioManager()->isAnyMusicPlaying() == false)
 	{
@@ -5539,10 +5539,10 @@ void Event::fadeOutMusic_MUSIC_INT()
 { //===============================================================================================
 	int p = 0;
 
-	Music* m = static_cast<Music*>(currentCommand->parameterList->get(p++)->object);
+	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
-	getAudioManager()->fadeOutMusic(m, ticks);
+	getAudioManager()->fadeOutSound(m, ticks);
 
 	getNextCommand();
 }

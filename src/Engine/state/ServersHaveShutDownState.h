@@ -11,7 +11,7 @@ class Logger;
 
 
 
-class ServersHaveShutDownState : public State
+class ServersHaveShutDownState : public Engine
 {
 public:
 

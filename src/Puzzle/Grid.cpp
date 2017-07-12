@@ -271,7 +271,7 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 	}
 
 	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 	for (int n = 0; n < removedBlocks.size(); n++)
 	{
@@ -326,11 +326,11 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 }
 
 //=========================================================================================================================
-shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	//ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
-	//ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
+	//ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
 
 	ArrayList<BobColor*> acceptableColors;
 	for (int b = 0; b < (int)blockTypes.size(); b++)
@@ -413,7 +413,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 }
 
 //=========================================================================================================================
-shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	ArrayList<BobColor*> acceptableColors;
@@ -502,11 +502,11 @@ shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<P
 }
 
 //=========================================================================================================================
-shared_ptr<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	//ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
-	//ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
+	//ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
 
 	//dont use the same color as left, above, or below
 	
@@ -608,7 +608,7 @@ void Grid::removeAndDestroyAllBlocksInGrid()
 }
 
 //=========================================================================================================================
-shared_ptr<Piece> Grid::putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::putOneBlockPieceInGridCheckingForFillRules(int x, int y, ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	shared_ptr<Piece> p = nullptr;
@@ -704,7 +704,7 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 	}
 
 	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 	//randomly put roughly the same amount of blocks into playing field (a piece at a time)
 	for (int i = 0; i < numberOfBlocks; i++)
@@ -784,7 +784,7 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 	}
 
 	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 	int blocksPlaced = 0;
 	for (int y = getHeight() - 1; y >= topY; y--)
@@ -887,7 +887,7 @@ bool Grid::scrollUpStack(shared_ptr<Piece> cursorPiece, int amt)
 		}
 
 		ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
-		ArrayList<shared_ptr<PieceType> > playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+		ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
 
 		{
 			//create new row of pieces at bottom
@@ -909,7 +909,7 @@ shared_ptr<Piece> Grid::putGarbageBlock(int x, int y)
 {//=========================================================================================================================
 
 	ArrayList<shared_ptr<BlockType>> garbageBlockTypes = getGameType()->getGarbageBlockTypes(getGameLogic()->getCurrentDifficulty());
-	ArrayList<shared_ptr<PieceType> > garbagePieceTypes = getGameType()->getGarbagePieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType>> garbagePieceTypes = getGameType()->getGarbagePieceTypes(getGameLogic()->getCurrentDifficulty());
 
 	//shared_ptr<Piece> p = getRandomPiece(garbagePieceTypes, garbageBlockTypes);
 	shared_ptr<Piece> p = putOneBlockPieceInGridCheckingForFillRules(x, y, garbagePieceTypes, garbageBlockTypes);
@@ -3421,10 +3421,10 @@ void Grid::doDeathSequence()
 }
 
 //=========================================================================================================================
-shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(ArrayList<shared_ptr<PieceType> > &arr)
+shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(ArrayList<shared_ptr<PieceType>> &arr)
 {//=========================================================================================================================
 
-	ArrayList<shared_ptr<PieceType> > randomBag;
+	ArrayList<shared_ptr<PieceType>> randomBag;
 
 	for (int i = 0; i < arr.size(); i++)
 	{
@@ -3481,10 +3481,10 @@ shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPie
 }
 
 //=========================================================================================================================
-shared_ptr<PieceType> Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(ArrayList<shared_ptr<PieceType> > &arr)
+shared_ptr<PieceType> Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(ArrayList<shared_ptr<PieceType>> &arr)
 {//=========================================================================================================================
 
-	ArrayList<shared_ptr<PieceType> > randomBag;
+	ArrayList<shared_ptr<PieceType>> randomBag;
 
 	for (int i = 0; i < arr.size(); i++)
 	{
@@ -3507,7 +3507,7 @@ shared_ptr<PieceType> Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceType
 //=========================================================================================================================
 ArrayList<shared_ptr<Piece>> Grid::getBagOfOneOfEachNonRandomNormalPieces()
 {//=========================================================================================================================
-	ArrayList<shared_ptr<PieceType> > pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType>> pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
 	ArrayList<shared_ptr<BlockType>> blockTypes = getGameType()->getNormalBlockTypes(getGameLogic()->getCurrentDifficulty());
 	ArrayList<shared_ptr<Piece>> tempBag;
 	for (int i = 0; i < (int)pieceTypes.size(); i++)
@@ -3588,7 +3588,7 @@ shared_ptr<Piece> Grid::getRandomPiece()
 
 	{
 		//make piece
-		ArrayList<shared_ptr<PieceType> > pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
+		ArrayList<shared_ptr<PieceType>> pieceTypes = getGameType()->getNormalPieceTypes(getGameLogic()->getCurrentDifficulty());
 		shared_ptr<PieceType> pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(pieceTypes);
 
 		if (getGameType()->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty)
@@ -3619,7 +3619,7 @@ shared_ptr<Piece> Grid::getRandomPiece()
 }
 
 //=========================================================================================================================
-shared_ptr<Piece> Grid::getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
+shared_ptr<Piece> Grid::getRandomPiece(ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	shared_ptr<Piece> piece(new Piece(getGameLogic(), this, getRandomPieceType(pieceTypes), blockTypes));
@@ -3628,7 +3628,7 @@ shared_ptr<Piece> Grid::getRandomPiece(ArrayList<shared_ptr<PieceType> > &pieceT
 }
 
 //=========================================================================================================================
-shared_ptr<PieceType> Grid::getRandomPieceType(ArrayList<shared_ptr<PieceType> > &arr)
+shared_ptr<PieceType> Grid::getRandomPieceType(ArrayList<shared_ptr<PieceType>> &arr)
 {//=========================================================================================================================
 
 	shared_ptr<PieceType> pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(arr);

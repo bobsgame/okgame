@@ -18,19 +18,19 @@ StateManager::StateManager()
 { //=========================================================================================================================
 }
 
-State* StateManager::getState()
+Engine* StateManager::getState()
 { //=========================================================================================================================
 	return currentState;
 }
 
-void StateManager::setState(State* s)
+void StateManager::setState(Engine* s)
 { //=========================================================================================================================
 	currentState = s;
 }
 
 void StateManager::update()
 {
-	State::updateTimers();
+	Engine::updateTimers();
 	currentState->update();
 }
 

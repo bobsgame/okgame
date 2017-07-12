@@ -30,7 +30,7 @@ void StadiumScreen::update()
 		return;
 	}
 
-	State* s = stadiumGameStateManager->getState();
+	Engine* s = stadiumGameStateManager->getState();
 	if (s == nullptr)
 	{
 		return;

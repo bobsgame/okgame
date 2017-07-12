@@ -4496,7 +4496,7 @@ void CustomGameEditorControl::initPreviewGame()
 //	else
 //	if (leftBaseTabControl->GetCurrentButton() == blockTab && blockSelectionListBox->IsAnyRowSelected())
 //	{
-//		ArrayList<shared_ptr<PieceType> >pieceTypes = bobsGame->getPlayer1Game()->getCurrentGameType()->getNormalPieceTypes();
+//		ArrayList<shared_ptr<PieceType>>pieceTypes = bobsGame->getPlayer1Game()->getCurrentGameType()->getNormalPieceTypes();
 //		if (currentBlockType != nullptr)bobsGame->getPlayer1Game()->nextPieces.add(new Piece(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, bobsGame->getPlayer1Game()->grid->getRandomPieceType(pieceTypes), currentBlockType));
 //	}
 //	else
@@ -4505,7 +4505,7 @@ void CustomGameEditorControl::initPreviewGame()
 //	}
 
 	ArrayList<shared_ptr<BlockType>>blockTypes = bobsGame->getPlayer1Game()->currentGameType->getNormalBlockTypes(bobsGame->getPlayer1Game()->getCurrentDifficulty());
-	ArrayList<shared_ptr<PieceType> >pieceTypes = bobsGame->getPlayer1Game()->currentGameType->getNormalPieceTypes(bobsGame->getPlayer1Game()->getCurrentDifficulty());
+	ArrayList<shared_ptr<PieceType>>pieceTypes = bobsGame->getPlayer1Game()->currentGameType->getNormalPieceTypes(bobsGame->getPlayer1Game()->getCurrentDifficulty());
 
 	shared_ptr<PieceType> p = bobsGame->getPlayer1Game()->grid->getRandomPieceType(pieceTypes);
 	shared_ptr<BlockType> b = bobsGame->getPlayer1Game()->grid->getRandomBlockType(blockTypes);

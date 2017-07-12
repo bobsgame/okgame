@@ -297,11 +297,17 @@ void Main::mainInit()
 	}
 
 	loginState = new LoginState();
+	loginState->init();
 	loggedOutState = new LoggedOutState();
+	loggedOutState->init();
 	serversHaveShutDownState = new ServersHaveShutDownState();
+	serversHaveShutDownState->init();
 	createNewAccountState = new CreateNewAccountState();
+	createNewAccountState->init();
 	titleScreenState = new TitleScreenState();
+	titleScreenState->init();
 	youWillBeNotifiedState = new YouWillBeNotifiedState();
+	youWillBeNotifiedState->init();
 	GLUtils::e();
 
 	//-------------------
@@ -382,7 +388,7 @@ void Main::mainInit()
 
 
 
-#define PUZZLE 1
+//#define PUZZLE 1
 
 #ifdef PUZZLE
 
@@ -440,7 +446,7 @@ void Main::mainInit()
 
 			showControlsImage();
 				
-			//stateManager->setState(loginState);
+			stateManager->setState(loginState);
 		}
 
 		//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
