@@ -3739,20 +3739,36 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 						}
 						else
 						{
+
+
 							u8 byte1;
 							u8 byte2;
 							u8 byte3;
 							u8 byte4;
+
 							raf.read((char*)&byte1, 1);
 							raf.read((char*)&byte2, 1);
 							raf.read((char*)&byte3, 1);
 							raf.read((char*)&byte4, 1);
-							int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
+
+							//u8 byte1 = sbyte1 & 0xFF;
+							//u8 byte2 = sbyte2 & 0xFF;
+							//u8 byte3 = sbyte3 & 0xFF;
+							//u8 byte4 = sbyte4 & 0xFF;
 
 
-							//int result;
-							//raf.read((char*)&result, 4);
-							
+							unsigned int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
+
+
+//							log.info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
+//							log.info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
+//
+//							//int result;
+//							//raf.read((char*)&result, 4);
+//							if (result<0 || result > 1000 || byte1 > 0 || byte2 > 0 || byte3 > 0)
+//							{
+//								log.error("ok");
+//							}
 							
 
 							if (result != 0)
@@ -3787,21 +3803,36 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 							u8 byte2;
 							u8 byte3;
 							u8 byte4;
+
 							raf.read((char*)&byte1, 1);
 							raf.read((char*)&byte2, 1);
 							raf.read((char*)&byte3, 1);
 							raf.read((char*)&byte4, 1);
-							int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
 
+//							u8 byte1 = sbyte1 & 0xFF;
+//							u8 byte2 = sbyte2 & 0xFF;
+//							u8 byte3 = sbyte3 & 0xFF;
+//							u8 byte4 = sbyte4 & 0xFF;
+
+							unsigned int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
+
+
+//							log.info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
+//							log.info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
+//
+//
+//							if(result < 0 || result > 1000 || byte1 > 0 || byte2 > 0 || byte3 > 0)
+//							{
+//								log.error("ok");
+//							}
 
 							//int result;
 							//raf.read((char*)&result, 4);
 
-
-							//								int byte1 = raf.read() & 0xFF;
-							//								int byte2 = raf.read() & 0xFF;
-							//
-							//								int result = (byte2<<8) + byte1;
+							//int byte1 = raf.read() & 0xFF;
+							//int byte2 = raf.read() & 0xFF;
+							
+							//int result = (byte2<<8) + byte1;
 
 							if (result != 0)
 							{
@@ -3817,7 +3848,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		log.error("Could not read file");
 	}
 
 	raf.close();
@@ -3833,7 +3864,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 	{
 		for (int tx = 0; tx < (chunkSizeTiles1X + 2); tx++)
 		{
-			int tile = layerChunkBuffer->data()[(ty * (chunkSizeTiles1X + 2)) + tx];
+			unsigned int tile = layerChunkBuffer->data()[(ty * (chunkSizeTiles1X + 2)) + tx];
 
 			//skip black tiles on the ground layer
 			if (groundLayer == true && tile == 1)
@@ -3864,20 +3895,20 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 					}
 
 
-					int tilesetIndex = ((tile * 64) + (py * 8 + px)); //*2;
+					unsigned int tilesetIndex = ((tile * 64) + (py * 8 + px)); //*2;
 
-					int paletteIndex = tilesetIntArray->data()[tilesetIndex];
+					unsigned int paletteIndex = tilesetIntArray->data()[tilesetIndex];
 
-					//					int byte1 = tileset[tilesetIndex] & 0xFF;
-					//					int byte2 = tileset[tilesetIndex+1] & 0xFF;
+					//int byte1 = tileset[tilesetIndex] & 0xFF;
+					//int byte2 = tileset[tilesetIndex+1] & 0xFF;
 					//
-					//					int paletteIndex = (byte2<<8)+byte1;
+					//int paletteIndex = (byte2<<8)+byte1;
 
 					if (paletteIndex != 0)
 					{
-						u8 paletteR = paletteRGBByteArray->data()[(paletteIndex * 3) + (0)] & 0xFF;
-						u8 paletteG = paletteRGBByteArray->data()[(paletteIndex * 3) + (1)] & 0xFF;
-						u8 paletteB = paletteRGBByteArray->data()[(paletteIndex * 3) + (2)] & 0xFF;
+						u8 paletteR = paletteRGBByteArray->data()[(paletteIndex * 3) + (0)];
+						u8 paletteG = paletteRGBByteArray->data()[(paletteIndex * 3) + (1)];
+						u8 paletteB = paletteRGBByteArray->data()[(paletteIndex * 3) + (2)];
 
 						BobColor* c = new BobColor(paletteR, paletteG, paletteB);
 

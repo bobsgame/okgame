@@ -514,34 +514,38 @@ IntArray* FileUtils::loadIntFile(string filename)
 {//=========================================================================================================================
 
 	ByteArray* byteArray = loadByteFile(filename);
+	//delete byteArray;
+	//byteArray = loadByteFile(filename);
 
 	IntArray* intArray = new IntArray(byteArray->size() / 4);
 
 	for (int x = 0; x<intArray->size(); x++)
 	{
-		u8 sbyte1 = byteArray->data()[x * 4 + 0];//signed byte 1
-		u8 sbyte2 = byteArray->data()[x * 4 + 1];
-		u8 sbyte3 = byteArray->data()[x * 4 + 2];
-		u8 sbyte4 = byteArray->data()[x * 4 + 3];
+		u8 byte1 = byteArray->data()[x * 4 + 0];//signed byte 1
+		u8 byte2 = byteArray->data()[x * 4 + 1];
+		u8 byte3 = byteArray->data()[x * 4 + 2];
+		u8 byte4 = byteArray->data()[x * 4 + 3];
 
-		u8 ubyte1 = sbyte1 & 0xFF;
-		u8 ubyte2 = sbyte2 & 0xFF;
-		u8 ubyte3 = sbyte3 & 0xFF;
-		u8 ubyte4 = sbyte4 & 0xFF;
+//		u8 ubyte1 = sbyte1 & 0xFF;
+//		u8 ubyte2 = sbyte2 & 0xFF;
+//		u8 ubyte3 = sbyte3 & 0xFF;
+//		u8 ubyte4 = sbyte4 & 0xFF;
 
-		int result = (ubyte1 << 24) + (ubyte2 << 16) + (ubyte3 << 8) + ubyte4;
+		
+
+		unsigned int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
+
+
+		if(byte2>0)log.info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
 
 		intArray->data()[x] = result;
 	}
 
-	delete byteArray;//does this leak? delete[] ?
-					 //-------------------
-					 //alt
-					 //-------------------
-
-					 //return getIntArrayFromByteArray(loadByteFile(filename));
+	delete byteArray;
+					 
 
 	return intArray;
+
 }
 
 IntArray* FileUtils::loadIntFileFromExePath(string filename)
@@ -771,7 +775,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 
 
 
-	char* cfilepointer = NULL;
+	u8* cfilepointer = NULL;
 	FILE* cfile;
 	int csize;
 	
@@ -785,12 +789,12 @@ ByteArray* FileUtils::loadByteFile(string filename)
 	
 		//fprintf(stdout,"loaded file: %s size: %d\n",fullname,size);
 	
-		cfilepointer = (char*)malloc(csize * sizeof(char));
+		cfilepointer = (u8*)malloc(csize);
 	
 		if (cfilepointer == NULL)
 		{
 			//ERROR_set_error(fullname);
-			//log.error(string(fullname) + " malloc failed");
+			log.error("Malloc failed when loading "+ filename);
 		}
 	
 		fread(cfilepointer, 1, csize, cfile);
@@ -798,7 +802,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 	if (cfile == NULL)
 	{
 		//ERROR_set_error(fullname);
-		log.error(string(filename) + " could not be opened, probably not found");
+		log.error(filename + " could not be opened, probably not found");
 	}
 	fclose(cfile);
 

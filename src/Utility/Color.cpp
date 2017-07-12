@@ -862,10 +862,10 @@ BobColor::BobColor(int rgb)
 //	uuid = to_string(generator());
 
 
-	int r = (rgb >> 24) & 0xFF;
-	int g = (rgb >> 16) & 0xFF;
-	int b = (rgb >> 8) & 0xFF;
-	int a = (rgb >> 0) & 0xFF;
+	u8 r = (rgb >> 24) & 0xFF;
+	u8 g = (rgb >> 16) & 0xFF;
+	u8 b = (rgb >> 8) & 0xFF;
+	u8 a = (rgb >> 0) & 0xFF;
 
 	this->r = r;
 	this->g = g;
@@ -882,10 +882,10 @@ BobColor::BobColor(float hf, float sf, float bf, float af, bool hsbOverload)
 //	uuid = to_string(generator());
 
 	int rgb = HSBtoRGB(hf, sf, bf);
-	int r = (rgb >> 16) & 0xFF;
-	int g = (rgb >> 8) & 0xFF;
-	int b = (rgb >> 0) & 0xFF;
-	int a = (int)(af * 255.0f);
+	u8 r = (rgb >> 16) & 0xFF;
+	u8 g = (rgb >> 8) & 0xFF;
+	u8 b = (rgb >> 0) & 0xFF;
+	u8 a = (u8)(af * 255.0f);
 
 	this->r = r;
 	this->g = g;
@@ -1102,9 +1102,9 @@ void BobColor::darker(float scale)
 	}
 
 	int rgb = HSBtoRGB(hsbvals[0], hsbvals[1], hsbvals[2]);
-	int ri = (rgb >> 16) & 0xFF;
-	int gi = (rgb >> 8) & 0xFF;
-	int bi = (rgb >> 0) & 0xFF;
+	u8 ri = (rgb >> 16) & 0xFF;
+	u8 gi = (rgb >> 8) & 0xFF;
+	u8 bi = (rgb >> 0) & 0xFF;
 
 	r = ri;
 	g = gi;
@@ -1151,9 +1151,9 @@ void BobColor::lighter(float scale)
 	}
 
 	int rgb = HSBtoRGB(hsbvals[0], hsbvals[1], hsbvals[2]);
-	int ri = (rgb >> 16) & 0xFF;
-	int gi = (rgb >> 8) & 0xFF;
-	int bi = (rgb >> 0) & 0xFF;
+	u8 ri = (rgb >> 16) & 0xFF;
+	u8 gi = (rgb >> 8) & 0xFF;
+	u8 bi = (rgb >> 0) & 0xFF;
 
 	r = ri;
 	g = gi;

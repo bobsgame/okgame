@@ -145,6 +145,7 @@ using namespace std;
 
 typedef unsigned char u8;
 
+
 class ByteArray
 {
 	u8* bytes = nullptr;
@@ -159,7 +160,7 @@ public:
 
 	ByteArray(unsigned int len)
 	{
-		this->bytes = (u8*)malloc(len);// new u8[len];
+		this->bytes = (u8*)calloc(len, 1);// new u8[len];
 		this->len = len;
 	}
 
@@ -182,18 +183,18 @@ public:
 
 class IntArray
 {
-	int* ints = nullptr;
+	unsigned int* ints = nullptr;
 	unsigned int len = 0;
 public:
 
-	IntArray(int* ints, unsigned int len)
+	IntArray(unsigned int* ints, unsigned int len)
 	{
 		this->ints = ints;
 		this->len = len;
 	}
 	IntArray(unsigned int len)
 	{
-		this->ints = (int*)malloc(len);// new int[len];
+		this->ints = (unsigned int*)calloc(len*4, 4);// new int[len];
 		this->len = len;
 	}
 	~IntArray()
@@ -201,7 +202,7 @@ public:
 		free(ints);
 		//delete[] ints;
 	}
-	int* data()
+	unsigned int* data()
 	{
 		return ints;
 	}

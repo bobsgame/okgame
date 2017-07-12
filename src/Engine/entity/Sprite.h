@@ -107,7 +107,7 @@ public:
 	//	}
 
 	void loadTextures();
-	ByteArray* getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set);
+	ByteArray* getReplacementRGBFromSet(u8 r, u8 g, u8 b, Sprite* s, int set);
 	//The following method was originally marked 'synchronized':
 	ByteArray* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
 	//The following method was originally marked 'synchronized':

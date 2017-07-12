@@ -1421,7 +1421,7 @@ int GLUtils::setupFBOTexture(int tex, int width, int height)
 { //=========================================================================================================================
 
 	const int s = width * height * 4;
-	u8* data = new u8[s];
+	u8* data = (u8*)calloc(s,1);
 
 	//init FBO texture
 	glBindTexture(GL_TEXTURE_2D, tex);
@@ -1432,7 +1432,7 @@ int GLUtils::setupFBOTexture(int tex, int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-	delete[] data;
+	free(data);
 
 	return tex;
 }

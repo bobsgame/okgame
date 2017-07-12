@@ -631,13 +631,15 @@ void Sprite::loadTextures()
 
 				   //incrementSpritePNGThreadsCreated_S();
 				
+					bool isRandom = getIsRandom();
+					bool hasShadow = getHasShadow();
 
 //					std::vector<std::future<void>> results;
 //					results.push_back
 //					(
 						generatePNGThreadPool->push
 						(
-							[&](int)
+							[&,isRandom,hasShadow](int)
 							{
 		//						if (getIsRandom() == true)
 		//						{
@@ -648,12 +650,12 @@ void Sprite::loadTextures()
 		//							Thread::currentThread().setName("Sprite_createSpriteTexturePNG");
 		//						}
 
-								if (getIsRandom() == false)
+								if (isRandom == false)
 								{
 									createSpriteTexturePNG_S();
 								}
 
-								if (getHasShadow() == true)
+								if (hasShadow == true)
 								{
 									createSpriteShadowTexturePNG_S();
 								}
@@ -689,7 +691,7 @@ void Sprite::loadTextures()
 
 
 //=========================================================================================================================
-ByteArray* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int set)
+ByteArray* Sprite::getReplacementRGBFromSet(u8 r, u8 g, u8 b, Sprite* s, int set)
 { //=========================================================================================================================
 
 	ByteArray* rgb = new ByteArray(3);
@@ -702,20 +704,20 @@ ByteArray* Sprite::getReplacementRGBFromSet(int r, int g, int b, Sprite* s, int 
 
 	for (int x = 0; x < w; x++)
 	{
-		int oldIndex = s->indexDataIntArray->data()[x] & 0xFF;
+		int oldIndex = s->indexDataIntArray->data()[x];// &0xFF;
 
-		int oldR = s->paletteRGBByteArray->data()[oldIndex * 3 + 0] & 0xFF;
-		int oldG = s->paletteRGBByteArray->data()[oldIndex * 3 + 1] & 0xFF;
-		int oldB = s->paletteRGBByteArray->data()[oldIndex * 3 + 2] & 0xFF;
+		u8 oldR = s->paletteRGBByteArray->data()[oldIndex * 3 + 0];
+		u8 oldG = s->paletteRGBByteArray->data()[oldIndex * 3 + 1];
+		u8 oldB = s->paletteRGBByteArray->data()[oldIndex * 3 + 2];
 
 		if (r == oldR && g == oldG && b == oldB)
 		{
 			int newIndex = s->indexDataIntArray->data()[(w * set) + x];
 
 
-			rgb->data()[0] = s->paletteRGBByteArray->data()[newIndex * 3 + 0] & 0xFF;
-			rgb->data()[1] = s->paletteRGBByteArray->data()[newIndex * 3 + 1] & 0xFF;
-			rgb->data()[2] = s->paletteRGBByteArray->data()[newIndex * 3 + 2] & 0xFF;
+			rgb->data()[0] = s->paletteRGBByteArray->data()[newIndex * 3 + 0];
+			rgb->data()[1] = s->paletteRGBByteArray->data()[newIndex * 3 + 1];
+			rgb->data()[2] = s->paletteRGBByteArray->data()[newIndex * 3 + 2];
 
 			return rgb;
 		}

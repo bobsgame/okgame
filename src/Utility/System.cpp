@@ -613,16 +613,14 @@ void System::updateUpdateTimers()
 
 
 
-
-
 //frame stats
 long long System::lastRenderTime = 0;
 long long System::lastUpdateTime = 0;
 
 int System::ticksTextCount = 0;
 
-long long System::averageTicksPerRenderLastSecond = 0;
-long long System::averageTicksPerUpdateLastSecond = 0;
+int System::averageTicksPerRenderLastSecond = 0;
+int System::averageTicksPerUpdateLastSecond = 0;
 
 //memory stats
 int System::mb = 1024 * 1024;
@@ -631,8 +629,6 @@ long long System::maxUsedMemory = 0;
 long long System::totalMemory = 0;
 long long System::freeMemory = 0;
 long long System::maxMemory = 0;
-
-
 
 
 void System::initStats()
@@ -729,14 +725,12 @@ void System::updateStats()
 	}
 
 	//if a second has passed
-	int ticksPassed = (int)(System::getTicksBetweenTimes(lastSecondTime, currentHighResTime));
-	if (ticksPassed >= 1000)
+	int ticksPassedThisSecond = (int)(System::getTicksBetweenTimes(lastSecondTime, currentHighResTime));
+	if (ticksPassedThisSecond >= 1000)
 	{
-
-
-
-		averageTicksPerRenderLastSecond = (long long)((double)(ticksPassed) / rendersThisSecond);
-		averageTicksPerUpdateLastSecond = (long long)((double)(ticksPassed) / updatesThisSecond);
+		
+		if (rendersThisSecond>0)averageTicksPerRenderLastSecond = ticksPassedThisSecond / rendersThisSecond;
+		if (updatesThisSecond>0)averageTicksPerUpdateLastSecond = ticksPassedThisSecond / updatesThisSecond;
 
 		if (rendersThisSecond >= 60)
 		{
@@ -813,6 +807,8 @@ void System::updateStats()
 					}
 				//GLUtils::DEFAULT_SHADER_FBO_FILTER = GLUtils::FILTER_FBO_LINEAR_NO_MIPMAPPING;
 			}
+
+
 			//		else
 			//		if(averageFPSTestSecondsPassed>15 && averageFPSTestRendersPerSecond>=50)
 			//		{
@@ -834,8 +830,6 @@ void System::updateStats()
 			//		}
 
 		}
-
-
 	}
 
 

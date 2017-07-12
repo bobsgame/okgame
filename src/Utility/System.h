@@ -18,13 +18,10 @@ public:
 	
 	static Logger log;
 
-
 //	string sessionToken = "";
-//
 
 	//InetAddress addr = InetAddress.getByName(refAddr);
 	//String name = addr.getHostName();
-
 
 	//TODO:
 //	static int downloadRate;// = 0;
@@ -56,7 +53,6 @@ public:
 
 
 
-//
 //	//done
 //
 //	static string jreVersion;
@@ -101,7 +97,8 @@ public:
 //
 //	static int numControllersFound;// = -1;
 //	static string controllersNames;
-//
+
+
 	static string glVendor;
 	static string glVersion;
 	static string glRenderer;
@@ -110,11 +107,6 @@ public:
 
 	static void initSystemInfo();
 	static void initClockAndTimeZone();
-
-
-
-
-public:
 
 
 	static ConsoleText* totalRendersText;
@@ -138,17 +130,13 @@ private:
 	static long long lastRenderTime;
 	static long long lastUpdateTime;
 	static int ticksTextCount;
-	static long long averageTicksPerRenderLastSecond;
-	static long long averageTicksPerUpdateLastSecond;
+	static int averageTicksPerRenderLastSecond;
+	static int averageTicksPerUpdateLastSecond;
 
 
 public:
 
-
-
 	static ConsoleText* mxThreadCountText;
-
-
 
 	static ConsoleText* memoryText;
 	static ConsoleText* texturesLoadedText;// = Console::debug("texturesLoadedText");
@@ -182,9 +170,6 @@ public:
 	//GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	//GraphicsDevice[] gs = ge.getScreenDevices();
 	//GraphicsDevice gd = gs->get(0);
-
-
-
 
 
 	static void initStats();
@@ -227,7 +212,6 @@ private:
 	static long long currentHighResTime;
 
 	
-
 	static int updatesThisSecond;
 	static int rendersThisSecond;
 	static long long lastSecondTime;
