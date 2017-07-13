@@ -6,24 +6,24 @@ do
 done
 
 sudo ldd ./bobsgame | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
-sudo ldd ./libPocoFoundation.so.45 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
-sudo ldd ./libPocoNet.so.45 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
-sudo ldd ./libPocoJSON.so.45 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
-sudo ldd ./libPocoXML.so.45 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
-sudo ldd ./libPocoUtil.so.45 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
-sudo ldd ./libPocoZip.so.45 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
+sudo ldd ./libPocoFoundation.so.48 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
+sudo ldd ./libPocoNet.so.48 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
+sudo ldd ./libPocoJSON.so.48 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
+sudo ldd ./libPocoXML.so.48 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
+sudo ldd ./libPocoUtil.so.48 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
+sudo ldd ./libPocoZip.so.48 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
 sudo ldd ./libCppUnit.so.1 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
 sudo ldd ./libboost_serialization.so.1.62.0 | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
 sudo ldd ./bobsgame | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' ./
 strip bobsgame
 chmod 755 bobsgame
 rm VBoxOGLcrutil.so
-rm libGL.so.1
-rm libc.so.6
-rm libdl.so.2
-rm libm.so.6
-rm libpthread.so.0
-rm libresolv.so.2
+rm libGL.so*
+rm libc.so*
+rm libdl.so*
+rm libm.so*
+rm libpthread.so*
+rm libresolv.so*
 
 rm libasyncns* #libasyncns is a C library for Linux/Unix for executing name service queries asynchronously
 rm libdbus* #D-Bus supplies both a system daemon (for events such as "new hardware device added" or "printer queue changed") and a per-user-login-session daemon (for general IPC needs among user applications).

@@ -1,0 +1,9 @@
+/home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/samples/grep/obj/Linux/x86_64/debug_static/grep.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/samples/grep/obj/Linux/x86_64/release_static/grep.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/samples/grep/obj/Linux/x86_64/debug_shared/grep.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/samples/grep/obj/Linux/x86_64/release_shared/grep.o: src/grep.cpp \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/RegularExpression.h \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/Foundation.h \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/Config.h \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/Platform.h \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/Platform_POSIX.h \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/Alignment.h \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/Bugcheck.h \
+ /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include/Poco/Types.h

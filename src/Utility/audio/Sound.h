@@ -30,7 +30,7 @@ public:
 	Mix_Chunk* mixChunk = nullptr;
 #endif
 
-	Sound::Sound(Engine* g, AudioFile *f);
+	Sound(Engine* g, AudioFile *f);
 
 
 

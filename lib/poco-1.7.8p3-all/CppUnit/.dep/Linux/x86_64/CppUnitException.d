@@ -1,0 +1,2 @@
+/home/bob/bobsgame/lib/poco-1.7.8p3-all/CppUnit/obj/Linux/x86_64/debug_static/CppUnitException.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/CppUnit/obj/Linux/x86_64/release_static/CppUnitException.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/CppUnit/obj/Linux/x86_64/debug_shared/CppUnitException.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/CppUnit/obj/Linux/x86_64/release_shared/CppUnitException.o: src/CppUnitException.cpp \
+ include/CppUnit/CppUnitException.h include/CppUnit/CppUnit.h

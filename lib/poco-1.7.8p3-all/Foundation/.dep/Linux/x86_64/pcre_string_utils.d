@@ -1,0 +1,2 @@
+/home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/debug_static/pcre_string_utils.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/release_static/pcre_string_utils.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/debug_shared/pcre_string_utils.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/release_shared/pcre_string_utils.o: src/pcre_string_utils.c src/pcre_config.h \
+ src/pcre_internal.h src/pcre.h src/ucp.h

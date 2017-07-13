@@ -34,12 +34,12 @@ include_directories(
         ${SDL2_NET_INCLUDE_DIR}
         ${bobsgame_SOURCE_DIR}/lib/glew-2.0.0/include
         ${bobsgame_SOURCE_DIR}/lib
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/Foundation/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/JSON/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/Net/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/Util/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/XML/include
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/Zip/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Foundation/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/JSON/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Net/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Util/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/XML/include
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/Zip/include
         ${bobsgame_SOURCE_DIR}/lib/miniz-master
         ${bobsgame_SOURCE_DIR}/lib/minilzo-2.09
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/include
@@ -70,13 +70,13 @@ link_libraries(
         ${SDL2_TTF_LIBRARY}
         ${SDL2_NET_LIBRARY}
 
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64/libCppUnit.so.1
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64/libPocoFoundation.so.45
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64/libPocoJSON.so.45
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64/libPocoNet.so.45
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64/libPocoUtil.so.45
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64/libPocoXML.so.45
-        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.5/lib/Linux/x86_64/libPocoZip.so.45
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libCppUnit.so.1
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoFoundation.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoJSON.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoNet.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoUtil.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoXML.so.48
+        ${bobsgame_SOURCE_DIR}/lib/poco-1.7.8p3-all/lib/Linux/x86_64/libPocoZip.so.48
 
 
         ${bobsgame_SOURCE_DIR}/lib/GWEN-master/gwen/lib/linux/gmake/libgwen_static.a
@@ -374,8 +374,8 @@ set(SOURCE_FILES
     src/Engine/state/LoginState.h
     src/Engine/state/ServersHaveShutDownState.cpp
     src/Engine/state/ServersHaveShutDownState.h
-    src/Engine/state/State.cpp
-    src/Engine/state/State.h
+    #src/Engine/state/State.cpp
+    #src/Engine/state/State.h
     src/Engine/state/StateManager.cpp
     src/Engine/state/StateManager.h
     src/Engine/state/TitleScreenState.cpp
@@ -422,14 +422,16 @@ set(SOURCE_FILES
     src/Puzzle/Stats/UserStatsForSpecificGameAndDifficulty.h
     src/Utility/audio/AudioManager.cpp
     src/Utility/audio/AudioManager.h
-    src/Utility/audio/Music.cpp
-    src/Utility/audio/Music.h
-    src/Utility/audio/MusicData.cpp
-    src/Utility/audio/MusicData.h
+    #src/Utility/audio/Music.cpp
+    #src/Utility/audio/Music.h
+    #src/Utility/audio/MusicData.cpp
+    #src/Utility/audio/MusicData.h
     src/Utility/audio/Sound.cpp
     src/Utility/audio/Sound.h
-    src/Utility/audio/SoundData.cpp
-    src/Utility/audio/SoundData.h
+    src/Utility/audio/AudioFile.cpp
+    src/Utility/audio/AudioFile.h
+    src/Utility/audio/AudioData.cpp
+    src/Utility/audio/AudioData.h
     src/Utility/gl/GLUtils.cpp
     src/Utility/gl/GLUtils.h
     src/Utility/gl/Texture.cpp
