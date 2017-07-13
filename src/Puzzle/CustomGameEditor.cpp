@@ -529,9 +529,13 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	bt->spriteName = "Square";
 	bt->colors.add(BobColor::gray);
 	bt->useInNormalPieces = true;
+	bt->useAsPlayingFieldFiller = true;
+	bt->useAsGarbage = true;
 	shared_ptr<PieceType> pt(new PieceType());
 	pt->name = "Single Block Piece";
 	pt->useAsNormalPiece = true;
+	pt->useAsPlayingFieldFillerPiece = true;
+	pt->useAsGarbagePiece = true;
 	currentGameType->blockTypes.add(bt);
 	currentGameType->pieceTypes.add(pt);
 	//currentGameType->difficultyTypes.add(new DifficultyType());
@@ -2206,6 +2210,8 @@ void CustomGameEditorControl::onAddBlockButton(Base* control)
 
 	b->name = newName;
 	b->useInNormalPieces = true;
+	b->useAsPlayingFieldFiller = true;
+	b->useAsGarbage = true;
 
 	currentGameType->blockTypes.add(b);
 
@@ -2387,6 +2393,8 @@ void CustomGameEditorControl::onAddPieceButton(Base* control)
 
 	b->name = newName;
 	b->useAsNormalPiece = true;
+	b->useAsPlayingFieldFillerPiece = true;
+	b->useAsGarbagePiece = true;
 	currentGameType->pieceTypes.add(b);
 
 
@@ -3491,9 +3499,13 @@ void CustomGameEditorControl::createNewGameType(Base* control)
 	bt->spriteName = "Square";
 	bt->colors.add(BobColor::gray);
 	bt->useInNormalPieces = true;
+	bt->useAsPlayingFieldFiller = true;
+	bt->useAsGarbage = true;
 	shared_ptr<PieceType> pt(new PieceType());
 	pt->name = "Single Block Piece";
 	pt->useAsNormalPiece = true;
+	pt->useAsPlayingFieldFillerPiece = true;
+	pt->useAsGarbagePiece = true;
 	s->blockTypes.add(bt);
 	s->pieceTypes.add(pt);
 
