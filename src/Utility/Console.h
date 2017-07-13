@@ -66,6 +66,8 @@ public:
 	static ArrayList<ConsoleText*>* consoleTextList;
 	static mutex _consoleTextList_Mutex;
 
+	static bool showConsole;
+
 	Console();
 	void update();
 

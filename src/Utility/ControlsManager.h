@@ -205,6 +205,7 @@ public:
 	bool KEY_TAB_HELD = false; //was START
 	bool KEY_RETURN_HELD = false; //was SELECT
 	bool KEY_H_HELD = false;
+	bool KEY_C_HELD = false;
 	bool KEY_LBRACKET_HELD = false; //was L
 	bool KEY_RBRACKET_HELD = false; //was R
 	bool KEY_RALT_HELD = false;
@@ -263,6 +264,7 @@ private:
 	bool KEY_TAB_PRESSED = false; //was START
 	bool KEY_RETURN_PRESSED = false; //was SELECT
 	bool KEY_H_PRESSED = false;
+	bool KEY_C_PRESSED = false;
 	bool KEY_LBRACKET_PRESSED = false; //was L
 	bool KEY_RBRACKET_PRESSED = false; //was R
 	bool KEY_RALT_PRESSED = false;
@@ -323,6 +325,7 @@ public:
 		bool key_TAB_Pressed()			{ if (KEY_TAB_PRESSED) { KEY_TAB_PRESSED = false; return true; }return false; }
 		bool key_RETURN_Pressed()			{ if (KEY_RETURN_PRESSED) { KEY_RETURN_PRESSED = false; return true; }return false; }
 		bool key_H_Pressed()				{ if (KEY_H_PRESSED) { KEY_H_PRESSED = false; return true; }return false; }
+		bool key_C_Pressed()				{ if (KEY_C_PRESSED) { KEY_C_PRESSED = false; return true; }return false; }
 		bool key_LBRACKET_Pressed()		{ if (KEY_LBRACKET_PRESSED) { KEY_LBRACKET_PRESSED = false; return true; }return false; }
 		bool key_RBRACKET_Pressed()		{ if (KEY_RBRACKET_PRESSED) { KEY_RBRACKET_PRESSED = false; return true; }return false; }
 		bool key_RALT_Pressed()			{ if (KEY_RALT_PRESSED) { KEY_RALT_PRESSED = false; return true; }return false; }

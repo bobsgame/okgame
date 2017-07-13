@@ -277,8 +277,16 @@ Console::Console()
 
 }
 
+bool Console::showConsole = true;
+
 void Console::update()
 { //=========================================================================================================================
+
+
+	if(Main::controlsManager->key_C_Pressed())
+	{
+		showConsole = !showConsole;
+	}
 
 	captionManager->update();
 
@@ -356,6 +364,9 @@ bool debugConsoleOff = true;
 
 void Console::render()
 { //=========================================================================================================================
+
+
+	if (showConsole == false)return;
 
 	int numStrings = consoleTextList->size();
 

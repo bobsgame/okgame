@@ -1422,10 +1422,13 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 	if (getSettings()->blockRule_drawDotToSquareOffBlockCorners)
 	{
-		if (connectedDown && connectedRight && !connectedDownRight)GLUtils::drawFilledRectXYWH(screenX + w - 1.0f, screenY + h - 1.0f, 1.0f * scale, 1.0f * scale, r, g, b, a);
-		if (connectedDown && connectedLeft && !connectedDownLeft)GLUtils::drawFilledRectXYWH(screenX, screenY + h - 1.0f, 1.0f * scale, 1.0f * scale, r, g, b, a);
-		if (connectedUp && connectedLeft && !connectedUpLeft)GLUtils::drawFilledRectXYWH(screenX, screenY, 1.0f * scale, 1.0f * scale, r, g, b, a);
-		if (connectedUp && connectedRight && !connectedUpRight)GLUtils::drawFilledRectXYWH(screenX + w - 1.0f, screenY, 1.0f * scale, 1.0f * scale, r, g, b, a);
+
+		float s = w * 0.04f;//border size, guesstimate
+
+		if (connectedDown && connectedRight && !connectedDownRight)GLUtils::drawFilledRectXYWH(screenX + w - s, screenY + h - s, s, s, r, g, b, a);
+		if (connectedDown && connectedLeft && !connectedDownLeft)GLUtils::drawFilledRectXYWH(screenX, screenY + h - s, s, s, r, g, b, a);
+		if (connectedUp && connectedLeft && !connectedUpLeft)GLUtils::drawFilledRectXYWH(screenX, screenY, s, s, r, g, b, a);
+		if (connectedUp && connectedRight && !connectedUpRight)GLUtils::drawFilledRectXYWH(screenX + w - s, screenY, s, s, r, g, b, a);
 	}
 
 	if (getSettings()->blockRule_fillSolidSquareWhenSetInGrid && setInGrid && flashingToBeRemoved == false)

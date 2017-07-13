@@ -76,6 +76,7 @@ void AudioManager::initAudioLibrary()
 
 #endif
 
+	GLUtils::checkSDLError("AudioManager::initAudioLibrary()");
 
 #ifdef USE_SOLOUD
 	soLoud = new SoLoud::Soloud();

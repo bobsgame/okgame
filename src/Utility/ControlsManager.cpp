@@ -263,6 +263,7 @@ void ControlsManager::resetPressedButtons()
 	KEY_TAB_PRESSED = false; //was START
 	KEY_RETURN_PRESSED = false; //was SELECT
 	KEY_H_PRESSED = false;
+	KEY_C_PRESSED = false;
 	KEY_LBRACKET_PRESSED = false; //was L
 	KEY_RBRACKET_PRESSED = false; //was R
 	KEY_RALT_PRESSED = false;
@@ -386,6 +387,7 @@ void ControlsManager::setButtonStates()
 	bool LAST_KEY_TAB_HELD = KEY_TAB_HELD; //was START
 	bool LAST_KEY_RETURN_HELD = KEY_RETURN_HELD; //was SELECT
 	bool LAST_KEY_H_HELD = KEY_H_HELD;
+	bool LAST_KEY_C_HELD = KEY_C_HELD;
 	bool LAST_KEY_LBRACKET_HELD = KEY_LBRACKET_HELD; //was L
 	bool LAST_KEY_RBRACKET_HELD = KEY_RBRACKET_HELD; //was R
 	bool LAST_KEY_RALT_HELD = KEY_RALT_HELD;
@@ -1174,6 +1176,7 @@ SDL_JoyHatEvent
 				case SDLK_LEFTBRACKET:KEY_LBRACKET_HELD = true;break;
 				case SDLK_RIGHTBRACKET:KEY_RBRACKET_HELD = true;break;
 				case SDLK_h:KEY_H_HELD = true; break;
+				case SDLK_c:KEY_C_HELD = true; break;
 				case SDLK_LSHIFT:KEY_LSHIFT_HELD = true; break;
 				case SDLK_RSHIFT:KEY_RSHIFT_HELD = true; break;
 				case SDLK_LCTRL:KEY_LCTRL_HELD = true; break;
@@ -1239,6 +1242,7 @@ SDL_JoyHatEvent
 				case SDLK_LEFTBRACKET:KEY_LBRACKET_HELD = false; break;
 				case SDLK_RIGHTBRACKET:KEY_RBRACKET_HELD = false; break;
 				case SDLK_h:KEY_H_HELD = false; break;
+				case SDLK_c:KEY_C_HELD = false; break;
 				case SDLK_LSHIFT:KEY_LSHIFT_HELD = false; break;
 				case SDLK_RSHIFT:KEY_RSHIFT_HELD = false; break;
 				case SDLK_LCTRL:KEY_LCTRL_HELD = false; break;
@@ -1382,6 +1386,7 @@ SDL_JoyHatEvent
 	if(KEY_TAB_HELD			&&LAST_KEY_TAB_HELD			==false)KEY_TAB_PRESSED	=true;
 	if(KEY_RETURN_HELD		&&LAST_KEY_RETURN_HELD		==false)KEY_RETURN_PRESSED=true;
 	if(KEY_H_HELD			&&LAST_KEY_H_HELD			==false)KEY_H_PRESSED	=true;
+	if(KEY_C_HELD			&&LAST_KEY_C_HELD			==false)KEY_C_PRESSED	=true;
 	if(KEY_LBRACKET_HELD	&&LAST_KEY_LBRACKET_HELD	==false)KEY_LBRACKET_PRESSED=true;
 	if(KEY_RBRACKET_HELD	&&LAST_KEY_RBRACKET_HELD	==false)KEY_RBRACKET_PRESSED=true;
 	if(KEY_RALT_HELD		&&LAST_KEY_RALT_HELD		==false)KEY_RALT_PRESSED=true;
