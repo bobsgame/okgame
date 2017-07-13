@@ -96,10 +96,10 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 		uploadButton->onPress.Add(this, &GameSequenceEditorControl::onUploadButton);
 
 		exitButton = new Button(applyButtonsBase);
-		exitButton->SetText(L"Leave");
+		exitButton->SetText(L"Exit To Title Screen");
 		//exitButton->SetToolTip("Leave (Ask to save changes).");
-		exitButton->Dock(Pos::Left | Pos::Center);
-		exitButton->SetWidth(50);
+		exitButton->Dock(Pos::Right | Pos::Center);
+		exitButton->SetWidth(150);
 		exitButton->onPress.Add(this, &GameSequenceEditorControl::onExitButton);
 
 	}

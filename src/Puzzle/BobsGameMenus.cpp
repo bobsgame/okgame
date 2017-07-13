@@ -29,87 +29,89 @@ bool BobsGame::updateMenus()
 
 	if (super::updateMenus() == true)updatedMenu = true;
 
-	if (startScreenMenuShowing)
-	{
-		startScreenMenuUpdate();
-		updatedMenu = true;
-	}
+
 	if (gettingGamesFromServerMenuShowing)
 	{
 		gettingGamesFromServerMenuUpdate();
-		updatedMenu = true;
+		return true;
+	}
+
+	if (startScreenMenuShowing)
+	{
+		startScreenMenuUpdate();
+		return true;
 	}
 
 	if (controllerMenuShowing)
 	{
 		controllerMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (localMultiplayerPlayerJoinMenuShowing)
 	{
 		localMultiplayerPlayerJoinMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (loginMenuShowing)
 	{
 		loginMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (createAccountMenuShowing)
 	{
 		createAccountMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (networkMultiplayerLobbyMenuShowing)
 	{
 		networkMultiplayerLobbyMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (networkMultiplayerPlayerJoinMenuShowing)
 	{
 		networkMultiplayerPlayerJoinMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (customGameEditorMenuShowing)
 	{
 		customGameEditorMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (gameSequenceEditorMenuShowing)
 	{
 		gameSequenceEditorMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (gameTestMenuShowing)
 	{
 		gameTestMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (globalSettingsMenuShowing)
 	{
 		globalSettingsMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (gameSetupMenuShowing)
 	{
 		gameSetupMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 	if (statsMenuShowing)
 	{
 		statsMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 //	if (selectGameSequenceOrSingleGameTypeMenuShowing)
@@ -151,7 +153,7 @@ bool BobsGame::updateMenus()
 	if (multiplayerOptionsMenuShowing)
 	{
 		multiplayerOptionsMenuUpdate();
-		updatedMenu = true;
+		return true;
 	}
 
 //	if (gameSetupMenuShowing)
@@ -171,88 +173,92 @@ bool BobsGame::renderMenus()
 
 	if (super::renderMenus() == true)renderedMenu = true;
 
-	if (startScreenMenuShowing)
-	{
-		startScreenMenuRender();
-		renderedMenu = true;
-	}
 
 	if (gettingGamesFromServerMenuShowing)
 	{
 		gettingGamesFromServerMenuRender();
-		renderedMenu = true;
+		return true;
 	}
+
+
+
+	if (startScreenMenuShowing)
+	{
+		startScreenMenuRender();
+		return true;
+	}
+
 
 	if (controllerMenuShowing)
 	{
 		controllerMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (localMultiplayerPlayerJoinMenuShowing)
 	{
 		localMultiplayerPlayerJoinMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (loginMenuShowing)
 	{
 		loginMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (createAccountMenuShowing)
 	{
 		createAccountMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (networkMultiplayerLobbyMenuShowing)
 	{
 		networkMultiplayerLobbyMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (networkMultiplayerPlayerJoinMenuShowing)
 	{
 		networkMultiplayerPlayerJoinMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (customGameEditorMenuShowing)
 	{
 		customGameEditorMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (gameSequenceEditorMenuShowing)
 	{
 		gameSequenceEditorMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (gameTestMenuShowing)
 	{
 		gameTestMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (globalSettingsMenuShowing)
 	{
 		globalSettingsMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (gameSetupMenuShowing)
 	{
 		gameSetupMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 	if (statsMenuShowing)
 	{
 		statsMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 
 //	if (selectGameSequenceOrSingleGameTypeMenuShowing)

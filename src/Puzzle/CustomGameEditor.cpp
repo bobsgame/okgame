@@ -460,12 +460,26 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 			uploadButton->onPress.Add(this, &CustomGameEditorControl::onUploadButton);
 
 
+
 			exitButton = new Button(applyButtonsBase);
-			exitButton->SetText(L"Leave");
+			exitButton->SetText(L"Exit To Title Screen");
 			//exitButton->SetToolTip("Leave (Ask to save changes).");
-			exitButton->Dock(Pos::Left | Pos::Center);
-			exitButton->SetWidth(50);
+			exitButton->Dock(Pos::Right | Pos::Center);
+			exitButton->SetWidth(150);
 			exitButton->onPress.Add(this, &CustomGameEditorControl::onExitButton);
+
+			{
+				Layout::Position* positioner = new Layout::Position(applyButtonsBase);
+				positioner->Dock(Pos::Right | Pos::Center);
+				positioner->SetWidth(10);
+			}
+
+			tutorialButton = new Button(applyButtonsBase);
+			tutorialButton->SetText(L"Watch Tutorial");
+			//tutorialButton->SetToolTip("");
+			tutorialButton->Dock(Pos::Right | Pos::Center);
+			tutorialButton->SetWidth(100);
+			tutorialButton->onPress.Add(this, &CustomGameEditorControl::onTutorialButton);
 
 			//load, save, preview, exit
 
@@ -3731,6 +3745,12 @@ void CustomGameEditorControl::onExitButton(Base* control)
 		//		cancelExitButton->onPress.Add(this, &CustomGameEditorControl::cancelExit);
 	}
 
+
+}
+
+void CustomGameEditorControl::onTutorialButton(Base* control)
+{//=========================================================================================================================
+	Main::openURL("https://www.youtube.com/watch?v=hLN18oZcIYE");
 
 }
 

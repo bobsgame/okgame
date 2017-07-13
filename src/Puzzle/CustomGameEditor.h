@@ -214,7 +214,9 @@ public:
 	void onExitButton(Gwen::Controls::Base* control);
 	void saveAndExit(Gwen::Controls::Base* control);
 	void dontSaveAndExit(Gwen::Controls::Base* control);
-    
+	void onTutorialButton(Gwen::Controls::Base* control);
+
+
 	void editSelectedGameType(Gwen::Controls::Base* control);
 	void createNewGameType(Gwen::Controls::Base* control);
 	void duplicateGameType(Gwen::Controls::Base* control);
@@ -316,6 +318,7 @@ private:
 	Gwen::Controls::Button* saveButton = nullptr;
 	Gwen::Controls::Button* uploadButton = nullptr;
 	Gwen::Controls::Button* exitButton = nullptr;
+	Gwen::Controls::Button* tutorialButton = nullptr;
 	Gwen::Controls::Base* leftBase = nullptr;
 	Gwen::Controls::WindowControl* settingsWindow = nullptr;
 	Gwen::Controls::ScrollControl* settingsScrollControl = nullptr;
