@@ -1378,11 +1378,11 @@ bool Grid::continueSwappingBlocks()
 
 						remove(x, y, false, false);//remove a
 
-						if (contains(x + a->interpolateSwappingWithY, y))//TODO redundant but trying to find all bad accesses
-							remove(x + a->interpolateSwappingWithY, y, false, false);
+						if (contains(x, y + a->interpolateSwappingWithY))//TODO redundant but trying to find all bad accesses
+							remove(x, y + a->interpolateSwappingWithY, false, false);
 
 						if (b != nullptr)add(x, y, b);
-						add(x + a->interpolateSwappingWithY, y, a);
+						add(x, y + a->interpolateSwappingWithY, a);
 
 						a->interpolateSwappingWithY = 0;
 						if (b != nullptr)
