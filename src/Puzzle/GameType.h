@@ -388,7 +388,7 @@ public:
 	//---------------------------------------------------
 
 	int gridWidth = 10;															Info gridWidth_Info = Info("Grid Width", "Width of the playing field grid."); //10;
-	int gridHeight = 20;															Info gridHeight_Info = Info("Grid Height", "Height of the playing field grid."); //20;
+	int gridHeight = 20;														Info gridHeight_Info = Info("Grid Height", "Height of the playing field grid."); //20;
 
 	int gridPixelsBetweenRows = 0;												Info gridPixelsBetweenRows_Info = Info("Grid Pixels Between Rows", "If there should be spacing between the block rows.");
 	int gridPixelsBetweenColumns = 0;											Info gridPixelsBetweenColumns_Info = Info("Grid Pixels Between Columns", "If there should be spacing between the block columns.");
@@ -397,7 +397,7 @@ public:
 	GameMode gameMode = GameMode::DROP;											Info gameMode_Info = Info("Game Mode", "Whether this is a falling block type game (where blocks fall from the top) or a stack based game (where a stack rises from the floor).  More game modes will be implemented in the future.");
 
 	bool randomlyFillGrid = false;												Info randomlyFillGrid_Info = Info("Drop: Randomly Fill Grid", "Whether the playing field should be randomly filled on start.");
-	int randomlyFillGridStartY = 10;												Info randomlyFillGridStartY_Info = Info("Drop: Randomly Fill Grid StartY", "How many lines from the top to start filling blocks.");
+	int randomlyFillGridStartY = 10;											Info randomlyFillGridStartY_Info = Info("Drop: Randomly Fill Grid StartY", "How many lines from the top to start filling blocks.");
 
 	//bool stackRiseGame = false;													Info stackRiseGame_Info = Info("Stack Rise Game", "Whether blocks should rise from the bottom instead of dropping from the top.");
 	bool stackDontPutSameColorNextToEachOther = false;							Info stackDontPutSameColorNextToEachOther_Info = Info("Stack: Don't Put Same Color Next To Each Other", "When creating blocks from the bottom of the stack, don't put two of the same color next to each other.");
@@ -409,10 +409,10 @@ public:
 	int randomlyFillStackStartY = 10;											Info randomlyFillStackStartY_Info = Info("Stack: Randomly Fill Stack Start Y", "How many lines from the top to start filling the stack.");
 
 	//bool useCurrentPieceAsCursor = true;										Info useCurrentPieceAsCursor_Info = Info("Use Current Piece As Cursor", "Instead of moving a piece, draw a cursor.  You'll want this for stack based games, probably.");
-	//bool makeNewPiece = false;													Info makeNewPiece_Info = Info("Make New Piece", "Whether to create a new piece at the top, which will be rotated.");
+	//bool makeNewPiece = false;												Info makeNewPiece_Info = Info("Make New Piece", "Whether to create a new piece at the top, which will be rotated.");
 	//bool makeCursorPiece = false;												Info makeCursorPiece_Info = Info("Make Cursor", "Whether to create a cursor to swap or rotate blocks.");
 
-	::CursorType stackCursorType = ::CursorType::ONE_BLOCK_PICK_UP;									Info stackCursorType_Info = Info("Stack: Cursor Type", "What type of cursor to swap or rotate blocks in stack games. Does nothing in drop gameNames.");
+	::CursorType stackCursorType = ::CursorType::ONE_BLOCK_PICK_UP;				Info stackCursorType_Info = Info("Stack: Cursor Type", "What type of cursor to swap or rotate blocks in stack games. Does nothing in drop gameNames.");
 	//int cursorPieceSize = 1;													Info cursorPieceSize_Info = Info("Cursor Piece Size", "How many block should the cursor be? 1-4 should work.");//TODO: change this into a PieceType
 
 

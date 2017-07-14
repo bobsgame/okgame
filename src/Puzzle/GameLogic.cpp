@@ -2485,7 +2485,7 @@ void GameLogic::newRandomPiece()
 
 	//fill last nextPiece from bag
 
-	while (nextPieces.size() < currentGameType->numberOfNextPiecesToShow)
+	while (nextPieces.size() < currentGameType->numberOfNextPiecesToShow+1)//+1 for currentPiece which is included
 	{
 		if (nextPieceSpecialBuffer.size() > 0)
 		{

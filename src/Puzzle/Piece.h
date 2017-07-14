@@ -208,7 +208,7 @@ public:
 	//int numBlocks = 1;
 	//int lastRotation = 0;
 
-	BobColor *color = nullptr;												Info color_Info = Info("Color", "If this is set, the entire piece will have this color, overriding individual block colors.");
+	BobColor *color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
 private:
 	BobColor importExport_color;
 public:

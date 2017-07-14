@@ -180,14 +180,11 @@ bool BobsGame::renderMenus()
 		return true;
 	}
 
-
-
 	if (startScreenMenuShowing)
 	{
 		startScreenMenuRender();
 		return true;
 	}
-
 
 	if (controllerMenuShowing)
 	{
@@ -300,7 +297,7 @@ bool BobsGame::renderMenus()
 	if (multiplayerOptionsMenuShowing)
 	{
 		multiplayerOptionsMenuRender();
-		renderedMenu = true;
+		return true;
 	}
 //	if (gameSetupMenuShowing)
 //	{

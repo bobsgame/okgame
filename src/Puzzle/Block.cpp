@@ -1175,7 +1175,9 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 	if (
 		(overrideAnySpecialBehavior == false && blockType->flashingSpecialType)
-		|| 
+		||
+		//if piece is special type and has no color, use the block special type color
+		//if piece is special type and has color, use the piece color
 		(piece != nullptr && piece->overrideAnySpecialBehavior == false && piece->pieceType != nullptr && piece->pieceType->flashingSpecialType)
 	)
 	{
@@ -1187,6 +1189,12 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		{
 			c = blockType->specialColor;
 		}
+
+		if (piece != nullptr && piece->overrideAnySpecialBehavior == false && piece->pieceType != nullptr && piece->pieceType->flashingSpecialType && piece->pieceType->color != nullptr)
+		{
+			c = piece->pieceType->color;
+		}
+
 		if (c == nullptr)
 		{
 			log.error("Should never happen!");
@@ -1204,6 +1212,9 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		
 		renderColor = new BobColor(ri, gi, bi, ai);
 	}
+
+	
+
 
 	
 
