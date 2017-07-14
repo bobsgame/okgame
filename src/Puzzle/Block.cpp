@@ -1156,6 +1156,7 @@ void Block::renderDisappearing()
 	render(getScreenX(), getScreenY(), disappearingAlpha, 1.0f + (2.0f - (disappearingAlpha * 2.0f)), true, false);
 }
 
+
 //=========================================================================================================================
 void Block::render(float screenX, float screenY, float a, float scale, bool interpolate, bool ghost)
 {//=========================================================================================================================

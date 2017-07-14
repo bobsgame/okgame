@@ -165,12 +165,14 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 			downVoteButton->SetWidth(100);
 			downVoteButton->onPress.Add(this, &GameTestMenuControl::onDownVoteButton);
 
+
 			exitButton = new Button(bottomBase);
-			exitButton->SetText(L"Leave");
+			exitButton->SetText(L"Exit To Title Screen");
 			//exitButton->SetToolTip("Leave (Ask to save changes).");
-			exitButton->Dock(Pos::Left | Pos::Center);
-			exitButton->SetWidth(50);
+			exitButton->Dock(Pos::Right | Pos::Center);
+			exitButton->SetWidth(150);
 			exitButton->onPress.Add(this, &GameTestMenuControl::onExitButton);
+
 
 			//load, save, preview, exit
 
