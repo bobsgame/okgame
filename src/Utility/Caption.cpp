@@ -40,14 +40,14 @@ Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY
 	init(g, fixedPosition, screenX, screenY, ticks, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 }
 //=========================================================================================================================
-Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline)
+Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area)
 {//=========================================================================================================================
 
 	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
 }
 
 //=========================================================================================================================
-Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, BobColor* textColor, RenderOrder layer, bool outline)
+Caption::Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, BobColor* textColor, RenderOrder layer)
 {//=========================================================================================================================
 
 	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, BobColor::clear, layer, 1, nullptr, nullptr, outline);

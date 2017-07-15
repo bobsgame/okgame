@@ -134,7 +134,7 @@ Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int 
 }
 
 //=========================================================================================================================
-Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder r, float scale, Entity* entity, Area* area)
+Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, bool outline, BobColor* textColor, BobColor* textBGColor, RenderOrder r, float scale, Entity* entity, Area* area)
 {//=========================================================================================================================
 
 	if (ticks >= 0 && ticks < 100)
@@ -142,7 +142,7 @@ Caption* CaptionManager::newManagedCaption(Caption::Position fixedPosition, int 
 		log.log("TTF Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
-	Caption* c = new Caption(this->e, fixedPosition, (float)x, (float)y, ticks, text, fontSize, textColor, textBGColor, r, scale, entity, area);
+	Caption* c = new Caption(this->e, fixedPosition, (float)x, (float)y, ticks, text, fontSize, outline, textColor, textBGColor, r, scale, entity, area);
 	captionList->add(c);
 	return c;
 }

@@ -412,7 +412,7 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 					string name = "Network player " + to_string(players.size());
 					string userName = p->peerConnection->getUserName();
 					if (userName != "")name = userName;
-					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, name, 16, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, name, 16, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 					getAudioManager()->playSound("ready");
 
@@ -516,7 +516,7 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 			if (String::startsWith(command, lobbyCommand_CANCELGAME))
 			{
 
-				getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN,0, 0, 5000, "Game was cancelled by host.", 24, BobColor::lightRed, BobColor::clear, RenderOrder::OVER_GUI);
+				getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN,0, 0, 5000, "Game was cancelled by host.", 24, true, BobColor::lightRed, BobColor::clear, RenderOrder::OVER_GUI);
 
 				BobNet::myStatus = BobNet::status_AVAILABLE;
 
@@ -782,8 +782,8 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 	if (networkMultiplayerLobbyMenu == nullptr)
 	{
-		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, true, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 		//if (onlineFriendsLabel == nullptr)onlineFriendsLabel = getCaptionManager()->newManagedCaption(0, 0, -1, "Online Friends:", oswald_16, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 		networkMultiplayerLobbyMenu = new BobMenu(this, "Network Multiplayer Lobby");
@@ -1854,8 +1854,8 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 	if (networkMultiplayerPlayerJoinMenu == nullptr)
 	{
-		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, true, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, 0, -1, " ", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 		networkMultiplayerPlayerJoinMenu = new BobMenu(this, "Network Multiplayer Room");
 		networkMultiplayerPlayerJoinMenu->setFontSize(12);
@@ -2068,8 +2068,8 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 							tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(p);
 							p->confirmed = true;
 
-							p->gameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, p->gameLogic->currentGameSequence->name, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-							p->difficultyCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, p->gameLogic->currentGameSequence->currentDifficultyName, 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+							p->gameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, p->gameLogic->currentGameSequence->name, 12, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+							p->difficultyCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, p->gameLogic->currentGameSequence->currentDifficultyName, 12, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 						}
 			}
@@ -2123,7 +2123,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 					{
 						players.add(p);
 					}
-					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 					tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(p);
 				}
@@ -2197,7 +2197,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 						{
 							players.add(p);
 						}
-						p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+						p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
 						tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(p);
 					}
@@ -2229,8 +2229,8 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		//are you sure?  this will disconnect everyone from your game
 		Caption *c = nullptr;
 
-		if (hosting)c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Are you sure you want to cancel the game?  Press Space or Start to stay, Esc or Select again to cancel and quit.", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-		else c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Are you sure you want to leave the game?  Press Space or Start to stay, Esc or Select again to cancel and quit.", 16, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		if (hosting)c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Are you sure you want to cancel the game?  Press Space or Start to stay, Esc or Select again to cancel and quit.", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+		else c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Are you sure you want to leave the game?  Press Space or Start to stay, Esc or Select again to cancel and quit.", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 		bool quit = false;
 		bool goback = false;
 		while (quit == false && goback == false)
@@ -2277,7 +2277,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 			{
 				if (networkMultiplayerPlayerJoinMenuPressStartCaption == nullptr)
 					networkMultiplayerPlayerJoinMenuPressStartCaption = 
-						getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, (int)(getHeight() - 50), -1, "Press the Enter key or Start on your controller to start game.", 16, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+						getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, (int)(getHeight() - 50), -1, "Press the Enter key or Start on your controller to start game.", 16, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 				networkMultiplayerPlayerJoinMenuPressStartCaption->flashing = true;
 				networkMultiplayerPlayerJoinMenuPressStartCaption->flashingTicksPerFlash = 1000;
 
