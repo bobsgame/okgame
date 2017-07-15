@@ -700,6 +700,7 @@ void GameSequenceEditorControl::editSelectedGameSequence(Base* control)
  //should already be done because onselect
 	if (gameSequencesListBox->IsAnyRowSelected() == false)return;
 
+	//bob can edit anything
 #ifndef _DEBUG
 	if (currentGameSequence->builtInType)
 	{
@@ -707,13 +708,14 @@ void GameSequenceEditorControl::editSelectedGameSequence(Base* control)
 		gameSequenceSelectLabel->SetText("Built in sequences must be duplicated in order to edit them.");
 	}
 	else
-#endif
+
 	if (currentGameSequence->downloaded)
 	{
 		//create modal notice that you can only duplicate? or maybe have an error label
 		gameSequenceSelectLabel->SetText("Downloaded sequences must be duplicated in order to edit them.");
 	}
 	else
+#endif
 	{
 		loadOrCreateGameSequenceWindow->CloseButtonPressed();
 		gameSequenceSelectLabel->SetText("");

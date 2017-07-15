@@ -3485,6 +3485,8 @@ void CustomGameEditorControl::editSelectedGameType(Base* control)
 	//should already be done because onselect
 	if (gameTypesListBox->IsAnyRowSelected() == false)return;
 
+
+	//bob can edit anything, verified on the server
 #ifndef _DEBUG
 	if(currentGameType->builtInType)
 	{
@@ -3492,13 +3494,14 @@ void CustomGameEditorControl::editSelectedGameType(Base* control)
 		gameTypeSelectLabel->SetText("Built in game types must be duplicated in order to edit them.");
 	}
 	else
-#endif
+
 	if (currentGameType->downloaded)
 	{
 		//create modal notice that you can only duplicate? or maybe have an error label
 		gameTypeSelectLabel->SetText("Downloaded game types must be duplicated in order to edit them.");
 	}
 	else
+#endif
 	{
 		loadOrCreateGameWindow->CloseButtonPressed();
 		gameTypeSelectLabel->SetText("");
