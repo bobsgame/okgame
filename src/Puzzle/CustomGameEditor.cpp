@@ -540,7 +540,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	//currentGameType->tetrid();
 	shared_ptr<BlockType> bt(new BlockType());
 	bt->name = "Gray Square";
-	bt->spriteName = "Square";
+	//bt->spriteName = "Square";
 	bt->colors.add(BobColor::gray);
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
@@ -3510,7 +3510,7 @@ void CustomGameEditorControl::createNewGameType(Base* control)
 
 	shared_ptr<BlockType> bt(new BlockType());
 	bt->name = "Gray Square";
-	bt->spriteName = "Square";
+	//bt->spriteName = "Square";
 	bt->colors.add(BobColor::gray);
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
