@@ -190,7 +190,6 @@ void MiniGameEngine::unloadTitleMenuTextures()
 	//	{
 	//		cursorTexture->release();
 	//		cursorTexture = nullptr;
-	//
 	//	}
 }
 

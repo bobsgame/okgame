@@ -474,18 +474,19 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 		s += name;
 	}
 
-	if (name == "")name = "My New Game Sequence";
+	if (name == "")name = "New Game Sequence ";
 	int n = 0;
 	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
 	{
 		GameSequence *s = bobsGame->loadedGameSequences.get(i);
-		if (s != currentGameSequence && s->name == name)
+		if (s != currentGameSequence && s->name == name + to_string(n))
 		{
-			name = name + to_string(n);
+			
 			n++;
 			i = 0;
 		}
 	}
+	name = name + to_string(n);
 
 	currentGameSequence->name = name;
 
@@ -495,6 +496,25 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	currentGameSequence->description = desc;
 
 }
+
+void GameSequenceEditorControl::initFromCurrentGameSequence()
+{//=========================================================================================================================
+		//fill the name and description text boxes and populate the listbox
+	currentGameSequenceListBox->Clear();
+	GetCanvas()->DoThink();
+	currentGameSequenceListBox->UnselectAll();
+
+	for(int i=0;i<currentGameSequence->importExport_gameUUIDs.size();i++)
+	{
+		string otheruuid = currentGameSequence->importExport_gameUUIDs.get(i);
+		GameType *gt = bobsGame->getGameTypeByUUID(otheruuid);
+		currentGameSequenceListBox->AddItem(gt->name, gt->uuid);
+	}
+	currentGameSequenceNameTextBox->SetText(currentGameSequence->name);
+	currentGameSequenceDescriptionTextBox->SetText(currentGameSequence->description);
+
+}
+
 
 void GameSequenceEditorControl::onGameSequencesListSelect(Base* control)
 {//=========================================================================================================================
@@ -512,19 +532,7 @@ void GameSequenceEditorControl::onGameSequencesListSelect(Base* control)
 
 	currentGameSequence = s;
 
-	//fill the name and description text boxes and populate the listbox
-	currentGameSequenceListBox->Clear();
-	GetCanvas()->DoThink();
-	currentGameSequenceListBox->UnselectAll();
-
-	for(int i=0;i<s->importExport_gameUUIDs.size();i++)
-	{
-		string otheruuid = s->importExport_gameUUIDs.get(i);
-		GameType *gt = bobsGame->getGameTypeByUUID(otheruuid);
-		currentGameSequenceListBox->AddItem(gt->name, gt->uuid);
-	}
-	currentGameSequenceNameTextBox->SetText(s->name);
-	currentGameSequenceDescriptionTextBox->SetText(s->description);
+	initFromCurrentGameSequence();
 
 }
 
@@ -578,10 +586,7 @@ void GameSequenceEditorControl::saveAndOpen(Base* control)
 
 	askToSaveBase->CloseButtonPressed();
 
-	saveGameSequenceListToCurrentGameSequence();
-
-	//save to xml
-	saveCurrentGameSequenceToXML();
+	onSaveButton(control);
 
 	openLoadOrCreateDialog(true);
 
@@ -722,14 +727,17 @@ void GameSequenceEditorControl::createNewGameSequence(Base* control)
  //create new currentGameType with defaults and close the list
 	GameSequence *s = new GameSequence();
 	s->name += to_string(bobsGame->loadedGameSequences.size());
-	bobsGame->loadedGameSequences.add(s);
+	//bobsGame->loadedGameSequences.add(s);
+
+	currentGameSequence = s;
+	initFromCurrentGameSequence();
 
 	//add to list and select it
 
 	Layout::TableRow *row = gameSequencesListBox->AddItem(s->name, s->uuid);
 	row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameSequencesListSelect);
 	gameSequencesListBox->SetSelectedRow(row);
-	onGameSequencesListSelect(row);
+	//onGameSequencesListSelect(row);
 
 	loadOrCreateGameSequenceWindow->CloseButtonPressed();
 
@@ -753,13 +761,29 @@ void GameSequenceEditorControl::duplicateGameSequence(Base* control)
 	s->downloaded = false;
 	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
 
-	s->name += "Copy" + to_string(bobsGame->loadedGameTypes.size());//TODO: rename this properly, could collide
-	bobsGame->loadedGameSequences.add(s);
+
+	s->name += " Copy ";
+	int n = 0;
+	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
+	{
+		GameSequence *g = bobsGame->loadedGameSequences.get(i);
+		if (g != s && g->name == s->name + to_string(n))
+		{
+			n++;
+			i = 0;
+		}
+	}
+	s->name = s->name + to_string(n);
+
+	//bobsGame->loadedGameSequences.add(s);
+
+	currentGameSequence = s;
+	initFromCurrentGameSequence();
 
 	Layout::TableRow *row = gameSequencesListBox->AddItem(s->name, s->uuid);
 	row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameSequencesListSelect);
 	gameSequencesListBox->SetSelectedRow(row);
-	onGameSequencesListSelect(row);
+	//onGameSequencesListSelect(row);
 
 	loadOrCreateGameSequenceWindow->CloseButtonPressed();
 
@@ -840,12 +864,17 @@ void GameSequenceEditorControl::onSaveButton(Base* control)
 	//save to xml
 	saveCurrentGameSequenceToXML();
 
+	//save new or duplicated gametype to loadedGameSequence list since we don't do this now until save
+	if (bobsGame->loadedGameSequences.contains(currentGameSequence) == false)
+		bobsGame->loadedGameSequences.add(currentGameSequence);
+
+
 }
 
 void GameSequenceEditorControl::onUploadButton(Base* control)
 {//=========================================================================================================================
 
-	saveGameSequenceListToCurrentGameSequence();
+	onSaveButton(control);
 
 	if (currentGameSequence->importExport_gameUUIDs.size() == 0)return;
 
@@ -935,10 +964,7 @@ void GameSequenceEditorControl::saveAndExit(Base* control)
  //make sure that there arent any unallowable characters, sanitize, etc
  //ask the user if they want to overwrite if the filename exists
 
-	saveGameSequenceListToCurrentGameSequence();
-
-	//save to xml
-	saveCurrentGameSequenceToXML();
+	onSaveButton(control);
 
 	//go to title screen
 	askToSaveBase->CloseButtonPressed();

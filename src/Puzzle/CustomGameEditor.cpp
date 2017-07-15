@@ -552,10 +552,9 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	pt->useAsGarbagePiece = true;
 	currentGameType->blockTypes.add(bt);
 	currentGameType->pieceTypes.add(pt);
-	//currentGameType->difficultyTypes.add(new DifficultyType());
-	currentBlockType = currentGameType->blockTypes.get(0);
-	currentPieceType = currentGameType->pieceTypes.get(0);
-	currentDifficultyType = currentGameType->difficultyTypes.get(0);
+
+
+
 	initFromCurrentGameType();
 
 	//settingsPropTree->SetWidth(500);
@@ -652,6 +651,20 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 void CustomGameEditorControl::initFromCurrentGameType()
 {//=========================================================================================================================
+
+	currentBlockType = nullptr;// new BlockType();
+	currentPieceType = nullptr;// new PieceType();
+	if (currentGameType->blockTypes.size() > 0)
+	{
+		currentBlockType = currentGameType->blockTypes.get(0);
+	}
+	if (currentGameType->pieceTypes.size() > 0)
+	{
+		currentPieceType = currentGameType->pieceTypes.get(0);
+	}
+	currentDifficultyType = currentGameType->difficultyTypes.get(0);
+
+
 	initSettingsPropTree(currentGameType);
 	initBlockSelectionListBox();
 	initBlockPropTree(currentBlockType);
@@ -659,6 +672,11 @@ void CustomGameEditorControl::initFromCurrentGameType()
 	initPiecePropTree(currentPieceType);
 	initDifficultySelectionListBox();
 	initDifficultyPropTree(currentDifficultyType);
+
+
+	bobsGame->getPlayer1Game()->currentGameSequence = new GameSequence();
+	bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.add(currentGameType);
+	bobsGame->getPlayer1Game()->currentGameSequence->endlessMode = true;
 }
 
 
@@ -1209,24 +1227,28 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	PropertyRow* pr = p->Find(currentGameType->name_Info.label);
 	string gameTypeName = pr->GetProperty()->GetPropertyValue().c_str();
 
+
+	//remove `
 	while (gameTypeName.find("`") != string::npos)
 	{
 		string s = gameTypeName.substr(0, gameTypeName.find("`"));
 		gameTypeName = gameTypeName.substr(gameTypeName.find("`") + 1);
 		s += gameTypeName;
 	}
-	if (gameTypeName == "")gameTypeName = "Unnamed Game";
+
+
+	if (gameTypeName == "")gameTypeName = "New Game ";
 	int n = 0;
 	for (int i = 0; i<bobsGame->loadedGameTypes.size(); i++)
 	{
 		GameType *s = bobsGame->loadedGameTypes.get(i);
-		if (s != currentGameType && s->name == gameTypeName)
+		if (s != currentGameType && s->name == gameTypeName + to_string(n))
 		{
-			gameTypeName = gameTypeName + to_string(n);
 			n++;
 			i = 0;
 		}
 	}
+	gameTypeName = gameTypeName + to_string(n);
 
 
 	//replace name in blockType
@@ -1771,20 +1793,20 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 
 
 	string newName = pr->GetProperty()->GetPropertyValue().c_str();
-	if (newName == "")newName = "Unnamed Block";
+	if (newName == "")newName = "New Block ";
 
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
 			shared_ptr<BlockType> bt = currentGameType->blockTypes.get(i);
-			if (bt != currentBlockType && bt->name == newName)
+			if (bt != currentBlockType && bt->name == newName + to_string(n))
 			{
-				newName = newName + to_string(n);
 				n++;
 				i = 0;
 			}
 		}
+		newName = newName + to_string(n);
 	}
 
 	string oldName = currentBlockType->name;
@@ -2123,19 +2145,18 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 
 	PropertyRow* pr = p->Find(currentPieceType->name_Info.label);
 	string pieceTypeName = pr->GetProperty()->GetPropertyValue().c_str();
-	if (pieceTypeName == "")pieceTypeName = "Unnamed Piece";
+	if (pieceTypeName == "")pieceTypeName = "New Piece ";
 	int n = 0;
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
 		shared_ptr<PieceType> bt = currentGameType->pieceTypes.get(i);
-		if (bt != currentPieceType && bt->name == pieceTypeName)
+		if (bt != currentPieceType && bt->name == pieceTypeName + to_string(n))
 		{
-			pieceTypeName = pieceTypeName + to_string(n);
-
 			n++;
 			i = 0;
 		}
 	}
+	pieceTypeName = pieceTypeName + to_string(n);
 
 	//replace name in pieceType
 	currentPieceType->name = pieceTypeName;
@@ -2207,19 +2228,19 @@ void CustomGameEditorControl::onAddBlockButton(Base* control)
 
 	shared_ptr<BlockType> b(new BlockType());
 
-	string newName = "New Block";
+	string newName = "New Block ";
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
 			shared_ptr<BlockType> bt = currentGameType->blockTypes.get(i);
-			if (bt->name == newName)
+			if (bt->name == newName + to_string(n))
 			{
-				newName = newName + to_string(n);
 				n++;
 				i = 0;
 			}
 		}
+		newName = newName + to_string(n);
 	}
 
 	b->name = newName;
@@ -2259,19 +2280,20 @@ void CustomGameEditorControl::onDuplicateBlockButton(Base* control)
 	b->uuid = newuuid;
 
 
-	string newName = bt->name + " Copy";
+	string newName = bt->name + " Copy ";
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
 			shared_ptr<BlockType> temp = currentGameType->blockTypes.get(i);
-			if (temp->name == newName)
+			if (temp->name == newName + to_string(n))
 			{
-				newName = newName + to_string(n);
+				
 				n++;
 				i = 0;
 			}
 		}
+		newName = newName + to_string(n);
 	}
 
 	b->name = newName;
@@ -2390,19 +2412,19 @@ void CustomGameEditorControl::onAddPieceButton(Base* control)
 
 	
 
-	string newName = "New Piece";
+	string newName = "New Piece ";
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 		{
 			shared_ptr<PieceType> bt = currentGameType->pieceTypes.get(i);
-			if (bt->name == newName)
+			if (bt->name == newName + to_string(n))
 			{
-				newName = newName + to_string(n);
 				n++;
 				i = 0;
 			}
 		}
+		newName = newName + to_string(n);
 	}
 
 	b->name = newName;
@@ -2445,19 +2467,20 @@ void CustomGameEditorControl::onDuplicatePieceButton(Base* control)
 	b->uuid = newuuid;
 
 
-	string newName = bt->name + " Copy";
+	string newName = bt->name + " Copy ";
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 		{
 			shared_ptr<PieceType> temp = currentGameType->pieceTypes.get(i);
-			if (temp->name == newName)
+			if (temp->name == newName + to_string(n))
 			{
-				newName = newName + to_string(n);
+				
 				n++;
 				i = 0;
 			}
 		}
+		newName = newName + to_string(n);
 	}
 
 	b->name = newName;
@@ -3253,6 +3276,7 @@ using Poco::File;
 using Poco::Process;
 using Poco::Path;
 
+
 void CustomGameEditorControl::onGameTypesListSelect(Base* control)
 {//=========================================================================================================================
 
@@ -3267,26 +3291,10 @@ void CustomGameEditorControl::onGameTypesListSelect(Base* control)
 		return;
 	}
 
-
 	currentGameType = s;
-	currentBlockType = nullptr;// new BlockType();
-	currentPieceType = nullptr;// new PieceType();
-	if (currentGameType->blockTypes.size() > 0)
-	{
-		currentBlockType = currentGameType->blockTypes.get(0);
-	}
-	if (currentGameType->pieceTypes.size() > 0)
-	{
-		currentPieceType = currentGameType->pieceTypes.get(0);
-	}
-	currentDifficultyType = currentGameType->difficultyTypes.get(0);
+
 	
 	initFromCurrentGameType();
-
-	bobsGame->getPlayer1Game()->currentGameSequence = new GameSequence();
-	bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.add(currentGameType);
-	bobsGame->getPlayer1Game()->currentGameSequence->endlessMode = true;
-
 	
 }
 
@@ -3346,11 +3354,9 @@ void CustomGameEditorControl::saveAndOpen(Base* control)
 	askToSaveBase->CloseButtonPressed();
 
 
-	//save settings, current blocktype, current piecetype, save to current currentGameType, save to xml
-	saveAllToCurrentGameType();
+	onSaveButton(control);
 
-	//save to xml
-	saveCurrentGameTypeToXML();
+
 
 
 	openLoadOrCreateDialog(true);
@@ -3523,19 +3529,21 @@ void CustomGameEditorControl::createNewGameType(Base* control)
 	s->blockTypes.add(bt);
 	s->pieceTypes.add(pt);
 
-	s->name += to_string(bobsGame->loadedGameTypes.size());
-	bobsGame->loadedGameTypes.add(s);
+	s->name += " "+to_string(bobsGame->loadedGameTypes.size());
+	//bobsGame->loadedGameTypes.add(s);
 
-
+	currentGameType = s;
+	initFromCurrentGameType();
 
 	//initFromCurrentGameType();
 
 	//add to list and select it
-
 	Layout::TableRow *row = gameTypesListBox->AddItem(s->name, s->uuid);
 	row->onRowSelected.Add(this, &CustomGameEditorControl::onGameTypesListSelect);
 	gameTypesListBox->SetSelectedRow(row);
-	onGameTypesListSelect(row);
+	//onGameTypesListSelect(row); //don't select it because it won't find it since we are not adding it to loadedGameTypes anymore
+
+
 
 	loadOrCreateGameWindow->CloseButtonPressed();
 
@@ -3561,13 +3569,27 @@ void CustomGameEditorControl::duplicateGameType(Base* control)
 	//s->loadedFilename = "";
 	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
 
-	s->name += "Copy"+to_string(bobsGame->loadedGameTypes.size());//TODO: rename this properly, could collide
-	bobsGame->loadedGameTypes.add(s);
+	s->name += " Copy ";
+	int n = 0;
+	for (int i = 0; i<bobsGame->loadedGameTypes.size(); i++)
+	{
+		GameType *g = bobsGame->loadedGameTypes.get(i);
+		if (g != s && g->name == s->name + to_string(n))
+		{
+			n++;
+			i = 0;
+		}
+	}
+	s->name = s->name + to_string(n);
+
+	//bobsGame->loadedGameTypes.add(s);
+	currentGameType = s;
+	initFromCurrentGameType();
 
 	Layout::TableRow *row = gameTypesListBox->AddItem(s->name, s->uuid);
 	row->onRowSelected.Add(this, &CustomGameEditorControl::onGameTypesListSelect);
 	gameTypesListBox->SetSelectedRow(row);
-	onGameTypesListSelect(row);
+	//onGameTypesListSelect(row);
 
 
 	loadOrCreateGameWindow->CloseButtonPressed();
@@ -3657,12 +3679,17 @@ void CustomGameEditorControl::onSaveButton(Base* control)
 	//save to xml
 	saveCurrentGameTypeToXML();
 
+	//save new or duplicated gametype to loadedGameType list since we don't do this now until save
+	if (bobsGame->loadedGameTypes.contains(currentGameType) == false)
+		bobsGame->loadedGameTypes.add(currentGameType);
+
+
 }
 
 void CustomGameEditorControl::onUploadButton(Base* control)
 {//=========================================================================================================================
 
-	saveAllToCurrentGameType();
+	onSaveButton(control);
 
 
 	GameType g;
@@ -3761,10 +3788,7 @@ void CustomGameEditorControl::saveAndExit(Base* control)
  //make sure that there arent any unallowable characters, sanitize, etc
  //ask the user if they want to overwrite if the filename exists
 
-	saveAllToCurrentGameType();
-
-	//save to xml
-	saveCurrentGameTypeToXML();
+	onSaveButton(control);
 
 	//go to title screen
 	askToSaveBase->CloseButtonPressed();
@@ -4491,6 +4515,7 @@ void CustomGameEditorControl::onPreviewButton(Base* control)
  //we basically already have the settings in memory so we can just create a new game instance and set the currentGameType to these ones
  //but we need to make a game sequence that is only this game
 	saveAllToCurrentGameType();
+
 	initPreviewGame();
 }
 

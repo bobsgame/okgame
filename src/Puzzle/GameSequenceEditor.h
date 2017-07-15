@@ -94,6 +94,7 @@ public:
 	//GameSequence* getGameSequenceByName(string name);
 	void saveGameSequenceListToCurrentGameSequence();
 	void onGameSequencesListSelect(Gwen::Controls::Base* control);
+	void initFromCurrentGameSequence();
     
     
 private:
