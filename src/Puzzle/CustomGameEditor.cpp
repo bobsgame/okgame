@@ -431,11 +431,24 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		{
 
 			previewButton = new Button(applyButtonsBase);
-			previewButton->SetText(L"Preview");
-			//previewButton->SetToolTip("Preview these settings below.");
+			previewButton->SetText(L"Reset Game");
+			previewButton->SetToolTip("Apply your changes and preview in the simulator area.");
 			previewButton->Dock(Pos::Left | Pos::Center);
-			previewButton->SetWidth(70);
+			previewButton->SetWidth(80);
 			previewButton->onPress.Add(this, &CustomGameEditorControl::onPreviewButton);
+
+			garbageButton = new Button(applyButtonsBase);
+			garbageButton->SetText(L"Garbage");
+			garbageButton->SetToolTip("Simulates multiplayer garbage.");
+			garbageButton->Dock(Pos::Left | Pos::Center);
+			garbageButton->SetWidth(70);
+			garbageButton->onPress.Add(this, &CustomGameEditorControl::onGarbageButton);
+
+			{
+				Layout::Position* positioner = new Layout::Position(applyButtonsBase);
+				positioner->Dock(Pos::Left | Pos::Center);
+				positioner->SetWidth(10);
+			}
 
 			loadButton = new Button(applyButtonsBase);
 			loadButton->SetText(L"Load or create new");
@@ -4520,6 +4533,15 @@ void CustomGameEditorControl::onPreviewButton(Base* control)
 	saveAllToCurrentGameType();
 
 	initPreviewGame();
+}
+
+//=========================================================================================================================
+void CustomGameEditorControl::onGarbageButton(Base* control)
+{//=========================================================================================================================
+
+
+	bobsGame->getPlayer1Game()->gotVSGarbageFromOtherPlayer(currentGameType->gridWidth);
+
 }
 
 

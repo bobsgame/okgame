@@ -194,6 +194,7 @@ public:
     
 	void initPreviewGame();
 	void onPreviewButton(Gwen::Controls::Base* control);
+	void onGarbageButton(Gwen::Controls::Base* control);
 
 	void onAddBlockButton(Gwen::Controls::Base* control);
 	void onDuplicateBlockButton(Gwen::Controls::Base* control);
@@ -314,6 +315,7 @@ public:
 private:
 	Gwen::Controls::Base* applyButtonsBase = nullptr;
 	Gwen::Controls::Button* previewButton = nullptr;
+	Gwen::Controls::Button* garbageButton = nullptr;
 	Gwen::Controls::Button* loadButton = nullptr;
 	Gwen::Controls::Button* saveButton = nullptr;
 	Gwen::Controls::Button* uploadButton = nullptr;

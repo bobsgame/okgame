@@ -122,7 +122,7 @@ BobMenu::BobMenu(Engine *g, string title)
 
 	if (title != "")
 	{
-		titleCaption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, title, outline, 32, menuColor, RenderOrder::OVER_GUI);
+		titleCaption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, title, 32, outline, menuColor, RenderOrder::OVER_GUI);
 	}
 
 	activeMenus.add(this);
