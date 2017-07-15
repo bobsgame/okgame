@@ -1169,17 +1169,28 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	//BobColor noColor;
 	//PieceType noPieceType;
 
-	if (overrideAnySpecialBehavior == false && blockType->specialColor != nullptr)
+	if(
+		overrideAnySpecialBehavior == false && 
+		blockType->specialColor != nullptr
+	)
 	{
 		renderColor = new BobColor(*blockType->specialColor);
 	}
 
-	if (
-		(overrideAnySpecialBehavior == false && blockType->flashingSpecialType)
+	if(
+		(
+			overrideAnySpecialBehavior == false && 
+			blockType->flashingSpecialType
+		)
 		||
 		//if piece is special type and has no color, use the block special type color
 		//if piece is special type and has color, use the piece color
-		(piece != nullptr && piece->overrideAnySpecialBehavior == false && piece->pieceType != nullptr && piece->pieceType->flashingSpecialType)
+		(
+			piece != nullptr && 
+			piece->overrideAnySpecialBehavior == false && 
+			piece->pieceType != nullptr && 
+			piece->pieceType->flashingSpecialType
+		)
 	)
 	{
 		BobColor *c = nullptr;
@@ -1191,7 +1202,13 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 			c = blockType->specialColor;
 		}
 
-		if (piece != nullptr && piece->overrideAnySpecialBehavior == false && piece->pieceType != nullptr && piece->pieceType->flashingSpecialType && piece->pieceType->color != nullptr)
+		if(
+			piece != nullptr && 
+			piece->overrideAnySpecialBehavior == false && 
+			piece->pieceType != nullptr && 
+			piece->pieceType->flashingSpecialType && 
+			piece->pieceType->color != nullptr
+		)
 		{
 			c = piece->pieceType->color;
 		}
@@ -1376,7 +1393,13 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	//		}
 
 	//for special blocks that are larger than one tile (like the weight), we need to draw just the part of the frame we need
-	if (overrideAnySpecialBehavior == false && piece != nullptr && piece->pieceType != nullptr && piece->pieceType->spriteName != "" && piece->overrideAnySpecialBehavior == false)
+	if (
+		overrideAnySpecialBehavior == false && 
+		piece != nullptr && 
+		piece->pieceType != nullptr && 
+		piece->pieceType->spriteName != "" && 
+		piece->overrideAnySpecialBehavior == false
+		)
 	{
 		//figure out what block we are in the piece
 
@@ -1430,6 +1453,24 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		int frame = animationFrame;
 		if (frame == -1)frame = 0;
 		if(anim!=nullptr)blockType->sprite->drawFrame(anim->frameStart + frame, screenX, screenX + w, screenY, screenY + h, r, g, b, a, GLUtils::FILTER_LINEAR);
+	}
+
+	//if not using any sprite draw a square
+	if(
+		blockType->sprite==nullptr && 
+		(blockType->specialSprite == nullptr || overrideAnySpecialBehavior == true) &&
+		(
+			piece!=nullptr &&
+			piece->pieceType!=nullptr && 
+			(piece->pieceType->spriteName == "" || piece->overrideAnySpecialBehavior == true)
+		)
+	)
+	{
+
+		GLUtils::drawFilledRectXYWH(screenX, screenY, w, h, r, g, b, a);
+		//Sprite* s = getBobsGame()->getSpriteFromName("Square");
+		//s->drawFrame(0, screenX, screenX + w, screenY, screenY + h, r, g, b, a, GLUtils::FILTER_LINEAR);
+		
 	}
 
 	if (getSettings()->blockRule_drawDotToSquareOffBlockCorners)
