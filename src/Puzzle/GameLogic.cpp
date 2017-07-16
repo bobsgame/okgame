@@ -2781,7 +2781,7 @@ void GameLogic::renderQueuedGarbage()
 void GameLogic::renderHoldPiece()
 {//=========================================================================================================================
 
-	if(currentGameType->gameMode==GameMode::STACK)
+	if(currentGameType->gameMode==GameMode::STACK || currentGameType->holdPieceEnabled==false)
 	{
 		if (holdCaption != nullptr)
 		{
@@ -2852,7 +2852,7 @@ bool GameLogic::nextPieceEnabled()
 void GameLogic::renderNextPiece()
 {//=========================================================================================================================
 
-	if (currentGameType->gameMode == GameMode::STACK)
+	if (currentGameType->gameMode == GameMode::STACK || currentGameType->nextPieceEnabled == false)
 	{
 		if (nextCaption != nullptr)
 		{
@@ -2860,7 +2860,7 @@ void GameLogic::renderNextPiece()
 		}
 		return;
 	}
-
+	
 	if (nextCaption != nullptr)
 	{
 		nextCaption->visible = true;
@@ -3637,9 +3637,11 @@ void GameLogic::updateKeyInput()
 	{
 		if (currentGameType->gameMode == GameMode::STACK)
 		{
+
+
 		}
 		else
-			if (currentGameType->gameMode == GameMode::DROP)
+		if (currentGameType->gameMode == GameMode::DROP)
 		{
 			if (currentGameType->holdPieceEnabled == true)
 			{
