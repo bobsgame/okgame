@@ -474,19 +474,27 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 		s += name;
 	}
 
-	if (name == "")name = "New Game Sequence ";
-	int n = 0;
-	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
+	if (name == "")name = "New Game Sequence";
+	bool taken = false;
+	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 	{
 		GameSequence *s = bobsGame->loadedGameSequences.get(i);
-		if (s != currentGameSequence && s->name == name + to_string(n))
-		{
-			
-			n++;
-			i = 0;
-		}
+		if (s != currentGameSequence && s->name == name)taken = true;
 	}
-	name = name + to_string(n);
+	if (taken)
+	{
+		int n = 0;
+		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
+		{
+			GameSequence *s = bobsGame->loadedGameSequences.get(i);
+			if (s != currentGameSequence && s->name == name + " " + to_string(n))
+			{
+				n++;
+				i = 0;
+			}
+		}
+		name = name + " " + to_string(n);
+	}
 
 	currentGameSequence->name = name;
 
@@ -764,18 +772,27 @@ void GameSequenceEditorControl::duplicateGameSequence(Base* control)
 	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
 
 
-	s->name += " Copy ";
-	int n = 0;
-	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
+	s->name += " Copy";
+	bool taken = false;
+	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 	{
 		GameSequence *g = bobsGame->loadedGameSequences.get(i);
-		if (g != s && g->name == s->name + to_string(n))
-		{
-			n++;
-			i = 0;
-		}
+		if (g != s && g->name == s->name)taken = true;
 	}
-	s->name = s->name + to_string(n);
+	if (taken)
+	{
+		int n = 0;
+		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
+		{
+			GameSequence *g = bobsGame->loadedGameSequences.get(i);
+			if (g != s && g->name == s->name + " " + to_string(n))
+			{
+				n++;
+				i = 0;
+			}
+		}
+		s->name = s->name + " " + to_string(n);
+	}
 
 	//bobsGame->loadedGameSequences.add(s);
 

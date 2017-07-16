@@ -1250,18 +1250,27 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	}
 
 
-	if (gameTypeName == "")gameTypeName = "New Game ";
-	int n = 0;
-	for (int i = 0; i<bobsGame->loadedGameTypes.size(); i++)
+	if (gameTypeName == "")gameTypeName = "New Game";
+	bool taken = false;
+	for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
 	{
 		GameType *s = bobsGame->loadedGameTypes.get(i);
-		if (s != currentGameType && s->name == gameTypeName + to_string(n))
-		{
-			n++;
-			i = 0;
-		}
+		if (s != currentGameType && s->name == gameTypeName)taken = true;
 	}
-	gameTypeName = gameTypeName + to_string(n);
+	if (taken)
+	{
+		int n = 0;
+		for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
+		{
+			GameType *s = bobsGame->loadedGameTypes.get(i);
+			if (s != currentGameType && s->name == gameTypeName + " " + to_string(n))
+			{
+				n++;
+				i = 0;
+			}
+		}
+		gameTypeName = gameTypeName + " " + to_string(n);
+	}
 
 
 	//replace name in blockType
@@ -1806,20 +1815,27 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 
 
 	string newName = pr->GetProperty()->GetPropertyValue().c_str();
-	if (newName == "")newName = "New Block ";
+	if (newName == "")newName = "New Block";
 
+	bool taken = false;
+	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> bt = currentGameType->blockTypes.get(i);
+		if (bt != currentBlockType && bt->name == newName)taken = true;
+	}
+	if (taken)
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
 			shared_ptr<BlockType> bt = currentGameType->blockTypes.get(i);
-			if (bt != currentBlockType && bt->name == newName + to_string(n))
+			if (bt != currentBlockType && bt->name == newName + " " + to_string(n))
 			{
 				n++;
 				i = 0;
 			}
 		}
-		newName = newName + to_string(n);
+		newName = newName + " " + to_string(n);
 	}
 
 	string oldName = currentBlockType->name;
@@ -2158,18 +2174,28 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 
 	PropertyRow* pr = p->Find(currentPieceType->name_Info.label);
 	string pieceTypeName = pr->GetProperty()->GetPropertyValue().c_str();
-	if (pieceTypeName == "")pieceTypeName = "New Piece ";
-	int n = 0;
+	if (pieceTypeName == "")pieceTypeName = "New Piece";
+
+	bool taken = false;
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
 		shared_ptr<PieceType> bt = currentGameType->pieceTypes.get(i);
-		if (bt != currentPieceType && bt->name == pieceTypeName + to_string(n))
-		{
-			n++;
-			i = 0;
-		}
+		if (bt != currentPieceType && bt->name == pieceTypeName)taken = true;
 	}
-	pieceTypeName = pieceTypeName + to_string(n);
+	if (taken)
+	{
+		int n = 0;
+		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
+		{
+			shared_ptr<PieceType> bt = currentGameType->pieceTypes.get(i);
+			if (bt != currentPieceType && bt->name == pieceTypeName + " " + to_string(n))
+			{
+				n++;
+				i = 0;
+			}
+		}
+		pieceTypeName = pieceTypeName + " "+ to_string(n);
+	}
 
 	//replace name in pieceType
 	currentPieceType->name = pieceTypeName;
@@ -2241,19 +2267,29 @@ void CustomGameEditorControl::onAddBlockButton(Base* control)
 
 	shared_ptr<BlockType> b(new BlockType());
 
-	string newName = "New Block ";
+	string newName = "New Block";
 	{
-		int n = 0;
+
+		bool taken = false;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
 			shared_ptr<BlockType> bt = currentGameType->blockTypes.get(i);
-			if (bt->name == newName + to_string(n))
-			{
-				n++;
-				i = 0;
-			}
+			if (bt->name == newName)taken = true;
 		}
-		newName = newName + to_string(n);
+		if (taken)
+		{
+			int n = 0;
+			for (int i = 0; i < currentGameType->blockTypes.size(); i++)
+			{
+				shared_ptr<BlockType> bt = currentGameType->blockTypes.get(i);
+				if (bt->name == newName + " " + to_string(n))
+				{
+					n++;
+					i = 0;
+				}
+			}
+			newName = newName + " " + to_string(n);
+		}
 	}
 
 	b->name = newName;
@@ -2293,20 +2329,28 @@ void CustomGameEditorControl::onDuplicateBlockButton(Base* control)
 	b->uuid = newuuid;
 
 
-	string newName = bt->name + " Copy ";
+	string newName = bt->name + " Copy";
+
+	bool taken = false;
+	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
+	{
+		shared_ptr<BlockType> temp = currentGameType->blockTypes.get(i);
+		if (temp->name == newName)taken = true;
+	}
+	if (taken)
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
 			shared_ptr<BlockType> temp = currentGameType->blockTypes.get(i);
-			if (temp->name == newName + to_string(n))
+			if (temp->name == newName + " " + to_string(n))
 			{
 				
 				n++;
 				i = 0;
 			}
 		}
-		newName = newName + to_string(n);
+		newName = newName + " " + to_string(n);
 	}
 
 	b->name = newName;
@@ -2425,19 +2469,26 @@ void CustomGameEditorControl::onAddPieceButton(Base* control)
 
 	
 
-	string newName = "New Piece ";
+	string newName = "New Piece";
+	bool taken = false;
+	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
+	{
+		shared_ptr<PieceType> bt = currentGameType->pieceTypes.get(i);
+		if (bt->name == newName)taken = true;
+	}
+	if (taken)
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 		{
 			shared_ptr<PieceType> bt = currentGameType->pieceTypes.get(i);
-			if (bt->name == newName + to_string(n))
+			if (bt->name == newName + " " + to_string(n))
 			{
 				n++;
 				i = 0;
 			}
 		}
-		newName = newName + to_string(n);
+		newName = newName + " " + to_string(n);
 	}
 
 	b->name = newName;
@@ -2480,20 +2531,26 @@ void CustomGameEditorControl::onDuplicatePieceButton(Base* control)
 	b->uuid = newuuid;
 
 
-	string newName = bt->name + " Copy ";
+	string newName = bt->name + " Copy";
+	bool taken = false;
+	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
+	{
+		shared_ptr<PieceType> temp = currentGameType->pieceTypes.get(i);
+		if (temp->name == newName)taken = true;
+	}
+	if (taken)
 	{
 		int n = 0;
 		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 		{
 			shared_ptr<PieceType> temp = currentGameType->pieceTypes.get(i);
-			if (temp->name == newName + to_string(n))
+			if (temp->name == newName + " " + to_string(n))
 			{
-				
 				n++;
 				i = 0;
 			}
 		}
-		newName = newName + to_string(n);
+		newName = newName + " " + to_string(n);
 	}
 
 	b->name = newName;
@@ -3585,18 +3642,27 @@ void CustomGameEditorControl::duplicateGameType(Base* control)
 	//s->loadedFilename = "";
 	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
 
-	s->name += " Copy ";
-	int n = 0;
-	for (int i = 0; i<bobsGame->loadedGameTypes.size(); i++)
+	s->name += " Copy";
+	bool taken = false;
+	for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
 	{
 		GameType *g = bobsGame->loadedGameTypes.get(i);
-		if (g != s && g->name == s->name + to_string(n))
-		{
-			n++;
-			i = 0;
-		}
+		if (g != s && g->name == s->name)taken = true;
 	}
-	s->name = s->name + to_string(n);
+	if (taken)
+	{
+		int n = 0;
+		for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
+		{
+			GameType *g = bobsGame->loadedGameTypes.get(i);
+			if (g != s && g->name == s->name + " " + to_string(n))
+			{
+				n++;
+				i = 0;
+			}
+		}
+		s->name = s->name + " " + to_string(n);
+	}
 
 	//bobsGame->loadedGameTypes.add(s);
 	currentGameType = s;
