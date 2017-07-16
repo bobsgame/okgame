@@ -467,7 +467,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 			uploadButton = new Button(applyButtonsBase);
 			uploadButton->SetText(L"Upload");
-			uploadButton->SetToolTip("Upload this game to the server so others can play it.  You will keep ownership rights and reuploading modified versions will overwrite the version on the server.  You can only upload one new game type every 10 minutes.  Please do not upload broken games or unfinished games.");
+			uploadButton->SetToolTip("Upload this game to the server so others can play it.  Reuploading modified versions will overwrite the version on the server.  You can only upload one new game type every 10 minutes.  Please do not upload broken or unfinished games.");
 			uploadButton->Dock(Pos::Left | Pos::Center);
 			uploadButton->SetWidth(50);
 			uploadButton->onPress.Add(this, &CustomGameEditorControl::onUploadButton);
@@ -1092,7 +1092,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 			p->SetSplitWidth(400);
 		}
 
-
+		
 		n++; p = settingsPropTree->Add("Grid Settings");
 		{
 			n++; p->Add(s->gridWidth_Info.label, to_string(s->gridWidth))->SetToolTip(s->gridWidth_Info.tip);
@@ -4944,7 +4944,7 @@ void CustomGameEditorControl::saveDifficultyPropTreeToCurrentDifficultyType()
 
 
 
-	DifficultyType defaultDifficultyType;
+	DifficultyType defaultDifficultyType = DifficultyType();
 
 
 	try {

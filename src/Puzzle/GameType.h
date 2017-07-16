@@ -396,8 +396,8 @@ public:
 	
 	GameMode gameMode = GameMode::DROP;											Info gameMode_Info = Info("Game Mode", "Whether this is a falling block type game (where blocks fall from the top) or a stack based game (where a stack rises from the floor).  More game modes will be implemented in the future.");
 
-	bool randomlyFillGrid = false;												Info randomlyFillGrid_Info = Info("Drop: Randomly Fill Grid", "Whether the playing field should be randomly filled on start.");
-	int randomlyFillGridStartY = 10;											Info randomlyFillGridStartY_Info = Info("Drop: Randomly Fill Grid StartY", "How many lines from the top to start filling blocks.");
+	bool randomlyFillGrid = true;												Info randomlyFillGrid_Info = Info("Drop: Randomly Fill Grid", "Whether the playing field should be randomly filled on start.");
+	int randomlyFillGridStartY = 10;											Info randomlyFillGridStartY_Info = Info("Drop: Randomly Fill Grid StartY", "How many lines from the top to start filling blocks.  Actual amount is set in Difficulty.");
 
 	//bool stackRiseGame = false;													Info stackRiseGame_Info = Info("Stack Rise Game", "Whether blocks should rise from the bottom instead of dropping from the top.");
 	bool stackDontPutSameColorNextToEachOther = false;							Info stackDontPutSameColorNextToEachOther_Info = Info("Stack: Don't Put Same Color Next To Each Other", "When creating blocks from the bottom of the stack, don't put two of the same color next to each other.");
@@ -405,8 +405,8 @@ public:
 	bool stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull = false;		Info stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info = Info("Stack: Don't Put Same Color Diagonal Or Next To Each Other", "When creating blocks from the bottom of the stack, don't put two of the same color next to each other or diagonal.");
 	bool stackLeaveAtLeastOneGapPerRow = false;									Info stackLeaveAtLeastOneGapPerRow_Info = Info("Stack: Leave At Least One Gap Per Row", "When creating blocks from the bottom of the stack, leave one block open in each row.");
 
-	bool randomlyFillStack = false;												Info randomlyFillStack_Info = Info("Stack: Randomly Fill Stack", "Whether to begin the game with a randomly filled stack.");
-	int randomlyFillStackStartY = 10;											Info randomlyFillStackStartY_Info = Info("Stack: Randomly Fill Stack Start Y", "How many lines from the top to start filling the stack.");
+	bool randomlyFillStack = true;												Info randomlyFillStack_Info = Info("Stack: Randomly Fill Stack", "Whether to begin the game with a randomly filled stack.");
+	int randomlyFillStackStartY = 10;											Info randomlyFillStackStartY_Info = Info("Stack: Randomly Fill Stack Start Y", "How many lines from the top to start filling the stack.  Actual amount is set in Difficulty.");
 
 	//bool useCurrentPieceAsCursor = true;										Info useCurrentPieceAsCursor_Info = Info("Use Current Piece As Cursor", "Instead of moving a piece, draw a cursor.  You'll want this for stack based games, probably.");
 	//bool makeNewPiece = false;												Info makeNewPiece_Info = Info("Make New Piece", "Whether to create a new piece at the top, which will be rotated.");
