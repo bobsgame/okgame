@@ -186,7 +186,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 		ar & BOOST_SERIALIZATION_NVP(randomlyFillGridStartY);
 
 		if (randomlyFillGrid)import_randomlyFillGrid = true;
-		if (randomlyFillGridStartY)import_randomlyFillGridStartY = randomlyFillGridStartY;
+		if (randomlyFillGridStartY>0)import_randomlyFillGridStartY = randomlyFillGridStartY;
 	}
 
 	
@@ -339,23 +339,21 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 	if (version < 6)//move randomly fill grid options into difficulty and combine randomly fill grid and stack
 	{
-		if (import_randomlyFillGrid)
-		{
-			for (int i = 0; i < difficultyTypes.size(); i++)
-			{
-				DifficultyType *bp = difficultyTypes.get(i);
-				bp->randomlyFillGrid = true;
-			}
-		}
 
-		if (import_randomlyFillGridStartY > 0)
+		for (int i = 0; i < difficultyTypes.size(); i++)
 		{
-			for (int i = 0; i < difficultyTypes.size(); i++)
-			{
-				DifficultyType *bp = difficultyTypes.get(i);
-				bp->randomlyFillGridStartY = import_randomlyFillGridStartY;
-			}
+			DifficultyType *bp = difficultyTypes.get(i);
+			bp->randomlyFillGrid = import_randomlyFillGrid;
 		}
+		
+
+
+		for (int i = 0; i < difficultyTypes.size(); i++)
+		{
+			DifficultyType *bp = difficultyTypes.get(i);
+			bp->randomlyFillGridStartY = import_randomlyFillGridStartY;
+		}
+		
 	}
     
     //---------------------------------------------------
