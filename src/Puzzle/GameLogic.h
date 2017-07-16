@@ -383,6 +383,7 @@ private:
 	//need to add "ReceivedGarbageAmount" to frame state
 
 	void handleNewChain();
+	float getStackRiseBasedOnCurrentLineDropSpeedTicks();
 	void doStackRiseGame();
 	void doFallingBlockGame();
 public:

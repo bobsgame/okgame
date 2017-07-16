@@ -1728,6 +1728,22 @@ void GameLogic::handleNewChain()
 }
 
 //=========================================================================================================================
+float GameLogic::getStackRiseBasedOnCurrentLineDropSpeedTicks()
+{//=========================================================================================================================
+	
+	int stackRiseDiff = getCurrentDifficulty()->maxStackRise - getCurrentDifficulty()->minStackRise;
+
+	long long dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks;
+
+	long long currentDropSpeedDiff = (currentLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks);
+
+	float currentStackRise = getCurrentDifficulty()->minStackRise + (((float)(currentDropSpeedDiff) / (float)(dropSpeedDiff)) * (float)(stackRiseDiff));
+
+	return currentStackRise;
+}
+
+
+//=========================================================================================================================
 void GameLogic::doStackRiseGame()
 {//=========================================================================================================================
 
@@ -1747,14 +1763,14 @@ void GameLogic::doStackRiseGame()
 		{
 			stopStackRiseTicksCounter = 0;
 		}
-		stopCounterCaptionText = "Wait: " + to_string(stopStackRiseTicksCounter);
+		stopCounterCaptionText = "Stack Wait: " + to_string(stopStackRiseTicksCounter);
 		stop = true;
 	}
 
 	if (timesToFlashBlocksQueue > 0)
 	{
 		flashChainBlocks();
-		stopCounterCaptionText = "Wait: Flash";
+		stopCounterCaptionText = "Stack Wait: Flash";
 
 		stop = true;
 	}
@@ -1764,7 +1780,7 @@ void GameLogic::doStackRiseGame()
 		{
 			removeFlashedChainBlocks();
 
-			stopCounterCaptionText = "Wait: Pop " + to_string(currentChainBlocks.size());
+			stopCounterCaptionText = "Stack Wait: Pop " + to_string(currentChainBlocks.size());
 			stop = true;
 		}
 	}
@@ -1772,13 +1788,13 @@ void GameLogic::doStackRiseGame()
 	if (timesToFlashScreenQueue > 0)
 	{
 		flashScreen();
-		stopCounterCaptionText = "Wait: Flash";
+		stopCounterCaptionText = "Stack Wait: Flash";
 		stop = true;
 	}
 
 	if (grid->continueSwappingBlocks())
 	{
-		stopCounterCaptionText = "Wait: Swap";
+		stopCounterCaptionText = "Stack Wait: Swap";
 		stop = true;
 	}
 
@@ -1797,15 +1813,11 @@ void GameLogic::doStackRiseGame()
 		//stackrise = minStackRise
 
 
-		int stackRiseDiff = getCurrentDifficulty()->maxStackRise - getCurrentDifficulty()->minStackRise;
+		
 
-		long long dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks;
+		float currentStackRise = getStackRiseBasedOnCurrentLineDropSpeedTicks();
 
-		long long currentDropSpeedDiff = (currentLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks);
-
-		int currentStackRise = getCurrentDifficulty()->minStackRise + (int)(((float)(currentDropSpeedDiff) / (float)(dropSpeedDiff)) * (float)(stackRiseDiff));
-
-		if (stackRiseTicksCounter > currentStackRise/3)//TODO: make better
+		if (stackRiseTicksCounter > (int)(currentStackRise/3.0f))//TODO: make better
 		{
 			stackRiseTicksCounter = 0;
 
@@ -4119,6 +4131,7 @@ void GameLogic::updateCaptions()
 
 
 
+
 #ifdef _DEBUG
 
 	if (blocksInGridCaption == nullptr)
@@ -4181,9 +4194,20 @@ void GameLogic::updateCaptions()
 	bgCaption->setText("Shader: " + to_string(getBobsGame()->shaderCount));
 #endif
 
-	if (stopCounterCaption != nullptr)
+
+	if (currentGameType->gameMode == GameMode::STACK)
 	{
-		stopCounterCaption->setText(stopCounterCaptionText);
+		if (stopCounterCaption != nullptr)
+		{
+			stopCounterCaption->setText(stopCounterCaptionText);
+		}
+	}
+	else
+	{
+		if (stopCounterCaption != nullptr)
+		{
+			stopCounterCaption->setText(" ");
+		}
 	}
 
 	if (currentLevel == getCurrentDifficulty()->extraStage1Level)
@@ -4212,11 +4236,33 @@ void GameLogic::updateCaptions()
 	rulesCaption->setText("Rules: "+currentGameType->rules);
 	difficultyCaption->setText("Difficulty: "+ getCurrentDifficulty()->name);
 
-	gravityCaption->setText("Gravity: " + to_string(16.7f / (float)(currentLineDropSpeedTicks)) + "G");//::Format("%.3f",
-	lockDelayCaption->setText("Lock Delay: " + to_string(lockDelayTicksCounter));
-	lineDropTicksCaption->setText("Line Drop Ticks: " + to_string(lineDropTicksCounter));
-	spawnDelayCaption->setText("Spawn Delay Ticks: " + to_string(spawnDelayTicksCounter));
-	lineClearDelayCaption->setText("Line Clear Delay Ticks: " + to_string(lineClearDelayTicksCounter));
+
+	if (currentGameType->gameMode == GameMode::STACK)
+	{
+		gravityCaption->setText("Stack Speed: " + to_string(16.7f / (float)(getStackRiseBasedOnCurrentLineDropSpeedTicks()/3.0f)));//::Format("%.3f",	
+
+	}
+	else
+	{
+		gravityCaption->setText("Gravity: " + to_string(16.7f / (float)(currentLineDropSpeedTicks)) + "G");//::Format("%.3f",	
+
+	}
+
+	if (currentGameType->gameMode == GameMode::STACK)
+	{
+		lockDelayCaption->setText(" ");
+		lineDropTicksCaption->setText(" ");
+		spawnDelayCaption->setText(" ");
+		lineClearDelayCaption->setText(" ");
+	}
+	else
+	{
+		lockDelayCaption->setText("Lock Delay: " + to_string(lockDelayTicksCounter));
+		lineDropTicksCaption->setText("Line Drop Ticks: " + to_string(lineDropTicksCounter));
+		spawnDelayCaption->setText("Spawn Delay Ticks: " + to_string(spawnDelayTicksCounter));
+		lineClearDelayCaption->setText("Line Clear Delay Ticks: " + to_string(lineClearDelayTicksCounter));
+
+	}
 
 	linesClearedThisGameCaption->setText("Lines This Game: " + to_string(linesClearedThisGame));
 	blocksClearedThisGameCaption->setText("Blocks This Game: " + to_string(blocksClearedThisGame));
