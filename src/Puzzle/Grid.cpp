@@ -669,7 +669,7 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 
 	topY += GameLogic::aboveGridBuffer;
 
-	int fieldSize = getWidth() * (getHeight() - topY);
+	int fieldSize = getWidth() * min((getHeight() - topY), 0);
 
 	//override settings amount of prefilled pieces if there are already pieces on the grid.
 	int num = getNumberOfFilledCells();
@@ -685,6 +685,8 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 	{
 		numberOfBlocks = fieldSize - 1;
 	}
+
+	if (numberOfBlocks < 0)numberOfBlocks = 0;
 
 	//get old blocks and remove them
 	ArrayList<shared_ptr<Block>> blockList;
@@ -766,7 +768,7 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 	//don't put same colors in row or column of 3
 	//don't put spaces
 
-	int fieldSize = getWidth() * ((getHeight()) - topY);
+	int fieldSize = getWidth() * min((getHeight() - topY),0);
 
 	//override settings amount of prefilled pieces if there are already pieces on the grid.
 	int num = getNumberOfFilledCells();
@@ -782,6 +784,8 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 	{
 		numberOfBlocks = fieldSize - 1;
 	}
+
+	if (numberOfBlocks < 0)numberOfBlocks = 0;
 
 	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
 	ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
