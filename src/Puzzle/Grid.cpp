@@ -669,7 +669,7 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 
 	topY += GameLogic::aboveGridBuffer;
 
-	int fieldSize = getWidth() * min((getHeight() - topY), 0);
+	int fieldSize = getWidth() * max((getHeight() - topY), 0);
 
 	//override settings amount of prefilled pieces if there are already pieces on the grid.
 	int num = getNumberOfFilledCells();
@@ -768,7 +768,7 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 	//don't put same colors in row or column of 3
 	//don't put spaces
 
-	int fieldSize = getWidth() * min((getHeight() - topY),0);
+	int fieldSize = getWidth() * max((getHeight() - topY),0);
 
 	//override settings amount of prefilled pieces if there are already pieces on the grid.
 	int num = getNumberOfFilledCells();
@@ -787,8 +787,28 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 
 	if (numberOfBlocks < 0)numberOfBlocks = 0;
 
+	//get old blocks and remove them
+	ArrayList<shared_ptr<Block>> blockList;
+	for (int y = 0; y < getHeight(); y++)
+	{
+		for (int x = 0; x < getWidth(); x++)
+		{
+			if (contains(x, y))//TODO redundant but trying to find all bad accesses
+			{
+				shared_ptr<Block> b = remove(x, y, false, true);
+				if (b != nullptr && blockList.contains(b) == false)
+				{
+					blockList.add(b);
+				}
+			}
+		}
+	}
+
+
 	ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getGameType()->getPlayingFieldBlockTypes(getGameLogic()->getCurrentDifficulty());
 	ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getGameType()->getPlayingFieldPieceTypes(getGameLogic()->getCurrentDifficulty());
+
+
 
 	int blocksPlaced = 0;
 	for (int y = getHeight() - 1; y >= topY; y--)
@@ -827,7 +847,27 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 			}
 		}
 	}
-	return;
+
+
+
+
+	//set the new blocks to the old blocks lastX lastY so there is a neat animation
+	for (int y = 0; y < getHeight(); y++)
+	{
+		for (int x = 0; x < getWidth(); x++)
+		{
+			shared_ptr<Block> b = get(x, y);
+			if (b != nullptr && blockList.size() > 0)
+			{
+				shared_ptr<Block> a = blockList.get(0);
+				blockList.removeAt(0);
+
+				b->lastScreenX = a->lastScreenX;
+				b->lastScreenY = a->lastScreenY;
+				b->ticksSinceLastMovement = 0;
+			}
+		}
+	}
 
 }
 
