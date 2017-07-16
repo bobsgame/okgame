@@ -1699,8 +1699,8 @@ void BobsGame::loadGameTypesFromXML()
 					GameType *s = new GameType();
 					*s = gt;
 
-					if(i==0)s->builtInType = true;
-					if(i==1) { s->builtInType = false; s->creatorUserName = "(You)"; }
+					//if(i==0)s->builtInType = true;
+					if(i==1) {s->creatorUserName = "(You)"; }//s->builtInType = false; 
 					if(i==2)s->downloaded = true;
 
 					loadedGameTypes.add(s);
@@ -1784,8 +1784,8 @@ void BobsGame::loadGameSequencesFromXML()
 					GameSequence *s = new GameSequence();
 					*s = gs;
 
-					if (i == 0)s->builtInType = true;
-					if (i == 1) { s->builtInType = false; s->creatorUserName = "(You)"; }
+					//if (i == 0)s->builtInType = true;
+					if (i == 1) { s->creatorUserName = "(You)"; }//s->builtInType = false; 
 					if (i == 2)s->downloaded = true;
 
 					loadedGameSequences.add(s);
@@ -2086,8 +2086,12 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 									loadedGameTypes.remove(existing);
 							}
 
+							//it won't replace your local version with the server version if you are the creator, 
+							//rather it assumes that the local version is the most recent.
+
 							if (existing == nullptr || existing->downloaded == true)//dont replace usermade game with downloaded version
 							{
+								g->downloaded = true;
 								loadedGameTypes.add(g);
 								saveGameTypeToXML(g, true);
 							}
@@ -2105,6 +2109,7 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 							}
 							if (existing == nullptr || existing->downloaded == true)
 							{
+								g->downloaded = true;
 								loadedGameSequences.add(g);
 								saveGameSequenceToXML(g, true);
 							}
@@ -2534,7 +2539,8 @@ void BobsGame::updateVersion0ToVersion1()
 		for (int i = 0; i < loadedGameTypes.size(); i++)
 		{
 			GameType *g = loadedGameTypes.get(i);
-			if (g->builtInType == false)saveGameTypeToXML(g,g->downloaded);
+			//if (g->builtInType == false)
+				saveGameTypeToXML(g,g->downloaded);
 		}
 	}
 }

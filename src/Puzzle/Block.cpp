@@ -1244,8 +1244,8 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		}
 		else
 		{
-			log.error("Should never happen!");
-			renderColor = BobColor(*BobColor::white);
+			log.warn("Should never happen!");
+			renderColor = BobColor(*BobColor::darkerBurgandy);
 		}
 	}
 

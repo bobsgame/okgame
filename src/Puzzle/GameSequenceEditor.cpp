@@ -767,7 +767,7 @@ void GameSequenceEditorControl::duplicateGameSequence(Base* control)
 	string uuid = s->uuid;
 	*s = *currentGameSequence;
 	s->uuid = uuid;
-	s->builtInType = false;
+	//s->builtInType = false;
 	s->downloaded = false;
 	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
 
@@ -825,11 +825,11 @@ void GameSequenceEditorControl::deleteGameSequence(Base* control)
 		return;
 	}
 
-	if (bt->builtInType)
-	{
-		gameSequenceSelectLabel->SetText("Cannot delete built in sequence.");
-		return;
-	}
+//	if (bt->builtInType)
+//	{
+//		gameSequenceSelectLabel->SetText("Cannot delete built in sequence.");
+//		return;
+//	}
 
 	if (bobsGame->loadedGameSequences.contains(bt))bobsGame->loadedGameSequences.remove(bt);
 

@@ -2962,22 +2962,22 @@ ArrayList<pair<GameType*,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
 	
 	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor;
 
+//	for (int i = 0; i<loadedGameTypes.size(); i++)
+//	{
+//		GameType *g = loadedGameTypes.get(i);
+//		if (g->builtInType)
+//		{
+//			string name = g->name;
+//			BobColor *color = BobColor::darkGreen;
+//			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name,color);
+//			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
+//			gamesStringColor.add(gameTypeStringColorPairPair);
+//		}
+//	}
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
 		GameType *g = loadedGameTypes.get(i);
-		if (g->builtInType)
-		{
-			string name = g->name;
-			BobColor *color = BobColor::darkGreen;
-			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name,color);
-			pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = pair<GameType*, pair<string, BobColor*>>(g, stringColorPair);
-			gamesStringColor.add(gameTypeStringColorPairPair);
-		}
-	}
-	for (int i = 0; i<loadedGameTypes.size(); i++)
-	{
-		GameType *g = loadedGameTypes.get(i);
-		if (g->builtInType == false && g->downloaded == false)
+		if (g->downloaded == false)//g->builtInType == false && 
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			BobColor *color = BobColor::darkPurple;
@@ -2991,7 +2991,7 @@ ArrayList<pair<GameType*,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
 		GameType *g = loadedGameTypes.get(i);
-		if (g->builtInType == false && g->downloaded == true)
+		if (g->downloaded == true)//g->builtInType == false && 
 		{
 			downloadedGames.add(g);
 		}
@@ -3038,22 +3038,22 @@ ArrayList<pair<GameSequence*, pair<string, BobColor*>>> BobsGame::getSortedGameS
 
 	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor;
 
+//	for (int i = 0; i<loadedGameSequences.size(); i++)
+//	{
+//		GameSequence *g = loadedGameSequences.get(i);
+//		if (g->builtInType)
+//		{
+//			string name = g->name;
+//			BobColor *color = BobColor::darkGreen;
+//			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
+//			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
+//			gamesStringColor.add(gameSequenceStringColorPairPair);
+//		}
+//	}
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
 		GameSequence *g = loadedGameSequences.get(i);
-		if (g->builtInType)
-		{
-			string name = g->name;
-			BobColor *color = BobColor::darkGreen;
-			pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
-			pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = pair<GameSequence*, pair<string, BobColor*>>(g, stringColorPair);
-			gamesStringColor.add(gameSequenceStringColorPairPair);
-		}
-	}
-	for (int i = 0; i<loadedGameSequences.size(); i++)
-	{
-		GameSequence *g = loadedGameSequences.get(i);
-		if (g->builtInType == false && g->downloaded == false)
+		if (g->downloaded == false)//g->builtInType == false && 
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			BobColor *color = BobColor::darkPurple;
@@ -3067,7 +3067,7 @@ ArrayList<pair<GameSequence*, pair<string, BobColor*>>> BobsGame::getSortedGameS
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
 		GameSequence *g = loadedGameSequences.get(i);
-		if (g->builtInType == false && g->downloaded == true)
+		if (g->downloaded == true)//g->builtInType == false && 
 		{
 			downloadedGames.add(g);
 		}

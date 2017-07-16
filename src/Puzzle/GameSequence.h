@@ -41,7 +41,7 @@ public:
 	string currentDifficultyName = "Beginner";
 
 	//non exported
-	bool builtInType = false;
+	//bool builtInType = false;
 	bool downloaded = false;
 
 	//filled in from the server
@@ -80,7 +80,12 @@ public:
 		{
 			ar & BOOST_SERIALIZATION_NVP(currentDifficultyName);
 		}
-		ar & BOOST_SERIALIZATION_NVP(builtInType);
+
+		if (version < 4)
+		{
+			bool builtInType = false;
+			ar & BOOST_SERIALIZATION_NVP(builtInType);
+		}
 
 		if (version == 0)
 		{
@@ -110,7 +115,7 @@ public:
 	}
 
 };
-BOOST_CLASS_VERSION(GameSequence, 3)
+BOOST_CLASS_VERSION(GameSequence, 4)
 BOOST_CLASS_TRACKING(GameSequence, boost::serialization::track_never)
 //=========================================================================================================================
 class NetworkGameSequence : public GameSequence
@@ -133,7 +138,7 @@ public:
 		this->randomizeSequence = g.randomizeSequence;
 		this->endlessMode = g.endlessMode;
 		this->currentDifficultyName = g.currentDifficultyName;
-		this->builtInType = g.builtInType;
+		//this->builtInType = g.builtInType;
 		this->creatorUserID = g.creatorUserID;
 		this->creatorUserName = g.creatorUserName;
 		this->dateCreated = g.dateCreated;
@@ -194,5 +199,5 @@ public:
 		return nullptr;
 	}
 };
-BOOST_CLASS_VERSION(NetworkGameSequence, 1)
+BOOST_CLASS_VERSION(NetworkGameSequence, 2)
 BOOST_CLASS_TRACKING(NetworkGameSequence, boost::serialization::track_never)

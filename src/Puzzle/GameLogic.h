@@ -504,7 +504,7 @@ public:
 	//string difficultyCaptionText = "difficultyCaptionText";
 
 	Caption* stopCounterCaption = nullptr;
-	string stopCounterCaptionText = "stopCounterCaptionText";
+	string stopCounterCaptionText = "Go!";
 
 	Caption* xCaption = nullptr;
 	Caption* yCaption = nullptr;

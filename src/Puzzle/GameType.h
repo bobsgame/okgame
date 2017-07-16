@@ -161,7 +161,7 @@ class GameType
 public:
 
 	//used for custom game editor
-	bool builtInType = false;
+	//bool builtInType = false;
 	bool downloaded = false;
 	//string loadedFilename = "";
 	string uuid = "";
@@ -617,5 +617,5 @@ public:
 
 };
 
-BOOST_CLASS_VERSION(GameType, 6)
+BOOST_CLASS_VERSION(GameType, 7)
 BOOST_CLASS_TRACKING(GameType, boost::serialization::track_never)

@@ -98,7 +98,12 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     
     
     ar & BOOST_SERIALIZATION_NVP(uuid);
-    ar & BOOST_SERIALIZATION_NVP(builtInType);
+
+	if (version < 7)
+	{
+		bool builtInType = false;
+		ar & BOOST_SERIALIZATION_NVP(builtInType);
+	}
 	if (version < 3)
 	{
 		string loadedFilename = "";

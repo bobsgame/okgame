@@ -4175,13 +4175,7 @@ void GameLogic::updateCaptions()
 			stopCounterCaption->setText(stopCounterCaptionText);
 		}
 	}
-	else
-	{
-		if (stopCounterCaption != nullptr)
-		{
-			stopCounterCaption->setText(" ");
-		}
-	}
+
 
 	if (currentLevel == getCurrentDifficulty()->extraStage1Level)
 	{
@@ -4221,21 +4215,13 @@ void GameLogic::updateCaptions()
 
 	}
 
-	if (currentGameType->gameMode == GameMode::STACK)
-	{
-		lockDelayCaption->setText(" ");
-		lineDropTicksCaption->setText(" ");
-		spawnDelayCaption->setText(" ");
-		lineClearDelayCaption->setText(" ");
-	}
-	else
-	{
-		lockDelayCaption->setText("Lock Delay: " + to_string(lockDelayTicksCounter));
-		lineDropTicksCaption->setText("Line Drop Ticks: " + to_string(lineDropTicksCounter));
-		spawnDelayCaption->setText("Spawn Delay Ticks: " + to_string(spawnDelayTicksCounter));
-		lineClearDelayCaption->setText("Line Clear Delay Ticks: " + to_string(lineClearDelayTicksCounter));
 
-	}
+	lockDelayCaption->setText("Lock Delay: " + to_string(lockDelayTicksCounter));
+	lineDropTicksCaption->setText("Line Drop Ticks: " + to_string(lineDropTicksCounter));
+	spawnDelayCaption->setText("Spawn Delay Ticks: " + to_string(spawnDelayTicksCounter));
+	lineClearDelayCaption->setText("Line Clear Delay Ticks: " + to_string(lineClearDelayTicksCounter));
+
+	
 
 	linesClearedThisGameCaption->setText("Lines This Game: " + to_string(linesClearedThisGame));
 	blocksClearedThisGameCaption->setText("Blocks This Game: " + to_string(blocksClearedThisGame));

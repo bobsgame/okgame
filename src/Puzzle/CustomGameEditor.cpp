@@ -3667,7 +3667,7 @@ void CustomGameEditorControl::duplicateGameType(Base* control)
 	string uuid = s->uuid;
 	*s = *currentGameType;
 	s->uuid = uuid;
-	s->builtInType = false;
+	//s->builtInType = false;
 	s->downloaded = false;
 	//s->loadedFilename = "";
 	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
@@ -3728,11 +3728,11 @@ void CustomGameEditorControl::deleteGameType(Base* control)
 		return;
 	}
 
-	if(bt->builtInType)
-	{
-		gameTypeSelectLabel->SetText("Cannot delete built in type.");
-		return;
-	}
+//	if(bt->builtInType)
+//	{
+//		gameTypeSelectLabel->SetText("Cannot delete built in type.");
+//		return;
+//	}
 
 	if (bobsGame->loadedGameTypes.contains(bt))bobsGame->loadedGameTypes.remove(bt);
 
