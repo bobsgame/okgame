@@ -2682,6 +2682,8 @@ void Grid::renderBackground()
 //=========================================================================================================================
 void Grid::render()
 {//=========================================================================================================================
+
+
 	for (int x = 0; x < getWidth(); x++)
 	{
 		for (int y = 0; y < getHeight(); y++)
@@ -2693,6 +2695,8 @@ void Grid::render()
 			}
 		}
 	}
+
+
 }
 
 //=========================================================================================================================
@@ -2807,6 +2811,14 @@ void Grid::renderBorder()
 	float bottomY0 = getYInFBO() + cellH() * getHeight();
 	float bottomY1 = getYInFBO() + cellH() * (getHeight() + mult);
 
+	if (getGameType()->gameMode == GameMode::STACK)
+	{
+		//render border over last grid row so i have a hidden row without a black gap
+		bottomY0 = getYInFBO() + cellH() * (getHeight()-1);
+		bottomY1 = getYInFBO() + cellH() * ((getHeight()-1) + mult);
+	}
+
+
 	GLUtils::drawTexture(BobsGame::upperLeft, leftX0, leftX1, topY0, topY1, a, f);
 	GLUtils::drawTexture(BobsGame::top, leftX1, rightX0, topY0, topY1, a, f);
 	GLUtils::drawTexture(BobsGame::upperRight, rightX0, rightX1, topY0, topY1, a, f);
@@ -2824,7 +2836,55 @@ void Grid::renderBorder()
 void Grid::renderTransparentOverLastRow()
 {//=========================================================================================================================
 
-	GLUtils::drawFilledRectXYWH(getXInFBO(), getYInFBO() + (scrollPlayingFieldY / scrollBlockIncrement)*cellH() + (getHeight() - 1) * cellH(), (float)getWidth() * cellW(), (float)cellH() + 1, 0, 0, 0, 0.5f);
+
+
+	float x = getXInFBO();
+	float y = getYInFBO() + (getHeight() - 2) * cellH() + cellH()/2;
+
+	float w = (float)getWidth() * cellW();
+	float h = (float)((getYInFBO() + getHeight() * cellH()) - y) + 1;
+
+	float div = 16;
+	for(float i=0; i<div; i++)
+	{
+		
+		GLUtils::drawFilledRectXYWH
+		(
+			x,
+			y + h/div*i,
+			w,
+			h/div,
+			0,
+			0,
+			0,
+			1.0f/(div-1)*i
+		);
+
+
+	}
+
+
+//	GLUtils::drawFilledRectXYWH
+//	(
+//		getXInFBO(), 
+//		getYInFBO() + (getHeight() - 1) * cellH(), 
+//		(float)getWidth() * cellW(), 
+//		(float)cellH() + 1, 
+//		0, 
+//		0, 
+//		0, 
+//		1.0f
+//	);
+
+
+
+
+	//TODO: render bottom border piece over blocks drawn
+
+	renderBorder();
+
+
+
 }
 
 //=========================================================================================================================

@@ -5381,7 +5381,7 @@ void BobsGame::customGameEditorMenuRender()
 
 
 		//need to be able to force an FBO size
-		//i should give each gamelogic its own captionmanager and render the captions in the fbo with the game 
+		//TODO: i should give each gamelogic its own captionmanager and render the captions in the fbo with the game 
 		//so that the internals of the game doesn't need to know where it is on screen at all
 
 		if (customGameEditor->windowOpen == false)
