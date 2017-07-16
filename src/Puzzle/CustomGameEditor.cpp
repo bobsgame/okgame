@@ -1146,9 +1146,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 				//pRow->onChange.Add(this, &LevelSelectMenuControl::OnFirstNameChanged);
 			}
 
-			n++; p->Add(s->randomlyFillGrid_Info.label, new Property::Checkbox(p), to_string(s->randomlyFillGrid))->SetToolTip(s->randomlyFillGrid_Info.tip);
-			//n++; p->Add(s->randomlyFillGridAmount_Info.label, to_string(s->randomlyFillGridAmount))->SetToolTip(s->randomlyFillGridAmount_Info.tip);
-			n++; p->Add(s->randomlyFillGridStartY_Info.label, to_string(s->randomlyFillGridStartY))->SetToolTip(s->randomlyFillGridStartY_Info.tip);
+
 
 			//n++; p->Add(s->stackRiseGame_Info.label, new Property::Checkbox(p), to_string(s->stackRiseGame))->SetToolTip(s->stackRiseGame_Info.tip);
 			n++; p->Add(s->stackDontPutSameColorNextToEachOther_Info.label, new Property::Checkbox(p), to_string(s->stackDontPutSameColorNextToEachOther))->SetToolTip(s->stackDontPutSameColorNextToEachOther_Info.tip);
@@ -1156,9 +1154,9 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 			n++; p->Add(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info.label, new Property::Checkbox(p), to_string(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull))->SetToolTip(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info.tip);
 			n++; p->Add(s->stackLeaveAtLeastOneGapPerRow_Info.label, new Property::Checkbox(p), to_string(s->stackLeaveAtLeastOneGapPerRow))->SetToolTip(s->stackLeaveAtLeastOneGapPerRow_Info.tip);
 
-			n++; p->Add(s->randomlyFillStack_Info.label, new Property::Checkbox(p), to_string(s->randomlyFillStack))->SetToolTip(s->randomlyFillStack_Info.tip);
-			//n++; p->Add(s->randomlyFillStackAmount_Info.label, to_string(s->randomlyFillStackAmount))->SetToolTip(s->randomlyFillStackAmount_Info.tip);
-			n++; p->Add(s->randomlyFillStackStartY_Info.label, to_string(s->randomlyFillStackStartY))->SetToolTip(s->randomlyFillStackStartY_Info.tip);
+//			n++; p->Add(s->randomlyFillStack_Info.label, new Property::Checkbox(p), to_string(s->randomlyFillStack))->SetToolTip(s->randomlyFillStack_Info.tip);
+//			//n++; p->Add(s->randomlyFillStackAmount_Info.label, to_string(s->randomlyFillStackAmount))->SetToolTip(s->randomlyFillStackAmount_Info.tip);
+//			n++; p->Add(s->randomlyFillStackStartY_Info.label, to_string(s->randomlyFillStackStartY))->SetToolTip(s->randomlyFillStackStartY_Info.tip);
 
 			//n++; p->Add(s->useCurrentPieceAsCursor_Info.label, new Property::Checkbox(p), to_string(s->useCurrentPieceAsCursor))->SetToolTip(s->useCurrentPieceAsCursor_Info.tip);
 			//n++; p->Add(s->makeNewPiece_Info.label, new Property::Checkbox(p), to_string(s->makeNewPiece))->SetToolTip(s->makeNewPiece_Info.tip);
@@ -1414,7 +1412,6 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	}
 	catch (exception) { currentGameType->gridPixelsBetweenColumns = defaultGameType.gridPixelsBetweenColumns; }
 
-	currentGameType->randomlyFillGrid = 0 != stoi(p->Find(currentGameType->randomlyFillGrid_Info.label)->GetProperty()->GetPropertyValue().c_str());
 
 
 	try {
@@ -1428,10 +1425,6 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 //	}
 //	catch (exception) { currentGameType->randomlyFillGridAmount = defaultSettings.randomlyFillGridAmount; }
 
-	try {
-		currentGameType->randomlyFillGridStartY = stoi(p->Find(currentGameType->randomlyFillGridStartY_Info.label)->GetProperty()->GetPropertyValue().c_str());
-	}
-	catch (exception) { currentGameType->randomlyFillGridStartY = defaultGameType.randomlyFillGridStartY; }
 
 
 	//currentGameType->stackRiseGame = 0 != stoi(p->Find(currentGameType->stackRiseGame_Info.label)->GetProperty()->GetPropertyValue().c_str());
@@ -1440,17 +1433,17 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	currentGameType->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull = 0 != stoi(p->Find(currentGameType->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info.label)->GetProperty()->GetPropertyValue().c_str());
 	currentGameType->stackLeaveAtLeastOneGapPerRow = 0 != stoi(p->Find(currentGameType->stackLeaveAtLeastOneGapPerRow_Info.label)->GetProperty()->GetPropertyValue().c_str());
 
-	currentGameType->randomlyFillStack = 0 != stoi(p->Find(currentGameType->randomlyFillStack_Info.label)->GetProperty()->GetPropertyValue().c_str());
+	//currentGameType->randomlyFillStack = 0 != stoi(p->Find(currentGameType->randomlyFillStack_Info.label)->GetProperty()->GetPropertyValue().c_str());
 
 //	try {
 //		currentGameType->randomlyFillStackAmount = stoi(p->Find(currentGameType->randomlyFillStackAmount_Info.label)->GetProperty()->GetPropertyValue().c_str());
 //	}
 //	catch (exception) { currentGameType->randomlyFillStackAmount = defaultSettings.randomlyFillStackAmount; }
 
-	try {
-		currentGameType->randomlyFillStackStartY = stoi(p->Find(currentGameType->randomlyFillStackStartY_Info.label)->GetProperty()->GetPropertyValue().c_str());
-	}
-	catch (exception) { currentGameType->randomlyFillStackStartY = defaultGameType.randomlyFillStackStartY; }
+//	try {
+//		currentGameType->randomlyFillStackStartY = stoi(p->Find(currentGameType->randomlyFillStackStartY_Info.label)->GetProperty()->GetPropertyValue().c_str());
+//	}
+//	catch (exception) { currentGameType->randomlyFillStackStartY = defaultGameType.randomlyFillStackStartY; }
 
 	//currentGameType->useCurrentPieceAsCursor = 0 != stoi(p->Find(currentGameType->useCurrentPieceAsCursor_Info.label)->GetProperty()->GetPropertyValue().c_str());
 	//currentGameType->makeNewPiece = 0 != stoi(p->Find(currentGameType->makeNewPiece_Info.label)->GetProperty()->GetPropertyValue().c_str());
@@ -4888,8 +4881,13 @@ void CustomGameEditorControl::initDifficultyPropTree(DifficultyType *b)
 			n++; p->Add(b->playingFieldGarbageSpawnRuleAmount_Info.label, to_string(b->playingFieldGarbageSpawnRuleAmount))->SetToolTip(b->playingFieldGarbageSpawnRuleAmount_Info.tip);
 			n++; p->Add(b->maximumBlockTypeColors_Info.label, to_string(b->maximumBlockTypeColors))->SetToolTip(b->maximumBlockTypeColors_Info.tip);
 
+
+			n++; p->Add(b->randomlyFillGrid_Info.label, new Property::Checkbox(p), to_string(b->randomlyFillGrid))->SetToolTip(b->randomlyFillGrid_Info.tip);
+			n++; p->Add(b->randomlyFillGridStartY_Info.label, to_string(b->randomlyFillGridStartY))->SetToolTip(b->randomlyFillGridStartY_Info.tip);
+
+
 			n++; p->Add(b->randomlyFillGridAmount_Info.label, to_string(b->randomlyFillGridAmount))->SetToolTip(b->randomlyFillGridAmount_Info.tip);
-			n++; p->Add(b->randomlyFillStackAmount_Info.label, to_string(b->randomlyFillStackAmount))->SetToolTip(b->randomlyFillStackAmount_Info.tip);
+			//n++; p->Add(b->randomlyFillStackAmount_Info.label, to_string(b->randomlyFillStackAmount))->SetToolTip(b->randomlyFillStackAmount_Info.tip);
 
 			{
 				string typesString = "";
@@ -5039,15 +5037,30 @@ void CustomGameEditorControl::saveDifficultyPropTreeToCurrentDifficultyType()
 	}
 	catch (exception) { currentDifficultyType->maximumBlockTypeColors = defaultDifficultyType.maximumBlockTypeColors; }
 
+	currentDifficultyType->randomlyFillGrid = 0 != stoi(p->Find(currentDifficultyType->randomlyFillGrid_Info.label)->GetProperty()->GetPropertyValue().c_str());
+
+
+	try
+	{
+		currentDifficultyType->randomlyFillGridStartY = stoi(p->Find(currentDifficultyType->randomlyFillGridStartY_Info.label)->GetProperty()->GetPropertyValue().c_str());
+	}
+	catch (exception) { currentDifficultyType->randomlyFillGridStartY = defaultDifficultyType.randomlyFillGridStartY; }
+
+
+
 	try {
 		currentDifficultyType->randomlyFillGridAmount = stoi(p->Find(currentDifficultyType->randomlyFillGridAmount_Info.label)->GetProperty()->GetPropertyValue().c_str());
 	}
 	catch (exception) { currentDifficultyType->randomlyFillGridAmount = defaultDifficultyType.randomlyFillGridAmount; }
 
-	try {
-		currentDifficultyType->randomlyFillStackAmount = stoi(p->Find(currentDifficultyType->randomlyFillStackAmount_Info.label)->GetProperty()->GetPropertyValue().c_str());
-	}
-	catch (exception) { currentDifficultyType->randomlyFillStackAmount = defaultDifficultyType.randomlyFillStackAmount; }
+
+
+
+
+//	try {
+//		currentDifficultyType->randomlyFillStackAmount = stoi(p->Find(currentDifficultyType->randomlyFillStackAmount_Info.label)->GetProperty()->GetPropertyValue().c_str());
+//	}
+//	catch (exception) { currentDifficultyType->randomlyFillStackAmount = defaultDifficultyType.randomlyFillStackAmount; }
 
 	//these are filled in directly from the edit window
 	//pieceTypesToDisallow

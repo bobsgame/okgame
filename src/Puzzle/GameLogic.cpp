@@ -276,15 +276,25 @@ void GameLogic::initGame()
 //		getCurrentGameType()->chainRule_AmountPerChain = gridW();
 //	}
 
-	if (currentGameType->randomlyFillGrid)
-	{
-		grid->randomlyFillGridWithPlayingFieldPieces(getCurrentDifficulty()->randomlyFillGridAmount, currentGameType->randomlyFillGridStartY);
-	}
 
-	if (currentGameType->randomlyFillStack)
+	if (currentGameType->gameMode == GameMode::DROP)
 	{
-		grid->buildRandomStackRetainingExistingBlocks(getCurrentDifficulty()->randomlyFillStackAmount, currentGameType->randomlyFillStackStartY);
+		if (getCurrentDifficulty()->randomlyFillGrid)
+		{
+			grid->randomlyFillGridWithPlayingFieldPieces(getCurrentDifficulty()->randomlyFillGridAmount, getCurrentDifficulty()->randomlyFillGridStartY);
+		}
 	}
+	else
+		if (currentGameType->gameMode == GameMode::STACK)
+		{
+			if (getCurrentDifficulty()->randomlyFillGrid)
+			{
+				grid->buildRandomStackRetainingExistingBlocks(getCurrentDifficulty()->randomlyFillGridAmount, getCurrentDifficulty()->randomlyFillGridStartY);
+			}
+		}
+
+
+
 
 	if (currentGameType->gameMode==GameMode::DROP)
 	{

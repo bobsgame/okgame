@@ -34,9 +34,25 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
     ar & BOOST_SERIALIZATION_NVP(creditsLevel);
     ar & BOOST_SERIALIZATION_NVP(playingFieldGarbageSpawnRuleAmount);
     ar & BOOST_SERIALIZATION_NVP(maximumBlockTypeColors);
+
+
+	if (version > 1)
+	{
+		ar & BOOST_SERIALIZATION_NVP(randomlyFillGrid);
+		ar & BOOST_SERIALIZATION_NVP(randomlyFillGridStartY);
+	}
+
     ar & BOOST_SERIALIZATION_NVP(randomlyFillGridAmount);
-    ar & BOOST_SERIALIZATION_NVP(randomlyFillStackAmount);
-    
+
+
+	if (version < 2)
+	{
+		int randomlyFillStackAmount = 0;
+		ar & BOOST_SERIALIZATION_NVP(randomlyFillStackAmount);
+		if (randomlyFillStackAmount < randomlyFillGridAmount)randomlyFillGridAmount = randomlyFillStackAmount;
+	}
+
+
 	if (version == 0)
 	{
 		ArrayList<PieceType> importExport_pieceTypesToDisallow;
@@ -158,9 +174,21 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     
     ar & BOOST_SERIALIZATION_NVP(gameMode);
     
-    ar & BOOST_SERIALIZATION_NVP(randomlyFillGrid);
-    //ar & BOOST_SERIALIZATION_NVP(randomlyFillGridAmount);
-    ar & BOOST_SERIALIZATION_NVP(randomlyFillGridStartY);
+	bool import_randomlyFillGrid = false;
+	int import_randomlyFillGridStartY = 0;
+
+	if (version < 6)
+	{
+		bool randomlyFillGrid = false;
+		int randomlyFillGridStartY = 0;
+		ar & BOOST_SERIALIZATION_NVP(randomlyFillGrid);
+		//ar & BOOST_SERIALIZATION_NVP(randomlyFillGridAmount);
+		ar & BOOST_SERIALIZATION_NVP(randomlyFillGridStartY);
+
+		if (randomlyFillGrid)import_randomlyFillGrid = true;
+		if (randomlyFillGridStartY)import_randomlyFillGridStartY = randomlyFillGridStartY;
+	}
+
 	
     //ar & BOOST_SERIALIZATION_NVP(stackRiseGame);
     ar & BOOST_SERIALIZATION_NVP(stackDontPutSameColorNextToEachOther);
@@ -168,9 +196,20 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     ar & BOOST_SERIALIZATION_NVP(stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull);
     ar & BOOST_SERIALIZATION_NVP(stackLeaveAtLeastOneGapPerRow);
     
-    ar & BOOST_SERIALIZATION_NVP(randomlyFillStack);
-    //ar & BOOST_SERIALIZATION_NVP(randomlyFillStackAmount);
-    ar & BOOST_SERIALIZATION_NVP(randomlyFillStackStartY);
+
+	if (version < 6)
+	{
+		bool randomlyFillStack = false;
+		int randomlyFillStackStartY = 0;
+
+
+		ar & BOOST_SERIALIZATION_NVP(randomlyFillStack);
+		//ar & BOOST_SERIALIZATION_NVP(randomlyFillStackAmount);
+		ar & BOOST_SERIALIZATION_NVP(randomlyFillStackStartY);
+
+		if (randomlyFillStack)import_randomlyFillGrid = true;
+		if (randomlyFillStackStartY>0)import_randomlyFillGridStartY = randomlyFillStackStartY;
+	}
     
     ar & BOOST_SERIALIZATION_NVP(stackCursorType);
     //ar & BOOST_SERIALIZATION_NVP(useCurrentPieceAsCursor);
@@ -297,6 +336,27 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     }
     importExport_difficulties.clear();
 	//---------------------------------------------------
+
+	if (version < 6)//move randomly fill grid options into difficulty and combine randomly fill grid and stack
+	{
+		if (import_randomlyFillGrid)
+		{
+			for (int i = 0; i < difficultyTypes.size(); i++)
+			{
+				DifficultyType *bp = difficultyTypes.get(i);
+				bp->randomlyFillGrid = true;
+			}
+		}
+
+		if (import_randomlyFillGridStartY > 0)
+		{
+			for (int i = 0; i < difficultyTypes.size(); i++)
+			{
+				DifficultyType *bp = difficultyTypes.get(i);
+				bp->randomlyFillGridStartY = import_randomlyFillGridStartY;
+			}
+		}
+	}
     
     //---------------------------------------------------
     //timing

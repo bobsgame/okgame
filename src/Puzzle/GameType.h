@@ -47,8 +47,12 @@ public:
 	int playingFieldGarbageSpawnRuleAmount = 5;			Info playingFieldGarbageSpawnRuleAmount_Info = Info("Playing Field Garbage Spawn Rule Amount", "Number of blocks or pieces or time (See spawn rule) until garbage is spawned from the bottom.");
 
 	int maximumBlockTypeColors = 8;						Info maximumBlockTypeColors_Info = Info("Maximum Block Colors", "Set the maximum number of colors to use, if less than the amount of colors set, it will only use the colors up to this number.  For instance, you may specify a block type to have 8 possible colors, but on beginner mode it only uses 3.  This will apply to all block types.");
+
+	bool randomlyFillGrid = true;												Info randomlyFillGrid_Info = Info("Randomly Fill Grid", "Whether the playing field should be randomly filled on start, even if the previous game had no blocks on the field.");
+	int randomlyFillGridStartY = 10;											Info randomlyFillGridStartY_Info = Info("Randomly Fill Grid StartY", "How many lines from the top to start filling blocks.");
+
 	int randomlyFillGridAmount = 30;												Info randomlyFillGridAmount_Info = Info("Drop: Randomly Fill Grid Amount", "How many blocks to fill the playing field with.");
-	int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
+	//int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
 
 	ArrayList<shared_ptr<PieceType>> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
 	ArrayList<shared_ptr<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
@@ -66,7 +70,7 @@ public:
 	void serialize(Archive & ar, const unsigned int version);
 	
 };
-BOOST_CLASS_VERSION(DifficultyType, 1)
+BOOST_CLASS_VERSION(DifficultyType, 2)
 BOOST_CLASS_TRACKING(DifficultyType, boost::serialization::track_never)
 
 //=========================================================================================================================
@@ -396,8 +400,8 @@ public:
 	
 	GameMode gameMode = GameMode::DROP;											Info gameMode_Info = Info("Game Mode", "Whether this is a falling block type game (where blocks fall from the top) or a stack based game (where a stack rises from the floor).  More game modes will be implemented in the future.");
 
-	bool randomlyFillGrid = true;												Info randomlyFillGrid_Info = Info("Drop: Randomly Fill Grid", "Whether the playing field should be randomly filled on start.");
-	int randomlyFillGridStartY = 10;											Info randomlyFillGridStartY_Info = Info("Drop: Randomly Fill Grid StartY", "How many lines from the top to start filling blocks.  Actual amount is set in Difficulty.");
+	//bool randomlyFillGrid = true;												Info randomlyFillGrid_Info = Info("Drop: Randomly Fill Grid", "Whether the playing field should be randomly filled on start.");
+	//int randomlyFillGridStartY = 10;											Info randomlyFillGridStartY_Info = Info("Drop: Randomly Fill Grid StartY", "How many lines from the top to start filling blocks.  Actual amount is set in Difficulty.");
 
 	//bool stackRiseGame = false;													Info stackRiseGame_Info = Info("Stack Rise Game", "Whether blocks should rise from the bottom instead of dropping from the top.");
 	bool stackDontPutSameColorNextToEachOther = false;							Info stackDontPutSameColorNextToEachOther_Info = Info("Stack: Don't Put Same Color Next To Each Other", "When creating blocks from the bottom of the stack, don't put two of the same color next to each other.");
@@ -405,8 +409,8 @@ public:
 	bool stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull = false;		Info stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info = Info("Stack: Don't Put Same Color Diagonal Or Next To Each Other", "When creating blocks from the bottom of the stack, don't put two of the same color next to each other or diagonal.");
 	bool stackLeaveAtLeastOneGapPerRow = false;									Info stackLeaveAtLeastOneGapPerRow_Info = Info("Stack: Leave At Least One Gap Per Row", "When creating blocks from the bottom of the stack, leave one block open in each row.");
 
-	bool randomlyFillStack = true;												Info randomlyFillStack_Info = Info("Stack: Randomly Fill Stack", "Whether to begin the game with a randomly filled stack.");
-	int randomlyFillStackStartY = 10;											Info randomlyFillStackStartY_Info = Info("Stack: Randomly Fill Stack Start Y", "How many lines from the top to start filling the stack.  Actual amount is set in Difficulty.");
+	//bool randomlyFillStack = true;												Info randomlyFillStack_Info = Info("Stack: Randomly Fill Stack", "Whether to begin the game with a randomly filled stack.");
+	//int randomlyFillStackStartY = 10;											Info randomlyFillStackStartY_Info = Info("Stack: Randomly Fill Stack Start Y", "How many lines from the top to start filling the stack.  Actual amount is set in Difficulty.");
 
 	//bool useCurrentPieceAsCursor = true;										Info useCurrentPieceAsCursor_Info = Info("Use Current Piece As Cursor", "Instead of moving a piece, draw a cursor.  You'll want this for stack based games, probably.");
 	//bool makeNewPiece = false;												Info makeNewPiece_Info = Info("Make New Piece", "Whether to create a new piece at the top, which will be rotated.");
@@ -613,5 +617,5 @@ public:
 
 };
 
-BOOST_CLASS_VERSION(GameType, 5)
+BOOST_CLASS_VERSION(GameType, 6)
 BOOST_CLASS_TRACKING(GameType, boost::serialization::track_never)
