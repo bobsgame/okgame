@@ -89,81 +89,47 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Legacy.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventManager.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\EventManager.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\Event.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\Event.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextManager.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextManager.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextWindow.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\text\TextWindow.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\BobFont.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\BobFont.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\Users\Administrator\workspace\bobsgame\src\Utility\gl\GLUtils.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\gl\GLUtils.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\gl\GLUtils.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Entity.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Entity.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\AudioManager.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\EnginePart.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\EnginePart.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\AudioFile.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\AudioFile.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\Player.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\Player.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Console.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Console.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Door.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ControlsManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ControlsManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\MiniGameEngine.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Sprite.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\Sprite.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\CaptionManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\CaptionManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\Map.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapManager.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\map\MapManager.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\stuffMenu\subMenus\ControlsPanel.cpp</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\LoginState.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\LoginState.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Caption.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Caption.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\LoginScreen.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\LoginScreen.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\TitleScreenState.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\TitleScreenState.h</string>
+      <string>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\crt\src\vcruntime\locks.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\MenuPanel.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\MenuPanel.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\bobtypes.h</string>
+      <string>c:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\include\Gwen\Controls\TabControl.h</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

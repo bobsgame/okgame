@@ -4334,26 +4334,26 @@ void GameLogic::resetNextPieces()
 {//=========================================================================================================================
 
 	//destroy all cube objects
-	if (currentPiece != nullptr)
-	{
-	}
-	if (holdPiece != nullptr)
-	{
-	}
-	if (nextPieces.size() > 0)
-	{
-		for (int x = 0; x < nextPieces.size(); x++)
-		{
-			//shared_ptr<Piece> p = nextPieces->get(x);
-		}
-	}
-	if (nextPieceSpecialBuffer.size() > 0)
-	{
-		for (int x = 0; x < nextPieceSpecialBuffer.size(); x++)
-		{
-			//shared_ptr<Piece> p = nextPieceSpecialBuffer->get(x);
-		}
-	}
+//	if (currentPiece != nullptr)
+//	{
+//	}
+//	if (holdPiece != nullptr)
+//	{
+//	}
+//	if (nextPieces.size() > 0)
+//	{
+//		for (int x = 0; x < nextPieces.size(); x++)
+//		{
+//			//shared_ptr<Piece> p = nextPieces->get(x);
+//		}
+//	}
+//	if (nextPieceSpecialBuffer.size() > 0)
+//	{
+//		for (int x = 0; x < nextPieceSpecialBuffer.size(); x++)
+//		{
+//			//shared_ptr<Piece> p = nextPieceSpecialBuffer->get(x);
+//		}
+//	}
 
 	currentPiece = nullptr;
 	holdPiece = nullptr;

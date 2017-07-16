@@ -512,6 +512,9 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		darkRectangle->SetSize(previewBase->Width(), previewBase->Height() - 20);
 	}
 
+
+
+	
 	GetParent()->SizeToChildren();
 	SizeToChildren();
 
@@ -530,12 +533,15 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 	settingsScrollControl->SetWidth(settingsWindow->Width()-20);
 
+
 	blockWindowSplitter->SetSize(blockWindow->Width(), blockWindow->Height());
 	blockWindowSplitter->SetSplitterWidth(blockWindow->Width() / 3 * 1);
 	blockListBase->SetSize(blockWindow->Width() / 3 * 1, blockWindowSplitter->Height());
 	blockSelectionListBox->SetSize(blockListBase->Width() - 30, blockListBase->Height() - 60);
 	blockButtonBase->SetSize(blockListBase->Width(), 20);
 	blockPropertiesScrollControl->SetSize(blockWindow->Width() / 3 * 2 - 15, blockWindowSplitter->Height());
+
+
 
 	pieceWindowSplitter->SetSize(pieceWindow->Width(), pieceWindow->Height());
 	pieceWindowSplitter->SetSplitterWidth(pieceWindow->Width() / 3 * 1);
@@ -544,9 +550,22 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	pieceButtonBase->SetSize(pieceListBase->Width(), 20);
 	piecePropertiesScrollControl->SetSize(pieceWindow->Width() / 3 * 2 - 15, pieceWindowSplitter->Height());
 
+
+	difficultyWindowSplitter->SetSize(difficultyWindow->Width(), difficultyWindow->Height());
+	difficultyWindowSplitter->SetSplitterWidth(difficultyWindow->Width() / 3 * 1);
+	difficultyListBase->SetSize(difficultyWindow->Width() / 3 * 1, difficultyWindowSplitter->Height());
+	difficultySelectionListBox->SetSize(difficultyListBase->Width() - 30, difficultyListBase->Height() - 60);
+	difficultyPropertiesScrollControl->SetSize(difficultyWindow->Width() / 3 * 2 - 15, difficultyWindowSplitter->Height());
+
+
+
 	previewBase->SetSize(w * 2 / 5, h - 20);
 	applyButtonsBase->SetSize(previewBase->Width(), 20);
 	darkRectangle->SetSize(previewBase->Width(), previewBase->Height() - 20);
+
+
+	doResize();
+
 
 
 	currentGameType = new GameType();
@@ -567,13 +586,17 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	currentGameType->pieceTypes.add(pt);
 
 
+	
+
 
 	initFromCurrentGameType();
+
+	
 
 	//settingsPropTree->SetWidth(500);
 	//blockPropTree->SetWidth(500);
 	//piecePropTree->SetWidth(500);
-	doResize();
+	
 
 
 
@@ -678,18 +701,31 @@ void CustomGameEditorControl::initFromCurrentGameType()
 	currentDifficultyType = currentGameType->difficultyTypes.get(0);
 
 
+
+
+	leftBaseTabControl->OnTabPressed(settingsTab); doResize();//activate the tabs and then resize so that the base exists to resize the property tree to
 	initSettingsPropTree(currentGameType);
+
+	leftBaseTabControl->OnTabPressed(blockTab); doResize();
 	initBlockSelectionListBox();
 	initBlockPropTree(currentBlockType);
+
+	leftBaseTabControl->OnTabPressed(pieceTab); doResize();
 	initPieceSelectionListBox();
 	initPiecePropTree(currentPieceType);
+
+	leftBaseTabControl->OnTabPressed(difficultyTab); doResize();
 	initDifficultySelectionListBox();
 	initDifficultyPropTree(currentDifficultyType);
 
 
+	leftBaseTabControl->OnTabPressed(settingsTab); doResize();
+
 	bobsGame->getPlayer1Game()->currentGameSequence = new GameSequence();
 	bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.add(currentGameType);
 	bobsGame->getPlayer1Game()->currentGameSequence->endlessMode = true;
+
+	
 }
 
 
@@ -743,6 +779,7 @@ void CustomGameEditorControl::doResize()
 								int sw = settingsScrollControl->Width() - 20;
 								if (600 > sw)sw = 600;
 								settingsPropTree->SetSize(settingsScrollControl->Width() - 20, settingsPropTreeNumChildren * fontHeight);
+
 							}
 						}
 					}
@@ -1010,8 +1047,8 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 
 	settingsPropTree = new PropertyTree(settingsScrollControl);
 	//settingsPropTree->Dock(Pos::Fill);
-	settingsPropTree->SetWidth(600);
-	settingsPropTree->SetHeight(1000);
+	settingsPropTree->SetWidth(settingsScrollControl->Width()-20);
+	//settingsPropTree->SetHeight(settingsScrollControl->Height() - 20);
 	{
 		int n = 0;
 		Properties* p = nullptr;
@@ -1075,7 +1112,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 			n++; p->Add(s->flip180Allowed_Info.label, new Property::Checkbox(p), to_string(s->flip180Allowed))->SetToolTip(s->flip180Allowed_Info.tip);
 			n++; p->Add(s->floorKickAllowed_Info.label, new Property::Checkbox(p), to_string(s->floorKickAllowed))->SetToolTip(s->floorKickAllowed_Info.tip);
 
-			p->SetSplitWidth(400);
+			p->SetSplitWidth(settingsPropTree->Width()/2);
 		}
 
 
@@ -1089,7 +1126,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 				//pRow->onChange.Add(this, &LevelSelectMenuControl::OnFirstNameChanged);
 			}
 
-			p->SetSplitWidth(400);
+			p->SetSplitWidth(settingsPropTree->Width() / 2);
 		}
 
 		
@@ -1140,7 +1177,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 				//pRow->onChange.Add(this, &LevelSelectMenuControl::OnFirstNameChanged);
 			}
 
-			p->SetSplitWidth(400);
+			p->SetSplitWidth(settingsPropTree->Width() / 2);
 		}
 
 
@@ -1162,7 +1199,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 			n++; p->Add(s->blockMovementInterpolationTicks_Info.label, to_string(s->blockMovementInterpolationTicks))->SetToolTip(s->blockMovementInterpolationTicks_Info.tip);
 			n++; p->Add(s->blockAnimationTicksRandomUpToBetweenLoop_Info.label, to_string(s->blockAnimationTicksRandomUpToBetweenLoop))->SetToolTip(s->blockAnimationTicksRandomUpToBetweenLoop_Info.tip);
 
-			p->SetSplitWidth(400);
+			p->SetSplitWidth(settingsPropTree->Width() / 2);
 		}
 
 
@@ -1183,7 +1220,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 			n++; p->Add(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info.label, new Property::Checkbox(p), to_string(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty))->SetToolTip(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info.tip);
 
 
-			p->SetSplitWidth(400);
+			p->SetSplitWidth(settingsPropTree->Width() / 2);
 		}
 
 
@@ -1201,7 +1238,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 			n++; p->Add(s->removingBlocksDelayTicksBetweenEachBlock_Info.label, to_string(s->removingBlocksDelayTicksBetweenEachBlock))->SetToolTip(s->removingBlocksDelayTicksBetweenEachBlock_Info.tip);
 
 
-			p->SetSplitWidth(400);
+			p->SetSplitWidth(settingsPropTree->Width() / 2);
 		}
 
 
@@ -1209,7 +1246,7 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 		{
 			n++; p->Add(s->bloomIntensity_Info.label, to_string(s->bloomIntensity))->SetToolTip(s->bloomIntensity_Info.tip);
 			n++; p->Add(s->bloomTimes_Info.label, to_string(s->bloomTimes))->SetToolTip(s->bloomTimes_Info.tip);
-			p->SetSplitWidth(400);
+			p->SetSplitWidth(settingsPropTree->Width() / 2);
 		}
 
 		settingsPropTree->ExpandAll();
@@ -1534,7 +1571,7 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 
 	blockPropTree = new PropertyTree(blockPropertiesScrollControl);
 	//blockPropTree->Dock(Pos::Fill);
-	blockPropTree->SetWidth(400);
+	blockPropTree->SetWidth(blockPropertiesScrollControl->Width()-20);
 	//blockPropTree->SetHeight(1000);
 	{
 
@@ -1751,7 +1788,7 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 
 
 
-			p->SetSplitWidth(200);
+			p->SetSplitWidth(blockPropTree->Width()/2);
 		}
 //
 //		currentBlockType_makePieceTypeWhenCleared.clear();
@@ -1986,7 +2023,7 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 
 	piecePropTree = new PropertyTree(piecePropertiesScrollControl);
 	//piecePropTree->Dock(Pos::Fill);
-	piecePropTree->SetWidth(400);
+	piecePropTree->SetWidth(piecePropertiesScrollControl->Width() - 20);
 	//piecePropTree->SetHeight(1000);
 	{
 
@@ -2144,7 +2181,7 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doOverrideBlockTypesSelectionWindowButton);
 			}
 
-			p->SetSplitWidth(200);
+			p->SetSplitWidth(piecePropTree->Width()/2);
 		}
 
 
@@ -4825,7 +4862,7 @@ void CustomGameEditorControl::initDifficultyPropTree(DifficultyType *b)
 
 	difficultyPropTree = new PropertyTree(difficultyPropertiesScrollControl);
 	//difficultyPropTree->Dock(Pos::Fill);
-	difficultyPropTree->SetWidth(400);
+	difficultyPropTree->SetWidth(difficultyPropertiesScrollControl->Width() - 20);
 	//difficultyPropTree->SetHeight(1000);
 	{
 
@@ -4885,7 +4922,7 @@ void CustomGameEditorControl::initDifficultyPropTree(DifficultyType *b)
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doDifficultyDisallowBlockTypesSelectionWindowButton);
 			}
 
-			p->SetSplitWidth(200);
+			p->SetSplitWidth(difficultyPropTree->Width()/2);
 		}
 
 
