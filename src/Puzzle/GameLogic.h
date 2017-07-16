@@ -254,7 +254,9 @@ private:
 	bool playingFastMusic = false;
 	bool firstDeath = false;
 
+	float gameSpeed = 0.0f;
 	long long currentLineDropSpeedTicks = 0;
+	long long currentStackRiseSpeedTicks = 0;
 	long long lockDelayTicksCounter = 0;
 	long long lineDropTicksCounter = 0;
 	long long spawnDelayTicksCounter = 0;
@@ -383,7 +385,7 @@ private:
 	//need to add "ReceivedGarbageAmount" to frame state
 
 	void handleNewChain();
-	float getStackRiseBasedOnCurrentLineDropSpeedTicks();
+	//float getStackRiseBasedOnCurrentLineDropSpeedTicks();
 	void doStackRiseGame();
 	void doFallingBlockGame();
 public:

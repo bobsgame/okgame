@@ -257,6 +257,7 @@ void GameLogic::initGame()
 
 	lockDelayTicksCounter = currentGameType->maxLockDelayTicks;
 	currentLineDropSpeedTicks = getCurrentDifficulty()->initialLineDropSpeedTicks;
+	currentStackRiseSpeedTicks = getCurrentDifficulty()->maxStackRise;
 	stopStackRiseTicksCounter = 1000;
 
 	piecesMadeThisGame = 0;
@@ -1727,21 +1728,6 @@ void GameLogic::handleNewChain()
 	}
 }
 
-//=========================================================================================================================
-float GameLogic::getStackRiseBasedOnCurrentLineDropSpeedTicks()
-{//=========================================================================================================================
-	
-	int stackRiseDiff = getCurrentDifficulty()->maxStackRise - getCurrentDifficulty()->minStackRise;
-
-	long long dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks;
-
-	long long currentDropSpeedDiff = (currentLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks);
-
-	float currentStackRise = getCurrentDifficulty()->minStackRise + (((float)(currentDropSpeedDiff) / (float)(dropSpeedDiff)) * (float)(stackRiseDiff));
-
-	return currentStackRise;
-}
-
 
 //=========================================================================================================================
 void GameLogic::doStackRiseGame()
@@ -1803,21 +1789,8 @@ void GameLogic::doStackRiseGame()
 		stopCounterCaptionText = "Go!";
 		stackRiseTicksCounter += ticks();
 
-		//stackrise 300 was default, was too slow
-		//200-300 is a good speed
 
-		//dropspeed is 128-1000
-
-		//dropspeed/10 = 12-100
-
-		//stackrise = minStackRise
-
-
-		
-
-		float currentStackRise = getStackRiseBasedOnCurrentLineDropSpeedTicks();
-
-		if (stackRiseTicksCounter > (int)(currentStackRise/3.0f))//TODO: make better
+		if (stackRiseTicksCounter > currentStackRiseSpeedTicks)
 		{
 			stackRiseTicksCounter = 0;
 
@@ -4239,7 +4212,7 @@ void GameLogic::updateCaptions()
 
 	if (currentGameType->gameMode == GameMode::STACK)
 	{
-		gravityCaption->setText("Stack Speed: " + to_string(16.7f / (float)(getStackRiseBasedOnCurrentLineDropSpeedTicks()/3.0f)));//::Format("%.3f",	
+		gravityCaption->setText("Stack Speed: " + to_string(16.7f / (float)(currentStackRiseSpeedTicks)));//::Format("%.3f",	
 
 	}
 	else
@@ -4444,6 +4417,24 @@ void GameLogic::changeGame()
 	lockInputCountdownTicks = 500;
 }
 
+//
+////=========================================================================================================================
+//float GameLogic::getStackRiseBasedOnCurrentLineDropSpeedTicks()
+//{//=========================================================================================================================
+//
+//	int stackRiseDiff = getCurrentDifficulty()->maxStackRise - getCurrentDifficulty()->minStackRise;
+//
+//	long long dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks;
+//
+//	long long currentDropSpeedDiff = (currentLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks);
+//
+//	float currentStackRise = getCurrentDifficulty()->minStackRise + (((float)(currentDropSpeedDiff) / (float)(dropSpeedDiff)) * (float)(stackRiseDiff));
+//
+//	return currentStackRise;
+//}
+//
+
+
 //=========================================================================================================================
 void GameLogic::updateScore()
 {//=========================================================================================================================
@@ -4454,14 +4445,51 @@ void GameLogic::updateScore()
 	{
 		lastPiecesMadeThisGame = piecesMadeThisGame;
 
-		if (currentLineDropSpeedTicks > getCurrentDifficulty()->minimumLineDropSpeedTicks)
-		{
-			currentLineDropSpeedTicks = (long long)(currentLineDropSpeedTicks * 0.98f);
-		}
-		if (currentLineDropSpeedTicks < getCurrentDifficulty()->minimumLineDropSpeedTicks)
-		{
-			currentLineDropSpeedTicks = getCurrentDifficulty()->minimumLineDropSpeedTicks;
-		}
+		gameSpeed += 0.01;
+
+		if (gameSpeed > 1.0f)gameSpeed = 1.0f;
+
+
+
+		
+		long long dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks;
+		currentLineDropSpeedTicks = getCurrentDifficulty()->initialLineDropSpeedTicks - (dropSpeedDiff * gameSpeed);
+
+		//long long currentDropSpeedDiff = (currentLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks);
+
+
+	
+
+		int stackRiseDiff = getCurrentDifficulty()->maxStackRise - getCurrentDifficulty()->minStackRise;
+		currentStackRiseSpeedTicks = (getCurrentDifficulty()->maxStackRise - (stackRiseDiff * gameSpeed))/3.0f;//TODO: make better
+
+		//float currentStackRise = getCurrentDifficulty()->minStackRise + (((float)(currentDropSpeedDiff) / (float)(dropSpeedDiff)) * (float)(stackRiseDiff));
+
+
+
+
+//		if (currentLineDropSpeedTicks > getCurrentDifficulty()->minimumLineDropSpeedTicks)
+//		{
+//			currentLineDropSpeedTicks = (long long)(currentLineDropSpeedTicks * 0.98f);
+//		}
+//		if (currentLineDropSpeedTicks < getCurrentDifficulty()->minimumLineDropSpeedTicks)
+//		{
+//			currentLineDropSpeedTicks = getCurrentDifficulty()->minimumLineDropSpeedTicks;
+//		}
+
+
+
+
+		//stackrise 300 was default, was too slow
+		//200-300 is a good speed
+
+		//dropspeed is 128-1000
+
+		//dropspeed/10 = 12-100
+
+		//stackrise = minStackRise
+
+
 
 	}
 

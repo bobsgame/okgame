@@ -943,6 +943,8 @@ bool Grid::scrollUpStack(shared_ptr<Piece> cursorPiece, int amt)
                 putOneBlockPieceInGridCheckingForFillRules(x, y, playingFieldPieceTypes, playingFieldBlockTypes);
 			}
 		}
+
+		getGameLogic()->piecesMadeThisGame++;
 	}
 
 	return true;
