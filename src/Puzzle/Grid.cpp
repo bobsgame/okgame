@@ -2603,80 +2603,93 @@ void Grid::renderBackground()
 {//=========================================================================================================================
 
 	
-			float alpha = 0.85f;
+	float alpha = 0.85f;
+
+	int height = getHeight();
+	if (getGameType()->gameMode == GameMode::STACK)
+	{
+		height--;
+	}
 	
-			for(int x=-1;x<getWidth();x++)
+	for(int x=-1;x<getWidth();x++)
+	{
+		//for(int y=-1+GameLogic::aboveGridBuffer;y<getHeight();y++)
+		for(int y=-1;y<height;y++)
+		{
+	
+			BobColor *color = getGameLogic()->player->gridCheckeredBackgroundColor1;
+	
+			if(y%2==0)
 			{
-				//for(int y=-1+GameLogic::aboveGridBuffer;y<getHeight();y++)
-				for(int y=-1;y<getHeight();y++)
-				{
-	
-					BobColor *color = getGameLogic()->player->gridCheckeredBackgroundColor1;
-	
-					if(y%2==0)
-					{
-						if(x%2==0)color = getGameLogic()->player->gridCheckeredBackgroundColor1;
-						else color = getGameLogic()->player->gridCheckeredBackgroundColor2;
-					}
-					else
-					{
-						if(x%2==0)color = getGameLogic()->player->gridCheckeredBackgroundColor2;
-						else color = getGameLogic()->player->gridCheckeredBackgroundColor1;
-					}
-	
-					float fbgX = bgX() + (x*cellW());
-					float fbgY = bgY() + (y*cellH());
-	
-	
-					GLUtils::drawFilledRectXYWH(fbgX,fbgY,(float)cellW(), (float)cellH(),color->rf(),color->gf(),color->bf(),alpha);
-				}
+				if(x%2==0)color = getGameLogic()->player->gridCheckeredBackgroundColor1;
+				else color = getGameLogic()->player->gridCheckeredBackgroundColor2;
+			}
+			else
+			{
+				if(x%2==0)color = getGameLogic()->player->gridCheckeredBackgroundColor2;
+				else color = getGameLogic()->player->gridCheckeredBackgroundColor1;
 			}
 	
-			float r = getGameLogic()->player->gridCheckeredBackgroundColor1->rf();
-			float g = getGameLogic()->player->gridCheckeredBackgroundColor1->gf();
-			float b = getGameLogic()->player->gridCheckeredBackgroundColor1->bf();
+			float fbgX = bgX() + (x*cellW());
+			float fbgY = bgY() + (y*cellH());
 	
-			//draw danger zone
-			BobColor* c = new BobColor(48, 48, 48);
-			GLUtils::drawFilledRectXYWH(getXInFBO(), getYInFBO(), (float)cellW()*getWidth(), (float)cellH()*GameLogic::aboveGridBuffer, c->rf(), c->gf(), c->bf(), alpha);
-			delete c;
 	
-			//clip sides of background so scroll doesn't look dumb.
-			GLUtils::drawFilledRectXYWH
-			(
-				getXInFBO()-cellW(),
-				getYInFBO()-cellH(),
-				(float)cellW()*(getWidth()+2),
-				(float)cellH(),
-				r, g, b, alpha
-			);
+			GLUtils::drawFilledRectXYWH(fbgX,fbgY,(float)cellW(), (float)cellH(),color->rf(),color->gf(),color->bf(),alpha);
+		}
+	}
 	
-			GLUtils::drawFilledRectXYWH
-			(
-				getXInFBO()-cellW(),
-				getYInFBO()-cellH(),
-				(float)cellW(),
-				(float)cellH()*(getHeight()+1),
-				r, g, b, alpha
-			);
+	float r = getGameLogic()->player->gridCheckeredBackgroundColor1->rf();
+	float g = getGameLogic()->player->gridCheckeredBackgroundColor1->gf();
+	float b = getGameLogic()->player->gridCheckeredBackgroundColor1->bf();
 	
-			GLUtils::drawFilledRectXYWH
-			(
-				getXInFBO()+getWidth()*cellW(),
-				getYInFBO()-cellH(),
-				(float)cellW(),
-				(float)cellH()*(getHeight()+1),
-				r, g, b, alpha
-			);
+	//draw danger zone
+	BobColor c(48, 48, 48);
+
+	float y = getYInFBO();
+	float h = (float)cellH()*GameLogic::aboveGridBuffer;
+	GLUtils::drawFilledRectXYWH(getXInFBO(), y, (float)cellW()*getWidth(), (float)cellH()*GameLogic::aboveGridBuffer, c.rf(), c.gf(), c.bf(), alpha);
+
+	c = *BobColor::lightGray;
+	GLUtils::drawFilledRectXYWH(getXInFBO(), y+h-1, (float)cellW()*getWidth(), 1, c.rf(), c.gf(), c.bf(), alpha);
+
+
 	
-			GLUtils::drawFilledRectXYWH
-			(
-				getXInFBO()-cellW(),
-				getYInFBO()+getHeight()*cellH(),
-				(float)cellW()*(getWidth()+2),
-				(float)cellH(),
-				r, g, b, alpha
-			);
+	//clip sides of background so scroll doesn't look dumb.
+	GLUtils::drawFilledRectXYWH
+	(
+		getXInFBO()-cellW(),
+		getYInFBO()-cellH(),
+		(float)cellW()*(getWidth()+2),
+		(float)cellH(),
+		r, g, b, alpha
+	);
+	
+	GLUtils::drawFilledRectXYWH
+	(
+		getXInFBO()-cellW(),
+		getYInFBO()-cellH(),
+		(float)cellW(),
+		(float)cellH()*(height +1),
+		r, g, b, alpha
+	);
+	
+	GLUtils::drawFilledRectXYWH
+	(
+		getXInFBO()+getWidth()*cellW(),
+		getYInFBO()-cellH(),
+		(float)cellW(),
+		(float)cellH()*(height +1),
+		r, g, b, alpha
+	);
+	
+	GLUtils::drawFilledRectXYWH
+	(
+		getXInFBO()-cellW(),
+		getYInFBO()+ height*cellH(),
+		(float)cellW()*(getWidth()+2),
+		(float)cellH(),
+		r, g, b, alpha
+	);
 }
 
 //=========================================================================================================================
@@ -2832,6 +2845,8 @@ void Grid::renderBorder()
 
 }
 
+
+
 //=========================================================================================================================
 void Grid::renderTransparentOverLastRow()
 {//=========================================================================================================================
@@ -2842,11 +2857,12 @@ void Grid::renderTransparentOverLastRow()
 	float y = getYInFBO() + (getHeight() - 2) * cellH() + cellH()/2;
 
 	float w = (float)getWidth() * cellW();
-	float h = (float)((getYInFBO() + getHeight() * cellH()) - y) + 1;
+	float h = (float)((getYInFBO() + getHeight() * cellH()) - y);
 
 	float div = 16;
 	for(float i=0; i<div; i++)
 	{
+		if (i == div - 1)h += 1;
 		
 		GLUtils::drawFilledRectXYWH
 		(
