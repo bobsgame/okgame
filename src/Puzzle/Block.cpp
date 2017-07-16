@@ -1162,9 +1162,9 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 {//=========================================================================================================================
 
 
-	//BobColor noColor;
+	BobColor noColor;
 
-	BobColor *renderColor = nullptr;
+	BobColor renderColor;
 
 	//BobColor noColor;
 	//PieceType noPieceType;
@@ -1174,7 +1174,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		blockType->specialColor != nullptr
 	)
 	{
-		renderColor = new BobColor(*blockType->specialColor);
+		renderColor = BobColor(*blockType->specialColor);
 	}
 
 	if(
@@ -1228,7 +1228,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		if (bi > 255)bi = 255;
 		if (ai > 255)ai = 255;
 		
-		renderColor = new BobColor(ri, gi, bi, ai);
+		renderColor = BobColor(ri, gi, bi, ai);
 	}
 
 	
@@ -1236,15 +1236,16 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 	
 
-	if (renderColor == nullptr)
+	if (renderColor == noColor)
 	{
 		if (color != nullptr)
 		{
-			renderColor = new BobColor(*color);
+			renderColor = BobColor(*color);
 		}
 		else
 		{
-			renderColor = new BobColor(*BobColor::black);
+			log.error("Should never happen!");
+			renderColor = BobColor(*BobColor::white);
 		}
 	}
 
@@ -1319,25 +1320,25 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	//-------------------------------------------------
 	//do locking animation, draw darker if locked into Grid()
 	//-------------------------------------------------
-	BobColor *textureColor = new BobColor(*renderColor);
+	BobColor textureColor = BobColor(renderColor);
 	if (getSettings()->fadeBlocksDarkerWhenLocking && locking)
 	{
 		for (int i = 0; i < lockingAnimationFrame; i++)
 		{
-			textureColor->darker(0.1f);
+			textureColor.darker(0.1f);
 		}
 
 		if (lockingAnimationFrame > 5)
 		{
 			//delete textureColor;
-			textureColor = new BobColor(*BobColor::white);
+			textureColor = BobColor(*BobColor::white);
 		}
 	}
 	else
 	{
 		if (getSettings()->blockRule_drawBlocksDarkerWhenLocked && setInGrid && flashingToBeRemoved == false)
 		{
-			textureColor->darker(0.5f); //.darker();//a=0.6f;//
+			textureColor.darker(0.5f); //.darker();//a=0.6f;//
 		}
 	}
 
@@ -1345,21 +1346,21 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	{
 		if (flashingToBeRemovedLightDarkToggle == true)
 		{
-			textureColor->lighter();
-			textureColor->lighter();
-			textureColor->lighter();
+			textureColor.lighter();
+			textureColor.lighter();
+			textureColor.lighter();
 		}
 		else
 		{
-			textureColor->darker();
-			textureColor->darker();
-			textureColor->darker();
+			textureColor.darker();
+			textureColor.darker();
+			textureColor.darker();
 		}
 	}
 
-	float r = textureColor->rf();
-	float g = textureColor->gf();
-	float b = textureColor->bf();
+	float r = textureColor.rf();
+	float g = textureColor.gf();
+	float b = textureColor.bf();
 
 	if (slamming)
 	{
@@ -1486,14 +1487,14 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 	if (getSettings()->blockRule_fillSolidSquareWhenSetInGrid && setInGrid && flashingToBeRemoved == false)
 	{
-		BobColor c = BobColor(*renderColor, 0.1f);
+		BobColor c = BobColor(renderColor, 0.1f);
 		GLUtils::drawFilledRectXYWH(screenX, screenY, w, h, c.rf(), c.gf(), c.bf(), c.af());
 		//delete c;
 	}
 
 	if (getSettings()->drawDotOnCenterOfRotation)
 	{
-		BobColor dotColor = BobColor(*renderColor, 1.0f);
+		BobColor dotColor = BobColor(renderColor, 1.0f);
 		dotColor.lighter();
 		dotColor.lighter();
 		if (xInPiece == 0 && yInPiece == 0)GLUtils::drawFilledRectXYWH(screenX + 3 * scale, screenY + 3 * scale, w - 6 * scale, h - 6 * scale, dotColor.rf(), dotColor.gf(), dotColor.bf(), a);

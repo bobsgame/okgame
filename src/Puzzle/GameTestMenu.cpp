@@ -46,12 +46,12 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 	checkBase->SetHeight(20);
 	{
 		Controls::Label *checkLabel = new Controls::Label(checkBase);
-		checkLabel->SetText("Hide built in and already voted:");
+		checkLabel->SetText("Hide already voted:");
 		checkLabel->Dock(Pos::Left);
 		checkLabel->SetHeight(20);
 		checkLabel->SetWidth(200);
 
-		hideVotedGames = new CheckBox(checkLabel, "Hide built in and already voted");
+		hideVotedGames = new CheckBox(checkLabel, "Hide already voted");
 		hideVotedGames->SetChecked(true);
 		hideVotedGames->onCheckChanged.Add(this, &GameTestMenuControl::onChangeHideVotedGames);
 		hideVotedGames->Dock(Pos::Left);
@@ -304,10 +304,10 @@ void GameTestMenuControl::populateGameTypesListBox()
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
 
-		if (g->builtInType)
-		{
-			if (hideVotedGames->IsChecked())continue;
-		}
+		//if (g->builtInType)
+//		{
+//			if (hideVotedGames->IsChecked())continue;
+//		}
 		if (g->downloaded == false)
 		{
 			if (hideVotedGames->IsChecked())continue;
@@ -341,10 +341,10 @@ void GameTestMenuControl::populateGameSequencesListBox()
 		string name = stringColorPair.first;
 		BobColor *color = stringColorPair.second;
 
-		if (g->builtInType)
-		{
-			if (hideVotedGames->IsChecked())continue;
-		}
+//		if (g->builtInType)
+//		{
+//			if (hideVotedGames->IsChecked())continue;
+//		}
 		if (g->downloaded == false)
 		{
 			if (hideVotedGames->IsChecked())continue;
@@ -527,7 +527,24 @@ void GameTestMenuControl::initPreviewGame()
 	}
 	if(currentGameSequence->gameTypes.size()==0)
 	{
-		currentGameSequence->gameTypes.add(new GameType());
+		
+
+		GameType *g = new GameType();
+		shared_ptr<BlockType> bt(new BlockType());
+		bt->name = "Gray Square";
+		bt->colors.add(BobColor::gray);
+		bt->useInNormalPieces = true;
+		bt->useAsPlayingFieldFiller = true;
+		bt->useAsGarbage = true;
+		shared_ptr<PieceType> pt(new PieceType());
+		pt->name = "Single Block Piece";
+		pt->useAsNormalPiece = true;
+		pt->useAsPlayingFieldFillerPiece = true;
+		pt->useAsGarbagePiece = true;
+		g->blockTypes.add(bt);
+		g->pieceTypes.add(pt);
+
+		currentGameSequence->gameTypes.add(g);
 	}
 
 	

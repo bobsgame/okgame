@@ -4445,7 +4445,7 @@ void GameLogic::updateScore()
 	{
 		lastPiecesMadeThisGame = piecesMadeThisGame;
 
-		gameSpeed += 0.01;
+		gameSpeed += 0.02f;
 
 		if (gameSpeed > 1.0f)gameSpeed = 1.0f;
 
