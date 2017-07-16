@@ -40,3 +40,5 @@ install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf @loader_
 install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 @loader_path/libs/SDL2.framework/Versions/A/SDL2 ./bobsgame
 otool -L ./bobsgame
 chmod 755 bobsgame
+
+codesign -f -s - ./SDL2.framework/Versions/A/SDL2
