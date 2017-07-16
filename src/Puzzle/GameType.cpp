@@ -49,7 +49,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 	{
 		int randomlyFillStackAmount = 0;
 		ar & BOOST_SERIALIZATION_NVP(randomlyFillStackAmount);
-		if (randomlyFillStackAmount < randomlyFillGridAmount)randomlyFillGridAmount = randomlyFillStackAmount;
+		if (randomlyFillStackAmount < randomlyFillGridAmount || randomlyFillStackAmount > 30)randomlyFillGridAmount = randomlyFillStackAmount;
 	}
 
 
