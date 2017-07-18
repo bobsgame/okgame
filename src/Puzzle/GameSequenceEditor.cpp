@@ -109,9 +109,9 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 	mainWindowSplitter = new Gwen::Controls::HorizontalSplitter(this);
 	mainWindowSplitter->GetSplitter()->onDragged.Add(this, &GameSequenceEditorControl::doResize);
 	mainWindowSplitter->Dock(Pos::Top);
-	
-	
-	
+
+
+
 
 	leftBase = new Base(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(0, leftBase);
@@ -132,7 +132,7 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 				gameTypesListBox = new ListBox(gameTypesListBoxBase);
 				gameTypesListBox->Dock(Pos::Fill);
 				gameTypesListBox->SetAllowMultiSelect(false);
-				
+
 
 				populateGameTypesListBox();
 
@@ -152,7 +152,7 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 			gameTypesAddRemoveButtonsBase = new Base(gameTypesWindow);
 			gameTypesAddRemoveButtonsBase->Dock(Pos::Right);
 			{
-				
+
 				gameTypesAddRemoveButtonsPositioner = new Layout::Position(gameTypesAddRemoveButtonsBase);
 				gameTypesAddRemoveButtonsPositioner->Dock(Pos::Top);
 
@@ -447,7 +447,7 @@ void GameSequenceEditorControl::populateGameSequencesListBox()
 
 void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 {//=========================================================================================================================
-	
+
 	//traverse the listbox and get all the names of the games
 	//clear the game array
 	//add all the names
@@ -710,12 +710,12 @@ void GameSequenceEditorControl::editSelectedGameSequence(Base* control)
 
 	//bob can edit anything
 #ifndef _DEBUG
-	if (currentGameSequence->builtInType)
-	{
-		//create modal notice that you can only duplicate? or maybe have an error label
-		gameSequenceSelectLabel->SetText("Built in sequences must be duplicated in order to edit them.");
-	}
-	else
+//	if (currentGameSequence->builtInType)
+//	{
+//		//create modal notice that you can only duplicate? or maybe have an error label
+//		gameSequenceSelectLabel->SetText("Built in sequences must be duplicated in order to edit them.");
+//	}
+//	else
 
 	if (currentGameSequence->downloaded)
 	{
@@ -924,7 +924,7 @@ void GameSequenceEditorControl::onUploadButton(Base* control)
 	}
 
 	if (response == "")response = "Did not get a response from the server. Try again later.";
-	
+
 	WindowControl *result = new WindowControl(GetCanvas());
 	result->SetTitle("Result");
 	result->SetSize(300, 60);
@@ -1001,7 +1001,7 @@ void GameSequenceEditorControl::dontSaveAndExit(Base* control)
 
 void GameSequenceEditorControl::onCurrentGameSequenceListRowSelect(Base* control)
 {//=========================================================================================================================
-	
+
 	//don't need to do anything for this i don't think
 
 }
@@ -1080,7 +1080,7 @@ void GameSequenceEditorControl::onUpButton(Base* control)
 		}
 		currentGameSequenceListBox->SetSelectedRow(currentGameSequenceListBox->GetRow(index - 1));
 	}
-	
+
 
 }
 
@@ -1119,7 +1119,7 @@ void GameSequenceEditorControl::onDownButton(Base* control)
 		}
 		currentGameSequenceListBox->SetSelectedRow(currentGameSequenceListBox->GetRow(index + 1));
 	}
-	
+
 
 }
 
@@ -1156,7 +1156,7 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 
 	if(gameSequenceEditor!=nullptr)
 	{
-		
+
 		gameSequenceEditor->checkResize();
 
 		if (gameSequenceEditor->exit == true)

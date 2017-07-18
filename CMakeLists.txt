@@ -356,20 +356,18 @@ set(SOURCE_FILES
     src/Engine/stadium/BobsGameStadium.h
     src/Engine/stadium/StadiumScreen.cpp
     src/Engine/stadium/StadiumScreen.h
-    src/Engine/state/CreateNewAccount.cpp
-    src/Engine/state/CreateNewAccount.h
     src/Engine/state/CreateNewAccountState.cpp
     src/Engine/state/CreateNewAccountState.h
-    src/Engine/state/GlowTileBackground.cpp
-    src/Engine/state/GlowTileBackground.h
-    src/Engine/state/KeyboardScreen.cpp
-    src/Engine/state/KeyboardScreen.h
-    src/Engine/state/LegalScreen.cpp
-    src/Engine/state/LegalScreen.h
+    src/Engine/state/GlowTileBackgroundMenuPanel.cpp
+    src/Engine/state/GlowTileBackgroundMenuPanel.h
+    src/Engine/state/KeyboardMenuPanel.cpp
+    src/Engine/state/KeyboardMenuPanel.h
+    src/Engine/state/LegalMenuPanel.cpp
+    src/Engine/state/LegalMenuPanel.h
     src/Engine/state/LoggedOutState.cpp
     src/Engine/state/LoggedOutState.h
-    src/Engine/state/LoginScreen.cpp
-    src/Engine/state/LoginScreen.h
+    src/Engine/state/LogoState.cpp
+    src/Engine/state/LogoState.h
     src/Engine/state/LoginState.cpp
     src/Engine/state/LoginState.h
     src/Engine/state/ServersHaveShutDownState.cpp
