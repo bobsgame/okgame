@@ -105,7 +105,7 @@ void LogoState::render()
 //	GLUtils::drawTexture(t, x0, x1, y0, y1, 1.0f, GLUtils::FILTER_NEAREST);
 //	GLUtils::drawTexture(over, x0, x1, y0, y1, 1.0f, GLUtils::FILTER_NEAREST);
 
-	float timesToCycle = 3.0f;
+	float timesToCycle = ticksToShow/1000.0f;
 
 
 
