@@ -28,7 +28,7 @@ void TitleScreenState::update()
 		ticks = 0;
 
 		frame++;
-		if (frame >= (int)Main::glowTileBackground->glowTileFramesTexture->size())
+		if (frame >= (int)Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->size())
 		{
 			frame = 0;
 			count++;
@@ -41,7 +41,10 @@ void TitleScreenState::update()
 		//			Main.mainObject.createNewAccountState.cancelButton.setEnabled(false);
 		//			Main.mainObject.createNewAccountState.cancelButton.setVisible(false);
 		//			Main.mainObject.createNewAccountState.cancelButton.setActivated(true);
-		Main::getMain()->stateManager->setState(Main::getMain()->createNewAccountState);
+
+
+		Main::getMain()->stateManager->popState();
+		//Main::getMain()->stateManager->pushState(Main::getMain()->createNewAccountState);
 	}
 }
 
@@ -49,9 +52,9 @@ void TitleScreenState::render()
 { //=========================================================================================================================
 
 
-	BobTexture* t = Main::glowTileBackground->bgScrollTexture;
+	BobTexture* t = Main::glowTileBackgroundMenuPanel->bgScrollTexture;
 
-	BobTexture* over = Main::glowTileBackground->glowTileFramesTexture->get(frame);
+	BobTexture* over = Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->get(frame);
 
 	float screenWidth = (float)GLUtils::getViewportWidth();
 	float screenHeight = (float)GLUtils::getViewportHeight();

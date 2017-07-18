@@ -49,7 +49,7 @@ void NDMenuBackground::init()
 
 	for (int i = 0; i < numActiveTiles; i++)
 	{
-		glowTiles->add(new GlowTileBackground::GlowTile(this));
+		glowTiles->add(new GlowTileBackgroundMenuPanel::GlowTile(this));
 	}
 
 	glowTiles->get(0)->started = true;

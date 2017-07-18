@@ -134,6 +134,7 @@
     <ClInclude Include="lib\stb_image_write.h" />
     <ClInclude Include="lib\stb_truetype.h" />
     <ClInclude Include="src\Engine\network\TCPServerConnection.h" />
+    <ClInclude Include="src\Engine\state\LogoState.h" />
     <ClInclude Include="src\Puzzle\Legacy.h" />
     <ClInclude Include="src\Puzzle\Room.h" />
     <ClInclude Include="src\Puzzle\Stats\LeaderBoardAndHighScoreBoardEntry.h" />
@@ -261,13 +262,11 @@
     <ClInclude Include="src\Engine\map\WarpArea.h" />
     <ClInclude Include="src\Engine\network\BobNet.h" />
     <ClInclude Include="src\Engine\network\UDPPeerConnection.h" />
-    <ClInclude Include="src\Engine\state\CreateNewAccount.h" />
     <ClInclude Include="src\Engine\state\CreateNewAccountState.h" />
-    <ClInclude Include="src\Engine\state\GlowTileBackground.h" />
-    <ClInclude Include="src\Engine\state\KeyboardScreen.h" />
-    <ClInclude Include="src\Engine\state\LegalScreen.h" />
+    <ClInclude Include="src\Engine\state\GlowTileBackgroundMenuPanel.h" />
+    <ClInclude Include="src\Engine\state\KeyboardMenuPanel.h" />
+    <ClInclude Include="src\Engine\state\LegalMenuPanel.h" />
     <ClInclude Include="src\Engine\state\LoggedOutState.h" />
-    <ClInclude Include="src\Engine\state\LoginScreen.h" />
     <ClInclude Include="src\Engine\state\LoginState.h" />
     <ClInclude Include="src\Engine\state\ServersHaveShutDownState.h" />
     <ClInclude Include="src\Engine\state\StateManager.h" />
@@ -333,6 +332,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Engine\network\TCPServerConnection.cpp" />
+    <ClCompile Include="src\Engine\state\LogoState.cpp" />
     <ClCompile Include="src\Puzzle\BobsGameMenus.cpp" />
     <ClCompile Include="src\Engine\cinematics\CinematicsManager.cpp" />
     <ClCompile Include="src\Engine\cinematics\Letterbox.cpp" />
@@ -446,13 +446,11 @@
     <ClCompile Include="src\Engine\map\WarpArea.cpp" />
     <ClCompile Include="src\Engine\network\BobNet.cpp" />
     <ClCompile Include="src\Engine\network\UDPPeerConnection.cpp" />
-    <ClCompile Include="src\Engine\state\CreateNewAccount.cpp" />
     <ClCompile Include="src\Engine\state\CreateNewAccountState.cpp" />
-    <ClCompile Include="src\Engine\state\GlowTileBackground.cpp" />
-    <ClCompile Include="src\Engine\state\KeyboardScreen.cpp" />
-    <ClCompile Include="src\Engine\state\LegalScreen.cpp" />
+    <ClCompile Include="src\Engine\state\GlowTileBackgroundMenuPanel.cpp" />
+    <ClCompile Include="src\Engine\state\KeyboardMenuPanel.cpp" />
+    <ClCompile Include="src\Engine\state\LegalMenuPanel.cpp" />
     <ClCompile Include="src\Engine\state\LoggedOutState.cpp" />
-    <ClCompile Include="src\Engine\state\LoginScreen.cpp" />
     <ClCompile Include="src\Engine\state\LoginState.cpp" />
     <ClCompile Include="src\Engine\state\ServersHaveShutDownState.cpp" />
     <ClCompile Include="src\Engine\state\StateManager.cpp" />

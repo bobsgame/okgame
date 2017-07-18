@@ -18,16 +18,19 @@ public:
 	static Logger log;
 
 
-	Engine* currentState = nullptr;
+	ArrayList<Engine*> states;
+
+	//Engine* currentState = nullptr;
 
 
 	StateManager();
 
 
-	Engine* getState();
+	Engine* getCurrentState();
 
 
-	void setState(Engine* s);
+	void pushState(Engine* s);
+	void popState();
 
 
 	void update();

@@ -18,24 +18,38 @@ StateManager::StateManager()
 { //=========================================================================================================================
 }
 
-Engine* StateManager::getState()
+Engine* StateManager::getCurrentState()
 { //=========================================================================================================================
-	return currentState;
+
+	if(states.size()>0)
+	return states.get(0);
+	else return nullptr;
 }
 
-void StateManager::setState(Engine* s)
+//void StateManager::setState(Engine* s)
+//{ //=========================================================================================================================
+//	currentState = s;
+//}
+
+void StateManager::pushState(Engine* s)
 { //=========================================================================================================================
-	currentState = s;
+	states.insert(0, s);
+}
+
+void StateManager::popState()
+{ //=========================================================================================================================
+	if(states.size()>0)
+	states.removeAt(0);
 }
 
 void StateManager::update()
 {
 	Engine::updateTimers();
-	currentState->update();
+	getCurrentState()->update();
 }
 
 void StateManager::render()
 {
-	currentState->render();
+	getCurrentState()->render();
 }
 

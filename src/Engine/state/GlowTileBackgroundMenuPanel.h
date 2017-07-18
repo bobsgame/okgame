@@ -11,7 +11,7 @@ class Logger;
 
 
 
-class GlowTileBackground : public MenuPanel
+class GlowTileBackgroundMenuPanel : public MenuPanel
 {
 public:
 
@@ -25,10 +25,10 @@ public:
 	class GlowTile
 	{
 	private:
-		GlowTileBackground* outerInstance = nullptr;
+		GlowTileBackgroundMenuPanel* outerInstance = nullptr;
 
 	public:
-		GlowTile(GlowTileBackground* outerInstance);
+		GlowTile(GlowTileBackgroundMenuPanel* outerInstance);
 
 		int tileX = 0;
 		int tileY = 0;
@@ -57,10 +57,10 @@ public:
 	float scrollSpeedTicksMultiplier = 0;
 
 
-	GlowTileBackground();
+	GlowTileBackgroundMenuPanel();
 
 
-	GlowTileBackground(Engine* g);
+	GlowTileBackgroundMenuPanel(Engine* g);
 
 
 	virtual void init();

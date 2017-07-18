@@ -22,13 +22,13 @@ void ServersHaveShutDownState::update()
 { //=========================================================================================================================
 }
 
-GlowTileBackground* Main::glowTileBackground = nullptr;
+
 
 void ServersHaveShutDownState::render()
 { //=========================================================================================================================
 
 
-	Main::glowTileBackground->render();
+	Main::glowTileBackgroundMenuPanel->render();
 
 
 	GLUtils::drawFilledRect(0, 0, 0, 0, (float)GLUtils::getViewportWidth(), 0, (float)GLUtils::getViewportHeight(), 0.5f);

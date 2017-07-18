@@ -44,7 +44,7 @@ GUIManager::GUIManager(BGClientEngine* g)
 	stuffMenu = new StuffMenu();
 	playerEditMenu = new PlayerEditMenu();
 	gameStore = new GameStore();
-	keyboardScreen = new KeyboardScreen();
+	keyboardScreen = new KeyboardMenuPanel();
 	//
 	//   
 	//   stuffMenuGUI = new GUI(stuffMenu, GLUtils::TWLrenderer);

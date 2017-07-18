@@ -11,10 +11,10 @@
 
 
 
-Logger KeyboardScreen::log = Logger("KeyboardScreen");
+Logger KeyboardMenuPanel::log = Logger("KeyboardScreen");
 
 
-KeyboardScreen::KeyboardScreen()
+KeyboardMenuPanel::KeyboardMenuPanel()
 { //=========================================================================================================================
 
 	// MenuPanel();
@@ -99,12 +99,12 @@ KeyboardScreen::KeyboardScreen()
 	//   //insideScrollPaneLayout.setTheme(GUIManager.emptyDialogLayoutTheme);
 }
 
-KeyboardScreen::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(KeyboardScreen* outerInstance)
+KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(KeyboardMenuPanel* outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
 
-void KeyboardScreen::WidgetAnonymousInnerClassHelper::layout()
+void KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::layout()
 {
 	//force the keyboard image to fit inside the layout/scrollpane/layout/layout
 	//
@@ -124,18 +124,18 @@ void KeyboardScreen::WidgetAnonymousInnerClassHelper::layout()
 }
 
 //The following method was originally marked 'synchronized':
-bool KeyboardScreen::getClickedOK_S()
+bool KeyboardMenuPanel::getClickedOK_S()
 {
 	return _clickedOK;
 }
 
 //The following method was originally marked 'synchronized':
-void KeyboardScreen::setClickedOK_S(bool b)
+void KeyboardMenuPanel::setClickedOK_S(bool b)
 {
 	_clickedOK = b;
 }
 
-void KeyboardScreen::update()
+void KeyboardMenuPanel::update()
 { //=========================================================================================================================
 	if (isActivated == true)
 	{
@@ -159,13 +159,13 @@ void KeyboardScreen::update()
 	}
 }
 
-void KeyboardScreen::onScrolledUp()
+void KeyboardMenuPanel::onScrolledUp()
 { //=========================================================================================================================
 
 	//getGUI().setTooltipDelay(1);
 }
 
-void KeyboardScreen::scrollDown()
+void KeyboardMenuPanel::scrollDown()
 { //=========================================================================================================================
 	if (ticksSinceTurnedOff <= fadeOutTime)
 	{
@@ -180,7 +180,7 @@ void KeyboardScreen::scrollDown()
 	}
 }
 
-void KeyboardScreen::layout()
+void KeyboardMenuPanel::layout()
 { //=========================================================================================================================
 
 	//   //login panel is centered
@@ -191,13 +191,13 @@ void KeyboardScreen::layout()
 	MenuPanel::layout();
 }
 
-void KeyboardScreen::setButtonsVisible(bool b)
+void KeyboardMenuPanel::setButtonsVisible(bool b)
 { //=========================================================================================================================
 
 	//okButton->setVisible(b);
 }
 
-void KeyboardScreen::doOK()
+void KeyboardMenuPanel::doOK()
 { //=========================================================================================================================
 	//
 	//   GUI* gui = getGUI();
@@ -238,7 +238,7 @@ void KeyboardScreen::doOK()
 	//   }
 }
 
-void KeyboardScreen::renderBefore()
+void KeyboardMenuPanel::renderBefore()
 { //=========================================================================================================================
 
 
@@ -256,7 +256,7 @@ void KeyboardScreen::renderBefore()
 	//Main.glowTileBackground.render();
 }
 
-void KeyboardScreen::render()
+void KeyboardMenuPanel::render()
 { //=========================================================================================================================
 
 

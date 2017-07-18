@@ -49,7 +49,7 @@ void ND::update()
 	MenuPanel::update();
 
 
-	Engine* s = nDGameStateManager->getState();
+	Engine* s = nDGameStateManager->getCurrentState();
 
 	if (isActivated == true)
 	{
@@ -122,12 +122,12 @@ void ND::setGame(NDGameEngine* game)
 	light = new Light(game, "nDScreenLight", 0, 0, GLUtils::getViewportWidth(), GLUtils::getViewportHeight(), 240, 240, 255, 60, 32, 2.0f, 1.0f, 0, true, true);
 
 
-	nDGameStateManager->setState(game);
+	nDGameStateManager->pushState(game);
 }
 
 NDGameEngine* ND::getGame()
 { //=========================================================================================================================
-	return static_cast<NDGameEngine*>(nDGameStateManager->getState());
+	return static_cast<NDGameEngine*>(nDGameStateManager->getCurrentState());
 }
 
 void ND::toggleActivated()

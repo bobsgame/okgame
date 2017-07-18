@@ -11,38 +11,49 @@ class Logger;
 
 
 
-class LegalScreen : public MenuPanel
+class KeyboardMenuPanel : public MenuPanel
 {
 public:
 	static Logger log;
 
 
-	//   DialogLayout* legalPanel;
-	//
-	//   Button* noButton;
-	//   Button* okButton;
+	//DialogLayout* keyboardPanel = nullptr;
 
 
-	LegalScreen();
+	//Button* okButton = nullptr;
 
+
+	KeyboardMenuPanel();
+
+private:
+	class WidgetAnonymousInnerClassHelper// : public Widget
+	{
+	private:
+		KeyboardMenuPanel* outerInstance = nullptr;
+
+	public:
+		WidgetAnonymousInnerClassHelper(KeyboardMenuPanel* outerInstance);
+
+		void layout();
+	};
+
+public:
 	bool _clickedOK = false;
-	bool _clickedCancel = false;
 
 	//The following method was originally marked 'synchronized':
 	bool getClickedOK_S();
-	//The following method was originally marked 'synchronized':
-	bool getClickedCancel_S();
 
 	//The following method was originally marked 'synchronized':
 	void setClickedOK_S(bool b);
-	//The following method was originally marked 'synchronized':
-	void setClickedCancel_S(bool b);
 
 
 	virtual void update() override;
 
 
 	virtual void onScrolledUp() override;
+
+
+	virtual void scrollDown() override;
 
 
 protected:
@@ -53,13 +64,7 @@ public:
 	void setButtonsVisible(bool b);
 
 
-	virtual void scrollDown() override;
-
-
-	void doDisagree();
-
-
-	void doAgree();
+	void doOK();
 
 
 	virtual void renderBefore() override;

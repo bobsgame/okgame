@@ -13,25 +13,25 @@
 
 
 
-Logger GlowTileBackground::log = Logger("GlowTileBackground");
+Logger GlowTileBackgroundMenuPanel::log = Logger("GlowTileBackground");
 
 
-GlowTileBackground::GlowTile::GlowTile(GlowTileBackground* outerInstance) : outerInstance(outerInstance)
+GlowTileBackgroundMenuPanel::GlowTile::GlowTile(GlowTileBackgroundMenuPanel* outerInstance) : outerInstance(outerInstance)
 {
 }
 
-GlowTileBackground::GlowTileBackground()
+GlowTileBackgroundMenuPanel::GlowTileBackgroundMenuPanel()
 { //=========================================================================================================================
 }
 
-GlowTileBackground::GlowTileBackground(Engine* g)
+GlowTileBackgroundMenuPanel::GlowTileBackgroundMenuPanel(Engine* g)
 { //=========================================================================================================================
 
 	this->e = g;
-	init();
+	
 }
 
-void GlowTileBackground::init()
+void GlowTileBackgroundMenuPanel::init()
 { //=========================================================================================================================
 
 	numActiveTiles = 4;
@@ -62,7 +62,7 @@ void GlowTileBackground::init()
 	glowTiles->get(0)->started = true;
 }
 
-void GlowTileBackground::cleanup()
+void GlowTileBackgroundMenuPanel::cleanup()
 { //=========================================================================================================================
 	if (glowTileFramesTexture->size() > 0 && glowTileFramesTexture->size() > 0)
 	{
@@ -83,7 +83,7 @@ void GlowTileBackground::cleanup()
 	}
 }
 
-void GlowTileBackground::update()
+void GlowTileBackgroundMenuPanel::update()
 { //=========================================================================================================================
 
 
@@ -243,7 +243,7 @@ void GlowTileBackground::update()
 	//TODO: fix weird delay on start
 }
 
-void GlowTileBackground::render()
+void GlowTileBackgroundMenuPanel::render()
 { //=========================================================================================================================
 
 	//------------------------------------------

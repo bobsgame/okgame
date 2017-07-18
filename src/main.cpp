@@ -152,6 +152,8 @@ Gwen::Renderer::OpenGL* Main::gwenRenderer = nullptr;
 Gwen::Skin::TexturedBase* Main::gwenSkin = nullptr;
 //MSG msg;
 
+GlowTileBackgroundMenuPanel* Main::glowTileBackgroundMenuPanel = nullptr;
+
 //==========================================================================================================================
 void Main::mainInit()
 {//=========================================================================================================================
@@ -285,10 +287,7 @@ void Main::mainInit()
 
 
 
-	if (previewClientInEditor == false)
-	{
-		doLegalScreen();
-	}
+
 
 
 	stateManager = new StateManager();
@@ -299,11 +298,13 @@ void Main::mainInit()
 	//-------------------
 
 	log.debug("Init GUIs");
-	if (glowTileBackground == nullptr)
-	{
-		glowTileBackground = new GlowTileBackground();
-	}
 
+
+	glowTileBackgroundMenuPanel = new GlowTileBackgroundMenuPanel();
+	glowTileBackgroundMenuPanel->init();
+
+	logoScreenState = new LogoState();
+	logoScreenState->init();
 	loginState = new LoginState();
 	loginState->init();
 	loggedOutState = new LoggedOutState();
@@ -396,7 +397,11 @@ void Main::mainInit()
 
 
 
-#define PUZZLE 1
+
+
+
+
+//#define PUZZLE 1
 
 #ifdef PUZZLE
 
@@ -417,11 +422,11 @@ void Main::mainInit()
 	}
 
 	gameEngine = new BGClientEngine();
-	stateManager->setState(gameEngine);
+	stateManager->pushState(gameEngine);
 	//Engine::setClientGameEngine(gameEngine);
 	gameEngine->init();
 	
-	bobNet->addEngineToForwardMessagesTo(stateManager->getState());
+	bobNet->addEngineToForwardMessagesTo(gameEngine);
 
 	if (previewClientInEditor == false)
 	{
@@ -447,14 +452,10 @@ void Main::mainInit()
 				
 			//gameEngine->textManager->text("yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay <PLAYER>Yep  \"Yuu\" yay. Yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay. a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
 
-
 		}
 		else
 		{
-
-			showControlsImage();
-				
-			stateManager->setState(loginState);
+			stateManager->pushState(loginState);
 		}
 
 		//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
@@ -475,6 +476,21 @@ void Main::mainInit()
 	GLUtils::e();
 
 
+	
+
+	if (previewClientInEditor == false)
+	{
+		//stateManager->pushState(controlsScreenState);
+		//showControlsImage();
+
+
+		//stateManager->pushState(legalScreenState);
+		//doLegalScreen();
+
+		stateManager->pushState(logoScreenState);
+	}
+
+	
 
 	//GLUtils::e();
 	//tcpServerConnection = new BGClientTCP(gameEngine);
@@ -681,7 +697,7 @@ void Main::initClientEngine()
 void Main::whilefix()
 {//==========================================================================================================================
 	getMain()->processEvents();
-	getMain()->stateManager->getState()->resetPressedButtons();
+	getMain()->stateManager->getCurrentState()->resetPressedButtons();
 
 	bool frame = false;
 
@@ -698,9 +714,9 @@ void Main::whilefix()
 			console->update();
 			bobNet->tcpServerConnection.update();
 
-			if (dynamic_cast<Engine*>(getMain()->stateManager->getState()) != NULL)
+			if (dynamic_cast<Engine*>(getMain()->stateManager->getCurrentState()) != NULL)
 			{
-				((Engine*)getMain()->stateManager->getState())->getCaptionManager()->update();
+				((Engine*)getMain()->stateManager->getCurrentState())->getCaptionManager()->update();
 			}
 			
 
@@ -712,7 +728,7 @@ void Main::whilefix()
 		SDL_Delay(10);
 	}
 
-	getMain()->stateManager->getState()->setButtonStates();
+	getMain()->stateManager->getCurrentState()->setButtonStates();
 }
 
 //==========================================================================================================================
@@ -753,7 +769,7 @@ void Main::update()
 
 	processEvents();
 	//GLUtils::e();
-	stateManager->getState()->updateControls();
+	stateManager->getCurrentState()->updateControls();
 	//GLUtils::e();
 
 	doScreenShotCheck();
@@ -1622,8 +1638,8 @@ void Main::checkVersion()
 			while (stop == false)
 			{
 				getMain()->processEvents();
-				getMain()->stateManager->getState()->resetPressedButtons();
-				getMain()->stateManager->getState()->setButtonStates();
+				getMain()->stateManager->getCurrentState()->resetPressedButtons();
+				getMain()->stateManager->getCurrentState()->setButtonStates();
 
 				if(controlsManager->key_SPACE_Pressed())
 				{

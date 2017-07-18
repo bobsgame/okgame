@@ -12,7 +12,7 @@ class Logger;
 
 
 
-#include "../../state/KeyboardScreen.h"
+#include "../../state/KeyboardMenuPanel.h"
 
 
 class GUIManager : public EnginePart
@@ -34,7 +34,7 @@ public:
 	ArrayList<GameChallengeNotificationPanel*>* gameChallenges = new ArrayList<GameChallengeNotificationPanel*>();
 	//ArrayList<GUI*> gameChallengesGUIs;
 
-	KeyboardScreen* keyboardScreen = nullptr;
+	KeyboardMenuPanel* keyboardScreen = nullptr;
 	//GUI* keyboardScreenGUI = nullptr;
 
 

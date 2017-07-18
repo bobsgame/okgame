@@ -27,12 +27,13 @@ class BobsGame;
 class FileUtils;
 class StateManager;
 class LoggedOutState;
+class LogoState;
 class LoginState;
 class ServersHaveShutDownState;
 class CreateNewAccountState;
 class TitleScreenState;
 class YouWillBeNotifiedState;
-class GlowTileBackground;
+class GlowTileBackgroundMenuPanel;
 
 class Main
 {
@@ -138,6 +139,7 @@ public:
 
 	static Console* console;// = nullptr;
 
+	LogoState* logoScreenState = nullptr;
 	LoginState* loginState = nullptr;
 	LoggedOutState* loggedOutState = nullptr;
 	ServersHaveShutDownState* serversHaveShutDownState = nullptr;
@@ -145,7 +147,7 @@ public:
 	TitleScreenState* titleScreenState = nullptr;
 
 	YouWillBeNotifiedState* youWillBeNotifiedState = nullptr;
-	static GlowTileBackground* glowTileBackground;
+	static GlowTileBackgroundMenuPanel* glowTileBackgroundMenuPanel;
 
 	bool serversAreShuttingDown = false;
 

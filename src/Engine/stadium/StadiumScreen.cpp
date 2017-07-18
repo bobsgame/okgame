@@ -30,7 +30,7 @@ void StadiumScreen::update()
 		return;
 	}
 
-	Engine* s = stadiumGameStateManager->getState();
+	Engine* s = stadiumGameStateManager->getCurrentState();
 	if (s == nullptr)
 	{
 		return;
@@ -51,14 +51,14 @@ void StadiumScreen::setGame(MiniGameEngine* game, Area* area)
 	this->area = area;
 
 
-	stadiumGameStateManager->setState(game);
+	stadiumGameStateManager->pushState(game);
 
 	this->setActivated(true);
 }
 
 MiniGameEngine* StadiumScreen::getGame()
 { //=========================================================================================================================
-	return static_cast<MiniGameEngine*>(stadiumGameStateManager->getState());
+	return static_cast<MiniGameEngine*>(stadiumGameStateManager->getCurrentState());
 }
 
 void StadiumScreen::render()
@@ -74,7 +74,7 @@ void StadiumScreen::render()
 		return;
 	}
 
-	if (stadiumGameStateManager->getState() == nullptr)
+	if (stadiumGameStateManager->getCurrentState() == nullptr)
 	{
 		return;
 	}

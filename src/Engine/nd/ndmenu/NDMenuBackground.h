@@ -12,10 +12,10 @@ class Logger;
 
 
 
-#include "../../state/GlowTileBackground.h"
+#include "../../state/GlowTileBackgroundMenuPanel.h"
 
 
-class NDMenuBackground : public GlowTileBackground
+class NDMenuBackground : public GlowTileBackgroundMenuPanel
 {
 public:
 

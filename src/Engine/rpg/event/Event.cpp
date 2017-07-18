@@ -6265,7 +6265,7 @@ void Event::blockUntilBobsGameDead()
 { //===============================================================================================
 	//int p=0;
 
-	BobsGameStadium* bobsGameStadium = static_cast<BobsGameStadium*>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getState());
+	BobsGameStadium* bobsGameStadium = static_cast<BobsGameStadium*>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getCurrentState());
 
 	if (bobsGameStadium != nullptr)
 	{
@@ -6284,7 +6284,7 @@ void Event::showLoginScreen()
 	//Main.introMode = false;
 
 	//Main.mainObject.makeNewClientEngine();
-	Main::getMain()->stateManager->setState(Main::getMain()->titleScreenState);
+	Main::getMain()->stateManager->pushState(Main::getMain()->titleScreenState);
 
 	//Main.mainObject.showControlsImage();
 

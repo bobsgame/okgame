@@ -11,10 +11,10 @@
 
 
 
-Logger LegalScreen::log = Logger("LegalScreen");
+Logger LegalMenuPanel::log = Logger("LegalScreen");
 
 
-LegalScreen::LegalScreen()
+LegalMenuPanel::LegalMenuPanel()
 { //=========================================================================================================================
 
 	//MenuPanel();
@@ -99,30 +99,30 @@ LegalScreen::LegalScreen()
 }
 
 //The following method was originally marked 'synchronized':
-bool LegalScreen::getClickedOK_S()
+bool LegalMenuPanel::getClickedOK_S()
 {
 	return _clickedOK;
 }
 
 //The following method was originally marked 'synchronized':
-bool LegalScreen::getClickedCancel_S()
+bool LegalMenuPanel::getClickedCancel_S()
 {
 	return _clickedCancel;
 }
 
 //The following method was originally marked 'synchronized':
-void LegalScreen::setClickedOK_S(bool b)
+void LegalMenuPanel::setClickedOK_S(bool b)
 {
 	_clickedOK = b;
 }
 
 //The following method was originally marked 'synchronized':
-void LegalScreen::setClickedCancel_S(bool b)
+void LegalMenuPanel::setClickedCancel_S(bool b)
 {
 	_clickedCancel = b;
 }
 
-void LegalScreen::update()
+void LegalMenuPanel::update()
 { //=========================================================================================================================
 	if (isActivated == true)
 	{
@@ -146,13 +146,13 @@ void LegalScreen::update()
 	}
 }
 
-void LegalScreen::onScrolledUp()
+void LegalMenuPanel::onScrolledUp()
 { //=========================================================================================================================
 
 	//getGUI().setTooltipDelay(1);
 }
 
-void LegalScreen::layout()
+void LegalMenuPanel::layout()
 { //=========================================================================================================================
 
 	//   //login panel is centered
@@ -163,7 +163,7 @@ void LegalScreen::layout()
 	MenuPanel::layout();
 }
 
-void LegalScreen::setButtonsVisible(bool b)
+void LegalMenuPanel::setButtonsVisible(bool b)
 { //=========================================================================================================================
 
 	//
@@ -171,7 +171,7 @@ void LegalScreen::setButtonsVisible(bool b)
 	//   okButton->setVisible(b);
 }
 
-void LegalScreen::scrollDown()
+void LegalMenuPanel::scrollDown()
 { //=========================================================================================================================
 	if (ticksSinceTurnedOff <= fadeOutTime)
 	{
@@ -186,7 +186,7 @@ void LegalScreen::scrollDown()
 	}
 }
 
-void LegalScreen::doDisagree()
+void LegalMenuPanel::doDisagree()
 { //=========================================================================================================================
 	//   GUI* gui = getGUI();
 	//   if (gui != nullptr)
@@ -226,7 +226,7 @@ void LegalScreen::doDisagree()
 	//   }
 }
 
-void LegalScreen::doAgree()
+void LegalMenuPanel::doAgree()
 { //=========================================================================================================================
 
 	//   GUI* gui = getGUI();
@@ -267,7 +267,7 @@ void LegalScreen::doAgree()
 	//   }
 }
 
-void LegalScreen::renderBefore()
+void LegalMenuPanel::renderBefore()
 { //=========================================================================================================================
 
 
@@ -282,7 +282,7 @@ void LegalScreen::renderBefore()
 	//additional rendering calls go here (after gui is drawn)
 }
 
-void LegalScreen::render()
+void LegalMenuPanel::render()
 { //=========================================================================================================================
 
 

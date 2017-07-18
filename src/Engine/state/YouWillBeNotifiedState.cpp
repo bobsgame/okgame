@@ -26,7 +26,7 @@ void YouWillBeNotifiedState::render()
 { //=========================================================================================================================
 
 
-	Main::glowTileBackground->render();
+	Main::glowTileBackgroundMenuPanel->render();
 
 	string text = "To be continued...";
 

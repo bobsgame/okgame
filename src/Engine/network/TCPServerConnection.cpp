@@ -1197,7 +1197,7 @@ void TCPServerConnection::incomingSessionWasLoggedOnSomewhereElse(string s)
   //setUserID_S(-1);
   //setSessionToken_S("");
 
-	Main::mainObject->stateManager->setState(Main::mainObject->loggedOutState);
+	Main::mainObject->stateManager->pushState(Main::mainObject->loggedOutState);
 }
 
 void TCPServerConnection::incomingServersAreShuttingDown(string s)
@@ -1209,7 +1209,7 @@ void TCPServerConnection::incomingServersAreShuttingDown(string s)
 void TCPServerConnection::incomingServersHaveShutDown(string s)
 {
 
-	Main::mainObject->stateManager->setState(Main::mainObject->serversHaveShutDownState);
+	Main::mainObject->stateManager->pushState(Main::mainObject->serversHaveShutDownState);
 }
 
 
