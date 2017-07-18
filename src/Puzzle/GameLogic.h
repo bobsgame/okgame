@@ -350,7 +350,7 @@ private:
 	int queuedVSGarbageAmountFromOtherPlayer = 0;
 	int garbageWaitForPiecesSetCount = 0;
 
-	shared_ptr<Block> garbageBlock = nullptr;
+	//shared_ptr<Block> garbageBlock = nullptr;
 
 	bool checkForChainAgainIfNoBlocksPopping = false;
 

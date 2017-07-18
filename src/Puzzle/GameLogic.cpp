@@ -2576,21 +2576,21 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 
 	makeAnnouncementCaption("Got VS Garbage: " + to_string(amount));
 
-	if (garbageBlock == nullptr)
-	{
-
-		ArrayList<shared_ptr<PieceType>> garbagePieceTypes = currentGameType->getGarbagePieceTypes(getCurrentDifficulty());
-		if (garbagePieceTypes.size() == 0)garbagePieceTypes.add(PieceType::emptyPieceType);
-
-		shared_ptr<PieceType> pieceType = grid->getRandomPieceType(garbagePieceTypes);
-
-		ArrayList<shared_ptr<BlockType>> garbageBlockTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
-
-		shared_ptr<Piece> p(new Piece(this, grid, pieceType, garbageBlockTypes));
-		p->init();
-
-		garbageBlock = p->blocks.get(0);
-	}
+//	if (garbageBlock == nullptr)
+//	{
+//
+//		ArrayList<shared_ptr<PieceType>> garbagePieceTypes = currentGameType->getGarbagePieceTypes(getCurrentDifficulty());
+//		if (garbagePieceTypes.size() == 0)garbagePieceTypes.add(PieceType::emptyPieceType);
+//
+//		shared_ptr<PieceType> pieceType = grid->getRandomPieceType(garbagePieceTypes);
+//
+//		ArrayList<shared_ptr<BlockType>> garbageBlockTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
+//
+//		shared_ptr<Piece> p(new Piece(this, grid, pieceType, garbageBlockTypes));
+//		p->init();
+//
+//		garbageBlock = p->blocks.get(0);
+//	}
 }
 
 //=========================================================================================================================
@@ -2763,12 +2763,17 @@ void GameLogic::renderQueuedGarbage()
 		garbageWaitCaption->flashingTicksPerFlash = 500;
 		garbageWaitCaption->setText("Garbage: "+ to_string(queuedVSGarbageAmountFromOtherPlayer)+" Wait: " + to_string(garbageWaitForPiecesSetCount));
 
+		ArrayList<shared_ptr<BlockType>> blockTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
+
 		for (int i = 0; i < queuedVSGarbageAmountFromOtherPlayer; i++)
 		{
-			if (garbageBlock != nullptr)
-			{
-				garbageBlock->render(grid->getXInFBO() + i * blockWidth, grid->getYInFBO() - blockHeight, 0.5f, 1.0f, false, false);
-			}
+			shared_ptr<BlockType> blockType = blockTypes.get(blockTypes.size() % (i+1));
+			Block b(this, grid, nullptr, blockType);
+			b.render(grid->getXInFBO() + i * blockWidth, grid->getYInFBO() - blockHeight, 0.5f, 1.0f, false, false);
+//			if (garbageBlock != nullptr)
+//			{
+//				garbageBlock->render(grid->getXInFBO() + i * blockWidth, grid->getYInFBO() - blockHeight, 0.5f, 1.0f, false, false);
+//			}
 		}
 	}
 	else
