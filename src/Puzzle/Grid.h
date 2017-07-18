@@ -118,6 +118,7 @@ public:
 	shared_ptr<Piece> putGarbageBlock(int x, int y);
 	void makeGarbageRowFromCeiling();
 	void moveAllRowsUpOne();
+	void putGarbageBlockFromFloor(int x, int y);
 	void makeGarbageRowFromFloor();
 	void cursorSwapBetweenTwoBlocksHorizontal(shared_ptr<Piece> cursor);
 	void cursorSwapBetweenTwoBlocksVertical(shared_ptr<Piece> cursor);

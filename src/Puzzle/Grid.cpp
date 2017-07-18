@@ -1014,6 +1014,24 @@ void Grid::moveAllRowsUpOne()
 }
 
 //=========================================================================================================================
+void Grid::putGarbageBlockFromFloor(int x, int y)
+{//=========================================================================================================================
+	shared_ptr<Piece> p = putGarbageBlock(x, y);
+
+	if (p != nullptr)
+	{
+		for (int i = 0; i < p->getNumBlocksInCurrentRotation() && i < p->blocks.size(); i++)
+		{
+			shared_ptr<Block> b = p->blocks.get(i);
+
+			b->lastScreenX = getXInFBO() + (b->xGrid) * cellW();
+			b->lastScreenY = getYInFBO() + b->yInPiece*cellH() + getHeight()*cellH();
+			b->ticksSinceLastMovement = 0;
+		}
+	}
+}
+
+//=========================================================================================================================
 void Grid::makeGarbageRowFromFloor()
 {//=========================================================================================================================
 
@@ -1030,7 +1048,7 @@ void Grid::makeGarbageRowFromFloor()
 			{
 				if (get(x, y - 1) != nullptr)
 				{
-					putGarbageBlock(x, y);
+					putGarbageBlockFromFloor(x, y);
 				}
 			}
 		}
@@ -1044,7 +1062,7 @@ void Grid::makeGarbageRowFromFloor()
 
 				if (r == 0)
 				{
-					putGarbageBlock(x, y);
+					putGarbageBlockFromFloor(x, y);
 				}
 			}
 		}
@@ -1056,7 +1074,7 @@ void Grid::makeGarbageRowFromFloor()
 			{
 				if (x != lastGarbageHoleX)
 				{
-					putGarbageBlock(x, y);
+					putGarbageBlockFromFloor(x, y);
 				}
 			}
 
