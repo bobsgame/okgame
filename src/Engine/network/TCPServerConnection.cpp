@@ -925,11 +925,12 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 
 	}
 
-
+	bool processed = false;
 	for (int i = 0; i < BobNet::engines.size(); i++)
 	{
-		if (BobNet::engines.get(i)->serverMessageReceived(s))return true;
+		if (BobNet::engines.get(i)->serverMessageReceived(s))processed = true;
 	}
+	if (processed)return true;
 
 	log.error("Did not handle TCP packet:"+s);
 

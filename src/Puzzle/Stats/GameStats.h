@@ -17,7 +17,7 @@ public:
 	Logger log = Logger("BobsGameGameStats");
 
 	string userName = "";
-	long long userID = -1;
+	long long userID = 0;
 
 	string isGameTypeOrSequence = "";
 
@@ -49,10 +49,10 @@ public:
 	int combosMade = 0;
 	int biggestCombo = 0;
 
-	int maxPlayers = -1;
+	int maxPlayers = 0;
 	int privateRoom = 0;
 	int tournamentRoom = 0;
-	long long hostUserID = -1;
+	long long hostUserID = 0;
 	int multiplayer_AllowDifferentDifficulties = 1;
 	int multiplayer_AllowDifferentGameSequences = 1;
 	int multiplayer_GameEndsWhenOnePlayerRemains = 1;

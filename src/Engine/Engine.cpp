@@ -78,6 +78,8 @@ void Engine::init()
 	cinematicsManager->init();
 
 	GLUtils::e();
+
+	Main::bobNet->addEngineToForwardMessagesTo(this);
 }
 //=========================================================================================================================
 void Engine::cleanup()

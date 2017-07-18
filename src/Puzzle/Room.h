@@ -19,11 +19,11 @@ public:
 	UDPPeerConnection *hostPeer = nullptr;
 
 	int currentNumPlayers = 0;
-	int maxPlayers = -1;
+	int maxPlayers = 0;
 	bool privateRoom = false;
 	bool tournamentRoom = false;
 	string uuid = "";
-	long long hostUserID = -1;
+	long long hostUserID = 0;
 	bool multiplayer_AllowDifferentDifficulties = true;
 	bool multiplayer_AllowDifferentGameSequences = true;
 	bool multiplayer_GameEndsWhenOnePlayerRemains = true;

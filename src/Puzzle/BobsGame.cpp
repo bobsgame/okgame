@@ -1165,12 +1165,12 @@ void BobsGame::sendGameStatsToServer()
 					s.gameTypeEndedOnName = g->currentGameType->name;
 					s.gameTypeEndedOnUUID = g->currentGameType->uuid;
 					s.difficultyName = g->currentGameSequence->currentDifficultyName;
-					s.won = g->won;
-					s.lost = g->lost;
-					s.died = g->died;
-					s.complete = g->complete;
-					s.isLocalMultiplayer = localMultiplayer;
-					s.isNetworkMultiplayer = networkMultiplayer;
+					s.won = (int)g->won;
+					s.lost = (int)g->lost;
+					s.died = (int)g->died;
+					s.complete = (int)g->complete;
+					s.isLocalMultiplayer = (int)localMultiplayer;
+					s.isNetworkMultiplayer = (int)networkMultiplayer;
 					s.numPlayers = players.size();
 					s.level = g->currentLevel;
 					s.timeLasted = g->totalTicksPassed;
@@ -1187,9 +1187,11 @@ void BobsGame::sendGameStatsToServer()
 					s.piecesPlaced = g->piecesPlacedTotal;
 					s.combosMade = g->totalCombosMade;
 					s.biggestCombo = g->biggestComboChain;
+
 					s.maxPlayers = currentRoom->maxPlayers;
-					s.privateRoom = currentRoom->privateRoom;
-					s.tournamentRoom = currentRoom->tournamentRoom;
+
+					s.privateRoom = (int)currentRoom->privateRoom;
+					s.tournamentRoom = (int)currentRoom->tournamentRoom;
 					s.hostUserID = currentRoom->hostUserID;
 					s.multiplayer_AllowDifferentDifficulties = currentRoom->multiplayer_AllowDifferentDifficulties;
 					s.multiplayer_AllowDifferentGameSequences = currentRoom->multiplayer_AllowDifferentGameSequences;

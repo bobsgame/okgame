@@ -82,6 +82,8 @@ public:
 	//   Label* passwordLabel;
 	//
 	bool loggedIn = false;
+	//bool leaveMenu = false;
+	bool createNewAccount = false;
 	//
 	//
 	//   Label* sendStatsQuestionMark;

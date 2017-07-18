@@ -318,12 +318,13 @@ else
 //	log.info("Sigar::Proc Threads:" + to_string(procstat.threads));
 //}
 
+sigar_close(sigar);
+
 now = SDL_GetPerformanceCounter();
 log.debug("Sigar info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 start = SDL_GetPerformanceCounter();
 
 
-sigar_close(sigar);
 #endif
 
 

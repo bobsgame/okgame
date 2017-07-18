@@ -4138,7 +4138,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 			if (multiplayerOptionsMenu->isSelectedID("Max Players", clicked, mx, my))
 			{
-				currentRoom->maxPlayers = -1;
+				currentRoom->maxPlayers = 0;
 			}
 
 		}
@@ -4154,8 +4154,8 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				if (ticksPassed > 15)
 				{
 					timeLastChangedSetting = currentTime;
-					if (currentRoom->maxPlayers > -1) currentRoom->maxPlayers--;
-					if (currentRoom->maxPlayers < 2)currentRoom->maxPlayers = -1;
+					if (currentRoom->maxPlayers > 0) currentRoom->maxPlayers--;
+					if (currentRoom->maxPlayers < 2)currentRoom->maxPlayers = 0;
 				}
 			}
 		}
@@ -4171,7 +4171,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				if (ticksPassed > 15)
 				{
 					timeLastChangedSetting = currentTime;
-					if (currentRoom->maxPlayers < 1)currentRoom->maxPlayers = 1;
+					if (currentRoom->maxPlayers < 2)currentRoom->maxPlayers = 2;
 					currentRoom->maxPlayers++;
 				}
 			}

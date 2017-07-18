@@ -401,7 +401,7 @@ void Main::mainInit()
 
 
 
-#define PUZZLE 1
+//#define PUZZLE 1
 
 #ifdef PUZZLE
 
@@ -410,7 +410,7 @@ void Main::mainInit()
 	stateManager->pushState(bobsGame);
 	bobsGame->init();
 
-	bobNet->addEngineToForwardMessagesTo(bobsGame);
+	//bobNet->addEngineToForwardMessagesTo(bobsGame);
 #endif
 
 
@@ -426,7 +426,7 @@ void Main::mainInit()
 	//Engine::setClientGameEngine(gameEngine);
 	gameEngine->init();
 	
-	bobNet->addEngineToForwardMessagesTo(gameEngine);
+	//bobNet->addEngineToForwardMessagesTo(gameEngine);
 
 	if (previewClientInEditor == false)
 	{

@@ -294,182 +294,210 @@ void LoginMenuPanel::update()
 
 	if (getIsActivated() == true)
 	{
-
-		//log in
-		//save login
-		//create account
-
-		int y = (int)(GLUtils::getRealWindowHeight() / 4 * 3);
-
-
-		if (loginMenu == nullptr)
+		if (getIsScrollingDown() == false)
 		{
-			loginMenu = new BobMenu(getEngine(), "Login");
-			//loginMenu->center = false;
-			loginMenu->add("Username or Email: " + userNameOrEmailText, "Username or Email", BobMenu::statusColor);
-			loginMenu->add("Password: " + passwordStarsText, "Password", BobMenu::statusColor);
-			loginMenu->add("Stay logged in: Yes", "Stay logged in");
-			loginMenu->add("Log in");
-			loginMenu->addInfo(" ");
-			loginMenu->add("Create new account");
-			loginMenu->add("Forgot password");
-			//loginMenu->addInfo(" ");
-			//loginMenu->add("Return to title screen");
+			//log in
+			//save login
+			//create account
 
-			loginMenu->cursorPosition = loginMenuCursorPosition;
-		}
-
-		if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-		if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+			int y = (int)(GLUtils::getRealWindowHeight() / 4 * 3);
 
 
-		int mx = getControlsManager()->getMouseX();
-		int my = getControlsManager()->getMouseY();
-
-		if (mx != lastMX || my != lastMY)
-		{
-			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
-			lastMX = mx;
-			lastMY = my;
-		}
-
-		if (getControlsManager()->miniGame_UP_Pressed())
-		{
-			loginMenu->up();
-
-			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
-		}
-
-		if (getControlsManager()->miniGame_DOWN_Pressed() || getControlsManager()->key_TAB_Pressed())
-		{
-			loginMenu->down();
-
-			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
-		}
-
-		bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
-		bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
-
-		if (confirm || clicked || (getControlsManager()->miniGame_LEFT_Pressed() || getControlsManager()->miniGame_RIGHT_Pressed()))
-		{
-			if (loginMenu->isSelectedID("Stay logged in", clicked, mx, my))
+			if (getServerConnection()->getConnectedToServer_S())
 			{
-				stayLoggedIn = !stayLoggedIn;
+				if (FileUtils::readSessionTokenFromCache() != "")
+				{
+					if (loginMenu == nullptr)
+					{
+						loginMenu = new BobMenu(getEngine(), "Login");
+						//loginMenu->center = false;
+						loginMenu->addInfo("Logging in...", "Logging in", BobMenu::statusColor);
 
-				if (stayLoggedIn)loginMenu->getMenuItemByID("Stay logged in")->setText("Stay logged in: Yes");
-				else loginMenu->getMenuItemByID("Stay logged in")->setText("Stay logged in: No");
-
+					}
+				}
 			}
-		}
-
-		if (loginMenu->isSelectedID("Username or Email"))
-		{
-			if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = userNameOrEmailText; textStarted = true; }
-			userNameOrEmailText = getControlsManager()->text;
-			loginMenu->getMenuItemByID("Username or Email")->setText("Username or Email: " + userNameOrEmailText);
-		}
-
-		if (loginMenu->isSelectedID("Password"))
-		{
-			if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = passwordText; textStarted = true; }
-			passwordText = getControlsManager()->text;
-			passwordStarsText = "";
-			for (int i = 0; i < (int)passwordText.length(); i++)passwordStarsText += "*";
-			loginMenu->getMenuItemByID("Password")->setText("Password: " + passwordStarsText);
-		}
-
-		bool leaveMenu = false;
-
-		if (confirm || clicked)
-		{
-
-			if (loginMenu->isSelectedID("Log in", clicked, mx, my) || loginMenu->isSelectedID("Password", clicked, mx, my))
+			else
 			{
-				getServerConnection()->doLogin(statusLabel, errorLabel, userNameOrEmailText, passwordText, stayLoggedIn);
+				if (loginMenu == nullptr)
+				{
+
+					loginMenu = new BobMenu(getEngine(), "Login");
+					//loginMenu->center = false;
+					loginMenu->add("Username or Email: " + userNameOrEmailText, "Username or Email", BobMenu::statusColor);
+					loginMenu->add("Password: " + passwordStarsText, "Password", BobMenu::statusColor);
+					loginMenu->add("Stay logged in: Yes", "Stay logged in");
+					loginMenu->add("Log in");
+					loginMenu->addInfo(" ");
+					loginMenu->add("Create new account");
+					loginMenu->add("Forgot password");
+					//loginMenu->addInfo(" ");
+					//loginMenu->add("Return to title screen");
+
+					loginMenu->cursorPosition = loginMenuCursorPosition;
+				}
 			}
 
-			if (loginMenu->isSelectedID("Create new account", clicked, mx, my))
-			{
-				leaveMenu = true;
-				//createAccountMenuShowing = true;
-				//Main::getMain()->stateManager->popState();
-				Main::getMain()->stateManager->pushState(Main::getMain()->createNewAccountState);
-				Main::getMain()->createNewAccountState->createNewAccountMenuPanel->setActivated(true);
-			}
+			if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+			if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 
-			if (loginMenu->isSelectedID("Forgot password", clicked, mx, my))
+			if (getIsScrolledUp())
 			{
-				getServerConnection()->doForgotPassword(statusLabel, errorLabel, userNameOrEmailText);
-			}
 
-			//		if (loginMenu->isSelectedID("Return to title screen", clicked, mx, my))
-			//		{
-			//			//back to title screen
-			//			leaveMenu = true;
-			//			titleMenuShowing = true;
-			//		}
+				int mx = getControlsManager()->getMouseX();
+				int my = getControlsManager()->getMouseY();
+
+				if (mx != lastMX || my != lastMY)
+				{
+					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+					lastMX = mx;
+					lastMY = my;
+				}
+
+				if (getControlsManager()->miniGame_UP_Pressed())
+				{
+					loginMenu->up();
+
+					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+				}
+
+				if (getControlsManager()->miniGame_DOWN_Pressed() || getControlsManager()->key_TAB_Pressed())
+				{
+					loginMenu->down();
+
+					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+				}
+
+				bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+				bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+
+				if (confirm || clicked || (getControlsManager()->miniGame_LEFT_Pressed() || getControlsManager()->miniGame_RIGHT_Pressed()))
+				{
+					if (loginMenu->isSelectedID("Stay logged in", clicked, mx, my))
+					{
+						stayLoggedIn = !stayLoggedIn;
+
+						if (stayLoggedIn)loginMenu->getMenuItemByID("Stay logged in")->setText("Stay logged in: Yes");
+						else loginMenu->getMenuItemByID("Stay logged in")->setText("Stay logged in: No");
+
+					}
+				}
+
+				if (loginMenu->isSelectedID("Username or Email"))
+				{
+					if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = userNameOrEmailText; textStarted = true; }
+					userNameOrEmailText = getControlsManager()->text;
+					loginMenu->getMenuItemByID("Username or Email")->setText("Username or Email: " + userNameOrEmailText);
+				}
+
+				if (loginMenu->isSelectedID("Password"))
+				{
+					if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = passwordText; textStarted = true; }
+					passwordText = getControlsManager()->text;
+					passwordStarsText = "";
+					for (int i = 0; i < (int)passwordText.length(); i++)passwordStarsText += "*";
+					loginMenu->getMenuItemByID("Password")->setText("Password: " + passwordStarsText);
+				}
+
+
+
+				if (confirm || clicked)
+				{
+
+					if (loginMenu->isSelectedID("Log in", clicked, mx, my) || loginMenu->isSelectedID("Password", clicked, mx, my))
+					{
+						getServerConnection()->doLogin(statusLabel, errorLabel, userNameOrEmailText, passwordText, stayLoggedIn);
+					}
+
+					if (loginMenu->isSelectedID("Create new account", clicked, mx, my))
+					{
+
+						setActivated(false);
+
+						createNewAccount = true;
+					}
+
+					if (loginMenu->isSelectedID("Forgot password", clicked, mx, my))
+					{
+						getServerConnection()->doForgotPassword(statusLabel, errorLabel, userNameOrEmailText);
+					}
+
+//					if (loginMenu->isSelectedID("Return to title screen", clicked, mx, my))
+//					{
+//						//back to title screen
+//						setActivated(false);
+//					}
+
+				}
+
+
+				if (getServerConnection()->getConnectedToServer_S())
+				{
+
+					if (getServerConnection()->getAuthorizedOnServer_S())
+					{
+						setActivated(false);
+
+						loggedIn = true;
+					}
+				}
+
+			}
 
 		}
-
-		if (getServerConnection()->getAuthorizedOnServer_S())
-		{
-			leaveMenu = true;
-
-			loggedIn = true;
-
-			setActivated(false);
-			//if (networkMultiplayer)networkMultiplayerLobbyMenuShowing = true;
-			//else startScreenMenuShowing = true;
-
-
-		}
-
-		//	if (getControlsManager()->key_ESC_Pressed() || getControlsManager()->miniGame_SELECT_Pressed())
-		//	{
-		//		leaveMenu = true;
-		//		startScreenMenuShowing = true;
-		//	}
-
-		if (leaveMenu)
-		{
-			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
-			getControlsManager()->text = "";
-
-			//loginMenuShowing = false;
-
-			if (loginMenu != nullptr)
-			{
-				loginMenuCursorPosition = loginMenu->cursorPosition;
-				delete loginMenu;
-				loginMenu = nullptr;
-			}
-
-			if (statusLabel != nullptr)
-			{
-				statusLabel->setToBeDeletedImmediately();
-				statusLabel = nullptr;
-			}
-
-			if (errorLabel != nullptr)
-			{
-				errorLabel->setToBeDeletedImmediately();
-				errorLabel = nullptr;
-			}
-		}
-
 	}
 
-	if (loggedIn == true)
+
+	if (getIsActivated() == false)
 	{
-		if (getIsActivated() == false)
+		if (getIsScrollingDown() == false)
 		{
-			if (getIsScrollingDown() == false)
+
+			if (loggedIn == true)
 			{
 				Main::getMain()->stateManager->popState();
 				//Main::getMain()->stateManager->pushState(Main::getMain()->gameEngine);
 			}
+
+			if(createNewAccount)
+			{
+				createNewAccount = false;
+
+				Main::getMain()->stateManager->pushState(Main::getMain()->createNewAccountState);
+				Main::getMain()->createNewAccountState->createNewAccountMenuPanel->setActivated(true);
+			}
+
+			//if (leaveMenu)
+			{
+				if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+				getControlsManager()->text = "";
+
+				//loginMenuShowing = false;
+
+				if (loginMenu != nullptr)
+				{
+					loginMenuCursorPosition = loginMenu->cursorPosition;
+					delete loginMenu;
+					loginMenu = nullptr;
+				}
+
+				if (statusLabel != nullptr)
+				{
+					statusLabel->setToBeDeletedImmediately();
+					statusLabel = nullptr;
+				}
+
+				if (errorLabel != nullptr)
+				{
+					errorLabel->setToBeDeletedImmediately();
+					errorLabel = nullptr;
+				}
+			}
+
+
+
 		}
 	}
+	
 
 
 
@@ -482,14 +510,14 @@ void LoginMenuPanel::renderBefore()
 { //=========================================================================================================================
 
 
-	if (getIsScrollingDown() == true)
-	{
-		return;
-	}
-	if (getIsActivated() == false)
-	{
-		return;
-	}
+//	if (getIsScrollingDown() == true)
+//	{
+//		return;
+//	}
+//	if (getIsActivated() == false)
+//	{
+//		return;
+//	}
 	//additional rendering calls go here (after gui is drawn)
 
 
@@ -502,7 +530,7 @@ void LoginMenuPanel::renderBefore()
 	float w = (float)GLUtils::getRealWindowWidth();
 	float h = (float)GLUtils::getRealWindowHeight();
 
-	GLUtils::drawFilledRect(255,255,255, w / 4 * 1, w / 4 * 3, screenY + h / 4 * 1, screenY + h / 4 * 3, 0.8f);
+	GLUtils::drawFilledRect(255,255,255, w / 4 * 1, w / 4 * 3, screenY + h / 4 * 1, screenY + h / 4 * 3, 0.95f);
 
 	//BobTexture* t = onlineTexture;
 
@@ -527,14 +555,14 @@ void LoginMenuPanel::render()
 { //=========================================================================================================================
 
 
-	if (getIsScrollingDown() == true)
-	{
-		return;
-	}
-	if (getIsActivated() == false)
-	{
-		return;
-	}
+//	if (getIsScrollingDown() == true)
+//	{
+//		return;
+//	}
+//	if (getIsActivated() == false)
+//	{
+//		return;
+//	}
 
 	//additional rendering calls go here (after gui is drawn)
 }

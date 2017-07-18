@@ -78,20 +78,22 @@ void BGClientEngine::init()
 
 	nD->init();
 
+	NDMenu* nDMenu = new NDMenu(nD);
+	nDMenu->init();
+	
 
 	BobsGame* bobsgame = new BobsGame(nD);
 	bobsgame->init();
-
-
-
-	NDMenu* nDMenu = new NDMenu(nD);
-	nDMenu->init();
+	
 
 	Ping* ping = new Ping(nD);
 	ping->init();
+	
 
 	Ramio* ramio = new Ramio(nD);
 	ramio->init();
+	
+
 
 	nDMenu->addGame(ping, "Ping", BobColor::blue);
 	nDMenu->addGame(ramio,"Ramio",BobColor::red);

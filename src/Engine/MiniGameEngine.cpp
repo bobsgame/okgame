@@ -414,7 +414,7 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		{
 			UDPPeerConnection* f = onlineFriends.get(multiplayerScreenCursorPosition);
 			this->connection = f;
-			BobNet::addEngineToForwardMessagesTo(this);
+			//BobNet::addEngineToForwardMessagesTo(this);
 
 			waitingForFriendScreenShowing = true;
 			setIncomingGameChallengeResponse(gameChallengeResponse_NONE);

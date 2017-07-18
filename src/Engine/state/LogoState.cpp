@@ -105,7 +105,7 @@ void LogoState::render()
 //	GLUtils::drawTexture(t, x0, x1, y0, y1, 1.0f, GLUtils::FILTER_NEAREST);
 //	GLUtils::drawTexture(over, x0, x1, y0, y1, 1.0f, GLUtils::FILTER_NEAREST);
 
-	float timesToCycle = ticksToShow/1500.0f;
+	float timesToCycle = ticksToShow/1800.0f;
 
 
 
@@ -129,25 +129,25 @@ void LogoState::render()
 
 	//half screen
 	//scale by width
-	sx0 = w / 6 * 2;
-	sx1 = w / 6 * 4;
+	sx0 = w / 8 * 3;
+	sx1 = w / 8 * 5;
 	float drawwidth = sx1 - sx0;
 	float wratio = drawwidth / iw;
 	float scaledheight = wratio * ih;
 
-	sy0 = (h - scaledheight)/6*2;
+	sy0 = (h - scaledheight) / 8*3;
 	sy1 = sy0 + scaledheight;
 
 	//if doesnt fit scale by height
 	if(scaledheight>h)
 	{
-		sy0 = h / 6 * 2;
-		sy1 = h / 6 * 4;
+		sy0 = h / 8 * 3;
+		sy1 = h / 8 * 5;
 		float drawheight = sy1 - sy0;
 		float hratio = drawheight / ih;
 		float scaledwidth = hratio * iw;
 
-		sx0 = (w - scaledwidth) / 6*2;
+		sx0 = (w - scaledwidth) / 8*3;
 		sx1 = sx0 + scaledwidth;
 	}
 
