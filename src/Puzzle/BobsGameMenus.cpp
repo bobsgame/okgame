@@ -901,7 +901,7 @@ void BobsGame::pauseMenuRender()
 
 	if (t != nullptr)
 	{
-		pauseMenu->setGraphic(t, getWidth() / 8 * 5, getHeight() / 8);
+		pauseMenu->setGraphic(t, getWidth() / 8 * 5, getHeight() / 8, GLUtils::FILTER_LINEAR);
 	}
 
 	pauseMenu->render(0, 0, getHeight(), true, nullptr, nullptr, true);

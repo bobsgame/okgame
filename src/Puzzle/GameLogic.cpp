@@ -2758,7 +2758,7 @@ void GameLogic::renderQueuedGarbage()
 			garbageWaitCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, " ", announcementCaptionFontSize, true, BobColor::white, BobColor::clear, RenderOrder::ABOVE, 0.5f);
 		}
 		garbageWaitCaption->screenX = (float)(grid->getXOnScreenNoShake());
-		garbageWaitCaption->screenY = (float)(grid->getYOnScreenNoShake() - (cellH()));
+		garbageWaitCaption->screenY = (float)(grid->getYOnScreenNoShake());// -(cellH()));
 		garbageWaitCaption->flashing = true;
 		garbageWaitCaption->flashingTicksPerFlash = 500;
 		garbageWaitCaption->setText("Garbage: "+ to_string(queuedVSGarbageAmountFromOtherPlayer)+" Wait: " + to_string(garbageWaitForPiecesSetCount));
@@ -2767,9 +2767,17 @@ void GameLogic::renderQueuedGarbage()
 
 		for (int i = 0; i < queuedVSGarbageAmountFromOtherPlayer; i++)
 		{
-			shared_ptr<BlockType> blockType = blockTypes.get(blockTypes.size() % (i+1));
+
+			float scale = 1.0f;
+			if(queuedVSGarbageAmountFromOtherPlayer>grid->getWidth()*2)
+			{
+				scale = (float)(grid->getWidth()*2) / (float)queuedVSGarbageAmountFromOtherPlayer;
+			}
+
+			shared_ptr<BlockType> blockType = blockTypes.get((blockTypes.size()-1) % (i+1));
 			Block b(this, grid, nullptr, blockType);
-			b.render(grid->getXInFBO() + i * blockWidth, grid->getYInFBO() - blockHeight, 0.5f, 1.0f, false, false);
+			b.update();//set the sprite
+			b.render(grid->getXInFBO() + ((i%(int)(grid->getWidth()/scale)) * blockWidth * scale), grid->getYInFBO() + (blockHeight*scale*(i/(grid->getWidth()/scale))), 1.0f, scale, false, false);// - blockHeight
 //			if (garbageBlock != nullptr)
 //			{
 //				garbageBlock->render(grid->getXInFBO() + i * blockWidth, grid->getYInFBO() - blockHeight, 0.5f, 1.0f, false, false);

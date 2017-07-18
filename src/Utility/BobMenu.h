@@ -75,6 +75,7 @@ public:
 	static ArrayList<BobMenu*> activeMenus;
 
 	BobTexture *graphic = nullptr;
+	int filter = GLUtils::FILTER_NEAREST;
 	float spacing = 1.0f;
 	bool center = true;
 	
@@ -111,7 +112,7 @@ public:
 	BobMenu(Engine *g, string title);
 	~BobMenu();
 
-	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0);
+	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
 	void clear();
 	void setAllCaptionsToFullAlpha();
 	static void update(int ticksPassed);

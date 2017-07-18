@@ -139,13 +139,13 @@ BobMenu::~BobMenu()
 int graphicWidth = 0;
 int graphicYStartPosition = 0;
 //=========================================================================================================================
-void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight)
+void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight, int filter)
 {//=========================================================================================================================
 	this->graphic = t;
 	this->graphicWidth = graphicWidth;
 	this->graphicYStartPosition = graphicYStartPosition;
 	this->maxGraphicHeight = maxGraphicHeight;
-
+	this->filter = filter;
 }
 
 //=========================================================================================================================
@@ -552,7 +552,7 @@ void BobMenu::render
 
 		y = (int)(sy1 + 40);
 
-		GLUtils::drawTexture(graphic, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
+		GLUtils::drawTexture(graphic, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, filter);
 	}
 
 	if (returnBottomOfGraphic != nullptr)*returnBottomOfGraphic = y;
