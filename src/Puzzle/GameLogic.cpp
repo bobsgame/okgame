@@ -2578,9 +2578,17 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 
 	if (garbageBlock == nullptr)
 	{
-		ArrayList<shared_ptr<BlockType>> garbageTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
-		shared_ptr<Piece> p(new Piece(this, grid, PieceType::emptyPieceType, grid->getRandomBlockType(garbageTypes)));//TODO: use garbagePieceTypes with one block
+
+		ArrayList<shared_ptr<PieceType>> garbagePieceTypes = currentGameType->getGarbagePieceTypes(getCurrentDifficulty());
+		if (garbagePieceTypes.size() == 0)garbagePieceTypes.add(PieceType::emptyPieceType);
+
+		shared_ptr<PieceType> pieceType = grid->getRandomPieceType(garbagePieceTypes);
+
+		ArrayList<shared_ptr<BlockType>> garbageBlockTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
+
+		shared_ptr<Piece> p(new Piece(this, grid, pieceType, garbageBlockTypes));
 		p->init();
+
 		garbageBlock = p->blocks.get(0);
 	}
 }
@@ -2630,29 +2638,30 @@ void GameLogic::queueVSGarbage(int amount)
 
 	//garbage types per game?
 
-	if (getBobsGame()->isMultiplayer())
+
+
+	if (queuedVSGarbageAmountFromOtherPlayer > 0)
 	{
-
-		if (queuedVSGarbageAmountFromOtherPlayer > 0)
+		if (amount >= queuedVSGarbageAmountFromOtherPlayer)
 		{
-			if (amount >= queuedVSGarbageAmountFromOtherPlayer)
-			{
-				makeAnnouncementCaption("Negated VS Garbage: " + to_string(queuedVSGarbageAmountFromOtherPlayer));
+			makeAnnouncementCaption("Negated VS Garbage: " + to_string(queuedVSGarbageAmountFromOtherPlayer));
 
-				amount -= queuedVSGarbageAmountFromOtherPlayer;
-				queuedVSGarbageAmountFromOtherPlayer = 0;
-			}
-			else
+			amount -= queuedVSGarbageAmountFromOtherPlayer;
+			queuedVSGarbageAmountFromOtherPlayer = 0;
+		}
+		else
+		{
+			if (amount < queuedVSGarbageAmountFromOtherPlayer)
 			{
-				if (amount < queuedVSGarbageAmountFromOtherPlayer)
-				{
-					makeAnnouncementCaption("Negated VS Garbage: " + to_string(amount));
-					queuedVSGarbageAmountFromOtherPlayer -= amount;
-					amount = 0;
-				}
+				makeAnnouncementCaption("Negated VS Garbage: " + to_string(amount));
+				queuedVSGarbageAmountFromOtherPlayer -= amount;
+				amount = 0;
 			}
 		}
+	}
 
+	if (getBobsGame()->isMultiplayer() && getBobsGame()->currentRoom->multiplayer_DisableVSGarbage==false)
+	{
 		if (amount > 0)
 		{
 			queuedVSGarbageAmountToSend += amount;

@@ -3543,14 +3543,14 @@ void Grid::doDeathSequence()
 }
 
 //=========================================================================================================================
-shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(ArrayList<shared_ptr<PieceType>> &arr)
+shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(ArrayList<shared_ptr<PieceType>> &pieceTypes)
 {//=========================================================================================================================
 
 	ArrayList<shared_ptr<PieceType>> randomBag;
 
-	for (int i = 0; i < arr.size(); i++)
+	for (int i = 0; i < pieceTypes.size(); i++)
 	{
-		shared_ptr<PieceType> p = arr.get(i);
+		shared_ptr<PieceType> p = pieceTypes.get(i);
 		if (p->frequencySpecialPieceTypeOnceEveryNPieces != 0)
 		{
 			if (getGameLogic()->createdPiecesCounterForFrequencyPieces >= p->frequencySpecialPieceTypeOnceEveryNPieces)
@@ -3579,9 +3579,9 @@ shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPie
 
 	//		for(int n=0;n<randomTotal;n++)randomBag.Add(emptyPieceType);
 
-	for (int i = 0; i < arr.size(); i++)
+	for (int i = 0; i < pieceTypes.size(); i++)
 	{
-		shared_ptr<PieceType> b = arr.get(i);
+		shared_ptr<PieceType> b = pieceTypes.get(i);
 
 		if (b->randomSpecialPieceChanceOneOutOf > 0)
 		{
@@ -3750,13 +3750,13 @@ shared_ptr<Piece> Grid::getRandomPiece(ArrayList<shared_ptr<PieceType>> &pieceTy
 }
 
 //=========================================================================================================================
-shared_ptr<PieceType> Grid::getRandomPieceType(ArrayList<shared_ptr<PieceType>> &arr)
+shared_ptr<PieceType> Grid::getRandomPieceType(ArrayList<shared_ptr<PieceType>> &pieceTypes)
 {//=========================================================================================================================
 
-	shared_ptr<PieceType> pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(arr);
+	shared_ptr<PieceType> pieceType = getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(pieceTypes);
 	if (pieceType == nullptr)
 	{
-		pieceType = getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(arr);
+		pieceType = getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(pieceTypes);
 	}
 	if (pieceType == nullptr)pieceType = PieceType::emptyPieceType;
 	return pieceType;

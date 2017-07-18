@@ -167,13 +167,13 @@ public:
 	string uuid = "";
 
 	//filled in from server
-	long long creatorUserID = -1;
+	long long creatorUserID = 0;
 	string creatorUserName = "";
-	long long dateCreated = -1;
-	long long lastModified = -1;
-	long long howManyTimesUpdated = -1;
-	long long upVotes = -1;
-	long long downVotes = -1;
+	long long dateCreated = 0;
+	long long lastModified = 0;
+	long long howManyTimesUpdated = 0;
+	long long upVotes = 0;
+	long long downVotes = 0;
 	string yourVote = "none";
 
 	static DifficultyType* difficulty_BEGINNER;

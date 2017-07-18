@@ -3020,7 +3020,7 @@ ArrayList<pair<GameType*,pair<string,BobColor*>>> BobsGame::getSortedGameTypes()
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
 		int daysExisted = (int)(secondsExisted / 60 / 60 / 24);
 
-		string name = g->creatorUserName + " - " + g->name + " (" + to_string(g->upVotes) + "/" + to_string(g->downVotes) + ") " + to_string(daysExisted) + "days";
+		string name = g->creatorUserName + " - " + g->name + " | Score: " + to_string(g->upVotes - g->downVotes) + " Age: " + to_string(daysExisted) + " days";
 
 		BobColor *color = BobColor::black;
 		pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
@@ -3096,7 +3096,7 @@ ArrayList<pair<GameSequence*, pair<string, BobColor*>>> BobsGame::getSortedGameS
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
 		int daysExisted = (int)(secondsExisted / 60 / 60 / 24);
 
-		string name = g->creatorUserName + " - " + g->name + " (" + to_string(g->upVotes) + "/" + to_string(g->downVotes) + ") " + to_string(daysExisted) + "days";
+		string name = g->creatorUserName + " - " + g->name + " | Score: " + to_string(g->upVotes - g->downVotes) + " Age: " + to_string(daysExisted) + " days";
 
 		BobColor *color = BobColor::black;
 		pair<string, BobColor*> stringColorPair = pair<string, BobColor*>(name, color);
