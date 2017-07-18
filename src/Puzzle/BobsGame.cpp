@@ -475,6 +475,20 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 
 	if (useColorFilter)
 	{
+		captionManager->render(RenderOrder::ABOVE);
+		captionManager->render(RenderOrder::ABOVE_TOP);
+		captionManager->render(RenderOrder::OVER_TEXT);
+		captionManager->render(RenderOrder::OVER_GUI);
+//		for (int i = 0; i < players.size(); i++)
+//		{
+//			PuzzlePlayer *p = players.get(i);
+//			GameLogic *g = p->gameLogic;
+//			g->getCaptionManager()->render(RenderOrder::ABOVE);
+//			g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
+//			g->getCaptionManager()->render(RenderOrder::OVER_TEXT);
+//			g->getCaptionManager()->render(RenderOrder::OVER_GUI);
+//		}
+
 		//let's now draw the main fbo into the mask fbo with the color shader, then back to the main fbo
 		GLUtils::bindFBO(GLUtils::bobsGame_mainGameFBO);
 		GLUtils::drawIntoFBOAttachment(1);
@@ -587,7 +601,15 @@ void BobsGame::render()
 //			captionManager->render(RenderOrder::ABOVE_TOP);
 //			captionManager->render(RenderOrder::OVER_TEXT);
 			captionManager->render(RenderOrder::OVER_GUI);
+//			for (int i = 0; i < players.size(); i++)
+//			{
+//				PuzzlePlayer *p = players.get(i);
+//				GameLogic *g = p->gameLogic;
+//				g->getCaptionManager()->render(RenderOrder::OVER_GUI);
+//			}
 //		}
+
+
 
 		//--------------------------
 		// draw MAIN FBO texture into SCREEN BUFFER
@@ -765,6 +787,15 @@ void BobsGame::render()
 			captionManager->render(RenderOrder::ABOVE_TOP);
 			captionManager->render(RenderOrder::OVER_TEXT);
 			captionManager->render(RenderOrder::OVER_GUI);
+//			for (int i = 0; i < players.size(); i++)
+//			{
+//				PuzzlePlayer *p = players.get(i);
+//				GameLogic *g = p->gameLogic;
+//				g->getCaptionManager()->render(RenderOrder::ABOVE);
+//				g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
+//				g->getCaptionManager()->render(RenderOrder::OVER_TEXT);
+//				g->getCaptionManager()->render(RenderOrder::OVER_GUI);
+//			}
 		}
 
 		for (int i = 0; i < players.size(); i++)

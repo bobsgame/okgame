@@ -1640,7 +1640,7 @@ void GameLogic::handleNewChain()
 			if (bonusAmount > 0)
 			{
 				makeAnnouncementCaption("Chain Bonus: " + to_string(bonusAmount), BobColor::green);
-				queueVSGarbage(bonusAmount);
+				queueVSGarbageToSend(bonusAmount);
 			}
 
 			getBobsGame()->changeBG();
@@ -1669,7 +1669,7 @@ void GameLogic::handleNewChain()
 
 			makeAnnouncementCaption("Combo Bonus: " + to_string(bonusAmount) + " X " + to_string(currentCombo), BobColor::green);
 
-			queueVSGarbage(currentCombo);
+			queueVSGarbageToSend(currentCombo);
 
 			getBobsGame()->shakeHard();
 			grid->shakeHard();
@@ -2508,9 +2508,9 @@ void GameLogic::newRandomPiece()
 	piecesMadeTotal++;
 	blocksMadeTotal += currentPiece->blocks.size();
 
-	if (garbageWaitPieces > 0)
+	if (garbageWaitForPiecesSetCount > 0)
 	{
-		garbageWaitPieces--;
+		garbageWaitForPiecesSetCount--;
 	}
 
 	getAudioManager()->playSound(getRandomMakePieceSound(), getVolume(), getSoundEffectSpeed());
@@ -2566,10 +2566,10 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 
 	frameState.receivedGarbageAmount += amount;
 
-	garbageWaitPieces += 3;
-	if (garbageWaitPieces > 4)
+	garbageWaitForPiecesSetCount += 3;
+	if (garbageWaitForPiecesSetCount > 4)
 	{
-		garbageWaitPieces = 4;
+		garbageWaitForPiecesSetCount = 4;
 	}
 
 	queuedVSGarbageAmountFromOtherPlayer += amount;
@@ -2599,7 +2599,7 @@ void GameLogic::processQueuedGarbageSentFromOtherPlayer()
 
 	if (queuedVSGarbageAmountFromOtherPlayer > 0)
 	{
-		if (garbageWaitPieces == 0)
+		if (garbageWaitForPiecesSetCount == 0)
 		{
 			//makeAnnouncementCaption("Processed VS Garbage: " + to_string(queuedGarbageAmountFromOtherPlayer));
 
@@ -2631,7 +2631,7 @@ void GameLogic::processQueuedGarbageSentFromOtherPlayer()
 }
 
 //=========================================================================================================================
-void GameLogic::queueVSGarbage(int amount)
+void GameLogic::queueVSGarbageToSend(int amount)
 {//=========================================================================================================================
 
 	//if queued garbage, send it to the other side and negate it
@@ -2761,7 +2761,7 @@ void GameLogic::renderQueuedGarbage()
 		garbageWaitCaption->screenY = (float)(grid->getYOnScreenNoShake() - (cellH()));
 		garbageWaitCaption->flashing = true;
 		garbageWaitCaption->flashingTicksPerFlash = 500;
-		garbageWaitCaption->setText("Wait: " + to_string(garbageWaitPieces));
+		garbageWaitCaption->setText("Garbage: "+ to_string(queuedVSGarbageAmountFromOtherPlayer)+" Wait: " + to_string(garbageWaitForPiecesSetCount));
 
 		for (int i = 0; i < queuedVSGarbageAmountFromOtherPlayer; i++)
 		{
@@ -4671,4 +4671,8 @@ FrameState* GameLogic::getFrameState()
 	return &(frameState);
 }
 
-
+////=========================================================================================================================
+//CaptionManager* GameLogic::getCaptionManager()
+//{//=========================================================================================================================
+//	return &captionManager;
+//}

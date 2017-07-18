@@ -84,7 +84,7 @@ public:
 	ActionManager* getActionManager();
 	TextManager* getTextManager();
 	AudioManager* getAudioManager();
-	CaptionManager* getCaptionManager();
+	virtual CaptionManager* getCaptionManager();
 	EventManager* getEventManager();
 	CinematicsManager* getCinematicsManager();
 

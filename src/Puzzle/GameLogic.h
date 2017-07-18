@@ -163,6 +163,10 @@ public:
 
 public:
 
+	//CaptionManager captionManager;
+
+	//virtual CaptionManager* getCaptionManager() override;
+
 	
 	ArrayList<GameType*> gameTypeRandomBag;
 	GameType* currentGameType = nullptr;//currentGameType
@@ -344,7 +348,7 @@ public:
 
 private:
 	int queuedVSGarbageAmountFromOtherPlayer = 0;
-	int garbageWaitPieces = 0;
+	int garbageWaitForPiecesSetCount = 0;
 
 	shared_ptr<Block> garbageBlock = nullptr;
 
@@ -409,7 +413,7 @@ private:
 public:
 	void gotVSGarbageFromOtherPlayer(int amount);
 	void processQueuedGarbageSentFromOtherPlayer();
-	void queueVSGarbage(int amount);
+	void queueVSGarbageToSend(int amount);
 
 private:
 	void processGarbageRules();
