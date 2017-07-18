@@ -401,16 +401,16 @@ void Main::mainInit()
 
 
 
-//#define PUZZLE 1
+#define PUZZLE 1
 
 #ifdef PUZZLE
 
 	log.debug("Create BobsGame");
 	bobsGame = new BobsGame();
-	stateManager->setState(bobsGame);
+	stateManager->pushState(bobsGame);
 	bobsGame->init();
 
-	bobNet->addEngineToForwardMessagesTo(stateManager->getState());
+	bobNet->addEngineToForwardMessagesTo(bobsGame);
 #endif
 
 

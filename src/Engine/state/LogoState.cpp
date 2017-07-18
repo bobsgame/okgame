@@ -35,7 +35,7 @@ void LogoState::update()
 	totalTicksPassed += (int)engineTicksPassed();
 
 
-	if(totalTicksPassed>=ticksToShow)
+	if(totalTicksPassed >= ticksToShow)
 	{
 		
 		Main::getMain()->stateManager->popState();
@@ -105,7 +105,7 @@ void LogoState::render()
 //	GLUtils::drawTexture(t, x0, x1, y0, y1, 1.0f, GLUtils::FILTER_NEAREST);
 //	GLUtils::drawTexture(over, x0, x1, y0, y1, 1.0f, GLUtils::FILTER_NEAREST);
 
-	float timesToCycle = ticksToShow/1000.0f;
+	float timesToCycle = ticksToShow/1500.0f;
 
 
 
@@ -129,25 +129,25 @@ void LogoState::render()
 
 	//half screen
 	//scale by width
-	sx0 = w / 4 * 1;
-	sx1 = w / 4 * 3;
+	sx0 = w / 6 * 2;
+	sx1 = w / 6 * 4;
 	float drawwidth = sx1 - sx0;
 	float wratio = drawwidth / iw;
 	float scaledheight = wratio * ih;
 
-	sy0 = (h - scaledheight)/2;
+	sy0 = (h - scaledheight)/6*2;
 	sy1 = sy0 + scaledheight;
 
 	//if doesnt fit scale by height
 	if(scaledheight>h)
 	{
-		sy0 = h / 4 * 1;
-		sy1 = h / 4 * 3;
+		sy0 = h / 6 * 2;
+		sy1 = h / 6 * 4;
 		float drawheight = sy1 - sy0;
 		float hratio = drawheight / ih;
 		float scaledwidth = hratio * iw;
 
-		sx0 = (w - scaledwidth) / 2;
+		sx0 = (w - scaledwidth) / 6*2;
 		sx1 = sx0 + scaledwidth;
 	}
 
