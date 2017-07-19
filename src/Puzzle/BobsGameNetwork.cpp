@@ -2004,7 +2004,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 				currentRoom->multiplayer_NumPlayers = players.size();
 				string s = currentRoom->encodeRoomData(false);
 
-				tellServerIAmHostingOrUpdateRoomStatus(s);
+				tellServerIAmHostingOrUpdateRoomStatus(""+to_string(currentRoom->multiplayer_HostUserID)+":"+currentRoom->uuid+":"+s+":");
 				
 			}
 		}

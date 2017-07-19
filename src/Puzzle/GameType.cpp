@@ -114,8 +114,22 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     //---------------------------------------------------
     
     ar & BOOST_SERIALIZATION_NVP(name);
-    ar & BOOST_SERIALIZATION_NVP(rules);
-    
+
+	if(version > 7)
+	{
+		ar & BOOST_SERIALIZATION_NVP(rules1);
+		ar & BOOST_SERIALIZATION_NVP(rules2);
+		ar & BOOST_SERIALIZATION_NVP(rules3);
+	}
+	if (version < 8)
+	{
+		string rules = "";
+		ar & BOOST_SERIALIZATION_NVP(rules);
+		rules1 = rules;
+		rules2 = "";
+		rules3 = "";
+	}
+
     ar & BOOST_SERIALIZATION_NVP(scoreType);
     ar & BOOST_SERIALIZATION_NVP(scoreTypeAmountPerLevelGained);
     

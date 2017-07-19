@@ -122,7 +122,7 @@ BobMenu::BobMenu(Engine *g, string title)
 
 	if (title != "")
 	{
-		titleCaption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, title, 32, outline, menuColor, RenderOrder::OVER_GUI);
+		titleCaption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, title, 32, true, menuColor, RenderOrder::OVER_GUI);
 	}
 
 	activeMenus.add(this);
@@ -265,14 +265,21 @@ BobMenu::MenuItem* BobMenu::addInfo(string caption, string id, BobColor *color)
 
 	if (color == nullptr)color = infoColor;
 
+	
+
 	MenuItem *m = new MenuItem();
-	m->caption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, false, color, RenderOrder::OVER_GUI);
+
+	outline = false;
+	m->outline = false;
+
+	m->caption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
 	m->captionText = caption;
 	m->color = color;
 	m->id = id;
 	m->hidden = false;
 	m->info = true;
-
+	
+	
 	if (id == "")id = caption;
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	m->id = id;
@@ -287,7 +294,8 @@ BobMenu::MenuItem* BobMenu::add(string caption, string id, BobColor *color)
 	if (color == nullptr)color = defaultMenuColor;
 
 	MenuItem *m = new MenuItem();
-	m->caption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, outline, color, RenderOrder::OVER_GUI);
+	m->outline = outline;
+	m->caption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
 	m->captionText = caption;
 	m->color = color;
 	if (id == "")id = caption;
@@ -309,8 +317,8 @@ BobMenu::MenuItem* BobMenu::addYesNo(string caption, bool yesNo)
 	
 	m->isYesNoType = true;
 	m->yesNoValue = yesNo;
-	if (yesNo == false)m->setColor(disabledMenuColor,outline);
-	else m->setColor(menuColor,outline);
+	if (yesNo == false)m->setColor(disabledMenuColor,m->outline);
+	else m->setColor(menuColor, m->outline);
 	return m;
 }
 

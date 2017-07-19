@@ -611,6 +611,16 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 		processFrame();
 		
 
+		if(getCurrentDifficulty()->name == "Beginner" && currentGameType->gameMode==GameMode::STACK && madeBeginnerStackAnnouncement==false)
+		{
+			madeBeginnerStackAnnouncement = true;
+
+			makeAnnouncementCaption("Press Left Ctrl To Raise The Stack!", BobColor::white);
+
+		}
+
+
+
 
 		if (getBobsGame()->isNetworkGame() == false)
 		{
@@ -4036,9 +4046,10 @@ void GameLogic::updateCaptions()
 
 	captionY = -1;
 
-	if (levelCaption == nullptr)
+
+	if (difficultyCaption == nullptr)
 	{
-		levelCaption = makeInfoCaption("levelCaption");
+		difficultyCaption = makeInfoCaption("difficultyCaption");
 	}
 
 	if (gameTypeCaption == nullptr)
@@ -4046,17 +4057,33 @@ void GameLogic::updateCaptions()
 		gameTypeCaption = makeInfoCaption("gameTypeCaption");
 	}
 
-
-	if (difficultyCaption == nullptr)
+	if (rulesCaption1 == nullptr)
 	{
-		difficultyCaption = makeInfoCaption("difficultyCaption");
+		rulesCaption1 = makeInfoCaption("rules1Caption");
 	}
 
-	if (rulesCaption == nullptr)
+	if (rulesCaption2 == nullptr)
 	{
-		rulesCaption = makeInfoCaption("rulesCaption");
+		rulesCaption2 = makeInfoCaption("rules2Caption");
 	}
 
+	if (levelCaption == nullptr)
+	{
+		levelCaption = makeInfoCaption("levelCaption");
+	}
+
+	if (Main::globalSettings->bobsGame_showDetailedGameInfoCaptions)
+	{
+		if (piecesToLevelUpThisLevelCaption == nullptr)
+		{
+			piecesToLevelUpThisLevelCaption = makeInfoCaption("piecesToLevelUpThisLevelCaption");
+		}
+	}
+
+	if (piecesLeftToLevelUpCaption == nullptr)
+	{
+		piecesLeftToLevelUpCaption = makeInfoCaption("piecesToLevelUpThisLevelCaption");
+	}
 
 	if (Main::globalSettings->bobsGame_showDetailedGameInfoCaptions)
 	{
@@ -4229,8 +4256,11 @@ void GameLogic::updateCaptions()
 
 	if(levelCaption !=nullptr)levelCaption->setText(levelCaptionText);
 	if(gameTypeCaption !=nullptr)gameTypeCaption->setText("Game: "+currentGameType->name);
-	if(rulesCaption !=nullptr)rulesCaption->setText("Rules: "+currentGameType->rules);
+	if(rulesCaption1 !=nullptr)rulesCaption1->setText("Rules: "+currentGameType->rules1);
+	if(rulesCaption2 !=nullptr)rulesCaption2->setText(""+currentGameType->rules2);
+	if(rulesCaption3 !=nullptr)rulesCaption3->setText(""+currentGameType->rules3);
 	if(difficultyCaption !=nullptr)difficultyCaption->setText("Difficulty: "+ getCurrentDifficulty()->name);
+	
 
 
 
@@ -4509,10 +4539,18 @@ void GameLogic::updateScore()
 	}
 
 
+
+
+
 	if (currentGameType->scoreType == ScoreType::LINES_CLEARED)
 	{
+
+		if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Lines For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained));
+		if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Lines Left For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained- linesClearedThisLevel));
+
 		if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 		{
+
 			if (linesClearedThisLevel / currentGameType->scoreTypeAmountPerLevelGained >= 1)
 			{
 				currentLevel++;
@@ -4522,6 +4560,10 @@ void GameLogic::updateScore()
 	else
 		if (currentGameType->scoreType == ScoreType::BLOCKS_CLEARED)
 		{
+
+			if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Blocks For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained));
+			if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Blocks Left For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained- blocksClearedThisLevel));
+
 			if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 			{
 				if (blocksClearedThisLevel / currentGameType->scoreTypeAmountPerLevelGained >= 1)
@@ -4533,6 +4575,11 @@ void GameLogic::updateScore()
 		else
 			if (currentGameType->scoreType == ScoreType::PIECES_MADE)
 			{
+
+				if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Pieces For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained));
+				if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Pieces Left For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained- piecesMadeThisLevel));
+
+
 				if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 				{
 					if (piecesMadeThisLevel / currentGameType->scoreTypeAmountPerLevelGained >= 1)

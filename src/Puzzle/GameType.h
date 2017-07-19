@@ -333,7 +333,9 @@ public:
 	//---------------------------------------------------
 
 	string name = "My New Game Type";								Info name_Info = Info("Game Type Name", "The name of the game type.");
-	string rules = "Make a line of matching colors to score!";		Info rules_Info = Info("Rules Description", "A short description of the rules.");
+	string rules1 = "Make a line of 3 or more matching colors to score!";	Info rules1_Info = Info("Rules Description 1", "A short description of the rules.");
+	string rules2 = "The spark ball turns the blocks into circles.";		Info rules2_Info = Info("Rules Description 2", "Another line for a short description of the rules.");
+	string rules3 = "The flashing ball matches any color.";					Info rules3_Info = Info("Rules Description 3", "Another line for a short description of the rules.");
 
 	ScoreType scoreType = ScoreType::BLOCKS_CLEARED;						Info scoreType_Info = Info("Score Type", "What the score and level is based on.");
 	int scoreTypeAmountPerLevelGained = 4;									Info scoreTypeAmountPerLevelGained_Info = Info("Score Type Amount Per Level Gained", "Amount which determines whether a level is gained, for instance 8 lines cleared, 20 blocks cleared, or 10 pieces made.");
@@ -617,5 +619,5 @@ public:
 
 };
 
-BOOST_CLASS_VERSION(GameType, 7)
+BOOST_CLASS_VERSION(GameType, 8)
 BOOST_CLASS_TRACKING(GameType, boost::serialization::track_never)

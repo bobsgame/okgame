@@ -1056,7 +1056,9 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 		{
 
 			n++; p->Add(s->name_Info.label, string(s->name))->SetToolTip(s->name_Info.tip);
-			n++; p->Add(s->rules_Info.label, string(s->rules))->SetToolTip(s->rules_Info.tip);
+			n++; p->Add(s->rules1_Info.label, string(s->rules1))->SetToolTip(s->rules1_Info.tip);
+			n++; p->Add(s->rules2_Info.label, string(s->rules2))->SetToolTip(s->rules2_Info.tip);
+			n++; p->Add(s->rules3_Info.label, string(s->rules3))->SetToolTip(s->rules3_Info.tip);
 
 			Property::ComboBox* scoreTypeCombo = new Property::ComboBox(p);
 			{
@@ -1323,14 +1325,18 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	catch (exception) { currentGameType->intItem = defaultSettings.intItem; }
 	*/
 
-	currentGameType->rules = p->Find(currentGameType->rules_Info.label)->GetProperty()->GetPropertyValue().c_str();
+	currentGameType->rules1 = p->Find(currentGameType->rules1_Info.label)->GetProperty()->GetPropertyValue().c_str();
+	currentGameType->rules2 = p->Find(currentGameType->rules2_Info.label)->GetProperty()->GetPropertyValue().c_str();
+	currentGameType->rules3 = p->Find(currentGameType->rules3_Info.label)->GetProperty()->GetPropertyValue().c_str();
 
-	try {
+	try 
+	{
 		currentGameType->scoreType = (ScoreType)stoi(p->Find(currentGameType->scoreType_Info.label)->GetProperty()->GetPropertyValue().c_str());
 	}
 	catch (exception) { currentGameType->scoreType = defaultGameType.scoreType; }
 
-	try {
+	try 
+	{
 		currentGameType->scoreTypeAmountPerLevelGained = stoi(p->Find(currentGameType->scoreTypeAmountPerLevelGained_Info.label)->GetProperty()->GetPropertyValue().c_str());
 	}
 	catch (exception) { currentGameType->scoreTypeAmountPerLevelGained = defaultGameType.scoreTypeAmountPerLevelGained; }

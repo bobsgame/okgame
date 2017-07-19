@@ -746,6 +746,7 @@ void BobsGame::gettingGamesFromServerMenuUpdate()
 	{
 		gettingGamesFromServerMenu = new BobMenu(this, "");
 		gettingGamesFromServerMenu->spacing = 1.2f;
+		gettingGamesFromServerMenu->setFontSize(24);
 		gettingGamesFromServerMenu->addInfo("Downloading games from server...","Downloading");
 	}
 

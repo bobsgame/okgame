@@ -251,6 +251,8 @@ private:
 public:
 	bool didInit = false;
 
+	bool madeBeginnerStackAnnouncement = false;
+
 private:
 	bool extraStage1 = false;
 	bool extraStage2 = false;
@@ -509,7 +511,9 @@ public:
 	string levelCaptionText = "levelCaptionText";
 
 	Caption* gameTypeCaption = nullptr;
-	Caption* rulesCaption = nullptr;
+	Caption* rulesCaption1 = nullptr;
+	Caption* rulesCaption2 = nullptr;
+	Caption* rulesCaption3 = nullptr;
 
 	Caption* difficultyCaption = nullptr;
 	//string difficultyCaptionText = "difficultyCaptionText";
@@ -542,6 +546,9 @@ public:
 	Caption* comboChainTotalCaption = nullptr;
 	Caption* seedCaption = nullptr;
 	Caption* bgCaption = nullptr;
+
+	Caption* piecesToLevelUpThisLevelCaption = nullptr;
+	Caption* piecesLeftToLevelUpCaption = nullptr;
 
 private:
 	ArrayList<Caption*>* infoCaptions = new ArrayList<Caption*>();

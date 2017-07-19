@@ -47,6 +47,7 @@ public:
 	Caption* titleCaption = nullptr;
 	
 	bool outline = true;
+	
 	bool scaleFontSizeToFit = true;
 
 	int cursorPosition = 0;
@@ -95,6 +96,8 @@ public:
 		bool isYesNoType = false;
 		bool yesNoValue = true;
 		string captionText = "";
+
+		bool outline = true;
 
 		//BobSubMenu *subMenu = nullptr;
 
