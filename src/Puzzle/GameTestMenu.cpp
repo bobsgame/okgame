@@ -6,7 +6,7 @@
 using namespace Gwen;
 using namespace Gwen::Controls;
 
-
+#include "Room.h"
 
 
 
@@ -551,7 +551,7 @@ void GameTestMenuControl::initPreviewGame()
 	bobsGame->getPlayer1Game()->currentGameType = (currentGameSequence->gameTypes.get(0));
 	bobsGame->getPlayer1Game()->currentGameSequence = currentGameSequence;
 	bobsGame->getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyCombo->GetSelectedItem()->GetText().c_str();
-	bobsGame->getPlayer1Game()->currentGameSequence->endlessMode = true;
+	bobsGame->currentRoom->endlessMode = true;
 	
 
 

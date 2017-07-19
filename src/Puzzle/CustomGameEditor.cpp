@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 
-
+#include "Room.h"
 
 
 //	void Layout(Gwen::Skin::Base* skin)
@@ -723,7 +723,7 @@ void CustomGameEditorControl::initFromCurrentGameType()
 
 	bobsGame->getPlayer1Game()->currentGameSequence = new GameSequence();
 	bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.add(currentGameType);
-	bobsGame->getPlayer1Game()->currentGameSequence->endlessMode = true;
+	bobsGame->currentRoom->endlessMode = true;
 
 
 }
@@ -4658,7 +4658,7 @@ void CustomGameEditorControl::initPreviewGame()
 		bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.add(currentGameType);
 		bobsGame->getPlayer1Game()->currentGameSequence->currentDifficultyName = "Beginner";
 		if (currentDifficultyType != nullptr)bobsGame->getPlayer1Game()->currentGameSequence->currentDifficultyName = currentDifficultyType->name;
-		bobsGame->getPlayer1Game()->currentGameSequence->endlessMode = true;
+		bobsGame->currentRoom->endlessMode = true;
 	}
 
 

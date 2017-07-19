@@ -42,6 +42,13 @@ int main(int argc, char* argv[])//int argc, char **argv)
 
 	//cout << "Starting..." << endl;
 
+	if(argc>0)
+	{
+		
+		//TODO: run in headless mode, run bobsgame at maximum speed, load framestate binary from disk, encode youtube video?
+
+	}
+
 	Main::setMain(new Main());
 	Main::getMain()->mainInit();
 	Main::getMain()->mainLoop();

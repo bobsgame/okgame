@@ -1711,8 +1711,8 @@ void BobsGame::settingsMenuInit(BobMenu* m)
 	m->add("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%", "Saturation");
 
 	m->add("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%", "Global Hue Shift");
-	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
-	m->add("Show Detailed Game Stats: " + Main::globalSettings->showDetailedGameInfoCaptions ? "On" : "Off", "Game Stats");
+	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
+	m->add("Show Detailed Game Stats: " + Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off", "Game Stats");
 
 	m->add("Defaults");
 }
@@ -1730,8 +1730,8 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			Main::globalSettings->showDetailedGameInfoCaptions = !Main::globalSettings->showDetailedGameInfoCaptions;
-			m->getMenuItemByID("Show Detailed Game Stats: " + Main::globalSettings->showDetailedGameInfoCaptions ? "On" : "Off");
+			Main::globalSettings->bobsGame_showDetailedGameInfoCaptions = !Main::globalSettings->bobsGame_showDetailedGameInfoCaptions;
+			m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off");
 		}
 	}
 
@@ -1825,9 +1825,9 @@ void BobsGame::settingsMenuLeft(BobMenu* m)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			if (Main::globalSettings->screenFlashOnLevelUpAlpha > 0)Main::globalSettings->screenFlashOnLevelUpAlpha -= 0.01f;
-			if (Main::globalSettings->screenFlashOnLevelUpAlpha < 0)Main::globalSettings->screenFlashOnLevelUpAlpha = 0;
-			m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
+			if (Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha > 0)Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha -= 0.01f;
+			if (Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha < 0)Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha = 0;
+			m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
 		}
 	}
 
@@ -1919,9 +1919,9 @@ void BobsGame::settingsMenuRight(BobMenu* m)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			if (Main::globalSettings->screenFlashOnLevelUpAlpha < 0.5f)Main::globalSettings->screenFlashOnLevelUpAlpha += 0.01f;
-			if (Main::globalSettings->screenFlashOnLevelUpAlpha > 0.5f)Main::globalSettings->screenFlashOnLevelUpAlpha = 0.5f;
-			m->getCaptionByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
+			if (Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha < 0.5f)Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha += 0.01f;
+			if (Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha > 0.5f)Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha = 0.5f;
+			m->getCaptionByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
 		}
 	}
 
@@ -1939,8 +1939,8 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m)
 	Main::globalSettings->brightness = gs.brightness;
 	Main::globalSettings->contrast = gs.contrast;
 	Main::globalSettings->gamma = gs.gamma;
-	Main::globalSettings->screenFlashOnLevelUpAlpha = gs.screenFlashOnLevelUpAlpha;
-	Main::globalSettings->showDetailedGameInfoCaptions = gs.showDetailedGameInfoCaptions;
+	Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha = gs.bobsGame_screenFlashOnLevelUpAlpha;
+	Main::globalSettings->bobsGame_showDetailedGameInfoCaptions = gs.bobsGame_showDetailedGameInfoCaptions;
 
 	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
 	m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
@@ -1948,8 +1948,8 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m)
 	m->getMenuItemByID("Contrast")->setText("Contrast: " + to_string((int)(Main::globalSettings->contrast * 100)) + "%");
 	m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
 	m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
-	m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
-	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->showDetailedGameInfoCaptions ? "On" : "Off");
+	m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
+	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off");
 	
 }
 
@@ -2475,6 +2475,19 @@ enum class GameObjective
 	LAST,
 };
 
+//void BobsGame::saveRoomConfiguration()
+//{
+//	
+//
+//}
+//
+//
+//void BobsGame::loadRoomConfiguration()
+//{
+//	
+//
+//}
+
 //=========================================================================================================================
 void BobsGame::gameSetupMenuUpdate()
 {//=========================================================================================================================
@@ -2486,7 +2499,7 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSetupMenu->add("Select Game Sequence Or Single Game Type...", "Select Game");
 		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");
 		gameSetupMenu->add("Objective: Play To Credits Level", "Objective");
-		gameSetupMenu->add("Options", "Options");
+		gameSetupMenu->add("More Options", "Options");
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Start Game", "Start Game")->setColor(BobColor::green);
 		gameSetupMenu->addInfo(" ", " ");
@@ -2499,15 +2512,16 @@ void BobsGame::gameSetupMenuUpdate()
 
 	}
 
+
 	{
 		string selectedDifficultyName = "";
 		if (localMultiplayer || networkMultiplayer)
 		{
 			if (currentRoom == nullptr)currentRoom = new Room();
 
-			if (currentRoom->multiplayer_SelectedDifficultyName != "")
+			if (currentRoom->difficultyName != "")
 			{
-				selectedDifficultyName = currentRoom->multiplayer_SelectedDifficultyName;
+				selectedDifficultyName = currentRoom->difficultyName;
 			}
 		}
 		else
@@ -2526,8 +2540,16 @@ void BobsGame::gameSetupMenuUpdate()
 				if (selectedDifficultyName == difficultyName)selectedDifficultyIndex = i;
 			}
 
+
+			if (currentRoom == nullptr)currentRoom = new Room();
+			if (currentRoom->difficultyName != "")
+			{
+				currentRoom->difficultyName = selectedDifficultyName;
+			}
+
 			if (getPlayer1Game()->currentGameSequence != nullptr)
 				getPlayer1Game()->currentGameSequence->currentDifficultyName = selectedDifficultyName;
+			
 
 			Caption *c = gameSetupMenu->getCaptionByID("Difficulty");
 			if (c != nullptr)c->setText("Difficulty: " + selectedDifficultyName);
@@ -2539,7 +2561,7 @@ void BobsGame::gameSetupMenuUpdate()
 		GameSequence *selectedGameSequence = nullptr;
 		if (localMultiplayer || networkMultiplayer)
 		{
-			selectedGameSequence = currentRoom->multiplayer_SelectedGameSequence;
+			selectedGameSequence = currentRoom->gameSequence;
 		}
 		else
 		{
@@ -2554,7 +2576,7 @@ void BobsGame::gameSetupMenuUpdate()
 				selectedGameSequence = new GameSequence();
 				selectedGameSequence->gameTypes.add(new GameType());
 			}
-			currentRoom->multiplayer_SelectedGameSequence = selectedGameSequence;
+			currentRoom->gameSequence = selectedGameSequence;
 			getPlayer1Game()->currentGameSequence = selectedGameSequence;
 		}
 
@@ -2571,6 +2593,7 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSetupMenu->getMenuItemByID("Start Game")->info = false;
 		
 	}
+
 
 	{
 		string objectiveString = "";
@@ -2653,7 +2676,7 @@ void BobsGame::gameSetupMenuUpdate()
 
 				DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex);
 				string difficultyName = d->name;
-				currentRoom->multiplayer_SelectedDifficultyName = difficultyName;
+				currentRoom->difficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 			}
@@ -2673,13 +2696,11 @@ void BobsGame::gameSetupMenuUpdate()
 
 				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
 				{
-					if (getPlayer1Game()->currentGameSequence != nullptr)getPlayer1Game()->currentGameSequence->endlessMode = false;
-					if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->endlessMode = false;
+					if (currentRoom != nullptr)currentRoom->endlessMode = false;
 				}
 				if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
 				{
-					if (getPlayer1Game()->currentGameSequence != nullptr)getPlayer1Game()->currentGameSequence->endlessMode = true;
-					if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->endlessMode = true;
+					if (currentRoom != nullptr)currentRoom->endlessMode = true;
 				}
 
 				string objectiveString = "";
@@ -2723,24 +2744,22 @@ void BobsGame::gameSetupMenuUpdate()
 			if (gameSetupMenu->isSelectedID("Start Game", clicked, mx, my))
 			{
 
-				if(getPlayer1Game()->currentGameSequence == nullptr)getPlayer1Game()->currentGameSequence = currentRoom->multiplayer_SelectedGameSequence;
+				if(getPlayer1Game()->currentGameSequence == nullptr)getPlayer1Game()->currentGameSequence = currentRoom->gameSequence;
 
 				GameType gt;
 				DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex);
 				string difficultyName = d->name;
-				currentRoom->multiplayer_SelectedDifficultyName = difficultyName;
+				currentRoom->difficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
 				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
 				{
-					if (getPlayer1Game()->currentGameSequence != nullptr)getPlayer1Game()->currentGameSequence->endlessMode = false;
-					if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->endlessMode = false;
+					if (currentRoom != nullptr)currentRoom->endlessMode = false;
 				}
 				if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
 				{
-					if (getPlayer1Game()->currentGameSequence != nullptr)getPlayer1Game()->currentGameSequence->endlessMode = true;
-					if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->endlessMode = true;
+					if (currentRoom != nullptr)currentRoom->endlessMode = true;
 				}
 
 				//if game type selected, else gray out
@@ -3008,7 +3027,7 @@ void BobsGame::selectGameSequenceMenuUpdate()
 				}
 				else
 				{
-					currentRoom->multiplayer_SelectedGameSequence = g;
+					currentRoom->gameSequence = g;
 					getPlayer1Game()->currentGameSequence = g;
 
 					gameSequenceOptionsMenuShowing = true;
@@ -3097,14 +3116,14 @@ void BobsGame::gameSequenceOptionsMenuUpdate()
 
 		if (gameSequenceOptionsMenu->isSelectedID(RANDOMIZE_SEQUENCE, clicked, mx, my))
 		{
-			if(getPlayer1Game()->currentGameSequence!=nullptr)getPlayer1Game()->currentGameSequence->randomizeSequence = true;
-			if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->randomizeSequence = true;
+			if (currentRoom->gameSequence != nullptr)currentRoom->gameSequence->randomizeSequence = true;
+			if (currentRoom != nullptr)currentRoom->singleplayer_RandomizeSequence = true;
 		}
 
 		if (gameSequenceOptionsMenu->isSelectedID(PLAY_THROUGH_SEQUENCE_IN_ORDER, clicked, mx, my))
 		{
-			if (getPlayer1Game()->currentGameSequence != nullptr)getPlayer1Game()->currentGameSequence->randomizeSequence = false;
-			if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->randomizeSequence = false;
+			if (currentRoom->gameSequence != nullptr)currentRoom->gameSequence->randomizeSequence = false;
+			if (currentRoom != nullptr)currentRoom->singleplayer_RandomizeSequence = false;
 		}
 
 		//gameObjectiveMenuShowing = true;
@@ -3792,11 +3811,11 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 				else
 				{
 
-					currentRoom->multiplayer_SelectedGameSequence = new GameSequence();
-					currentRoom->multiplayer_SelectedGameSequence->gameTypes.add(g);
-					currentRoom->multiplayer_SelectedGameSequence->name = g->name;
+					currentRoom->gameSequence = new GameSequence();
+					currentRoom->gameSequence->gameTypes.add(g);
+					currentRoom->gameSequence->name = g->name;
 
-					getPlayer1Game()->currentGameSequence = currentRoom->multiplayer_SelectedGameSequence;
+					getPlayer1Game()->currentGameSequence = currentRoom->gameSequence;
 				}
 			}
 		}
@@ -3888,16 +3907,14 @@ void BobsGame::gameObjectiveMenuUpdate()
 		if (gameObjectiveMenu->isSelectedID(PLAY_TO_CREDITS_LEVEL, clicked, mx, my))
 		{
 			selectedObjectiveIndex = (int)GameObjective::PLAY_TO_CREDITS_LEVEL;
-			if(getPlayer1Game()->currentGameSequence!=nullptr)getPlayer1Game()->currentGameSequence->endlessMode = false;
-			if(currentRoom->multiplayer_SelectedGameSequence!=nullptr)currentRoom->multiplayer_SelectedGameSequence->endlessMode = false;
+			if(currentRoom!=nullptr)currentRoom->endlessMode = false;
 
 		}
 
 		if (gameObjectiveMenu->isSelectedID(ENDLESS, clicked, mx, my))
 		{
 			selectedObjectiveIndex = (int)GameObjective::ENDLESS;
-			if (getPlayer1Game()->currentGameSequence != nullptr)getPlayer1Game()->currentGameSequence->endlessMode = true;
-			if (currentRoom->multiplayer_SelectedGameSequence != nullptr)currentRoom->multiplayer_SelectedGameSequence->endlessMode = true;
+			if (currentRoom != nullptr)currentRoom->endlessMode = true;
 
 		}
 
@@ -4044,10 +4061,10 @@ void BobsGame::difficultyMenuUpdate()
 				if (statsMenuShowing == false)
 				{
 					currentRoom->multiplayer_AllowDifferentDifficulties = false;
-					currentRoom->multiplayer_SelectedDifficultyName = difficultyName;
+					currentRoom->difficultyName = difficultyName;
 
 					if (getPlayer1Game()->currentGameSequence != nullptr)
-						getPlayer1Game()->currentGameSequence->currentDifficultyName = currentRoom->multiplayer_SelectedDifficultyName;
+						getPlayer1Game()->currentGameSequence->currentDifficultyName = currentRoom->difficultyName;
 				}
 				else
 				{
@@ -4170,10 +4187,10 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		currentRoom = new Room();
 	}
 
-	if(currentRoom->multiplayer_SelectedGameSequence == nullptr)
+	if(currentRoom->gameSequence == nullptr)
 	{
-		currentRoom->multiplayer_SelectedGameSequence = new GameSequence();
-		currentRoom->multiplayer_SelectedGameSequence->gameTypes.add(new GameType());
+		currentRoom->gameSequence = new GameSequence();
+		currentRoom->gameSequence->gameTypes.add(new GameType());
 	}
 
 	if(currentRoom->multiplayer_AllowDifferentGameSequences)
@@ -4181,14 +4198,14 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		multiplayerOptionsMenu->getMenuItemByID("Select Game")->setText("Game Sequence: Allow Different Game Sequences Or Types");
 	}
 	else
-	if (currentRoom->multiplayer_SelectedGameSequence != nullptr)
+	if (currentRoom->gameSequence != nullptr)
 	{
 		{
 			Caption *c = multiplayerOptionsMenu->getCaptionByID("Select Game");
 			if (c != nullptr)
 			{
-				if (currentRoom->multiplayer_SelectedGameSequence->gameTypes.size() > 1)c->setText("Game Sequence: " + currentRoom->multiplayer_SelectedGameSequence->name);
-				if (currentRoom->multiplayer_SelectedGameSequence->gameTypes.size() == 1)c->setText("Game Type: " + currentRoom->multiplayer_SelectedGameSequence->name);
+				if (currentRoom->gameSequence->gameTypes.size() > 1)c->setText("Game Sequence: " + currentRoom->gameSequence->name);
+				if (currentRoom->gameSequence->gameTypes.size() == 1)c->setText("Game Type: " + currentRoom->gameSequence->name);
 			}
 		}
 	}
@@ -4199,19 +4216,19 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		if (c != nullptr)c->setText("Difficulty: Allow Different Difficulties");
 	}
 	else
-	if (currentRoom->multiplayer_SelectedDifficultyName != "")
+	if (currentRoom->difficultyName != "")
 	{
 
 		GameType gt;
 		for (int i = 0; i < gt.difficultyTypes.size(); i++)
 		{
 			string difficultyName = gt.difficultyTypes.get(i)->name;
-			if (currentRoom->multiplayer_SelectedDifficultyName == difficultyName)selectedDifficultyIndex = i + 1;
+			if (currentRoom->difficultyName == difficultyName)selectedDifficultyIndex = i + 1;
 		}
 
 		DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
 		string difficultyName = d->name;
-		currentRoom->multiplayer_SelectedDifficultyName = difficultyName;
+		currentRoom->difficultyName = difficultyName;
 		if (getPlayer1Game()->currentGameSequence != nullptr)
 			getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
@@ -4221,14 +4238,14 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 	if (networkMultiplayer)
 	{
-		if (currentRoom->privateRoom)multiplayerOptionsMenu->getMenuItemByID("Public Or Private")->setText("Visibility: Private (Friends Only)");
+		if (currentRoom->multiplayer_PrivateRoom)multiplayerOptionsMenu->getMenuItemByID("Public Or Private")->setText("Visibility: Private (Friends Only)");
 		else multiplayerOptionsMenu->getMenuItemByID("Public Or Private")->setText("Visibility: Public");
 
-		if (currentRoom->tournamentRoom)multiplayerOptionsMenu->getMenuItemByID("Free Play Or Tournament")->setText("Score Mode: Tournament (Counts Towards Ranking)");
+		if (currentRoom->multiplayer_TournamentRoom)multiplayerOptionsMenu->getMenuItemByID("Free Play Or Tournament")->setText("Score Mode: Tournament (Counts Towards Ranking)");
 		else multiplayerOptionsMenu->getMenuItemByID("Free Play Or Tournament")->setText("Score Mode: Free Play");
 
-		if (currentRoom->maxPlayers < 2)multiplayerOptionsMenu->getMenuItemByID("Max Players")->setText("Max Players: Unlimited");
-		else multiplayerOptionsMenu->getMenuItemByID("Max Players")->setText("Max Players: " + to_string(currentRoom->maxPlayers));
+		if (currentRoom->multiplayer_MaxPlayers < 2)multiplayerOptionsMenu->getMenuItemByID("Max Players")->setText("Max Players: Unlimited");
+		else multiplayerOptionsMenu->getMenuItemByID("Max Players")->setText("Max Players: " + to_string(currentRoom->multiplayer_MaxPlayers));
 	}
 
 	if (currentRoom->multiplayer_DisableVSGarbage)multiplayerOptionsMenu->getMenuItemByID("Garbage Rule")->setText("Garbage Rule: Disable VS Garbage");
@@ -4306,7 +4323,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 					currentRoom->multiplayer_AllowDifferentDifficulties = false;
 					DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
 					string difficultyName = d->name;
-					currentRoom->multiplayer_SelectedDifficultyName = difficultyName;
+					currentRoom->difficultyName = difficultyName;
 					if (getPlayer1Game()->currentGameSequence != nullptr)
 						getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 				}
@@ -4342,17 +4359,17 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 			if (multiplayerOptionsMenu->isSelectedID("Public Or Private", clicked, mx, my))
 			{
-				currentRoom->privateRoom = !currentRoom->privateRoom;
+				currentRoom->multiplayer_PrivateRoom = !currentRoom->multiplayer_PrivateRoom;
 			}
 
 			if (multiplayerOptionsMenu->isSelectedID("Free Play Or Tournament", clicked, mx, my))
 			{
-				currentRoom->tournamentRoom = !currentRoom->tournamentRoom;
+				currentRoom->multiplayer_TournamentRoom = !currentRoom->multiplayer_TournamentRoom;
 			}
 
 			if (multiplayerOptionsMenu->isSelectedID("Max Players", clicked, mx, my))
 			{
-				currentRoom->maxPlayers = 0;
+				currentRoom->multiplayer_MaxPlayers = 0;
 			}
 
 		}
@@ -4368,8 +4385,8 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				if (ticksPassed > 15)
 				{
 					timeLastChangedSetting = currentTime;
-					if (currentRoom->maxPlayers > 0) currentRoom->maxPlayers--;
-					if (currentRoom->maxPlayers < 2)currentRoom->maxPlayers = 0;
+					if (currentRoom->multiplayer_MaxPlayers > 0) currentRoom->multiplayer_MaxPlayers--;
+					if (currentRoom->multiplayer_MaxPlayers < 2)currentRoom->multiplayer_MaxPlayers = 0;
 				}
 			}
 		}
@@ -4385,8 +4402,8 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				if (ticksPassed > 15)
 				{
 					timeLastChangedSetting = currentTime;
-					if (currentRoom->maxPlayers < 2)currentRoom->maxPlayers = 2;
-					currentRoom->maxPlayers++;
+					if (currentRoom->multiplayer_MaxPlayers < 2)currentRoom->multiplayer_MaxPlayers = 2;
+					currentRoom->multiplayer_MaxPlayers++;
 				}
 			}
 		}
@@ -4553,7 +4570,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 				}
 				else
 				{
-					p->gameLogic->currentGameSequence = currentRoom->multiplayer_SelectedGameSequence;
+					p->gameLogic->currentGameSequence = currentRoom->gameSequence;
 					p->setGameSequence = true;
 				}
 			}
@@ -4566,7 +4583,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 				}
 				else
 				{
-					p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->multiplayer_SelectedDifficultyName;
+					p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->difficultyName;
 					p->setDifficulty = true;
 				}
 			}

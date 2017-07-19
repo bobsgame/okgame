@@ -20,7 +20,7 @@ void NetworkGameSequence::serialize(Archive & ar, const unsigned int version)
 	ar & BOOST_SERIALIZATION_NVP(importExport_gameUUIDs);
 
 	ar & BOOST_SERIALIZATION_NVP(randomizeSequence);
-	ar & BOOST_SERIALIZATION_NVP(endlessMode);
+	//ar & BOOST_SERIALIZATION_NVP(endlessMode);
 	ar & BOOST_SERIALIZATION_NVP(currentDifficultyName);
 
 	if (version < 2)

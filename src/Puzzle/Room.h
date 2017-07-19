@@ -11,31 +11,87 @@
 #include "GameSequence.h"
 #include "BobsGame.h"
 
+
+
+
+
+
+
 //=========================================================================================================================
 class Room
 {//=========================================================================================================================
 public:
 
-	UDPPeerConnection *hostPeer = nullptr;
+	
 
-	int currentNumPlayers = 0;
-	int maxPlayers = 0;
-	bool privateRoom = false;
-	bool tournamentRoom = false;
+	
+	
+
 	string uuid = "";
-	long long hostUserID = 0;
+	string gameSequenceOrTypeName = "";
+	string gameSequenceUUID = "";
+	string gameTypeUUID = "";
+	string difficultyName = "Beginner";
+
+	//this is only used for sending stats to the server and for saving and loading game configurations
+	//on load config this should set randomizeSequence in currentRoom->currentSequence
+	//because either multiplayer allows multiple sequences in which case each player can determine this
+	//or it sends the serialized gameSequence with randomizeSequence set
+	bool singleplayer_RandomizeSequence = true;
+
+
+	bool endlessMode = false;
+
+
+
+	
+	int multiplayer_NumPlayers = 0;
+	long long multiplayer_HostUserID = 0;
+	int multiplayer_MaxPlayers = 0;
+	bool multiplayer_PrivateRoom = false;
+	bool multiplayer_TournamentRoom = false;
 	bool multiplayer_AllowDifferentDifficulties = true;
 	bool multiplayer_AllowDifferentGameSequences = true;
 	bool multiplayer_GameEndsWhenOnePlayerRemains = true;
 	bool multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
 	bool multiplayer_DisableVSGarbage = false;
-	string gameSequenceOrTypeName = "";
-	string gameSequenceUUID = "";
-	string gameTypeUUID = "";
-	//bool isSingleGameType = false;
-	//bool isGameSequence = false;
-	GameSequence *multiplayer_SelectedGameSequence = nullptr;
-	string multiplayer_SelectedDifficultyName = "Beginner";
+
+	//don't export
+	GameSequence *gameSequence = nullptr;
+	UDPPeerConnection *hostPeer = nullptr;
+
+	//=========================================================================================================================
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{//=========================================================================================================================
+		ar & BOOST_SERIALIZATION_NVP(uuid);
+		ar & BOOST_SERIALIZATION_NVP(gameSequenceOrTypeName);
+		ar & BOOST_SERIALIZATION_NVP(gameSequenceUUID);
+		ar & BOOST_SERIALIZATION_NVP(gameTypeUUID);
+		ar & BOOST_SERIALIZATION_NVP(difficultyName);
+		ar & BOOST_SERIALIZATION_NVP(singleplayer_RandomizeSequence);
+		ar & BOOST_SERIALIZATION_NVP(endlessMode);
+
+
+
+
+
+		
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_NumPlayers);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_HostUserID);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_MaxPlayers);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_PrivateRoom);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_TournamentRoom);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_AllowDifferentDifficulties);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_AllowDifferentGameSequences);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_GameEndsWhenOnePlayerRemains);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_DisableVSGarbage);
+
+
+	}
+
+
 
 	//=========================================================================================================================
 	Room()
@@ -47,19 +103,19 @@ public:
 	string getRoomDescription()
 	{//=========================================================================================================================
 		string visibility = "Public";
-		if (privateRoom)visibility = "Private";
+		if (multiplayer_PrivateRoom)visibility = "Private";
 
 		string scoreMode = "Free Play";
-		if (tournamentRoom)scoreMode = "Tournament";
+		if (multiplayer_TournamentRoom)scoreMode = "Tournament";
 
 		string game = "Any Game";
 
-		if (multiplayer_AllowDifferentGameSequences == false && multiplayer_SelectedGameSequence != nullptr)
-			game = multiplayer_SelectedGameSequence->name;
+		if (multiplayer_AllowDifferentGameSequences == false && gameSequence != nullptr)
+			game = gameSequence->name;
 
 		string difficulty = "Any Difficulty";
 		if (multiplayer_AllowDifferentDifficulties == false)
-			difficulty = multiplayer_SelectedDifficultyName;
+			difficulty = difficultyName;
 
 		string garbage = "";
 		if (multiplayer_DisableVSGarbage)
@@ -68,8 +124,10 @@ public:
 		string endWhenLose = "Ends When All Lost";
 		if (multiplayer_GameEndsWhenOnePlayerRemains)endWhenLose = "End On 1 Player Left";
 
-		string endOnCredits = "Endless Mode";
-		if (multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)endOnCredits = "Race To Credits";
+		string endOnCredits = "Free Play To Completion";
+		if (endlessMode)endOnCredits = "Endless Mode";
+		else
+		if (multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)endOnCredits = "End On First Completion";
 
 		string roomDescription = game;
 		if (visibility != "")roomDescription += " | " + visibility;
@@ -79,53 +137,37 @@ public:
 		//if (endWhenLose != "")roomDescription += " | " + endWhenLose;
 		//if (endOnCredits != "")roomDescription += " | " + endOnCredits;
 
-		string playersString = to_string(currentNumPlayers);
-		if (maxPlayers > 1)playersString += "/" + to_string(maxPlayers) + " players";
+		string playersString = to_string(multiplayer_NumPlayers);
+		if (multiplayer_MaxPlayers > 1)playersString += "/" + to_string(multiplayer_MaxPlayers) + " players";
 		else playersString += " players";
 
 		roomDescription += " | " + playersString;
 		return roomDescription;
 	}
 
+
 	//=========================================================================================================================
-	string encodeRoomData(long long hostUserID, int numPlayers, bool includeXMLGameSequence)
+	string encodeRoomData(bool includeXMLGameSequence)
 	{//=========================================================================================================================
 
 	 //hostUserID,roomUUID,`gameSequenceOrTypeName`,isGameSequenceOrType,gameSequenceOrTypeUUID,usersInRoom,maxUsers,private,tournament,multiplayerOptions,
-		string s =
-			to_string(hostUserID) +
-			"," + uuid;
+		
 
-		s += ",`" + multiplayer_SelectedGameSequence->name + "`";
+		std::stringstream ss;
+		boost::archive::xml_oarchive oarchive(ss);
 
-		if (multiplayer_SelectedGameSequence->gameTypes.size() == 1)
-		{
-			s += ",GameType," + multiplayer_SelectedGameSequence->gameTypes.get(0)->uuid;
-		}
-		else
-		{
-			s += ",GameSequence," + multiplayer_SelectedGameSequence->uuid;
-		}
+		Room r;
+		r = *this;
+		oarchive << BOOST_SERIALIZATION_NVP(r);
 
-		s +=
 
-			"," + to_string(numPlayers) +
-			"," + to_string(maxPlayers) +
-			"," + to_string((int)privateRoom) +
-			"," + to_string((int)tournamentRoom) +
-			"," + multiplayer_SelectedDifficultyName +
-			"," + to_string((int)multiplayer_AllowDifferentDifficulties) +
-			"," + to_string((int)multiplayer_AllowDifferentGameSequences) +
-			"," + to_string((int)multiplayer_GameEndsWhenOnePlayerRemains) +
-			"," + to_string((int)multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel) +
-			"," + to_string((int)multiplayer_DisableVSGarbage) +
-			",";
+		string s = FileUtils::lz4StringToBase64String(ss.str());
 
 		if (includeXMLGameSequence)
 		{
-			if (multiplayer_SelectedGameSequence != nullptr)
+			if (gameSequence != nullptr)
 			{
-				NetworkGameSequence ngs = NetworkGameSequence(*(multiplayer_SelectedGameSequence));
+				NetworkGameSequence ngs = NetworkGameSequence(*(gameSequence));
 				s += ":" + ngs.toBase64GZippedXML();
 			}
 		}
@@ -133,180 +175,49 @@ public:
 	}
 
 	//=========================================================================================================================
-	static Room* decodeRoomData(string s, bool decodeGameSequenceXML)
+	static Room* decodeRoomData(string &s, bool decodeGameSequenceXML)
 	{//=========================================================================================================================
 
-		string hostUserIDString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string roomUUID = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		s = s.substr(s.find("`") + 1);
-		string gameSequenceOrTypeName = s.substr(0, s.find("`"));
-		s = s.substr(s.find("`") + 1);
-		s = s.substr(s.find(",") + 1);
-		string isGameSequenceOrType = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string gameSequenceOrTypeUUID = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string playersString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string maxPlayersString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string privateRoomString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string tournamentRoomString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string multiplayer_SelectedDifficultyNameString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);		
-		string multiplayer_AllowDifferentDifficultiesString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string multiplayer_AllowDifferentGameSequencesString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string multiplayer_GameEndsWhenAllOpponentsLoseString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string multiplayer_GameEndsWhenSomeoneCompletesCreditsLevelString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-		string multiplayer_DisableVSGarbageString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
-
-		string multiplayer_SelectedGameSequenceString = "";
-		if (decodeGameSequenceXML)
+		string roomLZ4 = "";
+		string gameSequenceZip = "";
+		
+		if (s.find(":") != string::npos)
 		{
-			s = s.substr(s.find(":") + 1);
-			multiplayer_SelectedGameSequenceString = s.substr(0, s.find(":"));
-			if (multiplayer_SelectedGameSequenceString.length() < 10)multiplayer_SelectedGameSequenceString = "";
-		}
-
-		Room *newRoom = new Room();
-
-
-
-		int hostUserID = -1;
-		try
-		{
-			hostUserID = stoi(hostUserIDString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("hostUserID could not be parsed");
-			return nullptr;
-		}
-		newRoom->hostUserID = hostUserID;
-
-		newRoom->uuid = roomUUID;
-
-		newRoom->gameSequenceOrTypeName = gameSequenceOrTypeName;
-
-		if (isGameSequenceOrType == "GameType")
-		{
-			//newRoom->isSingleGameType = true;
-			newRoom->gameTypeUUID = gameSequenceOrTypeUUID;
+			roomLZ4 = s.substr(0,s.find(":"));
+			gameSequenceZip = s.substr(s.find(":")+1);
 		}
 		else
 		{
-			//newRoom->isGameSequence = true;
-			newRoom->gameSequenceUUID = gameSequenceOrTypeUUID;
+			roomLZ4 = s;
 		}
 
-		int numPlayers = -1;
+
+		string roomString = FileUtils::unlz4Base64StringToString(roomLZ4);
+
+		stringstream ss;
+		ss << roomString;
+
+		boost::archive::xml_iarchive ia(ss);
+		Room rs;
 		try
 		{
-			numPlayers = stoi(playersString);
+			ia >> BOOST_SERIALIZATION_NVP(rs);
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("numPlayers could not be parsed");
-			return nullptr;
-		}
-		newRoom->currentNumPlayers = numPlayers;
-
-		try
-		{
-			newRoom->maxPlayers = stoi(maxPlayersString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse maxPlayers");
-			return nullptr;
+			rs = Room();
+			BobsGame::log.error("Could not unserialize Room");
 		}
 
-		try
-		{
-			newRoom->privateRoom = 0 != stoi(privateRoomString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse privateRoom");
-			return nullptr;
-		}
+		Room *newRoom = new Room();
+		*newRoom = rs;
 
-		try
-		{
-			newRoom->tournamentRoom = 0 != stoi(tournamentRoomString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse tournamentRoom");
-			return nullptr;
-		}
-
-		newRoom->multiplayer_SelectedDifficultyName = multiplayer_SelectedDifficultyNameString;
-
-		try
-		{
-			newRoom->multiplayer_AllowDifferentDifficulties = 0 != stoi(multiplayer_AllowDifferentDifficultiesString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse multiplayer_AllowDifferentDifficulties");
-			return nullptr;
-		}
-
-		try
-		{
-			newRoom->multiplayer_AllowDifferentGameSequences = 0 != stoi(multiplayer_AllowDifferentGameSequencesString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse multiplayer_AllowDifferentGameSequences");
-			return nullptr;
-		}
-
-		try
-		{
-			newRoom->multiplayer_GameEndsWhenOnePlayerRemains = 0 != stoi(multiplayer_GameEndsWhenAllOpponentsLoseString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse multiplayer_GameEndsWhenAllOpponentsLose");
-			return nullptr;
-		}
-
-		try
-		{
-			newRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = 0 != stoi(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevelString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel");
-			return nullptr;
-		}
-
-		try
-		{
-			newRoom->multiplayer_DisableVSGarbage = 0 != stoi(multiplayer_DisableVSGarbageString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("Could not parse multiplayer_DisableVSGarbage");
-			return nullptr;
-		}
 
 		if (decodeGameSequenceXML)
 		{
-			if (multiplayer_SelectedGameSequenceString.length() > 0)
+			if (gameSequenceZip.length() > 0)
 			{
-				NetworkGameSequence *gs = NetworkGameSequence::fromBase64GZippedXML(multiplayer_SelectedGameSequenceString);
+				NetworkGameSequence *gs = NetworkGameSequence::fromBase64GZippedXML(gameSequenceZip);
 
 				if (gs == nullptr)
 				{
@@ -316,7 +227,7 @@ public:
 
 				BobsGame::saveUnknownGameSequencesAndTypesToXML(gs);
 
-				newRoom->multiplayer_SelectedGameSequence = gs;
+				newRoom->gameSequence = gs;
 				if (gs->gameTypes.size() == 1)
 				{
 					//newRoom->isSingleGameType = true;
@@ -330,7 +241,7 @@ public:
 			}
 			else
 			{
-				newRoom->multiplayer_SelectedGameSequence = nullptr;
+				newRoom->gameSequence = nullptr;
 			}
 		}
 
@@ -340,4 +251,5 @@ public:
 
 
 };
-
+BOOST_CLASS_VERSION(Room, 1)
+BOOST_CLASS_TRACKING(Room, boost::serialization::track_never)

@@ -68,7 +68,10 @@ void BobsGame::tellHostPeerIAmJoiningTheirGame()
 void BobsGame::tellAllPeersIAmHosting()
 {//=========================================================================================================================
 
-	string command = lobbyCommandAllPeers_HOSTING + currentRoom->encodeRoomData(getServerConnection()->getUserID_S(),players.size(),true);
+	currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
+	currentRoom->multiplayer_NumPlayers = players.size();
+
+	string command = lobbyCommandAllPeers_HOSTING + currentRoom->encodeRoomData(true);
 
 	sendAllPeers(command);
 }
@@ -562,7 +565,7 @@ bool BobsGame::udpPeerMessageReceived(UDPPeerConnection *c, string s)
 				}
 
 				newRoom->hostPeer = c;
-				newRoom->hostUserID = c->peerUserID;
+				newRoom->multiplayer_HostUserID = c->peerUserID;
 
 				bool found = false;
 				for (int i = 0; i<rooms.size(); i++)
@@ -665,7 +668,7 @@ void BobsGame::addToRoomsMenu(Room* c, string name, string id)
 
 	if (filterByMaxPlayers > 1)
 	{
-		if (c->maxPlayers < 2 || c->maxPlayers > filterByMaxPlayers)add = false;
+		if (c->multiplayer_MaxPlayers < 2 || c->multiplayer_MaxPlayers > filterByMaxPlayers)add = false;
 	}
 
 	if (filterByKeyword != "")
@@ -718,7 +721,7 @@ void BobsGame::populateRoomsMenu()
 		{
 			Room* c = rooms.get(i);
 
-			if (c->privateRoom && c->hostPeer != nullptr)
+			if (c->multiplayer_PrivateRoom && c->hostPeer != nullptr)
 			{
 				addToRoomsMenu(c, c->hostPeer->getUserName() + ": " + c->getRoomDescription(), c->uuid);
 			}
@@ -735,7 +738,7 @@ void BobsGame::populateRoomsMenu()
 			{
 				Room* c = rooms.get(i);
 
-				if (c->privateRoom == false && c->tournamentRoom == false)
+				if (c->multiplayer_PrivateRoom == false && c->multiplayer_TournamentRoom == false)
 				{
 					addToRoomsMenu(c, c->getRoomDescription(), c->uuid);
 				}
@@ -750,7 +753,7 @@ void BobsGame::populateRoomsMenu()
 			{
 				Room* c = rooms.get(i);
 
-				if (c->privateRoom == false && c->tournamentRoom == true)
+				if (c->multiplayer_PrivateRoom == false && c->multiplayer_TournamentRoom == true)
 				{
 					addToRoomsMenu(c, c->getRoomDescription(), c->uuid);
 				}
@@ -878,7 +881,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 			if (currentRoom->hostPeer == nullptr)
 			{
 				//add peer with room host userID so that I try to connect to it which gets ip address from STUN server
-				UDPPeerConnection* p = BobNet::addFriendID(currentRoom->hostUserID, UDPPeerConnection::ANON_TYPE);
+				UDPPeerConnection* p = BobNet::addFriendID(currentRoom->multiplayer_HostUserID, UDPPeerConnection::ANON_TYPE);
 
 				//tell server to tell host to connect to me
 				getServerConnection()->tellBobsGameRoomHostMyUserID_S(currentRoom->uuid);
@@ -929,7 +932,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 				while(haveGameSequence == false)
 				{
 
-					if (currentRoom->multiplayer_SelectedGameSequence != nullptr)haveGameSequence = true;
+					if (currentRoom->gameSequence != nullptr)haveGameSequence = true;
 
 					tries++;
 
@@ -1045,9 +1048,9 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					string uuid = c->gameTypeUUID;
 					if (uuid == "")uuid = c->gameSequenceUUID;
 
-					populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, uuid, c->multiplayer_SelectedDifficultyName);
+					populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, uuid, c->difficultyName);
 
-					populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->multiplayer_SelectedDifficultyName,
+					populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->difficultyName,
 						totalTimePlayed, totalBlocksCleared, planeswalkerPoints, eloScore, timeLasted, blocksCleared);
 				}
 			}
@@ -1144,7 +1147,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 			for (int i = 0; i<rooms.size(); i++)
 			{
 				Room *r = rooms.get(i);
-				if (r->privateRoom == false)
+				if (r->multiplayer_PrivateRoom == false)
 				{
 					delete r;
 					rooms.removeAt(i);
@@ -1878,33 +1881,33 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 	
 		
 		string privateOrPublic = "Public";
-		if (currentRoom->privateRoom == true)
+		if (currentRoom->multiplayer_PrivateRoom == true)
 			privateOrPublic = "Private";
 		networkMultiplayerRoomRulesMenu->addInfo("Visibility: " + privateOrPublic);
 
 		string tournament = "Free Play";
-		if (currentRoom->tournamentRoom == true)
+		if (currentRoom->multiplayer_TournamentRoom == true)
 			tournament = "Tournament (Will Affect Player Rankings)";
 		networkMultiplayerRoomRulesMenu->addInfo("Visibility: " + privateOrPublic);
 
 		string maxPlayers = "No Limit";
-		if (currentRoom->maxPlayers > 1)
-			maxPlayers = to_string(currentRoom->maxPlayers);
+		if (currentRoom->multiplayer_MaxPlayers > 1)
+			maxPlayers = to_string(currentRoom->multiplayer_MaxPlayers);
 		networkMultiplayerRoomRulesMenu->addInfo("Max Players: " + maxPlayers);
 
 		networkMultiplayerRoomRulesMenu->addInfo(" ");
 
 		string gameName = "Game: Any Game Sequence Or Type";
-		if (currentRoom->multiplayer_AllowDifferentGameSequences == false && currentRoom->multiplayer_SelectedGameSequence != nullptr)
+		if (currentRoom->multiplayer_AllowDifferentGameSequences == false && currentRoom->gameSequence != nullptr)
 		{
-			if(currentRoom->multiplayer_SelectedGameSequence->gameTypes.size()==1)gameName = "Game Type: " + currentRoom->multiplayer_SelectedGameSequence->name;
-			else gameName = "Game Sequence: " + currentRoom->multiplayer_SelectedGameSequence->name;
+			if(currentRoom->gameSequence->gameTypes.size()==1)gameName = "Game Type: " + currentRoom->gameSequence->name;
+			else gameName = "Game Sequence: " + currentRoom->gameSequence->name;
 		}
 		networkMultiplayerRoomRulesMenu->addInfo(gameName);
 
 		string difficulty = "Any Difficulty";
 		if (currentRoom->multiplayer_AllowDifferentDifficulties == false)
-			difficulty = currentRoom->multiplayer_SelectedDifficultyName;
+			difficulty = currentRoom->difficultyName;
 		networkMultiplayerRoomRulesMenu->addInfo("Difficulty: " + difficulty);
 
 		string garbage = "Allowed";
@@ -1995,10 +1998,11 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		{
 			lastSentServerRoomUpdateTime = currentTime;
 
-			if (hosting && currentRoom->privateRoom==false)
+			if (hosting && currentRoom->multiplayer_PrivateRoom==false)
 			{
-
-				string s = currentRoom->encodeRoomData(getServerConnection()->getUserID_S(),players.size(),false);
+				currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
+				currentRoom->multiplayer_NumPlayers = players.size();
+				string s = currentRoom->encodeRoomData(false);
 
 				tellServerIAmHostingOrUpdateRoomStatus(s);
 				
@@ -2045,7 +2049,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 					}
 					else
 					{
-						p->gameLogic->currentGameSequence = currentRoom->multiplayer_SelectedGameSequence;
+						p->gameLogic->currentGameSequence = currentRoom->gameSequence;
 						p->setGameSequence = true;
 					}
 				}
@@ -2058,7 +2062,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 						}
 						else
 						{
-							p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->multiplayer_SelectedDifficultyName;
+							p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->difficultyName;
 							p->setDifficulty = true;
 						}
 					}
@@ -2078,14 +2082,14 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 	if (getControlsManager()->key_SPACE_Pressed())
 	{
-		if (currentRoom->maxPlayers > 1 && players.size() >= currentRoom->maxPlayers)
+		if (currentRoom->multiplayer_MaxPlayers > 1 && players.size() >= currentRoom->multiplayer_MaxPlayers)
 		{
 			errorLabel->setText("Maximum players reached, cannot add a new player.");
 		}
 		else
 		{
 			bool add = true;
-			if(currentRoom->tournamentRoom)
+			if(currentRoom->multiplayer_TournamentRoom)
 			{
 				for(int i=0;i<players.size();i++)
 				{
@@ -2153,14 +2157,14 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 		if (g->a_Pressed())
 		{
-			if (currentRoom->maxPlayers > 1 && players.size() >= currentRoom->maxPlayers)
+			if (currentRoom->multiplayer_MaxPlayers > 1 && players.size() >= currentRoom->multiplayer_MaxPlayers)
 			{
 				errorLabel->setText("Maximum players reached, cannot add a new player.");
 			}
 			else
 			{
 				bool add = true;
-				if (currentRoom->tournamentRoom)
+				if (currentRoom->multiplayer_TournamentRoom)
 				{
 					for (int i = 0; i<players.size(); i++)
 					{

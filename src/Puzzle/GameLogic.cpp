@@ -3008,7 +3008,7 @@ void GameLogic::renderOverlays()
 		if (flashScreenOnOffToggle == true)
 		{
 			//draw screen flash effect
-			GLUtils::drawFilledRectXYWH(0, 0, (float)GLUtils::getViewportWidth(), (float)GLUtils::getViewportHeight(), 1.0f, 1.0f, 1.0f, Main::globalSettings->screenFlashOnLevelUpAlpha);
+			GLUtils::drawFilledRectXYWH(0, 0, (float)GLUtils::getViewportWidth(), (float)GLUtils::getViewportHeight(), 1.0f, 1.0f, 1.0f, Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha);
 		}
 	}
 }
@@ -4058,7 +4058,7 @@ void GameLogic::updateCaptions()
 	}
 
 
-	if (Main::globalSettings->showDetailedGameInfoCaptions)
+	if (Main::globalSettings->bobsGame_showDetailedGameInfoCaptions)
 	{
 		if (linesClearedThisGameCaption == nullptr)
 		{
@@ -4579,7 +4579,7 @@ void GameLogic::updateScore()
 			getAudioManager()->playSound(currentGameType->levelUpSound, getVolume(), 1.0f);
 		}
 
-		if (currentGameSequence->endlessMode == false)
+		if (getBobsGame()->currentRoom->endlessMode == false)
 		{
 			if (currentLevel == getCurrentDifficulty()->extraStage1Level && extraStage1 == false)
 			{

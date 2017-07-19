@@ -35,7 +35,6 @@ public:
 	ArrayList<GameType*>gameTypes;
 
 	bool randomizeSequence = true;
-	bool endlessMode = false;
 
 	//this should only be exported when sending to other players
 	string currentDifficultyName = "Beginner";
@@ -74,7 +73,11 @@ public:
 		}
 
 		ar & BOOST_SERIALIZATION_NVP(randomizeSequence);
-		ar & BOOST_SERIALIZATION_NVP(endlessMode);
+		if (version < 5)
+		{
+			bool endlessMode = false;
+			ar & BOOST_SERIALIZATION_NVP(endlessMode);
+		}
 
 		if (version < 3)
 		{
@@ -115,7 +118,7 @@ public:
 	}
 
 };
-BOOST_CLASS_VERSION(GameSequence, 4)
+BOOST_CLASS_VERSION(GameSequence, 5)
 BOOST_CLASS_TRACKING(GameSequence, boost::serialization::track_never)
 //=========================================================================================================================
 class NetworkGameSequence : public GameSequence
@@ -136,7 +139,6 @@ public:
 		this->importExport_gameUUIDs = g.importExport_gameUUIDs;
 		this->gameTypes = g.gameTypes;
 		this->randomizeSequence = g.randomizeSequence;
-		this->endlessMode = g.endlessMode;
 		this->currentDifficultyName = g.currentDifficultyName;
 		//this->builtInType = g.builtInType;
 		this->creatorUserID = g.creatorUserID;

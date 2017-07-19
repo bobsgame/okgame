@@ -1238,11 +1238,16 @@ void BobsGame::sendGameStatsToServer()
 					s.combosMade = g->totalCombosMade;
 					s.biggestCombo = g->biggestComboChain;
 
-					s.maxPlayers = currentRoom->maxPlayers;
 
-					s.privateRoom = (int)currentRoom->privateRoom;
-					s.tournamentRoom = (int)currentRoom->tournamentRoom;
-					s.hostUserID = currentRoom->hostUserID;
+					s.singlePlayer_randomizeSequence = currentRoom->singleplayer_RandomizeSequence;
+					s.endlessMode = currentRoom->endlessMode;
+					s.room_DifficultyName = currentRoom->difficultyName;
+					s.multiplayer_NumPlayers = currentRoom->multiplayer_NumPlayers;
+
+					s.multiplayer_HostUserID = currentRoom->multiplayer_HostUserID;
+					s.multiplayer_MaxPlayers = currentRoom->multiplayer_MaxPlayers;
+					s.multiplayer_PrivateRoom = (int)currentRoom->multiplayer_PrivateRoom;
+					s.multiplayer_TournamentRoom = (int)currentRoom->multiplayer_TournamentRoom;
 					s.multiplayer_AllowDifferentDifficulties = currentRoom->multiplayer_AllowDifferentDifficulties;
 					s.multiplayer_AllowDifferentGameSequences = currentRoom->multiplayer_AllowDifferentGameSequences;
 					s.multiplayer_GameEndsWhenOnePlayerRemains = currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
@@ -1274,7 +1279,7 @@ void BobsGame::sendGameStatsToServer()
 
 					string statsString = s.encode();
 
-					BobsGameGameStats *d = new BobsGameGameStats(statsString);
+					//BobsGameGameStats *d = new BobsGameGameStats(statsString);
 					//d->decode(statsString);
 					//log.info(statsString);
 
