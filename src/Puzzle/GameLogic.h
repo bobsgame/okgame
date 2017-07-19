@@ -78,7 +78,11 @@ public:
 	int randomInt = 0;
 	//long long totalTicksPassed = 0;
 
-	DropLockType dropLockType = DropLockType::HARD_DROP_INSTANT_LOCK; 
+	bool slamLock = true;
+	bool singleDownLock = false;
+	bool doubleDownLock = true;
+
+	//DropLockType dropLockType = DropLockType::HARD_DROP_INSTANT_LOCK; 
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -99,8 +103,11 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(gridString);
 		//ar & BOOST_SERIALIZATION_NVP(currentGameString);
 		ar & BOOST_SERIALIZATION_NVP(randomInt);
-		ar & BOOST_SERIALIZATION_NVP(dropLockType);
+		//ar & BOOST_SERIALIZATION_NVP(dropLockType);
 		//ar & BOOST_SERIALIZATION_NVP(totalTicksPassed);
+		ar & BOOST_SERIALIZATION_NVP(slamLock);
+		ar & BOOST_SERIALIZATION_NVP(singleDownLock);
+		ar & BOOST_SERIALIZATION_NVP(doubleDownLock);
 	}
 
 	//=========================================================================================================================

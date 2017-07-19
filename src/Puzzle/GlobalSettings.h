@@ -20,8 +20,8 @@ public:
 	float contrast = 1.2f;
 	float gamma = 1.0f;
 	bool useXInput = true;
-	float screenFlashOnLevelUp = 0.3f;
-	bool showGameStats = true;
+	float screenFlashOnLevelUpAlpha = 0.3f;
+	bool showDetailedGameInfoCaptions = true;
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version)
@@ -46,8 +46,8 @@ public:
 		}
 		if(version>2)
 		{
-			ar & BOOST_SERIALIZATION_NVP(screenFlashOnLevelUp);
-			ar & BOOST_SERIALIZATION_NVP(showGameStats);
+			ar & BOOST_SERIALIZATION_NVP(screenFlashOnLevelUpAlpha);
+			ar & BOOST_SERIALIZATION_NVP(showDetailedGameInfoCaptions);
 		}
 	}
 

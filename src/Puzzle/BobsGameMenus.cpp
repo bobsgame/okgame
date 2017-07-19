@@ -1711,8 +1711,8 @@ void BobsGame::settingsMenuInit(BobMenu* m)
 	m->add("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%", "Saturation");
 
 	m->add("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%", "Global Hue Shift");
-	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%", "Screen Flash");
-	m->add("Show Detailed Game Stats: " + Main::globalSettings->showGameStats ? "On" : "Off", "Game Stats");
+	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
+	m->add("Show Detailed Game Stats: " + Main::globalSettings->showDetailedGameInfoCaptions ? "On" : "Off", "Game Stats");
 
 	m->add("Defaults");
 }
@@ -1730,8 +1730,8 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			Main::globalSettings->showGameStats = !Main::globalSettings->showGameStats;
-			m->getMenuItemByID("Show Detailed Game Stats: " + Main::globalSettings->showGameStats ? "On" : "Off");
+			Main::globalSettings->showDetailedGameInfoCaptions = !Main::globalSettings->showDetailedGameInfoCaptions;
+			m->getMenuItemByID("Show Detailed Game Stats: " + Main::globalSettings->showDetailedGameInfoCaptions ? "On" : "Off");
 		}
 	}
 
@@ -1825,9 +1825,9 @@ void BobsGame::settingsMenuLeft(BobMenu* m)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			if (Main::globalSettings->screenFlashOnLevelUp > 0)Main::globalSettings->screenFlashOnLevelUp -= 0.01f;
-			if (Main::globalSettings->screenFlashOnLevelUp < 0)Main::globalSettings->screenFlashOnLevelUp = 0;
-			m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%");
+			if (Main::globalSettings->screenFlashOnLevelUpAlpha > 0)Main::globalSettings->screenFlashOnLevelUpAlpha -= 0.01f;
+			if (Main::globalSettings->screenFlashOnLevelUpAlpha < 0)Main::globalSettings->screenFlashOnLevelUpAlpha = 0;
+			m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
 		}
 	}
 
@@ -1919,9 +1919,9 @@ void BobsGame::settingsMenuRight(BobMenu* m)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			if (Main::globalSettings->screenFlashOnLevelUp < 0.5f)Main::globalSettings->screenFlashOnLevelUp += 0.01f;
-			if (Main::globalSettings->screenFlashOnLevelUp > 0.5f)Main::globalSettings->screenFlashOnLevelUp = 0.5f;
-			m->getCaptionByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%");
+			if (Main::globalSettings->screenFlashOnLevelUpAlpha < 0.5f)Main::globalSettings->screenFlashOnLevelUpAlpha += 0.01f;
+			if (Main::globalSettings->screenFlashOnLevelUpAlpha > 0.5f)Main::globalSettings->screenFlashOnLevelUpAlpha = 0.5f;
+			m->getCaptionByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
 		}
 	}
 
@@ -1939,8 +1939,8 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m)
 	Main::globalSettings->brightness = gs.brightness;
 	Main::globalSettings->contrast = gs.contrast;
 	Main::globalSettings->gamma = gs.gamma;
-	Main::globalSettings->screenFlashOnLevelUp = gs.screenFlashOnLevelUp;
-	Main::globalSettings->showGameStats = gs.showGameStats;
+	Main::globalSettings->screenFlashOnLevelUpAlpha = gs.screenFlashOnLevelUpAlpha;
+	Main::globalSettings->showDetailedGameInfoCaptions = gs.showDetailedGameInfoCaptions;
 
 	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
 	m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
@@ -1948,8 +1948,8 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m)
 	m->getMenuItemByID("Contrast")->setText("Contrast: " + to_string((int)(Main::globalSettings->contrast * 100)) + "%");
 	m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
 	m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
-	m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%");
-	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->showGameStats ? "On" : "Off");
+	m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
+	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->showDetailedGameInfoCaptions ? "On" : "Off");
 	
 }
 

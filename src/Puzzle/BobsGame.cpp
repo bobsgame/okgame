@@ -1563,7 +1563,7 @@ void BobsGame::setButtonStates()
 //	else
 //	if (players.size() > 1)
 //	{
-	PuzzlePlayer *p;// = players.get(0);
+	PuzzlePlayer *p = nullptr;// = players.get(0);
 
 		for (int i = 0; i < players.size();i++)
 		{

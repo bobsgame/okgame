@@ -1086,6 +1086,10 @@ void GameLogic::setControlsState(PuzzlePlayer *p)
 	frameState.DOWN_HELD = p->DOWN_HELD;
 	frameState.RIGHT_HELD = p->RIGHT_HELD;
 	frameState.SLAM_HELD = p->SLAM_HELD;
+
+	frameState.slamLock = p->slamLock;
+	frameState.singleDownLock = p->singleDownLock;
+	frameState.doubleDownLock = p->doubleDownLock;
 }
 
 
@@ -3004,7 +3008,7 @@ void GameLogic::renderOverlays()
 		if (flashScreenOnOffToggle == true)
 		{
 			//draw screen flash effect
-			GLUtils::drawFilledRectXYWH(0, 0, (float)GLUtils::getViewportWidth(), (float)GLUtils::getViewportHeight(), 1.0f, 1.0f, 1.0f, Main::globalSettings->screenFlashOnLevelUp);
+			GLUtils::drawFilledRectXYWH(0, 0, (float)GLUtils::getViewportWidth(), (float)GLUtils::getViewportHeight(), 1.0f, 1.0f, 1.0f, Main::globalSettings->screenFlashOnLevelUpAlpha);
 		}
 	}
 }
@@ -3575,15 +3579,15 @@ void GameLogic::updateKeyInput()
 			}
 		}
 		else
-			if (currentGameType->gameMode == GameMode::DROP)
+		if (currentGameType->gameMode == GameMode::DROP)
 		{
 			if (pieceSetAtBottom == false)
 			{
 				getAudioManager()->playSound(currentGameType->moveDownSound, getVolume(), getSoundEffectSpeed());
 
-				movePiece(MovementType::DOWN);
+				bool moved = movePiece(MovementType::DOWN);
 
-				if (getFrameState()->dropLockType == DropLockType::SOFT_DROP_INSTANT_LOCK)
+				if ((moved == true && getFrameState()->singleDownLock==true) || (moved == false && getFrameState()->doubleDownLock == true))//dropLockType == DropLockType::SOFT_DROP_INSTANT_LOCK)
 				{
 					lockDelayTicksCounter = 0;
 				}
@@ -3634,7 +3638,7 @@ void GameLogic::updateKeyInput()
 
 				while (movePiece(MovementType::HARD_DROP) == true)
 				{
-					if (getFrameState()->dropLockType == DropLockType::HARD_DROP_INSTANT_LOCK)
+					if (getFrameState()->slamLock==true)//dropLockType == DropLockType::HARD_DROP_INSTANT_LOCK)
 					{
 						lockDelayTicksCounter = 0;
 					}
@@ -4042,120 +4046,123 @@ void GameLogic::updateCaptions()
 		gameTypeCaption = makeInfoCaption("gameTypeCaption");
 	}
 
-	if (rulesCaption == nullptr)
-	{
-		rulesCaption = makeInfoCaption("rulesCaption");
-	}
 
 	if (difficultyCaption == nullptr)
 	{
 		difficultyCaption = makeInfoCaption("difficultyCaption");
 	}
 
-
-	if (linesClearedThisGameCaption == nullptr)
+	if (rulesCaption == nullptr)
 	{
-		linesClearedThisGameCaption = makeInfoCaption("linesClearedThisGameCaption");
-	}
-	if (blocksClearedThisGameCaption == nullptr)
-	{
-		blocksClearedThisGameCaption = makeInfoCaption("blocksClearedThisGameCaption");
-	}
-	if (piecesMadeThisGameCaption == nullptr)
-	{
-		piecesMadeThisGameCaption = makeInfoCaption("piecesMadeThisGameCaption");
-	}
-	if (totalLinesClearedCaption == nullptr)
-	{
-		totalLinesClearedCaption = makeInfoCaption("totalLinesClearedCaption");
-	}
-	if (totalBlocksClearedCaption == nullptr)
-	{
-		totalBlocksClearedCaption = makeInfoCaption("totalBlocksClearedCaption");
-	}
-	if (totalPiecesMadeCaption == nullptr)
-	{
-		totalPiecesMadeCaption = makeInfoCaption("totalPiecesMadeCaption");
+		rulesCaption = makeInfoCaption("rulesCaption");
 	}
 
 
-
-
-	if (currentChainCaption == nullptr)
+	if (Main::globalSettings->showDetailedGameInfoCaptions)
 	{
-		currentChainCaption = makeInfoCaption("currentChainCaption");
-	}
-	if (currentComboCaption == nullptr)
-	{
-		currentComboCaption = makeInfoCaption("currentComboCaption");
-	}
-	if (comboChainTotalCaption == nullptr)
-	{
-		comboChainTotalCaption = makeInfoCaption("comboChainTotalCaption");
-	}
-
-	if (lineDropTicksCaption == nullptr)
-	{
-		lineDropTicksCaption = makeInfoCaption("lineDropTicksCaption");
-	}
-	if (lockDelayCaption == nullptr)
-	{
-		lockDelayCaption = makeInfoCaption("lockDelayCaption");
-	}
-	if (spawnDelayCaption == nullptr)
-	{
-		spawnDelayCaption = makeInfoCaption("spawnDelayCaption");
-	}
-	if (lineClearDelayCaption == nullptr)
-	{
-		lineClearDelayCaption = makeInfoCaption("lineClearDelayCaption");
-	}
-
-	if (gravityCaption == nullptr)
-	{
-		gravityCaption = makeInfoCaption("gravityCaption");
-	}
-	
-	if (currentGameType->gameMode == GameMode::STACK)
-	{
-		if (stopCounterCaption == nullptr)
+		if (linesClearedThisGameCaption == nullptr)
 		{
-			stopCounterCaption = makeInfoCaption("stopCounterCaption");
+			linesClearedThisGameCaption = makeInfoCaption("linesClearedThisGameCaption");
 		}
-	}
+		if (blocksClearedThisGameCaption == nullptr)
+		{
+			blocksClearedThisGameCaption = makeInfoCaption("blocksClearedThisGameCaption");
+		}
+		if (piecesMadeThisGameCaption == nullptr)
+		{
+			piecesMadeThisGameCaption = makeInfoCaption("piecesMadeThisGameCaption");
+		}
+		if (totalLinesClearedCaption == nullptr)
+		{
+			totalLinesClearedCaption = makeInfoCaption("totalLinesClearedCaption");
+		}
+		if (totalBlocksClearedCaption == nullptr)
+		{
+			totalBlocksClearedCaption = makeInfoCaption("totalBlocksClearedCaption");
+		}
+		if (totalPiecesMadeCaption == nullptr)
+		{
+			totalPiecesMadeCaption = makeInfoCaption("totalPiecesMadeCaption");
+		}
+
+
+
+
+		if (currentChainCaption == nullptr)
+		{
+			currentChainCaption = makeInfoCaption("currentChainCaption");
+		}
+		if (currentComboCaption == nullptr)
+		{
+			currentComboCaption = makeInfoCaption("currentComboCaption");
+		}
+		if (comboChainTotalCaption == nullptr)
+		{
+			comboChainTotalCaption = makeInfoCaption("comboChainTotalCaption");
+		}
+
+		if (lineDropTicksCaption == nullptr)
+		{
+			lineDropTicksCaption = makeInfoCaption("lineDropTicksCaption");
+		}
+		if (lockDelayCaption == nullptr)
+		{
+			lockDelayCaption = makeInfoCaption("lockDelayCaption");
+		}
+		if (spawnDelayCaption == nullptr)
+		{
+			spawnDelayCaption = makeInfoCaption("spawnDelayCaption");
+		}
+		if (lineClearDelayCaption == nullptr)
+		{
+			lineClearDelayCaption = makeInfoCaption("lineClearDelayCaption");
+		}
+
+		if (gravityCaption == nullptr)
+		{
+			gravityCaption = makeInfoCaption("gravityCaption");
+		}
+
+		if (currentGameType->gameMode == GameMode::STACK)
+		{
+			if (stopCounterCaption == nullptr)
+			{
+				stopCounterCaption = makeInfoCaption("stopCounterCaption");
+			}
+		}
 
 
 
 
 #ifdef _DEBUG
 
-	if (blocksInGridCaption == nullptr)
-	{
-		blocksInGridCaption = makeInfoCaption("blocksInGridCaption");
-	}
-	if (xCaption == nullptr)
-	{
-		xCaption = makeInfoCaption("xCaption");
-	}
-	if (yCaption == nullptr)
-	{
-		yCaption = makeInfoCaption("yCaption");
-	}
-	if (rotationCaption == nullptr)
-	{
-		rotationCaption = makeInfoCaption("rotationCaption");
-	}
-	if (seedCaption == nullptr)
-	{
-		seedCaption = makeInfoCaption("seedCaption");
-	}
-	if (bgCaption == nullptr)
-	{
-		bgCaption = makeInfoCaption("bgCaption");
-	}
+		if (blocksInGridCaption == nullptr)
+		{
+			blocksInGridCaption = makeInfoCaption("blocksInGridCaption");
+		}
+		if (xCaption == nullptr)
+		{
+			xCaption = makeInfoCaption("xCaption");
+		}
+		if (yCaption == nullptr)
+		{
+			yCaption = makeInfoCaption("yCaption");
+		}
+		if (rotationCaption == nullptr)
+		{
+			rotationCaption = makeInfoCaption("rotationCaption");
+		}
+		if (seedCaption == nullptr)
+		{
+			seedCaption = makeInfoCaption("seedCaption");
+		}
+		if (bgCaption == nullptr)
+		{
+			bgCaption = makeInfoCaption("bgCaption");
+		}
 #endif
 
-
+	}
 
 
 	if (totalTicksPassedCaption == nullptr)
@@ -4220,42 +4227,42 @@ void GameLogic::updateCaptions()
 		levelCaptionText = "Level: " + to_string(currentLevel);
 	}
 
-	levelCaption->setText(levelCaptionText);
-	gameTypeCaption->setText("Game: "+currentGameType->name);
-	rulesCaption->setText("Rules: "+currentGameType->rules);
-	difficultyCaption->setText("Difficulty: "+ getCurrentDifficulty()->name);
+	if(levelCaption !=nullptr)levelCaption->setText(levelCaptionText);
+	if(gameTypeCaption !=nullptr)gameTypeCaption->setText("Game: "+currentGameType->name);
+	if(rulesCaption !=nullptr)rulesCaption->setText("Rules: "+currentGameType->rules);
+	if(difficultyCaption !=nullptr)difficultyCaption->setText("Difficulty: "+ getCurrentDifficulty()->name);
+
+
 
 
 	if (currentGameType->gameMode == GameMode::STACK)
 	{
-		gravityCaption->setText("Stack Speed: " + to_string(16.7f / (float)(currentStackRiseSpeedTicks)));//::Format("%.3f",	
-
+		if (gravityCaption != nullptr)gravityCaption->setText("Stack Speed: " + to_string(16.7f / (float)(currentStackRiseSpeedTicks)));//::Format("%.3f",	
 	}
 	else
 	{
-		gravityCaption->setText("Gravity: " + to_string(16.7f / (float)(currentLineDropSpeedTicks)) + "G");//::Format("%.3f",	
-
+		if (gravityCaption != nullptr)gravityCaption->setText("Gravity: " + to_string(16.7f / (float)(currentLineDropSpeedTicks)) + "G");//::Format("%.3f",	
 	}
 
 
-	lockDelayCaption->setText("Lock Delay: " + to_string(lockDelayTicksCounter));
-	lineDropTicksCaption->setText("Line Drop Ticks: " + to_string(lineDropTicksCounter));
-	spawnDelayCaption->setText("Spawn Delay Ticks: " + to_string(spawnDelayTicksCounter));
-	lineClearDelayCaption->setText("Line Clear Delay Ticks: " + to_string(lineClearDelayTicksCounter));
+	if (lockDelayCaption != nullptr)lockDelayCaption->setText("Lock Delay: " + to_string(lockDelayTicksCounter));
+	if (lineDropTicksCaption != nullptr)lineDropTicksCaption->setText("Line Drop Ticks: " + to_string(lineDropTicksCounter));
+	if (spawnDelayCaption != nullptr)spawnDelayCaption->setText("Spawn Delay Ticks: " + to_string(spawnDelayTicksCounter));
+	if (lineClearDelayCaption != nullptr)lineClearDelayCaption->setText("Line Clear Delay Ticks: " + to_string(lineClearDelayTicksCounter));
 
 	
 
-	linesClearedThisGameCaption->setText("Lines This Game: " + to_string(linesClearedThisGame));
-	blocksClearedThisGameCaption->setText("Blocks This Game: " + to_string(blocksClearedThisGame));
-	piecesMadeThisGameCaption->setText("Pieces Made This Game: " + to_string(piecesMadeThisGame));
+	if (linesClearedThisGameCaption != nullptr)linesClearedThisGameCaption->setText("Lines This Game: " + to_string(linesClearedThisGame));
+	if (blocksClearedThisGameCaption != nullptr)blocksClearedThisGameCaption->setText("Blocks This Game: " + to_string(blocksClearedThisGame));
+	if (piecesMadeThisGameCaption != nullptr)piecesMadeThisGameCaption->setText("Pieces Made This Game: " + to_string(piecesMadeThisGame));
 
-	totalLinesClearedCaption->setText("Lines Total: " + to_string(linesClearedTotal));
-	totalBlocksClearedCaption->setText("Blocks Total: " + to_string(blocksClearedTotal));
-	totalPiecesMadeCaption->setText("Pieces Made Total: " + to_string(piecesMadeTotal));
+	if (totalLinesClearedCaption != nullptr)totalLinesClearedCaption->setText("Lines Total: " + to_string(linesClearedTotal));
+	if (totalBlocksClearedCaption != nullptr)totalBlocksClearedCaption->setText("Blocks Total: " + to_string(blocksClearedTotal));
+	if (totalPiecesMadeCaption != nullptr)totalPiecesMadeCaption->setText("Pieces Made Total: " + to_string(piecesMadeTotal));
 
-	currentChainCaption->setText("Current Chain: " + to_string(currentChain));
-	currentComboCaption->setText("Current Combo: " + to_string(currentCombo));
-	comboChainTotalCaption->setText("Combo Chain Total: " + to_string(comboChainTotal));
+	if (currentChainCaption != nullptr)currentChainCaption->setText("Current Chain: " + to_string(currentChain));
+	if (currentComboCaption != nullptr)currentComboCaption->setText("Current Combo: " + to_string(currentCombo));
+	if (comboChainTotalCaption != nullptr)comboChainTotalCaption->setText("Combo Chain Total: " + to_string(comboChainTotal));
 
 
 	ostringstream oss1;
