@@ -333,6 +333,17 @@ public:
 	bool statsMenu_timeLasted = false;
 	bool statsMenu_blocksCleared = false;
 
+
+
+	void roomOptionsMenuUpdate();
+	void roomOptionsMenuRender();
+	BobMenu *roomOptionsMenu = nullptr;
+	bool roomOptionsMenuShowing = false;
+	int roomOptionsMenuCursorPosition = 0;
+
+
+
+
 	void gameSetupMenuUpdate();
 	void gameSetupMenuRender();
 	BobMenu *gameSetupMenu = nullptr;

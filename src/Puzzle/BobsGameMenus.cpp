@@ -2489,6 +2489,166 @@ enum class GameObjective
 //
 //}
 
+
+//=========================================================================================================================
+void BobsGame::roomOptionsMenuUpdate()
+{//=========================================================================================================================
+
+	if (roomOptionsMenu == nullptr)
+	{
+		roomOptionsMenu = new BobMenu(this, "");
+
+		roomOptionsMenu->add("Objective: Play To Credits Level", "Objective");
+		roomOptionsMenu->add("Game Speed Increase Rate: ", "Game Speed Increase Rate");
+		roomOptionsMenu->add("Game Speed Maximum: ", "Game Speed Maximum");
+		roomOptionsMenu->add("Score Needed To Level Up Multiplier: ", "Pieces Multiplier");
+		roomOptionsMenu->add("Score Needed To Level Up Compound Multiplier: ", "Pieces Compound Multiplier");
+
+		if(localMultiplayer || networkMultiplayer)
+		{
+			roomOptionsMenu->addInfo(" ");
+			roomOptionsMenu->addInfo("Multiplayer Options:");
+
+
+			if (networkMultiplayer)
+			{
+
+				roomOptionsMenu->add("Visibility: Public", "Public Or Private");
+				roomOptionsMenu->add("Score Mode: Free Play", "Free Play Or Tournament");
+				roomOptionsMenu->add("Max Players: Unlimited", "Max Players");
+				roomOptionsMenu->addInfo(" ", " ");
+			}
+
+
+			roomOptionsMenu->add("Game Sequence: Allow Different Game Sequences Or Types", "Select Game");
+			roomOptionsMenu->add("Difficulty: Allow Different Difficulties", "Difficulty");
+			roomOptionsMenu->add("End Rule: Game Ends When One Player Remains", "End Rule");
+			roomOptionsMenu->add("Finish Rule: Race To Credits Level", "Finish Rule");
+			roomOptionsMenu->add("Garbage Rule: Enable VS Garbage", "Garbage Rule");
+
+		}
+		
+		roomOptionsMenu->cursorPosition = roomOptionsMenuCursorPosition;
+	}
+
+
+	{
+		string objectiveString = "";
+		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+		{
+			objectiveString = "Play To Credits Level";
+		}
+		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+		{
+			objectiveString = "Endless";
+		}
+		Caption *c = roomOptionsMenu->getCaptionByID("Objective");
+		if (c != nullptr)c->setText("Objective: " + objectiveString);
+	}
+
+
+
+	if (getControlsManager()->miniGame_UP_Pressed())
+	{
+		roomOptionsMenu->up();
+	}
+
+	if (getControlsManager()->miniGame_DOWN_Pressed())
+	{
+		roomOptionsMenu->down();
+	}
+
+
+	bool left = getControlsManager()->miniGame_LEFT_Pressed();
+	bool right = getControlsManager()->miniGame_RIGHT_Pressed();
+
+	if (left || right)
+	{
+
+
+		if (roomOptionsMenu->isSelectedID("Objective"))
+		{
+			if (left)
+			{
+				selectedObjectiveIndex--;
+				if (selectedObjectiveIndex < 0)selectedObjectiveIndex = (int)GameObjective::LAST - 1;
+			}
+			if (right)
+			{
+				selectedObjectiveIndex++;
+				if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
+			}
+
+			if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+			{
+				if (currentRoom != nullptr)currentRoom->endlessMode = false;
+			}
+			if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+			{
+				if (currentRoom != nullptr)currentRoom->endlessMode = true;
+			}
+
+			string objectiveString = "";
+			if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+			{
+				objectiveString = "Play To Credits Level";
+			}
+			if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+			{
+				objectiveString = "Endless";
+			}
+			Caption *c = roomOptionsMenu->getCaptionByID("Objective");
+			if (c != nullptr)c->setText("Objective: " + objectiveString);
+
+		}
+	}
+
+	bool leaveMenu = false;
+
+	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+	int mx = getControlsManager()->getMouseX();
+	int my = getControlsManager()->getMouseY();
+	if (confirm || clicked)
+	{
+
+
+
+		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+		{
+			if (currentRoom != nullptr)currentRoom->endlessMode = false;
+		}
+		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+		{
+			if (currentRoom != nullptr)currentRoom->endlessMode = true;
+		}
+
+
+		if (roomOptionsMenu->isSelectedID("Objective", clicked, mx, my))
+		{
+			gameObjectiveMenuShowing = true;
+		}
+
+		leaveMenu = true;
+	}
+
+
+	if (leaveMenu)
+	{
+		roomOptionsMenuShowing = false;
+
+		if (roomOptionsMenu != nullptr)
+		{
+			roomOptionsMenuCursorPosition = roomOptionsMenu->cursorPosition;
+			delete roomOptionsMenu;
+			roomOptionsMenu = nullptr;
+		}
+	}
+
+}
+
+
+
 //=========================================================================================================================
 void BobsGame::gameSetupMenuUpdate()
 {//=========================================================================================================================
@@ -2498,9 +2658,8 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSetupMenu = new BobMenu(this, "Setup Game Options");
 
 		gameSetupMenu->add("Select Game Sequence Or Single Game Type...", "Select Game");
-		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");
-		gameSetupMenu->add("Objective: Play To Credits Level", "Objective");
-		gameSetupMenu->add("More Options", "Options");
+		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");;
+		gameSetupMenu->add("More Options...", "Options");
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Start Game", "Start Game")->setColor(BobColor::green);
 		gameSetupMenu->addInfo(" ", " ");
@@ -2511,6 +2670,20 @@ void BobsGame::gameSetupMenuUpdate()
 
 		gameSetupMenu->cursorPosition = gameSetupMenuCursorPosition;
 
+	}
+
+	{
+		string objectiveString = "";
+		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+		{
+			objectiveString = "Play To Credits Level";
+		}
+		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+		{
+			objectiveString = "Endless";
+		}
+		Caption *c = gameSetupMenu->getCaptionByID("Objective");
+		if (c != nullptr)c->setText("Objective: " + objectiveString);
 	}
 
 
@@ -2596,19 +2769,6 @@ void BobsGame::gameSetupMenuUpdate()
 	}
 
 
-	{
-		string objectiveString = "";
-		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
-		{
-			objectiveString = "Play To Credits Level";
-		}
-		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-		{
-			objectiveString = "Endless";
-		}
-		Caption *c = gameSetupMenu->getCaptionByID("Objective");
-		if (c != nullptr)c->setText("Objective: " + objectiveString);
-	}
 
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
@@ -2643,6 +2803,11 @@ void BobsGame::gameSetupMenuUpdate()
 	if (difficultyMenuShowing)
 	{
 		difficultyMenuUpdate();
+	}	
+	else
+	if (roomOptionsMenuShowing)
+	{
+		roomOptionsMenuUpdate();
 	}
 	else
 	{
@@ -2682,41 +2847,6 @@ void BobsGame::gameSetupMenuUpdate()
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 			}
 
-			if (gameSetupMenu->isSelectedID("Objective"))
-			{
-				if (left)
-				{
-					selectedObjectiveIndex--;
-					if (selectedObjectiveIndex < 0)selectedObjectiveIndex = (int)GameObjective::LAST - 1;
-				}
-				if (right)
-				{
-					selectedObjectiveIndex++;
-					if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
-				}
-
-				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
-				{
-					if (currentRoom != nullptr)currentRoom->endlessMode = false;
-				}
-				if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-				{
-					if (currentRoom != nullptr)currentRoom->endlessMode = true;
-				}
-
-				string objectiveString = "";
-				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
-				{
-					objectiveString = "Play To Credits Level";
-				}
-				if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-				{
-					objectiveString = "Endless";
-				}
-				Caption *c = gameSetupMenu->getCaptionByID("Objective");
-				if (c != nullptr)c->setText("Objective: " + objectiveString);
-
-			}
 		}
 
 		bool leaveMenu = false;
@@ -2737,9 +2867,9 @@ void BobsGame::gameSetupMenuUpdate()
 				difficultyMenuShowing = true;
 			}
 
-			if (gameSetupMenu->isSelectedID("Objective", clicked, mx, my))
+			if (gameSetupMenu->isSelectedID("Options", clicked, mx, my))
 			{
-				gameObjectiveMenuShowing = true;
+				roomOptionsMenuShowing = true;
 			}
 
 			if (gameSetupMenu->isSelectedID("Start Game", clicked, mx, my))
@@ -2753,6 +2883,7 @@ void BobsGame::gameSetupMenuUpdate()
 				currentRoom->difficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
+
 
 				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
 				{
@@ -2849,6 +2980,12 @@ void BobsGame::gameSetupMenuRender()
 	{
 		Caption *c = gameSetupMenu->getCaptionByID("Objective");
 		gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+	}
+
+	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
+	{
+		Caption *c = gameSetupMenu->getCaptionByID("Objective");
+		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
 	}
 }
 
@@ -3847,24 +3984,6 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 
 }
 
-//=========================================================================================================================
-void BobsGame::selectSingleGameTypeMenuRender()
-{//=========================================================================================================================
-
-	GLUtils::drawFilledRect(BobMenu::bgColor->ri(), BobMenu::bgColor->gi(), BobMenu::bgColor->bi(), 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
-
-	BobTexture* t = keyboardTexture;
-
-	if (selectSingleGameTypeMenu == nullptr)return;
-
-	if (t != nullptr)
-	{
-		selectSingleGameTypeMenu->setGraphic(t, getWidth() / 3 * 2, getHeight() / 10);
-	}
-
-	selectSingleGameTypeMenu->render();
-}
-
 
 
 //=========================================================================================================================
@@ -3971,23 +4090,6 @@ void BobsGame::gameObjectiveMenuUpdate()
 
 }
 
-//=========================================================================================================================
-void BobsGame::gameObjectiveMenuRender()
-{//=========================================================================================================================
-
-	GLUtils::drawFilledRect(BobMenu::bgColor->ri(), BobMenu::bgColor->gi(), BobMenu::bgColor->bi(), 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
-
-	BobTexture* t = keyboardTexture;
-
-	if (gameObjectiveMenu == nullptr)return;
-
-	if (t != nullptr)
-	{
-		gameObjectiveMenu->setGraphic(t, getWidth() / 3 * 2, getHeight() / 10);
-	}
-
-	gameObjectiveMenu->render(getHeight()/2);
-}
 
 
 //=========================================================================================================================
@@ -4117,24 +4219,6 @@ void BobsGame::difficultyMenuUpdate()
 		}
 	}
 
-}
-
-//=========================================================================================================================
-void BobsGame::difficultyMenuRender()
-{//=========================================================================================================================
-
-	GLUtils::drawFilledRect(BobMenu::bgColor->ri(), BobMenu::bgColor->gi(), BobMenu::bgColor->bi(), 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
-
-	BobTexture* t = keyboardTexture;
-
-	if (difficultyMenu == nullptr)return;
-
-	if (t != nullptr)
-	{
-		difficultyMenu->setGraphic(t, getWidth() / 3 * 2, getHeight() / 10);
-	}
-
-	difficultyMenu->render(getHeight() / 2);
 }
 
 
