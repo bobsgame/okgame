@@ -185,6 +185,10 @@ public:
 
 	void playerDifficultyMiniMenuUpdate(PuzzlePlayer *p);
 	void playerDifficultyMiniMenuRender(PuzzlePlayer *p, float x, float y);
+
+	void playerSettingsMenuToggle(PuzzlePlayer *p);
+	void playerSettingsMenuLeft(PuzzlePlayer *p);
+	void playerSettingsMenuRight(PuzzlePlayer *p);
 	void playerPauseMiniMenuUpdate(PuzzlePlayer *p);
 	void playerPauseMiniMenuRender(PuzzlePlayer *p, float x0, float x1, float y0, float y1);
 
@@ -300,9 +304,10 @@ public:
 
 
 	void settingsMenuInit(BobMenu* m);
+	void settingsMenuToggle(BobMenu* m);
 	void settingsMenuLeft(BobMenu* m);
 	void settingsMenuRight(BobMenu* m);
-	void settingsMenuConfirm(BobMenu* m);
+	void settingsMenuSetDefaults(BobMenu* m);
 	void globalSettingsMenuUpdate();
 	void globalSettingsMenuRender();
 	BobMenu *globalSettingsMenu = nullptr;

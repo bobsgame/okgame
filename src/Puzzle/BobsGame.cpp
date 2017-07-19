@@ -508,9 +508,10 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 		{
 			GLUtils::useShader(GLUtils::colorShader);
 
-			GlobalSettings gs;
 
-			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameHue", gs.hue);//ignore global settings and use default so custom games dont use user settings and are more accurate
+			//ignore global settings and use default so custom games dont use user settings and are more accurate
+			GlobalSettings gs;
+			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameHue", gs.hue);
 			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameSaturation", gs.saturation);
 			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameBrightness", gs.brightness);
 			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameContrast", gs.contrast);
@@ -736,49 +737,67 @@ void BobsGame::render()
 			renderGameIntoFBO(g, false);
 
 			//draw the mainGameFBO to the preColorFilterFBO in the correct place with correct size
-			GLUtils::bindFBO(GLUtils::preColorFilterFBO);
+			GLUtils::bindFBO(GLUtils::postColorFilterFBO);
 			GLUtils::drawIntoFBOAttachment(0);
-			GLUtils::setPreColorFilterViewport();
+			GLUtils::setPostColorFilterViewport();
+
+			if (GLUtils::useShaders)
+			{
+				GLUtils::useShader(GLUtils::colorShader);
+
+				GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameHue", Main::globalSettings->hue * p->hue);
+				GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameSaturation", Main::globalSettings->saturation);
+				GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameBrightness", Main::globalSettings->brightness);
+				GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameContrast", Main::globalSettings->contrast);
+				GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameGamma", Main::globalSettings->gamma);
+				GLUtils::setShaderVar1i(GLUtils::colorShader, (char*)"Tex0", 0);
+			}
 
 			drawBobsGameFBO(g->playingFieldX0, g->playingFieldX1, g->playingFieldY0, g->playingFieldY1);
+
+			if (GLUtils::useShaders)
+			{
+				GLUtils::useShader(0);
+			}
 		}
+
 
 		//--------------------------
 		//set main FBO
 		//--------------------------
 
-		GLUtils::bindFBO(GLUtils::postColorFilterFBO); //set the framebuffer object to the MAIN FBO
-		GLUtils::drawIntoFBOAttachment(0); //set which framebuffer object to draw into (whatever buffer is set with glBindFramebuffer)
-
-		//--------------------------
-		//set main viewport
-		//--------------------------
-		GLUtils::setPostColorFilterViewport();
-
-		//--------------------------
-		// draw ND FBO texture into MAIN FBO
-		//--------------------------
-
-		if (GLUtils::useShaders)
-		{
-			GLUtils::useShader(GLUtils::colorShader);
-
-			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameHue", Main::globalSettings->hue);
-			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameSaturation", Main::globalSettings->saturation);
-			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameBrightness", Main::globalSettings->brightness);
-			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameContrast", Main::globalSettings->contrast);
-			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameGamma", Main::globalSettings->gamma);
-			GLUtils::setShaderVar1i(GLUtils::colorShader, (char*)"Tex0", 0);
-		}
-
-		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-		GLUtils::drawTexture(GLUtils::preColorFilterFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0, (float)(GLUtils::getViewportWidth()), 0, (float)(GLUtils::getViewportHeight()), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
-		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		if (GLUtils::useShaders)
-		{
-			GLUtils::useShader(0);
-		}
+//		GLUtils::bindFBO(GLUtils::postColorFilterFBO); //set the framebuffer object to the MAIN FBO
+//		GLUtils::drawIntoFBOAttachment(0); //set which framebuffer object to draw into (whatever buffer is set with glBindFramebuffer)
+//
+//		//--------------------------
+//		//set main viewport
+//		//--------------------------
+//		GLUtils::setPostColorFilterViewport();
+//
+//		//--------------------------
+//		// draw ND FBO texture into MAIN FBO
+//		//--------------------------
+//
+//		if (GLUtils::useShaders)
+//		{
+//			GLUtils::useShader(GLUtils::colorShader);
+//
+//			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameHue", Main::globalSettings->hue * p->hue);
+//			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameSaturation", Main::globalSettings->saturation);
+//			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameBrightness", Main::globalSettings->brightness);
+//			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameContrast", Main::globalSettings->contrast);
+//			GLUtils::setShaderVar1f(GLUtils::colorShader, (char*)"gameGamma", Main::globalSettings->gamma);
+//			GLUtils::setShaderVar1i(GLUtils::colorShader, (char*)"Tex0", 0);
+//		}
+//
+//		GLUtils::setBlendMode(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+//		GLUtils::drawTexture(GLUtils::preColorFilterFBO_Texture_Attachment0, 0.0f, 1.0f, 1.0f, 0.0f, 0, (float)(GLUtils::getViewportWidth()), 0, (float)(GLUtils::getViewportHeight()), 1.0f, GLUtils::DEFAULT_ND_FBO_FILTER);
+//		GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//
+//		if (GLUtils::useShaders)
+//		{
+//			GLUtils::useShader(0);
+//		}
 
 		//render game captions
 		{

@@ -16,11 +16,11 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\GlobalSettings.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\Users\Administrator\workspace\bobsgame\src\Puzzle\GameLogic.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\GameLogic.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\GameLogic.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Grid.cpp</string>
+      <string>c:\Users\Administrator\workspace\bobsgame\src\Puzzle\Grid.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Grid.h</string>
     </ArrayOfString>
     <ArrayOfString>
@@ -86,7 +86,39 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Stats\LeaderBoardAndHighScoreBoardEntry.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Legacy.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\LoginState.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\LoginState.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\gui\MenuPanel.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\LogoState.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\System.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\BGClientEngine.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\Engine.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ND.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ndmenu\NDMenu.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ndmenu\NDMenu.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ndmenu\NDMenuWheel.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\MiniGameEngine.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\EnginePart.h</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

@@ -77,6 +77,13 @@ public:
 	bool slamWithR = false;
 	bool slamWithUp = true;
 
+	bool slamLock = true;
+	bool singleDownLock = false;
+	bool doubleDownLock = true;
+
+	float hue = 1.0f;
+	
+
 	bool useKeyboard = false;
 	GameController *gameController = nullptr;
 

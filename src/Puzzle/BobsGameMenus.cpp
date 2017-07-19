@@ -827,10 +827,12 @@ void BobsGame::pauseMenuUpdate()
 	if (getControlsManager()->MINIGAME_LEFT_HELD)
 	{
 		settingsMenuLeft(pauseMenu);
+		settingsMenuToggle(pauseMenu);
 	}
 	if (getControlsManager()->MINIGAME_RIGHT_HELD)
 	{
 		settingsMenuRight(pauseMenu);
+		settingsMenuToggle(pauseMenu);
 	}
 
 	bool leaveMenu = false;
@@ -842,9 +844,11 @@ void BobsGame::pauseMenuUpdate()
 	if (confirm || clicked)
 	{
 
+		settingsMenuToggle(pauseMenu);
+
 		if (pauseMenu->isSelectedID("Defaults", clicked, mx, my))
 		{
-			settingsMenuConfirm(pauseMenu);
+			settingsMenuSetDefaults(pauseMenu);
 		}
 
 		if(pauseMenu->isSelectedID("Back To Game", clicked, mx, my))
@@ -901,7 +905,7 @@ void BobsGame::pauseMenuRender()
 
 	if (t != nullptr)
 	{
-		pauseMenu->setGraphic(t, getWidth() / 8 * 5, getHeight() / 8, GLUtils::FILTER_LINEAR);
+		pauseMenu->setGraphic(t, getWidth() / 8 * 5, getHeight() / 8);
 	}
 
 	pauseMenu->render(0, 0, getHeight(), true, nullptr, nullptr, true);
@@ -1065,6 +1069,114 @@ void BobsGame::controllerMenuRender()
 }
 
 
+
+//=========================================================================================================================
+void BobsGame::playerSettingsMenuLeft(PuzzlePlayer *p)
+{//=========================================================================================================================
+	
+	if (p->menu->isSelectedID("Player Hue Shift"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			if (p->hue > 0)p->hue -= 0.01f;
+			if (p->hue < 0)p->hue = 0;
+			p->menu->getMenuItemByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
+		}
+	}
+
+}
+
+//=========================================================================================================================
+void BobsGame::playerSettingsMenuRight(PuzzlePlayer *p)
+{//=========================================================================================================================
+	
+	if (p->menu->isSelectedID("Player Hue Shift"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			if (p->hue < 2)p->hue += 0.01f;
+			if (p->hue > 2)p->hue = 2;
+			p->menu->getCaptionByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
+		}
+	}
+
+}
+
+
+//=========================================================================================================================
+void BobsGame::playerSettingsMenuToggle(PuzzlePlayer *p)
+{//=========================================================================================================================
+
+	if (p->menu->isSelectedID("Slam With Up"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			p->slamWithUp = !p->slamWithUp;
+			p->menu->getMenuItemByID("Slam With Up")->setText("Slam With Up: " + p->slamWithUp ? "On" : "Off");
+		}
+	}
+
+	if (p->menu->isSelectedID("Slam Lock"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			p->slamLock = !p->slamLock;
+			p->menu->getMenuItemByID("Slam Lock")->setText("Slam Lock: " + p->slamLock ? "On" : "Off");
+		}
+	}
+
+	if (p->menu->isSelectedID("Single Down Lock"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			p->singleDownLock = !p->singleDownLock;
+			p->menu->getMenuItemByID("Single Down Lock")->setText("Single Down Lock: " + p->singleDownLock ? "On" : "Off");
+		}
+	}
+
+	if (p->menu->isSelectedID("Double Down Lock"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			p->doubleDownLock = !p->doubleDownLock;
+			p->menu->getMenuItemByID("Double Down Lock")->setText("Double Down Lock: " + p->doubleDownLock ? "On" : "Off");
+		}
+	}
+
+
+
+}
+
 //=========================================================================================================================
 void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 {//=========================================================================================================================
@@ -1077,6 +1189,13 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 
 			p->menu->add("Back To Game", "Back To Game", BobColor::white);
 			settingsMenuInit(p->menu);
+			p->menu->add("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%", "Player Hue Shift");
+			p->menu->add("Slam With Up: "+p->slamWithUp?"On":"Off", "Slam With Up", BobColor::white);
+			p->menu->add("Slam Lock: "+p->slamLock?"On":"Off", "Slam Lock", BobColor::white);
+			p->menu->add("Single Down Lock: "+p->singleDownLock?"On":"Off", "Single Down Lock", BobColor::white);
+			p->menu->add("Double Down Lock: "+p->doubleDownLock?"On":"Off", "Double Down Lock", BobColor::white);
+
+			p->menu->addInfo(" ");
 			p->menu->add("Forfeit", "Forfeit", BobColor::white);
 		}
 
@@ -1093,10 +1212,20 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 		if (p->LEFT_HELD)
 		{
 			settingsMenuLeft(p->menu);
+			settingsMenuToggle(p->menu);
+
+			playerSettingsMenuLeft(p);
+			playerSettingsMenuToggle(p);
+
+
 		}
 		if (p->RIGHT_HELD)
 		{
 			settingsMenuRight(p->menu);
+			settingsMenuToggle(p->menu);
+
+			playerSettingsMenuRight(p);
+			playerSettingsMenuToggle(p);
 		}
 
 		bool leaveMenu = false;
@@ -1105,9 +1234,18 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 		if (p->confirmPressed())
 		{
 
+			settingsMenuToggle(p->menu);
+			playerSettingsMenuToggle(p);
+
+
 			if (p->menu->isSelectedID("Defaults"))
 			{
-				settingsMenuConfirm(p->menu);
+				settingsMenuSetDefaults(p->menu);
+
+				p->hue = 1.0f;
+				p->menu->getMenuItemByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
+
+
 			}
 
 			if (p->menu->isSelectedID("Back To Game"))
@@ -1571,9 +1709,35 @@ void BobsGame::settingsMenuInit(BobMenu* m)
 	m->add("Brightness: " + to_string((int)(Main::globalSettings->brightness * 100)) + "%", "Brightness");
 	m->add("Contrast: " + to_string((int)(Main::globalSettings->contrast * 100)) + "%", "Contrast");
 	m->add("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%", "Saturation");
-	//m->add("Hue Shift: " + to_string((int)(globalSettings->hue * 100)) + "%", "Hue Shift");
+
+	m->add("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%", "Global Hue Shift");
+	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%", "Screen Flash");
+	m->add("Show Detailed Game Stats: " + Main::globalSettings->showGameStats ? "On" : "Off", "Game Stats");
+
 	m->add("Defaults");
 }
+
+//=========================================================================================================================
+void BobsGame::settingsMenuToggle(BobMenu* m)
+{//=========================================================================================================================
+
+	if (m->isSelectedID("Game Stats"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			Main::globalSettings->showGameStats = !Main::globalSettings->showGameStats;
+			m->getMenuItemByID("Show Detailed Game Stats: " + Main::globalSettings->showGameStats ? "On" : "Off");
+		}
+	}
+
+}
+
+
 
 //=========================================================================================================================
 void BobsGame::settingsMenuLeft(BobMenu* m)
@@ -1636,21 +1800,38 @@ void BobsGame::settingsMenuLeft(BobMenu* m)
 			m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
 		}
 	}
-//
-//	if (m->isSelectedID("Hue Shift"))
-//	{
-//		long long startTime = timeLastChangedSetting;
-//		long long currentTime = System::currentHighResTimer();
-//		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-//
-//		if (ticksPassed > 15)
-//		{
-//			timeLastChangedSetting = currentTime;
-//			if (globalSettings->hue > 0)globalSettings->hue -= 0.01f;
-//			if (globalSettings->hue < 0)globalSettings->hue = 0;
-//			m->getMenuItemByID("Hue Shift")->setText("Hue Shift: " + to_string((int)(globalSettings->hue * 100)) + "%");
-//		}
-//	}
+
+	if (m->isSelectedID("Global Hue Shift"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			if (Main::globalSettings->hue > 0)Main::globalSettings->hue -= 0.01f;
+			if (Main::globalSettings->hue < 0)Main::globalSettings->hue = 0;
+			m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
+		}
+	}
+
+	if (m->isSelectedID("Screen Flash"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			if (Main::globalSettings->screenFlashOnLevelUp > 0)Main::globalSettings->screenFlashOnLevelUp -= 0.01f;
+			if (Main::globalSettings->screenFlashOnLevelUp < 0)Main::globalSettings->screenFlashOnLevelUp = 0;
+			m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%");
+		}
+	}
+
+
 }
 
 //=========================================================================================================================
@@ -1713,38 +1894,62 @@ void BobsGame::settingsMenuRight(BobMenu* m)
 			m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
 		}
 	}
-//
-//	if (m->isSelectedID("Hue Shift"))
-//	{
-//		long long startTime = timeLastChangedSetting;
-//		long long currentTime = System::currentHighResTimer();
-//		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-//
-//		if (ticksPassed > 15)
-//		{
-//			timeLastChangedSetting = currentTime;
-//			if (Main::globalSettings->hue < 2)Main::globalSettings->hue += 0.01f;
-//			if (Main::globalSettings->hue > 2)Main::globalSettings->hue = 2;
-//			m->getCaptionByID("Hue Shift")->replaceText("Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
-//		}
-//	}
+
+	if (m->isSelectedID("Global Hue Shift"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			if (Main::globalSettings->hue < 2)Main::globalSettings->hue += 0.01f;
+			if (Main::globalSettings->hue > 2)Main::globalSettings->hue = 2;
+			m->getCaptionByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
+		}
+	}
+
+	if (m->isSelectedID("Screen Flash"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			if (Main::globalSettings->screenFlashOnLevelUp < 0.5f)Main::globalSettings->screenFlashOnLevelUp += 0.01f;
+			if (Main::globalSettings->screenFlashOnLevelUp > 0.5f)Main::globalSettings->screenFlashOnLevelUp = 0.5f;
+			m->getCaptionByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%");
+		}
+	}
+
+
 }
 
 //=========================================================================================================================
-void BobsGame::settingsMenuConfirm(BobMenu* m)
+void BobsGame::settingsMenuSetDefaults(BobMenu* m)
 {//=========================================================================================================================
 
-		Main::globalSettings->musicVolume = 50;
-		music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
-		Main::globalSettings->hue = 1.5f;
-		Main::globalSettings->saturation = 1.2f;
-		Main::globalSettings->brightness = 1.0f;
-		Main::globalSettings->contrast = 1.2f;
-		Main::globalSettings->gamma = 1.0f;
-		m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
-		m->getMenuItemByID("Brightness")->setText("Brightness: " + to_string((int)(Main::globalSettings->brightness * 100)) + "%");
-		m->getMenuItemByID("Contrast")->setText("Contrast: " + to_string((int)(Main::globalSettings->contrast * 100)) + "%");
-		m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
+	GlobalSettings gs;
+	Main::globalSettings->musicVolume = gs.musicVolume;
+	Main::globalSettings->hue = gs.hue;
+	Main::globalSettings->saturation = gs.saturation;
+	Main::globalSettings->brightness = gs.brightness;
+	Main::globalSettings->contrast = gs.contrast;
+	Main::globalSettings->gamma = gs.gamma;
+	Main::globalSettings->screenFlashOnLevelUp = gs.screenFlashOnLevelUp;
+	Main::globalSettings->showGameStats = gs.showGameStats;
+
+	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
+	m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
+	m->getMenuItemByID("Brightness")->setText("Brightness: " + to_string((int)(Main::globalSettings->brightness * 100)) + "%");
+	m->getMenuItemByID("Contrast")->setText("Contrast: " + to_string((int)(Main::globalSettings->contrast * 100)) + "%");
+	m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
+	m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
+	m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->screenFlashOnLevelUp * 100 * 2)) + "%");
+	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->showGameStats ? "On" : "Off");
 	
 }
 
@@ -1775,10 +1980,12 @@ void BobsGame::globalSettingsMenuUpdate()
 	if (getControlsManager()->MINIGAME_LEFT_HELD)
 	{
 		settingsMenuLeft(globalSettingsMenu);
+		settingsMenuToggle(globalSettingsMenu);
 	}
 	if (getControlsManager()->MINIGAME_RIGHT_HELD)
 	{
 		settingsMenuRight(globalSettingsMenu);
+		settingsMenuToggle(globalSettingsMenu);
 	}
 
 	bool leaveMenu = false;
@@ -1789,9 +1996,12 @@ void BobsGame::globalSettingsMenuUpdate()
 	int my = getControlsManager()->getMouseY();
 	if (confirm || clicked)
 	{
+
+		settingsMenuToggle(globalSettingsMenu);
+
 		if (globalSettingsMenu->isSelectedID("Defaults", clicked, mx, my))
 		{
-			settingsMenuConfirm(globalSettingsMenu);
+			settingsMenuSetDefaults(globalSettingsMenu);
 		}
 		if (globalSettingsMenu->isSelectedID("Back To Title Screen", clicked, mx, my))
 		{
@@ -2276,8 +2486,12 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSetupMenu->add("Select Game Sequence Or Single Game Type...", "Select Game");
 		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");
 		gameSetupMenu->add("Objective: Play To Credits Level", "Objective");
+		gameSetupMenu->add("Options", "Options");
 		gameSetupMenu->addInfo(" ", " ");
-		gameSetupMenu->add("Start Game", "Start Game");
+		gameSetupMenu->add("Start Game", "Start Game")->setColor(BobColor::green);
+		gameSetupMenu->addInfo(" ", " ");
+		gameSetupMenu->add("Save Setup", "Save");
+		gameSetupMenu->add("Load Setup", "Load");
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Back To Title Screen", "Back To Title Screen");
 

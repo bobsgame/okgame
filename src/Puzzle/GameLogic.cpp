@@ -3004,7 +3004,7 @@ void GameLogic::renderOverlays()
 		if (flashScreenOnOffToggle == true)
 		{
 			//draw screen flash effect
-			GLUtils::drawFilledRectXYWH(0, 0, (float)GLUtils::getViewportWidth(), (float)GLUtils::getViewportHeight(), 1.0f, 1.0f, 1.0f, 0.2f);
+			GLUtils::drawFilledRectXYWH(0, 0, (float)GLUtils::getViewportWidth(), (float)GLUtils::getViewportHeight(), 1.0f, 1.0f, 1.0f, Main::globalSettings->screenFlashOnLevelUp);
 		}
 	}
 }
