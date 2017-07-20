@@ -2654,7 +2654,7 @@ void BobsGame::roomOptionsMenuUpdate()
 
 	if (roomOptionsMenu == nullptr)
 	{
-
+		if (descriptionCaption != nullptr) { delete descriptionCaption; descriptionCaption = nullptr; }
 		descriptionCaption = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 16, true, BobColor::white, BobColor::clear);
 		roomOptionsMenu = new BobMenu(this, "");
 
@@ -3092,6 +3092,8 @@ void BobsGame::roomOptionsMenuUpdate()
 		{
 			roomOptionsMenuShowing = false;
 
+			if (descriptionCaption != nullptr) { delete descriptionCaption; descriptionCaption = nullptr; }
+
 			if (roomOptionsMenu != nullptr)
 			{
 				roomOptionsMenuCursorPosition = roomOptionsMenu->cursorPosition;
@@ -3429,8 +3431,17 @@ void BobsGame::gameSetupMenuRender()
 
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
 	{
+		int bottomOfCaptions = 0;
+
 		Caption *c = gameSetupMenu->getCaptionByID("Options");
-		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, &bottomOfCaptions, true);
+
+		if (descriptionCaption != nullptr)
+		{
+			descriptionCaption->screenY = bottomOfCaptions + 24;
+			descriptionCaption->update();
+			descriptionCaption->render();
+		}
 
 		if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
 		{
@@ -4955,8 +4966,29 @@ void BobsGame::multiplayerOptionsMenuRender()
 
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
 	{
+		int bottomOfCaptions = 0;
+
 		Caption *c = multiplayerOptionsMenu->getCaptionByID("Options");
-		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, &bottomOfCaptions, true);
+
+		if (descriptionCaption != nullptr)
+		{
+			descriptionCaption->screenY = bottomOfCaptions + 24;
+			descriptionCaption->update();
+			descriptionCaption->render();
+		}
+
+		if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
+		{
+			c = roomOptionsMenu->getCaptionByID("Objective");
+			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		}
+
+		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
+		{
+			c = roomOptionsMenu->getCaptionByID("Send Garbage To");
+			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		}
 	}
 
 }
