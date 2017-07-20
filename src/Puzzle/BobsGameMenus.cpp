@@ -2657,10 +2657,11 @@ void BobsGame::roomOptionsMenuUpdate()
 		if (descriptionCaption != nullptr) { delete descriptionCaption; descriptionCaption = nullptr; }
 		descriptionCaption = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 16, true, BobColor::white, BobColor::clear);
 		roomOptionsMenu = new BobMenu(this, "");
+		roomOptionsMenu->center = false;
 
 		roomOptionsMenu->add("Objective: ", "Objective");
 		roomOptionsMenu->add("Game Speed Start: ", "Game Speed Start");
-		roomOptionsMenu->add("Game Speed Increase Rate: ", "Game Speed Increase Rate");
+		roomOptionsMenu->add("Game Speed Increase Rate: ", "Game Speed Change Rate");
 		roomOptionsMenu->add("Game Speed Maximum: ", "Game Speed Maximum");
 		roomOptionsMenu->add("Score Needed To Level Up Multiplier: ", "Levelup Multiplier");
 		roomOptionsMenu->add("Score Needed To Level Up Compound Multiplier: ", "Levelup Compound Multiplier");
@@ -2713,76 +2714,66 @@ void BobsGame::roomOptionsMenuUpdate()
 	}
 
 
+
 	{
 		string objectiveString = "";
 
 		if (currentRoom->endlessMode)
 		{
 			objectiveString = "Play As Long As You Can (Endless Mode)";
-			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = true;
+			if (localMultiplayer || networkMultiplayer)roomOptionsMenu->getMenuItemByID("Finish Rule")->info = true;
 		}
 		else
 		{
 			objectiveString = "Play To Credits Level";
-			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = false;
+			if (localMultiplayer || networkMultiplayer)roomOptionsMenu->getMenuItemByID("Finish Rule")->info = false;
 		}
 		roomOptionsMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
 	}
-
 
 	roomOptionsMenu->getMenuItemByID("Game Speed Start")->setText("Game Speed Start: " + to_string(currentRoom->gameSpeedStart * 100) + "%");
 	roomOptionsMenu->getMenuItemByID("Game Speed Change Rate")->setText("Game Speed Change Rate: " + to_string(currentRoom->gameSpeedChangeRate * 100) + "%");
 	roomOptionsMenu->getMenuItemByID("Game Speed Maximum")->setText("Game Speed Maximum: " + to_string(currentRoom->gameSpeedMaximum * 100) + "%");
 	roomOptionsMenu->getMenuItemByID("Levelup Multiplier")->setText("Score Needed To Level Up Multiplier: " + to_string(currentRoom->levelUpMultiplier * 100) + "%");
 	roomOptionsMenu->getMenuItemByID("Levelup Compound Multiplier")->setText("Score To Level Up Compound Multiplier: " + to_string(currentRoom->levelUpCompoundMultiplier * 100) + "%");
+	roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: " + string((currentRoom->multiplayer_FloorSpinLimit > 0) ? to_string(currentRoom->multiplayer_FloorSpinLimit) : "None"));
+	roomOptionsMenu->getMenuItemByID("Total Lock Delay Limit")->setText("Total Lock Delay Limit: " + string((currentRoom->multiplayer_TotalYLockDelayLimit > 0) ? to_string(currentRoom->multiplayer_TotalYLockDelayLimit) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Lock Delay Decrease Rate")->setText("Lock Delay Decrease Rate: " + string((currentRoom->multiplayer_LockDelayDecreaseRate > 0) ? to_string(currentRoom->multiplayer_LockDelayDecreaseRate * 100) + "%" : "None"));
+	roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + string((currentRoom->multiplayer_LockDelayMinimum > 0) ? to_string(currentRoom->multiplayer_LockDelayMinimum) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + string((currentRoom->multiplayer_StackWaitLimit > 0) ? to_string(currentRoom->multiplayer_StackWaitLimit) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Limit")->setText("Spawn Delay Limit: " + string((currentRoom->multiplayer_SpawnDelayLimit > 0) ? to_string(currentRoom->multiplayer_SpawnDelayLimit) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Decrease Rate")->setText("Spawn Delay Decrease Rate: " + string((currentRoom->multiplayer_SpawnDelayDecreaseRate > 0) ? to_string(currentRoom->multiplayer_SpawnDelayDecreaseRate * 100) + "%" : "None"));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Minimum")->setText("Spawn Delay Minimum: " + string((currentRoom->multiplayer_SpawnDelayMinimum > 0) ? to_string(currentRoom->multiplayer_SpawnDelayMinimum) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + string((currentRoom->multiplayer_DropDelayMinimum > 0) ? to_string(currentRoom->multiplayer_DropDelayMinimum) + "ms" : "None"));
 
 
-	roomOptionsMenu->getMenuItemByID("Allow Join")->setText("Allow New Players To Join During Game: " + currentRoom->multiplayer_AllowNewPlayersDuringGame ? "On" : "Off");
-	roomOptionsMenu->getMenuItemByID("Use Teams")->setText("Use Teams: " + currentRoom->multiplayer_UseTeams ? "On" : "Off");
+	if (localMultiplayer || networkMultiplayer)
+	{
 
-	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains)
-		roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Game Ends When One Player Remains");
-	else roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Continue Until All Players Lose");
+		roomOptionsMenu->getMenuItemByID("Allow Join")->setText("Allow New Players To Join During Game: " + string(currentRoom->multiplayer_AllowNewPlayersDuringGame ? "On" : "Off"));
+		roomOptionsMenu->getMenuItemByID("Use Teams")->setText("Use Teams: " + string(currentRoom->multiplayer_UseTeams ? "On" : "Off"));
 
-	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)
-		roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: End On First Completion");
-	else roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Free Play To Completion");
-	if (currentRoom->endlessMode)roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
+		if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains)
+			roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Game Ends When One Player Remains");
+		else roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Continue Until All Players Lose");
 
-	roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: " + currentRoom->multiplayer_DisableVSGarbage ? "Off" : "On");
+		if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)
+			roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: End On First Completion");
+		else roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Free Play To Completion");
+		if (currentRoom->endlessMode)roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
 
+		roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: " + string((currentRoom->multiplayer_DisableVSGarbage) ? "Off" : "On"));
+		roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: " + to_string(currentRoom->multiplayer_GarbageMultiplier * 100) + "%");
+		roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + string((currentRoom->multiplayer_GarbageLimit > 0) ? to_string(currentRoom->multiplayer_GarbageLimit) : "None"));
+		roomOptionsMenu->getMenuItemByID("Garbage Scale")->setText("Scale Garbage By Difficulty: " + string(currentRoom->multiplayer_GarbageScaleByDifficulty ? "On" : "Off"));
 
-	roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: " + to_string(currentRoom->multiplayer_GarbageMultiplier * 100) + "%");
+		if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players");
+		if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players 50% Chance");
+		if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: One Random Player");
+		if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Rotate Between Other Players");
+		if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Player With Least Blocks");
 
-	roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + (currentRoom->multiplayer_GarbageLimit > 0) ? to_string(currentRoom->multiplayer_GarbageLimit) : "None");
-
-	roomOptionsMenu->getMenuItemByID("Garbage Scale")->setText("Scale Garbage By Difficulty: " + currentRoom->multiplayer_GarbageScaleByDifficulty ? "On" : "Off");
-
-
-	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players");
-	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players 50% Chance");
-	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: One Random Player");
-	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Rotate Between Other Players");
-	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Player With Least Blocks");
-
-
-
-
-	roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: " + (currentRoom->multiplayer_FloorSpinLimit > 0) ? to_string(currentRoom->multiplayer_FloorSpinLimit) : "None");
-
-	roomOptionsMenu->getMenuItemByID("Total Lock Delay Limit")->setText("Total Lock Delay Limit: " + (currentRoom->multiplayer_TotalYLockDelayLimit > 0) ? to_string(currentRoom->multiplayer_TotalYLockDelayLimit) + "ms" : "None");
-
-	roomOptionsMenu->getMenuItemByID("Lock Delay Decrease Rate")->setText("Lock Delay Decrease Rate: " + (currentRoom->multiplayer_LockDelayDecreaseRate > 0) ? to_string(currentRoom->multiplayer_LockDelayDecreaseRate * 100) + "%" : "None");
-	roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + (currentRoom->multiplayer_LockDelayMinimum > 0) ? to_string(currentRoom->multiplayer_LockDelayMinimum) + "ms" : "None");
-
-	roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + (currentRoom->multiplayer_StackWaitLimit > 0) ? to_string(currentRoom->multiplayer_StackWaitLimit) + "ms" : "None");
-
-	roomOptionsMenu->getMenuItemByID("Spawn Delay Limit")->setText("Spawn Delay Limit: " + (currentRoom->multiplayer_SpawnDelayLimit > 0) ? to_string(currentRoom->multiplayer_SpawnDelayLimit) + "ms" : "None");
-	roomOptionsMenu->getMenuItemByID("Spawn Delay Decrease Rate")->setText("Spawn Delay Decrease Rate: " + (currentRoom->multiplayer_SpawnDelayDecreaseRate > 0) ? to_string(currentRoom->multiplayer_SpawnDelayDecreaseRate * 100) + "%" : "None");
-	roomOptionsMenu->getMenuItemByID("Spawn Delay Minimum")->setText("Spawn Delay Minimum: " + +(currentRoom->multiplayer_SpawnDelayMinimum > 0) ? to_string(currentRoom->multiplayer_SpawnDelayMinimum) + "ms" : "None");
-
-	roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + (currentRoom->multiplayer_DropDelayMinimum > 0) ? to_string(currentRoom->multiplayer_DropDelayMinimum) + "ms" : "None");
-
+	}
 
 
 
@@ -2815,7 +2806,6 @@ void BobsGame::roomOptionsMenuUpdate()
 		if (left || right)
 		{
 
-
 //			if (roomOptionsMenu->isSelectedID("Objective"))
 //			{
 //				descriptionCaption->setText("");
@@ -2838,7 +2828,6 @@ void BobsGame::roomOptionsMenuUpdate()
 //				{
 //					if (currentRoom != nullptr)currentRoom->endlessMode = true;
 //				}
-//
 //			}
 
 			if (roomOptionsMenu->isSelectedID("Game Speed Start"))
@@ -2889,7 +2878,6 @@ void BobsGame::roomOptionsMenuUpdate()
 				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_FloorSpinLimit, 0, 128, 1);
 			}
 
-
 			if (roomOptionsMenu->isSelectedID("Total Lock Delay Limit"))
 			{
 				descriptionCaption->setText("Maximum total milliseconds a piece can stay in the same Y position before locking. Default is no limit.");
@@ -2908,13 +2896,11 @@ void BobsGame::roomOptionsMenuUpdate()
 				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_LockDelayMinimum, 0, 10000, 100);
 			}
 
-
 			if (roomOptionsMenu->isSelectedID("Stack Wait Limit"))
 			{
 				descriptionCaption->setText("Maximum milliseconds that the stack can be waiting to scroll after a combo. Default is 10000.");
 				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_StackWaitLimit, 0, 10000, 100);
 			}
-
 
 			if (roomOptionsMenu->isSelectedID("Spawn Delay Limit"))
 			{
@@ -2934,13 +2920,11 @@ void BobsGame::roomOptionsMenuUpdate()
 				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_SpawnDelayMinimum, 0, 10000, 100);
 			}
 
-
 			if (roomOptionsMenu->isSelectedID("Drop Delay Minimum"))
 			{
 				descriptionCaption->setText("Minimum milliseconds for a piece to move down a row. Overrides minimum set in difficulty. Default is 500.");
 				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_DropDelayMinimum, 0, 10000, 100);
 			}
-
 
 			if (roomOptionsMenu->isSelectedID("End Rule"))
 			{
@@ -3392,7 +3376,7 @@ void BobsGame::gameSetupMenuRender()
 
 	if (t != nullptr)
 	{
-		gameSetupMenu->setGraphic(t, getWidth() / 8 * 6, getHeight() / 8);
+		gameSetupMenu->setGraphic(t, getWidth() / 8 * 6, getHeight() / 10, getHeight() / 3);
 	}
 
 	gameSetupMenu->render();

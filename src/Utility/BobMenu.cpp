@@ -269,7 +269,7 @@ BobMenu::MenuItem* BobMenu::addInfo(string caption, string id, BobColor *color)
 
 	MenuItem *m = new MenuItem();
 
-	outline = false;
+	//outline = false;
 	m->outline = false;
 
 	m->caption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
