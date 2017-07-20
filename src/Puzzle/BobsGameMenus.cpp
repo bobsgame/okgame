@@ -2211,11 +2211,6 @@ void BobsGame::statsMenuUpdate()
 					gameSequenceOptionsMenuUpdate();
 				}
 				else
-					if (gameObjectiveMenuShowing)
-					{
-						gameObjectiveMenuUpdate();
-					}
-					else
 						if (difficultyMenuShowing)
 						{
 							difficultyMenuUpdate();
@@ -2499,10 +2494,11 @@ void BobsGame::roomOptionsMenuUpdate()
 		roomOptionsMenu = new BobMenu(this, "");
 
 		roomOptionsMenu->add("Objective: Play To Credits Level", "Objective");
+		roomOptionsMenu->add("Game Speed Start: ", "Game Speed Start");
 		roomOptionsMenu->add("Game Speed Increase Rate: ", "Game Speed Increase Rate");
 		roomOptionsMenu->add("Game Speed Maximum: ", "Game Speed Maximum");
-		roomOptionsMenu->add("Score Needed To Level Up Multiplier: ", "Pieces Multiplier");
-		roomOptionsMenu->add("Score Needed To Level Up Compound Multiplier: ", "Pieces Compound Multiplier");
+		roomOptionsMenu->add("Score Needed To Level Up Multiplier: ", "Levelup Multiplier");
+		roomOptionsMenu->add("Score Needed To Level Up Compound Multiplier: ", "Levelup Compound Multiplier");
 
 		if(localMultiplayer || networkMultiplayer)
 		{
@@ -2510,23 +2506,38 @@ void BobsGame::roomOptionsMenuUpdate()
 			roomOptionsMenu->addInfo("Multiplayer Options:");
 
 
-			if (networkMultiplayer)
-			{
-
-				roomOptionsMenu->add("Visibility: Public", "Public Or Private");
-				roomOptionsMenu->add("Score Mode: Free Play", "Free Play Or Tournament");
-				roomOptionsMenu->add("Max Players: Unlimited", "Max Players");
-				roomOptionsMenu->addInfo(" ", " ");
-			}
-
-
-			roomOptionsMenu->add("Game Sequence: Allow Different Game Sequences Or Types", "Select Game");
-			roomOptionsMenu->add("Difficulty: Allow Different Difficulties", "Difficulty");
+			roomOptionsMenu->add("Allow New Players To Join During Game: ", "Allow Join");
+			roomOptionsMenu->add("Use Teams: ", "Use Teams");
 			roomOptionsMenu->add("End Rule: Game Ends When One Player Remains", "End Rule");
-			roomOptionsMenu->add("Finish Rule: Race To Credits Level", "Finish Rule");
-			roomOptionsMenu->add("Garbage Rule: Enable VS Garbage", "Garbage Rule");
+			roomOptionsMenu->add("Finish Rule: End On First Completion", "Finish Rule");
+			roomOptionsMenu->addInfo(" ");
+			roomOptionsMenu->add("VS Garbage: ", "Garbage Rule");
+			roomOptionsMenu->add("Garbage Multiplier: ", "Garbage Multiplier");
+			roomOptionsMenu->add("Garbage Limit: ", "Garbage Limit");
+			roomOptionsMenu->add("Scale Garbage By Difficulty: ", "Garbage Scale");
+			roomOptionsMenu->add("Send Garbage To: ", "Garbage Scale");
+			roomOptionsMenu->addInfo(" ");
+			roomOptionsMenu->add("Floor Spin Limit: ", "Floor Spin Limit");
+			roomOptionsMenu->add("Lock Delay Limit: ", "Lock Delay Limit");
+			roomOptionsMenu->add("Lock Delay Minimum: ", "Lock Delay Minimum");
+			roomOptionsMenu->add("Stack Wait Limit: ", "Stack Wait Limit");
+			roomOptionsMenu->add("Drop Delay Limit: ", "Drop Delay Limit");
+			roomOptionsMenu->add("Drop Delay Minimum: ", "Drop Delay Minimum");
+			
+
+
+
+//				infinite spin in room settings
+//				infinite spin on / off / max time
+//				lock delay limit, floor kick limit, 128 turns, step delay
+//
+//				allow teams(your team sends garbage to other team only), team victory, colored border, maybe caption
+//				add select team to player setup minimenu
 
 		}
+
+		roomOptionsMenu->addInfo(" ");
+		roomOptionsMenu->add("Apply Options", "Apply");
 		
 		roomOptionsMenu->cursorPosition = roomOptionsMenuCursorPosition;
 	}
@@ -2537,14 +2548,86 @@ void BobsGame::roomOptionsMenuUpdate()
 		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
 		{
 			objectiveString = "Play To Credits Level";
+			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = false;
 		}
 		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
 		{
 			objectiveString = "Endless";
+			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = true;
 		}
 		Caption *c = roomOptionsMenu->getCaptionByID("Objective");
 		if (c != nullptr)c->setText("Objective: " + objectiveString);
 	}
+
+
+	roomOptionsMenu->getMenuItemByID("Game Speed Start")->setText("Game Speed Start: "+to_string(currentRoom->gameSpeedStart));
+	roomOptionsMenu->getMenuItemByID("Game Speed Increase Rate")->setText("Game Speed Increase Rate: "+to_string(currentRoom->gameSpeedIncreaseRate));
+	roomOptionsMenu->getMenuItemByID("Game Speed Maximum")->setText("Game Speed Maximum: " + to_string(currentRoom->gameSpeedMaximum));
+	roomOptionsMenu->getMenuItemByID("Levelup Multiplier")->setText("Score Needed To Level Up Multiplier: " + to_string(currentRoom->levelUpMultiplier));
+	roomOptionsMenu->getMenuItemByID("Levelup Compound Multiplier")->setText("Score Needed To Level Up Compound Multiplier: " + to_string(currentRoom->levelUpCompoundMultiplier));
+
+
+	roomOptionsMenu->getMenuItemByID("Allow Join")->setText("Allow New Players To Join During Game: " + currentRoom->multiplayer_AllowNewPlayersDuringGame?"On":"Off");
+	roomOptionsMenu->getMenuItemByID("Use Teams")->setText("Use Teams: " + currentRoom->multiplayer_UseTeams?"On":"Off");
+
+	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains)
+		 roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Game Ends When One Player Remains");
+	else roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Continue Until All Players Lose");
+
+	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)
+		 roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: End On First Completion");
+	else roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
+	if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Free Play To Completion");
+
+	roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: "+ currentRoom->multiplayer_DisableVSGarbage?"Off":"On");
+
+
+	roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: "+to_string(currentRoom->multiplayer_GarbageMultiplier));
+
+	
+	if(currentRoom->multiplayer_GarbageLimit==0)
+		 roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: None");
+	else roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + to_string(currentRoom->multiplayer_GarbageLimit));
+
+	roomOptionsMenu->getMenuItemByID("Garbage Scale")->setText("Scale Garbage By Difficulty: "+ currentRoom->multiplayer_GarbageScaleByDifficulty?"On":"Off");
+
+
+	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players");
+	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players 50% Chance");
+	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: One Random Player");
+	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Rotate Between Other Players");
+	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Player With Least Blocks");
+
+
+
+
+	if (currentRoom->multiplayer_FloorSpinLimit == 0)
+		 roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: None");
+	else roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: " + to_string(currentRoom->multiplayer_FloorSpinLimit));
+
+	if (currentRoom->multiplayer_LockDelayLimit == 0)
+		 roomOptionsMenu->getMenuItemByID("Lock Delay Limit")->setText("Lock Delay Limit: None");
+	else roomOptionsMenu->getMenuItemByID("Lock Delay Limit")->setText("Lock Delay Limit: " + to_string(currentRoom->multiplayer_LockDelayLimit));
+
+	if (currentRoom->multiplayer_LockDelayMinimum == 0)
+		 roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: None");
+	else roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + to_string(currentRoom->multiplayer_LockDelayMinimum));
+
+	if (currentRoom->multiplayer_StackWaitLimit == 0)
+		 roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: None");
+	else roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + to_string(currentRoom->multiplayer_StackWaitLimit));
+
+	if (currentRoom->multiplayer_DropDelayLimit == 0)
+		 roomOptionsMenu->getMenuItemByID("Drop Delay Limit")->setText("Drop Delay Limit: None");
+	else roomOptionsMenu->getMenuItemByID("Drop Delay Limit")->setText("Drop Delay Limit: " + to_string(currentRoom->multiplayer_DropDelayLimit));
+
+	if (currentRoom->multiplayer_DropDelayMinimum == 0)
+		 roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: None");
+	else roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + to_string(currentRoom->multiplayer_DropDelayMinimum));
+
+
+
+
 
 
 
@@ -2601,6 +2684,96 @@ void BobsGame::roomOptionsMenuUpdate()
 			if (c != nullptr)c->setText("Objective: " + objectiveString);
 
 		}
+
+
+
+		if (roomOptionsMenu->isSelectedID("Game Speed Start"))
+		{
+
+
+		}
+
+		if (roomOptionsMenu->isSelectedID("Game Speed Increase Rate"))
+		{
+
+
+		}
+
+
+		if (roomOptionsMenu->isSelectedID("Game Speed Maximum"))
+		{
+
+
+		}
+
+
+		if (roomOptionsMenu->isSelectedID("Levelup Multiplier"))
+		{
+
+
+		}
+
+
+		if (roomOptionsMenu->isSelectedID("Levelup Compound Multiplier"))
+		{
+
+
+		}
+
+
+		if(roomOptionsMenu->isSelectedID("Garbage Multiplier"))
+		{
+
+		}		
+		
+		if(roomOptionsMenu->isSelectedID("Garbage Limit"))
+		{
+
+		}		
+		
+		if(roomOptionsMenu->isSelectedID("Garbage Scale"))
+		{
+
+		}	
+		
+
+		if(roomOptionsMenu->isSelectedID("Floor Spin Limit"))
+		{
+
+		}	
+		
+
+		if(roomOptionsMenu->isSelectedID("Lock Delay Limit"))
+		{
+
+		}	
+			
+
+		if(roomOptionsMenu->isSelectedID("Lock Delay Minimum"))
+		{
+
+		}	
+		
+
+		if(roomOptionsMenu->isSelectedID("Stack Wait Limit"))
+		{
+
+		}	
+
+		if(roomOptionsMenu->isSelectedID("Drop Delay Limit"))
+		{
+
+		}	
+		
+
+		if(roomOptionsMenu->isSelectedID("Drop Delay Minimum"))
+		{
+
+		}	
+
+
+
+
 	}
 
 	bool leaveMenu = false;
@@ -2609,7 +2782,7 @@ void BobsGame::roomOptionsMenuUpdate()
 	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
-	if (confirm || clicked)
+	if (confirm || clicked || left || right)
 	{
 
 
@@ -2629,9 +2802,53 @@ void BobsGame::roomOptionsMenuUpdate()
 			gameObjectiveMenuShowing = true;
 		}
 
-		leaveMenu = true;
+		if (roomOptionsMenu->isSelectedID("End Rule", clicked, mx, my))
+		{
+			currentRoom->multiplayer_GameEndsWhenOnePlayerRemains = !currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
+		}
+
+		if (roomOptionsMenu->isSelectedID("Finish Rule", clicked, mx, my))
+		{
+			currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = !currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
+		}
+
+		if (roomOptionsMenu->isSelectedID("Garbage Rule", clicked, mx, my))
+		{
+			currentRoom->multiplayer_DisableVSGarbage = !currentRoom->multiplayer_DisableVSGarbage;
+		}
+
+
+
+		if(roomOptionsMenu->isSelectedID("Allow Join", clicked, mx, my))
+		{
+
+		}
+
+		if(roomOptionsMenu->isSelectedID("Use Teams", clicked, mx, my))
+		{
+
+		}
+
+	
+		
+		if(roomOptionsMenu->isSelectedID("Send Garbage To", clicked, mx, my))
+		{
+
+		}
+
+
+
 	}
 
+
+
+	if (confirm || clicked)
+	{
+		if (roomOptionsMenu->isSelectedID("Apply", clicked, mx, my))
+		{
+			leaveMenu = true;
+		}
+	}
 
 	if (leaveMenu)
 	{
@@ -2984,7 +3201,7 @@ void BobsGame::gameSetupMenuRender()
 
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
 	{
-		Caption *c = gameSetupMenu->getCaptionByID("Objective");
+		Caption *c = gameSetupMenu->getCaptionByID("Options");
 		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
 	}
 }
@@ -4254,9 +4471,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 		multiplayerOptionsMenu->add("Game Sequence: Allow Different Game Sequences Or Types", "Select Game");
 		multiplayerOptionsMenu->add("Difficulty: Allow Different Difficulties", "Difficulty");
-		multiplayerOptionsMenu->add("End Rule: Game Ends When One Player Remains", "End Rule");
-		multiplayerOptionsMenu->add("Finish Rule: Race To Credits Level", "Finish Rule");
-		multiplayerOptionsMenu->add("Garbage Rule: Enable VS Garbage", "Garbage Rule");
+		multiplayerOptionsMenu->add("More Options...", "Options");
 		multiplayerOptionsMenu->addInfo(" "," ");
 		multiplayerOptionsMenu->add("Continue");
 		multiplayerOptionsMenu->addInfo(" ", " ");
@@ -4333,14 +4548,6 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		else multiplayerOptionsMenu->getMenuItemByID("Max Players")->setText("Max Players: " + to_string(currentRoom->multiplayer_MaxPlayers));
 	}
 
-	if (currentRoom->multiplayer_DisableVSGarbage)multiplayerOptionsMenu->getMenuItemByID("Garbage Rule")->setText("Garbage Rule: Disable VS Garbage");
-	else multiplayerOptionsMenu->getMenuItemByID("Garbage Rule")->setText("Garbage Rule: VS Garbage Allowed");
-
-	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)multiplayerOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Race To Credits Level");
-	else multiplayerOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
-
-	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains)multiplayerOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Game Ends When One Player Remains");
-	else multiplayerOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Continue Until All Players Lose");
 
 
 
@@ -4367,6 +4574,11 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 	if (difficultyMenuShowing)
 	{
 		difficultyMenuUpdate();
+	}
+	else	
+	if (roomOptionsMenuShowing)
+	{
+		roomOptionsMenuUpdate();
 	}
 	else
 	{
@@ -4418,6 +4630,8 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				}
 			}
 
+
+
 		}
 
 		bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
@@ -4427,20 +4641,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		if (confirm || left || right || clicked)
 		{
 
-			if (multiplayerOptionsMenu->isSelectedID("End Rule", clicked, mx, my))
-			{
-				currentRoom->multiplayer_GameEndsWhenOnePlayerRemains = !currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
-			}
 
-			if (multiplayerOptionsMenu->isSelectedID("Finish Rule", clicked, mx, my))
-			{
-				currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = !currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
-			}
-
-			if (multiplayerOptionsMenu->isSelectedID("Garbage Rule", clicked, mx, my))
-			{
-				currentRoom->multiplayer_DisableVSGarbage = !currentRoom->multiplayer_DisableVSGarbage;
-			}
 
 			if (multiplayerOptionsMenu->isSelectedID("Public Or Private", clicked, mx, my))
 			{
@@ -4456,6 +4657,8 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 			{
 				currentRoom->multiplayer_MaxPlayers = 0;
 			}
+
+
 
 		}
 
@@ -4506,6 +4709,12 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				difficultyMenuShowing = true;
 			}
 
+			if (multiplayerOptionsMenu->isSelectedID("Options", clicked, mx, my))
+			{
+				roomOptionsMenuShowing = true;
+			}
+
+			
 			if (multiplayerOptionsMenu->isSelectedID("Continue", clicked, mx, my))
 			{
 
@@ -4605,6 +4814,12 @@ void BobsGame::multiplayerOptionsMenuRender()
 	{
 		Caption *c = multiplayerOptionsMenu->getCaptionByID("Difficulty");
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+	}
+
+	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
+	{
+		Caption *c = multiplayerOptionsMenu->getCaptionByID("Options");
+		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
 	}
 
 }

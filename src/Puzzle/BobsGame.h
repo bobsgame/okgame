@@ -164,7 +164,7 @@ public:
 	long long timeLastChangedSetting = 0;
 
 	void difficultyMenuUpdate();
-	void difficultyMenuRender();
+	//void difficultyMenuRender();
 	bool difficultyMenuShowing = false;
 	BobMenu *difficultyMenu = nullptr;
 	int difficultyMenuCursorPosition = 0;
@@ -336,7 +336,7 @@ public:
 
 
 	void roomOptionsMenuUpdate();
-	void roomOptionsMenuRender();
+	//void roomOptionsMenuRender();
 	BobMenu *roomOptionsMenu = nullptr;
 	bool roomOptionsMenuShowing = false;
 	int roomOptionsMenuCursorPosition = 0;
@@ -389,7 +389,7 @@ public:
 	void populateGameTypesMenu(BobMenu *m);
 	void populateGameSequencesMenu(BobMenu *m);
 	void selectSingleGameTypeMenuUpdate();
-	void selectSingleGameTypeMenuRender();
+	//void selectSingleGameTypeMenuRender();
 	BobMenu *selectSingleGameTypeMenu = nullptr;
 	bool selectSingleGameTypeMenuShowing = false;
 	int selectSingleGameTypeMenuCursorPosition = 0;

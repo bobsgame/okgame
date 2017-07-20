@@ -13,7 +13,17 @@
 
 
 
+enum class SendGarbageToRule
+{
+	
+	SEND_GARBAGE_TO_ALL_PLAYERS,
+	SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE,
+	SEND_GARBAGE_TO_RANDOM_PLAYER,
+	SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION,
+	SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS,
 
+
+};
 
 
 
@@ -56,6 +66,29 @@ public:
 	bool multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
 	bool multiplayer_DisableVSGarbage = false;
 
+
+	float gameSpeedStart = 0.01f;
+	float gameSpeedIncreaseRate = 0.02f;
+	float gameSpeedMaximum = 1.0f;//can be 0.1 to 10.0 although that won't make sense
+	float levelUpMultiplier = 1.0f;//can be negative
+	float levelUpCompoundMultiplier = 1.0f;//can be negative
+	bool multiplayer_AllowNewPlayersDuringGame = false;
+	bool multiplayer_UseTeams = false;
+	float multiplayer_GarbageMultiplier = 1.0f;
+	int multiplayer_GarbageLimit = 0;
+	bool multiplayer_GarbageScaleByDifficulty = true;//scale garbage by difficulty, beginner->insane 2x, insane->beginner 0.5x, etc.
+	int multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
+	int multiplayer_FloorSpinLimit = 0;
+	int multiplayer_LockDelayLimit = 0;
+	int multiplayer_LockDelayMinimum = 0;
+	int multiplayer_StackWaitLimit = 0;
+	int multiplayer_DropDelayLimit = 0;
+	int multiplayer_DropDelayMinimum = 0;
+
+
+
+
+
 	//don't export
 	GameSequence *gameSequence = nullptr;
 	UDPPeerConnection *hostPeer = nullptr;
@@ -85,6 +118,26 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_GameEndsWhenOnePlayerRemains);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_DisableVSGarbage);
+
+
+
+		ar & BOOST_SERIALIZATION_NVP(gameSpeedStart);
+		ar & BOOST_SERIALIZATION_NVP(gameSpeedIncreaseRate);
+		ar & BOOST_SERIALIZATION_NVP(gameSpeedMaximum);
+		ar & BOOST_SERIALIZATION_NVP(levelUpMultiplier);
+		ar & BOOST_SERIALIZATION_NVP(levelUpCompoundMultiplier);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_AllowNewPlayersDuringGame);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_UseTeams);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_GarbageMultiplier);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_GarbageLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_GarbageScaleByDifficulty);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_SendGarbageTo);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_FloorSpinLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_LockDelayLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_LockDelayMinimum);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_StackWaitLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_DropDelayLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_DropDelayMinimum);
 
 	}
 
@@ -177,6 +230,25 @@ public:
 			"," + to_string((int)multiplayer_GameEndsWhenOnePlayerRemains) +
 			"," + to_string((int)multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel) +
 			"," + to_string((int)multiplayer_DisableVSGarbage) +
+
+
+			"," + to_string((int)gameSpeedStart) +
+			"," + to_string((int)gameSpeedIncreaseRate) +
+			"," + to_string((int)gameSpeedMaximum) +
+			"," + to_string((int)levelUpMultiplier) +
+			"," + to_string((int)levelUpCompoundMultiplier) +
+			"," + to_string((int)multiplayer_AllowNewPlayersDuringGame) +
+			"," + to_string((int)multiplayer_UseTeams) +
+			"," + to_string((int)multiplayer_GarbageMultiplier) +
+			"," + to_string((int)multiplayer_GarbageLimit) +
+			"," + to_string((int)multiplayer_GarbageScaleByDifficulty) +
+			"," + to_string((int)multiplayer_SendGarbageTo) +
+			"," + to_string((int)multiplayer_FloorSpinLimit) +
+			"," + to_string((int)multiplayer_LockDelayLimit) +
+			"," + to_string((int)multiplayer_LockDelayMinimum) +
+			"," + to_string((int)multiplayer_StackWaitLimit) +
+			"," + to_string((int)multiplayer_DropDelayLimit) +
+			"," + to_string((int)multiplayer_DropDelayMinimum) +
 			",";
 
 		if (includeXMLGameSequence)
@@ -232,12 +304,50 @@ public:
 		string multiplayer_DisableVSGarbageString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
 
-		string multiplayer_SelectedGameSequenceString = "";
+
+		string gameSpeedStartString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string gameSpeedIncreaseRateString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string gameSpeedMaximumString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string levelUpMultiplierString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string levelUpCompoundMultiplierString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_AllowNewPlayersDuringGameString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_UseTeamsString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_GarbageMultiplierString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_GarbageLimitString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_GarbageScaleByDifficultyString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_SendGarbageToString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_FloorSpinLimitString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_LockDelayLimitString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_LockDelayMinimumString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_StackWaitLimitString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_DropDelayLimitString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_DropDelayMinimumString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+
+
+
+		string multiplayer_ZippedGameSequenceString = "";
 		if (decodeGameSequenceXML)
 		{
 			s = s.substr(s.find(":") + 1);
-			multiplayer_SelectedGameSequenceString = s.substr(0, s.find(":"));
-			if (multiplayer_SelectedGameSequenceString.length() < 10)multiplayer_SelectedGameSequenceString = "";
+			multiplayer_ZippedGameSequenceString = s.substr(0, s.find(":"));
+			if (multiplayer_ZippedGameSequenceString.length() < 10)multiplayer_ZippedGameSequenceString = "";
 		}
 
 		Room *newRoom = new Room();
@@ -376,11 +486,45 @@ public:
 			return nullptr;
 		}
 
+
+
+
+		try
+		{
+
+			newRoom->gameSpeedStart							 = stof(gameSpeedStartString);
+			newRoom->gameSpeedIncreaseRate					 = stof(gameSpeedIncreaseRateString);
+			newRoom->gameSpeedMaximum						 = stof(gameSpeedMaximumString);
+			newRoom->levelUpMultiplier						 = stof(levelUpMultiplierString);
+			newRoom->levelUpCompoundMultiplier				 = stof(levelUpCompoundMultiplierString);
+			newRoom->multiplayer_AllowNewPlayersDuringGame	 = 0 != stoi(multiplayer_AllowNewPlayersDuringGameString);
+			newRoom->multiplayer_UseTeams					 = 0 != stoi(multiplayer_UseTeamsString);
+			newRoom->multiplayer_GarbageMultiplier			 = stof(multiplayer_GarbageMultiplierString);
+			newRoom->multiplayer_GarbageLimit				 = stoi(multiplayer_GarbageLimitString);
+			newRoom->multiplayer_GarbageScaleByDifficulty	 = 0 != stoi(multiplayer_GarbageScaleByDifficultyString);
+			newRoom->multiplayer_SendGarbageTo				 = stoi(multiplayer_SendGarbageToString);
+			newRoom->multiplayer_FloorSpinLimit				 = stoi(multiplayer_FloorSpinLimitString);
+			newRoom->multiplayer_LockDelayLimit				 = stoi(multiplayer_LockDelayLimitString);
+			newRoom->multiplayer_LockDelayMinimum			 = stoi(multiplayer_LockDelayMinimumString);
+			newRoom->multiplayer_StackWaitLimit				 = stoi(multiplayer_StackWaitLimitString);
+			newRoom->multiplayer_DropDelayLimit				 = stoi(multiplayer_DropDelayLimitString);
+			newRoom->multiplayer_DropDelayMinimum			 = stoi(multiplayer_DropDelayMinimumString);
+
+
+
+		}
+		catch (exception)
+		{
+			BobsGame::log.error("Could not parse room options");
+			return nullptr;
+		}
+
+
 		if (decodeGameSequenceXML)
 		{
-			if (multiplayer_SelectedGameSequenceString.length() > 0)
+			if (multiplayer_ZippedGameSequenceString.length() > 0)
 			{
-				NetworkGameSequence *gs = NetworkGameSequence::fromBase64GZippedXML(multiplayer_SelectedGameSequenceString);
+				NetworkGameSequence *gs = NetworkGameSequence::fromBase64GZippedXML(multiplayer_ZippedGameSequenceString);
 
 				if (gs == nullptr)
 				{

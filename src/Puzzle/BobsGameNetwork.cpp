@@ -1919,8 +1919,9 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 		if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains)endWhenLose = "Game Ends When One Player Remains";
 		networkMultiplayerRoomRulesMenu->addInfo("End Rule: " + endWhenLose);
 
-		string endOnCredits = "Endless Mode";
-		if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)endOnCredits = "Race To Credits";
+		string endOnCredits = "Free Play To Completion";
+		if (currentRoom->endlessMode)endOnCredits = "Endless Mode";
+		if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)endOnCredits = "End On First Completion";
 		networkMultiplayerRoomRulesMenu->addInfo("Finish Rule: " + endWhenLose);
 
 		networkMultiplayerRoomRulesMenu->addInfo(" ");
