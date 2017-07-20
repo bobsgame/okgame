@@ -1676,7 +1676,10 @@ void BobsGame::selectGameSequenceFilterMenuUpdate()
 	{
 		selectGameSequenceMenu = new BobMenu(this, "");
 		selectGameSequenceMenu->center = false;
+		selectGameSequenceMenu->outline = false;
+
 		populateGameSequencesMenu(selectGameSequenceMenu);
+
 		selectGameSequenceMenu->cursorPosition = selectGameSequenceMenuCursorPosition;
 	}
 
@@ -1732,8 +1735,11 @@ void BobsGame::selectSingleGameTypeFilterMenuUpdate()
 	{
 		selectSingleGameTypeMenu = new BobMenu(this, "");
 		selectSingleGameTypeMenu->center = false;
-		selectSingleGameTypeMenu->setFontSize(12);
+		selectSingleGameTypeMenu->setFontSize(14);
+		selectSingleGameTypeMenu->outline = false;
+
 		populateGameTypesMenu(selectSingleGameTypeMenu);
+
 		selectSingleGameTypeMenu->cursorPosition = selectSingleGameTypeMenuCursorPosition;
 	}
 

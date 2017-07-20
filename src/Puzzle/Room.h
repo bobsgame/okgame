@@ -21,7 +21,7 @@ enum class SendGarbageToRule
 	SEND_GARBAGE_TO_RANDOM_PLAYER,
 	SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION,
 	SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS,
-
+	LAST,//last marker of enum to do loop
 
 };
 

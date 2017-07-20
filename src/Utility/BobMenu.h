@@ -28,8 +28,8 @@ public:
 private:
 	//TTF_Font *font = BobFont::ttf_18;
 
-	int fontSize = 18;
-	int scaledFontSize = 18;
+	int fontSize = 22;
+	int scaledFontSize = 22;
 public:
 
 
