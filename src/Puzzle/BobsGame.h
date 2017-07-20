@@ -334,6 +334,8 @@ public:
 	bool statsMenu_blocksCleared = false;
 
 
+	void leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float increment);
+	void leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int increment);
 
 	void roomOptionsMenuUpdate();
 	//void roomOptionsMenuRender();
@@ -341,7 +343,7 @@ public:
 	bool roomOptionsMenuShowing = false;
 	int roomOptionsMenuCursorPosition = 0;
 
-
+	Caption* descriptionCaption = nullptr;
 
 
 	void gameSetupMenuUpdate();
@@ -350,7 +352,7 @@ public:
 	bool gameSetupMenuShowing = false;
 	int gameSetupMenuCursorPosition = 0;
 	int selectedDifficultyIndex = 0;
-	int selectedObjectiveIndex = 0;
+	//int selectedObjectiveIndex = 0;
 
 	//void selectedGameSequence(string name);
 	//void selectedGameType(string name);
@@ -409,10 +411,16 @@ public:
 	int gameSequenceOptionsMenuCursorPosition = 0;
 
 	void gameObjectiveMenuUpdate();
-	void gameObjectiveMenuRender();
+	//void gameObjectiveMenuRender();
 	BobMenu *gameObjectiveMenu = nullptr;
 	bool gameObjectiveMenuShowing = false;
 	int gameObjectiveMenuCursorPosition = 0;
+
+	void sendGarbageToMenuUpdate();
+	//void sendGarbageToMenuRender();
+	BobMenu *sendGarbageToMenu = nullptr;
+	bool sendGarbageToMenuShowing = false;
+	int sendGarbageToMenuCursorPosition = 0;
 
 	void multiplayerOptionsMenuUpdate();
 	void multiplayerOptionsMenuRender();

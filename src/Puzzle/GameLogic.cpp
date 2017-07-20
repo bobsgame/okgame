@@ -2630,12 +2630,12 @@ void GameLogic::processQueuedGarbageSentFromOtherPlayer()
 				if (isNetworkPlayer)log.warn("Garbage");
 				else log.debug("Garbage");
 
-				if (currentGameType->vsGarbageRule == VSGarbageRule::FALL_FROM_CEILING_IN_EVEN_ROWS)
+				if (currentGameType->vsGarbageRule == VSGarbageDropRule::FALL_FROM_CEILING_IN_EVEN_ROWS)
 				{
 					makeGarbageRowFromCeiling();
 					moveDownBlocksOverBlankSpaces();
 				}
-				if (currentGameType->vsGarbageRule == VSGarbageRule::RISE_FROM_FLOOR_IN_EVEN_ROWS)
+				if (currentGameType->vsGarbageRule == VSGarbageDropRule::RISE_FROM_FLOOR_IN_EVEN_ROWS)
 				{
 					makeGarbageRowFromFloor();
 				}

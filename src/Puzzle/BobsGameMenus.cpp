@@ -2464,12 +2464,12 @@ void BobsGame::statsMenuRender()
 
 
 
-enum class GameObjective
-{
-	PLAY_TO_CREDITS_LEVEL,
-	ENDLESS,
-	LAST,
-};
+//enum class GameObjective
+//{
+//	PLAY_TO_CREDITS_LEVEL,
+//	ENDLESS,
+//	LAST,
+//};
 
 //void BobsGame::saveRoomConfiguration()
 //{
@@ -2485,29 +2485,203 @@ enum class GameObjective
 //}
 
 
+
+//=========================================================================================================================
+void BobsGame::gameObjectiveMenuUpdate()
+{//=========================================================================================================================
+
+	const string PLAY_TO_CREDITS_LEVEL = "Play To Credits Level";
+	const string ENDLESS = "Endless";
+	if (gameObjectiveMenu == nullptr)
+	{
+		gameObjectiveMenu = new BobMenu(this, "");
+		gameObjectiveMenu->add(PLAY_TO_CREDITS_LEVEL);
+		gameObjectiveMenu->add(ENDLESS);
+		gameObjectiveMenu->cursorPosition = gameObjectiveMenuCursorPosition;
+	}
+	if (getControlsManager()->miniGame_UP_Pressed())
+	{
+		gameObjectiveMenu->up();
+	}
+	if (getControlsManager()->miniGame_DOWN_Pressed())
+	{
+		gameObjectiveMenu->down();
+	}
+	bool leaveMenu = false;
+	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+	int mx = getControlsManager()->getMouseX();
+	int my = getControlsManager()->getMouseY();
+	if (confirm || clicked)
+	{
+
+		if (gameObjectiveMenu->isSelectedID(PLAY_TO_CREDITS_LEVEL, clicked, mx, my))
+		{
+			//selectedObjectiveIndex = (int)GameObjective::PLAY_TO_CREDITS_LEVEL;
+			if (currentRoom != nullptr)currentRoom->endlessMode = false;
+		}
+
+		if (gameObjectiveMenu->isSelectedID(ENDLESS, clicked, mx, my))
+		{
+			//selectedObjectiveIndex = (int)GameObjective::ENDLESS;
+			if (currentRoom != nullptr)currentRoom->endlessMode = true;
+		}
+
+		leaveMenu = true;
+	}
+
+	if (leaveMenu)
+	{
+		gameObjectiveMenuShowing = false;
+		if (gameObjectiveMenu != nullptr)
+		{
+			gameObjectiveMenuCursorPosition = gameObjectiveMenu->cursorPosition;
+			delete gameObjectiveMenu;
+			gameObjectiveMenu = nullptr;
+		}
+	}
+}
+//=========================================================================================================================
+void BobsGame::sendGarbageToMenuUpdate()
+{//=========================================================================================================================
+
+	const string SEND_GARBAGE_TO_ALL_PLAYERS="All Other Players";
+	const string SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE="All Other Players 50% Chance";
+	const string SEND_GARBAGE_TO_RANDOM_PLAYER="One Random Player";
+	const string SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION="Rotate Between Other Players";
+	const string SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS="Player With Least Blocks";
+
+	if (sendGarbageToMenu == nullptr)
+	{
+		sendGarbageToMenu = new BobMenu(this, "");
+		sendGarbageToMenu->add(SEND_GARBAGE_TO_ALL_PLAYERS);
+		sendGarbageToMenu->add(SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE);
+		sendGarbageToMenu->add(SEND_GARBAGE_TO_RANDOM_PLAYER);
+		sendGarbageToMenu->add(SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION);
+		sendGarbageToMenu->add(SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS);
+
+		sendGarbageToMenu->cursorPosition = sendGarbageToMenuCursorPosition;
+	}
+	if (getControlsManager()->miniGame_UP_Pressed())
+	{
+		sendGarbageToMenu->up();
+	}
+	if (getControlsManager()->miniGame_DOWN_Pressed())
+	{
+		sendGarbageToMenu->down();
+	}
+	bool leaveMenu = false;
+	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+	int mx = getControlsManager()->getMouseX();
+	int my = getControlsManager()->getMouseY();
+	if (confirm || clicked)
+	{
+		if (sendGarbageToMenu->isSelectedID(SEND_GARBAGE_TO_ALL_PLAYERS, clicked, mx, my))currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
+		if (sendGarbageToMenu->isSelectedID(SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE, clicked, mx, my))currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE;
+		if (sendGarbageToMenu->isSelectedID(SEND_GARBAGE_TO_RANDOM_PLAYER, clicked, mx, my))currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER;
+		if (sendGarbageToMenu->isSelectedID(SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION, clicked, mx, my))currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION;
+		if (sendGarbageToMenu->isSelectedID(SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS, clicked, mx, my))currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS;
+		
+		leaveMenu = true;
+	}
+
+	if (leaveMenu)
+	{
+		sendGarbageToMenuShowing = false;
+		if (sendGarbageToMenu != nullptr)
+		{
+			sendGarbageToMenuCursorPosition = sendGarbageToMenu->cursorPosition;
+			delete sendGarbageToMenu;
+			sendGarbageToMenu = nullptr;
+		}
+	}
+}
+
+//=========================================================================================================================
+void BobsGame::leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float increment)
+{//=========================================================================================================================
+	long long startTime = timeLastChangedSetting;
+	long long currentTime = System::currentHighResTimer();
+	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+	if (ticksPassed > 15)
+	{
+		timeLastChangedSetting = currentTime;
+
+		if (left)
+		{
+			if (variable > min)variable -= increment;
+			if (variable < min)variable = min;
+		}
+
+		if (right)
+		{
+			if (variable < max)variable += increment;
+			if (variable > max)variable = max;
+		}
+	}
+}
+//=========================================================================================================================
+void BobsGame::leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int increment)
+{//=========================================================================================================================
+	long long startTime = timeLastChangedSetting;
+	long long currentTime = System::currentHighResTimer();
+	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+	if (ticksPassed > 15)
+	{
+		timeLastChangedSetting = currentTime;
+
+		if (left)
+		{
+			if (variable > min)variable -= increment;
+			if (variable < min)variable = min;
+		}
+
+		if (right)
+		{
+			if (variable < max)variable += increment;
+			if (variable > max)variable = max;
+		}
+	}
+}
+
+
 //=========================================================================================================================
 void BobsGame::roomOptionsMenuUpdate()
 {//=========================================================================================================================
 
 	if (roomOptionsMenu == nullptr)
 	{
+
+		descriptionCaption = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 16, true, BobColor::white, BobColor::clear);
 		roomOptionsMenu = new BobMenu(this, "");
 
-		roomOptionsMenu->add("Objective: Play To Credits Level", "Objective");
+		roomOptionsMenu->add("Objective: ", "Objective");
 		roomOptionsMenu->add("Game Speed Start: ", "Game Speed Start");
 		roomOptionsMenu->add("Game Speed Increase Rate: ", "Game Speed Increase Rate");
 		roomOptionsMenu->add("Game Speed Maximum: ", "Game Speed Maximum");
 		roomOptionsMenu->add("Score Needed To Level Up Multiplier: ", "Levelup Multiplier");
 		roomOptionsMenu->add("Score Needed To Level Up Compound Multiplier: ", "Levelup Compound Multiplier");
+		roomOptionsMenu->add("Floor Spin Limit: ", "Floor Spin Limit");
+		roomOptionsMenu->add("Total Lock Delay Limit: ", "Total Lock Delay Limit");
+		roomOptionsMenu->add("Lock Delay Decrease Rate: ", "Lock Delay Decrease Rate");
+		roomOptionsMenu->add("Lock Delay Minimum: ", "Lock Delay Minimum");
+		roomOptionsMenu->add("Stack Wait Limit: ", "Stack Wait Limit");
+		roomOptionsMenu->add("Spawn Delay Limit: ", "Spawn Delay Limit");
+		roomOptionsMenu->add("Spawn Delay Decrease Rate: ", "Spawn Delay Decrease Rate");
+		roomOptionsMenu->add("Spawn Delay Minimum: ", "Spawn Delay Minimum");
+		roomOptionsMenu->add("Drop Delay Minimum: ", "Drop Delay Minimum");
 
-		if(localMultiplayer || networkMultiplayer)
+		if (localMultiplayer || networkMultiplayer)
 		{
 			roomOptionsMenu->addInfo(" ");
 			roomOptionsMenu->addInfo("Multiplayer Options:");
 
 
-			roomOptionsMenu->add("Allow New Players To Join During Game: ", "Allow Join");
-			roomOptionsMenu->add("Use Teams: ", "Use Teams");
+			//roomOptionsMenu->add("Allow New Players To Join During Game: ", "Allow Join");
+			//roomOptionsMenu->add("Use Teams: ", "Use Teams");
 			roomOptionsMenu->add("End Rule: Game Ends When One Player Remains", "End Rule");
 			roomOptionsMenu->add("Finish Rule: End On First Completion", "Finish Rule");
 			roomOptionsMenu->addInfo(" ");
@@ -2516,351 +2690,416 @@ void BobsGame::roomOptionsMenuUpdate()
 			roomOptionsMenu->add("Garbage Limit: ", "Garbage Limit");
 			roomOptionsMenu->add("Scale Garbage By Difficulty: ", "Garbage Scale");
 			roomOptionsMenu->add("Send Garbage To: ", "Garbage Scale");
-			roomOptionsMenu->addInfo(" ");
-			roomOptionsMenu->add("Floor Spin Limit: ", "Floor Spin Limit");
-			roomOptionsMenu->add("Lock Delay Limit: ", "Lock Delay Limit");
-			roomOptionsMenu->add("Lock Delay Minimum: ", "Lock Delay Minimum");
-			roomOptionsMenu->add("Stack Wait Limit: ", "Stack Wait Limit");
-			roomOptionsMenu->add("Drop Delay Limit: ", "Drop Delay Limit");
-			roomOptionsMenu->add("Drop Delay Minimum: ", "Drop Delay Minimum");
-			
 
 
 
-//				infinite spin in room settings
-//				infinite spin on / off / max time
-//				lock delay limit, floor kick limit, 128 turns, step delay
-//
-//				allow teams(your team sends garbage to other team only), team victory, colored border, maybe caption
-//				add select team to player setup minimenu
+
+
+			//				infinite spin in room settings
+			//				infinite spin on / off / max time
+			//				lock delay limit, floor kick limit, 128 turns, step delay
+			//
+			//				allow teams(your team sends garbage to other team only), team victory, colored border, maybe caption
+			//				add select team to player setup minimenu
 
 		}
 
 		roomOptionsMenu->addInfo(" ");
-		roomOptionsMenu->add("Apply Options", "Apply");
-		
+		roomOptionsMenu->add("Set Defaults", "Defaults");
+		roomOptionsMenu->addInfo(" ");
+		roomOptionsMenu->add("Apply Options And Close", "Apply");
+
 		roomOptionsMenu->cursorPosition = roomOptionsMenuCursorPosition;
 	}
 
 
 	{
 		string objectiveString = "";
-		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+
+		if (currentRoom->endlessMode)
+		{
+			objectiveString = "Play As Long As You Can (Endless Mode)";
+			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = true;
+		}
+		else
 		{
 			objectiveString = "Play To Credits Level";
 			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = false;
 		}
-		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-		{
-			objectiveString = "Endless";
-			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = true;
-		}
-		Caption *c = roomOptionsMenu->getCaptionByID("Objective");
-		if (c != nullptr)c->setText("Objective: " + objectiveString);
+		roomOptionsMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
 	}
 
 
-	roomOptionsMenu->getMenuItemByID("Game Speed Start")->setText("Game Speed Start: "+to_string(currentRoom->gameSpeedStart));
-	roomOptionsMenu->getMenuItemByID("Game Speed Increase Rate")->setText("Game Speed Increase Rate: "+to_string(currentRoom->gameSpeedIncreaseRate));
-	roomOptionsMenu->getMenuItemByID("Game Speed Maximum")->setText("Game Speed Maximum: " + to_string(currentRoom->gameSpeedMaximum));
-	roomOptionsMenu->getMenuItemByID("Levelup Multiplier")->setText("Score Needed To Level Up Multiplier: " + to_string(currentRoom->levelUpMultiplier));
-	roomOptionsMenu->getMenuItemByID("Levelup Compound Multiplier")->setText("Score Needed To Level Up Compound Multiplier: " + to_string(currentRoom->levelUpCompoundMultiplier));
+	roomOptionsMenu->getMenuItemByID("Game Speed Start")->setText("Game Speed Start: " + to_string(currentRoom->gameSpeedStart * 100) + "%");
+	roomOptionsMenu->getMenuItemByID("Game Speed Change Rate")->setText("Game Speed Change Rate: " + to_string(currentRoom->gameSpeedChangeRate * 100) + "%");
+	roomOptionsMenu->getMenuItemByID("Game Speed Maximum")->setText("Game Speed Maximum: " + to_string(currentRoom->gameSpeedMaximum * 100) + "%");
+	roomOptionsMenu->getMenuItemByID("Levelup Multiplier")->setText("Score Needed To Level Up Multiplier: " + to_string(currentRoom->levelUpMultiplier * 100) + "%");
+	roomOptionsMenu->getMenuItemByID("Levelup Compound Multiplier")->setText("Score To Level Up Compound Multiplier: " + to_string(currentRoom->levelUpCompoundMultiplier * 100) + "%");
 
 
-	roomOptionsMenu->getMenuItemByID("Allow Join")->setText("Allow New Players To Join During Game: " + currentRoom->multiplayer_AllowNewPlayersDuringGame?"On":"Off");
-	roomOptionsMenu->getMenuItemByID("Use Teams")->setText("Use Teams: " + currentRoom->multiplayer_UseTeams?"On":"Off");
+	roomOptionsMenu->getMenuItemByID("Allow Join")->setText("Allow New Players To Join During Game: " + currentRoom->multiplayer_AllowNewPlayersDuringGame ? "On" : "Off");
+	roomOptionsMenu->getMenuItemByID("Use Teams")->setText("Use Teams: " + currentRoom->multiplayer_UseTeams ? "On" : "Off");
 
 	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains)
-		 roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Game Ends When One Player Remains");
+		roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Game Ends When One Player Remains");
 	else roomOptionsMenu->getMenuItemByID("End Rule")->setText("End Rule: Continue Until All Players Lose");
 
 	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)
-		 roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: End On First Completion");
-	else roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
-	if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Free Play To Completion");
+		roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: End On First Completion");
+	else roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Free Play To Completion");
+	if (currentRoom->endlessMode)roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
 
-	roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: "+ currentRoom->multiplayer_DisableVSGarbage?"Off":"On");
-
-
-	roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: "+to_string(currentRoom->multiplayer_GarbageMultiplier));
-
-	
-	if(currentRoom->multiplayer_GarbageLimit==0)
-		 roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: None");
-	else roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + to_string(currentRoom->multiplayer_GarbageLimit));
-
-	roomOptionsMenu->getMenuItemByID("Garbage Scale")->setText("Scale Garbage By Difficulty: "+ currentRoom->multiplayer_GarbageScaleByDifficulty?"On":"Off");
+	roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: " + currentRoom->multiplayer_DisableVSGarbage ? "Off" : "On");
 
 
-	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players");
-	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players 50% Chance");
-	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: One Random Player");
-	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Rotate Between Other Players");
-	if (currentRoom->multiplayer_SendGarbageTo==(int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Player With Least Blocks");
+	roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: " + to_string(currentRoom->multiplayer_GarbageMultiplier * 100) + "%");
+
+	roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + (currentRoom->multiplayer_GarbageLimit > 0) ? to_string(currentRoom->multiplayer_GarbageLimit) : "None");
+
+	roomOptionsMenu->getMenuItemByID("Garbage Scale")->setText("Scale Garbage By Difficulty: " + currentRoom->multiplayer_GarbageScaleByDifficulty ? "On" : "Off");
+
+
+	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players");
+	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players 50% Chance");
+	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: One Random Player");
+	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Rotate Between Other Players");
+	if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Player With Least Blocks");
 
 
 
 
-	if (currentRoom->multiplayer_FloorSpinLimit == 0)
-		 roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: None");
-	else roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: " + to_string(currentRoom->multiplayer_FloorSpinLimit));
+	roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: " + (currentRoom->multiplayer_FloorSpinLimit > 0) ? to_string(currentRoom->multiplayer_FloorSpinLimit) : "None");
 
-	if (currentRoom->multiplayer_LockDelayLimit == 0)
-		 roomOptionsMenu->getMenuItemByID("Lock Delay Limit")->setText("Lock Delay Limit: None");
-	else roomOptionsMenu->getMenuItemByID("Lock Delay Limit")->setText("Lock Delay Limit: " + to_string(currentRoom->multiplayer_LockDelayLimit));
+	roomOptionsMenu->getMenuItemByID("Total Lock Delay Limit")->setText("Total Lock Delay Limit: " + (currentRoom->multiplayer_TotalYLockDelayLimit > 0) ? to_string(currentRoom->multiplayer_TotalYLockDelayLimit) + "ms" : "None");
 
-	if (currentRoom->multiplayer_LockDelayMinimum == 0)
-		 roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: None");
-	else roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + to_string(currentRoom->multiplayer_LockDelayMinimum));
+	roomOptionsMenu->getMenuItemByID("Lock Delay Decrease Rate")->setText("Lock Delay Decrease Rate: " + (currentRoom->multiplayer_LockDelayDecreaseRate > 0) ? to_string(currentRoom->multiplayer_LockDelayDecreaseRate * 100) + "%" : "None");
+	roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + (currentRoom->multiplayer_LockDelayMinimum > 0) ? to_string(currentRoom->multiplayer_LockDelayMinimum) + "ms" : "None");
 
-	if (currentRoom->multiplayer_StackWaitLimit == 0)
-		 roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: None");
-	else roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + to_string(currentRoom->multiplayer_StackWaitLimit));
+	roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + (currentRoom->multiplayer_StackWaitLimit > 0) ? to_string(currentRoom->multiplayer_StackWaitLimit) + "ms" : "None");
 
-	if (currentRoom->multiplayer_DropDelayLimit == 0)
-		 roomOptionsMenu->getMenuItemByID("Drop Delay Limit")->setText("Drop Delay Limit: None");
-	else roomOptionsMenu->getMenuItemByID("Drop Delay Limit")->setText("Drop Delay Limit: " + to_string(currentRoom->multiplayer_DropDelayLimit));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Limit")->setText("Spawn Delay Limit: " + (currentRoom->multiplayer_SpawnDelayLimit > 0) ? to_string(currentRoom->multiplayer_SpawnDelayLimit) + "ms" : "None");
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Decrease Rate")->setText("Spawn Delay Decrease Rate: " + (currentRoom->multiplayer_SpawnDelayDecreaseRate > 0) ? to_string(currentRoom->multiplayer_SpawnDelayDecreaseRate * 100) + "%" : "None");
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Minimum")->setText("Spawn Delay Minimum: " + +(currentRoom->multiplayer_SpawnDelayMinimum > 0) ? to_string(currentRoom->multiplayer_SpawnDelayMinimum) + "ms" : "None");
 
-	if (currentRoom->multiplayer_DropDelayMinimum == 0)
-		 roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: None");
-	else roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + to_string(currentRoom->multiplayer_DropDelayMinimum));
+	roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + (currentRoom->multiplayer_DropDelayMinimum > 0) ? to_string(currentRoom->multiplayer_DropDelayMinimum) + "ms" : "None");
 
 
 
 
-
-
-
-	if (getControlsManager()->miniGame_UP_Pressed())
+	if (sendGarbageToMenuShowing)
 	{
-		roomOptionsMenu->up();
+		sendGarbageToMenuUpdate();
 	}
-
-	if (getControlsManager()->miniGame_DOWN_Pressed())
+	else
+	if (gameObjectiveMenuShowing)
 	{
-		roomOptionsMenu->down();
+		gameObjectiveMenuUpdate();
 	}
-
-
-	bool left = getControlsManager()->miniGame_LEFT_Pressed();
-	bool right = getControlsManager()->miniGame_RIGHT_Pressed();
-
-	if (left || right)
+	else
 	{
 
-
-		if (roomOptionsMenu->isSelectedID("Objective"))
+		if (getControlsManager()->miniGame_UP_Pressed())
 		{
-			if (left)
+			roomOptionsMenu->up();
+		}
+
+		if (getControlsManager()->miniGame_DOWN_Pressed())
+		{
+			roomOptionsMenu->down();
+		}
+
+
+		bool left = getControlsManager()->miniGame_LEFT_Pressed();
+		bool right = getControlsManager()->miniGame_RIGHT_Pressed();
+
+		if (left || right)
+		{
+
+
+//			if (roomOptionsMenu->isSelectedID("Objective"))
+//			{
+//				descriptionCaption->setText("");
+//				if (left)
+//				{
+//					selectedObjectiveIndex--;
+//					if (selectedObjectiveIndex < 0)selectedObjectiveIndex = (int)GameObjective::LAST - 1;
+//				}
+//				if (right)
+//				{
+//					selectedObjectiveIndex++;
+//					if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
+//				}
+//
+//				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+//				{
+//					if (currentRoom != nullptr)currentRoom->endlessMode = false;
+//				}
+//				if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+//				{
+//					if (currentRoom != nullptr)currentRoom->endlessMode = true;
+//				}
+//
+//			}
+
+			if (roomOptionsMenu->isSelectedID("Game Speed Start"))
 			{
-				selectedObjectiveIndex--;
-				if (selectedObjectiveIndex < 0)selectedObjectiveIndex = (int)GameObjective::LAST - 1;
+				descriptionCaption->setText("Percent speed at which the game begins. Default is 1% of max.");
+				leftRightMenuAdjustFloat(left, right, currentRoom->gameSpeedStart, 0.01f, 10.0f, 0.01f);
 			}
-			if (right)
+
+			if (roomOptionsMenu->isSelectedID("Game Speed Change Rate"))
 			{
-				selectedObjectiveIndex++;
-				if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
+				descriptionCaption->setText("Percent speed the game changes each level. Default is 2%. Can be negative.");
+				leftRightMenuAdjustFloat(left, right, currentRoom->gameSpeedChangeRate, -1.0f, 1.0f, 0.01f);
 			}
 
-			if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+			if (roomOptionsMenu->isSelectedID("Game Speed Maximum"))
 			{
-				if (currentRoom != nullptr)currentRoom->endlessMode = false;
+				descriptionCaption->setText("Multiplier applied to the maximum game speed defined in the selected difficulty. Default is 100%.");
+				leftRightMenuAdjustFloat(left, right, currentRoom->gameSpeedMaximum, 0.01f, 2.0f, 0.01f);
 			}
-			if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+
+			if (roomOptionsMenu->isSelectedID("Levelup Multiplier"))
 			{
-				if (currentRoom != nullptr)currentRoom->endlessMode = true;
+				descriptionCaption->setText("Multiplier applied globally to score needed (pieces cleared, lines made, etc) to level up. Default is 100%.");
+				leftRightMenuAdjustFloat(left, right, currentRoom->levelUpMultiplier, 0.01f, 10.0f, 0.01f);
 			}
 
-			string objectiveString = "";
-			if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+			if (roomOptionsMenu->isSelectedID("Levelup Compound Multiplier"))
 			{
-				objectiveString = "Play To Credits Level";
+				descriptionCaption->setText("Multiplier applied every level to score needed to level up, making each level longer/shorter than the last. Default is 0%. Can be negative");
+				leftRightMenuAdjustFloat(left, right, currentRoom->levelUpCompoundMultiplier, -1.0f, 1.0f, 0.01f);
 			}
-			if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+
+			if (roomOptionsMenu->isSelectedID("Garbage Multiplier"))
 			{
-				objectiveString = "Endless";
+				descriptionCaption->setText("Multiplier for sent garbage. Default is 100%.");
+				leftRightMenuAdjustFloat(left, right, currentRoom->multiplayer_GarbageMultiplier, 0.01f, 2.0f, 0.01f);
 			}
-			Caption *c = roomOptionsMenu->getCaptionByID("Objective");
-			if (c != nullptr)c->setText("Objective: " + objectiveString);
 
+			if (roomOptionsMenu->isSelectedID("Garbage Limit"))
+			{
+				descriptionCaption->setText("Hard limit on garbage queued. Default is no limit.");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_GarbageLimit, 0, 50, 1);
+			}
+
+			if (roomOptionsMenu->isSelectedID("Floor Spin Limit"))
+			{
+				descriptionCaption->setText("How many times a piece can be spun in place or moved on the same Y position before locking. Default is no limit (infinite spin).");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_FloorSpinLimit, 0, 128, 1);
+			}
+
+
+			if (roomOptionsMenu->isSelectedID("Total Lock Delay Limit"))
+			{
+				descriptionCaption->setText("Maximum total milliseconds a piece can stay in the same Y position before locking. Default is no limit.");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_TotalYLockDelayLimit, 0, 10000, 100);
+			}
+
+			if (roomOptionsMenu->isSelectedID("Lock Delay Decrease Rate"))
+			{
+				descriptionCaption->setText("Percent the lock delay will decrease each level. Default is 0 (Lock delay does not decrease).");
+				leftRightMenuAdjustFloat(left, right, currentRoom->multiplayer_LockDelayDecreaseRate, 0.0f, 1.0f, 0.01f);
+			}
+
+			if (roomOptionsMenu->isSelectedID("Lock Delay Minimum"))
+			{
+				descriptionCaption->setText("Minimum milliseconds before a piece locks. Resets every movement or rotation. Set to zero to always lock instantly. Default is 500.");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_LockDelayMinimum, 0, 10000, 100);
+			}
+
+
+			if (roomOptionsMenu->isSelectedID("Stack Wait Limit"))
+			{
+				descriptionCaption->setText("Maximum milliseconds that the stack can be waiting to scroll after a combo. Default is 10000.");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_StackWaitLimit, 0, 10000, 100);
+			}
+
+
+			if (roomOptionsMenu->isSelectedID("Spawn Delay Limit"))
+			{
+				descriptionCaption->setText("Maximum milliseconds that a piece will wait at the top before moving down. Default is 10000.");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_SpawnDelayLimit, 0, 10000, 100);
+			}
+
+			if (roomOptionsMenu->isSelectedID("Spawn Delay Decrease Rate"))
+			{
+				descriptionCaption->setText("Percent the initial spawn delay will decrease each level. Making combos can increase it up to the limit. Default is 0 (Spawn delay does not decrease).");
+				leftRightMenuAdjustFloat(left, right, currentRoom->multiplayer_SpawnDelayDecreaseRate, 0.0f, 1.0f, 0.01f);
+			}
+
+			if (roomOptionsMenu->isSelectedID("Spawn Delay Minimum"))
+			{
+				descriptionCaption->setText("Minimum milliseconds for a spawned piece to move down. Does nothing if spawn rate does not decrease. Default is 500.");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_SpawnDelayMinimum, 0, 10000, 100);
+			}
+
+
+			if (roomOptionsMenu->isSelectedID("Drop Delay Minimum"))
+			{
+				descriptionCaption->setText("Minimum milliseconds for a piece to move down a row. Overrides minimum set in difficulty. Default is 500.");
+				leftRightMenuAdjustInt(left, right, currentRoom->multiplayer_DropDelayMinimum, 0, 10000, 100);
+			}
+
+
+			if (roomOptionsMenu->isSelectedID("End Rule"))
+			{
+				descriptionCaption->setText("");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Finish Rule"))
+			{
+				descriptionCaption->setText("");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Garbage Rule"))
+			{
+				descriptionCaption->setText("");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Allow Join"))
+			{
+				descriptionCaption->setText("Allow new players to join while the match is going, for more casual ongoing games.");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Use Teams"))
+			{
+				descriptionCaption->setText("Players can select a team color, and their garbage will only be sent to the other teams. The winning player's team wins.");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Garbage Scale"))
+			{
+				descriptionCaption->setText("This will scale the amount of garbage sent based on the difference in difficulty. Insane will send 0.25x to Beginner, but receive 4x.");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Send Garbage To"))
+			{
+				descriptionCaption->setText("");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Defaults"))
+			{
+				descriptionCaption->setText("Set all options to default.");
+			}
+
+			if (roomOptionsMenu->isSelectedID("Apply"))
+			{
+				descriptionCaption->setText("Apply settings and return to game setup screen.");
+			}
 		}
 
+		bool leaveMenu = false;
 
-
-		if (roomOptionsMenu->isSelectedID("Game Speed Start"))
+		bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+		bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+		int mx = getControlsManager()->getMouseX();
+		int my = getControlsManager()->getMouseY();
+		if (confirm || clicked || left || right)
 		{
 
 
+
+//			if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+//			{
+//				if (currentRoom != nullptr)currentRoom->endlessMode = false;
+//			}
+//			if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+//			{
+//				if (currentRoom != nullptr)currentRoom->endlessMode = true;
+//			}
+
+
+			if (roomOptionsMenu->isSelectedID("Objective", clicked, mx, my))
+			{
+				gameObjectiveMenuShowing = true;
+			}
+
+			if (roomOptionsMenu->isSelectedID("End Rule", clicked, mx, my))
+			{
+				currentRoom->multiplayer_GameEndsWhenOnePlayerRemains = !currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
+			}
+
+			if (roomOptionsMenu->isSelectedID("Finish Rule", clicked, mx, my))
+			{
+				currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = !currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
+			}
+
+			if (roomOptionsMenu->isSelectedID("Garbage Rule", clicked, mx, my))
+			{
+				currentRoom->multiplayer_DisableVSGarbage = !currentRoom->multiplayer_DisableVSGarbage;
+			}
+
+			if (roomOptionsMenu->isSelectedID("Allow Join", clicked, mx, my))
+			{
+				currentRoom->multiplayer_AllowNewPlayersDuringGame = !currentRoom->multiplayer_AllowNewPlayersDuringGame;
+			}
+
+			if (roomOptionsMenu->isSelectedID("Use Teams", clicked, mx, my))
+			{
+				currentRoom->multiplayer_UseTeams = !currentRoom->multiplayer_UseTeams;
+			}
+
+			if (roomOptionsMenu->isSelectedID("Garbage Scale", clicked, mx, my))
+			{
+				currentRoom->multiplayer_GarbageScaleByDifficulty = !currentRoom->multiplayer_GarbageScaleByDifficulty;
+			}
+
+			if (roomOptionsMenu->isSelectedID("Send Garbage To", clicked, mx, my))
+			{
+				sendGarbageToMenuShowing = true;
+			}
 		}
 
-		if (roomOptionsMenu->isSelectedID("Game Speed Increase Rate"))
+		if (confirm || clicked)
 		{
+			if (roomOptionsMenu->isSelectedID("Defaults", clicked, mx, my))
+			{
+				Room r;
+				currentRoom->endlessMode = r.endlessMode;
+				currentRoom->multiplayer_GameEndsWhenOnePlayerRemains = r.multiplayer_GameEndsWhenOnePlayerRemains;
+				currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = r.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
+				currentRoom->multiplayer_DisableVSGarbage = r.multiplayer_DisableVSGarbage;
+				currentRoom->gameSpeedStart = r.gameSpeedStart;
+				currentRoom->gameSpeedChangeRate = r.gameSpeedChangeRate;
+				currentRoom->gameSpeedMaximum = r.gameSpeedMaximum;
+				currentRoom->levelUpMultiplier = r.levelUpMultiplier;
+				currentRoom->levelUpCompoundMultiplier = r.levelUpCompoundMultiplier;
+				currentRoom->multiplayer_AllowNewPlayersDuringGame = r.multiplayer_AllowNewPlayersDuringGame;
+				currentRoom->multiplayer_UseTeams = r.multiplayer_UseTeams;
+				currentRoom->multiplayer_GarbageMultiplier = r.multiplayer_GarbageMultiplier;
+				currentRoom->multiplayer_GarbageLimit = r.multiplayer_GarbageLimit;
+				currentRoom->multiplayer_GarbageScaleByDifficulty = r.multiplayer_GarbageScaleByDifficulty;
+				currentRoom->multiplayer_SendGarbageTo = r.multiplayer_SendGarbageTo;
+				currentRoom->multiplayer_FloorSpinLimit = r.multiplayer_FloorSpinLimit;
+				currentRoom->multiplayer_TotalYLockDelayLimit = r.multiplayer_TotalYLockDelayLimit;
+				currentRoom->multiplayer_LockDelayDecreaseRate = r.multiplayer_LockDelayDecreaseRate;
+				currentRoom->multiplayer_LockDelayMinimum = r.multiplayer_LockDelayMinimum;
+				currentRoom->multiplayer_StackWaitLimit = r.multiplayer_StackWaitLimit;
+				currentRoom->multiplayer_SpawnDelayLimit = r.multiplayer_SpawnDelayLimit;
+				currentRoom->multiplayer_SpawnDelayDecreaseRate = r.multiplayer_SpawnDelayDecreaseRate;
+				currentRoom->multiplayer_SpawnDelayMinimum = r.multiplayer_SpawnDelayMinimum;
+				currentRoom->multiplayer_DropDelayMinimum = r.multiplayer_DropDelayMinimum;
 
+			}
 
+			if (roomOptionsMenu->isSelectedID("Apply", clicked, mx, my))
+			{
+				leaveMenu = true;
+			}
 		}
 
-
-		if (roomOptionsMenu->isSelectedID("Game Speed Maximum"))
+		if (leaveMenu)
 		{
+			roomOptionsMenuShowing = false;
 
-
+			if (roomOptionsMenu != nullptr)
+			{
+				roomOptionsMenuCursorPosition = roomOptionsMenu->cursorPosition;
+				delete roomOptionsMenu;
+				roomOptionsMenu = nullptr;
+			}
 		}
-
-
-		if (roomOptionsMenu->isSelectedID("Levelup Multiplier"))
-		{
-
-
 		}
-
-
-		if (roomOptionsMenu->isSelectedID("Levelup Compound Multiplier"))
-		{
-
-
-		}
-
-
-		if(roomOptionsMenu->isSelectedID("Garbage Multiplier"))
-		{
-
-		}		
-		
-		if(roomOptionsMenu->isSelectedID("Garbage Limit"))
-		{
-
-		}		
-		
-		if(roomOptionsMenu->isSelectedID("Garbage Scale"))
-		{
-
-		}	
-		
-
-		if(roomOptionsMenu->isSelectedID("Floor Spin Limit"))
-		{
-
-		}	
-		
-
-		if(roomOptionsMenu->isSelectedID("Lock Delay Limit"))
-		{
-
-		}	
-			
-
-		if(roomOptionsMenu->isSelectedID("Lock Delay Minimum"))
-		{
-
-		}	
-		
-
-		if(roomOptionsMenu->isSelectedID("Stack Wait Limit"))
-		{
-
-		}	
-
-		if(roomOptionsMenu->isSelectedID("Drop Delay Limit"))
-		{
-
-		}	
-		
-
-		if(roomOptionsMenu->isSelectedID("Drop Delay Minimum"))
-		{
-
-		}	
-
-
-
-
-	}
-
-	bool leaveMenu = false;
-
-	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
-	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
-	int mx = getControlsManager()->getMouseX();
-	int my = getControlsManager()->getMouseY();
-	if (confirm || clicked || left || right)
-	{
-
-
-
-		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
-		{
-			if (currentRoom != nullptr)currentRoom->endlessMode = false;
-		}
-		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-		{
-			if (currentRoom != nullptr)currentRoom->endlessMode = true;
-		}
-
-
-		if (roomOptionsMenu->isSelectedID("Objective", clicked, mx, my))
-		{
-			gameObjectiveMenuShowing = true;
-		}
-
-		if (roomOptionsMenu->isSelectedID("End Rule", clicked, mx, my))
-		{
-			currentRoom->multiplayer_GameEndsWhenOnePlayerRemains = !currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
-		}
-
-		if (roomOptionsMenu->isSelectedID("Finish Rule", clicked, mx, my))
-		{
-			currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = !currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
-		}
-
-		if (roomOptionsMenu->isSelectedID("Garbage Rule", clicked, mx, my))
-		{
-			currentRoom->multiplayer_DisableVSGarbage = !currentRoom->multiplayer_DisableVSGarbage;
-		}
-
-
-
-		if(roomOptionsMenu->isSelectedID("Allow Join", clicked, mx, my))
-		{
-
-		}
-
-		if(roomOptionsMenu->isSelectedID("Use Teams", clicked, mx, my))
-		{
-
-		}
-
-	
-		
-		if(roomOptionsMenu->isSelectedID("Send Garbage To", clicked, mx, my))
-		{
-
-		}
-
-
-
-	}
-
-
-
-	if (confirm || clicked)
-	{
-		if (roomOptionsMenu->isSelectedID("Apply", clicked, mx, my))
-		{
-			leaveMenu = true;
-		}
-	}
-
-	if (leaveMenu)
-	{
-		roomOptionsMenuShowing = false;
-
-		if (roomOptionsMenu != nullptr)
-		{
-			roomOptionsMenuCursorPosition = roomOptionsMenu->cursorPosition;
-			delete roomOptionsMenu;
-			roomOptionsMenu = nullptr;
-		}
-	}
 
 }
 
@@ -2889,19 +3128,27 @@ void BobsGame::gameSetupMenuUpdate()
 
 	}
 
-	{
-		string objectiveString = "";
-		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
-		{
-			objectiveString = "Play To Credits Level";
-		}
-		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-		{
-			objectiveString = "Endless";
-		}
-		Caption *c = gameSetupMenu->getCaptionByID("Objective");
-		if (c != nullptr)c->setText("Objective: " + objectiveString);
-	}
+//	{
+//		string objectiveString = "";
+//		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+//		{
+//			objectiveString = "Play To Credits Level";
+//		}
+//		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+//		{
+//			objectiveString = "Endless";
+//		}
+//		gameSetupMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
+//
+//		if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+//		{
+//			if (currentRoom != nullptr)currentRoom->endlessMode = false;
+//		}
+//		if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+//		{
+//			if (currentRoom != nullptr)currentRoom->endlessMode = true;
+//		}
+//	}
 
 
 	{
@@ -3012,11 +3259,6 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSequenceOptionsMenuUpdate();
 	}
 	else
-	if (gameObjectiveMenuShowing)
-	{
-		gameObjectiveMenuUpdate();
-	}
-	else
 	if (difficultyMenuShowing)
 	{
 		difficultyMenuUpdate();
@@ -3101,16 +3343,6 @@ void BobsGame::gameSetupMenuUpdate()
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
-
-				if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
-				{
-					if (currentRoom != nullptr)currentRoom->endlessMode = false;
-				}
-				if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-				{
-					if (currentRoom != nullptr)currentRoom->endlessMode = true;
-				}
-
 				//if game type selected, else gray out
 				leaveMenu = true;
 			}
@@ -3193,16 +3425,24 @@ void BobsGame::gameSetupMenuRender()
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
 	}
 
-	if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
-	{
-		Caption *c = gameSetupMenu->getCaptionByID("Objective");
-		gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
-	}
+
 
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
 	{
 		Caption *c = gameSetupMenu->getCaptionByID("Options");
 		roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+
+		if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
+		{
+			c = roomOptionsMenu->getCaptionByID("Objective");
+			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		}
+
+		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
+		{
+			c = roomOptionsMenu->getCaptionByID("Send Garbage To");
+			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		}
 	}
 }
 
@@ -4203,109 +4443,6 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 
 
 
-//=========================================================================================================================
-void BobsGame::gameObjectiveMenuUpdate()
-{//=========================================================================================================================
-
-	const string PLAY_TO_CREDITS_LEVEL = "Play To Credits Level";
-	const string ENDLESS = "Endless";
-
-	if (gameObjectiveMenu == nullptr)
-	{
-		gameObjectiveMenu = new BobMenu(this, "");
-
-		gameObjectiveMenu->add(PLAY_TO_CREDITS_LEVEL);
-		gameObjectiveMenu->add(ENDLESS);
-		
-
-		gameObjectiveMenu->cursorPosition = gameObjectiveMenuCursorPosition;
-	}
-
-
-	if (getControlsManager()->miniGame_UP_Pressed())
-	{
-		gameObjectiveMenu->up();
-	}
-
-	if (getControlsManager()->miniGame_DOWN_Pressed())
-	{
-		gameObjectiveMenu->down();
-	}
-
-	bool leaveMenu = false;
-
-	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
-	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
-	int mx = getControlsManager()->getMouseX();
-	int my = getControlsManager()->getMouseY();
-	if (confirm || clicked)
-	{
-
-		if (gameObjectiveMenu->isSelectedID(PLAY_TO_CREDITS_LEVEL, clicked, mx, my))
-		{
-			selectedObjectiveIndex = (int)GameObjective::PLAY_TO_CREDITS_LEVEL;
-			if(currentRoom!=nullptr)currentRoom->endlessMode = false;
-
-		}
-
-		if (gameObjectiveMenu->isSelectedID(ENDLESS, clicked, mx, my))
-		{
-			selectedObjectiveIndex = (int)GameObjective::ENDLESS;
-			if (currentRoom != nullptr)currentRoom->endlessMode = true;
-
-		}
-
-//		if (localMultiplayer || networkMultiplayer)
-//		{
-//			if (multiplayer_AllowDifferentDifficulties == false)
-//			{
-//				difficultyMenuShowing = true;
-//			}
-//			else
-//				if (localMultiplayer)
-//				{
-//					localMultiplayerPlayerJoinMenuShowing = true;
-//				}
-//				else
-//					if (networkMultiplayer)
-//					{
-//						networkMultiplayerPlayerJoinMenuShowing = true;
-//					}
-//		}
-//		else
-//		{
-//			difficultyMenuShowing = true;
-//		}
-
-		leaveMenu = true;
-	}
-
-//	if (getControlsManager()->miniGame_CANCEL_Pressed())
-//	{
-//		if(localMultiplayer || networkMultiplayer)
-//		{
-//			multiplayerOptionsMenuShowing = true;
-//		}
-//		else
-//		{
-//			selectGameSequenceOrSingleGameTypeMenuShowing = true;
-//		}
-//		leaveMenu = true;
-//	}
-
-	if (leaveMenu)
-	{
-		gameObjectiveMenuShowing = false;
-
-		if (gameObjectiveMenu != nullptr)
-		{
-			gameObjectiveMenuCursorPosition = gameObjectiveMenu->cursorPosition;
-			delete gameObjectiveMenu;
-			gameObjectiveMenu = nullptr;
-		}
-	}
-
-}
 
 
 

@@ -130,7 +130,7 @@ enum class CursorType
 //	SWAP_OR_ROTATE,//TODO: could do this instead but have to replace holdingBlock with array and store order etc
 //};
 //=========================================================================================================================
-enum class VSGarbageRule
+enum class VSGarbageDropRule
 {//=========================================================================================================================
 	FALL_FROM_CEILING_IN_EVEN_ROWS,
 	RISE_FROM_FLOOR_IN_EVEN_ROWS,
@@ -385,7 +385,7 @@ public:
 	//VS rules
 	//----------------------------------------------------
 
-	VSGarbageRule vsGarbageRule = VSGarbageRule::FALL_FROM_CEILING_IN_EVEN_ROWS;Info vsGarbageRule_Info = Info("VS Garbage Rule", "How garbage should act when sent from your opponent when they create combos.");
+	VSGarbageDropRule vsGarbageRule = VSGarbageDropRule::FALL_FROM_CEILING_IN_EVEN_ROWS;Info vsGarbageRule_Info = Info("VS Garbage Rule", "How garbage should act when sent from your opponent when they create combos.");
 
 	//TODO: need what constitutes sending garbage, how many pieces to trigger, combo balancing, multiplier per game, etc
 	
@@ -516,7 +516,7 @@ public:
 	//--------------------------------------------
 
 	//TODO: max stack wait delay
-	long long maxLockDelayTicks = 17 * 30;															Info maxLockDelayTicks_Info = Info("Max Lock Delay Ticks", "Maximum milliseconds a piece can be set at the bottom before locking.");
+	long long maxLockDelayTicks = 17 * 30;															Info maxLockDelayTicks_Info = Info("Lock Delay Ticks", "Milliseconds a piece can be set at the bottom before locking.");
 	long long spawnDelayTicksAmountPerPiece = 30 * 17;												Info spawnDelayTicksAmountPerPiece_Info = Info("Spawn Delay Ticks Amount Per Piece", "Millisecond delay that a piece waits before dropping from the top.");
 	long long lineClearDelayTicksAmountPerLine = 100 * 17;											Info lineClearDelayTicksAmountPerLine_Info = Info("Line Clear Delay Ticks Amount Per Line", "How many milliseconds to wait after clearing a line.  Only affects games that clear entire lines.");
 	long long lineClearDelayTicksAmountPerBlock = 10 * 17;											Info lineClearDelayTicksAmountPerBlock_Info = Info("Line Clear Delay Ticks Amount Per Block", "How many milliseconds to wait after making a chain, per block.  Only affects games that use chains.");

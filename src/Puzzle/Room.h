@@ -50,11 +50,8 @@ public:
 	bool singleplayer_RandomizeSequence = true;
 
 
-	bool endlessMode = false;
-
-
-
 	
+	//these are set in the multiplayer setup screen
 	int multiplayer_NumPlayers = 0;
 	long long multiplayer_HostUserID = 0;
 	int multiplayer_MaxPlayers = 0;
@@ -62,28 +59,34 @@ public:
 	bool multiplayer_TournamentRoom = false;
 	bool multiplayer_AllowDifferentDifficulties = true;
 	bool multiplayer_AllowDifferentGameSequences = true;
-	bool multiplayer_GameEndsWhenOnePlayerRemains = true;
-	bool multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
-	bool multiplayer_DisableVSGarbage = false;
 
 
-	float gameSpeedStart = 0.01f;
-	float gameSpeedIncreaseRate = 0.02f;
-	float gameSpeedMaximum = 1.0f;//can be 0.1 to 10.0 although that won't make sense
-	float levelUpMultiplier = 1.0f;//can be negative
-	float levelUpCompoundMultiplier = 1.0f;//can be negative
-	bool multiplayer_AllowNewPlayersDuringGame = false;
-	bool multiplayer_UseTeams = false;
-	float multiplayer_GarbageMultiplier = 1.0f;
-	int multiplayer_GarbageLimit = 0;
-	bool multiplayer_GarbageScaleByDifficulty = true;//scale garbage by difficulty, beginner->insane 2x, insane->beginner 0.5x, etc.
-	int multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
-	int multiplayer_FloorSpinLimit = 0;
-	int multiplayer_LockDelayLimit = 0;
-	int multiplayer_LockDelayMinimum = 0;
-	int multiplayer_StackWaitLimit = 0;
-	int multiplayer_DropDelayLimit = 0;
-	int multiplayer_DropDelayMinimum = 0;
+
+	//these are set in the roomOptions screen for both single and multiplayer
+	bool	endlessMode = false;
+	bool	multiplayer_GameEndsWhenOnePlayerRemains = true;
+	bool	multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
+	bool	multiplayer_DisableVSGarbage = false;
+	float	gameSpeedStart = 0.01f;
+	float	gameSpeedChangeRate = 0.02f;
+	float	gameSpeedMaximum = 1.0f;//can be 0.1 to 10.0 although that won't make sense
+	float	levelUpMultiplier = 1.0f;//can be negative
+	float	levelUpCompoundMultiplier = 1.0f;//can be negative
+	bool	multiplayer_AllowNewPlayersDuringGame = false;
+	bool	multiplayer_UseTeams = false;
+	float	multiplayer_GarbageMultiplier = 1.0f;
+	int		multiplayer_GarbageLimit = 0;
+	bool	multiplayer_GarbageScaleByDifficulty = true;//scale garbage by difficulty, beginner->insane 2x, insane->beginner 0.5x, etc.
+	int		multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
+	int		multiplayer_FloorSpinLimit = 0;
+	int		multiplayer_TotalYLockDelayLimit = 0;
+	float	multiplayer_LockDelayDecreaseRate = 0;
+	int		multiplayer_LockDelayMinimum = 0;
+	int		multiplayer_StackWaitLimit = 0;
+	int		multiplayer_SpawnDelayLimit = 0;
+	float	multiplayer_SpawnDelayDecreaseRate = 0;
+	int		multiplayer_SpawnDelayMinimum = 0;
+	int		multiplayer_DropDelayMinimum = 0;
 
 
 
@@ -122,7 +125,7 @@ public:
 
 
 		ar & BOOST_SERIALIZATION_NVP(gameSpeedStart);
-		ar & BOOST_SERIALIZATION_NVP(gameSpeedIncreaseRate);
+		ar & BOOST_SERIALIZATION_NVP(gameSpeedChangeRate);
 		ar & BOOST_SERIALIZATION_NVP(gameSpeedMaximum);
 		ar & BOOST_SERIALIZATION_NVP(levelUpMultiplier);
 		ar & BOOST_SERIALIZATION_NVP(levelUpCompoundMultiplier);
@@ -133,10 +136,15 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_GarbageScaleByDifficulty);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_SendGarbageTo);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_FloorSpinLimit);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_LockDelayLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_TotalYLockDelayLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_LockDelayDecreaseRate);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_LockDelayMinimum);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_StackWaitLimit);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_DropDelayLimit);
+
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_SpawnDelayLimit);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_SpawnDelayDecreaseRate);
+		ar & BOOST_SERIALIZATION_NVP(multiplayer_SpawnDelayMinimum);
+
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_DropDelayMinimum);
 
 	}
@@ -232,23 +240,27 @@ public:
 			"," + to_string((int)multiplayer_DisableVSGarbage) +
 
 
-			"," + to_string((int)gameSpeedStart) +
-			"," + to_string((int)gameSpeedIncreaseRate) +
-			"," + to_string((int)gameSpeedMaximum) +
-			"," + to_string((int)levelUpMultiplier) +
-			"," + to_string((int)levelUpCompoundMultiplier) +
+			"," + to_string(gameSpeedStart) +
+			"," + to_string(gameSpeedChangeRate) +
+			"," + to_string(gameSpeedMaximum) +
+			"," + to_string(levelUpMultiplier) +
+			"," + to_string(levelUpCompoundMultiplier) +
 			"," + to_string((int)multiplayer_AllowNewPlayersDuringGame) +
 			"," + to_string((int)multiplayer_UseTeams) +
-			"," + to_string((int)multiplayer_GarbageMultiplier) +
-			"," + to_string((int)multiplayer_GarbageLimit) +
+			"," + to_string(multiplayer_GarbageMultiplier) +
+			"," + to_string(multiplayer_GarbageLimit) +
 			"," + to_string((int)multiplayer_GarbageScaleByDifficulty) +
-			"," + to_string((int)multiplayer_SendGarbageTo) +
-			"," + to_string((int)multiplayer_FloorSpinLimit) +
-			"," + to_string((int)multiplayer_LockDelayLimit) +
-			"," + to_string((int)multiplayer_LockDelayMinimum) +
-			"," + to_string((int)multiplayer_StackWaitLimit) +
-			"," + to_string((int)multiplayer_DropDelayLimit) +
-			"," + to_string((int)multiplayer_DropDelayMinimum) +
+			"," + to_string(multiplayer_SendGarbageTo) +
+			"," + to_string(multiplayer_FloorSpinLimit) +
+			"," + to_string(multiplayer_TotalYLockDelayLimit) +
+			"," + to_string(multiplayer_LockDelayDecreaseRate) +
+			"," + to_string(multiplayer_LockDelayMinimum) +
+			"," + to_string(multiplayer_StackWaitLimit) +
+
+			"," + to_string(multiplayer_SpawnDelayLimit) +
+			"," + to_string(multiplayer_SpawnDelayDecreaseRate) +
+			"," + to_string(multiplayer_SpawnDelayMinimum) +
+			"," + to_string(multiplayer_DropDelayMinimum) +
 			",";
 
 		if (includeXMLGameSequence)
@@ -331,12 +343,21 @@ public:
 		s = s.substr(s.find(",") + 1);
 		string multiplayer_LockDelayLimitString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
+		string multiplayer_LockDelayDecreaseMultiplierString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
 		string multiplayer_LockDelayMinimumString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
 		string multiplayer_StackWaitLimitString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
-		string multiplayer_DropDelayLimitString = s.substr(0, s.find(","));
+
+
+		string multiplayer_SpawnDelayLimitString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
+		string multiplayer_SpawnDelayDecreaseRateString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+		string multiplayer_SpawnDelayMinimumString = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+
 		string multiplayer_DropDelayMinimumString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
 
@@ -493,7 +514,7 @@ public:
 		{
 
 			newRoom->gameSpeedStart							 = stof(gameSpeedStartString);
-			newRoom->gameSpeedIncreaseRate					 = stof(gameSpeedIncreaseRateString);
+			newRoom->gameSpeedChangeRate					 = stof(gameSpeedIncreaseRateString);
 			newRoom->gameSpeedMaximum						 = stof(gameSpeedMaximumString);
 			newRoom->levelUpMultiplier						 = stof(levelUpMultiplierString);
 			newRoom->levelUpCompoundMultiplier				 = stof(levelUpCompoundMultiplierString);
@@ -504,10 +525,14 @@ public:
 			newRoom->multiplayer_GarbageScaleByDifficulty	 = 0 != stoi(multiplayer_GarbageScaleByDifficultyString);
 			newRoom->multiplayer_SendGarbageTo				 = stoi(multiplayer_SendGarbageToString);
 			newRoom->multiplayer_FloorSpinLimit				 = stoi(multiplayer_FloorSpinLimitString);
-			newRoom->multiplayer_LockDelayLimit				 = stoi(multiplayer_LockDelayLimitString);
+			newRoom->multiplayer_TotalYLockDelayLimit		 = stoi(multiplayer_LockDelayLimitString);
+			newRoom->multiplayer_LockDelayDecreaseRate		 = stof(multiplayer_LockDelayDecreaseMultiplierString);
 			newRoom->multiplayer_LockDelayMinimum			 = stoi(multiplayer_LockDelayMinimumString);
 			newRoom->multiplayer_StackWaitLimit				 = stoi(multiplayer_StackWaitLimitString);
-			newRoom->multiplayer_DropDelayLimit				 = stoi(multiplayer_DropDelayLimitString);
+
+			newRoom->multiplayer_SpawnDelayLimit			 = stoi(multiplayer_SpawnDelayLimitString);
+			newRoom->multiplayer_SpawnDelayDecreaseRate		 = stof(multiplayer_SpawnDelayDecreaseRateString);
+			newRoom->multiplayer_SpawnDelayMinimum			 = stoi(multiplayer_SpawnDelayMinimumString);
 			newRoom->multiplayer_DropDelayMinimum			 = stoi(multiplayer_DropDelayMinimumString);
 
 

@@ -1122,8 +1122,8 @@ void CustomGameEditorControl::initSettingsPropTree(GameType *s)
 		{
 			Property::ComboBox* vsGarbageRuleCombo = new Property::ComboBox(p);
 			{
-				vsGarbageRuleCombo->GetComboBox()->AddItem(L"Fall from ceiling in even rows", to_string((int)VSGarbageRule::FALL_FROM_CEILING_IN_EVEN_ROWS));
-				vsGarbageRuleCombo->GetComboBox()->AddItem(L"Rise from floor in even rows", to_string((int)VSGarbageRule::RISE_FROM_FLOOR_IN_EVEN_ROWS));
+				vsGarbageRuleCombo->GetComboBox()->AddItem(L"Fall from ceiling in even rows", to_string((int)VSGarbageDropRule::FALL_FROM_CEILING_IN_EVEN_ROWS));
+				vsGarbageRuleCombo->GetComboBox()->AddItem(L"Rise from floor in even rows", to_string((int)VSGarbageDropRule::RISE_FROM_FLOOR_IN_EVEN_ROWS));
 				n++; p->Add(s->vsGarbageRule_Info.label, vsGarbageRuleCombo, to_string((int)s->vsGarbageRule))->SetToolTip(s->vsGarbageRule_Info.tip);
 				//pRow->onChange.Add(this, &LevelSelectMenuControl::OnFirstNameChanged);
 			}
@@ -1389,7 +1389,7 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	p = settingsPropTree->Find("VS Rules Settings");
 
 	try {
-		currentGameType->vsGarbageRule = (VSGarbageRule)stoi(p->Find(currentGameType->vsGarbageRule_Info.label)->GetProperty()->GetPropertyValue().c_str());
+		currentGameType->vsGarbageRule = (VSGarbageDropRule)stoi(p->Find(currentGameType->vsGarbageRule_Info.label)->GetProperty()->GetPropertyValue().c_str());
 	}
 	catch (exception) { currentGameType->vsGarbageRule = defaultGameType.vsGarbageRule; }
 
