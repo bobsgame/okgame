@@ -499,6 +499,18 @@ int BobMenu::getAmountOfMenuItems()
 	return menuItems.size();
 }
 
+ArrayList<string> BobMenu::getArrayListOfMenuItemIDs()
+{
+	ArrayList<string> ids;
+
+	for(int i=0;i<menuItems.size();i++)
+	{
+		ids.add(menuItems.get(i)->id);
+	}
+
+	return ids;
+}
+
 
 
 

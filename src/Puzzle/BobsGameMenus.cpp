@@ -6,6 +6,7 @@
 
 #include "Room.h"
 
+
 //=========================================================================================================================
 void BobsGame::setupMenus()
 {//=========================================================================================================================
@@ -2477,8 +2478,6 @@ void BobsGame::statsMenuRender()
 //	IN_ORDER,
 //};
 
-
-
 //enum class GameObjective
 //{
 //	PLAY_TO_CREDITS_LEVEL,
@@ -2486,19 +2485,190 @@ void BobsGame::statsMenuRender()
 //	LAST,
 //};
 
-//void BobsGame::saveRoomConfiguration()
-//{
-//	
-//
-//}
-//
-//
-//void BobsGame::loadRoomConfiguration()
-//{
-//	
-//
-//}
 
+
+
+//=========================================================================================================================
+void BobsGame::saveRoomConfigMenuUpdate()
+{//=========================================================================================================================
+
+
+	if (saveRoomConfigMenu == nullptr)
+	{
+		saveRoomConfigMenu = new BobMenu(this, "");
+		saveRoomConfigMenu->center = false;
+		//saveRoomConfigMenu->outline = false;
+
+		saveRoomConfigMenu->add("Name: ","Name", BobMenu::statusColor);
+		saveRoomConfigMenu->add("Save");
+		saveRoomConfigMenu->add("Cancel");
+
+
+		saveRoomConfigNameText = "" + currentRoom->gameSequence->name + " " + currentRoom->difficultyName + " " ;
+
+		saveRoomConfigMenu->cursorPosition = saveRoomConfigMenuCursorPosition;
+	}
+
+	int mx = getControlsManager()->getMouseX();
+	int my = getControlsManager()->getMouseY();
+
+	if (mx != lastMX || my != lastMY)
+	{
+		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+		lastMX = mx;
+		lastMY = my;
+	}
+
+	if (getControlsManager()->miniGame_UP_Pressed())
+	{
+		saveRoomConfigMenu->up();
+
+		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+	}
+
+	if (getControlsManager()->miniGame_DOWN_Pressed() || getControlsManager()->key_TAB_Pressed())
+	{
+		saveRoomConfigMenu->down();
+
+		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+	}
+
+
+	if (loginMenu->isSelectedID("Name"))
+	{
+		if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = saveRoomConfigNameText; textStarted = true; }
+		saveRoomConfigNameText = getControlsManager()->text;
+		loginMenu->getMenuItemByID("Name")->setText("Name: " + saveRoomConfigNameText);
+	}
+
+	bool leaveMenu = false;
+	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+
+	if (confirm || clicked)
+	{
+
+		if (saveRoomConfigMenu->isSelectedID("Save", clicked, mx, my))
+		{
+			if (name.length() > 0)
+			{
+
+				time_t t = time(0); // get time now 
+				struct tm * now = localtime(&t);
+				string year = to_string(now->tm_year + 1900);
+				string month = to_string((now->tm_mon + 1));
+				string day = to_string(now->tm_mday);
+				string hour = to_string(now->tm_hour);
+				string minute = to_string(now->tm_min);
+				string second = to_string(now->tm_sec);
+
+				string name = saveRoomConfigNameText + " " + year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-" + second + ".roomConfig";
+
+				name = FileUtils::removeIllegalFilenameChars(name);
+
+				leaveMenu = true;
+
+				BobsGame::saveRoomConfigToFile(currentRoom, name);
+			}
+		}
+
+		if (saveRoomConfigMenu->isSelectedID("Cancel", clicked, mx, my))
+		{
+			leaveMenu = true;
+		}
+	}
+
+	if (leaveMenu)
+	{
+		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+		saveRoomConfigMenuShowing = false;
+		if (saveRoomConfigMenu != nullptr)
+		{
+			saveRoomConfigMenuCursorPosition = saveRoomConfigMenu->cursorPosition;
+			delete saveRoomConfigMenu;
+			saveRoomConfigMenu = nullptr;
+		}
+	}
+}
+
+
+//=========================================================================================================================
+void BobsGame::loadRoomConfigMenuUpdate()
+{//=========================================================================================================================
+
+	if (loadRoomConfigMenu == nullptr)
+	{
+		loadRoomConfigMenu = new BobMenu(this, "");
+		loadRoomConfigMenu->center = false;
+		//loadRoomConfigMenu->outline = false;
+
+
+
+		ArrayList<string> roomConfigNames = BobsGame::getRoomConfigsList();
+
+		for (int i = 0; i < roomConfigNames.size(); i++)
+		{
+			loadRoomConfigMenu->add(roomConfigNames.get(i));
+		}
+
+		loadRoomConfigMenu->add("Cancel");
+
+		loadRoomConfigMenu->cursorPosition = loadRoomConfigMenuCursorPosition;
+	}
+
+	if (getControlsManager()->miniGame_UP_Pressed())
+	{
+		loadRoomConfigMenu->up();
+	}
+	if (getControlsManager()->miniGame_DOWN_Pressed())
+	{
+		loadRoomConfigMenu->down();
+	}
+	bool leaveMenu = false;
+	bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+	bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+	int mx = getControlsManager()->getMouseX();
+	int my = getControlsManager()->getMouseY();
+	if (confirm || clicked)
+	{
+		
+
+		if (loadRoomConfigMenu->isSelectedID("Cancel", clicked, mx, my))
+		{
+			leaveMenu = true;
+		}
+		else
+		{
+
+			ArrayList<string> ids = loadRoomConfigMenu->getArrayListOfMenuItemIDs();
+
+			for (int i = 0; i < ids.size(); i++)
+			{
+				if (loadRoomConfigMenu->isSelectedID(ids.get(i), clicked, mx, my))
+				{
+					Room *r = BobsGame::loadRoomConfig(ids.get(i));
+
+					if (r != nullptr)currentRoom = r;
+					leaveMenu = true;
+				}
+			}
+		}
+
+
+		
+	}
+
+	if (leaveMenu)
+	{
+		loadRoomConfigMenuShowing = false;
+		if (loadRoomConfigMenu != nullptr)
+		{
+			loadRoomConfigMenuCursorPosition = loadRoomConfigMenu->cursorPosition;
+			delete loadRoomConfigMenu;
+			loadRoomConfigMenu = nullptr;
+		}
+	}
+}
 
 
 //=========================================================================================================================
@@ -2799,6 +2969,7 @@ void BobsGame::roomOptionsMenuUpdate()
 		if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: Player With Least Blocks");
 
 	}
+
 
 
 
@@ -3307,6 +3478,16 @@ void BobsGame::gameSetupMenuUpdate()
 
 
 
+	if (loadRoomConfigMenuShowing)
+	{
+		loadRoomConfigMenuUpdate();
+	}
+	else
+	if (saveRoomConfigMenuShowing)
+	{
+		saveRoomConfigMenuUpdate();
+	}
+	else
 	if (selectGameSequenceOrSingleGameTypeMenuShowing)
 	{
 		selectGameSequenceOrSingleGameTypeMenuUpdate();
@@ -3397,6 +3578,16 @@ void BobsGame::gameSetupMenuUpdate()
 			if (gameSetupMenu->isSelectedID("Options", clicked, mx, my))
 			{
 				roomOptionsMenuShowing = true;
+			}
+
+			if (gameSetupMenu->isSelectedID("Save", clicked, mx, my))
+			{
+				saveRoomConfigMenuShowing = true;
+			}
+
+			if (gameSetupMenu->isSelectedID("Load", clicked, mx, my))
+			{
+				loadRoomConfigMenuShowing = true;
 			}
 
 			if (gameSetupMenu->isSelectedID("Start Game", clicked, mx, my))
@@ -3495,6 +3686,18 @@ void BobsGame::gameSetupMenuRender()
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
+	if (saveRoomConfigMenuShowing && saveRoomConfigMenu!=nullptr)
+	{
+		Caption *c = gameSetupMenu->getCaptionByID("Save");
+		saveRoomConfigMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
+	}
+
+	if (loadRoomConfigMenuShowing && loadRoomConfigMenu!=nullptr)
+	{
+		Caption *c = gameSetupMenu->getCaptionByID("Load");
+		loadRoomConfigMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
+	}
+
 
 
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
@@ -3504,7 +3707,7 @@ void BobsGame::gameSetupMenuRender()
 		{
 			//Caption *c = gameSetupMenu->getCaptionByID("Options");
 			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, &bottomOfCaptions, true);
-			roomOptionsMenu->render(getWidth()/6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
+			roomOptionsMenu->render(getHeight()/6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
 		}
 
 		if (descriptionCaption != nullptr)
@@ -5044,7 +5247,7 @@ void BobsGame::multiplayerOptionsMenuRender()
 		{
 			//Caption *c = multiplayerOptionsMenu->getCaptionByID("Options");
 			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, &bottomOfCaptions, true);
-			roomOptionsMenu->render(getWidth() / 6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
+			roomOptionsMenu->render(getHeight() / 6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
 		}
 
 		if (descriptionCaption != nullptr)

@@ -131,6 +131,7 @@ public:
 	MenuItem* addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
+	ArrayList<string> getArrayListOfMenuItemIDs();
 
 	//returns bottom of graphic y position
 	void render(

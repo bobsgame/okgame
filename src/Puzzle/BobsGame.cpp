@@ -1953,6 +1953,141 @@ GameSequence* BobsGame::getGameSequenceByUUID(string uuid)
 }
 
 //=========================================================================================================================
+void BobsGame::saveRoomConfigToFile(Room* currentRoom,string name)
+{//=========================================================================================================================
+	
+	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
+	Poco::Path userDataPath(userDataPathString);
+	Poco::File userDataPathDir(userDataPath);
+	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
+
+	//Path filePath();
+	Poco::File file(userDataPathString + name);
+
+	{
+		
+		if(currentRoom->gameSequence->gameTypes.size()==1)
+		{
+			currentRoom->gameTypeUUID = currentRoom->gameSequence->gameTypes.get(0)->uuid;
+		}
+		else
+		{
+			currentRoom->gameTypeUUID = "";
+			currentRoom->gameSequenceUUID = currentRoom->gameSequence->uuid;
+		}
+
+		Room r;
+		r = *currentRoom;
+
+		std::stringstream ss;
+		boost::archive::xml_oarchive oarchive(ss);
+		oarchive << BOOST_SERIALIZATION_NVP(r);
+
+		ofstream outputFile;
+		outputFile.open(userDataPathString + name, ofstream::out);
+		outputFile << ss.str() << endl;
+		outputFile.close();
+	}
+}
+//=========================================================================================================================
+ArrayList<string> BobsGame::getRoomConfigsList()
+{//=========================================================================================================================
+	
+	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
+	Path userDataPath(userDataPathString);
+	File userDataPathDir(userDataPath);
+	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
+
+
+	ArrayList<string> roomConfigFileNames;
+
+
+	vector<string> files;
+	userDataPathDir.list(files);
+
+	vector<string>::iterator it = files.begin();
+	for (; it != files.end(); ++it)
+	{
+		//cout << *it << endl;
+		string name = *it;
+		if (name.find(".roomConfig") != string::npos)
+		{
+			roomConfigFileNames.add(name.substr(0,name.find(".roomConfig")));
+		}
+	}
+	
+	return roomConfigFileNames;
+
+}
+
+//=========================================================================================================================
+Room* BobsGame::loadRoomConfig(string configName)
+{//=========================================================================================================================
+	
+	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
+	Path userDataPath(userDataPathString);
+	File userDataPathDir(userDataPath);
+	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
+
+	string fullPathName = userDataPathString + configName + ".roomConfig";
+
+
+	
+	Room *room = new Room();
+	try
+	{
+
+		ifstream t(fullPathName);
+		string str;
+
+		t.seekg(0, ios::end);
+		str.reserve((size_t)t.tellg());
+		t.seekg(0, ios::beg);
+
+		str.assign((istreambuf_iterator<char>(t)),
+			istreambuf_iterator<char>());
+
+		stringstream ss;
+		ss << str;
+
+		boost::archive::xml_iarchive ia(ss);
+
+		Room gs;
+		ia >> BOOST_SERIALIZATION_NVP(gs);
+
+		*room = gs;
+
+	}
+	catch (exception)
+	{
+		log.error("Could not load Room: " + configName);
+		return nullptr;
+	}
+
+
+	GameSequence*gs = getGameSequenceByUUID(room->gameSequenceUUID);
+	if(gs == nullptr)
+	{
+		gs = new GameSequence();
+		GameType* gt = getGameTypeByUUID(room->gameTypeUUID);
+		if (gt != nullptr)
+		{
+			gs->gameTypes.add(gt);
+		}
+		else
+		{
+			log.error("Could not load Room: " + configName);
+			return nullptr;
+		}
+	}
+
+	return room;
+
+
+}
+
+
+//=========================================================================================================================
 void BobsGame::saveUnknownGameSequencesAndTypesToXML(GameSequence *gs)
 {//=========================================================================================================================
 

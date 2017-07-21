@@ -198,6 +198,7 @@ public:
 	BobMenu *loginMenu = nullptr;
 	int loginMenuCursorPosition = 0;
 	bool textStarted = false;
+	string saveRoomConfigNameText = "";
 	string userNameOrEmailText = "";
 	string userNameText = "";
 	string emailText = "";
@@ -336,6 +337,17 @@ public:
 
 	void leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float increment);
 	void leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int increment);
+
+	void saveRoomConfigMenuUpdate();
+	BobMenu *saveRoomConfigMenu = nullptr;
+	bool saveRoomConfigMenuShowing = false;
+	int saveRoomConfigMenuCursorPosition = 0;
+
+	void loadRoomConfigMenuUpdate();
+	BobMenu *loadRoomConfigMenu = nullptr;
+	bool loadRoomConfigMenuShowing = false;
+	int loadRoomConfigMenuCursorPosition = 0;
+
 
 	void roomOptionsMenuUpdate();
 	//void roomOptionsMenuRender();
@@ -513,6 +525,10 @@ public:
 	static ArrayList<Sprite*> loadedSprites;
 	void loadGameSequencesFromXML();
 	void loadGameTypesFromXML();
+
+	static void saveRoomConfigToFile(Room* currentRoom, string name);
+	static ArrayList<string> getRoomConfigsList();
+	static Room* loadRoomConfig(string configName);
 
 	static void saveUnknownGameSequencesAndTypesToXML(GameSequence *gs);
 	static void saveGameSequenceToXML(GameSequence *gs, bool downloaded);

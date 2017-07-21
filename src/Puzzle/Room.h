@@ -38,9 +38,15 @@ public:
 	
 
 	string uuid = "";
+
+	//this is only set on network import
 	string gameSequenceOrTypeName = "";
+	//this is only set on network import
 	string gameSequenceUUID = "";
+	//this is only set on network import
 	string gameTypeUUID = "";
+
+
 	string difficultyName = "Beginner";
 
 	//this is only used for sending stats to the server and for saving and loading game configurations
