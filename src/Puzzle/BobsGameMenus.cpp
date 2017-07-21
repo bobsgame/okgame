@@ -2401,31 +2401,31 @@ void BobsGame::statsMenuRender()
 	if (whichStatsMiniMenuShowing && whichStatsMiniMenu != nullptr)
 	{
 		Caption *c = statsMenu->getCaptionByID("Stats Type");
-		whichStatsMiniMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		whichStatsMiniMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
 		Caption *c = statsMenu->getCaptionByID("Game");
-		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceMenuShowing && selectGameSequenceMenu != nullptr)
 	{
 		Caption *c = statsMenu->getCaptionByID("Game");
-		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectSingleGameTypeMenuShowing && selectSingleGameTypeMenu != nullptr)
 	{
 		Caption *c = statsMenu->getCaptionByID("Game");
-		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (difficultyMenuShowing && difficultyMenu != nullptr)
 	{
 		Caption *c = statsMenu->getCaptionByID("Difficulty");
-		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 }
@@ -2510,7 +2510,7 @@ void BobsGame::gameObjectiveMenuUpdate()
 	if (gameObjectiveMenu == nullptr)
 	{
 		gameObjectiveMenu = new BobMenu(this, "");
-		gameObjectiveMenu->outline = false;
+		//gameObjectiveMenu->outline = false;
 
 		gameObjectiveMenu->add(PLAY_TO_CREDITS_LEVEL);
 		gameObjectiveMenu->add(ENDLESS);
@@ -2571,7 +2571,7 @@ void BobsGame::sendGarbageToMenuUpdate()
 	if (sendGarbageToMenu == nullptr)
 	{
 		sendGarbageToMenu = new BobMenu(this, "");
-		sendGarbageToMenu->outline = false;
+		//sendGarbageToMenu->outline = false;
 		
 		
 		sendGarbageToMenu->add(SEND_GARBAGE_TO_ALL_PLAYERS);
@@ -2678,22 +2678,26 @@ void BobsGame::roomOptionsMenuUpdate()
 	if (roomOptionsMenu == nullptr)
 	{
 		if (descriptionCaption != nullptr) { delete descriptionCaption; descriptionCaption = nullptr; }
-		descriptionCaption = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 16, false, BobColor::darkGray, BobColor::clear);
+		descriptionCaption = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 18, false, BobColor::darkGray, BobColor::clear);
 		roomOptionsMenu = new BobMenu(this, "");
 		roomOptionsMenu->center = false;
 		roomOptionsMenu->setFontSize(24);
-		roomOptionsMenu->outline = false;
+		//roomOptionsMenu->outline = false;
+		//roomOptionsMenu->defaultMenuColor = BobColor::gray;
 
 		roomOptionsMenu->add("Objective: ", "Objective");
 		roomOptionsMenu->add("Game Speed Start: ", "Game Speed Start");
 		roomOptionsMenu->add("Game Speed Increase Rate: ", "Game Speed Change Rate");
 		roomOptionsMenu->add("Game Speed Maximum: ", "Game Speed Maximum");
+		roomOptionsMenu->addInfo(" ");
 		roomOptionsMenu->add("Score Needed To Level Up Multiplier: ", "Levelup Multiplier");
 		roomOptionsMenu->add("Score Needed To Level Up Compound Multiplier: ", "Levelup Compound Multiplier");
+		roomOptionsMenu->addInfo(" ");
 		roomOptionsMenu->add("Floor Spin Limit: ", "Floor Spin Limit");
 		roomOptionsMenu->add("Total Lock Delay Limit: ", "Total Lock Delay Limit");
 		roomOptionsMenu->add("Lock Delay Decrease Rate: ", "Lock Delay Decrease Rate");
 		roomOptionsMenu->add("Lock Delay Minimum: ", "Lock Delay Minimum");
+		roomOptionsMenu->addInfo(" ");
 		roomOptionsMenu->add("Stack Wait Limit: ", "Stack Wait Limit");
 		roomOptionsMenu->add("Spawn Delay Limit: ", "Spawn Delay Limit");
 		roomOptionsMenu->add("Spawn Delay Decrease Rate: ", "Spawn Delay Decrease Rate");
@@ -2829,7 +2833,7 @@ void BobsGame::roomOptionsMenuUpdate()
 
 			if (roomOptionsMenu->isSelectedID("Game Speed Start"))
 			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->gameSpeedStart, 0.01f, 1.0f, 0.1f);
+				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->gameSpeedStart, 0.01f, 1.0f, 0.01f);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Game Speed Change Rate"))
@@ -2839,12 +2843,12 @@ void BobsGame::roomOptionsMenuUpdate()
 
 			if (roomOptionsMenu->isSelectedID("Game Speed Maximum"))
 			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->gameSpeedMaximum, 0.01f, 5.0f, 0.1f);
+				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->gameSpeedMaximum, 0.01f, 5.0f, 0.01f);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Levelup Multiplier"))
 			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->levelUpMultiplier, 0.01f, 10.0f, 0.1f);
+				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->levelUpMultiplier, 0.01f, 10.0f, 0.01f);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Levelup Compound Multiplier"))
@@ -2924,7 +2928,7 @@ void BobsGame::roomOptionsMenuUpdate()
 
 		if (roomOptionsMenu->isSelectedID("Game Speed Maximum"))
 		{
-			descriptionCaption->setText("Multiplier applied to the maximum game speed defined in the selected difficulty. Default is 100%.");
+			descriptionCaption->setText("Additional multiplier applied to the maximum game speed (defined in the selected difficulty). Default is 100%.");
 		}
 
 		if (roomOptionsMenu->isSelectedID("Levelup Multiplier"))
@@ -3197,13 +3201,12 @@ void BobsGame::gameSetupMenuUpdate()
 	if (gameSetupMenu == nullptr)
 	{
 		gameSetupMenu = new BobMenu(this, "Setup Game Options");
-		gameSetupMenu->setFontSize(28);
 
 		gameSetupMenu->add("Select Game Sequence Or Single Game Type...", "Select Game");
 		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");;
 		gameSetupMenu->add("More Options...", "Options");
 		gameSetupMenu->addInfo(" ", " ");
-		gameSetupMenu->add("Start Game", "Start Game")->setColor(BobColor::green);
+		gameSetupMenu->add("Start Game", "Start Game", BobColor::green);
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Save Setup...", "Save");
 		gameSetupMenu->add("Load Setup...", "Load");
@@ -3465,31 +3468,31 @@ void BobsGame::gameSetupMenuRender()
 	if(selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
 		Caption *c = gameSetupMenu->getCaptionByID("Select Game");
-		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceMenuShowing && selectGameSequenceMenu != nullptr)
 	{
 		Caption *c = gameSetupMenu->getCaptionByID("Select Game");
-		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 		
 	if (selectSingleGameTypeMenuShowing && selectSingleGameTypeMenu != nullptr)
 	{
 		Caption *c = gameSetupMenu->getCaptionByID("Select Game");
-		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 			
 	if (gameSequenceOptionsMenuShowing && gameSequenceOptionsMenu != nullptr)
 	{
 		Caption *c = gameSetupMenu->getCaptionByID("Select Game");
-		gameSequenceOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		gameSequenceOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (difficultyMenuShowing && difficultyMenu!=nullptr)
 	{
 		Caption *c = gameSetupMenu->getCaptionByID("Difficulty");
-		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 
@@ -3500,13 +3503,13 @@ void BobsGame::gameSetupMenuRender()
 
 		{
 			//Caption *c = gameSetupMenu->getCaptionByID("Options");
-			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, &bottomOfCaptions, true);
-			roomOptionsMenu->render(getWidth()/6, 0, GLUtils::getViewportHeight(), true, nullptr, &bottomOfCaptions, true);
+			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, &bottomOfCaptions, true);
+			roomOptionsMenu->render(getWidth()/6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
 		}
 
 		if (descriptionCaption != nullptr)
 		{
-			descriptionCaption->screenY = bottomOfCaptions + 24;
+			descriptionCaption->screenY = getHeight() - 30;// bottomOfCaptions + 24;
 			descriptionCaption->update();
 			descriptionCaption->render();
 		}
@@ -3514,13 +3517,13 @@ void BobsGame::gameSetupMenuRender()
 		if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
 		{
 			Caption *c = roomOptionsMenu->getCaptionByID("Objective");
-			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 
 		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
 		{
 			Caption *c = roomOptionsMenu->getCaptionByID("Send Garbage To");
-			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 	}
 }
@@ -5007,31 +5010,31 @@ void BobsGame::multiplayerOptionsMenuRender()
 	if (selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
 		Caption *c = multiplayerOptionsMenu->getCaptionByID("Select Game");
-		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceMenuShowing && selectGameSequenceMenu != nullptr)
 	{
 		Caption *c = multiplayerOptionsMenu->getCaptionByID("Select Game");
-		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectSingleGameTypeMenuShowing && selectSingleGameTypeMenu != nullptr)
 	{
 		Caption *c = multiplayerOptionsMenu->getCaptionByID("Select Game");
-		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (gameSequenceOptionsMenuShowing && gameSequenceOptionsMenu != nullptr)
 	{
 		Caption *c = multiplayerOptionsMenu->getCaptionByID("Select Game");
-		gameSequenceOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		gameSequenceOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (difficultyMenuShowing && difficultyMenu != nullptr)
 	{
 		Caption *c = multiplayerOptionsMenu->getCaptionByID("Difficulty");
-		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
@@ -5040,13 +5043,13 @@ void BobsGame::multiplayerOptionsMenuRender()
 
 		{
 			//Caption *c = multiplayerOptionsMenu->getCaptionByID("Options");
-			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, &bottomOfCaptions, true);
-			roomOptionsMenu->render(getWidth() / 6, 0, GLUtils::getViewportHeight(), true, nullptr, &bottomOfCaptions, true);
+			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, &bottomOfCaptions, true);
+			roomOptionsMenu->render(getWidth() / 6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
 		}
 
 		if (descriptionCaption != nullptr)
 		{
-			descriptionCaption->screenY = bottomOfCaptions + 24;
+			descriptionCaption->screenY = getHeight() - 30;// bottomOfCaptions + 24;
 			descriptionCaption->update();
 			descriptionCaption->render();
 		}
@@ -5054,13 +5057,13 @@ void BobsGame::multiplayerOptionsMenuRender()
 		if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
 		{
 			Caption *c = roomOptionsMenu->getCaptionByID("Objective");
-			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 
 		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
 		{
 			Caption *c = roomOptionsMenu->getCaptionByID("Send Garbage To");
-			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, GLUtils::getViewportHeight(), true, nullptr, nullptr, true);
+			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 	}
 
