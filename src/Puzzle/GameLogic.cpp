@@ -192,6 +192,8 @@ void GameLogic::initGame()
 		timeStarted = (long long)ms.count();
 
 		gameSpeed = getRoom()->gameSpeedStart;
+
+		adjustedMaxLockDelayTicks = currentGameType->maxLockDelayTicks;
 	}
 
 	didInit = true;
@@ -263,7 +265,9 @@ void GameLogic::initGame()
 
 	//TODO: maximum spawn/line clear delay
 
-	lockDelayTicksCounter = currentGameType->maxLockDelayTicks;
+	lockDelayTicksCounter = adjustedMaxLockDelayTicks;
+	if (getRoom()->multiplayer_LockDelayMinimum > -1 && lockDelayTicksCounter < getRoom()->multiplayer_LockDelayMinimum)lockDelayTicksCounter = getRoom()->multiplayer_LockDelayMinimum;
+
 	currentLineDropSpeedTicks = getCurrentDifficulty()->initialLineDropSpeedTicks;
 	currentStackRiseSpeedTicks = getCurrentDifficulty()->maxStackRise;
 	stopStackRiseTicksCounter = 1000;
@@ -2008,7 +2012,22 @@ void GameLogic::doFallingBlockGame()
 	//apply gravity to current piece
 	if (pieceSetAtBottom == false)
 	{
-		if (lineDropTicksCounter == 0 && spawnDelayTicksCounter == 0 && lineClearDelayTicksCounter == 0)
+
+		currentTotalYLockDelay += lockDelayTicksCounter;
+
+		if(getRoom()->multiplayer_TotalYLockDelayLimit > -1 && currentTotalYLockDelay >= getRoom()->multiplayer_TotalYLockDelayLimit)
+		{
+			currentPiece->yGrid++;
+			if (grid->doesPieceFit(currentPiece) == false)
+			{
+				currentPiece->yGrid--;
+				setPiece();
+			}
+			else currentPiece->yGrid--;
+		}
+
+
+		if ((lineDropTicksCounter == 0 && spawnDelayTicksCounter == 0 && lineClearDelayTicksCounter == 0))
 		{
 			bool moved = movePiece(MovementType::DOWN);
 			if (moved)
@@ -2076,7 +2095,10 @@ bool GameLogic::moveDownBlocksOverBlankSpaces()
 //=========================================================================================================================
 void GameLogic::pieceMoved()
 {//=========================================================================================================================
-	lockDelayTicksCounter = currentGameType->maxLockDelayTicks;
+
+	lockDelayTicksCounter = adjustedMaxLockDelayTicks;
+	if (getRoom()->multiplayer_LockDelayMinimum > -1 && lockDelayTicksCounter < getRoom()->multiplayer_LockDelayMinimum)lockDelayTicksCounter = getRoom()->multiplayer_LockDelayMinimum;
+
 
 	//test one more down
 	currentPiece->yGrid++;
@@ -2087,9 +2109,22 @@ void GameLogic::pieceMoved()
 	currentPiece->yGrid--;
 }
 
+
+
+
 //=========================================================================================================================
 bool GameLogic::movePiece(MovementType move)
 {//=========================================================================================================================
+
+//	int		multiplayer_FloorSpinLimit = 0;
+//	int		multiplayer_TotalYLockDelayLimit = 0;
+//	float	multiplayer_LockDelayDecreaseRate = 0;
+//	int		multiplayer_LockDelayMinimum = 0;
+//	int		multiplayer_StackWaitLimit = 0;
+//	int		multiplayer_SpawnDelayLimit = 0;
+//	float	multiplayer_SpawnDelayDecreaseRate = 0;
+//	int		multiplayer_SpawnDelayMinimum = 0;
+//	int		multiplayer_DropDelayMinimum = 0;
 
 	if (currentPiece == nullptr)
 	{
@@ -2176,13 +2211,17 @@ bool GameLogic::movePiece(MovementType move)
 		}
 	}
 
+	bool checkForMovementsTouchingBottom = false;
+
 	if (move == MovementType::ROTATE_COUNTERCLOCKWISE)
 	{
 		currentPiece->rotateCCW();
+		checkForMovementsTouchingBottom = true;
 	}
 	if (move == MovementType::ROTATE_CLOCKWISE)
 	{
 		currentPiece->rotateCW();
+		checkForMovementsTouchingBottom = true;
 	}
 	if (move == MovementType::UP)
 	{
@@ -2195,15 +2234,38 @@ bool GameLogic::movePiece(MovementType move)
 	if (move == MovementType::RIGHT)
 	{
 		currentPiece->xGrid++;
+		checkForMovementsTouchingBottom = true;
 	}
 	if (move == MovementType::LEFT)
 	{
 		currentPiece->xGrid--;
+		checkForMovementsTouchingBottom = true;
 	}
 
 	if (grid->doesPieceFit(currentPiece))
 	{
 		pieceMoved();
+
+		if(checkForMovementsTouchingBottom)
+		{
+			currentPiece->yGrid++;
+			if (grid->doesPieceFit(currentPiece)==false)
+			{
+				currentFloorMovements++;
+
+				if(currentFloorMovements>=getRoom()->multiplayer_FloorSpinLimit)
+				{
+					setPiece();
+				}
+			}
+			currentPiece->yGrid--;
+		}
+
+		if (move == MovementType::DOWN || move == MovementType::HARD_DROP)
+		{
+			currentLockDelayTicksY = 0;
+		}
+
 		return true;
 	}
 	else
@@ -2641,6 +2703,9 @@ void GameLogic::setPiece()
 
 	currentPiece = nullptr;
 
+	currentFloorMovements = 0;
+	currentTotalYLockDelay = 0;
+
 	getAudioManager()->playSound(currentGameType->pieceSetSound, getVolume(), getSoundEffectSpeed());
 }
 
@@ -2758,7 +2823,8 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 
 	queuedVSGarbageAmountFromOtherPlayer += amount;
 
-	if (queuedVSGarbageAmountFromOtherPlayer > getRoom()->multiplayer_GarbageLimit)queuedVSGarbageAmountFromOtherPlayer = getRoom()->multiplayer_GarbageLimit;
+
+	if (getRoom()->multiplayer_GarbageLimit>0 && queuedVSGarbageAmountFromOtherPlayer > getRoom()->multiplayer_GarbageLimit)queuedVSGarbageAmountFromOtherPlayer = getRoom()->multiplayer_GarbageLimit;
 
 	makeAnnouncementCaption("Got VS Garbage: " + to_string(amount));
 
@@ -3731,7 +3797,7 @@ void GameLogic::updateKeyInput()
 			}
 		}
 		else
-			if (currentGameType->gameMode == GameMode::DROP)
+		if (currentGameType->gameMode == GameMode::DROP)
 		{
 			getAudioManager()->playSound(currentGameType->moveRightSound, getVolume(), getSoundEffectSpeed());
 			movePiece(MovementType::RIGHT);
@@ -3752,7 +3818,7 @@ void GameLogic::updateKeyInput()
 			}
 		}
 		else
-			if (currentGameType->gameMode == GameMode::DROP)
+		if (currentGameType->gameMode == GameMode::DROP)
 		{
 			getAudioManager()->playSound(currentGameType->moveLeftSound, getVolume(), getSoundEffectSpeed());
 			movePiece(MovementType::LEFT);
@@ -4725,18 +4791,18 @@ void GameLogic::updateScore()
 
 
 
-
+	int amount = currentGameType->scoreTypeAmountPerLevelGained * getRoom()->levelUpMultiplier * getRoom()->levelUpCompoundMultiplier;
 
 	if (currentGameType->scoreType == ScoreType::LINES_CLEARED)
 	{
 
-		if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Lines For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained));
-		if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Lines Left For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained- linesClearedThisLevel));
+		if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Lines For Next Level: " + to_string(amount));
+		if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Lines Left For Next Level: " + to_string(amount - linesClearedThisLevel));
 
 		if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 		{
 
-			if (linesClearedThisLevel / (currentGameType->scoreTypeAmountPerLevelGained * getRoom()->levelUpMultiplier * getRoom()->levelUpCompoundMultiplier) >= 1)
+			if (linesClearedThisLevel / (amount) >= 1)
 			{
 				getRoom()->levelUpCompoundMultiplier *= getRoom()->levelUpCompoundMultiplier;
 				currentLevel++;
@@ -4747,12 +4813,12 @@ void GameLogic::updateScore()
 		if (currentGameType->scoreType == ScoreType::BLOCKS_CLEARED)
 		{
 
-			if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Blocks For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained));
-			if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Blocks Left For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained- blocksClearedThisLevel));
+			if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Blocks For Next Level: " + to_string(amount));
+			if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Blocks Left For Next Level: " + to_string(amount  - blocksClearedThisLevel));
 
 			if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 			{
-				if (blocksClearedThisLevel / (currentGameType->scoreTypeAmountPerLevelGained * getRoom()->levelUpMultiplier * getRoom()->levelUpCompoundMultiplier) >= 1)
+				if (blocksClearedThisLevel / (amount) >= 1)
 				{
 					getRoom()->levelUpCompoundMultiplier *= getRoom()->levelUpCompoundMultiplier;
 					currentLevel++;
@@ -4762,14 +4828,15 @@ void GameLogic::updateScore()
 		else
 			if (currentGameType->scoreType == ScoreType::PIECES_MADE)
 			{
+				
 
-				if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Pieces For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained));
-				if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Pieces Left For Next Level: " + to_string(currentGameType->scoreTypeAmountPerLevelGained- piecesMadeThisLevel));
+				if (piecesToLevelUpThisLevelCaption != nullptr)piecesToLevelUpThisLevelCaption->setText("Total Pieces For Next Level: " + to_string(amount));
+				if (piecesLeftToLevelUpCaption != nullptr)piecesLeftToLevelUpCaption->setText("Pieces Left For Next Level: " + to_string(amount  - piecesMadeThisLevel));
 
 
 				if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 				{
-					if (piecesMadeThisLevel / (currentGameType->scoreTypeAmountPerLevelGained * getRoom()->levelUpMultiplier * getRoom()->levelUpCompoundMultiplier) >= 1)
+					if (piecesMadeThisLevel / amount >= 1)
 					{
 						getRoom()->levelUpCompoundMultiplier *= getRoom()->levelUpCompoundMultiplier;
 						currentLevel++;
@@ -4792,6 +4859,10 @@ void GameLogic::updateScore()
 		blocksClearedThisLevel = 0;
 
 		lastKnownLevel = currentLevel;
+
+
+		
+		if (getRoom()->multiplayer_LockDelayDecreaseRate > -1)adjustedMaxLockDelayTicks -= currentGameType->maxLockDelayTicks * getRoom()->multiplayer_LockDelayDecreaseRate;
 
 		if (currentGameSequence->gameTypes.size() > 1)
 		{

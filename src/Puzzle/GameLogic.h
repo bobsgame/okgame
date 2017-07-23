@@ -278,6 +278,10 @@ private:
 	long long lineClearDelayTicksCounter = 0;
 	long long moveDownLineTicksCounter = 0;
 
+	long long currentTotalYLockDelay = 0;
+	long long adjustedMaxLockDelayTicks = 0;
+	long long currentFloorMovements = 0;
+
 	string playingMusic = "";
 
 	//used for panel

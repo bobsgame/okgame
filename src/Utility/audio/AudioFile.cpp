@@ -36,8 +36,9 @@ AudioFile::AudioFile(AudioData* data)
 AudioFile::AudioFile(string filename)
 { //=========================================================================================================================
 
-	
-
+#ifdef _DEBUG
+	log.info("Loading " + filename);
+#endif
 	string name = string(filename);
 	int found = (int)name.find('/');
 	while (found != string::npos)

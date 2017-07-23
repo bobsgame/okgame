@@ -88,12 +88,12 @@ public:
 	bool	multiplayer_GarbageScaleByDifficulty = true;//scale garbage by difficulty, beginner->insane 2x, insane->beginner 0.5x, etc.
 	int		multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
 
-	int		multiplayer_FloorSpinLimit = 0;
-	int		multiplayer_TotalYLockDelayLimit = 0;
+	int		multiplayer_FloorSpinLimit = -1;
+	int		multiplayer_TotalYLockDelayLimit = -1;
 	float	multiplayer_LockDelayDecreaseRate = 0;
 	int		multiplayer_LockDelayMinimum = 0;
-	int		multiplayer_StackWaitLimit = 0;
-	int		multiplayer_SpawnDelayLimit = 0;
+	int		multiplayer_StackWaitLimit = -1;
+	int		multiplayer_SpawnDelayLimit = -1;
 	float	multiplayer_SpawnDelayDecreaseRate = 0;
 	int		multiplayer_SpawnDelayMinimum = 0;
 	int		multiplayer_DropDelayMinimum = 0;

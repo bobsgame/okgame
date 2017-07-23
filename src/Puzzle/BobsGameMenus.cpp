@@ -2869,7 +2869,7 @@ void BobsGame::roomOptionsMenuUpdate()
 		roomOptionsMenu->add("Score Needed To Level Up Multiplier: ", "Levelup Multiplier");
 		roomOptionsMenu->add("Score Needed To Level Up Compound Multiplier: ", "Levelup Compound Multiplier");
 		roomOptionsMenu->addInfo(" ");
-		roomOptionsMenu->add("Floor Spin Limit: ", "Floor Spin Limit");
+		roomOptionsMenu->add("Floor Movement Limit: ", "Floor Movement Limit");
 		roomOptionsMenu->add("Total Lock Delay Limit: ", "Total Lock Delay Limit");
 		roomOptionsMenu->add("Lock Delay Decrease Rate: ", "Lock Delay Decrease Rate");
 		roomOptionsMenu->add("Lock Delay Minimum: ", "Lock Delay Minimum");
@@ -2937,12 +2937,12 @@ void BobsGame::roomOptionsMenuUpdate()
 	roomOptionsMenu->getMenuItemByID("Game Speed Maximum")->setText("Game Speed Maximum: " + to_string((int)(currentRoom->gameSpeedMaximum * 100)) + "%");
 	roomOptionsMenu->getMenuItemByID("Levelup Multiplier")->setText("Score Needed To Level Up Multiplier: " + to_string((int)(currentRoom->levelUpMultiplier * 100)) + "%");
 	roomOptionsMenu->getMenuItemByID("Levelup Compound Multiplier")->setText("Score To Level Up Compound Multiplier: " + to_string((int)(currentRoom->levelUpCompoundMultiplier * 100)) + "%");
-	roomOptionsMenu->getMenuItemByID("Floor Spin Limit")->setText("Floor Spin Limit: " + string((currentRoom->multiplayer_FloorSpinLimit > 0) ? to_string(currentRoom->multiplayer_FloorSpinLimit) : "None"));
-	roomOptionsMenu->getMenuItemByID("Total Lock Delay Limit")->setText("Total Lock Delay Limit: " + string((currentRoom->multiplayer_TotalYLockDelayLimit > 0) ? to_string(currentRoom->multiplayer_TotalYLockDelayLimit) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Floor Movement Limit")->setText("Floor Movement Limit: " + string((currentRoom->multiplayer_FloorSpinLimit > -1) ? to_string(currentRoom->multiplayer_FloorSpinLimit) : "No Limit"));
+	roomOptionsMenu->getMenuItemByID("Total Lock Delay Limit")->setText("Total Lock Delay Limit: " + string((currentRoom->multiplayer_TotalYLockDelayLimit > -1) ? to_string(currentRoom->multiplayer_TotalYLockDelayLimit) + "ms" : "No Limit"));
 	roomOptionsMenu->getMenuItemByID("Lock Delay Decrease Rate")->setText("Lock Delay Decrease Rate: " + string((currentRoom->multiplayer_LockDelayDecreaseRate > 0) ? to_string((int)(currentRoom->multiplayer_LockDelayDecreaseRate * 100)) + "%" : "None"));
 	roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + string((currentRoom->multiplayer_LockDelayMinimum > 0) ? to_string(currentRoom->multiplayer_LockDelayMinimum) + "ms" : "None"));
-	roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + string((currentRoom->multiplayer_StackWaitLimit > 0) ? to_string(currentRoom->multiplayer_StackWaitLimit) + "ms" : "None"));
-	roomOptionsMenu->getMenuItemByID("Spawn Delay Limit")->setText("Spawn Delay Limit: " + string((currentRoom->multiplayer_SpawnDelayLimit > 0) ? to_string(currentRoom->multiplayer_SpawnDelayLimit) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + string((currentRoom->multiplayer_StackWaitLimit > -1) ? to_string(currentRoom->multiplayer_StackWaitLimit) + "ms" : "No Limit"));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Limit")->setText("Spawn Delay Limit: " + string((currentRoom->multiplayer_SpawnDelayLimit > -1) ? to_string(currentRoom->multiplayer_SpawnDelayLimit) + "ms" : "No Limit"));
 	roomOptionsMenu->getMenuItemByID("Spawn Delay Decrease Rate")->setText("Spawn Delay Decrease Rate: " + string((currentRoom->multiplayer_SpawnDelayDecreaseRate > 0) ? to_string((int)(currentRoom->multiplayer_SpawnDelayDecreaseRate * 100)) + "%" : "None"));
 	roomOptionsMenu->getMenuItemByID("Spawn Delay Minimum")->setText("Spawn Delay Minimum: " + string((currentRoom->multiplayer_SpawnDelayMinimum > 0) ? to_string(currentRoom->multiplayer_SpawnDelayMinimum) + "ms" : "None"));
 	roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + string((currentRoom->multiplayer_DropDelayMinimum > 0) ? to_string(currentRoom->multiplayer_DropDelayMinimum) + "ms" : "None"));
@@ -2965,7 +2965,7 @@ void BobsGame::roomOptionsMenuUpdate()
 
 		roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: " + string((currentRoom->multiplayer_DisableVSGarbage) ? "Off" : "On"));
 		roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: " + to_string((int)(currentRoom->multiplayer_GarbageMultiplier * 100)) + "%");
-		roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + string((currentRoom->multiplayer_GarbageLimit > 0) ? to_string(currentRoom->multiplayer_GarbageLimit) : "None"));
+		roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + string((currentRoom->multiplayer_GarbageLimit > 0) ? to_string(currentRoom->multiplayer_GarbageLimit) : "No Limit"));
 		roomOptionsMenu->getMenuItemByID("Garbage Scale")->setText("Scale Garbage By Difficulty: " + string(currentRoom->multiplayer_GarbageScaleByDifficulty ? "On" : "Off"));
 
 		if (currentRoom->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)roomOptionsMenu->getMenuItemByID("Send Garbage To")->setText("Send Garbage To: All Other Players");
@@ -3043,14 +3043,14 @@ void BobsGame::roomOptionsMenuUpdate()
 				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_GarbageLimit, 0, 50, 1);
 			}
 
-			if (roomOptionsMenu->isSelectedID("Floor Spin Limit"))
+			if (roomOptionsMenu->isSelectedID("Floor Movement Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_FloorSpinLimit, 0, 128, 1);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_FloorSpinLimit, -1, 128, 1);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Total Lock Delay Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_TotalYLockDelayLimit, 0, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_TotalYLockDelayLimit, -1, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Lock Delay Decrease Rate"))
@@ -3065,12 +3065,12 @@ void BobsGame::roomOptionsMenuUpdate()
 
 			if (roomOptionsMenu->isSelectedID("Stack Wait Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_StackWaitLimit, 0, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_StackWaitLimit, -1, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Spawn Delay Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_SpawnDelayLimit, 0, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_SpawnDelayLimit, -1, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Spawn Delay Decrease Rate"))
@@ -3128,14 +3128,14 @@ void BobsGame::roomOptionsMenuUpdate()
 			descriptionCaption->setText("Hard limit on garbage queued. Default is no limit.");
 		}
 
-		if (roomOptionsMenu->isSelectedID("Floor Spin Limit"))
+		if (roomOptionsMenu->isSelectedID("Floor Movement Limit"))
 		{
-			descriptionCaption->setText("How many times a piece can be spun in place or moved on the same Y position before locking. Default is no limit (infinite spin).");
+			descriptionCaption->setText("How many times a piece can be spun in place or moved on the same Y position before locking. Set to 0 to always lock instantly. Default is no limit (infinite spin).");
 		}
 
 		if (roomOptionsMenu->isSelectedID("Total Lock Delay Limit"))
 		{
-			descriptionCaption->setText("Maximum total milliseconds a piece can stay in the same Y position before locking. Default is no limit.");
+			descriptionCaption->setText("Maximum total milliseconds a piece can stay in the same Y position before locking. Set to 0 to always lock instantly. Default is no limit.");
 		}
 
 		if (roomOptionsMenu->isSelectedID("Lock Delay Decrease Rate"))
@@ -3145,17 +3145,17 @@ void BobsGame::roomOptionsMenuUpdate()
 
 		if (roomOptionsMenu->isSelectedID("Lock Delay Minimum"))
 		{
-			descriptionCaption->setText("Minimum milliseconds before a piece locks. Resets every movement or rotation. Set to zero to always lock instantly. Default is 500.");
+			descriptionCaption->setText("Minimum milliseconds before a piece locks. Resets every movement or rotation. Set to 0 to always lock instantly. Default is 500.");
 		}
 
 		if (roomOptionsMenu->isSelectedID("Stack Wait Limit"))
 		{
-			descriptionCaption->setText("Maximum milliseconds that the stack can be waiting to scroll after a combo. Default is 10000.");
+			descriptionCaption->setText("Maximum milliseconds that the stack can be waiting to scroll after a combo. Set to 0 to always scroll. Default is no limit.");
 		}
 
 		if (roomOptionsMenu->isSelectedID("Spawn Delay Limit"))
 		{
-			descriptionCaption->setText("Maximum milliseconds that a piece will wait at the top before moving down. Default is 10000.");
+			descriptionCaption->setText("Maximum milliseconds that a piece will wait at the top before moving down. Set to 0 to always spawn instantly. Default is no limit.");
 		}
 
 		if (roomOptionsMenu->isSelectedID("Spawn Delay Decrease Rate"))
@@ -3402,8 +3402,8 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Start Game", "Start Game", BobColor::green);
 		gameSetupMenu->addInfo(" ", " ");
-		gameSetupMenu->add("Save Setup...", "Save");
-		gameSetupMenu->add("Load Setup...", "Load");
+		gameSetupMenu->add("Save Config...", "Save");
+		gameSetupMenu->add("Load Config...", "Load");
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Back To Title Screen", "Back To Title Screen");
 
@@ -4922,6 +4922,9 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		multiplayerOptionsMenu->addInfo(" "," ");
 		multiplayerOptionsMenu->add("Continue");
 		multiplayerOptionsMenu->addInfo(" ", " ");
+		multiplayerOptionsMenu->add("Save Config...", "Save");
+		multiplayerOptionsMenu->add("Load Config...", "Load");
+		multiplayerOptionsMenu->addInfo(" ", " ");
 		if(networkMultiplayer)multiplayerOptionsMenu->add("Back To Network Multiplayer Lobby");
 		else multiplayerOptionsMenu->add("Back To Title Screen");
 		
@@ -5159,6 +5162,16 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 			if (multiplayerOptionsMenu->isSelectedID("Options", clicked, mx, my))
 			{
 				roomOptionsMenuShowing = true;
+			}
+
+			if (multiplayerOptionsMenu->isSelectedID("Save", clicked, mx, my))
+			{
+				saveRoomConfigMenuShowing = true;
+			}
+
+			if (multiplayerOptionsMenu->isSelectedID("Load", clicked, mx, my))
+			{
+				loadRoomConfigMenuShowing = true;
 			}
 
 			
