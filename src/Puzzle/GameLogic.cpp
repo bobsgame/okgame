@@ -22,6 +22,12 @@ BobsGame* GameLogic::getBobsGame()
 	return (BobsGame*)getEngine();
 }
 
+//===============================================================================================
+Room* GameLogic::getRoom()
+{//===============================================================================================
+	return getBobsGame()->currentRoom;
+}
+
 
 
 //===============================================================================================
@@ -184,6 +190,8 @@ void GameLogic::initGame()
 
 		chrono::milliseconds ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch());
 		timeStarted = (long long)ms.count();
+
+		gameSpeed = getRoom()->gameSpeedStart;
 	}
 
 	didInit = true;
@@ -621,44 +629,195 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 
 
 
-
-		if (getBobsGame()->isNetworkGame() == false)
+		if (getRoom()->multiplayer_DisableVSGarbage == false)
 		{
-			if (getBobsGame()->currentRoom->multiplayer_DisableVSGarbage == false)
-			{
-				if (queuedVSGarbageAmountToSend > 0)
-				{
-					for (int n = 0; n < getBobsGame()->players.size(); n++)
-					{
-						PuzzlePlayer *p2 = getBobsGame()->players.get(n);
 
-						GameLogic *g2 = p2->gameLogic;
-						if (g2 != this && Math::randLessThan(getBobsGame()->players.size()) == 0)g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
-					}
-					queuedVSGarbageAmountToSend = 0;
-				}
+			vector<GameLogic*> otherPlayers;
+			for (int n = 0; n < getBobsGame()->players.size(); n++)
+			{
+				GameLogic *g2 = getBobsGame()->players.get(n)->gameLogic;
+				if (g2 != this)otherPlayers.push_back(g2);
 			}
 
-		}
-		else
-		{
+			sort(otherPlayers.begin(), otherPlayers.end(), [](GameLogic*a, GameLogic*b) {return a->uuid.compare(b->uuid); });
 
-			if (getBobsGame()->currentRoom->multiplayer_DisableVSGarbage == false)
+
+
+			if (getBobsGame()->isNetworkGame())
 			{
-				for (int n = 0; n < getBobsGame()->players.size(); n++)
+
+				//TODO: these will need to be server based for network games.  they are disabled for network games for now.
+
+				if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION ||
+					getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS ||
+					getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)
 				{
-					PuzzlePlayer *p2 = getBobsGame()->players.get(n);
-					GameLogic *g2 = p2->gameLogic;
-					if (g2 != this)
+					getRoom()->multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
+				}
+
+			}
+			else
+			{
+				vector<GameLogic*> alivePlayers;
+				for (auto g2 : otherPlayers)
+				{
+					if (g2->won == false && g2->died == false && g2->lost == false && g2->complete == false)
 					{
-						if (g2->queuedVSGarbageAmountToSend > 0)// && Math::randLessThan(getBobsGame()->players.size()) == 0)
+						alivePlayers.push_back(g2);
+					}
+				}
+				if (alivePlayers.size() > 0)
+				{
+
+					if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION)
+					{
+						if (getBobsGame()->isNetworkGame() == false)
+						{
+							if (queuedVSGarbageAmountToSend > 0)
+							{
+								lastSentGarbageToPlayerIndex++;
+								if (lastSentGarbageToPlayerIndex >= alivePlayers.size())lastSentGarbageToPlayerIndex = 0;
+
+								GameLogic* g2 = alivePlayers.at(lastSentGarbageToPlayerIndex);
+
+								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
+								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+								
+								queuedVSGarbageAmountToSend = 0;
+							}
+						}
+					}
+
+					if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)
+					{
+						if (getBobsGame()->isNetworkGame() == false)
+						{
+							if (queuedVSGarbageAmountToSend > 0)
+							{
+
+								GameLogic *leastBlocksPlayer = nullptr;
+								int leastBlocks = 1000;
+								for (auto g2 : alivePlayers)
+								{
+									if(g2->grid->getNumberOfFilledCells()<leastBlocks)
+									{
+										leastBlocks = g2->grid->getNumberOfFilledCells();
+										leastBlocksPlayer = g2;
+									}
+								}
+
+								if (leastBlocksPlayer != nullptr)
+								{
+									leastBlocksPlayer->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
+									leastBlocksPlayer->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+								}
+
+								queuedVSGarbageAmountToSend = 0;
+							}
+
+						}
+					}
+
+					if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)
+					{
+						if (getBobsGame()->isNetworkGame() == false)
+						{
+							if (queuedVSGarbageAmountToSend > 0)
+							{
+								GameLogic *g2 = alivePlayers.at(getRandomIntLessThan(alivePlayers.size(), "sendGarbage"));
+								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
+								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+
+								queuedVSGarbageAmountToSend = 0;
+							}
+						}
+					}
+				}
+
+			}
+
+
+
+
+
+
+
+			if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)
+			{
+
+				if (getBobsGame()->isNetworkGame() == false)
+				{
+					if (queuedVSGarbageAmountToSend > 0)
+					{
+						for (auto g2 : otherPlayers)
+						{
+							g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
+							g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+						}
+						queuedVSGarbageAmountToSend = 0;
+					}
+					
+				}
+				else
+				{
+					for (auto g2 : otherPlayers)
+					{
+						if (g2->queuedVSGarbageAmountToSend > 0)
 						{
 							gotVSGarbageFromOtherPlayer(g2->queuedVSGarbageAmountToSend);
+							frameState.receivedGarbageAmount += g2->queuedVSGarbageAmountToSend;
+							g2->queuedVSGarbageAmountToSend = 0;
 						}
-						g2->queuedVSGarbageAmountToSend = 0;
+					}
+
+				}
+			}
+
+			if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)
+			{
+				if (getBobsGame()->isNetworkGame() == false)
+				{
+					if (queuedVSGarbageAmountToSend > 0)
+					{
+						for (auto g2 : otherPlayers)
+						{
+							if (getRandomIntLessThan(2, "sendGarbage") == 0)
+							{
+								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
+								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+							}
+						}
+						queuedVSGarbageAmountToSend = 0;
+					}
+					
+				}
+				else
+				{
+					for (auto g2 : otherPlayers)
+					{
+						if (g2->queuedVSGarbageAmountToSend > 0)
+						{
+							if (getRandomIntLessThan(2, "sendGarbage") == 0)
+							{
+								gotVSGarbageFromOtherPlayer(g2->queuedVSGarbageAmountToSend);
+								frameState.receivedGarbageAmount += g2->queuedVSGarbageAmountToSend;
+							}
+							g2->queuedVSGarbageAmountToSend = 0;
+						}
 					}
 				}
 			}
+
+
+
+
+		}
+
+
+
+
+		if (getBobsGame()->isNetworkGame() == true)
+		{
 
 			string gridString;
 			for (int n = 0; n<grid->blocks.size(); n++)
@@ -670,7 +829,7 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 
 
 			sendPacketsToOtherPlayers(p);
-			//TODO: handle accepting garbage from network players games
+
 
 			//handle gotGarbage for network players
 
@@ -796,7 +955,7 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 
 					processFrame();
 
-					if (getBobsGame()->currentRoom->multiplayer_DisableVSGarbage == false)
+					if (getRoom()->multiplayer_DisableVSGarbage == false)
 					{
 						if (frameState.receivedGarbageAmount > 0) //this should only happen when we are the network side
 						{
@@ -2578,7 +2737,7 @@ void GameLogic::newRandomPiece()
 void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 {//=========================================================================================================================
 
-	frameState.receivedGarbageAmount += amount;
+	
 
 	garbageWaitForPiecesSetCount += 3;
 	if (garbageWaitForPiecesSetCount > 4)
@@ -2586,7 +2745,20 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 		garbageWaitForPiecesSetCount = 4;
 	}
 
+	if(getRoom()->multiplayer_GarbageScaleByDifficulty)
+	{
+		//it is scaled on both send and receive
+		//so Insane send is cut in half, then cut in half again for beginner
+		if(getCurrentDifficulty()->name == "Beginner")amount = (int)(amount*0.5f);
+		if(getCurrentDifficulty()->name == "Easy")amount = (int)(amount*0.75f);
+		if(getCurrentDifficulty()->name == "Normal")amount = (int)(amount*1.0f);
+		if(getCurrentDifficulty()->name == "Hard")amount = (int)(amount*1.5f);
+		if(getCurrentDifficulty()->name == "Insane")amount = (int)(amount*2.0f);
+	}
+
 	queuedVSGarbageAmountFromOtherPlayer += amount;
+
+	if (queuedVSGarbageAmountFromOtherPlayer > getRoom()->multiplayer_GarbageLimit)queuedVSGarbageAmountFromOtherPlayer = getRoom()->multiplayer_GarbageLimit;
 
 	makeAnnouncementCaption("Got VS Garbage: " + to_string(amount));
 
@@ -2652,7 +2824,19 @@ void GameLogic::queueVSGarbageToSend(int amount)
 
 	//garbage types per game?
 
+	amount *= getRoom()->multiplayer_GarbageMultiplier;
 
+
+	if (getRoom()->multiplayer_GarbageScaleByDifficulty)
+	{
+		//it is scaled on both send and receive
+		//so Insane send is cut in half, then cut in half again for beginner
+		if (getCurrentDifficulty()->name == "Beginner")amount = (int)(amount*2.0f);
+		if (getCurrentDifficulty()->name == "Easy")amount = (int)(amount*1.5f);
+		if (getCurrentDifficulty()->name == "Normal")amount = (int)(amount*1.0f);
+		if (getCurrentDifficulty()->name == "Hard")amount = (int)(amount*0.75f);
+		if (getCurrentDifficulty()->name == "Insane")amount = (int)(amount*0.5f);
+	}
 
 	if (queuedVSGarbageAmountFromOtherPlayer > 0)
 	{
@@ -2674,7 +2858,7 @@ void GameLogic::queueVSGarbageToSend(int amount)
 		}
 	}
 
-	if (getBobsGame()->isMultiplayer() && getBobsGame()->currentRoom->multiplayer_DisableVSGarbage==false)
+	if (getBobsGame()->isMultiplayer() && getRoom()->multiplayer_DisableVSGarbage==false)
 	{
 		if (amount > 0)
 		{
@@ -4490,9 +4674,10 @@ void GameLogic::updateScore()
 	{
 		lastPiecesMadeThisGame = piecesMadeThisGame;
 
-		gameSpeed += 0.02f;
+		gameSpeed += getRoom()->gameSpeedChangeRate;
 
-		if (gameSpeed > 1.0f)gameSpeed = 1.0f;
+		if (gameSpeed > getRoom()->gameSpeedMaximum)gameSpeed = getRoom()->gameSpeedMaximum;
+		if (gameSpeed < 0.0f)gameSpeed = 0.0f;
 
 
 
@@ -4551,8 +4736,9 @@ void GameLogic::updateScore()
 		if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 		{
 
-			if (linesClearedThisLevel / currentGameType->scoreTypeAmountPerLevelGained >= 1)
+			if (linesClearedThisLevel / (currentGameType->scoreTypeAmountPerLevelGained * getRoom()->levelUpMultiplier * getRoom()->levelUpCompoundMultiplier) >= 1)
 			{
+				getRoom()->levelUpCompoundMultiplier *= getRoom()->levelUpCompoundMultiplier;
 				currentLevel++;
 			}
 		}
@@ -4566,8 +4752,9 @@ void GameLogic::updateScore()
 
 			if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 			{
-				if (blocksClearedThisLevel / currentGameType->scoreTypeAmountPerLevelGained >= 1)
+				if (blocksClearedThisLevel / (currentGameType->scoreTypeAmountPerLevelGained * getRoom()->levelUpMultiplier * getRoom()->levelUpCompoundMultiplier) >= 1)
 				{
+					getRoom()->levelUpCompoundMultiplier *= getRoom()->levelUpCompoundMultiplier;
 					currentLevel++;
 				}
 			}
@@ -4582,8 +4769,9 @@ void GameLogic::updateScore()
 
 				if (currentGameType->scoreTypeAmountPerLevelGained > 0)
 				{
-					if (piecesMadeThisLevel / currentGameType->scoreTypeAmountPerLevelGained >= 1)
+					if (piecesMadeThisLevel / (currentGameType->scoreTypeAmountPerLevelGained * getRoom()->levelUpMultiplier * getRoom()->levelUpCompoundMultiplier) >= 1)
 					{
+						getRoom()->levelUpCompoundMultiplier *= getRoom()->levelUpCompoundMultiplier;
 						currentLevel++;
 					}
 				}
@@ -4626,7 +4814,7 @@ void GameLogic::updateScore()
 			getAudioManager()->playSound(currentGameType->levelUpSound, getVolume(), 1.0f);
 		}
 
-		if (getBobsGame()->currentRoom->endlessMode == false)
+		if (getRoom()->endlessMode == false)
 		{
 			if (currentLevel == getCurrentDifficulty()->extraStage1Level && extraStage1 == false)
 			{

@@ -2499,12 +2499,15 @@ void BobsGame::saveRoomConfigMenuUpdate()
 		saveRoomConfigMenu->center = false;
 		//saveRoomConfigMenu->outline = false;
 
-		saveRoomConfigMenu->add("Name: ","Name", BobMenu::statusColor);
+		saveRoomConfigNameText = "" + currentRoom->gameSequence->name + " " + currentRoom->difficultyName + " ";
+
+
+		saveRoomConfigMenu->add("Name: " + saveRoomConfigNameText,"Name", BobMenu::statusColor);
 		saveRoomConfigMenu->add("Save");
 		saveRoomConfigMenu->add("Cancel");
 
 
-		saveRoomConfigNameText = "" + currentRoom->gameSequence->name + " " + currentRoom->difficultyName + " " ;
+		
 
 		saveRoomConfigMenu->cursorPosition = saveRoomConfigMenuCursorPosition;
 	}
@@ -2534,11 +2537,11 @@ void BobsGame::saveRoomConfigMenuUpdate()
 	}
 
 
-	if (loginMenu->isSelectedID("Name"))
+	if (saveRoomConfigMenu->isSelectedID("Name"))
 	{
 		if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = saveRoomConfigNameText; textStarted = true; }
 		saveRoomConfigNameText = getControlsManager()->text;
-		loginMenu->getMenuItemByID("Name")->setText("Name: " + saveRoomConfigNameText);
+		saveRoomConfigMenu->getMenuItemByID("Name")->setText("Name: " + saveRoomConfigNameText);
 	}
 
 	bool leaveMenu = false;
@@ -2746,9 +2749,12 @@ void BobsGame::sendGarbageToMenuUpdate()
 		
 		sendGarbageToMenu->add(SEND_GARBAGE_TO_ALL_PLAYERS);
 		sendGarbageToMenu->add(SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE);
-		sendGarbageToMenu->add(SEND_GARBAGE_TO_RANDOM_PLAYER);
-		sendGarbageToMenu->add(SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION);
-		sendGarbageToMenu->add(SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS);
+		if (networkMultiplayer == false)
+		{
+			sendGarbageToMenu->add(SEND_GARBAGE_TO_RANDOM_PLAYER);
+			sendGarbageToMenu->add(SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION);
+			sendGarbageToMenu->add(SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS);
+		}
 
 		sendGarbageToMenu->cursorPosition = sendGarbageToMenuCursorPosition;
 	}
@@ -3089,7 +3095,7 @@ void BobsGame::roomOptionsMenuUpdate()
 		}
 		if (roomOptionsMenu->isSelectedID("Game Speed Start"))
 		{
-			descriptionCaption->setText("Percent speed at which the game begins. Default is 1% of max.");
+			descriptionCaption->setText("Percent speed at which the game begins. Default is 0%.");
 		}
 
 		if (roomOptionsMenu->isSelectedID("Game Speed Change Rate"))
@@ -3245,7 +3251,6 @@ void BobsGame::roomOptionsMenuUpdate()
 //							selectedObjectiveIndex++;
 //							if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
 //						}
-//					
 //						if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
 //						{
 //							if (currentRoom != nullptr)currentRoom->endlessMode = false;
@@ -3293,15 +3298,33 @@ void BobsGame::roomOptionsMenuUpdate()
 				if (confirm || clicked)sendGarbageToMenuShowing = true;
 				else
 				{
-					if (left)
+
+					if(networkMultiplayer)
 					{
-						currentRoom->multiplayer_SendGarbageTo--;
-						if (currentRoom->multiplayer_SendGarbageTo < 0)currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::LAST - 1;
+						if (left)
+						{
+							currentRoom->multiplayer_SendGarbageTo--;
+							if (currentRoom->multiplayer_SendGarbageTo < 0)currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE;
+						}
+						if (right)
+						{
+							currentRoom->multiplayer_SendGarbageTo++;
+							if (currentRoom->multiplayer_SendGarbageTo > (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)currentRoom->multiplayer_SendGarbageTo = 0;
+						}
+
 					}
-					if (right)
+					else
 					{
-						currentRoom->multiplayer_SendGarbageTo++;
-						if (currentRoom->multiplayer_SendGarbageTo >= (int)SendGarbageToRule::LAST)currentRoom->multiplayer_SendGarbageTo = 0;
+						if (left)
+						{
+							currentRoom->multiplayer_SendGarbageTo--;
+							if (currentRoom->multiplayer_SendGarbageTo < 0)currentRoom->multiplayer_SendGarbageTo = (int)SendGarbageToRule::LAST - 1;
+						}
+						if (right)
+						{
+							currentRoom->multiplayer_SendGarbageTo++;
+							if (currentRoom->multiplayer_SendGarbageTo >= (int)SendGarbageToRule::LAST)currentRoom->multiplayer_SendGarbageTo = 0;
+						}
 					}
 										
 				}

@@ -11,6 +11,7 @@
 #include "GameSequence.h"
 class PuzzlePlayer;
 class Logger;
+class Room;
 #include <random>
 
 #include "./../../src/Engine/EnginePart.h"
@@ -181,6 +182,7 @@ public:
 	Grid* grid = nullptr;
 
 	BobsGame* getBobsGame();
+	Room* getRoom();
 
 	int blockWidth = 1;
 	int blockHeight = 1;
@@ -353,6 +355,9 @@ public:
 	int biggestComboChain = 0;
 
 public:
+	//only used for local multiplayer games, specific network garbage rules must be coordinated by server
+	int lastSentGarbageToPlayerIndex = 0;
+
 	int queuedVSGarbageAmountToSend = 0;
 
 private:

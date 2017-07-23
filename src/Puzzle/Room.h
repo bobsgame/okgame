@@ -73,17 +73,21 @@ public:
 	bool	multiplayer_GameEndsWhenOnePlayerRemains = true;
 	bool	multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
 	bool	multiplayer_DisableVSGarbage = false;
+
 	float	gameSpeedStart = 0.01f;
 	float	gameSpeedChangeRate = 0.02f;
 	float	gameSpeedMaximum = 1.0f;//can be 0.1 to 10.0 although that won't make sense
 	float	levelUpMultiplier = 1.0f;//can be negative
 	float	levelUpCompoundMultiplier = 1.0f;//can be negative
-	bool	multiplayer_AllowNewPlayersDuringGame = false;
-	bool	multiplayer_UseTeams = false;
+
+	bool	multiplayer_AllowNewPlayersDuringGame = false;//TODO:
+	bool	multiplayer_UseTeams = false;//TODO:
+
 	float	multiplayer_GarbageMultiplier = 1.0f;
 	int		multiplayer_GarbageLimit = 0;
 	bool	multiplayer_GarbageScaleByDifficulty = true;//scale garbage by difficulty, beginner->insane 2x, insane->beginner 0.5x, etc.
 	int		multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
+
 	int		multiplayer_FloorSpinLimit = 0;
 	int		multiplayer_TotalYLockDelayLimit = 0;
 	float	multiplayer_LockDelayDecreaseRate = 0;
