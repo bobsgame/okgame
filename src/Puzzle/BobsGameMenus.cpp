@@ -2937,15 +2937,15 @@ void BobsGame::roomOptionsMenuUpdate()
 	roomOptionsMenu->getMenuItemByID("Game Speed Maximum")->setText("Game Speed Maximum: " + to_string((int)(currentRoom->gameSpeedMaximum * 100)) + "%");
 	roomOptionsMenu->getMenuItemByID("Levelup Multiplier")->setText("Score Needed To Level Up Multiplier: " + to_string((int)(currentRoom->levelUpMultiplier * 100)) + "%");
 	roomOptionsMenu->getMenuItemByID("Levelup Compound Multiplier")->setText("Score To Level Up Compound Multiplier: " + to_string((int)(currentRoom->levelUpCompoundMultiplier * 100)) + "%");
-	roomOptionsMenu->getMenuItemByID("Floor Movement Limit")->setText("Floor Movement Limit: " + string((currentRoom->multiplayer_FloorSpinLimit > -1) ? to_string(currentRoom->multiplayer_FloorSpinLimit) : "No Limit"));
-	roomOptionsMenu->getMenuItemByID("Total Lock Delay Limit")->setText("Total Lock Delay Limit: " + string((currentRoom->multiplayer_TotalYLockDelayLimit > -1) ? to_string(currentRoom->multiplayer_TotalYLockDelayLimit) + "ms" : "No Limit"));
-	roomOptionsMenu->getMenuItemByID("Lock Delay Decrease Rate")->setText("Lock Delay Decrease Rate: " + string((currentRoom->multiplayer_LockDelayDecreaseRate > 0) ? to_string((int)(currentRoom->multiplayer_LockDelayDecreaseRate * 100)) + "%" : "None"));
-	roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + string((currentRoom->multiplayer_LockDelayMinimum > 0) ? to_string(currentRoom->multiplayer_LockDelayMinimum) + "ms" : "None"));
-	roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + string((currentRoom->multiplayer_StackWaitLimit > -1) ? to_string(currentRoom->multiplayer_StackWaitLimit) + "ms" : "No Limit"));
-	roomOptionsMenu->getMenuItemByID("Spawn Delay Limit")->setText("Spawn Delay Limit: " + string((currentRoom->multiplayer_SpawnDelayLimit > -1) ? to_string(currentRoom->multiplayer_SpawnDelayLimit) + "ms" : "No Limit"));
-	roomOptionsMenu->getMenuItemByID("Spawn Delay Decrease Rate")->setText("Spawn Delay Decrease Rate: " + string((currentRoom->multiplayer_SpawnDelayDecreaseRate > 0) ? to_string((int)(currentRoom->multiplayer_SpawnDelayDecreaseRate * 100)) + "%" : "None"));
-	roomOptionsMenu->getMenuItemByID("Spawn Delay Minimum")->setText("Spawn Delay Minimum: " + string((currentRoom->multiplayer_SpawnDelayMinimum > 0) ? to_string(currentRoom->multiplayer_SpawnDelayMinimum) + "ms" : "None"));
-	roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + string((currentRoom->multiplayer_DropDelayMinimum > 0) ? to_string(currentRoom->multiplayer_DropDelayMinimum) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Floor Movement Limit")->setText("Floor Movement Limit: " + string((currentRoom->floorSpinLimit > -1) ? to_string(currentRoom->floorSpinLimit) : "No Limit"));
+	roomOptionsMenu->getMenuItemByID("Total Lock Delay Limit")->setText("Total Lock Delay Limit: " + string((currentRoom->totalYLockDelayLimit > -1) ? to_string(currentRoom->totalYLockDelayLimit) + "ms" : "No Limit"));
+	roomOptionsMenu->getMenuItemByID("Lock Delay Decrease Rate")->setText("Lock Delay Decrease Rate: " + string((currentRoom->lockDelayDecreaseRate > 0) ? to_string((int)(currentRoom->lockDelayDecreaseRate * 100)) + "%" : "None"));
+	roomOptionsMenu->getMenuItemByID("Lock Delay Minimum")->setText("Lock Delay Minimum: " + string((currentRoom->lockDelayMinimum > 0) ? to_string(currentRoom->lockDelayMinimum) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Stack Wait Limit")->setText("Stack Wait Limit: " + string((currentRoom->stackWaitLimit > -1) ? to_string(currentRoom->stackWaitLimit) + "ms" : "No Limit"));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Limit")->setText("Spawn Delay Limit: " + string((currentRoom->spawnDelayLimit > -1) ? to_string(currentRoom->spawnDelayLimit) + "ms" : "No Limit"));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Decrease Rate")->setText("Spawn Delay Decrease Rate: " + string((currentRoom->spawnDelayDecreaseRate > 0) ? to_string((int)(currentRoom->spawnDelayDecreaseRate * 100)) + "%" : "None"));
+	roomOptionsMenu->getMenuItemByID("Spawn Delay Minimum")->setText("Spawn Delay Minimum: " + string((currentRoom->spawnDelayMinimum > 0) ? to_string(currentRoom->spawnDelayMinimum) + "ms" : "None"));
+	roomOptionsMenu->getMenuItemByID("Drop Delay Minimum")->setText("Drop Delay Minimum: " + string((currentRoom->dropDelayMinimum > 0) ? to_string(currentRoom->dropDelayMinimum) + "ms" : "None"));
 
 
 	if (localMultiplayer || networkMultiplayer)
@@ -3045,47 +3045,47 @@ void BobsGame::roomOptionsMenuUpdate()
 
 			if (roomOptionsMenu->isSelectedID("Floor Movement Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_FloorSpinLimit, -1, 128, 1);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->floorSpinLimit, -1, 128, 1);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Total Lock Delay Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_TotalYLockDelayLimit, -1, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->totalYLockDelayLimit, -1, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Lock Delay Decrease Rate"))
 			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->multiplayer_LockDelayDecreaseRate, 0.0f, 1.0f, 0.01f);
+				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->lockDelayDecreaseRate, 0.0f, 1.0f, 0.01f);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Lock Delay Minimum"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_LockDelayMinimum, 0, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->lockDelayMinimum, 0, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Stack Wait Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_StackWaitLimit, -1, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->stackWaitLimit, -1, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Spawn Delay Limit"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_SpawnDelayLimit, -1, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->spawnDelayLimit, -1, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Spawn Delay Decrease Rate"))
 			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->multiplayer_SpawnDelayDecreaseRate, 0.0f, 1.0f, 0.01f);
+				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->spawnDelayDecreaseRate, 0.0f, 1.0f, 0.01f);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Spawn Delay Minimum"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_SpawnDelayMinimum, 0, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->spawnDelayMinimum, 0, 10000, 100);
 			}
 
 			if (roomOptionsMenu->isSelectedID("Drop Delay Minimum"))
 			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_DropDelayMinimum, 0, 10000, 100);
+				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->dropDelayMinimum, 0, 10000, 100);
 			}
 		}
 
@@ -3351,15 +3351,15 @@ void BobsGame::roomOptionsMenuUpdate()
 				currentRoom->multiplayer_GarbageLimit = r.multiplayer_GarbageLimit;
 				currentRoom->multiplayer_GarbageScaleByDifficulty = r.multiplayer_GarbageScaleByDifficulty;
 				currentRoom->multiplayer_SendGarbageTo = r.multiplayer_SendGarbageTo;
-				currentRoom->multiplayer_FloorSpinLimit = r.multiplayer_FloorSpinLimit;
-				currentRoom->multiplayer_TotalYLockDelayLimit = r.multiplayer_TotalYLockDelayLimit;
-				currentRoom->multiplayer_LockDelayDecreaseRate = r.multiplayer_LockDelayDecreaseRate;
-				currentRoom->multiplayer_LockDelayMinimum = r.multiplayer_LockDelayMinimum;
-				currentRoom->multiplayer_StackWaitLimit = r.multiplayer_StackWaitLimit;
-				currentRoom->multiplayer_SpawnDelayLimit = r.multiplayer_SpawnDelayLimit;
-				currentRoom->multiplayer_SpawnDelayDecreaseRate = r.multiplayer_SpawnDelayDecreaseRate;
-				currentRoom->multiplayer_SpawnDelayMinimum = r.multiplayer_SpawnDelayMinimum;
-				currentRoom->multiplayer_DropDelayMinimum = r.multiplayer_DropDelayMinimum;
+				currentRoom->floorSpinLimit = r.floorSpinLimit;
+				currentRoom->totalYLockDelayLimit = r.totalYLockDelayLimit;
+				currentRoom->lockDelayDecreaseRate = r.lockDelayDecreaseRate;
+				currentRoom->lockDelayMinimum = r.lockDelayMinimum;
+				currentRoom->stackWaitLimit = r.stackWaitLimit;
+				currentRoom->spawnDelayLimit = r.spawnDelayLimit;
+				currentRoom->spawnDelayDecreaseRate = r.spawnDelayDecreaseRate;
+				currentRoom->spawnDelayMinimum = r.spawnDelayMinimum;
+				currentRoom->dropDelayMinimum = r.dropDelayMinimum;
 
 			}
 

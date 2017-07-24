@@ -280,6 +280,7 @@ private:
 
 	long long currentTotalYLockDelay = 0;
 	long long adjustedMaxLockDelayTicks = 0;
+	long long adjustedSpawnDelayTicksAmount = 0;
 	long long currentFloorMovements = 0;
 
 	string playingMusic = "";

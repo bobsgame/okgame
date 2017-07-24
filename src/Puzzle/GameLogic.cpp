@@ -266,7 +266,7 @@ void GameLogic::initGame()
 	//TODO: maximum spawn/line clear delay
 
 	lockDelayTicksCounter = adjustedMaxLockDelayTicks;
-	if (getRoom()->multiplayer_LockDelayMinimum > -1 && lockDelayTicksCounter < getRoom()->multiplayer_LockDelayMinimum)lockDelayTicksCounter = getRoom()->multiplayer_LockDelayMinimum;
+	if (getRoom()->lockDelayMinimum > -1 && lockDelayTicksCounter < getRoom()->lockDelayMinimum)lockDelayTicksCounter = getRoom()->lockDelayMinimum;
 
 	currentLineDropSpeedTicks = getCurrentDifficulty()->initialLineDropSpeedTicks;
 	currentStackRiseSpeedTicks = getCurrentDifficulty()->maxStackRise;
@@ -1897,6 +1897,8 @@ void GameLogic::handleNewChain()
 			if (currentChainBlocks.size() > 3)
 			{
 				stopStackRiseTicksCounter += 1000 * currentChainBlocks.size();
+
+				if (getRoom()->stackWaitLimit > -1 && stopStackRiseTicksCounter > getRoom()->stackWaitLimit)stopStackRiseTicksCounter = getRoom()->stackWaitLimit;
 			}
 		}
 
@@ -2015,7 +2017,7 @@ void GameLogic::doFallingBlockGame()
 
 		currentTotalYLockDelay += lockDelayTicksCounter;
 
-		if(getRoom()->multiplayer_TotalYLockDelayLimit > -1 && currentTotalYLockDelay >= getRoom()->multiplayer_TotalYLockDelayLimit)
+		if(getRoom()->totalYLockDelayLimit > -1 && currentTotalYLockDelay >= getRoom()->totalYLockDelayLimit)
 		{
 			currentPiece->yGrid++;
 			if (grid->doesPieceFit(currentPiece) == false)
@@ -2033,6 +2035,7 @@ void GameLogic::doFallingBlockGame()
 			if (moved)
 			{
 				lineDropTicksCounter = currentLineDropSpeedTicks;
+				
 			}
 
 			if (died)
@@ -2097,7 +2100,7 @@ void GameLogic::pieceMoved()
 {//=========================================================================================================================
 
 	lockDelayTicksCounter = adjustedMaxLockDelayTicks;
-	if (getRoom()->multiplayer_LockDelayMinimum > -1 && lockDelayTicksCounter < getRoom()->multiplayer_LockDelayMinimum)lockDelayTicksCounter = getRoom()->multiplayer_LockDelayMinimum;
+	if (getRoom()->lockDelayMinimum > -1 && lockDelayTicksCounter < getRoom()->lockDelayMinimum)lockDelayTicksCounter = getRoom()->lockDelayMinimum;
 
 
 	//test one more down
@@ -2116,15 +2119,7 @@ void GameLogic::pieceMoved()
 bool GameLogic::movePiece(MovementType move)
 {//=========================================================================================================================
 
-//	int		multiplayer_FloorSpinLimit = 0;
-//	int		multiplayer_TotalYLockDelayLimit = 0;
-//	float	multiplayer_LockDelayDecreaseRate = 0;
-//	int		multiplayer_LockDelayMinimum = 0;
-//	int		multiplayer_StackWaitLimit = 0;
-//	int		multiplayer_SpawnDelayLimit = 0;
-//	float	multiplayer_SpawnDelayDecreaseRate = 0;
-//	int		multiplayer_SpawnDelayMinimum = 0;
-//	int		multiplayer_DropDelayMinimum = 0;
+
 
 	if (currentPiece == nullptr)
 	{
@@ -2253,7 +2248,7 @@ bool GameLogic::movePiece(MovementType move)
 			{
 				currentFloorMovements++;
 
-				if(currentFloorMovements>=getRoom()->multiplayer_FloorSpinLimit)
+				if(currentFloorMovements>=getRoom()->floorSpinLimit)
 				{
 					setPiece();
 				}
@@ -2263,7 +2258,7 @@ bool GameLogic::movePiece(MovementType move)
 
 		if (move == MovementType::DOWN || move == MovementType::HARD_DROP)
 		{
-			currentLockDelayTicksY = 0;
+			currentTotalYLockDelay = 0;
 		}
 
 		return true;
@@ -2602,7 +2597,9 @@ void GameLogic::setCurrentPieceAtTop()
 		died = true;
 	}
 
-	spawnDelayTicksCounter = currentGameType->spawnDelayTicksAmountPerPiece;
+	spawnDelayTicksCounter = adjustedSpawnDelayTicksAmount;// currentGameType->spawnDelayTicksAmountPerPiece;
+	if (getRoom()->spawnDelayLimit > -1 && spawnDelayTicksCounter > getRoom()->spawnDelayLimit)spawnDelayTicksCounter = getRoom()->spawnDelayLimit;
+	if (getRoom()->spawnDelayMinimum > -1 && spawnDelayTicksCounter < getRoom()->spawnDelayMinimum)spawnDelayTicksCounter = getRoom()->spawnDelayMinimum;
 
 	lineDropTicksCounter = 0;
 }
@@ -4749,7 +4746,13 @@ void GameLogic::updateScore()
 
 		
 		long long dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks;
+		if (getRoom()->dropDelayMinimum>-1)
+		{
+			dropSpeedDiff = getCurrentDifficulty()->initialLineDropSpeedTicks - min(getCurrentDifficulty()->minimumLineDropSpeedTicks,getRoom()->dropDelayMinimum);
+		}
+
 		currentLineDropSpeedTicks = getCurrentDifficulty()->initialLineDropSpeedTicks - (dropSpeedDiff * gameSpeed);
+
 
 		//long long currentDropSpeedDiff = (currentLineDropSpeedTicks - getCurrentDifficulty()->minimumLineDropSpeedTicks);
 
@@ -4862,7 +4865,10 @@ void GameLogic::updateScore()
 
 
 		
-		if (getRoom()->multiplayer_LockDelayDecreaseRate > -1)adjustedMaxLockDelayTicks -= currentGameType->maxLockDelayTicks * getRoom()->multiplayer_LockDelayDecreaseRate;
+		if (getRoom()->lockDelayDecreaseRate > -1)adjustedMaxLockDelayTicks -= currentGameType->maxLockDelayTicks * getRoom()->lockDelayDecreaseRate;
+
+		if (getRoom()->spawnDelayDecreaseRate > -1)adjustedSpawnDelayTicksAmount -= currentGameType->spawnDelayTicksAmountPerPiece * getRoom()->spawnDelayDecreaseRate;
+		if (getRoom()->spawnDelayMinimum > -1 && adjustedSpawnDelayTicksAmount < getRoom()->spawnDelayMinimum)adjustedSpawnDelayTicksAmount = getRoom()->spawnDelayMinimum;
 
 		if (currentGameSequence->gameTypes.size() > 1)
 		{

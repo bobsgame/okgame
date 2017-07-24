@@ -88,15 +88,16 @@ public:
 	bool	multiplayer_GarbageScaleByDifficulty = true;//scale garbage by difficulty, beginner->insane 2x, insane->beginner 0.5x, etc.
 	int		multiplayer_SendGarbageTo = (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS;
 
-	int		multiplayer_FloorSpinLimit = -1;
-	int		multiplayer_TotalYLockDelayLimit = -1;
-	float	multiplayer_LockDelayDecreaseRate = 0;
-	int		multiplayer_LockDelayMinimum = 0;
-	int		multiplayer_StackWaitLimit = -1;
-	int		multiplayer_SpawnDelayLimit = -1;
-	float	multiplayer_SpawnDelayDecreaseRate = 0;
-	int		multiplayer_SpawnDelayMinimum = 0;
-	int		multiplayer_DropDelayMinimum = 0;
+	int		floorSpinLimit = -1;
+	int		totalYLockDelayLimit = -1;
+	float	lockDelayDecreaseRate = 0;
+	int		lockDelayMinimum = 0;
+
+	int		stackWaitLimit = -1;
+	int		spawnDelayLimit = -1;
+	float	spawnDelayDecreaseRate = 0;
+	int		spawnDelayMinimum = 0;
+	int		dropDelayMinimum = 0;
 
 
 
@@ -145,17 +146,17 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_GarbageLimit);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_GarbageScaleByDifficulty);
 		ar & BOOST_SERIALIZATION_NVP(multiplayer_SendGarbageTo);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_FloorSpinLimit);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_TotalYLockDelayLimit);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_LockDelayDecreaseRate);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_LockDelayMinimum);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_StackWaitLimit);
+		ar & BOOST_SERIALIZATION_NVP(floorSpinLimit);
+		ar & BOOST_SERIALIZATION_NVP(totalYLockDelayLimit);
+		ar & BOOST_SERIALIZATION_NVP(lockDelayDecreaseRate);
+		ar & BOOST_SERIALIZATION_NVP(lockDelayMinimum);
+		ar & BOOST_SERIALIZATION_NVP(stackWaitLimit);
 
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_SpawnDelayLimit);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_SpawnDelayDecreaseRate);
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_SpawnDelayMinimum);
+		ar & BOOST_SERIALIZATION_NVP(spawnDelayLimit);
+		ar & BOOST_SERIALIZATION_NVP(spawnDelayDecreaseRate);
+		ar & BOOST_SERIALIZATION_NVP(spawnDelayMinimum);
 
-		ar & BOOST_SERIALIZATION_NVP(multiplayer_DropDelayMinimum);
+		ar & BOOST_SERIALIZATION_NVP(dropDelayMinimum);
 
 	}
 
@@ -261,16 +262,16 @@ public:
 			"," + to_string(multiplayer_GarbageLimit) +
 			"," + to_string((int)multiplayer_GarbageScaleByDifficulty) +
 			"," + to_string(multiplayer_SendGarbageTo) +
-			"," + to_string(multiplayer_FloorSpinLimit) +
-			"," + to_string(multiplayer_TotalYLockDelayLimit) +
-			"," + to_string(multiplayer_LockDelayDecreaseRate) +
-			"," + to_string(multiplayer_LockDelayMinimum) +
-			"," + to_string(multiplayer_StackWaitLimit) +
+			"," + to_string(floorSpinLimit) +
+			"," + to_string(totalYLockDelayLimit) +
+			"," + to_string(lockDelayDecreaseRate) +
+			"," + to_string(lockDelayMinimum) +
+			"," + to_string(stackWaitLimit) +
 
-			"," + to_string(multiplayer_SpawnDelayLimit) +
-			"," + to_string(multiplayer_SpawnDelayDecreaseRate) +
-			"," + to_string(multiplayer_SpawnDelayMinimum) +
-			"," + to_string(multiplayer_DropDelayMinimum) +
+			"," + to_string(spawnDelayLimit) +
+			"," + to_string(spawnDelayDecreaseRate) +
+			"," + to_string(spawnDelayMinimum) +
+			"," + to_string(dropDelayMinimum) +
 			",";
 
 		if (includeXMLGameSequence)
@@ -534,16 +535,16 @@ public:
 			newRoom->multiplayer_GarbageLimit				 = stoi(multiplayer_GarbageLimitString);
 			newRoom->multiplayer_GarbageScaleByDifficulty	 = 0 != stoi(multiplayer_GarbageScaleByDifficultyString);
 			newRoom->multiplayer_SendGarbageTo				 = stoi(multiplayer_SendGarbageToString);
-			newRoom->multiplayer_FloorSpinLimit				 = stoi(multiplayer_FloorSpinLimitString);
-			newRoom->multiplayer_TotalYLockDelayLimit		 = stoi(multiplayer_LockDelayLimitString);
-			newRoom->multiplayer_LockDelayDecreaseRate		 = stof(multiplayer_LockDelayDecreaseMultiplierString);
-			newRoom->multiplayer_LockDelayMinimum			 = stoi(multiplayer_LockDelayMinimumString);
-			newRoom->multiplayer_StackWaitLimit				 = stoi(multiplayer_StackWaitLimitString);
+			newRoom->floorSpinLimit				 = stoi(multiplayer_FloorSpinLimitString);
+			newRoom->totalYLockDelayLimit		 = stoi(multiplayer_LockDelayLimitString);
+			newRoom->lockDelayDecreaseRate		 = stof(multiplayer_LockDelayDecreaseMultiplierString);
+			newRoom->lockDelayMinimum			 = stoi(multiplayer_LockDelayMinimumString);
+			newRoom->stackWaitLimit				 = stoi(multiplayer_StackWaitLimitString);
 
-			newRoom->multiplayer_SpawnDelayLimit			 = stoi(multiplayer_SpawnDelayLimitString);
-			newRoom->multiplayer_SpawnDelayDecreaseRate		 = stof(multiplayer_SpawnDelayDecreaseRateString);
-			newRoom->multiplayer_SpawnDelayMinimum			 = stoi(multiplayer_SpawnDelayMinimumString);
-			newRoom->multiplayer_DropDelayMinimum			 = stoi(multiplayer_DropDelayMinimumString);
+			newRoom->spawnDelayLimit			 = stoi(multiplayer_SpawnDelayLimitString);
+			newRoom->spawnDelayDecreaseRate		 = stof(multiplayer_SpawnDelayDecreaseRateString);
+			newRoom->spawnDelayMinimum			 = stoi(multiplayer_SpawnDelayMinimumString);
+			newRoom->dropDelayMinimum			 = stoi(multiplayer_DropDelayMinimumString);
 
 
 
