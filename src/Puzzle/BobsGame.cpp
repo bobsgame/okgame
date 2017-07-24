@@ -703,9 +703,9 @@ void BobsGame::render()
 			glActiveTexture(GL_TEXTURE0);
 			glDisable(GL_TEXTURE_2D);
 
-			GLUtils::bindFBO(GLUtils::preColorFilterFBO);
+			GLUtils::bindFBO(GLUtils::postColorFilterFBO);
 			GLUtils::drawIntoFBOAttachment(0); //draw to nD FBO screen texture
-			GLUtils::setPreColorFilterViewport();
+			GLUtils::setPostColorFilterViewport();
 			GLUtils::globalDrawScale = tempDrawScale;
 
 			//clear the preColor FBO
