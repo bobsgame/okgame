@@ -99,8 +99,72 @@ public:
 	int		spawnDelayMinimum = 0;
 	int		dropDelayMinimum = 0;
 
+	//=========================================================================================================================
+	void setDefaults()
+	{//=========================================================================================================================
 
 
+		Room r;
+
+		this->endlessMode = r.endlessMode;
+		this->multiplayer_GameEndsWhenOnePlayerRemains = r.multiplayer_GameEndsWhenOnePlayerRemains;
+		this->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = r.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
+		this->multiplayer_DisableVSGarbage = r.multiplayer_DisableVSGarbage;
+		this->gameSpeedStart = r.gameSpeedStart;
+		this->gameSpeedChangeRate = r.gameSpeedChangeRate;
+		this->gameSpeedMaximum = r.gameSpeedMaximum;
+		this->levelUpMultiplier = r.levelUpMultiplier;
+		this->levelUpCompoundMultiplier = r.levelUpCompoundMultiplier;
+		this->multiplayer_AllowNewPlayersDuringGame = r.multiplayer_AllowNewPlayersDuringGame;
+		this->multiplayer_UseTeams = r.multiplayer_UseTeams;
+		this->multiplayer_GarbageMultiplier = r.multiplayer_GarbageMultiplier;
+		this->multiplayer_GarbageLimit = r.multiplayer_GarbageLimit;
+		this->multiplayer_GarbageScaleByDifficulty = r.multiplayer_GarbageScaleByDifficulty;
+		this->multiplayer_SendGarbageTo = r.multiplayer_SendGarbageTo;
+		this->floorSpinLimit = r.floorSpinLimit;
+		this->totalYLockDelayLimit = r.totalYLockDelayLimit;
+		this->lockDelayDecreaseRate = r.lockDelayDecreaseRate;
+		this->lockDelayMinimum = r.lockDelayMinimum;
+		this->stackWaitLimit = r.stackWaitLimit;
+		this->spawnDelayLimit = r.spawnDelayLimit;
+		this->spawnDelayDecreaseRate = r.spawnDelayDecreaseRate;
+		this->spawnDelayMinimum = r.spawnDelayMinimum;
+		this->dropDelayMinimum = r.dropDelayMinimum;
+	}
+
+	//=========================================================================================================================
+	bool isDefaultSettings()
+	{//=========================================================================================================================
+
+		Room r;
+
+		if(this->endlessMode != r.endlessMode)return false;
+		if(this->multiplayer_GameEndsWhenOnePlayerRemains != r.multiplayer_GameEndsWhenOnePlayerRemains)return false;
+		if(this->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel != r.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)return false;
+		if(this->multiplayer_DisableVSGarbage != r.multiplayer_DisableVSGarbage)return false;
+		if(this->gameSpeedStart != r.gameSpeedStart)return false;
+		if(this->gameSpeedChangeRate != r.gameSpeedChangeRate)return false;
+		if(this->gameSpeedMaximum != r.gameSpeedMaximum)return false;
+		if(this->levelUpMultiplier != r.levelUpMultiplier)return false;
+		if(this->levelUpCompoundMultiplier != r.levelUpCompoundMultiplier)return false;
+		if(this->multiplayer_AllowNewPlayersDuringGame != r.multiplayer_AllowNewPlayersDuringGame)return false;
+		if(this->multiplayer_UseTeams != r.multiplayer_UseTeams)return false;
+		if(this->multiplayer_GarbageMultiplier != r.multiplayer_GarbageMultiplier)return false;
+		if(this->multiplayer_GarbageLimit != r.multiplayer_GarbageLimit)return false;
+		if(this->multiplayer_GarbageScaleByDifficulty != r.multiplayer_GarbageScaleByDifficulty)return false;
+		if(this->multiplayer_SendGarbageTo != r.multiplayer_SendGarbageTo)return false;
+		if(this->floorSpinLimit != r.floorSpinLimit)return false;
+		if(this->totalYLockDelayLimit != r.totalYLockDelayLimit)return false;
+		if(this->lockDelayDecreaseRate != r.lockDelayDecreaseRate)return false;
+		if(this->lockDelayMinimum != r.lockDelayMinimum)return false;
+		if(this->stackWaitLimit != r.stackWaitLimit)return false;
+		if(this->spawnDelayLimit != r.spawnDelayLimit)return false;
+		if(this->spawnDelayDecreaseRate != r.spawnDelayDecreaseRate)return false;
+		if(this->spawnDelayMinimum != r.spawnDelayMinimum)return false;
+		if(this->dropDelayMinimum != r.dropDelayMinimum)return false;
+
+		return true;
+	}
 
 
 	//don't export
@@ -284,6 +348,8 @@ public:
 		}
 		return s;
 	}
+
+
 
 	//=========================================================================================================================
 	static Room* decodeRoomData(string s, bool decodeGameSequenceXML)

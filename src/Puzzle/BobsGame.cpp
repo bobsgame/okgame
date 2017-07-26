@@ -1170,6 +1170,8 @@ void BobsGame::update()
 void BobsGame::sendGameStatsToServer()
 {//=========================================================================================================================
 
+	if (leaderboardScoreDisabled)return;
+	
 	if (sentStats)return;
 
 	if (getServerConnection()->getConnectedToServer_S() == false)return;

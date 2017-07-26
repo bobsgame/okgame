@@ -455,6 +455,7 @@ public:
 	bool voteUpDown = false;
 
 	bool sentStats = false;
+	bool leaderboardScoreDisabled = false;
 
 	void playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p);
 	void playerGameSequenceMiniMenuRender(PuzzlePlayer *p, float x, float y);

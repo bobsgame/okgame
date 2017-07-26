@@ -3335,32 +3335,7 @@ void BobsGame::roomOptionsMenuUpdate()
 		{
 			if (roomOptionsMenu->isSelectedID("Defaults", clicked, mx, my))
 			{
-				Room r;
-				currentRoom->endlessMode = r.endlessMode;
-				currentRoom->multiplayer_GameEndsWhenOnePlayerRemains = r.multiplayer_GameEndsWhenOnePlayerRemains;
-				currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = r.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
-				currentRoom->multiplayer_DisableVSGarbage = r.multiplayer_DisableVSGarbage;
-				currentRoom->gameSpeedStart = r.gameSpeedStart;
-				currentRoom->gameSpeedChangeRate = r.gameSpeedChangeRate;
-				currentRoom->gameSpeedMaximum = r.gameSpeedMaximum;
-				currentRoom->levelUpMultiplier = r.levelUpMultiplier;
-				currentRoom->levelUpCompoundMultiplier = r.levelUpCompoundMultiplier;
-				currentRoom->multiplayer_AllowNewPlayersDuringGame = r.multiplayer_AllowNewPlayersDuringGame;
-				currentRoom->multiplayer_UseTeams = r.multiplayer_UseTeams;
-				currentRoom->multiplayer_GarbageMultiplier = r.multiplayer_GarbageMultiplier;
-				currentRoom->multiplayer_GarbageLimit = r.multiplayer_GarbageLimit;
-				currentRoom->multiplayer_GarbageScaleByDifficulty = r.multiplayer_GarbageScaleByDifficulty;
-				currentRoom->multiplayer_SendGarbageTo = r.multiplayer_SendGarbageTo;
-				currentRoom->floorSpinLimit = r.floorSpinLimit;
-				currentRoom->totalYLockDelayLimit = r.totalYLockDelayLimit;
-				currentRoom->lockDelayDecreaseRate = r.lockDelayDecreaseRate;
-				currentRoom->lockDelayMinimum = r.lockDelayMinimum;
-				currentRoom->stackWaitLimit = r.stackWaitLimit;
-				currentRoom->spawnDelayLimit = r.spawnDelayLimit;
-				currentRoom->spawnDelayDecreaseRate = r.spawnDelayDecreaseRate;
-				currentRoom->spawnDelayMinimum = r.spawnDelayMinimum;
-				currentRoom->dropDelayMinimum = r.dropDelayMinimum;
-
+				currentRoom->setDefaults();
 			}
 
 			if (roomOptionsMenu->isSelectedID("Apply", clicked, mx, my))
@@ -3394,6 +3369,9 @@ void BobsGame::gameSetupMenuUpdate()
 
 	if (gameSetupMenu == nullptr)
 	{
+
+		errorLabel = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 16, false, BobColor::red, BobColor::clear);
+
 		gameSetupMenu = new BobMenu(this, "Setup Game Options");
 
 		gameSetupMenu->add("Select Game Sequence Or Single Game Type...", "Select Game");
@@ -3412,6 +3390,14 @@ void BobsGame::gameSetupMenuUpdate()
 	}
 
 
+	if(currentRoom->isDefaultSettings()==false)
+	{
+		errorLabel->setText("Settings are not default, score will not count towards leaderboard ranking.");
+	}
+	else
+	{
+		errorLabel->setText("");
+	}
 
 	{
 		string selectedDifficultyName = "";
@@ -3624,6 +3610,17 @@ void BobsGame::gameSetupMenuUpdate()
 				currentRoom->difficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
+
+				if (currentRoom->isDefaultSettings() == false)
+				{
+					leaderboardScoreDisabled = true;
+				}
+				else
+				{
+					leaderboardScoreDisabled = false;
+				}
+
+				sentStats = false;
 
 				//if game type selected, else gray out
 				leaveMenu = true;
