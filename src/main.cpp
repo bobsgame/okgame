@@ -403,11 +403,12 @@ void Main::mainInit()
 
 
 
-
+	bool rpg = false;
 
 	File f(getPath()+"rpg");
-	if (f.exists())
+	if (f.exists() || rpg)
 	{
+		rpg = true;
 
 		if (gameEngine != nullptr)
 		{
@@ -483,20 +484,19 @@ void Main::mainInit()
 
 
 	
-
-	if (previewClientInEditor == false)
+	if (rpg)
 	{
-		//stateManager->pushState(controlsScreenState);
-		//showControlsImage();
+		if (previewClientInEditor == false)
+		{
+			//stateManager->pushState(controlsScreenState);
+			//showControlsImage();
 
+			//stateManager->pushState(legalScreenState);
+			//doLegalScreen();
 
-		//stateManager->pushState(legalScreenState);
-		//doLegalScreen();
-
-		stateManager->pushState(logoScreenState);
+			stateManager->pushState(logoScreenState);
+		}
 	}
-
-	
 
 	//GLUtils::e();
 	//tcpServerConnection = new BGClientTCP(gameEngine);

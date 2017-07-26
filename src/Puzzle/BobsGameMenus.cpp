@@ -3646,6 +3646,12 @@ void BobsGame::gameSetupMenuUpdate()
 		{
 			gameSetupMenuShowing = false;
 
+			if(errorLabel!=nullptr)
+			{
+				delete errorLabel;
+				errorLabel = nullptr;
+			}
+
 			if (gameSetupMenu != nullptr)
 			{
 				gameSetupMenuCursorPosition = gameSetupMenu->cursorPosition;

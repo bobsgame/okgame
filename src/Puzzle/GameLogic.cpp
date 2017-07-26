@@ -680,7 +680,7 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 							if (queuedVSGarbageAmountToSend > 0)
 							{
 								lastSentGarbageToPlayerIndex++;
-								if (lastSentGarbageToPlayerIndex >= alivePlayers.size())lastSentGarbageToPlayerIndex = 0;
+								if (lastSentGarbageToPlayerIndex >= (int)alivePlayers.size())lastSentGarbageToPlayerIndex = 0;
 
 								GameLogic* g2 = alivePlayers.at(lastSentGarbageToPlayerIndex);
 
