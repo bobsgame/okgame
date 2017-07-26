@@ -405,72 +405,71 @@ void Main::mainInit()
 
 
 
-
-
-
-#define PUZZLE 1
-
-#ifdef PUZZLE
-
-	log.debug("Create BobsGame");
-	bobsGame = new BobsGame();
-	stateManager->pushState(bobsGame);
-	bobsGame->init();
-
-	//bobNet->addEngineToForwardMessagesTo(bobsGame);
-#endif
-
-
-#ifndef PUZZLE
-
-	if (gameEngine != nullptr)
+	File f(getPath()+"rpg");
+	if (f.exists())
 	{
-		gameEngine->cleanup();
-	}
 
-	gameEngine = new BGClientEngine();
-	stateManager->pushState(gameEngine);
-	//Engine::setClientGameEngine(gameEngine);
-	gameEngine->init();
-	
-	//bobNet->addEngineToForwardMessagesTo(gameEngine);
-
-	if (previewClientInEditor == false)
-	{
-		bool didIntro = true; //FileUtils.doesDidIntroFileExist();
-
-		if (didIntro == false)
+		if (gameEngine != nullptr)
 		{
-			introMode = true;
+			gameEngine->cleanup();
+		}
 
-			log.debug("Setup Intro");
+		gameEngine = new BGClientEngine();
+		stateManager->pushState(gameEngine);
+		//Engine::setClientGameEngine(gameEngine);
+		gameEngine->init();
 
-			gameEngine->statusBar->gameStoreButton->setEnabled(false);
-			gameEngine->statusBar->ndButton->setEnabled(false);
-			gameEngine->statusBar->stuffButton->setEnabled(false);
-			gameEngine->statusBar->moneyCaption->setEnabled(false);
-			gameEngine->statusBar->dayCaption->setEnabled(false);
+		//bobNet->addEngineToForwardMessagesTo(gameEngine);
 
-			gameEngine->cinematicsManager->fadeFromBlack(10000);
+		if (previewClientInEditor == false)
+		{
+			bool didIntro = true; //FileUtils.doesDidIntroFileExist();
+
+			if (didIntro == false)
+			{
+				introMode = true;
+
+				log.debug("Setup Intro");
+
+				gameEngine->statusBar->gameStoreButton->setEnabled(false);
+				gameEngine->statusBar->ndButton->setEnabled(false);
+				gameEngine->statusBar->stuffButton->setEnabled(false);
+				gameEngine->statusBar->moneyCaption->setEnabled(false);
+				gameEngine->statusBar->dayCaption->setEnabled(false);
+
+				gameEngine->cinematicsManager->fadeFromBlack(10000);
+
+				//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
+				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
+				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
+
+				//gameEngine->textManager->text("yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay <PLAYER>Yep  \"Yuu\" yay. Yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay. a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
+
+			}
+			else
+			{
+				stateManager->pushState(loginState);
+			}
 
 			//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
-			gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
-			//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
-				
-			//gameEngine->textManager->text("yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay <PLAYER>Yep  \"Yuu\" yay. Yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay. a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
+			//gameEngine->mapManager->changeMap("TOWNYUUDownstairs", 30, 18);
+
 
 		}
-		else
-		{
-			stateManager->pushState(loginState);
-		}
+	}
+	else
+	{
 
-		//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
-		//gameEngine->mapManager->changeMap("TOWNYUUDownstairs", 30, 18);
+		log.debug("Create BobsGame");
+		bobsGame = new BobsGame();
+		stateManager->pushState(bobsGame);
+		bobsGame->init();
 
+		//bobNet->addEngineToForwardMessagesTo(bobsGame);
 
 	}
-#endif
+
+
 	
 
 	System::initTimers();
