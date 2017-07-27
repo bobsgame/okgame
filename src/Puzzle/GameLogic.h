@@ -303,6 +303,7 @@ public:
 	ArrayList<shared_ptr<Block>> fadingOutBlocks;
 
 	shared_ptr<Piece> currentPiece = nullptr;
+	shared_ptr<Piece> lastPiece = nullptr;
 
 	shared_ptr<Piece> holdPiece = nullptr;
 	ArrayList<shared_ptr<Piece>> nextPieces;

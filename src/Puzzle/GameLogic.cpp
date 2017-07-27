@@ -2683,12 +2683,7 @@ void GameLogic::setPiece()
 
 	grid->setPiece(currentPiece);
 
-	//make it so all blocks in piece must be less than 0
-	//if(currentPiece.yGrid<0+GameLogic.aboveGridBuffer)
-	if (currentPiece->yGrid + currentPiece->getHighestOffsetY() < 0 + GameLogic::aboveGridBuffer)
-	{
-		died = true;
-	}
+
 
 	//TODO: size grid buffer based on largest piece... 
 	//OR start grid at 0 on the bottom, and have the grid expand infinitely 
@@ -2698,6 +2693,7 @@ void GameLogic::setPiece()
 
 	piecesPlacedTotal++;
 
+	lastPiece = currentPiece;
 	currentPiece = nullptr;
 
 	currentFloorMovements = 0;
@@ -2735,6 +2731,19 @@ void GameLogic::newRandomPiece()
 
 
 	setCurrentPieceAtTop();
+
+	//make it so all blocks in piece must be less than 0
+	//if(currentPiece.yGrid<0+GameLogic.aboveGridBuffer)
+	if (lastPiece != nullptr)
+	{
+		for(int i=0;i<lastPiece->blocks.size();i++)
+		{
+			if(lastPiece->blocks.get(i)->yGrid < 0 + GameLogic::aboveGridBuffer)//lastPiece->yGrid + lastPiece->getHighestOffsetY()
+			{
+				died = true;
+			}
+		}
+	}
 
 	switchedHoldPieceAlready = false;
 
@@ -4678,6 +4687,7 @@ void GameLogic::resetNextPieces()
 
 	currentPiece = nullptr;
 	holdPiece = nullptr;
+	lastPiece = nullptr;
 
 	nextPieces.clear();//MEMORY
 	nextPieceSpecialBuffer.clear();//MEMORY
