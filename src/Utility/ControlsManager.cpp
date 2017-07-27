@@ -1037,6 +1037,7 @@ SDL_JoyHatEvent
 					if (value<0-DEADZONE || value > DEADZONE || value == 0)
 					{
 
+#ifdef _DEBUG
 						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
 						string s = string("Controller Axis Event: " + string(SDL_GameControllerName(controller)));
 						if (axis == SDL_CONTROLLER_AXIS_LEFTX)s += (" Axis: SDL_CONTROLLER_AXIS_LEFTX");
@@ -1046,60 +1047,64 @@ SDL_JoyHatEvent
 						if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT)s += (" Axis: SDL_CONTROLLER_AXIS_TRIGGERLEFT");
 						if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)s += (" Axis: SDL_CONTROLLER_AXIS_TRIGGERRIGHT");
 						s += " Value:" + to_string(value);
-#ifdef _DEBUG
+
 						log.debug(s);
 						//log.debug("SDL_GameControllerGetStringForAxis:" + string(SDL_GameControllerGetStringForAxis(axis)));
 						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
 						//if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS)log.debug("Axis #:"+to_string(bind.value.axis));
-						
 #endif
+
+						int dz = 32000;
+
 						for (int i = 0; i < gameControllers.size(); i++)
 						{
 							GameController *g = gameControllers.get(i);
 							if (g->id == id)
 							{
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= 32000)g->L_HELD = true;
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value == 0)g->L_HELD = false;
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= 32000)g->R_HELD = true;
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value == 0)g->R_HELD = false;
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= dz)g->L_HELD = true;
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)g->L_HELD = false;
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= dz)g->R_HELD = true;
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)g->R_HELD = false;
 #ifdef _DEBUG
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value>= 32000)log.debug("Left trigger held");
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value == 0)log.debug("Left trigger released");
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value>= 32000)log.debug("Right trigger held");
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value == 0)log.debug("Right trigger released");
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value>= dz)log.debug("Controller Axis Event: Left trigger held " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)log.debug("Controller Axis Event: Left trigger released " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value>= dz)log.debug("Controller Axis Event: Right trigger held " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)log.debug("Controller Axis Event: Right trigger released " + to_string(value));
 #endif
-
 							}
 						}
 
-					}
 
-					//none of this works, have to check axis manually:
-					for (int i = 0; i < gameControllers.size(); i++)
-					{
-						GameController *g = gameControllers.get(i);
-						if (g->id == id)
+
+						if (Main::globalSettings->useAnalogSticks)
 						{
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value >= 20000)g->ANALOGLEFT_HELD = true;
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value <= -20000)g->ANALOGRIGHT_HELD = true;
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value >= 20000)g->ANALOGUP_HELD = true;
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value <= -20000)g->ANALOGDOWN_HELD = true;
-							//
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value <= 20000)g->ANALOGLEFT_HELD = false;
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value >= -20000)g->ANALOGRIGHT_HELD = false;
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value <= 20000)g->ANALOGUP_HELD = false;
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value >= -20000)g->ANALOGDOWN_HELD = false;
-							//#ifdef _DEBUG
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value >= 20000)log.debug("Left held");
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value <= -20000)log.debug("Right held");
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value >= 20000)log.debug("Up held");
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value <= -20000)log.debug("Down held");
-							//
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value <= 20000)log.debug("Left unpressed");
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value >= -20000)log.debug("Right unpressed");
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value <= 20000)log.debug("Up unpressed");
-							//					if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value >= -20000)log.debug("Down unpressed");
-							//#endif
+							//none of this works, have to check axis manually:
+							for (int i = 0; i < gameControllers.size(); i++)
+							{
+								GameController *g = gameControllers.get(i);
+								if (g->id == id)
+								{
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)g->ANALOGLEFT_HELD = true;
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)g->ANALOGRIGHT_HELD = true;
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)g->ANALOGUP_HELD = true;
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)g->ANALOGDOWN_HELD = true;
+	#ifdef _DEBUG
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)log.debug("Controller Axis Event: Left held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)log.debug("Controller Axis Event: Right held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)log.debug("Controller Axis Event: Up held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)log.debug("Controller Axis Event: Down held " + to_string(value));
+
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Controller Axis Event: Left unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Controller Axis Event: Right unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz && g->ANALOGUP_HELD)log.debug("Controller Axis Event: Up unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Controller Axis Event: Down unpressed " + to_string(value));
+	#endif
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz)g->ANALOGLEFT_HELD = false;
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz)g->ANALOGRIGHT_HELD = false;
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz)g->ANALOGUP_HELD = false;
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz)g->ANALOGDOWN_HELD = false;
+								}
+							}
 						}
 					}
 
@@ -1122,7 +1127,7 @@ SDL_JoyHatEvent
 					
 					
 
-					if (value<0 - DEADZONE || value > DEADZONE)
+					if (value < 0 - DEADZONE || value > DEADZONE)
 					{
 #ifdef _DEBUG
 						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
@@ -1168,6 +1173,8 @@ SDL_JoyHatEvent
 						else if (mapping.find("leftx:" + axisString + ",") != string::npos)leftX = true;
 						else if (mapping.find("lefty:" + axisString + ",") != string::npos)leftY = true;
 
+						int dz = 32000;
+
 						for (int i = 0; i < gameControllers.size(); i++)
 						{
 							GameController *g = gameControllers.get(i);
@@ -1179,34 +1186,46 @@ SDL_JoyHatEvent
 								//						if (rightTrigger&&value <= -32767)g->R_HELD = false;
 
 #ifdef _DEBUG
-								if (leftTrigger&&value >= 32000)log.debug("Left trigger held");
-								if (leftTrigger&&value <= -32000)log.debug("Left trigger released");
-								if (rightTrigger&&value >= 32000)log.debug("Right trigger held");
-								if (rightTrigger&&value <= -32000)log.debug("Right trigger released");
+								if (leftTrigger&&value >= dz)log.debug("Joystick Axis Event: Left trigger held " + to_string(value));
+								if (leftTrigger&&value <= -dz)log.debug("Joystick Axis Event: Left trigger released " + to_string(value));
+								if (rightTrigger&&value >= dz)log.debug("Joystick Axis Event: Right trigger held " + to_string(value));
+								if (rightTrigger&&value <= -dz)log.debug("Joystick Axis Event: Right trigger released " + to_string(value));
 #endif
+							}
+						}
 
-								//none of this works, have to check axis manually:
+						
 
-		//						if (leftX&&value >= 20000)g->ANALOGLEFT_HELD = true;
-		//						if (leftX&&value <= -20000)g->ANALOGRIGHT_HELD = true;
-		//						if (leftY&&value >= 20000)g->ANALOGUP_HELD = true;
-		//						if (leftY&&value <= -20000)g->ANALOGDOWN_HELD = true;
-		//
-		//						if (leftX&&value <= 20000)g->ANALOGLEFT_HELD = false;
-		//						if (leftX&&value >= -20000)g->ANALOGRIGHT_HELD = false;
-		//						if (leftY&&value <= 20000)g->ANALOGUP_HELD = false;
-		//						if (leftY&&value >= -20000)g->ANALOGDOWN_HELD = false;
-		//#ifdef _DEBUG
-		//						if (leftX&&value >= 20000)log.debug("Left held");
-		//						if (leftX&&value <= -20000)log.debug("Right held");
-		//						if (leftY&&value >= 20000)log.debug("Up held");
-		//						if (leftY&&value <= -20000)log.debug("Down held");
-		//
-		//						if (leftX&&value <= 20000)log.debug("Left unpressed");
-		//						if (leftX&&value >= -20000)log.debug("Right unpressed");
-		//						if (leftY&&value <= 20000)log.debug("Up unpressed");
-		//						if (leftY&&value >= -20000)log.debug("Down unpressed");
-		//#endif
+						if (Main::globalSettings->useAnalogSticks)
+						{
+							for (int i = 0; i < gameControllers.size(); i++)
+							{
+								GameController *g = gameControllers.get(i);
+								if (g->id == id)
+								{
+									//none of this works, have to check axis manually:
+
+//									if (leftX&&value < -dz)g->ANALOGLEFT_HELD = true;
+//									if (leftX&&value > dz)g->ANALOGRIGHT_HELD = true;
+//									if (leftY&&value < -dz)g->ANALOGUP_HELD = true;
+//									if (leftY&&value > dz)g->ANALOGDOWN_HELD = true;
+//
+//#ifdef _DEBUG
+//									if (leftX&&value < -dz)log.debug("Joystick Axis Event: Left held " + to_string(value));
+//									if (leftX&&value > dz)log.debug("Joystick Axis Event: Right held " + to_string(value));
+//									if (leftY&&value < -dz)log.debug("Joystick Axis Event: Up held " + to_string(value));
+//									if (leftY&&value > dz)log.debug("Joystick Axis Event: Down held " + to_string(value));
+//
+//									if (leftX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Joystick Axis Event: Left unpressed " + to_string(value));
+//									if (leftX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Joystick Axis Event: Right unpressed " + to_string(value));
+//									if (leftY&&value > -dz && g->ANALOGUP_HELD)log.debug("Joystick Axis Event: Up unpressed " + to_string(value));
+//									if (leftY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Joystick Axis Event: Down unpressed " + to_string(value));
+//#endif
+//									if (leftX&&value > -dz)g->ANALOGLEFT_HELD = false;
+//									if (leftX&&value < dz)g->ANALOGRIGHT_HELD = false;
+//									if (leftY&&value > -dz)g->ANALOGUP_HELD = false;
+//									if (leftY&&value < dz)g->ANALOGDOWN_HELD = false;
+								}
 							}
 						}
 

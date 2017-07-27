@@ -948,6 +948,7 @@ void BobsGame::controllerMenuUpdate()
 		controllerMenu->add("Use XInput (better controller support but 4 player max)", "XInput");
 		controllerMenu->addInfo("");
 #endif
+		controllerMenu->add("Use Analog Sticks: ","Use Analog Sticks");
 		controllerMenu->add("Test detected button mapping");
 		controllerMenu->add("Return to Title Screen");
 		controllerMenu->addInfo(" ", "Testing Caption");
@@ -960,6 +961,9 @@ void BobsGame::controllerMenuUpdate()
 	if(Main::globalSettings->useXInput)controllerMenu->getMenuItemByID("XInput")->setText("Use XInput (better controller support but 4 player max)");
 	else controllerMenu->getMenuItemByID("XInput")->setText("Use DirectInput (worse controller support but no player limit)");
 #endif
+
+	if (Main::globalSettings->useAnalogSticks)controllerMenu->getMenuItemByID("Use Analog Sticks")->setText("Use Analog Sticks: Yes");
+	else controllerMenu->getMenuItemByID("Use Analog Sticks")->setText("Use Analog Sticks: No");
 
 	if(controllerMenuTestingButtons)
 	{
@@ -1019,6 +1023,11 @@ void BobsGame::controllerMenuUpdate()
 
 		if (confirm || clicked)
 		{
+
+			if (controllerMenu->isSelectedID("Use Analog Sticks", clicked, mx, my))
+			{
+				Main::globalSettings->useAnalogSticks = !Main::globalSettings->useAnalogSticks;
+			}
 
 			if (controllerMenu->isSelectedID("XInput", clicked, mx, my))
 			{

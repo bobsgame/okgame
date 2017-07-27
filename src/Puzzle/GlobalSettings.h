@@ -20,9 +20,12 @@ public:
 	float contrast = 1.2f;
 	float gamma = 1.0f;
 	bool useXInput = true;
+	
 
 	float bobsGame_screenFlashOnLevelUpAlpha = 0.3f;
 	bool bobsGame_showDetailedGameInfoCaptions = true;
+
+	bool useAnalogSticks = true;
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version)
@@ -50,8 +53,13 @@ public:
 			ar & BOOST_SERIALIZATION_NVP(bobsGame_screenFlashOnLevelUpAlpha);
 			ar & BOOST_SERIALIZATION_NVP(bobsGame_showDetailedGameInfoCaptions);
 		}
+
+		if(version>3)
+		{
+			ar & BOOST_SERIALIZATION_NVP(useAnalogSticks);
+		}
 	}
 
 };
-BOOST_CLASS_VERSION(GlobalSettings, 3)
+BOOST_CLASS_VERSION(GlobalSettings, 4)
 BOOST_CLASS_TRACKING(GlobalSettings, boost::serialization::track_never)

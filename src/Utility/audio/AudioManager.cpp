@@ -104,8 +104,10 @@ void AudioManager::initAudioLibrary()
 			string spriteFolderString = Main::getPath() + "data/sounds/";
 			Path spriteFolderPath(spriteFolderString);
 			File spriteFolderPathDir(spriteFolderPath);
+			log.debug("createDirectories");
 			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
 			vector<string> files;
+			log.debug("list");
 			spriteFolderPathDir.list(files);
 			vector<string>::iterator it = files.begin();
 			for (; it != files.end(); ++it)
