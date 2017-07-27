@@ -186,9 +186,11 @@ public:
 	void playerDifficultyMiniMenuUpdate(PuzzlePlayer *p);
 	void playerDifficultyMiniMenuRender(PuzzlePlayer *p, float x, float y);
 
-	void playerSettingsMenuToggle(PuzzlePlayer *p);
-	void playerSettingsMenuLeft(PuzzlePlayer *p);
-	void playerSettingsMenuRight(PuzzlePlayer *p);
+	void playerControllerSettingsMenuInit(BobMenu* m, PuzzlePlayer *p);
+	void playerControllerSettingsMenuToggle(BobMenu* m, PuzzlePlayer *p);
+	void playerSettingsMenuInit(BobMenu* m, PuzzlePlayer *p);
+	void playerSettingsMenuLeft(BobMenu* m, PuzzlePlayer *p);
+	void playerSettingsMenuRight(BobMenu* m, PuzzlePlayer *p);
 	void playerPauseMiniMenuUpdate(PuzzlePlayer *p);
 	void playerPauseMiniMenuRender(PuzzlePlayer *p, float x0, float x1, float y0, float y1);
 

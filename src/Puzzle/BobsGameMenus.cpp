@@ -808,6 +808,7 @@ void BobsGame::pauseMenuUpdate()
 
 		pauseMenu->add("Back To Game", "Back To Game");
 		settingsMenuInit(pauseMenu);
+		playerControllerSettingsMenuInit(pauseMenu, getPlayer1());
 		pauseMenu->add("Quit Game And Return To Title Screen","Quit Game And Return To Title Screen");
 
 		pauseMenu->cursorPosition = pauseMenuCursorPosition;
@@ -837,10 +838,12 @@ void BobsGame::pauseMenuUpdate()
 	if (getControlsManager()->miniGame_LEFT_Pressed())
 	{
 		settingsMenuToggle(pauseMenu);
+		playerControllerSettingsMenuToggle(pauseMenu,getPlayer1());
 	}
 	if (getControlsManager()->miniGame_RIGHT_Pressed())
 	{
 		settingsMenuToggle(pauseMenu);
+		playerControllerSettingsMenuToggle(pauseMenu, getPlayer1());
 	}
 
 	bool leaveMenu = false;
@@ -853,6 +856,7 @@ void BobsGame::pauseMenuUpdate()
 	{
 
 		settingsMenuToggle(pauseMenu);
+		playerControllerSettingsMenuToggle(pauseMenu, getPlayer1());
 
 		if (pauseMenu->isSelectedID("Defaults", clicked, mx, my))
 		{
@@ -1088,10 +1092,16 @@ void BobsGame::controllerMenuRender()
 
 
 //=========================================================================================================================
-void BobsGame::playerSettingsMenuLeft(PuzzlePlayer *p)
+void BobsGame::playerSettingsMenuInit(BobMenu* m, PuzzlePlayer *p)
+{//=========================================================================================================================
+
+	m->add("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%", "Player Hue Shift");
+}
+//=========================================================================================================================
+void BobsGame::playerSettingsMenuLeft(BobMenu* m, PuzzlePlayer *p)
 {//=========================================================================================================================
 	
-	if (p->menu->isSelectedID("Player Hue Shift"))
+	if (m->isSelectedID("Player Hue Shift"))
 	{
 		long long startTime = timeLastChangedSetting;
 		long long currentTime = System::currentHighResTimer();
@@ -1102,17 +1112,17 @@ void BobsGame::playerSettingsMenuLeft(PuzzlePlayer *p)
 			timeLastChangedSetting = currentTime;
 			if (p->hue > 0)p->hue -= 0.01f;
 			if (p->hue < 0)p->hue = 0;
-			p->menu->getMenuItemByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
+			m->getMenuItemByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
 		}
 	}
 
 }
 
 //=========================================================================================================================
-void BobsGame::playerSettingsMenuRight(PuzzlePlayer *p)
+void BobsGame::playerSettingsMenuRight(BobMenu* m, PuzzlePlayer *p)
 {//=========================================================================================================================
 	
-	if (p->menu->isSelectedID("Player Hue Shift"))
+	if (m->isSelectedID("Player Hue Shift"))
 	{
 		long long startTime = timeLastChangedSetting;
 		long long currentTime = System::currentHighResTimer();
@@ -1123,18 +1133,27 @@ void BobsGame::playerSettingsMenuRight(PuzzlePlayer *p)
 			timeLastChangedSetting = currentTime;
 			if (p->hue < 2)p->hue += 0.01f;
 			if (p->hue > 2)p->hue = 2;
-			p->menu->getCaptionByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
+			m->getCaptionByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
 		}
 	}
 
 }
-
-
 //=========================================================================================================================
-void BobsGame::playerSettingsMenuToggle(PuzzlePlayer *p)
+void BobsGame::playerControllerSettingsMenuInit(BobMenu* m, PuzzlePlayer *p)
 {//=========================================================================================================================
 
-	if (p->menu->isSelectedID("Slam With Up"))
+	m->add("Slam With Up: " + string(p->slamWithUp ? "On" : "Off"), "Slam With Up", BobColor::white);
+	m->add("Slam Lock: " + string(p->slamLock ? "On" : "Off"), "Slam Lock", BobColor::white);
+	m->add("Single Down Lock: " + string(p->singleDownLock ? "On" : "Off"), "Single Down Lock", BobColor::white);
+	m->add("Double Down Lock: " + string(p->doubleDownLock ? "On" : "Off"), "Double Down Lock", BobColor::white);
+
+}
+
+//=========================================================================================================================
+void BobsGame::playerControllerSettingsMenuToggle(BobMenu* m, PuzzlePlayer *p)
+{//=========================================================================================================================
+
+	if (m->isSelectedID("Slam With Up"))
 	{
 		long long startTime = timeLastChangedSetting;
 		long long currentTime = System::currentHighResTimer();
@@ -1144,11 +1163,11 @@ void BobsGame::playerSettingsMenuToggle(PuzzlePlayer *p)
 		{
 			timeLastChangedSetting = currentTime;
 			p->slamWithUp = !p->slamWithUp;
-			p->menu->getMenuItemByID("Slam With Up")->setText("Slam With Up: " + p->slamWithUp ? "On" : "Off");
+			m->getMenuItemByID("Slam With Up")->setText("Slam With Up: " + string(p->slamWithUp ? "On" : "Off"));
 		}
 	}
 
-	if (p->menu->isSelectedID("Slam Lock"))
+	if (m->isSelectedID("Slam Lock"))
 	{
 		long long startTime = timeLastChangedSetting;
 		long long currentTime = System::currentHighResTimer();
@@ -1158,11 +1177,11 @@ void BobsGame::playerSettingsMenuToggle(PuzzlePlayer *p)
 		{
 			timeLastChangedSetting = currentTime;
 			p->slamLock = !p->slamLock;
-			p->menu->getMenuItemByID("Slam Lock")->setText("Slam Lock: " + p->slamLock ? "On" : "Off");
+			m->getMenuItemByID("Slam Lock")->setText("Slam Lock: " + string(p->slamLock ? "On" : "Off"));
 		}
 	}
 
-	if (p->menu->isSelectedID("Single Down Lock"))
+	if (m->isSelectedID("Single Down Lock"))
 	{
 		long long startTime = timeLastChangedSetting;
 		long long currentTime = System::currentHighResTimer();
@@ -1172,11 +1191,11 @@ void BobsGame::playerSettingsMenuToggle(PuzzlePlayer *p)
 		{
 			timeLastChangedSetting = currentTime;
 			p->singleDownLock = !p->singleDownLock;
-			p->menu->getMenuItemByID("Single Down Lock")->setText("Single Down Lock: " + p->singleDownLock ? "On" : "Off");
+			m->getMenuItemByID("Single Down Lock")->setText("Single Down Lock: " + string(p->singleDownLock ? "On" : "Off"));
 		}
 	}
 
-	if (p->menu->isSelectedID("Double Down Lock"))
+	if (m->isSelectedID("Double Down Lock"))
 	{
 		long long startTime = timeLastChangedSetting;
 		long long currentTime = System::currentHighResTimer();
@@ -1186,7 +1205,7 @@ void BobsGame::playerSettingsMenuToggle(PuzzlePlayer *p)
 		{
 			timeLastChangedSetting = currentTime;
 			p->doubleDownLock = !p->doubleDownLock;
-			p->menu->getMenuItemByID("Double Down Lock")->setText("Double Down Lock: " + p->doubleDownLock ? "On" : "Off");
+			m->getMenuItemByID("Double Down Lock")->setText("Double Down Lock: " + string(p->doubleDownLock ? "On" : "Off"));
 		}
 	}
 
@@ -1206,11 +1225,11 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 
 			p->menu->add("Back To Game", "Back To Game", BobColor::white);
 			settingsMenuInit(p->menu);
-			p->menu->add("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%", "Player Hue Shift");
-			p->menu->add("Slam With Up: "+p->slamWithUp?"On":"Off", "Slam With Up", BobColor::white);
-			p->menu->add("Slam Lock: "+p->slamLock?"On":"Off", "Slam Lock", BobColor::white);
-			p->menu->add("Single Down Lock: "+p->singleDownLock?"On":"Off", "Single Down Lock", BobColor::white);
-			p->menu->add("Double Down Lock: "+p->doubleDownLock?"On":"Off", "Double Down Lock", BobColor::white);
+
+			playerSettingsMenuInit(p->menu, p);
+			
+
+			playerControllerSettingsMenuInit(p->menu, p);
 
 			p->menu->addInfo(" ");
 			p->menu->add("Forfeit", "Forfeit", BobColor::white);
@@ -1229,23 +1248,23 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 		if (p->LEFT_HELD)
 		{
 			settingsMenuLeft(p->menu);
-			playerSettingsMenuLeft(p);
+			playerSettingsMenuLeft(p->menu,p);
 		}
 		if (p->RIGHT_HELD)
 		{
 			settingsMenuRight(p->menu);
-			playerSettingsMenuRight(p);
+			playerSettingsMenuRight(p->menu, p);
 		}
 
 		if (p->leftPressed())
 		{
 			settingsMenuToggle(p->menu);
-			playerSettingsMenuToggle(p);
+			playerControllerSettingsMenuToggle(p->menu, p);
 		}
 		if (p->rightPressed())
 		{
 			settingsMenuToggle(p->menu);
-			playerSettingsMenuToggle(p);
+			playerControllerSettingsMenuToggle(p->menu, p);
 		}
 
 		bool leaveMenu = false;
@@ -1255,7 +1274,7 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 		{
 
 			settingsMenuToggle(p->menu);
-			playerSettingsMenuToggle(p);
+			playerControllerSettingsMenuToggle(p->menu, p);
 
 
 			if (p->menu->isSelectedID("Defaults"))
@@ -1732,7 +1751,7 @@ void BobsGame::settingsMenuInit(BobMenu* m)
 
 	m->add("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%", "Global Hue Shift");
 	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
-	m->add("Show Detailed Game Stats: " + Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off", "Game Stats");
+	m->add("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"), "Game Stats");
 
 	m->add("Defaults");
 }
@@ -1751,7 +1770,7 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 		{
 			timeLastChangedSetting = currentTime;
 			Main::globalSettings->bobsGame_showDetailedGameInfoCaptions = !Main::globalSettings->bobsGame_showDetailedGameInfoCaptions;
-			m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off");
+			m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"));
 		}
 	}
 
@@ -1969,7 +1988,7 @@ void BobsGame::settingsMenuSetDefaults(BobMenu* m)
 	m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
 	m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
 	m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
-	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off");
+	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"));
 	
 }
 
