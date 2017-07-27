@@ -162,6 +162,7 @@ public:
 	virtual void pauseMenuUpdate() override;
 	virtual void pauseMenuRender() override;
 	long long timeLastChangedSetting = 0;
+	long long timeStartedChangedSetting = 0;
 
 	void difficultyMenuUpdate();
 	//void difficultyMenuRender();
@@ -337,8 +338,8 @@ public:
 	bool statsMenu_blocksCleared = false;
 
 
-	void leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float increment);
-	void leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int increment);
+	void leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float minIncrement, float maxIncrement);
+	void leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int minIncrement, int maxIncrement);
 
 	void saveRoomConfigMenuUpdate();
 	BobMenu *saveRoomConfigMenu = nullptr;
