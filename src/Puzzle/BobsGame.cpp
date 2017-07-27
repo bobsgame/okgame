@@ -164,7 +164,7 @@ void BobsGame::initPlayer()
 	PuzzlePlayer *p = new PuzzlePlayer(new GameLogic(this, -1));
 	
 	p->useKeyboard = true;
-	if (getControlsManager()->gameControllers.size() > 0)p->gameController = getControlsManager()->gameControllers.get(0);
+	//if (getControlsManager()->gameControllers.size() > 0)p->gameController = getControlsManager()->gameControllers.get(0);
 	players.add(p);
 
 	if (currentRoom == nullptr)currentRoom = new Room();

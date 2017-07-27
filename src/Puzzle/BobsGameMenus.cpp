@@ -3706,9 +3706,15 @@ void BobsGame::gameSetupMenuRender()
 		gameSetupMenu->setGraphic(t, getWidth() / 8 * 6, getHeight() / 10, getHeight() / 3);
 	}
 
-
-
-	gameSetupMenu->render();
+	{
+		int bottomOfCaptions = 0;
+		gameSetupMenu->render(0,0,getHeight(),true,nullptr,&bottomOfCaptions);
+		if (errorLabel != nullptr)
+		{
+			errorLabel->screenY = bottomOfCaptions + 24;
+			errorLabel->render();
+		}
+	}
 
 	if(selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{

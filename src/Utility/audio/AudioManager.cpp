@@ -95,14 +95,17 @@ void AudioManager::initAudioLibrary()
 		loadedBuiltIn = true;
 
 
-		Uint64 start, now, totalStart, totalNow;
+		Uint64 start = 0, now = 0, totalStart = 0, totalNow = 0;
 		start = SDL_GetPerformanceCounter();
 		totalStart = SDL_GetPerformanceCounter();
 
 		log.debug("Loading built in sounds");
 		{
+			log.debug("get path");
 			string spriteFolderString = Main::getPath() + "data/sounds/";
+			log.debug("create path");
 			Path spriteFolderPath(spriteFolderString);
+			log.debug("create file");
 			File spriteFolderPathDir(spriteFolderPath);
 			log.debug("createDirectories");
 			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();

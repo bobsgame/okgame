@@ -2740,7 +2740,7 @@ void GameLogic::newRandomPiece()
 	{
 		for(int i=0;i<lastPiece->blocks.size();i++)
 		{
-			if(lastPiece->blocks.get(i)->yGrid < 0 + GameLogic::aboveGridBuffer && lastPiece->blocks.get(i)->yGrid < grid->getHeight() && grid->contains(lastPiece->blocks.get(i)->xGrid, lastPiece->blocks.get(i)->yGrid))//lastPiece->yGrid + lastPiece->getHighestOffsetY()
+			if(lastPiece->blocks.get(i)->yGrid < 0 + GameLogic::aboveGridBuffer && lastPiece->blocks.get(i)->yGrid > 0 && lastPiece->blocks.get(i)->xGrid > 0 && lastPiece->blocks.get(i)->yGrid < grid->getHeight() && grid->contains(lastPiece->blocks.get(i)->xGrid, lastPiece->blocks.get(i)->yGrid))//lastPiece->yGrid + lastPiece->getHighestOffsetY()
 			{
 				died = true;
 			}
@@ -4323,6 +4323,11 @@ void GameLogic::updateCaptions()
 	if (rulesCaption2 == nullptr)
 	{
 		rulesCaption2 = makeInfoCaption("rules2Caption");
+	}
+
+	if (rulesCaption3 == nullptr)
+	{
+		rulesCaption3 = makeInfoCaption("rules3Caption");
 	}
 
 	if (levelCaption == nullptr)
