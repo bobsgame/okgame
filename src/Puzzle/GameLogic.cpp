@@ -2249,13 +2249,13 @@ bool GameLogic::movePiece(MovementType move)
 			if (grid->doesPieceFit(currentPiece)==false)
 			{
 				currentFloorMovements++;
-
-				if(currentFloorMovements>=getRoom()->floorSpinLimit)
-				{
-					setPiece();
-				}
 			}
 			currentPiece->yGrid--;
+
+			if (getRoom()->floorSpinLimit > -1 && currentFloorMovements >= getRoom()->floorSpinLimit)
+			{
+				setPiece();
+			}
 		}
 
 		if (move == MovementType::DOWN || move == MovementType::HARD_DROP)

@@ -2870,7 +2870,7 @@ void BobsGame::roomOptionsMenuUpdate()
 		//roomOptionsMenu->outline = false;
 		//roomOptionsMenu->defaultMenuColor = BobColor::gray;
 
-		roomOptionsMenu->add("Objective: ", "Objective");
+		
 		roomOptionsMenu->add("Game Speed Start: ", "Game Speed Start");
 		roomOptionsMenu->add("Game Speed Increase Rate: ", "Game Speed Change Rate");
 		roomOptionsMenu->add("Game Speed Maximum: ", "Game Speed Maximum");
@@ -2924,23 +2924,6 @@ void BobsGame::roomOptionsMenuUpdate()
 	}
 
 
-
-	{
-		string objectiveString = "";
-
-		if (currentRoom->endlessMode)
-		{
-			objectiveString = "Play As Long As You Can (Endless Mode)";
-			if (localMultiplayer || networkMultiplayer)roomOptionsMenu->getMenuItemByID("Finish Rule")->info = true;
-		}
-		else
-		{
-			objectiveString = "Play To Credits Level";
-			if (localMultiplayer || networkMultiplayer)roomOptionsMenu->getMenuItemByID("Finish Rule")->info = false;
-		}
-		roomOptionsMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
-	}
-
 	roomOptionsMenu->getMenuItemByID("Game Speed Start")->setText("Game Speed Start: " + to_string((int)(currentRoom->gameSpeedStart * 100)) + "%");
 	roomOptionsMenu->getMenuItemByID("Game Speed Change Rate")->setText("Game Speed Change Rate: " + to_string((int)(currentRoom->gameSpeedChangeRate * 100)) + "%");
 	roomOptionsMenu->getMenuItemByID("Game Speed Maximum")->setText("Game Speed Maximum: " + to_string((int)(currentRoom->gameSpeedMaximum * 100)) + "%");
@@ -2970,7 +2953,16 @@ void BobsGame::roomOptionsMenuUpdate()
 		if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)
 			roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: End On First Completion");
 		else roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Free Play To Completion");
-		if (currentRoom->endlessMode)roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
+
+		if (currentRoom->endlessMode)
+		{
+			roomOptionsMenu->getMenuItemByID("Finish Rule")->setText("Finish Rule: Endless Mode");
+			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = true;
+		}
+		else
+		{
+			roomOptionsMenu->getMenuItemByID("Finish Rule")->info = false;
+		}
 
 		roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: " + string((currentRoom->multiplayer_DisableVSGarbage) ? "Off" : "On"));
 		roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: " + to_string((int)(currentRoom->multiplayer_GarbageMultiplier * 100)) + "%");
@@ -2991,11 +2983,6 @@ void BobsGame::roomOptionsMenuUpdate()
 	if (sendGarbageToMenuShowing)
 	{
 		sendGarbageToMenuUpdate();
-	}
-	else
-	if (gameObjectiveMenuShowing)
-	{
-		gameObjectiveMenuUpdate();
 	}
 	else
 	{
@@ -3098,10 +3085,7 @@ void BobsGame::roomOptionsMenuUpdate()
 			}
 		}
 
-		if (roomOptionsMenu->isSelectedID("Objective"))
-		{
-			descriptionCaption->setText("Play to final level or last as long as you can.");
-		}
+
 		if (roomOptionsMenu->isSelectedID("Game Speed Start"))
 		{
 			descriptionCaption->setText("Percent speed at which the game begins. Default is 0%.");
@@ -3241,36 +3225,7 @@ void BobsGame::roomOptionsMenuUpdate()
 		{
 
 
-			if (roomOptionsMenu->isSelectedID("Objective", clicked, mx, my))
-			{
-				if(confirm || clicked) gameObjectiveMenuShowing = true;
-				else
-				{
-					if (roomOptionsMenu->isSelectedID("Objective"))
-					{
 
-						currentRoom->endlessMode = !currentRoom->endlessMode;
-//						if (left)
-//						{
-//							selectedObjectiveIndex--;
-//							if (selectedObjectiveIndex < 0)selectedObjectiveIndex = (int)GameObjective::LAST - 1;
-//						}
-//						if (right)
-//						{
-//							selectedObjectiveIndex++;
-//							if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
-//						}
-//						if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
-//						{
-//							if (currentRoom != nullptr)currentRoom->endlessMode = false;
-//						}
-//						if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
-//						{
-//							if (currentRoom != nullptr)currentRoom->endlessMode = true;
-//						}
-					}
-				}
-			}
 
 			if (roomOptionsMenu->isSelectedID("End Rule", clicked, mx, my))
 			{
@@ -3386,7 +3341,9 @@ void BobsGame::gameSetupMenuUpdate()
 		gameSetupMenu->add("Start Game", "Start Game", BobColor::green);
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Select Game Sequence Or Single Game Type...", "Select Game");
-		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");;
+		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");
+		gameSetupMenu->add("Objective: ", "Objective");
+
 		gameSetupMenu->add("More Options...", "Options");
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Save Config...", "Save");
@@ -3489,7 +3446,19 @@ void BobsGame::gameSetupMenuUpdate()
 		
 	}
 
+	{
+		string objectiveString = "";
 
+		if (currentRoom->endlessMode)
+		{
+			objectiveString = "Play As Long As You Can (Endless Mode)";
+		}
+		else
+		{
+			objectiveString = "Play To Credits Level";
+		}
+		gameSetupMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
+	}
 
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
@@ -3530,6 +3499,11 @@ void BobsGame::gameSetupMenuUpdate()
 	{
 		difficultyMenuUpdate();
 	}	
+	else
+	if (gameObjectiveMenuShowing)
+	{
+		gameObjectiveMenuUpdate();
+	}
 	else
 	if (roomOptionsMenuShowing)
 	{
@@ -3598,6 +3572,36 @@ void BobsGame::gameSetupMenuUpdate()
 
 
 		bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+
+		if(confirm || clicked || left || right)
+		{
+			if (gameSetupMenu->isSelectedID("Objective", clicked, mx, my))
+			{
+				if (confirm || clicked) gameObjectiveMenuShowing = true;
+				else
+				{
+					currentRoom->endlessMode = !currentRoom->endlessMode;
+					//if (left)
+					//{
+					//	selectedObjectiveIndex--;
+					//	if (selectedObjectiveIndex < 0)selectedObjectiveIndex = (int)GameObjective::LAST - 1;
+					//}
+					//if (right)
+					//{
+					//	selectedObjectiveIndex++;
+					//	if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
+					//}
+					//if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+					//{
+					//	if (currentRoom != nullptr)currentRoom->endlessMode = false;
+					//}
+					//if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+					//{
+					//	if (currentRoom != nullptr)currentRoom->endlessMode = true;
+					//}
+				}
+			}
+		}
 
 		if (confirm || clicked)
 		{
@@ -3712,6 +3716,7 @@ void BobsGame::gameSetupMenuRender()
 		if (errorLabel != nullptr)
 		{
 			errorLabel->screenY = bottomOfCaptions + 24;
+			errorLabel->update();
 			errorLabel->render();
 		}
 	}
@@ -3758,7 +3763,11 @@ void BobsGame::gameSetupMenuRender()
 		loadRoomConfigMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
-
+	if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
+	{
+		Caption *c = gameSetupMenu->getCaptionByID("Objective");
+		gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
+	}
 
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
 	{
@@ -3775,12 +3784,6 @@ void BobsGame::gameSetupMenuRender()
 			descriptionCaption->screenY = getHeight() - 30;// bottomOfCaptions + 24;
 			descriptionCaption->update();
 			descriptionCaption->render();
-		}
-
-		if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
-		{
-			Caption *c = roomOptionsMenu->getCaptionByID("Objective");
-			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 
 		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
@@ -4955,6 +4958,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 		multiplayerOptionsMenu->add("Game Sequence: Allow Different Game Sequences Or Types", "Select Game");
 		multiplayerOptionsMenu->add("Difficulty: Allow Different Difficulties", "Difficulty");
+		multiplayerOptionsMenu->add("Objective: ", "Objective");
 		multiplayerOptionsMenu->add("More Options...", "Options");
 		multiplayerOptionsMenu->addInfo(" "," ");
 		multiplayerOptionsMenu->add("Continue");
@@ -5023,6 +5027,20 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		if (c != nullptr)c->setText("Difficulty: " + difficultyName);
 	}
 
+	{
+		string objectiveString = "";
+
+		if (currentRoom->endlessMode)
+		{
+			objectiveString = "Play As Long As You Can (Endless Mode)";
+		}
+		else
+		{
+			objectiveString = "Play To Credits Level";
+		}
+		multiplayerOptionsMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
+	}
+
 	if (networkMultiplayer)
 	{
 		if (currentRoom->multiplayer_PrivateRoom)multiplayerOptionsMenu->getMenuItemByID("Public Or Private")->setText("Visibility: Private (Friends Only)");
@@ -5061,6 +5079,11 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 	if (difficultyMenuShowing)
 	{
 		difficultyMenuUpdate();
+	}
+	else	
+	if (gameObjectiveMenuShowing)
+	{
+		gameObjectiveMenuUpdate();
 	}
 	else	
 	if (roomOptionsMenuShowing)
@@ -5145,9 +5168,36 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 				currentRoom->multiplayer_MaxPlayers = 0;
 			}
 
-
+			if (multiplayerOptionsMenu->isSelectedID("Objective", clicked, mx, my))
+			{
+				if (confirm || clicked) gameObjectiveMenuShowing = true;
+				else
+				{
+					currentRoom->endlessMode = !currentRoom->endlessMode;
+					//if (left)
+					//{
+					//	selectedObjectiveIndex--;
+					//	if (selectedObjectiveIndex < 0)selectedObjectiveIndex = (int)GameObjective::LAST - 1;
+					//}
+					//if (right)
+					//{
+					//	selectedObjectiveIndex++;
+					//	if (selectedObjectiveIndex >= (int)GameObjective::LAST)selectedObjectiveIndex = 0;
+					//}
+					//if (selectedObjectiveIndex == (int)GameObjective::PLAY_TO_CREDITS_LEVEL)
+					//{
+					//	if (currentRoom != nullptr)currentRoom->endlessMode = false;
+					//}
+					//if (selectedObjectiveIndex == (int)GameObjective::ENDLESS)
+					//{
+					//	if (currentRoom != nullptr)currentRoom->endlessMode = true;
+					//}
+				}
+			}
 
 		}
+
+
 
 		if(left)
 		{
@@ -5313,6 +5363,12 @@ void BobsGame::multiplayerOptionsMenuRender()
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
+	if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
+	{
+		Caption *c = multiplayerOptionsMenu->getCaptionByID("Objective");
+		gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
+	}
+
 	if (roomOptionsMenuShowing && roomOptionsMenu != nullptr)
 	{
 		int bottomOfCaptions = 0;
@@ -5328,12 +5384,6 @@ void BobsGame::multiplayerOptionsMenuRender()
 			descriptionCaption->screenY = getHeight() - 30;// bottomOfCaptions + 24;
 			descriptionCaption->update();
 			descriptionCaption->render();
-		}
-
-		if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
-		{
-			Caption *c = roomOptionsMenu->getCaptionByID("Objective");
-			gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 
 		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
