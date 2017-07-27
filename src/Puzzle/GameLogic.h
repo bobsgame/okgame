@@ -393,10 +393,10 @@ private:
 
 public:
 	bool testing = true; //turn me off to restore "press start"
-	void update(PuzzlePlayer *p, int gameIndex, int numGames, float forceWidth = 0, float forceHeight = 0);
+	void update(int gameIndex, int numGames, float forceWidth = 0, float forceHeight = 0);
 
 private:
-	void setControlsState(PuzzlePlayer *p);
+	void setControlsState();
 
 
 private:
@@ -675,7 +675,7 @@ public:
 	typedef ArrayList<FrameState> FrameStateArray;
 	ArrayList<FrameStateArray> allNetworkPacketsSentUpUntilNow;
 
-	void sendPacketsToOtherPlayers(PuzzlePlayer *p);
+	void sendPacketsToOtherPlayers();
 	bool waitingForNetworkFrames = true;
 
 	void incoming_FramePacket(const string &s);

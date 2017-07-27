@@ -1500,6 +1500,11 @@ void Grid::shakeSmall()
 
 	setShakePlayingField(120, 2, 2, 40);//from miniGameEngine
 
+	if(getGameLogic()->player->gameController!=nullptr)
+	{
+		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 120*2, 32767 / 2, 10, 120, 40);
+	}
+
 //	if (effectShakeDurationTicks == 0)
 //	{
 //		effectShakeDurationTicks = 300;
@@ -1519,12 +1524,22 @@ void Grid::shakeMedium()
 {//=========================================================================================================================
 
 	setShakePlayingField(300, 4, 2, 60);//from miniGameEngine
+
+	if (getGameLogic()->player->gameController != nullptr)
+	{
+		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 300*2, 32767 / 2, 10, 300, 60);
+	}
 }
 
 //=========================================================================================================================
 void Grid::shakeHard()
 {//=========================================================================================================================
 	setShakePlayingField(600, 10, 10, 60);//from miniGameEngine
+
+	if (getGameLogic()->player->gameController != nullptr)
+	{
+		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 600*2, 32767, 10, 600, 60);
+	}
 //	effectShakeDurationTicks = 600;
 //	effectShakeMaxX = (int)(20 * (GLUtils::getViewportWidth() / 320));
 //	effectShakeMaxY = (int)(20 * (GLUtils::getViewportWidth() / 320));

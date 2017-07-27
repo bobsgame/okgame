@@ -128,27 +128,6 @@ ControlsManager::ControlsManager()
 
 
 
-//==========================================================================================================================
-void ControlsManager::cleanup()
-{//==========================================================================================================================
-
-	log.info("Cleaning up controllers");
-
-	if (controllersByJoystickID.size()>0)
-	{
-		ArrayList<SDL_GameController*> *controllers = controllersByJoystickID.getAllValues();
-
-		for(int i = 0; i < controllers->size(); i++)
-		{
-			SDL_GameController *controller = controllers->get(i);
-			SDL_GameControllerClose(controller);
-		}
-		delete controllers;
-	}
-	//controllersByJoystickNum->clear();
-	controllersByJoystickID.clear();
-
-}
 
 //=========================================================================================================================
 void ControlsManager::initControllers()
@@ -221,8 +200,21 @@ void ControlsManager::initControllers()
 			SDL_JoystickID id = SDL_JoystickInstanceID(joy);
 			controllersByJoystickID.put(id, controller);
 
+			SDL_Haptic *haptic = nullptr;
+			haptic = SDL_HapticOpenFromJoystick(joy);
+			if (haptic != NULL)
+			{
+				// See if it can do sine waves
+				if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0)
+				{
+					SDL_HapticClose(haptic); // No sine effect
+					haptic = nullptr;
+				}
+			}
+
 			GameController* g = new GameController();
 			g->id = id;
+			g->haptic = haptic;
 			gameControllers.add(g);
 
 			char* mapping = SDL_GameControllerMapping(controller);
@@ -244,6 +236,37 @@ void ControlsManager::initControllers()
 
 
 	//string path = string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + "controls.cfg";
+
+}
+
+
+//==========================================================================================================================
+void ControlsManager::cleanup()
+{//==========================================================================================================================
+
+	log.info("Cleaning up controllers");
+
+	for(int i=0;i<gameControllers.size();i++)
+	{
+		if(gameControllers.get(i)->haptic!=nullptr)
+		{
+			SDL_HapticClose(gameControllers.get(i)->haptic);
+		}
+	}
+
+	if (controllersByJoystickID.size()>0)
+	{
+		ArrayList<SDL_GameController*> *controllers = controllersByJoystickID.getAllValues();
+
+		for (int i = 0; i < controllers->size(); i++)
+		{
+			SDL_GameController *controller = controllers->get(i);
+			SDL_GameControllerClose(controller);
+		}
+		delete controllers;
+	}
+	//controllersByJoystickNum->clear();
+	controllersByJoystickID.clear();
 
 }
 
@@ -1749,6 +1772,47 @@ SDL_JoyHatEvent
 		
 
 }
+
+
+//=========================================================================================================================
+void ControlsManager::doHaptic(GameController *g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
+{//=========================================================================================================================
+
+	if (g->haptic == nullptr)return;
+
+	if(g->hapticID!=-1)
+	{
+		SDL_HapticDestroyEffect(g->haptic, g->hapticID);
+		g->hapticID = -1;
+	}
+
+	SDL_HapticEffect effect;
+	int effect_id;
+
+	// Create the effect
+	SDL_memset(&effect, 0, sizeof(SDL_HapticEffect)); // 0 is safe default
+	effect.type = SDL_HAPTIC_SINE;
+	effect.periodic.direction.type = SDL_HAPTIC_POLAR; // Polar coordinates
+	effect.periodic.direction.dir[0] = 18000; // Force comes from south
+	effect.periodic.period = wavePeriod; // 1000 ms
+	effect.periodic.magnitude = magnitude; // 20000/32767 strength
+	effect.periodic.length = length; // 5 seconds long
+	effect.periodic.attack_length = attackLength; // Takes 1 second to get max strength
+	effect.periodic.fade_length = fadeLength; // Takes 1 second to fade away
+
+										// Upload the effect
+	effect_id = SDL_HapticNewEffect(g->haptic, &effect);
+
+	g->hapticID = effect_id;
+
+	SDL_HapticRunEffect(g->haptic, effect_id, 1);
+
+	//SDL_HapticDestroyEffect(haptic, effect_id);
+
+
+}
+
+
 
 //void ControlsManager::update()
 //{

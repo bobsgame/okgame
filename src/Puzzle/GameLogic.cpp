@@ -481,8 +481,10 @@ void GameLogic::waitForReady()
 #define UPDATE 1
 
 //=========================================================================================================================
-void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float forceWidth, float forceHeight)
+void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forceHeight)
 {//=========================================================================================================================
+
+
 
 	float screenWidth = getBobsGame()->getWidth();
 	float screenHeight = getBobsGame()->getHeight();
@@ -548,23 +550,23 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 		playingFieldY0 = (float)(row*rowHeight);
 		playingFieldY1 = (float)(row*rowHeight + rowHeight);
 
-		if (p->nameCaption != nullptr)
+		if (player->nameCaption != nullptr)
 		{
-			p->nameCaption->screenX = grid->getXOnScreenNoShake();
-			p->nameCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH();
-			p->nameCaption->setTextColor(BobColor::white);
+			player->nameCaption->screenX = grid->getXOnScreenNoShake();
+			player->nameCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH();
+			player->nameCaption->setTextColor(BobColor::white);
 		}
-		if (p->gameCaption != nullptr)
+		if (player->gameCaption != nullptr)
 		{
-			p->gameCaption->screenX = grid->getXOnScreenNoShake();
-			p->gameCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH() + 16;
-			p->gameCaption->setTextColor(BobColor::white);
+			player->gameCaption->screenX = grid->getXOnScreenNoShake();
+			player->gameCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH() + 16;
+			player->gameCaption->setTextColor(BobColor::white);
 		}
-		if (p->difficultyCaption != nullptr)
+		if (player->difficultyCaption != nullptr)
 		{
-			p->difficultyCaption->screenX = grid->getXOnScreenNoShake();
-			p->difficultyCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH() + 16 + 16;
-			p->difficultyCaption->setTextColor(BobColor::white);
+			player->difficultyCaption->screenX = grid->getXOnScreenNoShake();
+			player->difficultyCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH() + 16 + 16;
+			player->difficultyCaption->setTextColor(BobColor::white);
 		}
 
 		captionX = (float)(grid->getXOnScreenNoShake() + (grid->getWidth() + 1) * cellW()) + 4;
@@ -594,7 +596,7 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 		frameState = FrameState();
 		frameState.ticksPassed = getEngine()->engineTicksPassed();
 
-		if(p->pausePressed())
+		if(player->pausePressed())
 		{
 			if(numGames==1)
 			{
@@ -608,12 +610,12 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 
 		if(pauseMiniMenuShowing)
 		{
-			getBobsGame()->playerPauseMiniMenuUpdate(p);
+			getBobsGame()->playerPauseMiniMenuUpdate(player);
 
 		}
 		else
 		{
-			setControlsState(p);
+			setControlsState();
 		}
 
 		//log.debug("New frame");
@@ -832,7 +834,7 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 			frameState.randomInt = randomGenerator();
 
 
-			sendPacketsToOtherPlayers(p);
+			sendPacketsToOtherPlayers();
 
 
 			//handle gotGarbage for network players
@@ -915,7 +917,7 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 			ticksPassed = (long long)System::getTicksBetweenTimes(getLastTimeGotIncomingTraffic(), currentTime);
 			if (ticksPassed > 15000)
 			{
-				if (p->peerConnection->getConnectedToPeer_S() == false)
+				if (player->peerConnection->getConnectedToPeer_S() == false)
 				{
 					//TODO: drop connection, match is forfeit, i am winner
 					setTheyForfeit(true);
@@ -986,7 +988,7 @@ void GameLogic::update(PuzzlePlayer* p, int gameIndex, int numGames, float force
 	}
 }
 //=========================================================================================================================
-void GameLogic::sendPacketsToOtherPlayers(PuzzlePlayer *p)
+void GameLogic::sendPacketsToOtherPlayers()
 {//=========================================================================================================================
 	long long currentTime = System::currentHighResTimer();
 
@@ -1072,7 +1074,7 @@ void GameLogic::sendPacketsToOtherPlayers(PuzzlePlayer *p)
 			string idAndMD5String = outboundPacketQueueVector.get(0);
 			string b64zip = outboundPacketQueueHashMap.get(idAndMD5String);
 
-			getBobsGame()->sendAllJoinedPeers(BobsGame::netCommand_FRAME + p->getID() + ":" + idAndMD5String + ":" + b64zip);
+			getBobsGame()->sendAllJoinedPeers(BobsGame::netCommand_FRAME + player->getID() + ":" + idAndMD5String + ":" + b64zip);
 
 			//remove id,MD5 from vector queue 	
 			//remove id,MD5 from hashmap queue 	
@@ -1248,21 +1250,21 @@ void GameLogic::setTheyForfeit(bool b)
 }
 
 //=========================================================================================================================
-void GameLogic::setControlsState(PuzzlePlayer *p)
+void GameLogic::setControlsState()
 {//=========================================================================================================================
 
-	frameState.ROTATECW_HELD = p->ROTATECW_HELD;
-	frameState.HOLDRAISE_HELD = p->HOLDRAISE_HELD;
-	frameState.ROTATECCW_HELD = p->ROTATECCW_HELD;
-	frameState.UP_HELD = p->UP_HELD;
-	frameState.LEFT_HELD = p->LEFT_HELD;
-	frameState.DOWN_HELD = p->DOWN_HELD;
-	frameState.RIGHT_HELD = p->RIGHT_HELD;
-	frameState.SLAM_HELD = p->SLAM_HELD;
+	frameState.ROTATECW_HELD = player->ROTATECW_HELD;
+	frameState.HOLDRAISE_HELD = player->HOLDRAISE_HELD;
+	frameState.ROTATECCW_HELD = player->ROTATECCW_HELD;
+	frameState.UP_HELD = player->UP_HELD;
+	frameState.LEFT_HELD = player->LEFT_HELD;
+	frameState.DOWN_HELD = player->DOWN_HELD;
+	frameState.RIGHT_HELD = player->RIGHT_HELD;
+	frameState.SLAM_HELD = player->SLAM_HELD;
 
-	frameState.slamLock = p->slamLock;
-	frameState.singleDownLock = p->singleDownLock;
-	frameState.doubleDownLock = p->doubleDownLock;
+	frameState.slamLock = player->slamLock;
+	frameState.singleDownLock = player->singleDownLock;
+	frameState.doubleDownLock = player->doubleDownLock;
 }
 
 

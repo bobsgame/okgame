@@ -1004,7 +1004,7 @@ void BobsGame::update()
 		GameLogic *g = p->gameLogic;
 
 		//actual game update
-		g->update(p,i,players.size());
+		g->update(i,players.size());
 
 
 

@@ -20,6 +20,8 @@ class GameController
 public:
 
 	SDL_JoystickID id;
+	SDL_Haptic *haptic = nullptr;
+	int hapticID = -1;
 
 	bool UP_HELD = false;
 	bool DOWN_HELD = false;
@@ -723,6 +725,8 @@ public:
 	void setButtonStates();
 
 	static void cleanup();
+
+	void doHaptic(GameController *g, int length, int magnitude = 32767, int attackLength = 500, int fadeLength = 500, int wavePeriod = 500);
 	int getMouseX();
 	int getMouseY();
 };
