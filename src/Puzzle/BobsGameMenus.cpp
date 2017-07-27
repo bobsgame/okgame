@@ -3383,11 +3383,11 @@ void BobsGame::gameSetupMenuUpdate()
 
 		gameSetupMenu = new BobMenu(this, "Setup Game Options");
 
+		gameSetupMenu->add("Start Game", "Start Game", BobColor::green);
+		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Select Game Sequence Or Single Game Type...", "Select Game");
 		gameSetupMenu->add("Difficulty: Beginner", "Difficulty");;
 		gameSetupMenu->add("More Options...", "Options");
-		gameSetupMenu->addInfo(" ", " ");
-		gameSetupMenu->add("Start Game", "Start Game", BobColor::green);
 		gameSetupMenu->addInfo(" ", " ");
 		gameSetupMenu->add("Save Config...", "Save");
 		gameSetupMenu->add("Load Config...", "Load");
@@ -3577,7 +3577,26 @@ void BobsGame::gameSetupMenuUpdate()
 
 		bool leaveMenu = false;
 
-		bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+
+		bool confirm = false;
+		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
+		{
+			GameController *g = getControlsManager()->gameControllers.get(i);
+			if (g->b_Pressed())
+			{
+				confirm = true;
+				getPlayer1()->gameController = g;
+			}
+			if (g->start_Pressed())
+			{
+				confirm = true;
+				getPlayer1()->gameController = g;
+			}
+		}
+
+		if (getControlsManager()->miniGame_CONFIRM_Pressed())confirm = true;//, clicked, mx, my
+
+
 		bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
 
 		if (confirm || clicked)

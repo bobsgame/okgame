@@ -200,22 +200,33 @@ void ControlsManager::initControllers()
 			SDL_JoystickID id = SDL_JoystickInstanceID(joy);
 			controllersByJoystickID.put(id, controller);
 
+
+			GameController* g = new GameController();
+			g->id = id;
+
+			gameControllers.add(g);
+
 			SDL_Haptic *haptic = nullptr;
 			haptic = SDL_HapticOpenFromJoystick(joy);
 			if (haptic != NULL)
 			{
-				// See if it can do sine waves
-				if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0)
-				{
-					SDL_HapticClose(haptic); // No sine effect
-					haptic = nullptr;
-				}
+				log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
+				g->haptic = haptic;
+
+				SDL_HapticRumbleInit(haptic);
+
+
+//				// See if it can do sine waves
+//				if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0)
+//				{
+//					SDL_HapticClose(haptic); // No sine effect
+//					haptic = nullptr;
+//				}
 			}
 
-			GameController* g = new GameController();
-			g->id = id;
-			g->haptic = haptic;
-			gameControllers.add(g);
+
+			
+			
 
 			char* mapping = SDL_GameControllerMapping(controller);
 			log.info("Controller " + to_string(i) + " is mapped as " + string(mapping));
@@ -895,9 +906,30 @@ SDL_JoyHatEvent
 						n = 0;
 					}
 				}
+
+
+
 				GameController* g = new GameController();
 				g->id = joystickID;
 				gameControllers.add(g);
+
+				SDL_Haptic *haptic = nullptr;
+				haptic = SDL_HapticOpenFromJoystick(joy);
+				if (haptic != NULL)
+				{
+					log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
+					g->haptic = haptic;
+
+					SDL_HapticRumbleInit(haptic);
+
+
+					//				// See if it can do sine waves
+					//				if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0)
+					//				{
+					//					SDL_HapticClose(haptic); // No sine effect
+					//					haptic = nullptr;
+					//				}
+				}
 
 				char* mapping = SDL_GameControllerMapping(controller);
 				log.debug("Controller " + to_string(joystickDeviceIndex) + " is mapped as " + string(mapping));
@@ -913,18 +945,23 @@ SDL_JoyHatEvent
 
 				//controllersByJoystickNum->removeAllValues(controller);
 				controllersByJoystickID.removeAllValues(controller);
-				SDL_GameControllerClose(controller);
-				log.debug("Controller Removed: " + string(SDL_GameControllerName(controller)));
+
 
 				for (int i = 0; i < gameControllers.size(); i++)
 				{
 					GameController *g = gameControllers.get(i);
 					if (g->id == joystickID)
 					{
+						if(g->haptic!=nullptr)SDL_HapticClose(g->haptic);
 						gameControllers.removeAt(i);
 						i = 0;
 					}
-				}
+				}			
+
+				SDL_GameControllerClose(controller);
+
+				log.debug("Controller Removed: " + string(SDL_GameControllerName(controller)));
+
 
 			 }
 			 else
@@ -1778,36 +1815,41 @@ SDL_JoyHatEvent
 void ControlsManager::doHaptic(GameController *g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
 {//=========================================================================================================================
 
+	log.debug("doHaptic");
 	if (g->haptic == nullptr)return;
 
-	if(g->hapticID!=-1)
-	{
-		SDL_HapticDestroyEffect(g->haptic, g->hapticID);
-		g->hapticID = -1;
-	}
+	SDL_HapticRumblePlay(g->haptic, (float)magnitude/32767.0f, length);
 
-	SDL_HapticEffect effect;
-	int effect_id;
+	log.debug("Played haptic");
 
-	// Create the effect
-	SDL_memset(&effect, 0, sizeof(SDL_HapticEffect)); // 0 is safe default
-	effect.type = SDL_HAPTIC_SINE;
-	effect.periodic.direction.type = SDL_HAPTIC_POLAR; // Polar coordinates
-	effect.periodic.direction.dir[0] = 18000; // Force comes from south
-	effect.periodic.period = wavePeriod; // 1000 ms
-	effect.periodic.magnitude = magnitude; // 20000/32767 strength
-	effect.periodic.length = length; // 5 seconds long
-	effect.periodic.attack_length = attackLength; // Takes 1 second to get max strength
-	effect.periodic.fade_length = fadeLength; // Takes 1 second to fade away
-
-										// Upload the effect
-	effect_id = SDL_HapticNewEffect(g->haptic, &effect);
-
-	g->hapticID = effect_id;
-
-	SDL_HapticRunEffect(g->haptic, effect_id, 1);
-
-	//SDL_HapticDestroyEffect(haptic, effect_id);
+//	if(g->hapticID!=-1)
+//	{
+//		SDL_HapticDestroyEffect(g->haptic, g->hapticID);
+//		g->hapticID = -1;
+//	}
+//
+//	SDL_HapticEffect effect;
+//	int effect_id;
+//
+//	// Create the effect
+//	SDL_memset(&effect, 0, sizeof(SDL_HapticEffect)); // 0 is safe default
+//	effect.type = SDL_HAPTIC_SINE;
+//	effect.periodic.direction.type = SDL_HAPTIC_POLAR; // Polar coordinates
+//	effect.periodic.direction.dir[0] = 18000; // Force comes from south
+//	effect.periodic.period = wavePeriod; // 1000 ms
+//	effect.periodic.magnitude = magnitude; // 20000/32767 strength
+//	effect.periodic.length = length; // 5 seconds long
+//	effect.periodic.attack_length = attackLength; // Takes 1 second to get max strength
+//	effect.periodic.fade_length = fadeLength; // Takes 1 second to fade away
+//
+//										// Upload the effect
+//	effect_id = SDL_HapticNewEffect(g->haptic, &effect);
+//
+//	g->hapticID = effect_id;
+//
+//	SDL_HapticRunEffect(g->haptic, effect_id, 1);
+//
+//	//SDL_HapticDestroyEffect(haptic, effect_id);
 
 
 }

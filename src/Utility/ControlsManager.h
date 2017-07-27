@@ -21,7 +21,7 @@ public:
 
 	SDL_JoystickID id;
 	SDL_Haptic *haptic = nullptr;
-	int hapticID = -1;
+	//int hapticID = -1;
 
 	bool UP_HELD = false;
 	bool DOWN_HELD = false;

@@ -1502,7 +1502,7 @@ void Grid::shakeSmall()
 
 	if(getGameLogic()->player->gameController!=nullptr)
 	{
-		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 120*2, 32767 / 2, 10, 120, 40);
+		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 120*3, 32767, 10, 120, 40);
 	}
 
 //	if (effectShakeDurationTicks == 0)
@@ -1527,7 +1527,7 @@ void Grid::shakeMedium()
 
 	if (getGameLogic()->player->gameController != nullptr)
 	{
-		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 300*2, 32767 / 2, 10, 300, 60);
+		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 300*4, 32767, 10, 300, 60);
 	}
 }
 
@@ -1538,7 +1538,7 @@ void Grid::shakeHard()
 
 	if (getGameLogic()->player->gameController != nullptr)
 	{
-		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 600*2, 32767, 10, 600, 60);
+		getGameLogic()->getControlsManager()->doHaptic(getGameLogic()->player->gameController, 600*4, 32767, 10, 600, 60);
 	}
 //	effectShakeDurationTicks = 600;
 //	effectShakeMaxX = (int)(20 * (GLUtils::getViewportWidth() / 320));

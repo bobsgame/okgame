@@ -5294,7 +5294,7 @@ void BobsGame::customGameEditorMenuUpdate()
 
 		if (customGameEditor->windowOpen == false)
 		{
-			getPlayer1Game()->update(getPlayer1(), 0, 1, customGameEditor->darkRectangle->Width(), customGameEditor->darkRectangle->Height());
+			getPlayer1Game()->update(0, 1, customGameEditor->darkRectangle->Width(), customGameEditor->darkRectangle->Height());
 		}
 
 		if (customGameEditor->exit == true)

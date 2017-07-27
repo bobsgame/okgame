@@ -633,7 +633,7 @@ void BobsGame::gameTestMenuUpdate()
 
 		if (gameTestMenu->windowOpen == false)
 		{
-			getPlayer1Game()->update(getPlayer1(), 0, 1, gameTestMenu->darkRectangle->Width(), gameTestMenu->darkRectangle->Height());
+			getPlayer1Game()->update(0, 1, gameTestMenu->darkRectangle->Width(), gameTestMenu->darkRectangle->Height());
 		}
 
 		if (gameTestMenu->exit == true)
