@@ -262,8 +262,39 @@ void ControlsManager::resetPressedButtons()
 	KEY_SPACE_PRESSED = false; //was A
 	KEY_TAB_PRESSED = false; //was START
 	KEY_RETURN_PRESSED = false; //was SELECT
-	KEY_H_PRESSED = false;
+	KEY_A_PRESSED = false;
+	KEY_B_PRESSED = false;
 	KEY_C_PRESSED = false;
+	KEY_D_PRESSED = false;
+	KEY_E_PRESSED = false;
+	KEY_F_PRESSED = false;
+	KEY_G_PRESSED = false;
+	KEY_H_PRESSED = false;
+	KEY_I_PRESSED = false;
+	KEY_J_PRESSED = false;
+	KEY_K_PRESSED = false;
+	KEY_L_PRESSED = false;
+	KEY_M_PRESSED = false;
+	KEY_N_PRESSED = false;
+	KEY_O_PRESSED = false;
+	KEY_P_PRESSED = false;
+	KEY_Q_PRESSED = false;
+	KEY_R_PRESSED = false;
+	KEY_S_PRESSED = false;
+	KEY_T_PRESSED = false;
+	KEY_U_PRESSED = false;
+	KEY_V_PRESSED = false;
+	KEY_W_PRESSED = false;
+	KEY_X_PRESSED = false;
+	KEY_Y_PRESSED = false;
+	KEY_Z_PRESSED = false;
+	KEY_COMMA_PRESSED = false;
+	KEY_PERIOD_PRESSED = false;
+	KEY_FRONTSLASH_PRESSED = false;
+	KEY_SEMICOLON_PRESSED = false;
+	KEY_QUOTE_PRESSED = false;
+	KEY_BACKSLASH_PRESSED = false;
+
 	KEY_LBRACKET_PRESSED = false; //was L
 	KEY_RBRACKET_PRESSED = false; //was R
 	KEY_RALT_PRESSED = false;
@@ -386,8 +417,39 @@ void ControlsManager::setButtonStates()
 	bool LAST_KEY_SPACE_HELD = KEY_SPACE_HELD; //was A
 	bool LAST_KEY_TAB_HELD = KEY_TAB_HELD; //was START
 	bool LAST_KEY_RETURN_HELD = KEY_RETURN_HELD; //was SELECT
-	bool LAST_KEY_H_HELD = KEY_H_HELD;
+	bool LAST_KEY_A_HELD = KEY_A_HELD;
+	bool LAST_KEY_B_HELD = KEY_B_HELD;
 	bool LAST_KEY_C_HELD = KEY_C_HELD;
+	bool LAST_KEY_D_HELD = KEY_D_HELD;
+	bool LAST_KEY_E_HELD = KEY_E_HELD;
+	bool LAST_KEY_F_HELD = KEY_F_HELD;
+	bool LAST_KEY_G_HELD = KEY_G_HELD;
+	bool LAST_KEY_H_HELD = KEY_H_HELD;
+	bool LAST_KEY_I_HELD = KEY_I_HELD;
+	bool LAST_KEY_J_HELD = KEY_J_HELD;
+	bool LAST_KEY_K_HELD = KEY_K_HELD;
+	bool LAST_KEY_L_HELD = KEY_L_HELD;
+	bool LAST_KEY_M_HELD = KEY_M_HELD;
+	bool LAST_KEY_N_HELD = KEY_N_HELD;
+	bool LAST_KEY_O_HELD = KEY_O_HELD;
+	bool LAST_KEY_P_HELD = KEY_P_HELD;
+	bool LAST_KEY_Q_HELD = KEY_Q_HELD;
+	bool LAST_KEY_R_HELD = KEY_R_HELD;
+	bool LAST_KEY_S_HELD = KEY_S_HELD;
+	bool LAST_KEY_T_HELD = KEY_T_HELD;
+	bool LAST_KEY_U_HELD = KEY_U_HELD;
+	bool LAST_KEY_V_HELD = KEY_V_HELD;
+	bool LAST_KEY_W_HELD = KEY_W_HELD;
+	bool LAST_KEY_X_HELD = KEY_X_HELD;
+	bool LAST_KEY_Y_HELD = KEY_Y_HELD;
+	bool LAST_KEY_Z_HELD = KEY_Z_HELD;
+	bool LAST_KEY_COMMA_HELD = KEY_COMMA_HELD;
+	bool LAST_KEY_PERIOD_HELD = KEY_PERIOD_HELD;
+	bool LAST_KEY_FRONTSLASH_HELD = KEY_FRONTSLASH_HELD;
+	bool LAST_KEY_SEMICOLON_HELD = KEY_SEMICOLON_HELD;
+	bool LAST_KEY_QUOTE_HELD = KEY_QUOTE_HELD;
+	bool LAST_KEY_BACKSLASH_HELD = KEY_BACKSLASH_HELD;
+
 	bool LAST_KEY_LBRACKET_HELD = KEY_LBRACKET_HELD; //was L
 	bool LAST_KEY_RBRACKET_HELD = KEY_RBRACKET_HELD; //was R
 	bool LAST_KEY_RALT_HELD = KEY_RALT_HELD;
@@ -1175,8 +1237,39 @@ SDL_JoyHatEvent
 				case SDLK_SPACE:KEY_SPACE_HELD = true; break;
 				case SDLK_LEFTBRACKET:KEY_LBRACKET_HELD = true;break;
 				case SDLK_RIGHTBRACKET:KEY_RBRACKET_HELD = true;break;
-				case SDLK_h:KEY_H_HELD = true; break;
+				case SDLK_a:KEY_A_HELD = true; break;
+				case SDLK_b:KEY_B_HELD = true; break;
 				case SDLK_c:KEY_C_HELD = true; break;
+				case SDLK_d:KEY_D_HELD = true; break;
+				case SDLK_e:KEY_E_HELD = true; break;
+				case SDLK_f:KEY_F_HELD = true; break;
+				case SDLK_g:KEY_G_HELD = true; break;
+				case SDLK_h:KEY_H_HELD = true; break;
+				case SDLK_i:KEY_I_HELD = true; break;
+				case SDLK_j:KEY_J_HELD = true; break;
+				case SDLK_k:KEY_K_HELD = true; break;
+				case SDLK_l:KEY_L_HELD = true; break;
+				case SDLK_m:KEY_M_HELD = true; break;
+				case SDLK_n:KEY_N_HELD = true; break;
+				case SDLK_o:KEY_O_HELD = true; break;
+				case SDLK_p:KEY_P_HELD = true; break;
+				case SDLK_q:KEY_Q_HELD = true; break;
+				case SDLK_r:KEY_R_HELD = true; break;
+				case SDLK_s:KEY_S_HELD = true; break;
+				case SDLK_t:KEY_T_HELD = true; break;
+				case SDLK_u:KEY_U_HELD = true; break;
+				case SDLK_v:KEY_V_HELD = true; break;
+				case SDLK_w:KEY_W_HELD = true; break;
+				case SDLK_x:KEY_X_HELD = true; break;
+				case SDLK_y:KEY_Y_HELD = true; break;
+				case SDLK_z:KEY_Z_HELD = true; break;
+				case SDLK_COMMA:KEY_COMMA_HELD = true; break;
+				case SDLK_PERIOD:KEY_PERIOD_HELD = true; break;
+				case SDLK_SLASH:KEY_FRONTSLASH_HELD = true; break;
+				case SDLK_SEMICOLON:KEY_SEMICOLON_HELD = true; break;
+				case SDLK_QUOTE:KEY_QUOTE_HELD = true; break;
+				case SDLK_BACKSLASH:KEY_BACKSLASH_HELD = true; break;
+
 				case SDLK_LSHIFT:KEY_LSHIFT_HELD = true; break;
 				case SDLK_RSHIFT:KEY_RSHIFT_HELD = true; break;
 				case SDLK_LCTRL:KEY_LCTRL_HELD = true; break;
@@ -1241,8 +1334,38 @@ SDL_JoyHatEvent
 				case SDLK_SPACE:KEY_SPACE_HELD = false; break;
 				case SDLK_LEFTBRACKET:KEY_LBRACKET_HELD = false; break;
 				case SDLK_RIGHTBRACKET:KEY_RBRACKET_HELD = false; break;
-				case SDLK_h:KEY_H_HELD = false; break;
+				case SDLK_a:KEY_A_HELD = false; break;
+				case SDLK_b:KEY_B_HELD = false; break;
 				case SDLK_c:KEY_C_HELD = false; break;
+				case SDLK_d:KEY_D_HELD = false; break;
+				case SDLK_e:KEY_E_HELD = false; break;
+				case SDLK_f:KEY_F_HELD = false; break;
+				case SDLK_g:KEY_G_HELD = false; break;
+				case SDLK_h:KEY_H_HELD = false; break;
+				case SDLK_i:KEY_I_HELD = false; break;
+				case SDLK_j:KEY_J_HELD = false; break;
+				case SDLK_k:KEY_K_HELD = false; break;
+				case SDLK_l:KEY_L_HELD = false; break;
+				case SDLK_m:KEY_M_HELD = false; break;
+				case SDLK_n:KEY_N_HELD = false; break;
+				case SDLK_o:KEY_O_HELD = false; break;
+				case SDLK_p:KEY_P_HELD = false; break;
+				case SDLK_q:KEY_Q_HELD = false; break;
+				case SDLK_r:KEY_R_HELD = false; break;
+				case SDLK_s:KEY_S_HELD = false; break;
+				case SDLK_t:KEY_T_HELD = false; break;
+				case SDLK_u:KEY_U_HELD = false; break;
+				case SDLK_v:KEY_V_HELD = false; break;
+				case SDLK_w:KEY_W_HELD = false; break;
+				case SDLK_x:KEY_X_HELD = false; break;
+				case SDLK_y:KEY_Y_HELD = false; break;
+				case SDLK_z:KEY_Z_HELD = false; break;
+				case SDLK_COMMA:KEY_COMMA_HELD = false; break;
+				case SDLK_PERIOD:KEY_PERIOD_HELD = false; break;
+				case SDLK_SLASH:KEY_FRONTSLASH_HELD = false; break;
+				case SDLK_SEMICOLON:KEY_SEMICOLON_HELD = false; break;
+				case SDLK_QUOTE:KEY_QUOTE_HELD = false; break;
+				case SDLK_BACKSLASH:KEY_BACKSLASH_HELD = false; break;
 				case SDLK_LSHIFT:KEY_LSHIFT_HELD = false; break;
 				case SDLK_RSHIFT:KEY_RSHIFT_HELD = false; break;
 				case SDLK_LCTRL:KEY_LCTRL_HELD = false; break;
@@ -1385,8 +1508,40 @@ SDL_JoyHatEvent
 	if(KEY_SPACE_HELD		&&LAST_KEY_SPACE_HELD		==false)KEY_SPACE_PRESSED	=true;
 	if(KEY_TAB_HELD			&&LAST_KEY_TAB_HELD			==false)KEY_TAB_PRESSED	=true;
 	if(KEY_RETURN_HELD		&&LAST_KEY_RETURN_HELD		==false)KEY_RETURN_PRESSED=true;
-	if(KEY_H_HELD			&&LAST_KEY_H_HELD			==false)KEY_H_PRESSED	=true;
+	if(KEY_A_HELD			&&LAST_KEY_A_HELD			==false)KEY_A_PRESSED	=true;
+	if(KEY_B_HELD			&&LAST_KEY_B_HELD			==false)KEY_B_PRESSED	=true;
 	if(KEY_C_HELD			&&LAST_KEY_C_HELD			==false)KEY_C_PRESSED	=true;
+	if(KEY_D_HELD			&&LAST_KEY_D_HELD			==false)KEY_D_PRESSED	=true;
+	if(KEY_E_HELD			&&LAST_KEY_E_HELD			==false)KEY_E_PRESSED	=true;
+	if(KEY_F_HELD			&&LAST_KEY_F_HELD			==false)KEY_F_PRESSED	=true;
+	if(KEY_G_HELD			&&LAST_KEY_G_HELD			==false)KEY_G_PRESSED	=true;
+	if(KEY_H_HELD			&&LAST_KEY_H_HELD			==false)KEY_H_PRESSED	=true;
+	if(KEY_I_HELD			&&LAST_KEY_I_HELD			==false)KEY_I_PRESSED	=true;
+	if(KEY_J_HELD			&&LAST_KEY_J_HELD			==false)KEY_J_PRESSED	=true;
+	if(KEY_K_HELD			&&LAST_KEY_K_HELD			==false)KEY_K_PRESSED	=true;
+	if(KEY_L_HELD			&&LAST_KEY_L_HELD			==false)KEY_L_PRESSED	=true;
+	if(KEY_M_HELD			&&LAST_KEY_M_HELD			==false)KEY_M_PRESSED	=true;
+	if(KEY_N_HELD			&&LAST_KEY_N_HELD			==false)KEY_N_PRESSED	=true;
+	if(KEY_O_HELD			&&LAST_KEY_O_HELD			==false)KEY_O_PRESSED	=true;
+	if(KEY_P_HELD			&&LAST_KEY_P_HELD			==false)KEY_P_PRESSED	=true;
+	if(KEY_Q_HELD			&&LAST_KEY_Q_HELD			==false)KEY_Q_PRESSED	=true;
+	if(KEY_R_HELD			&&LAST_KEY_R_HELD			==false)KEY_R_PRESSED	=true;
+	if(KEY_S_HELD			&&LAST_KEY_S_HELD			==false)KEY_S_PRESSED	=true;
+	if(KEY_T_HELD			&&LAST_KEY_T_HELD			==false)KEY_T_PRESSED	=true;
+	if(KEY_U_HELD			&&LAST_KEY_U_HELD			==false)KEY_U_PRESSED	=true;
+	if(KEY_V_HELD			&&LAST_KEY_V_HELD			==false)KEY_V_PRESSED	=true;
+	if(KEY_W_HELD			&&LAST_KEY_W_HELD			==false)KEY_W_PRESSED	=true;
+	if(KEY_X_HELD			&&LAST_KEY_X_HELD			==false)KEY_X_PRESSED	=true;
+	if(KEY_Y_HELD			&&LAST_KEY_Y_HELD			==false)KEY_Y_PRESSED	=true;
+	if(KEY_Z_HELD			&&LAST_KEY_Z_HELD			==false)KEY_Z_PRESSED	=true;
+
+	if(KEY_COMMA_HELD		&&LAST_KEY_COMMA_HELD		==false)KEY_COMMA_PRESSED	=true;
+	if(KEY_PERIOD_HELD		&&LAST_KEY_PERIOD_HELD		==false)KEY_PERIOD_PRESSED	=true;
+	if(KEY_FRONTSLASH_HELD	&&LAST_KEY_FRONTSLASH_HELD	==false)KEY_FRONTSLASH_PRESSED	=true;
+	if(KEY_SEMICOLON_HELD	&&LAST_KEY_SEMICOLON_HELD	==false)KEY_SEMICOLON_PRESSED	=true;
+	if(KEY_QUOTE_HELD		&&LAST_KEY_QUOTE_HELD		==false)KEY_QUOTE_PRESSED	=true;
+	if(KEY_BACKSLASH_HELD	&&LAST_KEY_BACKSLASH_HELD	==false)KEY_BACKSLASH_PRESSED	=true;
+
 	if(KEY_LBRACKET_HELD	&&LAST_KEY_LBRACKET_HELD	==false)KEY_LBRACKET_PRESSED=true;
 	if(KEY_RBRACKET_HELD	&&LAST_KEY_RBRACKET_HELD	==false)KEY_RBRACKET_PRESSED=true;
 	if(KEY_RALT_HELD		&&LAST_KEY_RALT_HELD		==false)KEY_RALT_PRESSED=true;

@@ -459,7 +459,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 			saveButton = new Button(applyButtonsBase);
 			saveButton->SetText(L"Save");
-			saveButton->SetToolTip("Saves to XML in "+string(SDL_GetPrefPath("Bob Corporation","bob's game"))+".  Renames existing file with versioning.  Do this often as some combinations may crash.");
+			saveButton->SetToolTip("Saves to XML in "+string(SDL_GetPrefPath("Bob Corporation","bob's game"))+". Renames existing file with versioning. Do this often as some combinations may crash. Ctrl-S works too.");
 			saveButton->Dock(Pos::Left | Pos::Center);
 			saveButton->SetWidth(50);
 			saveButton->onPress.Add(this, &CustomGameEditorControl::onSaveButton);
@@ -467,7 +467,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 			uploadButton = new Button(applyButtonsBase);
 			uploadButton->SetText(L"Upload");
-			uploadButton->SetToolTip("Upload this game to the server so others can play it.  Reuploading modified versions will overwrite the version on the server.  You can only upload one new game type every 10 minutes.  Please do not upload broken or unfinished games.");
+			uploadButton->SetToolTip("Upload this game to the server so others can play it. Reuploading modified versions will overwrite the version on the server. You can only upload one new game type every 10 minutes. Please do not upload broken or unfinished games.");
 			uploadButton->Dock(Pos::Left | Pos::Center);
 			uploadButton->SetWidth(50);
 			uploadButton->onPress.Add(this, &CustomGameEditorControl::onUploadButton);
@@ -5398,6 +5398,10 @@ void BobsGame::customGameEditorMenuRender()
 		}
 
 
+		if(getControlsManager()->KEY_LCTRL_HELD && getControlsManager()->key_S_Pressed())
+		{
+			customGameEditor->onSaveButton(nullptr);
+		}
 
 		//need to be able to force an FBO size
 		//TODO: i should give each gamelogic its own captionmanager and render the captions in the fbo with the game
