@@ -704,7 +704,7 @@ public:
 
 		if (KEY_ESC_PRESSED) { KEY_ESC_PRESSED = false; return true; }
 		//if (KEY_LSHIFT_PRESSED) { KEY_LSHIFT_PRESSED = false; return true; }
-		if (MINIGAME_B_PRESSED) { MINIGAME_B_PRESSED = false; return true; }//TODO: can be customized to either a or b
+		if (MINIGAME_A_PRESSED) { MINIGAME_A_PRESSED = false; return true; }//TODO: can be customized to either a or b
 
 		return false;
 	}

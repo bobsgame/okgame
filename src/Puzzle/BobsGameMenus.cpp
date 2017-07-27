@@ -3553,6 +3553,8 @@ void BobsGame::gameSetupMenuUpdate()
 
 
 		bool confirm = false;
+
+		//assign controller to p1 if start or b pressed
 		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
 		{
 			GameController *g = getControlsManager()->gameControllers.get(i);
@@ -3560,14 +3562,17 @@ void BobsGame::gameSetupMenuUpdate()
 			{
 				confirm = true;
 				getPlayer1()->gameController = g;
+				getPlayer1()->rotateCWPressed();//cancel this
 			}
 			if (g->start_Pressed())
 			{
 				confirm = true;
 				getPlayer1()->gameController = g;
+				getPlayer1()->pausePressed();//cancel this so it doesn't pause immediately
 			}
 		}
 
+		//check enter and space
 		if (getControlsManager()->miniGame_CONFIRM_Pressed())confirm = true;//, clicked, mx, my
 
 

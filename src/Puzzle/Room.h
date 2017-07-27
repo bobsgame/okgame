@@ -106,10 +106,11 @@ public:
 
 		Room r;
 
-		this->endlessMode = r.endlessMode;
 		this->multiplayer_GameEndsWhenOnePlayerRemains = r.multiplayer_GameEndsWhenOnePlayerRemains;
 		this->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = r.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
 		this->multiplayer_DisableVSGarbage = r.multiplayer_DisableVSGarbage;
+
+
 		this->gameSpeedStart = r.gameSpeedStart;
 		this->gameSpeedChangeRate = r.gameSpeedChangeRate;
 		this->gameSpeedMaximum = r.gameSpeedMaximum;
@@ -138,10 +139,6 @@ public:
 
 		Room r;
 
-		if(this->endlessMode != r.endlessMode)return false;
-		if(this->multiplayer_GameEndsWhenOnePlayerRemains != r.multiplayer_GameEndsWhenOnePlayerRemains)return false;
-		if(this->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel != r.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel)return false;
-		if(this->multiplayer_DisableVSGarbage != r.multiplayer_DisableVSGarbage)return false;
 		if(this->gameSpeedStart != r.gameSpeedStart)return false;
 		if(this->gameSpeedChangeRate != r.gameSpeedChangeRate)return false;
 		if(this->gameSpeedMaximum != r.gameSpeedMaximum)return false;
