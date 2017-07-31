@@ -233,9 +233,8 @@ void ArrayList<E>::deleteAll()
 	for(int i=0;i<size();i++)
 	{
 		delete get(i);
-		removeAt(i);
-		i--;
 	}
+	clear();
 }
 
 template <typename E>

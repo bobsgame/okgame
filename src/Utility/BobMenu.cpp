@@ -34,8 +34,10 @@ BobMenu::MenuItem::~MenuItem()
 {//=========================================================================================================================
 	if (caption != nullptr)
 	{
-		caption->setToBeDeletedImmediately();
+		//caption->setToBeDeletedImmediately();
+		delete caption;
 	}
+	
 
 	//if (subMenu != nullptr)delete subMenu;
 }
@@ -130,14 +132,14 @@ BobMenu::BobMenu(Engine *g, string title)
 //=========================================================================================================================
 BobMenu::~BobMenu()
 {//=========================================================================================================================
-	if (titleCaption != nullptr)titleCaption->setToBeDeletedImmediately();
+	if (titleCaption != nullptr)delete titleCaption;// titleCaption->setToBeDeletedImmediately();
 	menuItems.deleteAll();
 	
 	activeMenus.remove(this);
 }
 
-int graphicWidth = 0;
-int graphicYStartPosition = 0;
+//int graphicWidth = 0;
+//int graphicYStartPosition = 0;
 //=========================================================================================================================
 void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosition, int maxGraphicHeight, int filter)
 {//=========================================================================================================================
@@ -151,9 +153,10 @@ void BobMenu::setGraphic(BobTexture* t, int graphicWidth, int graphicYStartPosit
 //=========================================================================================================================
 void BobMenu::clear()
 {//=========================================================================================================================
-
 	menuItems.deleteAll();
+	topMenuItemDrawn = nullptr;
 }
+
 //=========================================================================================================================
 void BobMenu::setAllCaptionsToFullAlpha()
 {//=========================================================================================================================

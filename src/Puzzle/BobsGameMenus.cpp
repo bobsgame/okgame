@@ -2230,6 +2230,9 @@ void BobsGame::statsMenuUpdate()
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
 
+	bool clicked = false;
+	bool confirm = false;
+
 	if (whichStatsMiniMenuShowing)
 	{
 		whichStatsMiniMenuUpdate();
@@ -2271,8 +2274,8 @@ void BobsGame::statsMenuUpdate()
 								statsMenu->down();
 							}
 
-							bool confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
-							bool clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
+							confirm = getControlsManager()->miniGame_CONFIRM_Pressed();//, clicked, mx, my
+							clicked = getControlsManager()->mouse_LEFTBUTTON_Pressed();
 
 
 							if (clicked == true && confirm == false)
@@ -2352,6 +2355,7 @@ void BobsGame::statsMenuUpdate()
 	
 		yourStatsMenu->clear();
 		leaderBoardMenu->clear();
+
 
 		if (whichDifficultyToShow > 5)whichDifficultyToShow = 0;
 		if (whichDifficultyToShow == 0)statsMenu_difficultyName = "OVERALL";
