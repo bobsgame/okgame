@@ -4254,14 +4254,7 @@ void GameLogic::deleteAllCaptions()
 		holdCaption->setToBeDeletedImmediately();
 	}
 
-	for (int i = 0; i < infoCaptions->size(); i++)
-	{
-		Caption* c = infoCaptions->get(i);
-		if (c != nullptr)
-		{
-			c->setToBeDeletedImmediately();
-		}
-	}
+	deleteInfoCaptions();
 
 	for (int i = 0; i < announcementCaptions->size(); i++)
 	{
@@ -4271,6 +4264,20 @@ void GameLogic::deleteAllCaptions()
 			c->setToBeDeletedImmediately();
 		}
 	}
+}
+
+//=========================================================================================================================
+void GameLogic::deleteInfoCaptions()
+{//=========================================================================================================================
+	for (int i = 0; i < infoCaptions->size(); i++)
+	{
+		Caption* c = infoCaptions->get(i);
+		if (c != nullptr)
+		{
+			c->setToBeDeletedImmediately();
+		}
+	}
+
 }
 
 //=========================================================================================================================
@@ -4453,6 +4460,7 @@ void GameLogic::updateCaptions()
 #endif
 
 	}
+
 
 
 	if (totalTicksPassedCaption == nullptr)

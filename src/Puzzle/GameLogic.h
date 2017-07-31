@@ -620,6 +620,7 @@ private:
 public:
 	void deleteAllCaptions();
 
+	void deleteInfoCaptions();
 	void updateInfoCaptionsXY();
 	void updateCaptions();
 

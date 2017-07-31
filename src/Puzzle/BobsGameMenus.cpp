@@ -1770,6 +1770,9 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 		{
 			timeLastChangedSetting = currentTime;
 			Main::globalSettings->bobsGame_showDetailedGameInfoCaptions = !Main::globalSettings->bobsGame_showDetailedGameInfoCaptions;
+
+			getPlayer1Game()->deleteInfoCaptions();
+
 			m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"));
 		}
 	}
