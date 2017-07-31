@@ -920,7 +920,7 @@ void BobsGame::pauseMenuRender()
 		pauseMenu->setGraphic(t, getWidth() / 8 * 5, getHeight() / 8);
 	}
 
-	pauseMenu->render(0, 0, getHeight(), true, nullptr, nullptr, true);
+	pauseMenu->render(0, getWidth()/4, getHeight(), true, nullptr, nullptr, true);
 }
 
 
@@ -1131,8 +1131,8 @@ void BobsGame::playerSettingsMenuRight(BobMenu* m, PuzzlePlayer *p)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			if (p->hue < 2)p->hue += 0.01f;
-			if (p->hue > 2)p->hue = 2;
+			if (p->hue < 1)p->hue += 0.01f;
+			if (p->hue > 1)p->hue = 1;
 			m->getCaptionByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
 		}
 	}
@@ -1142,10 +1142,10 @@ void BobsGame::playerSettingsMenuRight(BobMenu* m, PuzzlePlayer *p)
 void BobsGame::playerControllerSettingsMenuInit(BobMenu* m, PuzzlePlayer *p)
 {//=========================================================================================================================
 
-	m->add("Slam With Up: " + string(p->slamWithUp ? "On" : "Off"), "Slam With Up", BobColor::white);
-	m->add("Slam Lock: " + string(p->slamLock ? "On" : "Off"), "Slam Lock", BobColor::white);
-	m->add("Single Down Lock: " + string(p->singleDownLock ? "On" : "Off"), "Single Down Lock", BobColor::white);
-	m->add("Double Down Lock: " + string(p->doubleDownLock ? "On" : "Off"), "Double Down Lock", BobColor::white);
+	m->add("Slam With Up: " + string(p->slamWithUp ? "On" : "Off"), "Slam With Up");
+	m->add("Slam Lock: " + string(p->slamLock ? "On" : "Off"), "Slam Lock");
+	m->add("Single Down Lock: " + string(p->singleDownLock ? "On" : "Off"), "Single Down Lock");
+	m->add("Double Down Lock: " + string(p->doubleDownLock ? "On" : "Off"), "Double Down Lock");
 
 }
 
@@ -1943,8 +1943,8 @@ void BobsGame::settingsMenuRight(BobMenu* m)
 		if (ticksPassed > 15)
 		{
 			timeLastChangedSetting = currentTime;
-			if (Main::globalSettings->hue < 2)Main::globalSettings->hue += 0.01f;
-			if (Main::globalSettings->hue > 2)Main::globalSettings->hue = 2;
+			if (Main::globalSettings->hue < 1)Main::globalSettings->hue += 0.01f;
+			if (Main::globalSettings->hue > 1)Main::globalSettings->hue = 1;
 			m->getCaptionByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
 		}
 	}

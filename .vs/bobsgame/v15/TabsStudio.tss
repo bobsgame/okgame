@@ -105,26 +105,20 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\Engine.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ND.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ArrayList.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ndmenu\NDMenu.cpp</string>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ndmenu\NDMenu.h</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ControlsManager.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\ControlsManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\nd\ndmenu\NDMenuWheel.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\audio\AudioManager.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\MiniGameEngine.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\EnginePart.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Caption.cpp</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.cpp</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>
