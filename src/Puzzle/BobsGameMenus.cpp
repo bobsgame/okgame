@@ -758,7 +758,7 @@ void BobsGame::gettingGamesFromServerMenuUpdate()
 	{
 		gettingGamesFromServerDotsTime = currentTime;
 		gettingGamesFromServerCount++;
-		gettingGamesFromServerMenu->getCaptionByID("Downloading")->setText("Downloading games from server" + cycleDots(gettingGamesFromServerCount));
+		gettingGamesFromServerMenu->getMenuItemByID("Downloading")->setText("Downloading games from server" + cycleDots(gettingGamesFromServerCount));
 	}
 	
 	
@@ -975,7 +975,6 @@ void BobsGame::controllerMenuUpdate()
 		controllerMenu->getMenuItemByID("Testing Caption")->setText("Testing buttons... Press Esc key or hold Start and Select on controller to stop");
 
 		BobMenu::MenuItem *m = controllerMenu->getMenuItemByID("Button Press Caption");
-		Caption *c = controllerMenu->getCaptionByID("Button Press Caption");
 
 		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
 		{
@@ -983,18 +982,18 @@ void BobsGame::controllerMenuUpdate()
 
 			m->setColor(BobColor::lightRed);
 
-			if (g->up_Pressed())c->setText("Controller "+to_string(i)+" Up Pressed");
-			if (g->down_Pressed())c->setText("Controller " + to_string(i) + " Down Pressed");
-			if (g->left_Pressed())c->setText("Controller " + to_string(i) + " Left Pressed");
-			if (g->right_Pressed())c->setText("Controller " + to_string(i) + " Right Pressed");
-			if (g->b_Pressed())c->setText("Controller " + to_string(i) + " B Pressed");
-			if (g->a_Pressed())c->setText("Controller " + to_string(i) + " A Pressed");
-			if (g->x_Pressed())c->setText("Controller " + to_string(i) + " X Pressed");
-			if (g->y_Pressed())c->setText("Controller " + to_string(i) + " Y Pressed");
-			if (g->start_Pressed())c->setText("Controller " + to_string(i) + " Start Pressed");
-			if (g->select_Pressed())c->setText("Controller " + to_string(i) + " Select Pressed");
-			if (g->l_Pressed())c->setText("Controller " + to_string(i) + " L Pressed");
-			if (g->r_Pressed())c->setText("Controller " + to_string(i) + " R Pressed");
+			if (g->up_Pressed())m->setText("Controller "+to_string(i)+" Up Pressed");
+			if (g->down_Pressed())m->setText("Controller " + to_string(i) + " Down Pressed");
+			if (g->left_Pressed())m->setText("Controller " + to_string(i) + " Left Pressed");
+			if (g->right_Pressed())m->setText("Controller " + to_string(i) + " Right Pressed");
+			if (g->b_Pressed())m->setText("Controller " + to_string(i) + " B Pressed");
+			if (g->a_Pressed())m->setText("Controller " + to_string(i) + " A Pressed");
+			if (g->x_Pressed())m->setText("Controller " + to_string(i) + " X Pressed");
+			if (g->y_Pressed())m->setText("Controller " + to_string(i) + " Y Pressed");
+			if (g->start_Pressed())m->setText("Controller " + to_string(i) + " Start Pressed");
+			if (g->select_Pressed())m->setText("Controller " + to_string(i) + " Select Pressed");
+			if (g->l_Pressed())m->setText("Controller " + to_string(i) + " L Pressed");
+			if (g->r_Pressed())m->setText("Controller " + to_string(i) + " R Pressed");
 		}
 
 		if (getControlsManager()->key_ESC_Pressed() || (getControlsManager()->MINIGAME_START_HELD && getControlsManager()->MINIGAME_SELECT_HELD))
@@ -1133,7 +1132,7 @@ void BobsGame::playerSettingsMenuRight(BobMenu* m, PuzzlePlayer *p)
 			timeLastChangedSetting = currentTime;
 			if (p->hue < 1)p->hue += 0.01f;
 			if (p->hue > 1)p->hue = 1;
-			m->getCaptionByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
+			m->getMenuItemByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
 		}
 	}
 
@@ -1948,7 +1947,7 @@ void BobsGame::settingsMenuRight(BobMenu* m)
 			timeLastChangedSetting = currentTime;
 			if (Main::globalSettings->hue < 1)Main::globalSettings->hue += 0.01f;
 			if (Main::globalSettings->hue > 1)Main::globalSettings->hue = 1;
-			m->getCaptionByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
+			m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
 		}
 	}
 
@@ -1963,7 +1962,7 @@ void BobsGame::settingsMenuRight(BobMenu* m)
 			timeLastChangedSetting = currentTime;
 			if (Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha < 0.5f)Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha += 0.01f;
 			if (Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha > 0.5f)Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha = 0.5f;
-			m->getCaptionByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
+			m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
 		}
 	}
 
@@ -2209,6 +2208,7 @@ void BobsGame::statsMenuUpdate()
 		statsMenu->add("Leaderboard Type", "Stats Type");
 		statsMenu->add("Game: All Games", "Game");
 		statsMenu->add("Difficulty: All Difficulties", "Difficulty");
+		statsMenu->add("Objective: Play To Credits", "Objective");
 		statsMenu->addInfo(" ");
 		statsMenu->add("Back To Title Screen", "Back To Title Screen");
 
@@ -2222,11 +2222,9 @@ void BobsGame::statsMenuUpdate()
 	if (statsMenu_difficultyName == "Hard")	   whichDifficultyToShow = 4;
 	if (statsMenu_difficultyName == "Insane")  whichDifficultyToShow = 5;
 
-	Caption *c = statsMenu->getCaptionByID("Difficulty");
-	if (c != nullptr)c->setText("Difficulty: " + statsMenu_difficultyName);
+	statsMenu->getMenuItemByID("Difficulty")->setText("Difficulty: " + statsMenu_difficultyName);
 
-	c = statsMenu->getCaptionByID("Game");
-	if (c != nullptr)c->setText("Game: " + statsMenu_gameSequenceOrTypeName);
+	statsMenu->getMenuItemByID("Game")->setText("Game: " + statsMenu_gameSequenceOrTypeName);
 
 	bool leaveMenu = false;
 
@@ -3446,8 +3444,7 @@ void BobsGame::gameSetupMenuUpdate()
 				getPlayer1Game()->currentGameSequence->currentDifficultyName = selectedDifficultyName;
 			
 
-			Caption *c = gameSetupMenu->getCaptionByID("Difficulty");
-			if (c != nullptr)c->setText("Difficulty: " + selectedDifficultyName);
+			gameSetupMenu->getMenuItemByID("Difficulty")->setText("Difficulty: " + selectedDifficultyName);
 		}
 	}
 
@@ -3476,7 +3473,7 @@ void BobsGame::gameSetupMenuUpdate()
 		}
 
 		{
-			Caption *c = gameSetupMenu->getCaptionByID("Select Game");
+			BobMenu::MenuItem *c = gameSetupMenu->getMenuItemByID("Select Game");
 			if (c != nullptr)
 			{
 				if (selectedGameSequence->gameTypes.size() > 1)c->setText("Game Sequence: " + selectedGameSequence->name);
@@ -5040,7 +5037,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 	if (currentRoom->gameSequence != nullptr)
 	{
 		{
-			Caption *c = multiplayerOptionsMenu->getCaptionByID("Select Game");
+			BobMenu::MenuItem *c = multiplayerOptionsMenu->getMenuItemByID("Select Game");
 			if (c != nullptr)
 			{
 				if (currentRoom->gameSequence->gameTypes.size() > 1)c->setText("Game Sequence: " + currentRoom->gameSequence->name);
@@ -5051,8 +5048,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 
 	if (currentRoom->multiplayer_AllowDifferentDifficulties)
 	{
-		Caption *c = multiplayerOptionsMenu->getCaptionByID("Difficulty");
-		if (c != nullptr)c->setText("Difficulty: Allow Different Difficulties");
+		multiplayerOptionsMenu->getMenuItemByID("Difficulty")->setText("Difficulty: Allow Different Difficulties");
 	}
 	else
 	if (currentRoom->difficultyName != "")
@@ -5071,8 +5067,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		if (getPlayer1Game()->currentGameSequence != nullptr)
 			getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
-		Caption *c = multiplayerOptionsMenu->getCaptionByID("Difficulty");
-		if (c != nullptr)c->setText("Difficulty: " + difficultyName);
+		multiplayerOptionsMenu->getMenuItemByID("Difficulty")->setText("Difficulty: " + difficultyName);
 	}
 
 	{
