@@ -24,6 +24,7 @@ public:
 	string gameSequenceName = "";
 	string gameSequenceUUID = "";
 	string difficultyName = "";
+	string objectiveString = "";
 
 	int totalGamesPlayed = 0;
 	int singlePlayerGamesPlayed = 0;
@@ -79,6 +80,7 @@ public:
 		gameSaveString += ",gameSequenceName:`" + gameSequenceName + "`";
 		gameSaveString += ",gameSequenceUUID:`" + gameSequenceUUID + "`";
 		gameSaveString += ",difficultyName:`" + difficultyName + "`";
+		gameSaveString += ",objectiveString:`" + objectiveString + "`";
 
 		gameSaveString += ",totalGamesPlayed:" + to_string(totalGamesPlayed);
 		gameSaveString += ",singlePlayerGamesPlayed:" + to_string(singlePlayerGamesPlayed);
@@ -173,6 +175,11 @@ public:
 		s = s.substr(s.find('`') + 1);
 		t = s.substr(0, s.find('`'));
 		if (t.length()>0)difficultyName = t;
+		s = s.substr(s.find('`') + 1);
+
+		s = s.substr(s.find('`') + 1);
+		t = s.substr(0, s.find('`'));
+		if (t.length()>0)objectiveString = t;
 		s = s.substr(s.find('`') + 1);
 
 

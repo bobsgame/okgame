@@ -330,6 +330,7 @@ public:
 	string statsMenu_difficultyName = "OVERALL";
 	string statsMenu_gameSequenceOrTypeUUID = "OVERALL";
 	string statsMenu_gameSequenceOrTypeName = "OVERALL";
+	string statsMenu_objectiveName = "Play To Credits";
 	bool statsMenu_totalTimePlayed = true;
 	bool statsMenu_totalBlocksCleared = false;
 	bool statsMenu_planeswalkerPoints = false;
@@ -391,8 +392,8 @@ public:
 	typedef pair<GameType*, StringColorPair> GameTypeStringColorPairPair;
 	typedef pair<GameSequence*, StringColorPair> GameSequenceStringColorPairPair;
 
-	void populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString);
-	void populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString,
+	void populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);
+	void populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 		bool totalTimePlayed,
 		bool totalBlocksCleared,
 		bool planeswalkerPoints,

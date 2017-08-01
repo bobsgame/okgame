@@ -60,6 +60,7 @@ public:
 	string gameSequenceName = "";
 	string gameSequenceUUID = "";
 	string difficultyName = "";
+	string objectiveString = "";
 
 	class BobsGameLeaderBoardAndHighScoreBoardEntry
 	{
@@ -1046,6 +1047,7 @@ public:
 		gameSavestring += ",gameSequenceName:`" + gameSequenceName + "`";
 		gameSavestring += ",gameSequenceUUID:`" + gameSequenceUUID + "`";
 		gameSavestring += ",difficultyName:`" + difficultyName + "`";
+		gameSavestring += ",objectiveString:`" + objectiveString + "`";
 
 		for (int i = 0; i<maxEntries; i++)
 		{
@@ -1135,6 +1137,11 @@ public:
 		s = s.substr(s.find('`') + 1);
 		t = s.substr(0, s.find('`'));
 		if (t.length()>0)difficultyName = t;
+		s = s.substr(s.find('`') + 1);
+
+		s = s.substr(s.find('`') + 1);
+		t = s.substr(0, s.find('`'));
+		if (t.length()>0)objectiveString = t;
 		s = s.substr(s.find('`') + 1);
 
 		for (int i = 0; i<maxEntries; i++)

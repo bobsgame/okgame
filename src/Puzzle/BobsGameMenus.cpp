@@ -2226,6 +2226,10 @@ void BobsGame::statsMenuUpdate()
 
 	statsMenu->getMenuItemByID("Game")->setText("Game: " + statsMenu_gameSequenceOrTypeName);
 
+	statsMenu->getMenuItemByID("Objective")->setText("Objective: " + statsMenu_objectiveName);
+
+	
+
 	bool leaveMenu = false;
 
 	int mx = getControlsManager()->getMouseX();
@@ -2320,6 +2324,13 @@ void BobsGame::statsMenuUpdate()
 									difficultyMenuShowing = true;
 								}
 
+								if (statsMenu->isSelectedID("Objective", clicked, mx, my))
+								{
+									if (statsMenu_objectiveName == "Endless Mode")statsMenu_objectiveName = "Play To Credits";
+									else statsMenu_objectiveName = "Endless Mode";
+
+								}
+
 							}
 						}
 
@@ -2331,7 +2342,7 @@ void BobsGame::statsMenuUpdate()
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
-		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL");
+		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL", statsMenu_objectiveName);
 
 	}
 
@@ -2343,7 +2354,7 @@ void BobsGame::statsMenuUpdate()
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
-		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", "OVERALL", 
+		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", "OVERALL", statsMenu_objectiveName,
 			statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
 	}
 
@@ -2366,9 +2377,9 @@ void BobsGame::statsMenuUpdate()
 		if (whichDifficultyToShow == 4)statsMenu_difficultyName = "Hard";
 		if (whichDifficultyToShow == 5)statsMenu_difficultyName = "Insane";
 
-		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName);
+		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName);
 
-		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName,
+		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName,
 				statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
 
 		yourStatsMenu->setAllCaptionsToFullAlpha();
@@ -4422,7 +4433,7 @@ string getDateFromEpochTime(long long ms)
 
 //=========================================================================================================================
 //gameTypeOrSequenceString or difficulty string can be "OVERALL"
-void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString)
+void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString)
 {//=========================================================================================================================
 
 	BobsGameUserStatsForSpecificGameAndDifficulty *stats = nullptr;
@@ -4432,9 +4443,12 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
 		{
 			if (s->difficultyName == difficultyString)
-			{
-				stats = s;
-				break;
+			{			
+				if (s->objectiveString == objectiveString)
+				{
+					stats = s;
+					break;
+				}
 			}
 		}
 	}
@@ -4471,6 +4485,7 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 	menu->add("Your Stats");
 	menu->add(gameName);
 	menu->add(difficultyName);
+	menu->add(objectiveString);
 	menu->addInfo(" ");
 	menu->add("Total Games Played: " + to_string(stats->totalGamesPlayed));
 	menu->add("Single Player Games Played: " + to_string(stats->singlePlayerGamesPlayed));
@@ -4513,7 +4528,7 @@ static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByBlocksCleared;
 */
 
 //=========================================================================================================================
-void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, 
+void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 	bool totalTimePlayed,
 	bool totalBlocksCleared,
 	bool planeswalkerPoints,
@@ -4541,8 +4556,11 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 		{
 			if (s->difficultyName == difficultyString)
 			{
-				stats = s;
-				break;
+				if (s->objectiveString == objectiveString)
+				{
+					stats = s;
+					break;
+				}
 			}
 		}
 	}
@@ -4622,6 +4640,7 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 	menu->add(titleName);
 	menu->add(gameName);
 	menu->add(difficultyName);
+	menu->add(objectiveString);
 	menu->addInfo(" ");
 
 	for (int i = 0; i < stats->entries.size(); i++)
