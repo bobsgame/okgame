@@ -6,6 +6,7 @@
 #pragma once
 #include "bobtypes.h"
 class Logger;
+class AudioFile;
 
 #include "src/Engine/network/ServerObject.h"
 

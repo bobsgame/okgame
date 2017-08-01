@@ -8,6 +8,7 @@
 class UDPPeerConnection;
 class TCPServerConnection;
 class Logger;
+class Engine;
 
 class BobNet
 {
