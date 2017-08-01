@@ -825,6 +825,9 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		networkMultiplayerLobbyMenu->cursorPosition = networkMultiplayerLobbyMenuCursorPosition;
 	}
 
+	string objectiveString = "Play To Credits";
+	if (currentRoom->endlessMode)objectiveString = "Endless Mode";
+
 	if(yourStatsMenu == nullptr)
 	{
 		yourStatsMenu = new BobMenu(this, "");
@@ -833,7 +836,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
-		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL");
+		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL", objectiveString);
 		//populateLeaderBoardOrHighScoreBoardMenu
 
 	}
@@ -845,7 +848,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
-		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", "OVERALL",false,false,false,true,false,false);
+		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", "OVERALL", objectiveString, false,false,false,true,false,false);
 	}
 
 	//	if (getGameSave_S().facebookID != "")
@@ -1048,9 +1051,12 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					string uuid = c->gameTypeUUID;
 					if (uuid == "")uuid = c->gameSequenceUUID;
 
-					populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, uuid, c->difficultyName);
+					string roomObjectiveString = "Play To Credits";
+					if (c->endlessMode)roomObjectiveString = "Endless Mode";
 
-					populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->difficultyName,
+					populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, uuid, c->difficultyName, roomObjectiveString);
+
+					populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->difficultyName, roomObjectiveString,
 						totalTimePlayed, totalBlocksCleared, planeswalkerPoints, eloScore, timeLasted, blocksCleared);
 				}
 			}
@@ -1058,9 +1064,9 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		}
 		else
 		{
-			populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", difficultyName);
+			populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", difficultyName, objectiveString);
 
-			populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", difficultyName,
+			populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", difficultyName, objectiveString,
 				totalTimePlayed, totalBlocksCleared, planeswalkerPoints, eloScore, timeLasted, blocksCleared);
 
 		}
