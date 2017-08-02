@@ -796,6 +796,7 @@ public:
 	void sendOnlineFriendListRequest_S();
 
 	void sendBobsGameGameTypesAndSequencesDownloadRequest_S();
+	void sendBobsGameGetHighScoresAndLeaderboardsRequest_S();
 	void incomingBobsGameGameTypesAndSequencesDownloadResponse(string &s);
 	void incomingBobsGameGameTypesAndSequencesUploadResponse(string &s);
 	void incomingBobsGameGameTypesAndSequencesVoteResponse(string &s);

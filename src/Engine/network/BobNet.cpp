@@ -116,6 +116,7 @@ const string BobNet::Bobs_Game_HostingPublicRoomEnded = "Bobs_Game_HostingPublic
 const string BobNet::Bobs_Game_GameStats = "Bobs_Game_GameStats:";
 
 
+const string BobNet::Bobs_Game_GetHighScoresAndLeaderboardsRequest = "Bobs_Game_GetHighScoresAndLeaderboardsRequest:";
 const string BobNet::Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched = "Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched:";
 const string BobNet::Bobs_Game_UserStatsForSpecificGameAndDifficulty = "Bobs_Game_UserStatsForSpecificGameAndDifficulty:";
 const string BobNet::Bobs_Game_LeaderBoardsByTotalTimePlayed = "Bobs_Game_LeaderBoardsByTotalTimePlayed:";

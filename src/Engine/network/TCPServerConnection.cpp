@@ -1486,6 +1486,13 @@ void TCPServerConnection::sendBobsGameGameTypesAndSequencesDownloadRequest_S()
 	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Bobs_Game_GameTypesAndSequences_Download_Request + BobNet::endline);
 
 }
+//===============================================================================================
+void TCPServerConnection::sendBobsGameGetHighScoresAndLeaderboardsRequest_S()
+{//===============================================================================================
+
+	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Bobs_Game_GetHighScoresAndLeaderboardsRequest + BobNet::endline);
+
+}
 
 //===============================================================================================
 void TCPServerConnection::incomingBobsGameGameTypesAndSequencesDownloadResponse(string &s)

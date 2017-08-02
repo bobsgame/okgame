@@ -2243,6 +2243,8 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 						if (getServerConnection()->getAndResetBobsGameGameTypesAndSequencesDownloadResponseReceived_S())
 						{
 							gotGamesFromServer = true;
+
+							getServerConnection()->sendBobsGameGetHighScoresAndLeaderboardsRequest_S();
 						}
 					}
 				}
@@ -2318,6 +2320,8 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 
 						setGotIncomingGamesFromServer_S(false);
 						gettingGamesFromServerMenuShowing = false;
+
+						
 
 						if (gettingGamesFromServerMenu != nullptr)
 						{

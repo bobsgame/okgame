@@ -2851,7 +2851,7 @@ void BobsGame::leftRightMenuAdjustFloat(bool left, bool right, float& variable, 
 	}
 	float timeSinceStart = float(currentTime - timeStartedChangedSetting);
 	if (timeSinceStart < 200)timeSinceStart = 0;
-	float increment = minIncrement + (std::max((timeSinceStart / 500.0f),1.0f) * (maxIncrement - minIncrement));
+	float increment = minIncrement + (max((timeSinceStart / 500.0f),1.0f) * (maxIncrement - minIncrement));
 
 	if (ticksPassed > 15)
 	{
@@ -2884,7 +2884,7 @@ void BobsGame::leftRightMenuAdjustInt(bool left, bool right, int& variable, int 
 	}
 	float timeSinceStart = float(currentTime - timeStartedChangedSetting);
 	if (timeSinceStart < 200)timeSinceStart = 0;
-	int increment = minIncrement + (std::max((timeSinceStart / 500.0f), 1.0f) * (maxIncrement - minIncrement));
+	int increment = minIncrement + (max((timeSinceStart / 500.0f), 1.0f) * (maxIncrement - minIncrement));
 
 	if (ticksPassed > 15)
 	{

@@ -455,6 +455,7 @@ public:
 
 
 
+	static const string Bobs_Game_GetHighScoresAndLeaderboardsRequest;
 	static const string Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched;
 	static const string Bobs_Game_UserStatsForSpecificGameAndDifficulty;
 	static const string Bobs_Game_LeaderBoardsByTotalTimePlayed;
