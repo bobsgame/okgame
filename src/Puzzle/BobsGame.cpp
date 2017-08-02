@@ -2214,7 +2214,9 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 {//=========================================================================================================================
 	
 
-	
+
+
+
 	
 	if (getServerConnection()->getConnectedToServer_S())
 	{
@@ -2244,7 +2246,6 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 						{
 							gotGamesFromServer = true;
 
-							getServerConnection()->sendBobsGameGetHighScoresAndLeaderboardsRequest_S();
 						}
 					}
 				}
@@ -2321,7 +2322,16 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 						setGotIncomingGamesFromServer_S(false);
 						gettingGamesFromServerMenuShowing = false;
 
-						
+
+						if (sentHighScoresAndLeaderboardsRequestWhileLoggedIn == false)
+						{
+							getServerConnection()->sendBobsGameGetHighScoresAndLeaderboardsRequest_S();
+
+							if (getServerConnection()->getAuthorizedOnServer_S())
+							{
+								sentHighScoresAndLeaderboardsRequestWhileLoggedIn = true;
+							}
+						}
 
 						if (gettingGamesFromServerMenu != nullptr)
 						{
@@ -2332,7 +2342,24 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 				}
 			}
 		}
+
+
+		if (gotGamesFromServer)
+		{
+			if (getServerConnection()->getAuthorizedOnServer_S())
+			{
+				if (sentHighScoresAndLeaderboardsRequestWhileLoggedIn == false)
+				{
+					sentHighScoresAndLeaderboardsRequestWhileLoggedIn = true;
+					getServerConnection()->sendBobsGameGetHighScoresAndLeaderboardsRequest_S();
+				}
+			}
+		}
+		
 	}
+
+
+
 
 }
 

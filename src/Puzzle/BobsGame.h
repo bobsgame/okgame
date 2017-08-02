@@ -554,6 +554,7 @@ public:
 
 	bool wasAuthorizedWhenSent = false;
 	bool gotGamesFromServer = false;
+	bool sentHighScoresAndLeaderboardsRequestWhileLoggedIn = false;
 	bool sentServerGamesRequest = false;
 	long long lastCheckedGamesFromServerTime = 0;
 	void getGameTypesAndSequencesFromServer();
