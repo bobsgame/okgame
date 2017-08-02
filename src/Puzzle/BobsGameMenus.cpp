@@ -2838,6 +2838,11 @@ void BobsGame::sendGarbageToMenuUpdate()
 	}
 }
 
+float myMax(float a, float b)
+{
+    if(a>b)return a;
+    return b;
+}
 //=========================================================================================================================
 void BobsGame::leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float minIncrement, float maxIncrement)
 {//=========================================================================================================================
@@ -2851,7 +2856,7 @@ void BobsGame::leftRightMenuAdjustFloat(bool left, bool right, float& variable, 
 	}
 	float timeSinceStart = float(currentTime - timeStartedChangedSetting);
 	if (timeSinceStart < 200)timeSinceStart = 0;
-	float increment = minIncrement + (max((timeSinceStart / 500.0f),1.0f) * (maxIncrement - minIncrement));
+	float increment = minIncrement + (myMax((timeSinceStart / 500.0f),1.0f) * (maxIncrement - minIncrement));
 
 	if (ticksPassed > 15)
 	{
@@ -2871,6 +2876,7 @@ void BobsGame::leftRightMenuAdjustFloat(bool left, bool right, float& variable, 
 	}
 }
 
+
 //=========================================================================================================================
 void BobsGame::leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int minIncrement, int maxIncrement)
 {//=========================================================================================================================
@@ -2884,7 +2890,7 @@ void BobsGame::leftRightMenuAdjustInt(bool left, bool right, int& variable, int 
 	}
 	float timeSinceStart = float(currentTime - timeStartedChangedSetting);
 	if (timeSinceStart < 200)timeSinceStart = 0;
-	int increment = minIncrement + (max((timeSinceStart / 500.0f), 1.0f) * (maxIncrement - minIncrement));
+	int increment = minIncrement + (myMax((timeSinceStart / 500.0f), 1.0f) * (maxIncrement - minIncrement));
 
 	if (ticksPassed > 15)
 	{
