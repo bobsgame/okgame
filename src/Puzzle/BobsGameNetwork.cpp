@@ -2015,9 +2015,9 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 			{
 				currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
 				currentRoom->multiplayer_NumPlayers = players.size();
-				string s = currentRoom->encodeRoomData(false);
+				
 
-				tellServerIAmHostingOrUpdateRoomStatus(""+to_string(currentRoom->multiplayer_HostUserID)+":"+currentRoom->uuid+":"+s+":");
+				tellServerIAmHostingOrUpdateRoomStatus(currentRoom->encodeRoomData(false));
 				
 			}
 		}
