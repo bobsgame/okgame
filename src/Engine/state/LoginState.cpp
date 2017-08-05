@@ -454,7 +454,7 @@ void LoginMenuPanel::update()
 
 			if (loggedIn == true)
 			{
-				mainObject->stateManager->popState();
+				Main::getMain()->stateManager->popState();
 				//Main::getMain()->stateManager->pushState(Main::getMain()->gameEngine);
 			}
 
@@ -462,8 +462,8 @@ void LoginMenuPanel::update()
 			{
 				createNewAccount = false;
 
-				mainObject->stateManager->pushState(mainObject->createNewAccountState);
-				mainObject->createNewAccountState->createNewAccountMenuPanel->setActivated(true);
+				Main::getMain()->stateManager->pushState(Main::getMain()->createNewAccountState);
+				Main::getMain()->createNewAccountState->createNewAccountMenuPanel->setActivated(true);
 			}
 
 			//if (leaveMenu)

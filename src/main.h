@@ -94,8 +94,8 @@ public:
 	
 	static bool mainLoopStarted;
 
-	//static Main* getMain();
-	//static void setMain(Main* c);
+	static Main* getMain();
+	static void setMain(Main* c);
 
 	Main();
 	static void openURL(string url);
@@ -224,4 +224,5 @@ public:
 	//int unZip(string file);
 };
 
-Main* mainObject = nullptr;
+
+

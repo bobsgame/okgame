@@ -32,13 +32,18 @@
 #include "Gwen/Renderers/OpenGL_TruetypeFont.h"
 #include <lib/GWEN-master/gwen/include/Gwen/Input/gwen_input_sdl2.h>
 
+
+Main* mainObject = nullptr;
+
 void cleanup()
 {
-	if (mainObject == nullptr)
+	if (mainObject != nullptr)
 	{
 		mainObject->cleanup();
 		delete mainObject;
+		mainObject = nullptr;
 	}
+	
 }
 
 
@@ -60,11 +65,12 @@ int main(int argc, char* argv[])//int argc, char **argv)
 	}
 
 	mainObject = new Main();
+	Main::setMain(mainObject);
 	atexit(cleanup);
 	mainObject->mainInit();
 	mainObject->mainLoop();
-	mainObject->cleanup();
-	delete mainObject;
+
+	cleanup();
 
 //	Main::setMain(new Main());
 //	Main::getMain()->mainInit();
@@ -1935,17 +1941,17 @@ void Main::cleanup()
 //	return gameEngine;
 //}
 
-////==========================================================================================================================
-//Main* Main::getMain()
-//{//==========================================================================================================================
-//	return mainObject;
-//}
-//
-////==========================================================================================================================
-//void Main::setMain(Main* c)
-//{//==========================================================================================================================
-//	mainObject = c;
-//}
+//==========================================================================================================================
+Main* Main::getMain()
+{//==========================================================================================================================
+	return mainObject;
+}
+
+//==========================================================================================================================
+void Main::setMain(Main* c)
+{//==========================================================================================================================
+	mainObject = c;
+}
 
 //
 //#define USE_ZLIB_MINIZIP 1

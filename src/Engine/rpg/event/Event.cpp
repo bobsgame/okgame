@@ -6284,7 +6284,7 @@ void Event::showLoginScreen()
 	//Main.introMode = false;
 
 	//Main.mainObject.makeNewClientEngine();
-	mainObject->stateManager->pushState(mainObject->titleScreenState);
+	Main::getMain()->stateManager->pushState(Main::getMain()->titleScreenState);
 
 	//Main.mainObject.showControlsImage();
 

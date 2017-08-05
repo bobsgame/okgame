@@ -38,7 +38,7 @@ void LogoState::update()
 	if(totalTicksPassed >= ticksToShow)
 	{
 		
-		mainObject->stateManager->popState();
+		Main::getMain()->stateManager->popState();
 	}
 
 

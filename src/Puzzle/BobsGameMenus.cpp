@@ -2204,13 +2204,18 @@ void BobsGame::statsMenuUpdate()
 	if (statsMenu == nullptr)
 	{
 		statsMenu = new BobMenu(this, "Stats And Leaderboards");
+		statsMenu->center = false;
 
-		statsMenu->add("Leaderboard Type", "Stats Type");
+		statsMenu->add("Leaderboard Type: ", "Stats Type");
 		statsMenu->add("Game: All Games", "Game");
 		statsMenu->add("Difficulty: All Difficulties", "Difficulty");
 		statsMenu->add("Objective: Play To Credits", "Objective");
 		statsMenu->addInfo(" ");
 		statsMenu->add("Back To Title Screen", "Back To Title Screen");
+
+		statsMenu_difficultyName = "OVERALL";
+		statsMenu_gameSequenceOrTypeUUID = "OVERALL";
+		statsMenu_gameSequenceOrTypeName = "OVERALL";
 
 		statsMenu->cursorPosition = statsMenuCursorPosition;
 	}
@@ -2221,6 +2226,15 @@ void BobsGame::statsMenuUpdate()
 	if (statsMenu_difficultyName == "Normal")  whichDifficultyToShow = 3;
 	if (statsMenu_difficultyName == "Hard")	   whichDifficultyToShow = 4;
 	if (statsMenu_difficultyName == "Insane")  whichDifficultyToShow = 5;
+
+
+
+	if(statsMenu_totalTimePlayed)		statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Total Time Played" + statsMenu_difficultyName);
+	if(statsMenu_totalBlocksCleared)	statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Total Blocks Cleared" + statsMenu_difficultyName);
+	if(statsMenu_planeswalkerPoints)	statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Planeswalker Points" + statsMenu_difficultyName);
+	if(statsMenu_eloScore)				statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Elo Score" + statsMenu_difficultyName);
+	if(statsMenu_timeLasted)			statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Games By Time Lasted" + statsMenu_difficultyName);
+	if(statsMenu_blocksCleared)			statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Games By Blocks Cleared" + statsMenu_difficultyName);
 
 	statsMenu->getMenuItemByID("Difficulty")->setText("Difficulty: " + statsMenu_difficultyName);
 
@@ -2286,10 +2300,46 @@ void BobsGame::statsMenuUpdate()
 							if (clicked == true && confirm == false)
 							{
 
-								if (yourStatsMenu->isSelectedID(yourStatsMenu->getSelectedMenuItem()->id, clicked, mx, my)
-									||
-									leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id, clicked, mx, my)
-									)
+								if (leaderBoardMenu->isSelectedID("Stats Type", clicked, mx, my))
+								{
+									if (statsMenu_totalTimePlayed)
+									{
+										statsMenu_totalTimePlayed = false;
+										statsMenu_totalBlocksCleared = true;
+									}
+									else
+										if (statsMenu_totalBlocksCleared)
+										{
+											statsMenu_totalBlocksCleared = false;
+											statsMenu_planeswalkerPoints = true;
+										}
+										else
+											if (statsMenu_planeswalkerPoints)
+											{
+												statsMenu_planeswalkerPoints = false;
+												statsMenu_eloScore = true;
+											}
+											else
+												if (statsMenu_eloScore)
+												{
+													statsMenu_eloScore = false;
+													statsMenu_timeLasted = true;
+												}
+												else
+													if (statsMenu_timeLasted)
+													{
+														statsMenu_timeLasted = false;
+														statsMenu_blocksCleared = true;
+													}
+													else
+														if (statsMenu_blocksCleared)
+														{
+															statsMenu_blocksCleared = false;
+															statsMenu_totalTimePlayed = true;
+														}
+								}
+								else
+								if (yourStatsMenu->isSelectedID("Difficulty", clicked, mx, my) || leaderBoardMenu->isSelectedID("Difficulty", clicked, mx, my))
 								{
 									whichDifficultyToShow++;
 									if (whichDifficultyToShow > 5)whichDifficultyToShow = 0;
@@ -2300,6 +2350,8 @@ void BobsGame::statsMenuUpdate()
 									if (whichDifficultyToShow == 4)statsMenu_difficultyName = "Hard";
 									if (whichDifficultyToShow == 5)statsMenu_difficultyName = "Insane";
 								}
+
+				
 
 							}
 
@@ -2324,7 +2376,7 @@ void BobsGame::statsMenuUpdate()
 									difficultyMenuShowing = true;
 								}
 
-								if (statsMenu->isSelectedID("Objective", clicked, mx, my))
+								if (statsMenu->isSelectedID("Objective", clicked, mx, my) || yourStatsMenu->isSelectedID("Objective", clicked, mx, my) || leaderBoardMenu->isSelectedID("Objective", clicked, mx, my))
 								{
 									if (statsMenu_objectiveName == "Endless Mode")statsMenu_objectiveName = "Play To Credits";
 									else statsMenu_objectiveName = "Endless Mode";
@@ -3395,6 +3447,7 @@ void BobsGame::gameSetupMenuUpdate()
 		errorLabel = new Caption(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 16, false, BobColor::red, BobColor::clear);
 
 		gameSetupMenu = new BobMenu(this, "Setup Game Options");
+		gameSetupMenu->center = false;
 
 		gameSetupMenu->add("Start Game", "Start Game", BobColor::green);
 		gameSetupMenu->addInfo(" ", " ");
@@ -3867,6 +3920,7 @@ void BobsGame::gameSetupMenuUpdate()
 				delete yourStatsMenu;
 				yourStatsMenu = nullptr;
 			}
+
 			if (leaderBoardMenu != nullptr)
 			{
 				delete leaderBoardMenu;
@@ -3900,7 +3954,7 @@ void BobsGame::gameSetupMenuRender()
 
 
 		int bottomOfCaptions = 0;
-		gameSetupMenu->render(0, (getWidth()-(gameSetupMenu->lastWidth + 50 + yourStatsMenu->lastWidth + 50 + leaderBoardMenu->lastWidth)) / 2 ,getHeight(),true, &startHeight,&bottomOfCaptions, true, &leftX, &rightX);
+		gameSetupMenu->render(0, (getWidth()-(gameSetupMenu->lastWidth + 50 + yourStatsMenu->lastWidth + 50 + leaderBoardMenu->lastWidth)) / 2 , getHeight(), true, &startHeight,&bottomOfCaptions, true, &leftX, &rightX);
 		if (errorLabel != nullptr)
 		{
 			errorLabel->screenY = bottomOfCaptions + 24;
@@ -3908,8 +3962,8 @@ void BobsGame::gameSetupMenuRender()
 			errorLabel->render();
 		}
 
-		yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false, nullptr, &rightX);
-		leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false);
+		yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true, nullptr, &rightX);
+		leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true);
 
 	}
 

@@ -43,7 +43,7 @@ void TitleScreenState::update()
 		//			Main.mainObject.createNewAccountState.cancelButton.setActivated(true);
 
 
-		mainObject->stateManager->popState();
+		Main::getMain()->stateManager->popState();
 		//Main::getMain()->stateManager->pushState(Main::getMain()->createNewAccountState);
 	}
 }

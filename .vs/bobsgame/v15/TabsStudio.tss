@@ -116,9 +116,22 @@
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\MiniGameEngine.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\MiniGameEngine.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\Caption.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Utility\FileUtils.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\state\TitleScreenState.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\rpg\event\Event.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\entity\SpriteManager.cpp</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

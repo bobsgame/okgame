@@ -1198,19 +1198,19 @@ void TCPServerConnection::incomingSessionWasLoggedOnSomewhereElse(string s)
   //setUserID_S(-1);
   //setSessionToken_S("");
 
-	mainObject->stateManager->pushState(mainObject->loggedOutState);
+	Main::getMain()->stateManager->pushState(Main::getMain()->loggedOutState);
 }
 
 void TCPServerConnection::incomingServersAreShuttingDown(string s)
 {
 
-	mainObject->serversAreShuttingDown = true;
+	Main::getMain()->serversAreShuttingDown = true;
 }
 
 void TCPServerConnection::incomingServersHaveShutDown(string s)
 {
 
-	mainObject->stateManager->pushState(mainObject->serversHaveShutDownState);
+	Main::getMain()->stateManager->pushState(Main::getMain()->serversHaveShutDownState);
 }
 
 
@@ -2676,7 +2676,7 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 
 	}
 
-	while (mainObject->controlsManager->miniGame_CONFIRM_Pressed() == false)
+	while (Main::getMain()->controlsManager->miniGame_CONFIRM_Pressed() == false)
 	{
 		Main::whilefix();
 	}
