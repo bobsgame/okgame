@@ -129,7 +129,7 @@ BobMenu::BobMenu(Engine *g, string title, string subtitle)
 
 	if(subtitle !="")
 	{
-		subtitleCaption = new Caption(e, Caption::Position::NONE, 0, 0, -1, subtitle, 32, true, menuColor, RenderOrder::OVER_GUI);
+		subtitleCaption = new Caption(e, Caption::Position::NONE, 0, 0, -1, subtitle, 22, false, infoColor, RenderOrder::OVER_GUI);
 	}
 
 	activeMenus.add(this);
@@ -608,8 +608,9 @@ void BobMenu::render
 		if (subtitleCaption->screenX < leftX)leftX = subtitleCaption->screenX;
 		if (subtitleCaption->screenX + subtitleCaption->getWidth() > rightX)rightX = subtitleCaption->screenX + subtitleCaption->getWidth();
 
-		subtitleCaption->screenY = y + 5;
-		y += (subtitleCaption->getHeight() + 20);
+		subtitleCaption->screenY = y;
+		y += (subtitleCaption->getHeight() + 8);
+
 	}
 
 	if (menuItems.size() == 0)return;
@@ -648,6 +649,7 @@ void BobMenu::render
 		int menuItemsToShow = 0;
 		
 		int minSize = 6;
+		int tries = 0;
 		bool stillIncreasingSize = false;
 		do
 		{
@@ -718,15 +720,18 @@ void BobMenu::render
 				}
 			}
 
+			tries++;
+
 			//we want to decrease the font size until the menu fits between startY and endY
-		} while(
-				scaleFontSizeToFit
-				&&
-				(
-					(menuItemsToShow < visibleMenuItems.size() && scaledFontSize > minSize)
-					||
-					(menuItemsToShow == visibleMenuItems.size() && stillIncreasingSize)
-				)
+		} while (
+			scaleFontSizeToFit
+			&&
+			(
+				(menuItemsToShow < visibleMenuItems.size() && scaledFontSize > minSize)
+				||
+				(menuItemsToShow == visibleMenuItems.size() && stillIncreasingSize)
+			)
+			&& tries < 20
 			);
 
 
@@ -897,6 +902,12 @@ void BobMenu::render
 		{
 			GLUtils::drawFilledRect(0, 0, 0, leftX - 24, rightX + 24, topY - 16, bottomY + 16, 1);
 			GLUtils::drawFilledRect(255, 255, 255, leftX - 22, rightX + 22, topY - 14, bottomY + 14, 1);
+			if(subtitleCaption!=nullptr)
+			{
+				int stx = subtitleCaption->screenX;
+				int sty = subtitleCaption->screenY + subtitleCaption->getHeight() + 3;
+				GLUtils::drawFilledRect(0, 0, 0, stx, stx + subtitleCaption->getWidth(), sty, sty+1, 1);
+			}
 		}
 
 		//draw transparent cursor rectangle

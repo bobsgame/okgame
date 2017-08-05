@@ -2394,7 +2394,7 @@ void BobsGame::statsMenuUpdate()
 	{
 		yourStatsMenu = new BobMenu(this, "", "Your Stats");
 		yourStatsMenu->center = false;
-		yourStatsMenu->setFontSize(12);
+		yourStatsMenu->setFontSize(14);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -2406,9 +2406,9 @@ void BobsGame::statsMenuUpdate()
 
 	if (leaderBoardMenu == nullptr)
 	{
-		leaderBoardMenu = new BobMenu(this, "", "High Score");
+		leaderBoardMenu = new BobMenu(this, "", "High Scores");
 		leaderBoardMenu->center = false;
-		leaderBoardMenu->setFontSize(12);
+		leaderBoardMenu->setFontSize(14);
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -3592,7 +3592,7 @@ void BobsGame::gameSetupMenuUpdate()
 	{
 		yourStatsMenu = new BobMenu(this, "", "Your Stats");
 		yourStatsMenu->center = false;
-		yourStatsMenu->setFontSize(12);
+		yourStatsMenu->setFontSize(14);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -3604,9 +3604,9 @@ void BobsGame::gameSetupMenuUpdate()
 
 	if (leaderBoardMenu == nullptr)
 	{
-		leaderBoardMenu = new BobMenu(this, "", "High Score");
+		leaderBoardMenu = new BobMenu(this, "", "High Scores");
 		leaderBoardMenu->center = false;
-		leaderBoardMenu->setFontSize(12);
+		leaderBoardMenu->setFontSize(14);
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -4667,30 +4667,30 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 	string gameName = "";
 	if (gameTypeOrSequenceUUID == "OVERALL")
 	{
-		gameName = "All Games";
+		gameName = "Game: OVERALL";
 	}
 	else
 	{
 		GameType* gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
 		GameSequence *gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
-		if (gt != nullptr)gameName = gt->name;
-		if (gs != nullptr)gameName = gs->name;
+		if (gt != nullptr)gameName = "Game Type: "+gt->name;
+		if (gs != nullptr)gameName = "Game Sequence: "+gs->name;
 	}
 
 	string difficultyName = "";
 	if (difficultyString == "OVERALL")
 	{
-		difficultyName = "All Difficulties";
+		difficultyName = "Difficulty: OVERALL";
 	}
 	else
 	{
-		difficultyName = difficultyString;
+		difficultyName = "Difficulty: "+difficultyString;
 	}
 
-	menu->add("Your Stats");
+	//menu->add("Your Stats");
 	menu->add(gameName);
 	menu->add(difficultyName);
-	menu->add(objectiveString);
+	menu->add("Objective: "+objectiveString);
 	menu->addInfo(" ");
 	menu->add("Total Games Played: " + to_string(stats->totalGamesPlayed));
 	menu->add("Single Player Games Played: " + to_string(stats->singlePlayerGamesPlayed));
@@ -4779,24 +4779,24 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 	string gameName = "";
 	if (gameTypeOrSequenceUUID == "OVERALL")
 	{
-		gameName = "All Games";
+		gameName = "Game: OVERALL";
 	}
 	else
 	{
 		GameType* gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
 		GameSequence *gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
-		if (gt != nullptr)gameName = gt->name;
-		if (gs != nullptr)gameName = gs->name;
+		if (gt != nullptr)gameName = "Game Type: "+gt->name;
+		if (gs != nullptr)gameName = "Game Sequence: "+gs->name;
 	}
 
 	string difficultyName = "";
 	if (difficultyString == "OVERALL")
 	{
-		difficultyName = "All Difficulties";
+		difficultyName = "Difficulty: OVERALL";
 	}
 	else
 	{
-		difficultyName = difficultyString;
+		difficultyName = "Difficulty: "+difficultyString;
 	}
 
 	/*
@@ -4835,17 +4835,17 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 
 	string titleName = "";
 
-	if (totalTimePlayed)titleName = "Top Players (Total Time Played)";
-	if (totalBlocksCleared)titleName = "Top Players (Total Blocks Cleared)";
-	if (planeswalkerPoints)titleName = "Top Players (Planeswalker Points)";
-	if (eloScore)titleName = "Top Players (Elo Score)";
-	if (timeLasted)titleName = "Top Games (Time Lasted)";
-	if (blocksCleared)titleName = "Top Games (Total Time Played)";
+	if (totalTimePlayed)titleName = "Top Players: Total Time Played";
+	if (totalBlocksCleared)titleName = "Top Players: Total Blocks Cleared";
+	if (planeswalkerPoints)titleName = "Top Players: Planeswalker Points";
+	if (eloScore)titleName = "Top Players: Elo Score";
+	if (timeLasted)titleName = "Top Games: Time Lasted";
+	if (blocksCleared)titleName = "Top Games: Total Time Played";
 
 	menu->add(titleName);
 	menu->add(gameName);
 	menu->add(difficultyName);
-	menu->add(objectiveString);
+	menu->add("Objective: "+objectiveString);
 	menu->addInfo(" ");
 
 	for (int i = 0; i < stats->entries.size(); i++)
