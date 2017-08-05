@@ -308,9 +308,12 @@ void BobFont::initFonts()
 void BobFont::cleanup()
 {//=========================================================================================================================
 
+	log.info("BobFont::cleanup");
+
 	TTF_CloseFont(ttf_bobsgame_8);
 	TTF_CloseFont(ttf_bobsgame_16);
 
+	
 
 }
 

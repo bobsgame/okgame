@@ -42,6 +42,8 @@ mkdir "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux"
 mkdir "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\libs"
 mkdir "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\data"
 xcopy /v /e .\linux "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\libs"
+del "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\libs\prepare_for_launch.sh"
+del "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\libs\prepare_for_launch.sh~"
 mv "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\libs\bobsgame" "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\bobsgame"
 mv "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\libs\bobsgame.sh" "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux\bobsgame.sh"
 xcopy /v .\bobsgame.bmp "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% Linux"
@@ -56,6 +58,8 @@ mkdir "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS"
 mkdir "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\libs"
 mkdir "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\data"
 xcopy /v /e .\macos "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\libs"
+del "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\libs\prepare_for_launch.sh"
+del "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\libs\prepare_for_launch.sh~"
 mv "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\libs\bobsgame" "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\bobsgame"
 mv "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\libs\bobsgame.sh" "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS\bobsgame.sh"
 xcopy /v .\bobsgame.bmp "C:\Users\Administrator\Desktop\bob's game %mydate:~0,8% MacOS"
@@ -94,6 +98,7 @@ xcopy /v .\*.dll "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\
 xcopy /v .\Release\bobsgame.exe "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\windows"
 
 xcopy /v /e .\linux "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\linux\libs"
+
 mv "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\linux\libs\bobsgame" "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\linux\bobsgame"
 mv "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\linux\libs\bobsgame.sh" "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\linux\bobsgame.sh"
 
@@ -101,9 +106,13 @@ xcopy /v /e .\macos "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\s
 mv "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\macos\libs\bobsgame" "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\macos\bobsgame"
 mv "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\macos\libs\bobsgame.sh" "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\macos\bobsgame.sh"
 
+del "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\linux\libs\prepare_for_launch.sh"
+del "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\linux\libs\prepare_for_launch.sh~"
+del "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\macos\libs\prepare_for_launch.sh"
+del "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\content\macos\libs\prepare_for_launch.sh~"
+
 cd "C:\Users\Administrator\workspace\steam\steamworks_sdk_137\sdk\tools\ContentBuilder\"
 run_build.bat
 
 
-echo ALL DONE!!!!!!!!!!!!!!!!!!
 pause

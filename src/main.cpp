@@ -32,6 +32,16 @@
 #include "Gwen/Renderers/OpenGL_TruetypeFont.h"
 #include <lib/GWEN-master/gwen/include/Gwen/Input/gwen_input_sdl2.h>
 
+void cleanup()
+{
+	if (mainObject == nullptr)
+	{
+		mainObject->cleanup();
+		delete mainObject;
+	}
+}
+
+
 //==========================================================================================================================
 int main(int argc, char* argv[])//int argc, char **argv)
 {//==========================================================================================================================
@@ -49,17 +59,25 @@ int main(int argc, char* argv[])//int argc, char **argv)
 
 	}
 
-	Main::setMain(new Main());
-	Main::getMain()->mainInit();
-	Main::getMain()->mainLoop();
-	Main::getMain()->cleanup();
+	mainObject = new Main();
+	atexit(cleanup);
+	mainObject->mainInit();
+	mainObject->mainLoop();
+	mainObject->cleanup();
+	delete mainObject;
+
+//	Main::setMain(new Main());
+//	Main::getMain()->mainInit();
+//	Main::getMain()->mainLoop();
+//	Main::getMain()->cleanup();
+	
 
 	return 0;
 }
 
 Logger Main::log = Logger("Main");
 
-Main* Main::mainObject = nullptr;
+
 bool Main::mainLoopStarted = false;
 
 ArrayList<SDL_Event> Main::events;
@@ -75,6 +93,7 @@ Main::Main()
 {//=========================================================================================================================
 
 }
+
 
 #ifdef __WINDOWS__
 #include <shellapi.h>
@@ -188,6 +207,7 @@ void Main::mainInit()
  */
 
 
+	
 
 
 	new Logger();
@@ -218,8 +238,7 @@ void Main::mainInit()
 	}
 
 	
-
-
+	
 	//	if (lzo_init() != LZO_E_OK)
 	//	{
 	//		printf("internal error - lzo_init() failed !!!\n");
@@ -387,8 +406,8 @@ void Main::mainInit()
 		File f("/localServer");
 		if (f.exists())
 		{
-			serverAddressString = BobNet::debugServerAddress;
-			STUNServerAddressString = BobNet::debugSTUNServerAddress;
+			serverAddressString = "192.168.1.3";// BobNet::debugServerAddress;
+			STUNServerAddressString = "192.168.1.3";//BobNet::debugSTUNServerAddress;
 
 			//stun server port is incremented by 1 to prevent bind conflict when running local server
 			
@@ -702,8 +721,8 @@ void Main::initClientEngine()
 //==========================================================================================================================
 void Main::whilefix()
 {//==========================================================================================================================
-	getMain()->processEvents();
-	getMain()->stateManager->getCurrentState()->resetPressedButtons();
+	mainObject->processEvents();
+	mainObject->stateManager->getCurrentState()->resetPressedButtons();
 
 	bool frame = false;
 
@@ -720,21 +739,21 @@ void Main::whilefix()
 			console->update();
 			bobNet->tcpServerConnection.update();
 
-			if (dynamic_cast<Engine*>(getMain()->stateManager->getCurrentState()) != NULL)
+			if (dynamic_cast<Engine*>(mainObject->stateManager->getCurrentState()) != NULL)
 			{
-				((Engine*)getMain()->stateManager->getCurrentState())->getCaptionManager()->update();
+				((Engine*)mainObject->stateManager->getCurrentState())->getCaptionManager()->update();
 			}
 			
 
 			frame = true;
 
-			getMain()->render();
+			mainObject->render();
 			SDL_GL_SwapWindow(GLUtils::window);
 		}
 		SDL_Delay(10);
 	}
 
-	getMain()->stateManager->getCurrentState()->setButtonStates();
+	mainObject->stateManager->getCurrentState()->setButtonStates();
 }
 
 //==========================================================================================================================
@@ -1643,9 +1662,9 @@ void Main::checkVersion()
 			bool stop = false;
 			while (stop == false)
 			{
-				getMain()->processEvents();
-				getMain()->stateManager->getCurrentState()->resetPressedButtons();
-				getMain()->stateManager->getCurrentState()->setButtonStates();
+				mainObject->processEvents();
+				mainObject->stateManager->getCurrentState()->resetPressedButtons();
+				mainObject->stateManager->getCurrentState()->setButtonStates();
 
 				if(controlsManager->key_SPACE_Pressed())
 				{
@@ -1884,18 +1903,25 @@ void Main::cleanup()
 		gameEngine->cleanup(); 
 		delete gameEngine;
 	}
+
 	if (bobsGame != nullptr) 
 	{
+		log.info("bobsGame cleanup");
 		bobsGame->cleanup();
 		delete bobsGame;
 	}
+
+	
 	BobFont::cleanup();
 	GLUtils::cleanup();
+
 	delete bobNet;
 
+	log.info("SDLNet_Quit");
 	SDLNet_Quit();
 	//enet_deinitialize();
 
+	log.info("saveGlobalSettingsToXML");
 	saveGlobalSettingsToXML();
 
 	log.info("Exiting");
@@ -1909,17 +1935,17 @@ void Main::cleanup()
 //	return gameEngine;
 //}
 
-//==========================================================================================================================
-Main* Main::getMain()
-{//==========================================================================================================================
-	return mainObject;
-}
-
-//==========================================================================================================================
-void Main::setMain(Main* c)
-{//==========================================================================================================================
-	mainObject = c;
-}
+////==========================================================================================================================
+//Main* Main::getMain()
+//{//==========================================================================================================================
+//	return mainObject;
+//}
+//
+////==========================================================================================================================
+//void Main::setMain(Main* c)
+//{//==========================================================================================================================
+//	mainObject = c;
+//}
 
 //
 //#define USE_ZLIB_MINIZIP 1

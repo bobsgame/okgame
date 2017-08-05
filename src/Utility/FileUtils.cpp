@@ -1945,8 +1945,8 @@ void FileUtils::setStatusText(const string& text)
 	
 	   glClear(GL_COLOR_BUFFER_BIT);
 	
-	   Main::mainObject->console->render();
-	   Main::mainObject->whilefix();
+	   mainObject->console->render();
+	   mainObject->whilefix();
 }
 
 void FileUtils::deleteStatusText()
@@ -1964,8 +1964,8 @@ void FileUtils::deleteStatusText()
 	      delete statusConsoleText;
 	
 	      glClear(GL_COLOR_BUFFER_BIT);
-		  Main::mainObject->console->render();
-		  Main::mainObject->whilefix();
+		  mainObject->console->render();
+		  mainObject->whilefix();
 	   }
 }
 

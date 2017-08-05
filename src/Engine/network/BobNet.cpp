@@ -169,7 +169,7 @@ BobNet::~BobNet()
 	}
 	udpConnections.clear();
 
-	tcpServerConnection.cleanup();;
+	tcpServerConnection.cleanup();
 }
 
 mutex BobNet::threadLog_Mutex;

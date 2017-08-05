@@ -861,6 +861,7 @@ void BobMenu::render
 
 		if (returnLeftX != nullptr)*returnLeftX = leftX;
 		if (returnRightX != nullptr)*returnRightX = rightX;
+		lastWidth = rightX - leftX;
 
 		if (renderBackgroundAndBorder)
 		{

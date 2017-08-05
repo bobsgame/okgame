@@ -1323,12 +1323,12 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					if(clicked == true && confirm == false)
 					{
 
-						if(yourStatsMenu->isSelectedID(yourStatsMenu->getSelectedMenuItem()->id,clicked,mx,my))
+						if(yourStatsMenu!=nullptr && yourStatsMenu->getSelectedMenuItem()!=nullptr && yourStatsMenu->isSelectedID(yourStatsMenu->getSelectedMenuItem()->id,clicked,mx,my))
 						{
 							whichDifficultyToShow++;
 							rotateLeaderBoardsTime = -5000;
 						}
-						if (leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id,clicked, mx, my))
+						if (leaderBoardMenu != nullptr && leaderBoardMenu->getSelectedMenuItem() != nullptr && leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id,clicked, mx, my))
 						{
 							whichLeaderBoardToShow++;
 							rotateLeaderBoardsTime = -5000;

@@ -442,7 +442,7 @@ void HARDWARE_set_sprite_texture_filename_and_maybe_preload_texture(GFX* gfx, st
  //-----------------------------
  //if hq2x is on, use normal data sizes
  //-----------------------------
-	if (Main::getMain()->GLOBAL_hq2x_is_on)
+	if (mainObject->GLOBAL_hq2x_is_on)
 	{
 		//strcpy(gfx->FileName, gfx_filename);
 		gfx->FileName = gfx_filename;
