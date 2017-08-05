@@ -100,7 +100,7 @@ void BobMenu::MenuItem::setText(string s)
 //}
 
 //=========================================================================================================================
-BobMenu::BobMenu(Engine *g, string title)
+BobMenu::BobMenu(Engine *g, string title, string subtitle)
 {//=========================================================================================================================
 	this->e = g;
 	if (rectangleCursorTexture == nullptr)rectangleCursorTexture = GLUtils::getTextureFromPNGExePath("data/textbox/rectangleCursor.png");
@@ -127,12 +127,18 @@ BobMenu::BobMenu(Engine *g, string title)
 		titleCaption = new Caption(e, Caption::Position::CENTERED_X, 0, 0, -1, title, 32, true, menuColor, RenderOrder::OVER_GUI);
 	}
 
+	if(subtitle !="")
+	{
+		subtitleCaption = new Caption(e, Caption::Position::NONE, 0, 0, -1, subtitle, 32, true, menuColor, RenderOrder::OVER_GUI);
+	}
+
 	activeMenus.add(this);
 }
 //=========================================================================================================================
 BobMenu::~BobMenu()
 {//=========================================================================================================================
 	if (titleCaption != nullptr)delete titleCaption;// titleCaption->setToBeDeletedImmediately();
+	if (subtitleCaption != nullptr)delete subtitleCaption;// titleCaption->setToBeDeletedImmediately();
 	menuItems.deleteAll();
 	
 	activeMenus.remove(this);
@@ -582,6 +588,30 @@ void BobMenu::render
 
 	topY = (float)y;
 
+	if (subtitleCaption != nullptr)
+	{
+		if (x != 0)
+		{
+			subtitleCaption->fixedPosition = Caption::Position::NONE;
+			if (center)subtitleCaption->screenX = (float)(x - subtitleCaption->getWidth() / 2);
+			else subtitleCaption->screenX = (float)(x);
+		}
+		else
+		{
+			if (center == false)
+			{
+				subtitleCaption->fixedPosition = Caption::Position::NONE;
+				subtitleCaption->screenX = (float)(x);
+			}
+		}
+
+		if (subtitleCaption->screenX < leftX)leftX = subtitleCaption->screenX;
+		if (subtitleCaption->screenX + subtitleCaption->getWidth() > rightX)rightX = subtitleCaption->screenX + subtitleCaption->getWidth();
+
+		subtitleCaption->screenY = y + 5;
+		y += (subtitleCaption->getHeight() + 20);
+	}
+
 	if (menuItems.size() == 0)return;
 
 	//if selected disabled, move down
@@ -957,6 +987,11 @@ void BobMenu::render
 		{
 			titleCaption->update();
 			titleCaption->render();
+		}
+		if (subtitleCaption != nullptr)
+		{
+			subtitleCaption->update();
+			subtitleCaption->render();
 		}
 
 		//			if (areAllMenusDisabled() == false && drawCursor)

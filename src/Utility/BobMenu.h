@@ -45,6 +45,7 @@ public:
 	BobColor* defaultMenuColor = nullptr;
 
 	Caption* titleCaption = nullptr;
+	Caption* subtitleCaption = nullptr;
 	
 	bool outline = true;
 	
@@ -114,7 +115,7 @@ public:
 
 	int lastWidth = 0;
 
-	BobMenu(Engine *g, string title);
+	BobMenu(Engine *g, string title = "", string subtitle = "");
 	~BobMenu();
 
 	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);

@@ -331,6 +331,7 @@ public:
 	string statsMenu_gameSequenceOrTypeUUID = "OVERALL";
 	string statsMenu_gameSequenceOrTypeName = "OVERALL";
 	string statsMenu_objectiveName = "Play To Credits";
+	bool updateStatsMenu = true;
 	bool statsMenu_totalTimePlayed = true;
 	bool statsMenu_totalBlocksCleared = false;
 	bool statsMenu_planeswalkerPoints = false;

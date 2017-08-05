@@ -2192,6 +2192,7 @@ void BobsGame::whichStatsMiniMenuUpdate()
 			delete whichStatsMiniMenu;
 			whichStatsMiniMenu = nullptr;
 		}
+		updateStatsMenu = true;
 	}
 
 }
@@ -2302,6 +2303,8 @@ void BobsGame::statsMenuUpdate()
 
 								if (leaderBoardMenu->isSelectedID("Stats Type", clicked, mx, my))
 								{
+									updateStatsMenu = true;
+
 									if (statsMenu_totalTimePlayed)
 									{
 										statsMenu_totalTimePlayed = false;
@@ -2349,6 +2352,7 @@ void BobsGame::statsMenuUpdate()
 									if (whichDifficultyToShow == 3)statsMenu_difficultyName = "Normal";
 									if (whichDifficultyToShow == 4)statsMenu_difficultyName = "Hard";
 									if (whichDifficultyToShow == 5)statsMenu_difficultyName = "Insane";
+									updateStatsMenu = true;
 								}
 
 				
@@ -2380,7 +2384,7 @@ void BobsGame::statsMenuUpdate()
 								{
 									if (statsMenu_objectiveName == "Endless Mode")statsMenu_objectiveName = "Play To Credits";
 									else statsMenu_objectiveName = "Endless Mode";
-
+									updateStatsMenu = true;
 								}
 
 							}
@@ -2388,11 +2392,13 @@ void BobsGame::statsMenuUpdate()
 
 	if (yourStatsMenu == nullptr)
 	{
-		yourStatsMenu = new BobMenu(this, "");
+		yourStatsMenu = new BobMenu(this, "", "Your Stats");
 		yourStatsMenu->center = false;
 		yourStatsMenu->setFontSize(12);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
+
+		updateStatsMenu = true;
 
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL", statsMenu_objectiveName);
 
@@ -2400,7 +2406,7 @@ void BobsGame::statsMenuUpdate()
 
 	if (leaderBoardMenu == nullptr)
 	{
-		leaderBoardMenu = new BobMenu(this, "");
+		leaderBoardMenu = new BobMenu(this, "", "High Score");
 		leaderBoardMenu->center = false;
 		leaderBoardMenu->setFontSize(12);
 		leaderBoardMenu->outline = false;
@@ -2410,12 +2416,10 @@ void BobsGame::statsMenuUpdate()
 			statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
 	}
 
-	long long currentTime = System::currentHighResTimer();
-	long long startTime = updateStatsTime;
-	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-	if (ticksPassed > 200)
+
+	if (updateStatsMenu)
 	{
-		updateStatsTime = currentTime;
+		updateStatsMenu = false;
 
 		yourStatsMenu->clear();
 		leaderBoardMenu->clear();
@@ -2491,9 +2495,9 @@ void BobsGame::statsMenuRender()
 	int bottomHeight = 0;
 	int leftX = 0;
 	int rightX = 0;
-	statsMenu->render(0, getWidth() / 6 * 1, getHeight(), true, &startHeight, &bottomHeight, false, &leftX, &rightX);
-	yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false, nullptr, &rightX);
-	leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false);
+	statsMenu->render(0, (getWidth() - (statsMenu->lastWidth + 50 + yourStatsMenu->lastWidth + 50 + leaderBoardMenu->lastWidth)) / 2, getHeight(), true, &startHeight, &bottomHeight, false, &leftX, &rightX);
+	yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true, nullptr, &rightX);
+	leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true);
 
 	if (whichStatsMiniMenuShowing && whichStatsMiniMenu != nullptr)
 	{
@@ -2825,6 +2829,7 @@ void BobsGame::gameObjectiveMenuUpdate()
 			delete gameObjectiveMenu;
 			gameObjectiveMenu = nullptr;
 		}
+		updateStatsMenu = true;
 	}
 }
 //=========================================================================================================================
@@ -3570,12 +3575,12 @@ void BobsGame::gameSetupMenuUpdate()
 
 		if (currentRoom->endlessMode)
 		{
-			objectiveString = "Play As Long As You Can (Endless Mode)";
+			objectiveString = "Endless Mode";
 			statsMenu_objectiveName = "Endless Mode";
 		}
 		else
 		{
-			objectiveString = "Play To Credits Level";
+			objectiveString = "Play To Final Level";
 			statsMenu_objectiveName = "Play To Credits";
 		}
 		gameSetupMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
@@ -3585,11 +3590,13 @@ void BobsGame::gameSetupMenuUpdate()
 
 	if (yourStatsMenu == nullptr)
 	{
-		yourStatsMenu = new BobMenu(this, "");
+		yourStatsMenu = new BobMenu(this, "", "Your Stats");
 		yourStatsMenu->center = false;
 		yourStatsMenu->setFontSize(12);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
+
+		updateStatsMenu = true;
 
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL", statsMenu_objectiveName);
 
@@ -3597,7 +3604,7 @@ void BobsGame::gameSetupMenuUpdate()
 
 	if (leaderBoardMenu == nullptr)
 	{
-		leaderBoardMenu = new BobMenu(this, "");
+		leaderBoardMenu = new BobMenu(this, "", "High Score");
 		leaderBoardMenu->center = false;
 		leaderBoardMenu->setFontSize(12);
 		leaderBoardMenu->outline = false;
@@ -3607,12 +3614,10 @@ void BobsGame::gameSetupMenuUpdate()
 			statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
 	}
 
-	long long currentTime = System::currentHighResTimer();
-	long long startTime = updateStatsTime;
-	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-	if (ticksPassed > 200)
+
+	if (updateStatsMenu)
 	{
-		updateStatsTime = currentTime;
+		updateStatsMenu = false;
 
 		yourStatsMenu->clear();
 		leaderBoardMenu->clear();
@@ -3699,6 +3704,8 @@ void BobsGame::gameSetupMenuUpdate()
 		{
 			if (gameSetupMenu->isSelectedID("Difficulty"))
 			{
+				updateStatsMenu = true;
+
 				GameType gt;
 				if (left)
 				{
@@ -3753,6 +3760,9 @@ void BobsGame::gameSetupMenuUpdate()
 		{
 			if (gameSetupMenu->isSelectedID("Objective", clicked, mx, my))
 			{
+
+				updateStatsMenu = true;
+
 				if (confirm || clicked) gameObjectiveMenuShowing = true;
 				else
 				{
@@ -3850,6 +3860,8 @@ void BobsGame::gameSetupMenuUpdate()
 				leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id, clicked, mx, my)
 				)
 			{
+
+				updateStatsMenu = true;
 
 				if (statsMenu_totalTimePlayed)
 				{
@@ -4149,6 +4161,7 @@ void BobsGame::selectGameSequenceOrSingleGameTypeMenuUpdate()
 			delete selectGameSequenceOrSingleGameTypeMenu;
 			selectGameSequenceOrSingleGameTypeMenu = nullptr;
 		}
+		updateStatsMenu = true;
 	}
 
 }
@@ -4244,6 +4257,7 @@ void BobsGame::selectGameSequenceMenuUpdate()
 			delete selectGameSequenceMenu;
 			selectGameSequenceMenu = nullptr;
 		}
+		updateStatsMenu = true;
 	}
 
 }
@@ -4337,6 +4351,7 @@ void BobsGame::gameSequenceOptionsMenuUpdate()
 			delete gameSequenceOptionsMenu;
 			gameSequenceOptionsMenu = nullptr;
 		}
+		updateStatsMenu = true;
 	}
 
 }
@@ -5041,6 +5056,7 @@ void BobsGame::selectSingleGameTypeMenuUpdate()
 			delete selectSingleGameTypeMenu;
 			selectSingleGameTypeMenu = nullptr;
 		}
+		updateStatsMenu = true;
 	}
 
 }
@@ -5175,6 +5191,7 @@ void BobsGame::difficultyMenuUpdate()
 			delete difficultyMenu;
 			difficultyMenu = nullptr;
 		}
+		updateStatsMenu = true;
 	}
 
 }
