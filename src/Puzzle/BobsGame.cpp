@@ -1241,8 +1241,8 @@ void BobsGame::sendGameStatsToServer()
 					s.biggestCombo = g->biggestComboChain;
 
 
-					s.singlePlayer_randomizeSequence = currentRoom->singleplayer_RandomizeSequence;
-					s.endlessMode = currentRoom->endlessMode;
+					s.singlePlayer_randomizeSequence = (int)currentRoom->singleplayer_RandomizeSequence;
+					s.endlessMode = (int)currentRoom->endlessMode;
 					s.room_DifficultyName = currentRoom->difficultyName;
 					s.multiplayer_NumPlayers = currentRoom->multiplayer_NumPlayers;
 
@@ -1250,11 +1250,11 @@ void BobsGame::sendGameStatsToServer()
 					s.multiplayer_MaxPlayers = currentRoom->multiplayer_MaxPlayers;
 					s.multiplayer_PrivateRoom = (int)currentRoom->multiplayer_PrivateRoom;
 					s.multiplayer_TournamentRoom = (int)currentRoom->multiplayer_TournamentRoom;
-					s.multiplayer_AllowDifferentDifficulties = currentRoom->multiplayer_AllowDifferentDifficulties;
-					s.multiplayer_AllowDifferentGameSequences = currentRoom->multiplayer_AllowDifferentGameSequences;
-					s.multiplayer_GameEndsWhenOnePlayerRemains = currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
-					s.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
-					s.multiplayer_DisableVSGarbage = currentRoom->multiplayer_DisableVSGarbage;
+					s.multiplayer_AllowDifferentDifficulties = (int)currentRoom->multiplayer_AllowDifferentDifficulties;
+					s.multiplayer_AllowDifferentGameSequences = (int)currentRoom->multiplayer_AllowDifferentGameSequences;
+					s.multiplayer_GameEndsWhenOnePlayerRemains = (int)currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
+					s.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = (int)currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
+					s.multiplayer_DisableVSGarbage = (int)currentRoom->multiplayer_DisableVSGarbage;
 
 					s.allFrameStatesZipped = "temp";// FrameState::getFrameStatesAsBase64GZippedXML(g->framesArray);
 
