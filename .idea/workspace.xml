@@ -13,7 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="423f6daf-6cb9-4fa8-b77b-e902a19a9d13" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/linux/bobsgame" afterPath="$PROJECT_DIR$/linux/bobsgame" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Puzzle/BobsGameMenus.cpp" afterPath="$PROJECT_DIR$/src/Puzzle/BobsGameMenus.cpp" />
     </list>
     <ignored path="bobsgame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,8 +36,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15645">
-              <caret line="1043" column="0" selection-start-line="1043" selection-start-column="0" selection-end-line="1043" selection-end-column="0" />
+            <state relative-caret-position="16020">
+              <caret line="1068" column="0" selection-start-line="1068" selection-start-column="0" selection-end-line="1068" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -77,7 +76,7 @@
       <file leaf-file-name="Sound.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Utility/audio/Sound.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
+            <state relative-caret-position="675">
               <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
               <folding />
             </state>
@@ -108,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/src/Puzzle/BobsGameMenus.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="780">
-              <caret line="2892" column="41" selection-start-line="2892" selection-start-column="41" selection-end-line="2892" selection-end-column="41" />
+              <caret line="3129" column="0" selection-start-line="3129" selection-start-column="0" selection-end-line="3129" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -117,7 +116,7 @@
       <file leaf-file-name="stl_algobase.h" pinned="false" current-in-tab="false">
         <entry file="file:///usr/include/c++/4.8/bits/stl_algobase.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
+            <state relative-caret-position="3225">
               <caret line="215" column="4" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="4" />
               <folding />
             </state>
@@ -793,6 +792,7 @@
       <workItem from="1500856705524" duration="291000" />
       <workItem from="1501580508216" duration="604000" />
       <workItem from="1501656781511" duration="413000" />
+      <workItem from="1501929292263" duration="250000" />
     </task>
     <task id="LOCAL-00001" summary="improving cmakelists and project">
       <created>1473816278684</created>
@@ -1001,20 +1001,20 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100844000" />
+    <option name="totallyTimeSpent" value="101094000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="2029" height="1485" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14007977" sideWeight="0.47386172" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13659023" sideWeight="0.4675768" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34878588" sideWeight="0.68482816" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34878588" sideWeight="0.68482816" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33655536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26007605" sideWeight="0.31517184" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3271028" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33540374" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15204386" sideWeight="0.5261383" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15204386" sideWeight="0.5324232" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32866043" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37804878" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1272,7 +1272,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2415">
           <caret line="168" column="16" selection-start-line="168" selection-start-column="16" selection-end-line="168" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1293,8 +1292,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15645">
-          <caret line="1043" column="0" selection-start-line="1043" selection-start-column="0" selection-end-line="1043" selection-end-column="0" />
+        <state relative-caret-position="16020">
+          <caret line="1068" column="0" selection-start-line="1068" selection-start-column="0" selection-end-line="1068" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1318,7 +1317,7 @@
     <entry file="file://$PROJECT_DIR$/lib/md5.cpp" />
     <entry file="file://$PROJECT_DIR$/src/Utility/audio/Sound.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
+        <state relative-caret-position="675">
           <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
           <folding />
         </state>
@@ -1350,7 +1349,7 @@
     </entry>
     <entry file="file:///usr/include/c++/4.8/bits/stl_algobase.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
+        <state relative-caret-position="3225">
           <caret line="215" column="4" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="4" />
           <folding />
         </state>
@@ -1359,7 +1358,7 @@
     <entry file="file://$PROJECT_DIR$/src/Puzzle/BobsGameMenus.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="780">
-          <caret line="2892" column="41" selection-start-line="2892" selection-start-column="41" selection-end-line="2892" selection-end-column="41" />
+          <caret line="3129" column="0" selection-start-line="3129" selection-start-column="0" selection-end-line="3129" selection-end-column="0" />
           <folding />
         </state>
       </provider>
