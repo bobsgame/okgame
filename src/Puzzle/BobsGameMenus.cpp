@@ -2412,8 +2412,10 @@ void BobsGame::statsMenuUpdate()
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
-		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", "OVERALL", statsMenu_objectiveName,
+		string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", "OVERALL", statsMenu_objectiveName,
 			statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
+
+		leaderBoardMenu->subtitleCaption->setText(title);
 	}
 
 
@@ -2435,8 +2437,10 @@ void BobsGame::statsMenuUpdate()
 
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName);
 
-		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName,
+		string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName,
 				statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
+
+		leaderBoardMenu->subtitleCaption->setText(title);
 
 		yourStatsMenu->setAllCaptionsToFullAlpha();
 		leaderBoardMenu->setAllCaptionsToFullAlpha();
@@ -3481,6 +3485,53 @@ void BobsGame::gameSetupMenuUpdate()
 		errorLabel->setText("");
 	}
 
+
+	{
+		GameSequence *selectedGameSequence = nullptr;
+		if (localMultiplayer || networkMultiplayer)
+		{
+			selectedGameSequence = currentRoom->gameSequence;
+		}
+		else
+		{
+			selectedGameSequence = getPlayer1Game()->currentGameSequence;
+		}
+
+		if (selectedGameSequence == nullptr)
+		{
+			selectedGameSequence = getGameSequenceByName("bob's game");
+			if (selectedGameSequence == nullptr)
+			{
+				selectedGameSequence = new GameSequence();
+				selectedGameSequence->gameTypes.add(new GameType());
+			}
+			currentRoom->gameSequence = selectedGameSequence;
+			getPlayer1Game()->currentGameSequence = selectedGameSequence;
+		}
+
+		{
+			BobMenu::MenuItem *c = gameSetupMenu->getMenuItemByID("Select Game");
+			if (c != nullptr)
+			{
+				if (selectedGameSequence->gameTypes.size() > 1)
+				{
+					c->setText("Game Sequence: " + selectedGameSequence->name);
+					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->uuid;
+				}
+				if (selectedGameSequence->gameTypes.size() == 1)
+				{
+					c->setText("Game Type: " + selectedGameSequence->name);
+					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->gameTypes.get(0)->uuid;
+				}
+			}
+		}
+
+		gameSetupMenu->getMenuItemByID("Start Game")->setColor(BobMenu::menuColor);
+		gameSetupMenu->getMenuItemByID("Start Game")->info = false;
+
+	}
+
+
 	{
 		string selectedDifficultyName = "";
 		if (localMultiplayer || networkMultiplayer)
@@ -3526,51 +3577,6 @@ void BobsGame::gameSetupMenuUpdate()
 
 
 	{
-		GameSequence *selectedGameSequence = nullptr;
-		if (localMultiplayer || networkMultiplayer)
-		{
-			selectedGameSequence = currentRoom->gameSequence;
-		}
-		else
-		{
-			selectedGameSequence = getPlayer1Game()->currentGameSequence;
-		}
-
-		if(selectedGameSequence == nullptr)
-		{
-			selectedGameSequence = getGameSequenceByName("bob's game");
-			if (selectedGameSequence == nullptr)
-			{
-				selectedGameSequence = new GameSequence();
-				selectedGameSequence->gameTypes.add(new GameType());
-			}
-			currentRoom->gameSequence = selectedGameSequence;
-			getPlayer1Game()->currentGameSequence = selectedGameSequence;
-		}
-
-		{
-			BobMenu::MenuItem *c = gameSetupMenu->getMenuItemByID("Select Game");
-			if (c != nullptr)
-			{
-				if (selectedGameSequence->gameTypes.size() > 1)
-				{
-					c->setText("Game Sequence: " + selectedGameSequence->name);
-					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->uuid;
-				}
-				if (selectedGameSequence->gameTypes.size() == 1)
-				{
-					c->setText("Game Type: " + selectedGameSequence->name);
-					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->gameTypes.get(0)->uuid;
-				}
-			}
-		}
-
-		gameSetupMenu->getMenuItemByID("Start Game")->setColor(BobMenu::menuColor);
-		gameSetupMenu->getMenuItemByID("Start Game")->info = false;
-
-	}
-
-	{
 		string objectiveString = "";
 
 		if (currentRoom->endlessMode)
@@ -3598,7 +3604,7 @@ void BobsGame::gameSetupMenuUpdate()
 
 		updateStatsMenu = true;
 
-		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL", statsMenu_objectiveName);
+		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName);
 
 	}
 
@@ -3610,8 +3616,10 @@ void BobsGame::gameSetupMenuUpdate()
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
-		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", "OVERALL", statsMenu_objectiveName,
+		string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName,
 			statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
+
+		leaderBoardMenu->subtitleCaption->setText(title);
 	}
 
 
@@ -3624,8 +3632,10 @@ void BobsGame::gameSetupMenuUpdate()
 
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName);
 
-		populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName,
+		string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName,
 			statsMenu_totalTimePlayed, statsMenu_totalBlocksCleared, statsMenu_planeswalkerPoints, statsMenu_eloScore, statsMenu_timeLasted, statsMenu_blocksCleared);
+
+		leaderBoardMenu->subtitleCaption->setText(title);
 
 		yourStatsMenu->setAllCaptionsToFullAlpha();
 		leaderBoardMenu->setAllCaptionsToFullAlpha();
@@ -3723,6 +3733,7 @@ void BobsGame::gameSetupMenuUpdate()
 				currentRoom->difficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
+
 			}
 
 		}
@@ -4733,7 +4744,7 @@ static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByBlocksCleared;
 */
 
 //=========================================================================================================================
-void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
+string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 	bool totalTimePlayed,
 	bool totalBlocksCleared,
 	bool planeswalkerPoints,
@@ -4842,7 +4853,7 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 	if (timeLasted)titleName = "Top Games: Time Lasted";
 	if (blocksCleared)titleName = "Top Games: Total Time Played";
 
-	menu->add(titleName);
+	//menu->add(titleName);
 	menu->add(gameName);
 	menu->add(difficultyName);
 	menu->add("Objective: "+objectiveString);
@@ -4899,6 +4910,8 @@ void BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gam
 	}
 
 	if (deleteStats)delete stats;
+
+	return titleName;
 
 }
 

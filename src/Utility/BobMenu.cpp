@@ -902,12 +902,14 @@ void BobMenu::render
 		{
 			GLUtils::drawFilledRect(0, 0, 0, leftX - 24, rightX + 24, topY - 16, bottomY + 16, 1);
 			GLUtils::drawFilledRect(255, 255, 255, leftX - 22, rightX + 22, topY - 14, bottomY + 14, 1);
-			if(subtitleCaption!=nullptr)
-			{
-				int stx = subtitleCaption->screenX;
-				int sty = subtitleCaption->screenY + subtitleCaption->getHeight() + 3;
-				GLUtils::drawFilledRect(0, 0, 0, stx, stx + subtitleCaption->getWidth(), sty, sty+1, 1);
-			}
+
+		}
+
+		if (subtitleCaption != nullptr)
+		{
+			int stx = subtitleCaption->screenX;
+			int sty = subtitleCaption->screenY + subtitleCaption->getHeight() + 3;
+			GLUtils::drawFilledRect(0, 0, 0, stx, stx + subtitleCaption->getWidth(), sty, sty + 1, 1);
 		}
 
 		//draw transparent cursor rectangle

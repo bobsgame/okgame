@@ -394,7 +394,7 @@ public:
 	typedef pair<GameSequence*, StringColorPair> GameSequenceStringColorPairPair;
 
 	void populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);
-	void populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
+	string populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 		bool totalTimePlayed,
 		bool totalBlocksCleared,
 		bool planeswalkerPoints,

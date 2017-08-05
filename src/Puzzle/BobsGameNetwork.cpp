@@ -830,9 +830,9 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 	if(yourStatsMenu == nullptr)
 	{
-		yourStatsMenu = new BobMenu(this, "");
+		yourStatsMenu = new BobMenu(this, "", "Your Stats");
 		yourStatsMenu->center = false;
-		yourStatsMenu->setFontSize(12);
+		yourStatsMenu->setFontSize(14);
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -842,9 +842,9 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	}
 	if(leaderBoardMenu == nullptr)
 	{
-		leaderBoardMenu = new BobMenu(this, "");
+		leaderBoardMenu = new BobMenu(this, "", "High Scores");
 		leaderBoardMenu->center = false;
-		leaderBoardMenu->setFontSize(12);
+		leaderBoardMenu->setFontSize(14);
 		leaderBoardMenu->outline = false;
 		leaderBoardMenu->defaultMenuColor = BobColor::darkGray;
 
@@ -981,7 +981,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	//show friends online list
 	if (friendsOnlineMenu == nullptr)
 	{
-		friendsOnlineMenu = new BobMenu(this, "");
+		friendsOnlineMenu = new BobMenu(this, "", "Friends Online:");
 		friendsOnlineMenu->setFontSize(12);
 		friendsOnlineMenu->center = false;
 		friendsOnlineMenu->outline = false;
@@ -991,7 +991,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	if (roomsMenu == nullptr)
 	{
 		roomsMenu = new BobMenu(this, "");
-		roomsMenu->setFontSize(12);
+		roomsMenu->setFontSize(14);
 		roomsMenu->center = false;
 		populateRoomsMenu();
 	}
@@ -1056,8 +1056,10 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 					populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, uuid, c->difficultyName, roomObjectiveString);
 
-					populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->difficultyName, roomObjectiveString,
+					string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->difficultyName, roomObjectiveString,
 						totalTimePlayed, totalBlocksCleared, planeswalkerPoints, eloScore, timeLasted, blocksCleared);
+
+					leaderBoardMenu->subtitleCaption->setText(title);
 				}
 			}
 
@@ -1066,8 +1068,10 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		{
 			populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", difficultyName, objectiveString);
 
-			populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", difficultyName, objectiveString,
+			string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, "OVERALL", difficultyName, objectiveString,
 				totalTimePlayed, totalBlocksCleared, planeswalkerPoints, eloScore, timeLasted, blocksCleared);
+
+			leaderBoardMenu->subtitleCaption->setText(title);
 
 		}
 
@@ -1097,7 +1101,9 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		}
 
 		friendsOnlineMenu->clear();
-		friendsOnlineMenu->addInfo("Friends Online:");
+		//friendsOnlineMenu->addInfo("Friends Online:");
+
+		if(onlineFriends.size()==0)friendsOnlineMenu->addInfo("No friends online, add some more!");
 		
 		for (int i = 0; i < onlineFriends.size(); i++)
 		{
