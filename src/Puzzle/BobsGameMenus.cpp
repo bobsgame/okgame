@@ -2230,12 +2230,12 @@ void BobsGame::statsMenuUpdate()
 
 
 
-	if(statsMenu_totalTimePlayed)		statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Total Time Played" + statsMenu_difficultyName);
-	if(statsMenu_totalBlocksCleared)	statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Total Blocks Cleared" + statsMenu_difficultyName);
-	if(statsMenu_planeswalkerPoints)	statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Planeswalker Points" + statsMenu_difficultyName);
-	if(statsMenu_eloScore)				statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Elo Score" + statsMenu_difficultyName);
-	if(statsMenu_timeLasted)			statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Games By Time Lasted" + statsMenu_difficultyName);
-	if(statsMenu_blocksCleared)			statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Games By Blocks Cleared" + statsMenu_difficultyName);
+	if(statsMenu_totalTimePlayed)		statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Total Time Played");
+	if(statsMenu_totalBlocksCleared)	statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Total Blocks Cleared");
+	if(statsMenu_planeswalkerPoints)	statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Planeswalker Points");
+	if(statsMenu_eloScore)				statsMenu->getMenuItemByID("Stats Type")->setText("Leaderboard Type: Top Players By Elo Score");
+	if(statsMenu_timeLasted)			statsMenu->getMenuItemByID("Stats Type")->setText("High Scores Type: Top Games By Time Lasted");
+	if(statsMenu_blocksCleared)			statsMenu->getMenuItemByID("Stats Type")->setText("High Scores Type: Top Games By Blocks Cleared");
 
 	statsMenu->getMenuItemByID("Difficulty")->setText("Difficulty: " + statsMenu_difficultyName);
 
@@ -2500,8 +2500,8 @@ void BobsGame::statsMenuRender()
 	int leftX = 0;
 	int rightX = 0;
 	statsMenu->render(0, (getWidth() - (statsMenu->lastWidth + 50 + yourStatsMenu->lastWidth + 50 + leaderBoardMenu->lastWidth)) / 2, getHeight(), true, &startHeight, &bottomHeight, false, &leftX, &rightX);
-	yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true, nullptr, &rightX);
-	leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true);
+	yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false, nullptr, &rightX);
+	leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false);
 
 	if (whichStatsMiniMenuShowing && whichStatsMiniMenu != nullptr)
 	{
@@ -2782,8 +2782,8 @@ void BobsGame::loadRoomConfigMenuUpdate()
 void BobsGame::gameObjectiveMenuUpdate()
 {//=========================================================================================================================
 
-	const string PLAY_TO_CREDITS_LEVEL = "Play To Credits Level";
-	const string ENDLESS = "Endless";
+	const string PLAY_TO_CREDITS_LEVEL = "Play To Credits";
+	const string ENDLESS = "Endless Mode";
 	if (gameObjectiveMenu == nullptr)
 	{
 		gameObjectiveMenu = new BobMenu(this, "");
@@ -3586,7 +3586,7 @@ void BobsGame::gameSetupMenuUpdate()
 		}
 		else
 		{
-			objectiveString = "Play To Final Level";
+			objectiveString = "Play To Credits";
 			statsMenu_objectiveName = "Play To Credits";
 		}
 		gameSetupMenu->getMenuItemByID("Objective")->setText("Objective: " + objectiveString);
@@ -3985,8 +3985,8 @@ void BobsGame::gameSetupMenuRender()
 			errorLabel->render();
 		}
 
-		yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true, nullptr, &rightX);
-		leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, true);
+		yourStatsMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false, nullptr, &rightX);
+		leaderBoardMenu->render(startHeight, rightX + 50, getHeight(), false, nullptr, nullptr, false);
 
 	}
 
@@ -4652,81 +4652,99 @@ string getDateFromEpochTime(long long ms)
 void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString)
 {//=========================================================================================================================
 
-	BobsGameUserStatsForSpecificGameAndDifficulty *stats = nullptr;
-	for(int i=0;i<userStatsPerGameAndDifficulty.size();i++)
-	{
-		BobsGameUserStatsForSpecificGameAndDifficulty *s = userStatsPerGameAndDifficulty.get(i);
-		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
+
+
+
+		BobsGameUserStatsForSpecificGameAndDifficulty *stats = nullptr;
+		for (int i = 0; i < userStatsPerGameAndDifficulty.size(); i++)
 		{
-			if (s->difficultyName == difficultyString)
+			BobsGameUserStatsForSpecificGameAndDifficulty *s = userStatsPerGameAndDifficulty.get(i);
+			if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
 			{
-				if (s->objectiveString == objectiveString)
+				if (s->difficultyName == difficultyString)
 				{
-					stats = s;
-					break;
+					if (s->objectiveString == objectiveString)
+					{
+						stats = s;
+						break;
+					}
 				}
 			}
 		}
-	}
-	bool deleteStats = false;
-	if (stats == nullptr)
-	{
-		stats = new BobsGameUserStatsForSpecificGameAndDifficulty();
-		deleteStats = true;
-	}
+		bool deleteStats = false;
+		if (stats == nullptr)
+		{
+			stats = new BobsGameUserStatsForSpecificGameAndDifficulty();
+			deleteStats = true;
+		}
 
-	string gameName = "";
-	if (gameTypeOrSequenceUUID == "OVERALL")
-	{
-		gameName = "Game: OVERALL";
-	}
-	else
-	{
-		GameType* gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
-		GameSequence *gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
-		if (gt != nullptr)gameName = "Game Type: "+gt->name;
-		if (gs != nullptr)gameName = "Game Sequence: "+gs->name;
-	}
+		string gameName = "";
+		if (gameTypeOrSequenceUUID == "OVERALL")
+		{
+			gameName = "Game: OVERALL";
+		}
+		else
+		{
+			GameType* gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
+			GameSequence *gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
+			if (gt != nullptr)gameName = "Game Type: " + gt->name;
+			if (gs != nullptr)gameName = "Game Sequence: " + gs->name;
+		}
 
-	string difficultyName = "";
-	if (difficultyString == "OVERALL")
-	{
-		difficultyName = "Difficulty: OVERALL";
-	}
-	else
-	{
-		difficultyName = "Difficulty: "+difficultyString;
-	}
+		string difficultyName = "";
+		if (difficultyString == "OVERALL")
+		{
+			difficultyName = "Difficulty: OVERALL";
+		}
+		else
+		{
+			difficultyName = "Difficulty: " + difficultyString;
+		}
 
-	//menu->add("Your Stats");
-	menu->add(gameName);
-	menu->add(difficultyName);
-	menu->add("Objective: "+objectiveString);
-	menu->addInfo(" ");
-	menu->add("Total Games Played: " + to_string(stats->totalGamesPlayed));
-	menu->add("Single Player Games Played: " + to_string(stats->singlePlayerGamesPlayed));
-	menu->add("Single Player Games Completed: " + to_string(stats->singlePlayerGamesCompleted));
-	menu->add("Single Player Games Failed: " + to_string(stats->singlePlayerGamesLost));
-	menu->add("Local Multiplayer Games Played: " + to_string(stats->localMultiplayerGamesPlayed));
-	menu->add("Tournament Games Played: " + to_string(stats->tournamentGamesPlayed));
-	menu->add("Tournament Games Won: " + to_string(stats->tournamentGamesWon));
-	menu->add("Tournament Games Lost: " + to_string(stats->tournamentGamesLost));
-	menu->add("Longest Game Length: " + getNiceTime(stats->longestGameLength));
-	menu->add("Average Game Length: " + getNiceTime(stats->averageGameLength));
-	menu->add("Total Time Played: " + getNiceTime(stats->totalTimePlayed));
-	menu->add("First Time Played: " + getDateFromEpochTime(stats->firstTimePlayed));
-	menu->add("Last Time Played: " + getDateFromEpochTime(stats->lastTimePlayed));
-	menu->add("Most Blocks Cleared: " + to_string(stats->mostBlocksCleared));
-	menu->add("Total Blocks Made: " + to_string(stats->totalBlocksMade));
-	menu->add("Total Blocks Cleared: " + to_string(stats->totalBlocksCleared));
-	menu->add("Total Pieces Made: " + to_string(stats->totalPiecesMade));
-	menu->add("Total Pieces Placed: " + to_string(stats->totalPiecesPlaced));
-	menu->add("Total Combos Made: " + to_string(stats->totalCombosMade));
-	menu->add("Biggest Combo: " + to_string(stats->biggestCombo));
-	menu->add("Elo Score: " + to_string(stats->eloScore));
-	menu->add("Planeswalker Score: " + to_string(stats->planesWalkerPoints));
+		if (getServerConnection()->getConnectedToServer_S())
+		{
+			if (getServerConnection()->getAuthorizedOnServer_S())
+			{
 
-	if (deleteStats)delete stats;
+			//menu->add("Your Stats");
+			menu->add(gameName);
+			menu->add(difficultyName);
+			menu->add("Objective: " + objectiveString);
+			menu->addInfo(" ");
+			menu->add("Total Games Played: " + to_string(stats->totalGamesPlayed));
+			menu->add("Single Player Games Played: " + to_string(stats->singlePlayerGamesPlayed));
+			menu->add("Single Player Games Completed: " + to_string(stats->singlePlayerGamesCompleted));
+			menu->add("Single Player Games Failed: " + to_string(stats->singlePlayerGamesLost));
+			menu->add("Local Multiplayer Games Played: " + to_string(stats->localMultiplayerGamesPlayed));
+			menu->add("Tournament Games Played: " + to_string(stats->tournamentGamesPlayed));
+			menu->add("Tournament Games Won: " + to_string(stats->tournamentGamesWon));
+			menu->add("Tournament Games Lost: " + to_string(stats->tournamentGamesLost));
+			menu->add("Longest Game Length: " + getNiceTime(stats->longestGameLength));
+			menu->add("Average Game Length: " + getNiceTime(stats->averageGameLength));
+			menu->add("Total Time Played: " + getNiceTime(stats->totalTimePlayed));
+			menu->add("First Time Played: " + getDateFromEpochTime(stats->firstTimePlayed));
+			menu->add("Last Time Played: " + getDateFromEpochTime(stats->lastTimePlayed));
+			menu->add("Most Blocks Cleared: " + to_string(stats->mostBlocksCleared));
+			menu->add("Total Blocks Made: " + to_string(stats->totalBlocksMade));
+			menu->add("Total Blocks Cleared: " + to_string(stats->totalBlocksCleared));
+			menu->add("Total Pieces Made: " + to_string(stats->totalPiecesMade));
+			menu->add("Total Pieces Placed: " + to_string(stats->totalPiecesPlaced));
+			menu->add("Total Combos Made: " + to_string(stats->totalCombosMade));
+			menu->add("Biggest Combo: " + to_string(stats->biggestCombo));
+			menu->add("Elo Score: " + to_string(stats->eloScore));
+			menu->add("Planeswalker Score: " + to_string(stats->planesWalkerPoints));
+
+			if (deleteStats)delete stats;
+		}
+		else
+		{
+			menu->add(gameName);
+			menu->add(difficultyName);
+			menu->add("Objective: " + objectiveString);
+			menu->addInfo(" ");
+			menu->add("Create an account to track your stats!");
+		}
+	}
 }
 
 /*

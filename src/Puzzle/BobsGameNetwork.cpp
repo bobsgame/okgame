@@ -836,6 +836,8 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 		yourStatsMenu->outline = false;
 		yourStatsMenu->defaultMenuColor = BobColor::darkGray;
 
+		updateStatsMenu = true;
+
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, "OVERALL", "OVERALL", objectiveString);
 		//populateLeaderBoardOrHighScoreBoardMenu
 
@@ -999,11 +1001,16 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 	long long currentTime = System::currentHighResTimer();
 	long long startTime = updateStatsTime;
 	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
-	if (ticksPassed > 200)
+
+	rotateLeaderBoardsTime += ticksPassed;
+	updateStatsTime = currentTime;
+
+	if (updateStatsMenu || rotateLeaderBoardsTime>5000)
 	{
 		bool rotated = false;
-		updateStatsTime = currentTime;
-		rotateLeaderBoardsTime += ticksPassed;
+
+		updateStatsMenu = false;
+
 		if(rotateLeaderBoardsTime>5000)
 		{
 			rotateLeaderBoardsTime = 0;
@@ -1331,11 +1338,13 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 						if(yourStatsMenu!=nullptr && yourStatsMenu->getSelectedMenuItem()!=nullptr && yourStatsMenu->isSelectedID(yourStatsMenu->getSelectedMenuItem()->id,clicked,mx,my))
 						{
+							updateStatsMenu = true;
 							whichDifficultyToShow++;
 							rotateLeaderBoardsTime = -5000;
 						}
 						if (leaderBoardMenu != nullptr && leaderBoardMenu->getSelectedMenuItem() != nullptr && leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id,clicked, mx, my))
 						{
+							updateStatsMenu = true;
 							whichLeaderBoardToShow++;
 							rotateLeaderBoardsTime = -5000;
 						}
@@ -1587,8 +1596,8 @@ void BobsGame::networkMultiplayerLobbyMenuRender()
 	int bottomHeight = 0;
 	int leftX = 0;
 	int rightX = 0;
-	networkMultiplayerLobbyMenu->render(0, getWidth() / 10 * 1, getHeight(), !selectingHostedGame, &startHeight, &bottomHeight, false, &leftX, &rightX);
-	friendsOnlineMenu->render(bottomHeight + 30, leftX, getHeight(), false);
+	networkMultiplayerLobbyMenu->render(0,		 getWidth() / 10 * 1, getHeight(), !selectingHostedGame, &startHeight, &bottomHeight, false, &leftX, &rightX);
+	friendsOnlineMenu->render(bottomHeight + 30, getWidth() / 10 * 1, getHeight(), false);
 
 	roomsMenu->render(startHeight, rightX + 50, getHeight(), selectingHostedGame, nullptr, nullptr, false, nullptr, &rightX);
 
