@@ -1596,7 +1596,8 @@ void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(
 			temp->isGameTypeOrSequence == gameStats->isGameTypeOrSequence &&
 			temp->gameTypeUUID == gameStats->gameTypeUUID &&
 			temp->gameSequenceUUID == gameStats->gameSequenceUUID &&
-			temp->difficultyName == gameStats->difficultyName
+			temp->difficultyName == gameStats->difficultyName &&
+			temp->objectiveString == gameStats->objectiveString
 			)
 		{
 			BobsGame::userStatsPerGameAndDifficulty.removeAt(i);
@@ -1618,7 +1619,8 @@ void addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArr
 			temp->isGameTypeOrSequence == leaderBoard->isGameTypeOrSequence &&
 			temp->gameTypeUUID == leaderBoard->gameTypeUUID &&
 			temp->gameSequenceUUID == leaderBoard->gameSequenceUUID &&
-			temp->difficultyName == leaderBoard->difficultyName
+			temp->difficultyName == leaderBoard->difficultyName &&
+			temp->objectiveString == leaderBoard->objectiveString
 			)
 		{
 			boardArray.removeAt(i);
@@ -1636,6 +1638,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByTotalTimePlayed(string &s
 	s = s.substr(s.find(":") + 1);
 
 	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+
 	addToLeaderboard(BobsGame::topPlayersByTotalTimePlayed, leaderBoard);
 
 }
@@ -1646,6 +1649,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByTotalBlocksCleared(string
 	s = s.substr(s.find(":") + 1);
 
 	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+
 	addToLeaderboard(BobsGame::topPlayersByTotalBlocksCleared, leaderBoard);
 
 }
@@ -1657,7 +1661,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByPlaneswalkerPoints(string
 
 	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
 
-		addToLeaderboard(BobsGame::topPlayersByPlaneswalkerPoints, leaderBoard);
+	addToLeaderboard(BobsGame::topPlayersByPlaneswalkerPoints, leaderBoard);
 }
 
 //===============================================================================================
