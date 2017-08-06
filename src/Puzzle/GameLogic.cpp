@@ -3508,14 +3508,18 @@ void GameLogic::renderHighScoreMeters()
 			{
 				currentScore = myHighScore->fastestClearedLength;
 			}
-			amount = height * (currentScore / highestScore);
-			GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
 
-			if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
-			myHighScoreBarCaption->screenX = startX;
-			myHighScoreBarCaption->screenY = startY + height;
-			myHighScoreBarCaption->update();
-			myHighScoreBarCaption->render();
+			if (currentScore > 0)
+			{
+				amount = height * (currentScore / highestScore);
+				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
+
+				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
+				myHighScoreBarCaption->screenX = startX;
+				myHighScoreBarCaption->screenY = startY + height;
+				myHighScoreBarCaption->update();
+				myHighScoreBarCaption->render();
+			}
 		}
 
 
@@ -3536,15 +3540,19 @@ void GameLogic::renderHighScoreMeters()
 			{
 				currentScore = currentLeaderboardEntry->fastestClearedLength;
 			}
-			
-			amount = height * (currentScore / highestScore);
-			GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
 
-			if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard", 10, true, BobColor::white, BobColor::clear);
-			leaderboardBarCaption->screenX = startX;
-			leaderboardBarCaption->screenY = startY + height;
-			leaderboardBarCaption->update();
-			leaderboardBarCaption->render();
+			if (currentScore > 0)
+			{
+
+				amount = height * (currentScore / highestScore);
+				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
+
+				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard", 10, true, BobColor::white, BobColor::clear);
+				leaderboardBarCaption->screenX = startX;
+				leaderboardBarCaption->screenY = startY + height;
+				leaderboardBarCaption->update();
+				leaderboardBarCaption->render();
+			}
 		}
 
 
