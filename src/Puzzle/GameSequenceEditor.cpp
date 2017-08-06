@@ -896,6 +896,20 @@ void GameSequenceEditorControl::onUploadButton(Base* control)
 	onSaveButton(control);
 
 	if (currentGameSequence->importExport_gameUUIDs.size() == 0)return;
+	if (currentGameSequence->importExport_gameUUIDs.size() == 1)
+	{
+		WindowControl *result = new WindowControl(GetCanvas());
+		result->SetTitle("Result");
+		result->SetSize(300, 60);
+		result->MakeModal(true);
+		result->SetPos(GLUtils::getViewportWidth() / 2 - 150, GLUtils::getViewportHeight() / 2 - 30);
+		result->SetDeleteOnClose(true);
+
+		Label* label = new Label(result);
+		label->SetText("You cannot upload sequences with only one game type.");
+		label->Dock(Pos::Fill);
+		return;
+	}
 
 	GameSequence g;
 	g = *currentGameSequence;
