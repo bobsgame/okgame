@@ -3467,6 +3467,8 @@ void GameLogic::renderHighScoreMeters()
 			currentScore = totalTicksPassed;
 		}
 
+		if (highestScore == 0)return;
+
 		int amount = 0;
 		amount = height * (currentScore / highestScore);
 		GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);

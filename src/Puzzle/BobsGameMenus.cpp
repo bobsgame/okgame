@@ -4757,7 +4757,7 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 
 			if (objectiveString == "Play To Credits")
 			{
-				menu->add("Fastest Cleared Length: " + getNiceTime(stats->fastestClearedLength));
+				menu->add("Fastest Cleared Time: " + getNiceTime(stats->fastestClearedLength));
 				menu->add("Most Blocks Cleared: " + to_string(stats->mostBlocksCleared));
 			}
 			else
@@ -4989,7 +4989,7 @@ string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string g
 		{
 			if (objectiveString == "Play To Credits")
 			{
-				menu->add(s + "Fastest Cleared Length: " + getNiceTime(e->fastestClearedLength));
+				menu->add(s + "Fastest Cleared Time: " + getNiceTime(e->fastestClearedLength));
 			}
 			else
 			{
