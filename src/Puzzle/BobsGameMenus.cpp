@@ -1751,6 +1751,7 @@ void BobsGame::settingsMenuInit(BobMenu* m)
 	m->add("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%", "Global Hue Shift");
 	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
 	m->add("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"), "Game Stats");
+	m->add("Show High Score Bar In Single Player: " + string(Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer ? "On" : "Off"), "Score Bars");
 
 	m->add("Defaults");
 }
@@ -1773,6 +1774,23 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 			getPlayer1Game()->deleteInfoCaptions();
 
 			m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"));
+		}
+	}
+
+	if (m->isSelectedID("Score Bars"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer = !Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer;
+
+			getPlayer1Game()->deleteScoreBarCaptions();
+
+			m->getMenuItemByID("Score Bars")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer ? "On" : "Off"));
 		}
 	}
 
@@ -3641,7 +3659,24 @@ void BobsGame::gameSetupMenuUpdate()
 		leaderBoardMenu->setAllCaptionsToFullAlpha();
 	}
 
-
+	if(currentRoom->endlessMode)
+	{
+		statsMenu_totalTimePlayed = false;
+		statsMenu_totalBlocksCleared = false;
+		statsMenu_planeswalkerPoints = false;
+		statsMenu_eloScore = false;
+		statsMenu_timeLasted = false;
+		statsMenu_blocksCleared = true;
+	}
+	else
+	{
+		statsMenu_totalTimePlayed = false;
+		statsMenu_totalBlocksCleared = false;
+		statsMenu_planeswalkerPoints = false;
+		statsMenu_eloScore = false;
+		statsMenu_timeLasted = true;
+		statsMenu_blocksCleared = false;
+	}
 
 
 
@@ -3864,54 +3899,54 @@ void BobsGame::gameSetupMenuUpdate()
 		}
 
 
-		if (confirm || clicked)
-		{
-
-			if (
-				leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id, clicked, mx, my)
-				)
-			{
-
-				updateStatsMenu = true;
-
-				if (statsMenu_totalTimePlayed)
-				{
-					statsMenu_totalTimePlayed = false; 
-					statsMenu_totalBlocksCleared = true;
-				}
-				else
-				if (statsMenu_totalBlocksCleared)
-				{
-					statsMenu_totalBlocksCleared = false;
-					statsMenu_planeswalkerPoints = true;
-				}
-				else
-				if (statsMenu_planeswalkerPoints)
-				{
-					statsMenu_planeswalkerPoints = false;
-					statsMenu_eloScore = true;
-				}
-				else
-				if (statsMenu_eloScore)
-				{
-					statsMenu_eloScore = false;
-					statsMenu_timeLasted = true;
-				}
-				else
-				if (statsMenu_timeLasted)
-				{
-					statsMenu_timeLasted = false;
-					statsMenu_blocksCleared = true;
-				}
-				else
-				if (statsMenu_blocksCleared)
-				{
-					statsMenu_blocksCleared = false;
-					statsMenu_totalTimePlayed = true;
-				}
-
-			}
-		}
+//		if (confirm || clicked)
+//		{
+//
+//			if (
+//				leaderBoardMenu->isSelectedID(leaderBoardMenu->getSelectedMenuItem()->id, clicked, mx, my)
+//				)
+//			{
+//
+//				updateStatsMenu = true;
+//
+//				if (statsMenu_totalTimePlayed)
+//				{
+//					statsMenu_totalTimePlayed = false; 
+//					statsMenu_totalBlocksCleared = true;
+//				}
+//				else
+//				if (statsMenu_totalBlocksCleared)
+//				{
+//					statsMenu_totalBlocksCleared = false;
+//					statsMenu_planeswalkerPoints = true;
+//				}
+//				else
+//				if (statsMenu_planeswalkerPoints)
+//				{
+//					statsMenu_planeswalkerPoints = false;
+//					statsMenu_eloScore = true;
+//				}
+//				else
+//				if (statsMenu_eloScore)
+//				{
+//					statsMenu_eloScore = false;
+//					statsMenu_timeLasted = true;
+//				}
+//				else
+//				if (statsMenu_timeLasted)
+//				{
+//					statsMenu_timeLasted = false;
+//					statsMenu_blocksCleared = true;
+//				}
+//				else
+//				if (statsMenu_blocksCleared)
+//				{
+//					statsMenu_blocksCleared = false;
+//					statsMenu_totalTimePlayed = true;
+//				}
+//
+//			}
+//		}
 
 		if (getControlsManager()->miniGame_CANCEL_Pressed())
 		{
@@ -4646,6 +4681,30 @@ string getDateFromEpochTime(long long ms)
 	return s;
 }
 
+//=========================================================================================================================
+//gameTypeOrSequenceString or difficulty string can be "OVERALL"
+BobsGameUserStatsForSpecificGameAndDifficulty* BobsGame::getUserStatsForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString)
+{//=========================================================================================================================
+	BobsGameUserStatsForSpecificGameAndDifficulty *stats = nullptr;
+	for (int i = 0; i < userStatsPerGameAndDifficulty.size(); i++)
+	{
+		BobsGameUserStatsForSpecificGameAndDifficulty *s = userStatsPerGameAndDifficulty.get(i);
+		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
+		{
+			if (s->difficultyName == difficultyString)
+			{
+				if (s->objectiveString == objectiveString)
+				{
+					stats = s;
+					break;
+				}
+			}
+		}
+	}
+	return stats;
+
+}
+
 
 //=========================================================================================================================
 //gameTypeOrSequenceString or difficulty string can be "OVERALL"
@@ -4653,64 +4712,67 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 {//=========================================================================================================================
 
 
+	BobsGameUserStatsForSpecificGameAndDifficulty *stats = getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
 
+	bool deleteStats = false;
+	if (stats == nullptr)
+	{
+		stats = new BobsGameUserStatsForSpecificGameAndDifficulty();
+		deleteStats = true;
+	}
 
-		BobsGameUserStatsForSpecificGameAndDifficulty *stats = nullptr;
-		for (int i = 0; i < userStatsPerGameAndDifficulty.size(); i++)
-		{
-			BobsGameUserStatsForSpecificGameAndDifficulty *s = userStatsPerGameAndDifficulty.get(i);
-			if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
-			{
-				if (s->difficultyName == difficultyString)
-				{
-					if (s->objectiveString == objectiveString)
-					{
-						stats = s;
-						break;
-					}
-				}
-			}
-		}
-		bool deleteStats = false;
-		if (stats == nullptr)
-		{
-			stats = new BobsGameUserStatsForSpecificGameAndDifficulty();
-			deleteStats = true;
-		}
+	string gameName = "";
+	if (gameTypeOrSequenceUUID == "OVERALL")
+	{
+		gameName = "Game: OVERALL";
+	}
+	else
+	{
+		GameType* gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
+		GameSequence *gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
+		if (gt != nullptr)gameName = "Game Type: " + gt->name;
+		if (gs != nullptr)gameName = "Game Sequence: " + gs->name;
+	}
 
-		string gameName = "";
-		if (gameTypeOrSequenceUUID == "OVERALL")
-		{
-			gameName = "Game: OVERALL";
-		}
-		else
-		{
-			GameType* gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
-			GameSequence *gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
-			if (gt != nullptr)gameName = "Game Type: " + gt->name;
-			if (gs != nullptr)gameName = "Game Sequence: " + gs->name;
-		}
+	string difficultyName = "";
+	if (difficultyString == "OVERALL")
+	{
+		difficultyName = "Difficulty: OVERALL";
+	}
+	else
+	{
+		difficultyName = "Difficulty: " + difficultyString;
+	}
 
-		string difficultyName = "";
-		if (difficultyString == "OVERALL")
+	if (getServerConnection()->getConnectedToServer_S())
+	{
+		if (getServerConnection()->getAuthorizedOnServer_S())
 		{
-			difficultyName = "Difficulty: OVERALL";
-		}
-		else
-		{
-			difficultyName = "Difficulty: " + difficultyString;
-		}
-
-		if (getServerConnection()->getConnectedToServer_S())
-		{
-			if (getServerConnection()->getAuthorizedOnServer_S())
-			{
 
 			//menu->add("Your Stats");
 			menu->add(gameName);
 			menu->add(difficultyName);
 			menu->add("Objective: " + objectiveString);
 			menu->addInfo(" ");
+
+			if (objectiveString == "Play To Credits")
+			{
+				menu->add("Fastest Cleared Length: " + getNiceTime(stats->fastestClearedLength));
+				menu->add("Most Blocks Cleared: " + to_string(stats->mostBlocksCleared));
+			}
+			else
+			{
+				menu->add("Most Blocks Cleared: " + to_string(stats->mostBlocksCleared));
+				menu->add("Longest Game Length: " + getNiceTime(stats->longestGameLength));
+			}
+
+			menu->add("Average Game Length: " + getNiceTime(stats->averageGameLength));
+
+			menu->add("Biggest Combo: " + to_string(stats->biggestCombo));
+
+			menu->add("Planeswalker Score: " + to_string(stats->planesWalkerPoints));
+			menu->add("Elo Score: " + to_string(stats->eloScore));
+
 			menu->add("Total Games Played: " + to_string(stats->totalGamesPlayed));
 			menu->add("Single Player Games Played: " + to_string(stats->singlePlayerGamesPlayed));
 			menu->add("Single Player Games Completed: " + to_string(stats->singlePlayerGamesCompleted));
@@ -4719,20 +4781,18 @@ void BobsGame::populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, 
 			menu->add("Tournament Games Played: " + to_string(stats->tournamentGamesPlayed));
 			menu->add("Tournament Games Won: " + to_string(stats->tournamentGamesWon));
 			menu->add("Tournament Games Lost: " + to_string(stats->tournamentGamesLost));
-			menu->add("Longest Game Length: " + getNiceTime(stats->longestGameLength));
-			menu->add("Average Game Length: " + getNiceTime(stats->averageGameLength));
+
 			menu->add("Total Time Played: " + getNiceTime(stats->totalTimePlayed));
 			menu->add("First Time Played: " + getDateFromEpochTime(stats->firstTimePlayed));
 			menu->add("Last Time Played: " + getDateFromEpochTime(stats->lastTimePlayed));
-			menu->add("Most Blocks Cleared: " + to_string(stats->mostBlocksCleared));
+			
 			menu->add("Total Blocks Made: " + to_string(stats->totalBlocksMade));
 			menu->add("Total Blocks Cleared: " + to_string(stats->totalBlocksCleared));
 			menu->add("Total Pieces Made: " + to_string(stats->totalPiecesMade));
 			menu->add("Total Pieces Placed: " + to_string(stats->totalPiecesPlaced));
 			menu->add("Total Combos Made: " + to_string(stats->totalCombosMade));
-			menu->add("Biggest Combo: " + to_string(stats->biggestCombo));
-			menu->add("Elo Score: " + to_string(stats->eloScore));
-			menu->add("Planeswalker Score: " + to_string(stats->planesWalkerPoints));
+			
+
 
 			if (deleteStats)delete stats;
 		}
@@ -4761,15 +4821,15 @@ static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByTimeLasted;
 static ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> topGamesByBlocksCleared;
 */
 
+
 //=========================================================================================================================
-string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
+BobsGameLeaderBoardAndHighScoreBoard* BobsGame::getLeaderboardOrHighScoreBoardForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 	bool totalTimePlayed,
 	bool totalBlocksCleared,
 	bool planeswalkerPoints,
 	bool eloScore,
 	bool timeLasted,
-	bool blocksCleared
-)
+	bool blocksCleared)
 {//=========================================================================================================================
 
 	BobsGameLeaderBoardAndHighScoreBoard *stats = nullptr;
@@ -4798,6 +4858,30 @@ string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string g
 			}
 		}
 	}
+
+	return stats;
+}
+
+//=========================================================================================================================
+string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
+	bool totalTimePlayed,
+	bool totalBlocksCleared,
+	bool planeswalkerPoints,
+	bool eloScore,
+	bool timeLasted,
+	bool blocksCleared
+)
+{//=========================================================================================================================
+
+	BobsGameLeaderBoardAndHighScoreBoard *stats = getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
+		totalTimePlayed,
+		totalBlocksCleared,
+		planeswalkerPoints,
+		eloScore,
+		timeLasted,
+		blocksCleared);
+
+
 	bool deleteStats = false;
 	if (stats == nullptr)
 	{
@@ -4903,7 +4987,14 @@ string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string g
 
 		if (timeLasted)
 		{
-			menu->add(s + "Longest Game Length: " + getNiceTime(e->longestGameLength));
+			if (objectiveString == "Play To Credits")
+			{
+				menu->add(s + "Fastest Cleared Length: " + getNiceTime(e->fastestClearedLength));
+			}
+			else
+			{
+				menu->add(s + "Longest Game Length: " + getNiceTime(e->longestGameLength));
+			}
 		}
 
 		if (blocksCleared)

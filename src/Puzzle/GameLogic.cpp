@@ -3331,6 +3331,243 @@ void GameLogic::renderForeground()
 	
 }
 
+
+
+
+//=========================================================================================================================
+void GameLogic::renderHighScoreMeters()
+{//=========================================================================================================================
+	
+	//show your current progress against your highest score if exists
+
+	if (triedToGetHighScore == false)
+	{
+		triedToGetHighScore = true;
+
+		string gameTypeOrSequenceUUID = "";
+		if (currentGameSequence->gameTypes.size() == 1)
+		{
+			gameTypeOrSequenceUUID = currentGameSequence->gameTypes.get(0)->uuid;
+		}
+		else
+		{
+			gameTypeOrSequenceUUID = currentGameSequence->uuid;
+		}
+
+		string difficultyString = currentGameSequence->currentDifficultyName;
+
+		string objectiveString = "Play To Credits";
+		if (getRoom()->endlessMode)objectiveString = "Endless Mode";
+
+		myHighScore = getBobsGame()->getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
+
+		BobsGameLeaderBoardAndHighScoreBoard *currentLeaderboard = nullptr;
+		if (getRoom()->endlessMode)
+		{
+			currentLeaderboard = getBobsGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
+				false,
+				false,
+				false,
+				false,
+				false,
+				true);//blocks cleared
+		}
+		else
+		{
+			currentLeaderboard = getBobsGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
+				false,
+				false,
+				false,
+				false,
+				true, //time lasted
+				false);
+		}
+		if(currentLeaderboard!=nullptr)
+		{
+			currentLeaderboardEntry = currentLeaderboard->entries.get(0);
+
+			if (currentLeaderboardEntry->userName == "")
+			{
+				currentLeaderboardEntry = nullptr;
+			}
+		}
+
+	}
+
+	if (myHighScore != nullptr || currentLeaderboardEntry != nullptr)
+	{
+
+
+		//draw my current progress bar
+		long long highestScore = 0;
+
+		if(myHighScore!=nullptr)
+		{
+			//myHighScore->biggestCombo;
+		
+
+			if(getRoom()->endlessMode)
+			{
+				if (myHighScore->mostBlocksCleared > highestScore)highestScore = myHighScore->mostBlocksCleared;
+				//myHighScore->longestGameLength;
+			}
+			else
+			{
+				if (myHighScore->fastestClearedLength > highestScore)highestScore = myHighScore->fastestClearedLength;
+			}
+		}
+
+		//show your current progress against leaderboards if exists
+
+		if(currentLeaderboardEntry != nullptr)
+		{
+
+			currentLeaderboardEntry->userName;
+
+			//e->biggestCombo;
+			
+			if (getRoom()->endlessMode)
+			{
+				if (currentLeaderboardEntry->mostBlocksClearedInOneGame > highestScore)highestScore = currentLeaderboardEntry->mostBlocksClearedInOneGame;
+				//currentLeaderboardEntry->longestGameLength;
+			}
+			else
+			{
+				if (currentLeaderboardEntry->fastestClearedLength > highestScore)highestScore = currentLeaderboardEntry->fastestClearedLength;
+			}
+			
+		}
+
+		//now we have a scale to measure against
+
+
+		int startX = 0;
+		for (int i = 0; i < infoCaptions->size(); i++)
+		{
+			Caption* c = infoCaptions->get(i);
+
+			if (c != nullptr)
+			{
+				int x = c->screenX + c->getWidth();
+				if (x > startX)startX = x;
+			}
+		}
+		startX += 30;
+		int startY = GLUtils::getViewportHeight() / 6 * 1;
+		int height = GLUtils::getViewportHeight() / 6 * 4;
+
+		//draw my current progress
+		long long currentScore = 0;
+		if(getRoom()->endlessMode)
+		{
+			currentScore = blocksClearedTotal;
+		}
+		else
+		{
+			currentScore = totalTicksPassed;
+		}
+
+		int amount = 0;
+		amount = height * (currentScore / highestScore);
+		GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
+
+		if (myScoreBarCaption == nullptr)myScoreBarCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current Game", 10, true, BobColor::white, BobColor::clear);
+		myScoreBarCaption->screenX = startX;
+		myScoreBarCaption->screenY = startY + height;
+		myScoreBarCaption->update();
+		myScoreBarCaption->render();
+
+
+		string typeText = "Time Lasted";
+		if (getRoom()->endlessMode)
+		{
+			typeText = "Blocks Cleared";
+		}
+		else
+		{
+			typeText = "Time Lasted";
+		}
+		if (scoreBarTypeCaption == nullptr)scoreBarTypeCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, typeText, 10, true, BobColor::white, BobColor::clear);
+		scoreBarTypeCaption->screenX = startX;
+		scoreBarTypeCaption->screenY = startY + height + 20;
+		scoreBarTypeCaption->update();
+		scoreBarTypeCaption->render();
+
+		//then draw my high score if exists
+		if (myHighScore != nullptr)
+		{
+			startX += 10;
+
+			if (getRoom()->endlessMode)
+			{
+				currentScore = myHighScore->mostBlocksCleared;
+			}
+			else
+			{
+				currentScore = myHighScore->fastestClearedLength;
+			}
+			amount = height * (currentScore / highestScore);
+			GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
+
+			if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
+			myHighScoreBarCaption->screenX = startX;
+			myHighScoreBarCaption->screenY = startY + height;
+			myHighScoreBarCaption->update();
+			myHighScoreBarCaption->render();
+		}
+
+
+		//then draw leaderboard score if exists
+
+		if (currentLeaderboardEntry != nullptr)
+		{
+
+			currentLeaderboardEntry->userName;
+
+			startX += 10;
+
+			if (getRoom()->endlessMode)
+			{
+				currentScore = currentLeaderboardEntry->mostBlocksClearedInOneGame;
+			}
+			else
+			{
+				currentScore = currentLeaderboardEntry->fastestClearedLength;
+			}
+			
+			amount = height * (currentScore / highestScore);
+			GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
+
+			if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard", 10, true, BobColor::white, BobColor::clear);
+			leaderboardBarCaption->screenX = startX;
+			leaderboardBarCaption->screenY = startY + height;
+			leaderboardBarCaption->update();
+			leaderboardBarCaption->render();
+		}
+
+
+
+
+	}
+	
+}
+
+//=========================================================================================================================
+void GameLogic::showResultsRanking()
+{//=========================================================================================================================
+
+	//show your overall scores
+
+
+	//show your ranking in various leaderboards
+
+
+	//if ranked on leaderboard or high score board show the board and show your name highlighted, maybe do animation like hackers?
+
+
+
+}
+
 //=========================================================================================================================
 void GameLogic::doExtraStageEffects()
 {//=========================================================================================================================
@@ -4264,7 +4501,37 @@ void GameLogic::deleteAllCaptions()
 			c->setToBeDeletedImmediately();
 		}
 	}
+
+	deleteScoreBarCaptions();
+
+
 }
+
+//=========================================================================================================================
+void GameLogic::deleteScoreBarCaptions()
+{//=========================================================================================================================
+	if (scoreBarTypeCaption != nullptr)
+	{
+		delete scoreBarTypeCaption;
+		scoreBarTypeCaption = nullptr;
+	}
+	if (myScoreBarCaption != nullptr)
+	{
+		delete myScoreBarCaption;
+		myScoreBarCaption = nullptr;
+	}
+	if (myHighScoreBarCaption != nullptr)
+	{
+		delete myHighScoreBarCaption;
+		myHighScoreBarCaption = nullptr;
+	}
+	if (leaderboardBarCaption != nullptr)
+	{
+		delete leaderboardBarCaption;
+		leaderboardBarCaption = nullptr;
+	}
+}
+
 
 //=========================================================================================================================
 void GameLogic::deleteInfoCaptions()

@@ -24,6 +24,7 @@ public:
 
 	float bobsGame_screenFlashOnLevelUpAlpha = 0.3f;
 	bool bobsGame_showDetailedGameInfoCaptions = true;
+	bool bobsGame_showScoreBarsInSinglePlayer = true;
 
 	bool useAnalogSticks = true;
 
@@ -54,6 +55,11 @@ public:
 			ar & BOOST_SERIALIZATION_NVP(bobsGame_showDetailedGameInfoCaptions);
 		}
 
+		if(version>4)
+		{
+			ar & BOOST_SERIALIZATION_NVP(bobsGame_showScoreBarsInSinglePlayer);
+		}
+
 		if(version>3)
 		{
 			ar & BOOST_SERIALIZATION_NVP(useAnalogSticks);
@@ -61,5 +67,5 @@ public:
 	}
 
 };
-BOOST_CLASS_VERSION(GlobalSettings, 4)
+BOOST_CLASS_VERSION(GlobalSettings, 5)
 BOOST_CLASS_TRACKING(GlobalSettings, boost::serialization::track_never)

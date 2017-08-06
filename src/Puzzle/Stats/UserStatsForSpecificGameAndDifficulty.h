@@ -38,6 +38,7 @@ public:
 	long long totalTimePlayed = 0;
 	long long longestGameLength = 0;
 	long long averageGameLength = 0;
+	long long fastestClearedLength = 0;
 	double eloScore = 0;
 	long long firstTimePlayed = 0;
 	long long lastTimePlayed = 0;
@@ -53,6 +54,7 @@ public:
 
 	int mostBlocksCleared = 0;
 	string longestTimeStatsUUID = "";
+	string fastestTimeClearedStatsUUID = "";
 	string mostBlocksClearedStatsUUID = "";
 
 
@@ -94,6 +96,7 @@ public:
 		gameSaveString += ",totalTimePlayed:" + to_string(totalTimePlayed);
 		gameSaveString += ",longestGameLength:" + to_string(longestGameLength);
 		gameSaveString += ",averageGameLength:" + to_string(averageGameLength);
+		gameSaveString += ",fastestClearedLength:" + to_string(fastestClearedLength);
 		gameSaveString += ",eloScore:" + to_string(eloScore);
 		gameSaveString += ",firstTimePlayed:" + to_string(firstTimePlayed);
 		gameSaveString += ",lastTimePlayed:" + to_string(lastTimePlayed);
@@ -106,6 +109,7 @@ public:
 		gameSaveString += ",biggestCombo:" + to_string(biggestCombo);
 		gameSaveString += ",mostBlocksCleared:" + to_string(mostBlocksCleared);
 		gameSaveString += ",longestTimeStatsUUID:" + longestTimeStatsUUID;
+		gameSaveString += ",fastestTimeClearedStatsUUID:" + fastestTimeClearedStatsUUID;
 		gameSaveString += ",mostBlocksClearedStatsUUID:" + mostBlocksClearedStatsUUID;
 
 
@@ -257,6 +261,12 @@ public:
 
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
+		if (t.length()>0)try { fastestClearedLength = stoll(t); }
+		catch (exception) {  return; }
+		s = s.substr(s.find(',') + 1);
+
+		s = s.substr(s.find(':') + 1);
+		t = s.substr(0, s.find(','));
 		if (t.length()>0)try { eloScore = stod(t); }
 		catch (exception) {  return; }
 		s = s.substr(s.find(',') + 1);
@@ -324,6 +334,11 @@ public:
 		s = s.substr(s.find(':') + 1);
 		t = s.substr(0, s.find(','));
 		if (t.length()>0)longestTimeStatsUUID = t;
+		s = s.substr(s.find(',') + 1);
+
+		s = s.substr(s.find(':') + 1);
+		t = s.substr(0, s.find(','));
+		if (t.length()>0)fastestTimeClearedStatsUUID = t;
 		s = s.substr(s.find(',') + 1);
 
 		s = s.substr(s.find(':') + 1);

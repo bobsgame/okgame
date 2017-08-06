@@ -332,11 +332,11 @@ public:
 	string statsMenu_gameSequenceOrTypeName = "OVERALL";
 	string statsMenu_objectiveName = "Play To Credits";
 	bool updateStatsMenu = true;
-	bool statsMenu_totalTimePlayed = true;
+	bool statsMenu_totalTimePlayed = false;
 	bool statsMenu_totalBlocksCleared = false;
 	bool statsMenu_planeswalkerPoints = false;
 	bool statsMenu_eloScore = false;
-	bool statsMenu_timeLasted = false;
+	bool statsMenu_timeLasted = true;
 	bool statsMenu_blocksCleared = false;
 
 
@@ -393,7 +393,21 @@ public:
 	typedef pair<GameType*, StringColorPair> GameTypeStringColorPairPair;
 	typedef pair<GameSequence*, StringColorPair> GameSequenceStringColorPairPair;
 
+	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
+	BobsGameUserStatsForSpecificGameAndDifficulty* getUserStatsForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);
+	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
 	void populateUserStatsForSpecificGameAndDifficultyMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);
+
+	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
+	BobsGameLeaderBoardAndHighScoreBoard* getLeaderboardOrHighScoreBoardForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
+		bool totalTimePlayed,
+		bool totalBlocksCleared,
+		bool planeswalkerPoints,
+		bool eloScore,
+		bool timeLasted,
+		bool blocksCleared);
+
+	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
 	string populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 		bool totalTimePlayed,
 		bool totalBlocksCleared,

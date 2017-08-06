@@ -472,6 +472,11 @@ void BobsGame::renderGameIntoFBO(GameLogic* g, bool useColorFilter)
 	}
 
 	g->renderForeground();
+	
+	if(players.size()==1 && Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer)
+	{
+		g->renderHighScoreMeters();
+	}
 
 	if (useColorFilter)
 	{

@@ -80,6 +80,7 @@ public:
 		int singlePlayerHighestLevelReached = 0;
 		long long totalTimePlayed = 0;
 		long long longestGameLength = 0;
+		long long fastestClearedLength = 0;
 		long long firstTimePlayed = 0;
 		long long lastTimePlayed = 0;
 		long long timeRecordSet = 0;
@@ -1067,6 +1068,7 @@ public:
 			gameSavestring += ",singlePlayerHighestLevelReached" + diff + ":" + to_string(s->singlePlayerHighestLevelReached);
 			gameSavestring += ",totalTimePlayed" + diff + ":" + to_string(s->totalTimePlayed);
 			gameSavestring += ",longestGameLength" + diff + ":" + to_string(s->longestGameLength);
+			gameSavestring += ",fastestClearedLength" + diff + ":" + to_string(s->fastestClearedLength);
 			gameSavestring += ",firstTimePlayed" + diff + ":" + to_string(s->firstTimePlayed);
 			gameSavestring += ",lastTimePlayed"+diff+":"+to_string(s->lastTimePlayed);
 			gameSavestring += ",timeRecordSet" + diff + ":" + to_string(s->timeRecordSet);
@@ -1219,6 +1221,12 @@ public:
 			s = s.substr(s.find(':') + 1);
 			t = s.substr(0, s.find(','));
 			if (t.length()>0)try { stats->longestGameLength = stoll(t); }
+			catch (exception) {  log.error("Could not parse stats"); return; }
+			s = s.substr(s.find(',') + 1);
+
+			s = s.substr(s.find(':') + 1);
+			t = s.substr(0, s.find(','));
+			if (t.length()>0)try { stats->fastestClearedLength = stoll(t); }
 			catch (exception) {  log.error("Could not parse stats"); return; }
 			s = s.substr(s.find(',') + 1);
 

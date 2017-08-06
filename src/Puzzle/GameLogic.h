@@ -9,6 +9,9 @@
 #include <mutex>
 #include <queue>
 #include "GameSequence.h"
+#include "Stats/UserStatsForSpecificGameAndDifficulty.h"
+#include "Stats/LeaderBoardAndHighScoreBoardEntry.h"
+
 class PuzzlePlayer;
 class Logger;
 class Room;
@@ -468,6 +471,8 @@ public:
 	void renderBackground();
 	void renderBlocks();
 	void renderForeground();
+	void renderHighScoreMeters();
+	void showResultsRanking();
 
 private:
 	void doExtraStageEffects();
@@ -579,6 +584,14 @@ public:
 	Caption* loseCaption = nullptr;
 	Caption* garbageWaitCaption = nullptr;
 
+	BobsGameUserStatsForSpecificGameAndDifficulty *myHighScore = nullptr;
+	BobsGameLeaderBoardAndHighScoreBoard::BobsGameLeaderBoardAndHighScoreBoardEntry *currentLeaderboardEntry = nullptr;
+	bool triedToGetHighScore = false;
+	Caption* scoreBarTypeCaption = nullptr;
+	Caption* myScoreBarCaption = nullptr;
+	Caption* myHighScoreBarCaption = nullptr;
+	Caption* leaderboardBarCaption = nullptr;
+
 	//lines cleared
 	//blocks cleared
 	//dobules
@@ -620,6 +633,7 @@ private:
 public:
 	void deleteAllCaptions();
 
+	void deleteScoreBarCaptions();
 	void deleteInfoCaptions();
 	void updateInfoCaptionsXY();
 	void updateCaptions();
