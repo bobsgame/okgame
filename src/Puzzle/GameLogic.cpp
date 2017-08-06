@@ -3473,7 +3473,7 @@ void GameLogic::renderHighScoreMeters()
 		amount = height * (currentScore / highestScore);
 		GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
 
-		if (myScoreBarCaption == nullptr)myScoreBarCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current Game", 10, true, BobColor::white, BobColor::clear);
+		if (myScoreBarCaption == nullptr)myScoreBarCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, BobColor::white, BobColor::clear);
 		myScoreBarCaption->screenX = startX;
 		myScoreBarCaption->screenY = startY + height;
 		myScoreBarCaption->update();
@@ -3498,7 +3498,7 @@ void GameLogic::renderHighScoreMeters()
 		//then draw my high score if exists
 		if (myHighScore != nullptr)
 		{
-			startX += 10;
+			
 
 			if (getRoom()->endlessMode)
 			{
@@ -3511,10 +3511,12 @@ void GameLogic::renderHighScoreMeters()
 
 			if (currentScore > 0)
 			{
+				startX += 10;
+
 				amount = height * (currentScore / highestScore);
 				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
 
-				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
+				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Best", 10, true, BobColor::white, BobColor::clear);
 				myHighScoreBarCaption->screenX = startX;
 				myHighScoreBarCaption->screenY = startY + height;
 				myHighScoreBarCaption->update();
@@ -3528,9 +3530,7 @@ void GameLogic::renderHighScoreMeters()
 		if (currentLeaderboardEntry != nullptr)
 		{
 
-			currentLeaderboardEntry->userName;
-
-			startX += 10;
+			//currentLeaderboardEntry->userName;
 
 			if (getRoom()->endlessMode)
 			{
@@ -3543,6 +3543,7 @@ void GameLogic::renderHighScoreMeters()
 
 			if (currentScore > 0)
 			{
+				startX += 10;
 
 				amount = height * (currentScore / highestScore);
 				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
