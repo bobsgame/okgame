@@ -115,10 +115,12 @@ void Main::openURL(string url)
 {//==========================================================================================================================
 
 #ifdef __WINDOWS__
+
 	LPCWSTR o = L"open";
 	LPCWSTR u = convertCharArrayToLPCWSTR(url.c_str());
 
 	ShellExecute(NULL, o, u, NULL, NULL, SW_SHOWNORMAL);
+
 #endif
 #ifdef __LINUX__
 	string bin = "/usr/bin/firefox";
@@ -521,6 +523,10 @@ void Main::mainInit()
 
 			stateManager->pushState(logoScreenState);
 		}
+	}
+	else
+	{
+		stateManager->pushState(logoScreenState);
 	}
 
 	//GLUtils::e();

@@ -14,7 +14,7 @@
     <ProjectGuid>{AF7EAEC1-0865-4133-9A48-C8097F619525}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>bobsgame</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
