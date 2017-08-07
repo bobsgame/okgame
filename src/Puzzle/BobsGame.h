@@ -340,8 +340,8 @@ public:
 	bool statsMenu_blocksCleared = false;
 
 
-	void leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float minIncrement, float maxIncrement);
-	void leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int minIncrement, int maxIncrement);
+	void leftRightMenuAdjustFloat(float& variable, float min, float max, float minIncrement, float maxIncrement);
+	void leftRightMenuAdjustInt(int& variable, int min, int max, int minIncrement, int maxIncrement);
 
 	void saveRoomConfigMenuUpdate();
 	BobMenu *saveRoomConfigMenu = nullptr;

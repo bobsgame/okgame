@@ -2917,75 +2917,93 @@ void BobsGame::sendGarbageToMenuUpdate()
 	}
 }
 
+float myMin(float a, float b)
+{
+    if(a<b)return a;
+    return b;
+}
 float myMax(float a, float b)
 {
     if(a>b)return a;
     return b;
 }
 //=========================================================================================================================
-void BobsGame::leftRightMenuAdjustFloat(bool left, bool right, float& variable, float min, float max, float minIncrement, float maxIncrement)
+void BobsGame::leftRightMenuAdjustFloat(float& variable, float min, float max, float minIncrement, float maxIncrement)
 {//=========================================================================================================================
-	long long startTime = timeLastChangedSetting;
-	long long currentTime = System::currentHighResTimer();
-	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
 
-	if (ticksPassed > 200)
+	bool leftHeld = getControlsManager()->MINIGAME_LEFT_HELD;
+	bool rightHeld = getControlsManager()->MINIGAME_RIGHT_HELD;
+
+	long long currentTime = System::currentHighResTimer();
+
+	if (leftHeld || rightHeld)
+	{
+		int ticksSinceStart = (int)(System::getTicksBetweenTimes(timeStartedChangedSetting, currentTime));
+		float increment = minIncrement + (myMin((myMax(ticksSinceStart-500,0) / 1000.0f), 1.0f) * (float)(maxIncrement - minIncrement));
+
+		long long startTime = timeLastChangedSetting;
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+		if (ticksPassed > 30)
+		{
+			timeLastChangedSetting = currentTime;
+
+			if (leftHeld)
+			{
+				if (variable > min)variable -= increment;
+				if (variable < min)variable = min;
+			}
+
+			if (rightHeld)
+			{
+				if (variable < max)variable += increment;
+				if (variable > max)variable = max;
+			}
+		}
+	}
+	else
 	{
 		timeStartedChangedSetting = currentTime;
-	}
-	float timeSinceStart = float(currentTime - timeStartedChangedSetting);
-	if (timeSinceStart < 200)timeSinceStart = 0;
-	float increment = minIncrement + (myMax((timeSinceStart / 500.0f),1.0f) * (maxIncrement - minIncrement));
-
-	if (ticksPassed > 15)
-	{
-		timeLastChangedSetting = currentTime;
-
-		if (left)
-		{
-			if (variable > min)variable -= increment;
-			if (variable < min)variable = min;
-		}
-
-		if (right)
-		{
-			if (variable < max)variable += increment;
-			if (variable > max)variable = max;
-		}
 	}
 }
 
 
 //=========================================================================================================================
-void BobsGame::leftRightMenuAdjustInt(bool left, bool right, int& variable, int min, int max, int minIncrement, int maxIncrement)
+void BobsGame::leftRightMenuAdjustInt(int& variable, int min, int max, int minIncrement, int maxIncrement)
 {//=========================================================================================================================
-	long long startTime = timeLastChangedSetting;
-	long long currentTime = System::currentHighResTimer();
-	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
 
-	if (ticksPassed > 200)
+	bool leftHeld = getControlsManager()->MINIGAME_LEFT_HELD;
+	bool rightHeld = getControlsManager()->MINIGAME_RIGHT_HELD;
+
+	long long currentTime = System::currentHighResTimer();
+
+	if (leftHeld || rightHeld)
+	{
+		int ticksSinceStart = (int)(System::getTicksBetweenTimes(timeStartedChangedSetting, currentTime));
+		int increment = minIncrement + (myMin((int)(myMax(ticksSinceStart - 500, 0) / 1000.0f), 1.0f) * (float)(maxIncrement - minIncrement));
+		
+
+		long long startTime = timeLastChangedSetting;
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+		if (ticksPassed > 30)
+		{
+			timeLastChangedSetting = currentTime;
+
+			if (leftHeld)
+			{
+				if (variable > min)variable -= increment;
+				if (variable < min)variable = min;
+			}
+
+			if (rightHeld)
+			{
+				if (variable < max)variable += increment;
+				if (variable > max)variable = max;
+			}
+		}
+	}
+	else
 	{
 		timeStartedChangedSetting = currentTime;
-	}
-	float timeSinceStart = float(currentTime - timeStartedChangedSetting);
-	if (timeSinceStart < 200)timeSinceStart = 0;
-	int increment = minIncrement + (myMax((timeSinceStart / 500.0f), 1.0f) * (maxIncrement - minIncrement));
-
-	if (ticksPassed > 15)
-	{
-		timeLastChangedSetting = currentTime;
-
-		if (left)
-		{
-			if (variable > min)variable -= increment;
-			if (variable < min)variable = min;
-		}
-
-		if (right)
-		{
-			if (variable < max)variable += increment;
-			if (variable > max)variable = max;
-		}
 	}
 }
 
@@ -3135,92 +3153,88 @@ void BobsGame::roomOptionsMenuUpdate()
 		}
 
 
-		bool leftHeld = getControlsManager()->MINIGAME_LEFT_HELD;
-		bool rightHeld = getControlsManager()->MINIGAME_RIGHT_HELD;
 
-		if (leftHeld || rightHeld)
+
+		if (roomOptionsMenu->isSelectedID("Game Speed Start"))
 		{
-
-			if (roomOptionsMenu->isSelectedID("Game Speed Start"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->gameSpeedStart, 0.01f, 1.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Game Speed Change Rate"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->gameSpeedChangeRate, -1.0f, 1.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Game Speed Maximum"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->gameSpeedMaximum, 0.01f, 5.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Levelup Multiplier"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->levelUpMultiplier, 0.01f, 10.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Levelup Compound Multiplier"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->levelUpCompoundMultiplier, -1.0f, 1.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Garbage Multiplier"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->multiplayer_GarbageMultiplier, 0.01f, 2.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Garbage Limit"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->multiplayer_GarbageLimit, 0, 50, 1, 2);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Floor Movement Limit"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->floorSpinLimit, -1, 128, 1, 2);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Total Lock Delay Limit"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->totalYLockDelayLimit, -1, 10000, 1, 200);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Lock Delay Decrease Rate"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->lockDelayDecreaseRate, 0.0f, 1.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Lock Delay Minimum"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->lockDelayMinimum, 0, 10000, 1, 200);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Stack Wait Limit"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->stackWaitLimit, -1, 10000, 1, 200);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Spawn Delay Limit"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->spawnDelayLimit, -1, 10000, 1, 200);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Spawn Delay Decrease Rate"))
-			{
-				leftRightMenuAdjustFloat(leftHeld, rightHeld, currentRoom->spawnDelayDecreaseRate, 0.0f, 1.0f, 0.01f, 0.02f);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Spawn Delay Minimum"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->spawnDelayMinimum, 0, 10000, 1, 200);
-			}
-
-			if (roomOptionsMenu->isSelectedID("Drop Delay Minimum"))
-			{
-				leftRightMenuAdjustInt(leftHeld, rightHeld, currentRoom->dropDelayMinimum, 0, 10000, 1, 200);
-			}
+			leftRightMenuAdjustFloat(currentRoom->gameSpeedStart, 0.01f, 1.0f, 0.01f, 0.03f);
 		}
+
+		if (roomOptionsMenu->isSelectedID("Game Speed Change Rate"))
+		{
+			leftRightMenuAdjustFloat(currentRoom->gameSpeedChangeRate, -1.0f, 1.0f, 0.01f, 0.03f);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Game Speed Maximum"))
+		{
+			leftRightMenuAdjustFloat(currentRoom->gameSpeedMaximum, 0.01f, 5.0f, 0.01f, 0.03f);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Levelup Multiplier"))
+		{
+			leftRightMenuAdjustFloat(currentRoom->levelUpMultiplier, 0.01f, 10.0f, 0.01f, 0.03f);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Levelup Compound Multiplier"))
+		{
+			leftRightMenuAdjustFloat(currentRoom->levelUpCompoundMultiplier, -1.0f, 1.0f, 0.01f, 0.03f);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Garbage Multiplier"))
+		{
+			leftRightMenuAdjustFloat(currentRoom->multiplayer_GarbageMultiplier, 0.01f, 2.0f, 0.01f, 0.03f);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Garbage Limit"))
+		{
+			leftRightMenuAdjustInt(currentRoom->multiplayer_GarbageLimit, 0, 50, 1, 2);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Floor Movement Limit"))
+		{
+			leftRightMenuAdjustInt(currentRoom->floorSpinLimit, -1, 128, 1, 3);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Total Lock Delay Limit"))
+		{
+			leftRightMenuAdjustInt(currentRoom->totalYLockDelayLimit, -1, 10000, 1, 300);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Lock Delay Decrease Rate"))
+		{
+			leftRightMenuAdjustFloat(currentRoom->lockDelayDecreaseRate, 0.0f, 1.0f, 0.01f, 0.03f);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Lock Delay Minimum"))
+		{
+			leftRightMenuAdjustInt(currentRoom->lockDelayMinimum, 0, 10000, 1, 300);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Stack Wait Limit"))
+		{
+			leftRightMenuAdjustInt(currentRoom->stackWaitLimit, -1, 10000, 1, 300);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Spawn Delay Limit"))
+		{
+			leftRightMenuAdjustInt(currentRoom->spawnDelayLimit, -1, 10000, 1, 300);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Spawn Delay Decrease Rate"))
+		{
+			leftRightMenuAdjustFloat(currentRoom->spawnDelayDecreaseRate, 0.0f, 1.0f, 0.01f, 0.03f);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Spawn Delay Minimum"))
+		{
+			leftRightMenuAdjustInt(currentRoom->spawnDelayMinimum, 0, 10000, 1, 300);
+		}
+
+		if (roomOptionsMenu->isSelectedID("Drop Delay Minimum"))
+		{
+			leftRightMenuAdjustInt(currentRoom->dropDelayMinimum, 0, 10000, 1, 300);
+		}
+		
 
 
 		if (roomOptionsMenu->isSelectedID("Game Speed Start"))
