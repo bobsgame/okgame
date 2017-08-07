@@ -1004,12 +1004,13 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 	rotateLeaderBoardsTime += ticksPassed;
 	updateStatsTime = currentTime;
-
-	if (updateStatsMenu || rotateLeaderBoardsTime>5000)
+		
+	if (updateStatsMenu || ticksPassed > 200 || rotateLeaderBoardsTime>5000)
 	{
 		bool rotated = false;
 
 		updateStatsMenu = false;
+		updateStatsTime = currentTime;
 
 		if(rotateLeaderBoardsTime>5000)
 		{

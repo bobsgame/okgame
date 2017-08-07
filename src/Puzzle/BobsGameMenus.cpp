@@ -2436,10 +2436,13 @@ void BobsGame::statsMenuUpdate()
 		leaderBoardMenu->subtitleCaption->setText(title);
 	}
 
-
-	if (updateStatsMenu)
+	long long currentTime = System::currentHighResTimer();
+	long long startTime = updateStatsTime;
+	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+	if (updateStatsMenu || ticksPassed > 200)
 	{
 		updateStatsMenu = false;
+		updateStatsTime = currentTime;
 
 		yourStatsMenu->clear();
 		leaderBoardMenu->clear();
@@ -2939,7 +2942,7 @@ void BobsGame::leftRightMenuAdjustFloat(float& variable, float min, float max, f
 	if (leftHeld || rightHeld)
 	{
 		int ticksSinceStart = (int)(System::getTicksBetweenTimes(timeStartedChangedSetting, currentTime));
-		float increment = minIncrement + (myMin((myMax(ticksSinceStart-500,0) / 1000.0f), 1.0f) * (float)(maxIncrement - minIncrement));
+		float increment = minIncrement + (myMin((myMax(ticksSinceStart - 200, 0) / 1000.0f), 1.0f) * (float)(maxIncrement - minIncrement));
 
 		long long startTime = timeLastChangedSetting;
 		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
@@ -2979,7 +2982,7 @@ void BobsGame::leftRightMenuAdjustInt(int& variable, int min, int max, int minIn
 	if (leftHeld || rightHeld)
 	{
 		int ticksSinceStart = (int)(System::getTicksBetweenTimes(timeStartedChangedSetting, currentTime));
-		int increment = minIncrement + (myMin((int)(myMax(ticksSinceStart - 500, 0) / 1000.0f), 1.0f) * (float)(maxIncrement - minIncrement));
+		int increment = minIncrement + (myMin((int)(myMax(ticksSinceStart - 200, 0) / 1000.0f), 1.0f) * (float)(maxIncrement - minIncrement));
 		
 
 		long long startTime = timeLastChangedSetting;
@@ -3625,6 +3628,24 @@ void BobsGame::gameSetupMenuUpdate()
 	}
 
 
+	if (currentRoom->endlessMode)
+	{
+		statsMenu_totalTimePlayed = false;
+		statsMenu_totalBlocksCleared = false;
+		statsMenu_planeswalkerPoints = false;
+		statsMenu_eloScore = false;
+		statsMenu_timeLasted = false;
+		statsMenu_blocksCleared = true;
+	}
+	else
+	{
+		statsMenu_totalTimePlayed = false;
+		statsMenu_totalBlocksCleared = false;
+		statsMenu_planeswalkerPoints = false;
+		statsMenu_eloScore = false;
+		statsMenu_timeLasted = true;
+		statsMenu_blocksCleared = false;
+	}
 
 	if (yourStatsMenu == nullptr)
 	{
@@ -3655,9 +3676,13 @@ void BobsGame::gameSetupMenuUpdate()
 	}
 
 
-	if (updateStatsMenu)
+	long long currentTime = System::currentHighResTimer();
+	long long startTime = updateStatsTime;
+	int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+	if (updateStatsMenu || ticksPassed > 200)
 	{
 		updateStatsMenu = false;
+		updateStatsTime = currentTime;
 
 		yourStatsMenu->clear();
 		leaderBoardMenu->clear();
@@ -3672,26 +3697,6 @@ void BobsGame::gameSetupMenuUpdate()
 		yourStatsMenu->setAllCaptionsToFullAlpha();
 		leaderBoardMenu->setAllCaptionsToFullAlpha();
 	}
-
-	if(currentRoom->endlessMode)
-	{
-		statsMenu_totalTimePlayed = false;
-		statsMenu_totalBlocksCleared = false;
-		statsMenu_planeswalkerPoints = false;
-		statsMenu_eloScore = false;
-		statsMenu_timeLasted = false;
-		statsMenu_blocksCleared = true;
-	}
-	else
-	{
-		statsMenu_totalTimePlayed = false;
-		statsMenu_totalBlocksCleared = false;
-		statsMenu_planeswalkerPoints = false;
-		statsMenu_eloScore = false;
-		statsMenu_timeLasted = true;
-		statsMenu_blocksCleared = false;
-	}
-
 
 
 
@@ -4029,7 +4034,7 @@ void BobsGame::gameSetupMenuRender()
 		gameSetupMenu->render(0, (getWidth()-(gameSetupMenu->lastWidth + 50 + yourStatsMenu->lastWidth + 50 + leaderBoardMenu->lastWidth)) / 2 , getHeight(), true, &startHeight,&bottomOfCaptions, true, &leftX, &rightX);
 		if (errorLabel != nullptr)
 		{
-			errorLabel->screenY = bottomOfCaptions + 24;
+			errorLabel->screenY = getHeight() - 50; //bottomOfCaptions + 24;
 			errorLabel->update();
 			errorLabel->render();
 		}
