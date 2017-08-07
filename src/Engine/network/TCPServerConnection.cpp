@@ -1609,7 +1609,7 @@ void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(
 	BobsGame::userStatsPerGameAndDifficulty.add(gameStats);
 }
 //===============================================================================================
-void addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard)
+void TCPServerConnection::addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard)
 {//===============================================================================================
 
 	for (int i = 0; i<boardArray.size(); i++)
@@ -1692,9 +1692,13 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByBlocksCleared(string 
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
+
 	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
 
 	addToLeaderboard(BobsGame::topGamesByBlocksCleared, leaderBoard);
+
+
+
 
 }
 

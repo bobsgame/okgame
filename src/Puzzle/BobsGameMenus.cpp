@@ -4967,12 +4967,6 @@ string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string g
 
 	string titleName = "";
 
-	if (totalTimePlayed)titleName = "Top Players: Total Time Played";
-	if (totalBlocksCleared)titleName = "Top Players: Total Blocks Cleared";
-	if (planeswalkerPoints)titleName = "Top Players: Planeswalker Points";
-	if (eloScore)titleName = "Top Players: Elo Score";
-	if (timeLasted)titleName = "Top Games: Time Lasted";
-	if (blocksCleared)titleName = "Top Games: Total Time Played";
 
 	//menu->add(titleName);
 	menu->add(gameName);
@@ -4982,26 +4976,34 @@ string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string g
 
 	for (int i = 0; i < stats->entries.size(); i++)
 	{
+
 		BobsGameLeaderBoardAndHighScoreBoard::BobsGameLeaderBoardAndHighScoreBoardEntry* e = stats->entries.get(i);
+
+		if (e->userName == "") { continue; }
+
 		string s = to_string(i)+") " + e->userName + " | ";
 
 		if (totalTimePlayed)
 		{
 			menu->add(s+"Total Time Played: " + getNiceTime(e->totalTimePlayed));
+			titleName = "Top Players: Total Time Played";
 		}
 		if (totalBlocksCleared)
 		{
 			menu->add(s + "Total Blocks Cleared: " + to_string(e->totalBlocksCleared));
+			titleName = "Top Players: Total Blocks Cleared";
 		}
 
 		if (planeswalkerPoints)
 		{
 			menu->add(s + "Planeswalker Score: " + to_string(e->planesWalkerPoints));
+			titleName = "Top Players: Planeswalker Points";
 		}
 
 		if (eloScore)
 		{
 			menu->add(s + "Elo Score: " + to_string(e->eloScore));
+			titleName = "Top Players: Elo Score";
 		}
 
 		if (timeLasted)
@@ -5009,16 +5011,19 @@ string BobsGame::populateLeaderBoardOrHighScoreBoardMenu(BobMenu *menu, string g
 			if (objectiveString == "Play To Credits")
 			{
 				menu->add(s + "Fastest Cleared Time: " + getNiceTime(e->fastestClearedLength));
+				titleName = "Top Games: Fastest Cleared Time";
 			}
 			else
 			{
-				menu->add(s + "Longest Game Length: " + getNiceTime(e->longestGameLength));
+				menu->add(s + "Longest Time Lasted: " + getNiceTime(e->longestGameLength));
+				titleName = "Top Games: Longest Time Lasted";
 			}
 		}
 
 		if (blocksCleared)
 		{
 			menu->add(s + "Most Blocks Cleared: " + to_string(e->mostBlocksClearedInOneGame));
+			titleName = "Top Games: Most Blocks Cleared";
 		}
 
 //		menu->add("Total Games Played: " + to_string(e->totalGamesPlayed));

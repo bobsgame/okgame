@@ -3520,7 +3520,7 @@ void GameLogic::renderHighScoreMeters()
 				amount = height * (currentScore / highestScore);
 				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 200, 0, 0.75f);
 
-				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Best", 10, true, BobColor::white, BobColor::clear);
+				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
 				myHighScoreBarCaption->screenX = startX;
 				myHighScoreBarCaption->screenY = startY + height;
 				myHighScoreBarCaption->update();

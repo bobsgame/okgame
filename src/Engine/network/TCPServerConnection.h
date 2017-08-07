@@ -864,6 +864,7 @@ public:
 	void tellServerBobsGameTheGameHasEnded_S(const string& roomUUID, const string& results);
 	void sendBobsGameGameStats_S(const string& statsString);
 	void incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s);
+	void addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard);
 	void incomingBobsGameLeaderBoardByTotalTimePlayed(string &s);
 	void incomingBobsGameLeaderBoardByTotalBlocksCleared(string &s);
 	void incomingBobsGameLeaderBoardByPlaneswalkerPoints(string &s);
