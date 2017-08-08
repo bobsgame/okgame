@@ -7,6 +7,7 @@
 #include "bobtypes.h"
 
 #include <src/Utility/Logger.h>
+#include "src/Puzzle/Room.h"
 
 //===============================================================================================
 //game stats logs stats for every single game that every user plays
@@ -25,10 +26,11 @@ public:
 	string gameTypeUUID = "";
 	string gameSequenceName = "";
 	string gameSequenceUUID = "";
+	string difficultyName = "";
 
 	string gameTypeEndedOnName = "";
 	string gameTypeEndedOnUUID = "";
-	string difficultyName = "";
+	
 
 	int won = 0;
 	int died = 0;
@@ -49,25 +51,27 @@ public:
 	int combosMade = 0;
 	int biggestCombo = 0;
 
-	string room_DifficultyName = "";
-	int singlePlayer_randomizeSequence = 1;
-	int endlessMode = 0;
-	int multiplayer_NumPlayers = 0;
+	//string room_DifficultyName = "";
+	//int singlePlayer_randomizeSequence = 1;
+	//int endlessMode = 0;
+	//int multiplayer_NumPlayers = 0;
 
-	int multiplayer_MaxPlayers = 0;
-	int multiplayer_PrivateRoom = 0;
-	int multiplayer_TournamentRoom = 0;
-	long long multiplayer_HostUserID = 0;
-	int multiplayer_AllowDifferentDifficulties = 1;
-	int multiplayer_AllowDifferentGameSequences = 1;
-	int multiplayer_GameEndsWhenOnePlayerRemains = 1;
-	int multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = 1;
-	int multiplayer_DisableVSGarbage = 0;
+	//int multiplayer_MaxPlayers = 0;
+	//int multiplayer_PrivateRoom = 0;
+	//int multiplayer_TournamentRoom = 0;
+	//long long multiplayer_HostUserID = 0;
+	//int multiplayer_AllowDifferentDifficulties = 1;
+	//int multiplayer_AllowDifferentGameSequences = 1;
+	//int multiplayer_GameEndsWhenOnePlayerRemains = 1;
+	//int multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = 1;
+	//int multiplayer_DisableVSGarbage = 0;
 
 	string allFrameStatesZipped = "";
 	string playerIDsCSV = "";//id:`userName`:lost,id:`userName`:won,:
 
 	string statsUUID = "";
+
+	Room* room = nullptr;
 
 	//game type or sequence,
 	//sequence options
@@ -99,9 +103,11 @@ public:
 			+ gameTypeUUID + ","
 			+ "`" + gameSequenceName + "`" + ","
 			+ gameSequenceUUID + ","
-			+ "`" + gameTypeEndedOnName + "`" + ","
-			+ gameTypeEndedOnUUID + ","
 			+ difficultyName + ","
+
+			+"`" + gameTypeEndedOnName + "`" + ","
+			+ gameTypeEndedOnUUID + ","
+			
 			+ to_string(won) + ","
 			+ to_string(died) + ","
 			+ to_string(lost) + ","
@@ -123,407 +129,28 @@ public:
 
 
 
-			+ to_string(multiplayer_MaxPlayers) + ","
-			+ to_string(multiplayer_PrivateRoom) + ","
-			+ to_string(multiplayer_TournamentRoom) + ","
-			+ to_string(multiplayer_HostUserID) + ","
-
-			+ room_DifficultyName + ","
-			+ to_string(singlePlayer_randomizeSequence) + ","
-			+ to_string(endlessMode) + ","
-			+ to_string(multiplayer_NumPlayers) + ","
-
-			+ to_string(multiplayer_AllowDifferentDifficulties) + ","
-			+ to_string(multiplayer_AllowDifferentGameSequences) + ","
-			+ to_string(multiplayer_GameEndsWhenOnePlayerRemains) + ","
-			+ to_string(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel) + ","
-			+ to_string(multiplayer_DisableVSGarbage) + ","
-			+ allFrameStatesZipped + ","
+			//+ to_string(multiplayer_MaxPlayers) + ","
+			//+ to_string(multiplayer_PrivateRoom) + ","
+			//+ to_string(multiplayer_TournamentRoom) + ","
+			//+ to_string(multiplayer_HostUserID) + ","
+			//
+			//+ room_DifficultyName + ","
+			//+ to_string(singlePlayer_randomizeSequence) + ","
+			//+ to_string(endlessMode) + ","
+			//+ to_string(multiplayer_NumPlayers) + ","
+			//
+			//+ to_string(multiplayer_AllowDifferentDifficulties) + ","
+			//+ to_string(multiplayer_AllowDifferentGameSequences) + ","
+			//+ to_string(multiplayer_GameEndsWhenOnePlayerRemains) + ","
+			//+ to_string(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel) + ","
+			//+ to_string(multiplayer_DisableVSGarbage) + ","
+			+allFrameStatesZipped + ","
 			+ statsUUID + ","
-			+ playerIDsCSV + ":";
+			+ playerIDsCSV + ":"
+			+ room->encodeRoomData(false) + ":";
 
 		return s;
 	}
-
-	//===============================================================================================
-	BobsGameGameStats(string s)
-	{//===============================================================================================
-
-		boost::uuids::random_generator generator;
-		statsUUID = to_string(generator());
-
-		//decode(s);
-	}
-//
-//	//===============================================================================================
-//	void decode(string s)
-//	{//===============================================================================================
-//
-//		s = s.substr(s.find("`") + 1);
-//		userName = s.substr(0, s.find("`"));
-//		s = s.substr(s.find("`") + 1);
-//		s = s.substr(s.find(",") + 1);
-//		string userIDstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		isGameTypeOrSequence = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		s = s.substr(s.find("`") + 1);
-//		gameTypeName = s.substr(0, s.find("`"));
-//		s = s.substr(s.find("`") + 1);
-//		s = s.substr(s.find(",") + 1);
-//		gameTypeUUID = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		s = s.substr(s.find("`") + 1);
-//		gameSequenceName = s.substr(0, s.find("`"));
-//		s = s.substr(s.find("`") + 1);
-//		s = s.substr(s.find(",") + 1);
-//		gameSequenceUUID = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		s = s.substr(s.find("`") + 1);
-//		gameTypeEndedOnName = s.substr(0, s.find("`"));
-//		s = s.substr(s.find("`") + 1);
-//		s = s.substr(s.find(",") + 1);
-//		gameTypeEndedOnUUID = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		difficultyName = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string wonstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string diedstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string loststring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string completestring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string isLocalMultiplayerstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string isNetworkMultiplayerstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string numPlayersstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string levelstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string timeLastedstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string timeStartedstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string timeEndedstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string blocksMadestring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string piecesMadestring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string blocksClearedstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string piecesPlacedstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string combosMadestring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string biggestCombostring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string maxPlayersstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string privateRoomstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string tournamentRoomstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string hostUserIDstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string multiplayer_AllowDifferentDifficultiesstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string multiplayer_AllowDifferentGameSequencesstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string multiplayer_GameEndsWhenOnePlayerRemainsstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string multiplayer_GameEndsWhenSomeoneCompletesCreditsLevelstring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		string multiplayer_DisableVSGarbagestring = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		allFrameStatesZipped = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		statsUUID = s.substr(0, s.find(","));
-//		s = s.substr(s.find(",") + 1);
-//		while (s.substr(0, 1) != ":")//id:`userName`:lost,id:`userName`:won,:
-//		{
-//			playerIDsCSV += s.substr(0, s.find("`") + 1);
-//			s = s.substr(s.find("`") + 1);
-//			playerIDsCSV += s.substr(0, s.find("`") + 1);
-//			s = s.substr(s.find("`") + 1);
-//			playerIDsCSV += s.substr(0, s.find(",") + 1);
-//			s = s.substr(s.find(",") + 1);
-//		}
-//
-//		try
-//		{
-//			userID = stoll(userIDstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse userID");
-//			return;
-//		}
-//
-//		try
-//		{
-//			won = stoi(wonstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse won");
-//			return;
-//		}
-//
-//		try
-//		{
-//			died = stoi(diedstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse died");
-//			return;
-//		}
-//
-//		try
-//		{
-//			lost = stoi(loststring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse lost");
-//			return;
-//		}
-//
-//		try
-//		{
-//			complete = stoi(completestring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse complete");
-//			return;
-//		}
-//
-//		try
-//		{
-//			isLocalMultiplayer = stoi(isLocalMultiplayerstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse isLocalMultiplayer");
-//			return;
-//		}
-//
-//		try
-//		{
-//			isNetworkMultiplayer = stoi(isNetworkMultiplayerstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse isNetworkMultiplayer");
-//			return;
-//		}
-//
-//		try
-//		{
-//			numPlayers = stoi(numPlayersstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse numPlayers");
-//			return;
-//		}
-//
-//		try
-//		{
-//			level = stoi(levelstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse level");
-//			return;
-//		}
-//
-//		try
-//		{
-//			timeLasted = stoll(timeLastedstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse timeLasted");
-//			return;
-//		}
-//
-//		try
-//		{
-//			timeStarted = stoll(timeStartedstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse timeStarted");
-//			return;
-//		}
-//
-//		try
-//		{
-//			timeEnded = stoll(timeEndedstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse timeEnded");
-//			return;
-//		}
-//
-//		try
-//		{
-//			blocksMade = stoi(blocksMadestring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse blocksMade");
-//			return;
-//		}
-//
-//		try
-//		{
-//			piecesMade = stoi(piecesMadestring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse piecesMade");
-//			return;
-//		}
-//
-//		try
-//		{
-//			blocksCleared = stoi(blocksClearedstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse blocksCleared");
-//			return;
-//		}
-//
-//		try
-//		{
-//			piecesPlaced = stoi(piecesPlacedstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse piecesPlaced");
-//			return;
-//		}
-//
-//		try
-//		{
-//			combosMade = stoi(combosMadestring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse combosMade");
-//			return;
-//		}
-//
-//		try
-//		{
-//			biggestCombo = stoi(biggestCombostring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse biggestCombo");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_MaxPlayers = stoi(maxPlayersstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse maxPlayers");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_PrivateRoom = stoi(privateRoomstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse privateRoom");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_TournamentRoom = stoi(tournamentRoomstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse tournamentRoom");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_HostUserID = stoll(hostUserIDstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse hostUserID");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_AllowDifferentDifficulties = stoi(multiplayer_AllowDifferentDifficultiesstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse multiplayer_AllowDifferentDifficulties");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_AllowDifferentGameSequences = stoi(multiplayer_AllowDifferentGameSequencesstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse multiplayer_AllowDifferentGameSequences");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_GameEndsWhenOnePlayerRemains = stoi(multiplayer_GameEndsWhenOnePlayerRemainsstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse multiplayer_GameEndsWhenOnePlayerRemains");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = stoi(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevelstring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel");
-//			return;
-//		}
-//
-//		try
-//		{
-//			multiplayer_DisableVSGarbage = stoi(multiplayer_DisableVSGarbagestring);
-//		}
-//		catch (exception)
-//		{
-//			log.error("Could not parse multiplayer_DisableVSGarbage");
-//			return;
-//		}
-//
-//	}
 
 
 

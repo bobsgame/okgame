@@ -2,7 +2,7 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\main.cpp</string>
+      <string>c:\Users\Administrator\workspace\bobsgame\src\main.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\main.h</string>
     </ArrayOfString>
     <ArrayOfString>
@@ -52,7 +52,7 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\GameTestMenu.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\Users\Administrator\workspace\bobsgame\src\Puzzle\BobsGameMenus.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\BobsGameMenus.cpp</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\BobsGameNetwork.cpp</string>

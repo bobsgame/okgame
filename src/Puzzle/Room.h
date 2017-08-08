@@ -9,7 +9,7 @@
 #include "bobtypes.h"
 #include <src/Engine/network/UDPPeerConnection.h>
 #include "GameSequence.h"
-#include "BobsGame.h"
+
 
 
 
@@ -39,15 +39,18 @@ public:
 
 	string uuid = "";
 
+	string room_IsGameSequenceOrType = "";
 	//this is only set on network import
-	string gameSequenceOrTypeName = "";
+	string room_GameTypeName = "";
+	string room_GameSequenceName = "";
 	//this is only set on network import
-	string gameSequenceUUID = "";
+	string room_GameTypeUUID = "";
+	string room_GameSequenceUUID = "";
 	//this is only set on network import
-	string gameTypeUUID = "";
+	//string gameTypeUUID = "";
 
 
-	string difficultyName = "Beginner";
+	string room_DifficultyName = "Beginner";
 
 	//this is only used for sending stats to the server and for saving and loading game configurations
 	//on load config this should set randomizeSequence in currentRoom->currentSequence
@@ -56,10 +59,10 @@ public:
 	bool singleplayer_RandomizeSequence = true;
 
 
-	
-	//these are set in the multiplayer setup screen
 	int multiplayer_NumPlayers = 0;
 	long long multiplayer_HostUserID = 0;
+
+	//these are set in the multiplayer setup screen
 	int multiplayer_MaxPlayers = 0;
 	bool multiplayer_PrivateRoom = false;
 	bool multiplayer_TournamentRoom = false;
@@ -173,10 +176,12 @@ public:
 	void serialize(Archive & ar, const unsigned int version)
 	{//=========================================================================================================================
 		ar & BOOST_SERIALIZATION_NVP(uuid);
-		ar & BOOST_SERIALIZATION_NVP(gameSequenceOrTypeName);
-		ar & BOOST_SERIALIZATION_NVP(gameSequenceUUID);
-		ar & BOOST_SERIALIZATION_NVP(gameTypeUUID);
-		ar & BOOST_SERIALIZATION_NVP(difficultyName);
+		ar & BOOST_SERIALIZATION_NVP(room_IsGameSequenceOrType);
+		ar & BOOST_SERIALIZATION_NVP(room_GameTypeName);
+		ar & BOOST_SERIALIZATION_NVP(room_GameTypeUUID);
+		ar & BOOST_SERIALIZATION_NVP(room_GameSequenceName);
+		ar & BOOST_SERIALIZATION_NVP(room_GameSequenceUUID);
+		ar & BOOST_SERIALIZATION_NVP(room_DifficultyName);
 		ar & BOOST_SERIALIZATION_NVP(singleplayer_RandomizeSequence);
 		ar & BOOST_SERIALIZATION_NVP(endlessMode);
 
@@ -245,7 +250,7 @@ public:
 
 		string difficulty = "Any Difficulty";
 		if (multiplayer_AllowDifferentDifficulties == false)
-			difficulty = difficultyName;
+			difficulty = room_DifficultyName;
 
 		string garbage = "";
 		if (multiplayer_DisableVSGarbage)
@@ -286,16 +291,28 @@ public:
 			to_string(multiplayer_HostUserID) +
 			"," + uuid;
 
-		s += ",`" + gameSequence->name + "`";
+
+
 
 		if (gameSequence->gameTypes.size() == 1)
 		{
-			s += ",GameType," + gameSequence->gameTypes.get(0)->uuid;
+			room_IsGameSequenceOrType = "GameType";
+			room_GameTypeName = gameSequence->gameTypes.get(0)->name;
+			room_GameTypeUUID = gameSequence->gameTypes.get(0)->uuid;
 		}
 		else
 		{
-			s += ",GameSequence," + gameSequence->uuid;
+			room_IsGameSequenceOrType = "GameSequence";
+			room_GameSequenceName = gameSequence->name;
+			room_GameSequenceUUID = gameSequence->uuid;
 		}
+
+		s += "," + room_IsGameSequenceOrType;
+		s += ",`" + room_GameTypeName + "`";
+		s += "," + room_GameTypeUUID;
+		s += ",`" + room_GameSequenceName + "`";
+		s += "," + room_GameSequenceUUID;
+		s += "," + room_DifficultyName;
 
 		s +=
 
@@ -303,7 +320,6 @@ public:
 			"," + to_string(multiplayer_MaxPlayers) +
 			"," + to_string((int)multiplayer_PrivateRoom) +
 			"," + to_string((int)multiplayer_TournamentRoom) +
-			"," + difficultyName +
 			"," + to_string((int)endlessMode) +
 			"," + to_string((int)multiplayer_AllowDifferentDifficulties) +
 			"," + to_string((int)multiplayer_AllowDifferentGameSequences) +
@@ -347,23 +363,66 @@ public:
 	}
 
 
-
 	//=========================================================================================================================
 	static Room* decodeRoomData(string s, bool decodeGameSequenceXML)
 	{//=========================================================================================================================
+		Room *newRoom = new Room();
+		newRoom->decode(s, decodeGameSequenceXML);
+		return newRoom;
+	}
+
+	//=========================================================================================================================
+	void decode(string s, bool decodeGameSequenceXML)
+	{//=========================================================================================================================
+
+
 
 		string hostUserIDString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
 		string roomUUID = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
+
+		int hostUserID = -1;
+		try
+		{
+			hostUserID = stoi(hostUserIDString);
+		}
+		catch (exception)
+		{
+			BobsGame::log.error("hostUserID could not be parsed");
+			
+		}
+		multiplayer_HostUserID = hostUserID;
+
+		uuid = roomUUID;
+
+		
+
+
+		room_IsGameSequenceOrType = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+
 		s = s.substr(s.find("`") + 1);
-		string gameSequenceOrTypeName = s.substr(0, s.find("`"));
+		room_GameTypeName = s.substr(0, s.find("`"));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
-		string isGameSequenceOrType = s.substr(0, s.find(","));
+
+		room_GameTypeUUID = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
-		string gameSequenceOrTypeUUID = s.substr(0, s.find(","));
+
+		s = s.substr(s.find("`") + 1);
+		room_GameSequenceName = s.substr(0, s.find("`"));
+		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
+
+		room_GameSequenceUUID = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+
+		room_DifficultyName = s.substr(0, s.find(","));
+		s = s.substr(s.find(",") + 1);
+
+
+
 		string playersString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
 		string maxPlayersString = s.substr(0, s.find(","));
@@ -373,8 +432,7 @@ public:
 		string tournamentRoomString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);		
 
-		string difficultyNameString = s.substr(0, s.find(","));
-		s = s.substr(s.find(",") + 1);
+
 
 		string endlessModeString = s.substr(0, s.find(","));
 		s = s.substr(s.find(",") + 1);
@@ -445,36 +503,12 @@ public:
 			if (multiplayer_ZippedGameSequenceString.length() < 10)multiplayer_ZippedGameSequenceString = "";
 		}
 
-		Room *newRoom = new Room();
+		
 
 
 
-		int hostUserID = -1;
-		try
-		{
-			hostUserID = stoi(hostUserIDString);
-		}
-		catch (exception)
-		{
-			BobsGame::log.error("hostUserID could not be parsed");
-			return nullptr;
-		}
-		newRoom->multiplayer_HostUserID = hostUserID;
 
-		newRoom->uuid = roomUUID;
 
-		newRoom->gameSequenceOrTypeName = gameSequenceOrTypeName;
-
-		if (isGameSequenceOrType == "GameType")
-		{
-			//newRoom->isSingleGameType = true;
-			newRoom->gameTypeUUID = gameSequenceOrTypeUUID;
-		}
-		else
-		{
-			//newRoom->isGameSequence = true;
-			newRoom->gameSequenceUUID = gameSequenceOrTypeUUID;
-		}
 
 		int numPlayers = -1;
 		try
@@ -484,101 +518,100 @@ public:
 		catch (exception)
 		{
 			BobsGame::log.error("numPlayers could not be parsed");
-			return nullptr;
+			
 		}
-		newRoom->multiplayer_NumPlayers = numPlayers;
+		multiplayer_NumPlayers = numPlayers;
 
 		try
 		{
-			newRoom->multiplayer_MaxPlayers = stoi(maxPlayersString);
+			multiplayer_MaxPlayers = stoi(maxPlayersString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse maxPlayers");
-			return nullptr;
+			
 		}
 
 		try
 		{
-			newRoom->multiplayer_PrivateRoom = 0 != stoi(privateRoomString);
+			multiplayer_PrivateRoom = 0 != stoi(privateRoomString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse privateRoom");
-			return nullptr;
+			
 		}
 
 		try
 		{
-			newRoom->multiplayer_TournamentRoom = 0 != stoi(tournamentRoomString);
+			multiplayer_TournamentRoom = 0 != stoi(tournamentRoomString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse tournamentRoom");
-			return nullptr;
+			
 		}
 
 
-		newRoom->difficultyName = difficultyNameString;
 
 		try
 		{
-			newRoom->endlessMode = 0 != stoi(endlessModeString);
+			endlessMode = 0 != stoi(endlessModeString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse endlessMode");
-			return nullptr;
+			
 		}
 
 		try
 		{
-			newRoom->multiplayer_AllowDifferentDifficulties = 0 != stoi(multiplayer_AllowDifferentDifficultiesString);
+			multiplayer_AllowDifferentDifficulties = 0 != stoi(multiplayer_AllowDifferentDifficultiesString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse multiplayer_AllowDifferentDifficulties");
-			return nullptr;
+			
 		}
 
 		try
 		{
-			newRoom->multiplayer_AllowDifferentGameSequences = 0 != stoi(multiplayer_AllowDifferentGameSequencesString);
+			multiplayer_AllowDifferentGameSequences = 0 != stoi(multiplayer_AllowDifferentGameSequencesString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse multiplayer_AllowDifferentGameSequences");
-			return nullptr;
+			
 		}
 
 		try
 		{
-			newRoom->multiplayer_GameEndsWhenOnePlayerRemains = 0 != stoi(multiplayer_GameEndsWhenAllOpponentsLoseString);
+			multiplayer_GameEndsWhenOnePlayerRemains = 0 != stoi(multiplayer_GameEndsWhenAllOpponentsLoseString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse multiplayer_GameEndsWhenAllOpponentsLose");
-			return nullptr;
+			
 		}
 
 		try
 		{
-			newRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = 0 != stoi(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevelString);
+			multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = 0 != stoi(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevelString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel");
-			return nullptr;
+			
 		}
 
 		try
 		{
-			newRoom->multiplayer_DisableVSGarbage = 0 != stoi(multiplayer_DisableVSGarbageString);
+			multiplayer_DisableVSGarbage = 0 != stoi(multiplayer_DisableVSGarbageString);
 		}
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse multiplayer_DisableVSGarbage");
-			return nullptr;
+			
 		}
 
 
@@ -587,27 +620,27 @@ public:
 		try
 		{
 
-			newRoom->gameSpeedStart							 = stof(gameSpeedStartString);
-			newRoom->gameSpeedChangeRate					 = stof(gameSpeedIncreaseRateString);
-			newRoom->gameSpeedMaximum						 = stof(gameSpeedMaximumString);
-			newRoom->levelUpMultiplier						 = stof(levelUpMultiplierString);
-			newRoom->levelUpCompoundMultiplier				 = stof(levelUpCompoundMultiplierString);
-			newRoom->multiplayer_AllowNewPlayersDuringGame	 = 0 != stoi(multiplayer_AllowNewPlayersDuringGameString);
-			newRoom->multiplayer_UseTeams					 = 0 != stoi(multiplayer_UseTeamsString);
-			newRoom->multiplayer_GarbageMultiplier			 = stof(multiplayer_GarbageMultiplierString);
-			newRoom->multiplayer_GarbageLimit				 = stoi(multiplayer_GarbageLimitString);
-			newRoom->multiplayer_GarbageScaleByDifficulty	 = 0 != stoi(multiplayer_GarbageScaleByDifficultyString);
-			newRoom->multiplayer_SendGarbageTo				 = stoi(multiplayer_SendGarbageToString);
-			newRoom->floorSpinLimit				 = stoi(multiplayer_FloorSpinLimitString);
-			newRoom->totalYLockDelayLimit		 = stoi(multiplayer_LockDelayLimitString);
-			newRoom->lockDelayDecreaseRate		 = stof(multiplayer_LockDelayDecreaseMultiplierString);
-			newRoom->lockDelayMinimum			 = stoi(multiplayer_LockDelayMinimumString);
-			newRoom->stackWaitLimit				 = stoi(multiplayer_StackWaitLimitString);
+			gameSpeedStart							 = stof(gameSpeedStartString);
+			gameSpeedChangeRate					 = stof(gameSpeedIncreaseRateString);
+			gameSpeedMaximum						 = stof(gameSpeedMaximumString);
+			levelUpMultiplier						 = stof(levelUpMultiplierString);
+			levelUpCompoundMultiplier				 = stof(levelUpCompoundMultiplierString);
+			multiplayer_AllowNewPlayersDuringGame	 = 0 != stoi(multiplayer_AllowNewPlayersDuringGameString);
+			multiplayer_UseTeams					 = 0 != stoi(multiplayer_UseTeamsString);
+			multiplayer_GarbageMultiplier			 = stof(multiplayer_GarbageMultiplierString);
+			multiplayer_GarbageLimit				 = stoi(multiplayer_GarbageLimitString);
+			multiplayer_GarbageScaleByDifficulty	 = 0 != stoi(multiplayer_GarbageScaleByDifficultyString);
+			multiplayer_SendGarbageTo				 = stoi(multiplayer_SendGarbageToString);
+			floorSpinLimit				 = stoi(multiplayer_FloorSpinLimitString);
+			totalYLockDelayLimit		 = stoi(multiplayer_LockDelayLimitString);
+			lockDelayDecreaseRate		 = stof(multiplayer_LockDelayDecreaseMultiplierString);
+			lockDelayMinimum			 = stoi(multiplayer_LockDelayMinimumString);
+			stackWaitLimit				 = stoi(multiplayer_StackWaitLimitString);
 
-			newRoom->spawnDelayLimit			 = stoi(multiplayer_SpawnDelayLimitString);
-			newRoom->spawnDelayDecreaseRate		 = stof(multiplayer_SpawnDelayDecreaseRateString);
-			newRoom->spawnDelayMinimum			 = stoi(multiplayer_SpawnDelayMinimumString);
-			newRoom->dropDelayMinimum			 = stoi(multiplayer_DropDelayMinimumString);
+			spawnDelayLimit			 = stoi(multiplayer_SpawnDelayLimitString);
+			spawnDelayDecreaseRate		 = stof(multiplayer_SpawnDelayDecreaseRateString);
+			spawnDelayMinimum			 = stoi(multiplayer_SpawnDelayMinimumString);
+			dropDelayMinimum			 = stoi(multiplayer_DropDelayMinimumString);
 
 
 
@@ -615,7 +648,7 @@ public:
 		catch (exception)
 		{
 			BobsGame::log.error("Could not parse room options");
-			return nullptr;
+			
 		}
 
 
@@ -628,30 +661,30 @@ public:
 				if (gs == nullptr)
 				{
 					BobsGame::log.error("Could not parse received GameSequence");
-					return nullptr;
 				}
 
 				BobsGame::saveUnknownGameSequencesAndTypesToXML(gs);
 
-				newRoom->gameSequence = gs;
+				gameSequence = gs;
 				if (gs->gameTypes.size() == 1)
 				{
-					//newRoom->isSingleGameType = true;
-					newRoom->gameTypeUUID = gs->gameTypes.get(0)->uuid;
+					room_IsGameSequenceOrType = "GameType";
+					room_GameTypeName = gs->gameTypes.get(0)->name;
+					room_GameTypeUUID = gs->gameTypes.get(0)->uuid;
 				}
 				else
 				{
-					//newRoom->isGameSequence = true;
-					newRoom->gameSequenceUUID = gs->uuid;
+					room_IsGameSequenceOrType = "GameSequence";
+					room_GameSequenceName = gs->name;
+					room_GameSequenceUUID = gs->uuid;
 				}
 			}
 			else
 			{
-				newRoom->gameSequence = nullptr;
+				gameSequence = nullptr;
 			}
 		}
 
-		return newRoom;
 	}
 
 //

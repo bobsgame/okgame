@@ -658,12 +658,12 @@ void BobsGame::addToRoomsMenu(Room* c, string name, string id)
 	bool add = true;
 	if (filterByGameSequenceUUID != "")
 	{
-		if (c->gameSequenceUUID != filterByGameSequenceUUID)add = false;
+		if (c->room_GameSequenceUUID != filterByGameSequenceUUID)add = false;
 	}
 
 	if (filterByGameTypeUUID != "")
 	{
-		if (c->gameTypeUUID != filterByGameTypeUUID)add = false;
+		if (c->room_GameTypeUUID != filterByGameTypeUUID)add = false;
 	}
 
 	if (filterByMaxPlayers > 1)
@@ -673,7 +673,8 @@ void BobsGame::addToRoomsMenu(Room* c, string name, string id)
 
 	if (filterByKeyword != "")
 	{
-		if (c->gameSequenceOrTypeName.find(filterByKeyword) == string::npos)add = false;
+		if (c->room_GameTypeName.find(filterByKeyword) == string::npos)add = false;
+		if (c->room_GameSequenceName.find(filterByKeyword) == string::npos)add = false;
 	}
 
 	if (add)roomsMenu->add(name, id);
@@ -1056,15 +1057,15 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 				Room* c = rooms.get(i);
 				if (roomsMenu->isSelectedID(c->uuid, false, mx, my))
 				{
-					string uuid = c->gameTypeUUID;
-					if (uuid == "")uuid = c->gameSequenceUUID;
+					string uuid = c->room_GameTypeUUID;
+					if (uuid == "")uuid = c->room_GameSequenceUUID;
 
 					string roomObjectiveString = "Play To Credits";
 					if (c->endlessMode)roomObjectiveString = "Endless Mode";
 
-					populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, uuid, c->difficultyName, roomObjectiveString);
+					populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, uuid, c->room_DifficultyName, roomObjectiveString);
 
-					string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->difficultyName, roomObjectiveString,
+					string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, uuid, c->room_DifficultyName, roomObjectiveString,
 						totalTimePlayed, totalBlocksCleared, planeswalkerPoints, eloScore, timeLasted, blocksCleared);
 
 					leaderBoardMenu->subtitleCaption->setText(title);
@@ -1935,7 +1936,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 		string difficulty = "Any Difficulty";
 		if (currentRoom->multiplayer_AllowDifferentDifficulties == false)
-			difficulty = currentRoom->difficultyName;
+			difficulty = currentRoom->room_DifficultyName;
 		networkMultiplayerRoomRulesMenu->addInfo("Difficulty: " + difficulty);
 
 		string garbage = "Allowed";
@@ -2091,7 +2092,7 @@ void BobsGame::networkMultiplayerPlayerJoinMenuUpdate()
 						}
 						else
 						{
-							p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->difficultyName;
+							p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->room_DifficultyName;
 							p->setDifficulty = true;
 						}
 					}

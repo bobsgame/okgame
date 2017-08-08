@@ -37,7 +37,7 @@ ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByEloScore;
 ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByTimeLasted;
 ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByBlocksCleared;
 
-#include "Room.h"
+#include "Stats/GameStats.h"
 
 //=========================================================================================================================
 BobsGame::BobsGame()
@@ -1175,8 +1175,7 @@ void BobsGame::update()
 void BobsGame::sendGameStatsToServer()
 {//=========================================================================================================================
 
-	if (leaderboardScoreDisabled)return;
-	
+		
 	if (sentStats)return;
 
 	if (getServerConnection()->getConnectedToServer_S() == false)return;
@@ -1218,10 +1217,11 @@ void BobsGame::sendGameStatsToServer()
 						s.gameSequenceName = g->currentGameSequence->name;
 						s.gameSequenceUUID = g->currentGameSequence->uuid;
 					}
+					s.difficultyName = g->currentGameSequence->currentDifficultyName;
 
 					s.gameTypeEndedOnName = g->currentGameType->name;
 					s.gameTypeEndedOnUUID = g->currentGameType->uuid;
-					s.difficultyName = g->currentGameSequence->currentDifficultyName;
+					
 					s.won = (int)g->won;
 					s.lost = (int)g->lost;
 					s.died = (int)g->died;
@@ -1246,20 +1246,20 @@ void BobsGame::sendGameStatsToServer()
 					s.biggestCombo = g->biggestComboChain;
 
 
-					s.singlePlayer_randomizeSequence = (int)currentRoom->singleplayer_RandomizeSequence;
-					s.endlessMode = (int)currentRoom->endlessMode;
-					s.room_DifficultyName = currentRoom->difficultyName;
-					s.multiplayer_NumPlayers = currentRoom->multiplayer_NumPlayers;
-
-					s.multiplayer_HostUserID = currentRoom->multiplayer_HostUserID;
-					s.multiplayer_MaxPlayers = currentRoom->multiplayer_MaxPlayers;
-					s.multiplayer_PrivateRoom = (int)currentRoom->multiplayer_PrivateRoom;
-					s.multiplayer_TournamentRoom = (int)currentRoom->multiplayer_TournamentRoom;
-					s.multiplayer_AllowDifferentDifficulties = (int)currentRoom->multiplayer_AllowDifferentDifficulties;
-					s.multiplayer_AllowDifferentGameSequences = (int)currentRoom->multiplayer_AllowDifferentGameSequences;
-					s.multiplayer_GameEndsWhenOnePlayerRemains = (int)currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
-					s.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = (int)currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
-					s.multiplayer_DisableVSGarbage = (int)currentRoom->multiplayer_DisableVSGarbage;
+					//s.singlePlayer_randomizeSequence = (int)currentRoom->singleplayer_RandomizeSequence;
+					//s.endlessMode = (int)currentRoom->endlessMode;
+					//s.room_DifficultyName = currentRoom->difficultyName;
+					//s.multiplayer_NumPlayers = currentRoom->multiplayer_NumPlayers;
+					//
+					//s.multiplayer_HostUserID = currentRoom->multiplayer_HostUserID;
+					//s.multiplayer_MaxPlayers = currentRoom->multiplayer_MaxPlayers;
+					//s.multiplayer_PrivateRoom = (int)currentRoom->multiplayer_PrivateRoom;
+					//s.multiplayer_TournamentRoom = (int)currentRoom->multiplayer_TournamentRoom;
+					//s.multiplayer_AllowDifferentDifficulties = (int)currentRoom->multiplayer_AllowDifferentDifficulties;
+					//s.multiplayer_AllowDifferentGameSequences = (int)currentRoom->multiplayer_AllowDifferentGameSequences;
+					//s.multiplayer_GameEndsWhenOnePlayerRemains = (int)currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
+					//s.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = (int)currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
+					//s.multiplayer_DisableVSGarbage = (int)currentRoom->multiplayer_DisableVSGarbage;
 
 					s.allFrameStatesZipped = "temp";// FrameState::getFrameStatesAsBase64GZippedXML(g->framesArray);
 
@@ -1283,6 +1283,13 @@ void BobsGame::sendGameStatsToServer()
 						if (pp->gameLogic->lost)statusString = "lost";
 						s.playerIDsCSV += to_string(playerUserID) + ":" +"`"+playerUserName+"`"+":"+ statusString + ",";//id:`userName`:lost,id:`userName`:won,:
 					}
+
+					s.room = currentRoom;
+
+					//these won't be filled in for local multiplayer or singleplayer but they are already filled for network multiplayer games
+					//currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
+					//if(currentRoom->multiplayer_NumPlayers==0)currentRoom->multiplayer_NumPlayers = players.size();
+
 
 					string statsString = s.encode();
 
@@ -1905,6 +1912,9 @@ void BobsGame::loadGameSequenceUUIDsToGamesArray(GameSequence *g)
 //=========================================================================================================================
 GameType* BobsGame::getGameTypeByName(string name)
 {//=========================================================================================================================
+
+	if (name == "")return nullptr;
+
 	GameType *bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
@@ -1919,6 +1929,9 @@ GameType* BobsGame::getGameTypeByName(string name)
 //=========================================================================================================================
 GameType* BobsGame::getGameTypeByUUID(string uuid)
 {//=========================================================================================================================
+
+	if (uuid == "")return nullptr;
+
 	GameType *bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
@@ -1933,6 +1946,9 @@ GameType* BobsGame::getGameTypeByUUID(string uuid)
 //=========================================================================================================================
 GameSequence* BobsGame::getGameSequenceByName(string name)
 {//=========================================================================================================================
+
+	if (name == "")return nullptr;
+
 	GameSequence *bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
@@ -1947,6 +1963,8 @@ GameSequence* BobsGame::getGameSequenceByName(string name)
 //=========================================================================================================================
 GameSequence* BobsGame::getGameSequenceByUUID(string uuid)
 {//=========================================================================================================================
+	if (uuid == "")return nullptr;
+
 	GameSequence *bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
@@ -1975,12 +1993,16 @@ void BobsGame::saveRoomConfigToFile(Room* currentRoom,string name)
 		
 		if(currentRoom->gameSequence->gameTypes.size()==1)
 		{
-			currentRoom->gameTypeUUID = currentRoom->gameSequence->gameTypes.get(0)->uuid;
+			currentRoom->room_IsGameSequenceOrType = "GameType";
+			currentRoom->room_GameTypeName = currentRoom->gameSequence->gameTypes.get(0)->name;
+			currentRoom->room_GameTypeUUID = currentRoom->gameSequence->gameTypes.get(0)->uuid;
 		}
 		else
 		{
-			currentRoom->gameTypeUUID = "";
-			currentRoom->gameSequenceUUID = currentRoom->gameSequence->uuid;
+			currentRoom->room_IsGameSequenceOrType = "GameSequence";
+
+			currentRoom->room_GameSequenceName = currentRoom->gameSequence->name;
+			currentRoom->room_GameSequenceUUID = currentRoom->gameSequence->uuid;
 		}
 
 		Room r;
@@ -2072,11 +2094,11 @@ Room* BobsGame::loadRoomConfig(string configName)
 	}
 
 
-	GameSequence*gs = getGameSequenceByUUID(room->gameSequenceUUID);
+	GameSequence*gs = getGameSequenceByUUID(room->room_GameSequenceUUID);
 	if(gs == nullptr)
 	{
 		gs = new GameSequence();
-		GameType* gt = getGameTypeByUUID(room->gameTypeUUID);
+		GameType* gt = getGameTypeByUUID(room->room_GameTypeUUID);
 		if (gt != nullptr)
 		{
 			gs->gameTypes.add(gt);
@@ -2377,18 +2399,6 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 
 	while(s.length()>0)
 	{
-		string md5String;
-		string b64zippedXMLString;
-		string userIDString;
-		string userNameString;
-		string gameNameString;
-		string uuidString;
-		string dateCreatedString;
-		string lastModifiedString;
-		string howManyTimesUpdatedString;
-		string upVotesString;
-		string downVotesString;
-		string yourVoteString;
 
 		bool gameType = false;
 		bool gameSequence = false;
@@ -2409,33 +2419,33 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 
 		s = s.substr(s.find(":") + 1);
-		md5String = s.substr(0,s.find(":"));
+		string md5String = s.substr(0,s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		b64zippedXMLString = s.substr(0, s.find(":"));
+		string b64zippedXMLString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		userIDString = s.substr(0, s.find(":"));
-		s = s.substr(s.find(":") + 1);
-		s = s.substr(s.find("`") + 1);
-		userNameString = s.substr(0, s.find("`:"));
-		s = s.substr(s.find("`") + 1);
+		string userIDString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
 		s = s.substr(s.find("`") + 1);
-		gameNameString = s.substr(0, s.find("`:"));
+		string userNameString = s.substr(0, s.find("`:"));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(":") + 1);
-		uuidString = s.substr(0, s.find(":"));
+		s = s.substr(s.find("`") + 1);
+		string gameNameString = s.substr(0, s.find("`:"));
+		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(":") + 1);
-		dateCreatedString = s.substr(0, s.find(":"));
+		string uuidString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		lastModifiedString = s.substr(0, s.find(":"));
+		string dateCreatedString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		howManyTimesUpdatedString = s.substr(0, s.find(":"));
+		string lastModifiedString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		upVotesString = s.substr(0, s.find(":"));
+		string howManyTimesUpdatedString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		downVotesString = s.substr(0, s.find(":"));
+		string upVotesString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
-		yourVoteString = s.substr(0, s.find(":"));
+		string downVotesString = s.substr(0, s.find(":"));
+		s = s.substr(s.find(":") + 1);
+		string yourVoteString = s.substr(0, s.find(":"));
 		s = s.substr(s.find(":") + 1);
 
 		long long userID = -1;

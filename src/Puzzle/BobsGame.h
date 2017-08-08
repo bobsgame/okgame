@@ -27,10 +27,12 @@ class Logger;
 #include "CustomGameEditor.h"
 #include "GameSequenceEditor.h"
 
-#include "Stats/GameStats.h"
+//#include "Stats/GameStats.h"
 #include "Stats/UserStatsForSpecificGameAndDifficulty.h"
 #include "Stats/LeaderBoardAndHighScoreBoardEntry.h"
 //#include "GameTestMenu.h"
+
+class BobsGameGameStats;
 
 class GameTestMenuControl;
 //class Engine;
@@ -474,7 +476,7 @@ public:
 	bool voteUpDown = false;
 
 	bool sentStats = false;
-	bool leaderboardScoreDisabled = false;
+
 
 	void playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p);
 	void playerGameSequenceMiniMenuRender(PuzzlePlayer *p, float x, float y);

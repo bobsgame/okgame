@@ -2624,7 +2624,7 @@ void BobsGame::saveRoomConfigMenuUpdate()
 		saveRoomConfigMenu->center = false;
 		//saveRoomConfigMenu->outline = false;
 
-		saveRoomConfigNameText = "" + currentRoom->gameSequence->name + " " + currentRoom->difficultyName + " ";
+		saveRoomConfigNameText = "" + currentRoom->gameSequence->name + " " + currentRoom->room_DifficultyName + " ";
 
 
 		saveRoomConfigMenu->add("Name: " + saveRoomConfigNameText,"Name", BobMenu::statusColor);
@@ -3573,9 +3573,9 @@ void BobsGame::gameSetupMenuUpdate()
 		{
 			if (currentRoom == nullptr)currentRoom = new Room();
 
-			if (currentRoom->difficultyName != "")
+			if (currentRoom->room_DifficultyName != "")
 			{
-				selectedDifficultyName = currentRoom->difficultyName;
+				selectedDifficultyName = currentRoom->room_DifficultyName;
 			}
 		}
 		else
@@ -3596,9 +3596,9 @@ void BobsGame::gameSetupMenuUpdate()
 
 
 			if (currentRoom == nullptr)currentRoom = new Room();
-			if (currentRoom->difficultyName != "")
+			if (currentRoom->room_DifficultyName != "")
 			{
-				currentRoom->difficultyName = selectedDifficultyName;
+				currentRoom->room_DifficultyName = selectedDifficultyName;
 			}
 
 			if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -3784,7 +3784,7 @@ void BobsGame::gameSetupMenuUpdate()
 
 				DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex);
 				string difficultyName = d->name;
-				currentRoom->difficultyName = difficultyName;
+				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
@@ -3890,18 +3890,11 @@ void BobsGame::gameSetupMenuUpdate()
 				GameType gt;
 				DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex);
 				string difficultyName = d->name;
-				currentRoom->difficultyName = difficultyName;
+				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
 					getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
-				if (currentRoom->isDefaultSettings() == false)
-				{
-					leaderboardScoreDisabled = true;
-				}
-				else
-				{
-					leaderboardScoreDisabled = false;
-				}
+
 
 				sentStats = false;
 
@@ -5284,10 +5277,10 @@ void BobsGame::difficultyMenuUpdate()
 				if (statsMenuShowing == false)
 				{
 					currentRoom->multiplayer_AllowDifferentDifficulties = false;
-					currentRoom->difficultyName = difficultyName;
+					currentRoom->room_DifficultyName = difficultyName;
 
 					if (getPlayer1Game()->currentGameSequence != nullptr)
-						getPlayer1Game()->currentGameSequence->currentDifficultyName = currentRoom->difficultyName;
+						getPlayer1Game()->currentGameSequence->currentDifficultyName = currentRoom->room_DifficultyName;
 				}
 				else
 				{
@@ -5428,19 +5421,19 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 		multiplayerOptionsMenu->getMenuItemByID("Difficulty")->setText("Difficulty: Allow Different Difficulties");
 	}
 	else
-	if (currentRoom->difficultyName != "")
+	if (currentRoom->room_DifficultyName != "")
 	{
 
 		GameType gt;
 		for (int i = 0; i < gt.difficultyTypes.size(); i++)
 		{
 			string difficultyName = gt.difficultyTypes.get(i)->name;
-			if (currentRoom->difficultyName == difficultyName)selectedDifficultyIndex = i + 1;
+			if (currentRoom->room_DifficultyName == difficultyName)selectedDifficultyIndex = i + 1;
 		}
 
 		DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
 		string difficultyName = d->name;
-		currentRoom->difficultyName = difficultyName;
+		currentRoom->room_DifficultyName = difficultyName;
 		if (getPlayer1Game()->currentGameSequence != nullptr)
 			getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 
@@ -5550,7 +5543,7 @@ void BobsGame::multiplayerOptionsMenuUpdate()
 					currentRoom->multiplayer_AllowDifferentDifficulties = false;
 					DifficultyType *d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
 					string difficultyName = d->name;
-					currentRoom->difficultyName = difficultyName;
+					currentRoom->room_DifficultyName = difficultyName;
 					if (getPlayer1Game()->currentGameSequence != nullptr)
 						getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyName;
 				}
@@ -5875,7 +5868,7 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 				}
 				else
 				{
-					p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->difficultyName;
+					p->gameLogic->currentGameSequence->currentDifficultyName = currentRoom->room_DifficultyName;
 					p->setDifficulty = true;
 				}
 			}
