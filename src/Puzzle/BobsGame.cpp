@@ -1114,7 +1114,12 @@ void BobsGame::update()
 		//if connected to server, make menu to vote up or down
 		//has to be single player game because its tied to account
 
-		//if(doVoting()==false)
+//		if (sentStats && gotStatsResponse)
+//		{
+//			doVoting();
+//		}
+
+		//if(sentStats && gotStatsResponse && sentVote && gotVotingResponse)
 		{
 
 			//if connected to server and authorized
@@ -1175,137 +1180,128 @@ void BobsGame::update()
 void BobsGame::sendGameStatsToServer()
 {//=========================================================================================================================
 
-		
-	if (sentStats)return;
 
-	if (getServerConnection()->getConnectedToServer_S() == false)return;
-
-	if (getServerConnection()->getAuthorizedOnServer_S() == false)return;
-
+	if (
+		getServerConnection()->getConnectedToServer_S() == false || 
+		getServerConnection()->getAuthorizedOnServer_S() == false)
 	{
-		
-		//if (players.size() == 1 || currentRoom->tournamentRoom)
+
+//		if(statsCaption!=nullptr)
+//		{
+//			statsCaption->setToBeDeletedImmediately();
+//			statsCaption = nullptr;
+//		}
+
+		return;
+	}
+
+	if (sentStats)
+	{
+		//waiting for response from server
+
+		return;
+	}
+
+
+//	if(statsCaption==nullptr)
+//	{
+//		statsCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Uploading stats to server...", 24, true, BobColor::green);
+//	}
+
+
+	//do stats
+	//user stats
+	//tell server all game information
+	//even include local multiplayer why not
+	//include it in "games played" and "time played"
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		PuzzlePlayer *p = players.get(i);
+		if (p->isNetworkPlayer() == false)
 		{
 
-			//do stats
-			//user stats
-			//tell server all game information
-			//even include local multiplayer why not
-			//include it in "games played" and "time played"
+			GameLogic *g = p->gameLogic;
 
-			for (int i = 0; i < players.size(); i++)
+			BobsGameGameStats s;
+			s.userName = g->getEngine()->getUserName_S();
+			s.userID = g->getEngine()->getUserID_S();
+
+			if (g->currentGameSequence->gameTypes.size() == 1)
 			{
-				PuzzlePlayer *p = players.get(i);
-				if (p->isNetworkPlayer() == false)
-				{
+				s.isGameTypeOrSequence = "GameType";
+				s.gameTypeName = g->currentGameSequence->gameTypes.get(0)->name;
+				s.gameTypeUUID = g->currentGameSequence->gameTypes.get(0)->uuid;
+			}
+			else
+			{
+				s.isGameTypeOrSequence = "GameSequence";
+				s.gameSequenceName = g->currentGameSequence->name;
+				s.gameSequenceUUID = g->currentGameSequence->uuid;
+			}
+			s.difficultyName = g->currentGameSequence->currentDifficultyName;
 
-					GameLogic *g = p->gameLogic;
-
-					BobsGameGameStats s;
-					s.userName = g->getEngine()->getUserName_S();
-					s.userID = g->getEngine()->getUserID_S();
-
-					if (g->currentGameSequence->gameTypes.size() == 1)
-					{
-						s.isGameTypeOrSequence = "GameType";
-						s.gameTypeName = g->currentGameSequence->gameTypes.get(0)->name;
-						s.gameTypeUUID = g->currentGameSequence->gameTypes.get(0)->uuid;
-					}
-					else
-					{
-						s.isGameTypeOrSequence = "GameSequence";
-						s.gameSequenceName = g->currentGameSequence->name;
-						s.gameSequenceUUID = g->currentGameSequence->uuid;
-					}
-					s.difficultyName = g->currentGameSequence->currentDifficultyName;
-
-					s.gameTypeEndedOnName = g->currentGameType->name;
-					s.gameTypeEndedOnUUID = g->currentGameType->uuid;
+			s.gameTypeEndedOnName = g->currentGameType->name;
+			s.gameTypeEndedOnUUID = g->currentGameType->uuid;
 					
-					s.won = (int)g->won;
-					s.lost = (int)g->lost;
-					s.died = (int)g->died;
-					s.complete = (int)g->complete;
-					s.isLocalMultiplayer = (int)localMultiplayer;
-					s.isNetworkMultiplayer = (int)networkMultiplayer;
-					s.numPlayers = players.size();
-					s.level = g->currentLevel;
-					s.timeLasted = g->totalTicksPassed;
-					s.timeStarted = g->timeStarted;
-					if(g->timeEnded==0)
-					{
-						chrono::milliseconds ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch());
-						g->timeEnded = (long long)ms.count();
-					}
-					s.timeEnded = g->timeEnded;
-					s.blocksMade = g->blocksMadeTotal;
-					s.piecesMade = g->piecesMadeTotal;
-					s.blocksCleared = g->blocksClearedTotal;
-					s.piecesPlaced = g->piecesPlacedTotal;
-					s.combosMade = g->totalCombosMade;
-					s.biggestCombo = g->biggestComboChain;
+			s.won = (int)g->won;
+			s.lost = (int)g->lost;
+			s.died = (int)g->died;
+			s.complete = (int)g->complete;
+			s.isLocalMultiplayer = (int)localMultiplayer;
+			s.isNetworkMultiplayer = (int)networkMultiplayer;
+			s.numPlayers = players.size();
+			s.level = g->currentLevel;
+			s.timeLasted = g->totalTicksPassed;
+			s.timeStarted = g->timeStarted;
+			if(g->timeEnded==0)
+			{
+				chrono::milliseconds ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch());
+				g->timeEnded = (long long)ms.count();
+			}
+			s.timeEnded = g->timeEnded;
+			s.blocksMade = g->blocksMadeTotal;
+			s.piecesMade = g->piecesMadeTotal;
+			s.blocksCleared = g->blocksClearedTotal;
+			s.piecesPlaced = g->piecesPlacedTotal;
+			s.combosMade = g->totalCombosMade;
+			s.biggestCombo = g->biggestComboChain;
 
+			s.allFrameStatesZipped = "temp";// FrameState::getFrameStatesAsBase64GZippedXML(g->framesArray);
 
-					//s.singlePlayer_randomizeSequence = (int)currentRoom->singleplayer_RandomizeSequence;
-					//s.endlessMode = (int)currentRoom->endlessMode;
-					//s.room_DifficultyName = currentRoom->difficultyName;
-					//s.multiplayer_NumPlayers = currentRoom->multiplayer_NumPlayers;
-					//
-					//s.multiplayer_HostUserID = currentRoom->multiplayer_HostUserID;
-					//s.multiplayer_MaxPlayers = currentRoom->multiplayer_MaxPlayers;
-					//s.multiplayer_PrivateRoom = (int)currentRoom->multiplayer_PrivateRoom;
-					//s.multiplayer_TournamentRoom = (int)currentRoom->multiplayer_TournamentRoom;
-					//s.multiplayer_AllowDifferentDifficulties = (int)currentRoom->multiplayer_AllowDifferentDifficulties;
-					//s.multiplayer_AllowDifferentGameSequences = (int)currentRoom->multiplayer_AllowDifferentGameSequences;
-					//s.multiplayer_GameEndsWhenOnePlayerRemains = (int)currentRoom->multiplayer_GameEndsWhenOnePlayerRemains;
-					//s.multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = (int)currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel;
-					//s.multiplayer_DisableVSGarbage = (int)currentRoom->multiplayer_DisableVSGarbage;
+			for (int n = 0; n < players.size(); n++)
+			{
+				PuzzlePlayer *pp = players.get(n);
+				long long playerUserID = -1;
+				if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
+					playerUserID = pp->peerConnection->peerUserID;
+				else playerUserID = g->getEngine()->getUserID_S();
 
-					s.allFrameStatesZipped = "temp";// FrameState::getFrameStatesAsBase64GZippedXML(g->framesArray);
+				string playerUserName = "Local Player";
+				if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
+					playerUserName = pp->peerConnection->getUserName();
 
-					for (int n = 0; n < players.size(); n++)
-					{
-						PuzzlePlayer *pp = players.get(n);
-						long long playerUserID = -1;
-						if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
-							playerUserID = pp->peerConnection->peerUserID;
-						else playerUserID = g->getEngine()->getUserID_S();
+				if(players.size()==1)playerUserName = g->getEngine()->getUserName_S();
 
-						string playerUserName = "Local Player";
-						if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
-							playerUserName = pp->peerConnection->getUserName();
-
-						if(players.size()==1)playerUserName = g->getEngine()->getUserName_S();
-
-						string statusString = "";
-						if (pp->gameLogic->won)statusString = "won";
-						if (pp->gameLogic->died)statusString = "died";
-						if (pp->gameLogic->lost)statusString = "lost";
-						s.playerIDsCSV += to_string(playerUserID) + ":" +"`"+playerUserName+"`"+":"+ statusString + ",";//id:`userName`:lost,id:`userName`:won,:
-					}
-
-					s.room = currentRoom;
-
-					//these won't be filled in for local multiplayer or singleplayer but they are already filled for network multiplayer games
-					//currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
-					//if(currentRoom->multiplayer_NumPlayers==0)currentRoom->multiplayer_NumPlayers = players.size();
-
-
-					string statsString = s.encode();
-
-					//BobsGameGameStats *d = new BobsGameGameStats(statsString);
-					//d->decode(statsString);
-					//log.info(statsString);
-
-					getServerConnection()->sendBobsGameGameStats_S(statsString);
-
-				}
+				string statusString = "";
+				if (pp->gameLogic->won)statusString = "won";
+				if (pp->gameLogic->died)statusString = "died";
+				if (pp->gameLogic->lost)statusString = "lost";
+				s.playerIDsCSV += to_string(playerUserID) + ":" +"`"+playerUserName+"`"+":"+ statusString + ",";//id:`userName`:lost,id:`userName`:won,:
 			}
 
-			sentStats = true;
+			s.room = currentRoom;
+
+			string statsString = s.encode();
+			getServerConnection()->sendBobsGameGameStats_S(statsString);
 
 		}
 	}
+
+	sentStats = true;
+
+	
+	
 
 }
 

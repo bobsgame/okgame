@@ -39,17 +39,15 @@ public:
 
 	string uuid = "";
 
+	//this is only used for sending rooms to other clients and when sending stats to the server
+	//it is the host's game type, but is ignored if allow different gametypes is true
 	string room_IsGameSequenceOrType = "";
-	//this is only set on network import
 	string room_GameTypeName = "";
 	string room_GameSequenceName = "";
-	//this is only set on network import
 	string room_GameTypeUUID = "";
 	string room_GameSequenceUUID = "";
-	//this is only set on network import
-	//string gameTypeUUID = "";
 
-
+	//this is used if allow different difficulties is false, otherwise it is the host's selected difficulty
 	string room_DifficultyName = "Beginner";
 
 	//this is only used for sending stats to the server and for saving and loading game configurations

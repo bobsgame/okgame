@@ -51,21 +51,6 @@ public:
 	int combosMade = 0;
 	int biggestCombo = 0;
 
-	//string room_DifficultyName = "";
-	//int singlePlayer_randomizeSequence = 1;
-	//int endlessMode = 0;
-	//int multiplayer_NumPlayers = 0;
-
-	//int multiplayer_MaxPlayers = 0;
-	//int multiplayer_PrivateRoom = 0;
-	//int multiplayer_TournamentRoom = 0;
-	//long long multiplayer_HostUserID = 0;
-	//int multiplayer_AllowDifferentDifficulties = 1;
-	//int multiplayer_AllowDifferentGameSequences = 1;
-	//int multiplayer_GameEndsWhenOnePlayerRemains = 1;
-	//int multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = 1;
-	//int multiplayer_DisableVSGarbage = 0;
-
 	string allFrameStatesZipped = "";
 	string playerIDsCSV = "";//id:`userName`:lost,id:`userName`:won,:
 
@@ -127,23 +112,6 @@ public:
 			+ to_string(biggestCombo) + ","
 
 
-
-
-			//+ to_string(multiplayer_MaxPlayers) + ","
-			//+ to_string(multiplayer_PrivateRoom) + ","
-			//+ to_string(multiplayer_TournamentRoom) + ","
-			//+ to_string(multiplayer_HostUserID) + ","
-			//
-			//+ room_DifficultyName + ","
-			//+ to_string(singlePlayer_randomizeSequence) + ","
-			//+ to_string(endlessMode) + ","
-			//+ to_string(multiplayer_NumPlayers) + ","
-			//
-			//+ to_string(multiplayer_AllowDifferentDifficulties) + ","
-			//+ to_string(multiplayer_AllowDifferentGameSequences) + ","
-			//+ to_string(multiplayer_GameEndsWhenOnePlayerRemains) + ","
-			//+ to_string(multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel) + ","
-			//+ to_string(multiplayer_DisableVSGarbage) + ","
 			+allFrameStatesZipped + ","
 			+ statsUUID + ","
 			+ playerIDsCSV + ":"

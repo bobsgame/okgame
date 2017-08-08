@@ -5881,7 +5881,6 @@ void BobsGame::localMultiplayerPlayerJoinMenuUpdate()
 				p->difficultyCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, p->gameLogic->currentGameSequence->currentDifficultyName, 12, true, BobMenu::menuColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
 			}
 
-
 		}
 	}
 
