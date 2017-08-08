@@ -451,6 +451,7 @@ public:
 	static const string Bobs_Game_HostingPublicRoomEnded;
 
 	static const string Bobs_Game_GameStats;
+	static const string Bobs_Game_GameStats_Response;
 
 
 
@@ -466,6 +467,7 @@ public:
 	static const string Bobs_Game_HighScoreBoardsByBlocksCleared;
 
 
+	
 	static const string Server_Stats_Request;
 	static const string Server_Stats_Response;
 

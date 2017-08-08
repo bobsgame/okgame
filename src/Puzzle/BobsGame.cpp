@@ -836,7 +836,12 @@ void BobsGame::render()
 
 		if(voteMenu!=nullptr)
 		{
-			voteMenu->render(GLUtils::getViewportHeight()/2);
+			voteMenu->render(GLUtils::getViewportHeight()/3);
+		}
+
+		if(statsUploadMenu!=nullptr)
+		{
+			statsUploadMenu->render(GLUtils::getViewportHeight()/3);
 		}
 
 		//--------------------------
@@ -1114,12 +1119,13 @@ void BobsGame::update()
 		//if connected to server, make menu to vote up or down
 		//has to be single player game because its tied to account
 
-//		if (sentStats && gotStatsResponse)
-//		{
-//			doVoting();
-//		}
+		if (sentStats && gotStatsResponse)
+		{
+			doVoting();
+		}
+		
 
-		//if(sentStats && gotStatsResponse && sentVote && gotVotingResponse)
+		if(sentStats && gotStatsResponse && sentVote)
 		{
 
 			//if connected to server and authorized
@@ -1143,6 +1149,9 @@ void BobsGame::update()
 			if (getControlsManager()->miniGame_START_Pressed())
 			{
 				sentStats = false;
+				gotStatsResponse = false;
+				sentVote = false;
+				
 
 				if (players.size() == 1)
 				{
@@ -1183,172 +1192,234 @@ void BobsGame::sendGameStatsToServer()
 
 	if (
 		getServerConnection()->getConnectedToServer_S() == false || 
-		getServerConnection()->getAuthorizedOnServer_S() == false)
+		getServerConnection()->getAuthorizedOnServer_S() == false
+		)
 	{
 
-//		if(statsCaption!=nullptr)
-//		{
-//			statsCaption->setToBeDeletedImmediately();
-//			statsCaption = nullptr;
-//		}
+		if(statsUploadMenu !=nullptr)
+		{
+			delete statsUploadMenu;
+			statsUploadMenu = nullptr;
+		}
 
 		return;
 	}
 
-	if (sentStats)
+	long long currentTime = System::currentHighResTimer();
+
+	if (sentStats==false)
 	{
+
+		if (statsUploadMenu == nullptr)
+		{
+			statsUploadMenu = new BobMenu(this, "Results");
+			statsUploadMenu->addInfo("Uploading stats to server...", "Status");
+		}
+
+		//do stats
+		//user stats
+		//tell server all game information
+		//even include local multiplayer why not
+		//include it in "games played" and "time played"
+
+		for (int i = 0; i < players.size(); i++)
+		{
+			PuzzlePlayer *p = players.get(i);
+			if (p->isNetworkPlayer() == false)
+			{
+
+				GameLogic *g = p->gameLogic;
+
+				BobsGameGameStats s;
+				s.userName = g->getEngine()->getUserName_S();
+				s.userID = g->getEngine()->getUserID_S();
+
+				if (g->currentGameSequence->gameTypes.size() == 1)
+				{
+					s.isGameTypeOrSequence = "GameType";
+					s.gameTypeName = g->currentGameSequence->gameTypes.get(0)->name;
+					s.gameTypeUUID = g->currentGameSequence->gameTypes.get(0)->uuid;
+				}
+				else
+				{
+					s.isGameTypeOrSequence = "GameSequence";
+					s.gameSequenceName = g->currentGameSequence->name;
+					s.gameSequenceUUID = g->currentGameSequence->uuid;
+				}
+				s.difficultyName = g->currentGameSequence->currentDifficultyName;
+
+				s.gameTypeEndedOnName = g->currentGameType->name;
+				s.gameTypeEndedOnUUID = g->currentGameType->uuid;
+
+				s.won = (int)g->won;
+				s.lost = (int)g->lost;
+				s.died = (int)g->died;
+				s.complete = (int)g->complete;
+				s.isLocalMultiplayer = (int)localMultiplayer;
+				s.isNetworkMultiplayer = (int)networkMultiplayer;
+				s.numPlayers = players.size();
+				s.level = g->currentLevel;
+				s.timeLasted = g->totalTicksPassed;
+				s.timeStarted = g->timeStarted;
+				if (g->timeEnded == 0)
+				{
+					chrono::milliseconds ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch());
+					g->timeEnded = (long long)ms.count();
+				}
+				s.timeEnded = g->timeEnded;
+				s.blocksMade = g->blocksMadeTotal;
+				s.piecesMade = g->piecesMadeTotal;
+				s.blocksCleared = g->blocksClearedTotal;
+				s.piecesPlaced = g->piecesPlacedTotal;
+				s.combosMade = g->totalCombosMade;
+				s.biggestCombo = g->biggestComboChain;
+
+				s.allFrameStatesZipped = "temp";// FrameState::getFrameStatesAsBase64GZippedXML(g->framesArray);
+
+				for (int n = 0; n < players.size(); n++)
+				{
+					PuzzlePlayer *pp = players.get(n);
+					long long playerUserID = -1;
+					if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
+						playerUserID = pp->peerConnection->peerUserID;
+					else playerUserID = g->getEngine()->getUserID_S();
+
+					string playerUserName = "Local Player";
+					if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
+						playerUserName = pp->peerConnection->getUserName();
+
+					if (players.size() == 1)playerUserName = g->getEngine()->getUserName_S();
+
+					string statusString = "";
+					if (pp->gameLogic->won)statusString = "won";
+					if (pp->gameLogic->died)statusString = "died";
+					if (pp->gameLogic->lost)statusString = "lost";
+					s.playerIDsCSV += to_string(playerUserID) + ":" + "`" + playerUserName + "`" + ":" + statusString + ",";//id:`userName`:lost,id:`userName`:won,:
+				}
+
+				s.room = currentRoom;
+
+				string statsString = s.encode();
+				getServerConnection()->sendBobsGameGameStats_S(statsString);
+
+			}
+		}
+
+		sentStats = true;
+		firstCheckedStatsResponseTime = currentTime;
+
+	}
+	
+	if(sentStats)
+	{
+		
 		//waiting for response from server
-
-		return;
-	}
-
-
-//	if(statsCaption==nullptr)
-//	{
-//		statsCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Uploading stats to server...", 24, true, BobColor::green);
-//	}
-
-
-	//do stats
-	//user stats
-	//tell server all game information
-	//even include local multiplayer why not
-	//include it in "games played" and "time played"
-
-	for (int i = 0; i < players.size(); i++)
-	{
-		PuzzlePlayer *p = players.get(i);
-		if (p->isNetworkPlayer() == false)
+		if (gotStatsResponse == false)
 		{
 
-			GameLogic *g = p->gameLogic;
 
-			BobsGameGameStats s;
-			s.userName = g->getEngine()->getUserName_S();
-			s.userID = g->getEngine()->getUserID_S();
-
-			if (g->currentGameSequence->gameTypes.size() == 1)
+			long long startTime = lastCheckedStatsResponseTime;
+			int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+			if (ticksPassed > 100)
 			{
-				s.isGameTypeOrSequence = "GameType";
-				s.gameTypeName = g->currentGameSequence->gameTypes.get(0)->name;
-				s.gameTypeUUID = g->currentGameSequence->gameTypes.get(0)->uuid;
-			}
-			else
-			{
-				s.isGameTypeOrSequence = "GameSequence";
-				s.gameSequenceName = g->currentGameSequence->name;
-				s.gameSequenceUUID = g->currentGameSequence->uuid;
-			}
-			s.difficultyName = g->currentGameSequence->currentDifficultyName;
 
-			s.gameTypeEndedOnName = g->currentGameType->name;
-			s.gameTypeEndedOnUUID = g->currentGameType->uuid;
-					
-			s.won = (int)g->won;
-			s.lost = (int)g->lost;
-			s.died = (int)g->died;
-			s.complete = (int)g->complete;
-			s.isLocalMultiplayer = (int)localMultiplayer;
-			s.isNetworkMultiplayer = (int)networkMultiplayer;
-			s.numPlayers = players.size();
-			s.level = g->currentLevel;
-			s.timeLasted = g->totalTicksPassed;
-			s.timeStarted = g->timeStarted;
-			if(g->timeEnded==0)
-			{
-				chrono::milliseconds ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch());
-				g->timeEnded = (long long)ms.count();
-			}
-			s.timeEnded = g->timeEnded;
-			s.blocksMade = g->blocksMadeTotal;
-			s.piecesMade = g->piecesMadeTotal;
-			s.blocksCleared = g->blocksClearedTotal;
-			s.piecesPlaced = g->piecesPlacedTotal;
-			s.combosMade = g->totalCombosMade;
-			s.biggestCombo = g->biggestComboChain;
 
-			s.allFrameStatesZipped = "temp";// FrameState::getFrameStatesAsBase64GZippedXML(g->framesArray);
+				lastCheckedStatsResponseTime = currentTime;
 
-			for (int n = 0; n < players.size(); n++)
-			{
-				PuzzlePlayer *pp = players.get(n);
-				long long playerUserID = -1;
-				if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
-					playerUserID = pp->peerConnection->peerUserID;
-				else playerUserID = g->getEngine()->getUserID_S();
 
-				string playerUserName = "Local Player";
-				if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
-					playerUserName = pp->peerConnection->getUserName();
-
-				if(players.size()==1)playerUserName = g->getEngine()->getUserName_S();
-
-				string statusString = "";
-				if (pp->gameLogic->won)statusString = "won";
-				if (pp->gameLogic->died)statusString = "died";
-				if (pp->gameLogic->lost)statusString = "lost";
-				s.playerIDsCSV += to_string(playerUserID) + ":" +"`"+playerUserName+"`"+":"+ statusString + ",";//id:`userName`:lost,id:`userName`:won,:
+				if (getServerConnection()->getAndResetGotBobsGameGameStatsResponse_S())
+				{
+					gotStatsResponse = true;
+					ArrayList<string> statsResponse = getServerConnection()->getAndResetBobsGameGameStatsResponse_S();
+					for (int i = 0; i<statsResponse.size(); i++)
+					{
+						statsUploadMenu->addInfo(statsResponse.get(i));
+						statsUploadMenu->addInfo(" ");
+						statsUploadMenu->addInfo("Press Action");
+					}
+				}
+				else
+				{
+					if ((int)(System::getTicksBetweenTimes(firstCheckedStatsResponseTime, currentTime)) > 4000)
+					{
+						gotStatsResponse = true;
+						statsUploadMenu->getMenuItemByID("Status")->setText("Timed out waiting for results from server.");
+						statsUploadMenu->addInfo(" ");
+						statsUploadMenu->addInfo("Press Action");
+					}
+				}
 			}
 
-			s.room = currentRoom;
-
-			string statsString = s.encode();
-			getServerConnection()->sendBobsGameGameStats_S(statsString);
 
 		}
+		else
+		{
+			if (getControlsManager()->miniGame_ACTION_Pressed())
+			{
+				if (statsUploadMenu != nullptr)
+				{
+					delete statsUploadMenu;
+					statsUploadMenu = nullptr;
+				}
+			}
+
+		}
+
+			
+		
 	}
-
-	sentStats = true;
-
-	
-	
 
 }
 
 //=========================================================================================================================
-bool BobsGame::doVoting()
+void BobsGame::doVoting()
 {//=========================================================================================================================
 
-	if (getServerConnection()->getConnectedToServer_S() == false)return false;
 
-	if (getServerConnection()->getAuthorizedOnServer_S() == false)return false;
 
-	if (players.size() > 1)return false;
+	if (
+		players.size() > 1 ||
+		sentVote ||
+		getServerConnection()->getConnectedToServer_S() == false ||
+		getServerConnection()->getAuthorizedOnServer_S() == false
+		)
+	{
+		if (voteMenu != nullptr)
+		{
+			delete voteMenu;
+			voteMenu = nullptr;
+		}
+		return;
+	}
 
-	if (voting == false)
+
+	if (sentVote == false)
 	{
 		GameSequence *gs = getPlayer1Game()->currentGameSequence;
 		if (gs->gameTypes.size() == 1)
 		{
 			GameType *g = gs->gameTypes.get(0);
-			if (g->downloaded==true && g->yourVote == "none")
+			if (g->downloaded == false || g->yourVote != "none")
 			{
-				if (voteMenu == nullptr)
-				{
-					voteMenu = new BobMenu(this, "Vote");
-					voteMenu->addInfo("Please vote on this game:");
-					voteMenu->add("Up");
-					voteMenu->add("Down");
-				}
-
+				sentVote = true;
+				return;
 			}
-			else return false;
-
 		}
 		else
 		{
-			if (gs->downloaded == true && gs->yourVote == "none")
+			if (gs->downloaded == false || gs->yourVote != "none")
 			{
-				if (voteMenu == nullptr)
-				{
-					voteMenu = new BobMenu(this, "Vote");
-					voteMenu->addInfo("Please vote on this sequence:");
-					voteMenu->add("Up");
-					voteMenu->add("Down");
-				}
-
+				sentVote = true;
+				return;
 			}
-			else return false;
+		}
+
+		if (voteMenu == nullptr)
+		{
+			voteMenu = new BobMenu(this, "Vote");
+			voteMenu->addInfo("Please vote on this game:");
+			voteMenu->add("Up");
+			voteMenu->add("Down");
 		}
 
 		if (voteMenu != nullptr)
@@ -1371,17 +1442,45 @@ bool BobsGame::doVoting()
 			int my = getControlsManager()->getMouseY();
 			if (confirm || clicked)
 			{
+				string vote = "none";
 
 				if (voteMenu->isSelectedID("Up", clicked, mx, my))
 				{
-					voting = true;
-					voteUpDown = true;
+					vote = "up";
 				}
 				if (voteMenu->isSelectedID("Down", clicked, mx, my))
 				{
-					voting = true;
-					voteUpDown = false;
+					vote = "down";
 				}
+
+				if (vote != "none")
+				{
+					sentVote = true;
+
+					if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
+					{
+						string uuid = getPlayer1Game()->currentGameSequence->gameTypes.get(0)->uuid;
+						getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" + vote + ":" + BobNet::endline);
+					}
+					else
+					{
+						string uuid = getPlayer1Game()->currentGameSequence->uuid;
+						getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Vote_Request + "GameSequence:" + uuid + ":" + vote + ":" + BobNet::endline);
+					}
+
+					if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
+					{
+						if (vote=="up")getPlayer1Game()->currentGameSequence->gameTypes.get(0)->yourVote = "up";
+						else getPlayer1Game()->currentGameSequence->gameTypes.get(0)->yourVote = "down";
+					}
+					else
+					{
+						if (vote=="down")getPlayer1Game()->currentGameSequence->yourVote = "up";
+						else getPlayer1Game()->currentGameSequence->yourVote = "down";
+					}
+
+				}
+
 				leaveMenu = true;
 			}
 
@@ -1395,40 +1494,6 @@ bool BobsGame::doVoting()
 			}
 		}
 	}
-
-	if (voting)
-	{
-		voting = false;
-
-		string vote = "up";
-		if (voteUpDown == false)vote = "down";
-
-		if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
-		{
-			string uuid = getPlayer1Game()->currentGameSequence->gameTypes.get(0)->uuid;
-			getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" + vote + ":" + BobNet::endline);
-		}
-		else
-		{
-			string uuid = getPlayer1Game()->currentGameSequence->uuid;
-			getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Vote_Request + "GameSequence:" + uuid + ":" + vote + ":" + BobNet::endline);
-		}
-
-		if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
-		{
-			if (voteUpDown)getPlayer1Game()->currentGameSequence->gameTypes.get(0)->yourVote = "up";
-			else getPlayer1Game()->currentGameSequence->gameTypes.get(0)->yourVote = "down";
-		}
-		else
-		{
-			if (voteUpDown)getPlayer1Game()->currentGameSequence->yourVote = "up";
-			else getPlayer1Game()->currentGameSequence->yourVote = "down";
-		}
-
-		return true;
-	}
-
-	return false;
 
 
 

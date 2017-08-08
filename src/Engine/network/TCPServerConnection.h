@@ -863,6 +863,7 @@ public:
 	void tellServerBobsGameIHaveStartedTheGame_S(const string& roomUUID);
 	void tellServerBobsGameTheGameHasEnded_S(const string& roomUUID, const string& results);
 	void sendBobsGameGameStats_S(const string& statsString);
+	void incomingBobsGameGameStatsResponse_S(string s);
 	void incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s);
 	void addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard);
 	void incomingBobsGameLeaderBoardByTotalTimePlayed(string &s);
@@ -890,6 +891,47 @@ public:
 	}
 	//------------------------------------
 	
+
+	//------------------------------------
+	private:
+		bool _gotBobsGameGameStatsResponse = false;
+		mutex _gotBobsGameGameStatsResponse_Mutex;
+	public:
+		void setGotBobsGameGameStatsResponse_S(bool s)
+		{
+			lock_guard<mutex> lock(_gotBobsGameGameStatsResponse_Mutex);
+			_gotBobsGameGameStatsResponse = s;
+		}
+		bool getAndResetGotBobsGameGameStatsResponse_S()
+		{
+			lock_guard<mutex> lock(_gotBobsGameGameStatsResponse_Mutex);
+			bool s = _gotBobsGameGameStatsResponse;
+			_gotBobsGameGameStatsResponse = false;
+			return s;
+		}
+	//------------------------------------
+
+
+	//------------------------------------
+	private:
+		ArrayList<string> _bobsGameGameStatsResponse;
+		mutex _bobsGameGameStatsResponse_Mutex;
+	public:
+		void setBobsGameGameStatsResponse_S(ArrayList<string> s)
+		{
+			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
+			_bobsGameGameStatsResponse = s;
+		}
+		ArrayList<string> getAndResetBobsGameGameStatsResponse_S()
+		{
+			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
+			ArrayList<string> s = _bobsGameGameStatsResponse;
+			_bobsGameGameStatsResponse.clear();
+			return s;
+		}
+	//------------------------------------
+
+
 
 private:
 	void incomingOnlineFriendsListResponse(string s);

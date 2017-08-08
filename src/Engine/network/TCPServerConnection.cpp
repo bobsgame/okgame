@@ -919,10 +919,18 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 			{
 				incomingBobsGameHighScoreBoardsByBlocksCleared(stats);
 
-			}
+			}		
+
 		}
 		return true;
 
+	}
+
+	
+	if (String::startsWith(s, BobNet::Bobs_Game_GameStats_Response))
+	{
+		incomingBobsGameGameStatsResponse_S(s);
+		return true;
 	}
 
 	bool processed = false;
@@ -1581,7 +1589,24 @@ void TCPServerConnection::sendBobsGameGameStats_S(const string& statsString)
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameStats + statsString + ":" + BobNet::endline);
 }
 
+//===============================================================================================
+void TCPServerConnection::incomingBobsGameGameStatsResponse_S(string s)
+{ //=========================================================================================================================
+  //Bobs_Game_GameStats_Response:
+	s = s.substr(s.find(":") + 1);
 
+	ArrayList<string> responseStrings;
+	while(s.find("`")!=string::npos)
+	{
+		s = s.substr(s.find("`") + 1);
+		responseStrings.add(s.substr(0, s.find("`")));
+		s = s.substr(s.find("`") + 1);
+		s = s.substr(s.find(",") + 1);
+	}
+
+	setBobsGameGameStatsResponse_S(responseStrings);
+	setGotBobsGameGameStatsResponse_S(true);
+}
 
 //===============================================================================================
 void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s)
@@ -2018,7 +2043,7 @@ bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, str
 
 
 
-	if (statusLabel != nullptr) statusLabel->setText(" ");
+	if (statusLabel != nullptr)statusLabel->setText(" ");
 	if (errorLabel != nullptr)errorLabel->setText(" ");
 
 	if (userNameOrEmail.find("`") != string::npos)
@@ -2026,16 +2051,19 @@ bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, str
 		if (errorLabel != nullptr)errorLabel->setText("Username/Email must not contain `");
 		return false;
 	}
+
 	if (userNameOrEmail.find(",") != string::npos)
 	{
 		if (errorLabel != nullptr)errorLabel->setText("Username/Email must not contain ,");
 		return false;
 	}
+
 	if (userNameOrEmail.length() == 0)
 	{
 		if (errorLabel != nullptr)errorLabel->setText("Enter your username or email address.");
 		return false;
 	}
+
 	if (password.find("`") != string::npos)
 	{
 		if (errorLabel != nullptr)errorLabel->setText("Password must not contain `");

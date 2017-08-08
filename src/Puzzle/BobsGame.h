@@ -471,11 +471,20 @@ public:
 	//GameSequence *multiplayer_SelectedGameSequence = nullptr;
 	//string multiplayer_SelectedDifficultyName = "Beginner";
 
-	BobMenu* voteMenu = nullptr;
-	bool voting = false;
-	bool voteUpDown = false;
+	void sendGameStatsToServer();
+	void doVoting();
 
+	BobMenu* statsUploadMenu = nullptr;
 	bool sentStats = false;
+	bool gotStatsResponse = false;
+	long long firstCheckedStatsResponseTime = 0;
+	long long lastCheckedStatsResponseTime = 0;
+
+	BobMenu* voteMenu = nullptr;
+	bool sentVote = false;
+	//bool voteUpDown = false;
+
+	
 
 
 	void playerGameSequenceMiniMenuUpdate(PuzzlePlayer *p);
@@ -566,8 +575,7 @@ public:
 
 	void updateVersion0ToVersion1();
 
-	void sendGameStatsToServer();
-	bool doVoting();
+
 
 	bool wasAuthorizedWhenSent = false;
 	bool gotGamesFromServer = false;

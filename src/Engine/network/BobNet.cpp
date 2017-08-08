@@ -114,7 +114,7 @@ const string BobNet::Bobs_Game_HostingPublicRoomCanceled = "Bobs_Game_HostingPub
 const string BobNet::Bobs_Game_HostingPublicRoomEnded = "Bobs_Game_HostingPublicRoomEnded:";
 
 const string BobNet::Bobs_Game_GameStats = "Bobs_Game_GameStats:";
-
+const string BobNet::Bobs_Game_GameStats_Response = "Bobs_Game_GameStats_Response:";
 
 const string BobNet::Bobs_Game_GetHighScoresAndLeaderboardsRequest = "Bobs_Game_GetHighScoresAndLeaderboardsRequest:";
 const string BobNet::Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched = "Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched:";
@@ -125,6 +125,7 @@ const string BobNet::Bobs_Game_LeaderBoardsByPlaneswalkerPoints = "Bobs_Game_Lea
 const string BobNet::Bobs_Game_LeaderBoardsByEloScore = "Bobs_Game_LeaderBoardsByEloScore:";
 const string BobNet::Bobs_Game_HighScoreBoardsByTimeLasted = "Bobs_Game_HighScoreBoardsByTimeLasted:";
 const string BobNet::Bobs_Game_HighScoreBoardsByBlocksCleared = "Bobs_Game_HighScoreBoardsByBlocksCleared:";
+
 
 
 
