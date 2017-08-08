@@ -501,10 +501,10 @@ void UDPPeerConnection::_processQueuedMessagesIntoPackets()
 
 	if (unjoinedMessageQueueSize_S() == 0)return;
 
-	bool debug = false;
-#ifdef _DEBUG
-	debug = true;
-#endif
+//	bool debug = false;
+//#ifdef _DEBUG
+//	debug = true;
+//#endif
 
 	long long currentTime = System::currentHighResTimer();
 	long long startTime = _lastQueuedPacketTime;

@@ -1182,7 +1182,7 @@ float Caption::getWidth()
 {//=========================================================================================================================
 
 	float screenWidth = width * scale;
-	float screenHeight = height * scale;
+	//float screenHeight = height * scale;
 
 //	if (ttfFont != nullptr)
 //	{
@@ -1198,7 +1198,7 @@ float Caption::getWidth()
 float Caption::getHeight()
 {//=========================================================================================================================
 
-	float screenWidth = width * scale;
+	//float screenWidth = width * scale;
 	float screenHeight = height * scale;
 
 //	if (ttfFont != nullptr)

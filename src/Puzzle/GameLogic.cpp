@@ -3474,7 +3474,7 @@ void GameLogic::renderHighScoreMeters()
 		if (highestScore == 0)return;
 
 		int amount = 0;
-		amount = height * (currentScore / highestScore);
+		amount = height * (float)((float)currentScore / (float)highestScore);
 		GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
 
 		if (myScoreBarCaption == nullptr)myScoreBarCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, BobColor::white, BobColor::clear);
@@ -3517,7 +3517,7 @@ void GameLogic::renderHighScoreMeters()
 			{
 				startX += 10;
 
-				amount = height * (currentScore / highestScore);
+				amount = height * (float)((float)currentScore / (float)highestScore);
 				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 200, 0, 0.75f);
 
 				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
@@ -3549,7 +3549,7 @@ void GameLogic::renderHighScoreMeters()
 			{
 				startX += 10;
 
-				amount = height * (currentScore / highestScore);
+				amount = height * (float)((float)currentScore / (float)highestScore);
 				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 200, 0, 0, 0.75f);
 
 				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard", 10, true, BobColor::white, BobColor::clear);

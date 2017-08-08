@@ -2393,7 +2393,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 
 
 	SDL_Color textSDLColor = { (Uint8)color->ri() ,(Uint8)color->gi(),(Uint8)color->bi(),(Uint8)color->ai() };
-	SDL_Color bgSDLColor = { 0,0,0,0 };
+	//SDL_Color bgSDLColor = { 0,0,0,0 };
 
 	TTF_Font *ttfFont = BobFont::ttf_8;
 	TTF_Font *outlineFont = BobFont::ttf_outline_8;

@@ -185,7 +185,7 @@ void BGClientEngine::update()
 { //=========================================================================================================================
 
 	
-	long long currentTime = System::currentHighResTimer();
+	//long long currentTime = System::currentHighResTimer();
 
 
 

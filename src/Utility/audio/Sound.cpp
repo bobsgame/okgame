@@ -61,7 +61,7 @@ void Sound::initFromByteData()
 #endif
 #ifdef USE_SDL_MIXER
 
-	SDL_RWops* file = SDL_RWFromMem(audioFile->getByteData()->data(), audioFile->getByteData()->size());
+	SDL_RWops* file = SDL_RWFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
 	mixChunk = Mix_LoadWAV_RW(file, 0);
 	file->close(file);
 

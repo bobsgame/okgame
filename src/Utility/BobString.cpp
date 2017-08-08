@@ -32,7 +32,7 @@ bool String::startsWith(const string& withThis)
 
 int String::indexOf(string s)
 {
-	return this->find(s);
+	return (int)this->find(s);
 
 }
 

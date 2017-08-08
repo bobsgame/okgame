@@ -606,7 +606,7 @@ void TextManager::drawText(long long ticksPassed)
 	ticksPassed += remainderTicks;
 
 
-	int lettersToDraw = ticksPassed / ticksPerLetter;
+	int lettersToDraw = (int)(ticksPassed / ticksPerLetter);
 	remainderTicks = ticksPassed % ticksPerLetter;
 
 	for (int i = 0; i <= lettersToDraw && delay==false && scrollingUp == false; i++)
