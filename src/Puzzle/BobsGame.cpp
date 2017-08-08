@@ -836,12 +836,12 @@ void BobsGame::render()
 
 		if(voteMenu!=nullptr)
 		{
-			voteMenu->render(GLUtils::getViewportHeight()/3);
+			voteMenu->render(GLUtils::getViewportHeight()/2 + 100);
 		}
 
 		if(statsUploadMenu!=nullptr)
 		{
-			statsUploadMenu->render(GLUtils::getViewportHeight()/3);
+			statsUploadMenu->render(GLUtils::getViewportHeight()/2 + 100,0,getHeight(),false);
 		}
 
 		//--------------------------
@@ -1119,13 +1119,13 @@ void BobsGame::update()
 		//if connected to server, make menu to vote up or down
 		//has to be single player game because its tied to account
 
-		if (sentStats && gotStatsResponse)
+		if (sentStats && gotStatsResponse && statsUploadMenu == nullptr)
 		{
 			doVoting();
 		}
 		
 
-		if(sentStats && gotStatsResponse && sentVote)
+		if(sentStats && gotStatsResponse && statsUploadMenu == nullptr && sentVote)
 		{
 
 			//if connected to server and authorized
@@ -1141,7 +1141,7 @@ void BobsGame::update()
 					text = "Press Enter or Start to return to lobby";
 				}
 
-				pressEnterToRestartCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, getHeight() - 100, -1, text, 24, true, BobColor::white);
+				pressEnterToRestartCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, getHeight() - 300, -1, text, 32, true, BobColor::white);
 				pressEnterToRestartCaption->flashing = true;
 				pressEnterToRestartCaption->flashingTicksPerFlash = 2000;
 			}
@@ -1213,7 +1213,10 @@ void BobsGame::sendGameStatsToServer()
 		if (statsUploadMenu == nullptr)
 		{
 			statsUploadMenu = new BobMenu(this, "Results");
-			statsUploadMenu->addInfo("Uploading stats to server...", "Status");
+			statsUploadMenu->outline = true;
+			statsUploadMenu->defaultMenuColor = BobColor::white;
+			statsUploadMenu->setFontSize(24);
+			statsUploadMenu->add("Uploading stats to server...", "Status");
 		}
 
 		//do stats
@@ -1333,9 +1336,10 @@ void BobsGame::sendGameStatsToServer()
 					ArrayList<string> statsResponse = getServerConnection()->getAndResetBobsGameGameStatsResponse_S();
 					for (int i = 0; i<statsResponse.size(); i++)
 					{
-						statsUploadMenu->addInfo(statsResponse.get(i));
-						statsUploadMenu->addInfo(" ");
-						statsUploadMenu->addInfo("Press Action");
+						statsUploadMenu->clear();
+						statsUploadMenu->add(statsResponse.get(i));
+						statsUploadMenu->add(" ");
+						statsUploadMenu->add("Press Action", "", BobColor::green);
 					}
 				}
 				else
@@ -1343,9 +1347,10 @@ void BobsGame::sendGameStatsToServer()
 					if ((int)(System::getTicksBetweenTimes(firstCheckedStatsResponseTime, currentTime)) > 4000)
 					{
 						gotStatsResponse = true;
+						statsUploadMenu->clear();
 						statsUploadMenu->getMenuItemByID("Status")->setText("Timed out waiting for results from server.");
-						statsUploadMenu->addInfo(" ");
-						statsUploadMenu->addInfo("Press Action");
+						statsUploadMenu->add(" ");
+						statsUploadMenu->add("Press Action", "", BobColor::green);
 					}
 				}
 			}
@@ -1417,9 +1422,11 @@ void BobsGame::doVoting()
 		if (voteMenu == nullptr)
 		{
 			voteMenu = new BobMenu(this, "Vote");
-			voteMenu->addInfo("Please vote on this game:");
-			voteMenu->add("Up");
-			voteMenu->add("Down");
+			voteMenu->outline = true;
+			voteMenu->setFontSize(32);
+			voteMenu->addInfo("Please vote on this game:", "", BobColor::green)->outline = true;
+			voteMenu->add("Up", "", BobColor::white);
+			voteMenu->add("Down", "", BobColor::white);
 		}
 
 		if (voteMenu != nullptr)
