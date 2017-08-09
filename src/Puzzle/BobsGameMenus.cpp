@@ -559,12 +559,46 @@ void BobsGame::startScreenMenuUpdate()
 
 		startScreenMenu->getMenuItemByID("Vote On New Games")->setColor(BobMenu::menuColor);
 		startScreenMenu->getMenuItemByID("Vote On New Games")->info = false;
+
 	}
 	else
 	{
 		startScreenMenu->getMenuItemByID("Online Multiplayer")->info = true;
 		startScreenMenu->getMenuItemByID("Vote On New Games")->info = true;
 	}
+
+	if (getServerConnection()->getConnectedToServer_S())
+	{
+
+
+		if(sentActivityStreamRequest == false)
+		{
+			sentActivityStreamRequest = true;
+			getServerConnection()->sendBobsGameActivityStreamRequest_S();
+		}
+		else
+		{
+			if (activityStream.size()>0)
+			{
+							
+				if (activityMenu == nullptr)
+				{
+					activityMenu = new BobMenu(this, "", "Activity Stream");
+					activityMenu->spacing = 1.2f;
+					activityMenu->setFontSize(28);
+
+					for (int i = 0; i < activityStream.size() && i < 20; i++)
+					{
+						activityMenu->add(activityStream.get(i));
+					}
+				}
+			}
+
+		}
+	}
+
+
+
 
 	if (getControlsManager()->miniGame_UP_Pressed())
 	{
@@ -696,6 +730,13 @@ void BobsGame::startScreenMenuUpdate()
 				delete forumMenu;
 				forumMenu = nullptr;
 			}
+			if (activityMenu != nullptr)
+			{
+				delete activityMenu;
+				activityMenu = nullptr;
+				sentActivityStreamRequest = false;
+				gotActivityStream = false;
+			}
 		}
 	}
 }
@@ -715,7 +756,16 @@ void BobsGame::startScreenMenuRender()
 	if (t != nullptr)
 	{
 		startScreenMenu->setGraphic(t, getWidth()/3*2, getHeight() / 10, getHeight()/3);
-		startScreenMenu->render();
+
+		if (activityMenu != nullptr)
+		{
+			startScreenMenu->render(0, getWidth() / 4 * 1,getHeight(),true,nullptr,nullptr,true);
+			activityMenu->render(0, getWidth() / 4 * 3,getHeight(),false);
+		}
+		else
+		{
+			startScreenMenu->render();
+		}
 	}
 
 	infoMenu->render(0, 6);// getHeight() - (infoMenu->getAmountOfMenuItems() * 20), 10);

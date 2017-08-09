@@ -526,7 +526,7 @@ void Main::mainInit()
 	}
 	else
 	{
-		stateManager->pushState(logoScreenState);
+		//stateManager->pushState(logoScreenState);
 	}
 
 	//GLUtils::e();

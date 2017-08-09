@@ -453,6 +453,10 @@ public:
 	static const string Bobs_Game_GameStats;
 	static const string Bobs_Game_GameStats_Response;
 
+	static const string Bobs_Game_ActivityStream_Request;
+	static const string Bobs_Game_ActivityStream_Response;
+	static const string Bobs_Game_ActivityStream_Update;
+
 
 
 

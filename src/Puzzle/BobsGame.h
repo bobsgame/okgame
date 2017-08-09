@@ -141,9 +141,16 @@ public:
 	BobMenu *infoMenu = nullptr;
 	BobMenu *patreonMenu = nullptr;
 	BobMenu *forumMenu = nullptr;
+	BobMenu *activityMenu = nullptr;
 	int startScreenMenuCursorPosition = 0;
 	void startScreenMenuUpdate();
 	void startScreenMenuRender();
+
+
+	static ArrayList<string> activityStream;
+	bool sentActivityStreamRequest = false;
+	//bool gotActivityStream = false;
+	//long long lastCheckedActivityResponseTime = 0;
 
 	BobMenu *gettingGamesFromServerMenu = nullptr;
 	void gettingGamesFromServerMenuUpdate();

@@ -931,6 +931,17 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 	{
 		incomingBobsGameGameStatsResponse_S(s);
 		return true;
+	}	
+
+	if (String::startsWith(s, BobNet::Bobs_Game_ActivityStream_Response))
+	{
+		incomingBobsGameActivityStreamResponse_S(s);
+		return true;
+	}
+	if (String::startsWith(s, BobNet::Bobs_Game_ActivityStream_Update))
+	{
+		incomingBobsGameActivityStreamUpdate_S(s);
+		return true;
 	}
 
 	bool processed = false;
@@ -1606,6 +1617,51 @@ void TCPServerConnection::incomingBobsGameGameStatsResponse_S(string s)
 
 	setBobsGameGameStatsResponse_S(responseStrings);
 	setGotBobsGameGameStatsResponse_S(true);
+}
+
+//===============================================================================================
+void TCPServerConnection::sendBobsGameActivityStreamRequest_S()
+{//===============================================================================================
+	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_ActivityStream_Request + BobNet::endline);
+}
+
+//===============================================================================================
+void TCPServerConnection::incomingBobsGameActivityStreamResponse_S(string s)
+{ //=========================================================================================================================
+  //Bobs_Game_ActivityStream_Response:
+	s = s.substr(s.find(":") + 1);
+
+	
+	while(s.find("`")!=string::npos)
+	{
+		s = s.substr(s.find("`") + 1);
+		BobsGame::activityStream.add(s.substr(0, s.find("`")));
+		s = s.substr(s.find("`") + 1);
+		s = s.substr(s.find(",") + 1);
+	}
+
+	//setGotBobsGameActivityStreamResponse_S(true);
+}
+
+//===============================================================================================
+void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
+{ //=========================================================================================================================
+  //Bobs_Game_ActivityStream_Update:
+	s = s.substr(s.find(":") + 1);
+
+	ArrayList<string> strings;
+	while (s.find("`") != string::npos)
+	{
+		s = s.substr(s.find("`") + 1);
+		strings.add(s.substr(0, s.find("`")));
+		s = s.substr(s.find("`") + 1);
+		s = s.substr(s.find(",") + 1);
+	}
+	for(int i=strings.size()-1;i<=0;i--)
+	{
+		BobsGame::activityStream.add(strings.get(i));
+	}
+
 }
 
 //===============================================================================================

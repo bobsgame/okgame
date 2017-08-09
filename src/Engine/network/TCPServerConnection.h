@@ -864,6 +864,9 @@ public:
 	void tellServerBobsGameTheGameHasEnded_S(const string& roomUUID, const string& results);
 	void sendBobsGameGameStats_S(const string& statsString);
 	void incomingBobsGameGameStatsResponse_S(string s);
+	void sendBobsGameActivityStreamRequest_S();
+	void incomingBobsGameActivityStreamResponse_S(string s);
+	void incomingBobsGameActivityStreamUpdate_S(string s);
 	void incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s);
 	void addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard);
 	void incomingBobsGameLeaderBoardByTotalTimePlayed(string &s);
@@ -929,7 +932,11 @@ public:
 			_bobsGameGameStatsResponse.clear();
 			return s;
 		}
-	//------------------------------------
+	//------------------------------------	
+
+
+
+
 
 
 

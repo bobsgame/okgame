@@ -6,7 +6,7 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\main.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\Users\Administrator\workspace\bobsgame\src\Puzzle\BobsGame.cpp</string>
+      <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\BobsGame.cpp</string>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\BobsGame.h</string>
     </ArrayOfString>
     <ArrayOfString>
@@ -74,7 +74,7 @@
       <string>C:\Users\Administrator\workspace\bobsgame\src\Engine\network\UDPPeerConnection.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Room.h</string>
+      <string>c:\Users\Administrator\workspace\bobsgame\src\Puzzle\Room.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\Users\Administrator\workspace\bobsgame\src\Puzzle\Stats\GameStats.h</string>
