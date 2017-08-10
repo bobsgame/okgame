@@ -114,6 +114,7 @@ public:
 	MenuItem* topMenuItemDrawn = nullptr;
 
 	int lastWidth = 0;
+	int lastHeight = 0;
 
 	BobMenu(Engine *g, string title = "", string subtitle = "");
 	~BobMenu();

@@ -514,6 +514,9 @@ void BobsGame::startScreenMenuUpdate()
 		startScreenMenu->add("Exit Game");
 
 		startScreenMenu->cursorPosition = startScreenMenuCursorPosition;
+
+		localMultiplayer = false;
+		networkMultiplayer = false;
 	}
 
 	if (infoMenu == nullptr)
@@ -585,11 +588,12 @@ void BobsGame::startScreenMenuUpdate()
 				{
 					activityMenu = new BobMenu(this, "", "Activity Stream");
 					activityMenu->spacing = 1.2f;
-					activityMenu->setFontSize(28);
+					activityMenu->setFontSize(14);
+					activityMenu->center = false;
 
 					for (int i = 0; i < activityStream.size() && i < 20; i++)
 					{
-						activityMenu->add(activityStream.get(i));
+						activityMenu->addInfo(activityStream.get(i));
 					}
 				}
 			}
@@ -733,9 +737,7 @@ void BobsGame::startScreenMenuUpdate()
 			if (activityMenu != nullptr)
 			{
 				delete activityMenu;
-				activityMenu = nullptr;
-				sentActivityStreamRequest = false;
-				gotActivityStream = false;
+				activityMenu = nullptr;				
 			}
 		}
 	}
@@ -759,8 +761,10 @@ void BobsGame::startScreenMenuRender()
 
 		if (activityMenu != nullptr)
 		{
-			startScreenMenu->render(0, getWidth() / 4 * 1,getHeight(),true,nullptr,nullptr,true);
-			activityMenu->render(0, getWidth() / 4 * 3,getHeight(),false);
+			int bottomOfGraphic = 0;
+			int rightX = 0;
+			startScreenMenu->render(0, 0 ,getHeight(),true,&bottomOfGraphic,nullptr, false,nullptr,&rightX);
+			activityMenu->render(getHeight()-(activityMenu->lastHeight+30), rightX + 100 ,getHeight(),false);
 		}
 		else
 		{
@@ -2498,14 +2502,6 @@ void BobsGame::statsMenuUpdate()
 		leaderBoardMenu->clear();
 
 
-		if (whichDifficultyToShow > 5)whichDifficultyToShow = 0;
-		if (whichDifficultyToShow == 0)statsMenu_difficultyName = "OVERALL";
-		if (whichDifficultyToShow == 1)statsMenu_difficultyName = "Beginner";
-		if (whichDifficultyToShow == 2)statsMenu_difficultyName = "Easy";
-		if (whichDifficultyToShow == 3)statsMenu_difficultyName = "Normal";
-		if (whichDifficultyToShow == 4)statsMenu_difficultyName = "Hard";
-		if (whichDifficultyToShow == 5)statsMenu_difficultyName = "Insane";
-
 		populateUserStatsForSpecificGameAndDifficultyMenu(yourStatsMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName);
 
 		string title = populateLeaderBoardOrHighScoreBoardMenu(leaderBoardMenu, statsMenu_gameSequenceOrTypeUUID, statsMenu_difficultyName, statsMenu_objectiveName,
@@ -4074,7 +4070,7 @@ void BobsGame::gameSetupMenuRender()
 
 
 		int bottomOfCaptions = 0;
-		gameSetupMenu->render(0, (getWidth()-(gameSetupMenu->lastWidth + 50 + yourStatsMenu->lastWidth + 50 + leaderBoardMenu->lastWidth)) / 2 , getHeight(), true, &startHeight,&bottomOfCaptions, true, &leftX, &rightX);
+		gameSetupMenu->render(0, (getWidth()-(gameSetupMenu->lastWidth + 50 + yourStatsMenu->lastWidth + 50 + leaderBoardMenu->lastWidth)) / 2 , getHeight(), true, &startHeight,&bottomOfCaptions, false, &leftX, &rightX);
 		if (errorLabel != nullptr)
 		{
 			errorLabel->screenY = getHeight() - 50; //bottomOfCaptions + 24;
@@ -4714,6 +4710,8 @@ string getNiceTime(long long ms)
 	int sec = ms / 1000;
 	int min = sec / 60;
 	int hrs = min / 60;
+	sec = sec % 60;
+	min = min % 60;
 
 	string niceTime = "";
 	if (hrs > 0 && hrs < 10)niceTime += "0"+to_string(hrs) + "h ";
@@ -4722,8 +4720,8 @@ string getNiceTime(long long ms)
 	if (min > 0 && min < 10)niceTime += "0" + to_string(min) + "m ";
 	if (min > 0 && min >= 10)niceTime += to_string(min) + "m ";
 
-	if (sec > 0 && sec < 10)niceTime += "0" + to_string(sec) + "s ";
-	if (sec > 0 && sec >= 10)niceTime += to_string(sec) + "s ";
+	if (sec > 0 && sec < 10)niceTime += "0" + to_string(sec) + "s";
+	if (sec > 0 && sec >= 10)niceTime += to_string(sec) + "s";
 	return niceTime;
 }
 

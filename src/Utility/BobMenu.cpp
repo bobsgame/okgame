@@ -894,6 +894,8 @@ void BobMenu::render
 
 		bottomY = (float)bottomOfCaptions;
 
+		lastHeight = (bottomY + 15) - (topY - 15);
+
 		if (returnLeftX != nullptr)*returnLeftX = leftX - 25;
 		if (returnRightX != nullptr)*returnRightX = rightX + 25;
 		lastWidth = (rightX + 25) - (leftX - 25);

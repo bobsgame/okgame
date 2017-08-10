@@ -37,6 +37,9 @@ ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topPlayersByEloScore;
 ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByTimeLasted;
 ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByBlocksCleared;
 
+
+ArrayList<string> BobsGame::activityStream;
+
 #include "Stats/GameStats.h"
 
 //=========================================================================================================================
@@ -1195,7 +1198,8 @@ void BobsGame::sendGameStatsToServer()
 		getServerConnection()->getAuthorizedOnServer_S() == false
 		)
 	{
-
+		sentStats = true;
+		gotStatsResponse = true;
 		if(statsUploadMenu !=nullptr)
 		{
 			delete statsUploadMenu;
@@ -1389,6 +1393,7 @@ void BobsGame::doVoting()
 		getServerConnection()->getAuthorizedOnServer_S() == false
 		)
 	{
+		sentVote = true;
 		if (voteMenu != nullptr)
 		{
 			delete voteMenu;
@@ -1400,10 +1405,14 @@ void BobsGame::doVoting()
 
 	if (sentVote == false)
 	{
+		string type = "game sequence";
 		GameSequence *gs = getPlayer1Game()->currentGameSequence;
+		string name = gs->name;
 		if (gs->gameTypes.size() == 1)
 		{
+			type = "game type";
 			GameType *g = gs->gameTypes.get(0);
+			name = g->name;
 			if (g->downloaded == false || g->yourVote != "none")
 			{
 				sentVote = true;
@@ -1424,7 +1433,7 @@ void BobsGame::doVoting()
 			voteMenu = new BobMenu(this, "Vote");
 			voteMenu->outline = true;
 			voteMenu->setFontSize(32);
-			voteMenu->addInfo("Please vote on this game:", "", BobColor::green)->outline = true;
+			voteMenu->addInfo("Please vote on this "+type+" ("+name+")", "", BobColor::green)->outline = true;
 			voteMenu->add("Up", "", BobColor::white);
 			voteMenu->add("Down", "", BobColor::white);
 		}
