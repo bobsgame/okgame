@@ -1635,7 +1635,7 @@ void TCPServerConnection::incomingBobsGameActivityStreamResponse_S(string s)
 	while(s.find("`")!=string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		BobsGame::activityStream.add(s.substr(0, s.find("`")));
+		BobsGame::activityStream.add(FileUtils::removeSwearWords(s.substr(0, s.find("`"))));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
@@ -1659,7 +1659,7 @@ void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
 	}
 	for(int i=strings.size()-1;i<=0;i--)
 	{
-		BobsGame::activityStream.add(strings.get(i));
+		BobsGame::activityStream.insert(0,FileUtils::removeSwearWords(strings.get(i)));
 	}
 
 }

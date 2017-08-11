@@ -47,6 +47,8 @@ public:
 
 	FileUtils();
 
+	static ArrayList<string>* swearWords;
+	static string removeSwearWords(string s);
 	static string removeIllegalFilenameChars(string s);
 	//static void fixPath(string &fullname);
 	static BufferedImage* readBufferedImageFromFile(BobFile* file);

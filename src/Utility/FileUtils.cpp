@@ -105,8 +105,37 @@ void test()
 	}
 }
 
-//==========================================================================================================================
+ArrayList<string>* FileUtils::swearWords = nullptr;
 
+//==========================================================================================================================
+string FileUtils::removeSwearWords(string text)
+{//==========================================================================================================================
+	
+	if (Main::globalSettings->censorBadWords == false)return;
+
+	if(swearWords==nullptr)
+	{
+		swearWords = loadTextFileFromExePathIntoVectorOfStringsAndTrim("/data/misc/swearwords.txt");
+	}
+
+	for(int i=0;i<swearWords->size();i++)
+	{
+		string word = swearWords->get(i);
+		int pos = text.find(word);
+		while(pos!=(int)string::npos)
+		{
+			text = text.substr(0, pos) + "*" +text.substr(pos + word.length() + 1);
+
+			pos = text.find(word);
+		}
+	}
+	return text;
+
+}
+
+
+
+//==========================================================================================================================
 string FileUtils::removeIllegalFilenameChars(string filename)
 {//==========================================================================================================================
 

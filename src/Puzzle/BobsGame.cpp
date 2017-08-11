@@ -993,6 +993,8 @@ void BobsGame::update()
 		spriteManager->update();
 	}
 
+
+
 	getGameTypesAndSequencesFromServer();
 
 
@@ -1200,6 +1202,7 @@ void BobsGame::sendGameStatsToServer()
 	{
 		sentStats = true;
 		gotStatsResponse = true;
+		
 		if(statsUploadMenu !=nullptr)
 		{
 			delete statsUploadMenu;
@@ -2318,8 +2321,14 @@ void BobsGame::getGameTypesAndSequencesFromServer()
 {//=========================================================================================================================
 	
 
-
-
+	if (getServerConnection()->getConnectedToServer_S())
+	{
+		if (sentActivityStreamRequest == false)
+		{
+			sentActivityStreamRequest = true;
+			getServerConnection()->sendBobsGameActivityStreamRequest_S();
+		}
+	}
 
 	
 	if (getServerConnection()->getConnectedToServer_S())
@@ -2636,6 +2645,12 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 				g->downVotes = downVotes;
 				g->yourVote = yourVoteString;
 
+				g->creatorUserName = FileUtils::removeSwearWords(g->creatorUserName);
+				g->name = FileUtils::removeSwearWords(g->name);
+				g->rules1 = FileUtils::removeSwearWords(g->rules1);
+				g->rules2 = FileUtils::removeSwearWords(g->rules2);
+				g->rules3 = FileUtils::removeSwearWords(g->rules3);
+
 				incomingGameTypesQueuePush_S(g);
 			}
 			catch (exception)
@@ -2666,6 +2681,9 @@ void BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 				g->upVotes = upVotes;
 				g->downVotes = downVotes;
 				g->yourVote = yourVoteString;
+
+				g->creatorUserName = FileUtils::removeSwearWords(g->creatorUserName);
+				g->name = FileUtils::removeSwearWords(g->name);
 
 				incomingGameSequencesQueuePush_S(g);
 			}

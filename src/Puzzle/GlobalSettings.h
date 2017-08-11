@@ -27,6 +27,7 @@ public:
 	bool bobsGame_showScoreBarsInSinglePlayer = true;
 
 	bool useAnalogSticks = true;
+	bool censorBadWords = true;
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version)
@@ -64,8 +65,12 @@ public:
 		{
 			ar & BOOST_SERIALIZATION_NVP(useAnalogSticks);
 		}
+		if(version>5)
+		{
+			ar & BOOST_SERIALIZATION_NVP(censorBadWords);
+		}
 	}
 
 };
-BOOST_CLASS_VERSION(GlobalSettings, 5)
+BOOST_CLASS_VERSION(GlobalSettings, 6)
 BOOST_CLASS_TRACKING(GlobalSettings, boost::serialization::track_never)

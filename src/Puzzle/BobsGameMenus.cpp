@@ -570,36 +570,26 @@ void BobsGame::startScreenMenuUpdate()
 		startScreenMenu->getMenuItemByID("Vote On New Games")->info = true;
 	}
 
-	if (getServerConnection()->getConnectedToServer_S())
+
+	if (activityStream.size()>0)
 	{
-
-
-		if(sentActivityStreamRequest == false)
-		{
-			sentActivityStreamRequest = true;
-			getServerConnection()->sendBobsGameActivityStreamRequest_S();
-		}
-		else
-		{
-			if (activityStream.size()>0)
-			{
 							
-				if (activityMenu == nullptr)
-				{
-					activityMenu = new BobMenu(this, "", "Activity Stream");
-					activityMenu->spacing = 1.2f;
-					activityMenu->setFontSize(14);
-					activityMenu->center = false;
+		if (activityMenu == nullptr)
+		{
+			activityMenu = new BobMenu(this, "", "Activity Stream");
+			activityMenu->spacing = 1.2f;
+			activityMenu->setFontSize(14);
+			activityMenu->center = false;
 
-					for (int i = 0; i < activityStream.size() && i < 20; i++)
-					{
-						activityMenu->addInfo(activityStream.get(i));
-					}
-				}
+			for (int i = 0; i < activityStream.size() && i < 20; i++)
+			{
+				activityMenu->addInfo(activityStream.get(i));
 			}
-
 		}
 	}
+
+		
+	
 
 
 
@@ -1806,6 +1796,7 @@ void BobsGame::settingsMenuInit(BobMenu* m)
 	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
 	m->add("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"), "Game Stats");
 	m->add("Show High Score Bar In Single Player: " + string(Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer ? "On" : "Off"), "Score Bars");
+	m->add("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"), "Censor");
 
 	m->add("Defaults");
 }
@@ -1845,6 +1836,21 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 			getPlayer1Game()->deleteScoreBarCaptions();
 
 			m->getMenuItemByID("Score Bars")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer ? "On" : "Off"));
+		}
+	}
+
+	if (m->isSelectedID("Censor"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			Main::globalSettings->censorBadWords = !Main::globalSettings->censorBadWords;
+
+			m->getMenuItemByID("Censor")->setText("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"));
 		}
 	}
 
@@ -4714,14 +4720,37 @@ string getNiceTime(long long ms)
 	min = min % 60;
 
 	string niceTime = "";
-	if (hrs > 0 && hrs < 10)niceTime += "0"+to_string(hrs) + "h ";
-	if (hrs > 0 && hrs >= 10)niceTime += to_string(hrs) + "h ";
 
-	if (min > 0 && min < 10)niceTime += "0" + to_string(min) + "m ";
-	if (min > 0 && min >= 10)niceTime += to_string(min) + "m ";
+	if (hrs>0)
+	{
+		if (hrs > 0 && hrs < 10)niceTime += "0" + to_string(hrs) + ":";
+		if (hrs >= 10)niceTime += "" + to_string(hrs) + ":";
 
-	if (sec > 0 && sec < 10)niceTime += "0" + to_string(sec) + "s";
-	if (sec > 0 && sec >= 10)niceTime += to_string(sec) + "s";
+		if (min >= 0 && min < 10)niceTime += "0" + to_string(min) + ":";
+		if (min >= 10)niceTime += "" + to_string(min) + ":";
+
+		if (sec >= 0 && sec < 10)niceTime += "0" + to_string(sec) + "";
+		if (sec >= 10)niceTime += "" + to_string(sec) + "";
+	}
+	else
+	{
+
+		if (min >= 0 && min < 10)niceTime += "0" + to_string(min) + ":";
+		if (min >= 10)niceTime += "" + to_string(min) + ":";
+
+		if (sec >= 0 && sec < 10)niceTime += "0" + to_string(sec) + "";
+		if (sec >= 10)niceTime += "" + to_string(sec) + "";
+
+	}
+
+//	if (hrs > 0 && hrs < 10)niceTime += "0"+to_string(hrs) + "h ";
+//	if (hrs > 0 && hrs >= 10)niceTime += to_string(hrs) + "h ";
+//
+//	if (min > 0 && min < 10)niceTime += "0" + to_string(min) + "m ";
+//	if (min > 0 && min >= 10)niceTime += to_string(min) + "m ";
+//
+//	if (sec > 0 && sec < 10)niceTime += "0" + to_string(sec) + "s";
+//	if (sec > 0 && sec >= 10)niceTime += to_string(sec) + "s";
 	return niceTime;
 }
 
