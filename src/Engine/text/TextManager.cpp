@@ -626,7 +626,7 @@ void TextManager::drawText(long long ticksPassed)
 				parseOption();
 
 				string e = "A tag was parsed inside drawText()";
-				Console::error(e);
+				Main::console->error(e);
 				log.error(e);
 			}
 
@@ -647,7 +647,7 @@ void TextManager::drawText(long long ticksPassed)
 						//TODO: skip next word
 
 						string e = "A word was too long for the getText engine.";
-						Console::error(e);
+						Main::console->error(e);
 						log.error(e);
 
 						nextWordLength = BobFont::getNextWordLength(currentText, position, font);
@@ -1884,7 +1884,7 @@ void TextManager::parseOption()
 		else
 		{
 			string e = "Unknown tag parsed in TextEngine: " + optionBuffer;
-			Console::error(e);
+			Main::console->error(e);
 			log.error(e);
 		}
 	}

@@ -444,6 +444,7 @@ public:
 	static const string Bobs_Game_RoomList_Request;
 	static const string Bobs_Game_RoomList_Response;
 	static const string Bobs_Game_TellRoomHostToAddMyUserID;
+	static const string Bobs_Game_NewRoomCreatedUpdate;
 
 	static const string Bobs_Game_HostingPublicRoomUpdate;
 	static const string Bobs_Game_HostingPublicRoomStarted;

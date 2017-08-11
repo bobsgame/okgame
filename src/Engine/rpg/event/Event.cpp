@@ -6047,7 +6047,7 @@ void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 	u8 b = currentCommand->parameterList->get(p++)->i;
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
-	Console::add(gameString->text(), ticks, new BobColor(r, g, b));
+	Main::console->add(gameString->text(), ticks, new BobColor(r, g, b));
 
 	getNextCommand();
 }

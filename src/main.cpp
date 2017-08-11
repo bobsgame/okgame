@@ -1063,7 +1063,7 @@ void Main::doScreenShotCheck()
 		{
 			log.info("Saved screenshot to " + fileName);
 
-			Console::add("Saved screenshot to "+ fileName, 3000, BobColor::green);
+			Main::console->add("Saved screenshot to "+ fileName, 3000, BobColor::green);
 			//getFileName = System::getProperty("user.home") + "/" + "Desktop" + "/" + imageName;
 		}
 		//  				else
@@ -1625,9 +1625,9 @@ void Main::checkVersion()
 
 		if (serverVersion > localVersion)
 		{
-			Console::add("Your version is out of date!", BobColor::red);
-			Console::add("Your version: " + versionString, BobColor::red);
-			Console::add("Latest version: " + serverString, BobColor::red);
+			Main::console->add("Your version is out of date!", BobColor::red);
+			Main::console->add("Your version: " + versionString, BobColor::red);
+			Main::console->add("Latest version: " + serverString, BobColor::red);
 
 			//bobsgame.exe can update itself, download latest.zip, rename itself, unzip in directory and overwrite, reopen itself, exit
 			//in linux it doesnt even have to rename itself

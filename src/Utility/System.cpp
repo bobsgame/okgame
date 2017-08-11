@@ -648,34 +648,34 @@ void System::initStats()
 
   //initFrameStats();
 	{
-		upTimeText = Console::debug(" ");
+		upTimeText = Main::console->debug(" ");
 
-		totalRendersText = Console::debug(" ");
-		totalUpdatesText = Console::debug(" ");
+		totalRendersText = Main::console->debug(" ");
+		totalUpdatesText = Main::console->debug(" ");
 
-		rendersPerSecondText = Console::add(" ");
-		updatesPerSecondText = Console::debug(" ");
-		averageRendersPerSecondText = Console::add(" ");
-		onlineStatusText = Console::add(" ");
+		rendersPerSecondText = Main::console->add(" ");
+		updatesPerSecondText = Main::console->debug(" ");
+		averageRendersPerSecondText = Main::console->add(" ");
+		onlineStatusText = Main::console->add(" ");
 
-		rendersSkippedText = Console::debug(" ");
-		updatesSkippedText = Console::debug(" ");
+		rendersSkippedText = Main::console->debug(" ");
+		updatesSkippedText = Main::console->debug(" ");
 
-		averageTicksPerFrameText = Console::debug(" ");
-		averageTicksPerUpdateText = Console::debug(" ");
+		averageTicksPerFrameText = Main::console->debug(" ");
+		averageTicksPerUpdateText = Main::console->debug(" ");
 
 #ifdef _DEBUG
 		for (int i = 0; i < amtTicksTexts; i++)
-			ticksText[i] = Console::debug(" ");
+			ticksText[i] = Main::console->debug(" ");
 #endif
 	}
 
 
 	//initMemoryStats();
 	{
-		//memoryText = Console::debug("memoryText");
-		texturesLoadedText = Console::debug(" ");
-		textureBytesLoadedText = Console::debug(" ");
+		//memoryText = Main::console->debug("memoryText");
+		texturesLoadedText = Main::console->debug(" ");
+		textureBytesLoadedText = Main::console->debug(" ");
 
 		//vramText = DebugConsole.add("vramText");
 

@@ -107,6 +107,7 @@ const string BobNet::Bobs_Game_GameTypesAndSequences_Vote_Response = "Bobs_Game_
 const string BobNet::Bobs_Game_RoomList_Request = "Bobs_Game_RoomList_Request:";
 const string BobNet::Bobs_Game_RoomList_Response = "Bobs_Game_RoomList_Response:";
 const string BobNet::Bobs_Game_TellRoomHostToAddMyUserID = "Bobs_Game_TellRoomHostToAddMyUserID:";
+const string BobNet::Bobs_Game_NewRoomCreatedUpdate = "Bobs_Game_NewRoomCreatedUpdate:";
 
 const string BobNet::Bobs_Game_HostingPublicRoomUpdate = "Bobs_Game_HostingPublicRoomUpdate:";
 const string BobNet::Bobs_Game_HostingPublicRoomStarted = "Bobs_Game_HostingPublicRoomStarted:";

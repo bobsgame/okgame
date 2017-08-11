@@ -165,13 +165,13 @@ void Engine::updateDebugText()
 { //=========================================================================================================================
 
 
-	if (zoomText == nullptr)zoomText = Console::debug("zoomText");
-	if (mapCamText == nullptr)mapCamText = Console::debug("mapCamText");
-	if (mapScreenText == nullptr)mapScreenText = Console::debug("mapScreenText");
-	if (mapSizeText == nullptr)mapSizeText = Console::debug("mapSizeText");
-	if (resolutionText == nullptr)resolutionText = Console::debug("resolutionText");
-	if (textText == nullptr)textText = Console::debug("textText");
-	if (textOptionText == nullptr)textOptionText = Console::debug("textOptionText");
+	if (zoomText == nullptr)zoomText = Main::console->debug("zoomText");
+	if (mapCamText == nullptr)mapCamText = Main::console->debug("mapCamText");
+	if (mapScreenText == nullptr)mapScreenText = Main::console->debug("mapScreenText");
+	if (mapSizeText == nullptr)mapSizeText = Main::console->debug("mapSizeText");
+	if (resolutionText == nullptr)resolutionText = Main::console->debug("resolutionText");
+	if (textText == nullptr)textText = Main::console->debug("textText");
+	if (textOptionText == nullptr)textOptionText = Main::console->debug("textOptionText");
 
 
 	//playerSpeedText.getText = "Player speed: " + player.pixelsToMoveThisFrame;

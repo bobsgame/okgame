@@ -63,22 +63,24 @@ public:
 
 	static CaptionManager* captionManager;
 
-	static ArrayList<ConsoleText*>* consoleTextList;
-	static mutex _consoleTextList_Mutex;
+	ArrayList<ConsoleText*>* consoleTextList;
+	mutex _consoleTextList_Mutex;
 
 	static bool showConsole;
+
+	bool justifyRight = false;
 
 	Console();
 	void update();
 
-	static ConsoleText* error(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
-	static ConsoleText* debug(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
+	ConsoleText* error(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
+	ConsoleText* debug(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
 
 	/// <summary>
 	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	static ConsoleText* add(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr, bool isDebug = false);
-	static ConsoleText* add(const string& s, int ticks, BobColor* c);
-	static ConsoleText* add(const string& s, BobColor* c);
+	ConsoleText* add(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr, bool isDebug = false);
+	ConsoleText* add(const string& s, int ticks, BobColor* c);
+	ConsoleText* add(const string& s, BobColor* c);
 
 
 

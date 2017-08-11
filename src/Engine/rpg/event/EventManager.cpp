@@ -123,7 +123,7 @@ Item* EventManager::getItemByID(int id)
 	}
 
 	string e = "Item not found! getItemByID():" + to_string(id);
-	Console::error(e);
+	Main::console->error(e);
 	log.error(e);
 
 	return nullptr;
@@ -195,7 +195,7 @@ Skill* EventManager::getSkillByIDCreateIfNotExist(int id)
 	//All skills defined in editor should be loaded from /res/SkillData at load, so it should always exist.
 
 	string e = "Skill not found! getSkillByID():" + to_string(id);
-	Console::error(e);
+	Main::console->error(e);
 	log.error(e);
 
 	return new Skill(getEngine(), id);

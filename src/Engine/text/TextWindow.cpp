@@ -556,7 +556,7 @@ void TextWindow::setSpriteWindow(Entity* entity, BobTexture* texture, const stri
 	else
 	{
 		string e = "Tried to update sprite window with both npc and gfx null.";
-		Console::error(e);
+		Main::console->error(e);
 		log.error(e);
 	}
 }

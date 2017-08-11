@@ -857,6 +857,7 @@ public:
 
 	void sendBobsGameRoomListRequest_S();
 	void incomingBobsGameRoomListResponse(string &s);
+	void incomingBobsGameNewRoomCreatedUpdate(string &s);
 	void tellBobsGameRoomHostMyUserID_S(const string& roomUUID);
 	void tellServerBobsGameHostingPublicGameUpdate_S(const string& roomDescription);
 	void tellServerBobsGameIHaveCanceledTheGame_S(const string& roomUUID);

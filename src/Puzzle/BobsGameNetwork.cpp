@@ -1164,7 +1164,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 
 		if(s != "")
 		{
-			//remove non private rooms
+			//remove non private rooms since we are adding them back
 			for (int i = 0; i<rooms.size(); i++)
 			{
 				Room *r = rooms.get(i);

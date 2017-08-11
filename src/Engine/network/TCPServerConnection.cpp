@@ -10,6 +10,7 @@
 Logger TCPServerConnection::log = Logger("TCPServerConnection");
 Logger* TCPServerConnection::_threadLog = new Logger("TCPServerConnection");
 
+#include "src/Puzzle/Room.h"
 
 
 TCPServerConnection::TCPServerConnection()
@@ -278,7 +279,7 @@ void TCPServerConnection::_getInitialGameSave()
 			else
 			{
 				_initialGameSaveReceived_nonThreaded = true; //non threaded, a bit faster.
-				Console::add("Authorized on server: " + getGameSave_S().userName, 5000, BobColor::green);
+				Main::console->add("Authorized on server: " + getGameSave_S().userName, 5000, BobColor::green);
 			}
 		}
 		return;
@@ -294,7 +295,7 @@ void TCPServerConnection::setDisconnectedFromServer_S(string reason)
 	//initialGameSaveReceived_nonThreaded = false;
 
 	threadLogWarn_S(string("Disconnected from server: "+reason));
-	Console::add("Disconnected from Server: "+ reason, 5000, BobColor::red);
+	Main::console->add("Disconnected from Server: "+ reason, 5000, BobColor::red);
 
 	SDLNet_TCP_Close(getSocket_S());
 
@@ -500,7 +501,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 				//resolve load balancer
 				if(_loadBalancerAddress == nullptr)
 				{
-					Console::add("Connecting to server...", 5000, BobColor::green);
+					Main::console->add("Connecting to server...", 5000, BobColor::green);
 					//Main::whilefix();
 					threadLogDebug_S("Resolving host to load balancer...");
 
@@ -511,7 +512,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 						SDL_ClearError();
 						_couldNotResolveLoadBalancer = true;
 						threadLogWarn_S("Networking is disabled");
-						Console::add("Could not connect to server: Networking is disabled.", 5000, BobColor::red);
+						Main::console->add("Could not connect to server: Networking is disabled.", 5000, BobColor::red);
 						return false;
 					}
 
@@ -668,7 +669,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 				setSocketAddedToSet_S(true);
 
 			threadLogDebug_S("Connected to server.");
-			Console::add("Connected to server.", 5000, BobColor::green);
+			Main::console->add("Connected to server.", 5000, BobColor::green);
 
 			//wait for the server to open the channel
 
@@ -856,6 +857,12 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 	if (String::startsWith(s, BobNet::Bobs_Game_RoomList_Response))
 	{
 		incomingBobsGameRoomListResponse(s);
+		return true;
+	}
+
+	if (String::startsWith(s, BobNet::Bobs_Game_NewRoomCreatedUpdate))
+	{
+		incomingBobsGameNewRoomCreatedUpdate(s);
 		return true;
 	}
 
@@ -1565,6 +1572,19 @@ void TCPServerConnection::incomingBobsGameRoomListResponse(string &s)
 }
 
 //===============================================================================================
+void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
+{ //=========================================================================================================================
+ 
+	s = s.substr(s.find(":") + 1);
+	string userName = FileUtils::removeSwearWords(s.substr(0, s.find(":")));
+	s = s.substr(s.find(":") + 1);
+	//Room *r = Room::decodeRoomData(s, false);
+
+	BobsGame::console->add(""+userName+" is hosting a multiplayer room, go join it!",5000);
+}
+
+
+//===============================================================================================
 void TCPServerConnection::tellBobsGameRoomHostMyUserID_S(const string& roomUUID)
 {//===============================================================================================
 	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_TellRoomHostToAddMyUserID+roomUUID +":"+ BobNet::endline);
@@ -1659,7 +1679,9 @@ void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
 	}
 	for(int i=strings.size()-1;i<=0;i--)
 	{
-		BobsGame::activityStream.insert(0,FileUtils::removeSwearWords(strings.get(i)));
+		string a = FileUtils::removeSwearWords(strings.get(i));
+		BobsGame::activityStream.insert(0,a);
+		BobsGame::console->add(a, 5000);
 	}
 
 }

@@ -40,6 +40,8 @@ ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByBlocksClear
 
 ArrayList<string> BobsGame::activityStream;
 
+Console* BobsGame::console = nullptr;
+
 #include "Stats/GameStats.h"
 
 //=========================================================================================================================
@@ -122,7 +124,11 @@ void BobsGame::init()
 	music = getAudioManager()->playMusic("slick_v10");
 	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
 
-
+	if (console == nullptr)
+	{
+		console = new Console();
+		console->justifyRight = true;
+	}
 	//	games.put(randomSeed,ME);
 	//	player2 = new Game(this);
 	//	player2.controlledByNetwork = true;
@@ -847,6 +853,8 @@ void BobsGame::render()
 			statsUploadMenu->render(GLUtils::getViewportHeight()/2 + 100,0,getHeight(),false);
 		}
 
+		console->render();
+
 		//--------------------------
 		// draw MAIN FBO texture into SCREEN BUFFER
 		//--------------------------
@@ -873,7 +881,7 @@ void BobsGame::debugKeys()
 		shaderCount++;
 		if (shaderCount >= GLUtils::bgShaderCount)shaderCount = 0;
 		log.info("Shader: " + to_string(shaderCount));
-		Console::add("Shader: " + to_string(shaderCount), 10000);
+		Main::console->add("Shader: " + to_string(shaderCount), 10000);
 
 		getPlayer1Game()->updateCaptions();
 	}
@@ -888,62 +896,62 @@ void BobsGame::debugKeys()
 	if (getControlsManager()->key_1_Pressed() == true)
 	{
 		Main::globalSettings->hue -= 0.1f;
-		Console::debug("Hue: " + to_string(Main::globalSettings->hue), 1000);
+		Main::console->debug("Hue: " + to_string(Main::globalSettings->hue), 1000);
 	}
 
 	if (getControlsManager()->key_2_Pressed() == true)
 	{
 		Main::globalSettings->hue += 0.1f;
-		Console::debug("Hue: " + to_string(Main::globalSettings->hue), 1000);
+		Main::console->debug("Hue: " + to_string(Main::globalSettings->hue), 1000);
 	}
 
 	if (getControlsManager()->key_3_Pressed() == true)
 	{
 		Main::globalSettings->contrast -= 0.1f;
-		Console::debug("Contrast: " + to_string(Main::globalSettings->contrast), 1000);
+		Main::console->debug("Contrast: " + to_string(Main::globalSettings->contrast), 1000);
 	}
 
 	if (getControlsManager()->key_4_Pressed() == true)
 	{
 		Main::globalSettings->contrast += 0.1f;
-		Console::debug("Contrast: " + to_string(Main::globalSettings->contrast), 1000);
+		Main::console->debug("Contrast: " + to_string(Main::globalSettings->contrast), 1000);
 	}
 
 	if (getControlsManager()->key_5_Pressed() == true)
 	{
 		Main::globalSettings->
 			brightness -= 0.1f;
-		Console::debug("Brightness: " + to_string(Main::globalSettings->brightness), 1000);
+		Main::console->debug("Brightness: " + to_string(Main::globalSettings->brightness), 1000);
 	}
 
 	if (getControlsManager()->key_6_Pressed() == true)
 	{
 		Main::globalSettings->brightness += 0.1f;
-		Console::debug("Brightness: " + to_string(Main::globalSettings->brightness), 1000);
+		Main::console->debug("Brightness: " + to_string(Main::globalSettings->brightness), 1000);
 	}
 
 	if (getControlsManager()->key_7_Pressed() == true)
 	{
 		Main::globalSettings->saturation -= 0.1f;
-		Console::debug("Saturation: " + to_string(Main::globalSettings->saturation), 1000);
+		Main::console->debug("Saturation: " + to_string(Main::globalSettings->saturation), 1000);
 	}
 
 	if (getControlsManager()->key_8_Pressed() == true)
 	{
 		Main::globalSettings->saturation += 0.1f;
-		Console::debug("Saturation: " + to_string(Main::globalSettings->saturation), 1000);
+		Main::console->debug("Saturation: " + to_string(Main::globalSettings->saturation), 1000);
 	}
 
 	if (getControlsManager()->key_9_Pressed() == true)
 	{
 		Main::globalSettings->gamma -= 0.1f;
-		Console::debug("Gamma: " + to_string(Main::globalSettings->gamma), 1000);
+		Main::console->debug("Gamma: " + to_string(Main::globalSettings->gamma), 1000);
 	}
 
 	if (getControlsManager()->key_0_Pressed() == true)
 	{
 		Main::globalSettings->gamma += 0.1f;
-		Console::debug("Gamma: " + to_string(Main::globalSettings->gamma), 1000);
+		Main::console->debug("Gamma: " + to_string(Main::globalSettings->gamma), 1000);
 	}
 
 	if (getControlsManager()->key_BACKSPACE_Pressed() == true)
@@ -953,7 +961,7 @@ void BobsGame::debugKeys()
 		Main::globalSettings->brightness = 1.0f;
 		Main::globalSettings->contrast = 1.2f;
 		Main::globalSettings->gamma = 1.0f;
-		Console::debug("Hue: " + to_string(Main::globalSettings->hue) + " | Saturation: " + to_string(Main::globalSettings->saturation) + " | Brightness: " + to_string(Main::globalSettings->brightness) + " | Contrast: " + to_string(Main::globalSettings->contrast) + " | Gamma: " + to_string(Main::globalSettings->gamma), 1000);
+		Main::console->debug("Hue: " + to_string(Main::globalSettings->hue) + " | Saturation: " + to_string(Main::globalSettings->saturation) + " | Brightness: " + to_string(Main::globalSettings->brightness) + " | Contrast: " + to_string(Main::globalSettings->contrast) + " | Gamma: " + to_string(Main::globalSettings->gamma), 1000);
 	}
 
 #endif
@@ -983,6 +991,7 @@ void BobsGame::update()
 		}
 	}
 
+	console->update();
 
 	debugKeys();
 

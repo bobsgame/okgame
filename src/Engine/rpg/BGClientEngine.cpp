@@ -434,97 +434,97 @@ void BGClientEngine::handleGameEngineOptionKeys()
 		if (getControlsManager()->key_H_Pressed() == true)
 		{
 			hitLayerEnabled = !hitLayerEnabled;
-			Console::debug("Hit Layer Toggled: " + StringConverterHelper::toString(hitLayerEnabled), 1000);
+			Main::console->debug("Hit Layer Toggled: " + StringConverterHelper::toString(hitLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_TILDE_Pressed() == true)
 		{
 			underLayerEnabled = !underLayerEnabled;
-			Console::debug("Under Layer Toggled: " + StringConverterHelper::toString(underLayerEnabled), 1000);
+			Main::console->debug("Under Layer Toggled: " + StringConverterHelper::toString(underLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_1_Pressed() == true)
 		{
 			entityLayerEnabled = !entityLayerEnabled;
-			Console::debug("Entity Layer Toggled: " + StringConverterHelper::toString(entityLayerEnabled), 1000);
+			Main::console->debug("Entity Layer Toggled: " + StringConverterHelper::toString(entityLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_2_Pressed() == true)
 		{
 			overLayerEnabled = !overLayerEnabled;
-			Console::debug("Over Layer Toggled: " + StringConverterHelper::toString(overLayerEnabled), 1000);
+			Main::console->debug("Over Layer Toggled: " + StringConverterHelper::toString(overLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_3_Pressed() == true)
 		{
 			lightsLayerEnabled = !lightsLayerEnabled;
-			Console::debug("Lights Layer Toggled: " + StringConverterHelper::toString(lightsLayerEnabled), 1000);
+			Main::console->debug("Lights Layer Toggled: " + StringConverterHelper::toString(lightsLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_4_Pressed() == true)
 		{
 			GLUtils::useShaders = !GLUtils::useShaders;
-			Console::debug("Shader Toggled: " + to_string(GLUtils::useShaders), 1000);
+			Main::console->debug("Shader Toggled: " + to_string(GLUtils::useShaders), 1000);
 		}
 
 //		if (getControlsManager()->key_5_Pressed() == true)
 //		{
 //			GLUtils::useFBO = !GLUtils::useFBO;
-//			Console::debug("FBO Toggled: " + StringConverterHelper::toString(GLUtils::useFBO), 1000);
+//			Main::console->debug("FBO Toggled: " + StringConverterHelper::toString(GLUtils::useFBO), 1000);
 //		}
 
 		if (getControlsManager()->key_6_Pressed() == true)
 		{
 			debugLayerEnabled = !debugLayerEnabled;
-			Console::debug("Debug Layer Toggled: " + StringConverterHelper::toString(debugLayerEnabled), 1000);
+			Main::console->debug("Debug Layer Toggled: " + StringConverterHelper::toString(debugLayerEnabled), 1000);
 		}
 
 		if (getControlsManager()->key_NUM2_Pressed() == true)
 		{
 			getMapManager()->contrast -= 0.1f;
-			Console::debug("Contrast: " + to_string(getMapManager()->contrast), 1000);
+			Main::console->debug("Contrast: " + to_string(getMapManager()->contrast), 1000);
 		}
 
 		if (getControlsManager()->key_NUM3_Pressed() == true)
 		{
 			getMapManager()->contrast += 0.1f;
-			Console::debug("Contrast: " + to_string(getMapManager()->contrast), 1000);
+			Main::console->debug("Contrast: " + to_string(getMapManager()->contrast), 1000);
 		}
 
 		if (getControlsManager()->key_NUM5_Pressed() == true)
 		{
 			getMapManager()->brightness -= 0.1f;
-			Console::debug("Brightness: " + to_string(getMapManager()->brightness), 1000);
+			Main::console->debug("Brightness: " + to_string(getMapManager()->brightness), 1000);
 		}
 
 		if (getControlsManager()->key_NUM6_Pressed() == true)
 		{
 			getMapManager()->brightness += 0.1f;
-			Console::debug("Brightness: " + to_string(getMapManager()->brightness), 1000);
+			Main::console->debug("Brightness: " + to_string(getMapManager()->brightness), 1000);
 		}
 
 		if (getControlsManager()->key_NUM8_Pressed() == true)
 		{
 			getMapManager()->saturation -= 0.1f;
-			Console::debug("Saturation: " + to_string(getMapManager()->saturation), 1000);
+			Main::console->debug("Saturation: " + to_string(getMapManager()->saturation), 1000);
 		}
 
 		if (getControlsManager()->key_NUM9_Pressed() == true)
 		{
 			getMapManager()->saturation += 0.1f;
-			Console::debug("Saturation: " + to_string(getMapManager()->saturation), 1000);
+			Main::console->debug("Saturation: " + to_string(getMapManager()->saturation), 1000);
 		}
 
 		if (getControlsManager()->key_NUM1_Pressed() == true)
 		{
 			getMapManager()->gamma -= 0.1f;
-			Console::debug("Gamma: " + to_string(getMapManager()->gamma), 1000);
+			Main::console->debug("Gamma: " + to_string(getMapManager()->gamma), 1000);
 		}
 
 		if (getControlsManager()->key_NUM4_Pressed() == true)
 		{
 			getMapManager()->gamma += 0.1f;
-			Console::debug("Gamma: " + to_string(getMapManager()->gamma), 1000);
+			Main::console->debug("Gamma: " + to_string(getMapManager()->gamma), 1000);
 		}
 
 		if (getControlsManager()->key_NUM0_Pressed() == true)
@@ -533,7 +533,7 @@ void BGClientEngine::handleGameEngineOptionKeys()
 			getMapManager()->brightness = 1.0f;
 			getMapManager()->contrast = 1.0f;
 			getMapManager()->gamma = 1.0f;
-			Console::debug("Saturation: " + to_string(getMapManager()->saturation) + " | Brightness: " + to_string(getMapManager()->brightness) + " | Contrast: " + to_string(getMapManager()->contrast) + " | Gamma: " + to_string(getMapManager()->gamma), 1000);
+			Main::console->debug("Saturation: " + to_string(getMapManager()->saturation) + " | Brightness: " + to_string(getMapManager()->brightness) + " | Contrast: " + to_string(getMapManager()->contrast) + " | Gamma: " + to_string(getMapManager()->gamma), 1000);
 		}
 	}
 }
@@ -542,8 +542,8 @@ void BGClientEngine::updateDebugText()
 { //=========================================================================================================================
 	Engine::updateDebugText();
 
-	if (playerMapText == nullptr)playerMapText = Console::debug("playerMapText");
-	if (playerScreenText == nullptr)playerScreenText = Console::debug("playerScreenText");
+	if (playerMapText == nullptr)playerMapText = Main::console->debug("playerMapText");
+	if (playerScreenText == nullptr)playerScreenText = Main::console->debug("playerScreenText");
 
 	playerMapText->text = "Player map xy: " + to_string(player->getX()) + "," + to_string(player->getY()) + " | Tiles: " + to_string(player->getX() / 8) + "," + to_string(player->getY() / 8);
 	playerScreenText->text = "Player screen xy: " + to_string(player->getScreenLeft()) + "," + to_string(player->getScreenTop()) + " Player layer: " + to_string((int)player->getRenderOrder());

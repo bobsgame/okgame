@@ -280,9 +280,9 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 	if (fontSize == 29) { this->ttfFont = BobFont::ttf_29; outlineFont = BobFont::ttf_outline_29; }
 	if (fontSize == 30) { this->ttfFont = BobFont::ttf_30; outlineFont = BobFont::ttf_outline_30; }
 	if (fontSize == 31) { this->ttfFont = BobFont::ttf_31; outlineFont = BobFont::ttf_outline_31; }
-	if (fontSize == 32) { this->ttfFont = BobFont::ttf_32; outlineFont = BobFont::ttf_outline_32; }
-	if (fontSize > 32) { this->ttfFont = BobFont::ttf_48; outlineFont = BobFont::ttf_outline_48; this->fontSize = 48; }
-	if (fontSize > 48) { this->ttfFont = BobFont::ttf_64; outlineFont = BobFont::ttf_outline_64; this->fontSize = 64; }
+	if (fontSize >= 32 && fontSize < 48) { this->ttfFont = BobFont::ttf_32; outlineFont = BobFont::ttf_outline_32; this->fontSize = 32; }
+	if (fontSize >= 48 && fontSize < 64) { this->ttfFont = BobFont::ttf_48; outlineFont = BobFont::ttf_outline_48; this->fontSize = 48; }
+	if (fontSize >= 64) { this->ttfFont = BobFont::ttf_64; outlineFont = BobFont::ttf_outline_64; this->fontSize = 64; }
 
 	if (outline)this->outline = true;
 	if (outline)
@@ -1059,7 +1059,7 @@ void Caption::parseOptions(const string& optionBuffer)
 													}
 													else
 													{
-														Console::debug("Unknown getText tag: " + optionBuffer);
+														Main::console->debug("Unknown getText tag: " + optionBuffer);
 													}
 												}
 											}
@@ -1169,6 +1169,8 @@ int Caption::increaseHeightByOne()
 	if (ttfFont == nullptr)return 0;
 
 	fontSize++;
+	if (fontSize > 32)fontSize = 48;
+	if (fontSize > 48)fontSize = 64;
 	if (fontSize > 64)fontSize = 64;
 
 	setText(text, true);

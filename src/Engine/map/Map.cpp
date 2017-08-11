@@ -886,7 +886,7 @@ void Map::updateLoadingStatus()
 	{
 		if (hq2xChunkPNGThreadsDebugText == nullptr)
 		{
-			hq2xChunkPNGThreadsDebugText = Console::debug("hq2xChunkPNGThreadsDebugText");
+			hq2xChunkPNGThreadsDebugText = Main::console->debug("hq2xChunkPNGThreadsDebugText");
 		}
 
 
@@ -908,7 +908,7 @@ void Map::updateLoadingStatus()
 	{
 		if (chunkPNGThreadsDebugText == nullptr)
 		{
-			chunkPNGThreadsDebugText = Console::debug("chunkPNGThreadsDebugText");
+			chunkPNGThreadsDebugText = Main::console->debug("chunkPNGThreadsDebugText");
 		}
 
 
@@ -930,7 +930,7 @@ void Map::updateLoadingStatus()
 	{
 		if (lightPNGThreadsDebugText == nullptr)
 		{
-			lightPNGThreadsDebugText = Console::debug("lightPNGThreadsDebugText");
+			lightPNGThreadsDebugText = Main::console->debug("lightPNGThreadsDebugText");
 		}
 
 
@@ -955,7 +955,7 @@ void Map::updateLoadingStatus()
 
 		if (texturesLoadedDebugText == nullptr)
 		{
-			texturesLoadedDebugText = Console::debug("texturesLoadedDebugText");
+			texturesLoadedDebugText = Main::console->debug("texturesLoadedDebugText");
 		}
 
 		if (generatingAreaNotification == nullptr)

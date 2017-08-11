@@ -714,7 +714,7 @@ void UDPPeerConnection::_checkForTimeout()
 
 		if (getGotFriendData_S() == true)
 		{
-			Console::add("" + getFriendData_S().userName + " has gone offline.", 5000, BobColor::lightRed);//" escaped from reality and has descended into the inferior meat world. What a traitor."
+			Main::console->add("" + getFriendData_S().userName + " has gone offline.", 5000, BobColor::lightRed);//" escaped from reality and has descended into the inferior meat world. What a traitor."
 		}
 	}
 
@@ -752,7 +752,7 @@ void UDPPeerConnection::setDisconnectedFromPeer_S(string reason)
 	setPeerIPAddress_S("", -1);
 
 	threadLogWarn_S(string("Disconnected from " + getFriendData_S().userName + ": " + reason));
-	Console::add("Disconnected from " + getFriendData_S().userName + ": " + reason, 5000, BobColor::red);
+	Main::console->add("Disconnected from " + getFriendData_S().userName + ": " + reason, 5000, BobColor::red);
 
 	SDLNet_UDP_Close(getSocket_S());
 

@@ -111,7 +111,7 @@ ArrayList<string>* FileUtils::swearWords = nullptr;
 string FileUtils::removeSwearWords(string text)
 {//==========================================================================================================================
 	
-	if (Main::globalSettings->censorBadWords == false)return;
+	if (Main::globalSettings->censorBadWords == false)return text;
 
 	if(swearWords==nullptr)
 	{
@@ -1964,7 +1964,7 @@ void FileUtils::setStatusText(const string& text)
 
 	   if (statusConsoleText == nullptr)
 	   {
-	      statusConsoleText = Console::add("", -1, GLUtils::getViewportWidth() / 2 - 50, GLUtils::getViewportHeight() / 2 - 10);
+	      statusConsoleText = Main::console->add("", -1, GLUtils::getViewportWidth() / 2 - 50, GLUtils::getViewportHeight() / 2 - 10);
 	   }
 	
 	   statusConsoleText->x = (int)(GLUtils::getViewportWidth() / 2 - ((statusConsoleText->getWidth() + 3) / 2));

@@ -124,6 +124,7 @@ public:
 	ArrayList<PuzzlePlayer*> players;
 	
 
+	static Console* console;
 
 	//-----------------
 	//menus
