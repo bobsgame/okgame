@@ -1580,7 +1580,7 @@ void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
 	s = s.substr(s.find(":") + 1);
 	//Room *r = Room::decodeRoomData(s, false);
 
-	BobsGame::console->add(""+userName+" is hosting a multiplayer room, go join it!",5000);
+	BobsGame::console->add(""+userName+" is hosting a multiplayer room!",5000);
 }
 
 
