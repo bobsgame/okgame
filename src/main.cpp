@@ -331,7 +331,7 @@ void Main::mainInit()
 	GLUtils::e();
 
 
-
+	SDL_StopTextInput();
 
 
 

@@ -432,6 +432,177 @@ void ControlsManager::resetPressedButtons()
 }
 
 //=========================================================================================================================
+void ControlsManager::unsetHeldButtons()
+{//=========================================================================================================================
+	
+
+	KEY_UP_HELD = false;
+	KEY_DOWN_HELD = false;
+	KEY_LEFT_HELD = false;
+	KEY_RIGHT_HELD = false;
+	KEY_SPACE_HELD = false; //was A
+	KEY_TAB_HELD = false; //was START
+	KEY_RETURN_HELD = false; //was SELECT
+	KEY_A_HELD = false;
+	KEY_B_HELD = false;
+	KEY_C_HELD = false;
+	KEY_D_HELD = false;
+	KEY_E_HELD = false;
+	KEY_F_HELD = false;
+	KEY_G_HELD = false;
+	KEY_H_HELD = false;
+	KEY_I_HELD = false;
+	KEY_J_HELD = false;
+	KEY_K_HELD = false;
+	KEY_L_HELD = false;
+	KEY_M_HELD = false;
+	KEY_N_HELD = false;
+	KEY_O_HELD = false;
+	KEY_P_HELD = false;
+	KEY_Q_HELD = false;
+	KEY_R_HELD = false;
+	KEY_S_HELD = false;
+	KEY_T_HELD = false;
+	KEY_U_HELD = false;
+	KEY_V_HELD = false;
+	KEY_W_HELD = false;
+	KEY_X_HELD = false;
+	KEY_Y_HELD = false;
+	KEY_Z_HELD = false;
+	KEY_COMMA_HELD = false;
+	KEY_PERIOD_HELD = false;
+	KEY_FRONTSLASH_HELD = false;
+	KEY_SEMICOLON_HELD = false;
+	KEY_QUOTE_HELD = false;
+	KEY_BACKSLASH_HELD = false;
+
+	KEY_LBRACKET_HELD = false; //was L
+	KEY_RBRACKET_HELD = false; //was R
+	KEY_RALT_HELD = false;
+	KEY_LALT_HELD = false;
+	KEY_LSHIFT_HELD = false; //was B
+	KEY_RSHIFT_HELD = false; //quickzoom
+	KEY_LCTRL_HELD = false;
+	KEY_RCTRL_HELD = false; //quickzoom
+	KEY_BACKSPACE_HELD = false; //reset zoom
+	KEY_ESC_HELD = false;
+	KEY_F1_HELD = false;
+	KEY_F2_HELD = false;
+	KEY_F3_HELD = false;
+	KEY_F4_HELD = false;
+	KEY_F5_HELD = false;
+	KEY_F6_HELD = false;
+	KEY_F7_HELD = false;
+	KEY_F8_HELD = false;
+	KEY_F9_HELD = false;
+	KEY_F10_HELD = false;
+	KEY_F11_HELD = false;
+	KEY_F12_HELD = false;
+	KEY_PRINTSCREEN_HELD = false;
+	KEY_PAUSE_HELD = false;
+	KEY_TILDE_HELD = false;
+	KEY_1_HELD = false;
+	KEY_2_HELD = false;
+	KEY_3_HELD = false;
+	KEY_4_HELD = false;
+	KEY_5_HELD = false;
+	KEY_6_HELD = false;
+	KEY_7_HELD = false;
+	KEY_8_HELD = false;
+	KEY_9_HELD = false;
+	KEY_0_HELD = false;
+	KEY_MINUS_HELD = false; //zoom in
+	KEY_PLUS_HELD = false; //zoom out
+	KEY_NUM0_HELD = false;
+	KEY_NUM1_HELD = false;
+	KEY_NUM2_HELD = false;
+	KEY_NUM3_HELD = false;
+	KEY_NUM4_HELD = false;
+	KEY_NUM5_HELD = false;
+	KEY_NUM6_HELD = false;
+	KEY_NUM7_HELD = false;
+	KEY_NUM8_HELD = false;
+	KEY_NUM9_HELD = false;
+
+
+
+	BGCLIENT_UP_HELD = false;
+	BGCLIENT_DOWN_HELD = false;
+	BGCLIENT_LEFT_HELD = false;
+	BGCLIENT_RIGHT_HELD = false;
+	BGCLIENT_ACTION_HELD = false;
+	BGCLIENT_CANCELRUN_HELD = false;
+	//BGCLIENT_START_HELD = false;
+	//BGCLIENT_SELECT_HELD = false;
+	BGCLIENT_OPENND_HELD = false;
+	BGCLIENT_ZOOMOUT_HELD = false;
+	BGCLIENT_ZOOMIN_HELD = false;
+	BGCLIENT_ZOOMRESET_HELD = false;
+	BGCLIENT_OPENMENU_HELD = false;
+	BGCLIENT_QUICKZOOMOUT_HELD = false;
+	BGCLIENT_QUICKZOOMIN_HELD = false;
+
+
+
+	MINIGAME_UP_HELD = false;
+	MINIGAME_DOWN_HELD = false;
+	MINIGAME_LEFT_HELD = false;
+	MINIGAME_RIGHT_HELD = false;
+	MINIGAME_ANALOGUP_HELD = false;
+	MINIGAME_ANALOGDOWN_HELD = false;
+	MINIGAME_ANALOGLEFT_HELD = false;
+	MINIGAME_ANALOGRIGHT_HELD = false;
+	//MINIGAME_ACTION_HELD  = false;
+	//MINIGAME_RUN_HELD  = false;
+	//MINIGAME_START_HELD  = false;
+	//MINIGAME_SELECT_HELD  = false;
+	MINIGAME_L_HELD = false;
+	MINIGAME_R_HELD = false;
+	MINIGAME_Y_HELD = false;
+	MINIGAME_X_HELD = false;
+	MINIGAME_A_HELD = false;
+	MINIGAME_B_HELD = false;
+
+
+	BGCLIENT_UP_HELD = false;
+	BGCLIENT_DOWN_HELD = false;
+	BGCLIENT_LEFT_HELD = false;
+	BGCLIENT_RIGHT_HELD = false;
+	BGCLIENT_ACTION_HELD = false;
+	BGCLIENT_CANCELRUN_HELD = false;
+	//BGCLIENT_START_HELD = false;
+	//BGCLIENT_SELECT_HELD = false;
+	BGCLIENT_OPENND_HELD = false;
+	BGCLIENT_ZOOMOUT_HELD = false;
+	BGCLIENT_ZOOMIN_HELD = false;
+	BGCLIENT_ZOOMRESET_HELD = false;
+	BGCLIENT_OPENMENU_HELD = false;
+	BGCLIENT_QUICKZOOMOUT_HELD = false;
+	BGCLIENT_QUICKZOOMIN_HELD = false;
+
+
+	MINIGAME_UP_HELD = false;
+	MINIGAME_DOWN_HELD = false;
+	MINIGAME_LEFT_HELD = false;
+	MINIGAME_RIGHT_HELD = false;
+	MINIGAME_ANALOGUP_HELD = false;
+	MINIGAME_ANALOGDOWN_HELD = false;
+	MINIGAME_ANALOGLEFT_HELD = false;
+	MINIGAME_ANALOGRIGHT_HELD = false;
+	MINIGAME_ACTION_HELD = false;
+	MINIGAME_RUN_HELD = false;
+	MINIGAME_START_HELD = false;
+	MINIGAME_SELECT_HELD = false;
+	MINIGAME_L_HELD = false;
+	MINIGAME_R_HELD = false;
+	MINIGAME_X_HELD = false;
+	MINIGAME_Y_HELD = false;
+	MINIGAME_A_HELD = false;
+	MINIGAME_B_HELD = false;
+
+}
+
+//=========================================================================================================================
 void ControlsManager::setButtonStates()
 {//=========================================================================================================================
 
@@ -934,7 +1105,7 @@ SDL_JoyHatEvent
 			}
 
 		}
-		else
+		
 			 if (event.type == SDL_CONTROLLERDEVICEREMOVED)
 			 {
 				 SDL_JoystickID joystickID = event.cdevice.which;
@@ -961,7 +1132,7 @@ SDL_JoyHatEvent
 
 
 			 }
-			 else
+			 
 			if (event.type == SDL_CONTROLLERBUTTONDOWN)
 			{
 				int joystickID = event.cbutton.which;
@@ -1020,7 +1191,7 @@ SDL_JoyHatEvent
 				}
 				
 			}
-			else
+			
 			if (event.type == SDL_CONTROLLERBUTTONUP) 
 			{
 
@@ -1077,7 +1248,7 @@ SDL_JoyHatEvent
 				}
 				
 			}
-			else
+			
 			if (event.type == SDL_CONTROLLERAXISMOTION)
 			{
 				int id = event.caxis.which;
@@ -1169,7 +1340,7 @@ SDL_JoyHatEvent
 				
 
 			 }
-			else
+			
 			 if (event.type == SDL_JOYAXISMOTION)
 			 {
 				 SDL_JoystickID id = event.jaxis.which;
@@ -1291,12 +1462,12 @@ SDL_JoyHatEvent
 				 
 
 			 }
-			else
+			
 			if (event.type == SDL_TEXTINPUT) 
 			{
 				text += event.text.text;
 			}
-			else
+			
 		if (event.type == SDL_KEYDOWN)
 		{
 			if (event.key.keysym.sym == SDLK_BACKSPACE && text.length() > 0)
@@ -1396,7 +1567,7 @@ SDL_JoyHatEvent
 			default: break;
 			}
 		}
-		else
+		
 		if (event.type == SDL_KEYUP)
 		{
 			//int key = event.key.keysym.sym & ~SDLK_SCANCODE_MASK;
@@ -1492,7 +1663,7 @@ SDL_JoyHatEvent
 			default: break;
 			}
 		}
-		else
+		
 		if (event.type == SDL_MOUSEBUTTONUP)
 		{
 			if(event.button.button == SDL_BUTTON_LEFT)
@@ -1502,7 +1673,7 @@ SDL_JoyHatEvent
 				MOUSE_Y = event.button.y;
 			}
 		}
-		else
+		
 		if (event.type == SDL_MOUSEMOTION)
 		{
 
@@ -1510,12 +1681,12 @@ SDL_JoyHatEvent
 			MOUSE_Y = event.motion.y;
 			
 		}
-		else
+		
 		{
 
 #ifdef _DEBUG
 			if (event.type == SDL_FIRSTEVENT)							log.debug("SDL_FIRSTEVENT");
-			if (event.type == SDL_QUIT)								log.debug("SDL_FIRSTEVENT");
+			if (event.type == SDL_QUIT)								log.debug("SDL_QUIT");
 			if (event.type == SDL_APP_TERMINATING		)			log.debug("SDL_APP_TERMINATING");
 			if (event.type == SDL_APP_LOWMEMORY			)		log.debug("SDL_APP_LOWMEMORY");
 			if (event.type == SDL_APP_WILLENTERBACKGROUND)			log.debug("SDL_APP_WILLENTERBACKGROUND");
@@ -1524,8 +1695,8 @@ SDL_JoyHatEvent
 			if (event.type == SDL_APP_DIDENTERFOREGROUND)			log.debug("SDL_APP_DIDENTERFOREGROUND");
 			if (event.type == SDL_WINDOWEVENT			)			log.debug("SDL_WINDOWEVENT");
 			if (event.type == SDL_SYSWMEVENT			)			log.debug("SDL_SYSWMEVENT");
-			if (event.type == SDL_KEYDOWN				)			log.debug("SDL_KEYDOWN");
-			if (event.type == SDL_KEYUP					)		log.debug("SDL_KEYUP");
+			//if (event.type == SDL_KEYDOWN				)			log.debug("SDL_KEYDOWN");
+			//if (event.type == SDL_KEYUP					)		log.debug("SDL_KEYUP");
 			//if (event.type == SDL_TEXTEDITING			)			log.debug("SDL_TEXTEDITING");
 			//if (event.type == SDL_TEXTINPUT				)		log.debug("SDL_TEXTINPUT");
 			if (event.type == SDL_KEYMAPCHANGED			)		log.debug("SDL_KEYMAPCHANGED");

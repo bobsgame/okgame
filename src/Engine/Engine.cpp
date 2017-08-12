@@ -167,10 +167,10 @@ void Engine::updateChatConsole()
 
 		if(stop)
 		{
-			Main::whilefix();
+			chatControlsManager->unsetHeldButtons();
 			chatFocused = false;
 			activeControlsManager = controlsManager;
-			Main::whilefix();
+			
 			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 
 			chatControlsManager->text = "";
@@ -187,10 +187,10 @@ void Engine::updateChatConsole()
 	{
 		if (getControlsManager()->key_T_Pressed())
 		{
-			Main::whilefix();
+			controlsManager->unsetHeldButtons();
 			chatFocused = true;
 			activeControlsManager = chatControlsManager;
-			Main::whilefix();
+			
 
 		}
 

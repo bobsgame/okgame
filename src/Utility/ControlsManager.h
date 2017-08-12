@@ -725,6 +725,7 @@ public:
 	static void initControllers();
 	void resetPressedButtons();
 	void setButtonStates();
+	void unsetHeldButtons();
 
 	static void cleanup();
 
