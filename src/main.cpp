@@ -8,10 +8,10 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-//#undef INADDR_ANY       
-//#undef INADDR_LOOPBACK  
-//#undef INADDR_BROADCAST 
-//#undef INADDR_NONE  
+//#undef INADDR_ANY
+//#undef INADDR_LOOPBACK
+//#undef INADDR_BROADCAST
+//#undef INADDR_NONE
 //#include "enet/enet.h"
 
 
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])//int argc, char **argv)
 
 	if(argc>0)
 	{
-		
+
 		//TODO: run in headless mode, run bobsgame at maximum speed, load framestate binary from disk, encode youtube video?
 
 	}
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])//int argc, char **argv)
 //	Main::getMain()->mainInit();
 //	Main::getMain()->mainLoop();
 //	Main::getMain()->cleanup();
-	
+
 
 	return 0;
 }
@@ -226,7 +226,7 @@ void Main::mainInit()
  */
 
 
-	
+
 
 
 	new Logger();
@@ -256,8 +256,8 @@ void Main::mainInit()
 		log.error("SDLNet_Init error: "+string(SDLNet_GetError()));
 	}
 
-	
-	
+
+
 	//	if (lzo_init() != LZO_E_OK)
 	//	{
 	//		printf("internal error - lzo_init() failed !!!\n");
@@ -309,9 +309,9 @@ void Main::mainInit()
 
 
 
-	
 
-	
+
+
 
 	//this is done before init game so we can put debug stuff
 	console = new Console();
@@ -430,7 +430,7 @@ void Main::mainInit()
 			STUNServerAddressString = "192.168.1.3";//BobNet::debugSTUNServerAddress;
 
 			//stun server port is incremented by 1 to prevent bind conflict when running local server
-			
+
 			STUNServerUDPPort++;
 		}
 	}
@@ -510,7 +510,7 @@ void Main::mainInit()
 	}
 
 
-	
+
 
 	System::initTimers();
 
@@ -522,7 +522,7 @@ void Main::mainInit()
 	GLUtils::e();
 
 
-	
+
 	if (rpg)
 	{
 		if (previewClientInEditor == false)
@@ -573,7 +573,7 @@ void Main::mainInit()
 //=========================================================================================================================
 void Main::initGWEN()
 {//=========================================================================================================================
-	
+
 	log.debug("Init GWEN");
 
 	Uint64 start=0, now=0;
@@ -768,7 +768,7 @@ void Main::whilefix()
 			{
 				((Engine*)mainObject->stateManager->getCurrentState())->getCaptionManager()->update();
 			}
-			
+
 
 			frame = true;
 
@@ -884,7 +884,7 @@ void Main::render()
 
 	//ImGui::Render();
 
-	
+
 
 }
 
@@ -1031,7 +1031,7 @@ void Main::doScreenShotCheck()
 
 	bool takeScreenShot = false;
 
-	
+
 #ifdef _DEBUG
 	if (getControlsManager()->key_PRINTSCREEN_Pressed() || getControlsManager()->key_F10_Pressed())
 	{
@@ -1046,7 +1046,7 @@ void Main::doScreenShotCheck()
 		screenShotKeyPressed = false;
 	}
 #else
-	if (controlsManager->key_PRINTSCREEN_Pressed() || controlsManager->key_F12_Pressed())
+	if (getControlsManager()->key_PRINTSCREEN_Pressed() || getControlsManager()->key_F12_Pressed())
 	{
 		if (screenShotKeyPressed == false)
 		{
@@ -1067,8 +1067,8 @@ void Main::doScreenShotCheck()
 
 		if (mainObject->gameEngine != nullptr)mainObject->gameEngine->audioManager->playSound("screenShot", 1.0f, 1.0f, 1);
 
-		time_t t = time(0); // get time now 
-		struct tm * now = localtime( & t ); 
+		time_t t = time(0); // get time now
+		struct tm * now = localtime( & t );
 		//cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
 
 		//string imageName = "bobsgame-" + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + ".png";
@@ -1377,10 +1377,10 @@ void Main::showControlsImage()
   //			}
 }
 
-#undef INADDR_ANY       
-#undef INADDR_LOOPBACK  
-#undef INADDR_BROADCAST 
-#undef INADDR_NONE      
+#undef INADDR_ANY
+#undef INADDR_LOOPBACK
+#undef INADDR_BROADCAST
+#undef INADDR_NONE
 #include "Poco/Net/HTTPClientSession.h"
 #include "Poco/Net/HTTPRequest.h"
 #include "Poco/Net/HTTPResponse.h"
@@ -1489,7 +1489,7 @@ string Main::getPath()
 //public:
 //	static void onDecompressError(const void* pSender, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string>& info)
 //	{
-//		
+//
 //
 //	}
 //};
@@ -1535,7 +1535,7 @@ void Main::checkVersion()
 	log.info("SDL_GetPrefPath():" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
 	log.info("Poco::Path::home():" + Path::home());
 
-	if (exePath.find("itch") != std::string::npos) 
+	if (exePath.find("itch") != std::string::npos)
 	{
 		log.debug("'itch' found in path, skipping version check.");
 	}
@@ -1558,7 +1558,7 @@ void Main::checkVersion()
 			if (f.exists())
 			{
 				f.remove();
-				//Caption* c = 
+				//Caption* c =
 				//((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", BobFont::ttf_oswald_32, BobColor::green, BobColor::clear, RenderOrder::OVER_GUI);
 				//doesn't go away because we're not updating captionManager??
 
@@ -1581,7 +1581,7 @@ void Main::checkVersion()
 		{
 			log.error("Error deleting bobsgame.old");
 		}
-		
+
 
 		string versionTextPath = getPath() + "version.txt";
 		if(File(versionTextPath).exists()==false)
@@ -1622,7 +1622,7 @@ void Main::checkVersion()
 			istream& rs = session.receiveResponse(response);
 			//cout << response.getStatus() << " " << response.getReason() << endl;
 
-				
+
 			StreamCopier::copyToString(rs, serverString);
 			log.info("Server version:" + serverString);
 		}
@@ -1632,7 +1632,7 @@ void Main::checkVersion()
 			return;
 		}
 
-	
+
 		int serverVersion = -1;
 		try
 		{
@@ -1736,7 +1736,7 @@ void Main::checkVersion()
 
 				HTTPStreamFactory::registerFactory();
 
-					
+
 				URI zipuri(zipname);
 
 				HTTPClientSession session(zipuri.getHost(), zipuri.getPort());
@@ -1767,7 +1767,7 @@ void Main::checkVersion()
 			try
 			{
 
-				
+
 				//move all files to /old
 
 				//delete /old at start
@@ -1793,7 +1793,7 @@ void Main::checkVersion()
 				//log.info("Opened ifstream");
 				poco_assert(inp);
 				//log.info("Assert ifstream");
-				
+
 				Decompress dec(inp, Poco::Path(exePath));
 				//log.info("Create decompress object");
 				//dec.EError += Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string> >(this, &ZipTest::onDecompressError);
@@ -1933,18 +1933,18 @@ void Main::cleanup()
 
 	if (gameEngine != nullptr)
 	{
-		gameEngine->cleanup(); 
+		gameEngine->cleanup();
 		delete gameEngine;
 	}
 
-	if (bobsGame != nullptr) 
+	if (bobsGame != nullptr)
 	{
 		log.info("bobsGame cleanup");
 		bobsGame->cleanup();
 		delete bobsGame;
 	}
 
-	
+
 	BobFont::cleanup();
 	GLUtils::cleanup();
 
@@ -1959,9 +1959,9 @@ void Main::cleanup()
 
 	log.info("Exiting");
 
-	
+
 	SDL_Quit();
-	
+
 }
 
 ////==========================================================================================================================
