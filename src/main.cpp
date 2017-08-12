@@ -43,7 +43,16 @@ void cleanup()
 		delete mainObject;
 		mainObject = nullptr;
 	}
-	
+
+	try
+	{
+		std::terminate();
+	}
+	catch(exception e)
+	{
+		cerr << e.what();
+	}
+
 }
 
 
@@ -1949,8 +1958,10 @@ void Main::cleanup()
 	saveGlobalSettingsToXML();
 
 	log.info("Exiting");
-	SDL_Quit();
 
+	
+	SDL_Quit();
+	
 }
 
 ////==========================================================================================================================

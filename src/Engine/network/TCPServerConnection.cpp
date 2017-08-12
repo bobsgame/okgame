@@ -529,7 +529,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 						threadLogDebug_S("Connecting to load balancer...");
 
-						setSocket_S(SDLNet_TCP_Open(_loadBalancerAddress));
+						setSocket_S(SDLNet_TCP_Open(_loadBalancerAddress));//TODO: if it can't connect to the server the thread stalls here
 						if (!getSocket_S())
 						{
 							//SDLNet_FreeSocketSet(set);
@@ -2382,11 +2382,11 @@ bool TCPServerConnection::doCreateAccount(Caption *statusLabel, Caption *errorLa
 		errorLabel->setText("Please enter a password.");
 		return false;
 	}
-	if (password != confirmPassword)
-	{
-		errorLabel->setText("Passwords don't match.  Please confirm password.");
-		return false;
-	}
+//	if (password != confirmPassword)
+//	{
+//		errorLabel->setText("Passwords don't match.  Please confirm password.");
+//		return false;
+//	}
 
 	statusLabel->setText("Connecting to server...");
 	errorLabel->setText(" ");

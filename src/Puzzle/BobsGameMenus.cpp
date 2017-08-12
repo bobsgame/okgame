@@ -1497,7 +1497,7 @@ void BobsGame::loginMenuUpdate()
 		userNameOrEmailText = getControlsManager()->text;
 		loginMenu->getMenuItemByID("Username or Email")->setText("Username or Email: " + userNameOrEmailText);
 	}
-
+	else
 	if (loginMenu->isSelectedID("Password"))
 	{
 		if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = passwordText; textStarted = true; }
@@ -1505,6 +1505,10 @@ void BobsGame::loginMenuUpdate()
 		passwordStarsText = "";
 		for (int i = 0; i < (int)passwordText.length(); i++)passwordStarsText += "*";
 		loginMenu->getMenuItemByID("Password")->setText("Password: " + passwordStarsText);
+	}
+	else
+	{
+		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 	}
 
 	bool leaveMenu = false;
@@ -1514,7 +1518,11 @@ void BobsGame::loginMenuUpdate()
 
 		if (loginMenu->isSelectedID("Log in", clicked, mx, my) || loginMenu->isSelectedID("Password", clicked, mx, my))
 		{
-			getServerConnection()->doLogin(statusLabel, errorLabel,userNameOrEmailText,passwordText,stayLoggedIn);
+
+			getServerConnection()->doLogin(statusLabel, errorLabel, userNameOrEmailText, passwordText, stayLoggedIn);
+
+			passwordText = "";
+			
 		}
 
 		if (loginMenu->isSelectedID("Create new account", clicked, mx, my))
@@ -1628,7 +1636,7 @@ void BobsGame::createAccountMenuUpdate()
 		createAccountMenu->add("Username: " + userNameText, "Username");
 		createAccountMenu->add("Email: " + emailText, "Email");
 		createAccountMenu->add("Password: " + passwordStarsText, "Password");
-		createAccountMenu->add("Confirm password: " + confirmPasswordStarsText, "Confirm");
+		//createAccountMenu->add("Confirm password: " + confirmPasswordStarsText, "Confirm");
 		createAccountMenu->add("Create account");
 		createAccountMenu->addInfo(" ");
 		createAccountMenu->add("Return to login screen");
@@ -1664,14 +1672,14 @@ void BobsGame::createAccountMenuUpdate()
 		userNameText = getControlsManager()->text;
 		createAccountMenu->getMenuItemByID("Username")->setText("Username: " + userNameText);
 	}
-
+	else
 	if (createAccountMenu->isSelectedID("Email"))
 	{
 		if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = emailText; textStarted = true; }
 		emailText = getControlsManager()->text;
 		createAccountMenu->getMenuItemByID("Email")->setText("Email: " + emailText);
 	}
-
+	else
 	if (createAccountMenu->isSelectedID("Password"))
 	{
 		if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = passwordText; textStarted = true; }
@@ -1680,7 +1688,7 @@ void BobsGame::createAccountMenuUpdate()
 		for (int i = 0; i < (int)passwordText.length(); i++)passwordStarsText += "*";
 		createAccountMenu->getMenuItemByID("Password")->setText("Password: " + passwordStarsText);
 	}
-
+	else
 	if (createAccountMenu->isSelectedID("Confirm"))
 	{
 		if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = confirmPasswordText; textStarted = true; }
@@ -1688,6 +1696,10 @@ void BobsGame::createAccountMenuUpdate()
 		confirmPasswordStarsText = "";
 		for (int i = 0; i < (int)confirmPasswordText.length(); i++)confirmPasswordStarsText += "*";
 		createAccountMenu->getMenuItemByID("Confirm")->setText("Confirm password: " + confirmPasswordStarsText);
+	}
+	else
+	{
+		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 	}
 
 	bool leaveMenu = false;
@@ -1700,16 +1712,18 @@ void BobsGame::createAccountMenuUpdate()
 		{
 			if(getServerConnection()->doCreateAccount(statusLabel,errorLabel,userNameText,emailText,passwordText,confirmPasswordText)==true)
 			{
-
+				
 				Main::delay(2000);
 
 				if(getServerConnection()->doLogin(statusLabel, errorLabel, userNameText, passwordText, true)==true)
 				{
 					startScreenMenuShowing = true;
+					passwordText = "";
 				}
 				else
 				{
 					loginMenuShowing = true;
+					passwordText = "";
 				}
 				leaveMenu = true;
 
@@ -2719,6 +2733,10 @@ void BobsGame::saveRoomConfigMenuUpdate()
 		if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = saveRoomConfigNameText; textStarted = true; }
 		saveRoomConfigNameText = getControlsManager()->text;
 		saveRoomConfigMenu->getMenuItemByID("Name")->setText("Name: " + saveRoomConfigNameText);
+	}
+	else
+	{
+		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 	}
 
 	bool leaveMenu = false;

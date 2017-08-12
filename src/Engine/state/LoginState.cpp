@@ -388,7 +388,7 @@ void LoginMenuPanel::update()
 					userNameOrEmailText = getControlsManager()->text;
 					loginMenu->getMenuItemByID("Username or Email")->setText("Username or Email: " + userNameOrEmailText);
 				}
-
+				else
 				if (loginMenu->isSelectedID("Password"))
 				{
 					if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = passwordText; textStarted = true; }
@@ -397,7 +397,10 @@ void LoginMenuPanel::update()
 					for (int i = 0; i < (int)passwordText.length(); i++)passwordStarsText += "*";
 					loginMenu->getMenuItemByID("Password")->setText("Password: " + passwordStarsText);
 				}
-
+				else
+				{
+					if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+				}
 
 
 				if (confirm || clicked)

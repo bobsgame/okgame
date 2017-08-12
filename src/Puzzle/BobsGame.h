@@ -216,6 +216,7 @@ public:
 	string userNameOrEmailText = "";
 	string userNameText = "";
 	string emailText = "";
+	//bool showPasswordStars = false;
 	string passwordText = "";
 	string passwordStarsText = "";
 	string confirmPasswordText = "";

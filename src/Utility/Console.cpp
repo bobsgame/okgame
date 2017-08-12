@@ -49,7 +49,7 @@ void Console::update()
 
 	captionManager->update();
 
-	lock_guard<mutex> lock(_consoleTextList_Mutex);
+	//lock_guard<mutex> lock(_consoleTextList_Mutex);
 
 	for (int i = 0; i < consoleTextList->size(); i++)
 	{
@@ -85,7 +85,7 @@ void Console::update()
 //=========================================================================================================================
 void Console::pruneChats(int max)
 {//=========================================================================================================================
-	lock_guard<mutex> lock(_consoleTextList_Mutex);
+	//lock_guard<mutex> lock(_consoleTextList_Mutex);
 
 	while(consoleTextList->size()>max)
 	{
@@ -139,7 +139,7 @@ bool debugConsoleOff = true;
 void Console::render()
 { //=========================================================================================================================
 
-	lock_guard<mutex> lock(_consoleTextList_Mutex);
+	//lock_guard<mutex> lock(_consoleTextList_Mutex);
 
 	if (showConsole == false)return;
 

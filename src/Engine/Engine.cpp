@@ -145,7 +145,7 @@ void Engine::updateChatConsole()
 		{
 			stop = true;
 		}
-
+		else
 		if (chatControlsManager->key_RETURN_Pressed())
 		{
 			stop = true;
@@ -155,7 +155,7 @@ void Engine::updateChatConsole()
 				getServerConnection()->sendChatMessage(chatControlsManager->text);
 			}
 		}
-
+		else
 		{
 			if (!textStarted) { SDL_StartTextInput(); chatControlsManager->text = ""; textStarted = true; }
 
@@ -170,7 +170,7 @@ void Engine::updateChatConsole()
 			Main::whilefix();
 			chatFocused = false;
 			activeControlsManager = controlsManager;
-
+			Main::whilefix();
 			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 
 			chatControlsManager->text = "";
@@ -190,6 +190,8 @@ void Engine::updateChatConsole()
 			Main::whilefix();
 			chatFocused = true;
 			activeControlsManager = chatControlsManager;
+			Main::whilefix();
+
 		}
 
 	}
