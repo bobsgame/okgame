@@ -63,7 +63,7 @@ public:
 
 	static CaptionManager* captionManager;
 
-	ArrayList<ConsoleText*>* consoleTextList;
+	ArrayList<ConsoleText*>* consoleTextList = nullptr;
 	mutex _consoleTextList_Mutex;
 
 	static bool showConsole;

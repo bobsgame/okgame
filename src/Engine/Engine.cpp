@@ -159,7 +159,7 @@ void Engine::updateChatConsole()
 		{
 			if (!textStarted) { SDL_StartTextInput(); chatControlsManager->text = ""; textStarted = true; }
 
-			if (chatConsoleText == nullptr) { chatConsoleText = Main::rightConsole->add("> "); chatConsoleText->alwaysOnBottom = true; }
+			if (chatConsoleText == nullptr) { chatConsoleText = Main::rightConsole->add("> ",BobColor::magenta); chatConsoleText->alwaysOnBottom = true; }
 
 			chatConsoleText->text = "> "+chatControlsManager->text;
 
@@ -167,9 +167,12 @@ void Engine::updateChatConsole()
 
 		if(stop)
 		{
+			Main::whilefix();
 			chatFocused = false;
 			activeControlsManager = controlsManager;
+
 			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+
 			chatControlsManager->text = "";
 			if (chatConsoleText != nullptr)
 			{
@@ -184,6 +187,7 @@ void Engine::updateChatConsole()
 	{
 		if (getControlsManager()->key_T_Pressed())
 		{
+			Main::whilefix();
 			chatFocused = true;
 			activeControlsManager = chatControlsManager;
 		}

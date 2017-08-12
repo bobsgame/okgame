@@ -29,12 +29,14 @@ Console::Console()
 
 	log.debug("Init console");
 
-	captionManager = new CaptionManager(nullptr);
+	if(captionManager==nullptr)captionManager = new CaptionManager(nullptr);
 
+	consoleTextList = new ArrayList<ConsoleText*>();
 }
 
 bool Console::showConsole = true;
 
+//=========================================================================================================================
 void Console::update()
 { //=========================================================================================================================
 
@@ -80,8 +82,9 @@ void Console::update()
 	}
 }
 
+//=========================================================================================================================
 void Console::pruneChats(int max)
-{
+{//=========================================================================================================================
 	lock_guard<mutex> lock(_consoleTextList_Mutex);
 
 	while(consoleTextList->size()>max)
@@ -140,12 +143,12 @@ void Console::render()
 
 	if (showConsole == false)return;
 
-	int numStrings = consoleTextList->size();
+	
 
 	int messagesCounter = 0;
 
 	ArrayList<ConsoleText*> bottomList;
-	for(int i=0;i<numStrings;i++)
+	for(int i=0;i<consoleTextList->size();i++)
 	{
 		ConsoleText* dt = consoleTextList->get(i);
 		if (dt->alwaysOnBottom)
@@ -161,6 +164,7 @@ void Console::render()
 	}
 	bottomList.clear();
 
+	int numStrings = consoleTextList->size();
 	for (int n = numStrings; n > 0; n--)
 	{
 		ConsoleText* dt = consoleTextList->get(n - 1);
