@@ -178,6 +178,8 @@ public:
 
 	ControlsManager();
 
+	ArrayList<SDL_Event> events;
+
 	static int numControllers;
 	static string controllerNames;
 

@@ -47,6 +47,7 @@ Engine::~Engine()
 	delete eventManager;
 	delete cameraman;
 	delete actionManager;
+	delete controlsManager;
 }
 
 //=========================================================================================================================
@@ -71,8 +72,10 @@ void Engine::init()
 	cameraman = new Cameraman(this);
 	actionManager = new ActionManager(this);
 
-	//controlsManager = Main::controlsManager;
+	controlsManager = new ControlsManager();
+	chatControlsManager = new ControlsManager();
 
+	activeControlsManager = controlsManager;
 
 	textManager->init();
 	cinematicsManager->init();
@@ -80,6 +83,8 @@ void Engine::init()
 	GLUtils::e();
 
 	Main::bobNet->addEngineToForwardMessagesTo(this);
+
+
 }
 //=========================================================================================================================
 void Engine::cleanup()
@@ -116,6 +121,7 @@ void Engine::update()
 
 	mapManager->update(); //map adjusts itself based on cameraman xy so it must update after entities do
 
+	
 
 	actionManager->update();
 	eventManager->update();
@@ -123,6 +129,67 @@ void Engine::update()
 
 
 	updateDebugText();
+
+	updateChatConsole();
+
+}
+
+//=========================================================================================================================
+void Engine::updateChatConsole()
+{//=========================================================================================================================
+	
+	if (chatFocused)
+	{
+		bool stop = false;
+		if (chatControlsManager->key_ESC_Pressed())
+		{
+			stop = true;
+		}
+
+		if (chatControlsManager->key_RETURN_Pressed())
+		{
+			stop = true;
+
+			if (chatControlsManager->text != "")
+			{
+				getServerConnection()->sendChatMessage(chatControlsManager->text);
+			}
+		}
+
+		{
+			if (!textStarted) { SDL_StartTextInput(); chatControlsManager->text = ""; textStarted = true; }
+
+			if (chatConsoleText == nullptr) { chatConsoleText = Main::rightConsole->add("> "); chatConsoleText->alwaysOnBottom = true; }
+
+			chatConsoleText->text = "> "+chatControlsManager->text;
+
+		}
+
+		if(stop)
+		{
+			chatFocused = false;
+			activeControlsManager = controlsManager;
+			if (textStarted) { SDL_StopTextInput(); textStarted = false; }
+			chatControlsManager->text = "";
+			if (chatConsoleText != nullptr)
+			{
+				chatConsoleText->text = "";
+				chatConsoleText->ticks = 0;
+				chatConsoleText = nullptr;
+			}
+		}
+
+	}
+	else
+	{
+		if (getControlsManager()->key_T_Pressed())
+		{
+			chatFocused = true;
+			activeControlsManager = chatControlsManager;
+		}
+
+	}
+
 }
 
 
@@ -159,6 +226,8 @@ void Engine::render()
 	getSpriteManager()->renderScreenSprites(RenderOrder::OVER_GUI);
 
 	getCaptionManager()->render(RenderOrder::OVER_GUI);
+
+
 }
 
 void Engine::updateDebugText()
@@ -446,17 +515,22 @@ void Engine::updateControls()
 
 void Engine::resetPressedButtons()
 {
-	getControlsManager()->resetPressedButtons();
+	getActiveControlsManager()->resetPressedButtons();
 }
 
 void Engine::setButtonStates()
 {
-	getControlsManager()->setButtonStates();
+	getActiveControlsManager()->setButtonStates();
 }
 
 ControlsManager* Engine::getControlsManager()
 {
-	return Main::controlsManager;
+	return controlsManager;
+}
+
+ControlsManager* Engine::getActiveControlsManager()
+{
+	return activeControlsManager;
 }
 
 BGClientEngine* Engine::getClientGameEngine()

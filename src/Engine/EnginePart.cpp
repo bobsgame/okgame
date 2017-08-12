@@ -209,7 +209,7 @@ BGClientEngine* EnginePart::getClientGameEngine()
 
 ControlsManager* EnginePart::getControlsManager()
 {
-	return Main::controlsManager;
+	return getEngine()->getControlsManager();
 }
 
 

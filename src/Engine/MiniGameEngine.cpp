@@ -91,7 +91,7 @@ bool MiniGameEngine::updateMenus()
 		multiplayerScreenShowing = false;
 	}
 
-	BobMenu::update(super::engineTicksPassed());
+	BobMenu::update(this,super::engineTicksPassed());
 
 	if (titleMenuShowing)
 	{

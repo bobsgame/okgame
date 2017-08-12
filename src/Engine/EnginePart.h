@@ -90,7 +90,7 @@ public:
 
 	virtual Map* getCurrentMap();
 
-	static ControlsManager* getControlsManager();
+	ControlsManager* getControlsManager();
 
 	//static void setClientGameEngine(BGClientEngine* gameEngine);
 

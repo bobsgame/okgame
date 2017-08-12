@@ -135,6 +135,7 @@ const string BobNet::Bobs_Game_HighScoreBoardsByBlocksCleared = "Bobs_Game_HighS
 
 
 
+const string BobNet::Chat_Message = "Chat_Message:";
 const string BobNet::Server_Stats_Request = "Server_Stats_Request:";
 const string BobNet::Server_Stats_Response = "Server_Stats_Response:";
 

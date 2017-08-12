@@ -38,13 +38,16 @@ bool Console::showConsole = true;
 void Console::update()
 { //=========================================================================================================================
 
-
-	if(Main::controlsManager->key_C_Pressed())
+#ifdef _DEBUG
+	if(Main::getControlsManager()->key_C_Pressed())
 	{
 		showConsole = !showConsole;
 	}
+#endif
 
 	captionManager->update();
+
+	lock_guard<mutex> lock(_consoleTextList_Mutex);
 
 	for (int i = 0; i < consoleTextList->size(); i++)
 	{
@@ -70,9 +73,23 @@ void Console::update()
 			{
 				d->caption->setToBeDeletedImmediately();
 				consoleTextList->removeAt(i);
+				delete d;
 				i--;
 			}
 		}
+	}
+}
+
+void Console::pruneChats(int max)
+{
+	lock_guard<mutex> lock(_consoleTextList_Mutex);
+
+	while(consoleTextList->size()>max)
+	{
+		ConsoleText* d = consoleTextList->get(0);
+		d->caption->setToBeDeletedImmediately();
+		consoleTextList->removeAt(0);
+		delete d;
 	}
 }
 
@@ -119,6 +136,7 @@ bool debugConsoleOff = true;
 void Console::render()
 { //=========================================================================================================================
 
+	lock_guard<mutex> lock(_consoleTextList_Mutex);
 
 	if (showConsole == false)return;
 
@@ -126,11 +144,30 @@ void Console::render()
 
 	int messagesCounter = 0;
 
+	ArrayList<ConsoleText*> bottomList;
+	for(int i=0;i<numStrings;i++)
+	{
+		ConsoleText* dt = consoleTextList->get(i);
+		if (dt->alwaysOnBottom)
+		{
+			consoleTextList->removeAt(i);
+			bottomList.insert(0,dt);
+			i--;
+		}
+	}
+	for(int i=0;i<bottomList.size();i++)
+	{
+		consoleTextList->add(bottomList.get(i));
+	}
+	bottomList.clear();
+
 	for (int n = numStrings; n > 0; n--)
 	{
 		ConsoleText* dt = consoleTextList->get(n - 1);
 
 		if (dt->caption == nullptr)continue;
+
+
 
 		if (debugConsoleOff == true && dt->isDebug == true)
 		{

@@ -98,6 +98,7 @@ public:
 	static void setMain(Main* c);
 
 	Main();
+	static ControlsManager* getControlsManager();
 	static void openURL(string url);
 	static string getPath();
 
@@ -129,7 +130,7 @@ public:
 	static FileUtils* fileUtils;
 	static StateManager* stateManager;
 	static System* systemUtils;
-	static ControlsManager* controlsManager;// = nullptr;
+	//static ControlsManager* controlsManager;// = nullptr;
 
 	static BGClientEngine* gameEngine;// = nullptr;
 	
@@ -138,6 +139,7 @@ public:
 	//ArrayDeque<BGClientEngine*> *gameStack = new ArrayDeque<BGClientEngine*>();
 
 	static Console* console;// = nullptr;
+	static Console* rightConsole;// = nullptr;
 
 	LogoState* logoScreenState = nullptr;
 	LoginState* loginState = nullptr;
@@ -186,7 +188,7 @@ public:
 	static void doResizeCheck();
 	static void doScreenShotCheck();
 
-	static ArrayList<SDL_Event> events;// = new ArrayList<SDL_Event>();
+	//static ArrayList<SDL_Event> events;// = new ArrayList<SDL_Event>();
 
 	void printEvent(const SDL_Event* e);
 	void processEvents();

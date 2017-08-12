@@ -86,7 +86,7 @@ Logger Main::log = Logger("Main");
 
 bool Main::mainLoopStarted = false;
 
-ArrayList<SDL_Event> Main::events;
+
 
 bool Main::quit = false;
 
@@ -99,6 +99,7 @@ Main::Main()
 {//=========================================================================================================================
 
 }
+
 
 
 #ifdef __WINDOWS__
@@ -172,12 +173,13 @@ string Main::version = "";
 
 BobNet* Main::bobNet = nullptr;
 Console* Main::console = nullptr;
+Console* Main::rightConsole = nullptr;
 //AudioManager* Main::audioManager = nullptr;
 FileUtils* Main::fileUtils = nullptr;
 StateManager* Main::stateManager = nullptr;
 System* Main::systemUtils = nullptr;
 GlobalSettings* Main::globalSettings = nullptr;
-ControlsManager* Main::controlsManager = nullptr;
+//ControlsManager* Main::controlsManager = nullptr;
 BGClientEngine* Main::gameEngine = nullptr;
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
@@ -304,14 +306,15 @@ void Main::mainInit()
 
 	//this is done before init game so we can put debug stuff
 	console = new Console();
-
+	rightConsole = new Console();
+	rightConsole->justifyRight = true;
 
 
 	GLUtils::initGL((char*)"\"bob's game\"");
 	//GLUtils::initTWL();
 	GLUtils::e();
 
-	controlsManager = new ControlsManager();
+	new ControlsManager();
 	ControlsManager::initControllers();
 	GLUtils::e();
 
@@ -749,6 +752,7 @@ void Main::whilefix()
 			System::updateUpdateTimers();
 
 			console->update();
+			rightConsole->update();
 			bobNet->tcpServerConnection.update();
 
 			if (dynamic_cast<Engine*>(mainObject->stateManager->getCurrentState()) != NULL)
@@ -815,6 +819,7 @@ void Main::update()
 	stateManager->update();
 	//GLUtils::e();
 	console->update();
+	rightConsole->update();
 	//GLUtils::e();
 	bobNet->update();
 
@@ -863,6 +868,7 @@ void Main::render()
 	GLUtils::setBlendMode(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	console->render();
+	rightConsole->render();
 
 	if (error_console_on)ERROR_draw_error_console();
 	DEBUG_draw_overlays();
@@ -990,7 +996,7 @@ bool Main::resize = false;
 void Main::doResizeCheck()
 { //=========================================================================================================================
 
-	if ((controlsManager->KEY_RALT_HELD && controlsManager->key_RETURN_Pressed()) || controlsManager->key_F11_Pressed())
+	if ((getControlsManager()->KEY_RALT_HELD && getControlsManager()->key_RETURN_Pressed()) || getControlsManager()->key_F11_Pressed())
 	{
 
 		log.debug("Toggled fullscreen");
@@ -1018,7 +1024,7 @@ void Main::doScreenShotCheck()
 
 	
 #ifdef _DEBUG
-	if (controlsManager->key_PRINTSCREEN_Pressed() || controlsManager->key_F10_Pressed())
+	if (getControlsManager()->key_PRINTSCREEN_Pressed() || getControlsManager()->key_F10_Pressed())
 	{
 		if (screenShotKeyPressed == false)
 		{
@@ -1225,7 +1231,7 @@ void Main::processEvents()
 			else
 			{
 
-				events.add(event);
+				stateManager->getCurrentState()->getActiveControlsManager()->events.add(event);
 
 				gwenInput->ProcessEvent(event);
 				//ImGui_ImplSdl_ProcessEvent(&event);
@@ -1233,6 +1239,12 @@ void Main::processEvents()
 
 	}
 
+}
+
+
+ControlsManager * Main::getControlsManager()
+{
+	return stateManager->getCurrentState()->getControlsManager();
 }
 
 
@@ -1678,12 +1690,12 @@ void Main::checkVersion()
 				mainObject->stateManager->getCurrentState()->resetPressedButtons();
 				mainObject->stateManager->getCurrentState()->setButtonStates();
 
-				if(controlsManager->key_SPACE_Pressed())
+				if(getControlsManager()->key_SPACE_Pressed())
 				{
 					stop = true;
 				}
 
-				if (controlsManager->key_ESC_Pressed())
+				if (getControlsManager()->key_ESC_Pressed())
 				{
 					stop = true;
 					skip = true;

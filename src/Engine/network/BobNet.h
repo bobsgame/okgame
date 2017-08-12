@@ -473,6 +473,7 @@ public:
 
 
 	
+	static const string Chat_Message;
 	static const string Server_Stats_Request;
 	static const string Server_Stats_Response;
 

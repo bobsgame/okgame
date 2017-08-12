@@ -73,6 +73,8 @@ public:
 	Console();
 	void update();
 
+	void pruneChats(int max);
+
 	ConsoleText* error(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
 	ConsoleText* debug(const string& s, int ticks = -1, int x = -1, int y = -1, BobColor* c = nullptr);
 

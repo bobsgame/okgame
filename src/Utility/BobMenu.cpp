@@ -174,7 +174,7 @@ void BobMenu::setAllCaptionsToFullAlpha()
 }
 
 //=========================================================================================================================
-void BobMenu::update(int ticksPassed)
+void BobMenu::update(Engine *g, int ticksPassed)
 {//=========================================================================================================================
 	cursorInOutToggleTicks += ticksPassed;
 	if (cursorInOutToggleTicks > 300)
@@ -183,8 +183,8 @@ void BobMenu::update(int ticksPassed)
 		cursorInOutToggle = !cursorInOutToggle;
 	}
 
-	int mx = getControlsManager()->getMouseX();
-	int my = getControlsManager()->getMouseY();
+	int mx = g->getControlsManager()->getMouseX();
+	int my = g->getControlsManager()->getMouseY();
 	bool checkMouse = false;
 	if(mx!=lastMX || my!=lastMY)
 	{

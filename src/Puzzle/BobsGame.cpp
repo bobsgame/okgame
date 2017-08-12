@@ -40,7 +40,7 @@ ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> BobsGame::topGamesByBlocksClear
 
 ArrayList<string> BobsGame::activityStream;
 
-Console* BobsGame::console = nullptr;
+
 
 #include "Stats/GameStats.h"
 
@@ -90,9 +90,10 @@ BobsGame::~BobsGame()
 
 	players.clear();
 
-	
-
 }
+
+
+
 
 //=========================================================================================================================
 void BobsGame::init()
@@ -114,6 +115,7 @@ void BobsGame::init()
 	initAssets();
 
 
+	
 
 	log.debug("Init Player");
 	initPlayer();
@@ -124,11 +126,6 @@ void BobsGame::init()
 	music = getAudioManager()->playMusic("slick_v10");
 	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
 
-	if (console == nullptr)
-	{
-		console = new Console();
-		console->justifyRight = true;
-	}
 	//	games.put(randomSeed,ME);
 	//	player2 = new Game(this);
 	//	player2.controlledByNetwork = true;
@@ -853,8 +850,6 @@ void BobsGame::render()
 			statsUploadMenu->render(GLUtils::getViewportHeight()/2 + 100,0,getHeight(),false);
 		}
 
-		console->render();
-
 		//--------------------------
 		// draw MAIN FBO texture into SCREEN BUFFER
 		//--------------------------
@@ -991,7 +986,6 @@ void BobsGame::update()
 		}
 	}
 
-	console->update();
 
 	debugKeys();
 
@@ -1000,8 +994,11 @@ void BobsGame::update()
 		captionManager->update();
 		audioManager->update();
 		spriteManager->update();
+
+		updateChatConsole();
 	}
 
+	
 
 
 	getGameTypesAndSequencesFromServer();
@@ -1603,8 +1600,7 @@ void BobsGame::resetPressedButtons()
 		p->resetPressedButtons();
 	}
 
-
-	getControlsManager()->resetPressedButtons();
+	getActiveControlsManager()->resetPressedButtons();
 }
 
 void BobsGame::setButtonStates()
@@ -1615,7 +1611,7 @@ void BobsGame::setButtonStates()
 		p->setButtonStates();
 	}
 
-	getControlsManager()->setButtonStates();
+	getActiveControlsManager()->setButtonStates();
 
 
 	//puzzlegame

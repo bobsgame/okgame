@@ -93,6 +93,7 @@ public:
 	virtual void init() override;
 
 
+
 	void initPlayer();
 	bool isMultiplayer();
 	
@@ -124,7 +125,7 @@ public:
 	ArrayList<PuzzlePlayer*> players;
 	
 
-	static Console* console;
+	
 
 	//-----------------
 	//menus

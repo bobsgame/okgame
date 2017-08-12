@@ -876,6 +876,8 @@ public:
 	void incomingBobsGameLeaderBoardByEloScore(string &s);
 	void incomingBobsGameHighScoreBoardsByTimeLasted(string &s);
 	void incomingBobsGameHighScoreBoardsByBlocksCleared(string &s);
+	void sendChatMessage(string s);
+	void incomingChatMessage(string s);
 	//------------------------------------
 	private:
 		string _bobsGameRoomListResponse = "";

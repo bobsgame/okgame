@@ -868,10 +868,10 @@ SDL_JoyHatEvent
 
 
 	//While there are events to handle
-	while (Main::events.size()>0)
+	while (events.size()>0)
 	{
-		SDL_Event event = Main::events.get(0);
-		Main::events.removeAt(0);
+		SDL_Event event = events.get(0);
+		events.removeAt(0);
 
 		if (event.type == SDL_CONTROLLERDEVICEADDED) 
 		{

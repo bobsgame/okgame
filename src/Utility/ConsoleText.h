@@ -22,6 +22,8 @@ public:
 
 	Caption* caption = nullptr;
 
+	bool alwaysOnBottom = false;
+
 	string text = "";
 
 	int x = -1;

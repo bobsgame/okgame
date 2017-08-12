@@ -89,8 +89,19 @@ public:
 	virtual void update();
 	virtual void render();
 	virtual void cleanup();
+	void updateChatConsole();
 
-	static ControlsManager* getControlsManager();
+protected:
+	ControlsManager* controlsManager = nullptr;
+	ControlsManager* chatControlsManager = nullptr;
+	ControlsManager* activeControlsManager = nullptr;
+	bool chatFocused = false;
+	bool textStarted = false;
+
+	ConsoleText* chatConsoleText = nullptr;
+public:
+	ControlsManager* getControlsManager();
+	ControlsManager* getActiveControlsManager();
 
 	//static void setClientGameEngine(BGClientEngine* gameEngine);
 	static BGClientEngine* getClientGameEngine();
@@ -114,8 +125,7 @@ public:
 	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s);
 	virtual bool serverMessageReceived(string cs);
 
-private:
-	//ControlsManager* controlsManager = nullptr;
+
 
 	//static BGClientEngine* clientGameEngine;
 	//ArrayDeque<Cameraman*> *cameramanStack = new ArrayDeque<Cameraman*>();

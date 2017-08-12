@@ -122,7 +122,7 @@ public:
 	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
 	void clear();
 	void setAllCaptionsToFullAlpha();
-	static void update(int ticksPassed);
+	static void update(Engine *g, int ticksPassed);
 
 private:
 	bool areAllMenusDisabled();

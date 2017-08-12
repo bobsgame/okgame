@@ -866,6 +866,12 @@ bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ct
 		return true;
 	}
 
+	if (String::startsWith(s, BobNet::Chat_Message))
+	{
+		incomingChatMessage(s);
+		return true;
+	}
+
 
 
 	if (String::startsWith(s, BobNet::Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched))
@@ -1580,7 +1586,7 @@ void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
 	s = s.substr(s.find(":") + 1);
 	//Room *r = Room::decodeRoomData(s, false);
 
-	BobsGame::console->add(""+userName+" is hosting a multiplayer room!",5000);
+	Main::rightConsole->add(""+userName+" is hosting a multiplayer room!",5000,BobColor::green);
 }
 
 
@@ -1681,7 +1687,7 @@ void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
 	{
 		string a = FileUtils::removeSwearWords(strings.get(i));
 		BobsGame::activityStream.insert(0,a);
-		BobsGame::console->add(a, 5000);
+		Main::rightConsole->add(a, 5000);
 	}
 
 }
@@ -1806,6 +1812,24 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByBlocksCleared(string 
 }
 
 
+
+//===============================================================================================
+void TCPServerConnection::sendChatMessage(string s)
+{ //==============================================================================================
+
+	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Chat_Message +s+ BobNet::endline);
+
+}
+//===============================================================================================
+void TCPServerConnection::incomingChatMessage(string s)
+{ //==============================================================================================
+
+	s = s.substr(s.find(":") + 1);
+
+	Main::rightConsole->add(s);
+
+	Main::rightConsole->pruneChats(10);
+}
 
 //===============================================================================================
 void TCPServerConnection::incomingOnlineFriendsListResponse(string s)
@@ -2790,7 +2814,7 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 
 	}
 
-	while (Main::getMain()->controlsManager->miniGame_CONFIRM_Pressed() == false)
+	while (Main::getMain()->getControlsManager()->miniGame_CONFIRM_Pressed() == false)
 	{
 		Main::whilefix();
 	}
