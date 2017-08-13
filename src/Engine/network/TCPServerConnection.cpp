@@ -1687,7 +1687,7 @@ void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
 	{
 		string a = FileUtils::removeSwearWords(strings.get(i));
 		BobsGame::activityStream.insert(0,a);
-		Main::rightConsole->add(a, 5000);
+		Main::rightConsole->add(a, 5000, BobColor::magenta);
 	}
 
 }
@@ -1828,7 +1828,7 @@ void TCPServerConnection::incomingChatMessage(string s)
 
 	s = s.substr(0, s.find(":END:"));
 
-	Main::rightConsole->add(FileUtils::removeSwearWords(s));
+	Main::rightConsole->add(FileUtils::removeSwearWords(s),BobColor::white);
 
 	Main::rightConsole->pruneChats(10);
 }
