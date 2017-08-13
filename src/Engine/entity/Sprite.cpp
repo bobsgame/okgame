@@ -1161,9 +1161,11 @@ void Sprite::releaseSpriteTexture_S()
 { //=========================================================================================================================
 
 	texture->release();
+	delete texture;
 	texture = nullptr;
 
 	shadowTexture->release();
+	delete shadowTexture;
 	shadowTexture = nullptr;
 
 }

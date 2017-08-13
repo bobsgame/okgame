@@ -97,6 +97,7 @@ void Notification::update()
 			if (caption->texture != nullptr)
 			{
 				caption->texture->release();
+				delete caption->texture;
 				caption->texture = nullptr;
 			}
 

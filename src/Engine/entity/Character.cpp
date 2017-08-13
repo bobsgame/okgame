@@ -1466,6 +1466,8 @@ void Character::generateUniqueTexture(int genderIndex, int archetypeIndex, int s
 	if (uniqueTexture != nullptr)
 	{
 		uniqueTexture->release();
+		delete uniqueTexture;
+		uniqueTexture = nullptr;
 	}
 
 	int eyeSet = eyeColorIndex + 1;

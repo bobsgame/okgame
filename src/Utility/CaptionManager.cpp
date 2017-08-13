@@ -70,6 +70,7 @@ void CaptionManager::update()
 			{
 				log.debug("Caption texture was not null on delete, should not happen.");
 				c->texture->release();
+				delete c->texture;
 				c->texture = nullptr;
 			}
 			delete c;

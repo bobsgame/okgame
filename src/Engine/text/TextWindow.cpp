@@ -457,6 +457,7 @@ void TextWindow::updateSpriteWindowTexture()
 	spriteWindowTextureByteArray = newtex;
 
 	spriteBoxTexture->release();
+	delete spriteBoxTexture;
 	spriteBoxTexture = GLUtils::getTextureFromData("spriteWindow", 64, 64, spriteWindowTextureByteArray);
 
 	/*
@@ -569,7 +570,7 @@ void TextWindow::updateTextureFromByteArray()
 		// TODO: it might actually be more efficient to overwrite the previous texture, the way i had it before, instead of releasing and recreating.
 
 		textBoxTexture->release();
-
+		delete textBoxTexture;
 		textBoxTexture = GLUtils::getTextureFromData("textBox", getTextManager()->width, getTextManager()->height, textBoxTextureByteArray);
 
 		redraw = false;

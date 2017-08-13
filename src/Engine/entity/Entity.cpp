@@ -1468,6 +1468,7 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 	{
 		Character* r = static_cast<Character*>(this);
 		r->uniqueTexture->release();
+		delete r->uniqueTexture;
 		r->uniqueTexture = nullptr;
 
 	}

@@ -65,6 +65,7 @@ void Caption::setText(const string& text, bool force)
 	if (texture != nullptr)
 	{
 		texture->release();
+		delete texture;
 		texture = nullptr;
 	}
 
@@ -237,6 +238,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 	if (texture != nullptr)
 	{
 		texture->release();
+		delete texture;
 		texture = nullptr;
 	}
 
@@ -431,8 +433,14 @@ void Caption::init(Engine* g, Position fixedPosition, float screenX, float scree
 	if (texture != nullptr)
 	{
 		texture->release();
+		delete texture;
 		texture = nullptr;
+	}
 
+	if (textureByteArray != nullptr)
+	{
+		delete textureByteArray;
+		textureByteArray = nullptr;
 	}
 
 
@@ -1565,6 +1573,7 @@ void Caption::update()
 		if (texture != nullptr)
 		{
 			texture->release();
+			delete texture;
 			texture = nullptr;
 		}
 

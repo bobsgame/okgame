@@ -2600,6 +2600,7 @@ void Map::setChunkTexture(int index, BobTexture* t)
 void Map::releaseChunkTexture(int index)
 { //=========================================================================================================================
 	chunkTexture.get(index)->release();
+	delete chunkTexture.get(index);
 	chunkTexture.put(index, nullptr);
 }
 
@@ -2938,6 +2939,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							if (t != GLUtils::blankTexture)
 							{
 								t->release();
+								delete t;
 								t = nullptr;
 							}
 							setChunkTexture(chunkIndex, nullptr);
@@ -4415,6 +4417,7 @@ void Map::clearActiveEntityList()
 			if (r->uniqueTexture != nullptr)
 			{
 				r->uniqueTexture->release();
+				delete r->uniqueTexture;
 				r->uniqueTexture = nullptr;
 			}
 		}

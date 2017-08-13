@@ -564,7 +564,7 @@ void Piece::renderOutlineFirstBlock(float x, float y, float alpha, bool asGhost)
 		bx = xy[0];
 		by = xy[1];
 
-		delete xy;
+		delete [] xy;
 	}
 
 	for (int p = 0; p < 5; p++) //TODO: getScale with screen res
@@ -609,7 +609,7 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 				bx = xy[0];
 				by = xy[1];
 
-				delete xy;
+				delete [] xy;
 			}
 
 			for (int p = 0; p < 5; p++) //TODO: getScale with screen res

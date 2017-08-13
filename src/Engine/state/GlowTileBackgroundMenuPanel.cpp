@@ -70,7 +70,8 @@ void GlowTileBackgroundMenuPanel::cleanup()
 		{
 			if (glowTileFramesTexture->get(i) != nullptr)
 			{
-				glowTileFramesTexture->get(i)->release();				
+				glowTileFramesTexture->get(i)->release();	
+				delete glowTileFramesTexture->get(i);
 			}
 		}
 		glowTileFramesTexture->clear();
@@ -79,6 +80,7 @@ void GlowTileBackgroundMenuPanel::cleanup()
 	if (bgScrollTexture != nullptr)
 	{
 		bgScrollTexture->release();
+		delete bgScrollTexture;
 		bgScrollTexture = nullptr;
 	}
 }

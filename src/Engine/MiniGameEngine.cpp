@@ -176,13 +176,19 @@ void MiniGameEngine::unloadTitleMenuTextures()
 {//=========================================================================================================================
 	if(titleMenuTextures!= nullptr && titleMenuTextures->size()>0)
 	{
-		for(int i=0;i<numTitleMenuTextureFrames;i++)titleMenuTextures->get(i)->release();
+		for (int i = 0; i < numTitleMenuTextureFrames; i++)
+		{
+			titleMenuTextures->get(i)->release();
+			delete titleMenuTextures->get(i);
+		}
+		
 		titleMenuTextures->clear();
 	}
 
 	if (titleMenuTexture != nullptr)
 	{
 		titleMenuTexture->release();
+		delete titleMenuTexture;
 		titleMenuTexture = nullptr;
 	}
 
