@@ -315,8 +315,10 @@ void Main::mainInit()
 
 	//this is done before init game so we can put debug stuff
 	console = new Console();
+	console->fontSize = 16;
 	rightConsole = new Console();
 	rightConsole->justifyRight = true;
+	rightConsole->fontSize = 16;
 
 
 	GLUtils::initGL((char*)"\"bob's game\"");

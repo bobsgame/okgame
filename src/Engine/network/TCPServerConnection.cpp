@@ -1826,6 +1826,8 @@ void TCPServerConnection::incomingChatMessage(string s)
 
 	s = s.substr(s.find(":") + 1);
 
+	s = s.substr(0, s.find(":END:"));
+
 	Main::rightConsole->add(FileUtils::removeSwearWords(s));
 
 	Main::rightConsole->pruneChats(10);

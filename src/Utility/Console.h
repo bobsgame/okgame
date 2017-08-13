@@ -70,6 +70,8 @@ public:
 
 	bool justifyRight = false;
 
+	int fontSize = 12;
+
 	Console();
 	void update();
 

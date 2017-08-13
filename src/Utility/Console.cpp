@@ -61,7 +61,7 @@ void Console::update()
 		if (cy == -1)cy = 0;//-1 is a magic num for captions, dont use it  //TODO: change that so all instances
 		if (d->caption == nullptr)
 		{
-			d->caption = Console::captionManager->newManagedCaption(Caption::Position::NONE, cx, cy, -1, d->text, 12, true, d->color, BobColor::clear, RenderOrder::CONSOLE);
+			d->caption = Console::captionManager->newManagedCaption(Caption::Position::NONE, cx, cy, -1, d->text, fontSize, true, d->color, BobColor::clear, RenderOrder::CONSOLE);
 		}
 
 		if (d->caption->text != d->text)d->caption->setText(d->text, false);
@@ -147,6 +147,8 @@ void Console::render()
 
 	int messagesCounter = 0;
 
+	int yPosition = 0;
+
 	ArrayList<ConsoleText*> bottomList;
 	for(int i=0;i<consoleTextList->size();i++)
 	{
@@ -214,7 +216,9 @@ void Console::render()
 			{
 				x = GLUtils::getRealWindowWidth() - (dt->caption->getWidth() + 8);
 			}
-			float y = (float)GLUtils::getRealWindowHeight() - (16 * messagesCounter);
+
+			yPosition += (dt->caption->getHeight()*1.0f);
+			float y = (float)GLUtils::getRealWindowHeight() - yPosition;// ((dt->caption->getHeight()*1.2f) * messagesCounter);
 			dt->caption->screenX = x;
 			dt->caption->screenY = y;
 		}
