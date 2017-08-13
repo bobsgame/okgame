@@ -209,10 +209,13 @@ SDL_Surface* getOutlinedSurface(BobColor* textColor, int OUTLINE_SIZE, TTF_Font*
 	// blit text onto its outline 
 	SDL_SetSurfaceBlendMode(fg_surface, SDL_BLENDMODE_BLEND);
 	SDL_BlitSurface(fg_surface, NULL, surface, &rect);
-	SDL_FreeSurface(fg_surface);
 
 	*widthRet = fg_surface->w + OUTLINE_SIZE * 2;
 	*heightRet = fg_surface->h + OUTLINE_SIZE * 2;
+
+	SDL_FreeSurface(fg_surface);
+
+
 
 	return surface;
 }

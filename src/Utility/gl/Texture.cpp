@@ -160,6 +160,8 @@ void BobTexture::release()
 
 	glDeleteTextures(1, textureIDs);
 
+	delete[] textureIDs;
+
 	if (lastBoundTexture == this)
 	{
 		bindNone();
