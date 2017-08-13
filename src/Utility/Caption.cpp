@@ -244,6 +244,8 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 
 	this->initialized = false;
 
+	if (text.length() == 0)text = " ";
+
 	//get length
 	this->textCharacterLength = (int)text.length();
 	this->text = text;
@@ -285,7 +287,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 
 	
 
-	if (this->text.length() == 0)this->text = " ";
+	
 
 	SDL_Surface* surface = nullptr;
 
@@ -329,7 +331,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 		int OUTLINE_SIZE = 1;
 		// render text and text outline 
 		
-		surface = getOutlinedSurface(textColor, OUTLINE_SIZE, ttfFont, outlineFont, text, &this->width, &this->height);
+		surface = getOutlinedSurface(textColor, OUTLINE_SIZE, ttfFont, outlineFont, this->text, &this->width, &this->height);
 
 		if (surface == NULL || surface == nullptr)
 		{
@@ -356,7 +358,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 	else
 	{
 
-		surface = getSurface(textColor, textBGColor, ttfFont, text, &this->width, &this->height);
+		surface = getSurface(textColor, textBGColor, ttfFont, this->text, &this->width, &this->height);
 
 		if (surface == NULL || surface == nullptr)
 		{
