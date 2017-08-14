@@ -90,7 +90,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 {//=========================================================================================================================
 
 
-	if (fg == this->textColor && bg == this->textBGColor && aa == this->textAAColor)
+	if (fg == this->textColor && bg == this->textBGColor && (font->outlined==true || aa == this->textAAColor))
 	{
 		return;
 	}
