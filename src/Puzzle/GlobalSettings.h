@@ -69,6 +69,10 @@ public:
 		}
 		if(version>5)
 		{
+			ar & BOOST_SERIALIZATION_NVP(censorBadWords);
+		}
+		if(version>6)
+		{
 			ar & BOOST_SERIALIZATION_NVP(hideChat);
 		}
 		if(version>6)
