@@ -2076,6 +2076,9 @@ void GLUtils::setDefaultTextureParams()
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 2);//0=100% 1=50% 2=25%
   glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
+  //glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 
   //glTexEnvf(GL_TEXTURE_FILTER_CONTROL, GL_TEXTURE_LOD_BIAS, -1.5f);
 
@@ -3302,11 +3305,9 @@ void GLUtils::clearCache()
 //=========================================================================================================================
 GLuint GLUtils::createTextureID()
 {//=========================================================================================================================
-	GLuint *tmp = new GLuint[1];
-	glGenTextures(1, tmp);
+	GLuint t;
+	glGenTextures(1, &t);
 
-	GLuint t = tmp[0];
-	delete[] tmp;
 	return t;
 }
 
