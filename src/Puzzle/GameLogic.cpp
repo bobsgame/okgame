@@ -55,7 +55,7 @@ GameLogic::GameLogic(Engine* g, long long seed)
 	randomSeed = seed;
 	initializeRandomGenerator();
 
-	currentGameType = (new GameType());
+	currentGameType = new GameType();
 
 	grid->reformat(0, 0);
 

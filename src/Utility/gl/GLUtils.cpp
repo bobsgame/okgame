@@ -73,9 +73,9 @@ BobTexture* GLUtils::rect = nullptr;
 //static float* colBuffer = BufferUtils.newFloatBuffer(16);
 //static float* texBuffer = BufferUtils.newFloatBuffer(8);
 
-GLfloat* GLUtils::box = new GLfloat[12];
-GLfloat* GLUtils::col = new GLfloat[16];
-GLfloat* GLUtils::tex = new GLfloat[8];
+GLfloat* GLUtils::box = nullptr;
+GLfloat* GLUtils::col = nullptr;
+GLfloat* GLUtils::tex = nullptr;
 
 int GLUtils::windowWidth = 0;
 int GLUtils::windowHeight = 0;
@@ -2249,6 +2249,9 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 		return;
 	}
 
+	if (box == nullptr)box = new GLfloat[12];
+	if (col == nullptr)col = new GLfloat[16];
+	if (tex == nullptr)tex = new GLfloat[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2809,6 +2812,10 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 		glEnd();
 		return;
 	}
+
+	if (box == nullptr)box = new GLfloat[12];
+	if (col == nullptr)col = new GLfloat[16];
+	if (tex == nullptr)tex = new GLfloat[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;

@@ -166,8 +166,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 			{
 				if (tempBG == BobColor::clear)
 				{
-					BobColor* c = fg;
-					tempAA = new BobColor((c->rf()) * 255, (c->gf()) * 255, (c->bf()) * 255, (c->af() / 2.0f)*255);
+					tempAA = new BobColor((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f)*255);
 				}
 			}
 		}
@@ -244,11 +243,12 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 
 	this->initialized = false;
 
-	if (text.length() == 0)text = " ";
 
 	//get length
 	this->textCharacterLength = (int)text.length();
 	this->text = text;
+	if (this->text.length() == 0)this->text = " ";
+
 	this->screenX = screenX;
 	this->screenY = screenY;
 	this->layer = layer;
