@@ -1586,7 +1586,10 @@ void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
 	s = s.substr(s.find(":") + 1);
 	//Room *r = Room::decodeRoomData(s, false);
 
-	Main::rightConsole->add(""+userName+" is hosting a multiplayer room!",5000,BobColor::green);
+	if (Main::globalSettings->hideNotifications == false)
+	{
+		Main::rightConsole->add("" + userName + " is hosting a multiplayer room!", 5000, BobColor::green);
+	}
 }
 
 
@@ -1687,7 +1690,11 @@ void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
 	{
 		string a = FileUtils::removeSwearWords(strings.get(i));
 		BobsGame::activityStream.insert(0,a);
-		Main::rightConsole->add(a, 5000, BobColor::magenta);
+
+		if (Main::globalSettings->hideNotifications == false)
+		{
+			Main::rightConsole->add(a, 5000, BobColor::magenta);
+		}
 	}
 
 }
@@ -1828,9 +1835,12 @@ void TCPServerConnection::incomingChatMessage(string s)
 
 	s = s.substr(0, s.find(":END:"));
 
-	Main::rightConsole->add(FileUtils::removeSwearWords(s),BobColor::white);
+	if (Main::globalSettings->hideChat==false)
+	{
+		Main::rightConsole->add(FileUtils::removeSwearWords(s), BobColor::white);
 
-	Main::rightConsole->pruneChats(10);
+		Main::rightConsole->pruneChats(10);
+	}
 }
 
 //===============================================================================================

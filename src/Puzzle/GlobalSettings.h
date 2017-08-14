@@ -28,6 +28,8 @@ public:
 
 	bool useAnalogSticks = true;
 	bool censorBadWords = true;
+	bool hideChat = false;
+	bool hideNotifications = false;
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version)
@@ -67,10 +69,14 @@ public:
 		}
 		if(version>5)
 		{
-			ar & BOOST_SERIALIZATION_NVP(censorBadWords);
+			ar & BOOST_SERIALIZATION_NVP(hideChat);
+		}
+		if(version>6)
+		{
+			ar & BOOST_SERIALIZATION_NVP(hideNotifications);
 		}
 	}
 
 };
-BOOST_CLASS_VERSION(GlobalSettings, 6)
+BOOST_CLASS_VERSION(GlobalSettings, 7)
 BOOST_CLASS_TRACKING(GlobalSettings, boost::serialization::track_never)

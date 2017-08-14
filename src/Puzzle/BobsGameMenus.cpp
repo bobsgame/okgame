@@ -851,7 +851,7 @@ void BobsGame::pauseMenuUpdate()
 		pauseMenu = new BobMenu(this,"Paused");
 
 		pauseMenu->add("Back To Game", "Back To Game");
-		settingsMenuInit(pauseMenu);
+		settingsMenuInit(pauseMenu, false);
 		playerControllerSettingsMenuInit(pauseMenu, getPlayer1());
 		pauseMenu->add("Quit Game And Return To Title Screen","Quit Game And Return To Title Screen");
 
@@ -904,7 +904,7 @@ void BobsGame::pauseMenuUpdate()
 
 		if (pauseMenu->isSelectedID("Defaults", clicked, mx, my))
 		{
-			settingsMenuSetDefaults(pauseMenu);
+			settingsMenuSetDefaults(pauseMenu, false);
 		}
 
 		if(pauseMenu->isSelectedID("Back To Game", clicked, mx, my))
@@ -1267,7 +1267,7 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 			p->menu = new BobMenu(this, "");
 
 			p->menu->add("Back To Game", "Back To Game", BobColor::white);
-			settingsMenuInit(p->menu);
+			settingsMenuInit(p->menu, false);
 
 			playerSettingsMenuInit(p->menu, p);
 
@@ -1322,7 +1322,7 @@ void BobsGame::playerPauseMiniMenuUpdate(PuzzlePlayer *p)
 
 			if (p->menu->isSelectedID("Defaults"))
 			{
-				settingsMenuSetDefaults(p->menu);
+				settingsMenuSetDefaults(p->menu, false);
 
 				p->hue = 1.0f;
 				p->menu->getMenuItemByID("Player Hue Shift")->setText("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%");
@@ -1799,7 +1799,7 @@ void BobsGame::createAccountMenuRender()
 }
 
 //=========================================================================================================================
-void BobsGame::settingsMenuInit(BobMenu* m)
+void BobsGame::settingsMenuInit(BobMenu* m, bool isSettingsMenu)
 {//=========================================================================================================================
 	m->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume");
 	m->add("Brightness: " + to_string((int)(Main::globalSettings->brightness * 100)) + "%", "Brightness");
@@ -1807,13 +1807,50 @@ void BobsGame::settingsMenuInit(BobMenu* m)
 	m->add("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%", "Saturation");
 
 	m->add("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%", "Global Hue Shift");
-	m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
-	m->add("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"), "Game Stats");
-	m->add("Show High Score Bar In Single Player: " + string(Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer ? "On" : "Off"), "Score Bars");
-	m->add("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"), "Censor");
+	if (isSettingsMenu)m->add("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%", "Screen Flash");
+	if (isSettingsMenu)m->add("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"), "Game Stats");
+	if (isSettingsMenu)m->add("Show High Score Bar In Single Player: " + string(Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer ? "On" : "Off"), "Score Bars");
+	if (isSettingsMenu)m->add("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"), "Censor");
+	if (isSettingsMenu)m->add("Hide Chat: " + string(Main::globalSettings->hideChat ? "On" : "Off"), "Hide Chat");
+	if (isSettingsMenu)m->add("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"), "Hide Notifications");
 
 	m->add("Defaults");
 }
+
+
+//=========================================================================================================================
+void BobsGame::settingsMenuSetDefaults(BobMenu* m, bool isSettingsMenu)
+{//=========================================================================================================================
+
+	GlobalSettings gs;
+	Main::globalSettings->musicVolume = gs.musicVolume;
+	Main::globalSettings->hue = gs.hue;
+	Main::globalSettings->saturation = gs.saturation;
+	Main::globalSettings->brightness = gs.brightness;
+	Main::globalSettings->contrast = gs.contrast;
+	Main::globalSettings->gamma = gs.gamma;
+	if (isSettingsMenu)Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha = gs.bobsGame_screenFlashOnLevelUpAlpha;
+	if (isSettingsMenu)Main::globalSettings->bobsGame_showDetailedGameInfoCaptions = gs.bobsGame_showDetailedGameInfoCaptions;
+	if (isSettingsMenu)Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer = gs.bobsGame_showScoreBarsInSinglePlayer;
+	if (isSettingsMenu)Main::globalSettings->censorBadWords = gs.censorBadWords;
+	if (isSettingsMenu)Main::globalSettings->hideChat = gs.hideChat;
+	if (isSettingsMenu)Main::globalSettings->hideNotifications = gs.hideNotifications;
+
+	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
+	m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
+	m->getMenuItemByID("Brightness")->setText("Brightness: " + to_string((int)(Main::globalSettings->brightness * 100)) + "%");
+	m->getMenuItemByID("Contrast")->setText("Contrast: " + to_string((int)(Main::globalSettings->contrast * 100)) + "%");
+	m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
+	m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
+	if (isSettingsMenu)m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
+	if (isSettingsMenu)m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"));
+	if (isSettingsMenu)m->getMenuItemByID("Score Bars")->setText("Show High Score Bar In Single Player: " + string(Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer ? "On" : "Off"));
+	if (isSettingsMenu)m->getMenuItemByID("Censor")->setText("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"));
+	if (isSettingsMenu)m->getMenuItemByID("Hide Chat")->setText("Hide Chat: " + string(Main::globalSettings->hideChat ? "On" : "Off"));
+	if (isSettingsMenu)m->getMenuItemByID("Hide Notifications")->setText("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"));
+
+}
+
 
 //=========================================================================================================================
 void BobsGame::settingsMenuToggle(BobMenu* m)
@@ -1865,6 +1902,36 @@ void BobsGame::settingsMenuToggle(BobMenu* m)
 			Main::globalSettings->censorBadWords = !Main::globalSettings->censorBadWords;
 
 			m->getMenuItemByID("Censor")->setText("Remove Profanity In Usernames: " + string(Main::globalSettings->censorBadWords ? "On" : "Off"));
+		}
+	}
+	if (m->isSelectedID("Hide Chat"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			Main::globalSettings->hideChat = !Main::globalSettings->hideChat;
+
+			Main::rightConsole->pruneChats(0);
+
+			m->getMenuItemByID("Hide Chat")->setText("Hide Chat: " + string(Main::globalSettings->hideChat ? "On" : "Off"));
+		}
+	}
+	if (m->isSelectedID("Hide Notifications"))
+	{
+		long long startTime = timeLastChangedSetting;
+		long long currentTime = System::currentHighResTimer();
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
+
+		if (ticksPassed > 15)
+		{
+			timeLastChangedSetting = currentTime;
+			Main::globalSettings->hideNotifications = !Main::globalSettings->hideNotifications;
+
+			m->getMenuItemByID("Hide Notifications")->setText("Hide Notifications: " + string(Main::globalSettings->hideNotifications ? "On" : "Off"));
 		}
 	}
 
@@ -2062,31 +2129,6 @@ void BobsGame::settingsMenuRight(BobMenu* m)
 }
 
 //=========================================================================================================================
-void BobsGame::settingsMenuSetDefaults(BobMenu* m)
-{//=========================================================================================================================
-
-	GlobalSettings gs;
-	Main::globalSettings->musicVolume = gs.musicVolume;
-	Main::globalSettings->hue = gs.hue;
-	Main::globalSettings->saturation = gs.saturation;
-	Main::globalSettings->brightness = gs.brightness;
-	Main::globalSettings->contrast = gs.contrast;
-	Main::globalSettings->gamma = gs.gamma;
-	Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha = gs.bobsGame_screenFlashOnLevelUpAlpha;
-	Main::globalSettings->bobsGame_showDetailedGameInfoCaptions = gs.bobsGame_showDetailedGameInfoCaptions;
-
-	music->setVolume(((float)Main::globalSettings->musicVolume / 100.0f));
-	m->getMenuItemByID("Music Volume")->setText("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%");
-	m->getMenuItemByID("Brightness")->setText("Brightness: " + to_string((int)(Main::globalSettings->brightness * 100)) + "%");
-	m->getMenuItemByID("Contrast")->setText("Contrast: " + to_string((int)(Main::globalSettings->contrast * 100)) + "%");
-	m->getMenuItemByID("Saturation")->setText("Saturation: " + to_string((int)(Main::globalSettings->saturation * 100)) + "%");
-	m->getMenuItemByID("Global Hue Shift")->setText("Global Hue Shift: " + to_string((int)(Main::globalSettings->hue * 100)) + "%");
-	m->getMenuItemByID("Screen Flash")->setText("Level Up Screen Flash: " + to_string((int)(Main::globalSettings->bobsGame_screenFlashOnLevelUpAlpha * 100 * 2)) + "%");
-	m->getMenuItemByID("Game Stats")->setText("Show Detailed Game Stats: " + string(Main::globalSettings->bobsGame_showDetailedGameInfoCaptions ? "On" : "Off"));
-
-}
-
-//=========================================================================================================================
 void BobsGame::globalSettingsMenuUpdate()
 {//=========================================================================================================================
 
@@ -2094,7 +2136,7 @@ void BobsGame::globalSettingsMenuUpdate()
 	{
 		globalSettingsMenu = new BobMenu(this, "Global Settings");
 
-		settingsMenuInit(globalSettingsMenu);
+		settingsMenuInit(globalSettingsMenu, true);
 		globalSettingsMenu->add("Back To Title Screen", "Back To Title Screen");
 
 		globalSettingsMenu->cursorPosition = globalSettingsMenuCursorPosition;
@@ -2140,7 +2182,7 @@ void BobsGame::globalSettingsMenuUpdate()
 
 		if (globalSettingsMenu->isSelectedID("Defaults", clicked, mx, my))
 		{
-			settingsMenuSetDefaults(globalSettingsMenu);
+			settingsMenuSetDefaults(globalSettingsMenu, true);
 		}
 		if (globalSettingsMenu->isSelectedID("Back To Title Screen", clicked, mx, my))
 		{

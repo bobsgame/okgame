@@ -319,11 +319,11 @@ public:
 	int gameTestMenuCursorPosition = 0;
 
 
-	void settingsMenuInit(BobMenu* m);
+	void settingsMenuInit(BobMenu* m, bool isSettingsMenu);
 	void settingsMenuToggle(BobMenu* m);
 	void settingsMenuLeft(BobMenu* m);
 	void settingsMenuRight(BobMenu* m);
-	void settingsMenuSetDefaults(BobMenu* m);
+	void settingsMenuSetDefaults(BobMenu* m, bool isSettingsMenu);
 	void globalSettingsMenuUpdate();
 	void globalSettingsMenuRender();
 	BobMenu *globalSettingsMenu = nullptr;
