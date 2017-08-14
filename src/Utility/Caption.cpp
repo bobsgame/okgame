@@ -90,7 +90,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 {//=========================================================================================================================
 
 
-	if (fg == this->textColor && bg == this->textBGColor && aa == this->textAAColor)
+	if (fg == this->textColor && bg == this->textBGColor && (font->outlined==true || aa == this->textAAColor))
 	{
 		return;
 	}
@@ -166,8 +166,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 			{
 				if (tempBG == BobColor::clear)
 				{
-					BobColor* c = fg;
-					tempAA = new BobColor((c->rf()) * 255, (c->gf()) * 255, (c->bf()) * 255, (c->af() / 2.0f)*255);
+					tempAA = new BobColor((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f)*255);
 				}
 			}
 		}
@@ -244,9 +243,12 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 
 	this->initialized = false;
 
+
 	//get length
 	this->textCharacterLength = (int)text.length();
 	this->text = text;
+	if (this->text.length() == 0)this->text = " ";
+
 	this->screenX = screenX;
 	this->screenY = screenY;
 	this->layer = layer;
@@ -285,7 +287,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 
 	
 
-	if (this->text.length() == 0)this->text = " ";
+	
 
 	SDL_Surface* surface = nullptr;
 
@@ -329,7 +331,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 		int OUTLINE_SIZE = 1;
 		// render text and text outline 
 		
-		surface = getOutlinedSurface(textColor, OUTLINE_SIZE, ttfFont, outlineFont, text, &this->width, &this->height);
+		surface = getOutlinedSurface(textColor, OUTLINE_SIZE, ttfFont, outlineFont, this->text, &this->width, &this->height);
 
 		if (surface == NULL || surface == nullptr)
 		{
@@ -356,7 +358,7 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 	else
 	{
 
-		surface = getSurface(textColor, textBGColor, ttfFont, text, &this->width, &this->height);
+		surface = getSurface(textColor, textBGColor, ttfFont, this->text, &this->width, &this->height);
 
 		if (surface == NULL || surface == nullptr)
 		{

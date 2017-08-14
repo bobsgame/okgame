@@ -64,6 +64,7 @@ void SpriteManager::update()
 	{
 		sprites->get(n)->update();
 	}
+	delete sprites;
 }
 
 void SpriteManager::renderScreenSprites(RenderOrder layer)

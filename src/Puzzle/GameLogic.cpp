@@ -55,7 +55,7 @@ GameLogic::GameLogic(Engine* g, long long seed)
 	randomSeed = seed;
 	initializeRandomGenerator();
 
-	currentGameType = (new GameType());
+	currentGameType = new GameType();
 
 	grid->reformat(0, 0);
 
@@ -3473,9 +3473,12 @@ void GameLogic::renderHighScoreMeters()
 
 		if (highestScore == 0)return;
 
+		int barWidth = GLUtils::getViewportWidth() / 50;
+
 		int amount = 0;
 		amount = height * (float)((float)currentScore / (float)highestScore);
-		GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 0, 200, 0.75f);
+		BobColor *c = BobColor::cyan;
+		GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
 		if (myScoreBarCaption == nullptr)myScoreBarCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, BobColor::white, BobColor::clear);
 		myScoreBarCaption->screenX = startX;
@@ -3484,14 +3487,14 @@ void GameLogic::renderHighScoreMeters()
 		myScoreBarCaption->render();
 
 
-		string typeText = "Time Lasted";
+		string typeText = "";
 		if (getRoom()->endlessMode)
 		{
 			typeText = "Blocks Cleared";
 		}
 		else
 		{
-			typeText = "Time Lasted";
+			typeText = "Time To Finish";
 		}
 		if (scoreBarTypeCaption == nullptr)scoreBarTypeCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, typeText, 10, true, BobColor::white, BobColor::clear);
 		scoreBarTypeCaption->screenX = startX;
@@ -3499,11 +3502,11 @@ void GameLogic::renderHighScoreMeters()
 		scoreBarTypeCaption->update();
 		scoreBarTypeCaption->render();
 
+
+
 		//then draw my high score if exists
 		if (myHighScore != nullptr)
 		{
-			
-
 			if (getRoom()->endlessMode)
 			{
 				currentScore = myHighScore->mostBlocksCleared;
@@ -3515,10 +3518,11 @@ void GameLogic::renderHighScoreMeters()
 
 			if (currentScore > 0)
 			{
-				startX += 10;
+				startX += barWidth + 10;
 
 				amount = height * (float)((float)currentScore / (float)highestScore);
-				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 0, 200, 0, 0.75f);
+				c = BobColor::green;
+				GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
 				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
 				myHighScoreBarCaption->screenX = startX;
@@ -3547,10 +3551,11 @@ void GameLogic::renderHighScoreMeters()
 
 			if (currentScore > 0)
 			{
-				startX += 10;
+				startX += barWidth + 10;
 
 				amount = height * (float)((float)currentScore / (float)highestScore);
-				GLUtils::drawFilledRectXYWH((float)startX + (height - amount), (float)startY, GLUtils::getViewportWidth() / 50, amount, 200, 0, 0, 0.75f);
+				c = BobColor::magenta;
+				GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
 				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard", 10, true, BobColor::white, BobColor::clear);
 				leaderboardBarCaption->screenX = startX;

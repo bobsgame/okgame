@@ -46,14 +46,15 @@
 				<Compiler>
 					<Add option="-DBOOST_LIB_DIAGNOSTIC=1"/>
 					<Add directory="/usr/local/include/SDL2"/>
+					<Add directory="/usr/include/SDL2"/>
 					<Add directory="/home/bob/bobsgame/lib/glew-2.0.0/include"/>
 					<Add directory="/home/bob/bobsgame/lib"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Foundation/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/JSON/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Net/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Util/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/XML/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Zip/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/JSON/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Net/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Util/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/XML/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Zip/include"/>
 					<Add directory="/home/bob/bobsgame/lib/miniz-master"/>
 					<Add directory="/home/bob/bobsgame/lib/minilzo-2.09"/>
 					<Add directory="/home/bob/bobsgame/lib/GWEN-master/gwen/include"/>
@@ -83,14 +84,15 @@
 				<Compiler>
 					<Add option="-DBOOST_LIB_DIAGNOSTIC=1"/>
 					<Add directory="/usr/local/include/SDL2"/>
+					<Add directory="/usr/include/SDL2"/>
 					<Add directory="/home/bob/bobsgame/lib/glew-2.0.0/include"/>
 					<Add directory="/home/bob/bobsgame/lib"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Foundation/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/JSON/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Net/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Util/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/XML/include"/>
-					<Add directory="/home/bob/bobsgame/lib/poco-1.7.5/Zip/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/JSON/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Net/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Util/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/XML/include"/>
+					<Add directory="/home/bob/bobsgame/lib/poco-1.7.8p3-all/Zip/include"/>
 					<Add directory="/home/bob/bobsgame/lib/miniz-master"/>
 					<Add directory="/home/bob/bobsgame/lib/minilzo-2.09"/>
 					<Add directory="/home/bob/bobsgame/lib/GWEN-master/gwen/include"/>
@@ -832,34 +834,28 @@
 		<Unit filename="/home/bob/bobsgame/src/Engine/stadium/StadiumScreen.h">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccount.cpp">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccount.h">
-			<Option target="bobsgame"/>
-		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccountState.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/CreateNewAccountState.h">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/GlowTileBackground.cpp">
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/GlowTileBackgroundMenuPanel.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/GlowTileBackground.h">
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/GlowTileBackgroundMenuPanel.h">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/KeyboardScreen.cpp">
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/KeyboardMenuPanel.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/KeyboardScreen.h">
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/KeyboardMenuPanel.h">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/LegalScreen.cpp">
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LegalMenuPanel.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/LegalScreen.h">
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LegalMenuPanel.h">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoggedOutState.cpp">
@@ -868,28 +864,22 @@
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoggedOutState.h">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginScreen.cpp">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginScreen.h">
-			<Option target="bobsgame"/>
-		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginState.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/LoginState.h">
 			<Option target="bobsgame"/>
 		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LogoState.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Engine/state/LogoState.h">
+			<Option target="bobsgame"/>
+		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/ServersHaveShutDownState.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/ServersHaveShutDownState.h">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/State.cpp">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Engine/state/State.h">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Engine/state/StateManager.cpp">
@@ -1114,34 +1104,28 @@
 		<Unit filename="/home/bob/bobsgame/src/Utility/System.h">
 			<Option target="bobsgame"/>
 		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioData.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioData.h">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioFile.cpp">
+			<Option target="bobsgame"/>
+		</Unit>
+		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioFile.h">
+			<Option target="bobsgame"/>
+		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioManager.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Utility/audio/AudioManager.h">
 			<Option target="bobsgame"/>
 		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Music.cpp">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Music.h">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Utility/audio/MusicData.cpp">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Utility/audio/MusicData.h">
-			<Option target="bobsgame"/>
-		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Sound.cpp">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Utility/audio/Sound.h">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Utility/audio/SoundData.cpp">
-			<Option target="bobsgame"/>
-		</Unit>
-		<Unit filename="/home/bob/bobsgame/src/Utility/audio/SoundData.h">
 			<Option target="bobsgame"/>
 		</Unit>
 		<Unit filename="/home/bob/bobsgame/src/Utility/gl/GLUtils.cpp">
