@@ -8,6 +8,7 @@
 *.db
 *.suo
 *.dia
+*.vspx
 .DS_Store
 
 distro/
