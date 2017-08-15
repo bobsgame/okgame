@@ -107,6 +107,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 	BobColor* tempBG = this->textBGColor;
 	BobColor* tempAA = this->textAAColor;
 
+
 	if (fg != nullptr)
 	{
 		tempFG = fg;
