@@ -296,8 +296,8 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 		outlineBobColor.darker();
 		outlineBobColor.darker();
 		SDL_Color outlineColor = { (Uint8)outlineBobColor.ri() ,(Uint8)outlineBobColor.gi(),(Uint8)outlineBobColor.bi(),(Uint8)outlineBobColor.ai() };
-		surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
-		SDL_Surface *fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
+		surface = TTF_RenderText_Blended(outlineFont, this->text.c_str(), outlineColor);
+		SDL_Surface *fg_surface = TTF_RenderText_Blended(ttfFont, this->text.c_str(), textSDLColor);
 		SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 		// blit text onto its outline 
@@ -338,8 +338,8 @@ void Caption::initTTF(Engine* g, Position fixedPosition, float screenX, float sc
 		SDL_Color bgSDLColor = { (Uint8)textBGColor->ri() ,(Uint8)textBGColor->gi(),(Uint8)textBGColor->bi(),(Uint8)textBGColor->ai() };
 
 		surface = nullptr;
-		if (textBGColor != BobColor::clear)surface = TTF_RenderText_Shaded(ttfFont, text.c_str(), textSDLColor, bgSDLColor);
-		else surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);// , bgSDLColor);
+		if (textBGColor != BobColor::clear)surface = TTF_RenderText_Shaded(ttfFont, this->text.c_str(), textSDLColor, bgSDLColor);
+		else surface = TTF_RenderText_Blended(ttfFont, this->text.c_str(), textSDLColor);// , bgSDLColor);
 
 		this->width = surface->w;
 		this->height = surface->h;
