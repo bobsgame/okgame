@@ -3494,7 +3494,7 @@ void GameLogic::renderHighScoreMeters()
 		}
 		else
 		{
-			typeText = "Time To Finish";
+			typeText = "Fastest Time To Completion";
 		}
 		if (scoreBarTypeCaption == nullptr)scoreBarTypeCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, typeText, 10, true, BobColor::white, BobColor::clear);
 		scoreBarTypeCaption->screenX = startX;
@@ -3519,6 +3519,11 @@ void GameLogic::renderHighScoreMeters()
 			if (currentScore > 0)
 			{
 				startX += barWidth + 10;
+
+				if (myScoreBarCaption != nullptr)
+				{
+					if (startX < myScoreBarCaption->screenX + myScoreBarCaption->getWidth())startX = myScoreBarCaption->screenX + myScoreBarCaption->getWidth();
+				}
 
 				amount = height * (float)((float)currentScore / (float)highestScore);
 				c = BobColor::green;
@@ -3553,11 +3558,21 @@ void GameLogic::renderHighScoreMeters()
 			{
 				startX += barWidth + 10;
 
+				if(myScoreBarCaption !=nullptr)
+				{
+					if (startX < myScoreBarCaption->screenX + myScoreBarCaption->getWidth())startX = myScoreBarCaption->screenX + myScoreBarCaption->getWidth();
+				}
+
+				if(myHighScoreBarCaption!=nullptr)
+				{
+					if (startX < myHighScoreBarCaption->screenX + myHighScoreBarCaption->getWidth())startX = myHighScoreBarCaption->screenX + myHighScoreBarCaption->getWidth();
+				}
+
 				amount = height * (float)((float)currentScore / (float)highestScore);
 				c = BobColor::magenta;
 				GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
-				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard", 10, true, BobColor::white, BobColor::clear);
+				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard ("+ FileUtils::removeSwearWords(currentLeaderboardEntry->userName) + ")", 10, true, BobColor::white, BobColor::clear);
 				leaderboardBarCaption->screenX = startX;
 				leaderboardBarCaption->screenY = startY + height;
 				leaderboardBarCaption->update();
