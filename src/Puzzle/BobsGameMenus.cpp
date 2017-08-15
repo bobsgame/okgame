@@ -2757,6 +2757,7 @@ void BobsGame::saveRoomConfigMenuUpdate()
 		saveRoomConfigMenu->cursorPosition = saveRoomConfigMenuCursorPosition;
 	}
 
+
 	int mx = getControlsManager()->getMouseX();
 	int my = getControlsManager()->getMouseY();
 
