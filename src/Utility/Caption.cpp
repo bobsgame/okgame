@@ -90,7 +90,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 {//=========================================================================================================================
 
 
-	if (fg == this->textColor && bg == this->textBGColor && (font->outlined==true || aa == this->textAAColor))
+	if ((fg!=nullptr && *fg == *this->textColor) && (bg!=nullptr && *bg == *this->textBGColor) && (font->outlined==true || aa == this->textAAColor))
 	{
 		return;
 	}
@@ -111,6 +111,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 	{
 		tempFG = fg;
 	}
+
 	if (bg != nullptr)
 	{
 		tempBG = bg;
@@ -122,6 +123,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 	}
 	else
 	{
+
 		if (font->outlined == true) { tempAA = BobColor::black; }
 		else
 		if (tempBG == BobColor::white)
@@ -174,7 +176,7 @@ void Caption::setTextColor(BobColor* fg, BobColor* aa, BobColor* bg)
 
 	if (initialized == true) //don't replace the getText if we haven't drawn the bitmap yet
 	{
-		if (tempFG != this->textColor || tempBG != this->textBGColor || tempAA != this->textAAColor) //dont replace if the colors havent changed
+		if (*tempFG != *this->textColor || *tempBG != *this->textBGColor || (tempAA!=nullptr && *tempAA != *this->textAAColor)) //dont replace if the colors havent changed
 		{
 			this->textColor = tempFG;
 			this->textBGColor = tempBG;

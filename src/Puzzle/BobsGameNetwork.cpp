@@ -1285,12 +1285,14 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					else
 					if (roomsMenu->isSelectedID(FilterByKeyword))
 					{
+						chatEnabled = false;
 						if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = filterByKeyword; textStarted = true; }
 						filterByKeyword = getControlsManager()->text;
 					}
 					else
 					if (networkMultiplayerLobbyMenu->isSelectedID("Add friend by username"))
 					{
+						chatEnabled = false;
 						if (!textStarted) { SDL_StartTextInput(); getControlsManager()->text = friendUserName; textStarted = true; }
 						friendUserName = getControlsManager()->text;
 
@@ -1304,6 +1306,7 @@ void BobsGame::networkMultiplayerLobbyMenuUpdate()
 					}
 					else
 					{
+						chatEnabled = true;
 						if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 					}
 				}

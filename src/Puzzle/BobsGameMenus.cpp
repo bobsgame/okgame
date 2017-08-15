@@ -1450,6 +1450,8 @@ void BobsGame::loginMenuUpdate()
 		loginMenu->add("Return to title screen");
 
 		loginMenu->cursorPosition = loginMenuCursorPosition;
+
+		chatEnabled = false;
 	}
 
 	int mx = getControlsManager()->getMouseX();
@@ -1560,6 +1562,9 @@ void BobsGame::loginMenuUpdate()
 
 	if (leaveMenu)
 	{
+
+		chatEnabled = true;
+
 		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 		getControlsManager()->text = "";
 
@@ -1640,6 +1645,8 @@ void BobsGame::createAccountMenuUpdate()
 		createAccountMenu->add("Create account");
 		createAccountMenu->addInfo(" ");
 		createAccountMenu->add("Return to login screen");
+
+		chatEnabled = false;
 	}
 
 	int mx = getControlsManager()->getMouseX();
@@ -1746,6 +1753,9 @@ void BobsGame::createAccountMenuUpdate()
 
 	if (leaveMenu)
 	{
+
+		chatEnabled = true;
+
 		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 		getControlsManager()->text = "";
 
@@ -2728,6 +2738,8 @@ void BobsGame::saveRoomConfigMenuUpdate()
 
 	if (saveRoomConfigMenu == nullptr)
 	{
+		chatEnabled = false;
+
 		saveRoomConfigMenu = new BobMenu(this, "");
 		saveRoomConfigMenu->center = false;
 		//saveRoomConfigMenu->outline = false;
@@ -2820,6 +2832,8 @@ void BobsGame::saveRoomConfigMenuUpdate()
 
 	if (leaveMenu)
 	{
+		chatEnabled = true;
+
 		if (textStarted) { SDL_StopTextInput(); textStarted = false; }
 		saveRoomConfigMenuShowing = false;
 		if (saveRoomConfigMenu != nullptr)

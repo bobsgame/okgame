@@ -95,6 +95,7 @@ protected:
 	ControlsManager* controlsManager = nullptr;
 	ControlsManager* chatControlsManager = nullptr;
 	ControlsManager* activeControlsManager = nullptr;
+	bool chatEnabled = true;
 	bool chatFocused = false;
 	bool textStarted = false;
 

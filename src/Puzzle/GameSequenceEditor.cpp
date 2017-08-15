@@ -1162,6 +1162,8 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 
 
 		gameSequenceEditor->openLoadOrCreateDialog(false);
+
+		chatEnabled = false;
 	}
 
 
@@ -1226,6 +1228,9 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 
 	if (leaveMenu)
 	{
+
+		chatEnabled = true;
+
 		initPlayer();
 
 		gameSequenceEditorMenuShowing = false;

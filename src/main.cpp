@@ -35,8 +35,9 @@
 
 Main* mainObject = nullptr;
 
+//==========================================================================================================================
 void cleanup()
-{
+{//==========================================================================================================================
 	if (mainObject != nullptr)
 	{
 		mainObject->cleanup();
@@ -44,15 +45,15 @@ void cleanup()
 		mainObject = nullptr;
 	}
 
+
 	try
 	{
 		std::terminate();
 	}
-	catch(exception e)
+	catch (exception e)
 	{
 		cerr << e.what();
 	}
-
 }
 
 
@@ -203,27 +204,29 @@ GlowTileBackgroundMenuPanel* Main::glowTileBackgroundMenuPanel = nullptr;
 void Main::mainInit()
 {//=========================================================================================================================
 
- //easy mode
- //debug/skiptext
- //bpp
- //fullscreen
- /*
- dictionary*	ini ;
- ini = iniparser_load("config.ini");
- if (ini==nullptr){fprintf(stderr,"config.ini not found\n");}
- else
- {
- fullscreen = iniparser_getboolean(ini, "bobsgame:fullscreen", 0);
- easymode = iniparser_getboolean(ini, "bobsgame:easymode", 0);
- debug = iniparser_getboolean(ini, "bobsgame:debug", 0);
- ///if(debug)skiptext=1;
- //s = iniparser_getstring(ini, "bobsgame:easymode", nullptr);
- //i = iniparser_getint(ini, "skiptext:year", -1);
- //s = iniparser_getstring(ini, "wine:country", nullptr);
- //d = iniparser_getdouble(ini, "wine:alcohol", -1.0);
- iniparser_freedict(ini);
- }
- */
+
+
+	//easy mode
+	//debug/skiptext
+	//bpp
+	//fullscreen
+	/*
+	dictionary*	ini ;
+	ini = iniparser_load("config.ini");
+	if (ini==nullptr){fprintf(stderr,"config.ini not found\n");}
+	else
+	{
+		fullscreen = iniparser_getboolean(ini, "bobsgame:fullscreen", 0);
+		easymode = iniparser_getboolean(ini, "bobsgame:easymode", 0);
+		debug = iniparser_getboolean(ini, "bobsgame:debug", 0);
+		///if(debug)skiptext=1;
+		//s = iniparser_getstring(ini, "bobsgame:easymode", nullptr);
+		//i = iniparser_getint(ini, "skiptext:year", -1);
+		//s = iniparser_getstring(ini, "wine:country", nullptr);
+		//d = iniparser_getdouble(ini, "wine:alcohol", -1.0);
+		iniparser_freedict(ini);
+	}
+	*/
 
 
 

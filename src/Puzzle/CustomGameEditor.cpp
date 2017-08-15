@@ -5279,6 +5279,8 @@ void BobsGame::customGameEditorMenuUpdate()
 		customGameEditor->openLoadOrCreateDialog(false);
 
 		customGameEditor->doResize();
+
+		chatEnabled = false;
 	}
 
 
@@ -5352,6 +5354,7 @@ void BobsGame::customGameEditorMenuUpdate()
 
 	if (leaveMenu)
 	{
+		chatEnabled = true;
 		initPlayer();
 
 		customGameEditorMenuShowing = false;

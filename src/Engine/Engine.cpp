@@ -164,7 +164,7 @@ void Engine::updateChatConsole()
 			chatConsoleText->text = "Say: "+chatControlsManager->text;
 		}
 
-		if(stop)
+		if(stop || chatEnabled==false)
 		{
 			chatControlsManager->unsetHeldButtons();
 			chatFocused = false;
@@ -184,11 +184,14 @@ void Engine::updateChatConsole()
 	}
 	else
 	{
-		if (getControlsManager()->key_T_Pressed())
+		if (chatEnabled == true)
 		{
-			controlsManager->unsetHeldButtons();
-			chatFocused = true;
-			activeControlsManager = chatControlsManager;
+			if (getControlsManager()->key_T_Pressed())
+			{
+				controlsManager->unsetHeldButtons();
+				chatFocused = true;
+				activeControlsManager = chatControlsManager;
+			}
 		}
 
 	}
