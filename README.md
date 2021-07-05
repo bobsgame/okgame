@@ -1,22 +1,5 @@
 **ok** is "Open Source"
 
-Also see:
-
-https://github.com/bobsgame/ok
-
-https://github.com/bobsgame/bgEditor
-
-https://github.com/bobsgame/BobsGameServer
-
-https://github.com/bobsgame/BobSharedLibs
-
-https://github.com/bobsgame/BobsServerIndex
-
-https://github.com/bobsgame/BobsSTUNServer
-
-https://github.com/bobsgame/BobNetLibs
-
-
 --
 
 # *ok* is:
