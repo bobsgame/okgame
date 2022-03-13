@@ -22,40 +22,39 @@ Individual components:
 5. Open `bobsgame.sln` in `C:\Users\Administrator\workspace\bobsgame\bobsgame.sln`.
 6. Set the release type from Debug to Release.
 7. Head to Project > Properties > C/C++ > General > Additional Include Directories
-8. Copy this string to Notepad.
-9. In the source, boost is located in `F:\boost_1_64_0` *(likely to save space in the repo)*. We want to update this so boost is in the `lib` directory along with all of the other libraries. You could just put `boost_1_64_0` in your F drive to skip these steps.
-10. Download boost at <https://boostorg.jfrog.io/artifactory/main/release/1.64.0/source/boost_1_64_0.zip>.
-11. Extract the `boost_1_64_0` folder to `C:\Users\Administrator\workspace`.
-12. Change `F:\boost_1_64_0` to `..\boost_1_64_0`.
-It shoud look like this:
+8. Replace `F:\boost_1_64_0` with `..\boost_1_64_0`.
+It should look like this:
 ```
 .;.\lib;.\lib\glew-2.0.0\include;.\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\include;.\lib\SDL2_ttf-devel-2.0.14-VC\SDL2_ttf-2.0.14\include;.\lib\SDL2_mixer-devel-2.0.1-VC\SDL2_mixer-2.0.1\include;.\lib\SDL2_image-devel-2.0.1-VC\SDL2_image-2.0.1\include;.\lib\SDL2_net-devel-2.0.1-VC\SDL2_net-2.0.1\include;.\lib\SDL2_gfx-1.0.3;.\lib\soloud_20160109\include;.\lib\hyperic-sigar-1.6.4\sigar-bin\include;.\lib\poco-1.7.8p3-all\Foundation\include;.\lib\poco-1.7.8p3-all\JSON\include;.\lib\poco-1.7.8p3-all\Net\include;.\lib\poco-1.7.8p3-all\Util\include;.\lib\poco-1.7.8p3-all\XML\include;.\lib\poco-1.7.8p3-all\Zip\include;.\lib\enet-1.3.13\include;.\lib\zlib-1.2.8\include;.\lib\libzip-1.1.3\lib;.\lib\libzip-1.1.3\src;.\lib\zlib-1.2.8\contrib\minizip;.\lib\minilzo-2.09;.\lib\miniz-master;.\lib\cereal-master\include;..\boost_1_64_0;..\boost_1_64_0\stage\lib;.\lib\GWEN-master\gwen\include;%(AdditionalIncludeDirectories)
 ```
-13. Click Apply then go to Linker.
-14. Go to Additional Library Directories and replace it with this.
+9. Download boost at <https://boostorg.jfrog.io/artifactory/main/release/1.64.0/source/boost_1_64_0.zip>.
+10. Extract the `boost_1_64_0` folder to `C:\Users\Administrator\workspace`.
+11. Click Apply then go to Linker.
+12. Go to Additional Library Directories and Replace `F:\boost_1_64_0\stage\lib` with `..\boost_1_64_0\stage\lib`.
+It should look like this:
 ```
 .\lib\glew-2.0.0\lib;.\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\lib\x86;.\lib\SDL2_ttf-devel-2.0.14-VC\SDL2_ttf-2.0.14\lib\x86;.\lib\SDL2_mixer-devel-2.0.1-VC\SDL2_mixer-2.0.1\lib\x86;.\lib\SDL2_image-devel-2.0.1-VC\SDL2_image-2.0.1\lib\x86;.\lib\SDL2_net-devel-2.0.1-VC\SDL2_net-2.0.1\lib\x86;.\lib\soloud_20160109\lib;.\lib\hyperic-sigar-1.6.4\sigar-bin\lib;.\lib\poco-1.7.8p3-all\_lib;.\lib\zlib-1.2.8\lib;.\lib\libzip-1.1.3\Release;..\boost_1_64_0\stage\lib;.\lib\GWEN-master\gwen\lib\windows\vs2010;%(AdditionalLibraryDirectories)
 ```
-15. Press Apply then OK.
-16. You need to compile GWEN and boost, follow the instructions below to compile them.
-17. Right click bobsgame in the Solution Explorer and click Build.
+13. Press Apply then OK.
+14. You need to compile GWEN and boost, follow the instructions below to compile them.
+15. Right click bobsgame in the Solution Explorer and click Build.
 
 ### Compiling GWEN
 
 #### GWEN-Static
-1. Note that we only need to compile a .lib version of GWEN-Static, so were only going to get GWEN-Static to compile.
-2. Head over to `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects` and open a terminal there.
-3. Edit thee `Build.bat` file and remove `rem ` on the line where it says `rem premake4 vs2010`.
-4. A project should be creared in `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects\windows\vs2010`
-5. Open the solution in Visual Studio 2017, it will ask you to retarget projects, make sure your Windows SDK version is `10.0.19041.0` and the Platform Toolset is `Upgrade to v141`. Click OK.
-6. Edit `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\src\Platforms\gwen_platform_base.cpp` and include `#include <chrono>`.
-7. Right click the `GWEN-Static` project and click "Properties".
-8. Go to General > Character Set and select "Not Set". Apply and click OK.
+*Skip this step if you copied from this repository, but set the character set to not set, switch to release and build*
+1. Head over to `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects` and open a terminal there.
+2. Edit thee `Build.bat` file and remove `rem ` on the line where it says `rem premake4 vs2010`.
+3. A project should be creared in `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects\windows\vs2010`
+4. Open the solution in Visual Studio 2017, it will ask you to retarget projects, make sure your Windows SDK version is `10.0.19041.0` and the Platform Toolset is `Upgrade to v141`. Click OK.
+5. Edit `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\src\Platforms\gwen_platform_base.cpp` and include `#include <chrono>`.
+6. Right click the `GWEN-Static` project and click "Properties".
+7. Go to General > Character Set and select "Not Set". Apply and click OK.
 
 **TODO: Some way to do this without modifying file names and source.**
 
-9. Rename src/Bootil/Base.cpp to `src/Bootil/BBase.cpp` and `src/Bootil/Threads/Utility.cpp` to `src/Bootil/Threads/TUtility.cpp`.
-10. Rename all references to these functions to these:
+8. Rename `src/Bootil/Base.cpp` to `src/Bootil/BBase.cpp` and `src/Bootil/Threads/Utility.cpp` to `src/Bootil/Threads/TUtility.cpp`.
+9. Rename all references to these functions to these:
 ```
 IsKeyDown -> LIsKeyDown
 IsLeftMouseDown -> LIsLeftMouseDown
@@ -65,12 +64,12 @@ OnMouseClicked -> LOnMouseClicked
 OnKeyEvent -> LOnKeyEvent
 OnCanvasThink -> LOnCanvasThink
 ```
-9. Go to the release type and change it from Debug to Release.
-10. Right click the GWEN-Static project and click Build.
-11. The build should succeed and you should have a `gwen_static.lib` file in `C:\Users\User\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\lib\windows\vs2010`.
-12. Also build Renderer-OpenGL_DebugFont, it will succeed.
+10. Go to the release type and change it from Debug to Release.
+11. Right click the GWEN-Static project and click Build.
+12. The build should succeed and you should have a `gwen_static.lib` file in `C:\Users\User\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\lib\windows\vs2010`.
 
 ####  GWEN-Renderer-OPENGL_TruetypeFont
+*Skip this step if you copied from this repository, but build it still*
 1. Delete your GWEN.sln file in `C:\Users\User\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\lib\windows\vs2010` and replace it witrh the one in the `gwen` folder in this guide.
 2. Add the files `Renderer-OpenGL_TruetypeFont.vcxproj`, `Renderer-OpenGL_TruetypeFont.vcxproj.filters`, and `Renderer-OpenGL_TruetypeFont.vcxproj.user`
 3. Reload Visual Studio and build Renderer-OPENGL_TruetypeFont.
