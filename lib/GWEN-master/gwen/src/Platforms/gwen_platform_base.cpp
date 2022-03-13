@@ -30,6 +30,7 @@
 #include "Gwen/Platforms/gwen_platform_base.h"
 
 #include "Gwen/Macros.h"
+#include <chrono>
 
 namespace Gwen
 {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Renderers">
+      <UniqueIdentifier>{A9B152F5-3C03-E343-B932-5991D9A64991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderers\SFML">
+      <UniqueIdentifier>{DB9E42C1-719B-4342-B173-4691A5E06371}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Renderers\SFML\SFML.cpp">
+      <Filter>Renderers\SFML</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

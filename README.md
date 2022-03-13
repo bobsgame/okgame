@@ -1,3 +1,5 @@
+Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok.
+
 **ok** is "Open Source"
 
 --

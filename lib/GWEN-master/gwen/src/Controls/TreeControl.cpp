@@ -65,6 +65,6 @@ void TreeControl::OnNodeAdded( TreeNode* pNode )
 
 void TreeControl::OnNodeSelection( Controls::Base* /*control*/ )
 {
-	if ( !m_bAllowMultipleSelection || !Gwen::Input::IsKeyDown( Key::Control ) )
+	if ( !m_bAllowMultipleSelection || !Gwen::Input::LIsKeyDown( Key::Control ) )
 	{ DeselectAll(); }
 }

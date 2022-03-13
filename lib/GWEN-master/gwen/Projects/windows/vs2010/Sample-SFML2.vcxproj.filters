@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Samples">
+      <UniqueIdentifier>{1426F9A6-8B62-904D-B297-742E1C960EED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Samples\SFML2">
+      <UniqueIdentifier>{A948C072-6A07-4245-B0CA-CCC315C55321}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Samples\SFML2\SFML2.cpp">
+      <Filter>Samples\SFML2</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

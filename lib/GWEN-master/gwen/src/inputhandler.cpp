@@ -128,7 +128,7 @@ Gwen::Point Gwen::Input::GetMousePosition()
 	return MousePosition;
 }
 
-void Gwen::Input::OnCanvasThink( Controls::Base* pControl )
+void Gwen::Input::LOnCanvasThink( Controls::Base* pControl )
 {
 	if ( Gwen::MouseFocus && !Gwen::MouseFocus->Visible() )
 	{ Gwen::MouseFocus = NULL; }
@@ -165,29 +165,29 @@ void Gwen::Input::OnCanvasThink( Controls::Base* pControl )
 	}
 }
 
-bool Gwen::Input::IsKeyDown( int iKey )
+bool Gwen::Input::LIsKeyDown( int iKey )
 {
 	return KeyData.KeyState[ iKey ];
 }
 
-bool Gwen::Input::IsLeftMouseDown()
+bool Gwen::Input::LIsLeftMouseDown()
 {
 	return KeyData.LeftMouseDown;
 }
 
-bool Gwen::Input::IsRightMouseDown()
+bool Gwen::Input::LIsRightMouseDown()
 {
 	return KeyData.RightMouseDown;
 }
 
-void Gwen::Input::OnMouseMoved( Controls::Base* pCanvas, int x, int y, int /*deltaX*/, int /*deltaY*/ )
+void Gwen::Input::LOnMouseMoved( Controls::Base* pCanvas, int x, int y, int /*deltaX*/, int /*deltaY*/ )
 {
 	MousePosition.x = x;
 	MousePosition.y = y;
 	UpdateHoveredControl( pCanvas );
 }
 
-bool Gwen::Input::OnMouseClicked( Controls::Base* pCanvas, int iMouseButton, bool bDown )
+bool Gwen::Input::LOnMouseClicked( Controls::Base* pCanvas, int iMouseButton, bool bDown )
 {
 	// If we click on a control that isn't a menu we want to close
 	// all the open menus. Menus are children of the canvas.
@@ -346,7 +346,7 @@ bool Gwen::Input::DoSpecialKeys( Controls::Base* pCanvas, Gwen::UnicodeChar chr 
 	return false;
 }
 
-bool Gwen::Input::OnKeyEvent( Controls::Base* pCanvas, int iKey, bool bDown )
+bool Gwen::Input::LOnKeyEvent( Controls::Base* pCanvas, int iKey, bool bDown )
 {
 	Gwen::Controls::Base* pTarget = Gwen::KeyboardFocus;
 

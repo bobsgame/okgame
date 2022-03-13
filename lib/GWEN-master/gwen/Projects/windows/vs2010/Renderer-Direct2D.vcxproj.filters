@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Renderers">
+      <UniqueIdentifier>{A6EF9473-3BBE-BC4F-810F-64B37A46E89B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderers\Direct2D">
+      <UniqueIdentifier>{AA816C3F-9E42-8B4B-A638-53F70FD34078}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Renderers\Direct2D\Direct2D.cpp">
+      <Filter>Renderers\Direct2D</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Samples">
+      <UniqueIdentifier>{DA3FE744-A739-0C4D-9340-1B7A6586FFFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Samples\Allegro">
+      <UniqueIdentifier>{20566A30-43A6-324A-9558-200DE5ACE181}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Samples\Allegro\AllegroSample.cpp">
+      <Filter>Samples\Allegro</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

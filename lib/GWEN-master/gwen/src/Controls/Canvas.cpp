@@ -91,7 +91,7 @@ void Canvas::DoThink()
 	if ( NextTab == NULL )
 	{ NextTab = FirstTab; }
 
-	Gwen::Input::OnCanvasThink( this );
+	Gwen::Input::LOnCanvasThink( this );
 }
 
 void Canvas::SetScale( float f )
@@ -172,7 +172,7 @@ bool Canvas::InputMouseMoved( int x, int y, int deltaX, int deltaY )
 
 	// Todo: Handle scaling here..
 	//float fScale = 1.0f / Scale();
-	Gwen::Input::OnMouseMoved( this, x, y, deltaX, deltaY );
+	Gwen::Input::LOnMouseMoved( this, x, y, deltaX, deltaY );
 
 	if ( !Gwen::HoveredControl ) { return false; }
 
@@ -190,7 +190,7 @@ bool Canvas::InputMouseButton( int iButton, bool bDown )
 {
 	if ( Hidden() ) { return false; }
 
-	return Gwen::Input::OnMouseClicked( this, iButton, bDown );
+	return Gwen::Input::LOnMouseClicked( this, iButton, bDown );
 }
 
 bool Canvas::InputKey( int iKey, bool bDown )
@@ -201,7 +201,7 @@ bool Canvas::InputKey( int iKey, bool bDown )
 
 	if ( iKey >= Gwen::Key::Count ) { return false; }
 
-	return Gwen::Input::OnKeyEvent( this, iKey, bDown );
+	return Gwen::Input::LOnKeyEvent( this, iKey, bDown );
 }
 
 bool Canvas::InputCharacter( Gwen::UnicodeChar chr )
