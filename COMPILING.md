@@ -21,21 +21,21 @@ Individual components:
 4. Open the project with File > Open > Project/Solution.
 5. Open `bobsgame.sln` in `C:\Users\Administrator\workspace\bobsgame`.
 6. Set the release type from Debug to Release.
-7. Head to Project > Properties > C/C++ > General > Additional Include Directories.
-8. Replace `F:\boost_1_64_0` with `..\boost_1_64_0`.
+7. Download boost from <https://boostorg.jfrog.io/artifactory/main/release/1.64.0/source/boost_1_64_0.zip>.
+8. Extract the `boost_1_64_0` folder to `C:\Users\Administrator\workspace`.
+9. Head to Project > Properties > C/C++ > General > Additional Include Directories.
+10. Replace `F:\boost_1_64_0` with `..\boost_1_64_0`.
 It should look like this:
 ```
 .;.\lib;.\lib\glew-2.0.0\include;.\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\include;.\lib\SDL2_ttf-devel-2.0.14-VC\SDL2_ttf-2.0.14\include;.\lib\SDL2_mixer-devel-2.0.1-VC\SDL2_mixer-2.0.1\include;.\lib\SDL2_image-devel-2.0.1-VC\SDL2_image-2.0.1\include;.\lib\SDL2_net-devel-2.0.1-VC\SDL2_net-2.0.1\include;.\lib\SDL2_gfx-1.0.3;.\lib\soloud_20160109\include;.\lib\hyperic-sigar-1.6.4\sigar-bin\include;.\lib\poco-1.7.8p3-all\Foundation\include;.\lib\poco-1.7.8p3-all\JSON\include;.\lib\poco-1.7.8p3-all\Net\include;.\lib\poco-1.7.8p3-all\Util\include;.\lib\poco-1.7.8p3-all\XML\include;.\lib\poco-1.7.8p3-all\Zip\include;.\lib\enet-1.3.13\include;.\lib\zlib-1.2.8\include;.\lib\libzip-1.1.3\lib;.\lib\libzip-1.1.3\src;.\lib\zlib-1.2.8\contrib\minizip;.\lib\minilzo-2.09;.\lib\miniz-master;.\lib\cereal-master\include;..\boost_1_64_0;..\boost_1_64_0\stage\lib;.\lib\GWEN-master\gwen\include;%(AdditionalIncludeDirectories)
 ```
-9. Download boost from <https://boostorg.jfrog.io/artifactory/main/release/1.64.0/source/boost_1_64_0.zip>.
-10. Extract the `boost_1_64_0` folder to `C:\Users\Administrator\workspace`.
 11. Click Apply then go to Linker.
 12. Go to Additional Library Directories and Replace `F:\boost_1_64_0\stage\lib` with `..\boost_1_64_0\stage\lib`.
 It should look like this:
 ```
 .\lib\glew-2.0.0\lib;.\lib\SDL2-devel-2.0.5-VC\SDL2-2.0.5\lib\x86;.\lib\SDL2_ttf-devel-2.0.14-VC\SDL2_ttf-2.0.14\lib\x86;.\lib\SDL2_mixer-devel-2.0.1-VC\SDL2_mixer-2.0.1\lib\x86;.\lib\SDL2_image-devel-2.0.1-VC\SDL2_image-2.0.1\lib\x86;.\lib\SDL2_net-devel-2.0.1-VC\SDL2_net-2.0.1\lib\x86;.\lib\soloud_20160109\lib;.\lib\hyperic-sigar-1.6.4\sigar-bin\lib;.\lib\poco-1.7.8p3-all\_lib;.\lib\zlib-1.2.8\lib;.\lib\libzip-1.1.3\Release;..\boost_1_64_0\stage\lib;.\lib\GWEN-master\gwen\lib\windows\vs2010;%(AdditionalLibraryDirectories)
 ```
-13. Press Apply then OK.
+13. Click Apply then OK.
 14. You need to compile GWEN and boost, follow the instructions below to compile them.
 15. Right click bobsgame in the Solution Explorer and click Build.
 16. Copy the `_copy.bat` in this repo to the `bobsgame` folder. It will make a `bob's game` folder on your desktop with all the files required.
@@ -45,8 +45,8 @@ It should look like this:
 #### GWEN-Static
 *Skip this step if you copied from this repository, but set the character set to not set, switch to release and build.*
 1. Head over to `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects` and open a terminal there.
-2. Edit thee `Build.bat` file and remove `rem ` on the line where it says `rem premake4 vs2010`.
-3. A Visual Studio 2010 project should be creared in `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects\windows\vs2010`.
+2. Edit the `Build.bat` file and remove `rem` on the line where it says `rem premake4 vs2010`.
+3. A Visual Studio 2010 project should be created in `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects\windows\vs2010`.
 4. Open the solution in Visual Studio 2017, it will ask you to retarget projects, make sure your Windows SDK version is `10.0.19041.0` and the Platform Toolset is `Upgrade to v141`. Click OK.
 5. Edit `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\src\Platforms\gwen_platform_base.cpp` and add `#include <chrono>`.
 6. Right click the `GWEN-Static` project and click "Properties".
