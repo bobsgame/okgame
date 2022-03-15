@@ -65,9 +65,10 @@ OnMouseClicked -> LOnMouseClicked
 OnKeyEvent -> LOnKeyEvent
 OnCanvasThink -> LOnCanvasThink
 ```
-10. Go to the release type and change it from Debug to Release.
-11. Right click the GWEN-Static project and click Build.
-12. The build should succeed and you should have a `gwen_static.lib` file in `C:\Users\User\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\lib\windows\vs2010`.
+10. Create a `version.txt` file and add a version number, it could be something like `3389`. However, this is not required to run the game.
+11. Go to the release type and change it from Debug to Release.
+12. Right click the GWEN-Static project and click Build.
+13. The build should succeed and you should have a `gwen_static.lib` file in `C:\Users\User\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\lib\windows\vs2010`.
 
 ####  GWEN-Renderer-OPENGL_TruetypeFont
 *Skip this step if you copied from this repository, but build it still.*
