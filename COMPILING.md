@@ -2,6 +2,8 @@
 
 This guide is for compiling straight from the bob's game repo. All of the modified files are in this repo.
 
+Join the [discussion Discord](https://discord.gg/FfDxFc4JuS)!
+
 ## Installing VS 2017
 1. Download Visual Studio 2017 from <https://visualstudio.microsoft.com/vs/older-downloads/> *(You may need a Microsoft account)*
 2. Download "Visual Studio Community 2017 (version 15.9)."
