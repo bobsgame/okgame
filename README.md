@@ -1,5 +1,7 @@
 Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok.
 
+Join the [discussion Discord](https://discord.gg/FfDxFc4JuS)!
+
 **ok** is "Open Source"
 
 --
