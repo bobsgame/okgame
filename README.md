@@ -1,8 +1,4 @@
-*ok* is Open Source
-
---
-
-ok* is:
+ok is:
 
 *THE GREATEST PUZZLE GAME EVER MADE*
 
