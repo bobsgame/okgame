@@ -1,28 +1,32 @@
-**ok** is "Open Source"
+*ok* is Open Source
 
 --
 
-# *ok* is:
+ok* is:
 
-## *THE GREATEST PUZZLE GAME EVER MADE*
+*THE GREATEST PUZZLE GAME EVER MADE*
 
-## EVERY PUZZLE GAME IN ONE
+EVERY PUZZLE GAME IN ONE
 
-## A CUSTOM PUZZLE GAME CREATION SYSTEM
+A CUSTOM PUZZLE GAME CREATION SYSTEM
 
-## A WORLD TOURNAMENT PLATFORM AND GLOBAL RANKING AND LEADERBOARDS FOR ALL PUZZLE GAMES
+A WORLD TOURNAMENT PLATFORM AND GLOBAL RANKING AND LEADERBOARDS FOR ALL PUZZLE GAMES
 
-## LOCAL MULTIPLAYER WITH UNLIMITED PLAYERS
+LOCAL MULTIPLAYER WITH UNLIMITED PLAYERS
 
-## ONLINE MULTIPLAYER WITH UNLIMITED PLAYERS
+ONLINE MULTIPLAYER WITH UNLIMITED PLAYERS
 
-## MIXED MODE ONLINE/LOCAL MULTIPLAYER
+MIXED MODE ONLINE/LOCAL MULTIPLAYER
 
-## COMPLETELY FREE
+WRITTEN FROM SCRATCH IN C++ TRANSLATED FROM JAVA PORTED FROM C PORTED FROM PATTERNS PROCESSED BY MY BRAIN PORTED FROM A TELEPATHIC RADIO SIGNAL RECEIVED FROM GOD
 
-## WRITTEN FROM SCRATCH IN C++
+COMPLETELY FREE
 
-## OPEN SOURCE
+OPEN SOURCE
+
+FREE AS IN NIGGER
+
+FREE AS IN REAL ESTATE
 
 
 **ok** is a multiplayer puzzle game- but not just any puzzle game, **EVERY puzzle game!** It's a build-your-own puzzle game with a puzzle game creator where YOU define all the rules to your own custom game!
@@ -54,5 +58,6 @@ The source code is available on GitHub so it can grow into a standard tournament
 
 # License
 
-1. Do whatever
-2. 1 + 1 = 3
+(0) do whatever
+(1) this device may not cause harmful interference, and (2) this device must accept any interference received, including interference that may cause undersired operation
+(3) 1 + 1 = 3
