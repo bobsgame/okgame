@@ -20,11 +20,6 @@ COMPLETELY FREE
 
 OPEN SOURCE
 
-FREE AS IN NIGGER (No race or ethnicity implied!)
-
-FREE AS IN REAL ESTATE
-
-
 **ok** is a multiplayer puzzle game- but not just any puzzle game, **EVERY puzzle game!** It's a build-your-own puzzle game with a puzzle game creator where YOU define all the rules to your own custom game!
 
 More than that, great care has been made to ensure that **ok** is the *best* version of every puzzle game. I went through every puzzle game forum and wiki I could find and made sure to implement every detail and feature required by tournament level hardcore players. It has wall kicks, floor kicks, spin kicks, T-spins, adjustable timing, powerups, you name it. All of these features apply to all the games however you want, making it the best version of every game!
