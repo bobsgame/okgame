@@ -1,3 +1,6 @@
+https://youtu.be/osZsf2MfCFw
+[![Watch the video](https://img.youtube.com/vi/osZsf2MfCFw/default.jpg)](https://youtu.be/osZsf2MfCFw)
+
 ok is:
 
 *THE GREATEST PUZZLE GAME EVER MADE*
@@ -47,8 +50,4 @@ The source code is available on GitHub so it can grow into a standard tournament
 * Spectator mode, replays, challenge replay
 * Custom themes, sounds, and music
 
-# License
 
-(0) do whatever
-(1) this device may not cause harmful interference, and (2) this device must accept any interference received, including interference that may cause undersired operation
-(3) 1 + 1 = 3
