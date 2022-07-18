@@ -1,6 +1,6 @@
-Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok.
+**Join the [discussion](https://discord.gg/FfDxFc4JuS)!**
 
-Join the [discussion Discord](https://discord.gg/FfDxFc4JuS)!
+Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok.
 
 **ok** is "Open Source"
 
