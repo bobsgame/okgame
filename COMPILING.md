@@ -18,7 +18,7 @@ Individual components:
 
 ## Building bob's game for Windows
 1. Create a folder called `workspace` in `C:\Users\Administrator`.
-2. Clone bob's game using `git clone https://github.com/bobsgame/ok.git` and rename it to `bobsgame`.
+2. Clone bob's game using `git clone https://github.com/bobsgamed/ok.git` and rename it to `bobsgame`.
 3. Launch Visual Studio 2017 and login to your Microsoft account.
 4. Open the project with File > Open > Project/Solution.
 5. Open `bobsgame.sln` in `C:\Users\Administrator\workspace\bobsgame`.
