@@ -70,9 +70,9 @@ public:
 
 	LightData(int id, const string& name);
 
-	//static LightData* fromBase64ZippedJSON(const string& b64);
+	//static shared_ptr<LightData> fromBase64ZippedJSON(const string& b64);
 
-	//static LightData* fromJSON(const string& json);
+	//static shared_ptr<LightData> fromJSON(const string& json);
 
 	string& initFromString(string& t) override;
 

@@ -34,21 +34,21 @@ public:
 	bool car = false;
 
 
-	RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car);
+	RandomCharacter(shared_ptr<Engine> g, shared_ptr<Map> map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car);
 
 
-	Map* getCurrentMap() override;
-
-
-	//The following method was originally marked 'synchronized':
-	ByteArray* getByteBuffer_S();
+	shared_ptr<Map> getCurrentMap() override;
 
 
 	//The following method was originally marked 'synchronized':
-	void setByteBuffer_S(ByteArray* bb);
+	shared_ptr<ByteArray> getByteBuffer_S();
 
 
-	ByteArray* textureByteBuffer_S = nullptr;
+	//The following method was originally marked 'synchronized':
+	void setByteBuffer_S(shared_ptr<ByteArray> bb);
+
+
+	shared_ptr<ByteArray> textureByteBuffer_S = nullptr;
 
 	int eyeSet = -1;
 	int skinSet = -1;
@@ -59,7 +59,7 @@ public:
 	int carSet = -1;
 
 
-	int selectRandomSet(Sprite* s);
+	int selectRandomSet(shared_ptr<Sprite> s);
 
 
 	bool createdThread = false;

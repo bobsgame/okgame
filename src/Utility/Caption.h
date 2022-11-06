@@ -58,15 +58,15 @@ public:
 
 
 	string text = "";
-	BobFont* font = BobFont::font_normal_8;
-	TTF_Font* ttfFont = nullptr;
+	shared_ptr<BobFont> font = BobFont::font_normal_8;
+	TTF_shared_ptr<Font> ttfFont = nullptr;
 	int fontSize = 8;
 	bool outline = false;
 
 private:
-	BobColor* textBGColor = BobColor::black;
-	BobColor* textColor = BobColor::white;
-	BobColor* textAAColor = BobColor::gray;
+	shared_ptr<BobColor> textBGColor = BobColor::black;
+	shared_ptr<BobColor> textColor = BobColor::white;
+	shared_ptr<BobColor> textAAColor = BobColor::gray;
 
 public:
 	float screenX = 0;
@@ -89,9 +89,9 @@ private:
 public:
 	float entityXWhenCreated = 0;
 	float entityYWhenCreated = 0;
-	Entity* entity = nullptr;
+	shared_ptr<Entity> entity = nullptr;
 	int actionCaptionType = ActionManager::ACTIONCAPTIONTYPE_NONE;
-	Area* area = nullptr;
+	shared_ptr<Area> area = nullptr;
 	int actionRangeX = 0;
 	int actionRangeY = 0;
 
@@ -113,8 +113,8 @@ private:
 	bool initialized = false;
 
 public:
-	BobTexture* texture = nullptr;
-	ByteArray* textureByteArray = nullptr;
+	shared_ptr<BobTexture> texture = nullptr;
+	shared_ptr<ByteArray> textureByteArray = nullptr;
 	int texWidth = 0;
 	int texHeight = 0;
 
@@ -130,15 +130,15 @@ public:
 
 
 
-	Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, BobFont* font = BobFont::font_normal_8_outlined, BobColor* textColor = BobColor::black, BobColor* textAAColor=nullptr, BobColor* textBGColor = BobColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, int maxWidth=0, Entity* entity = nullptr, Area* area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
-	Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, BobColor* textColor = BobColor::black, BobColor* textBGColor = BobColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, Entity* entity = nullptr, Area* area = nullptr);
-	Caption(Engine* g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, BobColor* textColor = BobColor::black, RenderOrder layer = RenderOrder::ABOVE_TOP);
+	Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, shared_ptr<BobFont> font = BobFont::font_normal_8_outlined, shared_ptr<BobColor> textColor = BobColor::black, shared_ptr<BobColor> textAAColor=nullptr, shared_ptr<BobColor> textBGColor = BobColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, int maxWidth=0, shared_ptr<Entity> entity = nullptr, shared_ptr<Area> area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
+	Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, shared_ptr<BobColor> textColor = BobColor::black, shared_ptr<BobColor> textBGColor = BobColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, shared_ptr<Entity> entity = nullptr, shared_ptr<Area> area = nullptr);
+	Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, shared_ptr<BobColor> textColor = BobColor::black, RenderOrder layer = RenderOrder::ABOVE_TOP);
 
 	void setText(const string& text, bool force = false);
-	BobColor* getTextColor();
-	void setTextColor(BobColor* fg, BobColor* aa = nullptr, BobColor* bg = nullptr);
-	void initTTF(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, BobColor* textColor, BobColor* textBGColor, RenderOrder layer, float scale, Entity* entity, Area* area, bool outline);
-	void init(Engine* g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, BobFont* font, BobColor* textColor, BobColor* textAAColor, BobColor* textBGColor, RenderOrder layer, float scale, int maxWidth, Entity* entity, Area* area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines);
+	shared_ptr<BobColor> getTextColor();
+	void setTextColor(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa = nullptr, shared_ptr<BobColor> bg = nullptr);
+	void initTTF(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area, bool outline);
+	void init(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, shared_ptr<BobFont> font, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textAAColor, shared_ptr<BobColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines);
 	void render();
 private:
 	void increaseMaxWidthToLongestWord();
@@ -148,7 +148,7 @@ private:
 	void drawText();
 	void parseOptions(const string& optionBuffer);
 	int getLetterPixelColor(int letterIndex, int y, int xInLetter, bool blank);
-	void setPixel(int index, BobColor* c);
+	void setPixel(int index, shared_ptr<BobColor> c);
 public:
 	float getAlphaTo();
 	float getAlpha();
@@ -168,6 +168,6 @@ public:
 	void setToBeDeletedImmediately();
 	bool getBeingDeletedWhenFadeOutStatus();
 	void update();
-	void setEntity(Entity* e);
+	void setEntity(shared_ptr<Entity> e);
 };
 

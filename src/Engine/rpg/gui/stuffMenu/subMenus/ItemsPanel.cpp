@@ -38,7 +38,7 @@ void ItemsPanel::updateItems()
 { //=========================================================================================================================
 
 
-	ArrayList<Item*>* items = new ArrayList<Item*>();
+	ArrayList<shared_ptr<Item>>* items = make_shared<ArrayList><shared_ptr<Item>>();
 
 	for (int i = 0; i < (int)getEventManager()->itemList.size(); i++)
 	{
@@ -49,30 +49,30 @@ void ItemsPanel::updateItems()
 	}
 	//
 	//
-	//   itemDialogLayout = ArrayList<DialogLayout*>(items->size());
+	//   itemDialogLayout = ArrayList<shared_ptr<DialogLayout>>(items->size());
 	//
 	//   for (int n = 0; n < items->size(); n++)
 	//   {
-	//      itemDialogLayout[n] = new DialogLayout();
+	//      itemDialogLayout[n] = make_shared<DialogLayout>();
 	//      itemDialogLayout[n]->setCanAcceptKeyboardFocus(false);
 	//      itemDialogLayout[n]->setTheme("itemBox");
 	//
 	//
-	//      Item* i = items[n];
-	//      Label* nameLabel = new Label(i->name());
+	//      shared_ptr<Item> i = items[n];
+	//      shared_ptr<Label> nameLabel = make_shared<Label>(i->name());
 	//      nameLabel->setCanAcceptKeyboardFocus(false);
 	//      nameLabel->setTheme("itemLabel");
 	//
 	//
-	//      //Label descriptionLabel = new Label(i.description);
+	//      //Label descriptionLabel = make_shared<Label>(i.description);
 	//      //descriptionLabel.setCanAcceptKeyboardFocus(false);
 	//      //descriptionLabel.setTheme("");
 	//
 	//
-	//      SimpleTextAreaModel* textAreaModel = new SimpleTextAreaModel();
+	//      shared_ptr<SimpleTextAreaModel> textAreaModel = make_shared<SimpleTextAreaModel>();
 	//
 	//
-	//      TextArea* textArea = new TextArea(textAreaModel);
+	//      shared_ptr<TextArea> textArea = make_shared<TextArea>(textAreaModel);
 	//      textArea->setTheme("textarea");
 	//
 	//      textArea->setBorderSize(0, 0);

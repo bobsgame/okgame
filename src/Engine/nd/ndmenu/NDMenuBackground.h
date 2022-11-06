@@ -22,7 +22,7 @@ public:
 	static Logger log;
 
 
-	NDMenuBackground(Engine* g);
+	NDMenuBackground(shared_ptr<Engine> g);
 
 
 	virtual void init() override;

@@ -30,31 +30,31 @@ public:
 	static int TYPE_QUALIFIER_FALSE;
 
 
-	ArrayList<EventParameter*>* parameterList = new ArrayList<EventParameter*>();
+	ArrayList<shared_ptr<EventParameter>>* parameterList = make_shared<ArrayList><shared_ptr<EventParameter>>();
 
-	EventCommand* parent = nullptr;
-
-
-	ArrayList<EventCommand*>* children = new ArrayList<EventCommand*>();
+	shared_ptr<EventCommand> parent = nullptr;
 
 
-	EventCommand(Engine* g, const string& command, ArrayList<EventParameter*>* parameterList, int type);
+	ArrayList<shared_ptr<EventCommand>>* children = make_shared<ArrayList><shared_ptr<EventCommand>>();
+
+
+	EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>>* parameterList, int type);
 
 	int getNumParams();
 
 
-	static EventCommand* parseEventCommandFromCommandString(Engine* g, Event* event, string commandString);
+	static shared_ptr<EventCommand> parseEventCommandFromCommandString(shared_ptr<Engine> g, shared_ptr<Event> event, string commandString);
 
 
-	EventCommand* getParent();
+	shared_ptr<EventCommand> getParent();
 
 
-	void addChild(EventCommand* e);
+	void addChild(shared_ptr<EventCommand> e);
 
 
 	int currentChildIndex = 0;
 
 
-	EventCommand* getNextChild();
+	shared_ptr<EventCommand> getNextChild();
 };
 

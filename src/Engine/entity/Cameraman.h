@@ -25,7 +25,7 @@ public:
 	static Logger log;
 
 
-	Entity* targetEntity = nullptr;
+	shared_ptr<Entity> targetEntity = nullptr;
 
 	int lastXTarget = -1;
 	int lastYTarget = -1;
@@ -36,12 +36,12 @@ public:
 	int tileSize = 16;
 
 
-	static ConsoleText* currentSpeedXText;
-	static ConsoleText* currentSpeedYText;
+	static shared_ptr<ConsoleText> currentSpeedXText;
+	static shared_ptr<ConsoleText> currentSpeedYText;
 
 
-	static ConsoleText* targetSpeedXText;
-	static ConsoleText* targetSpeedYText;
+	static shared_ptr<ConsoleText> targetSpeedXText;
+	static shared_ptr<ConsoleText> targetSpeedYText;
 
 
 	int ticksSinceSnapToPlayer = 0;
@@ -102,16 +102,16 @@ public:
 	int screenShakeMaxX = 0;
 	int screenShakeMaxY = 0;
 
-	Cameraman(Engine* g);
+	Cameraman(shared_ptr<Engine> g);
 
 
 	void initCurrentAnimationFromSprite();
 
 
-	//Map* getMap();
+	//shared_ptr<Map> getMap();
 
 
-	Map* getCurrentMap();
+	shared_ptr<Map> getCurrentMap();
 
 
 	void render(float alpha);
@@ -160,7 +160,7 @@ public:
 	void setZoomTO(float ZOOMto);
 
 
-	void setZoomToFitArea(Area* a);
+	void setZoomToFitArea(shared_ptr<Area> a);
 
 
 	void updateZoom();
@@ -199,13 +199,13 @@ public:
 	void setXYToTarget();
 
 
-	void setTarget(Entity* t);
+	void setTarget(shared_ptr<Entity> t);
 
 
 	void setTarget(float mapXPixelsHQ, float mapYPixelsHQ);
 
 
-	void setTarget(Area* area);
+	void setTarget(shared_ptr<Area> area);
 
 
 	void setDummyTarget();

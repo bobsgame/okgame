@@ -14,7 +14,7 @@
 Logger RamioBoba::log = Logger("RamioBoba");
 
 
-RamioBoba::RamioBoba(Engine* g)
+RamioBoba::RamioBoba(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -81,7 +81,7 @@ void RamioBoba::update()
 	}
 }
 
-bool RamioBoba::checkStomp(RamioGuy* guy)
+bool RamioBoba::checkStomp(shared_ptr<RamioGuy> guy)
 {
 	// int r=rand()%5;
 	// if(r==0)CAPTION_make_caption(&yuu_ramio_caption, 1,CAPTION_CENTERED_OVER_SPRITE,PLAYER_npc->screen_y-10,3,"Squish!",FONT_NORMAL_ID,WHITE,BLACK,1,1);
@@ -98,7 +98,7 @@ bool RamioBoba::checkStomp(RamioGuy* guy)
 	return false;
 }
 
-bool RamioBoba::checkRunningInto(RamioGuy* guy)
+bool RamioBoba::checkRunningInto(shared_ptr<RamioGuy> guy)
 {
 	// TODO
 	return false;

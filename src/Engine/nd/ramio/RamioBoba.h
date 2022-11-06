@@ -20,7 +20,7 @@ public:
 	static Logger log;
 
 
-	RamioBoba(Engine* g);
+	RamioBoba(shared_ptr<Engine> g);
 
 
 	bool dead = false;
@@ -32,9 +32,9 @@ public:
 	virtual void update() override;
 
 
-	bool checkStomp(RamioGuy* guy);
+	bool checkStomp(shared_ptr<RamioGuy> guy);
 
 
-	bool checkRunningInto(RamioGuy* guy);
+	bool checkRunningInto(shared_ptr<RamioGuy> guy);
 };
 

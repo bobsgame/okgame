@@ -19,7 +19,7 @@ public:
 	static Logger log;
 
 
-	RamioBackground(Engine* g);
+	RamioBackground(shared_ptr<Engine> g);
 
 
 	int RAMIO_screen_x = 0;

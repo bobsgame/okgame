@@ -15,7 +15,7 @@ public:
 
 	static Logger log;
 
-	BobTexture* texture = nullptr;
+	shared_ptr<BobTexture> texture = nullptr;
 
 	bool pulse = false;
 	bool pulseInOut = false;
@@ -47,7 +47,7 @@ public:
 	bool enabled = true;
 
 	StatusBarButton();
-	StatusBarButton(BGClientEngine* g);
+	StatusBarButton(shared_ptr<BGClientEngine> g);
 
 	virtual void init();
 

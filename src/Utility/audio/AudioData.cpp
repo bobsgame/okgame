@@ -28,24 +28,24 @@ AudioData::AudioData(int id, const string& name, const string& filename)
 	this->fileName = filename;
 }
 //
-//AudioData* AudioData::fromBase64ZippedJSON(const string& b64)
+//shared_ptr<AudioData> AudioData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = new Gson();
+//	//Gson gson = make_shared<Gson>();
 //	//AudioData data = gson.fromJson(json,AudioData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//AudioData* AudioData::fromJSON(const string& json)
+//shared_ptr<AudioData> AudioData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//Gson* gson = new Gson();
-//	AudioData* data = nullptr;// gson->fromJson(json, AudioData::typeid);
+//	//shared_ptr<Gson> gson = make_shared<Gson>();
+//	shared_ptr<AudioData> data = nullptr;// gson->fromJson(json, AudioData::typeid);
 //
 //
 //	return data;

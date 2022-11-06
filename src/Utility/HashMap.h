@@ -155,7 +155,7 @@ template <typename K, typename V>
 ArrayList<V>* HashMap<K, V>::getAllValues()
 {
 	//typename HashMap<K, V>::iterator it;
-	ArrayList<V> *v = new ArrayList<V>();
+	ArrayList<V> *v = make_shared<ArrayList><V>();
 	for (auto it = m->begin(); it != m->end(); ++it)v->add(it->second);
 	return v;
 }

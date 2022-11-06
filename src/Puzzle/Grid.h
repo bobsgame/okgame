@@ -28,7 +28,7 @@ public:
 	//BlockType noBlockType;
 	//ArrayList<Color> emptyColors;
 
-	GameLogic* game = nullptr;
+	shared_ptr<GameLogic> game = nullptr;
 
 	float screenX = 0;
 	float screenY = 0;
@@ -36,7 +36,7 @@ public:
 //#define blockHashMap
 
 #ifdef blocksHashMap
-	HashMap<int, shared_ptr<Block>>* blocks = new HashMap<int, shared_ptr<Block>>();
+	HashMap<int, shared_ptr<Block>>* blocks = make_shared<HashMap><int, shared_ptr<Block>>();
 #else
 	ArrayList<shared_ptr<Block>> blocks;
 #endif
@@ -91,7 +91,7 @@ public:
 	int lastGarbageHoleX = 0;
 	bool garbageHoleDirectionToggle = true;
 	ArrayList<shared_ptr<Piece>> randomBag;;
-	Grid(GameLogic* gameInstance);
+	Grid(shared_ptr<GameLogic> gameInstance);
 	float getXInFBO();
 	float getXInFBONoShake();
 	float getXOnScreenNoShake();
@@ -193,7 +193,7 @@ public:
 	bool areAnyBlocksPopping();
 	int cellW();
 	int cellH();
-	GameType* getGameType();
-	GameLogic* getGameLogic();
+	shared_ptr<GameType> getGameType();
+	shared_ptr<GameLogic> getGameLogic();
 };
 

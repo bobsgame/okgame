@@ -16,15 +16,15 @@
 Logger NDMenuWheel::log = Logger("NDMenuWheel");
 
 
-BobTexture* NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
-BobTexture* NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
+shared_ptr<BobTexture> NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
+shared_ptr<BobTexture> NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
 
-NDMenuWheel::NDMenuWheel(Engine* g)
+NDMenuWheel::NDMenuWheel(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
 
-ArrayList<NDMenuWheelItem*>* NDMenuWheel::wheelItems = new ArrayList<NDMenuWheelItem*>();
+ArrayList<shared_ptr<NDMenuWheelItem>>* NDMenuWheel::wheelItems = make_shared<ArrayList><shared_ptr<NDMenuWheelItem>>();
 int NDMenuWheel::CLOCKWISE = 0;
 int NDMenuWheel::COUNTERCLOCKWISE = 1;
 float NDMenuWheel::highlightColor = 0;
@@ -64,14 +64,14 @@ void NDMenuWheel::init()
 	NDMenuWheelItem::wheelItemGlossyOverlayTexture = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/glossyOverlay.png");
 
 
-	wheelItems->add(new NDMenuWheelItem(getEngine(), nullptr, "GameStore", BobColor::magenta));
-	wheelItems->add(new NDMenuWheelItem(getEngine(), nullptr, "Settings", BobColor::green));
+	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "GameStore", BobColor::magenta));
+	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "Settings", BobColor::green));
 }
 
-void NDMenuWheel::addGame(NDGameEngine* game, const string& name, BobColor* color)
+void NDMenuWheel::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color)
 { //=========================================================================================================================
 
-	wheelItems->add(new NDMenuWheelItem(getEngine(), game, name, color));
+	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), game, name, color));
 
 
 	//------------------------------------------
@@ -122,7 +122,7 @@ void NDMenuWheel::render()
 	}
 
 
-	NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
+	shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 	//------------------------------------------
 	//draw selection box
 	//------------------------------------------
@@ -134,14 +134,14 @@ void NDMenuWheel::render()
 
 void NDMenuWheel::renderGameTitleCentered()
 { //=========================================================================================================================
-	//NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
+	//shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 	//draw game title
 	//NDGame.drawTexture(selected.labelTexture,ND.getViewportWidth()/2-selected.labelTexture.getImageWidth()/2,ND.getViewportHeight()/2-selected.labelTexture.getImageHeight()/2);
 }
 
 void NDMenuWheel::renderGameTitleCenteredGlow()
 { //=========================================================================================================================
-	//NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
+	//shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 	//draw game title glow
 	//NDGame.drawTextureAlpha(selected.labelGlowTexture,ND.getViewportWidth()/2-selected.labelTexture.getImageWidth()/2,ND.getViewportHeight()/2-selected.labelTexture.getImageHeight()/2,NDMenu.actionFadeCounter/255.0f);
 }
@@ -201,7 +201,7 @@ void NDMenuWheel::update()
 	}
 
 
-	NDMenuWheelItem* selected = wheelItems->get(selectedWheelItem);
+	shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 
 
 	float screenMiddleY = (float)(GLUtils::getViewportHeight() / 2);
@@ -284,8 +284,8 @@ void NDMenuWheel::update()
 		//------------------------------------------
 
 
-		NDMenuWheelItem* bottomItem = wheelItems->get(0);
-		NDMenuWheelItem* topItem = bottomItem;
+		shared_ptr<NDMenuWheelItem> bottomItem = wheelItems->get(0);
+		shared_ptr<NDMenuWheelItem> topItem = bottomItem;
 
 		for (int c = 0; c < wheelItems->size(); c++)
 		{

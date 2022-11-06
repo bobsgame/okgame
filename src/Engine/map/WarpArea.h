@@ -17,7 +17,7 @@ public:
 
 	static Logger log;
 
-	WarpArea(Engine* g, AreaData* a, Map* m);
+	WarpArea(shared_ptr<Engine> g, shared_ptr<AreaData> a, shared_ptr<Map> m);
 
 	long long lastRequestedMapDataTime = 0;
 

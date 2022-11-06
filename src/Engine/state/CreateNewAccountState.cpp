@@ -18,7 +18,7 @@ CreateNewAccountState::CreateNewAccountState()
 { //=========================================================================================================================
 
 
-	createNewAccountMenuPanel = new CreateNewAccountMenuPanel();
+	createNewAccountMenuPanel = make_shared<CreateNewAccountMenuPanel>();
 
 	//createNewAccountGUI = new GUI(createNewAccount, GLUtils::TWLrenderer);
 	//createNewAccountGUI->applyTheme(GLUtils::TWLthemeManager);
@@ -62,29 +62,29 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //MenuPanel();
 
   //
-  //   panel = new DialogLayout();
+  //   panel = make_shared<DialogLayout>();
   //   panel->setTheme("darkPanel");
   //
   //
-  //   Label* createAccountPanelLabel = new Label("Create Account");
+  //   shared_ptr<Label> createAccountPanelLabel = make_shared<Label>("Create Account");
   //   createAccountPanelLabel->setCanAcceptKeyboardFocus(false);
   //   createAccountPanelLabel->setTheme("bigLabel");
   //
   //
-  //   errorLabel = new Label(" ");
+  //   errorLabel = make_shared<Label>(" ");
   //   errorLabel->setTheme("errorLabel");
   //   errorLabel->setCanAcceptKeyboardFocus(false);
   //
-  //   statusLabel = new Label(" ");
+  //   statusLabel = make_shared<Label>(" ");
   //   statusLabel->setCanAcceptKeyboardFocus(false);
   //
   //   //---------------------------------------------------------
   //   //username
   //   //---------------------------------------------------------
-  //   //		nameEditField = new EditField();
+  //   //		nameEditField = make_shared<EditField>();
   //   //		nameEditField.setText("");
   //   //		nameEditField.setMaxTextLength(40);
-  //   //		nameEditField.addCallback(new Callback()
+  //   //		nameEditField.addCallback(make_shared<Callback>()
   //   //		{
   //   //			@Override
   //   //			public void callback(int key)
@@ -92,7 +92,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //   //				//username cannot contain `
   //   //			}
   //   //		});
-  //   //		Label nameLabel = new Label("Username");
+  //   //		Label nameLabel = make_shared<Label>("Username");
   //   //		nameLabel.setLabelFor(nameEditField);
   //   //		nameLabel.setCanAcceptKeyboardFocus(false);
   //
@@ -100,11 +100,11 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //   //---------------------------------------------------------
   //   //email address
   //   //---------------------------------------------------------
-  //   emailEditField = new EditField();
+  //   emailEditField = make_shared<EditField>();
   //   emailEditField->setText("");
   //   emailEditField->setMaxTextLength(40);
-  //   emailEditField->addCallback(new CallbackAnonymousInnerClassHelper(this));
-  //   emailLabel = new Label("Email Address:");
+  //   emailEditField->addCallback(make_shared<CallbackAnonymousInnerClassHelper>(this));
+  //   emailLabel = make_shared<Label>("Email Address:");
   //   emailLabel->setLabelFor(emailEditField);
   //   emailLabel->setCanAcceptKeyboardFocus(false);
   //
@@ -112,32 +112,32 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //   //---------------------------------------------------------
   //   //password
   //   //---------------------------------------------------------
-  //   passwordEditField = new EditField();
+  //   passwordEditField = make_shared<EditField>();
   //   passwordEditField->setPasswordMasking(true);
-  //   passwordLabel = new Label("Password:");
+  //   passwordLabel = make_shared<Label>("Password:");
   //   passwordLabel->setLabelFor(passwordEditField);
   //
   //
-  //   passwordEditField->addCallback(new CallbackAnonymousInnerClassHelper2(this));
+  //   passwordEditField->addCallback(make_shared<CallbackAnonymousInnerClassHelper>2(this));
   //
   //
   //   //---------------------------------------------------------
   //   //confirm password
   //   //---------------------------------------------------------
-  //   confirmPasswordEditField = new EditField();
+  //   confirmPasswordEditField = make_shared<EditField>();
   //   confirmPasswordEditField->setPasswordMasking(true);
-  //   confirmPasswordLabel = new Label("Confirm Password:");
+  //   confirmPasswordLabel = make_shared<Label>("Confirm Password:");
   //   confirmPasswordLabel->setLabelFor(confirmPasswordEditField);
   //
   //
-  //   confirmPasswordEditField->addCallback(new CallbackAnonymousInnerClassHelper3(this));
+  //   confirmPasswordEditField->addCallback(make_shared<CallbackAnonymousInnerClassHelper>3(this));
   //
   //
   //   //---------------------------------------------------------
   //   //email box
   //   //---------------------------------------------------------
   //
-  //   emailDialogLayout = new DialogLayout();
+  //   emailDialogLayout = make_shared<DialogLayout>();
   //   emailDialogLayout->setCanAcceptKeyboardFocus(false);
   //
   //   emailDialogLayout->setHorizontalGroup(emailDialogLayout->createSequentialGroup(emailDialogLayout->createParallelGroup(emailDialogLayout->createSequentialGroup().addGap().addWidgets(emailLabel).addGap()), emailDialogLayout->createParallelGroup(emailDialogLayout->createSequentialGroup().addGap().addWidgets(emailEditField).addGap())));
@@ -152,7 +152,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //   //password box
   //   //---------------------------------------------------------
   //
-  //   passwordDialogLayout = new DialogLayout();
+  //   passwordDialogLayout = make_shared<DialogLayout>();
   //   passwordDialogLayout->setCanAcceptKeyboardFocus(false);
   //
   //   passwordDialogLayout->setHorizontalGroup(passwordDialogLayout->createSequentialGroup(passwordDialogLayout->createParallelGroup(passwordDialogLayout->createSequentialGroup().addGap(), passwordDialogLayout->createParallelGroup().addWidgets(passwordLabel, confirmPasswordLabel), passwordDialogLayout->createSequentialGroup().addGap()), passwordDialogLayout->createParallelGroup(passwordDialogLayout->createSequentialGroup().addGap().addWidgets(passwordEditField).addGap(), passwordDialogLayout->createSequentialGroup().addGap().addWidgets(confirmPasswordEditField).addGap())));
@@ -163,7 +163,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //   //---------------------------------------------------------
   //   //ok button
   //   //---------------------------------------------------------
-  //   okButton = new Button("Ok!");
+  //   okButton = make_shared<Button>("Ok!");
   //   okButton->setCanAcceptKeyboardFocus(false);
   //   okButton->setTheme("button");
   //   okButton->addCallback([&] ()
@@ -175,7 +175,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //   //---------------------------------------------------------
   //   //cancel button
   //   //---------------------------------------------------------
-  //   cancelButton = new Button("Cancel");
+  //   cancelButton = make_shared<Button>("Cancel");
   //   cancelButton->setCanAcceptKeyboardFocus(false);
   //   cancelButton->setTheme("button");
   //   cancelButton->addCallback([&] ()
@@ -212,7 +212,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
   //   //scrollpane
   //   //----------------------
   //
-  //   scrollPane = new ScrollPane(insideScrollPaneLayout);
+  //   scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
   //
   //   scrollPane->setTheme(GUIManager::scrollPaneTheme);
   //   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -240,7 +240,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
 }
 
 //
-//CreateNewAccount::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(CreateNewAccount* outerInstance)
+//CreateNewAccount::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(shared_ptr<CreateNewAccount> outerInstance)
 //{
 //   this->outerInstance = outerInstance;
 //}
@@ -249,7 +249,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
 //{
 //}
 //
-//CreateNewAccount::CallbackAnonymousInnerClassHelper2::CallbackAnonymousInnerClassHelper2(CreateNewAccount* outerInstance)
+//CreateNewAccount::CallbackAnonymousInnerClassHelper2::CallbackAnonymousInnerClassHelper2(shared_ptr<CreateNewAccount> outerInstance)
 //{
 //   this->outerInstance = outerInstance;
 //}
@@ -274,7 +274,7 @@ CreateNewAccountMenuPanel::CreateNewAccountMenuPanel()
 //   }
 //}
 //
-//CreateNewAccount::CallbackAnonymousInnerClassHelper3::CallbackAnonymousInnerClassHelper3(CreateNewAccount* outerInstance)
+//CreateNewAccount::CallbackAnonymousInnerClassHelper3::CallbackAnonymousInnerClassHelper3(shared_ptr<CreateNewAccount> outerInstance)
 //{
 //   this->outerInstance = outerInstance;
 //}
@@ -341,7 +341,7 @@ void CreateNewAccountMenuPanel::doCreateAccount()
   //
   //
   //      //create thread, this needs to be a thread because Button.doCallback only creates a Runnable and calls Runnable.run() which does NOT create a thread
-  //      new Thread([&] ()
+  //      make_shared<Thread>([&] ()
   //         {
   //            try
   //            {

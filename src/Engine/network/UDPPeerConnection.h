@@ -108,10 +108,10 @@ private:
 	bool threadStarted = false;
 	thread t;
 public:
-	static void updateThreadLoop(UDPPeerConnection *u);
+	static void updateThreadLoop(shared_ptr<UDPPeerConnection >u);
 	//------------------------------------
 private:
-	static Logger* _threadLog;
+	static shared_ptr<Logger> _threadLog;
 	mutex threadLog_Mutex;
 public:
 	void threadLogDebug_S(string s)
@@ -215,11 +215,11 @@ public:
 
 	//------------------------------------
 private:
-	IPaddress* _peerIPAddress_S = nullptr;
+	shared_ptr<IPaddress> _peerIPAddress_S = nullptr;
 	int _peerPort_S = -1;
 	mutex _peerIPAddress_Mutex;
 public:
-	IPaddress* getPeerIPAddress_S()
+	shared_ptr<IPaddress> getPeerIPAddress_S()
 	{
 		lock_guard<mutex> lock(_peerIPAddress_Mutex);
 		return _peerIPAddress_S;
@@ -243,7 +243,7 @@ public:
 		}
 		else
 		{
-			_peerIPAddress_S = new IPaddress();
+			_peerIPAddress_S = make_shared<IPaddress>();
 			_peerPort_S = port;
 
 			if (SDLNet_ResolveHost(_peerIPAddress_S, ipAddressString.c_str(), port) < 0)
@@ -286,10 +286,10 @@ public:
 	//------------------------------------
 
 private:
-	queue<UDPpacket*> *_sentPacketQueue = new queue<UDPpacket*>();
+	queue<shared_ptr<UDPpacket>> *_sentPacketQueue = new queue<shared_ptr<UDPpacket>>();
 	mutex _sentPacketQueue_Mutex;
 public:
-	UDPpacket* sentPacketQueueFront_S()
+	shared_ptr<UDPpacket> sentPacketQueueFront_S()
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
 		return _sentPacketQueue->front();
@@ -304,7 +304,7 @@ public:
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
 		_sentPacketQueue->pop();
 	}
-	void sentPacketQueuePush_S(UDPpacket* p)
+	void sentPacketQueuePush_S(shared_ptr<UDPpacket> p)
 	{
 		lock_guard<mutex> lock(_sentPacketQueue_Mutex);
 		_sentPacketQueue->push(p);
@@ -505,14 +505,14 @@ private:
 		long long timeGotACK = 0;
 	};
 	typedef HashMap<long long, long long> HashMapLongLongLongLong;
-	HashMapLongLongLongLong *_frameSentTimes = new HashMapLongLongLongLong();
-	ArrayList<long long> *_frameRoundaboutTicks = new ArrayList<long long>();
+	shared_ptr<HashMapLongLongLongLong >_frameSentTimes = make_shared<HashMapLongLongLongLong>();
+	ArrayList<long long> *_frameRoundaboutTicks = make_shared<ArrayList><long long>();
 	//------------------------------------
 	//thread only functions
 	//------------------------------------
 	bool _ensureSocketIsOpen();
 	void _checkForIncomingPeerTraffic();
-	UDPpacket* makePacket(string s);
+	shared_ptr<UDPpacket> makePacket(string s);
 	void _processQueuedMessagesIntoPackets();
 	void _writeQueuedPackets();
 	void _getAddressFromSTUNServer();
@@ -535,20 +535,20 @@ public:
 	//bool bobsGameHosting = false;
 	//bool bobsGamePlaying = false;
 	//string hostedRoomUUID = "";
-	//Caption *caption = nullptr;
+	//shared_ptr<Caption >caption = nullptr;
 	//bool multiplayer_AllowDifferentDifficulties = true;
 	//bool multiplayer_AllowDifferentGameSequences = true;
 	//bool multiplayer_GameEndsWhenOnePlayerRemains = true;
 	//bool multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
 	//bool multiplayer_DisableVSGarbage = false;
-	//GameSequence *multiplayer_SelectedGameSequence = nullptr;
+	//shared_ptr<GameSequence >multiplayer_SelectedGameSequence = nullptr;
 	//string multiplayer_SelectedDifficultyName = "Beginner";
 
 	//engine parts to forward udp messages to, they also get forwarded to engines which dispatch them
-	ArrayList<EnginePart*> engineParts;
-	void addEnginePartToForwardMessagesTo(EnginePart* e);
-	void removeEnginePartToForwardMessagesTo(EnginePart* e);
+	ArrayList<shared_ptr<EnginePart>> engineParts;
+	void addEnginePartToForwardMessagesTo(shared_ptr<EnginePart> e);
+	void removeEnginePartToForwardMessagesTo(shared_ptr<EnginePart> e);
 
-	static TCPServerConnection* getServerConnection();
+	static shared_ptr<TCPServerConnection> getServerConnection();
 
 };

@@ -9,7 +9,7 @@
 
 Logger FriendData::log = Logger("FriendData");
 Logger UDPPeerConnection::log = Logger("UDPPeerConnection");
-Logger* UDPPeerConnection::_threadLog = new Logger("UDPPeerConnection");
+shared_ptr<Logger> UDPPeerConnection::_threadLog = make_shared<Logger>("UDPPeerConnection");
 
 
 int UDPPeerConnection::lastUsedUDPPort = Main::clientUDPPortStartRange;
@@ -36,13 +36,13 @@ UDPPeerConnection::~UDPPeerConnection()
 
 }
 
-void UDPPeerConnection::addEnginePartToForwardMessagesTo(EnginePart* e)
+void UDPPeerConnection::addEnginePartToForwardMessagesTo(shared_ptr<EnginePart> e)
 {
 	if (engineParts.contains(e) == false)
 		engineParts.add(e);
 }
 
-void UDPPeerConnection::removeEnginePartToForwardMessagesTo(EnginePart* e)
+void UDPPeerConnection::removeEnginePartToForwardMessagesTo(shared_ptr<EnginePart> e)
 {
 	if (engineParts.contains(e) == true)
 		engineParts.remove(e);
@@ -94,7 +94,7 @@ void UDPPeerConnection::update()
 
 }
 
-void UDPPeerConnection::updateThreadLoop(UDPPeerConnection *u)
+void UDPPeerConnection::updateThreadLoop(shared_ptr<UDPPeerConnection >u)
 {//===============================================================================================
 
 	//threadLogDebug_S("Starting peer thread");
@@ -235,11 +235,11 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 			if (rd > 0)
 			{
 
-				queue<string*> packetsToProcess;
+				queue<string> packetsToProcess;
 
 				while (numPacketsReceived > 0)
 				{
-					UDPpacket *packet = SDLNet_AllocPacket(65535);
+					shared_ptr<UDPpacket >packet = SDLNet_AllocPacket(65535);
 					numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet);
 
 					if (numPacketsReceived > 0)
@@ -337,7 +337,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 
 							if (sentPacketQueueSize_S() > 0)
 							{
-								UDPpacket *q = sentPacketQueueFront_S();
+								shared_ptr<UDPpacket >q = sentPacketQueueFront_S();
 								string queuedIDString = string((char*)q->data);
 								queuedIDString = queuedIDString.substr(0, queuedIDString.find(":"));
 								long long queuedID = -1;
@@ -468,17 +468,17 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 }
 
 //===============================================================================================
-UDPpacket* UDPPeerConnection::makePacket(string s)
+shared_ptr<UDPpacket> UDPPeerConnection::makePacket(string s)
 {//===============================================================================================
 
-	IPaddress* peerAddress = getPeerIPAddress_S();
+	shared_ptr<IPaddress> peerAddress = getPeerIPAddress_S();
 	if (peerAddress == nullptr)
 	{
 		threadLogWarn_S("peerAddress was null.");
 		return nullptr;
 	}
 
-	UDPpacket * packet = SDLNet_AllocPacket((int)s.length());
+	shared_ptr<UDPpacket > packet = SDLNet_AllocPacket((int)s.length());
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)
@@ -584,7 +584,7 @@ void UDPPeerConnection::_writeQueuedPackets()
 
 		string s = packetMessageQueueFront_S();
 
-		UDPpacket *packet = makePacket(s);
+		shared_ptr<UDPpacket >packet = makePacket(s);
 		if (packet == nullptr)
 		{
 			_writePacketWait += 2000;
@@ -772,7 +772,7 @@ void UDPPeerConnection::setDisconnectedFromPeer_S(string reason)
 
 
 //===============================================================================================
-bool UDPPeerConnection::udpPeerMessageReceived(string s)// ChannelHandlerContext* ctx, MessageEvent* e)
+bool UDPPeerConnection::udpPeerMessageReceived(string s)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
 { //===============================================================================================
 
 #ifdef _DEBUG
@@ -862,14 +862,14 @@ void UDPPeerConnection::writeUnreliable_S(string s)
 		s = s + BobNet::endline;
 	}
 
-	IPaddress* peerAddress = getPeerIPAddress_S();
+	shared_ptr<IPaddress> peerAddress = getPeerIPAddress_S();
 	if (peerAddress == nullptr)
 	{
 		threadLogWarn_S("peerAddress was null.");
 		return;
 	}
 
-	UDPpacket * packet = SDLNet_AllocPacket((int)s.length());
+	shared_ptr<UDPpacket > packet = SDLNet_AllocPacket((int)s.length());
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)
@@ -945,7 +945,7 @@ void UDPPeerConnection::sendPeerConnectResponse()
 	writeReliable_S(BobNet::Friend_Connect_Response + to_string(getServerConnection()->getUserID_S()) +":"+ BobNet::endline);
 }
 
-void UDPPeerConnection::incomingPeerConnectResponse(string e)//MessageEvent* e)
+void UDPPeerConnection::incomingPeerConnectResponse(string e)//shared_ptr<MessageEvent> e)
 {
 
   
@@ -976,7 +976,7 @@ void UDPPeerConnection::incomingPeerConnectResponse(string e)//MessageEvent* e)
 }
 
 
-void UDPPeerConnection::incomingFriendDataRequest(string e)//MessageEvent* e)
+void UDPPeerConnection::incomingFriendDataRequest(string e)//shared_ptr<MessageEvent> e)
 { //===============================================================================================
 
   //allowed info depends on type of friend, zip code friends should not get full name, etc.
@@ -987,7 +987,7 @@ void UDPPeerConnection::incomingFriendDataRequest(string e)//MessageEvent* e)
 		return;
 	}
 
-	FriendData* myFriendData = new FriendData();
+	shared_ptr<FriendData> myFriendData = make_shared<FriendData>();
 
 	GameSave g = getServerConnection()->getGameSave_S();
 	myFriendData->initWithGameSave(g);
@@ -997,7 +997,7 @@ void UDPPeerConnection::incomingFriendDataRequest(string e)//MessageEvent* e)
 	writeReliable_S(BobNet::Friend_Data_Response + s +":"+ BobNet::endline);
 }
 
-void UDPPeerConnection::incomingFriendDataResponse(string e)//MessageEvent* e)
+void UDPPeerConnection::incomingFriendDataResponse(string e)//shared_ptr<MessageEvent> e)
 { //===============================================================================================
 
   
@@ -1573,7 +1573,7 @@ void FriendData::decode(string s)
 //	}
 }
 
-TCPServerConnection* UDPPeerConnection::getServerConnection()
+shared_ptr<TCPServerConnection> UDPPeerConnection::getServerConnection()
 {
 	return &BobNet::tcpServerConnection;
 }

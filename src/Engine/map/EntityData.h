@@ -67,18 +67,18 @@ private:
 	
 	bool pullPlayer = false;
 	bool pushPlayer = false;
-	ArrayList<string>* behaviorList = new ArrayList<string>();
-	ArrayList<string>* connectionTYPEIDList = new ArrayList<string>();
+	ArrayList<string>* behaviorList = make_shared<ArrayList><string>();
+	ArrayList<string>* connectionTYPEIDList = make_shared<ArrayList><string>();
 	string comment = "";
 	bool isNPC = false; //only used for export from tools for now to determine whether to spawn a character or an entity. determined from the SPRITE.getIsNPC, which is where it should be.
 
-	EventData* eventData = nullptr;
+	shared_ptr<EventData> eventData = nullptr;
 
 public:
 	EntityData();
 
-	EntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, EventData* eventData = nullptr, const string& comment = "");
-	void initEntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, EventData* eventData = nullptr, const string& comment = "");
+	EntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, shared_ptr<EventData> eventData = nullptr, const string& comment = "");
+	void initEntityData(int id, const string& name, const string& spriteAssetName = "", int spawnXPixels1X = 0, int spawnYPixels1X = 0, int initialFrame = 0, bool pushable = false, bool nonWalkable = false, int alphaByte = 255, float scale = 1, int ticksPerPixelMoved = 12, bool aboveTopLayer = false, bool aboveWhenEqual = false, bool alwaysOnBottom = false, bool animateThroughFrames = false, bool randomTimeBetweenAnimation = false, int ticksBetweenFrames = 0, int ticksBetweenAnimation = false, bool onlyHereDuringEvent = false, bool randomFrames = false, bool disableShadow = false, shared_ptr<EventData> eventData = nullptr, const string& comment = "");
 
 	//	
 	//	public void addConnection(String s)
@@ -93,8 +93,8 @@ public:
 	//	}
 
 	virtual string& initFromString(string& t) override;
-	//static EntityData* fromBase64ZippedJSON(const string& b64);
-	//static EntityData* fromJSON(const string& json);
+	//static shared_ptr<EntityData> fromBase64ZippedJSON(const string& b64);
+	//static shared_ptr<EntityData> fromJSON(const string& json);
 
 	virtual string getTYPEIDString();
 
@@ -137,7 +137,7 @@ public:
 	bool getDontUsePathfinding();
 	bool getPullPlayer();
 	bool getPushPlayer();
-	EventData* getEventData();
+	shared_ptr<EventData> getEventData();
 	//int getMapID();
 	//int getStateID();
 	ArrayList<string>* getConnectionTYPEIDList();

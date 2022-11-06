@@ -75,52 +75,52 @@ public:
 	   public String itemsPurchased = "";
 	*/
 	//
-	//   Button* editCharacterButton = nullptr;
+	//   shared_ptr<Button> editCharacterButton = nullptr;
 	//
 	//
-	//   Label* moneyDescriptionLabel = nullptr;
-	//   Label* moneyLabel = nullptr;
-	//   Button* addMoneyButton = nullptr;
-	//   Label* addMoneyButtonQuestionMark = nullptr;
+	//   shared_ptr<Label> moneyDescriptionLabel = nullptr;
+	//   shared_ptr<Label> moneyLabel = nullptr;
+	//   shared_ptr<Button> addMoneyButton = nullptr;
+	//   shared_ptr<Label> addMoneyButtonQuestionMark = nullptr;
 	//
-	//   Label* accountTypeDescriptionLabel = nullptr;
-	//   Label* accountTypeLabel = nullptr;
-	//   Button* goPremiumButton = nullptr;
-	//   Label* goPremiumButtonQuestionMark = nullptr;
+	//   shared_ptr<Label> accountTypeDescriptionLabel = nullptr;
+	//   shared_ptr<Label> accountTypeLabel = nullptr;
+	//   shared_ptr<Button> goPremiumButton = nullptr;
+	//   shared_ptr<Label> goPremiumButtonQuestionMark = nullptr;
 	//
 	//
 	//   //public String characterName = "";
-	//   Label* characterNameDescriptionLabel = nullptr;
-	//   Label* characterNameLabel = nullptr;
+	//   shared_ptr<Label> characterNameDescriptionLabel = nullptr;
+	//   shared_ptr<Label> characterNameLabel = nullptr;
 	//
 	//
-	//   DialogLayout* accountDialogLayout;
-	//   Label* accountPanelLabel;
+	//   shared_ptr<DialogLayout> accountDialogLayout;
+	//   shared_ptr<Label> accountPanelLabel;
 	//
 	//
 	//   //public String emailAddress = "";
-	//   Label* emailAddressDescriptionLabel = nullptr;
-	//   Label* emailAddressLabel = nullptr;
+	//   shared_ptr<Label> emailAddressDescriptionLabel = nullptr;
+	//   shared_ptr<Label> emailAddressLabel = nullptr;
 	//
 	//
 	//   //public long accountCreatedTime = 0;
-	//   Label* accountCreatedTimeDescriptionLabel = nullptr;
-	//   Label* accountCreatedTimeLabel = nullptr;
+	//   shared_ptr<Label> accountCreatedTimeDescriptionLabel = nullptr;
+	//   shared_ptr<Label> accountCreatedTimeLabel = nullptr;
 	//
 	//
 	//   //public long lastLoginTime = 0;
-	//   Label* lastLoginTimeDescriptionLabel = nullptr;
-	//   Label* lastLoginTimeLabel = nullptr;
+	//   shared_ptr<Label> lastLoginTimeDescriptionLabel = nullptr;
+	//   shared_ptr<Label> lastLoginTimeLabel = nullptr;
 	//
 	//
 	//   //public int timesLoggedIn = 0;
-	//   Label* timesLoggedInDescriptionLabel = nullptr;
-	//   Label* timesLoggedInLabel = nullptr;
+	//   shared_ptr<Label> timesLoggedInDescriptionLabel = nullptr;
+	//   shared_ptr<Label> timesLoggedInLabel = nullptr;
 	//
 	//
 	//   //public String lastIP = "";
-	//   Label* lastIPDescriptionLabel = nullptr;
-	//   Label* lastIPLabel = nullptr;
+	//   shared_ptr<Label> lastIPDescriptionLabel = nullptr;
+	//   shared_ptr<Label> lastIPLabel = nullptr;
 	//
 	//
 	//   //public String realName = "";
@@ -133,90 +133,90 @@ public:
 	//   //Label birthdayTimeLabel = null;
 	//
 	//
-	//   DialogLayout* facebookDialogLayout;
-	//   Label* facebookPanelLabel;
+	//   shared_ptr<DialogLayout> facebookDialogLayout;
+	//   shared_ptr<Label> facebookPanelLabel;
 	//
 	//   //public String facebookEmail = "";
-	//   Label* facebookEmailDescriptionLabel = nullptr;
-	//   Label* facebookEmailLabel = nullptr;
+	//   shared_ptr<Label> facebookEmailDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookEmailLabel = nullptr;
 	//
 	//
 	//   //public String facebookBirthday = "";
-	//   Label* facebookBirthdayDescriptionLabel = nullptr;
-	//   Label* facebookBirthdayLabel = nullptr;
+	//   shared_ptr<Label> facebookBirthdayDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookBirthdayLabel = nullptr;
 	//
 	//
 	//   //public String facebookFirstName = "";
-	//   Label* facebookFirstNameDescriptionLabel = nullptr;
-	//   Label* facebookFirstNameLabel = nullptr;
+	//   shared_ptr<Label> facebookFirstNameDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookFirstNameLabel = nullptr;
 	//
 	//
 	//   //public String facebookLastName = "";
-	//   Label* facebookLastNameDescriptionLabel = nullptr;
-	//   Label* facebookLastNameLabel = nullptr;
+	//   shared_ptr<Label> facebookLastNameDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookLastNameLabel = nullptr;
 	//
 	//
 	//   //public String facebookGender = "";
-	//   Label* facebookGenderDescriptionLabel = nullptr;
-	//   Label* facebookGenderLabel = nullptr;
+	//   shared_ptr<Label> facebookGenderDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookGenderLabel = nullptr;
 	//
 	//
 	//   //public String facebookLocale = "";
-	//   Label* facebookLocaleDescriptionLabel = nullptr;
-	//   Label* facebookLocaleLabel = nullptr;
+	//   shared_ptr<Label> facebookLocaleDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookLocaleLabel = nullptr;
 	//
 	//
 	//   //public Float facebookTimeZone = 0.0f;
-	//   Label* facebookTimeZoneDescriptionLabel = nullptr;
-	//   Label* facebookTimeZoneLabel = nullptr;
+	//   shared_ptr<Label> facebookTimeZoneDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookTimeZoneLabel = nullptr;
 	//
 	//
 	//   //public String facebookUsername = "";
-	//   Label* facebookUsernameDescriptionLabel = nullptr;
-	//   Label* facebookUsernameLabel = nullptr;
+	//   shared_ptr<Label> facebookUsernameDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookUsernameLabel = nullptr;
 	//
 	//
 	//   //public String facebookWebsite = "";
-	//   Label* facebookWebsiteDescriptionLabel = nullptr;
-	//   Label* facebookWebsiteLabel = nullptr;
+	//   shared_ptr<Label> facebookWebsiteDescriptionLabel = nullptr;
+	//   shared_ptr<Label> facebookWebsiteLabel = nullptr;
 	//
 	//
-	//   DialogLayout* locationDialogLayout;
-	//   Label* locationPanelLabel;
+	//   shared_ptr<DialogLayout> locationDialogLayout;
+	//   shared_ptr<Label> locationPanelLabel;
 	//
 	//   //public String postalCode = "";
-	//   Label* postalCodeDescriptionLabel = nullptr;
-	//   Label* postalCodeLabel = nullptr;
+	//   shared_ptr<Label> postalCodeDescriptionLabel = nullptr;
+	//   shared_ptr<Label> postalCodeLabel = nullptr;
 	//
 	//   //public String countryName = "";
-	//   Label* countryNameDescriptionLabel = nullptr;
-	//   Label* countryNameLabel = nullptr;
+	//   shared_ptr<Label> countryNameDescriptionLabel = nullptr;
+	//   shared_ptr<Label> countryNameLabel = nullptr;
 	//
 	//   //public String isoCountryCode = "";
-	//   Label* isoCountryCodeDescriptionLabel = nullptr;
-	//   Label* isoCountryCodeLabel = nullptr;
+	//   shared_ptr<Label> isoCountryCodeDescriptionLabel = nullptr;
+	//   shared_ptr<Label> isoCountryCodeLabel = nullptr;
 	//
 	//   //public String placeName = "";
-	//   Label* placeNameDescriptionLabel = nullptr;
-	//   Label* placeNameLabel = nullptr;
+	//   shared_ptr<Label> placeNameDescriptionLabel = nullptr;
+	//   shared_ptr<Label> placeNameLabel = nullptr;
 	//
 	//
 	//   //public String stateName = "";
-	//   Label* stateNameDescriptionLabel = nullptr;
-	//   Label* stateNameLabel = nullptr;
+	//   shared_ptr<Label> stateNameDescriptionLabel = nullptr;
+	//   shared_ptr<Label> stateNameLabel = nullptr;
 	//
 	//
 	//   //public float lat = 0;
-	//   Label* latDescriptionLabel = nullptr;
-	//   Label* latLabel = nullptr;
+	//   shared_ptr<Label> latDescriptionLabel = nullptr;
+	//   shared_ptr<Label> latLabel = nullptr;
 	//
 	//   //public float lon = 0;
-	//   Label* lonDescriptionLabel = nullptr;
-	//   Label* lonLabel = nullptr;
+	//   shared_ptr<Label> lonDescriptionLabel = nullptr;
+	//   shared_ptr<Label> lonLabel = nullptr;
 	//
 	//   //public int timeZone = 0;
-	//   Label* timeZoneDescriptionLabel = nullptr;
-	//   Label* timeZoneLabel = nullptr;
+	//   shared_ptr<Label> timeZoneDescriptionLabel = nullptr;
+	//   shared_ptr<Label> timeZoneLabel = nullptr;
 	//
 	//
 	//   //Label playerFacebookNameDescriptionLabel = null;

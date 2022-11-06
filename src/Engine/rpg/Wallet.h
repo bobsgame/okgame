@@ -23,7 +23,7 @@ public:
 	float lastMoney = -1;
 
 
-	Wallet(BGClientEngine* g);
+	Wallet(shared_ptr<BGClientEngine> g);
 
 
 	void init();

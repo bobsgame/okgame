@@ -11,7 +11,7 @@
 
 Logger EventManager::log = Logger("EventManager");
 
-EventManager::EventManager(Engine* g)
+EventManager::EventManager(shared_ptr<Engine> g)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -55,12 +55,12 @@ void EventManager::update()
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
 	{
-		Event* s = runningEventQueue.get(i);
+		shared_ptr<Event> s = runningEventQueue.get(i);
 		s->run();
 	}
 }
 
-void EventManager::addToEventQueueIfNotThere(Event* event)
+void EventManager::addToEventQueueIfNotThere(shared_ptr<Event> event)
 { //=========================================================================================================================
 
 	if (event->getWasAddedToQueue() == false)
@@ -74,12 +74,12 @@ void EventManager::addToEventQueueIfNotThere(Event* event)
 	//if it is in the event queue, run the next instruction.
 }
 
-bool EventManager::isEventInQueue(Event* event)
+bool EventManager::isEventInQueue(shared_ptr<Event> event)
 { //=========================================================================================================================
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
 	{
-		Event* s = runningEventQueue.get(i);
+		shared_ptr<Event> s = runningEventQueue.get(i);
 
 		if (s == event)
 		{
@@ -94,13 +94,13 @@ void EventManager::unloadCurrentMapEvents()
 
 	for (int i = 0; i < (int)getCurrentMap()->mapEventList.size(); i++)
 	{
-		Event* s = getCurrentMap()->mapEventList.get(i);// getEventManager()->getEventByID(getCurrentMap()->mapEventIDList.get(i));
+		shared_ptr<Event> s = getCurrentMap()->mapEventList.get(i);// getEventManager()->getEventByID(getCurrentMap()->mapEventIDList.get(i));
 		if(s!=nullptr)s->reset();
 	}
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
 	{
-		Event* s = runningEventQueue.get(i);
+		shared_ptr<Event> s = runningEventQueue.get(i);
 
 		if (s->type() != EventData::TYPE_PROJECT_INITIAL_LOADER && s->type() != EventData::TYPE_PROJECT_CUTSCENE_DONT_RUN_UNTIL_CALLED)
 		{
@@ -111,11 +111,11 @@ void EventManager::unloadCurrentMapEvents()
 	}
 }
 
-Item* EventManager::getItemByID(int id)
+shared_ptr<Item> EventManager::getItemByID(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < itemList.size(); i++)
 	{
-		Item* s = itemList.get(i);
+		shared_ptr<Item> s = itemList.get(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -129,26 +129,26 @@ Item* EventManager::getItemByID(int id)
 	return nullptr;
 }
 
-Dialogue* EventManager::getDialogueByIDCreateIfNotExist(int id)
+shared_ptr<Dialogue> EventManager::getDialogueByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < dialogueList.size(); i++)
 	{
-		Dialogue* d = dialogueList.get(i);
+		shared_ptr<Dialogue> d = dialogueList.get(i);
 		if (d->getID() == id)
 		{
 			return d;
 		}
 	}
-	return new Dialogue(getEngine(), id);
+	return make_shared<Dialogue>(getEngine(), id);
 }
 
-//Event* EventManager::getCutsceneEventByID(int id)
+//shared_ptr<Event> EventManager::getCutsceneEventByID(int id)
 //{ //=========================================================================================================================
 //	//go through list
 //	//if event doesn't exist, make new one
 //	for (int i = 0; i < cutsceneEventList.size(); i++)
 //	{
-//		Event* d = cutsceneEventList.get(i);
+//		shared_ptr<Event> d = cutsceneEventList.get(i);
 //		if (d->getID() == id)
 //		{
 //			return d;
@@ -158,13 +158,13 @@ Dialogue* EventManager::getDialogueByIDCreateIfNotExist(int id)
 //	return nullptr;
 //}
 
-Event* EventManager::getEventByIDCreateIfNotExist(int id)
+shared_ptr<Event> EventManager::getEventByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	//go through list
 	//if event doesn't exist, make new one
 	for (int i = 0; i < eventList.size(); i++)
 	{
-		Event* d = eventList.get(i);
+		shared_ptr<Event> d = eventList.get(i);
 		if (d->getID() == id)
 		{
 			return d;
@@ -175,17 +175,17 @@ Event* EventManager::getEventByIDCreateIfNotExist(int id)
 	//but i think the object should request the event from the server instead of making an empty event
 	//or at least the object should create the event itself so it can be associated with the correct object
 	//log.error("Could not find event with ID " + to_string(id));
-	Event* d = new Event(getEngine(), new EventData(id, "", 0, "", ""), "");
+	shared_ptr<Event> d = make_shared<Event>(getEngine(), make_shared<EventData>(id, "", 0, "", ""), "");
 	d->setInitialized_S(false);
 
 	return d;
 }
 
-Skill* EventManager::getSkillByIDCreateIfNotExist(int id)
+shared_ptr<Skill> EventManager::getSkillByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < skillList.size(); i++)
 	{
-		Skill* s = skillList.get(i);
+		shared_ptr<Skill> s = skillList.get(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -198,35 +198,35 @@ Skill* EventManager::getSkillByIDCreateIfNotExist(int id)
 	Main::console->error(e);
 	log.error(e);
 
-	return new Skill(getEngine(), id);
+	return make_shared<Skill>(getEngine(), id);
 }
 
-GameString* EventManager::getGameStringByIDCreateIfNotExist(int id)
+shared_ptr<GameString> EventManager::getGameStringByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 
 	for (int i = 0; i < gameStringList.size(); i++)
 	{
-		GameString* s = gameStringList.get(i);
+		shared_ptr<GameString> s = gameStringList.get(i);
 		if (s->getID() == id)
 		{
 			return s;
 		}
 	}
 
-	return new GameString(getEngine(), id);
+	return make_shared<GameString>(getEngine(), id);
 }
 
-Flag* EventManager::getFlagByIDCreateIfNotExist(int id)
+shared_ptr<Flag> EventManager::getFlagByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < flagList.size(); i++)
 	{
-		Flag* s = flagList.get(i);
+		shared_ptr<Flag> s = flagList.get(i);
 		if (s->getID() == id)
 		{
 			return s;
 		}
 	}
 
-	return new Flag(getEngine(), id);
+	return make_shared<Flag>(getEngine(), id);
 }
 

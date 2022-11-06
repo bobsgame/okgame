@@ -14,7 +14,7 @@
 Logger GameDataLoader::log = Logger("GameDataLoader");
 
 
-GameDataLoader::GameDataLoader(Engine* g)
+GameDataLoader::GameDataLoader(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -55,9 +55,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     SpriteData* data = SpriteData::fromBase64ZippedJSON(s);
+	//                     shared_ptr<SpriteData> data = SpriteData::fromBase64ZippedJSON(s);
 	//
-	//                     Sprite* sprite = new Sprite(Engine());
+	//                     shared_ptr<Sprite> sprite = make_shared<Sprite>(Engine());
 	//                     sprite->initializeWithSpriteData(data);
 	//
 	//                     SpriteManager()->spriteByIDHashMap.put(sprite->id(), sprite);
@@ -98,7 +98,7 @@ void GameDataLoader::loadGameData()
 	//                     }
 	//                     for (int n = 0; n < data->getAnimationList()->size(); n++)
 	//                     {
-	//                        SpriteAnimationSequence* a = data->getAnimationList()->get(n);
+	//                        shared_ptr<SpriteAnimationSequence> a = data->getAnimationList()->get(n);
 	//                        if (debug)
 	//                        {
 	//                           log.debug("Loaded Animation: " + a->frameSequenceName);
@@ -119,9 +119,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     MapData* data = MapData::fromBase64ZippedJSON(s);
+	//                     shared_ptr<MapData> data = MapData::fromBase64ZippedJSON(s);
 	//
-	//                     Map* map = new Map(Engine(), data);
+	//                     shared_ptr<Map> map = make_shared<Map>(Engine(), data);
 	//
 	//
 	//                     getMapManager()->mapList.push_back(map);
@@ -156,9 +156,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     SoundData* data = SoundData::fromBase64ZippedJSON(s);
+	//                     shared_ptr<SoundData> data = SoundData::fromBase64ZippedJSON(s);
 	//
-	//                     Sound* sound = new Sound(Engine(), data);
+	//                     shared_ptr<Sound> sound = make_shared<Sound>(Engine(), data);
 	//
 	//
 	//                     s = stringList[++i]; //tileData base64 GZipped intArray
@@ -184,9 +184,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     MusicData* data = MusicData::fromBase64ZippedJSON(s);
+	//                     shared_ptr<MusicData> data = MusicData::fromBase64ZippedJSON(s);
 	//
-	//                     Music* music = new Music(Engine(), data);
+	//                     shared_ptr<Music> music = make_shared<Music>(Engine(), data);
 	//
 	//
 	//                     s = stringList[++i]; //tileData base64 GZipped intArray

@@ -25,24 +25,24 @@ class Sprite : public EnginePart
 public:
 	static Logger log;
 
-	Event* event = nullptr;
+	shared_ptr<Event> event = nullptr;
 
-	//static ExecutorService *generatePNGExecutorService;
+	//static shared_ptr<ExecutorService >generatePNGExecutorService;
 	static ctpl::thread_pool* generatePNGThreadPool;
 
 
-	IntArray* indexDataIntArray = nullptr;
-	ByteArray* paletteRGBByteArray = nullptr;
+	shared_ptr<IntArray> indexDataIntArray = nullptr;
+	shared_ptr<ByteArray> paletteRGBByteArray = nullptr;
 
-	BobTexture* texture = nullptr;
-	BobTexture* shadowTexture = nullptr;
+	shared_ptr<BobTexture> texture = nullptr;
+	shared_ptr<BobTexture> shadowTexture = nullptr;
 
-	//ArrayList<TextureRegion*>* frameTextureRegionList = new ArrayList<TextureRegion*>();
+	//ArrayList<shared_ptr<TextureRegion>>* frameTextureRegionList = make_shared<ArrayList><shared_ptr<TextureRegion>>();
 
 	bool useHQ2X = false;
 
 protected:
-	SpriteData* data = nullptr;
+	shared_ptr<SpriteData> data = nullptr;
 
 	bool _isInitialized = false;
 
@@ -62,10 +62,10 @@ public:
 	bool preloadedFromData = false;
 
 	Sprite();
-	Sprite(Engine* g);
+	Sprite(shared_ptr<Engine> g);
 	void preloadFromDataFile(string name);
 	//The following method was originally marked 'synchronized':
-	void initializeWithSpriteData(SpriteData* spriteData);
+	void initializeWithSpriteData(shared_ptr<SpriteData> spriteData);
 	void sendDataRequest(const string& getSpriteName);
 	void sendDataRequest(int id);
 
@@ -78,9 +78,9 @@ public:
 	void drawFrame(const string& animationName, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void drawFrameXYWH(const string& animationName, float x, float y, float w, float h, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void drawFrame(int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	void drawFrame(BobTexture* texture, int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(shared_ptr<BobTexture> texture, int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void drawFrame(int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	void drawFrame(BobTexture* texture, int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(shared_ptr<BobTexture> texture, int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 
 
@@ -107,9 +107,9 @@ public:
 	//	}
 
 	void loadTextures();
-	ByteArray* getReplacementRGBFromSet(u8 r, u8 g, u8 b, Sprite* s, int set);
+	shared_ptr<ByteArray> getReplacementRGBFromSet(u8 r, u8 g, u8 b, shared_ptr<Sprite> s, int set);
 	//The following method was originally marked 'synchronized':
-	ByteArray* createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
+	shared_ptr<ByteArray> createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet);
 	//The following method was originally marked 'synchronized':
 	void createSpriteTexturePNG_S();
 	//The following method was originally marked 'synchronized':
@@ -170,26 +170,26 @@ public:
 	//	}
 
 	int getNumberOfAnimations();
-	SpriteAnimationSequence* getFirstAnimation();
-	SpriteAnimationSequence* getAnimationByName(const string& name);
-	SpriteAnimationSequence* getAnimationByFrame(int frame);
-	SpriteAnimationSequence* getAnimationByIndex(int index);
+	shared_ptr<SpriteAnimationSequence> getFirstAnimation();
+	shared_ptr<SpriteAnimationSequence> getAnimationByName(const string& name);
+	shared_ptr<SpriteAnimationSequence> getAnimationByFrame(int frame);
+	shared_ptr<SpriteAnimationSequence> getAnimationByIndex(int index);
 	int getAnimationNumFramesByIndex(int index);
 	int getAnimationNumFramesByName(const string& name);
 	int getAnimationNumFramesByFrame(int frame);
-	int getAnimationNumFramesByAnimation(SpriteAnimationSequence* a);
+	int getAnimationNumFramesByAnimation(shared_ptr<SpriteAnimationSequence> a);
 	int getAnimationIndexByName(const string& name);
-	int getAnimationIndexByAnimation(SpriteAnimationSequence* a);
+	int getAnimationIndexByAnimation(shared_ptr<SpriteAnimationSequence> a);
 	int getAnimationIndexByFrame(int frame);
 	string getAnimationNameByIndex(int index);
 	string getAnimationNameByFrame(int frame);
-	void antialiasBufferedImage(BufferedImage* bufferedImage);
-	void setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage);
+	void antialiasBufferedImage(shared_ptr<BufferedImage> bufferedImage);
+	void setHQ2XAlphaFromOriginal(shared_ptr<BufferedImage> hq2xBufferedImage, shared_ptr<BufferedImage> bufferedImage);
 
 
 	
 
-	SpriteData* getData();
+	shared_ptr<SpriteData> getData();
 
 	int getID();
 	string& getName();
@@ -219,12 +219,12 @@ public:
 	bool getIsItem();
 	bool getForceHQ2X();
 	bool getForceMD5Export();
-	EventData* getEventData();
+	shared_ptr<EventData> getEventData();
 	string& getItemGameDescription();
 	float getGamePrice();
 	int getUtilityOffsetXPixelsHQ();
 	int getUtilityOffsetYPixelsHQ();
-	ArrayList<SpriteAnimationSequence*>* getAnimationList();
+	ArrayList<shared_ptr<SpriteAnimationSequence>>* getAnimationList();
 
 
 	//	public void setName(String s){getData().setName(s);}

@@ -19,10 +19,10 @@ public:
 	~BobNet();
 	
 
-	static void addEngineToForwardMessagesTo(Engine* e);
+	static void addEngineToForwardMessagesTo(shared_ptr<Engine> e);
 	static void update();
 
-	static ArrayList<UDPPeerConnection*> udpConnections;
+	static ArrayList<shared_ptr<UDPPeerConnection>> udpConnections;
 	static TCPServerConnection tcpServerConnection;// = nullptr;
 
 	static const int status_AVAILABLE = 0;
@@ -35,9 +35,9 @@ public:
 	static int myStatus;// = status_AVAILABLE;
 
 	static void sendAllPeers(string s);
-	static UDPPeerConnection* addFriendID(long long friendID, int type);
+	static shared_ptr < UDPPeerConnection> addFriendID(long long friendID, int type);
 
-	static ArrayList<Engine*>engines;// = new ArrayList<State*>();
+	static ArrayList< shared_ptr<Engine>>engines;// = make_shared<ArrayList><shared_ptr<State>>();
 
 
 	static bool udpSTUNMessageReceived(string e);
@@ -49,7 +49,7 @@ public:
 	static void updateThreadLoop();
 	//------------------------------------
 private:
-	static Logger* _threadLog;
+	static shared_ptr<Logger> _threadLog;
 	static mutex threadLog_Mutex;
 public:
 	static void threadLogDebug_S(string s)
@@ -168,11 +168,11 @@ public:
 
 	//------------------------------------
 private:
-	static IPaddress* _stunServerIPAddress_S;
+	static shared_ptr<IPaddress> _stunServerIPAddress_S;
 	static int _stunServerPort_S;
 	static mutex _stunServerIPAddress_Mutex;
 public:
-	static IPaddress* getStunServerIPAddress_S()
+	static shared_ptr<IPaddress> getStunServerIPAddress_S()
 	{
 		lock_guard<mutex> lock(_stunServerIPAddress_Mutex);
 		return _stunServerIPAddress_S;
@@ -196,7 +196,7 @@ public:
 		}
 		else
 		{
-			_stunServerIPAddress_S = new IPaddress();
+			_stunServerIPAddress_S = make_shared<IPaddress>();
 			_stunServerPort_S = port;
 
 			if (SDLNet_ResolveHost(_stunServerIPAddress_S, ipAddressString.c_str(), port) < 0)

@@ -93,8 +93,8 @@ public:
 
 	string& initFromString(string& t);
 
-	//static DialogueData* fromBase64ZippedJSON(const string& b64);
-	//static DialogueData* fromJSON(const string& json);
+	//static shared_ptr<DialogueData> fromBase64ZippedJSON(const string& b64);
+	//static shared_ptr<DialogueData> fromJSON(const string& json);
 
 
 	string getTYPEIDString();

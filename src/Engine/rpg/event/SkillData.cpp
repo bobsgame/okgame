@@ -25,24 +25,24 @@ SkillData::SkillData(int id, const string& name)
 	this->name = name;
 }
 //
-//SkillData* SkillData::fromBase64ZippedJSON(const string& b64)
+//shared_ptr<SkillData> SkillData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = new Gson();
+//	//Gson gson = make_shared<Gson>();
 //	//SkillData data = gson.fromJson(json,SkillData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//SkillData* SkillData::fromJSON(const string& json)
+//shared_ptr<SkillData> SkillData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//Gson* gson = new Gson();
-//	SkillData* data = nullptr;// gson->fromJson(json, SkillData::typeid);
+//	//shared_ptr<Gson> gson = make_shared<Gson>();
+//	shared_ptr<SkillData> data = nullptr;// gson->fromJson(json, SkillData::typeid);
 //
 //
 //	return data;

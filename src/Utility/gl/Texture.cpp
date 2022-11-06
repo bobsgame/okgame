@@ -7,10 +7,10 @@
 
 //Logger Texture::log = Logger("Texture");
 
-BobTexture *BobTexture::lastBoundTexture = nullptr;
+shared_ptr<BobTexture >BobTexture::lastBoundTexture = nullptr;
 
 //=========================================================================================================================
-BobTexture *BobTexture::getLastBoundTexture()
+shared_ptr<BobTexture >BobTexture::getLastBoundTexture()
 {//=========================================================================================================================
 	return lastBoundTexture;
 }
@@ -155,7 +155,7 @@ void BobTexture::release()
 {//=========================================================================================================================
 
 
-	GLuint *textureIDs = new GLuint[1];
+	shared_ptr<GLuint >textureIDs = make_shared<GLuint>[1];
 	textureIDs[0] = textureID;
 
 	glDeleteTextures(1, textureIDs);
@@ -192,9 +192,9 @@ void BobTexture::setTextureID(GLuint textureID)
 }
 
 //=========================================================================================================================
-ByteArray* BobTexture::getTextureData()
+shared_ptr<ByteArray> BobTexture::getTextureData()
 {//=========================================================================================================================
-	ByteArray *buffer = new ByteArray((hasAlpha() ? 4 : 3) * texWidth * texHeight);
+	shared_ptr<ByteArray >buffer = make_shared<ByteArray>((hasAlpha() ? 4 : 3) * texWidth * texHeight);
 	bind();
 	glGetTexImage(GL_TEXTURE_2D, 0, hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, buffer->data());
 

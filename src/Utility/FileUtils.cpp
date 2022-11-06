@@ -272,7 +272,7 @@ long HARDWARE_get_file_size(string filename)//HARDWARE_FSFile[HARDWARE_FSGetFile
 	return size;
 }
 
-//FileUtils* FileUtils::fileUtils = nullptr;
+//shared_ptr<FileUtils> FileUtils::fileUtils = nullptr;
 
 string FileUtils::appDataPath = "";
 string FileUtils::cacheDir = "";
@@ -306,14 +306,14 @@ FileUtils::FileUtils()
 	cacheDir = appDataPath+"cache/";
 }
 
-BufferedImage* FileUtils::readBufferedImageFromFile(BobFile* file)
+shared_ptr<BufferedImage> FileUtils::readBufferedImageFromFile(shared_ptr<BobFile> file)
 {
-	return new BufferedImage();
+	return make_shared<BufferedImage>();
 }
 
 //ArrayList<string>* FileUtils::readLines(u8* get_resource_as_stream)
 //{
-//	return new ArrayList<string>;
+//	return make_shared<ArrayList><string>;
 //}
 
 #include "Poco/File.h"
@@ -359,7 +359,7 @@ void FileUtils::makeDir(const string& cs)
 //	//   if (String::startsWith(filename, "res/") == true)
 //	//   {
 //	//      filename = filename.substr(4);
-//	//      InputStream* is = utils->getClass().getClassLoader().getResourceAsStream(filename);
+//	//      shared_ptr<InputStream> is = utils->getClass().getClassLoader().getResourceAsStream(filename);
 //	//
 //	//      if (is == nullptr)
 //	//      {
@@ -370,14 +370,14 @@ void FileUtils::makeDir(const string& cs)
 //	//   }
 //	//   else //we are accessing from the hard disk. try the resource loader which will get it as a file.
 //	//   {
-//	//      FileInputStream* stream = nullptr;
+//	//      shared_ptr<FileInputStream> stream = nullptr;
 //	//      try
 //	//      {
-//	//         File* file = new File(filename);
+//	//         shared_ptr<File> file = make_shared<File>(filename);
 //	//
 //	//         if (!file->exists())
 //	//         {
-//	//            file = new File(new File("."), filename);
+//	//            file = make_shared<File>(make_shared<File>("."), filename);
 //	//         }
 //	//
 //	//         if (!file->exists())
@@ -387,7 +387,7 @@ void FileUtils::makeDir(const string& cs)
 //	//         }
 //	//         else
 //	//         {
-//	//            stream = new FileInputStream(file);
+//	//            stream = make_shared<FileInputStream>(file);
 //	//         }
 //	//      }
 //	//      catch (IOException e)
@@ -437,10 +437,10 @@ void FileUtils::makeDir(const string& cs)
 //	//   {
 //	//      try
 //	//      {
-//	//         File* file = new File(filename);
+//	//         shared_ptr<File> file = make_shared<File>(filename);
 //	//         if (file->exists() == false)
 //	//         {
-//	//            file = new File(new File("."), filename);
+//	//            file = make_shared<File>(make_shared<File>("."), filename);
 //	//         }
 //	//
 //	//
@@ -448,7 +448,7 @@ void FileUtils::makeDir(const string& cs)
 //	//         {
 //	//            log.error("Could not find file: " + filename);
 //	//
-//	//            //if(BobNet.debugMode)new Exception().printStackTrace();
+//	//            //if(BobNet.debugMode)make_shared<Exception>().printStackTrace();
 //	//
 //	//            return nullptr;
 //	//         }
@@ -469,12 +469,12 @@ void FileUtils::makeDir(const string& cs)
 //
 //short* FileUtils::oldLoadShortIntFile(const string& filename)
 //{ //=========================================================================================================================
-//	//   File* file = new File(filename);
+//	//   shared_ptr<File> file = make_shared<File>(filename);
 //	//
 //	//
 //	//   int* intArray(((int)(file->length())) / 2);
 //	//
-//	//   BufferedInputStream* bin = new BufferedInputStream(FileUtils::getResourceAsStream(filename));
+//	//   shared_ptr<BufferedInputStream> bin = make_shared<BufferedInputStream>(FileUtils::getResourceAsStream(filename));
 //	//
 //	//   try
 //	//   {
@@ -510,7 +510,7 @@ void FileUtils::makeDir(const string& cs)
 //vector<uint16_t>* FileUtils::loadShortFile(string filename)
 //{//=========================================================================================================================
 //
-//	ByteArray *byteArray = loadByteFileFromExePath(filename);
+//	shared_ptr<ByteArray >byteArray = loadByteFileFromExePath(filename);
 //	
 //	vector<uint16_t> *shortArray = new vector<uint16_t>(byteArray->size() / 2);
 //	
@@ -539,14 +539,14 @@ void FileUtils::makeDir(const string& cs)
 //}
 
 //=========================================================================================================================
-IntArray* FileUtils::loadIntFile(string filename)
+shared_ptr<IntArray> FileUtils::loadIntFile(string filename)
 {//=========================================================================================================================
 
-	ByteArray* byteArray = loadByteFile(filename);
+	shared_ptr<ByteArray> byteArray = loadByteFile(filename);
 	//delete byteArray;
 	//byteArray = loadByteFile(filename);
 
-	IntArray* intArray = new IntArray(byteArray->size() / 4);
+	shared_ptr<IntArray> intArray = make_shared<IntArray>(byteArray->size() / 4);
 
 	for (int x = 0; x<intArray->size(); x++)
 	{
@@ -577,7 +577,7 @@ IntArray* FileUtils::loadIntFile(string filename)
 
 }
 
-IntArray* FileUtils::loadIntFileFromExePath(string filename)
+shared_ptr<IntArray> FileUtils::loadIntFileFromExePath(string filename)
 {//=========================================================================================================================
 	filename = Main::getPath() + filename;
 
@@ -585,10 +585,10 @@ IntArray* FileUtils::loadIntFileFromExePath(string filename)
 }
 
 // ===============================================================================================
-ByteArray* FileUtils::getByteArrayFromIntArray(IntArray*intArray)
+shared_ptr<ByteArray> FileUtils::getByteArrayFromIntArray(shared_ptr<IntArray>intArray)
 {// ===============================================================================================
 
-	ByteArray* byteArray = new ByteArray(intArray->size() * 4);
+	shared_ptr<ByteArray> byteArray = make_shared<ByteArray>(intArray->size() * 4);
 
 	for (int i = 0; i < intArray->size(); i++)
 	{
@@ -702,7 +702,7 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 ArrayList<string>* FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
-	ArrayList<string>* lines = new ArrayList<string>();
+	ArrayList<string>* lines = make_shared<ArrayList><string>();
 
 	string line;
 	stringstream dosString;
@@ -795,7 +795,7 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 
 
 //=========================================================================================================================
-ByteArray* FileUtils::loadByteFile(string filename)
+shared_ptr<ByteArray> FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
@@ -835,7 +835,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 	}
 	fclose(cfile);
 
-	ByteArray* byteArray = new ByteArray((u8*)cfilepointer, csize);
+	shared_ptr<ByteArray> byteArray = make_shared<ByteArray>((u8*)cfilepointer, csize);
 
 	return byteArray;
 
@@ -904,7 +904,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 }
 
 //=========================================================================================================================
-ByteArray* FileUtils::loadByteFileFromExePath(string filename)
+shared_ptr<ByteArray> FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -993,7 +993,7 @@ std::string FileUtils::encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encod
 #include "Poco/Base64Decoder.h"
 
 //=========================================================================================================================
-ByteArray* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
+shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 	{
@@ -1002,7 +1002,7 @@ ByteArray* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encode
 		Base64::Decode(in, &outs);
 
 
-		ByteArray* outv = new ByteArray(outs.length());
+		shared_ptr<ByteArray> outv = make_shared<ByteArray>(outs.length());
 		for (int i = 0; i < outs.length(); i++)
 		{
 			outv->data()[i]=(outs[i]);
@@ -1075,7 +1075,7 @@ std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, 
 
 }
 //=========================================================================================================================
-ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
+shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 
@@ -1125,7 +1125,7 @@ ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_s
 		for (j = 0; (j < i - 1); j++) vec->push_back(char_array_3[j]);
 	}
 
-	ByteArray* ret = new ByteArray(vec->size());
+	shared_ptr<ByteArray> ret = make_shared<ByteArray>(vec->size());
 	for(int x=0;x<vec->size();x++)
 	{
 		ret->data()[x] = (*vec)[x];
@@ -1210,7 +1210,7 @@ ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_s
 //{// ===============================================================================================
 //
 //	//unsigned long zippedLength;
-//	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+//	shared_ptr<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 //	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 //
 //
@@ -1302,7 +1302,7 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 {// ===============================================================================================
 
  //unsigned long zippedLength;
-	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	shared_ptr<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1373,9 +1373,9 @@ string FileUtils::zipByteArrayToBase64String(const u8* byteArray, unsigned long 
 	//   string outStr = "";
 	//   try
 	//   {
-	//      ByteArrayOutputStream* out = new ByteArrayOutputStream();
+	//      shared_ptr<ByteArrayOutputStream> out = make_shared<ByteArrayOutputStream>();
 	//
-	//      GZIPOutputStream* gzip = new GZIPOutputStream(out);
+	//      shared_ptr<GZIPOutputStream> gzip = make_shared<GZIPOutputStream>(out);
 	//      gzip->write(byteArray);
 	//      gzip->close();
 	//
@@ -1515,11 +1515,11 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	//
 	//   try
 	//   {
-	//      ByteArrayInputStream is = new ByteArrayInputStream(zippedBytesAsString.getBytes("ISO-8859-1"));
+	//      ByteArrayInputStream is = make_shared<ByteArrayInputStream>(zippedBytesAsString.getBytes("ISO-8859-1"));
 	//
-	//      gis = new GZIPInputStream(is);
+	//      gis = make_shared<GZIPInputStream>(is);
 	//
-	//      return IOUtils.toByteArray(new InputStreamReader(gis, "ISO-8859-1"), "ISO-8859-1");
+	//      return IOUtils.toByteArray(make_shared<InputStreamReader>(gis, "ISO-8859-1"), "ISO-8859-1");
 	//   }
 	//   catch (Exception e)
 	//   {
@@ -1605,7 +1605,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	
 
 	//unsigned long zippedLength;
-	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	shared_ptr<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1772,7 +1772,7 @@ using Poco::MD5Engine;
 string FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
 
-	ByteArray* bytes = loadByteFileFromExePath(filename);
+	shared_ptr<ByteArray> bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
 	delete bytes;
 	return md5;
@@ -1781,7 +1781,7 @@ string FileUtils::getFileMD5Checksum(const string& filename)
 
 #include "md5.h"
 
-string FileUtils::getByteArrayMD5Checksum(ByteArray* bytes)
+string FileUtils::getByteArrayMD5Checksum(shared_ptr<ByteArray> bytes)
 { //===============================================================================================
 
 	return md5(bytes->data(), bytes->size());
@@ -1809,7 +1809,7 @@ string FileUtils::getStringMD5(const string& stringToMD5)
 #include <lib/stb_image.h>
 #include <lib/stb_image_write.h>
 //TODO: 
-void FileUtils::saveImage(const string& s, BufferedImage* i)
+void FileUtils::saveImage(const string& s, shared_ptr<BufferedImage> i)
 { //===============================================================================================
 
 	//		Iterator<ImageWriter> imageWritersIterator = ImageIO.getImageWritersByFormatName("png");
@@ -1821,9 +1821,9 @@ void FileUtils::saveImage(const string& s, BufferedImage* i)
 	//
 	//		try
 	//		{
-	//			file = new File(s);
-	//			fileOutputStream = new FileOutputStream(file);
-	//			memoryCacheImageOutputStream = new MemoryCacheImageOutputStream(fileOutputStream);
+	//			file = make_shared<File>(s);
+	//			fileOutputStream = make_shared<FileOutputStream>(file);
+	//			memoryCacheImageOutputStream = make_shared<MemoryCacheImageOutputStream>(fileOutputStream);
 	//		}
 	//		catch(FileNotFoundException e){log.error("Could not create PNG file. Error: "+e.getMessage());e.printStackTrace();return;}
 	//
@@ -1831,7 +1831,7 @@ void FileUtils::saveImage(const string& s, BufferedImage* i)
 	//		ImageWriteParam iwp = imageWriter.getDefaultWriteParam();
 	//		try
 	//		{
-	//			imageWriter.write(null, new IIOImage(bufferedImage, null, null), iwp);//param);
+	//			imageWriter.write(null, make_shared<IIOImage>(bufferedImage, null, null), iwp);//param);
 	//		}
 	//		catch(IOException e){log.error("An error occured during writing PNG file. Error: "+e.getMessage());e.printStackTrace();return;}
 	//
@@ -1850,7 +1850,7 @@ void FileUtils::saveImage(const string& s, BufferedImage* i)
 
 	//   try
 	//   {
-	//      ImageIO::write(bufferedImage, "PNG", new File(s));
+	//      ImageIO::write(bufferedImage, "PNG", make_shared<File>(s));
 	//   }
 	//   catch (IOException e)
 	//   {
@@ -1875,7 +1875,7 @@ void FileUtils::saveImage(const string& s, BufferedImage* i)
 void FileUtils::writeSessionTokenToCache(long long userID, const string& sessionToken, bool statsAllowed)
 { //===============================================================================================
 
-//	File* sessionFile = new File(cacheDir + "session.txt");
+//	shared_ptr<File> sessionFile = make_shared<File>(cacheDir + "session.txt");
 //	
 //	if (sessionFile->exists() == false)
 //	{
@@ -1901,7 +1901,7 @@ void FileUtils::writeSessionTokenToCache(long long userID, const string& session
 string FileUtils::readSessionTokenFromCache()
 { //===============================================================================================
 
-//	File* sessionFile = new File(cacheDir + "session.txt");
+//	shared_ptr<File> sessionFile = make_shared<File>(cacheDir + "session.txt");
 //	
 //	if (sessionFile->exists() == false)
 //	{
@@ -1912,7 +1912,7 @@ string FileUtils::readSessionTokenFromCache()
 //	
 //	try
 //	{
-//	    BufferedReader* input = new BufferedReader(new FileReader(sessionFile));
+//	    shared_ptr<BufferedReader> input = make_shared<BufferedReader>(make_shared<FileReader>(sessionFile));
 //	    line = input->readLine();
 //	    input->close();
 //	}
@@ -1954,7 +1954,7 @@ string FileUtils::readSessionTokenFromCache()
 void FileUtils::deleteSessionTokenFromCache()
 { //===============================================================================================
 
-	File* sessionFile = new File(appDataPath + "session.txt");
+	shared_ptr<File> sessionFile = make_shared<File>(appDataPath + "session.txt");
 	if(sessionFile->exists())sessionFile->remove();
 
 }
@@ -2003,12 +2003,12 @@ void FileUtils::deleteStatusText()
 //   class ProgressListener : public ActionListener
 //   {
 //   private:
-//      FileUtils* outerInstance;
+//      shared_ptr<FileUtils> outerInstance;
 //
 //   public:
-//      ProgressListener(FileUtils* outerInstance);
+//      ProgressListener(shared_ptr<FileUtils> outerInstance);
 //
-//      void actionPerformed(ActionEvent* e) override;
+//      void actionPerformed(shared_ptr<ActionEvent> e) override;
 //   };
 //
 //
@@ -2016,33 +2016,33 @@ void FileUtils::deleteStatusText()
 //   class DownloadCountingOutputStream : public CountingOutputStream
 //   {
 //   private:
-//      FileUtils* outerInstance;
+//      shared_ptr<FileUtils> outerInstance;
 //
-//      ActionListener* listener = nullptr;
+//      shared_ptr<ActionListener> listener = nullptr;
 //   public:
-//      DownloadCountingOutputStream(FileUtils* outerInstance, OutputStream* out);
-//      void setListener(ActionListener* listener);
+//      DownloadCountingOutputStream(shared_ptr<FileUtils> outerInstance, shared_ptr<OutputStream> out);
+//      void setListener(shared_ptr<ActionListener> listener);
 //
 //   protected:
 //      void afterWrite(int n) throw(IOException) override;
 //   };
 
 //
-//FileUtils::ProgressListener::ProgressListener(FileUtils* outerInstance) : outerInstance(outerInstance)
+//FileUtils::ProgressListener::ProgressListener(shared_ptr<FileUtils> outerInstance) : outerInstance(outerInstance)
 //{
 //}
 //
-//void FileUtils::ProgressListener::actionPerformed(ActionEvent* e)
+//void FileUtils::ProgressListener::actionPerformed(shared_ptr<ActionEvent> e)
 //{
 //   // e.getSource() gives you the object of DownloadCountingOutputStream because you set it in the overriden method, afterWrite().
-//   outerInstance->setStatusText("Downloading " + outerInstance->downloadingDataNiceName + ": " + (static_cast<DownloadCountingOutputStream*>(e->getSource()))->getByteCount() / 1024 + " kB / " + outerInstance->downloadingFileSize / 1024 + " kB");
+//   outerInstance->setStatusText("Downloading " + outerInstance->downloadingDataNiceName + ": " + (static_cast<shared_ptr<DownloadCountingOutputStream>>(e->getSource()))->getByteCount() / 1024 + " kB / " + outerInstance->downloadingFileSize / 1024 + " kB");
 //}
 //
-//FileUtils::DownloadCountingOutputStream::DownloadCountingOutputStream(FileUtils* outerInstance, OutputStream* out) : org::apache::commons::io::output::CountingOutputStream(out), outerInstance(outerInstance)
+//FileUtils::DownloadCountingOutputStream::DownloadCountingOutputStream(shared_ptr<FileUtils> outerInstance, shared_ptr<OutputStream> out) : org::apache::commons::io::output::CountingOutputStream(out), outerInstance(outerInstance)
 //{
 //}
 //
-//void FileUtils::DownloadCountingOutputStream::setListener(ActionListener* listener)
+//void FileUtils::DownloadCountingOutputStream::setListener(shared_ptr<ActionListener> listener)
 //{
 //   this->listener = listener;
 //}
@@ -2052,7 +2052,7 @@ void FileUtils::deleteStatusText()
 ////   CountingOutputStream::afterWrite(n);
 ////   if (listener != nullptr)
 ////   {
-////      listener->actionPerformed(new ActionEvent(this, 0, nullptr));
+////      listener->actionPerformed(make_shared<ActionEvent>(this, 0, nullptr));
 ////   }
 //}
 
@@ -2061,7 +2061,7 @@ void FileUtils::downloadFileToCacheWithProgressListener(const string& fileName, 
 	//
 	//   downloadingDataNiceName = niceName;
 	//
-	//   File* outputFile = new File(cacheDir + getFileName);
+	//   shared_ptr<File> outputFile = make_shared<File>(cacheDir + getFileName);
 	//   //download sprites.zip and maps.zip from http://localhost/z/ and save to directory
 	//
 	//   URL* fileURL = nullptr;
@@ -2085,17 +2085,17 @@ void FileUtils::downloadFileToCacheWithProgressListener(const string& fileName, 
 	//   //		}
 	//
 	//
-	//   OutputStream* os = nullptr;
-	//   InputStream* is = nullptr;
-	//   ProgressListener* progressListener = new ProgressListener(this);
+	//   shared_ptr<OutputStream> os = nullptr;
+	//   shared_ptr<InputStream> is = nullptr;
+	//   shared_ptr<ProgressListener> progressListener = make_shared<ProgressListener>(this);
 	//
 	//
 	//   try
 	//   {
-	//      os = new FileOutputStream(outputFile);
+	//      os = make_shared<FileOutputStream>(outputFile);
 	//      is = fileURL->openStream();
 	//
-	//      DownloadCountingOutputStream* dcount = new DownloadCountingOutputStream(this, os);
+	//      shared_ptr<DownloadCountingOutputStream> dcount = make_shared<DownloadCountingOutputStream>(this, os);
 	//
 	//      dcount->setListener(progressListener);
 	//
@@ -2162,16 +2162,16 @@ void FileUtils::decompressZipInCache(const string& fileName, const string& niceN
 	//
 	//   try
 	//   {
-	//      File* inputFile = new File(cacheDir + getFileName);
+	//      shared_ptr<File> inputFile = make_shared<File>(cacheDir + getFileName);
 	//
-	//      ZipInputStream* zipInputStream = new ZipInputStream(new FileInputStream(inputFile));
-	//      BufferedInputStream* bufferedInputStream = new BufferedInputStream(zipInputStream);
+	//      shared_ptr<ZipInputStream> zipInputStream = make_shared<ZipInputStream>(make_shared<FileInputStream>(inputFile));
+	//      shared_ptr<BufferedInputStream> bufferedInputStream = make_shared<BufferedInputStream>(zipInputStream);
 	//
-	//      ZipEntry* zipEntry = zipInputStream->getNextEntry();
+	//      shared_ptr<ZipEntry> zipEntry = zipInputStream->getNextEntry();
 	//
 	//      while (zipEntry != nullptr)
 	//      {
-	//         BufferedOutputStream* bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File(cacheDir + zipEntry->getName())));
+	//         shared_ptr<BufferedOutputStream> bufferedOutputStream = make_shared<BufferedOutputStream>(make_shared<FileOutputStream>(make_shared<File>(cacheDir + zipEntry->getName())));
 	//
 	//         //int zipSize = (int)zipEntry.getCompressedSize();
 	//
@@ -2204,7 +2204,7 @@ void FileUtils::decompressZipInCache(const string& fileName, const string& niceN
 void FileUtils::deleteFileFromCache(const string& fileName)
 { //===============================================================================================
 
-	//   File* file = new File(cacheDir + getFileName);
+	//   shared_ptr<File> file = make_shared<File>(cacheDir + getFileName);
 	//
 	//   if (file->exists() == true)
 	//   {
@@ -2218,7 +2218,7 @@ void FileUtils::deleteFileFromCache(const string& fileName)
 bool FileUtils::checkIfFileExistsInCache(const string& fileName)
 { //===============================================================================================
 
-	//   File* file = new File(cacheDir + getFileName);
+	//   shared_ptr<File> file = make_shared<File>(cacheDir + getFileName);
 	//
 	//   return file->exists();
 
@@ -2230,7 +2230,7 @@ long long FileUtils::getFileSizeInCache(const string& fileName)
 
 	//   if (checkIfFileExistsInCache(getFileName) == true)
 	//   {
-	//      return FileUtils::sizeOf(new File(cacheDir + getFileName));
+	//      return FileUtils::sizeOf(make_shared<File>(cacheDir + getFileName));
 	//   }
 	//   else
 	//   {
@@ -2334,7 +2334,7 @@ void FileUtils::initCache()
 
 	   FileUtils::makeDir(cacheDir + "l/");
 	
-	   //File initFile = new File(cacheDir+"init");
+	   //File initFile = make_shared<File>(cacheDir+"init");
 	   //if(initFile.exists()==false)
 	   //{
 			// check filesize of sprites.zip locally
@@ -2350,7 +2350,7 @@ void FileUtils::initCache()
 	
 	   deleteStatusText();
 
-	   //FileUtils::listFiles(new File(cacheDir),null,true);
+	   //FileUtils::listFiles(make_shared<File>(cacheDir),null,true);
 	
 	
 	   //delete("sprites.zip");
@@ -2375,7 +2375,7 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//
 	//   if (FileUtils::getResource("" + FileUtils::cacheDir + getFileName) == nullptr)
 	//   {
-	//      File* outputFile = new File(cacheDir + getFileName);
+	//      shared_ptr<File> outputFile = make_shared<File>(cacheDir + getFileName);
 	//
 	//      URL* fileURL = nullptr;
 	//
@@ -2389,12 +2389,12 @@ void FileUtils::downloadBigFileToCacheIfNotExist(const string& fileName)
 	//      }
 	//
 	//
-	//      OutputStream* os = nullptr;
-	//      InputStream* is = nullptr;
+	//      shared_ptr<OutputStream> os = nullptr;
+	//      shared_ptr<InputStream> is = nullptr;
 	//
 	//      try
 	//      {
-	//         os = new FileOutputStream(outputFile);
+	//         os = make_shared<FileOutputStream>(outputFile);
 	//         is = fileURL->openStream();
 	//
 	//         // this line give you the total length of source stream as a String.
@@ -2486,7 +2486,7 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 	//
 	//      try
 	//      {
-	//         FileUtils::copyURLToFile(fileURL, new File("" + FileUtils::cacheDir + getFileName), 60000, 60000);
+	//         FileUtils::copyURLToFile(fileURL, make_shared<File>("" + FileUtils::cacheDir + getFileName), 60000, 60000);
 	//      }
 	//      catch (IOException e1)
 	//      {
@@ -2531,21 +2531,21 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 
 }
 
-ByteArray* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
+shared_ptr<ByteArray> FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadByteFile(cacheDir + fileName);
 }
 
-IntArray* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
+shared_ptr<IntArray> FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadIntFile(cacheDir + fileName);
 }
 
-void FileUtils::saveByteArrayToCache(ByteArray* byteArray, const string& md5FileName)
+void FileUtils::saveByteArrayToCache(shared_ptr<ByteArray> byteArray, const string& md5FileName)
 { //===============================================================================================
 	
 	
@@ -2553,7 +2553,7 @@ void FileUtils::saveByteArrayToCache(ByteArray* byteArray, const string& md5File
 
 }
 
-void FileUtils::writeByteArrayToFile(ByteArray* byteArray, const string& fileName)
+void FileUtils::writeByteArrayToFile(shared_ptr<ByteArray> byteArray, const string& fileName)
 { //===============================================================================================
 
 	std::ofstream file(fileName, std::ios::binary);
@@ -2595,7 +2595,7 @@ void FileUtils::writeByteArrayToFile(ByteArray* byteArray, const string& fileNam
 
 bool FileUtils::doesDidIntroFileExist()
 { //===============================================================================================
-	//   File* introCheckFile = new File(FileUtils::cacheDir + ".didIntro");
+	//   shared_ptr<File> introCheckFile = make_shared<File>(FileUtils::cacheDir + ".didIntro");
 	//   if (introCheckFile->exists())
 	//   {
 	//      return true;
@@ -2605,7 +2605,7 @@ bool FileUtils::doesDidIntroFileExist()
 
 void FileUtils::writeDidIntroFile()
 { //===============================================================================================
-	//   File* introCheckFile = new File(FileUtils::cacheDir + ".didIntro");
+	//   shared_ptr<File> introCheckFile = make_shared<File>(FileUtils::cacheDir + ".didIntro");
 	//   try
 	//   {
 	//      introCheckFile->createNewFile();

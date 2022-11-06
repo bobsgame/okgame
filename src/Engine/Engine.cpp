@@ -5,9 +5,9 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 
-Logger Engine::log = Logger("Engine");
+shared_ptr<Logger> Engine::log = make_shared<Logger>("Engine");
 
-//BGClientEngine* Engine::clientGameEngine = nullptr;
+//shared_ptr<BGClientEngine> Engine::clientGameEngine = nullptr;
 
 //bool Engine::callNanoTimeForEachCall = false;
 
@@ -20,14 +20,14 @@ long long Engine::totalTicks = 0;
 long long Engine::ticksThisSecond = 0;
 int Engine::framesSkipped = 0;
 
-ArrayList<UDPPeerConnection*> Engine::onlineFriends;
+ArrayList< shared_ptr<UDPPeerConnection>> Engine::onlineFriends;
 
 
 //=========================================================================================================================
 Engine::Engine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log.debug("Engine()");
+	log->debug("Engine()");
 #endif
 
 }
@@ -36,18 +36,18 @@ Engine::Engine()
 Engine::~Engine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log.debug("~Engine()");
+	log->debug("~Engine()");
 #endif
-	delete audioManager;
-	delete spriteManager;
-	delete mapManager;
-	delete cinematicsManager;
-	delete captionManager;
-	delete textManager;
-	delete eventManager;
-	delete cameraman;
-	delete actionManager;
-	delete controlsManager;
+	//delete audioManager;
+	//delete spriteManager;
+	//delete mapManager;
+	//delete cinematicsManager;
+	//delete captionManager;
+	//delete textManager;
+	//delete eventManager;
+	//delete cameraman;
+	//delete actionManager;
+	//delete controlsManager;
 }
 
 //=========================================================================================================================
@@ -62,18 +62,18 @@ void Engine::init()
 
 
 
-	audioManager = new AudioManager(this);
-	spriteManager = new SpriteManager(this);
-	mapManager = new MapManager(this);
-	cinematicsManager = new CinematicsManager(this);
-	captionManager = new CaptionManager(this);
-	textManager = new TextManager(this);
-	eventManager = new EventManager(this);
-	cameraman = new Cameraman(this);
-	actionManager = new ActionManager(this);
+	audioManager = make_shared<AudioManager>(this);//(shared_from_this()); ???
+	spriteManager = make_shared < SpriteManager>(this);
+	mapManager = make_shared < MapManager>(this);
+	cinematicsManager = make_shared < CinematicsManager>(this);
+	captionManager = make_shared < CaptionManager>(this);
+	textManager = make_shared < TextManager>(this);
+	eventManager = make_shared < EventManager>(this);
+	cameraman = make_shared < Cameraman>(this);
+	actionManager = make_shared < ActionManager>(this);
 
-	controlsManager = new ControlsManager();
-	chatControlsManager = new ControlsManager();
+	controlsManager = make_shared<ControlsManager>(this);
+	chatControlsManager = make_shared<ControlsManager>(this);
 
 	activeControlsManager = controlsManager;
 
@@ -82,7 +82,7 @@ void Engine::init()
 
 	GLUtils::e();
 
-	Main::bobNet->addEngineToForwardMessagesTo(this);
+	Main::bobNet->addEngineToForwardMessagesTo(shared_from_this());
 
 
 }
@@ -100,8 +100,10 @@ void Engine::update()
 	onlineFriends.clear();
 	for (int i = 0; i < (int)BobNet::udpConnections.size(); i++)
 	{
-		UDPPeerConnection* f = BobNet::udpConnections.get(i);
-		if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true && f->peerStatus == BobNet::status_AVAILABLE)
+		shared_ptr<UDPPeerConnection> f = BobNet::udpConnections.get(i);
+		if (f->getConnectedToPeer_S() == true && 
+			f->getGotFriendData_S() == true && 
+			f->peerStatus == BobNet::status_AVAILABLE)
 		{
 			if (onlineFriends.contains(f) == false)
 				onlineFriends.add(f);
@@ -368,76 +370,76 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	return nullptr;
 }
 
-Cameraman* Engine::getCameraman()
+shared_ptr<Cameraman> Engine::getCameraman()
 {
 	return cameraman;
 }
 
-MapManager* Engine::getMapManager()
+shared_ptr<MapManager> Engine::getMapManager()
 {
 	return mapManager;
 }
 
-SpriteManager* Engine::getSpriteManager()
+shared_ptr<SpriteManager> Engine::getSpriteManager()
 {
 	return spriteManager;
 }
 
-ActionManager* Engine::getActionManager()
+shared_ptr<ActionManager> Engine::getActionManager()
 {
 	return actionManager;
 }
 
-TextManager* Engine::getTextManager()
+shared_ptr<TextManager> Engine::getTextManager()
 {
 	return textManager;
 }
 
-AudioManager* Engine::getAudioManager()
+shared_ptr<AudioManager> Engine::getAudioManager()
 {
 	return audioManager;
 }
 
-CaptionManager* Engine::getCaptionManager()
+shared_ptr<CaptionManager> Engine::getCaptionManager()
 {
 	return captionManager;
 }
 
-EventManager* Engine::getEventManager()
+shared_ptr<EventManager> Engine::getEventManager()
 {
 	return eventManager;
 }
 
-CinematicsManager* Engine::getCinematicsManager()
+shared_ptr<CinematicsManager> Engine::getCinematicsManager()
 {
 	return cinematicsManager;
 }
 
-Map* Engine::getCurrentMap()
+shared_ptr<Map> Engine::getCurrentMap()
 {
-	Map* m = mapManager->currentMap;
+	shared_ptr<Map> m = mapManager->currentMap;
 	if (m == nullptr)
 	{
-		m = new Map(this, new MapData(-1, "none", 0, 0));
+		m = make_shared<Map>(this, make_shared<MapData>(-1, "none", 0, 0));
 	}
 	return m;
 }
 
 
-//void Engine::setClientGameEngine(BGClientEngine* clientGameEngine)
+//void Engine::setClientGameEngine(shared_ptr<BGClientEngine> clientGameEngine)
 //{
 //	Engine::clientGameEngine = clientGameEngine;
 //	EnginePart::setClientGameEngine(clientGameEngine);
 //}
 
 
-//void Engine::setControlsManager(ControlsManager* controlsManager)
+//void Engine::setControlsManager(shared_ptr<ControlsManager> controlsManager)
 //{
 //	controlsManager = controlsManager;
 //	
 //}
 
-//BGClientEngine* Engine::getClientGameEngine()
+//shared_ptr<BGClientEngine> Engine::getClientGameEngine()
 //{
 //	return clientGameEngine;
 //}
@@ -529,22 +531,22 @@ void Engine::setButtonStates()
 	getActiveControlsManager()->setButtonStates();
 }
 
-ControlsManager* Engine::getControlsManager()
+shared_ptr<ControlsManager> Engine::getControlsManager()
 {
 	return controlsManager;
 }
 
-ControlsManager* Engine::getActiveControlsManager()
+shared_ptr<ControlsManager> Engine::getActiveControlsManager()
 {
 	return activeControlsManager;
 }
 
-BGClientEngine* Engine::getClientGameEngine()
+shared_ptr<BGClientEngine> Engine::getClientGameEngine()
 {
 	return Main::gameEngine;
 }
 
-TCPServerConnection* Engine::getServerConnection()
+shared_ptr<TCPServerConnection> Engine::getServerConnection()
 {
 	return &(Main::bobNet->tcpServerConnection);
 }
@@ -579,7 +581,7 @@ int Engine::getHeight()
 	return GLUtils::getViewportHeight();
 }
 
-bool Engine::udpPeerMessageReceived(UDPPeerConnection* c, string s)
+bool Engine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s)
 {
 	return false;
 }
@@ -604,7 +606,7 @@ float Engine::getHeightRelativeToZoom()
 
 
 
-bool Engine::serverMessageReceived(string e)// ChannelHandlerContext* ctx, MessageEvent* e)
+bool Engine::serverMessageReceived(string e)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
 { //===============================================================================================
 
 
@@ -707,7 +709,7 @@ void Engine::incomingSpriteData(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	SpriteData* data = new SpriteData(); data->initFromString(s);
+	shared_ptr<SpriteData> data = make_shared<SpriteData>(); data->initFromString(s);
 
 
 	if (data == nullptr)
@@ -716,13 +718,13 @@ void Engine::incomingSpriteData(string s)
 	}
 	else
 	{
-		Sprite* sprite = nullptr;
+		shared_ptr<Sprite> sprite = nullptr;
 		if(getSpriteManager()->spriteByNameHashMap.containsKey(data->getName()))
 		sprite = getSpriteManager()->spriteByNameHashMap.get(data->getName());
 
 		if (sprite == nullptr)
 		{
-			sprite = new Sprite(this);
+			sprite = make_shared<Sprite>(this);
 		}
 
 		sprite->initializeWithSpriteData(data);
@@ -749,7 +751,7 @@ void Engine::incomingMapData(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	MapData* data = new MapData(); data->initFromString(s);
+	shared_ptr<MapData> data = make_shared<MapData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -759,7 +761,7 @@ void Engine::incomingMapData(string s)
 	{
 		if (getMapManager()->mapByNameHashMap.containsKey(data->getName()) == false)
 		{
-			Map* m = new Map(this, data);
+			shared_ptr<Map> m = make_shared<Map>(this, data);
 			getMapManager()->mapList.add(m);
 			getMapManager()->mapByNameHashMap.put(data->getName(), m);
 			getMapManager()->mapByIDHashMap.put(data->getID(), m);
@@ -767,31 +769,31 @@ void Engine::incomingMapData(string s)
 	}
 }
 
-void Engine::sendServerObjectRequest(ServerObject* serverObject)
+void Engine::sendServerObjectRequest(shared_ptr<ServerObject> serverObject)
 { //====================================================
-     if(dynamic_cast<Dialogue*>(serverObject) != nullptr)
+     if(dynamic_cast<shared_ptr<Dialogue>>(serverObject) != nullptr)
      {
-        sendDialogueRequest((static_cast<Dialogue*>(serverObject))->getID());
+        sendDialogueRequest((static_cast<shared_ptr<Dialogue>>(serverObject))->getID());
      }
-     if (dynamic_cast<Flag*>(serverObject) != nullptr)
+     if (dynamic_cast<shared_ptr<Flag>>(serverObject) != nullptr)
      {
-        sendFlagRequest((static_cast<Flag*>(serverObject))->getID());
+        sendFlagRequest((static_cast<shared_ptr<Flag>>(serverObject))->getID());
      }
-     if (dynamic_cast<GameString*>(serverObject) != nullptr)
+     if (dynamic_cast<shared_ptr<GameString>>(serverObject) != nullptr)
      {
-        sendGameStringRequest((static_cast<GameString*>(serverObject))->getID());
+        sendGameStringRequest((static_cast<shared_ptr<GameString>>(serverObject))->getID());
      }
-     if (dynamic_cast<Skill*>(serverObject) != nullptr)
+     if (dynamic_cast<shared_ptr<Skill>>(serverObject) != nullptr)
      {
-        sendSkillRequest((static_cast<Skill*>(serverObject))->getID());
+        sendSkillRequest((static_cast<shared_ptr<Skill>>(serverObject))->getID());
      }
-     if (dynamic_cast<Event*>(serverObject) != nullptr)
+     if (dynamic_cast<shared_ptr<Event>>(serverObject) != nullptr)
      {
-        sendEventRequest((static_cast<Event*>(serverObject))->getID());
+        sendEventRequest((static_cast<shared_ptr<Event>>(serverObject))->getID());
      }
-     if (dynamic_cast<AudioFile*>(serverObject) != nullptr)
+     if (dynamic_cast<shared_ptr<AudioFile>>(serverObject) != nullptr)
      {
-        sendSoundRequest((static_cast<AudioFile*>(serverObject))->getID());
+        sendSoundRequest((static_cast<shared_ptr<AudioFile>>(serverObject))->getID());
      }
 
 }
@@ -809,7 +811,7 @@ void Engine::incomingDialogue(string s)
 
 								   //Dialogue:id-name:base64Blob
 
-	DialogueData* data = new DialogueData(); data->initFromString(s);
+	shared_ptr<DialogueData> data = make_shared<DialogueData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -817,7 +819,7 @@ void Engine::incomingDialogue(string s)
 	}
 	else
 	{
-		Dialogue* d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
+		shared_ptr<Dialogue> d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 }
@@ -836,7 +838,7 @@ void Engine::incomingEvent(string s)
 	s = s.substr(s.find(":") + 1); //intentional ::
 
 
-	EventData* data = new EventData(); data->initFromString(s);
+	shared_ptr<EventData> data = make_shared<EventData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -844,9 +846,9 @@ void Engine::incomingEvent(string s)
 	}
 	else
 	{
-		//Event* d = 
+		//shared_ptr<Event> d = 
 			getEventManager()->getEventByIDCreateIfNotExist(data->getID());
-		//if (d == nullptr)d = new Event(this, data, "cutscene");
+		//if (d == nullptr)d = make_shared<Event>(this, data, "cutscene");
 	}
 }
 
@@ -863,7 +865,7 @@ void Engine::incomingGameString(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	GameStringData* data = new GameStringData(); data->initFromString(s);
+	shared_ptr<GameStringData> data = make_shared<GameStringData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -871,7 +873,7 @@ void Engine::incomingGameString(string s)
 	}
 	else
 	{
-		GameString* gameString = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
+		shared_ptr<GameString> gameString = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
 		gameString->setData_S(data);
 	}
 }
@@ -889,7 +891,7 @@ void Engine::incomingFlag(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	FlagData* data = new FlagData(); data->initFromString(s);
+	shared_ptr<FlagData> data = make_shared<FlagData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -897,7 +899,7 @@ void Engine::incomingFlag(string s)
 	}
 	else
 	{
-		Flag* flag = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
+		shared_ptr<Flag> flag = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
 		flag->setData_S(data);
 	}
 }
@@ -915,7 +917,7 @@ void Engine::incomingSkill(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	SkillData* data = new SkillData(); data->initFromString(s);
+	shared_ptr<SkillData> data = make_shared<SkillData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -923,7 +925,7 @@ void Engine::incomingSkill(string s)
 	}
 	else
 	{
-		Skill* skill = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
+		shared_ptr<Skill> skill = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
 		skill->setData_S(data);
 	}
 }
@@ -940,7 +942,7 @@ void Engine::incomingMusic(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	AudioData* data = new AudioData(); data->initFromString(s);
+	shared_ptr<AudioData> data = make_shared<AudioData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -948,7 +950,7 @@ void Engine::incomingMusic(string s)
 	}
 	else
 	{
-		AudioFile* music = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
+		shared_ptr<AudioFile> music = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
 		music->setData_S(data);
 	}
 }
@@ -966,7 +968,7 @@ void Engine::incomingSound(string s)
 	s = s.substr(s.find(":") + 1);
 	s = s.substr(s.find(":") + 1); //intentional ::
 
-	AudioData* data = new AudioData(); data->initFromString(s);
+	shared_ptr<AudioData> data = make_shared<AudioData>(); data->initFromString(s);
 
 	if (data == nullptr)
 	{
@@ -974,7 +976,7 @@ void Engine::incomingSound(string s)
 	}
 	else
 	{
-		AudioFile* sound = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
+		shared_ptr<AudioFile> sound = AudioManager::getAudioFileByIDCreateIfNotExist(data->getID());
 		sound->setData_S(data);
 	}
 }

@@ -26,7 +26,7 @@ Engine* StateManager::getCurrentState()
 	else return nullptr;
 }
 
-//void StateManager::setState(Engine* s)
+//void StateManager::setState(shared_ptr<Engine> s)
 //{ //=========================================================================================================================
 //	currentState = s;
 //}

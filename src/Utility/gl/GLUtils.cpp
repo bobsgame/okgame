@@ -12,14 +12,14 @@ Logger GLUtils::log = Logger("GLUtils");
 //#include "../../../lib/SDL_stbimage.h"
 //#define STB_IMAGE_IMPLEMENTATION
 
-HashMap<string, BobTexture*> GLUtils::textureCache;
+HashMap<string, shared_ptr<BobTexture>> GLUtils::textureCache;
 
 //-----------------------------------------------
 //OLD STUFF
 //-----------------------------------------------
 
-SDL_Window *GLUtils::window = nullptr;
-SDL_Renderer *GLUtils::renderer = nullptr;
+shared_ptr<SDL_Window >GLUtils::window = nullptr;
+shared_ptr<SDL_Renderer >GLUtils::renderer = nullptr;
 
 void(*glDrawTexiES)(int, int, int, int, int);
 
@@ -61,21 +61,21 @@ float GLUtils::ZOOMto = 1.0f;
 bool GLUtils::antiAlias = true;
 int GLUtils::texturesLoaded = 0;
 long long GLUtils::textureBytesLoaded = 0;
-BobTexture* GLUtils::blankTexture = nullptr;
-BobTexture* GLUtils::boxTexture = nullptr;
+shared_ptr<BobTexture> GLUtils::blankTexture = nullptr;
+shared_ptr<BobTexture> GLUtils::boxTexture = nullptr;
 float GLUtils::globalDrawScale = 1.0f;
 
 
-BobTexture* GLUtils::rect = nullptr;
+shared_ptr<BobTexture> GLUtils::rect = nullptr;
 
 
 //static float* boxBuffer = BufferUtils.newFloatBuffer(12);
 //static float* colBuffer = BufferUtils.newFloatBuffer(16);
 //static float* texBuffer = BufferUtils.newFloatBuffer(8);
 
-GLfloat* GLUtils::box = nullptr;
-GLfloat* GLUtils::col = nullptr;
-GLfloat* GLUtils::tex = nullptr;
+shared_ptr<GLfloat> GLUtils::box = nullptr;
+shared_ptr<GLfloat> GLUtils::col = nullptr;
+shared_ptr<GLfloat> GLUtils::tex = nullptr;
 
 int GLUtils::windowWidth = 0;
 int GLUtils::windowHeight = 0;
@@ -84,7 +84,7 @@ int GLUtils::lastWindowWidth = 0;
 int GLUtils::lastWindowHeight = 0;
 
 SDL_DisplayMode GLUtils::currentDisplayMode;
-ArrayList<SDL_DisplayMode*> GLUtils::displayModes;
+ArrayList<shared_ptr<SDL_DisplayMode>> GLUtils::displayModes;
 int GLUtils::monitorWidth = 0;
 int GLUtils::monitorHeight = 0;
 
@@ -143,7 +143,7 @@ GLuint GLUtils::bobsGame_bgShaderFBO_Texture_Attachment1 = 0;
 
 
 
-ArrayList<Integer*> GLUtils::bgShaders;
+ArrayList<shared_ptr<Integer>> GLUtils::bgShaders;
 //ArrayList<int> GLUtils::bgShaders;
 int GLUtils::bgShaderCount = 80;
 
@@ -255,13 +255,13 @@ void GLUtils::initGL(char* windowName)
 
 
 	//						  //if we want to disable deprecated GL functions below GL 3.3
-	//						  //			ContextAttribs ctxAttr = new ContextAttribs(3, 3);
+	//						  //			ContextAttribs ctxAttr = make_shared<ContextAttribs>(3, 3);
 	//						  //			ctxAttr = ctxAttr.withForwardCompatible(true);
 	//						  //			ctxAttr = ctxAttr.withProfileCore(true);
 	//						  //			ctxAttr = ctxAttr.withProfileCompatibility(false);
 	//						  //			ctxAttr = ctxAttr.withDebug(true);
 	//
-	//	createGLContext(); //new PixelFormat(),ctxAttr);
+	//	createGLContext(); //make_shared<PixelFormat>(),ctxAttr);
 
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -710,7 +710,7 @@ void GLUtils::initGL(char* windowName)
 			log.error("FBO not supported.");
 
 			log.error("This game requires a newer graphics card that supports FBO.");
-			Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, BobColor::white, BobColor::black);
+			shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, BobColor::white, BobColor::black);
 
 			System::updateRenderTimers();
 			System::updateStats();
@@ -935,7 +935,7 @@ void GLUtils::initGL(char* windowName)
 				int p = GLUtils::createProgramObject();
 				//log.debug("createProgramObject bg " + to_string(p));
 				e("createProgramObject");
-				bgShaders.add(new Integer(p));
+				bgShaders.add(make_shared<Integer>(p));
 			}
 
 			int count = 0;
@@ -1192,7 +1192,7 @@ SDL_DisplayMode GLUtils::getCurrentDisplayMode()
 }
 
 //=========================================================================================================================
-ArrayList<SDL_DisplayMode*> GLUtils::getAvailableDisplayModes()
+ArrayList<shared_ptr<SDL_DisplayMode>> GLUtils::getAvailableDisplayModes()
 {//=========================================================================================================================
 
 	if (displayModes.size() > 0)return displayModes;
@@ -1207,7 +1207,7 @@ ArrayList<SDL_DisplayMode*> GLUtils::getAvailableDisplayModes()
 		int numDisplayModes = SDL_GetNumDisplayModes(d);
 		for (int m = 0; m < numDisplayModes; m++)
 		{
-			SDL_DisplayMode *mode = new SDL_DisplayMode();
+			shared_ptr<SDL_DisplayMode >mode = new SDL_DisplayMode();
 
 			if (SDL_GetDisplayMode(d, m, mode) != 0)
 				SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
@@ -1238,9 +1238,9 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	//	try
 	//	{
-	SDL_DisplayMode* targetDisplayMode = nullptr;
+	shared_ptr<SDL_DisplayMode> targetDisplayMode = nullptr;
 
-	ArrayList<SDL_DisplayMode*> modes = getAvailableDisplayModes();
+	ArrayList<shared_ptr<SDL_DisplayMode>> modes = getAvailableDisplayModes();
 
 	{
 		//if(fullscreen)
@@ -1249,7 +1249,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 		int freq = 0;
 		for (int i = 0; i < modes.size(); i++)
 		{
-			SDL_DisplayMode* m = modes.get(i);
+			shared_ptr<SDL_DisplayMode> m = modes.get(i);
 
 			if ((m->w == width) && (m->h == height))
 			{
@@ -1284,7 +1284,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	for (int i = 0; i < modes.size(); i++)
 	{
-		SDL_DisplayMode* m = modes.get(i);
+		shared_ptr<SDL_DisplayMode> m = modes.get(i);
 
 		log.info(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
 	}
@@ -1531,7 +1531,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 	{
 		const char* c_str = code.c_str();
 
-		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const GLcharARB **strings,const GLint *lengths)
+		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const shared_ptr<GLcharARB >*strings,const shared_ptr<GLint >lengths)
 		glShaderSourceARB(shader, 1, &c_str, NULL);
 		e();
 		glCompileShaderARB(shader);
@@ -1809,13 +1809,13 @@ void GLUtils::setPreColorFilterViewport()
 void GLUtils::setBobsGameMainFBOFilterViewport()
 { //=========================================================================================================================
 
-	glViewport(0, 0, (int)(bobsGameFBO_Width * FBO_SCALE), (int)(bobsGameFBO_Height * FBO_SCALE));
+	glViewport(0, 0, (int)(bobsGameFBO_shared_ptr<Width > FBO_SCALE), (int)(bobsGameFBO_shared_ptr<Height > FBO_SCALE));
 	glLoadIdentity();
-	glOrtho(0, bobsGameFBO_Width * FBO_SCALE, bobsGameFBO_Height * FBO_SCALE, 0, -1, 1);
+	glOrtho(0, bobsGameFBO_shared_ptr<Width > FBO_SCALE, bobsGameFBO_shared_ptr<Height > FBO_SCALE, 0, -1, 1);
 }
 void GLUtils::setBloomViewport()
 { //=========================================================================================================================
-	glViewport(0, 0, (int)(bobsGameFBO_Width * FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_Height * FBO_SCALE * BLOOM_FBO_SCALE));
+	glViewport(0, 0, (int)(bobsGameFBO_shared_ptr<Width > FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_shared_ptr<Height > FBO_SCALE * BLOOM_FBO_SCALE));
 	glLoadIdentity();
 	glOrtho(-1, 1, -1, 1, -1, 1);
 }
@@ -2096,13 +2096,13 @@ void GLUtils::setDefaultTextureParams()
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(BobTexture* texture, float sx0, float sy0, int filter)//static
+void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, int filter)//static
 {//=========================================================================================================================
 	drawTexture(texture, sx0, sy0, 1.0f, filter);
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(BobTexture* texture, float sx0, float sy0, float alpha, int filter)//static
+void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, float alpha, int filter)//static
 {//=========================================================================================================================
 
 	float sx1 = sx0 + texture->getImageWidth();
@@ -2112,7 +2112,7 @@ void GLUtils::drawTexture(BobTexture* texture, float sx0, float sy0, float alpha
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(BobTexture* texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 
 	float tXRatio = (float)texture->getImageWidth() / (float)texture->getTextureWidth();
@@ -2134,11 +2134,11 @@ void GLUtils::drawTexture(BobTexture* texture, float sx0, float sx1, float sy0, 
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(BobTexture* texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 	if (texture == nullptr)return;
 
-	//Sprite s = new Sprite(texture);
+	//Sprite s = make_shared<Sprite>(texture);
 
 
 	drawTexture(texture->getTextureID(), tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, alpha, filter);
@@ -2160,7 +2160,7 @@ void GLUtils::drawTexture(float tx0, float tx1, float ty0, float ty1, float sx0,
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(BobTexture* texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
+void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
 {//===========================================================================================================================
 
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
@@ -2252,9 +2252,9 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 		return;
 	}
 
-	if (box == nullptr)box = new GLfloat[12];
-	if (col == nullptr)col = new GLfloat[16];
-	if (tex == nullptr)tex = new GLfloat[8];
+	if (box == nullptr)box = make_shared<GLfloat>[12];
+	if (col == nullptr)col = make_shared<GLfloat>[16];
+	if (tex == nullptr)tex = make_shared<GLfloat>[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2389,7 +2389,7 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 //}
 
 //=========================================================================================================================
-void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, BobColor* color)//static
+void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, shared_ptr<BobColor> color)//static
 {//=========================================================================================================================
 
 	screenX0 *= globalDrawScale;
@@ -2401,8 +2401,8 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	SDL_Color textSDLColor = { (Uint8)color->ri() ,(Uint8)color->gi(),(Uint8)color->bi(),(Uint8)color->ai() };
 	//SDL_Color bgSDLColor = { 0,0,0,0 };
 
-	TTF_Font *ttfFont = BobFont::ttf_8;
-	TTF_Font *outlineFont = BobFont::ttf_outline_8;
+	TTF_shared_ptr<Font >ttfFont = BobFont::ttf_8;
+	TTF_shared_ptr<Font >outlineFont = BobFont::ttf_outline_8;
 
 	int OUTLINE_SIZE = 1;
 	// render text and text outline 
@@ -2411,8 +2411,8 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	outlineBobColor.darker();
 	outlineBobColor.darker();
 	SDL_Color outlineColor = { (Uint8)outlineBobColor.ri() ,(Uint8)outlineBobColor.gi(),(Uint8)outlineBobColor.bi(),(Uint8)outlineBobColor.ai() };
-	SDL_Surface* surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
-	SDL_Surface *fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
+	shared_ptr<SDL_Surface> surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
+	shared_ptr<SDL_Surface >fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
 	SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 	// blit text onto its outline 
@@ -2428,7 +2428,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	int width = fg_surface->w + OUTLINE_SIZE * 2;
 	int height = fg_surface->h + OUTLINE_SIZE * 2;
 
-	BobTexture* texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
+	shared_ptr<BobTexture> texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
 	SDL_FreeSurface(surface);
 
 	int texWidth = texture->getTextureWidth();
@@ -2474,7 +2474,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
  //
  //				BobFont awtFont = BobFont.createFont(BobFont.TRUETYPE_FONT, inputStream);
  //				awtFont = awtFont.deriveFont(8f); // set font size
- //				font = new TrueTypeFont(awtFont, antiAlias);
+ //				font = make_shared<TrueTypeFont>(awtFont, antiAlias);
  //			}
  //			catch (Exception e)
  //			{
@@ -2508,7 +2508,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	//		font.drawString(screenX0-1,screenY0, getText, Color.black);
 	//		font.drawString(screenX0,screenY0+1, getText, Color.black);
 	//		font.drawString(screenX0,screenY0-1, getText, Color.black);
-	//		font.drawString(screenX0,screenY0, getText, new Color(color.r(),color.g(),color.b()));
+	//		font.drawString(screenX0,screenY0, getText, make_shared<Color>(color.r(),color.g(),color.b()));
 	//
 	//
 	//		//glEnable(GL_TEXTURE_2D);
@@ -2816,9 +2816,9 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 		return;
 	}
 
-	if (box == nullptr)box = new GLfloat[12];
-	if (col == nullptr)col = new GLfloat[16];
-	if (tex == nullptr)tex = new GLfloat[8];
+	if (box == nullptr)box = make_shared<GLfloat>[12];
+	if (col == nullptr)col = make_shared<GLfloat>[16];
+	if (tex == nullptr)tex = make_shared<GLfloat>[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2923,10 +2923,10 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	if(rect==null)
 //	{
 //
-//		Pixmap pixmap = new Pixmap( 1, 1, Format.RGBA8888 );
+//		Pixmap pixmap = make_shared<Pixmap>( 1, 1, Format.RGBA8888 );
 //		pixmap.setColor( 1f, 1f, 1f, 1f );
 //		pixmap.fill();
-//		rect = new Texture( pixmap );
+//		rect = make_shared<Texture>( pixmap );
 //		pixmap.dispose();
 //
 ////			//int width = 1; //1 pixel wide
@@ -2972,10 +2972,10 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	if (rect == nullptr)
 //	{
 //
-//		//Pixmap *pixmap = new Pixmap(1, 1, Pixmap::Format::RGBA8888);
+//		//shared_ptr<Pixmap >pixmap = make_shared<Pixmap>(1, 1, Pixmap::Format::RGBA8888);
 //		//pixmap->setColor(1.0f, 1.0f, 1.0f, 1.0f);
 //		//pixmap->fill();
-//		//rect = new Texture(pixmap);
+//		//rect = make_shared<Texture>(pixmap);
 //		//pixmap->dispose();
 //	}
 //
@@ -2990,7 +2990,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	height = height / h; // * heightWidthRatio;
 //
 //
-//	//SpriteBatch *spriteBatch = BobsGame::spriteBatch;
+//	//shared_ptr<SpriteBatch >spriteBatch = BobsGame::spriteBatch;
 //	//spriteBatch->setColor(r, g, b, a);
 //	//spriteBatch->draw(rect,x,y,width,height);
 //
@@ -3151,14 +3151,14 @@ void GLUtils::old_render()
 
 
 //===========================================================================================================================
-BobTexture* GLUtils::loadTextureFromSurface(string filename, SDL_Surface* surfacein)
+shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string filename, shared_ptr<SDL_Surface> surfacein)
 {//===========================================================================================================================
 
-	SDL_Surface* surface = surfacein;
+	shared_ptr<SDL_Surface> surface = surfacein;
 
 	glEnable(GL_TEXTURE_2D);
 
-	BobTexture *tex = nullptr;
+	shared_ptr<BobTexture >tex = nullptr;
 
 	if (textureCache.containsKey(filename))
 	{
@@ -3171,7 +3171,7 @@ BobTexture* GLUtils::loadTextureFromSurface(string filename, SDL_Surface* surfac
 
 
 	GLuint textureID = createTextureID();
-	tex = new BobTexture(filename, textureID);
+	tex = make_shared<BobTexture>(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3189,7 +3189,7 @@ BobTexture* GLUtils::loadTextureFromSurface(string filename, SDL_Surface* surfac
 	tex->setAlpha(hasAlpha);
 
 
-	GLint *maxTexSizeArray = new GLint[16];
+	shared_ptr<GLint >maxTexSizeArray = make_shared<GLint>[16];
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTexSizeArray);
 	int max = maxTexSizeArray[0];
 	if ((texWidth > max) || (texHeight > max))
@@ -3202,7 +3202,7 @@ BobTexture* GLUtils::loadTextureFromSurface(string filename, SDL_Surface* surfac
 
 
 	//have to do this because the surface is not power of 2
-	SDL_Surface* temp = nullptr;
+	shared_ptr<SDL_Surface> temp = nullptr;
 	//bool freeTemp = false;
 
 	//if (surface->format->BytesPerPixel < 4)
@@ -3239,7 +3239,7 @@ BobTexture* GLUtils::loadTextureFromSurface(string filename, SDL_Surface* surfac
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const GLvoid * data);
+	const shared_ptr<GLvoid > data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3312,13 +3312,13 @@ GLuint GLUtils::createTextureID()
 }
 
 //=========================================================================================================================
-BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data)
+shared_ptr<BobTexture >GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	BobTexture *tex = nullptr;
+	shared_ptr<BobTexture >tex = nullptr;
 
 	if (textureCache.containsKey(textureName))
 	{
@@ -3331,7 +3331,7 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 
 
 	GLuint textureID = createTextureID();
-	tex = new BobTexture(textureName, textureID);
+	tex = make_shared<BobTexture>(textureName, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3359,7 +3359,7 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 
 
 
-	ByteArray* t = new ByteArray(texWidth*texHeight * 4);
+	shared_ptr<ByteArray> t = make_shared<ByteArray>(texWidth*texHeight * 4);
 
 	for (int y = 0; y<imageHeight; y++)
 		for (int x = 0; x<imageWidth; x++)
@@ -3383,7 +3383,7 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const GLvoid * data);
+	const shared_ptr<GLvoid > data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3403,7 +3403,7 @@ BobTexture *GLUtils::getTextureFromData(string textureName, int imageWidth, int 
 }
 
 //=========================================================================================================================
-BobTexture *GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+shared_ptr<BobTexture >GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
@@ -3412,13 +3412,13 @@ BobTexture *GLUtils::getTextureFromPNGExePath(string filename)// , const string 
 
 }
 //=========================================================================================================================
-BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+shared_ptr<BobTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	BobTexture *tex = nullptr;
+	shared_ptr<BobTexture >tex = nullptr;
 
 
 	if (textureCache.containsKey(filename))
@@ -3432,13 +3432,13 @@ BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const st
 
 
 	GLuint textureID = createTextureID();
-	tex = new BobTexture(filename, textureID);
+	tex = make_shared<BobTexture>(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 
-	SDL_Surface* imageSurface = IMG_Load(filename.c_str());
-	//SDL_Surface* imageSurface = STBIMG_Load(filename.c_str());
+	shared_ptr<SDL_Surface> imageSurface = IMG_Load(filename.c_str());
+	//shared_ptr<SDL_Surface> imageSurface = STBIMG_Load(filename.c_str());
 	if (imageSurface == NULL)
 	{
 		log.error("ERROR: Couldn't load "+ filename +": "+string(SDL_GetError()));
@@ -3523,7 +3523,7 @@ BobTexture *GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const st
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const GLvoid * data);
+	const shared_ptr<GLvoid > data);
 	*/
 	GLint level = 0;
 	GLint border = 0;

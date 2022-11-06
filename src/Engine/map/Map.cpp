@@ -27,15 +27,15 @@ ctpl::thread_pool* Map::generateLightPNGThreadPool = nullptr;
 Map::Map()
 {//=========================================================================================================================
 
-	//chunkTexture = new HashMap<int, BobTexture*>();
+	//chunkTexture = make_shared<HashMap><int, shared_ptr<BobTexture>>();
 }
 
 
 //=========================================================================================================================
-Map::Map(Engine* g, MapData* mapData)
+Map::Map(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 { //=========================================================================================================================
 
-	//chunkTexture = new HashMap<int, BobTexture*>();
+	//chunkTexture = make_shared<HashMap><int, shared_ptr<BobTexture>>();
 
 	initMap(g, mapData);
 
@@ -43,7 +43,7 @@ Map::Map(Engine* g, MapData* mapData)
 
 
 //=========================================================================================================================
-void Map::initMap(Engine* g, MapData* mapData)
+void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 {
 	e = g;
 
@@ -58,7 +58,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 //	if (chunkTexture.isEmpty())
 //	{
-//	    //chunkTexture = new ArrayList<Texture*>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
+//	    //chunkTexture = make_shared<ArrayList><shared_ptr<Texture>>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
 //	    for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 //	    {
 //	        delete chunkTexture.get(i);
@@ -101,10 +101,10 @@ void Map::initMap(Engine* g, MapData* mapData)
 	for (int i = 0; i < (int)mapData->getEventDataList()->size(); i++)
 	{
 		//create event, add to eventList
-		EventData* eventData = mapData->getEventDataList()->get(i);
+		shared_ptr<EventData> eventData = mapData->getEventDataList()->get(i);
 
 
-		Event* event = nullptr;
+		shared_ptr<Event> event = nullptr;
 
 		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
 		{
@@ -116,7 +116,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 		if (event == nullptr)
 		{
-			event = new Event(getEngine(), eventData, this);
+			event = make_shared<Event>(getEngine(), eventData, this);
 		}
 
 
@@ -129,8 +129,8 @@ void Map::initMap(Engine* g, MapData* mapData)
 	{
 		//create door, add to doorList,
 
-		DoorData* doorData = mapData->getDoorDataList()->get(i);
-		Door* door = new Door(getEngine(), doorData, this);
+		shared_ptr<DoorData> doorData = mapData->getDoorDataList()->get(i);
+		shared_ptr<Door> door = make_shared<Door>(getEngine(), doorData, this);
 
 
 		//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
@@ -142,23 +142,23 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 	for (int i = 0; i < (int)mapData->getStateDataList()->size(); i++)
 	{
-		MapStateData* mapStateData = mapData->getStateDataList()->get(i);
+		shared_ptr<MapStateData> mapStateData = mapData->getStateDataList()->get(i);
 
 
 		//create state, add to state list.
-		MapState* mapState = new MapState(mapStateData, this);
+		shared_ptr<MapState> mapState = make_shared<MapState>(mapStateData, this);
 
 		stateList.add(mapState);
 
 
 		for (int n = 0; n < (int)mapStateData->getAreaDataList()->size(); n++)
 		{
-			AreaData* areaData = mapStateData->getAreaDataList()->get(n);
+			shared_ptr<AreaData> areaData = mapStateData->getAreaDataList()->get(n);
 
 			if (areaData->getIsWarpArea())
 			{
 				//create warparea, add to warpAreaList
-				WarpArea* warpArea = new WarpArea(getEngine(), areaData, this);
+				shared_ptr<WarpArea> warpArea = make_shared<WarpArea>(getEngine(), areaData, this);
 
 				//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 				//also check and make sure it is sending event update
@@ -169,7 +169,7 @@ void Map::initMap(Engine* g, MapData* mapData)
 			}
 			else
 			{
-				Area* area = new Area(getEngine(), areaData, this);
+				shared_ptr<Area> area = make_shared<Area>(getEngine(), areaData, this);
 				mapState->areaByNameHashtable.put(area->getName(), area);
 				mapState->areaByTYPEIDHashtable.put(area->getTYPEIDString(), area);
 				mapState->areaList.add(area);
@@ -179,8 +179,8 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 		for (int n = 0; n < (int)mapStateData->getLightDataList()->size(); n++)
 		{
-			LightData* lightData = mapStateData->getLightDataList()->get(n);
-			Light* light = new Light(getEngine(), lightData, this);
+			shared_ptr<LightData> lightData = mapStateData->getLightDataList()->get(n);
+			shared_ptr<Light> light = make_shared<Light>(getEngine(), lightData, this);
 
 
 			mapState->lightList.add(light);
@@ -190,18 +190,18 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 		for (int n = 0; n < (int)mapStateData->getEntityDataList()->size(); n++)
 		{
-			EntityData* entityData = mapStateData->getEntityDataList()->get(n);
+			shared_ptr<EntityData> entityData = mapStateData->getEntityDataList()->get(n);
 
 			if (entityData->getIsNPC())
 			{
-				Character* character = new Character(getEngine(), entityData, this);
+				shared_ptr<Character> character = make_shared<Character>(getEngine(), entityData, this);
 
 				mapState->characterList.add(character);
 				mapState->characterByNameHashtable.put(character->getName(), character);
 			}
 			else
 			{
-				Entity* entity = new Entity(getEngine(), entityData, this);
+				shared_ptr<Entity> entity = make_shared<Entity>(getEngine(), entityData, this);
 
 				mapState->entityList.add(entity);
 				mapState->entityByNameHashtable.put(entity->getName(), entity);
@@ -215,9 +215,9 @@ void Map::initMap(Engine* g, MapData* mapData)
 
 
 //=========================================================================================================================
-Entity* Map::getEntityByName(const string& name)
+shared_ptr<Entity> Map::getEntityByName(const string& name)
 { //=========================================================================================================================
-	Entity* e = nullptr;
+	shared_ptr<Entity> e = nullptr;
 
 	if(currentState->entityByNameHashtable.containsKey(name))
 	e = currentState->entityByNameHashtable.get(name);
@@ -259,14 +259,14 @@ Entity* Map::getEntityByName(const string& name)
 
 
 //=========================================================================================================================
-Character* Map::getCharacterByName(const string& name)
+shared_ptr<Character> Map::getCharacterByName(const string& name)
 { //=========================================================================================================================
 	return currentState->characterByNameHashtable.get(name);
 }
 
 
 //=========================================================================================================================
-Light* Map::getLightByName(const string& name)
+shared_ptr<Light> Map::getLightByName(const string& name)
 { //=========================================================================================================================
 
 	//log.debug("getLightByName: "+name);
@@ -276,7 +276,7 @@ Light* Map::getLightByName(const string& name)
 
 
 //=========================================================================================================================
-Area* Map::getAreaOrWarpAreaByName(string name)
+shared_ptr<Area> Map::getAreaOrWarpAreaByName(string name)
 { //=========================================================================================================================
 
 
@@ -288,7 +288,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 	}
 
 
-	Area* a = nullptr;
+	shared_ptr<Area> a = nullptr;
 	if (currentState != nullptr)
 	{
 		if (currentState->areaByNameHashtable.containsKey(name))
@@ -299,7 +299,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 	{
 		for (int i = 0; i < stateList.size(); i++)
 		{
-			MapState* s = stateList.get(i);
+			shared_ptr<MapState> s = stateList.get(i);
 			if (s->areaByNameHashtable.containsKey(name))
 			a = s->areaByNameHashtable.get(name);
 			if (a != nullptr)
@@ -329,7 +329,7 @@ Area* Map::getAreaOrWarpAreaByName(string name)
 	return a;
 }
 
-Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
+shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 { //=========================================================================================================================
 
 
@@ -341,7 +341,7 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	}
 
 
-	Area* a = nullptr;
+	shared_ptr<Area> a = nullptr;
 	if (currentState != nullptr)
 	{
 		if (currentState->areaByTYPEIDHashtable.containsKey(typeID))
@@ -363,7 +363,7 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	{
 		for (int i = 0; i < stateList.size(); i++)
 		{
-			MapState* s = stateList.get(i);
+			shared_ptr<MapState> s = stateList.get(i);
 
 			if (s->areaByTYPEIDHashtable.containsKey(typeID))
 			a = s->areaByTYPEIDHashtable.get(typeID);
@@ -385,7 +385,7 @@ Area* Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	return a;
 }
 
-Door* Map::getDoorByTYPEID(const string& typeID_in)
+shared_ptr<Door> Map::getDoorByTYPEID(const string& typeID_in)
 { //=========================================================================================================================
 
 	string typeID = typeID_in;
@@ -403,7 +403,7 @@ Door* Map::getDoorByTYPEID(const string& typeID_in)
 
 		for (int i = 0; i < doorList.size(); i++)
 		{
-			Door* d = doorList.get(i);
+			shared_ptr<Door> d = doorList.get(i);
 
 			if (typeID == d->getTYPEIDString())
 			{
@@ -417,7 +417,7 @@ Door* Map::getDoorByTYPEID(const string& typeID_in)
 	return nullptr;
 }
 
-Door* Map::getDoorByName(const string& name_in)
+shared_ptr<Door> Map::getDoorByName(const string& name_in)
 { //=========================================================================================================================
 
 	string name = name_in;
@@ -436,7 +436,7 @@ Door* Map::getDoorByName(const string& name_in)
 
 		for (int i = 0; i < doorList.size(); i++)
 		{
-			Door* d = doorList.get(i);
+			shared_ptr<Door> d = doorList.get(i);
 
 			if (name == d->getName())
 			{
@@ -450,11 +450,11 @@ Door* Map::getDoorByName(const string& name_in)
 	return nullptr;
 }
 
-MapState* Map::getMapStateByName(const string& name)
+shared_ptr<MapState> Map::getMapStateByName(const string& name)
 { //=========================================================================================================================
 	for (int i = 0; i < stateList.size(); i++)
 	{
-		MapState* mapState = stateList.get(i);
+		shared_ptr<MapState> mapState = stateList.get(i);
 
 		if (name == mapState->getName())
 		{
@@ -466,19 +466,19 @@ MapState* Map::getMapStateByName(const string& name)
 	//we didn't find it. make a new one. throw an error.
 	log.error("Could not find Map State:" + name + ". This should never happen.");
 
-	//MapState s = new MapState(-1,name);
+	//MapState s = make_shared<MapState>(-1,name);
 	//stateList.add(s);
 
 
 	return nullptr;
 }
 
-MapState* Map::getMapStateByID(int id)
+shared_ptr<MapState> Map::getMapStateByID(int id)
 { //=========================================================================================================================
 	//this should look through the current map mapStateList first
 	for (int i = 0; i < stateList.size(); i++)
 	{
-		MapState* s = stateList.get(i);
+		shared_ptr<MapState> s = stateList.get(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -489,7 +489,7 @@ MapState* Map::getMapStateByID(int id)
 	log.error("Could not find State ID:" + to_string(id) + " in currentMap stateList. This should never happen.");
 	//then it should look through every map mapStateList, since state ID is guaranteed to be unique.
 
-	//MapState s = new MapState(id,"????");
+	//MapState s = make_shared<MapState>(id,"????");
 	//stateList.add(s);
 
 
@@ -499,19 +499,19 @@ MapState* Map::getMapStateByID(int id)
 ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 { //=========================================================================================================================
 
-	ArrayList<string>* areaTYPEIDList = new ArrayList<string>();
+	ArrayList<string>* areaTYPEIDList = make_shared<ArrayList><string>();
 
 
 	//areas
-	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<shared_ptr<Area>> aEnum = currentState->areaByNameHashtable.elements();
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      Area* a = aEnum->nextElement();
+	//      shared_ptr<Area> a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> *areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		Area* a = areas->get(i);
+		shared_ptr<Area> a = areas->get(i);
 
 
 		if (a->randomPointOfInterestOrExit())
@@ -524,7 +524,7 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//warpareas
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		Area* a = warpAreaList.get(i);
+		shared_ptr<Area> a = warpAreaList.get(i);
 		if (a->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->add(a->getTYPEIDString());
@@ -535,7 +535,7 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//doors
 	for (int i = 0; i < doorList.size(); i++)
 	{
-		Door* d = doorList.get(i);
+		shared_ptr<Door> d = doorList.get(i);
 		if (d->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->add(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
@@ -570,7 +570,7 @@ void Map::fadeOut()
 	}
 }
 
-void Map::loadMapState(MapState* s)
+void Map::loadMapState(shared_ptr<MapState> s)
 { //===============================================================================================
 	currentState = s;
 }
@@ -621,7 +621,7 @@ void Map::update()
 				for (int i = 0; i < mapEventList.size(); i++)
 				{
 					//int eventID = mapEventList.get(i);
-					Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
+					shared_ptr<Event> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
 					event->map = this;
 					if (event->getInitialized_S() == false)
 					{
@@ -660,7 +660,7 @@ void Map::update()
 			lastLoadEventRequestTime = currentTime;
 			for (int i = 0; i < mapEventList.size(); i++)
 			{
-				Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+				shared_ptr<Event> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
 				event->map = this;
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
@@ -719,7 +719,7 @@ void Map::update()
 		//run all events, **this will also run post-load events for this map, which stop executing after one loop.
 		for (int i = 0; i < mapEventList.size(); i++)
 		{
-			Event* event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+			shared_ptr<Event> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
 			event->map = this;
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
@@ -960,7 +960,7 @@ void Map::updateLoadingStatus()
 
 		if (generatingAreaNotification == nullptr)
 		{
-			generatingAreaNotification = new Notification((static_cast<BGClientEngine*>(getEngine())), "Loading Area...");
+			generatingAreaNotification = make_shared<Notification>((static_cast<shared_ptr<BGClientEngine>>(getEngine())), "Loading Area...");
 		}
 
 
@@ -998,7 +998,7 @@ void Map::updateEntities()
 	//for all entities update
 	for (int n = 0; n < activeEntityList.size(); n++)
 	{
-		Entity* e = activeEntityList.get(n);
+		shared_ptr<Entity> e = activeEntityList.get(n);
 
 		e->update();
 	}
@@ -1009,7 +1009,7 @@ void Map::updateDoors()
 
 	for (int n = 0; n < doorList.size(); n++)
 	{
-		Door* e = doorList.get(n);
+		shared_ptr<Door> e = doorList.get(n);
 
 		e->update();
 	}
@@ -1032,7 +1032,7 @@ void Map::updateAreas()
 
 	for (int i = 0; i < (int)currentState->areaList.size(); i++)
 	{
-		Area* a = currentState->areaList.get(i);
+		shared_ptr<Area> a = currentState->areaList.get(i);
 		a->update();
 	}
 }
@@ -1066,7 +1066,7 @@ void Map::zOrderEntities()
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1081,7 +1081,7 @@ void Map::zOrderEntities()
 
 	for (int i = 0; i < doorList.size(); i++)
 	{
-		Door* e = doorList.get(i);
+		shared_ptr<Door> e = doorList.get(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1109,12 +1109,12 @@ void Map::zOrderEntities()
 	}
 
 
-	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)
+	if (dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != nullptr)
 	{
 		//add friends, they are not added to any entityList
 		for (int i = 0; i < (int)getClientGameEngine()->friendManager->friendCharacters->size(); i++)
 		{
-			FriendCharacter* f = getFriendManager()->friendCharacters->get(i);
+			shared_ptr<FriendCharacter> f = getFriendManager()->friendCharacters->get(i);
 
 			if (f->mapName == getName())
 			{
@@ -1140,11 +1140,11 @@ void Map::zOrderEntities()
 
 	while (drawList.size() != 0)
 	{
-		Entity* highestOnScreenEntity = nullptr;
+		shared_ptr<Entity> highestOnScreenEntity = nullptr;
 
 		for (int n = 0; n < drawList.size(); n++)
 		{
-			Entity* e = drawList.get(n);
+			shared_ptr<Entity> e = drawList.get(n);
 
 			//store topmost entity on screen
 			//check for non-zordering entities, entities always on top, entities always on bottom here.
@@ -1191,11 +1191,11 @@ void Map::sortLightLayers()
 
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		Light* l = currentState->lightList.get(i);
+		shared_ptr<Light> l = currentState->lightList.get(i);
 		//if light is not drawn
 		if (l->sortingState != Light::DRAWN)
 		{
-			ArrayList<Light*>* thisLayerList = new ArrayList<Light*>();
+			ArrayList<shared_ptr<Light>>* thisLayerList = make_shared<ArrayList><shared_ptr<Light>>();
 
 			//light is drawing
 			l->sortingState = Light::DRAWING;
@@ -1203,7 +1203,7 @@ void Map::sortLightLayers()
 			//for all lights from this light to the end
 			for (int a = i + 1; a < (int)currentState->lightList.size(); a++)
 			{
-				Light* compareLight = currentState->lightList.get(a);
+				shared_ptr<Light> compareLight = currentState->lightList.get(a);
 
 				//if that light isn't already drawn
 				if (compareLight->sortingState != Light::DRAWN)
@@ -1211,7 +1211,7 @@ void Map::sortLightLayers()
 					//for all lights
 					for (int b = 0; b < (int)currentState->lightList.size(); b++)
 					{
-						Light* overlapLight = currentState->lightList.get(b);
+						shared_ptr<Light> overlapLight = currentState->lightList.get(b);
 
 						//if this light isn't
 						if (a != b && overlapLight->sortingState == Light::DRAWING)
@@ -1246,7 +1246,7 @@ void Map::sortLightLayers()
 
 			for (int d = 0; d < (int)currentState->lightList.size(); d++)
 			{
-				Light* drawLight = currentState->lightList.get(d);
+				shared_ptr<Light> drawLight = currentState->lightList.get(d);
 				if (drawLight->sortingState == Light::DRAWING)
 				{
 					thisLayerList->add(drawLight);
@@ -1303,7 +1303,7 @@ void Map::render(RenderOrder renderOrder, bool disableClip, bool disableFloorOff
 	}
 
 
-	BobTexture* texture = nullptr;
+	shared_ptr<BobTexture> texture = nullptr;
 
 	float sw = (float)getEngine()->getWidth();
 	float sh = (float)getEngine()->getHeight();
@@ -1562,7 +1562,7 @@ void Map::renderEntities(RenderOrder layer)
 
 		for (int n = 0; n < zList.size(); n++)
 		{
-			Entity* e = zList.get(n);
+			shared_ptr<Entity> e = zList.get(n);
 
 
 			if (layer == RenderOrder::SPRITE_DEBUG_OUTLINES)
@@ -1593,7 +1593,7 @@ void Map::renderAllLightsUnsorted()
 	{
 		for (int i = 0; i < (int)currentState->lightList.size(); i++)
 		{
-			Light* l = currentState->lightList.get(i);
+			shared_ptr<Light> l = currentState->lightList.get(i);
 			l->renderLight();
 		}
 	}
@@ -1611,15 +1611,15 @@ void Map::renderAreaActionIcons()
 	}
 
 	//areas
-	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<shared_ptr<Area>> aEnum = currentState->areaByNameHashtable.elements();
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      Area* a = aEnum->nextElement();
+	//      shared_ptr<Area> a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> *areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		Area* a = areas->get(i);
+		shared_ptr<Area> a = areas->get(i);
 
 		//if(a.isAnAction)
 		a->renderActionIcon();
@@ -1629,7 +1629,7 @@ void Map::renderAreaActionIcons()
 	//warpareas
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		Area* a = warpAreaList.get(i);
+		shared_ptr<Area> a = warpAreaList.get(i);
 		//if(a.isAnAction)
 		a->renderActionIcon();
 	}
@@ -1762,7 +1762,7 @@ void Map::renderLightBoxes()
 	//light boxes
 	for (int i = 0; i < sortedLightsLayers.size(); i++)
 	{
-		ArrayList<Light*>* thisLayer = sortedLightsLayers.get(i);
+		ArrayList<shared_ptr<Light>>* thisLayer = sortedLightsLayers.get(i);
 		for (int n = 0; n < thisLayer->size(); n++)
 		{
 			thisLayer->get(n)->renderDebugBoxes();
@@ -1778,16 +1778,16 @@ void Map::renderAreaDebugBoxes()
 		return;
 	}
 
-	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<shared_ptr<Area>> aEnum = currentState->areaByNameHashtable.elements();
 	//   //areas
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      Area* a = aEnum->nextElement();
+	//      shared_ptr<Area> a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> *areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		Area* a = areas->get(i);
+		shared_ptr<Area> a = areas->get(i);
 
 
 
@@ -1805,16 +1805,16 @@ void Map::renderAreaDebugInfo()
 	}
 
 	//TODO: make these a manager in mapmanager
-	//   java::util::Iterator<Area*> aEnum = currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<shared_ptr<Area>> aEnum = currentState->areaByNameHashtable.elements();
 	//   //areas
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      Area* a = aEnum->nextElement();
+	//      shared_ptr<Area> a = aEnum->nextElement();
 
-	ArrayList<Area*> *areas = currentState->areaByNameHashtable.getAllValues();
+	ArrayList<shared_ptr<Area>> *areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		Area* a = areas->get(i);
+		shared_ptr<Area> a = areas->get(i);
 
 
 		//a.renderDebugBoxes();
@@ -1865,7 +1865,7 @@ void Map::loadUtilityLayers()
 		hitLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getHitBoundsMD5());
 		/*hitLayer = new byte[getWidthTiles1X * getHeightTiles1X];
 		         
-		BufferedInputStream hitBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getHitBoundsMD5));
+		BufferedInputStream hitBin = make_shared<BufferedInputStream>(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getHitBoundsMD5));
 		         
 		try
 		{
@@ -1890,7 +1890,7 @@ void Map::loadUtilityLayers()
 		//
 		//
 		//			cameraLayer = new byte[getWidthTiles1X() * getHeightTiles1X()];
-		//			BufferedInputStream fxBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+FileUtils.cacheDir+getCameraBoundsMD5()));
+		//			BufferedInputStream fxBin = make_shared<BufferedInputStream>(FileUtils::getResourceAsStream(""+FileUtils.cacheDir+getCameraBoundsMD5()));
 		//
 		//			//TODO: in map editor, output this as byte array instead of int array, then i don't have to skip every other byte here
 		//			try
@@ -1925,7 +1925,7 @@ void Map::loadUtilityLayers()
 		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getGroundShaderMD5());
 
 		/*groundShaderLayer = new int[getWidthTiles1X * getHeightTiles1X];
-		BufferedInputStream shaderBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getGroundShaderMD5));
+		BufferedInputStream shaderBin = make_shared<BufferedInputStream>(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getGroundShaderMD5));
 		         
 		try
 		{
@@ -1964,7 +1964,7 @@ void Map::loadUtilityLayers()
 		groundShaderLayer = FileUtils::loadIntFileFromCacheOrDownloadIfNotExist("" + getLightMaskMD5());
 
 		/*lightMaskLayer = new int[getWidthTiles1X * getHeightTiles1X];
-		BufferedInputStream lightMaskBin = new BufferedInputStream(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getLightMaskMD5));
+		BufferedInputStream lightMaskBin = make_shared<BufferedInputStream>(FileUtils::getResourceAsStream(""+CacheManager.cacheDir+getLightMaskMD5));
 		         
 		try
 		{
@@ -1995,7 +1995,7 @@ void Map::loadUtilityLayers()
 	}
 }
 
-void Map::saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArray* pal)
+void Map::saveDataToCache(shared_ptr<IntArray> intArrayAllLayers, shared_ptr<IntArray> tiles, shared_ptr<ByteArray> pal)
 { //=========================================================================================================================
 
 	//I should just save each layer as the MD5 in the cache folder
@@ -2006,14 +2006,14 @@ void Map::saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArra
 		if (MapData::isTileLayer(l))
 		{
 			int index = (getWidthTiles1X() * getHeightTiles1X() * l);
-			IntArray* layer = new IntArray(getWidthTiles1X() * getHeightTiles1X());
+			shared_ptr<IntArray> layer = make_shared<IntArray>(getWidthTiles1X() * getHeightTiles1X());
 			for (int i = 0; i < getWidthTiles1X() * getHeightTiles1X(); i++)
 			{
 				layer->data()[i] = intArrayAllLayers->data()[index + i];
 			}
 
 			//save to cache folder as md5 name
-			ByteArray* byteArray = FileUtils::getByteArrayFromIntArray(layer);
+			shared_ptr<ByteArray> byteArray = FileUtils::getByteArrayFromIntArray(layer);
 			string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 			FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 
@@ -2073,7 +2073,7 @@ void Map::saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArra
 		}
 	}
 	//save tiles
-	ByteArray* byteArray = FileUtils::getByteArrayFromIntArray(tiles);
+	shared_ptr<ByteArray> byteArray = FileUtils::getByteArrayFromIntArray(tiles);
 	string md5FileName = FileUtils::getByteArrayMD5Checksum(byteArray);
 	FileUtils::saveByteArrayToCache(byteArray, md5FileName);
 	setTilesMD5(md5FileName);
@@ -2088,9 +2088,9 @@ void Map::saveDataToCache(IntArray* intArrayAllLayers, IntArray* tiles, ByteArra
 void Map::unloadArea(const string& s)
 { //=========================================================================================================================
 
-	//public Hashtable<String, Area> areaHashtable = new Hashtable<String, Area>();
+	//public Hashtable<String, Area> areaHashtable = make_shared<Hashtable><String, Area>();
 
-	Area* a = nullptr;
+	shared_ptr<Area> a = nullptr;
 	if(currentState->areaByNameHashtable.containsKey(s))
 	a = currentState->areaByNameHashtable.get(s);
 
@@ -2105,8 +2105,8 @@ void Map::unloadArea(const string& s)
 
 void Map::unloadLight(const string& s)
 { //=========================================================================================================================
-	//public ArrayList<Light> lightList = new ArrayList<Light>();
-	//public Hashtable<String,Light> lightHashtable = new Hashtable<String,Light>();
+	//public ArrayList<Light> lightList = make_shared<ArrayList><Light>();
+	//public Hashtable<String,Light> lightHashtable = make_shared<Hashtable><String,Light>();
 
 
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
@@ -2145,8 +2145,8 @@ void Map::unloadMapEntity(const string& s)
 { //=========================================================================================================================
 
 
-	//public ArrayList<MapSprite> entityList = new ArrayList<MapSprite>();
-	//public Hashtable<String, MapSprite> entityHashtable = new Hashtable<String, MapSprite>();
+	//public ArrayList<MapSprite> entityList = make_shared<ArrayList><MapSprite>();
+	//public Hashtable<String, MapSprite> entityHashtable = make_shared<Hashtable><String, MapSprite>();
 
 	for (int i = 0; i < (int)currentState->entityList.size(); i++)
 	{
@@ -2205,11 +2205,11 @@ void Map::releaseAllTextures()
 
 
 	
-	ArrayList<BobTexture*>* chunks = chunkTexture.getAllValues();
+	ArrayList<shared_ptr<BobTexture>>* chunks = chunkTexture.getAllValues();
 	{
 		for (int i = 0; i < chunks->size(); i++)
 		{
-			BobTexture *t = chunks->get(i);
+			shared_ptr<BobTexture >t = chunks->get(i);
 
 			if (t != nullptr)
 			{
@@ -2321,7 +2321,7 @@ float Map::getScreenX(float mapX, float width)
 	}
 
 
-	return screenXPixelsHQ * zoom;
+	return screenXshared_ptr<PixelsHQ > zoom;
 }
 
 float Map::getScreenY(float mapY, float height)
@@ -2352,7 +2352,7 @@ float Map::getScreenY(float mapY, float height)
 	}
 
 
-	return screenYPixelsHQ * zoom;
+	return screenYshared_ptr<PixelsHQ > zoom;
 }
 
 float Map::screenX()
@@ -2583,7 +2583,7 @@ bool Map::isXYWithinScreen(float x, float y)
 
 
 //The following method was originally marked 'synchronized':
-BobTexture* Map::getChunkTexture(int index)
+shared_ptr<BobTexture> Map::getChunkTexture(int index)
 { //=========================================================================================================================
 
 	if (chunkTexture.containsKey(index) == false)return nullptr;
@@ -2591,7 +2591,7 @@ BobTexture* Map::getChunkTexture(int index)
 }
 
 //The following method was originally marked 'synchronized':
-void Map::setChunkTexture(int index, BobTexture* t)
+void Map::setChunkTexture(int index, shared_ptr<BobTexture> t)
 { //=========================================================================================================================
 	chunkTexture.put(index, t);
 }
@@ -2693,16 +2693,16 @@ bool Map::loadChunkTexturesFromCachePNGs()
 
 						if (getChunkPNGFileExists_S(chunkIndex) == true || (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true))
 						{
-							BobFile* textureFile = nullptr;
+							shared_ptr<BobFile> textureFile = nullptr;
 
 							if (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 							{
-								textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+								textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 								(*usingHQ2XTexture)[chunkIndex] = true;
 							}
 							else
 							{
-								textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+								textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
 							}
 
 							if (textureFile->exists() == false)
@@ -2847,7 +2847,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 	{
 		{
 			//if(lightList.get(i).mapAsset==this)
-			Light* l = currentState->lightList.get(i);
+			shared_ptr<Light> l = currentState->lightList.get(i);
 
 			//check if tile has texture already in gpu
 			if (l->texture == nullptr)
@@ -2869,7 +2869,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 					if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == true)
 					{
 						//floatcheck it exists, this should never be false.
-						BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+						shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						if (textureFile->exists() == false)
 						{
 							//(exception())->printStackTrace();
@@ -2877,7 +2877,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 						}
 
 
-						BobTexture* t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+						shared_ptr<BobTexture> t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						getMapManager()->lightTextureHashMap.put(l->getFileName(), t);
 
 						l->texture = t;
@@ -2918,11 +2918,11 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 
 					if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 					{
-						BobFile* textureFile = nullptr;
+						shared_ptr<BobFile> textureFile = nullptr;
 
 						if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 						{
-							textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+							textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 						}
 
 						if (textureFile->exists() == false)
@@ -2931,7 +2931,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							continue;
 						}
 
-						BobTexture* t = getChunkTexture(chunkIndex);
+						shared_ptr<BobTexture> t = getChunkTexture(chunkIndex);
 
 						if (t != nullptr)
 						{
@@ -3042,8 +3042,8 @@ void Map::startThreadsForMissingChunkPNGs()
 
 
 				//check for existence of texture in groundMD5
-				BobFile* textureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-				BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+				shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+				shared_ptr<BobFile> hq2xTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 
 				if (hq2xTextureFile->exists())
@@ -3076,8 +3076,8 @@ void Map::startThreadsForMissingChunkPNGs()
 //					int threadChunkX = chunkX;
 //					int threadChunkY = chunkY;
 //					int threadChunkIndex = chunkIndex;
-					//shared_ptr<IntArray*> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
-					//shared_ptr<ByteArray*> threadPaletteRGBByteArray = paletteRGBByteArray;
+					//shared_ptr<shared_ptr<IntArray>> threadTilesetIntArray = tilesetIntArray; //we send in a final pointer to this because it is set to null when the map is unloaded, but the threads may still be creating map tile pngs and will release this pointer when they die.
+					//shared_ptr<shared_ptr<ByteArray>> threadPaletteRGBByteArray = paletteRGBByteArray;
 
 
 					if (MapManager::useThreads == true)
@@ -3238,7 +3238,7 @@ void Map::startThreadsForMissingLightPNGs()
 	{
 		{
 			//if(lightList.get(i).mapAsset==this)
-			Light* l = currentState->lightList.get(i);
+			shared_ptr<Light> l = currentState->lightList.get(i);
 
 
 			//don't create a thread to generate a texture that is already being made.
@@ -3261,7 +3261,7 @@ void Map::startThreadsForMissingLightPNGs()
 			if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == false)
 			{
 				//check for existence of texture in cache folder
-				BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+				shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 				if (textureFile->exists())
 				{
 					MapManager::setLightTexturePNGFileExists_S(l->getFileName(),true);
@@ -3393,7 +3393,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 			int chunkIndexOverLayer = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
 			//check for existence of texture in groundMD5
-			BobFile* hq2xTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+			shared_ptr<BobFile> hq2xTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 			if (hq2xTextureFile->exists())
 			{
@@ -3525,8 +3525,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	//Thread.yield();
 
 	//create chunkImage
-	BufferedImage* chunkImage = new BufferedImage(chunkSizeTiles1X * 8, chunkSizeTiles1X * 8);
-	BufferedImage* chunkImageBorder = new BufferedImage(chunkSizeTiles1X * 8 + 2, chunkSizeTiles1X * 8 + 2);
+	shared_ptr<BufferedImage> chunkImage = make_shared<BufferedImage>(chunkSizeTiles1X * 8, chunkSizeTiles1X * 8);
+	shared_ptr<BufferedImage> chunkImageBorder = make_shared<BufferedImage>(chunkSizeTiles1X * 8 + 2, chunkSizeTiles1X * 8 + 2);
 
 
 	//***************************************
@@ -3536,15 +3536,15 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 	//***************************************
 
 	/*Graphics G = chunkImage.getGraphics();
-	G.setColor(new Color(0,0,0,0));
+	G.setColor(make_shared<Color>(0,0,0,0));
 	G.fillRect(0, 0, chunkImage.getWidth(), chunkImage.getHeight());
 	G.dispose();
 	G = chunkImageBorder.getGraphics();
-	G.setColor(new Color(0,0,0,0));
+	G.setColor(make_shared<Color>(0,0,0,0));
 	G.fillRect(0, 0, chunkImageBorder.getWidth(), chunkImageBorder.getHeight());
 	G.dispose();*/
 
-	IntArray* layerChunkBuffer = new IntArray((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2));
+	shared_ptr<IntArray> layerChunkBuffer = make_shared<IntArray>((chunkSizeTiles1X + 2) * (chunkSizeTiles1X + 2));
 
 	string layerFileName = "";
 
@@ -3625,8 +3625,8 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 		//log.debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
 
 		//save 0 byte placeholder, this will always load blank texture
-		BobFile* f = new BobFile("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-		BobFile* f2 = new BobFile("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex));
+		shared_ptr<BobFile> f = make_shared<BobFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+		shared_ptr<BobFile> f2 = make_shared<BobFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex));
 
 		try
 		{
@@ -3654,7 +3654,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 
 #include <fstream>
 
-bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedImage* chunkImage, BufferedImage* chunkImageBorder, int chunkX, int chunkY, IntArray* layerChunkBuffer, bool shadowLayer)
+bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr<BufferedImage> chunkImage, shared_ptr<BufferedImage> chunkImageBorder, int chunkX, int chunkY, shared_ptr<IntArray> layerChunkBuffer, bool shadowLayer)
 { //=========================================================================================================================
 
 
@@ -3798,7 +3798,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 						else
 						{
 							//uint32_t result;
-							//raf.read(reinterpret_cast<char *>(&result), sizeof(result));
+							//raf.read(reinterpret_cast<char >(&result), sizeof(result));
 
 
 							u8 byte1;
@@ -3912,12 +3912,12 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 						u8 paletteG = paletteRGBByteArray->data()[(paletteIndex * 3) + (1)];
 						u8 paletteB = paletteRGBByteArray->data()[(paletteIndex * 3) + (2)];
 
-						BobColor* c = new BobColor(paletteR, paletteG, paletteB);
+						shared_ptr<BobColor> c = make_shared<BobColor>(paletteR, paletteG, paletteB);
 
 						if (shadowLayer) //shadow layer
 						{
 							int oldPixel = chunkImageBorder->getRGBA(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1);
-							BobColor* oldColor = new BobColor(oldPixel);// , true);
+							shared_ptr<BobColor> oldColor = make_shared<BobColor>(oldPixel);// , true);
 
 							u8 alpha = 255;
 							if (oldColor->getRGBA() == 0)
@@ -3932,7 +3932,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, BufferedIm
 
 							delete oldColor;
 
-							c = new BobColor(blendedRed, blendedGreen, blendedBlue, alpha);
+							c = make_shared<BobColor>(blendedRed, blendedGreen, blendedBlue, alpha);
 						}
 
 
@@ -3962,14 +3962,14 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 
 	int clear = 0;
-	//int black = (new Color(0, 0, 0, 255))->getRGB();
+	//int black = (make_shared<Color>(0, 0, 0, 255))->getRGB();
 
 
 	int underChunkIndex = (chunksWidth * chunksHeight * 0) + ((chunkY * chunksWidth) + chunkX);
 	int overChunkIndex = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
-	BobFile* underLayerTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(underChunkIndex));
-	BobFile* overLayerTextureFile = new BobFile(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(overChunkIndex));
+	shared_ptr<BobFile> underLayerTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(underChunkIndex));
+	shared_ptr<BobFile> overLayerTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(overChunkIndex));
 
 
 	//TODO: handle if 1x file doesn't exist, make it again from md5!
@@ -3978,20 +3978,20 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//nice fix for broken cache files
 
 
-	BufferedImage* bottom = nullptr;
-	BufferedImage* top = nullptr;
+	shared_ptr<BufferedImage> bottom = nullptr;
+	shared_ptr<BufferedImage> top = nullptr;
 
 
 	//handle 0 byte files!
 	if (underLayerTextureFile->length() < 1) //it is actually a completely isEmpty image, it was all 0 tiles
 	{
-		bottom = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
+		bottom = make_shared<BufferedImage>(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 
 
 		//thought this would fix the hq2x grain glitch, but it was from hq2x being static.
 		//dont need to initialize isEmpty graphics
 		/*Graphics G = bottom.getGraphics();
-		G.setColor(new Color(0,0,0,0));
+		G.setColor(make_shared<Color>(0,0,0,0));
 		G.fillRect(0,0,bottom.getWidth(), bottom.getHeight());
 		G.dispose();
 		G = null;*/
@@ -4011,9 +4011,9 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	if (overLayerTextureFile->length() < 1)
 	{
-		top = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
+		top = make_shared<BufferedImage>(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 		/*Graphics G = top.getGraphics();
-		G.setColor(new Color(0,0,0,0));
+		G.setColor(make_shared<Color>(0,0,0,0));
 		G.fillRect(0,0,top.getWidth(), top.getHeight());
 		G.dispose();
 		G = null;*/
@@ -4033,7 +4033,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//create bottom + top image
 
-	BufferedImage* bottomAndTop = new BufferedImage(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
+	shared_ptr<BufferedImage> bottomAndTop = make_shared<BufferedImage>(chunkSizePixels1X + 2, chunkSizePixels1X + 2);
 
 	//draw bottom, then top into bottomAndTop
 
@@ -4063,7 +4063,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//----------------------
 
 	//hq2x bottom+top
-	BufferedImage* hq2xBottomAndTop = (new HQ2X())->hq2x(bottomAndTop);
+	shared_ptr<BufferedImage> hq2xBottomAndTop = (new HQ2X())->hq2x(bottomAndTop);
 	//setHQ2XAlphaFromOriginal(hq2xBottomAndTop,bottomAndTop); //(shouldnt be transparent here)
 
 	//dont need bottomandtop
@@ -4071,7 +4071,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	delete bottomAndTop;
 	bottomAndTop = nullptr;
 
-	BufferedImage* hq2xBottomAndTopCopy = new BufferedImage(hq2xBottomAndTop->getWidth(), hq2xBottomAndTop->getHeight());
+	shared_ptr<BufferedImage> hq2xBottomAndTopCopy = make_shared<BufferedImage>(hq2xBottomAndTop->getWidth(), hq2xBottomAndTop->getHeight());
 	for (int y = 0; y < hq2xBottomAndTop->getHeight(); y++)
 	{
 		for (int x = 0; x < hq2xBottomAndTop->getWidth(); x++)
@@ -4116,30 +4116,30 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 			   {
 			      if(top.getRGB(x+1, y)!=clear&&top.getRGB(x, y-1)!=clear)//right up
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), make_shared<Color>(0,255,0,127).getRGB());
 			      }
 			   
 			      if(top.getRGB(x+1, y)!=clear&&top.getRGB(x, y+1)!=clear)//right down
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), make_shared<Color>(0,255,0,127).getRGB());
 			      }
 			   
 			      if(top.getRGB(x-1, y)!=clear&&top.getRGB(x, y-1)!=clear)//left up
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+0), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), make_shared<Color>(0,255,0,127).getRGB());
 			      }
 			   
 			      if(top.getRGB(x-1, y)!=clear&&top.getRGB(x, y+1)!=clear)//left down
 			      {
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), new Color(0,255,0,127).getRGB());
-			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), new Color(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+1), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+0, ((y*2)+0), make_shared<Color>(0,255,0,127).getRGB());
+			         hq2xBottomAndTop.setRGB((x*2)+1, ((y*2)+1), make_shared<Color>(0,255,0,127).getRGB());
 			      }
 			   }
 			   
@@ -4159,7 +4159,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//make temp image size-4
 
-	BufferedImage* temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
+	shared_ptr<BufferedImage> temp = make_shared<BufferedImage>(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
 	for (int y = 2; y < hq2xBottomAndTop->getHeight() - 2; y++)
 	{
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
@@ -4194,7 +4194,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	setHQ2XAlphaFromOriginal(hq2xBottomAndTop, bottom);
 
 	//hq2x bottom
-	BufferedImage* hq2xBottom = (new HQ2X())->hq2x(bottom);
+	shared_ptr<BufferedImage> hq2xBottom = (new HQ2X())->hq2x(bottom);
 
 
 	//dont need bottom
@@ -4236,7 +4236,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//output hq2x bottom layer full
 	//----------------------
 
-	temp = new BufferedImage(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
+	temp = make_shared<BufferedImage>(hq2xBottomAndTop->getWidth() - 4, hq2xBottomAndTop->getHeight() - 4);
 	for (int y = 2; y < hq2xBottomAndTop->getHeight() - 2; y++)
 	{
 		for (int x = 2; x < hq2xBottomAndTop->getWidth() - 2; x++)
@@ -4289,14 +4289,14 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	overLayerTextureFile = nullptr;
 }
 
-void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
+void Map::antialiasBufferedImage(shared_ptr<BufferedImage> bufferedImage)
 { //===============================================================================================
 
 	//go through hq2x image
 	//if pixel is transparent, and the pixel right and down, down and left, left and up, or up and right are black, this one is black
 
 	//have to make a copy otherwise the algorithm becomes recursive
-	BufferedImage* copy = new BufferedImage(bufferedImage->getWidth(), bufferedImage->getHeight());
+	shared_ptr<BufferedImage> copy = make_shared<BufferedImage>(bufferedImage->getWidth(), bufferedImage->getHeight());
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
@@ -4361,7 +4361,7 @@ void Map::antialiasBufferedImage(BufferedImage* bufferedImage)
 	}
 }
 
-void Map::setHQ2XAlphaFromOriginal(BufferedImage* hq2xBufferedImage, BufferedImage* bufferedImage)
+void Map::setHQ2XAlphaFromOriginal(shared_ptr<BufferedImage> hq2xBufferedImage, shared_ptr<BufferedImage> bufferedImage)
 { //===============================================================================================
 	//now go through original image again. take each transparent pixel and set the hq2x one with it at 2x
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
@@ -4388,13 +4388,13 @@ void Map::addEntitiesAndCharactersFromCurrentStateToActiveEntityList()
 
 	for (int n = 0; n < (int)currentState->entityList.size(); n++)
 	{
-		Entity* ms = currentState->entityList.get(n);
+		shared_ptr<Entity> ms = currentState->entityList.get(n);
 		activeEntityList.add(ms);
 	}
 
 	for (int n = 0; n < (int)currentState->characterList.size(); n++)
 	{
-		Character* ms = currentState->characterList.get(n);
+		shared_ptr<Character> ms = currentState->characterList.get(n);
 		activeEntityList.add(ms);
 	}
 
@@ -4410,10 +4410,10 @@ void Map::clearActiveEntityList()
 	//have to release unique textures on random entities
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
-		if ((dynamic_cast<RandomCharacter*>(e) != NULL))
+		shared_ptr<Entity> e = activeEntityList.get(i);
+		if ((dynamic_cast<shared_ptr<RandomCharacter>>(e) != NULL))
 		{
-			RandomCharacter* r = static_cast<RandomCharacter*>(e);
+			shared_ptr<RandomCharacter> r = static_cast<shared_ptr<RandomCharacter>>(e);
 			if (r->uniqueTexture != nullptr)
 			{
 				r->uniqueTexture->release();
@@ -4433,7 +4433,7 @@ bool Map::isAnyoneOverlappingXY(float x, float y)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (x > e->getLeft() && x < e->getRight() && y > e->getTop() && y < e->getBottom())
 		{
@@ -4449,7 +4449,7 @@ bool Map::isAnyoneOverlappingXYXY(float x, float y, float x2, float y2)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (x < e->getRight() && x2 > e->getLeft() && y < e->getBottom() && y2 > e->getTop())
 		{
@@ -4465,11 +4465,11 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
-		if ((dynamic_cast<RandomCharacter*>(e) != NULL))
+		if ((dynamic_cast<shared_ptr<RandomCharacter>>(e) != NULL))
 		{
-			RandomCharacter* c = static_cast<RandomCharacter*>(e);
+			shared_ptr<RandomCharacter> c = static_cast<shared_ptr<RandomCharacter>>(e);
 
 			if (x == c->targetX && y == c->targetY)
 			{
@@ -4481,10 +4481,10 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 	return false;
 }
 
-int* Map::findOpenSpaceInArea(Area* a, int w, int h)
+int* Map::findOpenSpaceInArea(shared_ptr<Area> a, int w, int h)
 { //=========================================================================================================================
 
-	ArrayList<int*>* coords = new ArrayList<int*>();
+	ArrayList<int>* coords = make_shared<ArrayList><int>();
 
 	for (int x = 1; x < a->getWidth() / 8; x++)
 	{
@@ -4523,7 +4523,7 @@ int* Map::findOpenSpaceInArea(Area* a, int w, int h)
 	return nullptr;
 }
 
-bool Map::isAnyCharacterTouchingArea(Area* a)
+bool Map::isAnyCharacterTouchingArea(shared_ptr<Area> a)
 { //=========================================================================================================================
 
 	//go through all entities, if somebody is standing here, don't go there.
@@ -4532,19 +4532,19 @@ bool Map::isAnyCharacterTouchingArea(Area* a)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			Entity* e = activeEntityList.get(i);
+			shared_ptr<Entity> e = activeEntityList.get(i);
 
 			if (
 				(
 					(
 						(
-							(dynamic_cast<Character*>(e) != NULL)
+							(dynamic_cast<shared_ptr<Character>>(e) != NULL)
 							||
-							(dynamic_cast<RandomCharacter*>(e) != NULL)
+							(dynamic_cast<shared_ptr<RandomCharacter>>(e) != NULL)
 						)
 					)
 					||
-					(dynamic_cast<Player*>(e) != NULL)
+					(dynamic_cast<shared_ptr<Player>>(e) != NULL)
 				)
 				&&
 				a->isEntityHitBoxTouchingMyBoundary(e)
@@ -4560,7 +4560,7 @@ bool Map::isAnyCharacterTouchingArea(Area* a)
 	return false;
 }
 
-bool Map::isAnyEntityTouchingArea(Area* a)
+bool Map::isAnyEntityTouchingArea(shared_ptr<Area> a)
 { //=========================================================================================================================
 
 	//go through all entities, if somebody is standing here, don't go there.
@@ -4569,7 +4569,7 @@ bool Map::isAnyEntityTouchingArea(Area* a)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			Entity* e = activeEntityList.get(i);
+			shared_ptr<Entity> e = activeEntityList.get(i);
 
 			if (a->isEntityHitBoxTouchingMyBoundary(e))
 			{
@@ -4581,15 +4581,15 @@ bool Map::isAnyEntityTouchingArea(Area* a)
 	return false;
 }
 
-ArrayList<Entity*>* Map::getAllEntitiesTouchingArea(Area* a)
+ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesTouchingArea(shared_ptr<Area> a)
 { //=========================================================================================================================
 
-	ArrayList<Entity*>* entitiesInArea = new ArrayList<Entity*>();
+	ArrayList<shared_ptr<Entity>>* entitiesInArea = make_shared<ArrayList><shared_ptr<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (a->isEntityHitBoxTouchingMyBoundary(e))
 		{
@@ -4601,15 +4601,15 @@ ArrayList<Entity*>* Map::getAllEntitiesTouchingArea(Area* a)
 	return entitiesInArea;
 }
 
-ArrayList<Entity*>* Map::getAllEntitiesPlayerIsTouching()
+ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesPlayerIsTouching()
 { //=========================================================================================================================
 
-	ArrayList<Entity*>* entitiesTouching = new ArrayList<Entity*>();
+	ArrayList<shared_ptr<Entity>>* entitiesTouching = make_shared<ArrayList><shared_ptr<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e))
 		{
@@ -4621,7 +4621,7 @@ ArrayList<Entity*>* Map::getAllEntitiesPlayerIsTouching()
 	return entitiesTouching;
 }
 
-bool Map::isAnyoneTryingToGoToArea(Area* a)
+bool Map::isAnyoneTryingToGoToArea(shared_ptr<Area> a)
 { //=========================================================================================================================
 	if (a != nullptr) //DEBUG HERE
 	{
@@ -4636,7 +4636,7 @@ bool Map::isAnyoneTryingToGoToArea(Area* a)
 	return false;
 }
 
-bool Map::isAnyEntityUsingSpriteAsset(Sprite* s)
+bool Map::isAnyEntityUsingSpriteAsset(shared_ptr<Sprite> s)
 { //=========================================================================================================================
 
 	for (int i = 0; i < activeEntityList.size(); i++)
@@ -4651,14 +4651,14 @@ bool Map::isAnyEntityUsingSpriteAsset(Sprite* s)
 	return false;
 }
 
-ArrayList<Entity*>* Map::getAllEntitiesUsingSpriteAsset(Sprite* s)
+ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesUsingSpriteAsset(shared_ptr<Sprite> s)
 { //=========================================================================================================================
 
-	ArrayList<Entity*>* entitiesUsingSprite = new ArrayList<Entity*>();
+	ArrayList<shared_ptr<Entity>>* entitiesUsingSprite = make_shared<ArrayList><shared_ptr<Entity>>();
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		Entity* e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.get(i);
 
 		if (e->sprite == s)
 		{
@@ -4670,13 +4670,13 @@ ArrayList<Entity*>* Map::getAllEntitiesUsingSpriteAsset(Sprite* s)
 	return entitiesUsingSprite;
 }
 
-Entity* Map::createEntity(const string& spriteName, Sprite* spriteAsset, float mapX, float mapY)
+shared_ptr<Entity> Map::createEntity(const string& spriteName, shared_ptr<Sprite> spriteAsset, float mapX, float mapY)
 { //=========================================================================================================================
 
 
-	EntityData* entityData = new EntityData(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
+	shared_ptr<EntityData> entityData = make_shared<EntityData>(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
 
-	Entity* e = new Entity(getEngine(), entityData, this);
+	shared_ptr<Entity> e = make_shared<Entity>(getEngine(), entityData, this);
 
 	getCurrentMap()->currentState->entityList.add(e);
 	getCurrentMap()->currentState->entityByNameHashtable.put(e->getName(),e);
@@ -4684,17 +4684,17 @@ Entity* Map::createEntity(const string& spriteName, Sprite* spriteAsset, float m
 	return e;
 }
 
-Entity* Map::createEntityFeetAtXY(const string& spriteName, Sprite* sprite, float mapX, float mapY)
+shared_ptr<Entity> Map::createEntityFeetAtXY(const string& spriteName, shared_ptr<Sprite> sprite, float mapX, float mapY)
 { //=========================================================================================================================
 
 	// use hitbox center instead of arbitrary offset
-	SpriteAnimationSequence* a = sprite->getFirstAnimation();
+	shared_ptr<SpriteAnimationSequence> a = sprite->getFirstAnimation();
 	int hitBoxYCenter = (a->hitBoxFromTopPixels1X) + (((sprite->getImageHeight() - (a->hitBoxFromTopPixels1X)) - (a->hitBoxFromBottomPixels1X)) / 2);
 
 	return createEntity(spriteName, sprite, mapX - (sprite->getImageWidth() / 2), mapY - (hitBoxYCenter));
 }
 
-Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, const string& spriteName, Sprite* sprite, float mapX, float mapY, int amt)
+shared_ptr<Entity> Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(shared_ptr<Entity> e, const string& spriteName, shared_ptr<Sprite> sprite, float mapX, float mapY, int amt)
 { //=========================================================================================================================
 
 	if (isXYWithinScreenByAmt(mapX + sprite->getImageWidth() / 2, mapY + sprite->getImageHeight() / 2, amt) == true)
@@ -4720,7 +4720,7 @@ Entity* Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(Entity* e, c
 	}
 }
 
-Entity* Map::createEntityAtArea(const string& spriteName, Sprite* spriteAsset, Area* a)
+shared_ptr<Entity> Map::createEntityAtArea(const string& spriteName, shared_ptr<Sprite> spriteAsset, shared_ptr<Area> a)
 { //=========================================================================================================================
 	float x = a->middleX();
 	float y = a->middleY();
@@ -4728,7 +4728,7 @@ Entity* Map::createEntityAtArea(const string& spriteName, Sprite* spriteAsset, A
 	return createEntityFeetAtXY(spriteName, spriteAsset, x, y);
 }
 
-MapData* Map::getData()
+shared_ptr<MapData> Map::getData()
 {
 	return data;
 }

@@ -20,7 +20,7 @@ void NDMenuMovie::init()
 	//initialize movie values
 	//------------------------------------------
 	/*
-	      Texture[] movie_border_TEXTURE = new Texture[13];
+	      Texture[] movie_border_TEXTURE = make_shared<Texture>[13];
 	
 	      movie_border_TEXTURE[0] = GL.loadTexture("res/nD/menu/movie_border/movie_border_00.png");
 	      movie_border_TEXTURE[1] = GL.loadTexture("res/nD/menu/movie_border/movie_border_01.png");
@@ -44,11 +44,11 @@ void NDMenuMovie::init()
 	
 	      int direction_button_pressed=0;
 	
-	      SDL_Surface* movie_YUV_SURFACE[4];
+	      shared_ptr<SDL_Surface> movie_YUV_SURFACE[4];
 	      SMPEG_Info movieInfo[4];
 	      SMPEG* movie[4];
 	
-	      SDL_Surface* movie_RGBA_SURFACE = null;
+	      shared_ptr<SDL_Surface> movie_RGBA_SURFACE = null;
 	      Texture movie_TEXTURE[2] = {null, null};
 	
 	      int movieswapframe=0;
@@ -67,7 +67,7 @@ void NDMenuMovie::init()
 	      int m=1;
 	      //for(m=0;m<4;m++)
 	      {
-	         SDL_Surface* tempSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, movieInfo[m].width, movieInfo[m].height, 32, rmask, gmask, bmask, amask);
+	         shared_ptr<SDL_Surface> tempSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, movieInfo[m].width, movieInfo[m].height, 32, rmask, gmask, bmask, amask);
 	         movie_YUV_SURFACE[m] = SDL_DisplayFormat(tempSurface);
 	         SDL_FreeSurface(tempSurface);
 	         SMPEG_setdisplay(movie[m], movie_YUV_SURFACE[m], null, null);

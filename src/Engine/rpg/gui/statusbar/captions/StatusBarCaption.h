@@ -15,21 +15,21 @@ public:
 
 	static Logger log;
 
-	Caption* caption = nullptr;
-	Light* light = nullptr;
+	shared_ptr<Caption> caption = nullptr;
+	shared_ptr<Light> light = nullptr;
 
-	BobColor* defaultFGColor = BobColor::white;
-	BobColor* defaultAAColor = BobColor::darkerGray;
-	BobColor* defaultBGColor = BobColor::clear;
+	shared_ptr<BobColor> defaultFGColor = BobColor::white;
+	shared_ptr<BobColor> defaultAAColor = BobColor::darkerGray;
+	shared_ptr<BobColor> defaultBGColor = BobColor::clear;
 
-	BobColor* currentFGColor = BobColor::white;
-	BobColor* currentAAColor = BobColor::darkerGray;
-	BobColor* currentBGColor = BobColor::clear;
+	shared_ptr<BobColor> currentFGColor = BobColor::white;
+	shared_ptr<BobColor> currentAAColor = BobColor::darkerGray;
+	shared_ptr<BobColor> currentBGColor = BobColor::clear;
 
 	bool enabled = true;
 
 	StatusBarCaption();
-	StatusBarCaption(BGClientEngine* g);
+	StatusBarCaption(shared_ptr<BGClientEngine> g);
 
 	void setEnabled(bool b);
 
@@ -41,7 +41,7 @@ public:
 
 	void updateCaption(const string& s);
 
-	virtual void setColors(BobColor* fg, BobColor* aa, BobColor* bg);
+	virtual void setColors(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, shared_ptr<BobColor> bg);
 
 	void setDefaultColor();
 };

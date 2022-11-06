@@ -14,7 +14,7 @@
 Logger PingBackground::log = Logger("PingBackground");
 
 
-PingBackground::PingBackground(Engine* g)
+PingBackground::PingBackground(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }

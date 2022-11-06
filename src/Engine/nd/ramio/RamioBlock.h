@@ -19,7 +19,7 @@ public:
 
 
 	RamioBlock();
-	RamioBlock(Engine* g);
+	RamioBlock(shared_ptr<Engine> g);
 
 
 	

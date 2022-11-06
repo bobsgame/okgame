@@ -14,18 +14,18 @@
 Logger ScreenSprite::log = Logger("ScreenSprite");
 
 
-ScreenSprite::ScreenSprite(Engine* g, const string& name, const string& spriteName)
+ScreenSprite::ScreenSprite(shared_ptr<Engine> g, const string& name, const string& spriteName)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	initEntity(new EntityData(-1, name, spriteName, 0, 0));
+	initEntity(make_shared<EntityData>(-1, name, spriteName, 0, 0));
 
 	setRenderOrder(RenderOrder::OVER_TEXT);
 
 	getSpriteManager()->screenSpriteList.add(this);
 
-	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
 }
 
 float ScreenSprite::getScreenLeft()
@@ -150,7 +150,7 @@ void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 	}
 }
 
-void ScreenSprite::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
+void ScreenSprite::render(float alpha, shared_ptr<BobTexture> texture, shared_ptr<BobTexture> shadowTexture)
 { //=========================================================================================================================
 
 

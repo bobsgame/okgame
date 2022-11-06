@@ -14,11 +14,11 @@
 Logger GameString::log = Logger("GameString");
 
 
-GameString::GameString(Engine* g, int id)
+GameString::GameString(shared_ptr<Engine> g, int id)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = new GameStringData(id, "", "");
+	this->data = make_shared<GameStringData>(id, "", "");
 
 	for (int i = 0; i < (int)getEventManager()->gameStringList.size(); i++)
 	{
@@ -31,7 +31,7 @@ GameString::GameString(Engine* g, int id)
 	getEventManager()->gameStringList.add(this);
 }
 
-GameString::GameString(Engine* g, GameStringData* data)
+GameString::GameString(shared_ptr<Engine> g, shared_ptr<GameStringData> data)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -50,13 +50,13 @@ GameString::GameString(Engine* g, GameStringData* data)
 }
 
 //The following method was originally marked 'synchronized':
-void GameString::setData_S(GameStringData* data)
+void GameString::setData_S(shared_ptr<GameStringData> data)
 { //=========================================================================================================================
 	this->data = data;
 	setInitialized_S(true);
 }
 
-GameStringData* GameString::getData()
+shared_ptr<GameStringData> GameString::getData()
 {
 	return data;
 }

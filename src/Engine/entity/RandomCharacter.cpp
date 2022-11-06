@@ -14,7 +14,7 @@
 Logger RandomCharacter::log = Logger("RandomCharacter");
 
 
-RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car)
+RandomCharacter::RandomCharacter(shared_ptr<Engine> g, shared_ptr<Map> map, int spawnXPixels1X, int spawnYPixels1X, bool kid, bool adult, bool male, bool female, bool car)
 { //=========================================================================================================================
 
 	//DONE: randomly decide what kind of character to create
@@ -22,14 +22,14 @@ RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int sp
 	//spawn at mapX, mapY
 
 
-	EntityData* data = new EntityData(-1, "Random", "", spawnXPixels1X, spawnYPixels1X);
+	shared_ptr<EntityData> data = make_shared<EntityData>(-1, "Random", "", spawnXPixels1X, spawnYPixels1X);
 	initEntity(data);
 	initCharacter();
 
 
-	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
 
-	ArrayList<string>* spriteNameList = new ArrayList<string>;
+	ArrayList<string>* spriteNameList = make_shared<ArrayList><string>;
 
 	if (kid == true)
 	{
@@ -229,7 +229,7 @@ RandomCharacter::RandomCharacter(Engine* g, Map* map, int spawnXPixels1X, int sp
 	setY(mapY - (getMiddleY() - getY()));
 }
 
-Map* RandomCharacter::getCurrentMap()
+shared_ptr<Map> RandomCharacter::getCurrentMap()
 { //=========================================================================================================================
 
 
@@ -239,18 +239,18 @@ Map* RandomCharacter::getCurrentMap()
 }
 
 //The following method was originally marked 'synchronized':
-ByteArray* RandomCharacter::getByteBuffer_S()
+shared_ptr<ByteArray> RandomCharacter::getByteBuffer_S()
 { //=========================================================================================================================
 	return textureByteBuffer_S;
 }
 
 //The following method was originally marked 'synchronized':
-void RandomCharacter::setByteBuffer_S(ByteArray* bb)
+void RandomCharacter::setByteBuffer_S(shared_ptr<ByteArray> bb)
 { //=========================================================================================================================
 	textureByteBuffer_S = bb;
 }
 
-int RandomCharacter::selectRandomSet(Sprite* s)
+int RandomCharacter::selectRandomSet(shared_ptr<Sprite> s)
 { //=========================================================================================================================
 
 	int set = 0;
@@ -313,14 +313,14 @@ void RandomCharacter::createRandomTexture()
 		//               Thread::currentThread().setName("RandomCharacter_createRandomSpriteTexture");
 		//
 		//
-		//               ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
+		//               shared_ptr<ByteArray> bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
 		//               setByteBuffer_S(bb);
 		//            }
 		//         );
 		//      }
 		//      else
 		{
-			ByteArray* bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
+			shared_ptr<ByteArray> bb = sprite->createRandomSpriteTextureByteBuffer_S(eyeSet, skinSet, hairSet, shirtSet, pantsSet, shoeSet, carSet);
 			setByteBuffer_S(bb);
 		}
 
@@ -368,7 +368,7 @@ void RandomCharacter::update()
 			{
 				//we're waiting for the thread to finish generating the bytebuffer
 
-				ByteArray* bb = getByteBuffer_S();
+				shared_ptr<ByteArray> bb = getByteBuffer_S();
 				if (bb != nullptr)
 				{
 					uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
@@ -416,7 +416,7 @@ void RandomCharacter::update()
 					if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == true)
 					{
 						//handle walking through door.
-						Door* d = getMap()->getDoorByTYPEID(currentAreaTYPEIDTarget);
+						shared_ptr<Door> d = getMap()->getDoorByTYPEID(currentAreaTYPEIDTarget);
 
 						//walk towards x and y
 						int there = 0;
@@ -447,7 +447,7 @@ void RandomCharacter::update()
 						if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
 						{
 							//get current area x and y
-							Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+							shared_ptr<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 
 
 							//TODO: if the area is a single tile, just touching the edge should be fine.
@@ -589,7 +589,7 @@ void RandomCharacter::update()
 						if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
 						{
 							//get current area x and y
-							Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+							shared_ptr<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 
 
 							//avoid_nearest_entity(32);
@@ -614,7 +614,7 @@ void RandomCharacter::update()
 								currentAreaTYPEIDTarget = "stayHere";
 							}
 
-							if ((dynamic_cast<WarpArea*>(a) != nullptr) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
+							if ((dynamic_cast<shared_ptr<WarpArea>>(a) != nullptr) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
 							{
 								fadeOutAndDelete();
 							}
@@ -708,12 +708,12 @@ string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 
 		if (String::startsWith(nextTYPEIDTarget, "DOOR.") == true)
 		{
-			Door* d = getMap()->getDoorByTYPEID(nextTYPEIDTarget);
+			shared_ptr<Door> d = getMap()->getDoorByTYPEID(nextTYPEIDTarget);
 			distance = Math::distance(getMiddleX(), getMiddleY(), d->getMiddleX(), d->getMiddleY());
 		}
 		else
 		{
-			Area* n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
+			shared_ptr<Area> n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
 
 			distance = Math::distance(getMiddleX(), getMiddleY(), n->middleX(), n->middleY());
 		}
@@ -733,7 +733,7 @@ string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 	{
 		//go through all other entities, if this target is "only one allowed" and any of them have this area as a target, find another one.
 
-		Area* n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
+		shared_ptr<Area> n = getMap()->getAreaOrWarpAreaByTYPEID(nextTYPEIDTarget);
 
 		if (n != nullptr && n->onlyOneAllowed())
 		{
@@ -752,7 +752,7 @@ string RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
 { //=========================================================================================================================
 
 
-	Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+	shared_ptr<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 	string nextTargetTYPEID = a->connectionTYPEIDList()->get(Math::randLessThan(a->connectionTYPEIDList()->size()));
 
 
@@ -760,7 +760,7 @@ string RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
 	{
 		//go through all other entities, if this target is "only one allowed" and any of them have this area as a target, find another one.
 
-		Area* n = getMap()->getAreaOrWarpAreaByTYPEID(nextTargetTYPEID);
+		shared_ptr<Area> n = getMap()->getAreaOrWarpAreaByTYPEID(nextTargetTYPEID);
 
 		if (n != nullptr && n->onlyOneAllowed())
 		{

@@ -32,7 +32,7 @@ public:
 	ArrayList<string> importExport_gameUUIDs;
 
 	//this is populated from loadedGameTypes when sequence is loaded, if a name from gameUUIDs cannot be found it will not be in here and an error will be logged
-	ArrayList<GameType*>gameTypes;
+	ArrayList<shared_ptr<GameType>>gameTypes;
 
 	bool randomizeSequence = true;
 
@@ -159,7 +159,7 @@ public:
 	//=========================================================================================================================
 	string toBase64GZippedXML()
 	{//=========================================================================================================================
-		NetworkGameSequence *s = this;
+		shared_ptr<NetworkGameSequence >s = this;
 		NetworkGameSequence gs;
 		gs = *s;
 
@@ -172,7 +172,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	static NetworkGameSequence *fromBase64GZippedXML(string b64GZipXML)
+	static shared_ptr<NetworkGameSequence >fromBase64GZippedXML(string b64GZipXML)
 	{//=========================================================================================================================
 		string xml = FileUtils::unzipBase64StringToString(b64GZipXML);
 
@@ -189,7 +189,7 @@ public:
 		{
 			NetworkGameSequence gs;
 			ia >> BOOST_SERIALIZATION_NVP(gs);
-			NetworkGameSequence *s = new NetworkGameSequence();
+			shared_ptr<NetworkGameSequence >s = make_shared<NetworkGameSequence>();
 			*s = gs;
 
 			return s;

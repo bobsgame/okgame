@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	StuffButton(BGClientEngine* g);
+	StuffButton(shared_ptr<BGClientEngine> g);
 
 
 	virtual void init() override;

@@ -18,7 +18,7 @@ MenuPanel::MenuPanel()
 
 }
 
-MenuPanel::MenuPanel(Engine *e)
+MenuPanel::MenuPanel(shared_ptr<Engine >e)
 { //=========================================================================================================================
 
 	this->e = e;
@@ -30,7 +30,7 @@ MenuPanel::MenuPanel(Engine *e)
 	//   //outside panel, just attached to "nothing"
 	//   //----------------------
 	//
-	//   mainPanelLayout = new DialogLayout();
+	//   mainPanelLayout = make_shared<DialogLayout>();
 	//
 	//   //if(stuffMenu().lightTheme==true)
 	//   //mainPanelLayout.setTheme(GUIManager.lightThemeString);
@@ -42,7 +42,7 @@ MenuPanel::MenuPanel(Engine *e)
 	//   //this goes inside the scrollpane which goes inside mainPanelLayout. for the stuff menu we just attach it directly to mainPanelLayout because the submenus have scrollpanes.
 	//   //----------------------
 	//
-	//   insideScrollPaneLayout = new DialogLayout();
+	//   insideScrollPaneLayout = make_shared<DialogLayout>();
 	//   insideScrollPaneLayout->setTheme(GUIManager::emptyDialogLayoutTheme);
 	//   insideScrollPaneLayout->setCanAcceptKeyboardFocus(false);
 }
@@ -258,12 +258,12 @@ void MenuPanel::render()
 }
 
 //
-//BGClientEngine* MenuPanel::getClientGameEngine()
+//shared_ptr<BGClientEngine> MenuPanel::getClientGameEngine()
 //{
 //	return Main::gameEngine;
 //}
 //
-//Clock* MenuPanel::getClock()
+//shared_ptr<Clock> MenuPanel::getClock()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -272,7 +272,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->clock;
 //}
 //
-//GUIManager* MenuPanel::getGUIManager()
+//shared_ptr<GUIManager> MenuPanel::getGUIManager()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -281,7 +281,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->guiManager;
 //}
 //
-//StuffMenu* MenuPanel::getStuffMenu()
+//shared_ptr<StuffMenu> MenuPanel::getStuffMenu()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -290,7 +290,7 @@ void MenuPanel::render()
 //	return getGUIManager()->stuffMenu;
 //}
 //
-//GameStore* MenuPanel::getGameStore()
+//shared_ptr<GameStore> MenuPanel::getGameStore()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -299,7 +299,7 @@ void MenuPanel::render()
 //	return getGUIManager()->gameStore;
 //}
 //
-//PlayerEditMenu* MenuPanel::getPlayerEditMenu()
+//shared_ptr<PlayerEditMenu> MenuPanel::getPlayerEditMenu()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -308,7 +308,7 @@ void MenuPanel::render()
 //	return getGUIManager()->playerEditMenu;
 //}
 //
-//Player* MenuPanel::getPlayer()
+//shared_ptr<Player> MenuPanel::getPlayer()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -326,7 +326,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->nD;
 //}
 //
-//Wallet* MenuPanel::getWallet()
+//shared_ptr<Wallet> MenuPanel::getWallet()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -335,7 +335,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->wallet;
 //}
 //
-//FriendManager* MenuPanel::getFriendManager()
+//shared_ptr<FriendManager> MenuPanel::getFriendManager()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -344,7 +344,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->friendManager;
 //}
 //
-//StatusBar* MenuPanel::getStatusBar()
+//shared_ptr<StatusBar> MenuPanel::getStatusBar()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -353,7 +353,7 @@ void MenuPanel::render()
 //	return getClientGameEngine()->statusBar;
 //}
 //
-//NotificationManager* MenuPanel::getNotificationManager()
+//shared_ptr<NotificationManager> MenuPanel::getNotificationManager()
 //{
 //	if (getClientGameEngine() == nullptr)
 //	{
@@ -362,12 +362,12 @@ void MenuPanel::render()
 //	return getStatusBar()->notificationManager;
 //}
 //
-//TCPServerConnection* MenuPanel::getServerConnection()
+//shared_ptr<TCPServerConnection> MenuPanel::getServerConnection()
 //{
 //	return BobNet::tcpServerConnection;
 //}
 //
-//GameSave* MenuPanel::getGameSave()
+//shared_ptr<GameSave> MenuPanel::getGameSave()
 //{
 //	return getServerConnection()->getGameSave_S();
 //}

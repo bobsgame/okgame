@@ -15,7 +15,7 @@ StatusBarButton::StatusBarButton()
 { //=========================================================================================================================
 }
 
-StatusBarButton::StatusBarButton(BGClientEngine* g)
+StatusBarButton::StatusBarButton(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================
 	this->e = g;
 }

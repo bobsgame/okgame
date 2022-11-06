@@ -30,7 +30,7 @@ public:
 
 	static Logger log;
 
-	BobColor* color = BobColor::black;
+	shared_ptr<BobColor> color = BobColor::black;
 
 
 private:
@@ -57,18 +57,18 @@ private:
 	/// speed should be low, 0.0f01f * ticks(16) = 0.0f16f* 60 fps = 0.96 seconds to full opacity.
 	/// </summary>
 public:
-	ScreenOverlay(Engine* g);
+	ScreenOverlay(shared_ptr<Engine> g);
 
 
 	void init();
 
 
-	void doTransition(BobColor* color, float fromAlpha, float toAlpha, int ticks);
+	void doTransition(shared_ptr<BobColor> color, float fromAlpha, float toAlpha, int ticks);
 
 
-	void doToAndFromTransition(BobColor* color, int ticks, float toAlpha);
+	void doToAndFromTransition(shared_ptr<BobColor> color, int ticks, float toAlpha);
 
-	void setInstantOverlay(BobColor* color, float alpha);
+	void setInstantOverlay(shared_ptr<BobColor> color, float alpha);
 
 
 	void update();

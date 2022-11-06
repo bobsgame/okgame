@@ -48,7 +48,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   autoZoomLabel = new Label("Auto Zoom Camera To Fit Room");
+	//   autoZoomLabel = make_shared<Label>("Auto Zoom Camera To Fit Room");
 	//   autoZoomLabel->setCanAcceptKeyboardFocus(false);
 	//   autoZoomLabel->setLabelFor(autoZoomToggleButton);
 	//
@@ -66,7 +66,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   playerPhysicsLabel = new Label("Player Physics");
+	//   playerPhysicsLabel = make_shared<Label>("Player Physics");
 	//   playerPhysicsLabel->setCanAcceptKeyboardFocus(false);
 	//   playerPhysicsLabel->setLabelFor(playerPhysicsToggleButton);
 	//
@@ -84,7 +84,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   cameraPhysicsLabel = new Label("Camera Physics");
+	//   cameraPhysicsLabel = make_shared<Label>("Camera Physics");
 	//   cameraPhysicsLabel->setCanAcceptKeyboardFocus(false);
 	//   cameraPhysicsLabel->setLabelFor(cameraPhysicsToggleButton);
 	//
@@ -113,7 +113,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//
 	//   playerWalkSpeedScrollbar->setValue((int)(100), true);
 	//
-	//   playerWalkSpeedLabel = new Label("Player Walk Speed: ");
+	//   playerWalkSpeedLabel = make_shared<Label>("Player Walk Speed: ");
 	//   playerWalkSpeedLabel->setCanAcceptKeyboardFocus(false);
 	//   playerWalkSpeedLabel->setLabelFor(playerWalkSpeedScrollbar);
 	//
@@ -122,7 +122,7 @@ void SettingsPanel::initGameSettingsSubPanel()
 	//   //group layout
 	//   //-----------------------------
 	//
-	//   gameSettingsDialogLayout = new DialogLayout();
+	//   gameSettingsDialogLayout = make_shared<DialogLayout>();
 	//   gameSettingsDialogLayout->setCanAcceptKeyboardFocus(false);
 	//
 	//   gameSettingsDialogLayout->setHorizontalGroup(gameSettingsDialogLayout->createParallelGroup(gameSettingsDialogLayout->createSequentialGroup(gameSettingsDialogLayout->createParallelGroup(autoZoomLabel, playerPhysicsLabel, cameraPhysicsLabel), gameSettingsDialogLayout->createParallelGroup(autoZoomToggleButton, playerPhysicsToggleButton, cameraPhysicsToggleButton)), gameSettingsDialogLayout->createSequentialGroup(gameSettingsDialogLayout->createParallelGroup(playerWalkSpeedLabel), gameSettingsDialogLayout->createParallelGroup(playerWalkSpeedScrollbar), gameSettingsDialogLayout->createParallelGroup(playerWalkSpeedValueLabel))));
@@ -155,7 +155,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   whiteStatusBarToggleButtonLabel = new Label("Toggle Light Theme");
+	//   whiteStatusBarToggleButtonLabel = make_shared<Label>("Toggle Light Theme");
 	//   whiteStatusBarToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   whiteStatusBarToggleButtonLabel->setLabelFor(whiteThemeToggleButton);
 	//
@@ -190,7 +190,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//   );
 	//
 	//
-	//   statusBarGlossLabel = new Label("Status Bar Gloss: ");
+	//   statusBarGlossLabel = make_shared<Label>("Status Bar Gloss: ");
 	//   statusBarGlossLabel->setCanAcceptKeyboardFocus(false);
 	//   statusBarGlossLabel->setLabelFor(statusBarGlossScrollbar);
 	//
@@ -202,7 +202,7 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//   //		grayscaleToggleButton.setCanAcceptKeyboardFocus(false);
 	//   //		grayscaleToggleButton.setActive(false);//Main.getGame().grayscale);
 	//   //		//grayscaleToggleButton.setTooltipContent("Toggle grayscale");
-	//   //		grayscaleToggleButton.addCallback(new Runnable()
+	//   //		grayscaleToggleButton.addCallback(make_shared<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -210,12 +210,12 @@ void SettingsPanel::initGUISettingsSubPanel()
 	//   //			}
 	//   //		});
 	//   //
-	//   //		grayscaleToggleButtonLabel = new Label("Grayscale");
+	//   //		grayscaleToggleButtonLabel = make_shared<Label>("Grayscale");
 	//   //		grayscaleToggleButtonLabel.setCanAcceptKeyboardFocus(false);
 	//   //		grayscaleToggleButtonLabel.setLabelFor(grayscaleToggleButton);
 	//
 	//
-	//   guiSettingsDialogLayout = new DialogLayout();
+	//   guiSettingsDialogLayout = make_shared<DialogLayout>();
 	//   guiSettingsDialogLayout->setCanAcceptKeyboardFocus(false);
 	//
 	//
@@ -244,7 +244,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   hq2xToggleButtonLabel = new Label("Generate HQ2X Background");
+	//   hq2xToggleButtonLabel = make_shared<Label>("Generate HQ2X Background");
 	//   hq2xToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   hq2xToggleButtonLabel->setLabelFor(hq2xToggleButton);
 	//
@@ -262,7 +262,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   fboToggleButtonLabel = new Label("Use Framebuffer Objects");
+	//   fboToggleButtonLabel = make_shared<Label>("Use Framebuffer Objects");
 	//   fboToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   fboToggleButtonLabel->setLabelFor(fboToggleButton);
 	//
@@ -280,7 +280,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//      }
 	//   );
 	//
-	//   shadersToggleButtonLabel = new Label("Use Shaders");
+	//   shadersToggleButtonLabel = make_shared<Label>("Use Shaders");
 	//   shadersToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   shadersToggleButtonLabel->setLabelFor(shadersToggleButton);
 	//
@@ -299,7 +299,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //		gammaScrollbar.setValue(100);//(int)(Main.getGame().gamma*100), true);
 	//   //
-	//   //		gammaScrollbar.addCallback(new Runnable()
+	//   //		gammaScrollbar.addCallback(make_shared<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -313,7 +313,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		gammaScrollbarLabel = new Label("Gamma: ");
+	//   //		gammaScrollbarLabel = make_shared<Label>("Gamma: ");
 	//   //		gammaScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		gammaScrollbarLabel.setLabelFor(gammaScrollbar);
 	//   //
@@ -331,7 +331,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //		contrastScrollbar.setValue(100);//(int)(Main.getGame().contrast*100), true);
 	//   //
 	//   //
-	//   //		contrastScrollbar.addCallback(new Runnable()
+	//   //		contrastScrollbar.addCallback(make_shared<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -345,7 +345,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		contrastScrollbarLabel = new Label("Contrast: ");
+	//   //		contrastScrollbarLabel = make_shared<Label>("Contrast: ");
 	//   //		contrastScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		contrastScrollbarLabel.setLabelFor(contrastScrollbar);
 	//   //
@@ -364,7 +364,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //		brightnessScrollbar.setValue(100);//(int)(Main.getGame().brightness*100), true);
 	//   //
 	//   //
-	//   //		brightnessScrollbar.addCallback(new Runnable()
+	//   //		brightnessScrollbar.addCallback(make_shared<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -378,7 +378,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		brightnessScrollbarLabel = new Label("Brightness: ");
+	//   //		brightnessScrollbarLabel = make_shared<Label>("Brightness: ");
 	//   //		brightnessScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		brightnessScrollbarLabel.setLabelFor(brightnessScrollbar);
 	//   //
@@ -397,7 +397,7 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //		saturationScrollbar.setValue(100);//(int)(Main.getGame().saturation*100), true);
 	//   //
-	//   //		saturationScrollbar.addCallback(new Runnable()
+	//   //		saturationScrollbar.addCallback(make_shared<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -411,13 +411,13 @@ void SettingsPanel::initGraphicsSettingsSubPanel()
 	//   //
 	//   //
 	//   //
-	//   //		saturationScrollbarLabel = new Label("Saturation: ");
+	//   //		saturationScrollbarLabel = make_shared<Label>("Saturation: ");
 	//   //		saturationScrollbarLabel.setCanAcceptKeyboardFocus(false);
 	//   //		saturationScrollbarLabel.setLabelFor(saturationScrollbar);
 	//   //
 	//
 	//
-	//   graphicsSettingsDialogLayout = new DialogLayout();
+	//   graphicsSettingsDialogLayout = make_shared<DialogLayout>();
 	//   //graphicsSettingsDialogLayout.setTheme("dark-paneldialoglayout");
 	//   graphicsSettingsDialogLayout->setCanAcceptKeyboardFocus(false);
 	//

@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//ArrayList<DialogLayout*> itemDialogLayout;
+	//ArrayList<shared_ptr<DialogLayout>> itemDialogLayout;
 
 	//DialogLayout::Group* horizontalGroup = nullptr;
 	//DialogLayout::Group* verticalGroup = nullptr;

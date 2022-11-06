@@ -12,95 +12,95 @@
 Logger BobFont::log = Logger("BobFont");
 
 
-TTF_Font* BobFont::ttf_bobsgame_8 = nullptr;
-TTF_Font* BobFont::ttf_bobsgame_16 = nullptr;
-TTF_Font* BobFont::ttf_6 = nullptr;
-TTF_Font* BobFont::ttf_7 = nullptr;
-TTF_Font* BobFont::ttf_8 = nullptr;
-TTF_Font* BobFont::ttf_9 = nullptr;
-TTF_Font* BobFont::ttf_10 = nullptr;
-TTF_Font* BobFont::ttf_11 = nullptr;
-TTF_Font* BobFont::ttf_12 = nullptr;
-TTF_Font* BobFont::ttf_13 = nullptr;
-TTF_Font* BobFont::ttf_14 = nullptr;
-TTF_Font* BobFont::ttf_15 = nullptr;
-TTF_Font* BobFont::ttf_16 = nullptr;
-TTF_Font* BobFont::ttf_17 = nullptr;
-TTF_Font* BobFont::ttf_18 = nullptr;
-TTF_Font* BobFont::ttf_19 = nullptr;
-TTF_Font* BobFont::ttf_20 = nullptr;
-TTF_Font* BobFont::ttf_21 = nullptr;
-TTF_Font* BobFont::ttf_22 = nullptr;
-TTF_Font* BobFont::ttf_23 = nullptr;
-TTF_Font* BobFont::ttf_24 = nullptr;
-TTF_Font* BobFont::ttf_25 = nullptr;
-TTF_Font* BobFont::ttf_26 = nullptr;
-TTF_Font* BobFont::ttf_27 = nullptr;
-TTF_Font* BobFont::ttf_28 = nullptr;
-TTF_Font* BobFont::ttf_29 = nullptr;
-TTF_Font* BobFont::ttf_30 = nullptr;
-TTF_Font* BobFont::ttf_31 = nullptr;
-TTF_Font* BobFont::ttf_32 = nullptr;
-TTF_Font* BobFont::ttf_48 = nullptr;
-TTF_Font* BobFont::ttf_64 = nullptr;
-TTF_Font* BobFont::ttf_outline_6 = nullptr;
-TTF_Font* BobFont::ttf_outline_7 = nullptr;
-TTF_Font* BobFont::ttf_outline_8 = nullptr;
-TTF_Font* BobFont::ttf_outline_9 = nullptr;
-TTF_Font* BobFont::ttf_outline_10 = nullptr;
-TTF_Font* BobFont::ttf_outline_11 = nullptr;
-TTF_Font* BobFont::ttf_outline_12 = nullptr;
-TTF_Font* BobFont::ttf_outline_13 = nullptr;
-TTF_Font* BobFont::ttf_outline_14 = nullptr;
-TTF_Font* BobFont::ttf_outline_15 = nullptr;
-TTF_Font* BobFont::ttf_outline_16 = nullptr;
-TTF_Font* BobFont::ttf_outline_17 = nullptr;
-TTF_Font* BobFont::ttf_outline_18 = nullptr;
-TTF_Font* BobFont::ttf_outline_19 = nullptr;
-TTF_Font* BobFont::ttf_outline_20 = nullptr;
-TTF_Font* BobFont::ttf_outline_21 = nullptr;
-TTF_Font* BobFont::ttf_outline_22 = nullptr;
-TTF_Font* BobFont::ttf_outline_23 = nullptr;
-TTF_Font* BobFont::ttf_outline_24 = nullptr;
-TTF_Font* BobFont::ttf_outline_25 = nullptr;
-TTF_Font* BobFont::ttf_outline_26 = nullptr;
-TTF_Font* BobFont::ttf_outline_27 = nullptr;
-TTF_Font* BobFont::ttf_outline_28 = nullptr;
-TTF_Font* BobFont::ttf_outline_29 = nullptr;
-TTF_Font* BobFont::ttf_outline_30 = nullptr;
-TTF_Font* BobFont::ttf_outline_31 = nullptr;
-TTF_Font* BobFont::ttf_outline_32 = nullptr;
-TTF_Font* BobFont::ttf_outline_48 = nullptr;
-TTF_Font* BobFont::ttf_outline_64 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_bobsgame_8 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_bobsgame_16 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_6 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_7 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_8 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_9 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_10 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_11 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_12 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_13 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_14 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_15 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_16 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_17 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_18 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_19 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_20 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_21 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_22 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_23 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_24 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_25 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_26 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_27 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_28 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_29 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_30 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_31 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_32 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_48 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_64 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_6 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_7 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_8 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_9 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_10 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_11 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_12 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_13 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_14 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_15 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_16 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_17 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_18 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_19 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_20 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_21 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_22 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_23 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_24 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_25 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_26 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_27 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_28 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_29 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_30 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_31 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_32 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_48 = nullptr;
+TTF_shared_ptr<Font> BobFont::ttf_outline_64 = nullptr;
 
 
-BobFont* BobFont::font_32 = nullptr;
-BobFont* BobFont::font_bob_16 = nullptr;
-BobFont* BobFont::font_bob_16_shadow2 = nullptr;
-BobFont* BobFont::font_bob_8 = nullptr;
-BobFont* BobFont::font_bob_8_shadow1 = nullptr;
-BobFont* BobFont::font_normal_11 = nullptr;
-BobFont* BobFont::font_normal_11_outlined = nullptr;
-BobFont* BobFont::font_normal_11_shadow1 = nullptr;
-BobFont* BobFont::font_normal_16 = nullptr;
-BobFont* BobFont::font_normal_16_outlined_smooth = nullptr;
-BobFont* BobFont::font_normal_16_outlined_blocky = nullptr;
-BobFont* BobFont::font_normal_16_outlined_blocky_shadow1 = nullptr;
-BobFont* BobFont::font_normal_16_shadow1 = nullptr;
-BobFont* BobFont::font_normal_8 = nullptr;
-BobFont* BobFont::font_normal_8_outlined = nullptr;
-BobFont* BobFont::font_normal_8_outlined_shadow1 = nullptr;
-BobFont* BobFont::font_normal_8_outlined_shadow2 = nullptr;
-BobFont* BobFont::font_normal_8_shadow1 = nullptr;
-BobFont* BobFont::font_normal_8_shadow3 = nullptr;
-BobFont* BobFont::font_small_16 = nullptr;
-BobFont* BobFont::font_small_16_shadow3 = nullptr;
-BobFont* BobFont::font_small_16_outlined_smooth = nullptr;
-BobFont* BobFont::font_small_16_outlined_smooth_shadow = nullptr;
-BobFont* BobFont::font_small_16_outlined_blocky = nullptr;
-BobFont* BobFont::font_small_8 = nullptr;
-BobFont* BobFont::font_small_8_outlined = nullptr;
-BobFont* BobFont::font_small_8_shadow1 = nullptr;
+shared_ptr<BobFont> BobFont::font_32 = nullptr;
+shared_ptr<BobFont> BobFont::font_bob_16 = nullptr;
+shared_ptr<BobFont> BobFont::font_bob_16_shadow2 = nullptr;
+shared_ptr<BobFont> BobFont::font_bob_8 = nullptr;
+shared_ptr<BobFont> BobFont::font_bob_8_shadow1 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_11 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_11_outlined = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_11_shadow1 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_16 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_16_outlined_smooth = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_16_outlined_blocky = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_16_outlined_blocky_shadow1 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_16_shadow1 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_8 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_8_outlined = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_8_outlined_shadow1 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_8_outlined_shadow2 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_8_shadow1 = nullptr;
+shared_ptr<BobFont> BobFont::font_normal_8_shadow3 = nullptr;
+shared_ptr<BobFont> BobFont::font_small_16 = nullptr;
+shared_ptr<BobFont> BobFont::font_small_16_shadow3 = nullptr;
+shared_ptr<BobFont> BobFont::font_small_16_outlined_smooth = nullptr;
+shared_ptr<BobFont> BobFont::font_small_16_outlined_smooth_shadow = nullptr;
+shared_ptr<BobFont> BobFont::font_small_16_outlined_blocky = nullptr;
+shared_ptr<BobFont> BobFont::font_small_8 = nullptr;
+shared_ptr<BobFont> BobFont::font_small_8_outlined = nullptr;
+shared_ptr<BobFont> BobFont::font_small_8_shadow1 = nullptr;
 
 //=========================================================================================================================
 BobFont::BobFont(const string& filename, int maxCharHeight, int blockHeight, bool outlined)
@@ -239,9 +239,9 @@ void BobFont::initFonts()
 	log.debug("Load outline fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
-	//FreeTypeFontGenerator *generator = new FreeTypeFontGenerator(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
-	//BitmapFont *font12 = generator->generateFont(12); // font size 12 pixels
-	//BitmapFont *font25 = generator->generateFont(25); // font size 25 pixels
+	//shared_ptr<FreeTypeFontGenerator >generator = make_shared<FreeTypeFontGenerator>(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
+	//shared_ptr<BitmapFont >font12 = generator->generateFont(12); // font size 12 pixels
+	//shared_ptr<BitmapFont >font25 = generator->generateFont(25); // font size 25 pixels
 	//generator->dispose(); // don't forget to dispose to avoid memory leaks!
 
 
@@ -255,41 +255,41 @@ void BobFont::initFonts()
 	//fontHugeByteArray = FileUtils::HARDWARE_load_file("assets/fonts/font_huge.bin");
 
 
-	font_32 = new BobFont("data/fonts/font_32.bin", 32, 64, false);
+	font_32 = make_shared<BobFont>("data/fonts/font_32.bin", 32, 64, false);
 	font_32->blockWidth = 64;
 
-	font_bob_16 = new BobFont("data/fonts/font_bob_16_hq2x.bin", 36, 32, false); //fix height
-	font_bob_16_shadow2 = new BobFont("data/fonts/font_bob_16_hq2x_shadow2.bin", 38, 32, false); //fix height
+	font_bob_16 = make_shared<BobFont>("data/fonts/font_bob_16_hq2x.bin", 36, 32, false); //fix height
+	font_bob_16_shadow2 = make_shared<BobFont>("data/fonts/font_bob_16_hq2x_shadow2.bin", 38, 32, false); //fix height
 
-	font_bob_8 = new BobFont("data/fonts/font_bob_8.bin", 20, 16, false); //fix height
-	font_bob_8_shadow1 = new BobFont("data/fonts/font_bob_8_shadow1.bin", 22, 16, false); //fix height
+	font_bob_8 = make_shared<BobFont>("data/fonts/font_bob_8.bin", 20, 16, false); //fix height
+	font_bob_8_shadow1 = make_shared<BobFont>("data/fonts/font_bob_8_shadow1.bin", 22, 16, false); //fix height
 
-	font_normal_11 = new BobFont("data/fonts/font_normal_11.bin", 15, 24, false);
-	font_normal_11_outlined = new BobFont("data/fonts/font_normal_11_outlined.bin", 17, 24, true);
-	font_normal_11_shadow1 = new BobFont("data/fonts/font_normal_11_shadow1.bin", 16, 24, false);
+	font_normal_11 = make_shared<BobFont>("data/fonts/font_normal_11.bin", 15, 24, false);
+	font_normal_11_outlined = make_shared<BobFont>("data/fonts/font_normal_11_outlined.bin", 17, 24, true);
+	font_normal_11_shadow1 = make_shared<BobFont>("data/fonts/font_normal_11_shadow1.bin", 16, 24, false);
 
-	font_normal_16 = new BobFont("data/fonts/font_normal_16_hq2x.bin", 20, 32, false);
-	font_normal_16_outlined_smooth = new BobFont("data/fonts/font_normal_16_hq2x_outlined.bin", 22, 32, true);
-	font_normal_16_outlined_blocky = new BobFont("data/fonts/font_normal_16_nearest2x_outlined.bin", 22, 32, true);
-	font_normal_16_outlined_blocky_shadow1 = new BobFont("data/fonts/font_normal_16_nearest2x_outlined_shadow1.bin", 23, 32, true);
-	font_normal_16_shadow1 = new BobFont("data/fonts/font_normal_16_hq2x_shadow.bin", 22, 32, false);
+	font_normal_16 = make_shared<BobFont>("data/fonts/font_normal_16_hq2x.bin", 20, 32, false);
+	font_normal_16_outlined_smooth = make_shared<BobFont>("data/fonts/font_normal_16_hq2x_outlined.bin", 22, 32, true);
+	font_normal_16_outlined_blocky = make_shared<BobFont>("data/fonts/font_normal_16_nearest2x_outlined.bin", 22, 32, true);
+	font_normal_16_outlined_blocky_shadow1 = make_shared<BobFont>("data/fonts/font_normal_16_nearest2x_outlined_shadow1.bin", 23, 32, true);
+	font_normal_16_shadow1 = make_shared<BobFont>("data/fonts/font_normal_16_hq2x_shadow.bin", 22, 32, false);
 
-	font_normal_8 = new BobFont("data/fonts/font_normal_8.bin", 10, 16, false);
-	font_normal_8_outlined = new BobFont("data/fonts/font_normal_8_outlined.bin", 12, 16, true);
-	font_normal_8_outlined_shadow1 = new BobFont("data/fonts/font_normal_8_outlined_shadow1.bin", 13, 16, true);
-	font_normal_8_outlined_shadow2 = new BobFont("data/fonts/font_normal_8_outlined_shadow2.bin", 14, 16, true);
-	font_normal_8_shadow1 = new BobFont("data/fonts/font_normal_8_shadow1.bin", 11, 16, false);
-	font_normal_8_shadow3 = new BobFont("data/fonts/font_normal_8_shadow3.bin", 13, 16, false);
+	font_normal_8 = make_shared<BobFont>("data/fonts/font_normal_8.bin", 10, 16, false);
+	font_normal_8_outlined = make_shared<BobFont>("data/fonts/font_normal_8_outlined.bin", 12, 16, true);
+	font_normal_8_outlined_shadow1 = make_shared<BobFont>("data/fonts/font_normal_8_outlined_shadow1.bin", 13, 16, true);
+	font_normal_8_outlined_shadow2 = make_shared<BobFont>("data/fonts/font_normal_8_outlined_shadow2.bin", 14, 16, true);
+	font_normal_8_shadow1 = make_shared<BobFont>("data/fonts/font_normal_8_shadow1.bin", 11, 16, false);
+	font_normal_8_shadow3 = make_shared<BobFont>("data/fonts/font_normal_8_shadow3.bin", 13, 16, false);
 
-	font_small_16 = new BobFont("data/fonts/font_small_16_hq2x.bin", 18, 32, false);
-	font_small_16_shadow3 = new BobFont("data/fonts/font_small_16_hq2x_shadow3.bin", 20, 32, false);
-	font_small_16_outlined_smooth = new BobFont("data/fonts/font_small_16_hq2x_outlined.bin", 20, 32, true);
-	font_small_16_outlined_smooth_shadow = new BobFont("data/fonts/font_small_16_hq2x_outlined_shadow2.bin", 20, 32, true);
-	font_small_16_outlined_blocky = new BobFont("data/fonts/font_small_16_nearest2x_outlined.bin", 20, 32, true);
+	font_small_16 = make_shared<BobFont>("data/fonts/font_small_16_hq2x.bin", 18, 32, false);
+	font_small_16_shadow3 = make_shared<BobFont>("data/fonts/font_small_16_hq2x_shadow3.bin", 20, 32, false);
+	font_small_16_outlined_smooth = make_shared<BobFont>("data/fonts/font_small_16_hq2x_outlined.bin", 20, 32, true);
+	font_small_16_outlined_smooth_shadow = make_shared<BobFont>("data/fonts/font_small_16_hq2x_outlined_shadow2.bin", 20, 32, true);
+	font_small_16_outlined_blocky = make_shared<BobFont>("data/fonts/font_small_16_nearest2x_outlined.bin", 20, 32, true);
 
-	font_small_8 = new BobFont("data/fonts/font_small_8.bin", 9, 16, false);
-	font_small_8_outlined = new BobFont("data/fonts/font_small_8_outlined.bin", 11, 16, true);
-	font_small_8_shadow1 = new BobFont("data/fonts/font_small_8_shadow1.bin", 10, 16, false);
+	font_small_8 = make_shared<BobFont>("data/fonts/font_small_8.bin", 9, 16, false);
+	font_small_8_outlined = make_shared<BobFont>("data/fonts/font_small_8_outlined.bin", 11, 16, true);
+	font_small_8_shadow1 = make_shared<BobFont>("data/fonts/font_small_8_shadow1.bin", 10, 16, false);
 
 
 	now = SDL_GetPerformanceCounter();
@@ -1043,7 +1043,7 @@ int BobFont::getFontIndexForChar(char c)
 
 
 //=========================================================================================================================
-int BobFont::getNextWordLength(const string& text, int in_position, BobFont* font)
+int BobFont::getNextWordLength(const string& text, int in_position, shared_ptr<BobFont> font)
 {//=========================================================================================================================
 
 	int next_word_length = 0;
@@ -1102,7 +1102,7 @@ bool BobFont::isCurrentPositionANewline(const string& t, int position)
 
 
 //=========================================================================================================================
-int BobFont::getFontPixelValueAtIndex(int index, BobFont* font)
+int BobFont::getFontPixelValueAtIndex(int index, shared_ptr<BobFont> font)
 {//=========================================================================================================================
 
 	if(font==nullptr || font == NULL)
@@ -1125,7 +1125,7 @@ int BobFont::getFontPixelValueAtIndex(int index, BobFont* font)
 
 
 //=========================================================================================================================
-int BobFont::getCharWidth(int letter_index, BobFont* font)
+int BobFont::getCharWidth(int letter_index, shared_ptr<BobFont> font)
 {//=========================================================================================================================
 
 	if (letter_index == -1)

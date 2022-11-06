@@ -16,7 +16,7 @@
 Logger GameStoreButton::log = Logger("GameStoreButton");
 
 
-GameStoreButton::GameStoreButton(BGClientEngine* g)
+GameStoreButton::GameStoreButton(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================
 
 	this->e = g;

@@ -14,7 +14,7 @@
 Logger GameSave::log = Logger("GameSave");
 
 
-GameSave::GameSave()//ResultSet* databaseResultSet)
+GameSave::GameSave()//shared_ptr<ResultSet> databaseResultSet)
 { //===============================================================================================
 
 	//   try
@@ -196,38 +196,38 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 	}
 
 
-	//if(variableName.equals("userID"))						{try{userID = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return new Integer(userID);}
+	//if(variableName.equals("userID"))						{try{userID = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return make_shared<Integer>(userID);}
 
-	//if(variableName.equals("emailAddress"))				{emailAddress = new String(value); return emailAddress;}
-	//else if(variableName.equals("passwordHash"))				{passwordHash = new String(value); return passwordHash;}
-	//else if(variableName.equals("accountVerified"))			{try{accountVerified = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return new Integer(accountVerified);}
-	//else if(variableName.equals("verificationHash"))			{verificationHash = new String(value); return verificationHash;}
-	//else if(variableName.equals("lastPasswordResetTime"))		{try{lastPasswordResetTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return new Long(lastPasswordResetTime);}
-	//else if(variableName.equals("accountCreatedTime"))			{try{accountCreatedTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return new Long(accountCreatedTime);}
-	//else if(variableName.equals("accountVerifiedTime"))		{try{accountVerifiedTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return new Long(accountVerifiedTime);}
-	//else if(variableName.equals("firstLoginTime"))				{try{firstLoginTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return new Long(firstLoginTime);}
-	//else if(variableName.equals("lastLoginTime"))					{try{lastLoginTime 	= Long.parseLong(value);}catch(NumberFormatException ex){return null;} return new Long(lastLoginTime);}
-	//else if(variableName.equals("lastSeenTime"))					{try{lastSeenTime 	= Long.parseLong(value);}catch(NumberFormatException ex){return null;} return new Long(lastSeenTime);}
-	//else if(variableName.equals("timesLoggedIn"))				{try{timesLoggedIn = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return new Integer(timesLoggedIn);}
-	//else if(variableName.equals("firstIP"))					{firstIP = new String(value); return firstIP;}
-	//else if(variableName.equals("lastIP"))						{lastIP = new String(value); return lastIP;}
-	//if(variableName.equals("realName"))					{realName 	= new String(value); return realName;}
-	//else if(variableName.equals("birthdayTime"))				{try{birthdayTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return new Long(birthdayTime);}
-	//else if(variableName.equals("facebookID"))					{facebookID 	= new String(value); return facebookID;}
-	//else if(variableName.equals("facebookAccessToken"))		{facebookAccessToken 	= new String(value); return facebookAccessToken;}
+	//if(variableName.equals("emailAddress"))				{emailAddress = make_shared<String>(value); return emailAddress;}
+	//else if(variableName.equals("passwordHash"))				{passwordHash = make_shared<String>(value); return passwordHash;}
+	//else if(variableName.equals("accountVerified"))			{try{accountVerified = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return make_shared<Integer>(accountVerified);}
+	//else if(variableName.equals("verificationHash"))			{verificationHash = make_shared<String>(value); return verificationHash;}
+	//else if(variableName.equals("lastPasswordResetTime"))		{try{lastPasswordResetTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return make_shared<Long>(lastPasswordResetTime);}
+	//else if(variableName.equals("accountCreatedTime"))			{try{accountCreatedTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return make_shared<Long>(accountCreatedTime);}
+	//else if(variableName.equals("accountVerifiedTime"))		{try{accountVerifiedTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return make_shared<Long>(accountVerifiedTime);}
+	//else if(variableName.equals("firstLoginTime"))				{try{firstLoginTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return make_shared<Long>(firstLoginTime);}
+	//else if(variableName.equals("lastLoginTime"))					{try{lastLoginTime 	= Long.parseLong(value);}catch(NumberFormatException ex){return null;} return make_shared<Long>(lastLoginTime);}
+	//else if(variableName.equals("lastSeenTime"))					{try{lastSeenTime 	= Long.parseLong(value);}catch(NumberFormatException ex){return null;} return make_shared<Long>(lastSeenTime);}
+	//else if(variableName.equals("timesLoggedIn"))				{try{timesLoggedIn = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return make_shared<Integer>(timesLoggedIn);}
+	//else if(variableName.equals("firstIP"))					{firstIP = make_shared<String>(value); return firstIP;}
+	//else if(variableName.equals("lastIP"))						{lastIP = make_shared<String>(value); return lastIP;}
+	//if(variableName.equals("realName"))					{realName 	= make_shared<String>(value); return realName;}
+	//else if(variableName.equals("birthdayTime"))				{try{birthdayTime = Long.parseLong(value);}catch(NumberFormatException ex){return null;} return make_shared<Long>(birthdayTime);}
+	//else if(variableName.equals("facebookID"))					{facebookID 	= make_shared<String>(value); return facebookID;}
+	//else if(variableName.equals("facebookAccessToken"))		{facebookAccessToken 	= make_shared<String>(value); return facebookAccessToken;}
 
-	//else if(variableName.equals("facebookEmail"))			{facebookEmail 	= new String(value); return facebookEmail;}
-	//else if(variableName.equals("facebookBirthday"))		{facebookBirthday 	= new String(value); return facebookBirthday;}
-	//else if(variableName.equals("facebookFirstName"))		{facebookFirstName 	= new String(value); return facebookFirstName;}
-	//else if(variableName.equals("facebookLastName"))		{facebookLastName 	= new String(value); return facebookLastName;}
-	//else if(variableName.equals("facebookGender"))			{facebookGender 	= new String(value); return facebookGender;}
-	//else if(variableName.equals("facebookLocale"))			{facebookLocale 	= new String(value); return facebookLocale;}
-	//else if(variableName.equals("facebookTimeZone"))		{try{facebookTimeZone = Float.parseFloat(value);}catch(NumberFormatException ex){return null;} return new Float(facebookTimeZone);}
-	//else if(variableName.equals("facebookUsername"))		{facebookUsername 	= new String(value); return facebookUsername;}
-	//else if(variableName.equals("facebookWebsite"))			{facebookWebsite 	= new String(value); return facebookWebsite;}
+	//else if(variableName.equals("facebookEmail"))			{facebookEmail 	= make_shared<String>(value); return facebookEmail;}
+	//else if(variableName.equals("facebookBirthday"))		{facebookBirthday 	= make_shared<String>(value); return facebookBirthday;}
+	//else if(variableName.equals("facebookFirstName"))		{facebookFirstName 	= make_shared<String>(value); return facebookFirstName;}
+	//else if(variableName.equals("facebookLastName"))		{facebookLastName 	= make_shared<String>(value); return facebookLastName;}
+	//else if(variableName.equals("facebookGender"))			{facebookGender 	= make_shared<String>(value); return facebookGender;}
+	//else if(variableName.equals("facebookLocale"))			{facebookLocale 	= make_shared<String>(value); return facebookLocale;}
+	//else if(variableName.equals("facebookTimeZone"))		{try{facebookTimeZone = Float.parseFloat(value);}catch(NumberFormatException ex){return null;} return make_shared<Float>(facebookTimeZone);}
+	//else if(variableName.equals("facebookUsername"))		{facebookUsername 	= make_shared<String>(value); return facebookUsername;}
+	//else if(variableName.equals("facebookWebsite"))			{facebookWebsite 	= make_shared<String>(value); return facebookWebsite;}
 
 
-	//else if(variableName.equals("googlePlusID"))				{googlePlusID 	= new String(value); return googlePlusID;}
+	//else if(variableName.equals("googlePlusID"))				{googlePlusID 	= make_shared<String>(value); return googlePlusID;}
 
 
 	if (variableName == "postalCode")
@@ -364,9 +364,9 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 	}
 
 
-	//else if(variableName.equals("accountType"))				{try{accountType = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return new Integer(money);}
-	//else if(variableName.equals("money"))						{try{money = Float.parseFloat(value);}catch(NumberFormatException ex){return null;} return new Float(money);}
-	//else if(variableName.equals("moneyPurchased"))			{try{moneyPurchased = Float.parseFloat(value);}catch(NumberFormatException ex){return null;} return new Float(moneyPurchased);}
+	//else if(variableName.equals("accountType"))				{try{accountType = Integer.parseInt(value);}catch(NumberFormatException ex){return null;} return make_shared<Integer>(money);}
+	//else if(variableName.equals("money"))						{try{money = Float.parseFloat(value);}catch(NumberFormatException ex){return null;} return make_shared<Float>(money);}
+	//else if(variableName.equals("moneyPurchased"))			{try{moneyPurchased = Float.parseFloat(value);}catch(NumberFormatException ex){return null;} return make_shared<Float>(moneyPurchased);}
 	else if (variableName == "realWorldTransactions")
 	{
 		try

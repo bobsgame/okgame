@@ -15,7 +15,7 @@
 //Logger TilePath::log = Logger("TilePath");
 
 
-TilePath::TilePath(PathFinder* outerInstance)
+TilePath::TilePath(shared_ptr<PathFinder> outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
@@ -25,9 +25,9 @@ int TilePath::getLength()
 	return (int)pathTiles->size();
 }
 
-PathTile* TilePath::getTileForPathIndex(int index)
+shared_ptr<PathTile> TilePath::getTileForPathIndex(int index)
 {
-	return static_cast<PathTile*>(pathTiles->at(index));
+	return static_cast<shared_ptr<PathTile>>(pathTiles->at(index));
 }
 
 int TilePath::getTileXForPathIndex(int index)
@@ -42,20 +42,20 @@ int TilePath::getTileYForPathIndex(int index)
 
 void TilePath::addPathTileToEnd(int x, int y)
 {
-	pathTiles->push_back(new PathTile(this, x, y));
+	pathTiles->push_back(make_shared<PathTile>(this, x, y));
 }
 
 void TilePath::addPathTileToBeginning(int x, int y)
 {
-	pathTiles->push_front(new PathTile(this, x, y));
+	pathTiles->push_front(make_shared<PathTile>(this, x, y));
 }
 
 bool TilePath::doesPathContain(int tileX, int tileY)
 {
-	return find(pathTiles->begin(), pathTiles->end(), new PathTile(this, tileX, tileY)) != pathTiles->end();
+	return find(pathTiles->begin(), pathTiles->end(), make_shared<PathTile>(this, tileX, tileY)) != pathTiles->end();
 }
 
-PathTile::PathTile(TilePath* outerInstance, int tileX, int tileY) : outerInstance(outerInstance)
+PathTile::PathTile(shared_ptr<TilePath> outerInstance, int tileX, int tileY) : outerInstance(outerInstance)
 {
 	this->tileX = tileX;
 	this->tileY = tileY;
@@ -78,9 +78,9 @@ int PathTile::hashCode()
 
 //bool PathTile::equals(void* other)
 //{
-//   if (dynamic_cast<PathTile*>(other) != nullptr)
+//   if (dynamic_cast<shared_ptr<PathTile>>(other) != nullptr)
 //   {
-//      PathTile* o = static_cast<PathTile*>(other);
+//      shared_ptr<PathTile> o = static_cast<shared_ptr<PathTile>>(other);
 //      return (o->tileX == tileX) && (o->tileY == tileY);
 //   }
 //
@@ -88,12 +88,12 @@ int PathTile::hashCode()
 //}
 
 
-SortedList::SortedList(PathFinder* outerInstance)
+SortedList::SortedList(shared_ptr<PathFinder> outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
 
-PotentialTile* SortedList::first()
+shared_ptr<PotentialTile> SortedList::first()
 {
 	return list->get(0);
 }
@@ -103,13 +103,13 @@ void SortedList::clear()
 	list->clear();
 }
 
-void SortedList::addAndSort(PotentialTile* o)
+void SortedList::addAndSort(shared_ptr<PotentialTile> o)
 {
 	list->add(o);
 	sort(list->v.begin(), list->v.end());
 }
 
-void SortedList::remove(PotentialTile* o)
+void SortedList::remove(shared_ptr<PotentialTile> o)
 {
 	list->remove(o);
 }
@@ -119,7 +119,7 @@ int SortedList::size()
 	return list->size();
 }
 
-bool SortedList::contains(PotentialTile* o)
+bool SortedList::contains(shared_ptr<PotentialTile> o)
 {
 	return find(list->v.begin(), list->v.end(), o) != list->v.end();
 }
@@ -130,7 +130,7 @@ PotentialTile::PotentialTile(int x, int y)
 	this->y = y;
 }
 
-int PotentialTile::setParentTile(PotentialTile* parent)
+int PotentialTile::setParentTile(shared_ptr<PotentialTile> parent)
 { //=========================================================================================================================
 	depth = parent->depth + 1;
 	this->parent = parent;
@@ -138,7 +138,7 @@ int PotentialTile::setParentTile(PotentialTile* parent)
 	return depth;
 }
 
-int PotentialTile::compareTo(PotentialTile* o)
+int PotentialTile::compareTo(shared_ptr<PotentialTile> o)
 { //=========================================================================================================================
 
 	float f = heuristicCost + cumulativePathCost;
@@ -158,7 +158,7 @@ int PotentialTile::compareTo(PotentialTile* o)
 	}
 }
 
-PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X)
+PathFinder::PathFinder(shared_ptr<Entity> e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X)
 { //=========================================================================================================================
 
 
@@ -414,19 +414,19 @@ PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartY
 	this->allowDiagMovement = false;
 
 
-	//ORIGINAL LINE: potentialTiles = new PotentialTile[w][h];
-	potentialTiles = new vector<PotentialTile*>(w*h);
+	//ORIGINAL LINE: potentialTiles = make_shared<PotentialTile>[w][h];
+	potentialTiles = new vector<shared_ptr<PotentialTile>>(w*h);
 
 
 	for (int x = 0; x < w; x++)
 	{
-		//potentialTiles->add(new ArrayList<PotentialTile*>());
+		//potentialTiles->add(make_shared<ArrayList><shared_ptr<PotentialTile>>());
 
 
 		for (int y = 0; y < h; y++)
 		{
-			//potentialTiles->get(x)->add(new PotentialTile(x, y));
-			(*potentialTiles)[y*w + x] = new PotentialTile(x, y);
+			//potentialTiles->get(x)->add(make_shared<PotentialTile>(x, y));
+			(*potentialTiles)[y*w + x] = make_shared<PotentialTile>(x, y);
 		}
 	}
 
@@ -434,7 +434,7 @@ PathFinder::PathFinder(Entity* e, float middleStartXPixelsHQ, float middleStartY
 	path = findPath(startTileX, startTileY, finishTileX, finishTileY);
 }
 
-TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int toTileY)
+shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, int toTileY)
 { //=========================================================================================================================
 
 
@@ -463,7 +463,7 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 	{
 		// pull out the first node in our open list, this is determined to
 		// be the most likely to be the next step based on our heuristic
-		PotentialTile* current = openPotentialTilesList->first();
+		shared_ptr<PotentialTile> current = openPotentialTilesList->first();
 		if (current == (*potentialTiles)[toTileY*w + toTileX])
 		{
 			break;
@@ -505,7 +505,7 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 					// in the sorted open list
 					float nextStepCost = current->cumulativePathCost + getTileTypeCost(current->x, current->y, xp, yp);
 
-					PotentialTile* neighbour = (*potentialTiles)[yp*w + xp];
+					shared_ptr<PotentialTile> neighbour = (*potentialTiles)[yp*w + xp];
 
 					setTileChecked(xp, yp);
 
@@ -555,8 +555,8 @@ TilePath* PathFinder::findPath(int startTileX, int startTileY, int toTileX, int 
 	// At this point we've definitely found a path so we can uses the parent
 	// references of the nodes to find out way from the target location back
 	// to the start recording the nodes on the way.
-	TilePath* path = new TilePath(this);
-	PotentialTile* target = (*potentialTiles)[toTileY*w + toTileX];
+	shared_ptr<TilePath> path = make_shared<TilePath>(this);
+	shared_ptr<PotentialTile> target = (*potentialTiles)[toTileY*w + toTileX];
 	while (target != (*potentialTiles)[startTileY*w + startTileX])
 	{
 		path->addPathTileToBeginning(target->x, target->y);

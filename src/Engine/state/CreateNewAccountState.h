@@ -20,30 +20,30 @@ public:
 
 	static Logger log;
 
-	//   EditField* emailEditField;
+	//   shared_ptr<EditField> emailEditField;
 	//
-	//   EditField* passwordEditField;
-	//   EditField* confirmPasswordEditField;
+	//   shared_ptr<EditField> passwordEditField;
+	//   shared_ptr<EditField> confirmPasswordEditField;
 	//
 	//
-	//   Button* okButton;
-	//   Button* cancelButton;
+	//   shared_ptr<Button> okButton;
+	//   shared_ptr<Button> cancelButton;
 	//
 	//   string nameString = "";
 	//
 	//
-	//   DialogLayout* panel;
-	//   DialogLayout* emailDialogLayout;
-	//   DialogLayout* passwordDialogLayout;
-	//   DialogLayout* socialDialogLayout;
+	//   shared_ptr<DialogLayout> panel;
+	//   shared_ptr<DialogLayout> emailDialogLayout;
+	//   shared_ptr<DialogLayout> passwordDialogLayout;
+	//   shared_ptr<DialogLayout> socialDialogLayout;
 	//
-	//   Label* errorLabel;
-	//   Label* statusLabel;
+	//   shared_ptr<Label> errorLabel;
+	//   shared_ptr<Label> statusLabel;
 	//
 	//
-	//   Label* emailLabel;
-	//   Label* passwordLabel;
-	//   Label* confirmPasswordLabel;
+	//   shared_ptr<Label> emailLabel;
+	//   shared_ptr<Label> passwordLabel;
+	//   shared_ptr<Label> confirmPasswordLabel;
 	//
 	//
 	CreateNewAccountMenuPanel();
@@ -52,10 +52,10 @@ public:
 	//   class CallbackAnonymousInnerClassHelper : public EditField::Callback
 	//   {
 	//   private:
-	//      CreateNewAccount* outerInstance;
+	//      shared_ptr<CreateNewAccount> outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper(CreateNewAccount* outerInstance);
+	//      CallbackAnonymousInnerClassHelper(shared_ptr<CreateNewAccount> outerInstance);
 	//
 	//      virtual void callback(int key) override;
 	//   };
@@ -64,10 +64,10 @@ public:
 	//   class CallbackAnonymousInnerClassHelper2 : public EditField::Callback
 	//   {
 	//   private:
-	//      CreateNewAccount* outerInstance;
+	//      shared_ptr<CreateNewAccount> outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper2(CreateNewAccount* outerInstance);
+	//      CallbackAnonymousInnerClassHelper2(shared_ptr<CreateNewAccount> outerInstance);
 	//
 	//      void callback(int key);
 	//   };
@@ -76,10 +76,10 @@ public:
 	//   class CallbackAnonymousInnerClassHelper3 : public EditField::Callback
 	//   {
 	//   private:
-	//      CreateNewAccount* outerInstance;
+	//      shared_ptr<CreateNewAccount> outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper3(CreateNewAccount* outerInstance);
+	//      CallbackAnonymousInnerClassHelper3(shared_ptr<CreateNewAccount> outerInstance);
 	//
 	//      void callback(int key);
 	//   };
@@ -119,7 +119,7 @@ public:
 	static Logger log;
 
 
-	CreateNewAccountMenuPanel* createNewAccountMenuPanel = nullptr;
+	shared_ptr<CreateNewAccountMenuPanel> createNewAccountMenuPanel = nullptr;
 	//GUI* createNewAccountGUI = nullptr;
 
 

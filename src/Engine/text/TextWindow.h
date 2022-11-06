@@ -19,17 +19,17 @@ public:
 	static Logger log;
 
 
-	BobTexture* textBoxTexture = nullptr;
-	BobTexture* spriteBoxTexture = nullptr;
-	static BobTexture* borderTexture;
+	shared_ptr<BobTexture> textBoxTexture = nullptr;
+	shared_ptr<BobTexture> spriteBoxTexture = nullptr;
+	static shared_ptr<BobTexture> borderTexture;
 
 
 	float scrollPercent = 0;
 
-	ByteArray* textBoxTextureByteArray = nullptr;
+	shared_ptr<ByteArray> textBoxTextureByteArray = nullptr;
 	//u8* textBoxTexturePixelsByteBuffer;
 
-	ByteArray* spriteWindowTextureByteArray = nullptr;
+	shared_ptr<ByteArray> spriteWindowTextureByteArray = nullptr;
 	//u8* spriteWindowTexturePixelsByteBuffer;
 
 
@@ -39,9 +39,9 @@ public:
 	int xInLine = 0;
 	int line = 0;
 
-	Entity* spriteWindowEntity = nullptr;
+	shared_ptr<Entity> spriteWindowEntity = nullptr;
 
-	BobTexture* spriteWindowTexture = nullptr;
+	shared_ptr<BobTexture> spriteWindowTexture = nullptr;
 
 	bool redraw = false;
 
@@ -63,7 +63,7 @@ public:
 	int shakeMaxY = 2;
 	bool shakeUpDownToggle = false;
 
-	TextWindow(Engine* g);
+	TextWindow(shared_ptr<Engine> g);
 
 
 	void init();
@@ -75,7 +75,7 @@ public:
 	void updateSpriteWindowTexture();
 
 
-	void setSpriteWindow(Entity* entity, BobTexture* texture, const string& newLabel);
+	void setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<BobTexture> texture, const string& newLabel);
 
 
 	void updateTextureFromByteArray();
@@ -87,7 +87,7 @@ public:
 	int getPixelValue(int letter_index, int y, int x_in_letter, bool blank);
 
 
-	void setPixel(int index, BobColor* c);
+	void setPixel(int index, shared_ptr<BobColor> c);
 
 
 	void drawColumn(int letter_index, int x_in_letter, bool blank);

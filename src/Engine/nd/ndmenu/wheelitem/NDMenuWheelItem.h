@@ -18,8 +18,8 @@ public:
 	static Logger log;
 
 
-	static BobTexture* wheelItemBackgroundTexture;
-	static BobTexture* wheelItemGlossyOverlayTexture;
+	static shared_ptr<BobTexture> wheelItemBackgroundTexture;
+	static shared_ptr<BobTexture> wheelItemGlossyOverlayTexture;
 
 	static int firstCartY; //((getViewportHeight()/2)-(wheelItemHeight/2));
 
@@ -37,15 +37,15 @@ public:
 	int slot = 0;
 	string name = "";
 
-	NDGameEngine* game = nullptr;
+	shared_ptr<NDGameEngine> game = nullptr;
 
-	BobColor* color = BobColor::black;
-
-
-	Caption* caption = nullptr;
+	shared_ptr<BobColor> color = BobColor::black;
 
 
-	NDMenuWheelItem(Engine* g, NDGameEngine* game, const string& name, BobColor* color);
+	shared_ptr<Caption> caption = nullptr;
+
+
+	NDMenuWheelItem(shared_ptr<Engine> g, shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color);
 
 
 	float top();

@@ -12,7 +12,7 @@ using namespace Gwen::Controls;
 
 
 //GWEN_CONTROL_CONSTRUCTOR(GameTestMenuControl)
-GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, BobsGame *b) : Gwen::Controls::Base(pParent, pName)
+GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame >b) : Gwen::Controls::Base(pParent, pName)
 {//=========================================================================================================================
 
 	this->bobsGame = b;
@@ -36,22 +36,22 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 	//int h = GLUtils::getViewportHeight();
 
 
-	Controls::Label *label = new Controls::Label(this);
+	Controls::Label *label = make_shared<Controls>::Label(this);
 	label->SetText("You can test and vote on new game types and sequences in this sandbox.");
 	label->Dock(Pos::Top);
 	label->SetHeight(20);
 	
-	Base* checkBase = new Base(this);
+	shared_ptr<Base> checkBase = make_shared<Base>(this);
 	checkBase->Dock(Pos::Top);
 	checkBase->SetHeight(20);
 	{
-		Controls::Label *checkLabel = new Controls::Label(checkBase);
+		Controls::Label *checkLabel = make_shared<Controls>::Label(checkBase);
 		checkLabel->SetText("Hide already voted:");
 		checkLabel->Dock(Pos::Left);
 		checkLabel->SetHeight(20);
 		checkLabel->SetWidth(200);
 
-		hideVotedGames = new CheckBox(checkLabel, "Hide already voted");
+		hideVotedGames = make_shared<CheckBox>(checkLabel, "Hide already voted");
 		hideVotedGames->SetChecked(true);
 		hideVotedGames->onCheckChanged.Add(this, &GameTestMenuControl::onChangeHideVotedGames);
 		hideVotedGames->Dock(Pos::Left);
@@ -59,15 +59,15 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 		hideVotedGames->SetHeight(20);
 	}
 
-	mainWindowSplitter = new Gwen::Controls::HorizontalSplitter(this);
+	mainWindowSplitter = make_shared<Gwen>::Controls::HorizontalSplitter(this);
 	mainWindowSplitter->GetSplitter()->onDragged.Add(this, &GameTestMenuControl::doResize);
 	mainWindowSplitter->Dock(Pos::Top);
 
-	leftBase = new Gwen::Controls::Base(mainWindowSplitter);
+	leftBase = make_shared<Gwen>::Controls::Base(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(0, leftBase);
 	{
 
-		leftBaseTabControl = new Controls::TabControl(leftBase);
+		leftBaseTabControl = make_shared<Controls>::TabControl(leftBase);
 		leftBaseTabControl->Dock(Pos::Fill);
 
 		gameTypesTab = leftBaseTabControl->AddPage(L"Single Game Types");
@@ -75,15 +75,15 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 		gameTypesPage->Dock(Pos::Fill);
 
 
-		gameTypesWindow = new Gwen::Controls::Base(gameTypesPage);
+		gameTypesWindow = make_shared<Gwen>::Controls::Base(gameTypesPage);
 		gameTypesWindow->SetToolTip("");
 		gameTypesWindow->Dock(Pos::Top);
 		{
 
-			gameTypesListBoxBase = new Gwen::Controls::Base(gameTypesWindow);
+			gameTypesListBoxBase = make_shared<Gwen>::Controls::Base(gameTypesWindow);
 			gameTypesListBoxBase->Dock(Pos::Left);
 			{
-				gameTypesListBox = new Gwen::Controls::ListBox(gameTypesListBoxBase);
+				gameTypesListBox = make_shared<Gwen>::Controls::ListBox(gameTypesListBoxBase);
 				gameTypesListBox->Dock(Pos::Fill);
 				gameTypesListBox->SetAllowMultiSelect(false);
 
@@ -96,15 +96,15 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 		gameSequencesPage = gameSequencesTab->GetPage();
 		gameSequencesPage->Dock(Pos::Fill);
 
-		gameSequencesWindow = new Gwen::Controls::Base(gameSequencesPage);
+		gameSequencesWindow = make_shared<Gwen>::Controls::Base(gameSequencesPage);
 		gameSequencesWindow->SetToolTip("");
 		gameSequencesWindow->Dock(Pos::Top);
 		{
 
-			gameSequencesListBoxBase = new Gwen::Controls::Base(gameSequencesWindow);
+			gameSequencesListBoxBase = make_shared<Gwen>::Controls::Base(gameSequencesWindow);
 			gameSequencesListBoxBase->Dock(Pos::Left);
 			{
-				gameSequencesListBox = new Gwen::Controls::ListBox(gameSequencesListBoxBase);
+				gameSequencesListBox = make_shared<Gwen>::Controls::ListBox(gameSequencesListBoxBase);
 				gameSequencesListBox->Dock(Pos::Fill);
 				gameSequencesListBox->SetAllowMultiSelect(false);
 
@@ -115,58 +115,58 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 		}
 	}
 
-	previewBase = new Base(mainWindowSplitter);
+	previewBase = make_shared<Base>(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(1, previewBase);
 	//previewBase->SetSize(w * 2 / 5, h - 20);
 	//previewBase->Dock(Pos::Fill);
 	{
 
-		applyButtonsBase = new Base(previewBase);
+		applyButtonsBase = make_shared<Base>(previewBase);
 		applyButtonsBase->Dock(Pos::Top);
 		applyButtonsBase->SetSize(previewBase->Width(), 20);
 		{
 
-			Base* topBase = new Base(applyButtonsBase);
+			shared_ptr<Base> topBase = make_shared<Base>(applyButtonsBase);
 			topBase->Dock(Pos::Top);
 			topBase->SetHeight(20);
 
-			selectedGameLabel = new Controls::Label(topBase, "label");
+			selectedGameLabel = make_shared<Controls>::Label(topBase, "label");
 			selectedGameLabel->SetText("Current Game Type: None");
 			selectedGameLabel->Dock(Pos::Left);
 			selectedGameLabel->SetWidth(300);
 			selectedGameLabel->SetHeight(25);
 
-			Base* bottomBase = new Base(applyButtonsBase);
+			shared_ptr<Base> bottomBase = make_shared<Base>(applyButtonsBase);
 			bottomBase->Dock(Pos::Top);
 			bottomBase->SetHeight(20);
 
-			previewButton = new Button(bottomBase);
+			previewButton = make_shared<Button>(bottomBase);
 			previewButton->SetText(L"Reset");
 			previewButton->Dock(Pos::Left | Pos::Center);
 			previewButton->SetWidth(100);
 			previewButton->onPress.Add(this, &GameTestMenuControl::onPreviewButton);
 
-			difficultyCombo = new ComboBox(bottomBase,"difficultyCombo");
+			difficultyCombo = make_shared<ComboBox>(bottomBase,"difficultyCombo");
 			GameType g;
 			for(int i=0;i<g.difficultyTypes.size();i++)difficultyCombo->AddItem(Gwen::Utility::StringToUnicode(g.difficultyTypes.get(i)->name));
 			difficultyCombo->Dock(Pos::Left);
 			difficultyCombo->SetHeight(25);
 			difficultyCombo->onSelection.Add(this, &GameTestMenuControl::onChangeDifficulty);
 			
-			upVoteButton = new Button(bottomBase);
+			upVoteButton = make_shared<Button>(bottomBase);
 			upVoteButton->SetText(L"Up Vote");
 			upVoteButton->Dock(Pos::Left | Pos::Center);
 			upVoteButton->SetWidth(100);
 			upVoteButton->onPress.Add(this, &GameTestMenuControl::onUpVoteButton);
 
-			downVoteButton = new Button(bottomBase);
+			downVoteButton = make_shared<Button>(bottomBase);
 			downVoteButton->SetText(L"Down Vote");
 			downVoteButton->Dock(Pos::Left | Pos::Center);
 			downVoteButton->SetWidth(100);
 			downVoteButton->onPress.Add(this, &GameTestMenuControl::onDownVoteButton);
 
 
-			exitButton = new Button(bottomBase);
+			exitButton = make_shared<Button>(bottomBase);
 			exitButton->SetText(L"Exit To Title Screen");
 			//exitButton->SetToolTip("Leave (Ask to save changes).");
 			exitButton->Dock(Pos::Right | Pos::Center);
@@ -188,7 +188,7 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 		}
 
 
-		darkRectangle = new GameTestPreviewRectangle(previewBase, "", bobsGame);
+		darkRectangle = make_shared<GameTestPreviewRectangle>(previewBase, "", bobsGame);
 		darkRectangle->SetColor(Color(0, 0, 0, 255));
 		darkRectangle->Dock(Pos::Top);
 		darkRectangle->SetSize(previewBase->Width(), previewBase->Height() - 20);
@@ -273,13 +273,13 @@ using Poco::Process;
 using Poco::Path;
 
 
-//GameSequence* GameTestMenuControl::getGameSequenceByName(string name)
+//shared_ptr<GameSequence> GameTestMenuControl::getGameSequenceByName(string name)
 //{//=========================================================================================================================
 //
-//	GameSequence *bt = nullptr;
+//	shared_ptr<GameSequence >bt = nullptr;
 //	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
 //	{
-//		GameSequence *b = bobsGame->loadedGameSequences.get(i);
+//		shared_ptr<GameSequence >b = bobsGame->loadedGameSequences.get(i);
 //		if (b->name == name)
 //		{
 //			bt = b;
@@ -295,14 +295,14 @@ void GameTestMenuControl::populateGameTypesListBox()
 	gameTypesListBox->Clear();
 	GetCanvas()->DoThink();
 
-	ArrayList<pair<GameType*, pair<string, BobColor*>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	ArrayList<pair<shared_ptr<GameType>, pair<string, shared_ptr<BobColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<GameType*, pair<string, BobColor*>> gameTypeStringColorPairPair = gamesStringColor.get(i);
-		GameType *g = gameTypeStringColorPairPair.first;
-		pair<string, BobColor*> stringColorPair = gameTypeStringColorPairPair.second;
+		pair<shared_ptr<GameType>, pair<string, shared_ptr<BobColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		shared_ptr<GameType >g = gameTypeStringColorPairPair.first;
+		pair<string, shared_ptr<BobColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
-		BobColor *color = stringColorPair.second;
+		shared_ptr<BobColor >color = stringColorPair.second;
 
 		//if (g->builtInType)
 //		{
@@ -332,14 +332,14 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	gameSequencesListBox->Clear();
 	GetCanvas()->DoThink();
 
-	ArrayList<pair<GameSequence*, pair<string, BobColor*>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<BobColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<GameSequence*, pair<string, BobColor*>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
-		GameSequence *g = gameSequenceStringColorPairPair.first;
-		pair<string, BobColor*> stringColorPair = gameSequenceStringColorPairPair.second;
+		pair<shared_ptr<GameSequence>, pair<string, shared_ptr<BobColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		shared_ptr<GameSequence >g = gameSequenceStringColorPairPair.first;
+		pair<string, shared_ptr<BobColor>> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
-		BobColor *color = stringColorPair.second;
+		shared_ptr<BobColor >color = stringColorPair.second;
 
 //		if (g->builtInType)
 //		{
@@ -362,13 +362,13 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	}
 }
 
-void GameTestMenuControl::onGameTypesListSelect(Base* control)
+void GameTestMenuControl::onGameTypesListSelect(shared_ptr<Base> control)
 {//=========================================================================================================================
 
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	GameType *s = bobsGame->getGameTypeByUUID(uuid);
+	shared_ptr<GameType >s = bobsGame->getGameTypeByUUID(uuid);
 
 	if (s == nullptr)
 	{
@@ -376,20 +376,20 @@ void GameTestMenuControl::onGameTypesListSelect(Base* control)
 		return;
 	}
 
-	currentGameSequence = new GameSequence();
+	currentGameSequence = make_shared<GameSequence>();
 	currentGameSequence->gameTypes.add(s);
 
 	selectedGameLabel->SetText(Utility::StringToUnicode("Current Game Type:"+s->name));
 	initPreviewGame();
 }
 
-void GameTestMenuControl::onGameSequencesListSelect(Base* control)
+void GameTestMenuControl::onGameSequencesListSelect(shared_ptr<Base> control)
 {//=========================================================================================================================
 
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	GameSequence *s = bobsGame->getGameSequenceByUUID(uuid);
+	shared_ptr<GameSequence >s = bobsGame->getGameSequenceByUUID(uuid);
 
 	if (s == nullptr)
 	{
@@ -405,7 +405,7 @@ void GameTestMenuControl::onGameSequencesListSelect(Base* control)
 }
 
 
-void GameTestMenuControl::onExitButton(Base* control)
+void GameTestMenuControl::onExitButton(shared_ptr<Base> control)
 {//=========================================================================================================================
 	exit = true;
 }
@@ -459,14 +459,14 @@ void GameTestMenuControl::vote(bool upDown)
 		}
 	}
 	
-	WindowControl *result = new WindowControl(GetCanvas());
+	shared_ptr<WindowControl >result = make_shared<WindowControl>(GetCanvas());
 	result->SetTitle("Result");
 	result->SetSize(300, 60);
 	result->MakeModal(true);
 	result->SetPos(GLUtils::getViewportWidth() / 2 - 150, GLUtils::getViewportHeight() / 2 - 30);
 	result->SetDeleteOnClose(true);
 
-	Label* label = new Label(result);
+	shared_ptr<Label> label = make_shared<Label>(result);
 	label->SetText(response);
 	label->Dock(Pos::Fill);
 
@@ -475,14 +475,14 @@ void GameTestMenuControl::vote(bool upDown)
 
 }
 
-void GameTestMenuControl::onUpVoteButton(Base* control)
+void GameTestMenuControl::onUpVoteButton(shared_ptr<Base> control)
 {//=========================================================================================================================
 
 	vote(true);
 
 }
 
-void GameTestMenuControl::onDownVoteButton(Base* control)
+void GameTestMenuControl::onDownVoteButton(shared_ptr<Base> control)
 {//=========================================================================================================================
 
 	vote(false);
@@ -491,7 +491,7 @@ void GameTestMenuControl::onDownVoteButton(Base* control)
 
 
 //=========================================================================================================================
-void GameTestMenuControl::onPreviewButton(Base* control)
+void GameTestMenuControl::onPreviewButton(shared_ptr<Base> control)
 {//=========================================================================================================================
  //we basically already have the settings in memory so we can just create a new game instance and set the currentGameType to these ones
  //but we need to make a game sequence that is only this game
@@ -499,12 +499,12 @@ void GameTestMenuControl::onPreviewButton(Base* control)
 	initPreviewGame();
 }
 //=========================================================================================================================
-void GameTestMenuControl::onChangeDifficulty(Base* control)
+void GameTestMenuControl::onChangeDifficulty(shared_ptr<Base> control)
 {//=========================================================================================================================
 	initPreviewGame();
 }
 //=========================================================================================================================
-void GameTestMenuControl::onChangeHideVotedGames(Base* control)
+void GameTestMenuControl::onChangeHideVotedGames(shared_ptr<Base> control)
 {//=========================================================================================================================
 	
 
@@ -523,20 +523,20 @@ void GameTestMenuControl::initPreviewGame()
 
 	if (currentGameSequence == nullptr)
 	{
-		currentGameSequence = new GameSequence();
+		currentGameSequence = make_shared<GameSequence>();
 	}
 	if(currentGameSequence->gameTypes.size()==0)
 	{
 		
 
-		GameType *g = new GameType();
-		shared_ptr<BlockType> bt(new BlockType());
+		shared_ptr<GameType >g = make_shared<GameType>();
+		shared_ptr<BlockType> bt(make_shared<BlockType>());
 		bt->name = "Gray Square";
 		bt->colors.add(BobColor::gray);
 		bt->useInNormalPieces = true;
 		bt->useAsPlayingFieldFiller = true;
 		bt->useAsGarbage = true;
-		shared_ptr<PieceType> pt(new PieceType());
+		shared_ptr<PieceType> pt(make_shared<PieceType>());
 		pt->name = "Single Block Piece";
 		pt->useAsNormalPiece = true;
 		pt->useAsPlayingFieldFillerPiece = true;
@@ -590,8 +590,8 @@ void GameTestPreviewRectangle::Render(Skin::Base* skin)
 	//glPushMatrix();
 	//glLoadIdentity();
 	//GLUtils::setPreColorFilterViewport();
-	Gwen::Texture *t = new Gwen::Texture();
-	t->data = (GLuint*)&GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
+	Gwen::Texture *t = make_shared<Gwen>::Texture();
+	t->data = (shared_ptr<GLuint>)&GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
 	skin->GetRender()->DrawTexturedRect(t, Gwen::Rect(0, Height(), Width(), 0 - Height()));
 	delete t;
 	//glPopMatrix();
@@ -604,7 +604,7 @@ void BobsGame::gameTestMenuUpdate()
 
  //	if (gameTestMenuMenu == nullptr)
  //	{
- //		gameTestMenuMenu = new Menu(this);
+ //		gameTestMenuMenu = make_shared<Menu>(this);
  //
  //		gameTestMenuMenu->add("Back To Game", "Back To Game", BobColor::white);
  //		gameTestMenuMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", BobColor::white);
@@ -615,7 +615,7 @@ void BobsGame::gameTestMenuUpdate()
 
 	if (gameTestMenu == nullptr)
 	{
-		gameTestMenu = new GameTestMenuControl(Main::gwenCanvas, "GameTestMenuControl", this);
+		gameTestMenu = make_shared<GameTestMenuControl>(Main::gwenCanvas, "GameTestMenuControl", this);
 
 		gameTestMenu->initPreviewGame();
 
@@ -704,7 +704,7 @@ void BobsGame::gameTestMenuRender()
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 	//
-	//	BobTexture* t = keyboardTexture;
+	//	shared_ptr<BobTexture> t = keyboardTexture;
 	//
 	//	if (gameTestMenuMenu == nullptr)return;
 	//

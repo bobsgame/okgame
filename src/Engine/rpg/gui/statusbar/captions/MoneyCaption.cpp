@@ -14,7 +14,7 @@
 Logger MoneyCaption::log = Logger("MoneyCaption");
 
 
-MoneyCaption::MoneyCaption(BGClientEngine* g)
+MoneyCaption::MoneyCaption(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -22,7 +22,7 @@ MoneyCaption::MoneyCaption(BGClientEngine* g)
 void MoneyCaption::init()
 { //=========================================================================================================================
 
-	light = new Light(getEngine(), "moneyLight", -100, 4, 18, 6, 0, 255, 0, 70, 10, 2.0f, 1.0f, 0, true, true); // divided by 2 because lights take 1x pixels from tools
+	light = make_shared<Light>(getEngine(), "moneyLight", -100, 4, 18, 6, 0, 255, 0, 70, 10, 2.0f, 1.0f, 0, true, true); // divided by 2 because lights take 1x pixels from tools
 
 	defaultFGColor = BobColor::green;
 	defaultAAColor = BobColor::darkerGreen;

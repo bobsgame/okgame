@@ -14,7 +14,7 @@
 Logger Door::log = Logger("Door");
 
 
-Door::Door(Engine* g, DoorData* doorAsset, Map* m)
+Door::Door(shared_ptr<Engine> g, shared_ptr<DoorData> doorAsset, shared_ptr<Map> m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -27,8 +27,8 @@ Door::Door(Engine* g, DoorData* doorAsset, Map* m)
 
 	if (getEventData() != nullptr)
 	{
-		this->event = new Event(g, getEventData(), this);
-		//Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		this->event = make_shared<Event>(g, getEventData(), this);
+		//shared_ptr<Event> e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		//event->door = this;
 		//event->entity = this;
 	}
@@ -164,7 +164,7 @@ void Door::update()
 						//TODO: don't spawn if there are too many randoms, have map limit?
 
 
-						ArrayList<string>* targetTYPEIDList = new ArrayList<string>();
+						ArrayList<string>* targetTYPEIDList = make_shared<ArrayList><string>();
 
 						//if this door has connections, set target to one of this door's connections
 						if (getConnectionTYPEIDList()->size() > 0)
@@ -205,7 +205,7 @@ void Door::update()
 								else
 								{
 									//else we should check to make sure there is a random point of interest to go to, otherwise he will have nowhere to go and just stand there.
-									Area* a = getMap()->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->get(i));
+									shared_ptr<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->get(i));
 
 									if (a != nullptr)
 									{
@@ -232,7 +232,7 @@ void Door::update()
 
 								if (canMakeRandom == true)
 								{
-									RandomCharacter* r = new RandomCharacter(getEngine(), getMap(), (int)(arrivalXPixelsHQ() + 8) / 2, (int)(arrivalYPixelsHQ() + 8) / 2, randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), false);
+									shared_ptr<RandomCharacter> r = make_shared<RandomCharacter>(getEngine(), getMap(), (int)(arrivalXPixelsHQ() + 8) / 2, (int)(arrivalYPixelsHQ() + 8) / 2, randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), false);
 									r->currentAreaTYPEIDTarget = targetTYPEIDList->get(i);
 									r->cameFrom = "DOOR." + getName();
 									targetTYPEIDList->clear();
@@ -282,12 +282,12 @@ void Door::enter()
 	}
 	else
 	{
-		Map* map = getMapManager()->getMapByNameBlockUntilLoaded(destinationMapName());
+		shared_ptr<Map> map = getMapManager()->getMapByNameBlockUntilLoaded(destinationMapName());
 
 
 		for (int i = 0; i < (int)map->doorList.size(); i++)
 		{
-			Door* d = map->doorList.get(i);
+			shared_ptr<Door> d = map->doorList.get(i);
 
 			if (d->getName() == destinationDoorName())
 			{
@@ -327,7 +327,7 @@ void Door::renderActionIcon()
 
 	//get distance from player
 
-	BobTexture* actionTexture = getSpriteManager()->actionTexture;
+	shared_ptr<BobTexture> actionTexture = getSpriteManager()->actionTexture;
 
 	if (actionTexture == nullptr)
 	{
@@ -398,7 +398,7 @@ void Door::renderDebugBoxes()
 			//go through doorlist
 			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
 			{
-				Door* door = getMap()->doorList.get(d);
+				shared_ptr<Door> door = getMap()->doorList.get(d);
 				if (door->getMap() == getMap())
 				{
 					if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
@@ -415,16 +415,16 @@ void Door::renderDebugBoxes()
 		{
 			//draw connections to areas
 			//go through area hashlist
-			//         java::util::Iterator<Area*> aEnum = getMap()->currentState->areaByNameHashtable.elements();
+			//         java::util::Iterator<shared_ptr<Area>> aEnum = getMap()->currentState->areaByNameHashtable.elements();
 			//         //areas
 			//         while (aEnum->hasMoreElements())
 			//         {
-			//            Area* a = aEnum->nextElement();
+			//            shared_ptr<Area> a = aEnum->nextElement();
 
-			ArrayList<Area*> *areas = getMap()->currentState->areaByNameHashtable.getAllValues();
+			ArrayList<shared_ptr<Area>> *areas = getMap()->currentState->areaByNameHashtable.getAllValues();
 			for (int n = 0; n<areas->size(); n++)
 			{
-				Area* a = areas->get(n);
+				shared_ptr<Area> a = areas->get(n);
 
 				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{
@@ -438,7 +438,7 @@ void Door::renderDebugBoxes()
 			//if not found, go through warparea list
 			for (int j = 0; j < (int)getMap()->warpAreaList.size(); j++)
 			{
-				Area* a = getMap()->warpAreaList.get(j);
+				shared_ptr<Area> a = getMap()->warpAreaList.get(j);
 
 				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{
@@ -469,14 +469,14 @@ void Door::renderDebugInfo()
 	GLUtils::drawOutlinedString("assetName: " + sprite->getName(), x, y - 9, BobColor::white);
 
 
-	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y + (++strings * 9), new BobColor(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y + (++strings * 9), make_shared<BobColor>(200, 0, 255));
 
 	if (destinationTYPEIDString() == "DOOR." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self")
 	{
 		GLUtils::drawOutlinedString("Has no destination!", x, y + (++strings * 9), BobColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString("Goes to: " + destinationMapName() + "." + destinationDoorName(), x, y + (++strings * 9), new BobColor(200, 0, 255));
+	GLUtils::drawOutlinedString("Goes to: " + destinationMapName() + "." + destinationDoorName(), x, y + (++strings * 9), make_shared<BobColor>(200, 0, 255));
 
 
 	if (randomNPCSpawnPoint())
@@ -533,20 +533,20 @@ void Door::renderDebugInfo()
 	boolean getRandomSpawnFemales;
 	               
 	               
-	ArrayList<String> getBehaviorList = new ArrayList<String>();
-	ArrayList<String> connectionList = new ArrayList<String>();
+	ArrayList<String> getBehaviorList = make_shared<ArrayList><String>();
+	ArrayList<String> connectionList = make_shared<ArrayList><String>();
 	               
 	               */
 }
 
-EntityData* Door::getData()
+shared_ptr<EntityData> Door::getData()
 {
 	return data;
 }
 
-DoorData* Door::getDoorData()
+shared_ptr<DoorData> Door::getDoorData()
 {
-	return ((DoorData*)getData());
+	return ((shared_ptr<DoorData>)getData());
 }
 
 float Door::arrivalXPixelsHQ()

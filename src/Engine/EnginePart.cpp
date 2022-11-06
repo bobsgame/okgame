@@ -11,14 +11,14 @@
 
 Logger EnginePart::log = Logger("EnginePart");
 
-//BGClientEngine* EnginePart::clientGameEngine = nullptr;
-//ControlsManager* EnginePart::controlsManager = nullptr;
+//shared_ptr<BGClientEngine> EnginePart::clientGameEngine = nullptr;
+//shared_ptr<ControlsManager> EnginePart::controlsManager = nullptr;
 
 EnginePart::EnginePart()
 { //=========================================================================================================================
 }
 
-EnginePart::EnginePart(Engine* g)
+EnginePart::EnginePart(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -26,7 +26,7 @@ EnginePart::EnginePart(Engine* g)
 }
 
 //
-//void EnginePart::setControlsManager(ControlsManager* controlsManager)
+//void EnginePart::setControlsManager(shared_ptr<ControlsManager> controlsManager)
 //{
 //	EnginePart::controlsManager = controlsManager;
 //}
@@ -133,63 +133,63 @@ int EnginePart::getMinutesSinceLastHere()
 	return (int)((ticksPassed / 1000) / 60);
 }
 
-Engine* EnginePart::getEngine()
+shared_ptr<Engine> EnginePart::getEngine()
 {
 	if(e==nullptr)return Main::gameEngine;
 	return e;
 }
 
-Cameraman* EnginePart::getCameraman()
+shared_ptr<Cameraman> EnginePart::getCameraman()
 {
 	return getEngine()->cameraman;
 }
 
-MapManager* EnginePart::getMapManager()
+shared_ptr<MapManager> EnginePart::getMapManager()
 {
 	return getEngine()->mapManager;
 }
 
-SpriteManager* EnginePart::getSpriteManager()
+shared_ptr<SpriteManager> EnginePart::getSpriteManager()
 {
 	return getEngine()->spriteManager;
 }
 
-ActionManager* EnginePart::getActionManager()
+shared_ptr<ActionManager> EnginePart::getActionManager()
 {
 	return getEngine()->actionManager;
 }
 
-TextManager* EnginePart::getTextManager()
+shared_ptr<TextManager> EnginePart::getTextManager()
 {
 	return getEngine()->textManager;
 }
 
-AudioManager* EnginePart::getAudioManager()
+shared_ptr<AudioManager> EnginePart::getAudioManager()
 {
 	return getEngine()->audioManager;
 }
 
-CaptionManager* EnginePart::getCaptionManager()
+shared_ptr<CaptionManager> EnginePart::getCaptionManager()
 {
 	return getEngine()->captionManager;
 }
 
-EventManager* EnginePart::getEventManager()
+shared_ptr<EventManager> EnginePart::getEventManager()
 {
 	return getEngine()->eventManager;
 }
 
-CinematicsManager* EnginePart::getCinematicsManager()
+shared_ptr<CinematicsManager> EnginePart::getCinematicsManager()
 {
 	return getEngine()->cinematicsManager;
 }
 
-Map* EnginePart::getCurrentMap()
+shared_ptr<Map> EnginePart::getCurrentMap()
 {
-	Map* m = getEngine()->mapManager->currentMap;
+	shared_ptr<Map> m = getEngine()->mapManager->currentMap;
 //	if (m == nullptr)
 //	{
-//		m = new Map(e, new MapData(-1, "none", 0, 0));
+//		m = make_shared<Map>(e, make_shared<MapData>(-1, "none", 0, 0));
 //	}
 	return m;
 }
@@ -197,53 +197,53 @@ Map* EnginePart::getCurrentMap()
 
 
 
-//void EnginePart::setClientGameEngine(BGClientEngine* gameEngine)
+//void EnginePart::setClientGameEngine(shared_ptr<BGClientEngine> gameEngine)
 //{
 //	EnginePart::clientGameEngine = gameEngine;
 //}
 
-BGClientEngine* EnginePart::getClientGameEngine()
+shared_ptr<BGClientEngine> EnginePart::getClientGameEngine()
 {
 	return Main::gameEngine;
 }
 
-ControlsManager* EnginePart::getControlsManager()
+shared_ptr<ControlsManager> EnginePart::getControlsManager()
 {
 	return getEngine()->getControlsManager();
 }
 
 
-Clock* EnginePart::getClock()
+shared_ptr<Clock> EnginePart::getClock()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->clock;
 }
 
-GUIManager* EnginePart::getGUIManager()
+shared_ptr<GUIManager> EnginePart::getGUIManager()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->guiManager;
 }
 
-StuffMenu* EnginePart::getStuffMenu()
+shared_ptr<StuffMenu> EnginePart::getStuffMenu()
 {
 	if (getGUIManager() == nullptr)return nullptr;
 	return getGUIManager()->stuffMenu;
 }
 
-GameStore* EnginePart::getGameStore()
+shared_ptr<GameStore> EnginePart::getGameStore()
 {
 	if (getGUIManager() == nullptr)return nullptr;
 	return getGUIManager()->gameStore;
 }
 
-PlayerEditMenu* EnginePart::getPlayerEditMenu()
+shared_ptr<PlayerEditMenu> EnginePart::getPlayerEditMenu()
 {
 	if (getGUIManager() == nullptr)return nullptr;
 	return getGUIManager()->playerEditMenu;
 }
 
-Player* EnginePart::getPlayer()
+shared_ptr<Player> EnginePart::getPlayer()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->player;
@@ -255,31 +255,31 @@ ND* EnginePart::getND()
 	return getClientGameEngine()->nD;
 }
 
-Wallet* EnginePart::getWallet()
+shared_ptr<Wallet> EnginePart::getWallet()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->wallet;
 }
 
-FriendManager* EnginePart::getFriendManager()
+shared_ptr<FriendManager> EnginePart::getFriendManager()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->friendManager;
 }
 
-StatusBar* EnginePart::getStatusBar()
+shared_ptr<StatusBar> EnginePart::getStatusBar()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getClientGameEngine()->statusBar;
 }
 
-NotificationManager* EnginePart::getNotificationManager()
+shared_ptr<NotificationManager> EnginePart::getNotificationManager()
 {
 	if (getClientGameEngine() == nullptr)return nullptr;
 	return getStatusBar()->notificationManager;
 }
 
-TCPServerConnection* EnginePart::getServerConnection()
+shared_ptr<TCPServerConnection> EnginePart::getServerConnection()
 {
 	return &BobNet::tcpServerConnection;
 }
@@ -290,7 +290,7 @@ GameSave EnginePart::getGameSave()
 }
 
 //=========================================================================================================================
-bool EnginePart::udpPeerMessageReceived(UDPPeerConnection* c, string e)
+bool EnginePart::udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e)
 {//=========================================================================================================================
 
 	string s = e;

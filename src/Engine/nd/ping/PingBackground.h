@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	PingBackground(Engine* g);
+	PingBackground(shared_ptr<Engine> g);
 
 
 	bool tvRolling = false;
@@ -27,7 +27,7 @@ public:
 	bool tvScanlinesColorPulseToggle = false;
 
 	bool backgroundInit = false;
-	BobTexture* backgroundTexture = nullptr;
+	shared_ptr<BobTexture> backgroundTexture = nullptr;
 	int screenX = 0;
 	int screenY = 0;
 

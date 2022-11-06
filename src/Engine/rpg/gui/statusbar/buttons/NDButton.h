@@ -15,7 +15,7 @@ public:
 
 	static Logger log;
 
-	NDButton(BGClientEngine* g);
+	NDButton(shared_ptr<BGClientEngine> g);
 
 	virtual void init() override;
 

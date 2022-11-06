@@ -16,7 +16,7 @@
 Logger GlowTileBackgroundMenuPanel::log = Logger("GlowTileBackground");
 
 
-GlowTileBackgroundMenuPanel::GlowTile::GlowTile(GlowTileBackgroundMenuPanel* outerInstance) : outerInstance(outerInstance)
+GlowTileBackgroundMenuPanel::GlowTile::GlowTile(shared_ptr<GlowTileBackgroundMenuPanel> outerInstance) : outerInstance(outerInstance)
 {
 }
 
@@ -24,7 +24,7 @@ GlowTileBackgroundMenuPanel::GlowTileBackgroundMenuPanel()
 { //=========================================================================================================================
 }
 
-GlowTileBackgroundMenuPanel::GlowTileBackgroundMenuPanel(Engine* g)
+GlowTileBackgroundMenuPanel::GlowTileBackgroundMenuPanel(shared_ptr<Engine> g)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -46,7 +46,7 @@ void GlowTileBackgroundMenuPanel::init()
 
 	bgScrollTexture = GLUtils::getTextureFromPNGExePath("data/guiBackground/glowTileFramesBG.png");
 
-	//glowTileFramesTexture = new ArrayList<Texture*>();
+	//glowTileFramesTexture = make_shared<ArrayList><shared_ptr<Texture>>();
 	for (int i = 0; i < tileFrames; i++)
 	{
 		glowTileFramesTexture->add(GLUtils::getTextureFromPNGExePath("data/guiBackground/glowTileFrames/" + to_string(i) + ".png"));
@@ -56,7 +56,7 @@ void GlowTileBackgroundMenuPanel::init()
 
 	for (int i = 0; i < numActiveTiles; i++)
 	{
-		glowTiles->add(new GlowTile(this));
+		glowTiles->add(make_shared<GlowTile>(this));
 	}
 
 	glowTiles->get(0)->started = true;
@@ -121,7 +121,7 @@ void GlowTileBackgroundMenuPanel::update()
 	//------------------------------------------
 	for (int i = 0; i < glowTiles->size(); i++)
 	{
-		GlowTile* tile = glowTiles->get(i);
+		shared_ptr<GlowTile> tile = glowTiles->get(i);
 
 		tile->ticks += ticksPassed;
 		if (tile->ticks > ticksPerFrame)
@@ -135,7 +135,7 @@ void GlowTileBackgroundMenuPanel::update()
 				next = 0;
 			}
 
-			GlowTile* nextTile = glowTiles->get(next);
+			shared_ptr<GlowTile> nextTile = glowTiles->get(next);
 
 			if (tile->started == false)
 			{
@@ -214,7 +214,7 @@ void GlowTileBackgroundMenuPanel::update()
 		//move the glow offsets when the bg loops
 		for (int i = 0; i < glowTiles->size(); i++)
 		{
-			GlowTile* tile = glowTiles->get(i);
+			shared_ptr<GlowTile> tile = glowTiles->get(i);
 			tile->tileX -= 1;
 			if (tile->tileX < 0)
 			{
@@ -230,7 +230,7 @@ void GlowTileBackgroundMenuPanel::update()
 		//move the glow offsets when the bg loops
 		for (int i = 0; i < glowTiles->size(); i++)
 		{
-			GlowTile* tile = glowTiles->get(i);
+			shared_ptr<GlowTile> tile = glowTiles->get(i);
 			tile->tileY -= 1;
 			if (tile->tileY < 0)
 			{
@@ -254,7 +254,7 @@ void GlowTileBackgroundMenuPanel::render()
 
 	{
 		//starting at bgScrollXY, draw bgScrollTexture until overlaps screen size x and y
-		BobTexture* texture = bgScrollTexture;
+		shared_ptr<BobTexture> texture = bgScrollTexture;
 
 		int w = texture->getImageWidth();
 		int h = texture->getImageHeight();
@@ -293,10 +293,10 @@ void GlowTileBackgroundMenuPanel::render()
 
 	for (int i = glowTiles->size() - 1; i >= 0; i--) //from top to bottom
 	{
-		GlowTile* tile = glowTiles->get(i);
+		shared_ptr<GlowTile> tile = glowTiles->get(i);
 
 
-		BobTexture* texture = glowTileFramesTexture->get(tile->frame);
+		shared_ptr<BobTexture> texture = glowTileFramesTexture->get(tile->frame);
 		int w = texture->getImageWidth();
 		int h = texture->getImageHeight();
 

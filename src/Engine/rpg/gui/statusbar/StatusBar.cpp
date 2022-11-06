@@ -16,31 +16,31 @@
 Logger StatusBar::log = Logger("StatusBar");
 
 
-BobTexture* StatusBar::blackBackgroundTexture = nullptr;
-BobTexture* StatusBar::blackForegroundTexture = nullptr;
-BobTexture* StatusBar::whiteBackgroundTexture = nullptr;
-BobTexture* StatusBar::whiteForegroundTexture = nullptr;
-BobTexture* StatusBar::backgroundTexture = nullptr;
-BobTexture* StatusBar::foregroundTexture = nullptr;
-BobTexture* StatusBar::glowTexture = nullptr;
-BobTexture* StatusBar::dividerTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::blackBackgroundTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::blackForegroundTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::whiteBackgroundTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::whiteForegroundTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::backgroundTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::foregroundTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::glowTexture = nullptr;
+shared_ptr<BobTexture> StatusBar::dividerTexture = nullptr;
 int StatusBar::sizeY = 26;
 float StatusBar::glossAlpha = 1.0f;
 bool StatusBar::useLightTheme = false;
 
-StatusBar::StatusBar(BGClientEngine* g)
+StatusBar::StatusBar(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	clockCaption = new ClockCaption(g);
-	dayCaption = new DayCaption(g);
-	moneyCaption = new MoneyCaption(g);
-	ndButton = new NDButton(g);
-	gameStoreButton = new GameStoreButton(g);
-	stuffButton = new StuffButton(g);
+	clockCaption = make_shared<ClockCaption>(g);
+	dayCaption = make_shared<DayCaption>(g);
+	moneyCaption = make_shared<MoneyCaption>(g);
+	ndButton = make_shared<NDButton>(g);
+	gameStoreButton = make_shared<GameStoreButton>(g);
+	stuffButton = make_shared<StuffButton>(g);
 
-	notificationManager = new NotificationManager(g);
+	notificationManager = make_shared<NotificationManager>(g);
 
 
 	blackBackgroundTexture = GLUtils::getTextureFromPNGExePath("data/statusbar/blackbarbackground.png");
@@ -93,7 +93,7 @@ void StatusBar::setLightTheme()
 		foregroundTexture = whiteForegroundTexture;
 
 
-		clockCaption->setColors(new BobColor(200, 0, 0), BobColor::lightRed, nullptr);
+		clockCaption->setColors(make_shared<BobColor>(200, 0, 0), BobColor::lightRed, nullptr);
 		dayCaption->setColors(BobColor::black, BobColor::lighterGray, nullptr);
 		moneyCaption->setColors(BobColor::green, BobColor::darkerGreen, nullptr);
 	}
@@ -166,7 +166,7 @@ void StatusBar::render(int layer)
 		return;
 	}
 
-	BobTexture* texture = nullptr;
+	shared_ptr<BobTexture> texture = nullptr;
 	if (layer == 0)
 	{
 		texture = backgroundTexture;

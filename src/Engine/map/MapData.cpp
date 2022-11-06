@@ -123,25 +123,25 @@ MapData::MapData(int id, const string& name, int widthTiles1X, int heightTiles1X
 	//		this.heightPixelsHQ2X = getHeightTiles1X*2*8; //hq2x pixel width
 }
 
-//MapData* MapData::fromBase64ZippedJSON(const string& b64)
+//shared_ptr<MapData> MapData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
 //
-//	//Gson gson = new Gson();
+//	//Gson gson = make_shared<Gson>();
 //	//MapData data = gson.fromJson(json,MapData.class);
 //
 //	return fromJSON(json);
 //}
 //
-//MapData* MapData::fromJSON(const string& json)
+//shared_ptr<MapData> MapData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//Gson* gson = new Gson();
-//	MapData* data = nullptr;// gson->fromJson(json, MapData::typeid);
+//	//shared_ptr<Gson> gson = make_shared<Gson>();
+//	shared_ptr<MapData> data = nullptr;// gson->fromJson(json, MapData::typeid);
 //
 //
 //	return data;
@@ -264,7 +264,7 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t,"}") == false)
 	{
-		MapStateData *data = new MapStateData();
+		shared_ptr<MapStateData >data = make_shared<MapStateData>();
 		t = data->initFromString(t);
 		stateDataList->add(data);
 	}
@@ -275,7 +275,7 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t, "}") == false)
 	{
-		EventData *data = new EventData();
+		shared_ptr<EventData >data = make_shared<EventData>();
 		t = data->initFromString(t);
 		eventDataList->add(data);
 	}
@@ -286,7 +286,7 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t,"}") == false)
 	{
-		DoorData *data = new DoorData();
+		shared_ptr<DoorData >data = make_shared<DoorData>();
 		t = data->initFromString(t);
 		doorDataList->add(data);
 	}
@@ -439,17 +439,17 @@ int MapData::getHeightPixelsHQ()
 	return getHeightTiles1X() * 8 * 2;
 }
 
-ArrayList<MapStateData*>* MapData::getStateDataList()
+ArrayList<shared_ptr<MapStateData>>* MapData::getStateDataList()
 {
 	return stateDataList;
 }
 
-ArrayList<EventData*>* MapData::getEventDataList()
+ArrayList<shared_ptr<EventData>>* MapData::getEventDataList()
 {
 	return eventDataList;
 }
 
-ArrayList<DoorData*>* MapData::getDoorDataList()
+ArrayList<shared_ptr<DoorData>>* MapData::getDoorDataList()
 {
 	return doorDataList;
 }

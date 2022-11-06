@@ -14,25 +14,25 @@ class Logger;
 class MapManager : public EnginePart
 {
 public:
-	ArrayList<Map*> mapList;
-	HashMap<string, Map*> mapByNameHashMap;//new HashMap<string, Map*>();
-	HashMap<int, Map*> mapByIDHashMap;//new HashMap<int, Map*>();
+	ArrayList<shared_ptr<Map>> mapList;
+	HashMap<string, shared_ptr<Map>> mapByNameHashMap;//make_shared<HashMap><string, shared_ptr<Map>>();
+	HashMap<int, shared_ptr<Map>> mapByIDHashMap;//make_shared<HashMap><int, shared_ptr<Map>>();
 
 	static Logger log;
 	
 
-	Map* currentMap = nullptr;
+	shared_ptr<Map> currentMap = nullptr;
 private:
-	Map* lastMap = nullptr;
+	shared_ptr<Map> lastMap = nullptr;
 
 
-	//	private final KahluaConverterManager converterManager = new KahluaConverterManager();
+	//	private final KahluaConverterManager converterManager = make_shared<KahluaConverterManager>();
 	//	private final J2SEPlatform platform = new J2SEPlatform();
 	//	private final KahluaTable env = platform.newEnvironment();
-	//	private final KahluaThread thread = new KahluaThread(platform, env);
-	//	private final LuaCaller caller = new LuaCaller(converterManager);
+	//	private final KahluaThread thread = make_shared<KahluaThread>(platform, env);
+	//	private final LuaCaller caller = make_shared<LuaCaller>(converterManager);
 	//
-	//	private final LuaJavaClassExposer exposer = new LuaJavaClassExposer(converterManager, platform, env);
+	//	private final LuaJavaClassExposer exposer = make_shared<LuaJavaClassExposer>(converterManager, platform, env);
 
 public:
 	static bool useThreads;
@@ -41,7 +41,7 @@ public:
 
 
 	//textures mapped to light filenames
-	static HashMap<string, BobTexture*> lightTextureHashMap;//new HashMap<string, Texture*>();
+	static HashMap<string, shared_ptr<BobTexture>> lightTextureHashMap;//make_shared<HashMap><string, shared_ptr<Texture>>();
 
 
 
@@ -76,11 +76,11 @@ public:
 
 
 
-	Door* doorEntered = nullptr;
-	Door* doorExited = nullptr;
+	shared_ptr<Door> doorEntered = nullptr;
+	shared_ptr<Door> doorExited = nullptr;
 
-	WarpArea* warpEntered = nullptr;
-	WarpArea* warpExited = nullptr;
+	shared_ptr<WarpArea> warpEntered = nullptr;
+	shared_ptr<WarpArea> warpExited = nullptr;
 
 
 	float drawAngle = 0; //TODO
@@ -96,7 +96,7 @@ public:
 	bool effectsBlackAndWhite = false; //TODO
 
 
-	MapManager(Engine* g);
+	MapManager(shared_ptr<Engine> g);
 	~MapManager();
 
 
@@ -172,42 +172,42 @@ public:
 	void changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixelsHQ, bool updateGameSave);
 
 
-	void changeMap(Map* m, int mapXTiles1X, int mapYTiles1X);
+	void changeMap(shared_ptr<Map> m, int mapXTiles1X, int mapYTiles1X);
 
 
-	void changeMap(Map* m, Door* door);
+	void changeMap(shared_ptr<Map> m, shared_ptr<Door> door);
 
 
-	void changeMap(Map* m, Area* area);
+	void changeMap(shared_ptr<Map> m, shared_ptr<Area> area);
 
 
-	void changeMap(Map* m, WarpArea* area);
+	void changeMap(shared_ptr<Map> m, shared_ptr<WarpArea> area);
 
 
 	void changeMap(const string& mapName, const string& areaName);
 
 
-	Map* getMapByIDBlockUntilLoaded(int id);
+	shared_ptr<Map> getMapByIDBlockUntilLoaded(int id);
 
 
-	Map* getMapByNameBlockUntilLoaded(const string& name);
+	shared_ptr<Map> getMapByNameBlockUntilLoaded(const string& name);
 
 
 	void requestMapDataIfNotLoadedYet(const string& name);
 
 
-	MapState* getMapStateByID(int id);
+	shared_ptr<MapState> getMapStateByID(int id);
 
 
-	Area* getAreaByID(int id);
+	shared_ptr<Area> getAreaByID(int id);
 
 
-	Entity* getEntityByID(int id);
+	shared_ptr<Entity> getEntityByID(int id);
 
 
-	Light* getLightByID(int id);
+	shared_ptr<Light> getLightByID(int id);
 
 
-	Door* getDoorByID(int id);
+	shared_ptr<Door> getDoorByID(int id);
 };
 

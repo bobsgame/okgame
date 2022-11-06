@@ -19,7 +19,7 @@ RamioBlock::RamioBlock()
 }
 
 
-RamioBlock::RamioBlock(Engine* g)
+RamioBlock::RamioBlock(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }

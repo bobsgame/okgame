@@ -35,7 +35,7 @@ SpriteData::SpriteData
 	bool isItem,// = false, 
 	bool forceHQ2X,// = false, 
 	bool forceClientMD5Export,// = false, 
-	EventData* eventData,// = -1, 
+	shared_ptr<EventData> eventData,// = -1, 
 	const string& itemGameDescription,// = "",
 	float gamePrice,// = 0, 
 	int utilityOffsetXPixels1X,// = 0, 
@@ -92,10 +92,10 @@ SpriteData::SpriteData
 
 void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X)
 { //=========================================================================================================================
-	animationList->add(new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
+	animationList->add(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
 }
 
-//SpriteData* SpriteData::fromBase64ZippedJSON(const string& b64)
+//shared_ptr<SpriteData> SpriteData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
@@ -106,11 +106,11 @@ void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, i
 //	return fromJSON(json);
 //}
 //
-//SpriteData* SpriteData::fromJSON(const string& json)
+//shared_ptr<SpriteData> SpriteData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
-//	//Gson* gson = new Gson();
-//	SpriteData* data = nullptr;// gson->fromJson(json, SpriteData::typeid);
+//	//shared_ptr<Gson> gson = make_shared<Gson>();
+//	shared_ptr<SpriteData> data = nullptr;// gson->fromJson(json, SpriteData::typeid);
 //
 //
 //	return data;
@@ -352,7 +352,7 @@ string& SpriteData::initFromString(string& t)
 		hitBoxFromBottomPixels1X = stoi(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 
-		SpriteAnimationSequence *s = new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
+		shared_ptr<SpriteAnimationSequence >s = make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
 		animationList->add(s);
 	}
 
@@ -361,7 +361,7 @@ string& SpriteData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t, "}") == false)
 	{
-		EventData* data = new EventData();
+		shared_ptr<EventData> data = make_shared<EventData>();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -489,7 +489,7 @@ bool SpriteData::getForceHQ2X()
 	return forceHQ2X;
 }
 
-EventData* SpriteData::getEventData()
+shared_ptr<EventData> SpriteData::getEventData()
 {
 	return eventData;
 }
@@ -537,7 +537,7 @@ string& SpriteData::getPaletteMD5()
 	return paletteMD5;
 }
 
-ArrayList<SpriteAnimationSequence*>* SpriteData::getAnimationList()
+ArrayList<shared_ptr<SpriteAnimationSequence>>* SpriteData::getAnimationList()
 {
 	return animationList;
 }

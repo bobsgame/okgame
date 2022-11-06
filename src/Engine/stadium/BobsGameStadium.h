@@ -20,14 +20,14 @@ private:
 public:
 	static Logger log;
 
-	StadiumScreen* stadiumScreen = nullptr;
-	Area* area = nullptr;
+	shared_ptr<StadiumScreen> stadiumScreen = nullptr;
+	shared_ptr<Area> area = nullptr;
 
 
 	BobsGameStadium();
 	~BobsGameStadium();
 	void init() override;
-	BobsGameStadium(StadiumScreen* stadiumScreen, Area* area);
+	BobsGameStadium(shared_ptr<StadiumScreen> stadiumScreen, shared_ptr<Area> area);
 
 
 	virtual void shakeSmall() override;

@@ -22,7 +22,7 @@ string GUIManager::buttonTheme = "oppositeThemeButton";
 string GUIManager::checkboxTheme = "checkbox";
 string GUIManager::scrollPaneTheme = "themedScrollPane";
 
-GUIManager::GUIManager(BGClientEngine* g)
+GUIManager::GUIManager(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================
 
 
@@ -41,10 +41,10 @@ GUIManager::GUIManager(BGClientEngine* g)
 	//glClear(GL_COLOR_BUFFER_BIT);
 
 
-	stuffMenu = new StuffMenu();
-	playerEditMenu = new PlayerEditMenu();
-	gameStore = new GameStore();
-	keyboardScreen = new KeyboardMenuPanel();
+	stuffMenu = make_shared<StuffMenu>();
+	playerEditMenu = make_shared<PlayerEditMenu>();
+	gameStore = make_shared<GameStore>();
+	keyboardScreen = make_shared<KeyboardMenuPanel>();
 	//
 	//   
 	//   stuffMenuGUI = new GUI(stuffMenu, GLUtils::TWLrenderer);
@@ -87,7 +87,7 @@ void GUIManager::update()
 
 	for (int i = 0; i < gameChallenges->size(); i++)
 	{
-		GameChallengeNotificationPanel* g = gameChallenges->get(i);
+		shared_ptr<GameChallengeNotificationPanel> g = gameChallenges->get(i);
 		g->update();
 	}
 }
@@ -126,7 +126,7 @@ void GUIManager::render()
 	//
 	//   for (int i = 0; i < gameChallenges->size(); i++)
 	//   {
-	//      GameChallengeNotificationPanel* g = gameChallenges[i];
+	//      shared_ptr<GameChallengeNotificationPanel> g = gameChallenges[i];
 	//      GUI* gui = gameChallengesGUIs[i];
 	//      if (g->getIsActivated())
 	//      {
@@ -138,9 +138,9 @@ void GUIManager::render()
 }
 
 //The following method was originally marked 'synchronized':
-GameChallengeNotificationPanel* GUIManager::makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName)
+shared_ptr<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(shared_ptr<FriendCharacter> friend_in, const string& gameName)
 { //=========================================================================================================================
-	GameChallengeNotificationPanel* g = new GameChallengeNotificationPanel(friend_in, gameName);
+	shared_ptr<GameChallengeNotificationPanel> g = make_shared<GameChallengeNotificationPanel>(friend_in, gameName);
 	gameChallenges->add(g);
 
 	//   GUI* gui = new GUI(g, GLUtils::TWLrenderer);
@@ -152,7 +152,7 @@ GameChallengeNotificationPanel* GUIManager::makeGameChallengeNotification(Friend
 	return g;
 }
 
-void GUIManager::removeGameNotification(GameChallengeNotificationPanel* g)
+void GUIManager::removeGameNotification(shared_ptr<GameChallengeNotificationPanel> g)
 { //=========================================================================================================================
 
 	for (int i = 0; i < gameChallenges->size(); i++)

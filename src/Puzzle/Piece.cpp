@@ -9,13 +9,13 @@
 
 Logger Piece::log = Logger("Piece");
 
-shared_ptr<PieceType> PieceType::emptyPieceType(new PieceType());
-shared_ptr<PieceType> PieceType::oneBlockCursorPieceType(new PieceType("cursorPiece", "", nullptr, 1, Piece::get1BlockCursorRotationSet()));
-shared_ptr<PieceType> PieceType::twoBlockHorizontalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockHorizontalCursorRotationSet()));
-shared_ptr<PieceType> PieceType::twoBlockVerticalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get2BlockVerticalCursorRotationSet()));
-shared_ptr<PieceType> PieceType::threeBlockHorizontalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockHorizontalCursorRotationSet()));
-shared_ptr<PieceType> PieceType::threeBlockVerticalCursorPieceType(new PieceType("cursorPiece", "", nullptr, 2, Piece::get3BlockVerticalCursorRotationSet()));
-shared_ptr<PieceType> PieceType::fourBlockCursorPieceType(new PieceType("cursorPiece", "", nullptr, 4, Piece::get4BlockCursorRotationSet()));
+shared_ptr<PieceType> PieceType::emptyPieceType(make_shared<PieceType>());
+shared_ptr<PieceType> PieceType::oneBlockCursorPieceType(make_shared<PieceType>("cursorPiece", "", nullptr, 1, Piece::get1BlockCursorRotationSet()));
+shared_ptr<PieceType> PieceType::twoBlockHorizontalCursorPieceType(make_shared<PieceType>("cursorPiece", "", nullptr, 2, Piece::get2BlockHorizontalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::twoBlockVerticalCursorPieceType(make_shared<PieceType>("cursorPiece", "", nullptr, 2, Piece::get2BlockVerticalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::threeBlockHorizontalCursorPieceType(make_shared<PieceType>("cursorPiece", "", nullptr, 2, Piece::get3BlockHorizontalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::threeBlockVerticalCursorPieceType(make_shared<PieceType>("cursorPiece", "", nullptr, 2, Piece::get3BlockVerticalCursorRotationSet()));
+shared_ptr<PieceType> PieceType::fourBlockCursorPieceType(make_shared<PieceType>("cursorPiece", "", nullptr, 4, Piece::get4BlockCursorRotationSet()));
 
 //=========================================================================================================================
 bool PieceType::operator==(const PieceType& rhs) const
@@ -126,7 +126,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 			for (int i = 0; i < importExport_overrideBlockTypes.size(); i++)
 			{
 				BlockType b = importExport_overrideBlockTypes.get(i);
-				shared_ptr<BlockType> bp(new BlockType());
+				shared_ptr<BlockType> bp(make_shared<BlockType>());
 				*bp = b;
 				overrideBlockTypes_DEPRECATED.add(bp);
 			}
@@ -145,7 +145,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 }
 
 //=========================================================================================================================
-Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes)
+Piece::Piece(shared_ptr<GameLogic> gameInstance, shared_ptr<Grid> grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
 	this->game = gameInstance;
@@ -169,14 +169,14 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, nullptr, grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
+			blocks.add(shared_ptr<Block>(make_shared<Block>(gameInstance, grid, nullptr, grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
 		}
 	}
 	else
 	{
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, nullptr, grid->getRandomBlockType(blockTypes))));
+			blocks.add(shared_ptr<Block>(make_shared<Block>(gameInstance, grid, nullptr, grid->getRandomBlockType(blockTypes))));
 		}
 	}
 
@@ -186,7 +186,7 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 }
 
 //=========================================================================================================================
-Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType)
+Piece::Piece(shared_ptr<GameLogic> gameInstance, shared_ptr<Grid> grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType)
 {//=========================================================================================================================
 
 	this->game = gameInstance;
@@ -214,7 +214,7 @@ Piece::Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceTyp
 
 	for (int b = 0; b < maxNumBlocks; b++)
 	{
-		blocks.add(shared_ptr<Block>(new Block(gameInstance, grid, nullptr, blockType)));
+		blocks.add(shared_ptr<Block>(make_shared<Block>(gameInstance, grid, nullptr, blockType)));
 	}
 
 	setRotation(0);
@@ -333,7 +333,7 @@ void Piece::initColors()
 	{
 		//don't make 3 jewels of the same color
 
-		BobColor *c = blocks.get(0)->getColor();
+		shared_ptr<BobColor >c = blocks.get(0)->getColor();
 
 		
 		if (c != nullptr)
@@ -515,7 +515,7 @@ void Piece::update()
 						filledBlockTypes = true;
 					}
 					b->counterCount = -2;
-					BobColor *color = b->getColor();
+					shared_ptr<BobColor >color = b->getColor();
 					b->blockType = grid->getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(blockTypes);
 					b->setColor(color);
 				}
@@ -725,7 +725,7 @@ void Piece::renderGhost(float x, float y, float alpha)
 	{
 		shared_ptr<Block> b = blocks.get(i);
 
-		BobColor *c = getGameLogic()->player->gridCheckeredBackgroundColor1;
+		shared_ptr<BobColor >c = getGameLogic()->player->gridCheckeredBackgroundColor1;
 
 		// fill in black square so background doesnt show through alpha
 		GLUtils::drawFilledRectXYWH(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), (float)cellW(), (float)cellH(), c->rf(), c->gf(), c->bf(), 1.0f);
@@ -937,11 +937,11 @@ void Piece::setRotation(int rotation)
 		rotation -= (int)pieceType->rotationSet.size();
 	}
 
-	Rotation *r = pieceType->rotationSet.get(rotation);
+	shared_ptr<Rotation >r = pieceType->rotationSet.get(rotation);
 
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
 	{
-		BlockOffset *b = r->blockOffsets.get(i);
+		shared_ptr<BlockOffset >b = r->blockOffsets.get(i);
 		blocks.get(i)->setXYOffsetInPiece(b->x, b->y);
 	}
 }
@@ -957,33 +957,33 @@ RotationSet Piece::get2BlockRotateAround00RotationSet()
 	//this is rotation around 0,0
 	//if(rotation==0)
 	{
-		Rotation *r = new Rotation();
-		r->add(new BlockOffset(0, 0));
-		r->add(new BlockOffset(1, 0));
+		shared_ptr<Rotation >r = make_shared<Rotation>();
+		r->add(make_shared<BlockOffset>(0, 0));
+		r->add(make_shared<BlockOffset>(1, 0));
 		rotations.add(r);
 	}
 
 	{
 		//if(rotation==1)
-		Rotation *r = new Rotation();
-		r->add(new BlockOffset(0, 0));
-		r->add(new BlockOffset(0, 1));
+		shared_ptr<Rotation >r = make_shared<Rotation>();
+		r->add(make_shared<BlockOffset>(0, 0));
+		r->add(make_shared<BlockOffset>(0, 1));
 		rotations.add(r);
 	}
 
 	{
 		//if(rotation==2)
-		Rotation *r = new Rotation();
-		r->add(new BlockOffset(0, 0));
-		r->add(new BlockOffset(-1, 0));
+		shared_ptr<Rotation >r = make_shared<Rotation>();
+		r->add(make_shared<BlockOffset>(0, 0));
+		r->add(make_shared<BlockOffset>(-1, 0));
 		rotations.add(r);
 	}
 
 	{
 		//if(rotation==3)
-		Rotation *r = new Rotation();
-		r->add(new BlockOffset(0, 0));
-		r->add(new BlockOffset(0, -1));
+		shared_ptr<Rotation >r = make_shared<Rotation>();
+		r->add(make_shared<BlockOffset>(0, 0));
+		r->add(make_shared<BlockOffset>(0, -1));
 		rotations.add(r);
 	}
 
@@ -1001,37 +1001,37 @@ RotationSet Piece::get2BlockBottomLeftAlwaysFilledRotationSet()
 	//this is rotation in a 2x2 bounding box with bottom left always filled
 	//if(rotation==0)
 	{
-		Rotation *r = new Rotation();
+		shared_ptr<Rotation >r = make_shared<Rotation>();
 		
-		r->add(new BlockOffset(0, 0));
-		r->add(new BlockOffset(1, 0));
+		r->add(make_shared<BlockOffset>(0, 0));
+		r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 
 	{
 		//if(rotation==1)
-		Rotation *r = new Rotation();
+		shared_ptr<Rotation >r = make_shared<Rotation>();
 		
-		r->add(new BlockOffset(0, -1));
-		r->add(new BlockOffset(0, 0));
+		r->add(make_shared<BlockOffset>(0, -1));
+		r->add(make_shared<BlockOffset>(0, 0));
 			rotations.add(r);
 		}
 
 	{
 		//if(rotation==2)
-		Rotation *r = new Rotation();
+		shared_ptr<Rotation >r = make_shared<Rotation>();
 		
-		r->add(new BlockOffset(1, 0));
-		r->add(new BlockOffset(0, 0));
+		r->add(make_shared<BlockOffset>(1, 0));
+		r->add(make_shared<BlockOffset>(0, 0));
 			rotations.add(r);
 		}
 
 	{
 		//if(rotation==3)
-		Rotation *r = new Rotation();
+		shared_ptr<Rotation >r = make_shared<Rotation>();
 		
-		r->add(new BlockOffset(0, 0));
-		r->add(new BlockOffset(0, -1));
+		r->add(make_shared<BlockOffset>(0, 0));
+		r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 
@@ -1050,9 +1050,9 @@ RotationSet Piece::get1BlockCursorRotationSet()
 		//this is rotation in a 2x2 bounding box with bottom left always filled
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 			rotations.add(r);
 		}
 	}
@@ -1070,10 +1070,10 @@ RotationSet Piece::get2BlockHorizontalCursorRotationSet()
 		//if(pieceType->name->equals("PANELPUZZLE_CURSOR"))
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 	}
@@ -1091,10 +1091,10 @@ RotationSet Piece::get2BlockVerticalCursorRotationSet()
 		//if(pieceType->name->equals("PANELPUZZLE_CURSOR"))
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 	}
@@ -1111,11 +1111,11 @@ RotationSet Piece::get3BlockHorizontalCursorRotationSet()
 	{
 
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 	}
@@ -1132,11 +1132,11 @@ RotationSet Piece::get3BlockVerticalCursorRotationSet()
 	{
 
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 	}
@@ -1154,12 +1154,12 @@ RotationSet Piece::get4BlockCursorRotationSet()
 		//if(pieceType->name->equals("PUZZLEFIGHTER_CURSOR"))
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 	}
@@ -1178,31 +1178,31 @@ RotationSet Piece::get3BlockVerticalRotationSet()
 
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, -2));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, -2));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, -2));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, -2));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, -2));
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, -2));
+			r->add(make_shared<BlockOffset>(0, 0));
 			rotations.add(r);
 		}
 	}
@@ -1220,31 +1220,31 @@ RotationSet Piece::get3BlockHorizontalRotationSet()
 
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 
-			r->add(new BlockOffset(0,0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0,0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 	}
@@ -1264,11 +1264,11 @@ RotationSet Piece::get3BlockTRotationSet()
 		*/
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 
@@ -1279,11 +1279,11 @@ RotationSet Piece::get3BlockTRotationSet()
 		*/
 		//if(rotation==1)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 
@@ -1293,11 +1293,11 @@ RotationSet Piece::get3BlockTRotationSet()
 		*/
 		//if(rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(-1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 
@@ -1308,11 +1308,11 @@ RotationSet Piece::get3BlockTRotationSet()
 		*/
 		//if(rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 1));
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 1));
+			r->add(make_shared<BlockOffset>(1, -1));
 			rotations.add(r);
 		}
 	}
@@ -1334,11 +1334,11 @@ RotationSet Piece::get3BlockLRotationSet()
 		*/
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 
@@ -1348,11 +1348,11 @@ RotationSet Piece::get3BlockLRotationSet()
 		*/
 		//if(rotation==1)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
@@ -1363,11 +1363,11 @@ RotationSet Piece::get3BlockLRotationSet()
 		*/
 		//if(rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 1));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 
@@ -1377,11 +1377,11 @@ RotationSet Piece::get3BlockLRotationSet()
 		*/
 		//if(rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 	}
@@ -1404,11 +1404,11 @@ RotationSet Piece::get3BlockJRotationSet()
 		*/
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 
@@ -1418,11 +1418,11 @@ RotationSet Piece::get3BlockJRotationSet()
 		*/
 		//if(rotation==1)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 1));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 1));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
@@ -1433,11 +1433,11 @@ RotationSet Piece::get3BlockJRotationSet()
 		*/
 		//if(rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 
@@ -1447,11 +1447,11 @@ RotationSet Piece::get3BlockJRotationSet()
 		*/
 		//if(rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 	}
@@ -1475,11 +1475,11 @@ RotationSet Piece::get3BlockIRotationSet()
 		*/
 		//if(rotation==0 || rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 
@@ -1488,11 +1488,11 @@ RotationSet Piece::get3BlockIRotationSet()
 		*/
 		//if(rotation==1 || rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
@@ -1503,11 +1503,11 @@ RotationSet Piece::get3BlockIRotationSet()
 		*/
 		//if(rotation==0 || rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 
@@ -1516,11 +1516,11 @@ RotationSet Piece::get3BlockIRotationSet()
 		*/
 		//if(rotation==1 || rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 	}
@@ -1542,11 +1542,11 @@ RotationSet Piece::get3BlockCRotationSet()
 		*/
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
@@ -1556,11 +1556,11 @@ RotationSet Piece::get3BlockCRotationSet()
 		*/
 		//if(rotation==1)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 
@@ -1570,11 +1570,11 @@ RotationSet Piece::get3BlockCRotationSet()
 		*/
 		//if(rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 
@@ -1584,11 +1584,11 @@ RotationSet Piece::get3BlockCRotationSet()
 		*/
 		//if(rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 	}
@@ -1611,11 +1611,11 @@ RotationSet Piece::get3BlockDRotationSet()
 		*/
 		//if(rotation==0 || rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 
@@ -1626,11 +1626,11 @@ RotationSet Piece::get3BlockDRotationSet()
 		*/
 		//if(rotation==1 || rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 		/*
@@ -1640,11 +1640,11 @@ RotationSet Piece::get3BlockDRotationSet()
 		*/
 		//if(rotation==0 || rotation==2)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 1));
-			r->add(new BlockOffset(-1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 1));
+			r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 
@@ -1655,11 +1655,11 @@ RotationSet Piece::get3BlockDRotationSet()
 		*/
 		//if(rotation==1 || rotation==3)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(1, -1));
 			rotations.add(r);
 		}
 	}
@@ -1677,43 +1677,43 @@ RotationSet Piece::get4BlockORotationSet()
 		//same everywhere
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(1, -1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
 
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 	}
@@ -1731,12 +1731,12 @@ RotationSet Piece::get4BlockSolidRotationSet()
 		//same everywhere
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(1, -1));
 			rotations.add(r);
 		}
 	}
@@ -1754,17 +1754,17 @@ RotationSet Piece::get9BlockSolidRotationSet()
 		//same everywhere
 		//if(rotation==0)
 		{
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(2, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(2, -1));
-			r->add(new BlockOffset(0, -2));
-			r->add(new BlockOffset(1, -2));
-			r->add(new BlockOffset(2, -2));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(2, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(2, -1));
+			r->add(make_shared<BlockOffset>(0, -2));
+			r->add(make_shared<BlockOffset>(1, -2));
+			r->add(make_shared<BlockOffset>(2, -2));
 			rotations.add(r);
 		}
 	}
@@ -1789,36 +1789,36 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 		if (type == RotationType::SRS || type == RotationType::SEGA)
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
 
-			r->add(new BlockOffset(-2, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-2, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::DTET)
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-2, 1));
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(-2, 1));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, 2));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, 2));
 			rotations.add(r);
 		}
 
@@ -1826,24 +1826,24 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 		{
 			{
 				//if(rotation==2)
-				Rotation *r = new Rotation();
+				shared_ptr<Rotation >r = make_shared<Rotation>();
 				
-				r->add(new BlockOffset(1, 1));
+				r->add(make_shared<BlockOffset>(1, 1));
 
-				r->add(new BlockOffset(0, 1));
-				r->add(new BlockOffset(-1, 1));
-				r->add(new BlockOffset(-2, 1));
+				r->add(make_shared<BlockOffset>(0, 1));
+				r->add(make_shared<BlockOffset>(-1, 1));
+				r->add(make_shared<BlockOffset>(-2, 1));
 			rotations.add(r);
 		}
 			{
 				//if(rotation==3)
-				Rotation *r = new Rotation();
+				shared_ptr<Rotation >r = make_shared<Rotation>();
 				
-				r->add(new BlockOffset(-1, 2));
+				r->add(make_shared<BlockOffset>(-1, 2));
 
-				r->add(new BlockOffset(-1, 1));
-				r->add(new BlockOffset(-1, 0));
-				r->add(new BlockOffset(-1, -1));
+				r->add(make_shared<BlockOffset>(-1, 1));
+				r->add(make_shared<BlockOffset>(-1, 0));
+				r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 		}
@@ -1851,24 +1851,24 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 		{
 			{
 				//if(rotation==2)
-				Rotation *r = new Rotation();
+				shared_ptr<Rotation >r = make_shared<Rotation>();
 				
-				r->add(new BlockOffset(1, 0));
-				r->add(new BlockOffset(0, 0));
-				r->add(new BlockOffset(-1, 0));
-				r->add(new BlockOffset(-2, 0));
+				r->add(make_shared<BlockOffset>(1, 0));
+				r->add(make_shared<BlockOffset>(0, 0));
+				r->add(make_shared<BlockOffset>(-1, 0));
+				r->add(make_shared<BlockOffset>(-2, 0));
 			rotations.add(r);
 		}
 			{
 				//if(rotation==3)
-				Rotation *r = new Rotation();
+				shared_ptr<Rotation >r = make_shared<Rotation>();
 				
 
-				r->add(new BlockOffset(0, 2));
-				r->add(new BlockOffset(0, 1));
-				r->add(new BlockOffset(0, 0));
+				r->add(make_shared<BlockOffset>(0, 2));
+				r->add(make_shared<BlockOffset>(0, 1));
+				r->add(make_shared<BlockOffset>(0, 0));
 
-				r->add(new BlockOffset(0, -1));
+				r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 		}
@@ -1878,46 +1878,46 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(2, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(2, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, -2));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, -2));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(2, 0));
+			r->add(make_shared<BlockOffset>(2, 0));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
 
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, -2));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, -2));
 			rotations.add(r);
 		}
 	}
@@ -1926,44 +1926,44 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-2, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-2, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, -2));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, -2));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(-2, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(-2, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
 
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, -2));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, -2));
 			rotations.add(r);
 		}
 	}
@@ -1988,46 +1988,46 @@ RotationSet Piece::get4BlockJRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)//this is rotation 2 for every other game()
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
 
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 1));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 	}
@@ -2036,59 +2036,59 @@ RotationSet Piece::get4BlockJRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::SEGA || type == RotationType::DTET)
 		{
 			//if(rotation==2)//SRS rotation 0 but down 1 //down one from other games, on floor
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 1));
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::GB || type == RotationType::NES)
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 
-			r->add(new BlockOffset(-1, -1));
+			r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==3)//SRS rotation 1
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(1, -1));
 			rotations.add(r);
 		}
 	}
@@ -2113,45 +2113,45 @@ RotationSet Piece::get4BlockLRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)//this is rotation 2 for every other game()
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
 
-			r->add(new BlockOffset(-1, -1));
+			r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 	}
@@ -2160,62 +2160,62 @@ RotationSet Piece::get4BlockLRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::SEGA || type == RotationType::DTET)
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(-1, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::GB || type == RotationType::NES)
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(-1, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==2)//down one from other games, on floor
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
 
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(1, 1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 	}
@@ -2247,60 +2247,60 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 		if (type == RotationType::SRS)
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::DTET)
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
 
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
 
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
 
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 	}
@@ -2309,74 +2309,74 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::SEGA || type == RotationType::GB)
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(-1, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(-1, -1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::NES)
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::SEGA || type == RotationType::GB)
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::NES)
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 	}
@@ -2401,45 +2401,45 @@ RotationSet Piece::get4BlockTRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)//this is rotation 2 for every other game()
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 	}
@@ -2448,61 +2448,61 @@ RotationSet Piece::get4BlockTRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)//SRS rotation 2, same as NES,GB
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==1)//SRS rotation 3, same as NES,GB
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::SEGA || type == RotationType::DTET)
 		{
 			//if(rotation==2)//down one from other games, on floor
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::GB || type == RotationType::NES)
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==3)//STS rotation 1, same as NES,GB
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 	}
@@ -2528,12 +2528,12 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 		if (type == RotationType::SRS)
 		{
 			//if(rotation==0)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-1, -1));
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(-1, -1));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
 			rotations.add(r);
 		}
 		else
@@ -2541,49 +2541,49 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 			if (type == RotationType::DTET)
 			{
 				//if(rotation==0)
-				Rotation *r = new Rotation();
+				shared_ptr<Rotation >r = make_shared<Rotation>();
 				
-				r->add(new BlockOffset(-1, 0));
-				r->add(new BlockOffset(0, 0));
-				r->add(new BlockOffset(0, 1));
-				r->add(new BlockOffset(1, 1));
+				r->add(make_shared<BlockOffset>(-1, 0));
+				r->add(make_shared<BlockOffset>(0, 0));
+				r->add(make_shared<BlockOffset>(0, 1));
+				r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 		}
 
 		{
 			//if(rotation==1)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(1, -1));
 
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==2)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 	}
@@ -2592,74 +2592,74 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 	{
 		{
 			//if(rotation==0)//same as STS rotation 2, same as NES,GB
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::SEGA || type == RotationType::NES)
 		{
 			//if(rotation==1 || rotation==3)//same as STS rotation 1, same as NES
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, -1));
-			r->add(new BlockOffset(1, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
+			r->add(make_shared<BlockOffset>(1, 0));
 
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::GB)
 		{
 			//if(rotation==1 || rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, -1));
-			r->add(new BlockOffset(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
+			r->add(make_shared<BlockOffset>(0, 0));
 
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 
-			r->add(new BlockOffset(-1, 1));
+			r->add(make_shared<BlockOffset>(-1, 1));
 			rotations.add(r);
 		}
 		{
 			//if(rotation==2)//same as STS rotation 2, same as NES,GB
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(1, 1));
+			r->add(make_shared<BlockOffset>(1, 1));
 
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(-1, 0));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::SEGA || type == RotationType::NES)
 		{
 			//if(rotation==3)//same as STS rotation 1, same as NES
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(0, 1));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(1, 0));
-			r->add(new BlockOffset(1, -1));
+			r->add(make_shared<BlockOffset>(0, 1));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(1, 0));
+			r->add(make_shared<BlockOffset>(1, -1));
 			rotations.add(r);
 		}
 
 		if (type == RotationType::GB)
 		{
 			//if(rotation==3)
-			Rotation *r = new Rotation();
+			shared_ptr<Rotation >r = make_shared<Rotation>();
 			
-			r->add(new BlockOffset(-1, 1));
-			r->add(new BlockOffset(-1, 0));
-			r->add(new BlockOffset(0, 0));
-			r->add(new BlockOffset(0, -1));
+			r->add(make_shared<BlockOffset>(-1, 1));
+			r->add(make_shared<BlockOffset>(-1, 0));
+			r->add(make_shared<BlockOffset>(0, 0));
+			r->add(make_shared<BlockOffset>(0, -1));
 			rotations.add(r);
 		}
 	}
@@ -2681,13 +2681,13 @@ int Piece::cellH()
 }
 
 //=========================================================================================================================
-GameType* Piece::getGameType()
+shared_ptr<GameType> Piece::getGameType()
 {//=========================================================================================================================
 	return getGameLogic()->currentGameType;
 }
 
 //=========================================================================================================================
-GameLogic* Piece::getGameLogic()
+shared_ptr<GameLogic> Piece::getGameLogic()
 {//=========================================================================================================================
 	return game;
 }

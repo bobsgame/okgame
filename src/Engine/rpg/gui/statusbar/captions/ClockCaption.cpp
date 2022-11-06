@@ -14,7 +14,7 @@
 Logger ClockCaption::log = Logger("ClockCaption");
 
 
-ClockCaption::ClockCaption(BGClientEngine* g)
+ClockCaption::ClockCaption(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -24,7 +24,7 @@ void ClockCaption::init()
 
 	//TODO: replace these lights with just pre-made pngs, less hackiness.
 
-	light = new Light(getEngine(), "timeLight", -100, 4, 24, 2, 255, 0, 0, 90, 16, 2.0f, 1.0f, 0, true, true);
+	light = make_shared<Light>(getEngine(), "timeLight", -100, 4, 24, 2, 255, 0, 0, 90, 16, 2.0f, 1.0f, 0, true, true);
 
 
 	defaultFGColor = BobColor::red;
@@ -84,7 +84,7 @@ void ClockCaption::setFastColor()
 	setColors(fastFGColor, fastAAColor, fastBGColor);
 }
 
-void ClockCaption::setColors(BobColor* fg, BobColor* aa, BobColor* bg)
+void ClockCaption::setColors(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, shared_ptr<BobColor> bg)
 { //=========================================================================================================================
 
 	StatusBarCaption::setColors(fg, aa, bg);
@@ -94,7 +94,7 @@ void ClockCaption::setColors(BobColor* fg, BobColor* aa, BobColor* bg)
 		//light->deleteFromMapEntityListAndReleaseTexture();
 		delete light;
 		light = nullptr;
-		light = new Light(getEngine(), "timeLight", -100, 4, 24, 2, fg->ri(), fg->gi(), fg->bi(), 90, 16, 2.0f, 1.0f, 0, true, true);
+		light = make_shared<Light>(getEngine(), "timeLight", -100, 4, 24, 2, fg->ri(), fg->gi(), fg->bi(), 90, 16, 2.0f, 1.0f, 0, true, true);
 	}
 }
 

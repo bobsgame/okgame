@@ -42,27 +42,38 @@ class Event;
 class UDPPeerConnection;
 class TCPServerConnection;
 
-class Engine// : public State
+class Engine : public std::enable_shared_from_this<Engine>// : public State
 {
 //private:
 	//typedef State super;
 public:
 	
 
-	static Logger log;
+	//static Logger log;
+	static shared_ptr<Logger> log;
 
-	AudioManager* audioManager = nullptr;
-	Cameraman* cameraman = nullptr;
-	SpriteManager* spriteManager = nullptr;
-	ActionManager* actionManager = nullptr;
-	MapManager* mapManager = nullptr;
-	CinematicsManager* cinematicsManager = nullptr;
-	CaptionManager* captionManager = nullptr;
-	TextManager* textManager = nullptr;
-	EventManager* eventManager = nullptr;
+	//shared_ptr<AudioManager> audioManager = nullptr;
+	//shared_ptr<Cameraman> cameraman = nullptr;
+	//shared_ptr<SpriteManager> spriteManager = nullptr;
+	//shared_ptr<ActionManager> actionManager = nullptr;
+	//shared_ptr<MapManager> mapManager = nullptr;
+	//shared_ptr<CinematicsManager> cinematicsManager = nullptr;
+	//shared_ptr<CaptionManager> captionManager = nullptr;
+	//shared_ptr<TextManager> textManager = nullptr;
+	//shared_ptr<EventManager> eventManager = nullptr;
+
+	shared_ptr<AudioManager> audioManager = nullptr;
+	shared_ptr<Cameraman> cameraman = nullptr;
+	shared_ptr<SpriteManager> spriteManager = nullptr;
+	shared_ptr<ActionManager> actionManager = nullptr;
+	shared_ptr<MapManager> mapManager = nullptr;
+	shared_ptr<CinematicsManager> cinematicsManager = nullptr;
+	shared_ptr<CaptionManager> captionManager = nullptr;
+	shared_ptr<TextManager> textManager = nullptr;
+	shared_ptr<EventManager> eventManager = nullptr;
 
 
-	static ArrayList<UDPPeerConnection*> onlineFriends;
+	static ArrayList<shared_ptr<UDPPeerConnection>> onlineFriends;
 
 	double engineSpeed = 1.0;
 
@@ -92,27 +103,35 @@ public:
 	void updateChatConsole();
 
 protected:
-	ControlsManager* controlsManager = nullptr;
-	ControlsManager* chatControlsManager = nullptr;
-	ControlsManager* activeControlsManager = nullptr;
+
+	static shared_ptr<ControlsManager> controlsManager;
+	static shared_ptr<ControlsManager> chatControlsManager;
+	static shared_ptr<ControlsManager> activeControlsManager;
+
+	
 	bool chatEnabled = true;
 	bool chatFocused = false;
 	bool textStarted = false;
 
-	ConsoleText* chatConsoleText = nullptr;
+	shared_ptr<ConsoleText> chatConsoleText = nullptr;
 public:
-	ControlsManager* getControlsManager();
-	ControlsManager* getActiveControlsManager();
+	virtual shared_ptr <ControlsManager> getControlsManager();
+	virtual shared_ptr <ControlsManager> getActiveControlsManager();
 
-	//static void setClientGameEngine(BGClientEngine* gameEngine);
-	static BGClientEngine* getClientGameEngine();
+	//static void setClientGameEngine(std::shared_ptr<BGClientEngine> clientGameEngine);
+
+	static void setControlsManager(shared_ptr<ControlsManager> controlsManager);
+
+
+	virtual shared_ptr <BGClientEngine> getClientGameEngine();
+	//static shared_ptr<BGClientEngine> clientGameEngine;
 
 	virtual void updateControls();
 	virtual void resetPressedButtons();
 	virtual void setButtonStates();
 
 
-	static TCPServerConnection* getServerConnection();
+	virtual shared_ptr <TCPServerConnection> getServerConnection();
 
 	static long long getUserID_S();
 	static string getUserName_S();
@@ -123,13 +142,14 @@ public:
 
 	int getHeight();
 
-	virtual bool udpPeerMessageReceived(UDPPeerConnection *c, string s);
+	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string s);
 	virtual bool serverMessageReceived(string cs);
 
 
 
-	//static BGClientEngine* clientGameEngine;
-	//ArrayDeque<Cameraman*> *cameramanStack = new ArrayDeque<Cameraman*>();
+	//static shared_ptr<BGClientEngine> clientGameEngine;
+	//ArrayDeque<shared_ptr<Cameraman>> *cameramanStack = make_shared<ArrayDeque><shared_ptr<Cameraman>>();
+	//std::shared_ptr<ArrayDeque<std::shared_ptr<Cameraman>>> cameramanStack = std::make_shared<ArrayDeque<std::shared_ptr<Cameraman>>>();
 
 public:
 
@@ -141,16 +161,16 @@ public:
 	bool debugLayerEnabled = false;
 
 	//DebugText cameraSpeedText = DebugConsole.add("cameraSpeedText");
-	ConsoleText* zoomText = nullptr;// Console::debug("zoomText");
+	shared_ptr<ConsoleText>  zoomText = nullptr;// Console::debug("zoomText");
+	shared_ptr<ConsoleText>  mapCamText = nullptr;// = Console::debug("mapCamText");
+	shared_ptr<ConsoleText>  mapScreenText = nullptr;// = Console::debug("mapScreenText");
+	shared_ptr<ConsoleText>  mapSizeText = nullptr;// = Console::debug("mapSizeText");
+	shared_ptr<ConsoleText>  resolutionText = nullptr;// = Console::debug("resolutionText");
+	shared_ptr<ConsoleText>  textText = nullptr;// = Console::debug("textText");
+	shared_ptr<ConsoleText>  textOptionText = nullptr;// = Console::debug("textOptionText");
 
-	ConsoleText* mapCamText = nullptr;// = Console::debug("mapCamText");
-	ConsoleText* mapScreenText = nullptr;// = Console::debug("mapScreenText");
 
-	ConsoleText* mapSizeText = nullptr;// = Console::debug("mapSizeText");
-	ConsoleText* resolutionText = nullptr;// = Console::debug("resolutionText");
 
-	ConsoleText* textText = nullptr;// = Console::debug("textText");
-	ConsoleText* textOptionText = nullptr;// = Console::debug("textOptionText");
 
 	Engine();
 	virtual ~Engine();
@@ -160,22 +180,23 @@ public:
 	virtual void updateDebugText();
 	void* getGameObjectByTYPEIDName(const string& typeIDName);
 
-	Cameraman* getCameraman();
-	MapManager* getMapManager();
-	SpriteManager* getSpriteManager();
-	ActionManager* getActionManager();
-	TextManager* getTextManager();
-	AudioManager* getAudioManager();
-	CaptionManager* getCaptionManager();
-	EventManager* getEventManager();
 
-	CinematicsManager* getCinematicsManager();
-	Map* getCurrentMap();
+	virtual shared_ptr<Cameraman> getCameraman();
+	virtual shared_ptr<MapManager> getMapManager();
+	virtual shared_ptr<SpriteManager> getSpriteManager();
+	virtual shared_ptr<ActionManager> getActionManager();
+	virtual shared_ptr<TextManager> getTextManager();
+	virtual shared_ptr<AudioManager> getAudioManager();
+	virtual shared_ptr<CaptionManager> getCaptionManager();
+	virtual shared_ptr<EventManager> getEventManager();
+
+	virtual shared_ptr<CinematicsManager> getCinematicsManager();
+	virtual shared_ptr<Map> getCurrentMap();
+
+
 
 public:
-	//static void setClientGameEngine(BGClientEngine* clientGameEngine);
-	//void setControlsManager(ControlsManager* controlsManager);
-	//static BGClientEngine* getClientGameEngine();
+
 
 	float getWidthRelativeToZoom();
 	float getHeightRelativeToZoom();
@@ -207,7 +228,7 @@ private:
 
 	//====================================================
 public:
-	void sendServerObjectRequest(ServerObject* serverObject);
+	void sendServerObjectRequest(std::shared_ptr<ServerObject> serverObject);
 
 	//====================================================
 	//DIALOGUE

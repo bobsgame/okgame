@@ -45,11 +45,11 @@ void BobsGameStadium::init()
 	name = "bob's game";
 }
 
-BobsGameStadium::BobsGameStadium(StadiumScreen* stadiumScreen, Area* area)
+BobsGameStadium::BobsGameStadium(shared_ptr<StadiumScreen> stadiumScreen, shared_ptr<Area> area)
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("BobsGameStadium(StadiumScreen* stadiumScreen, Area* area)");
+	log.info("BobsGameStadium(shared_ptr<StadiumScreen> stadiumScreen, shared_ptr<Area> area)");
 #endif
 
 	//StadiumGameEngine(stadiumScreen, area);
@@ -88,7 +88,7 @@ void BobsGameStadium::titleMenuUpdate()
 
 	if (titleMenu == nullptr)
 	{
-		titleMenu = new BobMenu(this,"");
+		titleMenu = make_shared<BobMenu>(this,"");
 		titleMenu->add("TOURNAMENT MODE");
 	}
 

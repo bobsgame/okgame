@@ -17,7 +17,7 @@ int EventCommand::TYPE_COMMAND = 0;
 int EventCommand::TYPE_QUALIFIER_TRUE = 1;
 int EventCommand::TYPE_QUALIFIER_FALSE = 2;
 
-EventCommand::EventCommand(Engine* g, const string& command, ArrayList<EventParameter*>* parameterList, int type)
+EventCommand::EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>>* parameterList, int type)
 { //===============================================================================================
 
 	this->e = g;
@@ -41,7 +41,7 @@ int EventCommand::getNumParams()
 	}
 }
 
-EventCommand* EventCommand::parseEventCommandFromCommandString(Engine* g, Event* event, string commandString)
+shared_ptr<EventCommand> EventCommand::parseEventCommandFromCommandString(shared_ptr<Engine> g, shared_ptr<Event> event, string commandString)
 { //===============================================================================================
 
 
@@ -58,7 +58,7 @@ EventCommand* EventCommand::parseEventCommandFromCommandString(Engine* g, Event*
 
 	int type = -1;
 
-	EventCommand* e = nullptr;
+	shared_ptr<EventCommand> e = nullptr;
 
 
 	if (commandString.find(" == TRUE") != string::npos)
@@ -88,7 +88,7 @@ EventCommand* EventCommand::parseEventCommandFromCommandString(Engine* g, Event*
 
 	if (commandString.find("(") != string::npos)
 	{
-		ArrayList<EventParameter*>* newParameterList = new ArrayList<EventParameter*>();
+		ArrayList<shared_ptr<EventParameter>>* newParameterList = make_shared<ArrayList><shared_ptr<EventParameter>>();
 
 		string command = commandString.substr(0, commandString.find("("));
 
@@ -105,7 +105,7 @@ EventCommand* EventCommand::parseEventCommandFromCommandString(Engine* g, Event*
 				//commandString now looks like "thing)" or "thing|thing)"
 
 				//all parameters looks like THING.ID
-				newParameterList->add(new EventParameter(g, parameterString));
+				newParameterList->add(make_shared<EventParameter>(g, parameterString));
 			}
 			else //commandString looks like thing)
 			{
@@ -114,37 +114,37 @@ EventCommand* EventCommand::parseEventCommandFromCommandString(Engine* g, Event*
 				//commandString now looks like ")"
 
 				//all parameters looks like THING.ID
-				newParameterList->add(new EventParameter(g, parameterString));
+				newParameterList->add(make_shared<EventParameter>(g, parameterString));
 			}
 		}
 
 
-		e = new EventCommand(g, command, newParameterList, type);
+		e = make_shared<EventCommand>(g, command, newParameterList, type);
 	}
 	else
 	{
 		//it's just doThing
 
-		e = new EventCommand(g, commandString, nullptr, type);
+		e = make_shared<EventCommand>(g, commandString, nullptr, type);
 	}
 
 
 	return e;
 }
 
-EventCommand* EventCommand::getParent()
+shared_ptr<EventCommand> EventCommand::getParent()
 { //=========================================================================================================================
 	return parent;
 }
 
-void EventCommand::addChild(EventCommand* e)
+void EventCommand::addChild(shared_ptr<EventCommand> e)
 { //=========================================================================================================================
 
 	children->add(e);
 	e->parent = this;
 }
 
-EventCommand* EventCommand::getNextChild()
+shared_ptr<EventCommand> EventCommand::getNextChild()
 { //=========================================================================================================================
 
 	//ROOT
@@ -160,7 +160,7 @@ EventCommand* EventCommand::getNextChild()
 
 	if (currentChildIndex < children->size())
 	{
-		EventCommand* e = children->get(currentChildIndex);
+		shared_ptr<EventCommand> e = children->get(currentChildIndex);
 		currentChildIndex++;
 
 		return e;

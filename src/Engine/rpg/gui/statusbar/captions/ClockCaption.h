@@ -15,7 +15,7 @@ public:
 
 	static Logger log;
 
-	ClockCaption(BGClientEngine* g);
+	ClockCaption(shared_ptr<BGClientEngine> g);
 
 	virtual void init() override;
 
@@ -25,17 +25,17 @@ public:
 
 	void setLightTheme();
 
-	BobColor* pausedFGColor = BobColor::darkGray;
-	BobColor* pausedAAColor = BobColor::gray;
-	BobColor* pausedBGColor = BobColor::lightGray;
+	shared_ptr<BobColor> pausedFGColor = BobColor::darkGray;
+	shared_ptr<BobColor> pausedAAColor = BobColor::gray;
+	shared_ptr<BobColor> pausedBGColor = BobColor::lightGray;
 
-	BobColor* fastFGColor = BobColor::darkerBlue;
-	BobColor* fastAAColor = BobColor::darkBlue;
-	BobColor* fastBGColor = BobColor::blue;
+	shared_ptr<BobColor> fastFGColor = BobColor::darkerBlue;
+	shared_ptr<BobColor> fastAAColor = BobColor::darkBlue;
+	shared_ptr<BobColor> fastBGColor = BobColor::blue;
 
-	BobColor* unknownFGColor = BobColor::white;
-	BobColor* unknownAAColor = BobColor::lightGray;
-	BobColor* unknownBGColor = BobColor::black;
+	shared_ptr<BobColor> unknownFGColor = BobColor::white;
+	shared_ptr<BobColor> unknownAAColor = BobColor::lightGray;
+	shared_ptr<BobColor> unknownBGColor = BobColor::black;
 
 	void setPausedColor();
 
@@ -43,6 +43,6 @@ public:
 
 	void setFastColor();
 
-	void setColors(BobColor* fg, BobColor* aa, BobColor* bg) override;
+	void setColors(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, shared_ptr<BobColor> bg) override;
 };
 

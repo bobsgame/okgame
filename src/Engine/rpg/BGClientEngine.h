@@ -35,22 +35,22 @@ public:
 
 	static bool debugMode;
 
-	ConsoleText* playerMapText = nullptr;// = Console::debug("playerMapText");
-	ConsoleText* playerScreenText = nullptr;// = Console::debug("playerScreenText");
+	shared_ptr<ConsoleText> playerMapText = nullptr;// = Console::debug("playerMapText");
+	shared_ptr<ConsoleText> playerScreenText = nullptr;// = Console::debug("playerScreenText");
 
-	GUIManager* guiManager = nullptr;
-	StatusBar* statusBar = nullptr;
-	Wallet* wallet = nullptr;
+	shared_ptr<GUIManager> guiManager = nullptr;
+	shared_ptr<StatusBar> statusBar = nullptr;
+	shared_ptr<Wallet> wallet = nullptr;
 
-	Clock* clock = nullptr;
+	shared_ptr<Clock> clock = nullptr;
 
-	Player* normalPlayer = nullptr;
-	Player* player = nullptr;
+	shared_ptr<Player> normalPlayer = nullptr;
+	shared_ptr<Player> player = nullptr;
 
-	FriendManager* friendManager = nullptr;
+	shared_ptr<FriendManager> friendManager = nullptr;
 
 	ND* nD = nullptr;
-	StadiumScreen* stadiumScreen = nullptr;
+	shared_ptr<StadiumScreen> stadiumScreen = nullptr;
 
 	bool controlsEnabled = true;
 	bool playerExistsInMap = true;
@@ -76,25 +76,25 @@ public:
 	void initializeGameFromSave_S();
 	void setPlayerAppearanceFromGameSave_S();
 
-	BobColor* getNameColor(int accountType);
+	shared_ptr<BobColor> getNameColor(int accountType);
 
 	string getAccountRankString(int accountRank);
-	BobColor* getAccountRankColor(int accountRank);
+	shared_ptr<BobColor> getAccountRankColor(int accountRank);
 
-	void setPlayerToTempPlayerWithSprite(Sprite* s);
+	void setPlayerToTempPlayerWithSprite(shared_ptr<Sprite> s);
 	void setPlayerToNormalPlayer();
 
-	Clock* getClock();
-	GUIManager* getGUIManager();
-	StuffMenu* getStuffMenu();
-	GameStore* getGameStore();
-	PlayerEditMenu* getPlayerEditMenu();
-	Player* getPlayer();
+	shared_ptr<Clock> getClock();
+	shared_ptr<GUIManager> getGUIManager();
+	shared_ptr<StuffMenu> getStuffMenu();
+	shared_ptr<GameStore> getGameStore();
+	shared_ptr<PlayerEditMenu> getPlayerEditMenu();
+	shared_ptr<Player> getPlayer();
 	ND* getND();
-	Wallet* getWallet();
-	FriendManager* getFriendManager();
-	StatusBar* getStatusBar();
-	NotificationManager* getNotificationManager();
+	shared_ptr<Wallet> getWallet();
+	shared_ptr<FriendManager> getFriendManager();
+	shared_ptr<StatusBar> getStatusBar();
+	shared_ptr<NotificationManager> getNotificationManager();
 	//The following method was originally marked 'synchronized':
 
 	//====================================================
@@ -103,7 +103,7 @@ public:
 
 	bool gameSaveCompleted_nonThreaded = false;
 
-	//GameSave* getGameSave_S();
+	//shared_ptr<GameSave> getGameSave_S();
 
 	private:
 		bool isGameInitializedFromSave_nonThreaded = false;
@@ -129,7 +129,7 @@ public:
 	int getProjectLoadEventID_S();
 
 	bool getFinishedLoadEvent();
-	Event* projectLoadEvent = nullptr;
+	shared_ptr<Event> projectLoadEvent = nullptr;
 
 	bool finishedProjectLoadEvent = false;
 

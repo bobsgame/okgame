@@ -20,25 +20,25 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	// MenuPanel();
 
 	//
-	//   keyboardPanel = new DialogLayout();
+	//   keyboardPanel = make_shared<DialogLayout>();
 	//   keyboardPanel->setTheme("keyboardPanel");
 	//
 	//
-	//   Label* controlsPanelLabel = new Label("Controls");
+	//   shared_ptr<Label> controlsPanelLabel = make_shared<Label>("Controls");
 	//   controlsPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   controlsPanelLabel->setTheme("bigLabel");
 	//
 	//
-	//   Widget* keyboardImagePanel = new WidgetAnonymousInnerClassHelper(this);
+	//   shared_ptr<Widget> keyboardImagePanel = make_shared<WidgetAnonymousInnerClassHelper>(this);
 	//   keyboardImagePanel->setTheme("keyboardImagePanel");
 	//
 	//
-	//   Label* pressF1Label = new Label("Press F1 to show controls at any time.");
+	//   shared_ptr<Label> pressF1Label = make_shared<Label>("Press F1 to show controls at any time.");
 	//   pressF1Label->setCanAcceptKeyboardFocus(false);
 	//   pressF1Label->setTheme("bigLabel");
 	//
 	//
-	//   okButton = new Button("OK");
+	//   okButton = make_shared<Button>("OK");
 	//   okButton->setCanAcceptKeyboardFocus(false);
 	//   okButton->addCallback([&] ()
 	//      {
@@ -67,7 +67,7 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = new ScrollPane(insideScrollPaneLayout);
+	//   scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -99,7 +99,7 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	//   //insideScrollPaneLayout.setTheme(GUIManager.emptyDialogLayoutTheme);
 }
 
-KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(KeyboardMenuPanel* outerInstance)
+KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(shared_ptr<KeyboardMenuPanel> outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
@@ -206,7 +206,7 @@ void KeyboardMenuPanel::doOK()
 	//      //setButtonsVisible(false);
 	//
 	//      //create thread, this needs to be a thread because Button.doCallback(Runnable) only calls Runnable.run() which does NOT create a thread.
-	//      new Thread([&] ()
+	//      make_shared<Thread>([&] ()
 	//         {
 	//            try
 	//            {

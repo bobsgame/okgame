@@ -14,99 +14,99 @@ Logger BobColor::log = Logger("Color");
 bool BobColor::colorsInitialized = false;
 
 
-ArrayList<BobColor*> BobColor::colors;
+ArrayList<shared_ptr<BobColor>> BobColor::colors;
 
-BobColor* BobColor::clear = new BobColor(0, 0, 0, 0);
-BobColor* BobColor::transparent = clear;
-BobColor* BobColor::black = new BobColor(0, 0, 0);
-BobColor* BobColor::darkerGray = new BobColor(0.2f * 255, 0.2f * 255, 0.2f * 255);
-BobColor* BobColor::darkGray = new BobColor(0.35f * 255, 0.35f * 255, 0.35f * 255);
-BobColor* BobColor::gray = new BobColor(0.5f * 255, 0.5f * 255, 0.5f * 255);
-BobColor* BobColor::lightGray = new BobColor(0.65f * 255, 0.65f * 255, 0.65f * 255);
-BobColor* BobColor::lighterGray = new BobColor(0.8f * 255, 0.8f * 255, 0.8f * 255);
-BobColor* BobColor::white = new BobColor(1.0f*255, 1.0f * 255, 1.0f * 255);
+shared_ptr<BobColor> BobColor::clear = make_shared<BobColor>(0, 0, 0, 0);
+shared_ptr<BobColor> BobColor::transparent = clear;
+shared_ptr<BobColor> BobColor::black = make_shared<BobColor>(0, 0, 0);
+shared_ptr<BobColor> BobColor::darkerGray = make_shared<BobColor>(0.2f * 255, 0.2f * 255, 0.2f * 255);
+shared_ptr<BobColor> BobColor::darkGray = make_shared<BobColor>(0.35f * 255, 0.35f * 255, 0.35f * 255);
+shared_ptr<BobColor> BobColor::gray = make_shared<BobColor>(0.5f * 255, 0.5f * 255, 0.5f * 255);
+shared_ptr<BobColor> BobColor::lightGray = make_shared<BobColor>(0.65f * 255, 0.65f * 255, 0.65f * 255);
+shared_ptr<BobColor> BobColor::lighterGray = make_shared<BobColor>(0.8f * 255, 0.8f * 255, 0.8f * 255);
+shared_ptr<BobColor> BobColor::white = make_shared<BobColor>(1.0f*255, 1.0f * 255, 1.0f * 255);
 
-BobColor* BobColor::cyan = new BobColor(0, 255, 255);
-BobColor* BobColor::lightCyan = new BobColor(0, 255, 255); //cyan->lighter();
-BobColor* BobColor::lighterCyan = new BobColor(0, 255, 255); //cyan->lighter();
-BobColor* BobColor::darkCyan = new BobColor(0, 255, 255); //cyan->darker();
-BobColor* BobColor::darkerCyan = new BobColor(0, 255, 255); //cyan->darker()->darker();
+shared_ptr<BobColor> BobColor::cyan = make_shared<BobColor>(0, 255, 255);
+shared_ptr<BobColor> BobColor::lightCyan = make_shared<BobColor>(0, 255, 255); //cyan->lighter();
+shared_ptr<BobColor> BobColor::lighterCyan = make_shared<BobColor>(0, 255, 255); //cyan->lighter();
+shared_ptr<BobColor> BobColor::darkCyan = make_shared<BobColor>(0, 255, 255); //cyan->darker();
+shared_ptr<BobColor> BobColor::darkerCyan = make_shared<BobColor>(0, 255, 255); //cyan->darker()->darker();
 
-BobColor* BobColor::magenta = new BobColor(255, 0, 127);
-BobColor* BobColor::lightMagenta = new BobColor(255, 0, 127); //magenta->lighter();
-BobColor* BobColor::lighterMagenta = new BobColor(255, 0, 127); //magenta->lighter();
-BobColor* BobColor::darkMagenta = new BobColor(255, 0, 127); //magenta->darker();
-BobColor* BobColor::darkerMagenta = new BobColor(255, 0, 127); //magenta->darker()->darker();
+shared_ptr<BobColor> BobColor::magenta = make_shared<BobColor>(255, 0, 127);
+shared_ptr<BobColor> BobColor::lightMagenta = make_shared<BobColor>(255, 0, 127); //magenta->lighter();
+shared_ptr<BobColor> BobColor::lighterMagenta = make_shared<BobColor>(255, 0, 127); //magenta->lighter();
+shared_ptr<BobColor> BobColor::darkMagenta = make_shared<BobColor>(255, 0, 127); //magenta->darker();
+shared_ptr<BobColor> BobColor::darkerMagenta = make_shared<BobColor>(255, 0, 127); //magenta->darker()->darker();
 
-BobColor* BobColor::yellow = new BobColor(255, 255, 0);
-BobColor* BobColor::lightYellow = new BobColor(255, 255, 0); //yellow->lighter();
-BobColor* BobColor::lighterYellow = new BobColor(255, 255, 0); //yellow->lighter();
-BobColor* BobColor::darkYellow = new BobColor(255, 255, 0); //yellow->darker();
-BobColor* BobColor::darkerYellow = new BobColor(255, 255, 0); //yellow->darker()->darker();
+shared_ptr<BobColor> BobColor::yellow = make_shared<BobColor>(255, 255, 0);
+shared_ptr<BobColor> BobColor::lightYellow = make_shared<BobColor>(255, 255, 0); //yellow->lighter();
+shared_ptr<BobColor> BobColor::lighterYellow = make_shared<BobColor>(255, 255, 0); //yellow->lighter();
+shared_ptr<BobColor> BobColor::darkYellow = make_shared<BobColor>(255, 255, 0); //yellow->darker();
+shared_ptr<BobColor> BobColor::darkerYellow = make_shared<BobColor>(255, 255, 0); //yellow->darker()->darker();
 
-BobColor* BobColor::orange = new BobColor(255, 140, 0);
-BobColor* BobColor::lightOrange = new BobColor(255, 140, 0); //orange->lighter();
-BobColor* BobColor::lighterOrange = new BobColor(255, 140, 0); //orange->lighter();
-BobColor* BobColor::darkOrange = new BobColor(255, 140, 0); //orange->darker();
-BobColor* BobColor::darkerOrange = new BobColor(255, 140, 0); //orange->darker()->darker();
+shared_ptr<BobColor> BobColor::orange = make_shared<BobColor>(255, 140, 0);
+shared_ptr<BobColor> BobColor::lightOrange = make_shared<BobColor>(255, 140, 0); //orange->lighter();
+shared_ptr<BobColor> BobColor::lighterOrange = make_shared<BobColor>(255, 140, 0); //orange->lighter();
+shared_ptr<BobColor> BobColor::darkOrange = make_shared<BobColor>(255, 140, 0); //orange->darker();
+shared_ptr<BobColor> BobColor::darkerOrange = make_shared<BobColor>(255, 140, 0); //orange->darker()->darker();
 
-BobColor* BobColor::red = new BobColor(255, 0, 0);
-BobColor* BobColor::lightRed = new BobColor(255, 0, 0); //red->lighter();
-BobColor* BobColor::lighterRed = new BobColor(255, 0, 0); //red->lighter();
-BobColor* BobColor::darkRed = new BobColor(255, 0, 0); //red->darker();
-BobColor* BobColor::darkerRed = new BobColor(255, 0, 0); //red->darker()->darker();
+shared_ptr<BobColor> BobColor::red = make_shared<BobColor>(255, 0, 0);
+shared_ptr<BobColor> BobColor::lightRed = make_shared<BobColor>(255, 0, 0); //red->lighter();
+shared_ptr<BobColor> BobColor::lighterRed = make_shared<BobColor>(255, 0, 0); //red->lighter();
+shared_ptr<BobColor> BobColor::darkRed = make_shared<BobColor>(255, 0, 0); //red->darker();
+shared_ptr<BobColor> BobColor::darkerRed = make_shared<BobColor>(255, 0, 0); //red->darker()->darker();
 
-BobColor* BobColor::pink = new BobColor(255, 0, 255);
-BobColor* BobColor::lightPink = new BobColor(255, 0, 255); //pink->lighter();
-BobColor* BobColor::lighterPink = new BobColor(255, 0, 255); //pink->lighter();
-BobColor* BobColor::darkPink = new BobColor(255, 0, 255); //pink->darker();
-BobColor* BobColor::darkerPink = new BobColor(255, 0, 255); //pink->darker()->darker();
+shared_ptr<BobColor> BobColor::pink = make_shared<BobColor>(255, 0, 255);
+shared_ptr<BobColor> BobColor::lightPink = make_shared<BobColor>(255, 0, 255); //pink->lighter();
+shared_ptr<BobColor> BobColor::lighterPink = make_shared<BobColor>(255, 0, 255); //pink->lighter();
+shared_ptr<BobColor> BobColor::darkPink = make_shared<BobColor>(255, 0, 255); //pink->darker();
+shared_ptr<BobColor> BobColor::darkerPink = make_shared<BobColor>(255, 0, 255); //pink->darker()->darker();
 
-BobColor* BobColor::purple = new BobColor(127, 0, 255);
-BobColor* BobColor::lightPurple = new BobColor(127, 0, 255); //purple->lighter();
-BobColor* BobColor::lighterPurple = new BobColor(127, 0, 255); //purple->lighter();
-BobColor* BobColor::darkPurple = new BobColor(127, 0, 255); //purple->darker();
-BobColor* BobColor::darkerPurple = new BobColor(127, 0, 255); //purple->darker()->darker();
-
-
-BobColor* BobColor::blue = new BobColor(0, 0, 255);
-BobColor* BobColor::lighterBlue = new BobColor(0, 0, 255); //blue->lighter();
-BobColor* BobColor::lightBlue = new BobColor(0, 0, 255); //blue->lighter();
-BobColor* BobColor::darkBlue = new BobColor(0, 0, 255); //blue->darker();
-BobColor* BobColor::darkerBlue = new BobColor(0, 0, 255); //blue->darker()->darker();
-
-BobColor* BobColor::green = new BobColor(0, 255, 0);
-BobColor* BobColor::lighterGreen = new BobColor(0, 255, 0); //green->lighter()->lighter();
-BobColor* BobColor::lightGreen = new BobColor(0, 255, 0); //green->lighter();
-BobColor* BobColor::darkGreen = new BobColor(0, 255, 0); //green->darker();
-BobColor* BobColor::darkerGreen = new BobColor(0, 255, 0); //green->darker()->darker();
-
-BobColor* BobColor::aqua = new BobColor(0, 150, 255);
-BobColor* BobColor::lighterAqua = new BobColor(0, 150, 255); //aqua->lighter()->lighter();
-BobColor* BobColor::lightAqua = new BobColor(0, 150, 255); //aqua->lighter();
-BobColor* BobColor::darkAqua = new BobColor(0, 150, 255); //aqua->darker();
-BobColor* BobColor::darkerAqua = new BobColor(0, 150, 255); //aqua->darker()->darker();
-
-BobColor* BobColor::turquoise = new BobColor(0, 255, 150);
-BobColor* BobColor::lighterTurquoise = new BobColor(0, 255, 150); //turquoise->lighter()->lighter();
-BobColor* BobColor::lightTurquoise = new BobColor(0, 255, 150); //turquoise->lighter();
-BobColor* BobColor::darkTurquoise = new BobColor(0, 255, 150); //turquoise->darker();
-BobColor* BobColor::darkerTurquoise = new BobColor(0, 255, 150); //turquoise->darker()->darker();
-
-BobColor* BobColor::olive = new BobColor(64, 72, 0);
-BobColor* BobColor::darkerOlive = new BobColor(64, 72, 0);
-BobColor* BobColor::darkOlive = new BobColor(64, 72, 0);
-BobColor* BobColor::lighterOlive = new BobColor(64, 72, 0);
-BobColor* BobColor::lightOlive = new BobColor(64, 72, 0);
-
-BobColor* BobColor::burgandy = new BobColor(220, 70, 0);
-BobColor* BobColor::darkerBurgandy = new BobColor(220, 70, 0);
-BobColor* BobColor::darkBurgandy = new BobColor(220, 70, 0);
-BobColor* BobColor::lighterBurgandy = new BobColor(220, 70, 0);
-BobColor* BobColor::lightBurgandy = new BobColor(220, 70, 0);
+shared_ptr<BobColor> BobColor::purple = make_shared<BobColor>(127, 0, 255);
+shared_ptr<BobColor> BobColor::lightPurple = make_shared<BobColor>(127, 0, 255); //purple->lighter();
+shared_ptr<BobColor> BobColor::lighterPurple = make_shared<BobColor>(127, 0, 255); //purple->lighter();
+shared_ptr<BobColor> BobColor::darkPurple = make_shared<BobColor>(127, 0, 255); //purple->darker();
+shared_ptr<BobColor> BobColor::darkerPurple = make_shared<BobColor>(127, 0, 255); //purple->darker()->darker();
 
 
-BobColor* BobColor::wine = new BobColor(200, 80, 0);
+shared_ptr<BobColor> BobColor::blue = make_shared<BobColor>(0, 0, 255);
+shared_ptr<BobColor> BobColor::lighterBlue = make_shared<BobColor>(0, 0, 255); //blue->lighter();
+shared_ptr<BobColor> BobColor::lightBlue = make_shared<BobColor>(0, 0, 255); //blue->lighter();
+shared_ptr<BobColor> BobColor::darkBlue = make_shared<BobColor>(0, 0, 255); //blue->darker();
+shared_ptr<BobColor> BobColor::darkerBlue = make_shared<BobColor>(0, 0, 255); //blue->darker()->darker();
+
+shared_ptr<BobColor> BobColor::green = make_shared<BobColor>(0, 255, 0);
+shared_ptr<BobColor> BobColor::lighterGreen = make_shared<BobColor>(0, 255, 0); //green->lighter()->lighter();
+shared_ptr<BobColor> BobColor::lightGreen = make_shared<BobColor>(0, 255, 0); //green->lighter();
+shared_ptr<BobColor> BobColor::darkGreen = make_shared<BobColor>(0, 255, 0); //green->darker();
+shared_ptr<BobColor> BobColor::darkerGreen = make_shared<BobColor>(0, 255, 0); //green->darker()->darker();
+
+shared_ptr<BobColor> BobColor::aqua = make_shared<BobColor>(0, 150, 255);
+shared_ptr<BobColor> BobColor::lighterAqua = make_shared<BobColor>(0, 150, 255); //aqua->lighter()->lighter();
+shared_ptr<BobColor> BobColor::lightAqua = make_shared<BobColor>(0, 150, 255); //aqua->lighter();
+shared_ptr<BobColor> BobColor::darkAqua = make_shared<BobColor>(0, 150, 255); //aqua->darker();
+shared_ptr<BobColor> BobColor::darkerAqua = make_shared<BobColor>(0, 150, 255); //aqua->darker()->darker();
+
+shared_ptr<BobColor> BobColor::turquoise = make_shared<BobColor>(0, 255, 150);
+shared_ptr<BobColor> BobColor::lighterTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->lighter()->lighter();
+shared_ptr<BobColor> BobColor::lightTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->lighter();
+shared_ptr<BobColor> BobColor::darkTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->darker();
+shared_ptr<BobColor> BobColor::darkerTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->darker()->darker();
+
+shared_ptr<BobColor> BobColor::olive = make_shared<BobColor>(64, 72, 0);
+shared_ptr<BobColor> BobColor::darkerOlive = make_shared<BobColor>(64, 72, 0);
+shared_ptr<BobColor> BobColor::darkOlive = make_shared<BobColor>(64, 72, 0);
+shared_ptr<BobColor> BobColor::lighterOlive = make_shared<BobColor>(64, 72, 0);
+shared_ptr<BobColor> BobColor::lightOlive = make_shared<BobColor>(64, 72, 0);
+
+shared_ptr<BobColor> BobColor::burgandy = make_shared<BobColor>(220, 70, 0);
+shared_ptr<BobColor> BobColor::darkerBurgandy = make_shared<BobColor>(220, 70, 0);
+shared_ptr<BobColor> BobColor::darkBurgandy = make_shared<BobColor>(220, 70, 0);
+shared_ptr<BobColor> BobColor::lighterBurgandy = make_shared<BobColor>(220, 70, 0);
+shared_ptr<BobColor> BobColor::lightBurgandy = make_shared<BobColor>(220, 70, 0);
+
+
+shared_ptr<BobColor> BobColor::wine = make_shared<BobColor>(200, 80, 0);
 
 
 
@@ -698,13 +698,13 @@ void BobColor::initPresetColors()
 
 
 //==========================================================================================================================
-BobColor* BobColor::getColorByName(string name)
+shared_ptr<BobColor> BobColor::getColorByName(string name)
 {//==========================================================================================================================
 
 	if (name == "" || name == "empty")return nullptr;
 	for(int i=0;i<colors.size();i++)
 	{
-		BobColor *c = colors.get(i);
+		shared_ptr<BobColor >c = colors.get(i);
 
 		if (c->name == name)return c;
 
@@ -725,7 +725,7 @@ BobColor::BobColor()
 
 }
 ////=========================================================================================================================
-//BobColor::BobColor(BobColor* c)
+//BobColor::BobColor(shared_ptr<BobColor> c)
 //{//=========================================================================================================================
 //	if (c != nullptr)
 //	{
@@ -1161,19 +1161,19 @@ void BobColor::lighter(float scale)
 }
 
 /*
-void Color::multiply(Color *c)
+void Color::multiply(shared_ptr<Color >c)
 {
-   return new Color(rf() * c->rf(), gf() * c->gf(), bf() * c->bf(), af() * c->af());
+   return make_shared<Color>(rf() * c->rf(), gf() * c->gf(), bf() * c->bf(), af() * c->af());
 }
 
-void Color::addToCopy(Color *c)
+void Color::addToCopy(shared_ptr<Color >c)
 {
-   return new Color(rf() + c->rf(), gf() + c->gf(), bf() + c->bf(), af() + c->af());
+   return make_shared<Color>(rf() + c->rf(), gf() + c->gf(), bf() + c->bf(), af() + c->af());
 }
 
 void Color::scaleCopy(float value)
 {
-   return new Color(rf() * value, gf() * value, bf() * value, af() * value);
+   return make_shared<Color>(rf() * value, gf() * value, bf() * value, af() * value);
 }
 */
 

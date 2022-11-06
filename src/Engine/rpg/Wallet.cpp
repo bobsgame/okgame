@@ -14,7 +14,7 @@
 Logger Wallet::log = Logger("Wallet");
 
 
-Wallet::Wallet(BGClientEngine* g)
+Wallet::Wallet(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================
 	this->e = g;
 }

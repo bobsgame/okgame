@@ -31,10 +31,10 @@ class AudioManager : EnginePart
 public:
 	static Logger log;
 
-	static ArrayList<AudioFile*> globalAudioFileList;
+	static ArrayList<shared_ptr<AudioFile>> globalAudioFileList;
 
 	static bool loadedBuiltIn;
-	ArrayList<Sound*> playingAudioList;
+	ArrayList<shared_ptr<Sound>> playingAudioList;
 
 	
 
@@ -44,49 +44,49 @@ public:
 
 
 	AudioManager();
-	AudioManager(Engine* g);
+	AudioManager(shared_ptr<Engine> g);
 	
 	static void initAudioLibrary();
 	static void cleanup();
 
 	static void globalUpdate();
 
-	//Sound* loadSoundFileByName(const string& name);
+	//shared_ptr<Sound> loadSoundFileByName(const string& name);
 	
 	
 	void update();
 
-	Sound* getSoundByName(const string& musicName);
+	shared_ptr<Sound> getSoundByName(const string& musicName);
 
-	void playMusic(Sound* s, float vol, float pitch, bool loop);
-	Sound* playMusic(const string& musicName, float volume, float pitch, bool loop);
+	void playMusic(shared_ptr<Sound> s, float vol, float pitch, bool loop);
+	shared_ptr<Sound> playMusic(const string& musicName, float volume, float pitch, bool loop);
 
-	Sound* playSound(const string& soundName);
-	Sound* playSound(const string& soundName, float volume, float pitch, int times);
-	Sound* playSound(const string& soundName, float volume, float pitch);
-	void playSound(Sound* s, float vol, float pitch, int times);
+	shared_ptr<Sound> playSound(const string& soundName);
+	shared_ptr<Sound> playSound(const string& soundName, float volume, float pitch, int times);
+	shared_ptr<Sound> playSound(const string& soundName, float volume, float pitch);
+	void playSound(shared_ptr<Sound> s, float vol, float pitch, int times);
 
-	void playMusic(Sound* m);
-	void playSoundLoop(Sound* m);
+	void playMusic(shared_ptr<Sound> m);
+	void playSoundLoop(shared_ptr<Sound> m);
 
-	Sound* playMusic(const string& musicName);
-	Sound* playSoundLoop(const string& musicName);
+	shared_ptr<Sound> playMusic(const string& musicName);
+	shared_ptr<Sound> playSoundLoop(const string& musicName);
 
 
 
-	bool isSoundPlaying(Sound* m);
+	bool isSoundPlaying(shared_ptr<Sound> m);
 
 	bool isSoundPlaying(const string& musicName);
 
-	void stopMusic(Sound* m);
-	void stopSound(Sound* m);
+	void stopMusic(shared_ptr<Sound> m);
+	void stopSound(shared_ptr<Sound> m);
 
 	void stopMusic(const string& musicName);
 	void stopSound(const string& musicName);
 
 	void fadeOutSound(const string& musicName, int ticks);
 
-	void fadeOutSound(Sound* m, int ticks);
+	void fadeOutSound(shared_ptr<Sound> m, int ticks);
 
 
 
@@ -117,9 +117,9 @@ public:
 
 	void unpauseAllSounds();
 
-	static AudioFile* getAudioFileByName(string name);
-	static AudioFile* getAudioFileByIDCreateIfNotExist(int id);
-	Sound* getSoundByIDCreateIfNotExist(int id);
+	static shared_ptr<AudioFile> getAudioFileByName(string name);
+	static shared_ptr<AudioFile> getAudioFileByIDCreateIfNotExist(int id);
+	shared_ptr<Sound> getSoundByIDCreateIfNotExist(int id);
 
 
 };

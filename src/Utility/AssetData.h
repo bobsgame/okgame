@@ -27,10 +27,10 @@ public:
 	//	public String toJSON()
 	//	{
 	//
-	//		Gson gson = new Gson();
+	//		Gson gson = make_shared<Gson>();
 	//		String json = gson.toJson(this);
 	//
-	////		ObjectMapper mapper = new ObjectMapper();
+	////		ObjectMapper mapper = make_shared<ObjectMapper>();
 	////		String json = "";
 	////
 	////		try

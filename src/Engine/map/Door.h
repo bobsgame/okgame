@@ -31,7 +31,7 @@ public:
 	bool showActionIcon = true;
 
 
-	Door(Engine* g, DoorData* doorAsset, Map* m);
+	Door(shared_ptr<Engine> g, shared_ptr<DoorData> doorAsset, shared_ptr<Map> m);
 
 
 	bool isOpen();
@@ -63,8 +63,8 @@ public:
 	virtual void renderDebugInfo() override;
 
 
-	virtual EntityData* getData() override;//was return DoorData but covarient problem
-	DoorData* getDoorData();
+	virtual shared_ptr<EntityData> getData() override;//was return DoorData but covarient problem
+	shared_ptr<DoorData> getDoorData();
 
 
 	float arrivalXPixelsHQ();

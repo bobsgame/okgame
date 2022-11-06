@@ -17,7 +17,7 @@ public:
 	static Logger log;
 
 protected:
-	AreaData* data = nullptr;
+	shared_ptr<AreaData> data = nullptr;
 
 public:
 	long long ticksSinceSpawnTry = 0;
@@ -30,16 +30,16 @@ public:
 
 	bool showActionIcon = true;
 
-	Map* map = nullptr;
+	shared_ptr<Map> map = nullptr;
 
 	Area();
-	Area(Engine* g, Map* m);
+	Area(shared_ptr<Engine> g, shared_ptr<Map> m);
 
-	Area(Engine* g, AreaData* a, Map* m);
+	Area(shared_ptr<Engine> g, shared_ptr<AreaData> a, shared_ptr<Map> m);
 
-	Event* event = nullptr;
+	shared_ptr<Event> event = nullptr;
 
-	Map* getMap();
+	shared_ptr<Map> getMap();
 
 	bool fadingInOut = false;
 	float fadeAlpha = 0.0f;
@@ -57,51 +57,51 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	BobBool* checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	shared_ptr<BobBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
 	void tellServerTalkedToToday();
 
 	bool isWithinScreenBounds();
 
-	bool inRangeOfEntityByAmount(Entity* e, int amt);
+	bool inRangeOfEntityByAmount(shared_ptr<Entity> e, int amt);
 
-	float getDistanceFromEntity(Entity* e);
+	float getDistanceFromEntity(shared_ptr<Entity> e);
 
-	bool isEntityHitBoxTouchingMyBoundary(Entity* e);
+	bool isEntityHitBoxTouchingMyBoundary(shared_ptr<Entity> e);
 
-	bool isAreaCenterTouchingMyBoundary(Area* a);
+	bool isAreaCenterTouchingMyBoundary(shared_ptr<Area> a);
 
-	bool isAreaBoundaryTouchingMyBoundary(Area* a);
+	bool isAreaBoundaryTouchingMyBoundary(shared_ptr<Area> a);
 
 	bool isXYTouchingMyBoundary(float x, float y);
 
 	bool isXYXYTouchingMyBoundary(float left, float top, float right, float bottom);
 
-	bool isAreaBoundaryTouchingMyCenter(Area* a);
+	bool isAreaBoundaryTouchingMyCenter(shared_ptr<Area> a);
 
-	bool isEntityMiddleXYTouchingMyCenter(Entity* e);
+	bool isEntityMiddleXYTouchingMyCenter(shared_ptr<Entity> e);
 
-	bool isAreaCenterTouchingMyCenter(Area* a);
+	bool isAreaCenterTouchingMyCenter(shared_ptr<Area> a);
 
 	bool isXYTouchingMyCenter(float x, float y);
 
 	bool isXYXYTouchingMyCenter(float left, float top, float right, float bottom);
 
-	bool isEntityHitBoxTouchingMyBoundaryByAmount(Entity* e, int amt);
+	bool isEntityHitBoxTouchingMyBoundaryByAmount(shared_ptr<Entity> e, int amt);
 
-	bool isAreaCenterTouchingMyBoundaryByAmount(Area* a, int amt);
+	bool isAreaCenterTouchingMyBoundaryByAmount(shared_ptr<Area> a, int amt);
 
-	bool isAreaBoundaryTouchingMyBoundaryByAmount(Area* a, int amt);
+	bool isAreaBoundaryTouchingMyBoundaryByAmount(shared_ptr<Area> a, int amt);
 
 	bool isXYTouchingMyBoundaryByAmount(float x, float y, int amt);
 
 	bool isXYXYTouchingMyBoundaryByAmount(float left, float top, float right, float bottom, int amt);
 
-	bool isAreaBoundaryTouchingMyCenterByAmount(Area* a, int amt);
+	bool isAreaBoundaryTouchingMyCenterByAmount(shared_ptr<Area> a, int amt);
 
-	bool isEntityMiddleXYTouchingMyCenterByAmount(Entity* e, int amt);
+	bool isEntityMiddleXYTouchingMyCenterByAmount(shared_ptr<Entity> e, int amt);
 
-	bool isAreaCenterTouchingMyCenterByAmount(Area* a, int amt);
+	bool isAreaCenterTouchingMyCenterByAmount(shared_ptr<Area> a, int amt);
 
 	bool isXYTouchingMyCenterByAmount(float x, float y, int amt);
 
@@ -136,7 +136,7 @@ public:
 
 	float screenBottom();
 
-	AreaData* getData();
+	shared_ptr<AreaData> getData();
 
 	float getX();
 	float getY();
@@ -173,7 +173,7 @@ public:
 	bool autoPilot();
 	bool playerFaceDirection();
 	bool suckPlayerIntoMiddle();
-	EventData* getEventData();
+	shared_ptr<EventData> getEventData();
 	ArrayList<string>* connectionTYPEIDList();
 
 	string getTYPEIDString();

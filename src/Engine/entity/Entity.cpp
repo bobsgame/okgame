@@ -24,16 +24,16 @@ Entity::Entity()
 { //=========================================================================================================================
 }
 
-Entity::Entity(Engine* g, Map* m)
+Entity::Entity(shared_ptr<Engine> g, shared_ptr<Map> m)
 { //=========================================================================================================================
 	this->e = g;
 
 	this->map = m;
 
-	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
 }
 
-Entity::Entity(Engine* g, EntityData* entityData, Map* m)
+Entity::Entity(shared_ptr<Engine> g, shared_ptr<EntityData> entityData, shared_ptr<Map> m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -42,15 +42,15 @@ Entity::Entity(Engine* g, EntityData* entityData, Map* m)
 
 	this->map = m;
 
-	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
 }
 
-void Entity::initEntity(EntityData* entityData)
+void Entity::initEntity(shared_ptr<EntityData> entityData)
 { //=========================================================================================================================
 
 	if (entityData == nullptr)
 	{
-		entityData = new EntityData(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
+		entityData = make_shared<EntityData>(-1, "", "", 0, 0, 0, false, false, 0, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, "");
 		log.warn("entityData was null in Entity.init()");
 	}
 	this->data = entityData;
@@ -94,7 +94,7 @@ void Entity::update()
 
 	if (event != nullptr)
 	{
-		//Event* e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//shared_ptr<Event> e = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
@@ -178,7 +178,7 @@ void Entity::updateTimers()
 
 		//however, the Player uses float based values for everything and moves fractions of pixels.
 		//Player should set ticksSinceLastMovement to zero for correct timing.
-		if (dynamic_cast<Player*>(this) != nullptr)
+		if (dynamic_cast<shared_ptr<Player>>(this) != nullptr)
 		{
 			ticksSinceLastMovement = 0;
 		}
@@ -215,7 +215,7 @@ void Entity::renderDebugBoxes()
 			//go through doorlist
 			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
 			{
-				Door* door = getMap()->doorList.get(d);
+				shared_ptr<Door> door = getMap()->doorList.get(d);
 
 				if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
 				{
@@ -240,7 +240,7 @@ void Entity::renderDebugBoxes()
 
 				for (int j = 0; j < (int)getMap()->currentState->areaList.size(); j++)
 				{
-					Area* a = getMap()->currentState->areaList.get(j);
+					shared_ptr<Area> a = getMap()->currentState->areaList.get(j);
 
 					if (getConnectionTYPEIDList()->get(i) == a->getName())
 					{
@@ -255,7 +255,7 @@ void Entity::renderDebugBoxes()
 			//if not found, go through warparea list
 			for (int j = 0; j < (int)getMap()->warpAreaList.size(); j++)
 			{
-				Area* a = getMap()->warpAreaList.get(j);
+				shared_ptr<Area> a = getMap()->warpAreaList.get(j);
 
 				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{
@@ -307,7 +307,7 @@ void Entity::renderDebugInfo()
 	//if(movementDirection==RIGHT)GL.drawOutlinedString("movementDirection: Right", x, y+(++strings*9),Color.white);
 
 	//if (this->getClass().equals(char::typeid) || this->getClass().equals(Player::typeid) || this->getClass().equals(RandomCharacter::typeid))
-	if (dynamic_cast<Character*>(this) != nullptr || dynamic_cast<Player*>(this) != nullptr || dynamic_cast<RandomCharacter*>(this) != nullptr)
+	if (dynamic_cast<shared_ptr<Character>>(this) != nullptr || dynamic_cast<shared_ptr<Player>>(this) != nullptr || dynamic_cast<shared_ptr<RandomCharacter>>(this) != nullptr)
 	{
 		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), BobColor::white);
 		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), BobColor::white);
@@ -415,8 +415,8 @@ void Entity::renderDebugInfo()
 	int movementsThisFrame = 0;
 	public float pixelsToMoveThisFrame = 0;
 	               
-	ArrayList<String> getBehaviorList = new ArrayList<String>();
-	ArrayList<String> connectionList = new ArrayList<String>();
+	ArrayList<String> getBehaviorList = make_shared<ArrayList><String>();
+	ArrayList<String> connectionList = make_shared<ArrayList><String>();
 	               
 	               */
 }
@@ -424,7 +424,7 @@ void Entity::renderDebugInfo()
 
 string Entity::getCurrentAreaTargetName()
 { //=========================================================================================================================
-	Area* a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
+	shared_ptr<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
 	if (a == nullptr)
 	{
 		return "ERROR: Area not found.";
@@ -445,7 +445,7 @@ void Entity::render(float mapAlpha)
 	//overrode this so i can send in arbitrary texture, really only used for random sprites which contain their own unique texture reference, and not the one contained in the spriteAsset object.
 }
 
-void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
+void Entity::render(float alpha, shared_ptr<BobTexture> texture, shared_ptr<BobTexture> shadowTexture)
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();
@@ -566,14 +566,14 @@ void Entity::render(float alpha, BobTexture* texture, BobTexture* shadowTexture)
 	//special case for rendering doors action icon doorknob glow thing. maybe should override render in door for this.
 	//------------------
 	//if (this->getClass().equals(Door::typeid))
-	if (dynamic_cast<Door*>(this) != NULL)
+	if (dynamic_cast<shared_ptr<Door>>(this) != NULL)
 	{
-		Door* d = static_cast<Door*>(this);
+		shared_ptr<Door> d = static_cast<shared_ptr<Door>>(this);
 		d->renderActionIcon();
 	}
 }
 
-Map* Entity::getCurrentMap()
+shared_ptr<Map> Entity::getCurrentMap()
 { //=========================================================================================================================
 
 	log.warn("getCurrentMap() in Entity");
@@ -582,7 +582,7 @@ Map* Entity::getCurrentMap()
 	return EnginePart::getCurrentMap();
 }
 
-Map* Entity::getMap()
+shared_ptr<Map> Entity::getMap()
 { //=========================================================================================================================
 
 	if (this->map == nullptr)
@@ -590,7 +590,7 @@ Map* Entity::getMap()
 		return EnginePart::getCurrentMap();
 	}
 
-	//Map* map = getMapManager()->getMapByIDBlockUntilLoaded(getMapID());
+	//shared_ptr<Map> map = getMapManager()->getMapByIDBlockUntilLoaded(getMapID());
 
 	return this->map;
 }
@@ -784,12 +784,12 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 
 		for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
 		{
-			Entity* m = getMap()->activeEntityList.get(i);
+			shared_ptr<Entity> m = getMap()->activeEntityList.get(i);
 
 			if (m != this &&
-				(dynamic_cast<Door*>(m) != NULL) == false &&
-				(dynamic_cast<RandomCharacter*>(m) != NULL) == false &&
-				(dynamic_cast<Character*>(m) != NULL) == false &&
+				(dynamic_cast<shared_ptr<Door>>(m) != NULL) == false &&
+				(dynamic_cast<shared_ptr<RandomCharacter>>(m) != NULL) == false &&
+				(dynamic_cast<shared_ptr<Character>>(m) != NULL) == false &&
 				m->getNonWalkable() == true && x < m->getRight() && x > m->getLeft() && y < m->getBottom() && y > m->getTop())
 			{
 				return true; //TODO use touching functions - using full hitbox.
@@ -797,9 +797,9 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 
 			if (m != this &&
 				(
-					(dynamic_cast<Character*>(m) != NULL) ||
-					(dynamic_cast<RandomCharacter*>(m) != NULL) ||
-					(dynamic_cast<Player*>(m) != NULL)
+					(dynamic_cast<shared_ptr<Character>>(m) != NULL) ||
+					(dynamic_cast<shared_ptr<RandomCharacter>>(m) != NULL) ||
+					(dynamic_cast<shared_ptr<Player>>(m) != NULL)
 				)
 				&& x < m->getMiddleX() + 6 && x > m->getMiddleX() - 6 && y < m->getMiddleY() + 6 && y > m->getMiddleY() - 6)
 			{
@@ -820,7 +820,7 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 
 	for (int s = 0; s < (int)getMap()->activeEntityList.size(); s++)
 	{
-		Entity* e = getMap()->activeEntityList.get(s);
+		shared_ptr<Entity> e = getMap()->activeEntityList.get(s);
 
 		if (e->getNonWalkable() == false)
 		{
@@ -845,7 +845,7 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 
 	for (int s = 0; s < (int)getMap()->doorList.size(); s++)
 	{
-		Door* e = getMap()->doorList.get(s);
+		shared_ptr<Door> e = getMap()->doorList.get(s);
 
 		if (e->getNonWalkable() == false || e->isOpen())
 		{
@@ -1040,7 +1040,7 @@ bool Entity::haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks)
 	}
 }
 
-SpriteAnimationSequence* Entity::getCurrentAnimation()
+shared_ptr<SpriteAnimationSequence> Entity::getCurrentAnimation()
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
@@ -1053,7 +1053,7 @@ SpriteAnimationSequence* Entity::getCurrentAnimation()
 	return currentAnimation;
 }
 
-void Entity::setCurrentAnimation(SpriteAnimationSequence* a)
+void Entity::setCurrentAnimation(shared_ptr<SpriteAnimationSequence> a)
 { //=========================================================================================================================
 	currentAnimation = a;
 }
@@ -1065,7 +1065,7 @@ void Entity::setCurrentAnimationByName(const string& name)
 		log.error("Sprite is null in Entity: " + getName() + " while setting AnimationByName");
 		return;
 	}
-	SpriteAnimationSequence* a = sprite->getAnimationByName(name);
+	shared_ptr<SpriteAnimationSequence> a = sprite->getAnimationByName(name);
 	if (a == nullptr)
 	{
 		log.error("Animation name: " + name + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
@@ -1115,7 +1115,7 @@ void Entity::setCurrentAnimationByDirection(int dir)
 		log.error("Sprite is null in Entity: " + getName() + " while setting AnimationByName");
 		return;
 	}
-	SpriteAnimationSequence* a = sprite->getAnimationByName(sequenceName);
+	shared_ptr<SpriteAnimationSequence> a = sprite->getAnimationByName(sequenceName);
 	if (a == nullptr)
 	{
 		log.error("Animation name: " + sequenceName + " not found in Sprite: " + sprite->getName() + " in Entity: " + getName());
@@ -1137,13 +1137,13 @@ int Entity::getSpriteLastFrame()
 	return sprite->getNumFrames() - 1;
 }
 
-SpriteAnimationSequence* Entity::getAnimationBySpriteFrame(int frame)
+shared_ptr<SpriteAnimationSequence> Entity::getAnimationBySpriteFrame(int frame)
 { //=========================================================================================================================
 	if (sprite == nullptr)
 	{
 		log.error("Sprite is null in Entity: " + getName() + " while getting AnimationByFrame");
 	}
-	SpriteAnimationSequence* a = sprite->getAnimationByFrame(frame);
+	shared_ptr<SpriteAnimationSequence> a = sprite->getAnimationByFrame(frame);
 
 	if (a == nullptr && sprite->getName() == "Camera" == false && sprite->getName() == "none" == false)
 	{
@@ -1455,7 +1455,7 @@ void Entity::fadeOutAndDelete()
 void Entity::deleteFromMapEntityListAndReleaseTexture()
 { //=========================================================================================================================
 
-	Map *m = getMap();
+	shared_ptr<Map >m = getMap();
 	if (m != nullptr)
 	{
 		if (m->activeEntityList.contains(this))
@@ -1464,9 +1464,9 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 		}
 	}
 
-	if ((dynamic_cast<Player*>(this) != NULL) || (dynamic_cast<Character*>(this) != NULL) || (dynamic_cast<RandomCharacter*>(this) != NULL))
+	if ((dynamic_cast<shared_ptr<Player>>(this) != NULL) || (dynamic_cast<shared_ptr<Character>>(this) != NULL) || (dynamic_cast<shared_ptr<RandomCharacter>>(this) != NULL))
 	{
-		Character* r = static_cast<Character*>(this);
+		shared_ptr<Character> r = static_cast<shared_ptr<Character>>(this);
 		r->uniqueTexture->release();
 		delete r->uniqueTexture;
 		r->uniqueTexture = nullptr;
@@ -1479,10 +1479,10 @@ void Entity::addEventBehavior(const string& s)
 	eventBehaviorList->add(s); //TODO: handle this stuff right!
 }
 
-BobBool* Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
+shared_ptr<BobBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
 {
 	// TODO
-	return new BobBool();
+	return make_shared<BobBool>();
 }
 
 void Entity::tellServerTalkedToToday()
@@ -1490,21 +1490,21 @@ void Entity::tellServerTalkedToToday()
 	// TODO
 }
 
-float Entity::getDistanceFromEntity(Entity* e)
+float Entity::getDistanceFromEntity(shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return Math::distance(getMiddleX(), getMiddleY(), e->getMiddleX(), e->getMiddleY());
 }
 
-Entity* Entity::findNearestEntity()
+shared_ptr<Entity> Entity::findNearestEntity()
 { //=========================================================================================================================
 
-	Entity* nearestEntity = nullptr;
+	shared_ptr<Entity> nearestEntity = nullptr;
 
 	int shortestdist = 65535;
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		Entity* currentEntity = getMap()->activeEntityList.get(n);
+		shared_ptr<Entity> currentEntity = getMap()->activeEntityList.get(n);
 
 		if (this != currentEntity)
 		{
@@ -1527,12 +1527,12 @@ Entity* Entity::findNearestEntity()
 	return nearestEntity;
 }
 
-Entity* Entity::findNearestEntityInDirection(int dir)
+shared_ptr<Entity> Entity::findNearestEntityInDirection(int dir)
 { //=========================================================================================================================
 
 	//this checks a direction and finds the closest entity within the entity boundaries in that direction
 
-	Entity* nearest_entity = nullptr;
+	shared_ptr<Entity> nearest_entity = nullptr;
 
 	float shortestdist = 65535;
 
@@ -1541,7 +1541,7 @@ Entity* Entity::findNearestEntityInDirection(int dir)
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		Entity* e = getMap()->activeEntityList.get(n);
+		shared_ptr<Entity> e = getMap()->activeEntityList.get(n);
 
 		if (this != e)
 		{
@@ -1613,7 +1613,7 @@ Entity* Entity::findNearestEntityInDirection(int dir)
 	return nearest_entity;
 }
 
-bool Entity::isWalkingIntoEntity(Entity* entity)
+bool Entity::isWalkingIntoEntity(shared_ptr<Entity> entity)
 { //=========================================================================================================================
 
 	bool walkingIntoDoor = false;
@@ -1768,7 +1768,7 @@ bool Entity::isWalkingIntoEntity(Entity* entity)
 	return walkingIntoDoor;
 }
 
-bool Entity::isWalkingIntoArea(Area* area)
+bool Entity::isWalkingIntoArea(shared_ptr<Area> area)
 { //=========================================================================================================================
 
 	bool walkingIntoArea = false;
@@ -1926,7 +1926,7 @@ bool Entity::isWalkingIntoArea(Area* area)
 	return walkingIntoArea;
 }
 
-bool Entity::isEntityHitBoxTouchingMyHitBox(Entity* e)
+bool Entity::isEntityHitBoxTouchingMyHitBox(shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return isEntityHitBoxTouchingMyHitBoxByAmount(e, 0);
 }
@@ -1936,12 +1936,12 @@ bool Entity::isNearestEntityHitBoxTouchingMyHitBox()
 	return isNearestEntityHitBoxTouchingMyHitBoxByAmount(0);
 }
 
-bool Entity::isAreaCenterTouchingMyHitBox(Area* a)
+bool Entity::isAreaCenterTouchingMyHitBox(shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyHitBoxByAmount(a, 0);
 }
 
-bool Entity::isAreaBoundaryTouchingMyHitBox(Area* a)
+bool Entity::isAreaBoundaryTouchingMyHitBox(shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyHitBoxByAmount(a, 0);
 }
@@ -1956,17 +1956,17 @@ bool Entity::isXYXYTouchingMyHitBox(float left, float top, float right, float bo
 	return isXYXYTouchingMyHitBoxByAmount(left, top, right, bottom, 0);
 }
 
-bool Entity::isAreaBoundaryTouchingMyMiddleXY(Area* a)
+bool Entity::isAreaBoundaryTouchingMyMiddleXY(shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaBoundaryTouchingMyMiddleXYByAmount(a, 0);
 }
 
-bool Entity::isEntityMiddleXYTouchingMyMiddleXY(Entity* e)
+bool Entity::isEntityMiddleXYTouchingMyMiddleXY(shared_ptr<Entity> e)
 { //=========================================================================================================================
 	return isEntityMiddleXYTouchingMyMiddleXYByAmount(e, 1);
 }
 
-bool Entity::isAreaCenterTouchingMyMiddleXY(Area* a)
+bool Entity::isAreaCenterTouchingMyMiddleXY(shared_ptr<Area> a)
 { //=========================================================================================================================
 	return isAreaCenterTouchingMyMiddleXYByAmount(a, 1);
 }
@@ -1981,7 +1981,7 @@ bool Entity::isXYXYTouchingMyMiddleXY(float left, float top, float right, float 
 	return isXYXYTouchingMyMiddleXYByAmount(left, top, right, bottom, 0);
 }
 
-bool Entity::isEntityHitBoxTouchingMyHitBoxByAmount(Entity* e, int amt)
+bool Entity::isEntityHitBoxTouchingMyHitBoxByAmount(shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), amt);
 }
@@ -1991,12 +1991,12 @@ bool Entity::isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt)
 	return isEntityHitBoxTouchingMyHitBoxByAmount(findNearestEntity(), amt);
 }
 
-bool Entity::isAreaCenterTouchingMyHitBoxByAmount(Area* a, int amt)
+bool Entity::isAreaCenterTouchingMyHitBoxByAmount(shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyHitBoxByAmount(a->middleX(), a->middleY(), amt);
 }
 
-bool Entity::isAreaBoundaryTouchingMyHitBoxByAmount(Area* a, int amt)
+bool Entity::isAreaBoundaryTouchingMyHitBoxByAmount(shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyHitBoxByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
@@ -2011,17 +2011,17 @@ bool Entity::isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, 
 	return Math::isXYXYTouchingXYXYByAmount(getLeft(), getTop(), getRight(), getBottom(), left, top, right, bottom, amt);
 }
 
-bool Entity::isAreaBoundaryTouchingMyMiddleXYByAmount(Area* a, int amt)
+bool Entity::isAreaBoundaryTouchingMyMiddleXYByAmount(shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYXYTouchingMyMiddleXYByAmount(a->getLeft(), a->getTop(), a->getRight(), a->getBottom(), amt);
 }
 
-bool Entity::isEntityMiddleXYTouchingMyMiddleXYByAmount(Entity* e, int amt)
+bool Entity::isEntityMiddleXYTouchingMyMiddleXYByAmount(shared_ptr<Entity> e, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyMiddleXYByAmount(e->getMiddleX(), e->getMiddleY(), amt);
 }
 
-bool Entity::isAreaCenterTouchingMyMiddleXYByAmount(Area* a, int amt)
+bool Entity::isAreaCenterTouchingMyMiddleXYByAmount(shared_ptr<Area> a, int amt)
 { //=========================================================================================================================
 	return isXYTouchingMyMiddleXYByAmount(a->middleX(), a->middleY(), amt);
 }
@@ -2101,7 +2101,7 @@ bool Entity::isTouchingPlayerInDirection(int dir)
 	return touching_player_entity;
 }
 
-bool Entity::isHitBoxTouchingEntityInDirectionByAmount(Entity* e, int direction, int amt)
+bool Entity::isHitBoxTouchingEntityInDirectionByAmount(shared_ptr<Entity> e, int direction, int amt)
 { //=========================================================================================================================
 	return isHitBoxTouchingXYXYInDirectionByAmount(e->getLeft(), e->getTop(), e->getRight(), e->getBottom(), direction, amt);
 }
@@ -2278,7 +2278,7 @@ float Entity::getScreenX()
 		screenXPixelsHQ = (left - screenleft);
 	}
 
-	return screenXPixelsHQ * zoom;
+	return screenXshared_ptr<PixelsHQ > zoom;
 }
 
 float Entity::getScreenY()
@@ -2306,7 +2306,7 @@ float Entity::getScreenY()
 		screenYPixelsHQ = top - screentop;
 	}
 
-	return screenYPixelsHQ * zoom;
+	return screenYshared_ptr<PixelsHQ > zoom;
 }
 
 float Entity::getScreenLeft()
@@ -2445,7 +2445,7 @@ float Entity::getHeight()
 	}
 }
 
-EntityData* Entity::getData()
+shared_ptr<EntityData> Entity::getData()
 {
 	return data;
 }
@@ -2572,7 +2572,7 @@ float Entity::getTicksPerPixelMoved()
 	return getData()->getTicksPerPixelMoved();
 }
 
-EventData* Entity::getEventData()
+shared_ptr<EventData> Entity::getEventData()
 {
 	return getData()->getEventData();
 }

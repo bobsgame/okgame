@@ -13,10 +13,10 @@
 
 Logger RamioBackground::log = Logger("RamioBackground");
 
-RamioBackground::RamioBackground(Engine* g)
+RamioBackground::RamioBackground(shared_ptr<Engine> g)
 { //=========================================================================================================================
 
-	initMap(g, new MapData(-1, "ramio", 400, 20));
+	initMap(g, make_shared<MapData>(-1, "ramio", 400, 20));
 }
 
 void RamioBackground::RAMIO_shakeplayingfield()

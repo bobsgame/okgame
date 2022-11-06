@@ -39,7 +39,7 @@ private:
 	bool on = false;
 
 
-	BobColor* color = BobColor::black;
+	shared_ptr<BobColor> color = BobColor::black;
 
 	int ticksSlideDuration = 0;
 
@@ -52,7 +52,7 @@ private:
 	/// speed must be low. 0.1f * ticks(16) * 60fps = 96 pixels per second.
 	/// </summary>
 public:
-	Letterbox(Engine* g);
+	Letterbox(shared_ptr<Engine> g);
 
 
 	void init();

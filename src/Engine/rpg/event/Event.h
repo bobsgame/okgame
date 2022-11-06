@@ -30,32 +30,32 @@ private:
 	long long ticksCounter = 0;
 
 public:
-	Sprite* sprite = nullptr;
-	Map* map = nullptr;
-	Door* door = nullptr;
-	Area* area = nullptr;
-	Entity* entity = nullptr;
+	shared_ptr<Sprite> sprite = nullptr;
+	shared_ptr<Map> map = nullptr;
+	shared_ptr<Door> door = nullptr;
+	shared_ptr<Area> area = nullptr;
+	shared_ptr<Entity> entity = nullptr;
 
-	EventCommand* commandTree = nullptr;
-	EventCommand* currentCommand = nullptr;
+	shared_ptr<EventCommand> commandTree = nullptr;
+	shared_ptr<EventCommand> currentCommand = nullptr;
 
 private:
-	EventData* data = nullptr;
+	shared_ptr<EventData> data = nullptr;
 
 public:
-	//Event(Engine* g, int id);
+	//Event(shared_ptr<Engine> g, int id);
 
 	//for cutscenes only, string is not used, only to make unambiguous
-	Event(Engine* g, EventData* eventData, string s);
+	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, string s);
 
-	Event(Engine* g, EventData* eventData, Map* m);
-	Event(Engine* g, EventData* eventData, Area* a);
-	Event(Engine* g, EventData* eventData, Entity* e);
-	Event(Engine* g, EventData* eventData, Sprite* s);
-	Event(Engine* g, EventData* eventData, Door* d);
+	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Map> m);
+	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Area> a);
+	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Entity> e);
+	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Sprite> s);
+	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Door> d);
 	void initEvent();
 
-	EventData* getData();
+	shared_ptr<EventData> getData();
 
 	int getID();
 	string& getName();
@@ -72,11 +72,11 @@ public:
 	void setText(const string& text);
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(EventData* eventData);
+	void setData_S(shared_ptr<EventData> eventData);
 
-	Map* getMap();
+	shared_ptr<Map> getMap();
 
-	virtual Map* getCurrentMap() override;
+	virtual shared_ptr<Map> getCurrentMap() override;
 
 	bool getWasAddedToQueue();
 

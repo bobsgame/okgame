@@ -17,13 +17,13 @@ int GameLogic::aboveGridBuffer = 4;
 
 
 //===============================================================================================
-BobsGame* GameLogic::getBobsGame()
+shared_ptr<BobsGame> GameLogic::getBobsGame()
 {//===============================================================================================
-	return (BobsGame*)getEngine();
+	return (shared_ptr<BobsGame>)getEngine();
 }
 
 //===============================================================================================
-Room* GameLogic::getRoom()
+shared_ptr<Room> GameLogic::getRoom()
 {//===============================================================================================
 	return getBobsGame()->currentRoom;
 }
@@ -31,7 +31,7 @@ Room* GameLogic::getRoom()
 
 
 //===============================================================================================
-GameLogic::GameLogic(Engine* g, long long seed)
+GameLogic::GameLogic(shared_ptr<Engine> g, long long seed)
 {//===============================================================================================
 
 	boost::uuids::random_generator generator;
@@ -50,12 +50,12 @@ GameLogic::GameLogic(Engine* g, long long seed)
 
 	this->e = g;
 
-	grid = new Grid(this);
+	grid = make_shared<Grid>(this);
 
 	randomSeed = seed;
 	initializeRandomGenerator();
 
-	currentGameType = new GameType();
+	currentGameType = make_shared<GameType>();
 
 	grid->reformat(0, 0);
 
@@ -104,7 +104,7 @@ void GameLogic::fillGameTypeRandomBag()
 
 	if (currentGameSequence->randomizeSequence)
 	{
-		ArrayList<GameType*> tempBag;
+		ArrayList<shared_ptr<GameType>> tempBag;
 
 		for (int i = 0; i < currentGameSequence->gameTypes.size(); i++)
 		{
@@ -118,7 +118,7 @@ void GameLogic::fillGameTypeRandomBag()
 		{
 			int i = getRandomIntLessThan(tempBag.size(), "fillGameTypeRandomBag");
 
-			GameType* g = tempBag.get(i);
+			shared_ptr<GameType> g = tempBag.get(i);
 			gameTypeRandomBag.add(g);
 
 			tempBag.removeAt(i);
@@ -143,14 +143,14 @@ void GameLogic::fillGameTypeRandomBag()
 }
 
 //=========================================================================================================================
-GameType* GameLogic::getGameTypeFromRandomBag()
+shared_ptr<GameType> GameLogic::getGameTypeFromRandomBag()
 {//=========================================================================================================================
 	if (gameTypeRandomBag.isEmpty())
 	{
 		fillGameTypeRandomBag();
 	}
 
-	GameType* value = gameTypeRandomBag.get(0);
+	shared_ptr<GameType> value = gameTypeRandomBag.get(0);
 
 	gameTypeRandomBag.removeAt(0);
 
@@ -158,13 +158,13 @@ GameType* GameLogic::getGameTypeFromRandomBag()
 }
 
 //=========================================================================================================================
-DifficultyType* GameLogic::getCurrentDifficulty()
+shared_ptr<DifficultyType> GameLogic::getCurrentDifficulty()
 {//=========================================================================================================================
 	return currentGameType->getDifficultyByName(currentGameSequence->currentDifficultyName);
 }
 
 //=========================================================================================================================
-void GameLogic::setGameType(GameType* gameType)
+void GameLogic::setGameType(shared_ptr<GameType> gameType)
 {//=========================================================================================================================
 
 	previousGameString = currentGameType->name;
@@ -182,7 +182,7 @@ void GameLogic::initGame()
 {//=========================================================================================================================
 
 	//set all variables to initial state, in case when switching games
-	//currentGameType = new GameType();
+	//currentGameType = make_shared<GameType>();
 
 	if(firstInit)
 	{
@@ -321,7 +321,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::oneBlockCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = shared_ptr<Piece>(make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType));
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2);
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -331,7 +331,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockHorizontalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = shared_ptr<Piece>(make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType));
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -341,7 +341,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::twoBlockVerticalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = shared_ptr<Piece>(make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType));
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -351,7 +351,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::threeBlockHorizontalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = shared_ptr<Piece>(make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType));
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -360,7 +360,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::threeBlockVerticalCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = shared_ptr<Piece>(make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType));
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -370,7 +370,7 @@ void GameLogic::initGame()
 		{
 			shared_ptr<PieceType> cursorPieceType(PieceType::fourBlockCursorPieceType);
 			shared_ptr<BlockType> cursorBlockType = BlockType::emptyBlockType;
-			currentPiece = shared_ptr<Piece>(new Piece(this, grid, cursorPieceType, cursorBlockType));
+			currentPiece = shared_ptr<Piece>(make_shared<Piece>(this, grid, cursorPieceType, cursorBlockType));
 			currentPiece->init();
 			currentPiece->xGrid = (grid->getWidth() / 2) - 1;
 			currentPiece->yGrid = 7 + GameLogic::aboveGridBuffer;
@@ -407,7 +407,7 @@ void GameLogic::initGame()
 	//		Writer output = null;
 	//		try
 	//		{
-	//			output = new BufferedWriter(new FileWriter(new File(System.getProperty("user.home")+"\\Desktop\\output.txt")));
+	//			output = make_shared<BufferedWriter>(make_shared<FileWriter>(make_shared<File>(System.getProperty("user.home")+"\\Desktop\\output.txt")));
 	//
 	//			string settingsString = GameType().toJSON();
 	//
@@ -458,7 +458,7 @@ void GameLogic::waitForReady()
 		getAudioManager()->playSound(currentGameType->readySound, getVolume(), 1.0f);
 		playedReadySound = true;
 
-		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 30, currentGameType->readyTicksAmount, "READY", announcementCaptionFontSize, true, BobColor::red, BobColor::clear, RenderOrder::ABOVE, 2.0f);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 30, currentGameType->readyTicksAmount, "READY", announcementCaptionFontSize, true, BobColor::red, BobColor::clear, RenderOrder::ABOVE, 2.0f);
 		c->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - c->getWidth() / 2;
 	}
 
@@ -471,7 +471,7 @@ void GameLogic::waitForReady()
 
 		getAudioManager()->playSound(currentGameType->goSound, getVolume(), 1.0f);
 
-		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2), 1000, "GO!", announcementCaptionFontSize, true, BobColor::green, BobColor::clear, RenderOrder::ABOVE, 2.0f);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2), 1000, "GO!", announcementCaptionFontSize, true, BobColor::green, BobColor::clear, RenderOrder::ABOVE, 2.0f);
 		c->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - c->getWidth() / 2;
 		c->flashing = true;
 		c->flashingTicksPerFlash = 80;
@@ -638,14 +638,14 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 		if (getRoom()->multiplayer_DisableVSGarbage == false)
 		{
 
-			vector<GameLogic*> otherPlayers;
+			vector<shared_ptr<GameLogic>> otherPlayers;
 			for (int n = 0; n < getBobsGame()->players.size(); n++)
 			{
-				GameLogic *g2 = getBobsGame()->players.get(n)->gameLogic;
+				shared_ptr<GameLogic >g2 = getBobsGame()->players.get(n)->gameLogic;
 				if (g2 != this)otherPlayers.push_back(g2);
 			}
 
-			sort(otherPlayers.begin(), otherPlayers.end(), [](GameLogic*a, GameLogic*b) {return a->uuid.compare(b->uuid); });
+			sort(otherPlayers.begin(), otherPlayers.end(), [](shared_ptr<GameLogic>a, shared_ptr<GameLogic>b) {return a->uuid.compare(b->uuid); });
 
 
 
@@ -664,7 +664,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 			}
 			else
 			{
-				vector<GameLogic*> alivePlayers;
+				vector<shared_ptr<GameLogic>> alivePlayers;
 				for (auto g2 : otherPlayers)
 				{
 					if (g2->won == false && g2->died == false && g2->lost == false && g2->complete == false)
@@ -684,7 +684,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 								lastSentGarbageToPlayerIndex++;
 								if (lastSentGarbageToPlayerIndex >= (int)alivePlayers.size())lastSentGarbageToPlayerIndex = 0;
 
-								GameLogic* g2 = alivePlayers.at(lastSentGarbageToPlayerIndex);
+								shared_ptr<GameLogic> g2 = alivePlayers.at(lastSentGarbageToPlayerIndex);
 
 								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
 								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
@@ -701,7 +701,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 							if (queuedVSGarbageAmountToSend > 0)
 							{
 
-								GameLogic *leastBlocksPlayer = nullptr;
+								shared_ptr<GameLogic >leastBlocksPlayer = nullptr;
 								int leastBlocks = 1000;
 								for (auto g2 : alivePlayers)
 								{
@@ -730,7 +730,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 						{
 							if (queuedVSGarbageAmountToSend > 0)
 							{
-								GameLogic *g2 = alivePlayers.at(getRandomIntLessThan(alivePlayers.size(), "sendGarbage"));
+								shared_ptr<GameLogic >g2 = alivePlayers.at(getRandomIntLessThan(alivePlayers.size(), "sendGarbage"));
 								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
 								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
 
@@ -1108,7 +1108,7 @@ void GameLogic::incoming_FramePacket(const string &s)
 }
 
 //=========================================================================================================================
-void GameLogic::_packetProcessThreadLoop(GameLogic *g)
+void GameLogic::_packetProcessThreadLoop(shared_ptr<GameLogic >g)
 {//=========================================================================================================================
 
 	//log.debug("Started frame processing thread");
@@ -1480,7 +1480,7 @@ void GameLogic::removeFlashedChainBlocks()
 				if (b->blockType->makePieceTypeWhenCleared_UUID.size()>0)
 				{
 					shared_ptr<PieceType> pt = currentGameType->getPieceTypeByUUID(b->blockType->makePieceTypeWhenCleared_UUID.get(getRandomIntLessThan(b->blockType->makePieceTypeWhenCleared_UUID.size(), "removeFlashedChainBlocks")));
-					shared_ptr<Piece> p(new Piece(this, grid, pt, BlockType::emptyBlockType));
+					shared_ptr<Piece> p(make_shared<Piece>(this, grid, pt, BlockType::emptyBlockType));
 					p->init();
 					nextPieceSpecialBuffer.add(p);
 
@@ -2138,7 +2138,7 @@ bool GameLogic::movePiece(MovementType move)
 
 			//make new piece, not new block
 			//this is so the colors get initialized and the block can be updated by getting arrayOfPiecesInGrid
-			shared_ptr<Piece> p(new Piece(this, grid, PieceType::emptyPieceType, shared_ptr<BlockType>(BlockType::shotPieceBlockType)));
+			shared_ptr<Piece> p(make_shared<Piece>(this, grid, PieceType::emptyPieceType, shared_ptr<BlockType>(BlockType::shotPieceBlockType)));
 			p->init();
 
 			shared_ptr<Block> b = p->blocks.get(0);
@@ -2846,7 +2846,7 @@ void GameLogic::gotVSGarbageFromOtherPlayer(int amount)
 //
 //		ArrayList<shared_ptr<BlockType>> garbageBlockTypes = currentGameType->getGarbageBlockTypes(getCurrentDifficulty());
 //
-//		shared_ptr<Piece> p(new Piece(this, grid, pieceType, garbageBlockTypes));
+//		shared_ptr<Piece> p(make_shared<Piece>(this, grid, pieceType, garbageBlockTypes));
 //		p->init();
 //
 //		garbageBlock = p->blocks.get(0);
@@ -3361,7 +3361,7 @@ void GameLogic::renderHighScoreMeters()
 
 		myHighScore = getBobsGame()->getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
 
-		BobsGameLeaderBoardAndHighScoreBoard *currentLeaderboard = nullptr;
+		shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >currentLeaderboard = nullptr;
 		if (getRoom()->endlessMode)
 		{
 			currentLeaderboard = getBobsGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
@@ -3444,7 +3444,7 @@ void GameLogic::renderHighScoreMeters()
 		int startX = 0;
 		for (int i = 0; i < infoCaptions->size(); i++)
 		{
-			Caption* c = infoCaptions->get(i);
+			shared_ptr<Caption> c = infoCaptions->get(i);
 
 			if (c != nullptr)
 			{
@@ -3477,10 +3477,10 @@ void GameLogic::renderHighScoreMeters()
 
 		int amount = 0;
 		amount = height * (float)((float)currentScore / (float)highestScore);
-		BobColor *c = BobColor::cyan;
+		shared_ptr<BobColor >c = BobColor::cyan;
 		GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
-		if (myScoreBarCaption == nullptr)myScoreBarCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, BobColor::white, BobColor::clear);
+		if (myScoreBarCaption == nullptr)myScoreBarCaption = make_shared<Caption>(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, BobColor::white, BobColor::clear);
 		myScoreBarCaption->screenX = startX;
 		myScoreBarCaption->screenY = startY + height;
 		myScoreBarCaption->update();
@@ -3496,7 +3496,7 @@ void GameLogic::renderHighScoreMeters()
 		{
 			typeText = "Fastest Time To Completion";
 		}
-		if (scoreBarTypeCaption == nullptr)scoreBarTypeCaption = new Caption(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, typeText, 10, true, BobColor::white, BobColor::clear);
+		if (scoreBarTypeCaption == nullptr)scoreBarTypeCaption = make_shared<Caption>(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, typeText, 10, true, BobColor::white, BobColor::clear);
 		scoreBarTypeCaption->screenX = startX;
 		scoreBarTypeCaption->screenY = startY + height + 20;
 		scoreBarTypeCaption->update();
@@ -3529,7 +3529,7 @@ void GameLogic::renderHighScoreMeters()
 				c = BobColor::green;
 				GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
-				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
+				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = make_shared<Caption>(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
 				myHighScoreBarCaption->screenX = startX;
 				myHighScoreBarCaption->screenY = startY + height;
 				myHighScoreBarCaption->update();
@@ -3572,7 +3572,7 @@ void GameLogic::renderHighScoreMeters()
 				c = BobColor::magenta;
 				GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
-				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = new Caption(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard ("+ FileUtils::removeSwearWords(currentLeaderboardEntry->userName) + ")", 10, true, BobColor::white, BobColor::clear);
+				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = make_shared<Caption>(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard ("+ FileUtils::removeSwearWords(currentLeaderboardEntry->userName) + ")", 10, true, BobColor::white, BobColor::clear);
 				leaderboardBarCaption->screenX = startX;
 				leaderboardBarCaption->screenY = startY + height;
 				leaderboardBarCaption->update();
@@ -4405,7 +4405,7 @@ void GameLogic::makeAnnouncementCaption(const string& text)
 }
 
 //=========================================================================================================================
-void GameLogic::makeAnnouncementCaption(const string& text, BobColor* color)
+void GameLogic::makeAnnouncementCaption(const string& text, shared_ptr<BobColor> color)
 {//=========================================================================================================================
 
 	if (color == nullptr)
@@ -4413,7 +4413,7 @@ void GameLogic::makeAnnouncementCaption(const string& text, BobColor* color)
 		color = announcementCaptionTextColor;
 	}
 
-	Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, text, announcementCaptionFontSize, true, color, announcementCaptionBGColor, RenderOrder::ABOVE_TOP, announcementCaptionScale);
+	shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, text, announcementCaptionFontSize, true, color, announcementCaptionBGColor, RenderOrder::ABOVE_TOP, announcementCaptionScale);
 	//c->drawAbove = true;
 	announcementCaptions->add(c);
 }
@@ -4470,10 +4470,10 @@ void GameLogic::updateCaptionFadeValues()
 }
 
 //=========================================================================================================================
-Caption* GameLogic::makeInfoCaption(const string& text)
+shared_ptr<Caption> GameLogic::makeInfoCaption(const string& text)
 {//=========================================================================================================================
 
-	Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (int)++captionY * captionYSize, -1, string("" + text), captionFontSize, true, captionTextColor, captionBGColor, RenderOrder::ABOVE, captionScale);
+	shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (int)++captionY * captionYSize, -1, string("" + text), captionFontSize, true, captionTextColor, captionBGColor, RenderOrder::ABOVE, captionScale);
 	if (infoCaptions->contains(c) == false)
 	{
 		infoCaptions->add(c);
@@ -4530,7 +4530,7 @@ void GameLogic::deleteAllCaptions()
 
 	for (int i = 0; i < announcementCaptions->size(); i++)
 	{
-		Caption* c = announcementCaptions->get(i);
+		shared_ptr<Caption> c = announcementCaptions->get(i);
 		if (c != nullptr)
 		{
 			c->setToBeDeletedImmediately();
@@ -4573,7 +4573,7 @@ void GameLogic::deleteInfoCaptions()
 {//=========================================================================================================================
 	for (int i = 0; i < infoCaptions->size(); i++)
 	{
-		Caption* c = infoCaptions->get(i);
+		shared_ptr<Caption> c = infoCaptions->get(i);
 		if (c != nullptr)
 		{
 			c->setToBeDeletedImmediately();
@@ -4593,7 +4593,7 @@ void GameLogic::updateInfoCaptionsXY()
 
 	for (int i = 0; i < infoCaptions->size(); i++)
 	{
-		Caption* c = infoCaptions->get(i);
+		shared_ptr<Caption> c = infoCaptions->get(i);
 
 		if (c != nullptr)
 		{
@@ -4888,11 +4888,11 @@ void GameLogic::updateCaptions()
 	totalTicksPassedCaption->screenX = grid->getXOnScreenNoShake() + (grid->getWidth() * blockWidth) / 2 - timeCaptionStandardizedWidth / 2;
 	totalTicksPassedCaption->screenY = playingFieldY1 - 40;// grid->screenY + grid->getHeight() * blockHeight + 20;
 
-	levelCaption->setTextColor(new BobColor(captionColorCycleHueValue, 0.5f, 1.0f, 1.0f, true));
+	levelCaption->setTextColor(make_shared<BobColor>(captionColorCycleHueValue, 0.5f, 1.0f, 1.0f, true));
 
 	if (announcementCaptions->size() > 15)
 	{
-		Caption* c = announcementCaptions->get(0);
+		shared_ptr<Caption> c = announcementCaptions->get(0);
 		c->setToFadeOutAndBeDeleted();
 		announcementCaptions->removeAt(0);
 	}
@@ -4910,7 +4910,7 @@ void GameLogic::updateCaptions()
 
 	for (int i = 0; i < announcementCaptions->size(); i++)
 	{
-		Caption* c = announcementCaptions->get(i);
+		shared_ptr<Caption> c = announcementCaptions->get(i);
 
 		int stayInCenterTicks = 1000;
 		int transitionTime = 200;
@@ -5267,14 +5267,14 @@ void GameLogic::updateScore()
 
 //
 ////=========================================================================================================================
-//GameType* GameLogic::currentGameType
+//shared_ptr<GameType> GameLogic::currentGameType
 //{//=========================================================================================================================
 //	return currentGameType;
 //}
 //
 //
 ////=========================================================================================================================
-//void GameLogic::setCurrentGameType(GameType* settings)
+//void GameLogic::setCurrentGameType(shared_ptr<GameType> settings)
 //{//=========================================================================================================================
 //	this->currentGameType = settings;
 //}
@@ -5325,13 +5325,13 @@ long long GameLogic::ticks()
 }
 
 //=========================================================================================================================
-FrameState* GameLogic::getFrameState()
+shared_ptr<FrameState> GameLogic::getFrameState()
 {//=========================================================================================================================
 	return &(frameState);
 }
 
 ////=========================================================================================================================
-//CaptionManager* GameLogic::getCaptionManager()
+//shared_ptr<CaptionManager> GameLogic::getCaptionManager()
 //{//=========================================================================================================================
 //	return &captionManager;
 //}

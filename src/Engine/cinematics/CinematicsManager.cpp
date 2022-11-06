@@ -13,16 +13,16 @@
 Logger CinematicsManager::log = Logger("CinematicsManager");
 
 
-CinematicsManager::CinematicsManager(Engine* g)
+CinematicsManager::CinematicsManager(shared_ptr<Engine> g)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	screenOverlayOverLights = new ScreenOverlay(g);
-	screenOverlayUnderLights = new ScreenOverlay(g);
-	screenOverlayGroundLayer = new ScreenOverlay(g);
+	screenOverlayOverLights = make_shared<ScreenOverlay>(g);
+	screenOverlayUnderLights = make_shared<ScreenOverlay>(g);
+	screenOverlayGroundLayer = make_shared<ScreenOverlay>(g);
 
-	letterbox = new Letterbox(g);
+	letterbox = make_shared<Letterbox>(g);
 }
 
 void CinematicsManager::init()
@@ -112,22 +112,22 @@ void CinematicsManager::fadeFromBlack(int ticks)
 
 void CinematicsManager::fadeColorFromCurrentAlphaToAlpha(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
-	screenOverlayOverLights->doTransition(new BobColor(ri, gi, bi), -1, toAlpha, ticks);
+	screenOverlayOverLights->doTransition(make_shared<BobColor>(ri, gi, bi), -1, toAlpha, ticks);
 }
 
 void CinematicsManager::fadeColorFromAlphaToAlpha(int ticks, u8 ri, u8 gi, u8 bi, float fromAlpha, float toAlpha)
 { //=========================================================================================================================
-	screenOverlayOverLights->doTransition(new BobColor(ri, gi, bi), fromAlpha, toAlpha, ticks);
+	screenOverlayOverLights->doTransition(make_shared<BobColor>(ri, gi, bi), fromAlpha, toAlpha, ticks);
 }
 
 void CinematicsManager::fadeColorFromTransparentToAlphaBackToTransparent(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
-	screenOverlayOverLights->doToAndFromTransition(new BobColor(ri, gi, bi), ticks, toAlpha);
+	screenOverlayOverLights->doToAndFromTransition(make_shared<BobColor>(ri, gi, bi), ticks, toAlpha);
 }
 
 void CinematicsManager::setInstantOverlayColor(u8 ri, u8 gi, u8 bi, float a)
 { //=========================================================================================================================
-	screenOverlayOverLights->setInstantOverlay(new BobColor(ri, gi, bi), a);
+	screenOverlayOverLights->setInstantOverlay(make_shared<BobColor>(ri, gi, bi), a);
 }
 
 void CinematicsManager::clearOverlay()
@@ -137,12 +137,12 @@ void CinematicsManager::clearOverlay()
 
 void CinematicsManager::fadeColorFromCurrentAlphaToAlphaUnderLights(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
-	screenOverlayUnderLights->doTransition(new BobColor(ri, gi, bi), -1, toAlpha, ticks);
+	screenOverlayUnderLights->doTransition(make_shared<BobColor>(ri, gi, bi), -1, toAlpha, ticks);
 }
 
 void CinematicsManager::setInstantOverlayColorUnderLights(u8 ri, u8 gi, u8 bi, float af)
 { //=========================================================================================================================
-	screenOverlayUnderLights->setInstantOverlay(new BobColor(ri, gi, bi), af);
+	screenOverlayUnderLights->setInstantOverlay(make_shared<BobColor>(ri, gi, bi), af);
 }
 
 void CinematicsManager::clearOverlayUnderLights()
@@ -152,12 +152,12 @@ void CinematicsManager::clearOverlayUnderLights()
 
 void CinematicsManager::fadeColorFromCurrentAlphaToAlphaGroundLayer(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha)
 { //=========================================================================================================================
-	screenOverlayGroundLayer->doTransition(new BobColor(ri, gi, bi), -1, toAlpha, ticks);
+	screenOverlayGroundLayer->doTransition(make_shared<BobColor>(ri, gi, bi), -1, toAlpha, ticks);
 }
 
 void CinematicsManager::setInstantOverlayColorGroundLayer(u8 ri, u8 gi, u8 bi, float af)
 { //=========================================================================================================================
-	screenOverlayGroundLayer->setInstantOverlay(new BobColor(ri, gi, bi), af);
+	screenOverlayGroundLayer->setInstantOverlay(make_shared<BobColor>(ri, gi, bi), af);
 }
 
 void CinematicsManager::clearOverlayGroundLayer()

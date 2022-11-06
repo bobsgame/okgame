@@ -60,11 +60,11 @@ public:
 	bool chainConnectionsMustContainAtLeastOneBlockWithThisTrue = false;	Info chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info = Info("Chain Connections Must Contain At Least One Of These Block Types", "When checking for chains, the chain must contain one of these blocks in order to qualify.");
 	bool ignoreWhenCheckingChainConnections = false;						Info ignoreWhenCheckingChainConnections_Info = Info("Ignore When Checking Chain Connections", "This block type is neutral and is ignored when checking chains.  It can only be cleared through other means.");
 
-	ArrayList<BobColor*> colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
+	ArrayList<shared_ptr<BobColor>> colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
 private:
 	ArrayList<BobColor> importExport_colors;	
 public:
-	BobColor *specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
+	shared_ptr<BobColor >specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
 private:
 	BobColor importExport_specialColor;
 public:
@@ -98,7 +98,7 @@ public:
 
 	bool addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks = false;				Info addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info = Info("Add To Chain If Connected Up Down Left Right To Cleared Chain Blocks", "If a block that is touching this one is being cleared, this block should be cleared too even if it does not match.");
 
-	ArrayList<TurnFromBlockTypeToType*> whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;	Info whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info = Info("When Set Turn All Touching Blocks Of FromTypes Into ToType And Fade Out", "When this block is set into the grid, turn any FromTypes into ToType and clear this block.");
+	ArrayList<shared_ptr<TurnFromBlockTypeToType>> whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;	Info whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info = Info("When Set Turn All Touching Blocks Of FromTypes Into ToType And Fade Out", "When this block is set into the grid, turn any FromTypes into ToType and clear this block.");
 //private:
 	ArrayList<TurnFromBlockTypeToType> importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
 public:
@@ -119,14 +119,14 @@ public:
 	static shared_ptr<BlockType> squareBlockType;
 	static shared_ptr<BlockType> shotPieceBlockType;
 
-	Sprite* sprite = nullptr;//dont serialize these
-	Sprite* specialSprite = nullptr;
+	shared_ptr<Sprite> sprite = nullptr;//dont serialize these
+	shared_ptr<Sprite> specialSprite = nullptr;
 //	BlockType();
-//	BlockType(const string& spriteName, ArrayList<Color*>* colors);
-//	BlockType(const string& spriteName, ArrayList<Color*>* colors, Color* specialColor);
-//	BlockType(const string& spriteName, ArrayList<Color*>* colors, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
-//	BlockType(const string& spriteName, ArrayList<Color*>* colors, Color* specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
-//	BlockType(const string& spriteName, const string& specialSpriteName, ArrayList<Color*>* colors, Color* specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
+//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors);
+//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors, shared_ptr<Color> specialColor);
+//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
+//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors, shared_ptr<Color> specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
+//	BlockType(const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<Color>>* colors, shared_ptr<Color> specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
 //	bool isSpecialType();
 //=========================================================================================================================
 	BlockType()
@@ -137,7 +137,7 @@ public:
 		uuid = to_string(generator());
 	}
 	//=========================================================================================================================
-	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, ArrayList<BobColor*> *colorsArray, BobColor *specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
+	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<BobColor>> *colorsArray, shared_ptr<BobColor >specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
 	{//=========================================================================================================================
 		this->name = name;
 		this->spriteName = spriteName;
@@ -236,7 +236,7 @@ public:
 		toType_UUID = toUUID;
 	}
 
-	string getName(GameType *g) { return g->getBlockTypeByUUID(fromType_UUID)->name + "->" + g->getBlockTypeByUUID(toType_UUID)->name; }
+	string getName(shared_ptr<GameType >g) { return g->getBlockTypeByUUID(fromType_UUID)->name + "->" + g->getBlockTypeByUUID(toType_UUID)->name; }
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -274,8 +274,8 @@ public:
 
 	//Color noColor;
 
-	GameLogic* game = nullptr;
-	Grid* grid = nullptr;
+	shared_ptr<GameLogic> game = nullptr;
+	shared_ptr<Grid> grid = nullptr;
 
 
 
@@ -294,7 +294,7 @@ public:
 	shared_ptr<BlockType> blockType = nullptr;
 
 private:
-	BobColor *color = nullptr;
+	shared_ptr<BobColor >color = nullptr;
 
 public:
 	float effectAlphaFrom = 0.5f;
@@ -379,7 +379,7 @@ public:
 	bool connectedUpLeft = false;
 	bool connectedDownLeft = false;
 
-	SpriteAnimationSequence* anim = nullptr;
+	shared_ptr<SpriteAnimationSequence> anim = nullptr;
 
 //	bool operator==(const Block& rhs) const
 //	{
@@ -445,7 +445,7 @@ public:
 //	}
 
 	Block();
-	Block(GameLogic* game, Grid* grid, shared_ptr<Piece> piece, shared_ptr<BlockType> blockType);
+	Block(shared_ptr<GameLogic> game, shared_ptr<Grid> grid, shared_ptr<Piece> piece, shared_ptr<BlockType> blockType);
 	void update();
 	void setXYOffsetInPiece(int x, int y);
 	void breakConnectionsInPiece();
@@ -455,7 +455,7 @@ public:
 	void renderDisappearing();
 	void render(float screenX, float screenY, float a, float scale, bool interpolate, bool ghost);
 	void renderOutlines(float screenX, float screenY, float s);
-	void setColor(BobColor *color);
+	void setColor(shared_ptr<BobColor >color);
 	void setRandomBlockTypeColor();
 //	Color getRandomMatrixColor();
 //	Color getRandomRainbowColor();
@@ -464,10 +464,10 @@ public:
 	int cellH();
 	int blockW();
 	int blockH();
-	GameType* getSettings();
-	GameLogic* getGameLogic();
-	BobsGame* getBobsGame();
-	BobColor *getColor();
-	BobColor *specialColor();
+	shared_ptr<GameType> getSettings();
+	shared_ptr<GameLogic> getGameLogic();
+	shared_ptr<BobsGame> getBobsGame();
+	shared_ptr<BobColor >getColor();
+	shared_ptr<BobColor >specialColor();
 };
 

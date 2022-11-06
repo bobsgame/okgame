@@ -48,7 +48,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	EventData* eventData,
+	shared_ptr<EventData> eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -118,7 +118,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	EventData* eventData,
+	shared_ptr<EventData> eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -158,25 +158,25 @@ void AreaData::addConnectionString(const string& s)
 	connectionTYPEIDList->add(s);
 }
 
-//AreaData* AreaData::fromBase64ZippedJSON(const string& b64)
+//shared_ptr<AreaData> AreaData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = new Gson();
+//	//Gson gson = make_shared<Gson>();
 //	//AreaData data = gson.fromJson(json,AreaData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//AreaData* AreaData::fromJSON(const string& json)
+//shared_ptr<AreaData> AreaData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//Gson* gson = new Gson();
-//	AreaData* data = nullptr;// gson->fromJson(json, AreaData::typeid);
+//	//shared_ptr<Gson> gson = make_shared<Gson>();
+//	shared_ptr<AreaData> data = nullptr;// gson->fromJson(json, AreaData::typeid);
 //
 //
 //	return data;
@@ -470,7 +470,7 @@ string& AreaData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (String::startsWith(t,"}") == false)
 	{
-		EventData* data = new EventData();
+		shared_ptr<EventData> data = make_shared<EventData>();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -653,7 +653,7 @@ bool AreaData::getSuckPlayerIntoMiddle()
 	return suckPlayerIntoMiddle;
 }
 
-EventData* AreaData::getEventData()
+shared_ptr<EventData> AreaData::getEventData()
 {
 	return eventData;
 }

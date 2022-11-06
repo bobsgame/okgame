@@ -14,11 +14,11 @@
 Logger Dialogue::log = Logger("Dialogue");
 
 
-Dialogue::Dialogue(Engine* g, int id)
+Dialogue::Dialogue(shared_ptr<Engine> g, int id)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = new DialogueData(id, "", "", "", "");
+	this->data = make_shared<DialogueData>(id, "", "", "", "");
 
 	for (int i = 0; i < (int)getEventManager()->dialogueList.size(); i++)
 	{
@@ -31,7 +31,7 @@ Dialogue::Dialogue(Engine* g, int id)
 	getEventManager()->dialogueList.add(this);
 }
 
-Dialogue::Dialogue(Engine* g, DialogueData* data)
+Dialogue::Dialogue(shared_ptr<Engine> g, shared_ptr<DialogueData> data)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -50,14 +50,14 @@ Dialogue::Dialogue(Engine* g, DialogueData* data)
 }
 
 //The following method was originally marked 'synchronized':
-void Dialogue::setData_S(DialogueData* data)
+void Dialogue::setData_S(shared_ptr<DialogueData> data)
 { //=========================================================================================================================
 
 	this->data = data;
 	setInitialized_S(true);
 }
 
-DialogueData* Dialogue::getData()
+shared_ptr<DialogueData> Dialogue::getData()
 {
 	return data;
 }

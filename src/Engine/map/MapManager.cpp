@@ -19,19 +19,19 @@ bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
 
-HashMap<string, BobTexture*> MapManager::lightTextureHashMap;
+HashMap<string, shared_ptr<BobTexture>> MapManager::lightTextureHashMap;
 
 
 HashMap<string, bool> MapManager::_lightTextureFileExistsHashtable;
 mutex MapManager::_lightTextureFileExistsHashtable_Mutex;
 
-MapManager::MapManager(Engine* g)
+MapManager::MapManager(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
-	//mapByNameHashMap = new HashMap<string, Map*>();
-	//mapByIDHashMap = new HashMap<int, Map*>();
-	//lightTextureHashMap = new HashMap<string, BobTexture*>();
-	//lightTextureFileExistsHashtable = new HashMap<string, BobBool*>();
+	//mapByNameHashMap = make_shared<HashMap><string, shared_ptr<Map>>();
+	//mapByIDHashMap = make_shared<HashMap><int, shared_ptr<Map>>();
+	//lightTextureHashMap = make_shared<HashMap><string, shared_ptr<BobTexture>>();
+	//lightTextureFileExistsHashtable = make_shared<HashMap><string, shared_ptr<BobBool>>();
 }
 
 
@@ -102,7 +102,7 @@ void MapManager::render()
 	}
 
 
-	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)//GLUtils::useFBO && 
+	if (dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != nullptr)//GLUtils::useFBO && 
 	{
 		GLUtils::bindFBO(GLUtils::postColorFilterFBO); //set the framebuffer object to the MAIN FBO
 
@@ -163,7 +163,7 @@ void MapManager::render()
 
 			for (int i = 0; i < (int)currentMap->sortedLightsLayers.size(); i++)
 			{
-				ArrayList<Light*>* thisLayer = currentMap->sortedLightsLayers.get(i);
+				ArrayList<shared_ptr<Light>>* thisLayer = currentMap->sortedLightsLayers.get(i);
 
 
 				if (flip == true)
@@ -212,7 +212,7 @@ void MapManager::render()
 				//this is "ping pong" rendering technique.
 				for (int n = 0; n < thisLayer->size(); n++)
 				{
-					Light* l = thisLayer->get(n);
+					shared_ptr<Light> l = thisLayer->get(n);
 					if (l->getName().find("mover") != string::npos == false) //skip mover lights, draw them afterwards.
 					{
 						if (l->renderLight() == true)
@@ -241,7 +241,7 @@ void MapManager::render()
 					//draw mover lights after finished drawing blended lights.
 					for (int i = 0; i < (int)currentMap->currentState->lightList.size(); i++)
 					{
-						Light* l = currentMap->currentState->lightList.get(i);
+						shared_ptr<Light> l = currentMap->currentState->lightList.get(i);
 						if (l->getName().find("mover") != string::npos)
 						{
 							l->renderLight();
@@ -611,7 +611,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	lastMap = currentMap;
 
 
-	Map* m = getMapByNameBlockUntilLoaded(mapName);
+	shared_ptr<Map> m = getMapByNameBlockUntilLoaded(mapName);
 	if (m == nullptr)
 	{
 		log.error("Could not load map: " + mapName);
@@ -627,7 +627,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	setTransitionOffsets();
 
 
-	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)
+	if (dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != nullptr)
 	{
 		if (lastMap != nullptr)
 		{
@@ -653,34 +653,34 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	//currentMap->load();//this is exported by tools, lights, areas, entities are created here per-map in overridden function.
 }
 
-void MapManager::changeMap(Map* m, int mapXTiles1X, int mapYTiles1X)
+void MapManager::changeMap(shared_ptr<Map> m, int mapXTiles1X, int mapYTiles1X)
 { //=========================================================================================================================
 	changeMap(m->getName(), mapXTiles1X * 2 * 8, mapYTiles1X * 2 * 8);
 }
 
-void MapManager::changeMap(Map* m, Door* door)
+void MapManager::changeMap(shared_ptr<Map> m, shared_ptr<Door> door)
 { //=========================================================================================================================
 	changeMap(m->getName(), (int)door->arrivalXPixelsHQ(), (int)door->arrivalYPixelsHQ());
 }
 
-void MapManager::changeMap(Map* m, Area* area)
+void MapManager::changeMap(shared_ptr<Map> m, shared_ptr<Area> area)
 { //=========================================================================================================================
 	changeMap(m->getName(), (int)(area->middleX()), (int)(area->middleY()));
 }
 
-void MapManager::changeMap(Map* m, WarpArea* area)
+void MapManager::changeMap(shared_ptr<Map> m, shared_ptr<WarpArea> area)
 { //=========================================================================================================================
 	changeMap(m->getName(), (int)area->arrivalXPixelsHQ(), (int)area->arrivalYPixelsHQ());
 }
 
 void MapManager::changeMap(const string& mapName, const string& areaName)
 { //=========================================================================================================================
-	Map* m = getMapByNameBlockUntilLoaded(mapName);
-	Area* a = m->getAreaOrWarpAreaByName(areaName);
+	shared_ptr<Map> m = getMapByNameBlockUntilLoaded(mapName);
+	shared_ptr<Area> a = m->getAreaOrWarpAreaByName(areaName);
 	changeMap(m, a);
 }
 
-Map* MapManager::getMapByIDBlockUntilLoaded(int id)
+shared_ptr<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 { //=========================================================================================================================
 
 	if (id == -1)
@@ -691,7 +691,7 @@ Map* MapManager::getMapByIDBlockUntilLoaded(int id)
 
 
 	
-	Map* m = nullptr;
+	shared_ptr<Map> m = nullptr;
 
 	if (mapByIDHashMap.containsKey(id))
 		m = mapByIDHashMap.get(id);
@@ -731,7 +731,7 @@ Map* MapManager::getMapByIDBlockUntilLoaded(int id)
 	return m;
 }
 
-Map* MapManager::getMapByNameBlockUntilLoaded(const string& name)
+shared_ptr<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 { //=========================================================================================================================
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
@@ -741,7 +741,7 @@ Map* MapManager::getMapByNameBlockUntilLoaded(const string& name)
 	}
 
 
-	Map* m = nullptr;
+	shared_ptr<Map> m = nullptr;
 	
 	if (mapByNameHashMap.containsKey(name))
 	{
@@ -795,7 +795,7 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 
 
 
-	Map* m = nullptr;
+	shared_ptr<Map> m = nullptr;
 
 	if (mapByNameHashMap.containsKey(name))
 	{
@@ -807,12 +807,12 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 	}
 }
 
-MapState* MapManager::getMapStateByID(int id)
+shared_ptr<MapState> MapManager::getMapStateByID(int id)
 { //=========================================================================================================================
 
 
 	//first check the current map.
-	MapState* s = getCurrentMap()->getMapStateByID(id);
+	shared_ptr<MapState> s = getCurrentMap()->getMapStateByID(id);
 
 	if (s != nullptr)
 	{
@@ -825,13 +825,13 @@ MapState* MapManager::getMapStateByID(int id)
 	return nullptr;
 }
 
-Area* MapManager::getAreaByID(int id)
+shared_ptr<Area> MapManager::getAreaByID(int id)
 { //=========================================================================================================================
 
 	// first check the current state of the current map
 	if (currentMap != nullptr)
 	{
-		Area* a = currentMap->getAreaOrWarpAreaByTYPEID("AREA." + to_string(id));
+		shared_ptr<Area> a = currentMap->getAreaOrWarpAreaByTYPEID("AREA." + to_string(id));
 		if (a != nullptr)
 		{
 			return a;
@@ -843,13 +843,13 @@ Area* MapManager::getAreaByID(int id)
 	//then check all states of all maps
 	for (int i = 0; i < mapList.size(); i++)
 	{
-		Map* m = mapList.get(i);
+		shared_ptr<Map> m = mapList.get(i);
 		for (int k = 0; k < (int)m->stateList.size(); k++)
 		{
-			MapState* s = m->stateList.get(k);
+			shared_ptr<MapState> s = m->stateList.get(k);
 			for (int l = 0; l < (int)s->areaList.size(); l++)
 			{
-				Area* a = s->areaList.get(l);
+				shared_ptr<Area> a = s->areaList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -869,7 +869,7 @@ Area* MapManager::getAreaByID(int id)
 	return nullptr;
 }
 
-Entity* MapManager::getEntityByID(int id)
+shared_ptr<Entity> MapManager::getEntityByID(int id)
 { //=========================================================================================================================
 	//TODO: first check the current state of the current map
 
@@ -878,13 +878,13 @@ Entity* MapManager::getEntityByID(int id)
 	//then check all states of all maps
 	for (int i = 0; i < mapList.size(); i++)
 	{
-		Map* m = mapList.get(i);
+		shared_ptr<Map> m = mapList.get(i);
 		for (int k = 0; k < (int)m->stateList.size(); k++)
 		{
-			MapState* s = m->stateList.get(k);
+			shared_ptr<MapState> s = m->stateList.get(k);
 			for (int l = 0; l < (int)s->entityList.size(); l++)
 			{
-				Entity* a = s->entityList.get(l);
+				shared_ptr<Entity> a = s->entityList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -893,7 +893,7 @@ Entity* MapManager::getEntityByID(int id)
 
 			for (int l = 0; l < (int)s->characterList.size(); l++)
 			{
-				Entity* a = s->characterList.get(l);
+				shared_ptr<Entity> a = s->characterList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -902,7 +902,7 @@ Entity* MapManager::getEntityByID(int id)
 
 			for (int l = 0; l < (int)s->lightList.size(); l++)
 			{
-				Entity* a = s->lightList.get(l);
+				shared_ptr<Entity> a = s->lightList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -938,7 +938,7 @@ Entity* MapManager::getEntityByID(int id)
 	return nullptr;
 }
 
-Light* MapManager::getLightByID(int id)
+shared_ptr<Light> MapManager::getLightByID(int id)
 { //=========================================================================================================================
 	//TODO: first check the current state of the current map
 
@@ -947,13 +947,13 @@ Light* MapManager::getLightByID(int id)
 	//then check all states of all maps
 	for (int i = 0; i < mapList.size(); i++)
 	{
-		Map* m = mapList.get(i);
+		shared_ptr<Map> m = mapList.get(i);
 		for (int k = 0; k < (int)m->stateList.size(); k++)
 		{
-			MapState* s = m->stateList.get(k);
+			shared_ptr<MapState> s = m->stateList.get(k);
 			for (int l = 0; l < (int)s->lightList.size(); l++)
 			{
-				Light* a = s->lightList.get(l);
+				shared_ptr<Light> a = s->lightList.get(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -965,7 +965,7 @@ Light* MapManager::getLightByID(int id)
 	return nullptr;
 }
 
-Door* MapManager::getDoorByID(int id)
+shared_ptr<Door> MapManager::getDoorByID(int id)
 { //=========================================================================================================================
 
 	//TODO: first check current map
@@ -973,11 +973,11 @@ Door* MapManager::getDoorByID(int id)
 	//then check all maps
 	for (int i = 0; i < mapList.size(); i++)
 	{
-		Map* m = mapList.get(i);
+		shared_ptr<Map> m = mapList.get(i);
 
 		for (int l = 0; l < (int)m->doorList.size(); l++)
 		{
-			Door* a = m->doorList.get(l);
+			shared_ptr<Door> a = m->doorList.get(l);
 			if (a->getID() == id)
 			{
 				return a;

@@ -16,13 +16,13 @@
 Logger ConsoleText::log = Logger("ConsoleText");
 
 
-BobColor* ConsoleText::defaultColor = nullptr;
+shared_ptr<BobColor> ConsoleText::defaultColor = nullptr;
 ConsoleText::ConsoleText()
 {
 	
 }
 
-ConsoleText::ConsoleText(const string& s, BobColor* c, int x, int y, int ticks, bool isDebug)
+ConsoleText::ConsoleText(const string& s, shared_ptr<BobColor> c, int x, int y, int ticks, bool isDebug)
 { //=========================================================================================================================
 
 

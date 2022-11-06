@@ -23,21 +23,21 @@ public:
 	virtual void update();
 	virtual void render();
 
-//	static BGClientEngine* getClientEngine();
-//	static EventManager* getEventManager();
-//	static Clock* getClock();
-//	static GUIManager* getGUIManager();
-//	static StuffMenu* getStuffMenu();
-//	static GameStore* getGameStore();
-//	static PlayerEditMenu* getPlayerEditMenu();
-//	static Player* getPlayer();
+//	static shared_ptr<BGClientEngine> getClientEngine();
+//	static shared_ptr<EventManager> getEventManager();
+//	static shared_ptr<Clock> getClock();
+//	static shared_ptr<GUIManager> getGUIManager();
+//	static shared_ptr<StuffMenu> getStuffMenu();
+//	static shared_ptr<GameStore> getGameStore();
+//	static shared_ptr<PlayerEditMenu> getPlayerEditMenu();
+//	static shared_ptr<Player> getPlayer();
 //	static ND* getND();
-//	static Wallet* getWallet();
-//	static FriendManager* getFriendManager();
-//	static StatusBar* getStatusBar();
-//	static NotificationManager* getNotificationManager();
-//	static GameSave* getGameSave();
-//	static TCPServerConnection* getServerConnection();
+//	static shared_ptr<Wallet> getWallet();
+//	static shared_ptr<FriendManager> getFriendManager();
+//	static shared_ptr<StatusBar> getStatusBar();
+//	static shared_ptr<NotificationManager> getNotificationManager();
+//	static shared_ptr<GameSave> getGameSave();
+//	static shared_ptr<TCPServerConnection> getServerConnection();
 
 };
 

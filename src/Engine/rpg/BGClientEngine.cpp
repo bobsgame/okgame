@@ -47,20 +47,20 @@ void BGClientEngine::init()
 #endif
 	
 
-	clock = new Clock(this);
+	clock = make_shared<Clock>(this);
 
-	player = new Player(this);
+	player = make_shared<Player>(this);
 	normalPlayer = player;
 
-	guiManager = new GUIManager(this);
+	guiManager = make_shared<GUIManager>(this);
 
-	statusBar = new StatusBar(this);
-	wallet = new Wallet(this);
+	statusBar = make_shared<StatusBar>(this);
+	wallet = make_shared<Wallet>(this);
 
-	friendManager = new FriendManager(this);
+	friendManager = make_shared<FriendManager>(this);
 
 	nD = new ND();
-	stadiumScreen = new StadiumScreen(this);
+	stadiumScreen = make_shared<StadiumScreen>(this);
 
 
 	if (Main::previewClientInEditor == false)
@@ -78,19 +78,19 @@ void BGClientEngine::init()
 
 	nD->init();
 
-	NDMenu* nDMenu = new NDMenu(nD);
+	shared_ptr<NDMenu> nDMenu = make_shared<NDMenu>(nD);
 	nDMenu->init();
 	
 
-	BobsGame* bobsgame = new BobsGame(nD);
+	shared_ptr<BobsGame> bobsgame = make_shared<BobsGame>(nD);
 	bobsgame->init();
 	
 
-	Ping* ping = new Ping(nD);
+	shared_ptr<Ping> ping = make_shared<Ping>(nD);
 	ping->init();
 	
 
-	Ramio* ramio = new Ramio(nD);
+	shared_ptr<Ramio> ramio = make_shared<Ramio>(nD);
 	ramio->init();
 	
 
@@ -127,13 +127,13 @@ void BGClientEngine::init()
 	cameraman->setXYToTarget(); //TODO: fix this so it goes to xtarget (camstop tiles) instead of just npc target (player)
 
 
-	//itemManager.ITEM_get_no_caption(new Item("nD","The indie handheld Game() console. A juggernaut of disposable technology, devised as a vengeful scheme to destroy the traditional Game() industry. Invented by a secretive, notoriously stubborn developer whose first Game() was held back by corrupt, obsolete corporate policy. So cheap and ubiquitous that every kid has two or three- making it a modern societal requirement."));
-	//itemManager.ITEM_get_no_caption(new Item("Wallet","This holds your old receipts, slowly rubbing the ink off so the paper can be reused to write down phone numbers- if only you had a pen!"));
-	//itemManager.ITEM_get_no_caption(new Item("Keys","These relics of long-antiquated technology give an illusion of security. Easily lost, they weigh down your pants, scratch everything in your pockets, and are generally uncomfortable, noisy metal daggers. Don't ever leave home without them!"));
-	//itemManager.ITEM_get_no_caption(new Item("Smartphone","This infinitely helpful device keeps you constantly distracted and tracks your every move for a huge monthly fee. Sometimes you begin to wonder if it is making you more impulsive and helpless, and are fortunately comforted by its glow just as panic sets in. Scientists are pretty sure it doesn't cause brain cancer!"));
+	//itemManager.ITEM_get_no_caption(make_shared<Item>("nD","The indie handheld Game() console. A juggernaut of disposable technology, devised as a vengeful scheme to destroy the traditional Game() industry. Invented by a secretive, notoriously stubborn developer whose first Game() was held back by corrupt, obsolete corporate policy. So cheap and ubiquitous that every kid has two or three- making it a modern societal requirement."));
+	//itemManager.ITEM_get_no_caption(make_shared<Item>("Wallet","This holds your old receipts, slowly rubbing the ink off so the paper can be reused to write down phone numbers- if only you had a pen!"));
+	//itemManager.ITEM_get_no_caption(make_shared<Item>("Keys","These relics of long-antiquated technology give an illusion of security. Easily lost, they weigh down your pants, scratch everything in your pockets, and are generally uncomfortable, noisy metal daggers. Don't ever leave home without them!"));
+	//itemManager.ITEM_get_no_caption(make_shared<Item>("Smartphone","This infinitely helpful device keeps you constantly distracted and tracks your every move for a huge monthly fee. Sometimes you begin to wonder if it is making you more impulsive and helpless, and are fortunately comforted by its glow just as panic sets in. Scientists are pretty sure it doesn't cause brain cancer!"));
 
 
-	//new EasingTest();
+	//make_shared<EasingTest>();
 
 	//cinematicsManager.toggleLetterbox(true);
 	//textManager.getText("Yuu normal font <TINY>tiny font <SMALL><GREEN>small font <WHITE><HUGE>huge font <.><SMALL><NORMAL><NEXTLINE>next line <1>top getText box<0>bottom getText box");
@@ -143,8 +143,8 @@ void BGClientEngine::init()
 	//captionManager.CAPTION_make_caption(Caption.CAPTION_CENTERED_X,0,Caption.CAPTION_DELETE_WHEN_MAIN_SPRITE_MOVES,"CAPTION_CENTERED_X",0,Color.white,Color.black,4,1.0f,0);
 
 
-	//new Notification("This is the notification area.");
-	//new Notification("This is the notification area. Important messages will show up here periodically to let you know about events or whatever.");
+	//make_shared<Notification>("This is the notification area.");
+	//make_shared<Notification>("This is the notification area. Important messages will show up here periodically to let you know about events or whatever.");
 }
 
 
@@ -191,7 +191,7 @@ void BGClientEngine::update()
 
 	if (Main::introMode == true)
 	{
-		//getServerConnection()->setGameSave_S(new GameSave());
+		//getServerConnection()->setGameSave_S(make_shared<GameSave>());
 		getServerConnection()->setInitialGameSaveReceived_S(true);
 		setGameInitializedFromSave_S(true);
 
@@ -574,10 +574,10 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				SkillData* data = new SkillData(); data->initFromString(s);
+				shared_ptr<SkillData> data = make_shared<SkillData>(); data->initFromString(s);
 
-				//Skill* skill =
-                new Skill(this, data);//adds itself to eventManager skill list in constructor
+				//shared_ptr<Skill> skill =
+                make_shared<Skill>(this, data);//adds itself to eventManager skill list in constructor
 				//getEventManager()->skillList.add(skill);
 
 				if (debug)
@@ -603,9 +603,9 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				DialogueData* data = new DialogueData(); data->initFromString(s);
-				//Dialogue* m =
-                new Dialogue(this, data);
+				shared_ptr<DialogueData> data = make_shared<DialogueData>(); data->initFromString(s);
+				//shared_ptr<Dialogue> m =
+                make_shared<Dialogue>(this, data);
 				//getEventManager()->dialogueList.add(m);
 				if (debug)
 				{
@@ -630,9 +630,9 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				FlagData* data = new FlagData(); data->initFromString(s);
-				//Flag* m =
-                new Flag(this, data);
+				shared_ptr<FlagData> data = make_shared<FlagData>(); data->initFromString(s);
+				//shared_ptr<Flag> m =
+                make_shared<Flag>(this, data);
 				//getEventManager()->flagList.add(m);
 				if (debug)
 				{
@@ -657,9 +657,9 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				GameStringData* data = new GameStringData(); data->initFromString(s);
-				//GameString* m =
-                new GameString(this, data);
+				shared_ptr<GameStringData> data = make_shared<GameStringData>(); data->initFromString(s);
+				//shared_ptr<GameString> m =
+                make_shared<GameString>(this, data);
 				//getEventManager()->gameStringList.add(m);
 				if (debug)
 				{
@@ -684,9 +684,9 @@ void BGClientEngine::loadPreCachedObjectData()
 			string s = b64List->get(i);
 			if (s.length() > 0)
 			{
-				EventData* data = new EventData(); data->initFromString(s);
-				//Event* m =
-                new Event(this, data, "cutscene");
+				shared_ptr<EventData> data = make_shared<EventData>(); data->initFromString(s);
+				//shared_ptr<Event> m =
+                make_shared<Event>(this, data, "cutscene");
 				//getEventManager()->eventList.add(m);
 				if (debug)
 				{
@@ -712,11 +712,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				SpriteData* data = new SpriteData(); data->initFromString(s);
+				shared_ptr<SpriteData> data = make_shared<SpriteData>(); data->initFromString(s);
 
 				if (getSpriteManager()->spriteByIDHashMap.containsKey(data->getID()) == false)
 				{
-					Sprite* sprite = new Sprite(this);
+					shared_ptr<Sprite> sprite = make_shared<Sprite>(this);
 					sprite->initializeWithSpriteData(data);
 
 					getSpriteManager()->spriteByNameHashMap.put(data->getName(), sprite);
@@ -754,12 +754,12 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				AudioData* data = new AudioData(); data->initFromString(s);
+				shared_ptr<AudioData> data = make_shared<AudioData>(); data->initFromString(s);
 
-				AudioFile* m = AudioManager::getAudioFileByName(data->getName());
+				shared_ptr<AudioFile> m = AudioManager::getAudioFileByName(data->getName());
 				if (m == nullptr)
 				{
-					new AudioFile(data);
+					make_shared<AudioFile>(data);
 				}
 				else
 				{
@@ -798,12 +798,12 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				AudioData* data = new AudioData(); data->initFromString(s);
+				shared_ptr<AudioData> data = make_shared<AudioData>(); data->initFromString(s);
 
-				AudioFile* m = AudioManager::getAudioFileByName(data->getName());
+				shared_ptr<AudioFile> m = AudioManager::getAudioFileByName(data->getName());
 				if (m == nullptr)
 				{
-					new AudioFile(data);
+					make_shared<AudioFile>(data);
 				}
 				else
 				{
@@ -837,11 +837,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 			if (s.length() > 0)
 			{
-				MapData* data = new MapData(); data->initFromString(s);
+				shared_ptr<MapData> data = make_shared<MapData>(); data->initFromString(s);
 
 				if (getMapManager()->mapByIDHashMap.containsKey(data->getID()) == false)
 				{
-					Map* m = new Map(this, data);
+					shared_ptr<Map> m = make_shared<Map>(this, data);
 
 					getMapManager()->mapList.add(m);
 					getMapManager()->mapByNameHashMap.put(data->getName(), m);
@@ -901,7 +901,7 @@ void BGClientEngine::initializeGameFromSave_S()
 			itemsHeld = itemsHeld.substr(itemsHeld.find(",") + 1);
 
 
-			Item* f = getEventManager()->getItemByID(itemID);
+			shared_ptr<Item> f = getEventManager()->getItemByID(itemID);
 			f->initHaveItemValue_S(value, timeSet);
 		}
 	}
@@ -941,7 +941,7 @@ void BGClientEngine::initializeGameFromSave_S()
 
 			flagsSet = flagsSet.substr(flagsSet.find(",") + 1);
 
-			Flag* f = getEventManager()->getFlagByIDCreateIfNotExist(flagID);
+			shared_ptr<Flag> f = getEventManager()->getFlagByIDCreateIfNotExist(flagID);
 			f->initValueFromGameSave_S(value, timeSet);
 		}
 	}
@@ -979,7 +979,7 @@ void BGClientEngine::initializeGameFromSave_S()
 
 			dialoguesDone = dialoguesDone.substr(dialoguesDone.find(",") + 1);
 
-			Dialogue* d = getEventManager()->getDialogueByIDCreateIfNotExist(dialogueID);
+			shared_ptr<Dialogue> d = getEventManager()->getDialogueByIDCreateIfNotExist(dialogueID);
 			d->initDialogueDoneValueFromGameSave_S(value, timeSet);
 		}
 	}
@@ -1026,7 +1026,7 @@ void BGClientEngine::initializeGameFromSave_S()
 
 			skillValues = skillValues.substr(skillValues.find(",") + 1);
 
-			Skill* skill = getEventManager()->getSkillByIDCreateIfNotExist(skillID);
+			shared_ptr<Skill> skill = getEventManager()->getSkillByIDCreateIfNotExist(skillID);
 			skill->initValueFromGameSave_S(value, timeSet);
 		}
 	}
@@ -1049,7 +1049,7 @@ void BGClientEngine::setPlayerAppearanceFromGameSave_S()
 	player->setCharacterNameAndCaption(getNameColor(g.accountRank), g.characterName, getAccountRankColor(g.accountRank), getAccountRankString(g.accountRank));
 }
 
-BobColor* BGClientEngine::getNameColor(int accountType)
+shared_ptr<BobColor> BGClientEngine::getNameColor(int accountType)
 { //=========================================================================================================================
 	return getAccountRankColor(accountType);
 }
@@ -1122,9 +1122,9 @@ string BGClientEngine::getAccountRankString(int accountRank)
 	return accountRankString;
 }
 
-BobColor* BGClientEngine::getAccountRankColor(int accountRank)
+shared_ptr<BobColor> BGClientEngine::getAccountRankColor(int accountRank)
 { //=========================================================================================================================
-	BobColor* accountRankColor = BobColor::white;
+	shared_ptr<BobColor> accountRankColor = BobColor::white;
 	if (accountRank == 0)
 	{
 		accountRankColor = BobColor::white; //"Free";
@@ -1191,11 +1191,11 @@ BobColor* BGClientEngine::getAccountRankColor(int accountRank)
 
 
 
-void BGClientEngine::setPlayerToTempPlayerWithSprite(Sprite* s)
+void BGClientEngine::setPlayerToTempPlayerWithSprite(shared_ptr<Sprite> s)
 { //=========================================================================================================================
 
 
-	Player* p = new Player(this, s->getName());
+	shared_ptr<Player> p = make_shared<Player>(this, s->getName());
 
 	p->update();
 
@@ -1244,32 +1244,32 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 
 
-Clock* BGClientEngine::getClock()
+shared_ptr<Clock> BGClientEngine::getClock()
 {
 	return clock;
 }
 
-GUIManager* BGClientEngine::getGUIManager()
+shared_ptr<GUIManager> BGClientEngine::getGUIManager()
 {
 	return guiManager;
 }
 
-StuffMenu* BGClientEngine::getStuffMenu()
+shared_ptr<StuffMenu> BGClientEngine::getStuffMenu()
 {
 	return getGUIManager()->stuffMenu;
 }
 
-GameStore* BGClientEngine::getGameStore()
+shared_ptr<GameStore> BGClientEngine::getGameStore()
 {
 	return getGUIManager()->gameStore;
 }
 
-PlayerEditMenu* BGClientEngine::getPlayerEditMenu()
+shared_ptr<PlayerEditMenu> BGClientEngine::getPlayerEditMenu()
 {
 	return getGUIManager()->playerEditMenu;
 }
 
-Player* BGClientEngine::getPlayer()
+shared_ptr<Player> BGClientEngine::getPlayer()
 {
 	return player;
 }
@@ -1279,22 +1279,22 @@ ND* BGClientEngine::getND()
 	return nD;
 }
 
-Wallet* BGClientEngine::getWallet()
+shared_ptr<Wallet> BGClientEngine::getWallet()
 {
 	return wallet;
 }
 
-FriendManager* BGClientEngine::getFriendManager()
+shared_ptr<FriendManager> BGClientEngine::getFriendManager()
 {
 	return friendManager;
 }
 
-StatusBar* BGClientEngine::getStatusBar()
+shared_ptr<StatusBar> BGClientEngine::getStatusBar()
 {
 	return statusBar;
 }
 
-NotificationManager* BGClientEngine::getNotificationManager()
+shared_ptr<NotificationManager> BGClientEngine::getNotificationManager()
 {
 	return getStatusBar()->notificationManager;
 }
@@ -1303,7 +1303,7 @@ NotificationManager* BGClientEngine::getNotificationManager()
 
 
 
-bool BGClientEngine::serverMessageReceived(string e)// ChannelHandlerContext* ctx, MessageEvent* e)
+bool BGClientEngine::serverMessageReceived(string e)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
 { //===============================================================================================
 
 	if(super::serverMessageReceived(e))
@@ -1332,7 +1332,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 	s = s.substr(s.find(":") + 1); //intentional ::
 
 
-	EventData* data = new EventData(); 
+	shared_ptr<EventData> data = make_shared<EventData>(); 
 	data->initFromString(s);
 
 	if (data == nullptr)
@@ -1341,7 +1341,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 	}
 	else
 	{
-		Event* d = getEventManager()->getEventByIDCreateIfNotExist(data->getID());
+		shared_ptr<Event> d = getEventManager()->getEventByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 
 		setProjectLoadEventID_S(data->getID());

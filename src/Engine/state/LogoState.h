@@ -21,7 +21,7 @@ public:
 
 
 	//GUI* loginScreenGUI = nullptr;
-	//LoginScreen* loginScreen = nullptr;
+	//shared_ptr<LoginScreen> loginScreen = nullptr;
 
 
 	int frame = 0;
@@ -29,8 +29,8 @@ public:
 
 	int count = 0;
 
-	BobTexture* logo = nullptr;
-	BobTexture* gradient = nullptr;
+	shared_ptr<BobTexture> logo = nullptr;
+	shared_ptr<BobTexture> gradient = nullptr;
 
 	long long totalTicksPassed = 0;
 	long long ticksToShow = 2000;

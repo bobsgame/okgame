@@ -21,11 +21,11 @@ public:
 
 
 	//ArrayList because threads will access it
-	ArrayList<FriendCharacter*>* friendCharacters = new ArrayList<FriendCharacter*>();
+	ArrayList<shared_ptr<FriendCharacter>>* friendCharacters = make_shared<ArrayList><shared_ptr<FriendCharacter>>();
 
 
 
-	FriendManager(BGClientEngine* g);
+	FriendManager(shared_ptr<BGClientEngine> g);
 
 
 	void init();

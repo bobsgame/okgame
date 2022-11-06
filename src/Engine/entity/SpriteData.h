@@ -104,22 +104,22 @@ private:
 
 
 	
-	ArrayList<SpriteAnimationSequence*>* animationList = new ArrayList<SpriteAnimationSequence*>();
+	ArrayList<shared_ptr<SpriteAnimationSequence>>* animationList = make_shared<ArrayList><shared_ptr<SpriteAnimationSequence>>();
 
-	EventData* eventData = nullptr;
+	shared_ptr<EventData> eventData = nullptr;
 
 public:
 
-	SpriteData(int id = -1, const string& name = "none", const string& displayName = "", int widthPixels1X = 0, int heightPixels1X = 0, int frames = 1, bool isNPC = false, bool isKid = false, bool isAdult = false, bool isMale = false, bool isFemale = false, bool isCar = false, bool isAnimal = false, bool hasShadow = false, bool isRandom = false, bool isDoor = false, bool isGame = false, bool isItem = false, bool forceHQ2X = false, bool forceClientMD5Export = false, EventData* eventData = nullptr, const string& itemGameDescription = "", float gamePrice = 0, int utilityOffsetXPixels1X = 0, int utilityOffsetYPixels1X = 0, const string& dataMD5 = "", const string& paletteMD5 = "");
+	SpriteData(int id = -1, const string& name = "none", const string& displayName = "", int widthPixels1X = 0, int heightPixels1X = 0, int frames = 1, bool isNPC = false, bool isKid = false, bool isAdult = false, bool isMale = false, bool isFemale = false, bool isCar = false, bool isAnimal = false, bool hasShadow = false, bool isRandom = false, bool isDoor = false, bool isGame = false, bool isItem = false, bool forceHQ2X = false, bool forceClientMD5Export = false, shared_ptr<EventData> eventData = nullptr, const string& itemGameDescription = "", float gamePrice = 0, int utilityOffsetXPixels1X = 0, int utilityOffsetYPixels1X = 0, const string& dataMD5 = "", const string& paletteMD5 = "");
 
 
 	void addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X);
 
 
-//	static SpriteData* fromBase64ZippedJSON(const string& b64);
+//	static shared_ptr<SpriteData> fromBase64ZippedJSON(const string& b64);
 //
 //
-//	static SpriteData* fromJSON(const string& json);
+//	static shared_ptr<SpriteData> fromJSON(const string& json);
 //
 	//string toString();
 	string& initFromString(string& t);
@@ -147,7 +147,7 @@ public:
 	bool getIsGame();
 	bool getIsItem();
 	bool getForceHQ2X();
-	EventData* getEventData();
+	shared_ptr<EventData> getEventData();
 	string& getItemGameDescription();
 	float getGamePrice();
 	int getUtilityOffsetXPixels1X();
@@ -156,7 +156,7 @@ public:
 	int getUtilityOffsetYPixelsHQ();
 	string& getDataMD5();
 	string& getPaletteMD5();
-	ArrayList<SpriteAnimationSequence*>* getAnimationList();
+	ArrayList<shared_ptr<SpriteAnimationSequence>>* getAnimationList();
 	string& getComment();
 	bool getForceMD5Export();
 

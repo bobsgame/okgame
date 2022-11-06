@@ -18,15 +18,15 @@ class GLUtils
 public:
 	static void old_clear();
 	static void old_render();
-	static BobTexture* loadTextureFromSurface(string filename, SDL_Surface* surface);
+	static shared_ptr<BobTexture> loadTextureFromSurface(string filename, shared_ptr<SDL_Surface> surface);
 	static void draw_texture_struct(texture_STRUCT* PLAYER_TEXTURE, float x, float y);
-	static HashMap<string, BobTexture*> textureCache;
+	static HashMap<string, shared_ptr<BobTexture>> textureCache;
 	static void clearCache(const string &name);// Remove a particular named image from the cache
 	static void clearCache();
 	static GLuint createTextureID();
-	static BobTexture *getTextureFromData(string textureName, int imageWidth, int imageHeight, ByteArray* data);
-	static BobTexture *getTextureFromPNGAbsolutePath(string filename);
-	static BobTexture *getTextureFromPNGExePath(string filename);
+	static shared_ptr<BobTexture >getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data);
+	static shared_ptr<BobTexture >getTextureFromPNGAbsolutePath(string filename);
+	static shared_ptr<BobTexture >getTextureFromPNGExePath(string filename);
 	static void draw_sprite(SPRITE* s);
 	static void gl_draw_flipped(GLuint textureid, float x, float y, float w, float h);
 	static void draw_texture(GLuint textureid, float x, float y, float w, float h);
@@ -38,8 +38,8 @@ public:
 	static void checkGLError(const string &whereErrorOccurredString);
 	static void e(const string &whereErrorOccurredString);
 	static void e();
-	static SDL_Window *window;
-	static SDL_Renderer *renderer;
+	static shared_ptr<SDL_Window >window;
+	static shared_ptr<SDL_Renderer >renderer;
 	//static unsigned char* rgba_fbo_data; //framebuffer array
 	//static unsigned char* filtered_rgba_fbo_data;
 	static Uint32 rmask;
@@ -62,28 +62,28 @@ private:
 public:
 	static int texturesLoaded;
 	static long long textureBytesLoaded;
-	static BobTexture* blankTexture;
-	static BobTexture* boxTexture;
+	static shared_ptr<BobTexture> blankTexture;
+	static shared_ptr<BobTexture> boxTexture;
 
 	static float globalDrawScale;
-	static BobTexture* rect;
-	static GLfloat* box;
-	static GLfloat* col;
-	static GLfloat* tex;
+	static shared_ptr<BobTexture> rect;
+	static shared_ptr<GLfloat> box;
+	static shared_ptr<GLfloat> col;
+	static shared_ptr<GLfloat> tex;
 	GLUtils();
 	static void cleanup();
 	static int getOutlinedTextWidth(string cs);
 	static void setDefaultTextureParams();
-	static void drawTexture(BobTexture* texture, float sx0, float sy0, int filter);
-	static void drawTexture(BobTexture* texture, float sx0, float sy0, float alpha, int filter);
-	static void drawTexture(BobTexture* texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
-	static void drawTexture(BobTexture* texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
+	static void drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, int filter);
+	static void drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, float alpha, int filter);
+	static void drawTexture(shared_ptr<BobTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
+	static void drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
 	static void drawTexture(int textureID, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
 	static void drawTexture(float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
-	static void drawTexture(BobTexture* texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter);
+	static void drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter);
 	static void drawTexture(float textureX0, float textureX1, float textureY0, float textureY1, float screenX0, float screenX1, float screenY0, float screenY1, float r, float g, float b, float a, int filter);
-	static void drawOutlinedString(const string& text, float screenX, float screenY, BobColor* color);
-	//static void drawOutlinedString(float screenX0, float screenY0, const string& text, BobColor* color);
+	static void drawOutlinedString(const string& text, float screenX, float screenY, shared_ptr<BobColor> color);
+	//static void drawOutlinedString(float screenX0, float screenY0, const string& text, shared_ptr<BobColor> color);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, int r, int g, int b);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, float r, float g, float b);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, float r, float g, float b, float a);
@@ -93,7 +93,7 @@ public:
 	static void drawFilledRectXYWH(float x, float y, float width, float height, float r, float g, float b, float a);
 	static void drawLine(float x1, float y1, float x2, float y2, int thickness);
 	static SDL_DisplayMode currentDisplayMode;// = new SDL_DisplayMode();
-	static ArrayList<SDL_DisplayMode*> displayModes;// = new ArrayList<SDL_DisplayMode*>();
+	static ArrayList<shared_ptr<SDL_DisplayMode>> displayModes;// = make_shared<ArrayList><shared_ptr<SDL_DisplayMode>>();
 	static int monitorWidth;// = 0;
 	static int monitorHeight;// = 0;
 	static int windowWidth;
@@ -101,7 +101,7 @@ public:
 	static int lastWindowWidth;// = 0;
 	static int lastWindowHeight;// = 0;
 	static SDL_DisplayMode getCurrentDisplayMode();
-	static ArrayList<SDL_DisplayMode*> getAvailableDisplayModes();
+	static ArrayList<shared_ptr<SDL_DisplayMode>> getAvailableDisplayModes();
 	static int getRealWindowWidth();
 	static int getRealWindowHeight();
 	static int getViewportWidth();
@@ -118,7 +118,7 @@ public:
 	static bool useShaders;
 	static int lightShader;
 	static int colorShader;
-	static ArrayList<Integer*> bgShaders;
+	static ArrayList<shared_ptr<Integer>> bgShaders;
 	static int bgShaderCount;
 	static GLuint gaussianShader;
 	static GLuint bloomMaskShader;

@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//static ArrayList<Label*> label;
+	//static ArrayList<shared_ptr<Label>> label;
 
 	//static DialogLayout::Group* horizontalGroup;
 	//static DialogLayout::Group* verticalGroup;

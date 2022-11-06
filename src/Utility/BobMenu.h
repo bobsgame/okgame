@@ -26,36 +26,36 @@ public:
 	//gl draw ratio fit between height or width
 
 private:
-	//TTF_Font *font = BobFont::ttf_18;
+	//TTF_shared_ptr<Font >font = BobFont::ttf_18;
 
 	int fontSize = 22;
 	int scaledFontSize = 22;
 public:
 
 
-	static BobColor* menuColor;
-	static BobColor* disabledMenuColor;
-	static BobColor* warningMenuColor;
-	static BobColor* clearColor;
-	static BobColor* infoColor;
-	static BobColor* statusColor;
-	static BobColor* errorColor;
-	static BobColor* bgColor;
+	static shared_ptr<BobColor> menuColor;
+	static shared_ptr<BobColor> disabledMenuColor;
+	static shared_ptr<BobColor> warningMenuColor;
+	static shared_ptr<BobColor> clearColor;
+	static shared_ptr<BobColor> infoColor;
+	static shared_ptr<BobColor> statusColor;
+	static shared_ptr<BobColor> errorColor;
+	static shared_ptr<BobColor> bgColor;
 
-	BobColor* defaultMenuColor = nullptr;
+	shared_ptr<BobColor> defaultMenuColor = nullptr;
 
-	Caption* titleCaption = nullptr;
-	Caption* subtitleCaption = nullptr;
+	shared_ptr<Caption> titleCaption = nullptr;
+	shared_ptr<Caption> subtitleCaption = nullptr;
 	
 	bool outline = true;
 	
 	bool scaleFontSizeToFit = true;
 
 	int cursorPosition = 0;
-	static BobTexture* rectangleCursorTexture;
-	static BobTexture* cursorTexture;
-	static BobTexture* upCursorTexture;
-	static BobTexture* downCursorTexture;
+	static shared_ptr<BobTexture> rectangleCursorTexture;
+	static shared_ptr<BobTexture> cursorTexture;
+	static shared_ptr<BobTexture> upCursorTexture;
+	static shared_ptr<BobTexture> downCursorTexture;
 	static long long cursorInOutToggleTicks;
 	static bool cursorInOutToggle;
 	static int lastMX;
@@ -74,9 +74,9 @@ public:
 	float rectangleCursorCurrentY = 0;
 
 	
-	static ArrayList<BobMenu*> activeMenus;
+	static ArrayList<shared_ptr<BobMenu>> activeMenus;
 
-	BobTexture *graphic = nullptr;
+	shared_ptr<BobTexture >graphic = nullptr;
 	int filter = GLUtils::FILTER_NEAREST;
 	float spacing = 1.0f;
 	bool center = true;
@@ -89,9 +89,9 @@ public:
 	class MenuItem
 	{//=========================================================================================================================
 	public:
-		Caption* caption = nullptr;
+		shared_ptr<Caption> caption = nullptr;
 		string id = "";
-		BobColor *color = nullptr;
+		shared_ptr<BobColor >color = nullptr;
 		bool hidden = false;
 		bool info = false;
 		bool isYesNoType = false;
@@ -100,29 +100,29 @@ public:
 
 		bool outline = true;
 
-		//BobSubMenu *subMenu = nullptr;
+		//shared_ptr<BobSubMenu >subMenu = nullptr;
 
 		~MenuItem();
 		void setYesNo(bool yesNo);
 		void toggle();
-		void setColor(BobColor* color, bool outline = true);
+		void setColor(shared_ptr<BobColor> color, bool outline = true);
 		void setText(string s);
 	};
 
-	ArrayList<MenuItem*> menuItems;
+	ArrayList<shared_ptr<MenuItem>> menuItems;
 
-	MenuItem* topMenuItemDrawn = nullptr;
+	shared_ptr<MenuItem> topMenuItemDrawn = nullptr;
 
 	int lastWidth = 0;
 	int lastHeight = 0;
 
-	BobMenu(Engine *g, string title = "", string subtitle = "");
+	BobMenu(shared_ptr<Engine >g, string title = "", string subtitle = "");
 	~BobMenu();
 
-	void setGraphic(BobTexture* t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
+	void setGraphic(shared_ptr<BobTexture> t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
 	void clear();
 	void setAllCaptionsToFullAlpha();
-	static void update(Engine *g, int ticksPassed);
+	static void update(shared_ptr<Engine >g, int ticksPassed);
 
 private:
 	bool areAllMenusDisabled();
@@ -130,9 +130,9 @@ public:
 
 	void up(bool noSound = false);
 	void down(bool noSound = false);
-	MenuItem* addInfo(string caption, string id = "", BobColor *color = nullptr);
-	MenuItem* add(string caption, string id = "", BobColor *color = nullptr);
-	MenuItem* addYesNo(string caption, bool yesNo);
+	shared_ptr<MenuItem> addInfo(string caption, string id = "", shared_ptr<BobColor >color = nullptr);
+	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<BobColor >color = nullptr);
+	shared_ptr<MenuItem> addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
 	ArrayList<string> getArrayListOfMenuItemIDs();
@@ -155,9 +155,9 @@ public:
 	void setAllVisible();
 	bool isSelectedID(string id, bool clicked = false, int mx = 0, int my = 0);
 	void setSelectedID(string id);
-	Caption* getCaptionByID(string id);
-	MenuItem* getMenuItemByID(string id);
-	MenuItem* getSelectedMenuItem();
+	shared_ptr<Caption> getCaptionByID(string id);
+	shared_ptr<MenuItem> getMenuItemByID(string id);
+	shared_ptr<MenuItem> getSelectedMenuItem();
 
 	void setFontSize(int size);
 
@@ -166,7 +166,7 @@ public:
 	//bool *onQuitToggle;
 
 	//	//=========================================================================================================================
-	//	BobSubMenu* addSubMenu(string caption, string id, BobsGame *b, void(*f) (BobsGame*, string))
+	//	shared_ptr<BobSubMenu> addSubMenu(string caption, string id, shared_ptr<BobsGame >b, void(*f) (shared_ptr<BobsGame>, string))
 	//	{//=========================================================================================================================
 	//		
 	//
@@ -180,12 +180,12 @@ public:
 //class BobSubMenu : public BobMenu
 //{//=========================================================================================================================
 //public:
-//	BobMenu *parentMenu = nullptr;
-//	BobsGame *bobsGame = nullptr;
-//	void (*callBack)(BobsGame*, string) = nullptr;
+//	shared_ptr<BobMenu >parentMenu = nullptr;
+//	shared_ptr<BobsGame >bobsGame = nullptr;
+//	void (*callBack)(shared_ptr<BobsGame>, string) = nullptr;
 //	bool isOpen = false;
 //
-//	BobSubMenu(Engine *g) : BobMenu(g, "")
+//	BobSubMenu(shared_ptr<Engine >g) : BobMenu(g, "")
 //	{
 //		
 //	}
@@ -193,9 +193,9 @@ public:
 //	{
 //		
 //	}
-//	MenuItem* add(string caption, string id = "", BobColor *color = menuColor)
+//	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<BobColor >color = menuColor)
 //	{
-//		MenuItem * m = BobMenu::add(caption, id, color);
+//		shared_ptr<MenuItem > m = BobMenu::add(caption, id, color);
 //		menuItems->get(menuItems->size()-1)->caption->visible = false;
 //		return m;
 //

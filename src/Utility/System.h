@@ -109,21 +109,21 @@ public:
 	static void initClockAndTimeZone();
 
 
-	static ConsoleText* totalRendersText;
-	static ConsoleText* totalUpdatesText;
-	static ConsoleText* rendersPerSecondText;
-	static ConsoleText* averageRendersPerSecondText;
-	static ConsoleText* updatesPerSecondText;
-	static ConsoleText* rendersSkippedText;
-	static ConsoleText* updatesSkippedText;
-	static ConsoleText* averageTicksPerFrameText;
-	static ConsoleText* averageTicksPerUpdateText;
-	static ConsoleText* onlineStatusText;
+	static shared_ptr<ConsoleText> totalRendersText;
+	static shared_ptr<ConsoleText> totalUpdatesText;
+	static shared_ptr<ConsoleText> rendersPerSecondText;
+	static shared_ptr<ConsoleText> averageRendersPerSecondText;
+	static shared_ptr<ConsoleText> updatesPerSecondText;
+	static shared_ptr<ConsoleText> rendersSkippedText;
+	static shared_ptr<ConsoleText> updatesSkippedText;
+	static shared_ptr<ConsoleText> averageTicksPerFrameText;
+	static shared_ptr<ConsoleText> averageTicksPerUpdateText;
+	static shared_ptr<ConsoleText> onlineStatusText;
 
-	static ConsoleText* upTimeText;
+	static shared_ptr<ConsoleText> upTimeText;
 
 	const static int amtTicksTexts = 10;
-	static ConsoleText* ticksText[amtTicksTexts];
+	static shared_ptr<ConsoleText> ticksText[amtTicksTexts];
 
 
 private:
@@ -136,11 +136,11 @@ private:
 
 public:
 
-	static ConsoleText* mxThreadCountText;
+	static shared_ptr<ConsoleText> mxThreadCountText;
 
-	static ConsoleText* memoryText;
-	static ConsoleText* texturesLoadedText;// = Console::debug("texturesLoadedText");
-	static ConsoleText* textureBytesLoadedText;// = Console::debug("textureBytesLoadedText");
+	static shared_ptr<ConsoleText> memoryText;
+	static shared_ptr<ConsoleText> texturesLoadedText;// = Console::debug("texturesLoadedText");
+	static shared_ptr<ConsoleText> textureBytesLoadedText;// = Console::debug("textureBytesLoadedText");
 
 
 	static int mb;
@@ -158,7 +158,7 @@ public:
 	//DebugText memPoolThresholdCountText;
 	//DebugText mxOSInfoSystemLoadText;
 
-	ConsoleText* vramText = nullptr;
+	shared_ptr<ConsoleText> vramText = nullptr;
 
 
 	//mxbean

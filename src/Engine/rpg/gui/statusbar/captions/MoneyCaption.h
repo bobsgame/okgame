@@ -17,7 +17,7 @@ public:
 
 	int dividerX = 0;
 
-	MoneyCaption(BGClientEngine* g);
+	MoneyCaption(shared_ptr<BGClientEngine> g);
 
 	virtual void init() override;
 

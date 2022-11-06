@@ -69,7 +69,7 @@ void NDMenu::init()
 	getAudioManager()->playMusic("nDMenuBackgroundMusic", 1.0f, 1.0f, true);
 }
 
-void NDMenu::addGame(NDGameEngine* game, const string& name, BobColor* color)
+void NDMenu::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color)
 { //=========================================================================================================================
 
 	wheel->addGame(game, name, color);

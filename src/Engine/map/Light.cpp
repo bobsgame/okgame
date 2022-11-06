@@ -21,16 +21,16 @@ int Light::DRAWING = 1;
 int Light::OVERLAPS_SOMETHING = 2;
 int Light::DRAWN = 3;
 
-Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight)
+Light::Light(shared_ptr<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight)
 { //=========================================================================================================================
 
 
 	this->e = g;
-	LightData* data = new LightData(-1, "", "", name, mapXPixels1X, mapYPixels1X, widthPixels1X, heightPixels1X, red, green, blue, alpha, radiusPixels1X, blendFalloff, decayExponent, focusRadius1X, isDayLight, isNightLight, false, false, false, -1, -1, 0, 0, false, false);
+	shared_ptr<LightData> data = make_shared<LightData>(-1, "", "", name, mapXPixels1X, mapYPixels1X, widthPixels1X, heightPixels1X, red, green, blue, alpha, radiusPixels1X, blendFalloff, decayExponent, focusRadius1X, isDayLight, isNightLight, false, false, false, -1, -1, 0, 0, false, false);
 	initEntity(data);
 	initLight(data);
 
-	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
 
 
 	isScreenLight = true;
@@ -38,7 +38,7 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 
 	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == false)
 	{
-		BobFile* textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + getFileName());
+		shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
 		if (textureFile->exists())
 		{
 			MapManager::setLightTexturePNGFileExists_S(getFileName(),true);
@@ -53,9 +53,9 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 
 	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == true)
 	{
-		BobFile* textureFile = nullptr;
+		shared_ptr<BobFile> textureFile = nullptr;
 
-		textureFile = new BobFile(FileUtils::cacheDir + "l" + "/" + getFileName());
+		textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
 
 
 		if (textureFile->exists() == false)
@@ -64,7 +64,7 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 		}
 
 
-		BobTexture* t = nullptr;
+		shared_ptr<BobTexture> t = nullptr;
 
 		if (getMapManager()->lightTextureHashMap.containsKey(getFileName()))
 			t = getMapManager()->lightTextureHashMap.get(getFileName());
@@ -103,7 +103,7 @@ Light::Light(Engine* g, const string& name, int mapXPixels1X, int mapYPixels1X, 
 	}
 }
 
-Light::Light(Engine* g, LightData* lightAsset, Map* m)
+Light::Light(shared_ptr<Engine> g, shared_ptr<LightData> lightAsset, shared_ptr<Map> m)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -112,10 +112,10 @@ Light::Light(Engine* g, LightData* lightAsset, Map* m)
 	initEntity(lightAsset);
 	initLight(lightAsset);
 
-	if (getEventData() != nullptr)this->event = new Event(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
 }
 
-void Light::initLight(LightData* lightAsset)
+void Light::initLight(shared_ptr<LightData> lightAsset)
 {
 	this->data = lightAsset;
 
@@ -278,7 +278,7 @@ bool Light::checkEdgeAgainstHitLayerAndOtherLightsInDirection(int dir)
 
 	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
 	{
-		Light* l = getMap()->currentState->lightList.get(i);
+		shared_ptr<Light> l = getMap()->currentState->lightList.get(i);
 		if (l != this  && l->getName().find("mover") != string::npos)//&& l->getName() != getName()
 		{
 			int r = 8 + Math::randLessThan(16);
@@ -741,9 +741,9 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	int centerX = 0; //lightBoxX+lightBoxWidth/2;
 	int centerY = 0; //lightBoxY+lightBoxHeight/2;
 
-	BufferedImage* lightImage = new BufferedImage(maxRadius + lightBoxWidth / 2, maxRadius + lightBoxHeight / 2);
+	shared_ptr<BufferedImage> lightImage = make_shared<BufferedImage>(maxRadius + lightBoxWidth / 2, maxRadius + lightBoxHeight / 2);
 
-	//Graphics* lightImageGraphics = lightImage->getGraphics();
+	//shared_ptr<Graphics> lightImageGraphics = lightImage->getGraphics();
 
 	float distanceFromBoxEdgeToXY = 0;
 	float totalDistanceFromCenterToXY = 0;
@@ -829,7 +829,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 					}
 				}
 
-				BobColor *c = new BobColor(r, g, b, alpha);
+				shared_ptr<BobColor >c = make_shared<BobColor>(r, g, b, alpha);
 				lightImage->setColor(c);
 				//set pixel
 				lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
@@ -843,7 +843,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	else
 	{
 		{
-			BobColor *c = new BobColor(r, g, b, maxBrightness);
+			shared_ptr<BobColor >c = make_shared<BobColor>(r, g, b, maxBrightness);
 			lightImage->setColor(c);
 			//lightImageGraphics.fillRect(lightBoxX, lightBoxY, lightBoxWidth, lightBoxHeight);
 			lightImage->fillRect(centerX, centerY, lightBoxWidth / 2, lightBoxHeight / 2);
@@ -912,16 +912,16 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 
 						int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-						BobColor *c = nullptr;
+						shared_ptr<BobColor >c = nullptr;
 
 						if (alpha > 255 || alpha < 0)
 						{
-							c = (new BobColor(255, 0, 255, 255));
+							c = (make_shared<BobColor>(255, 0, 255, 255));
 						}
 						else
 						{
 							//set color
-							c = (new BobColor(r, g, b, alpha));
+							c = (make_shared<BobColor>(r, g, b, alpha));
 						}
 						lightImage->setColor(c);
 						//set pixel
@@ -945,14 +945,14 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			BobColor *c = nullptr;
+			shared_ptr<BobColor >c = nullptr;
 			if (alpha > 255)
 			{
-				c = (new BobColor(255, 0, 255, 255));
+				c = (make_shared<BobColor>(255, 0, 255, 255));
 			}
 			else
 			{
-				c = (new BobColor(r, g, b, alpha));
+				c = (make_shared<BobColor>(r, g, b, alpha));
 			}
 			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
@@ -976,14 +976,14 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			BobColor *c = nullptr;
+			shared_ptr<BobColor >c = nullptr;
 			if (alpha > 255)
 			{
-				c = (new BobColor(255, 0, 255, 255));
+				c = (make_shared<BobColor>(255, 0, 255, 255));
 			}
 			else
 			{
-				c = (new BobColor(r, g, b, alpha));
+				c = (make_shared<BobColor>(r, g, b, alpha));
 			}
 			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
@@ -1002,7 +1002,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	/*
 	try
 	{
-	   texture = TextureLoader.get().getTexture((ImageData)new BufferedImageData(lightImage),GL_NEAREST);
+	   texture = TextureLoader.get().getTexture((ImageData)make_shared<BufferedImageData>(lightImage),GL_NEAREST);
 	}
 	catch (IOException e)
 	{
@@ -1032,7 +1032,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	//then figure out how to blend it with alpha shader
 }
 
-//BufferedImageData::BufferedImageData(Light* outerInstance, BufferedImage* bufferedImage) : outerInstance(outerInstance)
+//BufferedImageData::BufferedImageData(shared_ptr<Light> outerInstance, shared_ptr<BufferedImage> bufferedImage) : outerInstance(outerInstance)
 //{
 //	this->width = bufferedImage->getWidth();
 //	this->height = bufferedImage->getHeight();
@@ -1212,9 +1212,9 @@ float Light::getHitBoxFromBottom()
 	return 0;
 }
 
-LightData* Light::getLightData()
+shared_ptr<LightData> Light::getLightData()
 {
-	return static_cast<LightData*>(data);
+	return static_cast<shared_ptr<LightData>>(data);
 }
 
 float Light::getWidth()

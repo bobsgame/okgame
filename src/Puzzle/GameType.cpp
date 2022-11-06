@@ -6,12 +6,12 @@
 
 Logger GameType::log = Logger("GameType");
 
-DifficultyType* GameType::difficulty_BEGINNER = nullptr;
-DifficultyType* GameType::difficulty_EASY = nullptr;
-DifficultyType* GameType::difficulty_NORMAL = nullptr;
-DifficultyType* GameType::difficulty_HARD = nullptr;
-DifficultyType* GameType::difficulty_INSANE = nullptr;
-DifficultyType* GameType::difficulty_IMPOSSIBLE = nullptr;
+shared_ptr<DifficultyType> GameType::difficulty_BEGINNER = nullptr;
+shared_ptr<DifficultyType> GameType::difficulty_EASY = nullptr;
+shared_ptr<DifficultyType> GameType::difficulty_NORMAL = nullptr;
+shared_ptr<DifficultyType> GameType::difficulty_HARD = nullptr;
+shared_ptr<DifficultyType> GameType::difficulty_INSANE = nullptr;
+shared_ptr<DifficultyType> GameType::difficulty_IMPOSSIBLE = nullptr;
 
 //=========================================================================================================================
 template <typename Archive>
@@ -61,7 +61,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_pieceTypesToDisallow.size(); i++)
 		{
 			PieceType b = importExport_pieceTypesToDisallow.get(i);
-			shared_ptr<PieceType> bp(new PieceType());
+			shared_ptr<PieceType> bp(make_shared<PieceType>());
 			*bp = b;
 			pieceTypesToDisallow_DEPRECATED.add(bp);
 		}
@@ -74,7 +74,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_blockTypesToDisallow.size(); i++)
 		{
 			BlockType b = importExport_blockTypesToDisallow.get(i);
-			shared_ptr<BlockType> bp(new BlockType());
+			shared_ptr<BlockType> bp(make_shared<BlockType>());
 			*bp = b;
 			blockTypesToDisallow_DEPRECATED.add(bp);
 		}
@@ -285,7 +285,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     for (int i = 0; i < importExport_blockTypes.size(); i++)
     {
         BlockType b = importExport_blockTypes.get(i);
-        shared_ptr<BlockType> bp(new BlockType());
+        shared_ptr<BlockType> bp(make_shared<BlockType>());
 		*bp = b;
         blockTypes.add(bp);
     }
@@ -327,7 +327,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     for (int i = 0; i<importExport_pieceTypes.size(); i++)
     {
         PieceType b = importExport_pieceTypes.get(i);
-        shared_ptr<PieceType> bp(new PieceType());
+        shared_ptr<PieceType> bp(make_shared<PieceType>());
 		*bp = b;
         pieceTypes.add(bp);
     }
@@ -339,7 +339,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     importExport_difficulties.clear();
     for (int i = 0; i < difficultyTypes.size(); i++)
     {
-        DifficultyType *bp = difficultyTypes.get(i);
+        shared_ptr<DifficultyType >bp = difficultyTypes.get(i);
 		DifficultyType b;
 		b = *bp;
         importExport_difficulties.add(b);
@@ -349,7 +349,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     for (int i = 0; i<importExport_difficulties.size(); i++)
     {
         DifficultyType b = importExport_difficulties.get(i);
-        DifficultyType *bp = new DifficultyType();
+        shared_ptr<DifficultyType >bp = make_shared<DifficultyType>();
 		*bp = b;
         difficultyTypes.add(bp);
     }
@@ -361,7 +361,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 		for (int i = 0; i < difficultyTypes.size(); i++)
 		{
-			DifficultyType *bp = difficultyTypes.get(i);
+			shared_ptr<DifficultyType >bp = difficultyTypes.get(i);
 			bp->randomlyFillGrid = import_randomlyFillGrid;
 		}
 		
@@ -369,7 +369,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 		for (int i = 0; i < difficultyTypes.size(); i++)
 		{
-			DifficultyType *bp = difficultyTypes.get(i);
+			shared_ptr<DifficultyType >bp = difficultyTypes.get(i);
 			bp->randomlyFillGridStartY = import_randomlyFillGridStartY;
 		}
 		
@@ -517,7 +517,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 string GameType::toBase64GZippedXML()
 {//=========================================================================================================================
-	GameType *s = this;
+	shared_ptr<GameType >s = this;
 	GameType gs = GameType();
 	gs = *s;
 	std::stringstream ss;
@@ -529,7 +529,7 @@ string GameType::toBase64GZippedXML()
 }
 
 //=========================================================================================================================
-GameType *GameType::fromBase64GZippedXML(string b64GZipXML)
+shared_ptr<GameType >GameType::fromBase64GZippedXML(string b64GZipXML)
 {//=========================================================================================================================
 	string xml = FileUtils::unzipBase64StringToString(b64GZipXML);
 
@@ -546,7 +546,7 @@ GameType *GameType::fromBase64GZippedXML(string b64GZipXML)
 	try
 	{
 		ia >> BOOST_SERIALIZATION_NVP(gt);
-		GameType *s = new GameType();
+		shared_ptr<GameType >s = make_shared<GameType>();
 		*s = gt;
 		return s;
 	}
@@ -574,7 +574,7 @@ GameType *GameType::fromBase64GZippedXML(string b64GZipXML)
 //		regularFrequencySpecialPieceTypes.Add(pieceType);
 //	}
 
-ArrayList<shared_ptr<BlockType>> GameType::getNormalBlockTypes(DifficultyType *d)
+ArrayList<shared_ptr<BlockType>> GameType::getNormalBlockTypes(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<BlockType>> arr;
 	for (int i = 0; i<blockTypes.size(); i++)
@@ -594,7 +594,7 @@ ArrayList<shared_ptr<BlockType>> GameType::getNormalBlockTypes(DifficultyType *d
 	return arr;
 }
 
-ArrayList<shared_ptr<BlockType>> GameType::getGarbageBlockTypes(DifficultyType *d)
+ArrayList<shared_ptr<BlockType>> GameType::getGarbageBlockTypes(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<BlockType>> arr;
 	for(int i=0;i<blockTypes.size();i++)
@@ -614,7 +614,7 @@ ArrayList<shared_ptr<BlockType>> GameType::getGarbageBlockTypes(DifficultyType *
 	return arr;
 }
 
-ArrayList<shared_ptr<BlockType>> GameType::getPlayingFieldBlockTypes(DifficultyType *d)
+ArrayList<shared_ptr<BlockType>> GameType::getPlayingFieldBlockTypes(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 
 	ArrayList<shared_ptr<BlockType>> arr;
@@ -635,7 +635,7 @@ ArrayList<shared_ptr<BlockType>> GameType::getPlayingFieldBlockTypes(DifficultyT
 	return arr;
 }
 
-ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenCheckingChain(DifficultyType *d)
+ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenCheckingChain(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<BlockType>> arr;
 	for (int i = 0; i<blockTypes.size(); i++)
@@ -656,7 +656,7 @@ ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenCheckingChai
 
 }
 
-ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenMovingDown(DifficultyType *d)
+ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenMovingDown(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<BlockType>> arr;
 	for (int i = 0; i<blockTypes.size(); i++)
@@ -677,7 +677,7 @@ ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesToIgnoreWhenMovingDown(D
 
 }
 
-ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesChainMustContain(DifficultyType *d)
+ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesChainMustContain(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<BlockType>> arr;
 	for (int i = 0; i<blockTypes.size(); i++)
@@ -699,7 +699,7 @@ ArrayList<shared_ptr<BlockType>> GameType::getBlockTypesChainMustContain(Difficu
 }
 
 
-ArrayList<shared_ptr<PieceType>> GameType::getNormalPieceTypes(DifficultyType *d)
+ArrayList<shared_ptr<PieceType>> GameType::getNormalPieceTypes(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<PieceType>> arr;
 	for (int i = 0; i<pieceTypes.size(); i++)
@@ -719,7 +719,7 @@ ArrayList<shared_ptr<PieceType>> GameType::getNormalPieceTypes(DifficultyType *d
 	return arr;
 }
 
-ArrayList<shared_ptr<PieceType>> GameType::getGarbagePieceTypes(DifficultyType *d)
+ArrayList<shared_ptr<PieceType>> GameType::getGarbagePieceTypes(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 	ArrayList<shared_ptr<PieceType>> arr;
 	for (int i = 0; i<pieceTypes.size(); i++)
@@ -739,7 +739,7 @@ ArrayList<shared_ptr<PieceType>> GameType::getGarbagePieceTypes(DifficultyType *
 	return arr;
 }
 
-ArrayList<shared_ptr<PieceType>> GameType::getPlayingFieldPieceTypes(DifficultyType *d)
+ArrayList<shared_ptr<PieceType>> GameType::getPlayingFieldPieceTypes(shared_ptr<DifficultyType >d)
 {//=========================================================================================================================
 
 	ArrayList<shared_ptr<PieceType>> arr;
@@ -771,7 +771,7 @@ GameType::GameType()
 
 	if(difficulty_BEGINNER==nullptr)
 	{
-		difficulty_BEGINNER = new DifficultyType();
+		difficulty_BEGINNER = make_shared<DifficultyType>();
 		difficulty_BEGINNER->name = "Beginner";
 		difficulty_BEGINNER->initialLineDropSpeedTicks = 2000;
 		difficulty_BEGINNER->minimumLineDropSpeedTicks = 1000;
@@ -784,7 +784,7 @@ GameType::GameType()
 		difficulty_BEGINNER->creditsLevel = 9;
 		difficulty_BEGINNER->playingFieldGarbageSpawnRuleAmount = 10;
 
-		difficulty_EASY = new DifficultyType();
+		difficulty_EASY = make_shared<DifficultyType>();
 		difficulty_EASY->name = "Easy";
 		difficulty_EASY->initialLineDropSpeedTicks = 1500;
 		difficulty_EASY->minimumLineDropSpeedTicks = 500;
@@ -797,7 +797,7 @@ GameType::GameType()
 		difficulty_EASY->creditsLevel = 15;
 		difficulty_EASY->playingFieldGarbageSpawnRuleAmount = 8;
 
-		difficulty_NORMAL = new DifficultyType();
+		difficulty_NORMAL = make_shared<DifficultyType>();
 		difficulty_NORMAL->name = "Normal";
 		difficulty_NORMAL->initialLineDropSpeedTicks = 1000;
 		difficulty_NORMAL->minimumLineDropSpeedTicks = 30;
@@ -810,7 +810,7 @@ GameType::GameType()
 		difficulty_NORMAL->creditsLevel = 30;
 		difficulty_NORMAL->playingFieldGarbageSpawnRuleAmount = 5;
 
-		difficulty_HARD = new DifficultyType();
+		difficulty_HARD = make_shared<DifficultyType>();
 		difficulty_HARD->name = "Hard";
 		difficulty_HARD->initialLineDropSpeedTicks = 500;
 		difficulty_HARD->minimumLineDropSpeedTicks = 20;
@@ -823,7 +823,7 @@ GameType::GameType()
 		difficulty_HARD->creditsLevel = 60;
 		difficulty_HARD->playingFieldGarbageSpawnRuleAmount = 4;
 
-		difficulty_INSANE = new DifficultyType();
+		difficulty_INSANE = make_shared<DifficultyType>();
 		difficulty_INSANE->name = "Insane";
 		difficulty_INSANE->initialLineDropSpeedTicks = 128;
 		difficulty_INSANE->minimumLineDropSpeedTicks = 8;
@@ -836,7 +836,7 @@ GameType::GameType()
 		difficulty_INSANE->creditsLevel = 99;
 		difficulty_INSANE->playingFieldGarbageSpawnRuleAmount = 3;
 
-		difficulty_IMPOSSIBLE = new DifficultyType();
+		difficulty_IMPOSSIBLE = make_shared<DifficultyType>();
 		difficulty_IMPOSSIBLE->name = "Impossible";
 		difficulty_IMPOSSIBLE->initialLineDropSpeedTicks = 32;
 		difficulty_IMPOSSIBLE->minimumLineDropSpeedTicks = 2;
@@ -851,11 +851,11 @@ GameType::GameType()
 
 	}
 
-	DifficultyType* beginner = new DifficultyType(*difficulty_BEGINNER);
-	DifficultyType* easy = new DifficultyType(*difficulty_EASY);
-	DifficultyType* normal = new DifficultyType(*difficulty_NORMAL);
-	DifficultyType* hard = new DifficultyType(*difficulty_HARD);
-	DifficultyType* insane = new DifficultyType(*difficulty_INSANE);
+	shared_ptr<DifficultyType> beginner = make_shared<DifficultyType>(*difficulty_BEGINNER);
+	shared_ptr<DifficultyType> easy = make_shared<DifficultyType>(*difficulty_EASY);
+	shared_ptr<DifficultyType> normal = make_shared<DifficultyType>(*difficulty_NORMAL);
+	shared_ptr<DifficultyType> hard = make_shared<DifficultyType>(*difficulty_HARD);
+	shared_ptr<DifficultyType> insane = make_shared<DifficultyType>(*difficulty_INSANE);
 
 	difficultyTypes.clear();
 	difficultyTypes.add(beginner);
@@ -931,13 +931,13 @@ shared_ptr<PieceType> GameType::getPieceTypeByUUID(string s)
 	return nullptr;
 }
 
-DifficultyType* GameType::getDifficultyByName(string s)
+shared_ptr<DifficultyType> GameType::getDifficultyByName(string s)
 {//=========================================================================================================================
 
 	//bool found = false;
 	for (int i = 0; i<difficultyTypes.size(); i++)
 	{
-		DifficultyType *d = difficultyTypes.get(i);
+		shared_ptr<DifficultyType >d = difficultyTypes.get(i);
 		if (d->name == s)
 		{
 			return d;
@@ -950,13 +950,13 @@ DifficultyType* GameType::getDifficultyByName(string s)
 }
 
 
-//GameType::GameType(DifficultyType* d)
+//GameType::GameType(shared_ptr<DifficultyType> d)
 //{
 //	currentDifficulty = d;
 //	//setTimingBasedOnDifficulty(d);
 //}
 
-//void GameType::setTimingBasedOnDifficulty(DifficultyType* d)
+//void GameType::setTimingBasedOnDifficulty(shared_ptr<DifficultyType> d)
 //{
 //	currentDifficulty = d;
 //

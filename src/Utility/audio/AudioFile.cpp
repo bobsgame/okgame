@@ -12,7 +12,7 @@ Logger AudioFile::log = Logger("AudioFile");
 
 
 
-AudioFile::AudioFile(AudioData* data)
+AudioFile::AudioFile(shared_ptr<AudioData> data)
 { //=========================================================================================================================
 
 
@@ -51,7 +51,7 @@ AudioFile::AudioFile(string filename)
 	if (found != string::npos)
 		name = name.substr(0, found);
 
-	this->data = new AudioData(-1, name, filename);
+	this->data = make_shared<AudioData>(-1, name, filename);
 
 	byteData = FileUtils::loadByteFileFromExePath(filename);
 
@@ -67,7 +67,7 @@ AudioFile::AudioFile(string filename)
 
 }
 
-AudioData* AudioFile::getData()
+shared_ptr<AudioData> AudioFile::getData()
 { //=========================================================================================================================
 	return data;
 }
@@ -127,13 +127,13 @@ void AudioFile::setFileExists(bool i)
 	_fileExists = i;
 }
 
-ByteArray* AudioFile::getByteData()
+shared_ptr<ByteArray> AudioFile::getByteData()
 { //=========================================================================================================================
 	return byteData;
 }
 
 //The following method was originally marked 'synchronized':
-void AudioFile::setData_S(AudioData* data)
+void AudioFile::setData_S(shared_ptr<AudioData> data)
 { //=========================================================================================================================
 
 	this->data = data;
@@ -168,7 +168,7 @@ void AudioFile::update()
 				}
 				else
 				{
-					//               downloadThread = new Thread([&] ()
+					//               downloadThread = make_shared<Thread>([&] ()
 					//                  {
 					//                     try
 					//                     {

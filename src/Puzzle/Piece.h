@@ -74,7 +74,7 @@ class Rotation //static
 {//=========================================================================================================================
 
 public:
-	ArrayList<BlockOffset*> blockOffsets;
+	ArrayList<shared_ptr<BlockOffset>> blockOffsets;
 private:
 	ArrayList<BlockOffset> importExport_blockOffsets;
 public:
@@ -98,7 +98,7 @@ public:
 
 	}
 	//=========================================================================================================================
-	void add(BlockOffset *b)
+	void add(shared_ptr<BlockOffset >b)
 	{//=========================================================================================================================
 		blockOffsets.add(b);
 	}
@@ -112,7 +112,7 @@ public:
 		{
 			for (int i = 0; i<blockOffsets.size(); i++)
 			{
-				BlockOffset *b = blockOffsets.get(i);
+				shared_ptr<BlockOffset >b = blockOffsets.get(i);
 				importExport_blockOffsets.add(*b);
 			}
 		}
@@ -122,7 +122,7 @@ public:
 			for (int i = 0; i<importExport_blockOffsets.size(); i++)
 			{
 				BlockOffset b = importExport_blockOffsets.get(i);
-				BlockOffset *bp = new BlockOffset();
+				shared_ptr<BlockOffset >bp = make_shared<BlockOffset>();
 				*bp = b;
 				blockOffsets.add(bp);
 			}
@@ -140,7 +140,7 @@ class RotationSet
 public:
 	string name = "";
 
-	ArrayList<Rotation*> rotationSet;
+	ArrayList<shared_ptr<Rotation>> rotationSet;
 private:
 	ArrayList<Rotation> importExport_rotationSet;
 public:
@@ -155,13 +155,13 @@ public:
 		this->name = name;
 	}
 	//=========================================================================================================================
-	void add(Rotation *r)
+	void add(shared_ptr<Rotation >r)
 	{//=========================================================================================================================
 		rotationSet.add(r);
 	}
 
 	int size() { return rotationSet.size(); }
-	Rotation* get(int i) { return rotationSet.get(i); }
+	shared_ptr<Rotation> get(int i) { return rotationSet.get(i); }
 	void clear() { rotationSet.clear(); }
 	void removeAt(int i) { rotationSet.removeAt(i); }
 
@@ -176,7 +176,7 @@ public:
 		{
 			for (int i = 0; i<rotationSet.size(); i++)
 			{
-				Rotation *b = rotationSet.get(i);
+				shared_ptr<Rotation >b = rotationSet.get(i);
 				importExport_rotationSet.add(*b);
 			}
 		}
@@ -186,7 +186,7 @@ public:
 			for (int i = 0; i<importExport_rotationSet.size(); i++)
 			{
 				Rotation b = importExport_rotationSet.get(i);
-				Rotation *bp = new Rotation();
+				shared_ptr<Rotation >bp = make_shared<Rotation>();
 				*bp = b;
 				rotationSet.add(bp);
 			}
@@ -208,7 +208,7 @@ public:
 	//int numBlocks = 1;
 	//int lastRotation = 0;
 
-	BobColor *color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
+	shared_ptr<BobColor >color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
 private:
 	BobColor importExport_color;
 public:
@@ -249,10 +249,10 @@ public:
 	
 
 //	PieceType();
-//	PieceType(Color* color, int numBlocks, ArrayList<Rotation*>* rotationSet);
-//	PieceType(Color* color, int numBlocks, ArrayList<Rotation*>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(const string& spriteName, Color* color, int numBlocks, ArrayList<Rotation*>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(int numBlocks, ArrayList<Rotation*>* rotationSet);
+//	PieceType(shared_ptr<Color> color, int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet);
+//	PieceType(shared_ptr<Color> color, int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(const string& spriteName, shared_ptr<Color> color, int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet);
 
 	static shared_ptr<PieceType> emptyPieceType;
 	static shared_ptr<PieceType> oneBlockCursorPieceType;
@@ -272,16 +272,16 @@ public:
 		//this->numBlocks = 1;
 		//this->lastRotation = 0;
 
-		BlockOffset *b = new BlockOffset(0, 0);
-		Rotation *r = new Rotation();
+		shared_ptr<BlockOffset >b = make_shared<BlockOffset>(0, 0);
+		shared_ptr<Rotation >r = make_shared<Rotation>();
 		r->add(b);
-		//rotationSet = new ArrayList<Rotation*>();
+		//rotationSet = make_shared<ArrayList><shared_ptr<Rotation>>();
 		rotationSet = RotationSet("");
 		rotationSet.add(r);
 	}
 
 	//=========================================================================================================================
-	PieceType(const string &name, const string& spriteName = "", BobColor *color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
+	PieceType(const string &name, const string& spriteName = "", shared_ptr<BobColor >color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
 	{//=========================================================================================================================
 		this->name = name;
 
@@ -314,8 +314,8 @@ public:
 	//BlockType noBlockType;
 	//ArrayList<Color> emptyColors;
 
-	Grid* grid = nullptr;
-	GameLogic* game = nullptr;
+	shared_ptr<Grid> grid = nullptr;
+	shared_ptr<GameLogic> game = nullptr;
 
 	int currentRotation = 0;
 
@@ -380,8 +380,8 @@ public:
 //			;
 //	}
 
-	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes);
-	Piece(GameLogic* gameInstance, Grid* grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType);
+	Piece(shared_ptr<GameLogic> gameInstance, shared_ptr<Grid> grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes);
+	Piece(shared_ptr<GameLogic> gameInstance, shared_ptr<Grid> grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType);
 	void init();
 	void initColors();
 	void setPieceBlockConnections();
@@ -434,7 +434,7 @@ public:
 	static RotationSet get4BlockZRotationSet(RotationType type);
 	int cellW();
 	int cellH();
-	GameType* getGameType();
-	GameLogic* getGameLogic();
+	shared_ptr<GameType> getGameType();
+	shared_ptr<GameLogic> getGameLogic();
 };
 

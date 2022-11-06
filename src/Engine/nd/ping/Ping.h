@@ -16,10 +16,10 @@ public:
 
 	Ping(ND* nD);
 
-	PingPaddle* lp = new PingPaddle(this);
-	PingPaddle* rp = new PingPaddle(this);
+	shared_ptr<PingPaddle> lp = make_shared<PingPaddle>(this);
+	shared_ptr<PingPaddle> rp = make_shared<PingPaddle>(this);
 
-	PingBall* ball = new PingBall(this);
+	shared_ptr<PingBall> ball = make_shared<PingBall>(this);
 
 	int LEFT = 0;
 	int RIGHT = 1;
@@ -76,7 +76,7 @@ public:
 	bool canPressUp = false;
 	bool canPressR = false;
 
-	PingBackground* background = new PingBackground(this);
+	shared_ptr<PingBackground> background = make_shared<PingBackground>(this);
 
 	void reset();
 	void initGame();

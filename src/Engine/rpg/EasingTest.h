@@ -13,34 +13,34 @@ class Logger;
 class EasingTest : public EnginePart
 {
 public:
-	static Caption* linearTweenCaption;
+	static shared_ptr<Caption> linearTweenCaption;
 
-	static Caption* easeInQuadCaption;
-	static Caption* easeInCubicCaption;
-	static Caption* easeInQuartCaption;
-	static Caption* easeInQuintCaption;
-	static Caption* easeInExpoCaption;
-	static Caption* easeInCircCaption;
-	static Caption* easeInSineCaption;
+	static shared_ptr<Caption> easeInQuadCaption;
+	static shared_ptr<Caption> easeInCubicCaption;
+	static shared_ptr<Caption> easeInQuartCaption;
+	static shared_ptr<Caption> easeInQuintCaption;
+	static shared_ptr<Caption> easeInExpoCaption;
+	static shared_ptr<Caption> easeInCircCaption;
+	static shared_ptr<Caption> easeInSineCaption;
 
-	static Caption* easeOutQuadCaption;
-	static Caption* easeOutCubicCaption;
-	static Caption* easeOutQuartCaption;
-	static Caption* easeOutQuintCaption;
-	static Caption* easeOutExpoCaption;
-	static Caption* easeOutCircCaption;
-	static Caption* easeOutSineCaption;
+	static shared_ptr<Caption> easeOutQuadCaption;
+	static shared_ptr<Caption> easeOutCubicCaption;
+	static shared_ptr<Caption> easeOutQuartCaption;
+	static shared_ptr<Caption> easeOutQuintCaption;
+	static shared_ptr<Caption> easeOutExpoCaption;
+	static shared_ptr<Caption> easeOutCircCaption;
+	static shared_ptr<Caption> easeOutSineCaption;
 
-	static Caption* easeInOutQuadCaption;
-	static Caption* easeInOutCubicCaption;
-	static Caption* easeInOutQuartCaption;
-	static Caption* easeInOutQuintCaption;
-	static Caption* easeInOutExpoCaption;
-	static Caption* easeInOutCircCaption;
-	static Caption* easeInOutSineCaption;
+	static shared_ptr<Caption> easeInOutQuadCaption;
+	static shared_ptr<Caption> easeInOutCubicCaption;
+	static shared_ptr<Caption> easeInOutQuartCaption;
+	static shared_ptr<Caption> easeInOutQuintCaption;
+	static shared_ptr<Caption> easeInOutExpoCaption;
+	static shared_ptr<Caption> easeInOutCircCaption;
+	static shared_ptr<Caption> easeInOutSineCaption;
 
 
-	EasingTest(Engine* g);
+	EasingTest(shared_ptr<Engine> g);
 
 
 	static float ticksCount;

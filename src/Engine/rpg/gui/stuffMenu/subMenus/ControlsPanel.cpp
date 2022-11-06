@@ -20,13 +20,13 @@ ControlsPanel::ControlsPanel()
 	SubPanel();
 	//
 	//
-	//   Label* mainControlsLabel = new Label("Main Controls");
+	//   shared_ptr<Label> mainControlsLabel = make_shared<Label>("Main Controls");
 	//   mainControlsLabel->setCanAcceptKeyboardFocus(false);
 	//   mainControlsLabel->setTheme("helpLabelBig");
 	//
 	//
 	//   /*
-	//      Label wasdLabel = new Label("(You can also control movement with \"WASD\")");
+	//      Label wasdLabel = make_shared<Label>("(You can also control movement with \"WASD\")");
 	//      wasdLabel.setCanAcceptKeyboardFocus(false);
 	//      wasdLabel.setTheme("helpLabelSmall");
 	//                           */
@@ -42,68 +42,68 @@ ControlsPanel::ControlsPanel()
 	//   //TODO: add gameController support
 	//
 	//
-	//   Widget* keyboardImagePanel = new WidgetAnonymousInnerClassHelper(this);
+	//   shared_ptr<Widget> keyboardImagePanel = make_shared<WidgetAnonymousInnerClassHelper>(this);
 	//   keyboardImagePanel->setTheme("keyboardImagePanel");
 	//
 	//
-	//   //		Label otherControlsLabel = new Label("Other Controls:");
+	//   //		Label otherControlsLabel = make_shared<Label>("Other Controls:");
 	//   //		otherControlsLabel.setCanAcceptKeyboardFocus(false);
 	//   //		otherControlsLabel.setTheme("helpLabelBig");
 	//   //
-	//   //		Label otherControlsTextLabel = new Label("F12 - Take Screenshot");
+	//   //		Label otherControlsTextLabel = make_shared<Label>("F12 - Take Screenshot");
 	//   //		otherControlsTextLabel.setCanAcceptKeyboardFocus(false);
 	//   //		otherControlsTextLabel.setTheme("helpLabelSmall");
 	//
 	//
-	//   Label* gameControllerSetupLabel = new Label("Game Controller Setup");
+	//   shared_ptr<Label> gameControllerSetupLabel = make_shared<Label>("Game Controller Setup");
 	//   gameControllerSetupLabel->setCanAcceptKeyboardFocus(false);
 	//   gameControllerSetupLabel->setTheme("helpLabelBig");
 	//
 	//
-	//   Label* gameControllerInfoLabel = new Label("\"bob's game\" supports most USB Game Controllers. Please plug your controller in before starting the game.");
+	//   shared_ptr<Label> gameControllerInfoLabel = make_shared<Label>("\"bob's game\" supports most USB Game Controllers. Please plug your controller in before starting the game.");
 	//   gameControllerInfoLabel->setCanAcceptKeyboardFocus(false);
 	//   gameControllerInfoLabel->setTheme("helpLabelSmall");
 	//
 	//
 	//   /*
-	//         Label scrollDownLabel = new Label("In the \"Stuff Menu,\" you can click with the mouse and scroll down with the mouse wheel.");
+	//         Label scrollDownLabel = make_shared<Label>("In the \"Stuff Menu,\" you can click with the mouse and scroll down with the mouse wheel.");
 	//         scrollDownLabel.setCanAcceptKeyboardFocus(false);
 	//         scrollDownLabel.setTheme("helpLabelSmall");
 	//   */
 	//
 	//
-	//   DialogLayout* gameControllerLayout = new DialogLayout();
+	//   shared_ptr<DialogLayout> gameControllerLayout = make_shared<DialogLayout>();
 	//   gameControllerLayout->setCanAcceptKeyboardFocus(false);
 	//   gameControllerLayout->setTheme("gameControllerSetupLayout");
 	//
 	//
 	//   int buttons = 10;
 	//
-	//   ArrayList<Label*> buttonLabel(buttons);
-	//   buttonValueLabel = ArrayList<Label*>(buttons);
-	//   ArrayList<Button*> buttonButton(buttons);
+	//   ArrayList<shared_ptr<Label>> buttonLabel(buttons);
+	//   buttonValueLabel = ArrayList<shared_ptr<Label>>(buttons);
+	//   ArrayList<shared_ptr<Button>> buttonButton(buttons);
 	//
-	//   ArrayList<DialogLayout*> buttonLayout(buttons);
+	//   ArrayList<shared_ptr<DialogLayout>> buttonLayout(buttons);
 	//
 	//
 	//   for (int i = 0; i < buttons; i++)
 	//   {
-	//      buttonLabel[i] = new Label("");
+	//      buttonLabel[i] = make_shared<Label>("");
 	//      buttonLabel[i]->setCanAcceptKeyboardFocus(false);
 	//      buttonLabel[i]->setTheme("font16PurpleOutline");
 	//
-	//      buttonValueLabel[i] = new Label("NONE");
+	//      buttonValueLabel[i] = make_shared<Label>("NONE");
 	//      buttonValueLabel[i]->setCanAcceptKeyboardFocus(false);
 	//      buttonValueLabel[i]->setTheme("font11WhiteOutline");
 	//
-	//      buttonButton[i] = new Button("Set");
+	//      buttonButton[i] = make_shared<Button>("Set");
 	//      buttonButton[i]->setCanAcceptKeyboardFocus(false);
 	//
 	//      const int threadi = i;
 	//
 	//      buttonButton[i]->addCallback([&] () //even though this is a runnable, it is NOT a thread. fireCallback just calls Runnable.run() which does not create a thread.
 	//         {
-	//            new Thread([&] ()
+	//            make_shared<Thread>([&] ()
 	//               {
 	//                  try
 	//                  {
@@ -146,7 +146,7 @@ ControlsPanel::ControlsPanel()
 	//
 	//                     while (Controllers->next() == true)
 	//                     {
-	//                        Controller* c = Controllers::getEventSource();
+	//                        shared_ptr<Controller> c = Controllers::getEventSource();
 	//
 	//
 	//                        float val = 0.0f;
@@ -453,7 +453,7 @@ ControlsPanel::ControlsPanel()
 	//      );
 	//
 	//
-	//      buttonLayout[i] = new DialogLayout();
+	//      buttonLayout[i] = make_shared<DialogLayout>();
 	//      buttonLayout[i]->setCanAcceptKeyboardFocus(false);
 	//
 	//      buttonLayout[i]->setHorizontalGroup(buttonLayout[i]->createParallelGroup(buttonLayout[i]->createParallelGroup(buttonLayout[i]->createSequentialGroup().addWidget(buttonButton[i]).addGap().addWidgets(buttonLabel[i], buttonValueLabel[i]).addGap())));
@@ -493,7 +493,7 @@ ControlsPanel::ControlsPanel()
 	//   //insideLayout.createSequentialGroup(scrollDownLabel),
 }
 
-ControlsPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(ControlsPanel* outerInstance)
+ControlsPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(shared_ptr<ControlsPanel> outerInstance)
 {
 	this->outerInstance = outerInstance;
 }

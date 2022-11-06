@@ -10,9 +10,9 @@ class Logger;
 
 
 	public:
-		static BobTexture *lastBoundTexture;
+		static shared_ptr<BobTexture >lastBoundTexture;
 
-		static BobTexture *getLastBoundTexture();
+		static shared_ptr<BobTexture >getLastBoundTexture();
 
 
 	private:
@@ -102,5 +102,5 @@ class Logger;
 
 
 	public:
-		ByteArray* getTextureData();
+		shared_ptr<ByteArray> getTextureData();
 	};

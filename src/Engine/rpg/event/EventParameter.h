@@ -54,13 +54,13 @@ public:
 	string parameterString = "";
 
 
-	EventParameter(Engine* g, const string& parameterString);
+	EventParameter(shared_ptr<Engine> g, const string& parameterString);
 
 
 	void parsePrimitive(const string& typeString, const string& primitiveValueString);
 
 
-	void updateParameterVariablesFromString(Event* event);
+	void updateParameterVariablesFromString(shared_ptr<Event> event);
 
 
 	string toString();

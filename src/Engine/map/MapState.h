@@ -16,34 +16,34 @@ class MapState
 	//these hold the Light objects themselves, created in the constructor for this map.
 	//these both hold the same thing for convenience.
 public:
-	ArrayList<Light*> lightList;
-	HashMap<string, Light*> lightByNameHashtable;//new HashMap<string, Light*>();
+	ArrayList<shared_ptr<Light>> lightList;
+	HashMap<string, shared_ptr<Light>> lightByNameHashtable;//make_shared<HashMap><string, shared_ptr<Light>>();
 
 
-	ArrayList<Entity*> entityList;
-	HashMap<string, Entity*> entityByNameHashtable;//new HashMap<string, Entity*>();
+	ArrayList<shared_ptr<Entity>> entityList;
+	HashMap<string, shared_ptr<Entity>> entityByNameHashtable;//make_shared<HashMap><string, shared_ptr<Entity>>();
 
-	ArrayList<Character*> characterList;
-	HashMap<string, Character*> characterByNameHashtable;//new HashMap<string, Character*>();
-
-
-	ArrayList<Area*> areaList;
-	HashMap<string, Area*> areaByNameHashtable;//new HashMap<string, Area*>();
-	HashMap<string, Area*> areaByTYPEIDHashtable;//new HashMap<string, Area*>();
+	ArrayList<shared_ptr<Character>> characterList;
+	HashMap<string, shared_ptr<Character>> characterByNameHashtable;//make_shared<HashMap><string, shared_ptr<Character>>();
 
 
+	ArrayList<shared_ptr<Area>> areaList;
+	HashMap<string, shared_ptr<Area>> areaByNameHashtable;//make_shared<HashMap><string, shared_ptr<Area>>();
+	HashMap<string, shared_ptr<Area>> areaByTYPEIDHashtable;//make_shared<HashMap><string, shared_ptr<Area>>();
 
-	Map* map = nullptr;
+
+
+	shared_ptr<Map> map = nullptr;
 
 private:
-	MapStateData* data = nullptr;
+	shared_ptr<MapStateData> data = nullptr;
 
 
 public:
-	MapState(MapStateData* mapStateData, Map* m);
+	MapState(shared_ptr<MapStateData> mapStateData, shared_ptr<Map> m);
 
 
-	MapStateData* getData();
+	shared_ptr<MapStateData> getData();
 
 	int getID();
 	string& getName();

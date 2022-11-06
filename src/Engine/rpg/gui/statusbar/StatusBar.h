@@ -25,18 +25,18 @@ public:
 	static Logger log;
 
 
-	static BobTexture* blackBackgroundTexture;
-	static BobTexture* blackForegroundTexture;
+	static shared_ptr<BobTexture> blackBackgroundTexture;
+	static shared_ptr<BobTexture> blackForegroundTexture;
 
-	static BobTexture* whiteBackgroundTexture;
-	static BobTexture* whiteForegroundTexture;
+	static shared_ptr<BobTexture> whiteBackgroundTexture;
+	static shared_ptr<BobTexture> whiteForegroundTexture;
 
-	static BobTexture* backgroundTexture;
-	static BobTexture* foregroundTexture;
+	static shared_ptr<BobTexture> backgroundTexture;
+	static shared_ptr<BobTexture> foregroundTexture;
 
 
-	static BobTexture* glowTexture;
-	static BobTexture* dividerTexture;
+	static shared_ptr<BobTexture> glowTexture;
+	static shared_ptr<BobTexture> dividerTexture;
 
 
 	static int sizeY;
@@ -45,20 +45,20 @@ public:
 
 	static bool useLightTheme;
 
-	ClockCaption* clockCaption = nullptr;
-	DayCaption* dayCaption = nullptr;
-	MoneyCaption* moneyCaption = nullptr;
-	NDButton* ndButton = nullptr;
-	GameStoreButton* gameStoreButton = nullptr;
-	StuffButton* stuffButton = nullptr;
+	shared_ptr<ClockCaption> clockCaption = nullptr;
+	shared_ptr<DayCaption> dayCaption = nullptr;
+	shared_ptr<MoneyCaption> moneyCaption = nullptr;
+	shared_ptr<NDButton> ndButton = nullptr;
+	shared_ptr<GameStoreButton> gameStoreButton = nullptr;
+	shared_ptr<StuffButton> stuffButton = nullptr;
 
-	NotificationManager* notificationManager = nullptr;
+	shared_ptr<NotificationManager> notificationManager = nullptr;
 
 
 	bool enabled = true;
 
 
-	StatusBar(BGClientEngine* g);
+	StatusBar(shared_ptr<BGClientEngine> g);
 
 
 	void init();

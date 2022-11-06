@@ -26,25 +26,25 @@ FlagData::FlagData(int id, const string& name)
 	this->name = name;
 }
 
-//FlagData* FlagData::fromBase64ZippedJSON(const string& b64)
+//shared_ptr<FlagData> FlagData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = new Gson();
+//	//Gson gson = make_shared<Gson>();
 //	//FlagData data = gson.fromJson(json,FlagData.class);
 //
 //	return fromJSON(json);
 //}
 //
-//FlagData* FlagData::fromJSON(const string& json)
+//shared_ptr<FlagData> FlagData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//Gson* gson = new Gson();
-//	FlagData* data = nullptr;// gson->fromJson(json, FlagData::typeid);
+//	//shared_ptr<Gson> gson = make_shared<Gson>();
+//	shared_ptr<FlagData> data = nullptr;// gson->fromJson(json, FlagData::typeid);
 //
 //
 //	return data;

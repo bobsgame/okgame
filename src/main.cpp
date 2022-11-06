@@ -33,7 +33,7 @@
 #include <lib/GWEN-master/gwen/include/Gwen/Input/gwen_input_sdl2.h>
 
 
-Main* mainObject = nullptr;
+shared_ptr < Main> mainObject = nullptr;
 
 //==========================================================================================================================
 void cleanup()
@@ -41,7 +41,7 @@ void cleanup()
 	if (mainObject != nullptr)
 	{
 		mainObject->cleanup();
-		delete mainObject;
+		
 		mainObject = nullptr;
 	}
 
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])//int argc, char **argv)
 
 	}
 
-	mainObject = new Main();
+	mainObject = make_shared<Main>();
 	Main::setMain(mainObject);
 	atexit(cleanup);
 	mainObject->mainInit();
@@ -82,7 +82,7 @@ int main(int argc, char* argv[])//int argc, char **argv)
 
 	cleanup();
 
-//	Main::setMain(new Main());
+//	Main::setMain(make_shared<Main>());
 //	Main::getMain()->mainInit();
 //	Main::getMain()->mainLoop();
 //	Main::getMain()->cleanup();
@@ -170,7 +170,7 @@ using Poco::Process;
 using Poco::Path;
 
 
-//FileUtils *Main::cacheManager = new FileUtils();
+//shared_ptr<FileUtils >Main::cacheManager = make_shared<FileUtils>();
 //bool Main::isApplet = false;
 
 string Main::serverAddressString = BobNet::releaseServerAddress;
@@ -181,16 +181,16 @@ int Main::clientUDPPortStartRange = BobNet::clientUDPPortStartRange;
 
 string Main::version = "";
 
-BobNet* Main::bobNet = nullptr;
-Console* Main::console = nullptr;
-Console* Main::rightConsole = nullptr;
-//AudioManager* Main::audioManager = nullptr;
-FileUtils* Main::fileUtils = nullptr;
-StateManager* Main::stateManager = nullptr;
-System* Main::systemUtils = nullptr;
-GlobalSettings* Main::globalSettings = nullptr;
-//ControlsManager* Main::controlsManager = nullptr;
-BGClientEngine* Main::gameEngine = nullptr;
+shared_ptr<BobNet> Main::bobNet = nullptr;
+shared_ptr<Console> Main::console = nullptr;
+shared_ptr<Console> Main::rightConsole = nullptr;
+//shared_ptr<AudioManager> Main::audioManager = nullptr;
+shared_ptr<FileUtils> Main::fileUtils = nullptr;
+shared_ptr<StateManager> Main::stateManager = nullptr;
+shared_ptr<System> Main::systemUtils = nullptr;
+shared_ptr<GlobalSettings> Main::globalSettings = nullptr;
+//shared_ptr<ControlsManager> Main::controlsManager = nullptr;
+shared_ptr<BGClientEngine> Main::gameEngine = nullptr;
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
 Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
@@ -198,7 +198,7 @@ Gwen::Renderer::OpenGL* Main::gwenRenderer = nullptr;
 Gwen::Skin::TexturedBase* Main::gwenSkin = nullptr;
 //MSG msg;
 
-GlowTileBackgroundMenuPanel* Main::glowTileBackgroundMenuPanel = nullptr;
+shared_ptr<GlowTileBackgroundMenuPanel> Main::glowTileBackgroundMenuPanel = nullptr;
 
 //==========================================================================================================================
 void Main::mainInit()
@@ -232,13 +232,13 @@ void Main::mainInit()
 
 
 
-	new Logger();
+	make_shared<Logger>();
 	Logger::initLogger();
 
 	BobColor::initPresetColors();
 
 
-	fileUtils = new FileUtils();
+	fileUtils = make_shared<FileUtils>();
 	fileUtils->initCache();
 
 	loadGlobalSettingsFromXML();
@@ -301,8 +301,8 @@ void Main::mainInit()
 
 
 
-	new GLUtils();
-	new AudioManager();
+	make_shared<GLUtils>();
+	make_shared<AudioManager>();
 
 	AudioManager::initAudioLibrary();
 
@@ -317,9 +317,9 @@ void Main::mainInit()
 
 
 	//this is done before init game so we can put debug stuff
-	console = new Console();
+	console = make_shared<Console>();
 	console->fontSize = 16;
-	rightConsole = new Console();
+	rightConsole = make_shared<Console>();
 	rightConsole->justifyRight = true;
 	rightConsole->fontSize = 16;
 
@@ -328,7 +328,7 @@ void Main::mainInit()
 	//GLUtils::initTWL();
 	GLUtils::e();
 
-	new ControlsManager();
+	make_shared<ControlsManager>();
 	ControlsManager::initControllers();
 	GLUtils::e();
 
@@ -341,7 +341,7 @@ void Main::mainInit()
 
 
 
-	stateManager = new StateManager();
+	stateManager = make_shared<StateManager>();
 	GLUtils::e();
 
 	//-------------------
@@ -351,22 +351,22 @@ void Main::mainInit()
 	log.debug("Init GUIs");
 
 
-	glowTileBackgroundMenuPanel = new GlowTileBackgroundMenuPanel();
+	glowTileBackgroundMenuPanel = make_shared<GlowTileBackgroundMenuPanel>();
 	glowTileBackgroundMenuPanel->init();
 
-	logoScreenState = new LogoState();
+	logoScreenState = make_shared<LogoState>();
 	logoScreenState->init();
-	loginState = new LoginState();
+	loginState = make_shared<LoginState>();
 	loginState->init();
-	loggedOutState = new LoggedOutState();
+	loggedOutState = make_shared<LoggedOutState>();
 	loggedOutState->init();
-	serversHaveShutDownState = new ServersHaveShutDownState();
+	serversHaveShutDownState = make_shared<ServersHaveShutDownState>();
 	serversHaveShutDownState->init();
-	createNewAccountState = new CreateNewAccountState();
+	createNewAccountState = make_shared<CreateNewAccountState>();
 	createNewAccountState->init();
-	titleScreenState = new TitleScreenState();
+	titleScreenState = make_shared<TitleScreenState>();
 	titleScreenState->init();
-	youWillBeNotifiedState = new YouWillBeNotifiedState();
+	youWillBeNotifiedState = make_shared<YouWillBeNotifiedState>();
 	youWillBeNotifiedState->init();
 	GLUtils::e();
 
@@ -375,7 +375,7 @@ void Main::mainInit()
 	//-------------------
 	//log.debug("Init System");
 
-	systemUtils = new System();
+	systemUtils = make_shared<System>();
 	GLUtils::e();
 
 	System::initStats();
@@ -443,7 +443,7 @@ void Main::mainInit()
 
 
 	log.debug("Init BobNet");
-	bobNet = new BobNet();
+	bobNet = make_shared<BobNet>();
 
 
 
@@ -459,7 +459,7 @@ void Main::mainInit()
 			gameEngine->cleanup();
 		}
 
-		gameEngine = new BGClientEngine();
+		gameEngine = make_shared<BGClientEngine>();
 		stateManager->pushState(gameEngine);
 		//Engine::setClientGameEngine(gameEngine);
 		gameEngine->init();
@@ -506,7 +506,7 @@ void Main::mainInit()
 	{
 
 		log.debug("Create BobsGame");
-		bobsGame = new BobsGame();
+		bobsGame = make_shared<BobsGame>();
 		stateManager->pushState(bobsGame);
 		bobsGame->init();
 
@@ -547,7 +547,7 @@ void Main::mainInit()
 	}
 
 	//GLUtils::e();
-	//tcpServerConnection = new BGClientTCP(gameEngine);
+	//tcpServerConnection = make_shared<BGClientTCP>(gameEngine);
 	//GLUtils::e();
 
 //#ifdef _DEBUG
@@ -558,7 +558,7 @@ void Main::mainInit()
 //	log.debug(u);
 //#endif
 
-//	GameType *s = new GameType();
+//	shared_ptr<GameType >s = make_shared<GameType>();
 //	s->tetsosumi();
 //	string zip = s->toBase64GZippedXML();
 //	string xml = FileUtils::unzipBase64StringToString(zip);
@@ -645,14 +645,14 @@ void Main::loadGlobalSettingsFromXML()
 			log.error("Could not unserialize GlobalSettings");
 		}
 
-		GlobalSettings *s = new GlobalSettings();
+		shared_ptr<GlobalSettings >s = make_shared<GlobalSettings>();
 		*s = gs;
 		globalSettings = s;
 
 	}
 	else
 	{
-		globalSettings = new GlobalSettings();
+		globalSettings = make_shared<GlobalSettings>();
 
 		log.warn("Global settings not found.");
 	}
@@ -1076,7 +1076,7 @@ void Main::doScreenShotCheck()
 		struct tm * now = localtime( & t );
 		//cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_mday << endl;
 
-		//string imageName = "bobsgame-" + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + ".png";
+		//string imageName = "bobsgame-" + (make_shared<SimpleDateFormat>("yyyy-MM-dd-HH-mm-ss"))->format(Calendar::getInstance().getTime()) + ".png";
 		string fileName = string(Main::getPath())+"screenshot"+to_string(now->tm_year + 1900)+to_string(now->tm_mon + 1) +to_string(now->tm_mday)+to_string(now->tm_hour) + to_string(now->tm_min) + to_string(now->tm_sec) +".png";
 
 		//if (System::getProperty("os.name")->contains("Win"))
@@ -1108,7 +1108,7 @@ void Main::doScreenShotCheck()
 				flipdata[(((y*w) + x) * 4) + 3] = buffer[(((((h - 1) - y)*w) + x) * 4) + 3];
 
 			}
-		SDL_Surface *s = SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask);// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
+		SDL_Surface* s = SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask);// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
 		IMG_SavePNG(s, fileName.c_str());
 		SDL_FreeSurface(s);
 		delete[] buffer;
@@ -1118,7 +1118,7 @@ void Main::doScreenShotCheck()
 }
 
 //==========================================================================================================================
-void Main::printEvent(const SDL_Event* e)
+void Main::printEvent(const shared_ptr<SDL_Event> e)
 {//==========================================================================================================================
 	if (e->type == SDL_WINDOWEVENT)
 	{
@@ -1256,7 +1256,7 @@ void Main::processEvents()
 }
 
 
-ControlsManager * Main::getControlsManager()
+shared_ptr<ControlsManager > Main::getControlsManager()
 {
 	return stateManager->getCurrentState()->getControlsManager();
 }
@@ -1270,7 +1270,7 @@ ControlsManager * Main::getControlsManager()
 //   setGLWindow(w, h, Surf_Display);
 //
 //}
-//bool setGLWindow(int width, int height, SDL_Surface * Surf_Display)
+//bool setGLWindow(int width, int height, shared_ptr<SDL_Surface > Surf_Display)
 //{
 //   if ((Surf_Display = SDL_SetVideoMode(width, height, 32, SDL_HWSURFACE | SDL_OPENGL | SDL_RESIZABLE)) == NULL) {
 //      return false;
@@ -1300,7 +1300,7 @@ void Main::doLegalScreen()
 { //=========================================================================================================================
 
   //
-  //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
+  //			if ((make_shared<File>(FileUtils::cacheDir + "session"))->exists() == false)
   //			{
   //
   //				{
@@ -1308,7 +1308,7 @@ void Main::doLegalScreen()
   //
   //					log.info("Legal Screen...");
   //
-  //					LegalScreen *legalScreen = new LegalScreen();
+  //					shared_ptr<LegalScreen >legalScreen = make_shared<LegalScreen>();
   //					GUI *legalScreenGUI = new GUI(legalScreen, GLUtils::TWLrenderer);
   //					legalScreenGUI->applyTheme(GLUtils::TWLthemeManager);
   //
@@ -1351,12 +1351,12 @@ void Main::showControlsImage()
 { //=========================================================================================================================
 
   //
-  //			if ((new File(FileUtils::cacheDir + "session"))->exists() == false)
+  //			if ((make_shared<File>(FileUtils::cacheDir + "session"))->exists() == false)
   //			{
   //
   //				{
   //				//if(BobNet.debugMode==false)
-  //					KeyboardScreen *keyboardScreen = new KeyboardScreen();
+  //					shared_ptr<KeyboardScreen >keyboardScreen = make_shared<KeyboardScreen>();
   //					GUI *keyboardScreenGUI = new GUI(keyboardScreen, GLUtils::TWLrenderer);
   //					keyboardScreenGUI->applyTheme(GLUtils::TWLthemeManager);
   //
@@ -1563,11 +1563,11 @@ void Main::checkVersion()
 			if (f.exists())
 			{
 				f.remove();
-				//Caption* c =
-				//((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", BobFont::ttf_oswald_32, BobColor::green, BobColor::clear, RenderOrder::OVER_GUI);
+				//shared_ptr<Caption> c =
+				//((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", BobFont::ttf_oswald_32, BobColor::green, BobColor::clear, RenderOrder::OVER_GUI);
 				//doesn't go away because we're not updating captionManager??
 
-				Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN,0 , 0, -1, "Update installed!", 16, true, BobColor::white, BobColor::clear);
+				shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN,0 , 0, -1, "Update installed!", 16, true, BobColor::white, BobColor::clear);
 
 				for (int i = 0; i < 40; i++)
 				{
@@ -1687,8 +1687,8 @@ void Main::checkVersion()
 				return;
 			}
 
-			//Caption* c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", BobFont::ttf_oswald_16, BobColor::white, BobColor::clear);
-			Caption* c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Update available! Press Space to download, Esc to skip.", 16, true, BobColor::white, BobColor::clear);
+			//shared_ptr<Caption> c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", BobFont::ttf_oswald_16, BobColor::white, BobColor::clear);
+			shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Update available! Press Space to download, Esc to skip.", 16, true, BobColor::white, BobColor::clear);
 			System::updateRenderTimers();
 			System::updateStats();
 			System::updateUpdateTimers();
@@ -1716,15 +1716,15 @@ void Main::checkVersion()
 				}
 			}
 
-			delete c;
+			//delete c;
 
 			if (skip)return;
 
 			//put caption in middle of screen, updating, press esc to skip
 			log.info("Downloading update...");
-			//c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, BobColor::white, BobColor::clear);
-			c = new Caption(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Downloading update...", 16, true, BobColor::white, BobColor::clear);
-			//Caption* c = ((Engine*)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, Color::white, Color::black,RenderOrder::OVER_GUI);
+			//c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, BobColor::white, BobColor::clear);
+			c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Downloading update...", 16, true, BobColor::white, BobColor::clear);
+			//shared_ptr<Caption> c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, Color::white, Color::black,RenderOrder::OVER_GUI);
 
 			glClear(GL_COLOR_BUFFER_BIT);
 			//Main::delay(100); //bobsGame doesn't render captionManager
@@ -1764,7 +1764,7 @@ void Main::checkVersion()
 				//std::cerr << exc.displayText() << std::endl;
 				log.error("Could not download latest zip");
 				c->setToBeDeletedImmediately();
-				delete c;
+				//delete c;
 
 				return;
 			}
@@ -1894,7 +1894,7 @@ void Main::makeGhostThread()
 
   //			//ghost thread to prevent stuttering
   //			//this is due to windows aero, for some reason creating a ghost thread prevents it for some fucking reason
-  //			new Thread([&] ()
+  //			make_shared<Thread>([&] ()
   //			{
   //					try
   //					{
@@ -1939,21 +1939,21 @@ void Main::cleanup()
 	if (gameEngine != nullptr)
 	{
 		gameEngine->cleanup();
-		delete gameEngine;
+		//delete gameEngine;
 	}
 
 	if (bobsGame != nullptr)
 	{
 		log.info("bobsGame cleanup");
 		bobsGame->cleanup();
-		delete bobsGame;
+		//delete bobsGame;
 	}
 
 
 	BobFont::cleanup();
 	GLUtils::cleanup();
 
-	delete bobNet;
+	//delete bobNet;
 
 	log.info("SDLNet_Quit");
 	SDLNet_Quit();
@@ -1970,19 +1970,19 @@ void Main::cleanup()
 }
 
 ////==========================================================================================================================
-//BGClientEngine* Main::getGameEngine()
+//shared_ptr<BGClientEngine> Main::getGameEngine()
 //{//==========================================================================================================================
 //	return gameEngine;
 //}
 
 //==========================================================================================================================
-Main* Main::getMain()
+shared_ptr<Main> Main::getMain()
 {//==========================================================================================================================
 	return mainObject;
 }
 
 //==========================================================================================================================
-void Main::setMain(Main* c)
+void Main::setMain(shared_ptr<Main> c)
 {//==========================================================================================================================
 	mainObject = c;
 }

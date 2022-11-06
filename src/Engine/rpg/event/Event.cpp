@@ -12,14 +12,14 @@
 
 Logger Event::log = Logger("Event");
 
-//Event::Event(Engine* g, int id)
+//Event::Event(shared_ptr<Engine> g, int id)
 //{ //=========================================================================================================================
 //	this->e = g;
-//	this->data = new EventData(id, "", 0, "", "");
+//	this->data = make_shared<EventData>(id, "", 0, "", "");
 //	initEvent();
 //}
 
-Event::Event(Engine* g, EventData* eventData, string s)
+Event::Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, string s)
 { //=========================================================================================================================
 	this->e = g;
 	this->data = eventData;
@@ -28,35 +28,35 @@ Event::Event(Engine* g, EventData* eventData, string s)
 
 }
 
-Event::Event(Engine* g, EventData* eventData, Map* m)
+Event::Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Map> m)
 { //=========================================================================================================================
 	this->e = g;
 	this->data = eventData;
 	this->map = m;
 	initEvent();
 }
-Event::Event(Engine* g, EventData* eventData, Door *d)
+Event::Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Door >d)
 { //=========================================================================================================================
 	this->e = g;
 	this->data = eventData;
 	this->door = d;
 	initEvent();
 }
-Event::Event(Engine* g, EventData* eventData, Area* a)
+Event::Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Area> a)
 { //=========================================================================================================================
 	this->e = g;
 	this->data = eventData;
 	this->area = a;
 	initEvent();
 }
-Event::Event(Engine* g, EventData* eventData, Entity* e)
+Event::Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Entity> e)
 { //=========================================================================================================================
 	this->e = g;
 	this->data = eventData;
 	this->entity = e;
 	initEvent();
 }
-Event::Event(Engine* g, EventData* eventData, Sprite* s)
+Event::Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Sprite> s)
 { //=========================================================================================================================
 	this->e = g;
 	this->data = eventData;
@@ -70,38 +70,38 @@ void Event::initEvent()
 
 	for(int i=0;i<getData()->dialogueDataList->size();i++)
 	{
-		DialogueData* data = getData()->dialogueDataList->get(i);
-		Dialogue* d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
+		shared_ptr<DialogueData> data = getData()->dialogueDataList->get(i);
+		shared_ptr<Dialogue> d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 	for(int i=0; i<getData()->flagDataList->size();i++)
 	{
-		FlagData* data = getData()->flagDataList->get(i);
-		Flag* d = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
+		shared_ptr<FlagData> data = getData()->flagDataList->get(i);
+		shared_ptr<Flag> d = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 	for(int i=0; i<getData()->gameStringDataList->size();i++)
 	{
-		GameStringData* data = getData()->gameStringDataList->get(i);
-		GameString* d = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
+		shared_ptr<GameStringData> data = getData()->gameStringDataList->get(i);
+		shared_ptr<GameString> d = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 	for(int i=0; i<getData()->skillDataList->size();i++)
 	{
-		SkillData* data = getData()->skillDataList->get(i);
-		Skill* d = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
+		shared_ptr<SkillData> data = getData()->skillDataList->get(i);
+		shared_ptr<Skill> d = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 	for(int i=0; i<getData()->musicDataList->size();i++)
 	{
-		AudioData* data = getData()->musicDataList->get(i);
-		AudioFile* d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
+		shared_ptr<AudioData> data = getData()->musicDataList->get(i);
+		shared_ptr<AudioFile> d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 	for(int i=0; i<getData()->soundDataList->size();i++)
 	{
-		AudioData* data = getData()->soundDataList->get(i);
-		AudioFile* d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
+		shared_ptr<AudioData> data = getData()->soundDataList->get(i);
+		shared_ptr<AudioFile> d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 
@@ -110,7 +110,7 @@ void Event::initEvent()
 	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
 	{
 
-		Event *e = getEventManager()->eventList.get(i);
+		shared_ptr<Event >e = getEventManager()->eventList.get(i);
 		if (e->getID() == data->getID())
 		{
 			log.warn("Event already exists:" + data->getName());
@@ -129,7 +129,7 @@ void Event::initEvent()
 }
 
 
-EventData* Event::getData()
+shared_ptr<EventData> Event::getData()
 {
 	return data;
 }
@@ -194,13 +194,13 @@ void Event::setText(const string& text)
 }
 
 //The following method was originally marked 'synchronized':
-void Event::setData_S(EventData* eventData)
+void Event::setData_S(shared_ptr<EventData> eventData)
 { //=========================================================================================================================
 	this->data = eventData;
 	setInitialized_S(true);
 }
 
-Map* Event::getMap()
+shared_ptr<Map> Event::getMap()
 { //=========================================================================================================================
 
 	if (type() == EventData::TYPE_PROJECT_INITIAL_LOADER || type() == EventData::TYPE_PROJECT_CUTSCENE_DONT_RUN_UNTIL_CALLED)
@@ -233,7 +233,7 @@ Map* Event::getMap()
 	return getCurrentMap();
 }
 
-Map* Event::getCurrentMap()
+shared_ptr<Map> Event::getCurrentMap()
 { //=========================================================================================================================
 	log.warn("Don't use getCurrentMap() in Events!");
 	return ServerObject::getCurrentMap();
@@ -267,9 +267,9 @@ void Event::reset()
 void Event::parseEventString(string s)
 { //===============================================================================================
 
-	commandTree = new EventCommand(getEngine(), "none", nullptr, 0);
+	commandTree = make_shared<EventCommand>(getEngine(), "none", nullptr, 0);
 
-	EventCommand* currentParent = commandTree;
+	shared_ptr<EventCommand> currentParent = commandTree;
 
 	s = s.substr(1, s.length() - 1 - 1); //split off { }, string now looks like "command,command,if(qualifier == TRUE){command,command}"
 
@@ -291,7 +291,7 @@ void Event::parseEventString(string s)
 				s = s.substr(1);
 			}
 
-			currentParent = static_cast<EventCommand*>(currentParent->getParent());
+			currentParent = static_cast<shared_ptr<EventCommand>>(currentParent->getParent());
 		}
 		else
 		{
@@ -304,7 +304,7 @@ void Event::parseEventString(string s)
 				string qualifier = s.substr(0, s.find("{") - 1); //get "qualifier == TRUE"
 				s = s.substr(s.find("{") + 1); //string now looks like "command,command}"
 
-				EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, qualifier);
+				shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, qualifier);
 
 				currentParent->addChild(e);
 
@@ -319,7 +319,7 @@ void Event::parseEventString(string s)
 						string command = s.substr(0, s.find("}")); //get command
 						s = s.substr(s.find("}")); //split off command and comma
 
-						EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 						currentParent->addChild(e);
 					}
@@ -330,7 +330,7 @@ void Event::parseEventString(string s)
 							string command = s.substr(0, s.find("),") + 1); //get command
 							s = s.substr(s.find("),") + 2); //split off command and comma
 
-							EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 							currentParent->addChild(e);
 						}
@@ -339,7 +339,7 @@ void Event::parseEventString(string s)
 							string command = s.substr(0, s.find(",")); //get command
 							s = s.substr(s.find(",") + 1); //split off command and comma
 
-							EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 							currentParent->addChild(e);
 						}
@@ -352,7 +352,7 @@ void Event::parseEventString(string s)
 						string command = s.substr(0, s.find("}")); //get command
 						s = s.substr(s.find("}")); //split off command and comma
 
-						EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 						currentParent->addChild(e);
 					}
@@ -362,7 +362,7 @@ void Event::parseEventString(string s)
 
 						s = s.substr(command.length());
 
-						EventCommand* e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
 
 						currentParent->addChild(e);
 					}
@@ -522,7 +522,7 @@ void Event::doCommand()
 	{
 		for (int i = 0; i < (int)currentCommand->parameterList->size(); i++)
 		{
-			EventParameter* e = currentCommand->parameterList->get(i);
+			shared_ptr<EventParameter> e = currentCommand->parameterList->get(i);
 			e->updateParameterVariablesFromString(this);
 		}
 	}
@@ -2102,7 +2102,7 @@ void Event::isPlayerTouchingThisArea()
 		log.error("isPlayerTouchingThisArea() in event with no area!");
 	}
 
-	if ((dynamic_cast<WarpArea*>(this->area) != NULL))
+	if ((dynamic_cast<shared_ptr<WarpArea>>(this->area) != NULL))
 	{
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isWalkingIntoArea(area));
 	}
@@ -2142,7 +2142,7 @@ void Event::isPlayerTouchingAnyEntityUsingThisSprite()
 		log.error("isPlayerTouchingAnyEntityUsingThisSprite() in event with no sprite!");
 	}
 
-	ArrayList<Entity*>* e = getMap()->getAllEntitiesUsingSpriteAsset(sprite);
+	ArrayList<shared_ptr<Entity>>* e = getMap()->getAllEntitiesUsingSpriteAsset(sprite);
 
 	bool b = false;
 
@@ -2162,7 +2162,7 @@ void Event::isPlayerWalkingIntoDoor_DOOR()
 	int p = 0;
 	if (currentCommand->parameterList->size() > 0)
 	{
-		Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Door> d = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isWalkingIntoEntity(d));
 	}
@@ -2173,7 +2173,7 @@ void Event::isPlayerWalkingIntoWarp_WARP()
 	int p = 0;
 	if (currentCommand->parameterList->size() > 0)
 	{
-		WarpArea* d = static_cast<WarpArea*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<WarpArea> d = static_cast<shared_ptr<WarpArea>>(currentCommand->parameterList->get(p++)->object);
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isWalkingIntoArea(d));
 	}
@@ -2197,7 +2197,7 @@ void Event::isFlagSet_FLAG()
 
 	if (currentCommand->parameterList->size() > 0)
 	{
-		Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object); //we don't particularly need to know what the actual flag name is... ID is fine.
+		shared_ptr<Flag> f = static_cast<shared_ptr<Flag>>(currentCommand->parameterList->get(p++)->object); //we don't particularly need to know what the actual flag name is... ID is fine.
 
 		//Boolean value = f.checkServerValueAndResetAfterSuccessfulReturn();
 		//if(value!=null)
@@ -2214,7 +2214,7 @@ void Event::hasSkillAtLeast_SKILL_FLOAT1()
 
 	if (currentCommand->parameterList->size() > 1)
 	{
-		Skill* s = static_cast<Skill*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Skill> s = static_cast<shared_ptr<Skill>>(currentCommand->parameterList->get(p++)->object);
 		float f = currentCommand->parameterList->get(p++)->f;
 
 		float value = s->getValue_S();
@@ -2231,7 +2231,7 @@ void Event::isCurrentState_STATE()
 
 	if (currentCommand->parameterList->size() > 0)
 	{
-		MapState* s = static_cast<MapState*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<MapState> s = static_cast<shared_ptr<MapState>>(currentCommand->parameterList->get(p++)->object);
 
 		if (s != nullptr)
 		{
@@ -2246,7 +2246,7 @@ void Event::isPlayerStandingInArea_AREA()
 
 	if (currentCommand->parameterList->size() > 0)
 	{
-		Area* area = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Area> area = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isAreaBoundaryTouchingMyHitBox(area));
 	}
@@ -2258,8 +2258,8 @@ void Event::isEntityStandingInArea_ENTITY_AREA()
 
 	if (currentCommand->parameterList->size() > 1)
 	{
-		Entity* entity = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-		Area* area = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Entity> entity = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Area> area = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(entity->isAreaBoundaryTouchingMyHitBox(area));
 	}
@@ -2319,7 +2319,7 @@ void Event::hasMoneyLessThanAmount_FLOAT()
 void Event::hasItem_ITEM()
 { //===============================================================================================
 	int p = 0;
-	Item* item = static_cast<Item*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Item> item = static_cast<shared_ptr<Item>>(currentCommand->parameterList->get(p++)->object);
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(item->getHaveItemValue_S());
 }
@@ -2327,7 +2327,7 @@ void Event::hasItem_ITEM()
 void Event::hasGame_GAME()
 { //===============================================================================================
 	int p = 0;
-	Item* item = static_cast<Item*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Item> item = static_cast<shared_ptr<Item>>(currentCommand->parameterList->get(p++)->object);
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(item->getHaveItemValue_S());
 }
@@ -2348,7 +2348,7 @@ void Event::isAnyEntityUsingSprite_SPRITE()
 { //===============================================================================================
 	int p = 0;
 
-	Sprite* sprite = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> sprite = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -2368,8 +2368,8 @@ void Event::isAnyEntityUsingSpriteAtArea_SPRITE_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	Sprite* sprite = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> sprite = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -2377,7 +2377,7 @@ void Event::isAnyEntityUsingSpriteAtArea_SPRITE_AREA()
 		return; //block until sprite has loaded.
 	}
 
-	ArrayList<Entity*>* e = a->getMap()->getAllEntitiesTouchingArea(a);
+	ArrayList<shared_ptr<Entity>>* e = a->getMap()->getAllEntitiesTouchingArea(a);
 
 	bool b = false;
 
@@ -2399,7 +2399,7 @@ void Event::isEntitySpawned_ENTITY()
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	//will be null if it couldn't find the object ID after searching the entityList
 
@@ -2410,11 +2410,11 @@ void Event::isEntityAtArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	if (e != nullptr)
 	{
-		Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 		bool b = a->isEntityHitBoxTouchingMyBoundary(e);
 
@@ -2425,7 +2425,7 @@ void Event::isEntityAtArea_ENTITY_AREA()
 void Event::isAreaEmpty_AREA()
 { //===============================================================================================
 	int p = 0;
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	if (a != nullptr)
 	{
@@ -2439,7 +2439,7 @@ void Event::hasFinishedDialogue_DIALOGUE()
 { //===============================================================================================
 	int p = 0;
 
-	Dialogue* d = static_cast<Dialogue*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Dialogue> d = static_cast<shared_ptr<Dialogue>>(currentCommand->parameterList->get(p++)->object);
 
 	if (d != nullptr)
 	{
@@ -2509,7 +2509,7 @@ void Event::isMusicPlaying()
 { //===============================================================================================
 	int p = 0;
 
-	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> m = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getAudioManager()->isSoundPlaying(m));
 }
@@ -2552,7 +2552,7 @@ void Event::hasTalkedToThisToday()
 
 	if (area != nullptr)
 	{
-		BobBool* b = area->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+		shared_ptr<BobBool> b = area->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 		if (b != nullptr)
 		{
 			gotServerValue = true;
@@ -2564,7 +2564,7 @@ void Event::hasTalkedToThisToday()
 	}
 	if (door != nullptr)
 	{
-		BobBool* b = door->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+		shared_ptr<BobBool> b = door->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 		if (b != nullptr)
 		{
 			gotServerValue = true;
@@ -2576,7 +2576,7 @@ void Event::hasTalkedToThisToday()
 	}
 	if (entity != nullptr)
 	{
-		BobBool* b = entity->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+		shared_ptr<BobBool> b = entity->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 		if (b != nullptr)
 		{
 			gotServerValue = true;
@@ -2596,7 +2596,7 @@ void Event::hasTalkedToThisToday()
 void Event::hasBeenMinutesSinceFlagSet_FLAG_INT()
 { //===============================================================================================
 	int p = 0;
-	Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Flag> f = static_cast<shared_ptr<Flag>>(currentCommand->parameterList->get(p++)->object);
 
 	int i = currentCommand->parameterList->get(p++)->i;
 
@@ -2614,7 +2614,7 @@ void Event::hasBeenMinutesSinceFlagSet_FLAG_INT()
 void Event::hasBeenHoursSinceFlagSet_FLAG_INT23()
 { //===============================================================================================
 	int p = 0;
-	Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Flag> f = static_cast<shared_ptr<Flag>>(currentCommand->parameterList->get(p++)->object);
 
 	int i = currentCommand->parameterList->get(p++)->i;
 
@@ -2633,7 +2633,7 @@ void Event::hasBeenHoursSinceFlagSet_FLAG_INT23()
 void Event::hasBeenDaysSinceFlagSet_FLAG_INT()
 { //===============================================================================================
 	int p = 0;
-	Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Flag> f = static_cast<shared_ptr<Flag>>(currentCommand->parameterList->get(p++)->object);
 
 	int i = currentCommand->parameterList->get(p++)->i;
 
@@ -2791,7 +2791,7 @@ void Event::haveHoursPassedSinceBeenHere_INT()
 void Event::isLightOn_LIGHT()
 { //===============================================================================================
 	int p = 0;
-	Light* s = static_cast<Light*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Light> s = static_cast<shared_ptr<Light>>(currentCommand->parameterList->get(p++)->object);
 	if (s != nullptr)
 	{
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(s->toggleOnOffToggle);
@@ -2817,7 +2817,7 @@ void Event::blockUntilActionButtonPressed()
 void Event::blockUntilActionCaptionButtonPressed_STRING()
 { //===============================================================================================
 	int p = 0;
-	GameString* s = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> s = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 
 	if (s->getInitialized_S() == false)
 	{
@@ -2901,7 +2901,7 @@ void Event::loadMapState_STATE()
 { //===============================================================================================
 	int p = 0;
 
-	MapState* s = static_cast<MapState*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<MapState> s = static_cast<shared_ptr<MapState>>(currentCommand->parameterList->get(p++)->object);
 
 	getMap()->loadMapState(s);
 
@@ -2911,7 +2911,7 @@ void Event::loadMapState_STATE()
 void Event::runEvent_EVENT()
 { //===============================================================================================
 	int p = 0;
-	Event* e = static_cast<Event*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Event> e = static_cast<shared_ptr<Event>>(currentCommand->parameterList->get(p++)->object);
 
 	getEventManager()->addToEventQueueIfNotThere(e);
 
@@ -2921,7 +2921,7 @@ void Event::runEvent_EVENT()
 void Event::blockUntilEventDone_EVENT()
 { //===============================================================================================
 	int p = 0;
-	Event* e = static_cast<Event*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Event> e = static_cast<shared_ptr<Event>>(currentCommand->parameterList->get(p++)->object);
 
 	if (e->addedToQueue == false)
 	{
@@ -2932,7 +2932,7 @@ void Event::blockUntilEventDone_EVENT()
 void Event::clearEvent_EVENT()
 { //===============================================================================================
 	int p = 0;
-	Event* e = static_cast<Event*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Event> e = static_cast<shared_ptr<Event>>(currentCommand->parameterList->get(p++)->object);
 	e->reset();
 	getEventManager()->runningEventQueue.remove(e);
 
@@ -3059,7 +3059,7 @@ void Event::resetLastBeenHereTime()
 void Event::setFlag_FLAG_BOOL()
 { //===============================================================================================
 	int p = 0;
-	Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Flag> f = static_cast<shared_ptr<Flag>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	f->setValue_S(b);
@@ -3069,7 +3069,7 @@ void Event::setFlag_FLAG_BOOL()
 void Event::setFlagTrue_FLAG()
 { //===============================================================================================
 	int p = 0;
-	Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Flag> f = static_cast<shared_ptr<Flag>>(currentCommand->parameterList->get(p++)->object);
 	//boolean b = currentCommand.parameterList.get(p++).b;
 
 	f->setValue_S(true);
@@ -3079,7 +3079,7 @@ void Event::setFlagTrue_FLAG()
 void Event::setFlagFalse_FLAG()
 { //===============================================================================================
 	int p = 0;
-	Flag* f = static_cast<Flag*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Flag> f = static_cast<shared_ptr<Flag>>(currentCommand->parameterList->get(p++)->object);
 	//boolean b = currentCommand.parameterList.get(p++).b;
 
 	f->setValue_S(false);
@@ -3089,7 +3089,7 @@ void Event::setFlagFalse_FLAG()
 void Event::giveSkillPoints_SKILL_INT()
 { //===============================================================================================
 	int p = 0;
-	Skill* f = static_cast<Skill*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Skill> f = static_cast<shared_ptr<Skill>>(currentCommand->parameterList->get(p++)->object);
 	int i = currentCommand->parameterList->get(p++)->i;
 
 	float value = f->getValue_S();
@@ -3102,7 +3102,7 @@ void Event::giveSkillPoints_SKILL_INT()
 void Event::removeSkillPoints_SKILL_INT()
 { //===============================================================================================
 	int p = 0;
-	Skill* f = static_cast<Skill*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Skill> f = static_cast<shared_ptr<Skill>>(currentCommand->parameterList->get(p++)->object);
 	int i = currentCommand->parameterList->get(p++)->i;
 
 	float value = f->getValue_S();
@@ -3115,7 +3115,7 @@ void Event::removeSkillPoints_SKILL_INT()
 void Event::setSkillPoints_SKILL_INT()
 { //===============================================================================================
 	int p = 0;
-	Skill* f = static_cast<Skill*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Skill> f = static_cast<shared_ptr<Skill>>(currentCommand->parameterList->get(p++)->object);
 	int i = currentCommand->parameterList->get(p++)->i;
 
 	f->setValue_S(i);
@@ -3136,7 +3136,7 @@ void Event::enterThisWarp()
 { //=========================================================================================================================
 	if (area != nullptr)
 	{
-		(static_cast<WarpArea*>(area))->enter();
+		(static_cast<shared_ptr<WarpArea>>(area))->enter();
 	}
 	getNextCommand();
 }
@@ -3144,7 +3144,7 @@ void Event::enterThisWarp()
 void Event::enterDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
-	Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> d = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	if (d != nullptr)
 	{
@@ -3156,11 +3156,11 @@ void Event::enterDoor_DOOR()
 void Event::enterWarp_WARP()
 { //===============================================================================================
 	int p = 0;
-	WarpArea* a = static_cast<WarpArea*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<WarpArea> a = static_cast<shared_ptr<WarpArea>>(currentCommand->parameterList->get(p++)->object);
 
 	if (a != nullptr)
 	{
-		(static_cast<WarpArea*>(a))->enter();
+		(static_cast<shared_ptr<WarpArea>>(a))->enter();
 	}
 	getNextCommand();
 }
@@ -3169,9 +3169,9 @@ void Event::changeMap_MAP_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	Map* m = (Map*)currentCommand->parameterList->get(p++)->object;
+	shared_ptr<Map> m = (shared_ptr<Map>)currentCommand->parameterList->get(p++)->object;
 
-	Area* o = (Area*)currentCommand->parameterList->get(p++)->object;
+	shared_ptr<Area> o = (shared_ptr<Area>)currentCommand->parameterList->get(p++)->object;
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3183,9 +3183,9 @@ void Event::changeMap_MAP_DOOR()
 { //===============================================================================================
 	int p = 0;
 
-	Map* m = (Map*)currentCommand->parameterList->get(p++)->object;
+	shared_ptr<Map> m = (shared_ptr<Map>)currentCommand->parameterList->get(p++)->object;
 
-	Door* o = (Door*)currentCommand->parameterList->get(p++)->object;
+	shared_ptr<Door> o = (shared_ptr<Door>)currentCommand->parameterList->get(p++)->object;
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3197,9 +3197,9 @@ void Event::changeMap_MAP_WARP()
 { //===============================================================================================
 	int p = 0;
 
-	Map* m = (Map*)(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Map> m = (shared_ptr<Map>)(currentCommand->parameterList->get(p++)->object);
 
-	WarpArea* o = (WarpArea*)currentCommand->parameterList->get(p++)->object;
+	shared_ptr<WarpArea> o = (shared_ptr<WarpArea>)currentCommand->parameterList->get(p++)->object;
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3211,7 +3211,7 @@ void Event::changeMap_MAP_INT_INT()
 { //===============================================================================================
 	int p = 0;
 
-	Map* m = (Map*)(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Map> m = (shared_ptr<Map>)(currentCommand->parameterList->get(p++)->object);
 
 	int mapXTiles1X = currentCommand->parameterList->get(p++)->i * 2;
 	int mapYTiles1X = currentCommand->parameterList->get(p++)->i * 2;
@@ -3228,7 +3228,7 @@ void Event::doDialogue_DIALOGUE()
 
 	if (currentCommand->parameterList->size() > 0)
 	{
-		Dialogue* d = static_cast<Dialogue*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Dialogue> d = static_cast<shared_ptr<Dialogue>>(currentCommand->parameterList->get(p++)->object);
 
 		if (d->getInitialized_S() == false)
 		{
@@ -3261,7 +3261,7 @@ void Event::doDialogueWithCaption_DIALOGUE()
 	int p = 0;
 	if (currentCommand->parameterList->size() > 0)
 	{
-		Dialogue* d = static_cast<Dialogue*>(currentCommand->parameterList->get(p++)->object);
+		shared_ptr<Dialogue> d = static_cast<shared_ptr<Dialogue>>(currentCommand->parameterList->get(p++)->object);
 
 		if (d->getInitialized_S() == false)
 		{
@@ -3304,7 +3304,7 @@ void Event::doDialogueWithCaption_DIALOGUE()
 void Event::doDialogueIfNew_DIALOGUE()
 { //===============================================================================================
 	int p = 0;
-	Dialogue* d = static_cast<Dialogue*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Dialogue> d = static_cast<shared_ptr<Dialogue>>(currentCommand->parameterList->get(p++)->object);
 
 	if (d->getInitialized_S() == false)
 	{
@@ -3341,9 +3341,9 @@ void Event::setSpriteBox0_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
-	getTextManager()->textBox->get(0)->setSpriteWindow((static_cast<Entity*>(e)), nullptr, "");
+	getTextManager()->textBox->get(0)->setSpriteWindow((static_cast<shared_ptr<Entity>>(e)), nullptr, "");
 
 	getNextCommand();
 }
@@ -3352,9 +3352,9 @@ void Event::setSpriteBox1_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
-	getTextManager()->textBox->get(1)->setSpriteWindow((static_cast<Entity*>(e)), nullptr, "");
+	getTextManager()->textBox->get(1)->setSpriteWindow((static_cast<shared_ptr<Entity>>(e)), nullptr, "");
 
 	getNextCommand();
 }
@@ -3363,13 +3363,13 @@ void Event::setSpriteBox0_SPRITE()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> s = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 	if (s == nullptr)
 	{
 		return; //block until loaded.
 	}
 
-	getTextManager()->textBox->get(0)->setSpriteWindow(nullptr, (static_cast<Sprite*>(s))->texture, (static_cast<Sprite*>(s))->getDisplayName());
+	getTextManager()->textBox->get(0)->setSpriteWindow(nullptr, (static_cast<shared_ptr<Sprite>>(s))->texture, (static_cast<shared_ptr<Sprite>>(s))->getDisplayName());
 
 	getNextCommand();
 }
@@ -3378,13 +3378,13 @@ void Event::setSpriteBox1_SPRITE()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> s = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 	if (s == nullptr)
 	{
 		return; //block until loaded.
 	}
 
-	getTextManager()->textBox->get(1)->setSpriteWindow(nullptr, (static_cast<Sprite*>(s))->texture, (static_cast<Sprite*>(s))->getDisplayName());
+	getTextManager()->textBox->get(1)->setSpriteWindow(nullptr, (static_cast<shared_ptr<Sprite>>(s))->texture, (static_cast<shared_ptr<Sprite>>(s))->getDisplayName());
 
 	getNextCommand();
 }
@@ -3420,7 +3420,7 @@ void Event::doCinematicTextNoBorder_DIALOGUE_INTy()
 void Event::setDoorOpenAnimation_DOOR_BOOLopenClose()
 { //===============================================================================================
 	int p = 0;
-	Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> d = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	d->setOpenManually(b);
@@ -3431,7 +3431,7 @@ void Event::setDoorOpenAnimation_DOOR_BOOLopenClose()
 void Event::setDoorActionIcon_DOOR_BOOLonOff()
 { //===============================================================================================
 	int p = 0;
-	Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> d = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	d->showActionIcon = b;
@@ -3442,8 +3442,8 @@ void Event::setDoorActionIcon_DOOR_BOOLonOff()
 void Event::setDoorDestination_DOOR_DOORdestination()
 { //===============================================================================================
 	int p = 0;
-	Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
-	Door* d2 = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> d = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> d2 = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	d->setDestinationTYPEIDString(d2->getTYPEIDString());
 
@@ -3453,7 +3453,7 @@ void Event::setDoorDestination_DOOR_DOORdestination()
 void Event::setAreaActionIcon_AREA_BOOLonOff()
 { //===============================================================================================
 	int p = 0;
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	a->showActionIcon = b;
@@ -3464,8 +3464,8 @@ void Event::setAreaActionIcon_AREA_BOOLonOff()
 void Event::setWarpDestination_WARP_WARPdestination()
 { //===============================================================================================
 	int p = 0;
-	WarpArea* d = static_cast<WarpArea*>(currentCommand->parameterList->get(p++)->object);
-	WarpArea* d2 = static_cast<WarpArea*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<WarpArea> d = static_cast<shared_ptr<WarpArea>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<WarpArea> d2 = static_cast<shared_ptr<WarpArea>>(currentCommand->parameterList->get(p++)->object);
 
 	d->setDestinationTYPEIDString(d2->getTYPEIDString());
 
@@ -3475,7 +3475,7 @@ void Event::setWarpDestination_WARP_WARPdestination()
 void Event::setPlayerToTempPlayerWithSprite_SPRITE()
 { //===============================================================================================
 	int p = 0;
-	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> s = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 
 	if (s == nullptr)
 	{
@@ -3572,7 +3572,7 @@ void Event::playerSetToArea_AREA()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	getPlayer()->setFeetAtMapXY(a->middleX(), a->middleY());
 
@@ -3583,7 +3583,7 @@ void Event::playerSetToDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Door* a = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> a = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	getPlayer()->setFeetAtMapXY((float)a->arrivalXPixelsHQ() + 8, (float)a->arrivalYPixelsHQ() + 8);
 
@@ -3606,7 +3606,7 @@ void Event::playerWalkToArea_AREA()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO need behavior queue stuff working better.
 
@@ -3619,7 +3619,7 @@ void Event::playerWalkToDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Door* a = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> a = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO need behavior queue stuff working better.
 
@@ -3634,7 +3634,7 @@ void Event::playerWalkToEntity_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Entity* e2 = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e2 = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO need behavior queue stuff working better.
 
@@ -3659,7 +3659,7 @@ void Event::playerBlockUntilReachesArea_AREA()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 	if (getPlayer()->isAreaBoundaryTouchingMyHitBox(a))
 	{
 		getNextCommand();
@@ -3670,7 +3670,7 @@ void Event::playerBlockUntilReachesEntity_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity a = (Entity) currentCommand.parameterList.get(p++).object;
-	Entity* b = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> b = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	if (getPlayer()->isEntityHitBoxTouchingMyHitBox(b))
 	{
@@ -3682,7 +3682,7 @@ void Event::playerBlockUntilReachesDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> d = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	if (getPlayer()->isEntityHitBoxTouchingMyHitBox(d))
 	{
@@ -3706,7 +3706,7 @@ void Event::playerBlockUntilReachesTileXY_INTxTile1X_INTyTile1X()
 void Event::playerWalkToAreaAndBlockUntilThere_AREA()
 { //===============================================================================================
 	int p = 0;
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
 
 	//walk to area, use pathfinding always
 	int there = getPlayer()->walkToXYWithPathFinding(a->middleX(), a->middleY());
@@ -3737,7 +3737,7 @@ void Event::playerWalkToEntityAndBlockUntilThere_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Entity* a = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> a = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	//walk to area, use pathfinding always
 	int there = getPlayer()->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -3768,7 +3768,7 @@ void Event::playerWalkToDoorAndBlockUntilThere_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Door* a = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> a = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	//walk to area, use pathfinding always
 	int there = getPlayer()->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -3846,7 +3846,7 @@ void Event::playerStandAndShuffleAndFaceEntity_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	Entity* e2 = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e2 = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	getPlayer()->addEventBehavior("StandAndShuffleAndFace:ENTITY." + to_string(e2->getID())); //TODO:
 
@@ -3862,7 +3862,7 @@ void Event::playerSetFaceMovementDirection_STRINGdirection()
 	//getNextCommand();
 
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	if (gs->getInitialized_S() == false)
 	{
 		return;
@@ -3937,7 +3937,7 @@ void Event::playerDoAnimationByNameOnce_STRINGanimationName_INTticksPerFrame_BOO
 	int p = 0;
 
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
@@ -3970,7 +3970,7 @@ void Event::playerDoAnimationByNameLoop_STRINGanimationName_INTticksPerFrame_BOO
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
@@ -4008,7 +4008,7 @@ void Event::playerDoAnimationByNameOnce_STRINGanimationName_INTticksPerFrame()
 	int p = 0;
 
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
@@ -4037,7 +4037,7 @@ void Event::playerDoAnimationByNameLoop_STRINGanimationName_INTticksPerFrame()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
@@ -4097,7 +4097,7 @@ void Event::playerSetToAlpha_FLOAT()
 void Event::entitySetBehaviorQueueOnOff_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	e->behaviorEnabled = b;
@@ -4108,8 +4108,8 @@ void Event::entitySetBehaviorQueueOnOff_ENTITY_BOOL()
 void Event::entitySetToArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	e->setFeetAtMapXY(a->middleX(), a->middleY());
 
@@ -4119,8 +4119,8 @@ void Event::entitySetToArea_ENTITY_AREA()
 void Event::entitySetToDoor_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Door* a = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> a = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	e->setFeetAtMapXY((float)a->arrivalXPixelsHQ() + 8, (float)a->arrivalYPixelsHQ() + 8);
 
@@ -4130,7 +4130,7 @@ void Event::entitySetToDoor_ENTITY_DOOR()
 void Event::entitySetToTileXY_ENTITY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int tx = currentCommand->parameterList->get(p++)->i;
 	int ty = currentCommand->parameterList->get(p++)->i;
 
@@ -4142,8 +4142,8 @@ void Event::entitySetToTileXY_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityWalkToArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO need behavior queue stuff working better.
 
@@ -4155,8 +4155,8 @@ void Event::entityWalkToArea_ENTITY_AREA()
 void Event::entityWalkToDoor_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Door* a = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> a = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO need behavior queue stuff working better.
 
@@ -4170,8 +4170,8 @@ void Event::entityWalkToDoor_ENTITY_DOOR()
 void Event::entityWalkToEntity_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Entity* e2 = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e2 = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO need behavior queue stuff working better.
 
@@ -4195,8 +4195,8 @@ void Event::entityWalkToTileXY_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityMoveToArea_ENTITY_AREA_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidOthers_BOOLpushOthers_BOOLpathfind_BOOLanimate_BOOLmoveDiagonal()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 	bool bWalkOrSlide = currentCommand->parameterList->get(p++)->b;
 	bool bCheckHit = currentCommand->parameterList->get(p++)->b;
 	bool bAvoidOthers = currentCommand->parameterList->get(p++)->b;
@@ -4225,8 +4225,8 @@ void Event::entityMoveToDoor_ENTITY_DOOR_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidO
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Door* e2 = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> e2 = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 	bool bWalkOrSlide = currentCommand->parameterList->get(p++)->b;
 	bool bCheckHit = currentCommand->parameterList->get(p++)->b;
 	bool bAvoidOthers = currentCommand->parameterList->get(p++)->b;
@@ -4255,8 +4255,8 @@ void Event::entityMoveToEntity_ENTITY_ENTITY_BOOLwalkOrSlide_BOOLcheckHit_BOOLav
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Entity* e2 = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e2 = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	bool bWalkOrSlide = currentCommand->parameterList->get(p++)->b;
 	bool bCheckHit = currentCommand->parameterList->get(p++)->b;
 	bool bAvoidOthers = currentCommand->parameterList->get(p++)->b;
@@ -4285,7 +4285,7 @@ void Event::entityMoveToTileXY_ENTITY_INTxTile1X_INTyTile1X_BOOLwalkOrSlide_BOOL
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int tX = currentCommand->parameterList->get(p++)->i;
 	int tY = currentCommand->parameterList->get(p++)->i;
 	bool bWalkOrSlide = currentCommand->parameterList->get(p++)->b;
@@ -4316,8 +4316,8 @@ void Event::entityMoveToTileXY_ENTITY_INTxTile1X_INTyTile1X_BOOLwalkOrSlide_BOOL
 void Event::entityBlockUntilReachesArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 	if (e->isAreaBoundaryTouchingMyHitBox(a))
 	{
 		getNextCommand();
@@ -4327,8 +4327,8 @@ void Event::entityBlockUntilReachesArea_ENTITY_AREA()
 void Event::entityBlockUntilReachesEntity_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* a = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Entity* b = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> a = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> b = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	if (a->isEntityHitBoxTouchingMyHitBox(b))
 	{
@@ -4339,8 +4339,8 @@ void Event::entityBlockUntilReachesEntity_ENTITY_ENTITY()
 void Event::entityBlockUntilReachesDoor_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Door* d = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> d = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	if (e->isEntityHitBoxTouchingMyHitBox(d))
 	{
@@ -4351,7 +4351,7 @@ void Event::entityBlockUntilReachesDoor_ENTITY_DOOR()
 void Event::entityBlockUntilReachesTileXY_ENTITY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
-	Entity* a = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> a = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int tx = currentCommand->parameterList->get(p++)->i;
 	int ty = currentCommand->parameterList->get(p++)->i;
 
@@ -4364,8 +4364,8 @@ void Event::entityBlockUntilReachesTileXY_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityWalkToAreaAndBlockUntilThere_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	Character* e = static_cast<Character*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
+	shared_ptr<Character> e = static_cast<shared_ptr<Character>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
 
 	//walk to area, use pathfinding always
 	int there = e->walkToXYWithPathFinding(a->middleX(), a->middleY());
@@ -4395,8 +4395,8 @@ void Event::entityWalkToAreaAndBlockUntilThere_ENTITY_AREA()
 void Event::entityWalkToEntityAndBlockUntilThere_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Character* e = static_cast<Character*>(currentCommand->parameterList->get(p++)->object);
-	Entity* a = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Character> e = static_cast<shared_ptr<Character>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> a = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	//walk to area, use pathfinding always
 	int there = e->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -4426,8 +4426,8 @@ void Event::entityWalkToEntityAndBlockUntilThere_ENTITY_ENTITY()
 void Event::entityWalkToDoorAndBlockUntilThere_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	Character* e = static_cast<Character*>(currentCommand->parameterList->get(p++)->object);
-	Door* a = static_cast<Door*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Character> e = static_cast<shared_ptr<Character>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Door> a = static_cast<shared_ptr<Door>>(currentCommand->parameterList->get(p++)->object);
 
 	//walk to area, use pathfinding always
 	int there = e->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -4457,7 +4457,7 @@ void Event::entityWalkToDoorAndBlockUntilThere_ENTITY_DOOR()
 void Event::entityWalkToTileXYAndBlockUntilThere_ENTITY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
-	Character* e = static_cast<Character*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Character> e = static_cast<shared_ptr<Character>>(currentCommand->parameterList->get(p++)->object);
 	int tx = currentCommand->parameterList->get(p++)->i;
 	int ty = currentCommand->parameterList->get(p++)->i;
 
@@ -4494,7 +4494,7 @@ void Event::entityWalkToTileXYAndBlockUntilThere_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityStandAndShuffle_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	e->addEventBehavior("StandAndShuffle"); //TODO
 
@@ -4504,7 +4504,7 @@ void Event::entityStandAndShuffle_ENTITY()
 void Event::entityStandAndShuffleAndFacePlayer_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	e->addEventBehavior("StandAndShuffleAndFacePlayer"); //TODO:
 
@@ -4514,8 +4514,8 @@ void Event::entityStandAndShuffleAndFacePlayer_ENTITY()
 void Event::entityStandAndShuffleAndFaceEntity_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	Entity* e2 = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e2 = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	e->addEventBehavior("StandAndShuffleAndFace:ENTITY." + to_string(e2->getID())); //TODO:
 
@@ -4530,8 +4530,8 @@ void Event::entitySetFaceMovementDirection_ENTITY_STRINGdirection()
 	//((Character)e).setAnimationByDirection(dir);
 	//getNextCommand();
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	if (gs->getInitialized_S() == false)
 	{
 		return;
@@ -4589,7 +4589,7 @@ void Event::entitySetFaceMovementDirection_ENTITY_STRINGdirection()
 void Event::entitySetMovementSpeed_ENTITY_INTticksPerPixel()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int speed = currentCommand->parameterList->get(p++)->i;
 
 	e->setTicksPerPixelMoved((float)speed);
@@ -4600,7 +4600,7 @@ void Event::entitySetMovementSpeed_ENTITY_INTticksPerPixel()
 void Event::entitySetAnimateRandomFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int ticksPerFrame = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 
@@ -4617,7 +4617,7 @@ void Event::entitySetAnimateRandomFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToT
 void Event::entityAnimateOnceThroughCurrentAnimationFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int ticks = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 
@@ -4633,7 +4633,7 @@ void Event::entityAnimateOnceThroughCurrentAnimationFrames_ENTITY_INTticksPerFra
 void Event::entityAnimateLoopThroughCurrentAnimationFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks_INTticksBetweenLoops_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
@@ -4654,7 +4654,7 @@ void Event::entityAnimateLoopThroughCurrentAnimationFrames_ENTITY_INTticksPerFra
 void Event::entityAnimateOnceThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 
@@ -4671,7 +4671,7 @@ void Event::entityAnimateOnceThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandom
 void Event::entityAnimateLoopThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks_INTticksBetweenLoops_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
@@ -4694,8 +4694,8 @@ void Event::entitySetAnimationByNameFirstFrame_ENTITY_STRINGanimationName()
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4720,8 +4720,8 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
@@ -4749,8 +4749,8 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 void Event::entityDoAnimationByNameLoop_ENTITY_STRINGanimationName_INTticksPerFrame()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
@@ -4780,8 +4780,8 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 { //===============================================================================================
 	int p = 0;
 
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
@@ -4813,8 +4813,8 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 void Event::entityDoAnimationByNameLoop_ENTITY_STRINGanimationName_INTticksPerFrame_BOOLrandomUpToTicks_INTticksBetweenLoops_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gs = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gs = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int ticksBetweenFrames = currentCommand->parameterList->get(p++)->i;
 	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->get(p++)->b;
 	int ticksBetweenLoop = currentCommand->parameterList->get(p++)->i;
@@ -4850,7 +4850,7 @@ void Event::entityDoAnimationByNameLoop_ENTITY_STRINGanimationName_INTticksPerFr
 void Event::entityStopAnimating_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	e->stopAnimation();
 
 	getNextCommand();
@@ -4859,7 +4859,7 @@ void Event::entityStopAnimating_ENTITY()
 void Event::entitySetGlobalAnimationDisabled_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	e->setAnimationDisabled(b);
@@ -4870,7 +4870,7 @@ void Event::entitySetGlobalAnimationDisabled_ENTITY_BOOL()
 void Event::entitySetNonWalkable_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	e->setNonWalkable(b);
@@ -4881,7 +4881,7 @@ void Event::entitySetNonWalkable_ENTITY_BOOL()
 void Event::entitySetPushable_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	e->setPushable(b);
@@ -4892,7 +4892,7 @@ void Event::entitySetPushable_ENTITY_BOOL()
 void Event::entityFadeOutDelete_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	e->fadeOutAndDelete();
 
@@ -4902,7 +4902,7 @@ void Event::entityFadeOutDelete_ENTITY()
 void Event::entityDeleteInstantly_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	e->deleteFromMapEntityListAndReleaseTexture();
 	delete e;
@@ -4914,7 +4914,7 @@ void Event::entityDeleteInstantly_ENTITY()
 void Event::entitySetToAlpha_ENTITY_FLOAT()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 	float f = currentCommand->parameterList->get(p++)->f;
 
 	e->setToAlpha(f);
@@ -4925,9 +4925,9 @@ void Event::entitySetToAlpha_ENTITY_FLOAT()
 void Event::spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	Sprite* sprite = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gameString = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> sprite = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gameString = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -4941,7 +4941,7 @@ void Event::spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA()
 	}
 	else
 	{
-		Entity* m = getMap()->createEntityAtArea(gameString->text(), sprite, a);
+		shared_ptr<Entity> m = getMap()->createEntityAtArea(gameString->text(), sprite, a);
 
 		m->setAlphaImmediately(1.0f);
 
@@ -4952,9 +4952,9 @@ void Event::spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA()
 void Event::spawnSpriteAsEntityFadeIn_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	Sprite* sprite = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gameString = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> sprite = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gameString = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -4977,9 +4977,9 @@ void Event::spawnSpriteAsEntityFadeIn_SPRITE_STRINGentityIdent_AREA()
 void Event::spawnSpriteAsNPC_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	Sprite* sprite = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gameString = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> sprite = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gameString = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -4994,11 +4994,11 @@ void Event::spawnSpriteAsNPC_SPRITE_STRINGentityIdent_AREA()
 	else
 	{
 
-		Map* m = nullptr;
+		shared_ptr<Map> m = nullptr;
 		if (map != nullptr)m = map;
 		if (m == nullptr && a != nullptr && a->map != nullptr) m = a->map;
 
-		Character* character = new Character(getEngine(), gameString->text(), sprite, a, m);
+		shared_ptr<Character> character = make_shared<Character>(getEngine(), gameString->text(), sprite, a, m);
 
 		character->setAlphaImmediately(1.0f);
 
@@ -5009,9 +5009,9 @@ void Event::spawnSpriteAsNPC_SPRITE_STRINGentityIdent_AREA()
 void Event::spawnSpriteAsNPCFadeIn_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	Sprite* sprite = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
-	GameString* gameString = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> sprite = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gameString = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -5025,10 +5025,10 @@ void Event::spawnSpriteAsNPCFadeIn_SPRITE_STRINGentityIdent_AREA()
 	}
 	else
 	{
-		Map* m = nullptr;
+		shared_ptr<Map> m = nullptr;
 		if (map != nullptr)m = map;
 		if (m == nullptr && a != nullptr && a->map != nullptr) m = a->map;
-		new Character(getEngine(), gameString->text(), sprite, a, m);
+		make_shared<Character>(getEngine(), gameString->text(), sprite, a, m);
 
 		getNextCommand();
 	}
@@ -5038,7 +5038,7 @@ void Event::createScreenSpriteUnderTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 { //===============================================================================================
 	int p = 0;
 
-	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> s = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 	float screenX = currentCommand->parameterList->get(p++)->f;
 	float screenY = currentCommand->parameterList->get(p++)->f;
 
@@ -5048,7 +5048,7 @@ void Event::createScreenSpriteUnderTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
+	shared_ptr<ScreenSprite> screenSprite = make_shared<ScreenSprite>(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 
 	screenSprite->useXPercent = true;
 	screenSprite->useYPercent = true;
@@ -5074,7 +5074,7 @@ void Event::createScreenSpriteOverTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 { //===============================================================================================
 	int p = 0;
 
-	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> s = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 	float screenX = currentCommand->parameterList->get(p++)->f;
 	float screenY = currentCommand->parameterList->get(p++)->f;
 
@@ -5084,7 +5084,7 @@ void Event::createScreenSpriteOverTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
+	shared_ptr<ScreenSprite> screenSprite = make_shared<ScreenSprite>(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 
 	screenSprite->useXPercent = true;
 	screenSprite->useYPercent = true;
@@ -5108,7 +5108,7 @@ void Event::createScreenSpriteUnderText_SPRITE_INTx_INTy()
 { //===============================================================================================
 	int p = 0;
 
-	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> s = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 	int screenX = currentCommand->parameterList->get(p++)->i;
 	int screenY = currentCommand->parameterList->get(p++)->i;
 
@@ -5118,7 +5118,7 @@ void Event::createScreenSpriteUnderText_SPRITE_INTx_INTy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
+	shared_ptr<ScreenSprite> screenSprite = make_shared<ScreenSprite>(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 	screenSprite->screenXPixelsHQ = (float)screenX;
 	screenSprite->screenYPixelsHQ = (float)screenY;
 
@@ -5143,7 +5143,7 @@ void Event::createScreenSpriteOverText_SPRITE_INTx_INTy()
 	//DONE: should make the screen coords floats, for percentage of screen. 0.80% x, etc.
 	//also an options for centerx and centery
 
-	Sprite* s = static_cast<Sprite*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sprite> s = static_cast<shared_ptr<Sprite>>(currentCommand->parameterList->get(p++)->object);
 	int screenX = currentCommand->parameterList->get(p++)->i;
 	int screenY = currentCommand->parameterList->get(p++)->i;
 
@@ -5153,7 +5153,7 @@ void Event::createScreenSpriteOverText_SPRITE_INTx_INTy()
 		return; //block until sprite has loaded.
 	}
 
-	ScreenSprite* screenSprite = new ScreenSprite(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
+	shared_ptr<ScreenSprite> screenSprite = make_shared<ScreenSprite>(getEngine(), "SCREENSPRITE." + s->getName(), s->getName());
 	screenSprite->screenXPixelsHQ = (float)screenX;
 	screenSprite->screenYPixelsHQ = (float)screenY;
 
@@ -5172,7 +5172,7 @@ void Event::createScreenSpriteOverText_SPRITE_INTx_INTy()
 void Event::setCameraTarget_AREA()
 { //===============================================================================================
 	int p = 0;
-	Area* o = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> o = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	getCameraman()->setTarget(o);
 
@@ -5182,7 +5182,7 @@ void Event::setCameraTarget_AREA()
 void Event::setCameraTarget_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* o = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> o = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	getCameraman()->setTarget(o);
 
@@ -5216,7 +5216,7 @@ void Event::setCameraTargetToPlayer()
 void Event::blockUntilCameraReaches_AREA()
 { //===============================================================================================
 	int p = 0;
-	Area* o = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> o = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
 	if (o->isWithinScreenBounds())
 	{
@@ -5227,7 +5227,7 @@ void Event::blockUntilCameraReaches_AREA()
 void Event::blockUntilCameraReaches_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	Entity* o = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> o = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
 
 	if (o->isWithinScreenBounds())
 	{
@@ -5249,7 +5249,7 @@ void Event::blockUntilCameraReachesPlayer()
 void Event::pushCameraState()
 { //===============================================================================================
 	//int p=0;
-	//Kryo kryo = new Kryo();//TODO:
+	//Kryo kryo = make_shared<Kryo>();//TODO:
 
 	//getEngine()->cameramanStack.push(kryo.copy(getEngine()->cameraman));
 
@@ -5339,7 +5339,7 @@ void Event::giveItem_ITEM()
 { //===============================================================================================
 	int p = 0;
 
-	Item* i = static_cast<Item*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Item> i = static_cast<shared_ptr<Item>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO:ask the server if we can do this
 
@@ -5353,7 +5353,7 @@ void Event::takeItem_ITEM()
 { //===============================================================================================
 	int p = 0;
 
-	Item* i = static_cast<Item*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Item> i = static_cast<shared_ptr<Item>>(currentCommand->parameterList->get(p++)->object);
 
 	//confirm this action with the server
 	i->setHaveItemValue_S(false);
@@ -5365,7 +5365,7 @@ void Event::giveGame_GAME()
 { //===============================================================================================
 	int p = 0;
 
-	Item* i = static_cast<Item*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Item> i = static_cast<shared_ptr<Item>>(currentCommand->parameterList->get(p++)->object);
 
 	//TODO:ask the server if we can do this
 
@@ -5406,7 +5406,7 @@ void Event::giveMoney_FLOAT()
 void Event::playSound_SOUND()
 { //===============================================================================================
 	int p = 0;
-	Sound* s = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> s = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 
 	getAudioManager()->playSound(s,1,1,1);
 	getNextCommand();
@@ -5415,7 +5415,7 @@ void Event::playSound_SOUND()
 void Event::playSound_SOUND_FLOATvol()
 { //===============================================================================================
 	int p = 0;
-	Sound* s = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> s = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 	float vol = currentCommand->parameterList->get(p++)->f;
 
 	getAudioManager()->playSound(s, vol,1,1);
@@ -5425,7 +5425,7 @@ void Event::playSound_SOUND_FLOATvol()
 void Event::playSound_SOUND_FLOATvol_FLOATpitch_INTtimes()
 { //===============================================================================================
 	int p = 0;
-	Sound* s = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> s = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 	float vol = currentCommand->parameterList->get(p++)->f;
 	float pitch = currentCommand->parameterList->get(p++)->f;
 	int times = currentCommand->parameterList->get(p++)->i;
@@ -5437,7 +5437,7 @@ void Event::playSound_SOUND_FLOATvol_FLOATpitch_INTtimes()
 void Event::playMusicOnce_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> m = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 
 	getAudioManager()->playMusic(m, 1.0f, 1.0f, false);
 	getNextCommand();
@@ -5446,7 +5446,7 @@ void Event::playMusicOnce_MUSIC()
 void Event::playMusicLoop_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> m = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 
 	getAudioManager()->playMusic(m, 1.0f, 1.0f, true);
 	getNextCommand();
@@ -5455,7 +5455,7 @@ void Event::playMusicLoop_MUSIC()
 void Event::playMusic_MUSIC_FLOATvol_FLOATpitch_BOOLloop()
 { //===============================================================================================
 	int p = 0;
-	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> m = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 	float vol = currentCommand->parameterList->get(p++)->f;
 	float pitch = currentCommand->parameterList->get(p++)->f;
 	bool loop = currentCommand->parameterList->get(p++)->b;
@@ -5467,7 +5467,7 @@ void Event::playMusic_MUSIC_FLOATvol_FLOATpitch_BOOLloop()
 void Event::stopMusic_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> m = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 
 	getAudioManager()->stopMusic(m);
 
@@ -5485,8 +5485,8 @@ void Event::stopAllMusic()
 void Event::blockUntilLoopingMusicDoneWithLoopAndReplaceWith_MUSIC_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	Sound* currentPlaying = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
-	Sound* replaceWith = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> currentPlaying = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> replaceWith = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 
 	if (currentPlaying->getLoop() == true)
 	{
@@ -5505,7 +5505,7 @@ void Event::blockUntilMusicDone_MUSIC()
 { //===============================================================================================
 	int p = 0;
 
-	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> m = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 
 	//if music is LOOPING this will always block
 	if (m != nullptr)
@@ -5539,7 +5539,7 @@ void Event::fadeOutMusic_MUSIC_INT()
 { //===============================================================================================
 	int p = 0;
 
-	Sound* m = static_cast<Sound*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Sound> m = static_cast<shared_ptr<Sound>>(currentCommand->parameterList->get(p++)->object);
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
 	getAudioManager()->fadeOutSound(m, ticks);
@@ -5859,7 +5859,7 @@ void Event::toggleLightOnOff_LIGHT()
 { //===============================================================================================
 	int p = 0;
 
-	Light* l = static_cast<Light*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Light> l = static_cast<shared_ptr<Light>>(currentCommand->parameterList->get(p++)->object);
 
 	l->toggle();
 
@@ -5869,7 +5869,7 @@ void Event::toggleLightOnOff_LIGHT()
 void Event::setLightOnOff_LIGHT_BOOL()
 { //===============================================================================================
 	int p = 0;
-	Light* l = static_cast<Light*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Light> l = static_cast<shared_ptr<Light>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	l->setOnOff(b);
@@ -5880,7 +5880,7 @@ void Event::setLightOnOff_LIGHT_BOOL()
 void Event::setLightFlicker_LIGHT_BOOL()
 { //===============================================================================================
 	int p = 0;
-	Light* l = static_cast<Light*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Light> l = static_cast<shared_ptr<Light>>(currentCommand->parameterList->get(p++)->object);
 	bool b = currentCommand->parameterList->get(p++)->b;
 
 	l->setFlicker(b);
@@ -5931,9 +5931,9 @@ void Event::deleteRandoms()
 
 	for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
 	{
-		Entity* e = getMap()->activeEntityList.get(i);
+		shared_ptr<Entity> e = getMap()->activeEntityList.get(i);
 
-		if ((dynamic_cast<RandomCharacter*>(e) != NULL))
+		if ((dynamic_cast<shared_ptr<RandomCharacter>>(e) != NULL))
 		{
 			e->fadeOutAndDelete();
 		}
@@ -5945,7 +5945,7 @@ void Event::deleteRandoms()
 void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	GameString* s = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> s = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int sec = currentCommand->parameterList->get(p++)->i;
 	int x = currentCommand->parameterList->get(p++)->i;
 	int y = currentCommand->parameterList->get(p++)->i;
@@ -5966,7 +5966,7 @@ void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 		if(x==-1)pos = Caption::Position::CENTERED_OVER_ENTITY;
 		if(x==-2)pos = Caption::Position::CENTERED_SCREEN;
 		if(x==-3)pos = Caption::Position::CENTERED_X;
-		getCaptionManager()->newManagedCaption(pos, x, y, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		getCaptionManager()->newManagedCaption(pos, x, y, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, make_shared<BobColor>(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		getNextCommand();
 	}
 }
@@ -5974,7 +5974,7 @@ void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	GameString* s = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> s = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int sec = currentCommand->parameterList->get(p++)->i;
 	u8 r = currentCommand->parameterList->get(p++)->i;
 	u8 g = currentCommand->parameterList->get(p++)->i;
@@ -5986,7 +5986,7 @@ void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 	}
 	else
 	{
-		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, make_shared<BobColor>(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		c->setEntity(getPlayer()); //not really necessary, it does this automatically
 		getNextCommand();
 	}
@@ -5995,8 +5995,8 @@ void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	Entity* e = static_cast<Entity*>(currentCommand->parameterList->get(p++)->object);
-	GameString* s = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Entity> e = static_cast<shared_ptr<Entity>>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> s = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	int sec = currentCommand->parameterList->get(p++)->i;
 	u8 r = currentCommand->parameterList->get(p++)->i;
 	u8 g = currentCommand->parameterList->get(p++)->i;
@@ -6008,7 +6008,7 @@ void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 	}
 	else
 	{
-		Caption* c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, new BobColor(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, make_shared<BobColor>(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		c->setEntity(e);
 		getNextCommand();
 	}
@@ -6017,7 +6017,7 @@ void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 void Event::makeNotification_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	GameString* s = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> s = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	//		int sec = currentCommand.parameterList.get(p++).i;
 	//		int x = currentCommand.parameterList.get(p++).i;
 	//		int y = currentCommand.parameterList.get(p++).i;
@@ -6033,7 +6033,7 @@ void Event::makeNotification_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 	}
 	else
 	{
-		getNotificationManager()->add(new Notification(getClientGameEngine(), s->text()));
+		getNotificationManager()->add(make_shared<Notification>(getClientGameEngine(), s->text()));
 		getNextCommand();
 	}
 }
@@ -6041,13 +6041,13 @@ void Event::makeNotification_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 { //===============================================================================================
 	int p = 0;
-	GameString* gameString = static_cast<GameString*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<GameString> gameString = static_cast<shared_ptr<GameString>>(currentCommand->parameterList->get(p++)->object);
 	u8 r = currentCommand->parameterList->get(p++)->i;
 	u8 g = currentCommand->parameterList->get(p++)->i;
 	u8 b = currentCommand->parameterList->get(p++)->i;
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
-	Main::console->add(gameString->text(), ticks, new BobColor(r, g, b));
+	Main::console->add(gameString->text(), ticks, make_shared<BobColor>(r, g, b));
 
 	getNextCommand();
 }
@@ -6251,9 +6251,9 @@ void Event::startGame()
 void Event::startBobsGameOnStadiumScreen_AREA()
 { //===============================================================================================
 	int p = 0;
-	Area* a = static_cast<Area*>(currentCommand->parameterList->get(p++)->object);
+	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
-	BobsGameStadium* bobsGameStadium = new BobsGameStadium(getClientGameEngine()->stadiumScreen, a);
+	shared_ptr<BobsGameStadium> bobsGameStadium = make_shared<BobsGameStadium>(getClientGameEngine()->stadiumScreen, a);
 	bobsGameStadium->init();
 
 	FileUtils::writeDidIntroFile();
@@ -6265,7 +6265,7 @@ void Event::blockUntilBobsGameDead()
 { //===============================================================================================
 	//int p=0;
 
-	BobsGameStadium* bobsGameStadium = static_cast<BobsGameStadium*>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getCurrentState());
+	shared_ptr<BobsGameStadium> bobsGameStadium = static_cast<shared_ptr<BobsGameStadium>>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getCurrentState());
 
 	if (bobsGameStadium != nullptr)
 	{
@@ -6364,7 +6364,7 @@ void Event::pushGameState()
 
 	//should have Main.gameStack ArrayDeque
 
-	//Kryo kryo = new Kryo();//TODO:
+	//Kryo kryo = make_shared<Kryo>();//TODO:
 	//Main.mainObject.gameStack.push(kryo.copy(Main.mainObject.gameEngine));
 }
 

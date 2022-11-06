@@ -15,9 +15,9 @@ public:
 
 	static Logger log;
 
-	//DialogLayout* mainPanelLayout = nullptr;
-	//ScrollPane* scrollPane = nullptr;
-	//DialogLayout* insideScrollPaneLayout = nullptr;
+	//shared_ptr<DialogLayout> mainPanelLayout = nullptr;
+	//shared_ptr<ScrollPane> scrollPane = nullptr;
+	//shared_ptr<DialogLayout> insideScrollPaneLayout = nullptr;
 
 protected:
 	
@@ -44,7 +44,7 @@ public:
 
 	MenuPanel();
 
-	MenuPanel(Engine *e);
+	MenuPanel(shared_ptr<Engine >e);
 
 	virtual void update();
 
@@ -77,23 +77,23 @@ public:
 	virtual void render();
 
 //
-//	static BGClientEngine* getClientGameEngine();
+//	static shared_ptr<BGClientEngine> getClientGameEngine();
 //
 //
 //
-//	static Clock* getClock();
-//	static GUIManager* getGUIManager();
-//	static StuffMenu* getStuffMenu();
-//	static GameStore* getGameStore();
-//	static PlayerEditMenu* getPlayerEditMenu();
-//	static Player* getPlayer();
+//	static shared_ptr<Clock> getClock();
+//	static shared_ptr<GUIManager> getGUIManager();
+//	static shared_ptr<StuffMenu> getStuffMenu();
+//	static shared_ptr<GameStore> getGameStore();
+//	static shared_ptr<PlayerEditMenu> getPlayerEditMenu();
+//	static shared_ptr<Player> getPlayer();
 //	static ND* getND();
-//	static Wallet* getWallet();
-//	static FriendManager* getFriendManager();
-//	static StatusBar* getStatusBar();
-//	static NotificationManager* getNotificationManager();
+//	static shared_ptr<Wallet> getWallet();
+//	static shared_ptr<FriendManager> getFriendManager();
+//	static shared_ptr<StatusBar> getStatusBar();
+//	static shared_ptr<NotificationManager> getNotificationManager();
 //
-//	static TCPServerConnection* getServerConnection();
-//	static GameSave* getGameSave();
+//	static shared_ptr<TCPServerConnection> getServerConnection();
+//	static shared_ptr<GameSave> getGameSave();
 };
 

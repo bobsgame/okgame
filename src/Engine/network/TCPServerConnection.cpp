@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 Logger TCPServerConnection::log = Logger("TCPServerConnection");
-Logger* TCPServerConnection::_threadLog = new Logger("TCPServerConnection");
+shared_ptr<Logger> TCPServerConnection::_threadLog = make_shared<Logger>("TCPServerConnection");
 
 #include "src/Puzzle/Room.h"
 
@@ -109,7 +109,7 @@ void TCPServerConnection::update()
 }
 
 //===============================================================================================
-void TCPServerConnection::updateThreadLoop(TCPServerConnection *u)
+void TCPServerConnection::updateThreadLoop(shared_ptr<TCPServerConnection >u)
 {//===============================================================================================
 
 	long long _queuedSaveGameUpdateDelayTime = 0;
@@ -327,7 +327,7 @@ void TCPServerConnection::_checkForIncomingTraffic()
 
 
 
-		queue<string*> packetsToProcess;
+		queue<string> packetsToProcess;
 
 		int bytesReceived = 1;
 
@@ -505,7 +505,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 					//Main::whilefix();
 					threadLogDebug_S("Resolving host to load balancer...");
 
-					_loadBalancerAddress = new IPaddress();
+					_loadBalancerAddress = make_shared<IPaddress>();
 					if (SDLNet_ResolveHost(_loadBalancerAddress, Main::serverAddressString.c_str(), Main::serverTCPPort) < 0 )
 					{
 						threadLogWarn_S("Could not resolve load balancer IP: " + string(SDLNet_GetError()) + string(SDL_GetError()));
@@ -616,7 +616,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 			//for running server locally
 			if (Main::serverAddressString == "localhost")setServerIPAddressString_S("localhost");
 
-			_serverAddress = new IPaddress();
+			_serverAddress = make_shared<IPaddress>();
 			if (SDLNet_ResolveHost(_serverAddress, getServerIPAddressString_S().c_str(), Main::serverTCPPort) < 0)
 			{
 				threadLogError_S("Could not resolve server address: " + string(SDL_GetError()));
@@ -727,7 +727,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 //	return true;
 //}
 
-bool TCPServerConnection::messageReceived(string &s)// ChannelHandlerContext* ctx, MessageEvent* e)
+bool TCPServerConnection::messageReceived(string &s)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
 { //===============================================================================================
 
 
@@ -1022,7 +1022,7 @@ void TCPServerConnection::incomingServerStatsResponse(string s)
   //Server_Stats_Response:stats object
 	s = s.substr(s.find(":") + 1);
 
-	ServerStats *stats = new ServerStats();
+	shared_ptr<ServerStats >stats = make_shared<ServerStats>();
 	stats->initFromString(s);
 
 	serverStats = stats;
@@ -1086,7 +1086,7 @@ bool TCPServerConnection::connectAndAuthorizeAndQueueWriteToChannel_S(string s)
 
 //	thread *t = new thread
 //	(
-//			[](TCPServerConnection*u,string e)
+//			[](shared_ptr<TCPServerConnection>u,string e)
 //			{
 //				while (u->ensureConnectedToServerThreadBlock_S() == false)
 //				{
@@ -1584,7 +1584,7 @@ void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
 	s = s.substr(s.find(":") + 1);
 	string userName = FileUtils::removeSwearWords(s.substr(0, s.find(":")));
 	s = s.substr(s.find(":") + 1);
-	//Room *r = Room::decodeRoomData(s, false);
+	//shared_ptr<Room >r = Room::decodeRoomData(s, false);
 
 	if (Main::globalSettings->hideNotifications == false)
 	{
@@ -1704,10 +1704,10 @@ void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameUserStatsForSpecificGameAndDifficulty *gameStats = new BobsGameUserStatsForSpecificGameAndDifficulty(s);
+	shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty >gameStats = make_shared<BobsGameUserStatsForSpecificGameAndDifficulty>(s);
 	for(int i=0;i<BobsGame::userStatsPerGameAndDifficulty.size();i++)
 	{
-		BobsGameUserStatsForSpecificGameAndDifficulty *temp = BobsGame::userStatsPerGameAndDifficulty.get(i);
+		shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty >temp = BobsGame::userStatsPerGameAndDifficulty.get(i);
 		if(
 			temp->isGameTypeOrSequence == gameStats->isGameTypeOrSequence &&
 			temp->gameTypeUUID == gameStats->gameTypeUUID &&
@@ -1725,12 +1725,12 @@ void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(
 	BobsGame::userStatsPerGameAndDifficulty.add(gameStats);
 }
 //===============================================================================================
-void TCPServerConnection::addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard)
+void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard)
 {//===============================================================================================
 
 	for (int i = 0; i<boardArray.size(); i++)
 	{
-		BobsGameLeaderBoardAndHighScoreBoard *temp = boardArray.get(i);
+		shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >temp = boardArray.get(i);
 		if (
 			temp->isGameTypeOrSequence == leaderBoard->isGameTypeOrSequence &&
 			temp->gameTypeUUID == leaderBoard->gameTypeUUID &&
@@ -1753,7 +1753,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByTotalTimePlayed(string &s
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByTotalTimePlayed, leaderBoard);
 
@@ -1764,7 +1764,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByTotalBlocksCleared(string
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByTotalBlocksCleared, leaderBoard);
 
@@ -1775,7 +1775,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByPlaneswalkerPoints(string
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByPlaneswalkerPoints, leaderBoard);
 }
@@ -1785,7 +1785,7 @@ void TCPServerConnection::incomingBobsGameLeaderBoardByEloScore(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topPlayersByEloScore, leaderBoard);
 
@@ -1796,7 +1796,7 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByTimeLasted(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topGamesByTimeLasted, leaderBoard);
 
@@ -1809,7 +1809,7 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByBlocksCleared(string 
 	s = s.substr(s.find(":") + 1);
 
 
-	BobsGameLeaderBoardAndHighScoreBoard *leaderBoard = new BobsGameLeaderBoardAndHighScoreBoard(s);
+	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(BobsGame::topGamesByBlocksCleared, leaderBoard);
 
@@ -2152,7 +2152,7 @@ bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &pa
 
 }
 
-bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn)
+bool TCPServerConnection::doLogin(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn)
 { //=========================================================================================================================
 
 
@@ -2331,7 +2331,7 @@ bool TCPServerConnection::doLogin(Caption *statusLabel, Caption *errorLabel, str
 
 }
 
-bool TCPServerConnection::doCreateAccount(Caption *statusLabel, Caption *errorLabel, string &userName, string &email, string &password, string &confirmPassword)
+bool TCPServerConnection::doCreateAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userName, string &email, string &password, string &confirmPassword)
 { //=========================================================================================================================
 
 	statusLabel->setText(" ");
@@ -2656,7 +2656,7 @@ bool TCPServerConnection::checkForSessionTokenAndLogInIfExists()
 	return false;
 }
 
-bool TCPServerConnection::doForgotPassword(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail)
+bool TCPServerConnection::doForgotPassword(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail)
 { //=========================================================================================================================
 
   //send forgot password request to server, wait for response
@@ -2773,7 +2773,7 @@ bool TCPServerConnection::doForgotPassword(Caption *statusLabel, Caption *errorL
 }
 
 
-bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *errorLabel)
+bool TCPServerConnection::linkFacebookAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel)
 { //=========================================================================================================================
 
 	errorLabel->setText(" ");
@@ -2792,15 +2792,15 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 		//
 		//              //check if our session token is valid
 		//              //restFB stuff here
-		//              FacebookClient* facebookClient = nullptr;
+		//              shared_ptr<FacebookClient> facebookClient = nullptr;
 		//
 		//              //------------------------
 		//              //log into facebook to test token
 		//              //------------------------
 		//              try
 		//              {
-		//                 facebookClient = new DefaultFacebookClient(facebookAccessToken);
-		//                 User* user = facebookClient->fetchObject("me", User::typeid);
+		//                 facebookClient = make_shared<DefaultFacebookClient>(facebookAccessToken);
+		//                 shared_ptr<User> user = facebookClient->fetchObject("me", User::typeid);
 		//
 		//                 string facebookID = user->getId();
 		//                 log.debug("Facebook ID: " + facebookID);
@@ -2894,7 +2894,7 @@ bool TCPServerConnection::linkFacebookAccount(Caption *statusLabel, Caption *err
 }
 
 //=========================================================================================================================
-bool TCPServerConnection::doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, const string& friendUserName)
+bool TCPServerConnection::doAddFriendByUsername(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, const string& friendUserName)
 {//=========================================================================================================================
 
 	statusLabel->setText(" ");

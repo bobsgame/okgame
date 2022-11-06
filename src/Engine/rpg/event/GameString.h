@@ -18,23 +18,23 @@ class GameStringData;
 class GameString : public ServerObject
 {
 private:
-	GameStringData* data = nullptr;
+	shared_ptr<GameStringData> data = nullptr;
 
 
 public:
 
 	static Logger log;
-	GameString(Engine* g, int id);
+	GameString(shared_ptr<Engine> g, int id);
 
 
-	GameString(Engine* g, GameStringData* data);
+	GameString(shared_ptr<Engine> g, shared_ptr<GameStringData> data);
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(GameStringData* data);
+	void setData_S(shared_ptr<GameStringData> data);
 
 
-	GameStringData* getData();
+	shared_ptr<GameStringData> getData();
 
 	int getID();
 	string& getName();

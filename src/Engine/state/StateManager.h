@@ -20,7 +20,7 @@ public:
 
 	ArrayList<Engine*> states;
 
-	//Engine* currentState = nullptr;
+	//shared_ptr<Engine> currentState = nullptr;
 
 
 	StateManager();

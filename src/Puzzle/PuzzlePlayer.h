@@ -14,7 +14,7 @@ class PuzzlePlayer
 {//=========================================================================================================================
 public:
 	//=========================================================================================================================
-	PuzzlePlayer(GameLogic *g)
+	PuzzlePlayer(shared_ptr<GameLogic >g)
 	{//=========================================================================================================================
 		this->gameLogic = g;
 		if (g != nullptr)g->player = this;
@@ -53,9 +53,9 @@ public:
 		return false;
 	}
 
-	GameLogic* gameLogic = nullptr;
+	shared_ptr<GameLogic> gameLogic = nullptr;
 	bool confirmed = false;
-	BobMenu *menu = nullptr;
+	shared_ptr<BobMenu >menu = nullptr;
 	bool selectGameSequenceOrSingleGameTypeMiniMenuShowing = true;
 	bool selectGameSequenceMiniMenuShowing = false;
 	bool gameSequenceOptionsMiniMenuShowing = false;
@@ -85,21 +85,21 @@ public:
 	
 
 	bool useKeyboard = false;
-	GameController *gameController = nullptr;
+	shared_ptr<GameController >gameController = nullptr;
 
-	//BobsGameNetwork *network = nullptr;
-	UDPPeerConnection *peerConnection = nullptr;
-	Caption* nameCaption = nullptr;
-	Caption* gameCaption = nullptr;
-	Caption* difficultyCaption = nullptr;
-
-
+	//shared_ptr<BobsGameNetwork >network = nullptr;
+	shared_ptr<UDPPeerConnection >peerConnection = nullptr;
+	shared_ptr<Caption> nameCaption = nullptr;
+	shared_ptr<Caption> gameCaption = nullptr;
+	shared_ptr<Caption> difficultyCaption = nullptr;
 
 
-	BobColor *gridBorderColor = new BobColor(255, 255, 255);//TODO: move these to user settings!
-	BobColor *gridCheckeredBackgroundColor1 = BobColor::black;
-	BobColor *gridCheckeredBackgroundColor2 = new BobColor(8, 8, 8);
-	BobColor *screenBackgroundColor = BobColor::black;
+
+
+	shared_ptr<BobColor >gridBorderColor = make_shared<BobColor>(255, 255, 255);//TODO: move these to user settings!
+	shared_ptr<BobColor >gridCheckeredBackgroundColor1 = BobColor::black;
+	shared_ptr<BobColor >gridCheckeredBackgroundColor2 = make_shared<BobColor>(8, 8, 8);
+	shared_ptr<BobColor >screenBackgroundColor = BobColor::black;
 	bool gridRule_showWarningForFieldThreeQuartersFilled = true;//TODO: move these to user settings!
 
 

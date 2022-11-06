@@ -21,24 +21,24 @@ private:
 	bool value = false;
 	long long timeSet = -1;
 
-	FlagData* data = nullptr;
+	shared_ptr<FlagData> data = nullptr;
 
 
 public:
 
 
 	static Logger log;
-	Flag(Engine* g, int id);
+	Flag(shared_ptr<Engine> g, int id);
 
 
-	Flag(Engine* g, FlagData* data);
+	Flag(shared_ptr<Engine> g, shared_ptr<FlagData> data);
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(FlagData* data);
+	void setData_S(shared_ptr<FlagData> data);
 
 
-	FlagData* getData();
+	shared_ptr<FlagData> getData();
 
 
 	int getID();

@@ -9,10 +9,10 @@
 
 Logger Grid::log = Logger("Grid");
 
-shared_ptr<Block> Grid::nullBlock(new Block());
+shared_ptr<Block> Grid::nullBlock(make_shared<Block>());
 
 //=========================================================================================================================
-Grid::Grid(GameLogic* gameInstance)
+Grid::Grid(shared_ptr<GameLogic> gameInstance)
 {//=========================================================================================================================
 	this->game = gameInstance;
 }
@@ -332,7 +332,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 	//ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
 	//ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
 
-	ArrayList<BobColor*> acceptableColors;
+	ArrayList<shared_ptr<BobColor>> acceptableColors;
 	for (int b = 0; b < (int)blockTypes.size(); b++)
 	{
 		shared_ptr<BlockType> blockType = blockTypes.get(b);
@@ -381,7 +381,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 
 	if (acceptableColors.size() > 0)
 	{
-		BobColor *color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
+		shared_ptr<BobColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
 
 		if (p == nullptr)
 		{
@@ -416,7 +416,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
-	ArrayList<BobColor*> acceptableColors;
+	ArrayList<shared_ptr<BobColor>> acceptableColors;
 
 	for (int b = 0; b < (int)blockTypes.size(); b++)
 	{
@@ -429,7 +429,7 @@ shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<P
 
 			for (int i = 0; i < amtColors; i++)
 			{
-				BobColor *c = blockType->colors.get(i);
+				shared_ptr<BobColor >c = blockType->colors.get(i);
 
 				if (acceptableColors.contains(c) == false)
 				{
@@ -443,25 +443,25 @@ shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<P
 	if (x > 0 && get(x - 1, y) != nullptr && get(x - 1, y)->getColor() != nullptr)
 	{
 		 //left
-		BobColor *c = get(x - 1, y)->getColor();
+		shared_ptr<BobColor >c = get(x - 1, y)->getColor();
 		if(acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 	if (y < getHeight() - 1 && get(x, y + 1) != nullptr && get(x, y + 1)->getColor() != nullptr)
 	{
 		//down
-		BobColor *c = get(x, y + 1)->getColor();
+		shared_ptr<BobColor >c = get(x, y + 1)->getColor();
 		if (acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 	if (y > 0 && get(x, y - 1) != nullptr && get(x, y - 1)->getColor() != nullptr)
 	{
 		 //up
-		BobColor *c = get(x, y - 1)->getColor();
+		shared_ptr<BobColor >c = get(x, y - 1)->getColor();
 		if (acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 
 	if (acceptableColors.size() > 0)
 	{
-		BobColor *color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
+		shared_ptr<BobColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
 
 		if (p == nullptr)
 		{
@@ -555,7 +555,7 @@ shared_ptr<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(shared_p
 			shared_ptr<PieceType> pieceType = getRandomPieceType(pieceTypes);
 			shared_ptr<BlockType> blockType = acceptableBlockTypes.get(getGameLogic()->getRandomIntLessThan(acceptableBlockTypes.size(), "dontPutSameBlockTypeNextToEachOtherOrReturnNull"));
 
-			p = shared_ptr<Piece>(new Piece(game, this, pieceType, blockType));
+			p = shared_ptr<Piece>(make_shared<Piece>(game, this, pieceType, blockType));
 			p->init();
 
 			//remove other blocks and break connections, we only want one block
@@ -2335,7 +2335,7 @@ void Grid::setColorConnections(ArrayList<shared_ptr<BlockType>> &ignoreTypes)//,
 //	{
 //		for (int x = 0; x < getWidth(); x++)
 //		{
-//			ArrayList<shared_ptr<Block>>* connectedBlocksList = new ArrayList<shared_ptr<Block> >();
+//			ArrayList<shared_ptr<Block>>* connectedBlocksList = make_shared<ArrayList><shared_ptr<Block> >();
 //
 //			shared_ptr<Block> b = get(x, y);
 //			if (b != nullptr && (ignoreTypes->isEmpty() || ignoreTypes->contains(b->blockType) == false))
@@ -2692,7 +2692,7 @@ void Grid::renderBackground()
 		for(int y=-1;y<height;y++)
 		{
 	
-			BobColor *color = getGameLogic()->player->gridCheckeredBackgroundColor1;
+			shared_ptr<BobColor >color = getGameLogic()->player->gridCheckeredBackgroundColor1;
 	
 			if(y%2==0)
 			{
@@ -3182,7 +3182,7 @@ void Grid::setPiece(shared_ptr<Piece> piece, int x, int y)
 				{
 					for (int s = 0; s < b->blockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); s++)
 					{
-						TurnFromBlockTypeToType *turn = b->blockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(s);
+						shared_ptr<TurnFromBlockTypeToType >turn = b->blockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(s);
 
 						if (touchingBlock->blockType->uuid == turn->fromType_UUID)
 						{
@@ -3384,8 +3384,8 @@ void Grid::setRandomBlockColors()
 void Grid::setRandomMatrixBlockColors()
 {//=========================================================================================================================
 	//
-	//		backgroundColor1 = new Color(0.0f,BobsGame::randLessThanFloat(1.0f),0.0f);
-	//		backgroundColor2 = new Color(0.0f,BobsGame::randLessThanFloat(1.0f),0.0f);
+	//		backgroundColor1 = make_shared<Color>(0.0f,BobsGame::randLessThanFloat(1.0f),0.0f);
+	//		backgroundColor2 = make_shared<Color>(0.0f,BobsGame::randLessThanFloat(1.0f),0.0f);
 	//
 	//
 	//		for(int x=0;x<getWidth();x++)
@@ -3414,7 +3414,7 @@ void Grid::setRandomWholePieceColors(bool grayscale, shared_ptr<Piece> currentPi
 	//TODO
 	//
 	//		//make array of previously used colors
-	//		List<Color> previousColors = new List<Color>();
+	//		List<Color> previousColors = make_shared<List><Color>();
 	//
 	//		for(int x=0;x<getWidth();x++)
 	//		{
@@ -3602,7 +3602,7 @@ shared_ptr<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPie
 	}
 
 	//		int randomTotal = 1;
-	//		PieceType emptyPieceType(new PieceType());
+	//		PieceType emptyPieceType(make_shared<PieceType>());
 	//		randomBag.Add(emptyPieceType);
 	//		for(int i=0;i<array.Count;i++)
 	//		{
@@ -3672,7 +3672,7 @@ ArrayList<shared_ptr<Piece>> Grid::getBagOfOneOfEachNonRandomNormalPieces()
 		if (type->randomSpecialPieceChanceOneOutOf == 0 && type->frequencySpecialPieceTypeOnceEveryNPieces == 0)
 		{
 			
-			shared_ptr<Piece> tempPiece(new Piece(getGameLogic(), this, type, blockTypes));
+			shared_ptr<Piece> tempPiece(make_shared<Piece>(getGameLogic(), this, type, blockTypes));
 			tempPiece->init();
 			tempBag.add(tempPiece);
 		}
@@ -3750,7 +3750,7 @@ shared_ptr<Piece> Grid::getRandomPiece()
 		{
 			if (pieceType != nullptr)
 			{
-				piece = shared_ptr<Piece>(new Piece(getGameLogic(), this, pieceType, blockTypes));
+				piece = shared_ptr<Piece>(make_shared<Piece>(getGameLogic(), this, pieceType, blockTypes));
 				piece->init();
 			}
 			else
@@ -3765,7 +3765,7 @@ shared_ptr<Piece> Grid::getRandomPiece()
 				pieceType = getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(pieceTypes);
 			}
 			if (pieceType == nullptr)pieceType = PieceType::emptyPieceType;
-			piece = shared_ptr<Piece>(new Piece(getGameLogic(), this, pieceType, blockTypes));
+			piece = shared_ptr<Piece>(make_shared<Piece>(getGameLogic(), this, pieceType, blockTypes));
 			piece->init();
 		}
 	}
@@ -3777,7 +3777,7 @@ shared_ptr<Piece> Grid::getRandomPiece()
 shared_ptr<Piece> Grid::getRandomPiece(ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
-	shared_ptr<Piece> piece(new Piece(getGameLogic(), this, getRandomPieceType(pieceTypes), blockTypes));
+	shared_ptr<Piece> piece(make_shared<Piece>(getGameLogic(), this, getRandomPieceType(pieceTypes), blockTypes));
 	piece->init();
 	return piece;
 }
@@ -3846,7 +3846,7 @@ shared_ptr<BlockType> Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlo
 	}
 
 	//		int randomTotal = 1;
-	//		BlockType emptyBlockType(new BlockType());
+	//		BlockType emptyBlockType(make_shared<BlockType>());
 	//		randomBag.Add(emptyBlockType);
 	//		for(int i=0;i<array.Count;i++)
 	//		{
@@ -3941,13 +3941,13 @@ int Grid::cellH()
 }
 
 //=========================================================================================================================
-GameType* Grid::getGameType()
+shared_ptr<GameType> Grid::getGameType()
 {//=========================================================================================================================
 	return getGameLogic()->currentGameType;
 }
 
 //=========================================================================================================================
-GameLogic* Grid::getGameLogic()
+shared_ptr<GameLogic> Grid::getGameLogic()
 {//=========================================================================================================================
 	return game;
 }

@@ -18,17 +18,17 @@ public:
 	static Logger log;
 
 
-	Engine* e = nullptr;
+	shared_ptr<Engine> e = nullptr;
 
 
 public:
 	class GlowTile
 	{
 	private:
-		GlowTileBackgroundMenuPanel* outerInstance = nullptr;
+		shared_ptr<GlowTileBackgroundMenuPanel> outerInstance = nullptr;
 
 	public:
-		GlowTile(GlowTileBackgroundMenuPanel* outerInstance);
+		GlowTile(shared_ptr<GlowTileBackgroundMenuPanel> outerInstance);
 
 		int tileX = 0;
 		int tileY = 0;
@@ -38,9 +38,9 @@ public:
 	};
 
 public:
-	ArrayList<GlowTile*>* glowTiles = new ArrayList<GlowTile*>();
-	ArrayList<BobTexture*>* glowTileFramesTexture = new ArrayList<BobTexture*>();
-	BobTexture* bgScrollTexture = nullptr;
+	ArrayList<shared_ptr<GlowTile>>* glowTiles = make_shared<ArrayList><shared_ptr<GlowTile>>();
+	ArrayList<shared_ptr<BobTexture>>* glowTileFramesTexture = make_shared<ArrayList><shared_ptr<BobTexture>>();
+	shared_ptr<BobTexture> bgScrollTexture = nullptr;
 	float bgScrollX = 0;
 	float bgScrollY = 0;
 	long long ticksPassed = 0;
@@ -60,7 +60,7 @@ public:
 	GlowTileBackgroundMenuPanel();
 
 
-	GlowTileBackgroundMenuPanel(Engine* g);
+	GlowTileBackgroundMenuPanel(shared_ptr<Engine> g);
 
 
 	virtual void init();

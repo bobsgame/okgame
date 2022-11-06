@@ -68,7 +68,7 @@ public:
 
 	bool _requestedClientLocation = false;
 	string clientLocation = "";
-	ServerStats* serverStats = nullptr;
+	shared_ptr<ServerStats> serverStats = nullptr;
 
 
 	bool threadStarted = false;
@@ -78,7 +78,7 @@ public:
 
 	//------------------------------------
 public:
-	static void updateThreadLoop(TCPServerConnection *u);
+	static void updateThreadLoop(shared_ptr<TCPServerConnection >u);
 
 private:
 	void _sendKeepAlivePing();
@@ -93,7 +93,7 @@ private:
 	long long _lastLoadBalancerConnectTime = 0;
 	bool _couldNotResolveLoadBalancer = false;
 	int _couldNotOpenConnectionToLoadBalancerCount = 0;
-	IPaddress * _loadBalancerAddress = nullptr;
+	shared_ptr<IPaddress > _loadBalancerAddress = nullptr;
 	
 	long long _lastServerConnectTime = 0;
 	long long _lastSentServerIPRequestTime = 0;
@@ -138,7 +138,7 @@ public:
 
 	//------------------------------------
 private:
-	static Logger* _threadLog;
+	static shared_ptr<Logger> _threadLog;
 	mutex threadLog_Mutex;
 public:
 	void threadLogDebug_S(string s)
@@ -295,14 +295,14 @@ public:
 	//------------------------------------
 
 
-	IPaddress * _serverAddress = nullptr;
+	shared_ptr<IPaddress > _serverAddress = nullptr;
 	mutex _serverAddress_Mutex;
-	IPaddress* getServerAddress_S()
+	shared_ptr<IPaddress> getServerAddress_S()
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		return _serverAddress;
 	}
-	void setServerAddress_S(IPaddress *b)
+	void setServerAddress_S(shared_ptr<IPaddress >b)
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		_serverAddress = b;
@@ -869,7 +869,7 @@ public:
 	void incomingBobsGameActivityStreamResponse_S(string s);
 	void incomingBobsGameActivityStreamUpdate_S(string s);
 	void incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s);
-	void addToLeaderboard(ArrayList<BobsGameLeaderBoardAndHighScoreBoard*> &boardArray, BobsGameLeaderBoardAndHighScoreBoard *leaderBoard);
+	void addToLeaderboard(ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard);
 	void incomingBobsGameLeaderBoardByTotalTimePlayed(string &s);
 	void incomingBobsGameLeaderBoardByTotalBlocksCleared(string &s);
 	void incomingBobsGameLeaderBoardByPlaneswalkerPoints(string &s);
@@ -955,10 +955,10 @@ public:
 	string addFriendByUserNameResponse = "";
 
 	bool _doLoginNoCaptions(string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doLogin(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doCreateAccount(Caption *statusLabel, Caption *errorLabel, string &userName, string &email, string &password, string &confirmPassword);
+	bool doLogin(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
+	bool doCreateAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userName, string &email, string &password, string &confirmPassword);
 	bool checkForSessionTokenAndLogInIfExists();
-	bool doForgotPassword(Caption *statusLabel, Caption *errorLabel, string &userNameOrEmail);
-	bool linkFacebookAccount(Caption *statusLabel, Caption *errorLabel);
-	bool doAddFriendByUsername(Caption *statusLabel, Caption *errorLabel, const string& friendUserName);
+	bool doForgotPassword(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail);
+	bool linkFacebookAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel);
+	bool doAddFriendByUsername(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, const string& friendUserName);
 };

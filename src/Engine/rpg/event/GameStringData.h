@@ -29,9 +29,9 @@ public:
 
 	GameStringData(int id, const string& name, const string& text);
 
-	//static GameStringData* fromBase64ZippedJSON(const string& b64);
+	//static shared_ptr<GameStringData> fromBase64ZippedJSON(const string& b64);
 
-	//static GameStringData* fromJSON(const string& json);
+	//static shared_ptr<GameStringData> fromJSON(const string& json);
 
 	string& initFromString(string& t);
 

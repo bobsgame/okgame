@@ -24,7 +24,7 @@ public:
 	int w = 0;
 	int h = 0;
 
-	BobColor* currentFillColor = nullptr;
+	shared_ptr<BobColor> currentFillColor = nullptr;
 
 	BufferedImage();
 	BufferedImage(u8* rgbadata, int w, int h);
@@ -32,9 +32,9 @@ public:
 	void setRGB(int x, int y, int rgb);
 	int getRGBA(int x, int y);
 	u8* getData();
-	void setColor(BobColor* c);
+	void setColor(shared_ptr<BobColor> c);
 	void fillRect(int x, int y, int w, int h);
-	static BufferedImage* loadFromPNG(string filename);
+	static shared_ptr<BufferedImage> loadFromPNG(string filename);
 	const static int TYPE_INT_ARGB = 0;
 	int getWidth();
 	int getHeight();

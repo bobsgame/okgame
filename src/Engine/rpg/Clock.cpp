@@ -14,7 +14,7 @@
 Logger Clock::log = Logger("Clock");
 
 
-Clock::Clock(Engine* g)
+Clock::Clock(shared_ptr<Engine> g)
 { //=========================================================================================================================
 
 	this->e = g;

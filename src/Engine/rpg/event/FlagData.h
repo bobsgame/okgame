@@ -24,8 +24,8 @@ public:
 	FlagData(int id, const string& name);
 
 
-	//static FlagData* fromBase64ZippedJSON(const string& b64);
-	//static FlagData* fromJSON(const string& json);
+	//static shared_ptr<FlagData> fromBase64ZippedJSON(const string& b64);
+	//static shared_ptr<FlagData> fromJSON(const string& json);
 
 	string& initFromString(string& t);
 

@@ -22,19 +22,19 @@ public:
 	static Logger log;
 
 
-	StuffMenu* stuffMenu = nullptr;
+	shared_ptr<StuffMenu> stuffMenu = nullptr;
 	//GUI* stuffMenuGUI = nullptr;
 
-	GameStore* gameStore = nullptr;
+	shared_ptr<GameStore> gameStore = nullptr;
 	//GUI* gameStoreGUI = nullptr;
 
-	PlayerEditMenu* playerEditMenu = nullptr;
+	shared_ptr<PlayerEditMenu> playerEditMenu = nullptr;
 	//GUI* playerEditGUI = nullptr;
 
-	ArrayList<GameChallengeNotificationPanel*>* gameChallenges = new ArrayList<GameChallengeNotificationPanel*>();
-	//ArrayList<GUI*> gameChallengesGUIs;
+	ArrayList<shared_ptr<GameChallengeNotificationPanel>>* gameChallenges = make_shared<ArrayList><shared_ptr<GameChallengeNotificationPanel>>();
+	//ArrayList<GUI> gameChallengesGUIs;
 
-	KeyboardMenuPanel* keyboardScreen = nullptr;
+	shared_ptr<KeyboardMenuPanel> keyboardScreen = nullptr;
 	//GUI* keyboardScreenGUI = nullptr;
 
 
@@ -58,7 +58,7 @@ public:
 	bool lightTheme = false;
 
 
-	GUIManager(BGClientEngine* g);
+	GUIManager(shared_ptr<BGClientEngine> g);
 
 
 	void init();
@@ -71,10 +71,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	GameChallengeNotificationPanel* makeGameChallengeNotification(FriendCharacter* friend_in, const string& gameName);
+	shared_ptr<GameChallengeNotificationPanel> makeGameChallengeNotification(shared_ptr<FriendCharacter> friend_in, const string& gameName);
 
 
-	void removeGameNotification(GameChallengeNotificationPanel* g);
+	void removeGameNotification(shared_ptr<GameChallengeNotificationPanel> g);
 
 
 	void cleanup();
