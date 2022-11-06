@@ -178,7 +178,7 @@ void Cameraman::update()
 	float maxDistY = (float)getEngine()->getHeight();
 
 
-	if (dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != nullptr)
+	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)
 	{
 		float playerSpeedX = ((abs(getPlayer()->forceX * (getPlayer()->pixelsToMoveThisFrame + 1))) / getEngine()->engineTicksPassed()) / 0.01f;
 		float playerSpeedY = ((abs(getPlayer()->forceY * (getPlayer()->pixelsToMoveThisFrame + 1))) / getEngine()->engineTicksPassed()) / 0.01f;

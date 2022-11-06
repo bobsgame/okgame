@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 
 class Logger;
 class MapManager;
@@ -62,7 +62,7 @@ public:
 	static int OVERLAPS_SOMETHING;
 	static int DRAWN;
 
-	shared_ptr<BobTexture> texture = nullptr;
+	shared_ptr<OKTexture> texture = nullptr;
 
 	int sortingState = 0;
 

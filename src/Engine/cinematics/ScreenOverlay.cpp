@@ -23,7 +23,7 @@ void ScreenOverlay::init()
 { //=========================================================================================================================
 }
 
-void ScreenOverlay::doTransition(shared_ptr<BobColor> color, float fromAlpha, float toAlpha, int ticks)
+void ScreenOverlay::doTransition(shared_ptr<OKColor> color, float fromAlpha, float toAlpha, int ticks)
 { //=========================================================================================================================
 
 	this->color = color;
@@ -48,7 +48,7 @@ void ScreenOverlay::doTransition(shared_ptr<BobColor> color, float fromAlpha, fl
 	this->transitionType = TYPE_ONE_WAY;
 }
 
-void ScreenOverlay::doToAndFromTransition(shared_ptr<BobColor> color, int ticks, float toAlpha)
+void ScreenOverlay::doToAndFromTransition(shared_ptr<OKColor> color, int ticks, float toAlpha)
 { //=========================================================================================================================
 
 
@@ -66,7 +66,7 @@ void ScreenOverlay::doToAndFromTransition(shared_ptr<BobColor> color, int ticks,
 	this->transitionType = TYPE_ROUNDTRIP;
 }
 
-void ScreenOverlay::setInstantOverlay(shared_ptr<BobColor> color, float alpha)
+void ScreenOverlay::setInstantOverlay(shared_ptr<OKColor> color, float alpha)
 { //=========================================================================================================================
 
 	this->color = color;
@@ -139,7 +139,7 @@ void ScreenOverlay::clearOverlays()
 	alpha = 0;
 	toAlpha = 0;
 	transitionType = TYPE_INSTANT;
-	color = BobColor::black;
+	color = OKColor::black;
 }
 
 void ScreenOverlay::render()

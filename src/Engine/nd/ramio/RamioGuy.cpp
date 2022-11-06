@@ -508,7 +508,7 @@ void RamioGuy::move(int direction, float floatPixels)
 	}
 }
 
-void RamioGuy::render(float alpha, shared_ptr<BobTexture> texture, shared_ptr<BobTexture> shadowTexture)
+void RamioGuy::render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture)
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();

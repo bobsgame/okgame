@@ -1,18 +1,18 @@
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
 
-	class BobTexture
+	class OKTexture
 	{
 
 
 
 	public:
-		static shared_ptr<BobTexture >lastBoundTexture;
+		static shared_ptr<OKTexture >lastBoundTexture;
 
-		static shared_ptr<BobTexture >getLastBoundTexture();
+		static shared_ptr<OKTexture >getLastBoundTexture();
 
 
 	private:
@@ -41,7 +41,7 @@ class Logger;
 
 	public:
 
-		BobTexture(const string &ref, GLuint textureID);
+		OKTexture(const string &ref, GLuint textureID);
 
 
 		bool hasAlpha();

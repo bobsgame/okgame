@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -67,8 +67,8 @@ private:
 	
 	bool pullPlayer = false;
 	bool pushPlayer = false;
-	ArrayList<string>* behaviorList = make_shared<ArrayList><string>();
-	ArrayList<string>* connectionTYPEIDList = make_shared<ArrayList><string>();
+	ArrayList<string> behaviorList;// = make_shared<ArrayList><string>();
+	ArrayList<string> connectionTYPEIDList;// = make_shared<ArrayList><string>();
 	string comment = "";
 	bool isNPC = false; //only used for export from tools for now to determine whether to spawn a character or an entity. determined from the SPRITE.getIsNPC, which is where it should be.
 

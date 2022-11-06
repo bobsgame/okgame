@@ -73,11 +73,11 @@ string& AudioData::initFromString(string& t)
 	md5Name = t.substr(0, t.find("`"));
 	t = t.substr(t.find("`,") + 2);
 
-	if (String::startsWith(t, "preload:"))
+	if (OKString::startsWith(t, "preload:"))
 	{
 		t = t.substr(t.find("preload:`") + 1);
 		t = t.substr(t.find("`") + 1);
-		preload = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+		preload = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 	}
 

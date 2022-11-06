@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "CTPL-master/ctpl_stl.h"
 
 class Logger;
@@ -63,7 +63,7 @@ public:
 	shared_ptr<IntArray> lightMaskLayer = nullptr;
 
 
-	HashMap<int,shared_ptr<BobTexture>> chunkTexture;//= make_shared<HashMap><int, shared_ptr<Texture>>();
+	HashMap<int,shared_ptr<OKTexture>> chunkTexture;//= make_shared<HashMap><int, shared_ptr<Texture>>();
 
 	vector<bool>* usingHQ2XTexture = nullptr;
 
@@ -349,10 +349,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	shared_ptr<BobTexture> getChunkTexture(int index);
+	shared_ptr<OKTexture> getChunkTexture(int index);
 
 	//The following method was originally marked 'synchronized':
-	void setChunkTexture(int index, shared_ptr<BobTexture> t);
+	void setChunkTexture(int index, shared_ptr<OKTexture> t);
 
 
 	//The following method was originally marked 'synchronized':

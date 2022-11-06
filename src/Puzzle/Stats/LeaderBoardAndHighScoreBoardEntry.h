@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include <src/Utility/Logger.h>
 #include <src/Utility/ArrayList.h>
 
@@ -47,12 +47,12 @@
 //leaderboard shows the top 10 users ranked by elo score or planeswalkerpoints
 //high score board shows the top 10 scores by time lasted or some other metric, blocks made, blocks cleared?
 //TODO:might have to add timeSpentSpinningAtBottom and subtract that
-class BobsGameLeaderBoardAndHighScoreBoard
+class OKGameLeaderBoardAndHighScoreBoard
 {//===============================================================================================
 
 public:
 
-	Logger log = Logger("BobsGameLeaderBoardAndHighScoreBoard");
+	Logger log = Logger("OKGameLeaderBoardAndHighScoreBoard");
 
 	string isGameTypeOrSequence = "";
 	string gameTypeName = "";
@@ -62,7 +62,7 @@ public:
 	string difficultyName = "";
 	string objectiveString = "";
 
-	class BobsGameLeaderBoardAndHighScoreBoardEntry
+	class OKGameLeaderBoardAndHighScoreBoardEntry
 	{
 	public:
 		string userName = "";
@@ -93,7 +93,7 @@ public:
 
 	};
 
-	ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoardEntry>> entries;
+	ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry>> entries;
 
 	int maxEntries = 10;
 
@@ -102,21 +102,21 @@ public:
 
 
 	//===============================================================================================
-	BobsGameLeaderBoardAndHighScoreBoard()
+	OKGameLeaderBoardAndHighScoreBoard()
 	{//===============================================================================================
 
 		for (int i = 0; i<maxEntries; i++)
 		{
-			entries.add(make_shared<BobsGameLeaderBoardAndHighScoreBoardEntry>());
+			entries.add(make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>());
 		}
 
 	}
 //
 //	//===============================================================================================
-//	static BobsGameLeaderBoardAndHighScoreBoard getFromDBOrCreateNewIfNotExist(Connection databaseConnection, string databaseName, BobsGameGameStats game, bool anyGame, bool anyDifficulty)
+//	static OKGameLeaderBoardAndHighScoreBoard getFromDBOrCreateNewIfNotExist(Connection databaseConnection, string databaseName, OKGameGameStats game, bool anyGame, bool anyDifficulty)
 //	{//===============================================================================================
 //
-//		BobsGameLeaderBoardAndHighScoreBoard stats = nullptr;
+//		OKGameLeaderBoardAndHighScoreBoard stats = nullptr;
 //		{
 //
 //			string gameTypeOrSequenceQuerystring = "";
@@ -163,20 +163,20 @@ public:
 //
 //				if (resultSet.next())
 //				{
-//					stats = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(resultSet);
+//					stats = make_shared<OKGameLeaderBoardAndHighScoreBoard>(resultSet);
 //				}
 //
 //				resultSet.close();
 //				ps.close();
 //
 //			}
-//			catch (Exception ex) { log.error("DB ERROR: " + ex.getMessage());  return nullptr; }
+//			catch (Exception ex) { log->error("DB ERROR: " + ex.getMessage());  return nullptr; }
 //		}
 //
 //		//create it if it doesnt exist
 //		if (stats == nullptr)
 //		{
-//			stats = make_shared<BobsGameLeaderBoardAndHighScoreBoard>();
+//			stats = make_shared<OKGameLeaderBoardAndHighScoreBoard>();
 //			stats.isGameTypeOrSequence = game.isGameTypeOrSequence;
 //			stats.gameTypeUUID = game.gameTypeUUID;
 //			stats.gameTypeName = game.gameTypeName;
@@ -206,10 +206,10 @@ public:
 //
 //
 //	//===============================================================================================
-//	static ArrayList<BobsGameLeaderBoardAndHighScoreBoard> getAllLeaderBoardsAndHighScoreBoardsFromDB(Connection databaseConnection, string databaseName)
+//	static ArrayList<OKGameLeaderBoardAndHighScoreBoard> getAllLeaderBoardsAndHighScoreBoardsFromDB(Connection databaseConnection, string databaseName)
 //	{//===============================================================================================
 //
-//		ArrayList<BobsGameLeaderBoardAndHighScoreBoard> leaderBoards = make_shared<ArrayList><BobsGameLeaderBoardAndHighScoreBoard>();
+//		ArrayList<OKGameLeaderBoardAndHighScoreBoard> leaderBoards = make_shared<ArrayList><OKGameLeaderBoardAndHighScoreBoard>();
 //
 //		ResultSet resultSet = nullptr;
 //		PreparedStatement ps = nullptr;
@@ -235,7 +235,7 @@ public:
 //
 //			while (resultSet.next())
 //			{
-//				leaderBoards.add(make_shared<BobsGameLeaderBoardAndHighScoreBoard>(resultSet));
+//				leaderBoards.add(make_shared<OKGameLeaderBoardAndHighScoreBoard>(resultSet));
 //			}
 //
 //			resultSet.close();
@@ -243,14 +243,14 @@ public:
 //
 //
 //		}
-//		catch (Exception ex) { log.error("DB ERROR: " + ex.getMessage());  return nullptr; }
+//		catch (Exception ex) { log->error("DB ERROR: " + ex.getMessage());  return nullptr; }
 //
 //
 //		return leaderBoards;
 //	}
 //
 //	//===============================================================================================
-//	static void updateLeaderBoardsAndHighScoreBoards(Connection databaseConnection, BobsGameGameStats game, LeaderBoardScore score, BobsGameOverallUserStats userStats, BobsGameUserStatsForSpecificGameAndDifficulty gameStats)
+//	static void updateLeaderBoardsAndHighScoreBoards(Connection databaseConnection, OKGameGameStats game, LeaderBoardScore score, OKGameOverallUserStats userStats, OKGameUserStatsForSpecificGameAndDifficulty gameStats)
 //	{//===============================================================================================
 //	 //leaderboard by game and difficulty elo score
 //	 //leaderboard by game and difficulty planeswalker
@@ -308,7 +308,7 @@ public:
 //	 //		int singlePlayerHighestLevelReached = 0;
 //	 //		int biggestCombo = 0;
 //
-//		BobsGameLeaderBoardAndHighScoreBoard stats = nullptr;
+//		OKGameLeaderBoardAndHighScoreBoard stats = nullptr;
 //		bool needToUpdate = false;
 //
 //		bool anyGame = false;
@@ -330,7 +330,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByEloScore");
 //
@@ -343,7 +343,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByPlaneswalkerPoints");
 //
@@ -357,7 +357,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = true;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalTimePlayed");
 //
@@ -371,7 +371,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = true;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalBlocksCleared");
 //
@@ -385,7 +385,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByEloScore");
 //
@@ -398,7 +398,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByPlaneswalkerPoints");
 //
@@ -412,7 +412,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = true;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalTimePlayed");
 //
@@ -426,7 +426,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = true;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalBlocksCleared");
 //
@@ -440,7 +440,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByEloScore");
 //
@@ -453,7 +453,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByPlaneswalkerPoints");
 //
@@ -467,7 +467,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = true;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalTimePlayed");
 //
@@ -481,7 +481,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = true;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalBlocksCleared");
 //
@@ -495,7 +495,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByEloScore", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByEloScore");
 //
@@ -508,7 +508,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByPlaneswalkerPoints", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByPlaneswalkerPoints");
 //
@@ -522,7 +522,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = true;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalTimePlayed", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalTimePlayed");
 //
@@ -536,7 +536,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = true;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameLeaderBoardsByTotalBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameLeaderBoardsByTotalBlocksCleared");
 //
@@ -569,7 +569,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByBlocksCleared");
 //
@@ -582,7 +582,7 @@ public:
 //		compareTimeLasted = true;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByTimeLasted");
 //
@@ -597,7 +597,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByBlocksCleared");
 //
@@ -610,7 +610,7 @@ public:
 //		compareTimeLasted = true;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByTimeLasted");
 //
@@ -623,7 +623,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByBlocksCleared");
 //
@@ -636,7 +636,7 @@ public:
 //		compareTimeLasted = true;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByTimeLasted");
 //
@@ -651,7 +651,7 @@ public:
 //		compareTimeLasted = false;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByBlocksCleared", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByBlocksCleared");
 //
@@ -664,7 +664,7 @@ public:
 //		compareTimeLasted = true;
 //		compareTotalBlocksCleared = false;
 //		compareTotalTimePlayed = false;
-//		stats = BobsGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
+//		stats = OKGameLeaderBoardAndHighScoreBoard.getFromDBOrCreateNewIfNotExist(databaseConnection, "bobsGameHighScoreBoardsByTimeLasted", game, anyGame, anyDifficulty);
 //		needToUpdate = stats.updateFromGameStatsIfNecessary(databaseConnection, game, userStats, gameStats, score, compareEloScore, anyGame, anyDifficulty, comparePlaneswalkerPoints, compareBlocksCleared, compareTimeLasted, compareTotalBlocksCleared, compareTotalTimePlayed);
 //		if (needToUpdate)stats.updateDB(databaseConnection, game.userID, "bobsGameHighScoreBoardsByTimeLasted");
 //
@@ -676,7 +676,7 @@ public:
 //
 //
 //	//===============================================================================================
-//	private bool updateFromGameStatsIfNecessary(Connection databaseConnection, BobsGameGameStats game, BobsGameOverallUserStats userStats, BobsGameUserStatsForSpecificGameAndDifficulty gameStats, LeaderBoardScore score, bool anyGame, bool anyDifficulty, bool compareEloScore, bool comparePlaneswalkerPoints, bool compareBlocksCleared, bool compareTimeLasted, bool compareTotalBlocksCleared, bool compareTotalTimePlayed)
+//	private bool updateFromGameStatsIfNecessary(Connection databaseConnection, OKGameGameStats game, OKGameOverallUserStats userStats, OKGameUserStatsForSpecificGameAndDifficulty gameStats, LeaderBoardScore score, bool anyGame, bool anyDifficulty, bool compareEloScore, bool comparePlaneswalkerPoints, bool compareBlocksCleared, bool compareTimeLasted, bool compareTotalBlocksCleared, bool compareTotalTimePlayed)
 //	{//===============================================================================================
 //
 //
@@ -691,7 +691,7 @@ public:
 //		for (int i = 0; i<maxEntries; i++)
 //		{
 //
-//			BobsGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
 //
 //
 //
@@ -726,7 +726,7 @@ public:
 //			//			long longestTimeLastedThisGameAndDifficulty = 0;
 //
 //
-//			BobsGameLeaderBoardAndHighScoreBoardEntry newStats = make_shared<BobsGameLeaderBoardAndHighScoreBoardEntry>();
+//			OKGameLeaderBoardAndHighScoreBoardEntry newStats = make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>();
 //			newStats.userName = game.userName;
 //			newStats.userID = game.userID;
 //			newStats.statsUUID = game.statsUUID;
@@ -735,7 +735,7 @@ public:
 //
 //			if (anyGame)
 //			{
-//				BobsGameUserStatsPerDifficulty stats = nullptr;
+//				OKGameUserStatsPerDifficulty stats = nullptr;
 //
 //				if (game.difficultyName == "Beginner")stats = userStats.bgStats_BEGINNER;
 //				if (game.difficultyName == "Easy")stats = userStats.bgStats_EASY;
@@ -777,7 +777,7 @@ public:
 //			else
 //			{
 //				//use gameStats
-//				BobsGameUserStatsForSpecificGameAndDifficulty stats = gameStats;
+//				OKGameUserStatsForSpecificGameAndDifficulty stats = gameStats;
 //
 //				newStats.totalGamesPlayed = stats.totalGamesPlayed;
 //				newStats.singlePlayerGamesPlayed = stats.singlePlayerGamesPlayed;
@@ -967,13 +967,13 @@ public:
 //
 //
 //	//===============================================================================================
-//	BobsGameLeaderBoardAndHighScoreBoard(ResultSet databaseResultSet)
+//	OKGameLeaderBoardAndHighScoreBoard(ResultSet databaseResultSet)
 //	{//===============================================================================================
 //
 //
 //		for (int i = 0; i<maxEntries; i++)
 //		{
-//			entries.add(make_shared<BobsGameLeaderBoardAndHighScoreBoardEntry>());
+//			entries.add(make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>());
 //		}
 //
 //
@@ -998,7 +998,7 @@ public:
 //			for (int i = 0; i<maxEntries; i++)
 //			{
 //				string diff = "_" + i;
-//				BobsGameLeaderBoardAndHighScoreBoardEntry s = entries.get(i);
+//				OKGameLeaderBoardAndHighScoreBoardEntry s = entries.get(i);
 //
 //
 //				s.userName = databaseResultSet.getstring("userName" + diff);
@@ -1032,7 +1032,7 @@ public:
 //		}
 //		catch (Exception ex)
 //		{
-//			log.error("DB ERROR:" + ex.getMessage());
+//			log->error("DB ERROR:" + ex.getMessage());
 //		}
 //	}
 
@@ -1053,7 +1053,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			string diff = "_" + to_string(i);
-			shared_ptr<BobsGameLeaderBoardAndHighScoreBoardEntry >s = entries.get(i);
+			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry >s = entries.get(i);
 
 			gameSavestring += ",userName:`" + s->userName + "`";
 			gameSavestring += ",userID:`" + to_string(s->userID) + "`";
@@ -1088,12 +1088,12 @@ public:
 	}
 
 	//===============================================================================================
-	BobsGameLeaderBoardAndHighScoreBoard(string &s)
+	OKGameLeaderBoardAndHighScoreBoard(string &s)
 	{//===============================================================================================
 
 		for (int i = 0; i<maxEntries; i++)
 		{
-			entries.add(make_shared<BobsGameLeaderBoardAndHighScoreBoardEntry>());
+			entries.add(make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>());
 		}
 
 		decode(s);
@@ -1144,7 +1144,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			//string diff = "_" + to_string(i);
-			shared_ptr<BobsGameLeaderBoardAndHighScoreBoardEntry >stats = entries.get(i);
+			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry >stats = entries.get(i);
 
 			s = s.substr(s.find('`') + 1);
 			t = s.substr(0, s.find('`'));
@@ -1294,7 +1294,7 @@ public:
 //	{//===============================================================================================
 //
 //
-//		if (databaseConnection == nullptr) { log.error("DB ERROR: Could not open DB connection!"); return; }
+//		if (databaseConnection == nullptr) { log->error("DB ERROR: Could not open DB connection!"); return; }
 //
 //		PreparedStatement ps = nullptr;
 //
@@ -1312,7 +1312,7 @@ public:
 //		for (int i = 0; i<maxEntries; i++)
 //		{
 //			string diffName = "_" + i;
-//			BobsGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
 //
 //
 //			query += "" + diffStats.userName + diffName + " = ? ";
@@ -1358,7 +1358,7 @@ public:
 //			for (int i = 0; i<maxEntries; i++)
 //			{
 //
-//				BobsGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//				OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
 //
 //
 //				ps.setstring(++n, diffStats.userName);
@@ -1402,7 +1402,7 @@ public:
 //	void updateDB(Connection databaseConnection, long userID, string databaseName)
 //	{//===============================================================================================
 //
-//		if (databaseConnection == nullptr) { log.error("DB ERROR: Could not open DB connection!"); return; }
+//		if (databaseConnection == nullptr) { log->error("DB ERROR: Could not open DB connection!"); return; }
 //
 //		string query = "";
 //		query += "UPDATE " + databaseName + " SET "; //bobsGameEloScoreLeaderBoards or bobsGameMostBlocksClearedHighScoreBoards
@@ -1435,7 +1435,7 @@ public:
 //		for (int i = 0; i<maxEntries; i++)
 //		{
 //			string diffName = "_" + i;
-//			BobsGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
 //
 //
 //
@@ -1479,7 +1479,7 @@ public:
 //				for (int i = 0; i<maxEntries; i++)
 //				{
 //
-//					BobsGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//					OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
 //
 //
 //					ps.setstring(++n, diffStats.userName);
@@ -1513,7 +1513,7 @@ public:
 //
 //				ps.close();
 //			}
-//			catch (Exception ex) { log.error("DB ERROR: " + ex.getMessage());  }
+//			catch (Exception ex) { log->error("DB ERROR: " + ex.getMessage());  }
 //
 //		}
 //	}

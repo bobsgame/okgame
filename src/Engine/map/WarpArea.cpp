@@ -115,17 +115,17 @@ void WarpArea::renderDebugInfo()
 
 	float x = screenLeft();
 	float y = screenTop();
-	GLUtils::drawOutlinedString(getName(), x, y - 36, BobColor::white);
+	GLUtils::drawOutlinedString(getName(), x, y - 36, OKColor::white);
 
 
-	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y - 27, make_shared<BobColor>(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y - 27, make_shared<OKColor>(200, 0, 255));
 
 	if (destinationTYPEIDString() == "AREA." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self") //if it doesn't have a destination set, mark it as problematic
 	{
-		GLUtils::drawOutlinedString("WarpArea: Has no destination!", x, y - 18, BobColor::red);
+		GLUtils::drawOutlinedString("WarpArea: Has no destination!", x, y - 18, OKColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString("WarpArea: Goes to Map.Name: " + getDestinationMapName() + "." + getDestinationWarpAreaName(), x, y - 9, make_shared<BobColor>(200, 0, 255, 255));
+	GLUtils::drawOutlinedString("WarpArea: Goes to Map.Name: " + getDestinationMapName() + "." + getDestinationWarpAreaName(), x, y - 9, make_shared<OKColor>(200, 0, 255, 255));
 
 
 	Area::renderDebugInfo();

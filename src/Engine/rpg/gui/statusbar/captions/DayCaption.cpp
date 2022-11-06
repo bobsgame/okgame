@@ -24,9 +24,9 @@ void DayCaption::init()
 
 	light = make_shared<Light>(getEngine(), "dayLight", -100, 4, 10, 2, 255, 255, 255, 90, 16, 2.0f, 1.0f, 0, true, true);
 
-	defaultFGColor = BobColor::white;
-	defaultAAColor = BobColor::gray;
-	defaultBGColor = BobColor::clear;
+	defaultFGColor = OKColor::white;
+	defaultAAColor = OKColor::gray;
+	defaultBGColor = OKColor::clear;
 
 	currentFGColor = defaultFGColor;
 	currentAAColor = defaultAAColor;

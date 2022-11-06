@@ -81,11 +81,11 @@ string& EventData::initFromString(string& t)
 
 
 	//ONLY FOR USE ON CLIENT, IGNORE THIS
-	if (String::startsWith(t,"dialogueDataList"))
+	if (OKString::startsWith(t,"dialogueDataList"))
 	{
 		t = t.substr(t.find("dialogueDataList:{") + 1);
 		t = t.substr(t.find("{") + 1);
-		while (String::startsWith(t,"}") == false)
+		while (OKString::startsWith(t,"}") == false)
 		{
 			shared_ptr<DialogueData> data = make_shared<DialogueData>();
 			t = data->initFromString(t);
@@ -96,7 +96,7 @@ string& EventData::initFromString(string& t)
 
 		t = t.substr(t.find("flagDataList:{") + 1);
 		t = t.substr(t.find("{") + 1);
-		while (String::startsWith(t,"}") == false)
+		while (OKString::startsWith(t,"}") == false)
 		{
 			shared_ptr<FlagData> data = make_shared<FlagData>();
 			t = data->initFromString(t);
@@ -107,7 +107,7 @@ string& EventData::initFromString(string& t)
 
 		t = t.substr(t.find("skillDataList:{") + 1);
 		t = t.substr(t.find("{") + 1);
-		while (String::startsWith(t,"}") == false)
+		while (OKString::startsWith(t,"}") == false)
 		{
 			shared_ptr<SkillData> data = make_shared<SkillData>();
 			t = data->initFromString(t);
@@ -118,7 +118,7 @@ string& EventData::initFromString(string& t)
 
 		t = t.substr(t.find("gameStringDataList:{") + 1);
 		t = t.substr(t.find("{") + 1);
-		while (String::startsWith(t,"}") == false)
+		while (OKString::startsWith(t,"}") == false)
 		{
 			shared_ptr<GameStringData> data = make_shared<GameStringData>();
 			t = data->initFromString(t);
@@ -129,7 +129,7 @@ string& EventData::initFromString(string& t)
 
 		t = t.substr(t.find("musicDataList:{") + 1);
 		t = t.substr(t.find("{") + 1);
-		while (String::startsWith(t,"}") == false)
+		while (OKString::startsWith(t,"}") == false)
 		{
 			shared_ptr<AudioData> data = make_shared<AudioData>();
 			t = data->initFromString(t);
@@ -140,7 +140,7 @@ string& EventData::initFromString(string& t)
 
 		t = t.substr(t.find("soundDataList:{") + 1);
 		t = t.substr(t.find("{") + 1);
-		while (String::startsWith(t,"}") == false)
+		while (OKString::startsWith(t,"}") == false)
 		{
 			shared_ptr<AudioData> data = make_shared<AudioData>();
 			t = data->initFromString(t);
@@ -571,8 +571,8 @@ const shared_ptr<EventScriptCommand> EventData::setTimeNormalSpeed = make_shared
 const shared_ptr<EventScriptCommand> EventData::e037 = make_shared<EventScriptCommand>();
 const shared_ptr<EventScriptCommand> EventData::setNDOpen_BOOL = make_shared<EventScriptCommand>("setNDOpen_BOOL", "");
 const shared_ptr<EventScriptCommand> EventData::startGame = make_shared<EventScriptCommand>("startGame", "");
-const shared_ptr<EventScriptCommand> EventData::startBobsGameOnStadiumScreen_AREA = make_shared<EventScriptCommand>("startBobsGameOnStadiumScreen_AREA", "");
-const shared_ptr<EventScriptCommand> EventData::blockUntilBobsGameDead = make_shared<EventScriptCommand>("blockUntilBobsGameDead", "");
+const shared_ptr<EventScriptCommand> EventData::startOKGameOnStadiumScreen_AREA = make_shared<EventScriptCommand>("startOKGameOnStadiumScreen_AREA", "");
+const shared_ptr<EventScriptCommand> EventData::blockUntilOKGameDead = make_shared<EventScriptCommand>("blockUntilOKGameDead", "");
 const shared_ptr<EventScriptCommand> EventData::showLoginScreen = make_shared<EventScriptCommand>("showLoginScreen", "");
 const shared_ptr<EventScriptCommand> EventData::e038 = make_shared<EventScriptCommand>();
 const shared_ptr<EventScriptCommand> EventData::closeAllMenusAndND = make_shared<EventScriptCommand>("closeAllMenusAndND", "");

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bobtypes.h"
+#include "oktypes.h"
 
 
 
@@ -16,10 +16,10 @@
 #include "src/Utility/Color.h"
 #include "src/Utility/stringconverter.h"
 #include "src/Utility/Easing.h"
-#include "src/Utility/BobMath.h"
-#include "src/Utility/BobString.h"
+#include "src/Utility/OKMath.h"
+#include "src/Utility/OKString.h"
 #include "src/../lib/HQ2X/HQ2X.h"
-#include "src/Utility/BobBool.h"
+#include "src/Utility/OKBool.h"
 #include "src/Utility/AssetData.h"
 #include "src/Utility/BufferedImage.h"
 #include "src/Utility/ControlsManager.h"
@@ -36,15 +36,15 @@
 #include "src/Utility/System.h"
 #include "src/Utility/gl/GLUtils.h"
 #include "src/Utility/gl/Texture.h"
-#include "src/Utility/BobFont.h"
+#include "src/Utility/OKFont.h"
 #include "src/Utility/Caption.h"
 #include "src/Utility/CaptionManager.h"
-#include "src/Utility/BobMenu.h"
+#include "src/Utility/OKMenu.h"
 
 
 
 #include "src/Puzzle/Block.h"
-#include "src/Puzzle/BobsGame.h"
+#include "src/Puzzle/OKGame.h"
 #include "src/Puzzle/GameLogic.h"
 #include "src/Puzzle/Grid.h"
 #include "src/Puzzle/Piece.h"
@@ -140,10 +140,10 @@
 #include "src/Engine/nd/ramio/RamioGuy.h"
 #include "src/Engine/nd/ramio/RamioMoneyBlock.h"
 #include "src/Engine/nd/ramio/Ramio.h"
-#include "src/Engine/stadium/BobsGameStadium.h"
+#include "src/Engine/stadium/OKGameStadium.h"
 #include "src/Engine/stadium/StadiumScreen.h"
 #include "src/Engine/network/ServerObject.h"
-#include "src/Engine/network/BobNet.h"
+#include "src/Engine/network/OKNet.h"
 #include "src/Engine/network/TCPServerConnection.h"
 #include "src/Engine/network/UDPPeerConnection.h"
 #include "src/Engine/map/Area.h"

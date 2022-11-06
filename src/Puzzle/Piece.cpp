@@ -71,7 +71,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
     
     
     //ar & BOOST_SERIALIZATION_NVP(color);
-	importExport_color = BobColor();
+	importExport_color = OKColor();
     if (color != nullptr && color->name!="" && color->name!="empty")
     {
         importExport_color = *color;
@@ -89,9 +89,9 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
     color = nullptr;
 	if (importExport_color.name != "" && importExport_color.name != "empty")
 	{
-		color = BobColor::getColorByName(importExport_color.name);
+		color = OKColor::getColorByName(importExport_color.name);
 	}
-    importExport_color = BobColor();
+    importExport_color = OKColor();
     
     
     
@@ -254,7 +254,7 @@ void Piece::initColors()
 		}
 		else
 		{
-			//BobColor none;
+			//OKColor none;
 			if (pieceType->color != nullptr)
 			{
 				b->setColor(pieceType->color);
@@ -333,7 +333,7 @@ void Piece::initColors()
 	{
 		//don't make 3 jewels of the same color
 
-		shared_ptr<BobColor >c = blocks.get(0)->getColor();
+		shared_ptr<OKColor >c = blocks.get(0)->getColor();
 
 		
 		if (c != nullptr)
@@ -515,7 +515,7 @@ void Piece::update()
 						filledBlockTypes = true;
 					}
 					b->counterCount = -2;
-					shared_ptr<BobColor >color = b->getColor();
+					shared_ptr<OKColor >color = b->getColor();
 					b->blockType = grid->getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(blockTypes);
 					b->setColor(color);
 				}
@@ -725,7 +725,7 @@ void Piece::renderGhost(float x, float y, float alpha)
 	{
 		shared_ptr<Block> b = blocks.get(i);
 
-		shared_ptr<BobColor >c = getGameLogic()->player->gridCheckeredBackgroundColor1;
+		shared_ptr<OKColor >c = getGameLogic()->player->gridCheckeredBackgroundColor1;
 
 		// fill in black square so background doesnt show through alpha
 		GLUtils::drawFilledRectXYWH(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), (float)cellW(), (float)cellH(), c->rf(), c->gf(), c->bf(), 1.0f);

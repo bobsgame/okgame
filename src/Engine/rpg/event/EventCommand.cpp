@@ -96,7 +96,7 @@ shared_ptr<EventCommand> EventCommand::parseEventCommandFromCommandString(shared
 
 		//commandString now looks like "thing)" or "thing|thing)" or ")"
 
-		while (String::startsWith(commandString, ")") == false)
+		while (OKString::startsWith(commandString, ")") == false)
 		{
 			if (commandString.find("|") != -1) //commandString looks like thing|thing)
 			{

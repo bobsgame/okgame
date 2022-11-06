@@ -1,5 +1,5 @@
 
-#include "bobtypes.h"
+#include "oktypes.h"
 
 #include "Gwen/Platform.h"
 #include <Gwen/Controls/Base.h>
@@ -58,7 +58,7 @@ public:
 	const char* GetTypeName() { return "PreviewRectangle"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
 	//GWEN_CONTROL_CONSTRUCTOR(PreviewRectangle)
-	GameTestPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+	GameTestPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
 	{
 		bobsGame = b;
 		m_Color = Gwen::Color(255, 255, 0, 255);
@@ -66,7 +66,7 @@ public:
 
 	void Render(Gwen::Skin::Base* skin);
 
-	shared_ptr<BobsGame >bobsGame = nullptr;
+	shared_ptr<OKGame >bobsGame = nullptr;
 };
 
 
@@ -91,7 +91,7 @@ public:
 	}
 	const char* GetTypeName() { return "GameTestMenuControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "", shared_ptr<BobsGame >b = nullptr);
+	GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "", shared_ptr<OKGame >b = nullptr);
 
 
 
@@ -167,7 +167,7 @@ private:
 
 public:
 	bool windowOpen = false;
-	shared_ptr<BobsGame> bobsGame = nullptr;
+	shared_ptr<OKGame> bobsGame = nullptr;
 
 
 	int fontHeight = 20;

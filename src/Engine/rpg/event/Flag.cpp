@@ -24,7 +24,7 @@ Flag::Flag(shared_ptr<Engine> g, int id)
 	{
 		if (getEventManager()->flagList.get(i)->getID() == data->getID())
 		{
-			log.error("Flag already exists:" + data->getName());
+			log->error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
@@ -46,7 +46,7 @@ Flag::Flag(shared_ptr<Engine> g, shared_ptr<FlagData> data)
 	{
 		if (getEventManager()->flagList.get(i)->getID() == data->getID())
 		{
-			log.error("Flag already exists:" + data->getName());
+			log->error("Flag already exists:" + data->getName());
 			return;
 		}
 	}

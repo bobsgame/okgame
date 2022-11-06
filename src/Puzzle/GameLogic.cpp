@@ -17,15 +17,15 @@ int GameLogic::aboveGridBuffer = 4;
 
 
 //===============================================================================================
-shared_ptr<BobsGame> GameLogic::getBobsGame()
+shared_ptr<OKGame> GameLogic::getOKGame()
 {//===============================================================================================
-	return (shared_ptr<BobsGame>)getEngine();
+	return (shared_ptr<OKGame>)getEngine();
 }
 
 //===============================================================================================
 shared_ptr<Room> GameLogic::getRoom()
 {//===============================================================================================
-	return getBobsGame()->currentRoom;
+	return getOKGame()->currentRoom;
 }
 
 
@@ -37,12 +37,12 @@ GameLogic::GameLogic(shared_ptr<Engine> g, long long seed)
 	boost::uuids::random_generator generator;
 	uuid = to_string(generator());
 
-	captionTextColor = BobColor::white;
-	captionBGColor = BobColor::clear;
+	captionTextColor = OKColor::white;
+	captionBGColor = OKColor::clear;
 	captionFontSize = 16;
 
-	announcementCaptionTextColor = BobColor::white;
-	announcementCaptionBGColor = BobColor::clear;
+	announcementCaptionTextColor = OKColor::white;
+	announcementCaptionBGColor = OKColor::clear;
 	announcementCaptionFontSize = 32;
 	resultCaptionFontSize = 64;
 	mediumCaptionFontSize = 16;
@@ -204,7 +204,7 @@ void GameLogic::initGame()
 	}
 	grid->randomBag.clear();
 
-	//log.warn("Number of cells before: "+grid.getNumberOfFilledCells());
+	//log->warn("Number of cells before: "+grid.getNumberOfFilledCells());
 
 	int oldWidth = gridW();
 	int oldHeight = gridH();
@@ -220,8 +220,8 @@ void GameLogic::initGame()
 		//}
 	//}
 
-	if (isNetworkPlayer)log.warn(currentGameType->name);
-	else log.debug(currentGameType->name);
+	if (isNetworkPlayer)log->warn(currentGameType->name);
+	else log->debug(currentGameType->name);
 
 //	grid->blocks.clear();
 //	for (int i = 0; i<grid->getWidth()*grid->getHeight(); i++)
@@ -233,22 +233,22 @@ void GameLogic::initGame()
 
 	grid->scrollPlayingFieldY = 0;
 
-	//log.warn("Number of cells after reformat: "+grid.getNumberOfFilledCells());
+	//log->warn("Number of cells after reformat: "+grid.getNumberOfFilledCells());
 
 	//force gravity first to fill in any gaps
 	manuallyApplyGravityWithoutChainChecking();
 
-	//log.warn("Number of cells after move down: "+grid.getNumberOfFilledCells());
+	//log->warn("Number of cells after move down: "+grid.getNumberOfFilledCells());
 
 	//go through playing field, change all blocks to acceptable playing field blocks if exist, otherwise normal pieces
 	grid->replaceAllBlocksWithNewGameBlocks();
 
-	//log.warn("Number of cells after replace: "+grid.getNumberOfFilledCells());
+	//log->warn("Number of cells after replace: "+grid.getNumberOfFilledCells());
 
 	//force gravity first to fill in any gaps
 	manuallyApplyGravityWithoutChainChecking();
 
-	//log.warn("Number of cells after move down again: "+grid.getNumberOfFilledCells());
+	//log->warn("Number of cells after move down again: "+grid.getNumberOfFilledCells());
 
 	//possibly adding blocks or gaps to playing field i.e. dr
 
@@ -427,7 +427,7 @@ void GameLogic::waitForPressStart()
 
 	if (pressStartCaption == nullptr)
 	{
-		pressStartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "PRESS START", announcementCaptionFontSize, true, BobColor::yellow, BobColor::clear, RenderOrder::ABOVE, 1.0f);
+		pressStartCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "PRESS START", announcementCaptionFontSize, true, OKColor::yellow, OKColor::clear, RenderOrder::ABOVE, 1.0f);
 	}
 	else
 	{
@@ -446,7 +446,7 @@ void GameLogic::waitForPressStart()
 		}
 
 		waitingForStart = false;
-		log.info("waitingForStart=false");
+		log->info("waitingForStart=false");
 	}
 }
 
@@ -458,7 +458,7 @@ void GameLogic::waitForReady()
 		getAudioManager()->playSound(currentGameType->readySound, getVolume(), 1.0f);
 		playedReadySound = true;
 
-		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 30, currentGameType->readyTicksAmount, "READY", announcementCaptionFontSize, true, BobColor::red, BobColor::clear, RenderOrder::ABOVE, 2.0f);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 30, currentGameType->readyTicksAmount, "READY", announcementCaptionFontSize, true, OKColor::red, OKColor::clear, RenderOrder::ABOVE, 2.0f);
 		c->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - c->getWidth() / 2;
 	}
 
@@ -471,7 +471,7 @@ void GameLogic::waitForReady()
 
 		getAudioManager()->playSound(currentGameType->goSound, getVolume(), 1.0f);
 
-		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2), 1000, "GO!", announcementCaptionFontSize, true, BobColor::green, BobColor::clear, RenderOrder::ABOVE, 2.0f);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2), 1000, "GO!", announcementCaptionFontSize, true, OKColor::green, OKColor::clear, RenderOrder::ABOVE, 2.0f);
 		c->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - c->getWidth() / 2;
 		c->flashing = true;
 		c->flashingTicksPerFlash = 80;
@@ -486,8 +486,8 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 
 
-	float screenWidth = getBobsGame()->getWidth();
-	float screenHeight = getBobsGame()->getHeight();
+	float screenWidth = getOKGame()->getWidth();
+	float screenHeight = getOKGame()->getHeight();
 	
 	if (forceWidth != 0)
 	{
@@ -554,19 +554,19 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 		{
 			player->nameCaption->screenX = grid->getXOnScreenNoShake();
 			player->nameCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH();
-			player->nameCaption->setTextColor(BobColor::white);
+			player->nameCaption->setTextColor(OKColor::white);
 		}
 		if (player->gameCaption != nullptr)
 		{
 			player->gameCaption->screenX = grid->getXOnScreenNoShake();
 			player->gameCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH() + 16;
-			player->gameCaption->setTextColor(BobColor::white);
+			player->gameCaption->setTextColor(OKColor::white);
 		}
 		if (player->difficultyCaption != nullptr)
 		{
 			player->difficultyCaption->screenX = grid->getXOnScreenNoShake();
 			player->difficultyCaption->screenY = grid->getYOnScreenNoShake() + gridH()* cellH() + 16 + 16;
-			player->difficultyCaption->setTextColor(BobColor::white);
+			player->difficultyCaption->setTextColor(OKColor::white);
 		}
 
 		captionX = (float)(grid->getXOnScreenNoShake() + (grid->getWidth() + 1) * cellW()) + 4;
@@ -600,7 +600,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 		{
 			if(numGames==1)
 			{
-				getBobsGame()->pauseMenuShowing = true;
+				getOKGame()->pauseMenuShowing = true;
 			}
 			else
 			{
@@ -610,7 +610,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 		if(pauseMiniMenuShowing)
 		{
-			getBobsGame()->playerPauseMiniMenuUpdate(player);
+			getOKGame()->playerPauseMiniMenuUpdate(player);
 
 		}
 		else
@@ -618,7 +618,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 			setControlsState();
 		}
 
-		//log.debug("New frame");
+		//log->debug("New frame");
 
 		if (didInit == false)initGame();
 		
@@ -629,7 +629,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 		{
 			madeBeginnerStackAnnouncement = true;
 
-			makeAnnouncementCaption("Press Left Ctrl To Raise The Stack!", BobColor::white);
+			makeAnnouncementCaption("Press Left Ctrl To Raise The Stack!", OKColor::white);
 
 		}
 
@@ -639,9 +639,9 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 		{
 
 			vector<shared_ptr<GameLogic>> otherPlayers;
-			for (int n = 0; n < getBobsGame()->players.size(); n++)
+			for (int n = 0; n < getOKGame()->players.size(); n++)
 			{
-				shared_ptr<GameLogic >g2 = getBobsGame()->players.get(n)->gameLogic;
+				shared_ptr<GameLogic >g2 = getOKGame()->players.get(n)->gameLogic;
 				if (g2 != this)otherPlayers.push_back(g2);
 			}
 
@@ -649,7 +649,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 
 
-			if (getBobsGame()->isNetworkGame())
+			if (getOKGame()->isNetworkGame())
 			{
 
 				//TODO: these will need to be server based for network games.  they are disabled for network games for now.
@@ -677,7 +677,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 					if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_EACH_PLAYER_IN_ROTATION)
 					{
-						if (getBobsGame()->isNetworkGame() == false)
+						if (getOKGame()->isNetworkGame() == false)
 						{
 							if (queuedVSGarbageAmountToSend > 0)
 							{
@@ -696,7 +696,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 					if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_PLAYER_WITH_LEAST_BLOCKS)
 					{
-						if (getBobsGame()->isNetworkGame() == false)
+						if (getOKGame()->isNetworkGame() == false)
 						{
 							if (queuedVSGarbageAmountToSend > 0)
 							{
@@ -726,7 +726,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 					if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_RANDOM_PLAYER)
 					{
-						if (getBobsGame()->isNetworkGame() == false)
+						if (getOKGame()->isNetworkGame() == false)
 						{
 							if (queuedVSGarbageAmountToSend > 0)
 							{
@@ -751,7 +751,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 			if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS)
 			{
 
-				if (getBobsGame()->isNetworkGame() == false)
+				if (getOKGame()->isNetworkGame() == false)
 				{
 					if (queuedVSGarbageAmountToSend > 0)
 					{
@@ -781,7 +781,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 			if (getRoom()->multiplayer_SendGarbageTo == (int)SendGarbageToRule::SEND_GARBAGE_TO_ALL_PLAYERS_50_PERCENT_CHANCE)
 			{
-				if (getBobsGame()->isNetworkGame() == false)
+				if (getOKGame()->isNetworkGame() == false)
 				{
 					if (queuedVSGarbageAmountToSend > 0)
 					{
@@ -822,7 +822,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 
 
-		if (getBobsGame()->isNetworkGame() == true)
+		if (getOKGame()->isNetworkGame() == true)
 		{
 
 			string gridString;
@@ -858,7 +858,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 		//		{
 		//			if(waitingForPlayerCaption==null)
 		//			{
-		//				waitingForPlayerCaption = getCaptionManager()->newManagedCaption(0,(int)(ScreenHeight/2)-60,-1,"Waiting For Challenger",BobFont.font_normal_8_outlined,Color.darkGray,Color.CLEAR,1.0f,50,false, true);
+		//				waitingForPlayerCaption = getCaptionManager()->newManagedCaption(0,(int)(ScreenHeight/2)-60,-1,"Waiting For Challenger",OKFont.font_normal_8_outlined,Color.darkGray,Color.CLEAR,1.0f,50,false, true);
 		//			}
 		//			else
 		//			{
@@ -901,7 +901,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 			}
 			else
 			{
-				log.error("incomingFramePackets contains out of order frame!");
+				log->error("incomingFramePackets contains out of order frame!");
 			}
 		}
 
@@ -952,7 +952,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 					this->frameState = framesArray.get(0);
 					framesArray.removeAt(0);
 
-					//log.warn("New frame");
+					//log->warn("New frame");
 
 					if (didInit == false)
 					{
@@ -975,7 +975,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 						gridString += to_string(grid->blocks.get(n) != grid->nullBlock);
 					}
 					int r = randomGenerator();
-					if(frameState.gridString != gridString || frameState.randomInt != r)log.error("Desync! r: " + to_string(r) + "  frameState.randomInt: " + to_string(frameState.randomInt) + " gridString: "+gridString + " frameState.gridString: "+frameState.gridString );
+					if(frameState.gridString != gridString || frameState.randomInt != r)log->error("Desync! r: " + to_string(r) + "  frameState.randomInt: " + to_string(frameState.randomInt) + " gridString: "+gridString + " frameState.gridString: "+frameState.gridString );
 
 
 
@@ -1009,7 +1009,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 
 			if ((int)packetToSplit.size() > maxFramesInPacket)
 			{
-				log.debug("Splitting packet");
+				log->debug("Splitting packet");
 				//if player 1 has been playing for a while, the network packet will have too many frames in it.
 				//so we split it into multiple packets.
 				while (packetToSplit.size() > 0)
@@ -1052,7 +1052,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 			string b64zip = FrameState::getFrameStatesAsBase64LZ4XML(networkPacket);
 			string md5 = FileUtils::getStringMD5(b64zip);
 
-			//log.debug("Packet Size: "+b64zip.length());
+			//log->debug("Packet Size: "+b64zip.length());
 
 			string idAndMD5String = to_string(j) + "," + md5;
 
@@ -1074,7 +1074,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 			string idAndMD5String = outboundPacketQueueVector.get(0);
 			string b64zip = outboundPacketQueueHashMap.get(idAndMD5String);
 
-			getBobsGame()->sendAllJoinedPeers(BobsGame::netCommand_FRAME + player->getID() + ":" + idAndMD5String + ":" + b64zip);
+			getOKGame()->sendAllJoinedPeers(OKGame::netCommand_FRAME + player->getID() + ":" + idAndMD5String + ":" + b64zip);
 
 			//remove id,MD5 from vector queue 	
 			//remove id,MD5 from hashmap queue 	
@@ -1100,7 +1100,7 @@ void GameLogic::incoming_FramePacket(const string &s)
 
 	if(packetProcessThreadStarted == false)
 	{
-		//log.debug("Creating frame processing thread");
+		//log->debug("Creating frame processing thread");
 		packetProcessThread = thread(&GameLogic::_packetProcessThreadLoop,this);
 		packetProcessThreadStarted = true;
 	}
@@ -1111,7 +1111,7 @@ void GameLogic::incoming_FramePacket(const string &s)
 void GameLogic::_packetProcessThreadLoop(shared_ptr<GameLogic >g)
 {//=========================================================================================================================
 
-	//log.debug("Started frame processing thread");
+	//log->debug("Started frame processing thread");
 	while (g->getStopThread_S()==false)
 	{
 		this_thread::sleep_for(chrono::milliseconds(100));
@@ -1149,7 +1149,7 @@ void GameLogic::_processIncomingPackets()
 		}
 		catch (exception)
 		{
-			log.error("Failed to parse framePacket ID in incoming frame packet");
+			log->error("Failed to parse framePacket ID in incoming frame packet");
 			return;
 		}
 		string md5 = idMD5.substr(idMD5.find(",") + 1);
@@ -1157,7 +1157,7 @@ void GameLogic::_processIncomingPackets()
 		string compMD5 = FileUtils::getStringMD5(frameData);
 		if (md5 != compMD5)
 		{
-			log.error("Frame Packet MD5 did not match!");
+			log->error("Frame Packet MD5 did not match!");
 			return;
 		}
 
@@ -1172,10 +1172,10 @@ void GameLogic::_processIncomingPackets()
 
 			if (packet.size() > 0)
 			{
-				//log.info("Added framePacket ID: "+id);
+				//log->info("Added framePacket ID: "+id);
 				if (incomingFramePacketsContainsKey_S(id))
 				{
-					log.error("Incoming framePacket was already inserted into incomingFramePackets");
+					log->error("Incoming framePacket was already inserted into incomingFramePackets");
 				}
 				else
 				{
@@ -1207,16 +1207,16 @@ void GameLogic::_processIncomingPackets()
 //	}
 //	catch (exception)
 //	{
-//		log.error("Failed to parse randomSeed in incoming frame packet");
+//		log->error("Failed to parse randomSeed in incoming frame packet");
 //		return;
 //	}
 //	//s = s.substring(s.indexOf(":")+1);
 //
 //#ifdef _DEBUG
-//		log.error("incoming_Forfeit: Their Seed: " + to_string(theirRandomSeed));
+//		log->error("incoming_Forfeit: Their Seed: " + to_string(theirRandomSeed));
 //#endif
 //	//Game them = games.get(randomSeed);
-//	//if(them==null){log.error("Could not find game with seed:" + randomSeed);return;}
+//	//if(them==null){log->error("Could not find game with seed:" + randomSeed);return;}
 //
 //	setTheyForfeit(true);
 //
@@ -1224,7 +1224,7 @@ void GameLogic::_processIncomingPackets()
 //
 //void GameLogic::sendForfeit()
 //{ //=========================================================================================================================
-//	connection->write(netCommand_FORFEIT + to_string(randomSeed) + ":" + "-1" + BobNet::endline);
+//	connection->write(netCommand_FORFEIT + to_string(randomSeed) + ":" + "-1" + OKNet::endline);
 //}
 
 
@@ -1487,38 +1487,38 @@ void GameLogic::removeFlashedChainBlocks()
 					//DONE: sound "got bomb" "got weight" "got shooter"
 					if (p->pieceType->bombPiece)
 					{
-						makeAnnouncementCaption("BOMB", BobColor::blue);
+						makeAnnouncementCaption("BOMB", OKColor::blue);
 						getAudioManager()->playSound(currentGameType->gotBombSound, getVolume(), 1.0f);
 					}
 
 					if (p->pieceType->weightPiece)
 					{
-						makeAnnouncementCaption("WEIGHT", BobColor::orange);
+						makeAnnouncementCaption("WEIGHT", OKColor::orange);
 						getAudioManager()->playSound(currentGameType->gotWeightSound, getVolume(), 1.0f);
 					}
 
 					if (p->pieceType->clearEveryRowPieceIsOnIfAnySingleRowCleared)
 					{
-						makeAnnouncementCaption("FLASHING CLEAR", BobColor::green);
+						makeAnnouncementCaption("FLASHING CLEAR", OKColor::green);
 						getAudioManager()->playSound(currentGameType->flashingClearSound, getVolume(), 1.0f);
 					}
 
 					if (p->pieceType->pieceRemovalShooterPiece)
 					{
-						makeAnnouncementCaption("SUBTRACTOR", BobColor::red);
+						makeAnnouncementCaption("SUBTRACTOR", OKColor::red);
 						getAudioManager()->playSound(currentGameType->gotSubtractorSound, getVolume(), 1.0f);
 					}
 
 					if (p->pieceType->pieceShooterPiece)
 					{
-						makeAnnouncementCaption("ADDER", BobColor::yellow);
+						makeAnnouncementCaption("ADDER", OKColor::yellow);
 						getAudioManager()->playSound(currentGameType->gotAdderSound, getVolume(), 1.0f);
 					}
 				}
 
 				if (b->blockType->clearEveryOtherLineOnGridWhenCleared)
 				{
-					makeAnnouncementCaption("SCANLINE CLEAR", BobColor::red);
+					makeAnnouncementCaption("SCANLINE CLEAR", OKColor::red);
 					getAudioManager()->playSound(currentGameType->scanlineClearSound, getVolume(), 1.0f);
 
 					//add every other line to clear blocks
@@ -1635,7 +1635,7 @@ void GameLogic::removeFlashedChainBlocks()
 	if (linesCleared >= 4)
 	{
 		getAudioManager()->playSound(currentGameType->quadLineFlashingSound, getVolume(), 1.0f);
-		makeAnnouncementCaption("SOSUMI!", BobColor::green);
+		makeAnnouncementCaption("SOSUMI!", OKColor::green);
 	}
 
 	if (currentGameType->chainRule_CheckEntireLine)
@@ -1818,13 +1818,13 @@ void GameLogic::handleNewChain()
 
 			if (bonusAmount > 0)
 			{
-				makeAnnouncementCaption("Chain Bonus: " + to_string(bonusAmount), BobColor::green);
+				makeAnnouncementCaption("Chain Bonus: " + to_string(bonusAmount), OKColor::green);
 				queueVSGarbageToSend(bonusAmount);
 			}
 
-			getBobsGame()->changeBG();
+			getOKGame()->changeBG();
 
-			getBobsGame()->shakeSmall();
+			getOKGame()->shakeSmall();
 			grid->shakeSmall();
 		}
 		else
@@ -1838,7 +1838,7 @@ void GameLogic::handleNewChain()
 
 			makeAnnouncementCaption("Chain: " + to_string(currentChain));
 
-			makeAnnouncementCaption("" + to_string(currentCombo) + "X Combo! Total: " + to_string(comboChainTotal), BobColor::magenta);
+			makeAnnouncementCaption("" + to_string(currentCombo) + "X Combo! Total: " + to_string(comboChainTotal), OKColor::magenta);
 
 			int bonusAmount = (currentChain - chainMinimum);
 			if (bonusAmount == 0)
@@ -1846,11 +1846,11 @@ void GameLogic::handleNewChain()
 				bonusAmount = 1;
 			}
 
-			makeAnnouncementCaption("Combo Bonus: " + to_string(bonusAmount) + " X " + to_string(currentCombo), BobColor::green);
+			makeAnnouncementCaption("Combo Bonus: " + to_string(bonusAmount) + " X " + to_string(currentCombo), OKColor::green);
 
 			queueVSGarbageToSend(currentCombo);
 
-			getBobsGame()->shakeHard();
+			getOKGame()->shakeHard();
 			grid->shakeHard();
 		}
 
@@ -2125,7 +2125,7 @@ bool GameLogic::movePiece(MovementType move)
 
 	if (currentPiece == nullptr)
 	{
-		log.error("Tried to move null piece");
+		log->error("Tried to move null piece");
 		return false;
 	}
 
@@ -2873,8 +2873,8 @@ void GameLogic::processQueuedGarbageSentFromOtherPlayer()
 				queuedVSGarbageAmountFromOtherPlayer-= grid->getWidth();
 				if (queuedVSGarbageAmountFromOtherPlayer < 0)queuedVSGarbageAmountFromOtherPlayer = 0;
 
-				if (isNetworkPlayer)log.warn("Garbage");
-				else log.debug("Garbage");
+				if (isNetworkPlayer)log->warn("Garbage");
+				else log->debug("Garbage");
 
 				if (currentGameType->vsGarbageRule == VSGarbageDropRule::FALL_FROM_CEILING_IN_EVEN_ROWS)
 				{
@@ -2932,7 +2932,7 @@ void GameLogic::queueVSGarbageToSend(int amount)
 		}
 	}
 
-	if (getBobsGame()->isMultiplayer() && getRoom()->multiplayer_DisableVSGarbage==false)
+	if (getOKGame()->isMultiplayer() && getRoom()->multiplayer_DisableVSGarbage==false)
 	{
 		if (amount > 0)
 		{
@@ -3027,7 +3027,7 @@ void GameLogic::renderQueuedGarbage()
 	{
 		if (garbageWaitCaption == nullptr)
 		{
-			garbageWaitCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, " ", announcementCaptionFontSize, true, BobColor::white, BobColor::clear, RenderOrder::ABOVE, 0.5f);
+			garbageWaitCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, " ", announcementCaptionFontSize, true, OKColor::white, OKColor::clear, RenderOrder::ABOVE, 0.5f);
 		}
 		garbageWaitCaption->screenX = (float)(grid->getXOnScreenNoShake());
 		garbageWaitCaption->screenY = (float)(grid->getYOnScreenNoShake());// -(cellH()));
@@ -3359,12 +3359,12 @@ void GameLogic::renderHighScoreMeters()
 		string objectiveString = "Play To Credits";
 		if (getRoom()->endlessMode)objectiveString = "Endless Mode";
 
-		myHighScore = getBobsGame()->getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
+		myHighScore = getOKGame()->getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
 
-		shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >currentLeaderboard = nullptr;
+		shared_ptr<OKGameLeaderBoardAndHighScoreBoard >currentLeaderboard = nullptr;
 		if (getRoom()->endlessMode)
 		{
-			currentLeaderboard = getBobsGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
+			currentLeaderboard = getOKGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
 				false,
 				false,
 				false,
@@ -3374,7 +3374,7 @@ void GameLogic::renderHighScoreMeters()
 		}
 		else
 		{
-			currentLeaderboard = getBobsGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
+			currentLeaderboard = getOKGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
 				false,
 				false,
 				false,
@@ -3477,10 +3477,10 @@ void GameLogic::renderHighScoreMeters()
 
 		int amount = 0;
 		amount = height * (float)((float)currentScore / (float)highestScore);
-		shared_ptr<BobColor >c = BobColor::cyan;
+		shared_ptr<OKColor >c = OKColor::cyan;
 		GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
-		if (myScoreBarCaption == nullptr)myScoreBarCaption = make_shared<Caption>(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, BobColor::white, BobColor::clear);
+		if (myScoreBarCaption == nullptr)myScoreBarCaption = make_shared<Caption>(getOKGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, OKColor::white, OKColor::clear);
 		myScoreBarCaption->screenX = startX;
 		myScoreBarCaption->screenY = startY + height;
 		myScoreBarCaption->update();
@@ -3496,7 +3496,7 @@ void GameLogic::renderHighScoreMeters()
 		{
 			typeText = "Fastest Time To Completion";
 		}
-		if (scoreBarTypeCaption == nullptr)scoreBarTypeCaption = make_shared<Caption>(getBobsGame(),Caption::Position::NONE, startX, startY + height, -1, typeText, 10, true, BobColor::white, BobColor::clear);
+		if (scoreBarTypeCaption == nullptr)scoreBarTypeCaption = make_shared<Caption>(getOKGame(),Caption::Position::NONE, startX, startY + height, -1, typeText, 10, true, OKColor::white, OKColor::clear);
 		scoreBarTypeCaption->screenX = startX;
 		scoreBarTypeCaption->screenY = startY + height + 20;
 		scoreBarTypeCaption->update();
@@ -3526,10 +3526,10 @@ void GameLogic::renderHighScoreMeters()
 				}
 
 				amount = height * (float)((float)currentScore / (float)highestScore);
-				c = BobColor::green;
+				c = OKColor::green;
 				GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
-				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = make_shared<Caption>(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, BobColor::white, BobColor::clear);
+				if (myHighScoreBarCaption == nullptr)myHighScoreBarCaption = make_shared<Caption>(getOKGame(), Caption::Position::NONE, startX, startY + height, -1, "Your Best", 10, true, OKColor::white, OKColor::clear);
 				myHighScoreBarCaption->screenX = startX;
 				myHighScoreBarCaption->screenY = startY + height;
 				myHighScoreBarCaption->update();
@@ -3569,10 +3569,10 @@ void GameLogic::renderHighScoreMeters()
 				}
 
 				amount = height * (float)((float)currentScore / (float)highestScore);
-				c = BobColor::magenta;
+				c = OKColor::magenta;
 				GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
-				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = make_shared<Caption>(getBobsGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard ("+ FileUtils::removeSwearWords(currentLeaderboardEntry->userName) + ")", 10, true, BobColor::white, BobColor::clear);
+				if (leaderboardBarCaption == nullptr)leaderboardBarCaption = make_shared<Caption>(getOKGame(), Caption::Position::NONE, startX, startY + height, -1, "Leaderboard ("+ FileUtils::removeSwearWords(currentLeaderboardEntry->userName) + ")", 10, true, OKColor::white, OKColor::clear);
 				leaderboardBarCaption->screenX = startX;
 				leaderboardBarCaption->screenY = startY + height;
 				leaderboardBarCaption->update();
@@ -4289,7 +4289,7 @@ void GameLogic::wonSequence()
 
 		if (winCaption == nullptr)
 		{
-			winCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "WIN", resultCaptionFontSize, true, BobColor::green, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+			winCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "WIN", resultCaptionFontSize, true, OKColor::green, OKColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 			winCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - winCaption->getWidth() / 2;
 			winCaption->flashing = true;
 			winCaption->flashingTicksPerFlash = 500;
@@ -4315,7 +4315,7 @@ void GameLogic::lostSequence()
 
 		if (loseCaption == nullptr)
 		{
-			loseCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "LOSE", resultCaptionFontSize, true, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+			loseCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "LOSE", resultCaptionFontSize, true, OKColor::red, OKColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 			loseCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - loseCaption->getWidth() / 2;
 			loseCaption->flashing = true;
 			loseCaption->flashingTicksPerFlash = 500;
@@ -4345,7 +4345,7 @@ void GameLogic::diedSequence()
 
 			if (deadCaption == nullptr)
 			{
-				deadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, true, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+				deadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, true, OKColor::red, OKColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 				deadCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - deadCaption->getWidth() / 2;
 				deadCaption->flashing = true;
 				deadCaption->flashingTicksPerFlash = 500;
@@ -4359,7 +4359,7 @@ void GameLogic::diedSequence()
 
 				if (deadCaption == nullptr)
 				{
-					deadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, true, BobColor::red, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+					deadCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "NEVER GIVE UP", resultCaptionFontSize, true, OKColor::red, OKColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 					deadCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - deadCaption->getWidth() / 2;
 					deadCaption->flashing = true;
 					deadCaption->flashingTicksPerFlash = 500;
@@ -4388,7 +4388,7 @@ void GameLogic::creditsSequence()
 
 		if (creditsCaption == nullptr)
 		{
-			creditsCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "COMPLETE", resultCaptionFontSize, true, BobColor::purple, BobColor::clear, RenderOrder::OVER_TEXT, 1.0f);
+			creditsCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (GLUtils::getViewportHeight() / 2) - 60, -1, "COMPLETE", resultCaptionFontSize, true, OKColor::purple, OKColor::clear, RenderOrder::OVER_TEXT, 1.0f);
 			creditsCaption->screenX = (int)(grid->getXOnScreenNoShake() + (grid->getWidth() * cellW() / 2)) - creditsCaption->getWidth() / 2;
 			creditsCaption->flashing = true;
 			creditsCaption->flashingTicksPerFlash = 500;
@@ -4405,7 +4405,7 @@ void GameLogic::makeAnnouncementCaption(const string& text)
 }
 
 //=========================================================================================================================
-void GameLogic::makeAnnouncementCaption(const string& text, shared_ptr<BobColor> color)
+void GameLogic::makeAnnouncementCaption(const string& text, shared_ptr<OKColor> color)
 {//=========================================================================================================================
 
 	if (color == nullptr)
@@ -4598,7 +4598,7 @@ void GameLogic::updateInfoCaptionsXY()
 		if (c != nullptr)
 		{
 
-			if (getBobsGame()->isMultiplayer())c->visible = false;
+			if (getOKGame()->isMultiplayer())c->visible = false;
 
 			c->screenX = captionX;
 			c->screenY = gridY + (++counterY * captionYSize);
@@ -4767,17 +4767,17 @@ void GameLogic::updateCaptions()
 
 	if (totalTicksPassedCaption == nullptr)
 	{
-		totalTicksPassedCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "00:00:000", announcementCaptionFontSize, true, captionTextColor, BobColor::clear, RenderOrder::ABOVE_TOP, captionScale);
+		totalTicksPassedCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "00:00:000", announcementCaptionFontSize, true, captionTextColor, OKColor::clear, RenderOrder::ABOVE_TOP, captionScale);
 		timeCaptionStandardizedWidth = (int)(totalTicksPassedCaption->getWidth());
 	}
 
 	if (holdCaption == nullptr)
 	{
-		holdCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "HOLD", mediumCaptionFontSize, true, captionTextColor, BobColor::clear, RenderOrder::ABOVE, captionScale);
+		holdCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "HOLD", mediumCaptionFontSize, true, captionTextColor, OKColor::clear, RenderOrder::ABOVE, captionScale);
 	}
 	if (nextCaption == nullptr)
 	{
-		nextCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "NEXT", mediumCaptionFontSize, true, captionTextColor, BobColor::clear, RenderOrder::ABOVE, captionScale);
+		nextCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "NEXT", mediumCaptionFontSize, true, captionTextColor, OKColor::clear, RenderOrder::ABOVE, captionScale);
 	}
 
 	updateInfoCaptionsXY();
@@ -4793,7 +4793,7 @@ void GameLogic::updateCaptions()
 
 	blocksInGridCaption->setText("Blocks In Grid: " + to_string(grid->getNumberOfFilledCells()));
 	seedCaption->setText("Seed: " + to_string(randomSeed));
-	bgCaption->setText("Shader: " + to_string(getBobsGame()->shaderCount));
+	bgCaption->setText("Shader: " + to_string(getOKGame()->shaderCount));
 #endif
 
 
@@ -4888,7 +4888,7 @@ void GameLogic::updateCaptions()
 	totalTicksPassedCaption->screenX = grid->getXOnScreenNoShake() + (grid->getWidth() * blockWidth) / 2 - timeCaptionStandardizedWidth / 2;
 	totalTicksPassedCaption->screenY = playingFieldY1 - 40;// grid->screenY + grid->getHeight() * blockHeight + 20;
 
-	levelCaption->setTextColor(make_shared<BobColor>(captionColorCycleHueValue, 0.5f, 1.0f, 1.0f, true));
+	levelCaption->setTextColor(make_shared<OKColor>(captionColorCycleHueValue, 0.5f, 1.0f, 1.0f, true));
 
 	if (announcementCaptions->size() > 15)
 	{
@@ -4932,7 +4932,7 @@ void GameLogic::updateCaptions()
 		}
 		else
 		{
-			if (getBobsGame()->isMultiplayer())c->visible = false;
+			if (getOKGame()->isMultiplayer())c->visible = false;
 
 			//if(c.ticksAge<stayInCenterTicks+transitionTime)
 
@@ -5029,7 +5029,7 @@ void GameLogic::changeGame()
 	piecesMadeThisGame = piecesMade;
 	lastPiecesMadeThisGame = piecesMade;
 
-	//log.warn("Number of cells after init: "+grid.getNumberOfFilledCells());
+	//log->warn("Number of cells after init: "+grid.getNumberOfFilledCells());
 
 	//forceBlockGravity = true;
 
@@ -5223,7 +5223,7 @@ void GameLogic::updateScore()
 			if (currentLevel == getCurrentDifficulty()->extraStage1Level && extraStage1 == false)
 			{
 				extraStage1 = true;
-				makeAnnouncementCaption("Wow, it's the special stage!", BobColor::yellow);
+				makeAnnouncementCaption("Wow, it's the special stage!", OKColor::yellow);
 
 				getAudioManager()->playSound(currentGameType->extraStage1Sound, getVolume(), 1.0f);
 			}
@@ -5231,7 +5231,7 @@ void GameLogic::updateScore()
 			if (currentLevel == getCurrentDifficulty()->extraStage2Level && extraStage2 == false)
 			{
 				extraStage2 = true;
-				makeAnnouncementCaption("Whoa, I've never gotten this far!", BobColor::orange);
+				makeAnnouncementCaption("Whoa, I've never gotten this far!", OKColor::orange);
 
 				getAudioManager()->playSound(currentGameType->extraStage2Sound, getVolume(), 1.0f);
 			}
@@ -5239,7 +5239,7 @@ void GameLogic::updateScore()
 			if (currentLevel == getCurrentDifficulty()->extraStage3Level && extraStage3 == false)
 			{
 				extraStage3 = true;
-				makeAnnouncementCaption("Don't stop the party!", BobColor::red);//"Amazing!"
+				makeAnnouncementCaption("Don't stop the party!", OKColor::red);//"Amazing!"
 
 				getAudioManager()->playSound(currentGameType->extraStage3Sound, getVolume(), 1.0f);
 			}
@@ -5247,7 +5247,7 @@ void GameLogic::updateScore()
 			if (currentLevel == getCurrentDifficulty()->extraStage4Level && extraStage4 == false)
 			{
 				extraStage4 = true;
-				makeAnnouncementCaption("What is going on?!", BobColor::magenta);
+				makeAnnouncementCaption("What is going on?!", OKColor::magenta);
 
 				getAudioManager()->playSound(currentGameType->extraStage4Sound, getVolume(), 1.0f);
 			}
@@ -5255,7 +5255,7 @@ void GameLogic::updateScore()
 			if (currentLevel > getCurrentDifficulty()->creditsLevel)
 			{
 				complete = true;
-				makeAnnouncementCaption("You did it!!!", BobColor::blue);
+				makeAnnouncementCaption("You did it!!!", OKColor::blue);
 
 				getAudioManager()->playSound(currentGameType->creditsSound, getVolume(), 1.0f);
 			}
@@ -5286,8 +5286,8 @@ int GameLogic::getRandomIntLessThan(int i, string whereCalledFrom)
 
 	int n = randomGenerator() % i;
 
-	//if(isNetworkPlayer)log.warn("NETWORK Random: " + to_string(n) + " / "+to_string(i)+" | " + whereCalledFrom);
-	//if(!isNetworkPlayer)log.debug("LOCAL Random: " + to_string(n) + " / "+to_string(i)+" | " + whereCalledFrom);
+	//if(isNetworkPlayer)log->warn("NETWORK Random: " + to_string(n) + " / "+to_string(i)+" | " + whereCalledFrom);
+	//if(!isNetworkPlayer)log->debug("LOCAL Random: " + to_string(n) + " / "+to_string(i)+" | " + whereCalledFrom);
 
 	return n;
 	//return randomGenerator() % i;

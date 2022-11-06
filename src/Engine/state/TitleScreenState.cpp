@@ -52,9 +52,9 @@ void TitleScreenState::render()
 { //=========================================================================================================================
 
 
-	shared_ptr<BobTexture> t = Main::glowTileBackgroundMenuPanel->bgScrollTexture;
+	shared_ptr<OKTexture> t = Main::glowTileBackgroundMenuPanel->bgScrollTexture;
 
-	shared_ptr<BobTexture> over = Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->get(frame);
+	shared_ptr<OKTexture> over = Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->get(frame);
 
 	float screenWidth = (float)GLUtils::getViewportWidth();
 	float screenHeight = (float)GLUtils::getViewportHeight();

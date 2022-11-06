@@ -254,7 +254,7 @@ void GlowTileBackgroundMenuPanel::render()
 
 	{
 		//starting at bgScrollXY, draw bgScrollTexture until overlaps screen size x and y
-		shared_ptr<BobTexture> texture = bgScrollTexture;
+		shared_ptr<OKTexture> texture = bgScrollTexture;
 
 		int w = texture->getImageWidth();
 		int h = texture->getImageHeight();
@@ -296,7 +296,7 @@ void GlowTileBackgroundMenuPanel::render()
 		shared_ptr<GlowTile> tile = glowTiles->get(i);
 
 
-		shared_ptr<BobTexture> texture = glowTileFramesTexture->get(tile->frame);
+		shared_ptr<OKTexture> texture = glowTileFramesTexture->get(tile->frame);
 		int w = texture->getImageWidth();
 		int h = texture->getImageHeight();
 

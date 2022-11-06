@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -25,7 +25,7 @@ public:
 	static Logger log;
 
 
-	shared_ptr<Entity> targetEntity = nullptr;
+	Entity* targetEntity = nullptr;
 
 	int lastXTarget = -1;
 	int lastYTarget = -1;

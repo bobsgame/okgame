@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	ArrayList<shared_ptr<GameItem>>* games = make_shared<ArrayList><shared_ptr<GameItem>>();
+	ArrayList<shared_ptr<GameItem>> games;// = make_shared<ArrayList><shared_ptr<GameItem>>();
 	//public GameListPanel gameStorePanel;
 
 

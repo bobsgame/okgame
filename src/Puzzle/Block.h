@@ -4,11 +4,11 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include <Gwen/ControlList.h>
 #include "../Utility/ArrayList.h"
 #include "../Utility/Color.h"
-#include "BobsGame.h"
+#include "OKGame.h"
 class Logger;
 
 
@@ -60,13 +60,13 @@ public:
 	bool chainConnectionsMustContainAtLeastOneBlockWithThisTrue = false;	Info chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info = Info("Chain Connections Must Contain At Least One Of These Block Types", "When checking for chains, the chain must contain one of these blocks in order to qualify.");
 	bool ignoreWhenCheckingChainConnections = false;						Info ignoreWhenCheckingChainConnections_Info = Info("Ignore When Checking Chain Connections", "This block type is neutral and is ignored when checking chains.  It can only be cleared through other means.");
 
-	ArrayList<shared_ptr<BobColor>> colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
+	ArrayList<shared_ptr<OKColor>> colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
 private:
-	ArrayList<BobColor> importExport_colors;	
+	ArrayList<OKColor> importExport_colors;	
 public:
-	shared_ptr<BobColor >specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
+	shared_ptr<OKColor >specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
 private:
-	BobColor importExport_specialColor;
+	OKColor importExport_specialColor;
 public:
 	int randomSpecialBlockChanceOneOutOf = 0;								Info randomSpecialBlockChanceOneOutOf_Info = Info("Special: Random Special Block Chance One Out Of", "This block will be chosen randomly 1 out of n times when choosing from available blocks. Setting this makes the block a special type.");
 	int frequencySpecialBlockTypeOnceEveryNPieces = 0;						Info frequencySpecialBlockTypeOnceEveryNPieces_Info = Info("Special: Frequency Special Block Type Once Every N Pieces", "This block will be chosen after n pieces are created. Setting this makes a block the special type.");
@@ -137,7 +137,7 @@ public:
 		uuid = to_string(generator());
 	}
 	//=========================================================================================================================
-	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<BobColor>> *colorsArray, shared_ptr<BobColor >specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
+	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<OKColor>> *colorsArray, shared_ptr<OKColor >specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
 	{//=========================================================================================================================
 		this->name = name;
 		this->spriteName = spriteName;
@@ -294,7 +294,7 @@ public:
 	shared_ptr<BlockType> blockType = nullptr;
 
 private:
-	shared_ptr<BobColor >color = nullptr;
+	shared_ptr<OKColor >color = nullptr;
 
 public:
 	float effectAlphaFrom = 0.5f;
@@ -455,7 +455,7 @@ public:
 	void renderDisappearing();
 	void render(float screenX, float screenY, float a, float scale, bool interpolate, bool ghost);
 	void renderOutlines(float screenX, float screenY, float s);
-	void setColor(shared_ptr<BobColor >color);
+	void setColor(shared_ptr<OKColor >color);
 	void setRandomBlockTypeColor();
 //	Color getRandomMatrixColor();
 //	Color getRandomRainbowColor();
@@ -466,8 +466,8 @@ public:
 	int blockH();
 	shared_ptr<GameType> getSettings();
 	shared_ptr<GameLogic> getGameLogic();
-	shared_ptr<BobsGame> getBobsGame();
-	shared_ptr<BobColor >getColor();
-	shared_ptr<BobColor >specialColor();
+	shared_ptr<OKGame> getOKGame();
+	shared_ptr<OKColor >getColor();
+	shared_ptr<OKColor >specialColor();
 };
 

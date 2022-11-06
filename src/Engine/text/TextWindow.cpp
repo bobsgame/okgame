@@ -14,7 +14,7 @@
 
 
 Logger TextWindow::log = Logger("TextWindow");
-shared_ptr<BobTexture> TextWindow::borderTexture = nullptr;
+shared_ptr<OKTexture> TextWindow::borderTexture = nullptr;
 
 //=========================================================================================================================
 TextWindow::TextWindow(shared_ptr<Engine> g)
@@ -479,7 +479,7 @@ void TextWindow::updateSpriteWindowTexture()
 	 */
 }
 
-void TextWindow::setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<BobTexture> texture, const string& newLabel)
+void TextWindow::setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<OKTexture> texture, const string& newLabel)
 { //=========================================================================================================================
 
 	if (entity != nullptr || texture != nullptr)
@@ -558,7 +558,7 @@ void TextWindow::setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<BobTextur
 	{
 		string e = "Tried to update sprite window with both npc and gfx null.";
 		Main::console->error(e);
-		log.error(e);
+		log->error(e);
 	}
 }
 
@@ -630,12 +630,12 @@ int TextWindow::getPixelValue(int letter_index, int y, int x_in_letter, bool bla
 		return 0;
 	}
 
-	int index = BobFont::getFontPixelValueAtIndex((letter_index * getTextManager()->font->blockHeight * getTextManager()->font->blockWidth) + (y * getTextManager()->font->blockWidth) + x_in_letter, getTextManager()->font);
+	int index = OKFont::getFontPixelValueAtIndex((letter_index * getTextManager()->font->blockHeight * getTextManager()->font->blockWidth) + (y * getTextManager()->font->blockWidth) + x_in_letter, getTextManager()->font);
 
 	return index;
 }
 
-void TextWindow::setPixel(int index, shared_ptr<BobColor> c)
+void TextWindow::setPixel(int index, shared_ptr<OKColor> c)
 { //=========================================================================================================================
 
 
@@ -645,7 +645,7 @@ void TextWindow::setPixel(int index, shared_ptr<BobColor> c)
 	textBoxTextureByteArray->data()[index + 3] = c->ai(); // was 255
 }
 
-shared_ptr<ByteArray> BobFont::font_Palette_ByteArray = nullptr;
+shared_ptr<ByteArray> OKFont::font_Palette_ByteArray = nullptr;
 
 void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 { //=========================================================================================================================
@@ -676,7 +676,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 
 		if (index != 0)
 		{
-			shared_ptr<BobColor> pixelColor = getTextManager()->textColor;
+			shared_ptr<OKColor> pixelColor = getTextManager()->textColor;
 			if (index == 0)
 			{
 				pixelColor = getTextManager()->textBGColor;
@@ -698,8 +698,8 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 			if (index > 2)
 			{
 				// get the gray color from the getText palette
-				int byte1 = (int)(BobFont::font_Palette_ByteArray->data()[index * 2 + 0] & 255);
-				//int byte2 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 1] & 255);
+				int byte1 = (int)(OKFont::font_Palette_ByteArray->data()[index * 2 + 0] & 255);
+				//int byte2 = (int)(OKFont::font_Palette_ByteArray[index * 2 + 1] & 255);
 				//int abgr1555 = (byte2 << 8) + byte1;
 				int r = 255 - (int)((((byte1 & 31)) / 32.0f) * 255.0f);
 
@@ -715,7 +715,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 				{
 					a = 0;
 				}
-				pixelColor = make_shared<BobColor>(pixelColor->ri(), pixelColor->gi(), pixelColor->bi(), a);
+				pixelColor = make_shared<OKColor>(pixelColor->ri(), pixelColor->gi(), pixelColor->bi(), a);
 			}
 
 
@@ -726,7 +726,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 				u8 b = (int)(min(255,(int)(pixelColor->bi() + (((float)(h - y) / (float)(h))*255.0f))));
 
 
-				pixelColor = make_shared<BobColor>(r, g, b);
+				pixelColor = make_shared<OKColor>(r, g, b);
 			}
 
 
@@ -759,7 +759,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 			// if this value is 1 and the value of x_in_letter+1 is 0, set x_in_letter+1 to 3
 			if (index == 1)
 			{
-				shared_ptr<BobColor> shadowColor = getTextManager()->textShadowColor;
+				shared_ptr<OKColor> shadowColor = getTextManager()->textShadowColor;
 
 				if (draw2X)
 				{

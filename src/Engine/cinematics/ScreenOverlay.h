@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -30,7 +30,7 @@ public:
 
 	static Logger log;
 
-	shared_ptr<BobColor> color = BobColor::black;
+	shared_ptr<OKColor> color = OKColor::black;
 
 
 private:
@@ -63,12 +63,12 @@ public:
 	void init();
 
 
-	void doTransition(shared_ptr<BobColor> color, float fromAlpha, float toAlpha, int ticks);
+	void doTransition(shared_ptr<OKColor> color, float fromAlpha, float toAlpha, int ticks);
 
 
-	void doToAndFromTransition(shared_ptr<BobColor> color, int ticks, float toAlpha);
+	void doToAndFromTransition(shared_ptr<OKColor> color, int ticks, float toAlpha);
 
-	void setInstantOverlay(shared_ptr<BobColor> color, float alpha);
+	void setInstantOverlay(shared_ptr<OKColor> color, float alpha);
 
 
 	void update();

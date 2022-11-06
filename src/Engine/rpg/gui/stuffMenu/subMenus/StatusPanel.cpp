@@ -26,7 +26,7 @@ StatusPanel::StatusPanel()
 	//
 	//
 	//   string moneyToolTip = "";
-	//   //				"Support \"bob\" ( That's me! ) by adding BobCoin$ to your account to buy more nD minigames and other stuff! (Coming Soon!)\n" +
+	//   //				"Support \"bob\" ( That's me! ) by adding OKCoin$ to your account to buy more nD minigames and other stuff! (Coming Soon!)\n" +
 	//   //				"\n"+
 	//   //				"The games you buy can be played by your friends, even if they don't own them!\n" +
 	//   //				"Plus, they're really cheap, and you can use them for bonuses in various places in the game.\n" +
@@ -40,14 +40,14 @@ StatusPanel::StatusPanel()
 	//   //				"It's win-win all around!"
 	//   //				;
 	//
-	//   moneyDescriptionLabel = make_shared<Label>("BobCoin$: ");
+	//   moneyDescriptionLabel = make_shared<Label>("OKCoin$: ");
 	//   moneyDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   moneyDescriptionLabel->setTheme("descriptionLabel");
 	//   moneyLabel = make_shared<Label>(" ");
 	//   moneyLabel->setCanAcceptKeyboardFocus(false);
 	//   moneyLabel->setTheme("valueLabel");
 	//
-	//   addMoneyButton = make_shared<Button>("Support \"bob!\" - Add BobCoin$");
+	//   addMoneyButton = make_shared<Button>("Support \"bob!\" - Add OKCoin$");
 	//   addMoneyButton->setCanAcceptKeyboardFocus(false);
 	//   addMoneyButton->setTheme("smallButton");
 	//   //addMoneyButton.setTooltipContent(moneyToolTip);
@@ -65,8 +65,8 @@ StatusPanel::StatusPanel()
 	//   //--------
 	//
 	//
-	//   string accountToolTip = string("Support \"bob\" with a BobPass for a one-time price of $12 a year.\n") + "\n" + "   - Avatar Vanity shared_ptr<Plate> (Make everyone else jealous- the spice of life!)\n" + "   - More shared_ptr<Friends> - (Make my servers explode!)\n" + "   - Forum shared_ptr<Membership> - (Come and spew hatred where I could read it and ruin my day!)\n" + "   - Bug shared_ptr<Reports> - (See how much crap I have to fix! Pay to do work for me!)\n" + "   - Beta shared_ptr<Minigames> - (Play em' before they work!)\n" + "   - Make A Custom Avatar - Coming Soon!\n" + "   - Design And Script Your House - Coming Soon!\n" + "   - Whatever else I come up with!\n" + "\n" + "Plus, I'll think you're really cool, and my intense psychic energy will \n" + "resonate in the collective subconscious, improving your life telepathically!**\n" + "\n" + "\n" + "*Features will be rolled out shortly!\n" + "**Results may vary.";
-	//   //"   - Bonus BobCoin$ Added To Your Account (Why the heck not!)\n" +
+	//   string accountToolTip = string("Support \"bob\" with a OKPass for a one-time price of $12 a year.\n") + "\n" + "   - Avatar Vanity shared_ptr<Plate> (Make everyone else jealous- the spice of life!)\n" + "   - More shared_ptr<Friends> - (Make my servers explode!)\n" + "   - Forum shared_ptr<Membership> - (Come and spew hatred where I could read it and ruin my day!)\n" + "   - Bug shared_ptr<Reports> - (See how much crap I have to fix! Pay to do work for me!)\n" + "   - Beta shared_ptr<Minigames> - (Play em' before they work!)\n" + "   - Make A Custom Avatar - Coming Soon!\n" + "   - Design And Script Your House - Coming Soon!\n" + "   - Whatever else I come up with!\n" + "\n" + "Plus, I'll think you're really cool, and my intense psychic energy will \n" + "resonate in the collective subconscious, improving your life telepathically!**\n" + "\n" + "\n" + "*Features will be rolled out shortly!\n" + "**Results may vary.";
+	//   //"   - Bonus OKCoin$ Added To Your Account (Why the heck not!)\n" +
 	//   accountTypeDescriptionLabel = make_shared<Label>("Account Type: ");
 	//   accountTypeDescriptionLabel->setCanAcceptKeyboardFocus(false);
 	//   accountTypeDescriptionLabel->setTheme("descriptionLabel");
@@ -74,7 +74,7 @@ StatusPanel::StatusPanel()
 	//   accountTypeLabel->setCanAcceptKeyboardFocus(false);
 	//   accountTypeLabel->setTheme("valueLabel");
 	//
-	//   goPremiumButton = make_shared<Button>("Support \"bob!\" - Buy A BobPass");
+	//   goPremiumButton = make_shared<Button>("Support \"bob!\" - Buy A OKPass");
 	//   goPremiumButton->setCanAcceptKeyboardFocus(false);
 	//   goPremiumButton->setTheme("smallButton");
 	//   //goPremiumButton.setTooltipContent(accountToolTip);
@@ -697,7 +697,7 @@ void StatusPanel::doGoPremiumButton()
 	//      URL* url = nullptr;
 	//      try
 	//      {
-	//         url = new URL("http://www.bobsgame.com/buyBobPass.php?u=" + getGameSave()->userID);
+	//         url = new URL("http://www.bobsgame.com/buyOKPass.php?u=" + getGameSave()->userID);
 	//      }
 	//      catch (MalformedURLException e)
 	//      {
@@ -711,13 +711,13 @@ void StatusPanel::doGoPremiumButton()
 	//      try
 	//      {
 	//         //open browser window, we can't get it with JS as a desktop client so we need to redirect to PHP or something which stores it in SQL
-	//         string url = "http://www.bobsgame.com/buyBobPass.php?u=" + getGameSave()->userID;
+	//         string url = "http://www.bobsgame.com/buyOKPass.php?u=" + getGameSave()->userID;
 	//
 	//         java::awt::Desktop::getDesktop().browse(java::net::URI::create(url));
 	//      }
 	//      catch (java::io::IOException e)
 	//      {
-	//         log.error("Could not open browser: " + e->getMessage());
+	//         log->error("Could not open browser: " + e->getMessage());
 	//      }
 	//   }
 }
@@ -733,7 +733,7 @@ void StatusPanel::doAddMoneyButton()
 	//      URL* url = nullptr;
 	//      try
 	//      {
-	//         url = new URL("http://www.bobsgame.com/buyBobCoins.php?u=" + getGameSave()->userID);
+	//         url = new URL("http://www.bobsgame.com/buyOKCoins.php?u=" + getGameSave()->userID);
 	//      }
 	//      catch (MalformedURLException e)
 	//      {
@@ -747,13 +747,13 @@ void StatusPanel::doAddMoneyButton()
 	//      try
 	//      {
 	//         //open browser window, we can't get it with JS as a desktop client so we need to redirect to PHP or something which stores it in SQL
-	//         string url = "http://www.bobsgame.com/buyBobCoins.php?u=" + getGameSave()->userID;
+	//         string url = "http://www.bobsgame.com/buyOKCoins.php?u=" + getGameSave()->userID;
 	//
 	//         java::awt::Desktop::getDesktop().browse(java::net::URI::create(url));
 	//      }
 	//      catch (java::io::IOException e)
 	//      {
-	//         log.error("Could not open browser: " + e->getMessage());
+	//         log->error("Could not open browser: " + e->getMessage());
 	//      }
 	//   }
 }

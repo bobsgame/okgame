@@ -198,7 +198,7 @@ void Door::update()
 								bool canMakeRandom = false;
 
 								//if there is another exit, keep pumping out randoms, they will go there.
-								if (String::startsWith(targetTYPEIDList->get(i), "DOOR."))
+								if (OKString::startsWith(targetTYPEIDList->get(i), "DOOR."))
 								{
 									canMakeRandom = true;
 								}
@@ -327,7 +327,7 @@ void Door::renderActionIcon()
 
 	//get distance from player
 
-	shared_ptr<BobTexture> actionTexture = getSpriteManager()->actionTexture;
+	shared_ptr<OKTexture> actionTexture = getSpriteManager()->actionTexture;
 
 	if (actionTexture == nullptr)
 	{
@@ -393,7 +393,7 @@ void Door::renderDebugBoxes()
 	for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (String::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
+		if (OKString::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
 			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
@@ -463,30 +463,30 @@ void Door::renderDebugInfo()
 	int strings = -1;
 
 
-	GLUtils::drawOutlinedString("entityID: " + getName(), x, y - 18, BobColor::yellow);
+	GLUtils::drawOutlinedString("entityID: " + getName(), x, y - 18, OKColor::yellow);
 
 
-	GLUtils::drawOutlinedString("assetName: " + sprite->getName(), x, y - 9, BobColor::white);
+	GLUtils::drawOutlinedString("assetName: " + sprite->getName(), x, y - 9, OKColor::white);
 
 
-	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y + (++strings * 9), make_shared<BobColor>(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y + (++strings * 9), make_shared<OKColor>(200, 0, 255));
 
 	if (destinationTYPEIDString() == "DOOR." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self")
 	{
-		GLUtils::drawOutlinedString("Has no destination!", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("Has no destination!", x, y + (++strings * 9), OKColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString("Goes to: " + destinationMapName() + "." + destinationDoorName(), x, y + (++strings * 9), make_shared<BobColor>(200, 0, 255));
+	GLUtils::drawOutlinedString("Goes to: " + destinationMapName() + "." + destinationDoorName(), x, y + (++strings * 9), make_shared<OKColor>(200, 0, 255));
 
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), OKColor::magenta);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), OKColor::white);
 	}
 
 	if (randomNPCSpawnPoint())
@@ -508,12 +508,12 @@ void Door::renderDebugInfo()
 		{
 			allowedTypes = allowedTypes + " Females";
 		}
-		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), OKColor::magenta);
 	}
 
 	if (randomPointOfInterestOrExit())
 	{
-		GLUtils::drawOutlinedString("Random Exit (Point Of Interest)", x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Random Exit (Point Of Interest)", x, y + (++strings * 9), OKColor::white);
 	}
 
 

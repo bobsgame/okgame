@@ -27,7 +27,7 @@ shared_ptr<CaptionManager> Console::captionManager = nullptr;
 Console::Console()
 { //=========================================================================================================================
 
-	log.debug("Init console");
+	log->debug("Init console");
 
 	if(captionManager==nullptr)captionManager = make_shared<CaptionManager>(nullptr);
 
@@ -61,11 +61,11 @@ void Console::update()
 		if (cy == -1)cy = 0;//-1 is a magic num for captions, dont use it  //TODO: change that so all instances
 		if (d->caption == nullptr)
 		{
-			d->caption = Console::captionManager->newManagedCaption(Caption::Position::NONE, cx, cy, -1, d->text, fontSize, true, d->color, BobColor::clear, RenderOrder::CONSOLE);
+			d->caption = Console::captionManager->newManagedCaption(Caption::Position::NONE, cx, cy, -1, d->text, fontSize, true, d->color, OKColor::clear, RenderOrder::CONSOLE);
 		}
 
 		if (d->caption->text != d->text)d->caption->setText(d->text, false);
-		if (d->caption->getTextColor() != d->color)d->caption->setTextColor(d->color, nullptr, BobColor::clear);
+		if (d->caption->getTextColor() != d->color)d->caption->setTextColor(d->color, nullptr, OKColor::clear);
 
 		if (d->ticks != -1)
 		{
@@ -96,32 +96,32 @@ void Console::pruneChats(int max)
 	}
 }
 
-shared_ptr<ConsoleText> Console::error(const string& s, int ticks, int x, int y, shared_ptr<BobColor> c)
+shared_ptr<ConsoleText> Console::error(const string& s, int ticks, int x, int y, shared_ptr<OKColor> c)
 { //=========================================================================================================================
 
-	if (c == nullptr)c = BobColor::red;
+	if (c == nullptr)c = OKColor::red;
 	return add(s, ticks, x, y, c, true);
 }
 
-shared_ptr<ConsoleText> Console::debug(const string& s, int ticks, int x, int y, shared_ptr<BobColor> c)
+shared_ptr<ConsoleText> Console::debug(const string& s, int ticks, int x, int y, shared_ptr<OKColor> c)
 { //=========================================================================================================================
 
-	//if (c == nullptr)c = BobColor::yellow;
+	//if (c == nullptr)c = OKColor::yellow;
 	return add(s, ticks, x, y, c, true);
 }
 
-shared_ptr<ConsoleText> Console::add(const string& s, shared_ptr<BobColor> c)
+shared_ptr<ConsoleText> Console::add(const string& s, shared_ptr<OKColor> c)
 { //=========================================================================================================================
 	return add(s, -1, -1, -1, c);
 }
 
-shared_ptr<ConsoleText> Console::add(const string& s, int ticks, shared_ptr<BobColor> c)
+shared_ptr<ConsoleText> Console::add(const string& s, int ticks, shared_ptr<OKColor> c)
 { //=========================================================================================================================
 	return add(s, ticks, -1, -1, c);
 }
 
 
-shared_ptr<ConsoleText> Console::add(const string& s, int ticks, int x, int y, shared_ptr<BobColor> c, bool isDebug)
+shared_ptr<ConsoleText> Console::add(const string& s, int ticks, int x, int y, shared_ptr<OKColor> c, bool isDebug)
 { //=========================================================================================================================
 
 	shared_ptr<ConsoleText> dt = make_shared<ConsoleText>(s, c, x, y, ticks, isDebug);
@@ -297,7 +297,7 @@ void ERROR_set_error(string error_string)
 {//===========================================================================================================================
 
 
-	Console::log.error(error_string);
+	Console::log->error(error_string);
 
 	//copy the new error string into a stored string
 	//char* new_error = (char*)malloc((strlen(error_string) + 2) * sizeof(char));
@@ -355,7 +355,7 @@ void ERROR_draw_error_console()
 
 
 	shared_ptr<SDL_Surface> error_SURFACE = NULL;
-	shared_ptr<BobTexture> error_TEXTURE = NULL;
+	shared_ptr<OKTexture> error_TEXTURE = NULL;
 	SDL_Color green_COLOR = { 0,255,0,255 };
 	SDL_Color white_COLOR = { 255,255,255,255 };
 	SDL_Color black_COLOR = { 0,0,0,255 };
@@ -366,8 +366,8 @@ void ERROR_draw_error_console()
 	{
 		line++;
 
-		if (x == amount_of_errors - 1)error_SURFACE = TTF_RenderText_Shaded(BobFont::ttf_bobsgame_8, error_messages[x].c_str(), green_COLOR, black_COLOR);
-		else error_SURFACE = TTF_RenderText_Shaded(BobFont::ttf_bobsgame_8, error_messages[x].c_str(), white_COLOR, black_COLOR);
+		if (x == amount_of_errors - 1)error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, error_messages[x].c_str(), green_COLOR, black_COLOR);
+		else error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, error_messages[x].c_str(), white_COLOR, black_COLOR);
 
 		error_TEXTURE = GLUtils::loadTextureFromSurface(string(error_messages[x]), error_SURFACE);
 
@@ -462,7 +462,7 @@ void DEBUG_draw_overlays()
 
 
 	shared_ptr<SDL_Surface> error_SURFACE = NULL;
-	shared_ptr<BobTexture> error_TEXTURE = NULL;
+	shared_ptr<OKTexture> error_TEXTURE = NULL;
 	SDL_Color white_COLOR = { 255,255,255,255 };
 	SDL_Color black_COLOR = { 0,0,0,255 };
 
@@ -471,7 +471,7 @@ void DEBUG_draw_overlays()
 	{
 		if (DEBUG_overlays[x] != NULL)
 		{
-			error_SURFACE = TTF_RenderText_Shaded(BobFont::ttf_bobsgame_8, DEBUG_overlays[x]->text.c_str(), white_COLOR, black_COLOR);
+			error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, DEBUG_overlays[x]->text.c_str(), white_COLOR, black_COLOR);
 			error_TEXTURE = GLUtils::loadTextureFromSurface(string(DEBUG_overlays[x]->text), error_SURFACE);
 
 			GLUtils::drawTexture(error_TEXTURE, (float)DEBUG_overlays[x]->x, (float)DEBUG_overlays[x]->y, GLUtils::FILTER_NEAREST);
@@ -493,17 +493,17 @@ void DEBUG_draw_overlays()
 }
 
 //===========================================================================================================================
-void DEBUG_draw_text(float screenX0, float screenY0, string text, shared_ptr<BobColor> color)
+void DEBUG_draw_text(float screenX0, float screenY0, string text, shared_ptr<OKColor> color)
 {//===========================================================================================================================
 
 
 	shared_ptr<SDL_Surface> error_SURFACE = NULL;
-	shared_ptr<BobTexture> error_TEXTURE = NULL;
+	shared_ptr<OKTexture> error_TEXTURE = NULL;
 	SDL_Color white_COLOR = { (u8)color->ri(),(u8)color->gi(),(u8)color->bi(),255 };
 	SDL_Color black_COLOR = { 0,0,0,255 };
 
 
-	error_SURFACE = TTF_RenderText_Shaded(BobFont::ttf_bobsgame_8, text.c_str(), white_COLOR, black_COLOR);
+	error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, text.c_str(), white_COLOR, black_COLOR);
 	error_TEXTURE = GLUtils::loadTextureFromSurface(text.c_str(), error_SURFACE);
 
 	GLUtils::drawTexture(error_TEXTURE, screenX0, screenY0, GLUtils::FILTER_NEAREST);

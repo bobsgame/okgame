@@ -68,7 +68,7 @@ void CaptionManager::update()
 			captionList->remove(c);
 			if(c->texture!=nullptr)
 			{
-				log.debug("Caption texture was not null on delete, should not happen.");
+				log->debug("Caption texture was not null on delete, should not happen.");
 				c->texture->release();
 				delete c->texture;
 				c->texture = nullptr;
@@ -121,12 +121,12 @@ void CaptionManager::render(RenderOrder layer)
 
 
 //=========================================================================================================================
-shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, shared_ptr<BobFont> font, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textAAColor, shared_ptr<BobColor> textBGColor, RenderOrder r, float scale, int width, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, shared_ptr<OKFont> font, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textAAColor, shared_ptr<OKColor> textBGColor, RenderOrder r, float scale, int width, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 
 	if (ticks >= 0 && ticks < 100)
 	{
-		log.log("Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
+		log->log("Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
 	shared_ptr<Caption> c = make_shared<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, font, textColor, textAAColor, textBGColor, r, scale, width, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
@@ -135,12 +135,12 @@ shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPos
 }
 
 //=========================================================================================================================
-shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, bool outline, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textBGColor, RenderOrder r, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area)
+shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, bool outline, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textBGColor, RenderOrder r, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area)
 {//=========================================================================================================================
 
 	if (ticks >= 0 && ticks < 100)
 	{
-		log.log("TTF Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
+		log->log("TTF Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
 	shared_ptr<Caption> c = make_shared<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, fontSize, outline, textColor, textBGColor, r, scale, entity, area);

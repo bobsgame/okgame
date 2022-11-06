@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -19,9 +19,9 @@ public:
 	static Logger log;
 
 
-	shared_ptr<BobTexture> textBoxTexture = nullptr;
-	shared_ptr<BobTexture> spriteBoxTexture = nullptr;
-	static shared_ptr<BobTexture> borderTexture;
+	shared_ptr<OKTexture> textBoxTexture = nullptr;
+	shared_ptr<OKTexture> spriteBoxTexture = nullptr;
+	static shared_ptr<OKTexture> borderTexture;
 
 
 	float scrollPercent = 0;
@@ -41,7 +41,7 @@ public:
 
 	shared_ptr<Entity> spriteWindowEntity = nullptr;
 
-	shared_ptr<BobTexture> spriteWindowTexture = nullptr;
+	shared_ptr<OKTexture> spriteWindowTexture = nullptr;
 
 	bool redraw = false;
 
@@ -75,7 +75,7 @@ public:
 	void updateSpriteWindowTexture();
 
 
-	void setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<BobTexture> texture, const string& newLabel);
+	void setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<OKTexture> texture, const string& newLabel);
 
 
 	void updateTextureFromByteArray();
@@ -87,7 +87,7 @@ public:
 	int getPixelValue(int letter_index, int y, int x_in_letter, bool blank);
 
 
-	void setPixel(int index, shared_ptr<BobColor> c);
+	void setPixel(int index, shared_ptr<OKColor> c);
 
 
 	void drawColumn(int letter_index, int x_in_letter, bool blank);

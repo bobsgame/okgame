@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 #include "src/Utility/HashMap.h"
 #include "src/Utility/ArrayList.h"
@@ -54,7 +54,7 @@ public:
 	};
 
 public:
-	ArrayList<shared_ptr<Coords>>* actionsThisFrame = make_shared<ArrayList><shared_ptr<Coords>>();
+	ArrayList<shared_ptr<Coords>> actionsThisFrame;// = new ArrayList<shared_ptr<Coords>>();
 
 
 	ActionManager(shared_ptr<Engine> g);

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -32,13 +32,13 @@ public:
 	shared_ptr<NDMenuBackground> background = make_shared<NDMenuBackground>(this);
 
 
-	shared_ptr<BobColor> WHITE = make_shared<BobColor>(255, 255, 255);
-	shared_ptr<BobColor> BLACK = make_shared<BobColor>(0, 0, 0);
-	shared_ptr<BobColor> RED = make_shared<BobColor>(255, 0, 0);
-	shared_ptr<BobColor> GREEN = make_shared<BobColor>(0, 255, 0);
-	shared_ptr<BobColor> BLUE = make_shared<BobColor>(0, 0, 255);
-	shared_ptr<BobColor> MAGENTA = make_shared<BobColor>(255, 0, 255);
-	shared_ptr<BobColor> YELLOW = make_shared<BobColor>(0, 127, 127);
+	shared_ptr<OKColor> WHITE = make_shared<OKColor>(255, 255, 255);
+	shared_ptr<OKColor> BLACK = make_shared<OKColor>(0, 0, 0);
+	shared_ptr<OKColor> RED = make_shared<OKColor>(255, 0, 0);
+	shared_ptr<OKColor> GREEN = make_shared<OKColor>(0, 255, 0);
+	shared_ptr<OKColor> BLUE = make_shared<OKColor>(0, 0, 255);
+	shared_ptr<OKColor> MAGENTA = make_shared<OKColor>(255, 0, 255);
+	shared_ptr<OKColor> YELLOW = make_shared<OKColor>(0, 127, 127);
 
 
 	static bool actionButtonPressed;
@@ -76,7 +76,7 @@ public:
 	long long fadeOutTicks = 0;
 
 
-	void addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color);
+	void addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color);
 	virtual void update() override;
 	virtual void cleanup() override;
 	virtual void render() override;

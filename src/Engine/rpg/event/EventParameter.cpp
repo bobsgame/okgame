@@ -24,22 +24,22 @@ EventParameter::EventParameter(shared_ptr<Engine> g, const string& parameterStri
 void EventParameter::parsePrimitive(const string& typeString, const string& primitiveValueString)
 { //===============================================================================================
 
-	if (String::startsWith(typeString, "BOOL"))
+	if (OKString::startsWith(typeString, "BOOL"))
 	{
 		//type=TYPE_BOOL;
 		try
 		{
-			this->b = BobBoolean::parseBoolean(primitiveValueString);
+			this->b = OKBoolean::parseBoolean(primitiveValueString);
 		}
 		catch (exception)
 		{
-			log.error("Could not parse bool in primitiveValueString");
+			log->error("Could not parse bool in primitiveValueString");
 		}
 		
 	}
 	else
 	{
-		if (String::startsWith(typeString, "INT"))
+		if (OKString::startsWith(typeString, "INT"))
 		{
 			//type=TYPE_INT;
 			try
@@ -48,12 +48,12 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 			}
 			catch (exception)
 			{
-				log.error("Could not parse int in primitiveValueString");
+				log->error("Could not parse int in primitiveValueString");
 			}
 		}
 		else
 		{
-			if (String::startsWith(typeString, "FLOAT"))
+			if (OKString::startsWith(typeString, "FLOAT"))
 			{
 				//type=TYPE_FLOAT;
 				try
@@ -62,7 +62,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 				}
 				catch (exception)
 				{
-					log.error("Could not parse float in primitiveValueString");
+					log->error("Could not parse float in primitiveValueString");
 				}
 			}
 		}
@@ -75,25 +75,25 @@ void EventParameter::updateParameterVariablesFromString(shared_ptr<Event> event)
 	//parameterName is always OBJECT.id
 
 
-	if (String::startsWith(parameterString, "BOOL."))
+	if (OKString::startsWith(parameterString, "BOOL."))
 	{
 		parsePrimitive("BOOL", parameterString.substr(parameterString.find(".") + 1));
 	}
 	else
 	{
-		if (String::startsWith(parameterString, "INT."))
+		if (OKString::startsWith(parameterString, "INT."))
 		{
 			parsePrimitive("INT", parameterString.substr(parameterString.find(".") + 1));
 		}
 		else
 		{
-			if (String::startsWith(parameterString, "FLOAT."))
+			if (OKString::startsWith(parameterString, "FLOAT."))
 			{
 				parsePrimitive("FLOAT", parameterString.substr(parameterString.find(".") + 1));
 			}
 			else
 			{
-				if (String::startsWith(parameterString, "STRING."))
+				if (OKString::startsWith(parameterString, "STRING."))
 				{
 					parsePrimitive("STRING", parameterString.substr(parameterString.find(".") + 1));
 				}
@@ -127,7 +127,7 @@ void EventParameter::updateParameterVariablesFromString(shared_ptr<Event> event)
 
 							if (o == nullptr)
 							{
-								log.error("Could not find GameObject: " + parameterString + " when parsing Event Parameter.");
+								log->error("Could not find GameObject: " + parameterString + " when parsing Event Parameter.");
 							}
 							else
 							{
@@ -148,7 +148,7 @@ string EventParameter::toString()
 { //===============================================================================================
 
 
-	log.error("Should never call toString in EventParameter");
+	log->error("Should never call toString in EventParameter");
 
 
 	return "";

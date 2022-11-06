@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -20,7 +20,7 @@ void adjust_color(int* pr, int* pg, int* pb);
 
 
 
-class BobColor
+class OKColor
 {
 	//various color utilities lifted from other libraries
 
@@ -54,7 +54,7 @@ public:
 
 public:
 
-	bool operator==(const BobColor& rhs) const
+	bool operator==(const OKColor& rhs) const
 	{
 		return
 			r == rhs.r
@@ -64,14 +64,14 @@ public:
 			&& name == rhs.name
 			;
 	}
-	bool operator!=(const BobColor& rhs) const
+	bool operator!=(const OKColor& rhs) const
 	{
 		return
 			(*this == rhs) == false
 			;
 	}
 
-//	BobColor& BobColor::operator=(const BobColor rhs)
+//	OKColor& OKColor::operator=(const OKColor rhs)
 //	{
 //		//don't copy uuid
 //
@@ -84,106 +84,106 @@ public:
 //		return *this;
 //	}
 
-	static shared_ptr<BobColor> getColorByName(string name);
+	static shared_ptr<OKColor> getColorByName(string name);
 	static Logger log;
 
-	static ArrayList<shared_ptr<BobColor>> colors;
+	static ArrayList<shared_ptr<OKColor>> colors;
 
-	static shared_ptr<BobColor> clear;
-	static shared_ptr<BobColor> transparent;
-	static shared_ptr<BobColor> black;
+	static shared_ptr<OKColor> clear;
+	static shared_ptr<OKColor> transparent;
+	static shared_ptr<OKColor> black;
 
-	static shared_ptr<BobColor> darkerGray;
-	static shared_ptr<BobColor> darkGray;
-	static shared_ptr<BobColor> gray;
-	static shared_ptr<BobColor> lightGray;
-	static shared_ptr<BobColor> lighterGray;
+	static shared_ptr<OKColor> darkerGray;
+	static shared_ptr<OKColor> darkGray;
+	static shared_ptr<OKColor> gray;
+	static shared_ptr<OKColor> lightGray;
+	static shared_ptr<OKColor> lighterGray;
 
-	static shared_ptr<BobColor> white;
+	static shared_ptr<OKColor> white;
 
-	static shared_ptr<BobColor> cyan; //, lightCyan, darkCyan);
-	static shared_ptr<BobColor> lightCyan; //make_shared<Color>(150,255,255);
-	static shared_ptr<BobColor> lighterCyan; //make_shared<Color>(150,255,255);
-	static shared_ptr<BobColor> darkCyan; //make_shared<Color>(0,220,220);
-	static shared_ptr<BobColor> darkerCyan; //make_shared<Color>(0,180,180);
-	static shared_ptr<BobColor> magenta; //, lightMagenta, darkMagenta);
-	static shared_ptr<BobColor> lightMagenta; //make_shared<Color>(255,120,127);
-	static shared_ptr<BobColor> lighterMagenta; //make_shared<Color>(255,120,127);
-	static shared_ptr<BobColor> darkMagenta; //make_shared<Color>(150,0,75);
-	static shared_ptr<BobColor> darkerMagenta; //make_shared<Color>(127,0,64);
-	static shared_ptr<BobColor> yellow; //, lightYellow, darkYellow);
-	static shared_ptr<BobColor> lightYellow; //make_shared<Color>(255,255,127);
-	static shared_ptr<BobColor> lighterYellow; //make_shared<Color>(255,255,127);
-	static shared_ptr<BobColor> darkYellow; //make_shared<Color>(200,200,0);
-	static shared_ptr<BobColor> darkerYellow; //make_shared<Color>(127,127,0);
-	static shared_ptr<BobColor> orange; //, lightOrange, darkOrange);
-	static shared_ptr<BobColor> lightOrange; //make_shared<Color>(255, 190, 110);
-	static shared_ptr<BobColor> lighterOrange; //make_shared<Color>(255, 190, 110);
-	static shared_ptr<BobColor> darkOrange; //make_shared<Color>(220, 115, 0);
-	static shared_ptr<BobColor> darkerOrange; //make_shared<Color>(150, 90, 0);
-	static shared_ptr<BobColor> red; //, lightRed, darkRed);
-	static shared_ptr<BobColor> lightRed; //make_shared<Color>(255,127,127);
-	static shared_ptr<BobColor> lighterRed; //make_shared<Color>(255,127,127);
-	static shared_ptr<BobColor> darkRed; //make_shared<Color>(127,0,0);
-	static shared_ptr<BobColor> darkerRed; //make_shared<Color>(64,0,0);
-	static shared_ptr<BobColor> pink; //, lightPink, darkPink);
-	static shared_ptr<BobColor> lightPink; //make_shared<Color>(255, 127, 255);
-	static shared_ptr<BobColor> lighterPink; //make_shared<Color>(255, 127, 255);
-	static shared_ptr<BobColor> darkPink; //make_shared<Color>(127, 0, 127);
-	static shared_ptr<BobColor> darkerPink; //make_shared<Color>(64, 0, 64);
-	static shared_ptr<BobColor> purple; //, lightPurple, darkPurple);
-	static shared_ptr<BobColor> darkPurple; //make_shared<Color>(63,0,127);
-	static shared_ptr<BobColor> darkerPurple; //make_shared<Color>(63,0,127);
-	static shared_ptr<BobColor> lightPurple; //make_shared<Color>(159,63,255);
-	static shared_ptr<BobColor> lighterPurple; //make_shared<Color>(159,63,255);
-	static shared_ptr<BobColor> blue; //, lightBlue, darkBlue);
-	static shared_ptr<BobColor> lightBlue; //make_shared<Color>(150,150,255);
-	static shared_ptr<BobColor> lighterBlue; //make_shared<Color>(150,150,255);
-	static shared_ptr<BobColor> darkBlue; //make_shared<Color>(0,0,150);
-	static shared_ptr<BobColor> darkerBlue; //make_shared<Color>(0,0,64);
-	static shared_ptr<BobColor> green;
-	static shared_ptr<BobColor> lighterGreen;
-	static shared_ptr<BobColor> lightGreen;
-	static shared_ptr<BobColor> darkGreen;
-	static shared_ptr<BobColor> darkerGreen;
-	static shared_ptr<BobColor> aqua;
-	static shared_ptr<BobColor> lighterAqua;
-	static shared_ptr<BobColor> lightAqua;
-	static shared_ptr<BobColor> darkAqua;
-	static shared_ptr<BobColor> darkerAqua;
-	static shared_ptr<BobColor> turquoise;
-	static shared_ptr<BobColor> lighterTurquoise;
-	static shared_ptr<BobColor> lightTurquoise;
-	static shared_ptr<BobColor> darkTurquoise;
-	static shared_ptr<BobColor> darkerTurquoise;
-	static shared_ptr<BobColor> olive;
-	static shared_ptr<BobColor> lighterOlive;
-	static shared_ptr<BobColor> lightOlive;
-	static shared_ptr<BobColor> darkOlive;
-	static shared_ptr<BobColor> darkerOlive;
-	static shared_ptr<BobColor> burgandy;
-	static shared_ptr<BobColor> lighterBurgandy;
-	static shared_ptr<BobColor> lightBurgandy;
-	static shared_ptr<BobColor> darkBurgandy;
-	static shared_ptr<BobColor> darkerBurgandy;
-	static shared_ptr<BobColor> wine;
+	static shared_ptr<OKColor> cyan; //, lightCyan, darkCyan);
+	static shared_ptr<OKColor> lightCyan; //make_shared<Color>(150,255,255);
+	static shared_ptr<OKColor> lighterCyan; //make_shared<Color>(150,255,255);
+	static shared_ptr<OKColor> darkCyan; //make_shared<Color>(0,220,220);
+	static shared_ptr<OKColor> darkerCyan; //make_shared<Color>(0,180,180);
+	static shared_ptr<OKColor> magenta; //, lightMagenta, darkMagenta);
+	static shared_ptr<OKColor> lightMagenta; //make_shared<Color>(255,120,127);
+	static shared_ptr<OKColor> lighterMagenta; //make_shared<Color>(255,120,127);
+	static shared_ptr<OKColor> darkMagenta; //make_shared<Color>(150,0,75);
+	static shared_ptr<OKColor> darkerMagenta; //make_shared<Color>(127,0,64);
+	static shared_ptr<OKColor> yellow; //, lightYellow, darkYellow);
+	static shared_ptr<OKColor> lightYellow; //make_shared<Color>(255,255,127);
+	static shared_ptr<OKColor> lighterYellow; //make_shared<Color>(255,255,127);
+	static shared_ptr<OKColor> darkYellow; //make_shared<Color>(200,200,0);
+	static shared_ptr<OKColor> darkerYellow; //make_shared<Color>(127,127,0);
+	static shared_ptr<OKColor> orange; //, lightOrange, darkOrange);
+	static shared_ptr<OKColor> lightOrange; //make_shared<Color>(255, 190, 110);
+	static shared_ptr<OKColor> lighterOrange; //make_shared<Color>(255, 190, 110);
+	static shared_ptr<OKColor> darkOrange; //make_shared<Color>(220, 115, 0);
+	static shared_ptr<OKColor> darkerOrange; //make_shared<Color>(150, 90, 0);
+	static shared_ptr<OKColor> red; //, lightRed, darkRed);
+	static shared_ptr<OKColor> lightRed; //make_shared<Color>(255,127,127);
+	static shared_ptr<OKColor> lighterRed; //make_shared<Color>(255,127,127);
+	static shared_ptr<OKColor> darkRed; //make_shared<Color>(127,0,0);
+	static shared_ptr<OKColor> darkerRed; //make_shared<Color>(64,0,0);
+	static shared_ptr<OKColor> pink; //, lightPink, darkPink);
+	static shared_ptr<OKColor> lightPink; //make_shared<Color>(255, 127, 255);
+	static shared_ptr<OKColor> lighterPink; //make_shared<Color>(255, 127, 255);
+	static shared_ptr<OKColor> darkPink; //make_shared<Color>(127, 0, 127);
+	static shared_ptr<OKColor> darkerPink; //make_shared<Color>(64, 0, 64);
+	static shared_ptr<OKColor> purple; //, lightPurple, darkPurple);
+	static shared_ptr<OKColor> darkPurple; //make_shared<Color>(63,0,127);
+	static shared_ptr<OKColor> darkerPurple; //make_shared<Color>(63,0,127);
+	static shared_ptr<OKColor> lightPurple; //make_shared<Color>(159,63,255);
+	static shared_ptr<OKColor> lighterPurple; //make_shared<Color>(159,63,255);
+	static shared_ptr<OKColor> blue; //, lightBlue, darkBlue);
+	static shared_ptr<OKColor> lightBlue; //make_shared<Color>(150,150,255);
+	static shared_ptr<OKColor> lighterBlue; //make_shared<Color>(150,150,255);
+	static shared_ptr<OKColor> darkBlue; //make_shared<Color>(0,0,150);
+	static shared_ptr<OKColor> darkerBlue; //make_shared<Color>(0,0,64);
+	static shared_ptr<OKColor> green;
+	static shared_ptr<OKColor> lighterGreen;
+	static shared_ptr<OKColor> lightGreen;
+	static shared_ptr<OKColor> darkGreen;
+	static shared_ptr<OKColor> darkerGreen;
+	static shared_ptr<OKColor> aqua;
+	static shared_ptr<OKColor> lighterAqua;
+	static shared_ptr<OKColor> lightAqua;
+	static shared_ptr<OKColor> darkAqua;
+	static shared_ptr<OKColor> darkerAqua;
+	static shared_ptr<OKColor> turquoise;
+	static shared_ptr<OKColor> lighterTurquoise;
+	static shared_ptr<OKColor> lightTurquoise;
+	static shared_ptr<OKColor> darkTurquoise;
+	static shared_ptr<OKColor> darkerTurquoise;
+	static shared_ptr<OKColor> olive;
+	static shared_ptr<OKColor> lighterOlive;
+	static shared_ptr<OKColor> lightOlive;
+	static shared_ptr<OKColor> darkOlive;
+	static shared_ptr<OKColor> darkerOlive;
+	static shared_ptr<OKColor> burgandy;
+	static shared_ptr<OKColor> lighterBurgandy;
+	static shared_ptr<OKColor> lightBurgandy;
+	static shared_ptr<OKColor> darkBurgandy;
+	static shared_ptr<OKColor> darkerBurgandy;
+	static shared_ptr<OKColor> wine;
 
 
 	static void initPresetColors();
 	static bool colorsInitialized;// = false;
 
-	BobColor();
-	//BobColor(shared_ptr<BobColor> c);
-	//BobColor(const BobColor &c);
-	BobColor(BobColor c, u8 a);
-	//BobColor(BobColor c, float af);
-	//BobColor(BobColor c, float af);
-	//BobColor(float rf, float gf, float bf);
-	//BobColor(float rf, float gf, float bf, float af);
-	BobColor(u8 r, u8 g, u8 b);
-	BobColor(u8 r, u8 g, u8 b, u8 a);
-	BobColor(float hf, float sf, float bf, float af, bool hsbOverload);
-	BobColor(int rgb);
+	OKColor();
+	//OKColor(shared_ptr<OKColor> c);
+	//OKColor(const OKColor &c);
+	OKColor(OKColor c, u8 a);
+	//OKColor(OKColor c, float af);
+	//OKColor(OKColor c, float af);
+	//OKColor(float rf, float gf, float bf);
+	//OKColor(float rf, float gf, float bf, float af);
+	OKColor(u8 r, u8 g, u8 b);
+	OKColor(u8 r, u8 g, u8 b, u8 a);
+	OKColor(float hf, float sf, float bf, float af, bool hsbOverload);
+	OKColor(int rgb);
 	float rf();
 	float gf();
 	float bf();
@@ -213,5 +213,5 @@ public:
 	static int getRGBA(u8 r, u8 g, u8 b, u8 a);
 };
 
-BOOST_CLASS_VERSION(BobColor, 1)
-BOOST_CLASS_TRACKING(BobColor, boost::serialization::track_never)
+BOOST_CLASS_VERSION(OKColor, 1)
+BOOST_CLASS_TRACKING(OKColor, boost::serialization::track_never)

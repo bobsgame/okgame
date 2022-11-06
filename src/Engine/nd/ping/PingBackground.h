@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -27,7 +27,7 @@ public:
 	bool tvScanlinesColorPulseToggle = false;
 
 	bool backgroundInit = false;
-	shared_ptr<BobTexture> backgroundTexture = nullptr;
+	shared_ptr<OKTexture> backgroundTexture = nullptr;
 	int screenX = 0;
 	int screenY = 0;
 

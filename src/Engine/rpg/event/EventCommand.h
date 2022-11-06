@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -30,12 +30,12 @@ public:
 	static int TYPE_QUALIFIER_FALSE;
 
 
-	ArrayList<shared_ptr<EventParameter>>* parameterList = make_shared<ArrayList><shared_ptr<EventParameter>>();
+	ArrayList<shared_ptr<EventParameter>> parameterList;// = make_shared<ArrayList><shared_ptr<EventParameter>>();
 
 	shared_ptr<EventCommand> parent = nullptr;
 
 
-	ArrayList<shared_ptr<EventCommand>>* children = make_shared<ArrayList><shared_ptr<EventCommand>>();
+	ArrayList<shared_ptr<EventCommand>> children;// = make_shared<ArrayList><shared_ptr<EventCommand>>();
 
 
 	EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>>* parameterList, int type);

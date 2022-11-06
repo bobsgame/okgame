@@ -142,27 +142,27 @@ string& LightData::initFromString(string& t)
 
 	t = t.substr(t.find("isDayLight:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isDayLight = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isDayLight = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isNightLight:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNightLight = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isNightLight = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("flickers:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickers = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	flickers = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("changesColor:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	changesColor = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	changesColor = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toggleable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	toggleable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	toggleable = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toggleXPixels1X:`") + 1);
@@ -187,12 +187,12 @@ string& LightData::initFromString(string& t)
 
 	t = t.substr(t.find("flickerRandomUpToOnTicks:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickerRandomUpToOnTicks = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	flickerRandomUpToOnTicks = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("flickerRandomUpToOffTicks:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	flickerRandomUpToOffTicks = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	flickerRandomUpToOffTicks = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 

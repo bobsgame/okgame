@@ -176,7 +176,7 @@ void Area::renderActionIcon()
 		doorAlpha = 1.0f;
 	}
 
-	shared_ptr<BobTexture> actionTexture = getSpriteManager()->actionTexture;
+	shared_ptr<OKTexture> actionTexture = getSpriteManager()->actionTexture;
 	float tx0 = 0.0f;
 	float tx1 = 32.0f / ((float)(actionTexture->getTextureWidth()));
 	float ty0 = (float)(32.0f * 10) / ((float)(actionTexture->getTextureHeight()));
@@ -286,7 +286,7 @@ void Area::update()
 										bool canMakeRandom = false;
 
 										//if there is another exit, keep pumping out randoms, they will go there.
-										if (String::startsWith(targetTYPEIDList->get(i), "DOOR."))
+										if (OKString::startsWith(targetTYPEIDList->get(i), "DOOR."))
 										{
 											canMakeRandom = true;
 										}
@@ -423,7 +423,7 @@ void Area::renderDebugBoxes()
 	for (int i = 0; i < connectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (String::startsWith(connectionTYPEIDList()->get(i), "DOOR."))
+		if (OKString::startsWith(connectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
 			for (int d = 0; d < (int)map->doorList.size(); d++)
@@ -498,63 +498,63 @@ void Area::renderDebugInfo()
 
 	if ((dynamic_cast<shared_ptr<WarpArea>>(this) != nullptr) == false)
 	{
-		GLUtils::drawOutlinedString(getName(), x, y - 9, BobColor::white);
+		GLUtils::drawOutlinedString(getName(), x, y - 9, OKColor::white);
 	}
 
 	//if(isAnAction)GL.drawOutlinedString("Is An Action", x, y+(++strings*9),Color.red);
 	if (getEventData() != nullptr)
 	{
-		GLUtils::drawOutlinedString("Event ID: " + to_string(getEventData()->getID()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Event ID: " + to_string(getEventData()->getID()), x, y + (++strings * 9), OKColor::white);
 	}
 	if (waitHereTicks() == -1)
 	{
-		GLUtils::drawOutlinedString("Stop Here", x, y + (++strings * 9), BobColor::yellow);
+		GLUtils::drawOutlinedString("Stop Here", x, y + (++strings * 9), OKColor::yellow);
 	}
 	if (waitHereTicks() > 0 && randomWaitTime() == false)
 	{
-		GLUtils::drawOutlinedString("Wait " + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
+		GLUtils::drawOutlinedString("Wait " + to_string(waitHereTicks()), x, y + (++strings * 9), OKColor::yellow);
 	}
 	if (waitHereTicks() > 0 && randomWaitTime() == true)
 	{
-		GLUtils::drawOutlinedString("Wait Random < " + to_string(waitHereTicks()), x, y + (++strings * 9), BobColor::yellow);
+		GLUtils::drawOutlinedString("Wait Random < " + to_string(waitHereTicks()), x, y + (++strings * 9), OKColor::yellow);
 	}
 	if (onlyOneAllowed())
 	{
-		GLUtils::drawOutlinedString("Only 1", x, y + (++strings * 9), BobColor::green);
+		GLUtils::drawOutlinedString("Only 1", x, y + (++strings * 9), OKColor::green);
 	}
 	if (standSpawnDirection() != -1)
 	{
 		if (standSpawnDirection() == 0)
 		{
-			GLUtils::drawOutlinedString("Dir: Up", x, y + (++strings * 9), BobColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Up", x, y + (++strings * 9), OKColor::yellow);
 		}
 		if (standSpawnDirection() == 1)
 		{
-			GLUtils::drawOutlinedString("Dir: Down", x, y + (++strings * 9), BobColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Down", x, y + (++strings * 9), OKColor::yellow);
 		}
 		if (standSpawnDirection() == 2)
 		{
-			GLUtils::drawOutlinedString("Dir: Left", x, y + (++strings * 9), BobColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Left", x, y + (++strings * 9), OKColor::yellow);
 		}
 		if (standSpawnDirection() == 3)
 		{
-			GLUtils::drawOutlinedString("Dir: Right", x, y + (++strings * 9), BobColor::yellow);
+			GLUtils::drawOutlinedString("Dir: Right", x, y + (++strings * 9), OKColor::yellow);
 		}
 	}
 
 	if (randomPointOfInterestOrExit())
 	{
-		GLUtils::drawOutlinedString("Random Point Of Interest Or Exit", x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Random Point Of Interest Or Exit", x, y + (++strings * 9), OKColor::white);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Random Spawn Point | Chance: " + to_string(randomSpawnChance()), x, y + (++strings * 9), OKColor::magenta);
 	}
 
 	if (randomNPCSpawnPoint())
 	{
-		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Spawn Delay: " + to_string(randomSpawnDelay()), x, y + (++strings * 9), OKColor::white);
 	}
 
 	if (randomNPCSpawnPoint())
@@ -580,26 +580,26 @@ void Area::renderDebugInfo()
 		{
 			allowedTypes = allowedTypes + " Cars";
 		}
-		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), BobColor::magenta);
+		GLUtils::drawOutlinedString("Spawn Types: " + allowedTypes, x, y + (++strings * 9), OKColor::magenta);
 	}
 	if (randomNPCStayHere())
 	{
-		GLUtils::drawOutlinedString("Random Stay Here", x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Random Stay Here", x, y + (++strings * 9), OKColor::white);
 	}
 	if (randomSpawnOnlyTryOnce())
 	{
-		GLUtils::drawOutlinedString("Random Only Try Once: " + to_string(randomSpawnChance()), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Random Only Try Once: " + to_string(randomSpawnChance()), x, y + (++strings * 9), OKColor::white);
 	}
 	if (randomSpawnOnlyOffscreen())
 	{
-		GLUtils::drawOutlinedString("Random Only Offscreen", x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("Random Only Offscreen", x, y + (++strings * 9), OKColor::white);
 	}
 }
 
-shared_ptr<BobBool> Area::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
+shared_ptr<OKBool> Area::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
 {
 	// TODO
-	return make_shared<BobBool>();
+	return make_shared<OKBool>();
 }
 
 void Area::tellServerTalkedToToday()

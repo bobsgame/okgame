@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 #include "src/Engine/Engine.h"
@@ -76,10 +76,10 @@ public:
 	void initializeGameFromSave_S();
 	void setPlayerAppearanceFromGameSave_S();
 
-	shared_ptr<BobColor> getNameColor(int accountType);
+	shared_ptr<OKColor> getNameColor(int accountType);
 
 	string getAccountRankString(int accountRank);
-	shared_ptr<BobColor> getAccountRankColor(int accountRank);
+	shared_ptr<OKColor> getAccountRankColor(int accountRank);
 
 	void setPlayerToTempPlayerWithSprite(shared_ptr<Sprite> s);
 	void setPlayerToNormalPlayer();

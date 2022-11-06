@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include <thread>
 #include <mutex>
 #include <queue>
@@ -19,7 +19,7 @@ class Room;
 
 #include "./../../src/Engine/EnginePart.h"
 #include "./../Utility/Caption.h"
-#include "BobsGame.h"
+#include "OKGame.h"
 #include "GameType.h"
 #include "Piece.h"
 #include "Block.h"
@@ -166,8 +166,8 @@ public:
 
 	static Logger log;
 
-	//static BobColor noColor;
-	//static ArrayList<BobColor> emptyColors;
+	//static OKColor noColor;
+	//static ArrayList<OKColor> emptyColors;
 
 	shared_ptr<GameSequence >currentGameSequence = nullptr;
 	shared_ptr<PuzzlePlayer> player = nullptr;
@@ -184,7 +184,7 @@ public:
 
 	shared_ptr<Grid> grid = nullptr;
 
-	shared_ptr<BobsGame> getBobsGame();
+	shared_ptr<OKGame> getOKGame();
 	shared_ptr<Room> getRoom();
 
 	int blockWidth = 1;
@@ -446,7 +446,7 @@ private:
 	//	private void renderBackground()
 	//	{
 	//
-	//		if(side==BobsGame::LEFT)
+	//		if(side==OKGame::LEFT)
 	//		{
 	//			// fill screen with black
 	//			GLUtils::drawFilledRectXYWH(0,0,getWidth()/2,getHeight(),GameType().screenBackgroundColor.r(),GameType().screenBackgroundColor.g(),GameType().screenBackgroundColor.b(),1.0f);
@@ -510,17 +510,17 @@ private:
 	float captionScale = 1.0f;
 	int captionYSize = (int)(14 * 1.0f); // captionScale);
 
-	shared_ptr<BobColor> captionTextColor = nullptr;// = Color::white;
-	shared_ptr<BobColor> captionBGColor = nullptr;// = Color::black;
-	int captionFontSize = 0;// = BobFont::font_normal_8;
+	shared_ptr<OKColor> captionTextColor = nullptr;// = Color::white;
+	shared_ptr<OKColor> captionBGColor = nullptr;// = Color::black;
+	int captionFontSize = 0;// = OKFont::font_normal_8;
 
 	float announcementCaptionScale = 0.3f;
-	shared_ptr<BobColor> announcementCaptionTextColor = nullptr;// = Color::white;
-	shared_ptr<BobColor> announcementCaptionBGColor = nullptr;// = Color::clear;
-	int announcementCaptionFontSize = 0;// = BobFont::font_32;
-	int resultCaptionFontSize = 0;// = BobFont::font_32;
+	shared_ptr<OKColor> announcementCaptionTextColor = nullptr;// = Color::white;
+	shared_ptr<OKColor> announcementCaptionBGColor = nullptr;// = Color::clear;
+	int announcementCaptionFontSize = 0;// = OKFont::font_32;
+	int resultCaptionFontSize = 0;// = OKFont::font_32;
 
-	int mediumCaptionFontSize = 0;// = BobFont::font_normal_16_outlined_smooth;
+	int mediumCaptionFontSize = 0;// = OKFont::font_normal_16_outlined_smooth;
 
 public:
 	shared_ptr<Caption> levelCaption = nullptr;
@@ -567,8 +567,8 @@ public:
 	shared_ptr<Caption> piecesLeftToLevelUpCaption = nullptr;
 
 private:
-	ArrayList<shared_ptr<Caption>>* infoCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
-	ArrayList<shared_ptr<Caption>>* announcementCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
+	ArrayList<shared_ptr<Caption>> infoCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
+	ArrayList<shared_ptr<Caption>> announcementCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
 
 public:
 	shared_ptr<Caption> totalTicksPassedCaption = nullptr;
@@ -584,8 +584,8 @@ public:
 	shared_ptr<Caption> loseCaption = nullptr;
 	shared_ptr<Caption> garbageWaitCaption = nullptr;
 
-	shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty >myHighScore = nullptr;
-	BobsGameLeaderBoardAndHighScoreBoard::BobsGameLeaderBoardAndHighScoreBoardEntry *currentLeaderboardEntry = nullptr;
+	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >myHighScore = nullptr;
+	OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry *currentLeaderboardEntry = nullptr;
 	bool triedToGetHighScore = false;
 	shared_ptr<Caption> scoreBarTypeCaption = nullptr;
 	shared_ptr<Caption> myScoreBarCaption = nullptr;
@@ -625,7 +625,7 @@ public:
 
 private:
 	void makeAnnouncementCaption(const string& text);
-	void makeAnnouncementCaption(const string& text, shared_ptr<BobColor> color);
+	void makeAnnouncementCaption(const string& text, shared_ptr<OKColor> color);
 	void makeRandomLevelUpCaption();
 	void updateCaptionFadeValues();
 	shared_ptr<Caption> makeInfoCaption(const string& text);

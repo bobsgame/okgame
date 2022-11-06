@@ -4,9 +4,9 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 
-#include "BobsGame.h"
+#include "OKGame.h"
 #include "GameType.h"
 
 #include <iostream>
@@ -14,7 +14,7 @@
 #include <src/main.h>
 
 //=========================================================================================================================
-class GameSequence
+class GameSequence// : public std::enable_shared_from_this<GameSequence>
 {//=========================================================================================================================
 public:
 
@@ -121,7 +121,7 @@ public:
 BOOST_CLASS_VERSION(GameSequence, 5)
 BOOST_CLASS_TRACKING(GameSequence, boost::serialization::track_never)
 //=========================================================================================================================
-class NetworkGameSequence : public GameSequence
+class NetworkGameSequence : public GameSequence, std::enable_shared_from_this<NetworkGameSequence>
 {//=========================================================================================================================
 public:
 
@@ -159,14 +159,14 @@ public:
 	//=========================================================================================================================
 	string toBase64GZippedXML()
 	{//=========================================================================================================================
-		shared_ptr<NetworkGameSequence >s = this;
+		shared_ptr<NetworkGameSequence> s = shared_from_this();
 		NetworkGameSequence gs;
 		gs = *s;
 
 		std::stringstream ss;
 		boost::archive::xml_oarchive oarchive(ss);
 		oarchive << BOOST_SERIALIZATION_NVP(gs);
-		//Main::log.debug(ss.str());
+		//Main::log->debug(ss.str());
 		string zip = FileUtils::zipStringToBase64String(ss.str());
 		return zip;
 	}

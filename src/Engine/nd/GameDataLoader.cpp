@@ -94,14 +94,14 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug("Loaded Sprite: " + data->name());
+	//                        log->debug("Loaded Sprite: " + data->name());
 	//                     }
 	//                     for (int n = 0; n < data->getAnimationList()->size(); n++)
 	//                     {
 	//                        shared_ptr<SpriteAnimationSequence> a = data->getAnimationList()->get(n);
 	//                        if (debug)
 	//                        {
-	//                           log.debug("Loaded Animation: " + a->frameSequenceName);
+	//                           log->debug("Loaded Animation: " + a->frameSequenceName);
 	//                        }
 	//                     }
 	//
@@ -140,7 +140,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug("Loaded Map: " + data->name());
+	//                        log->debug("Loaded Map: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another mapData
@@ -167,7 +167,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug("Loaded Sound: " + data->name());
+	//                        log->debug("Loaded Sound: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another soundData
@@ -195,7 +195,7 @@ void GameDataLoader::loadGameData()
 	//
 	//                     if (debug)
 	//                     {
-	//                        log.debug("Loaded Music: " + data->name());
+	//                        log->debug("Loaded Music: " + data->name());
 	//                     }
 	//
 	//                     s = stringList[++i]; //blank line or another soundData

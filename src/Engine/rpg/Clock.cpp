@@ -315,7 +315,7 @@ void Clock::updateCaptions()
 	{
 		if (getStatusBar()->clockCaption != nullptr)
 		{
-			getStatusBar()->clockCaption->setColors(BobColor::green, BobColor::darkGreen, BobColor::clear);
+			getStatusBar()->clockCaption->setColors(OKColor::green, OKColor::darkGreen, OKColor::clear);
 		}
 	}
 }

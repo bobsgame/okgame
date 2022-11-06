@@ -178,7 +178,7 @@ void Entity::updateTimers()
 
 		//however, the Player uses float based values for everything and moves fractions of pixels.
 		//Player should set ticksSinceLastMovement to zero for correct timing.
-		if (dynamic_cast<shared_ptr<Player>>(this) != nullptr)
+		if (dynamic_cast<Player*>(this) != nullptr)
 		{
 			ticksSinceLastMovement = 0;
 		}
@@ -210,7 +210,7 @@ void Entity::renderDebugBoxes()
 	for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (String::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
+		if (OKString::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
 			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
@@ -279,20 +279,20 @@ void Entity::renderDebugInfo()
 
 	if (sprite->getDisplayName() == "No Name" == false)
 	{
-		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 36, BobColor::yellow);
-		GLUtils::drawOutlinedString("displayName: " + sprite->getDisplayName(), x, y - 27, BobColor::green);
+		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 36, OKColor::yellow);
+		GLUtils::drawOutlinedString("displayName: " + sprite->getDisplayName(), x, y - 27, OKColor::green);
 	}
 	else
 	{
-		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 27, BobColor::yellow);
+		GLUtils::drawOutlinedString("entityName: " + getName(), x, y - 27, OKColor::yellow);
 	}
 
-	GLUtils::drawOutlinedString("id: " + to_string(getID()), x, y - 18, BobColor::white);
-	GLUtils::drawOutlinedString("SpriteAsset Name: " + sprite->getName(), x, y - 9, BobColor::white);
+	GLUtils::drawOutlinedString("id: " + to_string(getID()), x, y - 18, OKColor::white);
+	GLUtils::drawOutlinedString("SpriteAsset Name: " + sprite->getName(), x, y - 9, OKColor::white);
 
 	if (getEventData() != nullptr)
 	{
-		GLUtils::drawOutlinedString("Has Event: " + to_string(getEventData()->getID()), x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("Has Event: " + to_string(getEventData()->getID()), x, y + (++strings * 9), OKColor::red);
 	}
 
 	//GL.drawOutlinedString("mapX: "+getMapXPixelsHQ+" mapY: "+getMapYPixelsHQ, x, y+(++strings*9),Color.white);
@@ -309,80 +309,80 @@ void Entity::renderDebugInfo()
 	//if (this->getClass().equals(char::typeid) || this->getClass().equals(Player::typeid) || this->getClass().equals(RandomCharacter::typeid))
 	if (dynamic_cast<shared_ptr<Character>>(this) != nullptr || dynamic_cast<shared_ptr<Player>>(this) != nullptr || dynamic_cast<shared_ptr<RandomCharacter>>(this) != nullptr)
 	{
-		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), BobColor::white);
-		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), BobColor::white);
+		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), OKColor::white);
+		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), OKColor::white);
 	}
 
 	//GL.drawOutlinedString("animationTicksCounter: "+animationTicksCounter, x, y+(++strings*9),Color.white);
 
 	if (getRandomFrames())
 	{
-		GLUtils::drawOutlinedString("Random Frames", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("Random Frames", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getDisableShadow())
 	{
-		GLUtils::drawOutlinedString("Disable Shadow", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("Disable Shadow", x, y + (++strings * 9), OKColor::red);
 	}
 
 	if (getRenderOrder() != RenderOrder::GROUND)
 	{
-		GLUtils::drawOutlinedString("RenderOrder: " + to_string((int)getRenderOrder()), x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("RenderOrder: " + to_string((int)getRenderOrder()), x, y + (++strings * 9), OKColor::red);
 	}
 	if (getAlwaysOnTop())
 	{
-		GLUtils::drawOutlinedString("getAlwaysOnTop", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getAlwaysOnTop", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getAboveWhenEqual())
 	{
-		GLUtils::drawOutlinedString("getAboveWhenEqual", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getAboveWhenEqual", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getAboveTopLayer())
 	{
-		GLUtils::drawOutlinedString("getAboveTopLayer", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getAboveTopLayer", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getAlwaysOnBottom())
 	{
-		GLUtils::drawOutlinedString("getAlwaysOnBottom", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getAlwaysOnBottom", x, y + (++strings * 9), OKColor::red);
 	}
 	if (isWalkingIntoPlayerThisFrame)
 	{
-		GLUtils::drawOutlinedString("isWalkingIntoPlayerThisFrame", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("isWalkingIntoPlayerThisFrame", x, y + (++strings * 9), OKColor::red);
 	}
 	if (isWalkingIntoWallThisFrame)
 	{
-		GLUtils::drawOutlinedString("isWalkingIntoWallThisFrame", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("isWalkingIntoWallThisFrame", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getIgnoreHitPlayer())
 	{
-		GLUtils::drawOutlinedString("getIgnoreHitPlayer", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getIgnoreHitPlayer", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getMovementAnimationDisabled())
 	{
-		GLUtils::drawOutlinedString("getMovementAnimationDisabled", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getMovementAnimationDisabled", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getPushable())
 	{
-		GLUtils::drawOutlinedString("getPushable", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getPushable", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getNonWalkable())
 	{
-		GLUtils::drawOutlinedString("getNonWalkable", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getNonWalkable", x, y + (++strings * 9), OKColor::red);
 	}
 	if (getIgnoreHitLayer())
 	{
-		GLUtils::drawOutlinedString("getIgnoreHitLayer", x, y + (++strings * 9), BobColor::red);
+		GLUtils::drawOutlinedString("getIgnoreHitLayer", x, y + (++strings * 9), OKColor::red);
 	}
 	//if(ignore_fx_layer)GL.drawOutlinedString("ignore_fx_layer", x, y+(++strings*9),Color.red);
 
-	GLUtils::drawOutlinedString("MiddleY: " + to_string(getMiddleY()), x, y + (++strings * 9), BobColor::green);
+	GLUtils::drawOutlinedString("MiddleY: " + to_string(getMiddleY()), x, y + (++strings * 9), OKColor::green);
 
 	if (currentAreaTYPEIDTarget != "" && currentAreaTYPEIDTarget.length() > 0)
 	{
-		GLUtils::drawOutlinedString("Current Target TYPEID: " + currentAreaTYPEIDTarget, x, y + (++strings * 9), BobColor::green);
+		GLUtils::drawOutlinedString("Current Target TYPEID: " + currentAreaTYPEIDTarget, x, y + (++strings * 9), OKColor::green);
 	}
 	if (currentAreaTYPEIDTarget != "" && currentAreaTYPEIDTarget.length() > 0)
 	{
-		GLUtils::drawOutlinedString("Current Target Name: " + getCurrentAreaTargetName(), x, y + (++strings * 9), BobColor::green);
+		GLUtils::drawOutlinedString("Current Target Name: " + getCurrentAreaTargetName(), x, y + (++strings * 9), OKColor::green);
 	}
 
 	/*
@@ -445,7 +445,7 @@ void Entity::render(float mapAlpha)
 	//overrode this so i can send in arbitrary texture, really only used for random sprites which contain their own unique texture reference, and not the one contained in the spriteAsset object.
 }
 
-void Entity::render(float alpha, shared_ptr<BobTexture> texture, shared_ptr<BobTexture> shadowTexture)
+void Entity::render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture)
 { //=========================================================================================================================
 
 	float zoom = getCameraman()->getZoom();
@@ -1479,10 +1479,10 @@ void Entity::addEventBehavior(const string& s)
 	eventBehaviorList->add(s); //TODO: handle this stuff right!
 }
 
-shared_ptr<BobBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
+shared_ptr<OKBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
 {
 	// TODO
-	return make_shared<BobBool>();
+	return make_shared<OKBool>();
 }
 
 void Entity::tellServerTalkedToToday()

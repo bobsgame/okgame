@@ -20,7 +20,7 @@ Logger Sound::log = Logger("Sound");
 //	{
 //		if (Main::audioManager->soundList->get(i)->getName() == data->getName())
 //		{
-//			log.warn("Sound already exists:" + data->getName());
+//			log->warn("Sound already exists:" + data->getName());
 //			return;
 //		}
 //	}
@@ -38,7 +38,7 @@ Sound::Sound(shared_ptr<Engine> g, shared_ptr<AudioFile >f)
 		if (getAudioManager()->playingAudioList.get(i)->getName() == f->getName())
 		{
 			if (getAudioManager()->playingAudioList.get(i)->getID() == -1)getAudioManager()->playingAudioList.get(i)->setID(f->getID());
-			//log.warn("Sound already exists:" + data->getName());
+			//log->warn("Sound already exists:" + data->getName());
 			return;
 		}
 	}
@@ -56,7 +56,7 @@ void Sound::initFromByteData()
 #ifdef USE_SOLOUD
 	filename = Main::getPath() + filename;
 	soLoudWave = make_shared<SoLoud>::Wav();
-	//log.debug(filename);
+	//log->debug(filename);
 	soLoudWave->load(filename.c_str());
 #endif
 #ifdef USE_SDL_MIXER
@@ -184,7 +184,7 @@ void Sound::play(float pitch, float volume, int timesToPlay)
 	if (timesToPlay < 0)
 	{
 		timesToPlay = 1;
-		// log.error("Trying to play sound -1 times. Sounds cannot be infinitely looped, only music can.");
+		// log->error("Trying to play sound -1 times. Sounds cannot be infinitely looped, only music can.");
 	}
 
 	if (timesToPlay == 1)

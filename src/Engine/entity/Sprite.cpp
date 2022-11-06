@@ -34,7 +34,7 @@ Sprite::Sprite(shared_ptr<Engine> g)
 void Sprite::preloadFromDataFile(string name)
 {//=========================================================================================================================
 
-	//log.info("make_shared<SpriteData> "+name);
+	//log->info("make_shared<SpriteData> "+name);
 	this->data = make_shared<SpriteData>(-1, name, name, 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
 
 
@@ -45,7 +45,7 @@ void Sprite::preloadFromDataFile(string name)
 
 	//load txt, parse id,width,height,frames,animations
 
-	//log.info("loadTextFileFromExePathIntoVectorOfStringsAndTrim "+name);
+	//log->info("loadTextFileFromExePathIntoVectorOfStringsAndTrim "+name);
 	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sprite/" + name + ".txt");
 
 	preloadedFromData = true;
@@ -60,24 +60,24 @@ void Sprite::preloadFromDataFile(string name)
 			{
 				try
 				{
-					if (String::startsWith(s, "id:"))
+					if (OKString::startsWith(s, "id:"))
 					{
 						id = stoi(s.substr(s.find(":") + 1));
 					}
-					if (String::startsWith(s, "width:"))
+					if (OKString::startsWith(s, "width:"))
 					{
 						width = stoi(s.substr(s.find(":") + 1));
 					}
-					if (String::startsWith(s, "height:"))
+					if (OKString::startsWith(s, "height:"))
 					{
 						height = stoi(s.substr(s.find(":") + 1));
 					}
-					if (String::startsWith(s, "frames:"))
+					if (OKString::startsWith(s, "frames:"))
 					{
 						frames = stoi(s.substr(s.find(":") + 1));
 					}
-					//if(String::startsWith(s,"name:"))this.name = s.substring(s.indexOf(":")+1);
-					if (String::startsWith(s, "animation:"))
+					//if(OKString::startsWith(s,"name:"))this.name = s.substring(s.indexOf(":")+1);
+					if (OKString::startsWith(s, "animation:"))
 					{
 
 						s = s.substr(s.find(":") + 1);
@@ -85,14 +85,14 @@ void Sprite::preloadFromDataFile(string name)
 						s = s.substr(s.find(":") + 1);
 						int frameStart = stoi(s);
 
-						//log.info("make_shared<SpriteAnimationSequence> " + frameSequenceName);
+						//log->info("make_shared<SpriteAnimationSequence> " + frameSequenceName);
 						getAnimationList()->add(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, 0, 0, 0, 0));
-						//log.debug("Animation:"+frameSequenceName+":"+to_string(frameStart));
+						//log->debug("Animation:"+frameSequenceName+":"+to_string(frameStart));
 					}
 				}
 				catch(exception)
 				{
-					log.error("Could not parse sprite file: "+name);
+					log->error("Could not parse sprite file: "+name);
 				}
 
 			}
@@ -115,7 +115,7 @@ void Sprite::preloadFromDataFile(string name)
 
 
 
-	//log.info("Loading " + name);
+	//log->info("Loading " + name);
 	texture = GLUtils::getTextureFromPNGExePath("data/sprite/" + name + ".png");
 
 
@@ -174,7 +174,7 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 
 		spriteData = make_shared<SpriteData>();
 
-		log.warn("Sprite::initializeWithSpriteData spriteData was null");
+		log->warn("Sprite::initializeWithSpriteData spriteData was null");
 	}
 
 	this->data = spriteData;
@@ -207,7 +207,7 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 //=========================================================================================================================
 void Sprite::sendDataRequest(const string &spriteName)
 {//=========================================================================================================================
-	//if engine is NOT gameEngine return, i.e. it is BobsGame and all the sprites are preloaded, should never get here though because it only calls this is sprite isnt initialized, etc.
+	//if engine is NOT gameEngine return, i.e. it is OKGame and all the sprites are preloaded, should never get here though because it only calls this is sprite isnt initialized, etc.
 	if ((dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != nullptr) == false)return;
 
 	long long startTime = lastSentDataRequestTime;
@@ -266,7 +266,7 @@ void Sprite::drawFrame(const string& animationName, float x0, float x1, float y0
 	}
 	else
 	{
-		//log.error("Could not find animation: "+animationName+" in Sprite: "+getName());
+		//log->error("Could not find animation: "+animationName+" in Sprite: "+getName());
 		drawFrame(this->texture, 0, x0, x1, y0, y1, r, g, b, a, filter);
 	}
 }
@@ -286,7 +286,7 @@ void Sprite::drawFrame(int frame, float x0, float x1, float y0, float y1, float 
 }
 
 //=========================================================================================================================
-void Sprite::drawFrame(shared_ptr<BobTexture> texture, int frame, float x0, float x1, float y0, float y1, float a, int filter)
+void Sprite::drawFrame(shared_ptr<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float a, int filter)
 { //===============================================================================================
 	drawFrame(texture, frame, x0, x1, y0, y1, 1.0f, 1.0f, 1.0f, a, filter);
 }
@@ -301,7 +301,7 @@ void Sprite::drawFrame(int frame, float x0, float x1, float y0, float y1, float 
 }
 
 //=========================================================================================================================
-void Sprite::drawFrame(shared_ptr<BobTexture> texture, int frame, float x0, float x1, float y0, float y1, float r, float g, float b, float a, int filter)
+void Sprite::drawFrame(shared_ptr<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float r, float g, float b, float a, int filter)
 { //===============================================================================================
 
 	if (texture != nullptr)
@@ -397,8 +397,8 @@ void Sprite::draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1
 		float sh = y1 - y0;
 
 
-		float w = BobsGame::FBOWidth;
-		float h = BobsGame::FBOHeight;
+		float w = OKGame::FBOWidth;
+		float h = OKGame::FBOHeight;
 		//float heightWidthRatio = h / w;
 
 		sx = sx / w;
@@ -413,18 +413,18 @@ void Sprite::draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1
 
 		//if(filter==GLUtils::FILTER_NEAREST)sprite.getTexture().setFilter(TextureFilter.Nearest,TextureFilter.Nearest);
 
-		//Camera camera = BobsGame::camera;
+		//Camera camera = OKGame::camera;
 		//camera.update();
 
-		shared_ptr<SpriteBatch >spriteBatch = BobsGame::spriteBatch;
+		shared_ptr<SpriteBatch >spriteBatch = OKGame::spriteBatch;
 
 		//spriteBatch.setProjectionMatrix(camera.combined);
 		//spriteBatch->begin();
-		//BobsGame::spriteBatch.setColor(r,g,b,a);
+		//OKGame::spriteBatch.setColor(r,g,b,a);
 
 		sprite->draw(spriteBatch);
 
-		//BobsGame::spriteBatch.setColor(1,1,1,1);
+		//OKGame::spriteBatch.setColor(1,1,1,1);
 		//spriteBatch->end();
 
 		*/
@@ -519,16 +519,16 @@ void Sprite::loadTextures()
 		{
 			checkedIfExist = true;
 
-			shared_ptr<BobFile> textureFile = nullptr;
+			shared_ptr<OKFile> textureFile = nullptr;
 
 
 			if (useHQ2X == true)
 			{
-				textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5());
+				textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5());
 			}
 			else
 			{
-				textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5());
+				textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5());
 			}
 
 			if (textureFile->exists())
@@ -911,7 +911,7 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 
 				if (useHQ2X)
 				{
-					spriteBufferedImage->setRGB(x, y + (f * h), BobColor::getRGBA(r, g, b, a));
+					spriteBufferedImage->setRGB(x, y + (f * h), OKColor::getRGBA(r, g, b, a));
 				}
 				else
 				{
@@ -944,7 +944,7 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 		{
 			for (int x = 0; x < imageWidth; x++)
 			{
-				shared_ptr<BobColor> c = make_shared<BobColor>(hq2xSpriteBufferedImage->getRGBA(x, y));// , true);
+				shared_ptr<OKColor> c = make_shared<OKColor>(hq2xSpriteBufferedImage->getRGBA(x, y));// , true);
 
 				textureByteArray->data()[(y * texWidth + x) * 4 + 0] = static_cast<u8>(c->ri());
 				textureByteArray->data()[(y * texWidth + x) * 4 + 1] = static_cast<u8>(c->gi());
@@ -985,7 +985,7 @@ void Sprite::createSpriteTexturePNG_S()
 
 //	if(getName()=="bobSmallTable")
 //	{
-//		log.info("desk");
+//		log->info("desk");
 //
 //	}
 
@@ -1118,7 +1118,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 
 					int nx = x;
 					int ny = (height * f) + ((bottom_pixel_y) - y);
-					int col = BobColor::black->getRGBA();
+					int col = OKColor::black->getRGBA();
 
 
 					spriteBufferedImage->setRGB(nx, ny, col);
@@ -1211,7 +1211,7 @@ shared_ptr<SpriteAnimationSequence> Sprite::getFirstAnimation()
 	else
 	{
 		getAnimationList()->add(make_shared<SpriteAnimationSequence>("Default", 0, 0, 0, 0, 0));
-		log.warn("First animation sequence not found in SpriteAsset: " + getName());
+		log->warn("First animation sequence not found in SpriteAsset: " + getName());
 	}
 
 	return getAnimationList()->get(0);
@@ -1291,7 +1291,7 @@ int Sprite::getAnimationNumFramesByAnimation(shared_ptr<SpriteAnimationSequence>
 
 	if (a == nullptr)
 	{
-		log.error("Animation was null in getAnimationNumFramesByAnimation");
+		log->error("Animation was null in getAnimationNumFramesByAnimation");
 		return getNumFrames();
 	}
 	if (a->cachedNumFrames > -1)return a->cachedNumFrames;
@@ -1439,7 +1439,7 @@ void Sprite::antialiasBufferedImage(shared_ptr<BufferedImage> bufferedImage)
 
 				if (black == 1)
 				{
-					bufferedImage->setRGB(x, y, BobColor::getRGBA(0, 0, 0, 127));
+					bufferedImage->setRGB(x, y, OKColor::getRGBA(0, 0, 0, 127));
 				}
 			}
 		}

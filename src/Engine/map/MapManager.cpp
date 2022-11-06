@@ -19,7 +19,7 @@ bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
 
-HashMap<string, shared_ptr<BobTexture>> MapManager::lightTextureHashMap;
+HashMap<string, shared_ptr<OKTexture>> MapManager::lightTextureHashMap;
 
 
 HashMap<string, bool> MapManager::_lightTextureFileExistsHashtable;
@@ -30,8 +30,8 @@ MapManager::MapManager(shared_ptr<Engine> g)
 	this->e = g;
 	//mapByNameHashMap = make_shared<HashMap><string, shared_ptr<Map>>();
 	//mapByIDHashMap = make_shared<HashMap><int, shared_ptr<Map>>();
-	//lightTextureHashMap = make_shared<HashMap><string, shared_ptr<BobTexture>>();
-	//lightTextureFileExistsHashtable = make_shared<HashMap><string, shared_ptr<BobBool>>();
+	//lightTextureHashMap = make_shared<HashMap><string, shared_ptr<OKTexture>>();
+	//lightTextureFileExistsHashtable = make_shared<HashMap><string, shared_ptr<OKBool>>();
 }
 
 
@@ -614,7 +614,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	shared_ptr<Map> m = getMapByNameBlockUntilLoaded(mapName);
 	if (m == nullptr)
 	{
-		log.error("Could not load map: " + mapName);
+		log->error("Could not load map: " + mapName);
 		return;
 	}
 
@@ -685,7 +685,7 @@ shared_ptr<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 
 	if (id == -1)
 	{
-		log.warn("getMapByID: " + to_string(id));
+		log->warn("getMapByID: " + to_string(id));
 		return getCurrentMap();
 	}
 
@@ -699,7 +699,7 @@ shared_ptr<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 
 	if (m == nullptr)
 	{
-		log.warn("Map did not exist in mapByIDHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors.");
+		log->warn("Map did not exist in mapByIDHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors.");
 
 
 		getEngine()->sendMapDataRequestByID(id);
@@ -712,7 +712,7 @@ shared_ptr<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 			tries++;
 			if (tries > 5)
 			{
-				log.warn("Map did not load in more than 5 seconds. Resending request.");
+				log->warn("Map did not load in more than 5 seconds. Resending request.");
 
 				tries = 0;
 				getEngine()->sendMapDataRequestByID(id);
@@ -725,7 +725,7 @@ shared_ptr<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 			m = mapByIDHashMap.get(id);
 		}
 
-		log.warn("Map finished loading from network.");
+		log->warn("Map finished loading from network.");
 	}
 
 	return m;
@@ -736,7 +736,7 @@ shared_ptr<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
 	{
-		log.warn("getMapByName: " + name);
+		log->warn("getMapByName: " + name);
 		return getCurrentMap();
 	}
 
@@ -750,7 +750,7 @@ shared_ptr<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 
 	if (m == nullptr)
 	{
-		log.warn(string("Map NAME: \"") + name + string("\" did not exist in mapNameHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors."));
+		log->warn(string("Map NAME: \"") + name + string("\" did not exist in mapNameHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors."));
 
 
 		getEngine()->sendMapDataRequestByName(name);
@@ -763,7 +763,7 @@ shared_ptr<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 			tries++;
 			if (tries > 5)
 			{
-				log.warn(string("Map NAME: \"") + name + string("\" did not load in more than 5 seconds. Resending request."));
+				log->warn(string("Map NAME: \"") + name + string("\" did not load in more than 5 seconds. Resending request."));
 
 				tries = 0;
 				getEngine()->sendMapDataRequestByName(name);
@@ -777,7 +777,7 @@ shared_ptr<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 			
 		}
 
-		log.warn(string("Map NAME: \"") + name + string("\" finished loading from network."));
+		log->warn(string("Map NAME: \"") + name + string("\" finished loading from network."));
 	}
 
 	return m;
@@ -789,7 +789,7 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
 	{
-		log.warn("requestMapDataIfNotLoadedYet: " + name);
+		log->warn("requestMapDataIfNotLoadedYet: " + name);
 		return;
 	}
 

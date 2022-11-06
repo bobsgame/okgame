@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -38,7 +38,7 @@ public:
 	static int COUNTERCLOCKWISE;
 
 
-	shared_ptr<BobTexture> selectedItemColorSpinTexture[15];
+	shared_ptr<OKTexture> selectedItemColorSpinTexture[15];
 
 
 	float cartSlideX = 0;
@@ -61,7 +61,7 @@ public:
 	void init();
 
 
-	void addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color);
+	void addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color);
 
 
 	void render();

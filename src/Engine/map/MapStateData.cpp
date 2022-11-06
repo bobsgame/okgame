@@ -64,7 +64,7 @@ string& MapStateData::initFromString(string& t)
 
 	t = t.substr(t.find("lightDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t,"}") == false)
+	while (OKString::startsWith(t,"}") == false)
 	{
 
 		shared_ptr<LightData >data = make_shared<LightData>();
@@ -77,7 +77,7 @@ string& MapStateData::initFromString(string& t)
 
 	t = t.substr(t.find("entityDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t,"}") == false)
+	while (OKString::startsWith(t,"}") == false)
 	{
 		shared_ptr<EntityData >data = make_shared<EntityData>();
 		t = data->initFromString(t);
@@ -90,7 +90,7 @@ string& MapStateData::initFromString(string& t)
 
 	t = t.substr(t.find("areaDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t,"}") == false)
+	while (OKString::startsWith(t,"}") == false)
 	{
 		shared_ptr<AreaData >data = make_shared<AreaData>();
 		t = data->initFromString(t);

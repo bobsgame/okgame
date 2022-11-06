@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -71,7 +71,7 @@ public:
 	//	{
 	//		if(type==TYPE_ERROR)
 	//		{
-	//			log.error("Error in Event Parameter: typeName:"+typeString+" String:"+s);
+	//			log->error("Error in Event Parameter: typeName:"+typeString+" String:"+s);
 	//			return "ERROR."+s;
 	//		}
 	//
@@ -82,7 +82,7 @@ public:
 	//
 	//		if(object!=null)return object.getIDString();
 	//
-	//		log.error("Error in Event Parameter: typeName:"+typeString+" String:"+s);
+	//		log->error("Error in Event Parameter: typeName:"+typeString+" String:"+s);
 	//		return "ERROR"+s;
 	//	}
 

@@ -150,7 +150,7 @@ void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 	}
 }
 
-void ScreenSprite::render(float alpha, shared_ptr<BobTexture> texture, shared_ptr<BobTexture> shadowTexture)
+void ScreenSprite::render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture)
 { //=========================================================================================================================
 
 

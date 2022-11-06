@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -94,6 +94,6 @@ public:
 	void move(int direction, float floatPixels);
 
 
-	virtual void render(float alpha, shared_ptr<BobTexture> texture, shared_ptr<BobTexture> shadowTexture) override;
+	virtual void render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture) override;
 };
 

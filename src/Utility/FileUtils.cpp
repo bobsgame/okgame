@@ -287,13 +287,13 @@ FileUtils::FileUtils()
 
 //	   if (Main::debugMode == true) //DEBUG
 //	   {
-//	      bigDataURL = BobNet::debugBigDataURL;
-//	      smallDataURL = BobNet::debugSmallDataURL;
+//	      bigDataURL = OKNet::debugBigDataURL;
+//	      smallDataURL = OKNet::debugSmallDataURL;
 //	   }
 //	   else
 //	   {
-	      bigDataURL = BobNet::releaseBigDataURL;
-	      smallDataURL = BobNet::releaseSmallDataURL;
+	      bigDataURL = OKNet::releaseBigDataURL;
+	      smallDataURL = OKNet::releaseSmallDataURL;
 	  // }
 	//
 	//   //cacheDir = "C:\\bobsGameCache\\";
@@ -302,11 +302,11 @@ FileUtils::FileUtils()
 	//slash = "/";// prop->getProperty("file.separator"); //also File.separatorChar, File.separator
 	//cacheDir = "";// prop->getProperty("user.home") + slash + ".bobsGame" + slash;
 	//fileUtils = this;
-	appDataPath = string(SDL_GetPrefPath("Bob Corporation", "bob's game"));
+	appDataPath = string(SDL_GetPrefPath("OK Corporation", "bob's game"));
 	cacheDir = appDataPath+"cache/";
 }
 
-shared_ptr<BufferedImage> FileUtils::readBufferedImageFromFile(shared_ptr<BobFile> file)
+shared_ptr<BufferedImage> FileUtils::readBufferedImageFromFile(shared_ptr<OKFile> file)
 {
 	return make_shared<BufferedImage>();
 }
@@ -348,7 +348,7 @@ void FileUtils::makeDir(const string& cs)
 //
 //	//
 //	//   //don't use absolute paths starting from the folder we are in. /whatever.jpg
-//	//   if (String::startsWith(filename, "/") == true && String::startsWith(filename, System::getProperty("user.home")) == false)
+//	//   if (OKString::startsWith(filename, "/") == true && OKString::startsWith(filename, System::getProperty("user.home")) == false)
 //	//   {
 //	//      filename = filename.substr(1); //cut off the /
 //	//      log.debug("Don't use absolute paths, fix this.");
@@ -356,7 +356,7 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//
 //	//   //if we are using stuff from /res/ we should get them from the ClassLoader which gets them from inside the JAR (but removed from /res/ for some reason)
-//	//   if (String::startsWith(filename, "res/") == true)
+//	//   if (OKString::startsWith(filename, "res/") == true)
 //	//   {
 //	//      filename = filename.substr(4);
 //	//      shared_ptr<InputStream> is = utils->getClass().getClassLoader().getResourceAsStream(filename);
@@ -413,7 +413,7 @@ void FileUtils::makeDir(const string& cs)
 //
 //
 //	//   //don't use absolute paths starting from the folder we are in. /whatever.jpg
-//	//   if (String::startsWith(filename, "/") == true && String::startsWith(filename, System::getProperty("user.home")) == false)
+//	//   if (OKString::startsWith(filename, "/") == true && OKString::startsWith(filename, System::getProperty("user.home")) == false)
 //	//   {
 //	//      filename = filename.substr(1); //cut off the /
 //	//      log.debug("Don't use absolute paths, fix this.");
@@ -421,7 +421,7 @@ void FileUtils::makeDir(const string& cs)
 //	//
 //	//
 //	//   //if we are using stuff from /res/ we should get them from the ClassLoader which gets them from inside the JAR (but removed from /res/ for some reason)
-//	//   if (String::startsWith(filename, "res/") == true)
+//	//   if (OKString::startsWith(filename, "res/") == true)
 //	//   {
 //	//      filename = filename.substr(4);
 //	//      URL* is = utils->getClass().getClassLoader().getResource(filename);
@@ -448,7 +448,7 @@ void FileUtils::makeDir(const string& cs)
 //	//         {
 //	//            log.error("Could not find file: " + filename);
 //	//
-//	//            //if(BobNet.debugMode)make_shared<Exception>().printStackTrace();
+//	//            //if(OKNet.debugMode)make_shared<Exception>().printStackTrace();
 //	//
 //	//            return nullptr;
 //	//         }
@@ -539,14 +539,14 @@ void FileUtils::makeDir(const string& cs)
 //}
 
 //=========================================================================================================================
-shared_ptr<IntArray> FileUtils::loadIntFile(string filename)
+IntArray* FileUtils::loadIntFile(string filename)
 {//=========================================================================================================================
 
-	shared_ptr<ByteArray> byteArray = loadByteFile(filename);
+	ByteArray* byteArray = loadByteFile(filename);
 	//delete byteArray;
 	//byteArray = loadByteFile(filename);
 
-	shared_ptr<IntArray> intArray = make_shared<IntArray>(byteArray->size() / 4);
+	IntArray* intArray = new IntArray(byteArray->size() / 4);
 
 	for (int x = 0; x<intArray->size(); x++)
 	{
@@ -570,14 +570,14 @@ shared_ptr<IntArray> FileUtils::loadIntFile(string filename)
 		intArray->data()[x] = result;
 	}
 
-	delete byteArray;
+	//delete byteArray;
 					 
 
 	return intArray;
 
 }
 
-shared_ptr<IntArray> FileUtils::loadIntFileFromExePath(string filename)
+IntArray* FileUtils::loadIntFileFromExePath(string filename)
 {//=========================================================================================================================
 	filename = Main::getPath() + filename;
 
@@ -585,10 +585,10 @@ shared_ptr<IntArray> FileUtils::loadIntFileFromExePath(string filename)
 }
 
 // ===============================================================================================
-shared_ptr<ByteArray> FileUtils::getByteArrayFromIntArray(shared_ptr<IntArray>intArray)
+ByteArray* FileUtils::getByteArrayFromIntArray(IntArray* intArray)
 {// ===============================================================================================
 
-	shared_ptr<ByteArray> byteArray = make_shared<ByteArray>(intArray->size() * 4);
+	ByteArray* byteArray = new ByteArray(intArray->size() * 4);
 
 	for (int i = 0; i < intArray->size(); i++)
 	{
@@ -623,17 +623,24 @@ shared_ptr<ByteArray> FileUtils::getByteArrayFromIntArray(shared_ptr<IntArray>in
 #include <locale>
 //=========================================================================================================================
 // trim from start (in place)
-void FileUtils::ltrim(std::string s) 
+void FileUtils::ltrim(std::string &s) 
 {//=========================================================================================================================
-	s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-		std::not1(std::ptr_fun<int, int>(std::isspace))));
+	//s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+		//std::not1(std::ptr_fun<int, int>(std::isspace))));
+		// 
+	//static inline std::string& ltrim(std::string & s) {
+		s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c); }));
+		//return s;
+	//}
 }
 //=========================================================================================================================
 // trim from end (in place)
-void FileUtils::rtrim(std::string s) 
+void FileUtils::rtrim(std::string &s) 
 {//=========================================================================================================================
-	s.erase(std::find_if(s.rbegin(), s.rend(),
-		std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+	//s.erase(std::find_if(s.rbegin(), s.rend(),
+		//std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+
+	s.erase(std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c); }), s.end());
 }//=========================================================================================================================
 
 // trim from both ends (in place)
@@ -702,7 +709,7 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 ArrayList<string>* FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
-	ArrayList<string>* lines = make_shared<ArrayList><string>();
+	ArrayList<string>* lines = new ArrayList<string>();// = make_shared<ArrayList><string>();
 
 	string line;
 	stringstream dosString;
@@ -795,7 +802,7 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 
 
 //=========================================================================================================================
-shared_ptr<ByteArray> FileUtils::loadByteFile(string filename)
+ByteArray* FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
@@ -835,7 +842,7 @@ shared_ptr<ByteArray> FileUtils::loadByteFile(string filename)
 	}
 	fclose(cfile);
 
-	shared_ptr<ByteArray> byteArray = make_shared<ByteArray>((u8*)cfilepointer, csize);
+	ByteArray* byteArray = new ByteArray((u8*)cfilepointer, csize);
 
 	return byteArray;
 
@@ -904,7 +911,7 @@ shared_ptr<ByteArray> FileUtils::loadByteFile(string filename)
 }
 
 //=========================================================================================================================
-shared_ptr<ByteArray> FileUtils::loadByteFileFromExePath(string filename)
+ByteArray* FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -993,7 +1000,7 @@ std::string FileUtils::encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encod
 #include "Poco/Base64Decoder.h"
 
 //=========================================================================================================================
-shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
+ByteArray* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 	{
@@ -1002,7 +1009,7 @@ shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArrayAlt(std::string co
 		Base64::Decode(in, &outs);
 
 
-		shared_ptr<ByteArray> outv = make_shared<ByteArray>(outs.length());
+		ByteArray* outv = new ByteArray(outs.length());
 		for (int i = 0; i < outs.length(); i++)
 		{
 			outv->data()[i]=(outs[i]);
@@ -1075,7 +1082,7 @@ std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, 
 
 }
 //=========================================================================================================================
-shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
+ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 
@@ -1125,7 +1132,7 @@ shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const
 		for (j = 0; (j < i - 1); j++) vec->push_back(char_array_3[j]);
 	}
 
-	shared_ptr<ByteArray> ret = make_shared<ByteArray>(vec->size());
+	ByteArray* ret = new ByteArray(vec->size());
 	for(int x=0;x<vec->size();x++)
 	{
 		ret->data()[x] = (*vec)[x];
@@ -1302,7 +1309,7 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 {// ===============================================================================================
 
  //unsigned long zippedLength;
-	shared_ptr<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1605,7 +1612,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	
 
 	//unsigned long zippedLength;
-	shared_ptr<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1772,7 +1779,7 @@ using Poco::MD5Engine;
 string FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
 
-	shared_ptr<ByteArray> bytes = loadByteFileFromExePath(filename);
+	ByteArray* bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
 	delete bytes;
 	return md5;
@@ -1781,7 +1788,7 @@ string FileUtils::getFileMD5Checksum(const string& filename)
 
 #include "md5.h"
 
-string FileUtils::getByteArrayMD5Checksum(shared_ptr<ByteArray> bytes)
+string FileUtils::getByteArrayMD5Checksum(ByteArray* bytes)
 { //===============================================================================================
 
 	return md5(bytes->data(), bytes->size());
@@ -1809,7 +1816,7 @@ string FileUtils::getStringMD5(const string& stringToMD5)
 #include <lib/stb_image.h>
 #include <lib/stb_image_write.h>
 //TODO: 
-void FileUtils::saveImage(const string& s, shared_ptr<BufferedImage> i)
+void FileUtils::saveImage(const string& s, BufferedImage* i)
 { //===============================================================================================
 
 	//		Iterator<ImageWriter> imageWritersIterator = ImageIO.getImageWritersByFormatName("png");
@@ -1990,7 +1997,8 @@ void FileUtils::deleteStatusText()
 	      statusConsoleText->ticks = 1; //will be deleted from the console after 1 tick
 	
 	      //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	      delete statusConsoleText;
+	      //delete statusConsoleText;
+		  statusConsoleText = nullptr;
 	
 	      glClear(GL_COLOR_BUFFER_BIT);
 		  Main::getMain()->console->render();
@@ -2516,7 +2524,7 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 			//int contentlen = (int)response.getContentLength();
 
 			FileStream fs(cacheDir + fileName, ios::out | ios::trunc | ios::binary);
-			std::auto_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
+			std::unique_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
 			StreamCopier::copyStream(*pStr.get(), fs);
 			fs.close();
 		}
@@ -2531,14 +2539,14 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 
 }
 
-shared_ptr<ByteArray> FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
+ByteArray* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadByteFile(cacheDir + fileName);
 }
 
-shared_ptr<IntArray> FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
+IntArray* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
@@ -2618,30 +2626,30 @@ void FileUtils::writeDidIntroFile()
 
 
 
-BobFile::BobFile()
+OKFile::OKFile()
 {
 }
 
-BobFile::BobFile(const string& s)
+OKFile::OKFile(const string& s)
 {
 	path = s;
 }
 
-bool BobFile::exists()
+bool OKFile::exists()
 {
 	File f(path);
 	return f.exists();
 
 }
 
-bool BobFile::exists(const string& s)
+bool OKFile::exists(const string& s)
 {
 	File f(s);
 	return f.exists();
 
 }
 
-int BobFile::length()
+int OKFile::length()
 {
 	File f(path);
 	if (f.exists())
@@ -2653,7 +2661,7 @@ int BobFile::length()
 
 //includes filename, so just path???
 
-string& BobFile::getAbsolutePath()
+string& OKFile::getAbsolutePath()
 {
 //	string fullPath = string(path);
 //	string absPath;
@@ -2669,7 +2677,7 @@ string& BobFile::getAbsolutePath()
 	return path;
 }
 
-void BobFile::createNewFile()
+void OKFile::createNewFile()
 {
 	File f(path);
 	if (f.exists()==false)
@@ -2678,7 +2686,7 @@ void BobFile::createNewFile()
 	}
 }
 
-string BobFile::getName()
+string OKFile::getName()
 {
 	string name = string(path);
 	int found = (int)name.find('/');
@@ -2691,7 +2699,7 @@ string BobFile::getName()
 
 }
 
-void BobFile::deleteFile()
+void OKFile::deleteFile()
 {
 	File f(path);
 	if (f.exists())

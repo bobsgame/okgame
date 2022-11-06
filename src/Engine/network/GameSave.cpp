@@ -109,7 +109,7 @@ GameSave::GameSave()//shared_ptr<ResultSet> databaseResultSet)
 	//   }
 	//   catch (exception& ex)
 	//   {
-	//      log.error("DB ERROR:" + ex.what());
+	//      log->error("DB ERROR:" + ex.what());
 	//   }
 }
 
@@ -153,7 +153,7 @@ string GameSave::addOrUpdateValueToCommaSeparatedList(string list, string value)
 	if (list.find(id + ":") != string::npos)
 	{
 		//remove the old value by looking up the id
-		log.debug("original list:" + list);
+		log->debug("original list:" + list);
 		string before = "";
 		if (list.find(id + ":") > 0)
 		{
@@ -164,16 +164,16 @@ string GameSave::addOrUpdateValueToCommaSeparatedList(string list, string value)
 		string after = list.substr(list.find(id + ":"));
 		after = after.substr(after.find(",") + 1);
 
-		log.debug("before:" + before);
-		log.debug("after:" + after);
+		log->debug("before:" + before);
+		log->debug("after:" + after);
 		list = before + after + value + ","; //tack it on the end, order doesn't matter.
-		log.debug("resulting list:" + list);
+		log->debug("resulting list:" + list);
 	}
 	else
 	{
-		log.debug("original list:" + list);
+		log->debug("original list:" + list);
 		list = list + value + ",";
-		log.debug("resulting list:" + list);
+		log->debug("resulting list:" + list);
 	}
 
 	return list;
@@ -183,8 +183,8 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 { //===============================================================================================
 
 
-	log.debug("variableName:" + variableName);
-	log.debug("value:" + value);
+	log->debug("variableName:" + variableName);
+	log->debug("value:" + value);
 
 	if (variableName.length() == 0)
 	{
@@ -263,7 +263,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse lat");
+			log->error("Could not parse lat");
 			return nullptr;
 		}
 		return &lat;
@@ -276,7 +276,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse lon");
+			log->error("Could not parse lon");
 			return nullptr;
 		}
 		return &lon;
@@ -313,7 +313,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse lastKnownX");
+			log->error("Could not parse lastKnownX");
 			return nullptr;
 		}
 		return &lastKnownX;
@@ -326,7 +326,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse lastKnownY");
+			log->error("Could not parse lastKnownY");
 			return nullptr;
 		}
 		return &lastKnownY;
@@ -344,7 +344,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse timePlayed");
+			log->error("Could not parse timePlayed");
 			return nullptr;
 		}
 		return &timePlayed;
@@ -357,7 +357,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse pixelsWalked");
+			log->error("Could not parse pixelsWalked");
 			return nullptr;
 		}
 		return &pixelsWalked;
@@ -375,7 +375,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse realWorldTransactions");
+			log->error("Could not parse realWorldTransactions");
 			return nullptr;
 		}
 		return &realWorldTransactions;
@@ -388,7 +388,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse inGameTransactions");
+			log->error("Could not parse inGameTransactions");
 			return nullptr;
 		}
 		return &inGameTransactions;
@@ -401,7 +401,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse timesTalkedToNPCs");
+			log->error("Could not parse timesTalkedToNPCs");
 			return nullptr;
 		}
 		return &timesTalkedToNPCs;
@@ -414,7 +414,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse timesTalkedToOtherPlayers");
+			log->error("Could not parse timesTalkedToOtherPlayers");
 			return nullptr;
 		}
 		return &timesTalkedToOtherPlayers;
@@ -453,7 +453,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse miniGamesTimesPlayed");
+			log->error("Could not parse miniGamesTimesPlayed");
 			return nullptr;
 		}
 		return &miniGamesTimesPlayed;
@@ -466,7 +466,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse miniGamesTimesBattled");
+			log->error("Could not parse miniGamesTimesBattled");
 			return nullptr;
 		}
 		return &miniGamesTimesBattled;
@@ -479,7 +479,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse miniGamesTimesChallenged");
+			log->error("Could not parse miniGamesTimesChallenged");
 			return nullptr;
 		}
 		return &miniGamesTimesChallenged;
@@ -492,7 +492,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse miniGamesTimesChallenger");
+			log->error("Could not parse miniGamesTimesChallenger");
 			return nullptr;
 		}
 		return &miniGamesTimesChallenger;
@@ -505,7 +505,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse miniGamesTimesWon");
+			log->error("Could not parse miniGamesTimesWon");
 			return nullptr;
 		}
 		return &miniGamesTimesWon;
@@ -518,7 +518,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse miniGamesTimesLost");
+			log->error("Could not parse miniGamesTimesLost");
 			return nullptr;
 		}
 		return &miniGamesTimesLost;
@@ -531,7 +531,7 @@ void* GameSave::updateGameSaveValue(const string& variableName, const string& va
 		}
 		catch (exception ex)//NumberFormatException ex)
 		{
-			log.error("Could not parse miniGamesTimesTied");
+			log->error("Could not parse miniGamesTimesTied");
 			return nullptr;
 		}
 		return &miniGamesTimesTied;
@@ -779,19 +779,19 @@ void GameSave::decodeGameSave(string s)
 				long long tempUserID = stoll(t);
 				if(userID!=-1 && tempUserID!=userID)
 				{
-					log.error("userID did not match incoming userID in GameSave!");
+					log->error("userID did not match incoming userID in GameSave!");
 				}
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse userID");
+				log->error("Could not parse userID");
 				
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("userID:" + to_string(userID));
+			log->debug("userID:" + to_string(userID));
 		}
 	}
 
@@ -806,7 +806,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("userName:" + userName);
+			log->debug("userName:" + userName);
 		}
 	}
 
@@ -821,7 +821,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("emailAddress:" + emailAddress);
+			log->debug("emailAddress:" + emailAddress);
 		}
 	}
 
@@ -837,14 +837,14 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse accountCreatedTime");
+				log->error("Could not parse accountCreatedTime");
 				
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("accountCreated:" + to_string(accountCreatedTime));
+			log->debug("accountCreated:" + to_string(accountCreatedTime));
 		}
 	}
 
@@ -860,14 +860,14 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse lastLoginTime");
+				log->error("Could not parse lastLoginTime");
 				
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("lastLoginTime:" + to_string(lastLoginTime));
+			log->debug("lastLoginTime:" + to_string(lastLoginTime));
 		}
 	}
 
@@ -883,14 +883,14 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse timesLoggedIn");
+				log->error("Could not parse timesLoggedIn");
 				
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("timesLoggedIn:" + to_string(timesLoggedIn));
+			log->debug("timesLoggedIn:" + to_string(timesLoggedIn));
 		}
 	}
 
@@ -907,14 +907,14 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse totalTimePlayed");
+				log->error("Could not parse totalTimePlayed");
 				
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("totalTimePlayed:" + to_string(totalTimePlayed));
+			log->debug("totalTimePlayed:" + to_string(totalTimePlayed));
 		}
 	}
 
@@ -930,7 +930,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("lastIP:" + lastIP);
+			log->debug("lastIP:" + lastIP);
 		}
 	}
 
@@ -940,7 +940,7 @@ void GameSave::decodeGameSave(string s)
 	//			String t = s.substring(0, s.indexOf('`'));
 	//			if(t.length()>0)realName = t;
 	//			s = s.substring(s.indexOf('`')+1);
-	//			if(debug)log.debug("realName:"+realName);
+	//			if(debug)log->debug("realName:"+realName);
 	//		}
 	//
 	////		",birthdayTime:"+                "`"+birthdayTime+"`"+
@@ -949,7 +949,7 @@ void GameSave::decodeGameSave(string s)
 	//			String t = s.substring(0, s.indexOf('`'));
 	//			if(t.length()>0)try{birthdayTime = Long.parseLong(t);}catch(NumberFormatException ex){ex.printStackTrace();return;}
 	//			s = s.substring(s.indexOf('`')+1);
-	//			if(debug)log.debug("birthdayTime:"+birthdayTime);
+	//			if(debug)log->debug("birthdayTime:"+birthdayTime);
 	//		}
 
 	{
@@ -963,7 +963,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("facebookID:" + facebookID);
+			log->debug("facebookID:" + facebookID);
 		}
 	}
 
@@ -978,7 +978,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("facebookAccessToken:" + facebookAccessToken);
+			log->debug("facebookAccessToken:" + facebookAccessToken);
 		}
 	}
 
@@ -993,7 +993,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("facebookEmail:" + facebookEmail);
+			log->debug("facebookEmail:" + facebookEmail);
 		}
 	}
 //	{
@@ -1007,7 +1007,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug("facebookBirthday:" + facebookBirthday);
+//			log->debug("facebookBirthday:" + facebookBirthday);
 //		}
 //	}
 	{
@@ -1021,7 +1021,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("facebookFirstName:" + facebookFirstName);
+			log->debug("facebookFirstName:" + facebookFirstName);
 		}
 	}
 	{
@@ -1035,7 +1035,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("facebookLastName:" + facebookLastName);
+			log->debug("facebookLastName:" + facebookLastName);
 		}
 	}
 	{
@@ -1049,7 +1049,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("facebookGender:" + facebookGender);
+			log->debug("facebookGender:" + facebookGender);
 		}
 	}
 //	{
@@ -1063,7 +1063,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug("facebookLocale:" + facebookLocale);
+//			log->debug("facebookLocale:" + facebookLocale);
 //		}
 //	}
 //	{
@@ -1078,14 +1078,14 @@ void GameSave::decodeGameSave(string s)
 //			}
 //			catch (exception ex)//NumberFormatException ex)
 //			{
-//				log.error("Could not parse facebookTimeZone");
+//				log->error("Could not parse facebookTimeZone");
 //				
 //			}
 //		}
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug("facebookTimeZone:" + to_string(facebookTimeZone));
+//			log->debug("facebookTimeZone:" + to_string(facebookTimeZone));
 //		}
 //	}
 //	{
@@ -1099,7 +1099,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug("facebookUsername:" + facebookUsername);
+//			log->debug("facebookUsername:" + facebookUsername);
 //		}
 //	}
 //	{
@@ -1113,7 +1113,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug("facebookWebsite:" + facebookWebsite);
+//			log->debug("facebookWebsite:" + facebookWebsite);
 //		}
 //	}
 //
@@ -1128,7 +1128,7 @@ void GameSave::decodeGameSave(string s)
 //		s = s.substr(s.find('`') + 1);
 //		if (debug)
 //		{
-//			log.debug("googlePlusID:" + googlePlusID);
+//			log->debug("googlePlusID:" + googlePlusID);
 //		}
 //	}
 
@@ -1143,7 +1143,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("postalCode:" + postalCode);
+			log->debug("postalCode:" + postalCode);
 		}
 	}
 
@@ -1158,7 +1158,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("countryName:" + countryName);
+			log->debug("countryName:" + countryName);
 		}
 	}
 
@@ -1173,7 +1173,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("isoCountryCode:" + isoCountryCode);
+			log->debug("isoCountryCode:" + isoCountryCode);
 		}
 	}
 
@@ -1188,7 +1188,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("placeName:" + placeName);
+			log->debug("placeName:" + placeName);
 		}
 	}
 
@@ -1203,7 +1203,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("stateName:" + stateName);
+			log->debug("stateName:" + stateName);
 		}
 	}
 
@@ -1219,13 +1219,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse lat");
+				log->error("Could not parse lat");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("lat:" + to_string(lat));
+			log->debug("lat:" + to_string(lat));
 		}
 	}
 	{
@@ -1240,13 +1240,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse lon");
+				log->error("Could not parse lon");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("lon:" + to_string(lon));
+			log->debug("lon:" + to_string(lon));
 		}
 	}
 
@@ -1256,7 +1256,7 @@ void GameSave::decodeGameSave(string s)
 	//			String t = s.substring(0, s.indexOf('`'));
 	//			if(t.length()>0)try{timeZone = Integer.parseInt(t);}catch(NumberFormatException ex){ex.printStackTrace();return;}
 	//			s = s.substring(s.indexOf('`')+1);
-	//			if(debug)log.debug("timeZone:"+timeZone);
+	//			if(debug)log->debug("timeZone:"+timeZone);
 	//		}
 
 	{
@@ -1270,7 +1270,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("notes:" + notes);
+			log->debug("notes:" + notes);
 		}
 	}
 
@@ -1285,7 +1285,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("warnings:" + warnings);
+			log->debug("warnings:" + warnings);
 		}
 	}
 
@@ -1300,7 +1300,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("avatarIcon:" + avatarIcon);
+			log->debug("avatarIcon:" + avatarIcon);
 		}
 	}
 
@@ -1315,7 +1315,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("lastKnownRoom:" + lastKnownRoom);
+			log->debug("lastKnownRoom:" + lastKnownRoom);
 		}
 	}
 
@@ -1331,13 +1331,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse lastKnownX");
+				log->error("Could not parse lastKnownX");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("lastKnownX:" + to_string(lastKnownX));
+			log->debug("lastKnownX:" + to_string(lastKnownX));
 		}
 	}
 
@@ -1353,13 +1353,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse lastKnownY");
+				log->error("Could not parse lastKnownY");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("lastKnownY:" + to_string(lastKnownY));
+			log->debug("lastKnownY:" + to_string(lastKnownY));
 		}
 	}
 
@@ -1374,7 +1374,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("startingRoom:" + startingRoom);
+			log->debug("startingRoom:" + startingRoom);
 		}
 	}
 
@@ -1390,13 +1390,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse timePlayed");
+				log->error("Could not parse timePlayed");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("timePlayed:" + to_string(timePlayed));
+			log->debug("timePlayed:" + to_string(timePlayed));
 		}
 	}
 
@@ -1412,13 +1412,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse pixelsWalked");
+				log->error("Could not parse pixelsWalked");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("pixelsWalked:" + to_string(pixelsWalked));
+			log->debug("pixelsWalked:" + to_string(pixelsWalked));
 		}
 	}
 
@@ -1435,13 +1435,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse accountRank");
+				log->error("Could not parse accountRank");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("accountRank:" + to_string(accountRank));
+			log->debug("accountRank:" + to_string(accountRank));
 		}
 	}
 
@@ -1456,13 +1456,13 @@ void GameSave::decodeGameSave(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse money");
+				log->error("Could not parse money");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("money:" + to_string(money));
+			log->debug("money:" + to_string(money));
 		}
 	}
 
@@ -1477,7 +1477,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("characterAppearance:" + characterAppearance);
+			log->debug("characterAppearance:" + characterAppearance);
 		}
 	}
 
@@ -1492,7 +1492,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("characterName:" + characterName);
+			log->debug("characterName:" + characterName);
 		}
 	}
 	{ //itemsHeld
@@ -1505,7 +1505,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("itemsHeld:" + itemsHeld);
+			log->debug("itemsHeld:" + itemsHeld);
 		}
 	}
 	{ //dialoguesDone
@@ -1518,7 +1518,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("dialoguesDone:" + dialoguesDone);
+			log->debug("dialoguesDone:" + dialoguesDone);
 		}
 	}
 	{ //flagsSet
@@ -1531,7 +1531,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("flagsSet:" + flagsSet);
+			log->debug("flagsSet:" + flagsSet);
 		}
 	}
 	{ //skillValues
@@ -1544,7 +1544,7 @@ void GameSave::decodeGameSave(string s)
 		s = s.substr(s.find('`') + 1);
 		if (debug)
 		{
-			log.debug("skillValues:" + skillValues);
+			log->debug("skillValues:" + skillValues);
 		}
 	}
 

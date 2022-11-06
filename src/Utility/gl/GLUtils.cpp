@@ -12,7 +12,7 @@ Logger GLUtils::log = Logger("GLUtils");
 //#include "../../../lib/SDL_stbimage.h"
 //#define STB_IMAGE_IMPLEMENTATION
 
-HashMap<string, shared_ptr<BobTexture>> GLUtils::textureCache;
+HashMap<string, shared_ptr<OKTexture>> GLUtils::textureCache;
 
 //-----------------------------------------------
 //OLD STUFF
@@ -61,12 +61,12 @@ float GLUtils::ZOOMto = 1.0f;
 bool GLUtils::antiAlias = true;
 int GLUtils::texturesLoaded = 0;
 long long GLUtils::textureBytesLoaded = 0;
-shared_ptr<BobTexture> GLUtils::blankTexture = nullptr;
-shared_ptr<BobTexture> GLUtils::boxTexture = nullptr;
+shared_ptr<OKTexture> GLUtils::blankTexture = nullptr;
+shared_ptr<OKTexture> GLUtils::boxTexture = nullptr;
 float GLUtils::globalDrawScale = 1.0f;
 
 
-shared_ptr<BobTexture> GLUtils::rect = nullptr;
+shared_ptr<OKTexture> GLUtils::rect = nullptr;
 
 
 //static float* boxBuffer = BufferUtils.newFloatBuffer(12);
@@ -164,7 +164,7 @@ void GLUtils::cleanup()
 void GLUtils::initGL(char* windowName)
 { //=========================================================================================================================
 
-	log.debug("Init GL");
+	log->debug("Init GL");
 
 	//-----------------------------
 	//set up display mode
@@ -177,11 +177,11 @@ void GLUtils::initGL(char* windowName)
 	SDL_DisplayMode dm;
 	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) 
 	{
-		log.error("SDL_GetDesktopDisplayMode failed: "+string(SDL_GetError()));
+		log->error("SDL_GetDesktopDisplayMode failed: "+string(SDL_GetError()));
 	}
 	monitorWidth = dm.w;
 	monitorHeight = dm.h;
-	log.info("Desktop display mode is "+to_string(dm.w)+"x" + to_string(dm.h) + "px @ " + to_string(dm.refresh_rate) + "hz.");
+	log->info("Desktop display mode is "+to_string(dm.w)+"x" + to_string(dm.h) + "px @ " + to_string(dm.refresh_rate) + "hz.");
 
 	checkSDLError("Get desktop display mode");
 
@@ -189,7 +189,7 @@ void GLUtils::initGL(char* windowName)
 	getAvailableDisplayModes();
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Get display modes took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Get display modes took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 	//-----------------------------
 	//set up window
@@ -199,7 +199,7 @@ void GLUtils::initGL(char* windowName)
 
 	
 
-	log.debug("Setting up SDL window");
+	log->debug("Setting up SDL window");
 
 
 	int w = 1920;
@@ -231,12 +231,12 @@ void GLUtils::initGL(char* windowName)
 
 	if (window == nullptr)
 	{
-		log.error("There was an error creating the window: "+string(SDL_GetError()));
+		log->error("There was an error creating the window: "+string(SDL_GetError()));
 		exit(1);
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Create window took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Create window took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	getCurrentDisplayMode();
@@ -244,14 +244,14 @@ void GLUtils::initGL(char* windowName)
 	SDL_GetWindowSize(window,&windowWidth,&windowHeight);
 
 
-	log.info("Window Width: " + to_string(windowWidth));
-	log.info("Window Height: " + to_string(windowHeight));
+	log->info("Window Width: " + to_string(windowWidth));
+	log->info("Window Height: " + to_string(windowHeight));
 
 	//-----------------------------
 	//set up GL
 	//-----------------------------
 
-	log.debug("Setting up GL context");
+	log->debug("Setting up GL context");
 
 
 	//						  //if we want to disable deprecated GL functions below GL 3.3
@@ -271,7 +271,7 @@ void GLUtils::initGL(char* windowName)
 
 	if (context == nullptr)
 	{
-		log.error("There was an error creating OpenGL context: "+string(SDL_GetError()));
+		log->error("There was an error creating OpenGL context: "+string(SDL_GetError()));
 		exit(1);
 	}
 
@@ -280,7 +280,7 @@ void GLUtils::initGL(char* windowName)
 	const unsigned char* version = glGetString(GL_VERSION);
 	if (version == nullptr)
 	{
-		log.error("There was an error with OpenGL configuration.");
+		log->error("There was an error with OpenGL configuration.");
 		exit(1);
 	}
 
@@ -292,7 +292,7 @@ void GLUtils::initGL(char* windowName)
 	
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Create GL context took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Create GL context took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -317,20 +317,20 @@ void GLUtils::initGL(char* windowName)
 #endif
 
 
-	log.debug("GL info:");
+	log->debug("GL info:");
 
-	//log.info(string((char*)(nullptr)));
+	//log->info(string((char*)(nullptr)));
 	char* vendorString = (char*)glGetString(GL_VENDOR);
 	char* versionString = (char*)glGetString(GL_VERSION);
 	char* rendererString = (char*)glGetString(GL_RENDERER);
 	char* shaderVersionString = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
 	char* extensionsString = (char*)glGetString(GL_EXTENSIONS);
 
-	if (vendorString !=NULL)log.info("GL vendor: " + string(vendorString));
-	if (versionString != NULL)log.info("GL version: " + string(versionString));
-	if (rendererString != NULL)log.info("Renderer: " + string(rendererString));
-	if (shaderVersionString != NULL)log.info("Shader version: " + string(shaderVersionString));
-	if (extensionsString != NULL)log.info("Extensions: " + string(extensionsString));
+	if (vendorString !=NULL)log->info("GL vendor: " + string(vendorString));
+	if (versionString != NULL)log->info("GL version: " + string(versionString));
+	if (rendererString != NULL)log->info("Renderer: " + string(rendererString));
+	if (shaderVersionString != NULL)log->info("Shader version: " + string(shaderVersionString));
+	if (extensionsString != NULL)log->info("Extensions: " + string(extensionsString));
 
 	int redBits;
 	int greenBits;
@@ -376,22 +376,22 @@ void GLUtils::initGL(char* windowName)
 	glGetIntegerv(GL_MAX_TEXTURE_STACK_DEPTH, &maxTextureStacks);
 
 
-	log.info("Color Bits(R,G,B,A): (" + to_string(redBits) + ", " + to_string(greenBits)+ ", " + to_string(blueBits) + ", " + to_string(alphaBits) + ")");
-	log.info("Depth Bits: " + to_string(depthBits));
-	log.info("Stencil Bits: " + to_string(stencilBits));
-	log.info("Max Texture Size: " + to_string(maxTextureSize) + "x" + to_string(maxTextureSize));
-	log.info("Max Lights: " + to_string(maxLights));
-	log.info("Max Clip Planes: " + to_string(maxClipPlanes));
-	log.info("Max Modelview Matrix Stacks: " + to_string(maxModelViewStacks));
-	log.info("Max Projection Matrix Stacks: " + to_string(maxProjectionStacks));
-	log.info("Max Attribute Stacks: " + to_string(maxAttribStacks));
-	log.info("Max Texture Stacks: " + to_string(maxTextureStacks));
+	log->info("Color Bits(R,G,B,A): (" + to_string(redBits) + ", " + to_string(greenBits)+ ", " + to_string(blueBits) + ", " + to_string(alphaBits) + ")");
+	log->info("Depth Bits: " + to_string(depthBits));
+	log->info("Stencil Bits: " + to_string(stencilBits));
+	log->info("Max Texture Size: " + to_string(maxTextureSize) + "x" + to_string(maxTextureSize));
+	log->info("Max Lights: " + to_string(maxLights));
+	log->info("Max Clip Planes: " + to_string(maxClipPlanes));
+	log->info("Max Modelview Matrix Stacks: " + to_string(maxModelViewStacks));
+	log->info("Max Projection Matrix Stacks: " + to_string(maxProjectionStacks));
+	log->info("Max Attribute Stacks: " + to_string(maxAttribStacks));
+	log->info("Max Texture Stacks: " + to_string(maxTextureStacks));
 
 	
 	//-----------------------------
 	//set up GL state
 	//-----------------------------
-	log.debug("Setting up GL state");
+	log->debug("Setting up GL state");
 
 	//NEW GL SETUP---------------------------------------------------------------
 
@@ -455,7 +455,7 @@ void GLUtils::initGL(char* windowName)
 	e("Set GL state");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setup GL state took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Setup GL state took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -463,7 +463,7 @@ void GLUtils::initGL(char* windowName)
 	//set up swap
 	//-----------------------------
 
-	log.debug("Setting up swap");
+	log->debug("Setting up swap");
 
 
 	glewInit();
@@ -478,7 +478,7 @@ void GLUtils::initGL(char* windowName)
 	{
 		wglSwapIntervalEXT(-1);//adaptive vsync, see -1
 		usingVSync=true;
-		log.info("Adaptive vsync supported.");
+		log->info("Adaptive vsync supported.");
 
 		if(disableVSync)
 		{
@@ -511,7 +511,7 @@ void GLUtils::initGL(char* windowName)
 		{
 			wglSwapIntervalEXT(-1);//adaptive vsync, see -1
 			usingVSync = true;
-			log.info("Adaptive vsync supported.");
+			log->info("Adaptive vsync supported.");
 
 			if (disableVSync)
 			{
@@ -546,7 +546,7 @@ void GLUtils::initGL(char* windowName)
 	{
 		glXSwapIntervalEXT(glXGetCurrentDisplay(),glXGetCurrentDrawable(),-1);//adaptive vsync, see -1
 		usingVSync=true;
-		log.info("Adaptive vsync supported.");
+		log->info("Adaptive vsync supported.");
 
 		if (disableVSync)
 		{
@@ -561,7 +561,7 @@ void GLUtils::initGL(char* windowName)
 	{
 		glXSwapIntervalEXT(glXGetCurrentDisplay(),glXGetCurrentDrawable(),1);
 		usingVSync=true;
-		log.info("GLX_EXT_swap_control supported.");
+		log->info("GLX_EXT_swap_control supported.");
 
 		if (disableVSync)
 		{
@@ -576,7 +576,7 @@ void GLUtils::initGL(char* windowName)
 	{
 		glXSwapIntervalSGI(1);
 		usingVSync=true;
-		log.info("GLX_SGI_swap_control supported.");
+		log->info("GLX_SGI_swap_control supported.");
 
 		if (disableVSync)
 		{
@@ -594,7 +594,7 @@ void GLUtils::initGL(char* windowName)
 		{
 			glXSwapIntervalEXT(glXGetCurrentDisplay(),glXGetCurrentDrawable(),-1);//adaptive vsync, see -1
 			usingVSync=true;
-			log.info("Adaptive vsync supported.");
+			log->info("Adaptive vsync supported.");
 
 			if (disableVSync)
 			{
@@ -608,7 +608,7 @@ void GLUtils::initGL(char* windowName)
 		{
 			glXSwapIntervalEXT(glXGetCurrentDisplay(),glXGetCurrentDrawable(),1);
 			usingVSync=true;
-			log.info("GLX_EXT_swap_control supported.");
+			log->info("GLX_EXT_swap_control supported.");
 
 			if (disableVSync)
 			{
@@ -622,7 +622,7 @@ void GLUtils::initGL(char* windowName)
 		{
 			glXSwapIntervalSGI(1);
 			usingVSync=true;
-			log.info("GLX_SGI_swap_control supported.");
+			log->info("GLX_SGI_swap_control supported.");
 
 			if (disableVSync)
 			{
@@ -649,13 +649,13 @@ void GLUtils::initGL(char* windowName)
             else
             {
                 usingVSync=true;
-                log.info("Vsync supported.");
+                log->info("Vsync supported.");
             }
         }
         else
         {
             usingVSync=true;
-            log.info("Adaptive vsync supported.");
+            log->info("Adaptive vsync supported.");
 
         }
         //#include <OpenGL/OpenGL.h>
@@ -668,11 +668,11 @@ void GLUtils::initGL(char* windowName)
 #endif
 	e("Vsync check");
 
-	if (usingVSync)log.info("Using vsync.");
-	else log.warn("No vsync.");
+	if (usingVSync)log->info("Using vsync.");
+	else log->warn("No vsync.");
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up swap took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Setting up swap took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -680,7 +680,7 @@ void GLUtils::initGL(char* windowName)
 	//set up framebuffer
 	//-----------------------------
 
-	log.debug("Setting up FBO");
+	log->debug("Setting up FBO");
 
 
 	//ARB is newer than EXT for some reason I think, uses glFramebuffer() and not glFramebufferEXT()
@@ -691,7 +691,7 @@ void GLUtils::initGL(char* windowName)
 		//useFBO = true;
 		ARBFBO = true;
 
-		log.info("GL_ARB_framebuffer_object supported.");
+		log->info("GL_ARB_framebuffer_object supported.");
 	}
 	else
 	{
@@ -702,15 +702,15 @@ void GLUtils::initGL(char* windowName)
 			//useFBO = true;
 			ARBFBO = false;
 
-			log.warn("GL_ARB_framebuffer_object not supported. Using GL_EXT_framebuffer_object.");
+			log->warn("GL_ARB_framebuffer_object not supported. Using GL_EXT_framebuffer_object.");
 		}
 
 		else
 		{
-			log.error("FBO not supported.");
+			log->error("FBO not supported.");
 
-			log.error("This game requires a newer graphics card that supports FBO.");
-			shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, BobColor::white, BobColor::black);
+			log->error("This game requires a newer graphics card that supports FBO.");
+			shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, OKColor::white, OKColor::black);
 
 			System::updateRenderTimers();
 			System::updateStats();
@@ -823,7 +823,7 @@ void GLUtils::initGL(char* windowName)
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up FBO took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Setting up FBO took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -832,7 +832,7 @@ void GLUtils::initGL(char* windowName)
 	//set up shaders
 	//-----------------------------
 
-	log.debug("Setting up shaders");
+	log->debug("Setting up shaders");
 
 
 	string glVersion = string((char*)glGetString(GL_VERSION));
@@ -843,10 +843,10 @@ void GLUtils::initGL(char* windowName)
 	}
 	catch (exception)
 	{
-		log.error("Could not parse glVersionMajor in initGL");
+		log->error("Could not parse glVersionMajor in initGL");
 	}
 
-	log.info("glVersionMajor:" + to_string(glVersionMajor));
+	log->info("glVersionMajor:" + to_string(glVersionMajor));
 
 	if (glVersionMajor < 2)
 	{
@@ -876,28 +876,28 @@ void GLUtils::initGL(char* windowName)
 		//			boolean extensionsStringHasNVVertexProgram3 = glExtensions.contains("GL_NV_vertex_program3");
 		//			boolean extensionsStringHasNVGPUProgram4 = glExtensions.contains("GL_NV_gpu_program4");
 
-		log.info("Shader version: " + string((char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
+		log->info("Shader version: " + string((char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
 
-		log.info("hasARBShadingLanguage100 (GLSL 1.00):" + to_string(hasARBShadingLanguage100));
-		log.info("hasARBFragmentShader (GLSL 1.00):" + to_string(hasARBFragmentShader));
-		log.info("hasARBVertexShader (GLSL 1.00):" + to_string(hasARBVertexShader));
-		log.info("hasARBShaderObjects (GLSL 1.00):" + to_string(hasARBShaderObjects));
-		log.info("shadingVersionExists (GLSL 1.051):" + to_string((string((char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))) != ("0"))));
+		log->info("hasARBShadingLanguage100 (GLSL 1.00):" + to_string(hasARBShadingLanguage100));
+		log->info("hasARBFragmentShader (GLSL 1.00):" + to_string(hasARBFragmentShader));
+		log->info("hasARBVertexShader (GLSL 1.00):" + to_string(hasARBVertexShader));
+		log->info("hasARBShaderObjects (GLSL 1.00):" + to_string(hasARBShaderObjects));
+		log->info("shadingVersionExists (GLSL 1.051):" + to_string((string((char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))) != ("0"))));
 
-		log.info("hasARBFragmentProgram (SM 2):" + to_string(hasARBFragmentProgram));
-		log.info("hasNVVertexProgram3 (SM 3):" + to_string(hasNVVertexProgram3));
-		log.info("hasNVGPUProgram4 (SM 4):" + to_string(hasNVGPUProgram4));
-		//			log.info("extensionsStringHasARBShadingLanguage:"+extensionsStringHasARBShadingLanguage);
-		//			log.info("extensionsStringHasARBFragmentShader:"+extensionsStringHasARBFragmentShader);
-		//			log.info("extensionsStringHasARBVertexShader:"+extensionsStringHasARBVertexShader);
-		//			log.info("extensionsStringHasARBShaderObjects:"+extensionsStringHasARBShaderObjects);
-		//			log.info("extensionsStringHasARBFragmentProgram:"+extensionsStringHasARBFragmentProgram);
-		//			log.info("extensionsStringHasNVVertexProgram3:"+extensionsStringHasNVVertexProgram3);
-		//			log.info("extensionsStringHasNVGPUProgram4:"+extensionsStringHasNVGPUProgram4);
+		log->info("hasARBFragmentProgram (SM 2):" + to_string(hasARBFragmentProgram));
+		log->info("hasNVVertexProgram3 (SM 3):" + to_string(hasNVVertexProgram3));
+		log->info("hasNVGPUProgram4 (SM 4):" + to_string(hasNVGPUProgram4));
+		//			log->info("extensionsStringHasARBShadingLanguage:"+extensionsStringHasARBShadingLanguage);
+		//			log->info("extensionsStringHasARBFragmentShader:"+extensionsStringHasARBFragmentShader);
+		//			log->info("extensionsStringHasARBVertexShader:"+extensionsStringHasARBVertexShader);
+		//			log->info("extensionsStringHasARBShaderObjects:"+extensionsStringHasARBShaderObjects);
+		//			log->info("extensionsStringHasARBFragmentProgram:"+extensionsStringHasARBFragmentProgram);
+		//			log->info("extensionsStringHasNVVertexProgram3:"+extensionsStringHasNVVertexProgram3);
+		//			log->info("extensionsStringHasNVGPUProgram4:"+extensionsStringHasNVGPUProgram4);
 
 
 
-		//log.debug("createProgramObject");
+		//log->debug("createProgramObject");
 		lightShader = GLUtils::createProgramObject();
 		colorShader = GLUtils::createProgramObject();
 		gaussianShader = GLUtils::createProgramObject();
@@ -905,7 +905,7 @@ void GLUtils::initGL(char* windowName)
 		bloomShader = GLUtils::createProgramObject();
 		e("createProgramObject");
 
-		//log.debug("makeShader");
+		//log->debug("makeShader");
 		if (GLUtils::makeShader("lightShader", lightShader, "data/shaders/texCoord.vert", "data/shaders/lightBlend.frag") == false)
 		{
 			useShaders = false;
@@ -927,20 +927,20 @@ void GLUtils::initGL(char* windowName)
 			useShaders = false;
 		}
 
-		//log.debug("createProgramObject bgShaderCount " + to_string(bgShaderCount));
+		//log->debug("createProgramObject bgShaderCount " + to_string(bgShaderCount));
 		if (useShaders)
 		{
 			for (int i = 0; i < bgShaderCount; i++)
 			{
 				int p = GLUtils::createProgramObject();
-				//log.debug("createProgramObject bg " + to_string(p));
+				//log->debug("createProgramObject bg " + to_string(p));
 				e("createProgramObject");
 				bgShaders.add(make_shared<Integer>(p));
 			}
 
 			int count = 0;
 
-			//log.debug("makeShader bg bgShaders size "+to_string(bgShaders.size()));
+			//log->debug("makeShader bg bgShaders size "+to_string(bgShaders.size()));
 			for (int i = 0; i < bgShaderCount; i++)
 			{
 				string name = to_string(count) + ".frag";
@@ -951,7 +951,7 @@ void GLUtils::initGL(char* windowName)
 
 				if (GLUtils::makeShader(name, bgShaders.get(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
 				{
-					log.error("Could not make bg shader "+name);
+					log->error("Could not make bg shader "+name);
 					bgShaderCount--;
 					bgShaders.removeAt(i);
 					i--;
@@ -1014,23 +1014,23 @@ void GLUtils::initGL(char* windowName)
 
 	if (useShaders == false)
 	{
-		log.warn("Shaders not supported.");
+		log->warn("Shaders not supported.");
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Setting up shaders took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Setting up shaders took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
-	log.debug("GL setup complete.");
+	log->debug("GL setup complete.");
 
 
-	log.debug("Loading graphics");
+	log->debug("Loading graphics");
 	blankTexture = GLUtils::getTextureFromPNGExePath("data/misc/blank.png");
 	boxTexture = GLUtils::getTextureFromPNGExePath("data/misc/box.png");
 
 	totalNow = SDL_GetPerformanceCounter();
-	log.debug("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Setting up GLUtils took " + to_string((double)((totalNow - totalStart)) / SDL_GetPerformanceFrequency()) + "ms");
 	
 
 
@@ -1048,7 +1048,7 @@ void GLUtils::checkSDLError(const string &whereErrorOccurredString)
 	const char *error = SDL_GetError();
 	if (*error) 
 	{
-		log.error("SDL error: " + string(error));
+		log->error("SDL error: " + string(error));
 		SDL_ClearError();
 	}
 
@@ -1061,8 +1061,8 @@ void GLUtils::checkSDLError(const string &whereErrorOccurredString)
 //	{
 //		//strcpy(lastSDLErrorMessageString, sdlErrorMessageString);
 //		SDL_ClearError();
-//		if (whereErrorOccurredString.length()>0)log.error(whereErrorOccurredString);
-//		log.error(sdlErrorMessageString);
+//		if (whereErrorOccurredString.length()>0)log->error(whereErrorOccurredString);
+//		log->error(sdlErrorMessageString);
 //	}
 }
 
@@ -1098,7 +1098,7 @@ void GLUtils::checkGLError(const string &whereErrorOccurredString)
 		//else if(val==GL_TABLE_TOO_LARGE)errorString = "GL_TABLE_TOO_LARGE";//deprecated
 		else errorString = "Unknown GL error";
 
-		log.error(whereErrorOccurredString + ": "+errorString);
+		log->error(whereErrorOccurredString + ": "+errorString);
 
 		i++;
 	}
@@ -1276,7 +1276,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	if (targetDisplayMode == nullptr)
 	{
-		log.warn("Could not find video mode : " + to_string(width) + "x" + to_string(height) + " fullscreen: " + StringConverterHelper::toString(fullscreen));
+		log->warn("Could not find video mode : " + to_string(width) + "x" + to_string(height) + " fullscreen: " + StringConverterHelper::toString(fullscreen));
 		return;
 	}
 
@@ -1286,7 +1286,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 	{
 		shared_ptr<SDL_DisplayMode> m = modes.get(i);
 
-		log.info(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
+		log->info(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
 	}
 
 	//TODO: get the browser window/current frame size using javascript
@@ -1320,7 +1320,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 	//	}
 	//	catch (exception e)//LWJGLException e)
 	//	{
-	//		log.warn("Could not set video mode: " + to_string(width) + "x" + to_string(height) + " fullscreen: " + StringConverterHelper::toString(fullscreen));
+	//		log->warn("Could not set video mode: " + to_string(width) + "x" + to_string(height) + " fullscreen: " + StringConverterHelper::toString(fullscreen));
 	//	}
 }
 
@@ -1454,7 +1454,7 @@ int GLUtils::createProgramObject()
 			if (i == 0)
 			{
 				ARBShader = true;
-				log.warn("Core shaders failed. Trying ARB shaders.");
+				log->warn("Core shaders failed. Trying ARB shaders.");
 			}
 		}
 
@@ -1465,7 +1465,7 @@ int GLUtils::createProgramObject()
 			if (i == 0)
 			{
 				useShaders = false;
-				log.warn("ARB shaders failed. Using no shaders.");
+				log->warn("ARB shaders failed. Using no shaders.");
 			}
 		}
 	}
@@ -1521,8 +1521,8 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 	}
 	catch (exception& e)
 	{
-		log.error("Could not read code: " + filename);
-		log.error("Standard exception: " + string(e.what()));
+		log->error("Could not read code: " + filename);
+		log->error("Standard exception: " + string(e.what()));
 		return 0;
 	}
 
@@ -1558,7 +1558,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 				{
 					out = out.substr(0, out.length() - 1); //remove extra newline
 				}
-				log.warn("ShaderInfoLogARB: " + out);
+				log->warn("ShaderInfoLogARB: " + out);
 			}
 
 			shader = 0;
@@ -1593,7 +1593,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 				{
 					out = out.substr(0, out.length() - 1); //remove extra newline
 				}
-				log.warn("ShaderInfoLog: " + out);
+				log->warn("ShaderInfoLog: " + out);
 			}
 		
 			shader = 0;
@@ -1612,14 +1612,14 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 	int vertShader = 0;
 	int fragShader = 0;
 
-	//log.debug("compileShaderObject");
+	//log->debug("compileShaderObject");
 	vertShader = GLUtils::compileShaderObject(vertPath, VERT);
 	fragShader = GLUtils::compileShaderObject(fragPath, FRAG);
 
 	if (vertShader != 0 && fragShader != 0)
 	{
 
-		//log.debug("glAttachShader");
+		//log->debug("glAttachShader");
 		if (ARBShader)
 		{
 			glAttachObjectARB(shaderProgram, vertShader);
@@ -1693,15 +1693,15 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 			}
 		}
 
-		//log.info(name + " status: " + out);
+		//log->info(name + " status: " + out);
 		string lower = out;
 		transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
 
 //		if (
 //			lower.find("warning") != string::npos
-//			) //startsWith("Validation successful")==false && String::startsWith(status,"Validation warning! - Sampler")==false)
+//			) //startsWith("Validation successful")==false && OKString::startsWith(status,"Validation warning! - Sampler")==false)
 //		{
-//			log.warn(name + " status: " + out);
+//			log->warn(name + " status: " + out);
 //			return true;
 //		}
 //		else
@@ -1711,7 +1711,7 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 			lower.find("failed") != string::npos
 			)
 		{
-			log.error(name + " status: " + out);
+			log->error(name + " status: " + out);
 			return false;
 		}
 		else
@@ -1721,7 +1721,7 @@ bool GLUtils::makeShader(const string& name, int shaderProgram, const string& ve
 	}
 	else
 	{
-		log.warn(name + " did not compile!");
+		log->warn(name + " did not compile!");
 		return false;
 	}
 }
@@ -1806,7 +1806,7 @@ void GLUtils::setPreColorFilterViewport()
 	glOrtho(0, getViewportWidth() * FBO_SCALE, getViewportHeight() * FBO_SCALE, 0, -1, 1);
 }
 
-void GLUtils::setBobsGameMainFBOFilterViewport()
+void GLUtils::setOKGameMainFBOFilterViewport()
 { //=========================================================================================================================
 
 	glViewport(0, 0, (int)(bobsGameFBO_shared_ptr<Width > FBO_SCALE), (int)(bobsGameFBO_shared_ptr<Height > FBO_SCALE));
@@ -1828,7 +1828,7 @@ void GLUtils::setShaderViewport()
 }
 
 //=========================================================================================================================
-void GLUtils::resizeBobsGameFBO(float w, float h)
+void GLUtils::resizeOKGameFBO(float w, float h)
 { //=========================================================================================================================
 
 	if (w == 0)w = 10;
@@ -1888,8 +1888,8 @@ void GLUtils::doResize()
 	windowWidth = w;
 	windowHeight = h;
 
-	log.info("Window Width: " + to_string(windowWidth));
-	log.info("Window Height: " + to_string(windowHeight));
+	log->info("Window Width: " + to_string(windowWidth));
+	log->info("Window Height: " + to_string(windowHeight));
 
 	//glMatrixMode(GL_MODELVIEW);//worldview transform (how far from 0,0,0 are we)
 	//glLoadIdentity();//reset selected transform matrix
@@ -2096,13 +2096,13 @@ void GLUtils::setDefaultTextureParams()
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, int filter)//static
+void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sy0, int filter)//static
 {//=========================================================================================================================
 	drawTexture(texture, sx0, sy0, 1.0f, filter);
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, float alpha, int filter)//static
+void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sy0, float alpha, int filter)//static
 {//=========================================================================================================================
 
 	float sx1 = sx0 + texture->getImageWidth();
@@ -2112,7 +2112,7 @@ void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, 
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 
 	float tXRatio = (float)texture->getImageWidth() / (float)texture->getTextureWidth();
@@ -2134,7 +2134,7 @@ void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float sx0, float sx1, 
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 	if (texture == nullptr)return;
 
@@ -2160,7 +2160,7 @@ void GLUtils::drawTexture(float tx0, float tx1, float ty0, float ty1, float sx0,
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
+void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
 {//===========================================================================================================================
 
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
@@ -2184,7 +2184,7 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 //	{
 //		roundCoords++;
 //		if (roundCoords > 1)roundCoords = 0;
-//		log.debug("Round:" + to_string(roundCoords));
+//		log->debug("Round:" + to_string(roundCoords));
 //	}
 //
 //#endif
@@ -2389,7 +2389,7 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 //}
 
 //=========================================================================================================================
-void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, shared_ptr<BobColor> color)//static
+void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, shared_ptr<OKColor> color)//static
 {//=========================================================================================================================
 
 	screenX0 *= globalDrawScale;
@@ -2401,16 +2401,16 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	SDL_Color textSDLColor = { (Uint8)color->ri() ,(Uint8)color->gi(),(Uint8)color->bi(),(Uint8)color->ai() };
 	//SDL_Color bgSDLColor = { 0,0,0,0 };
 
-	TTF_shared_ptr<Font >ttfFont = BobFont::ttf_8;
-	TTF_shared_ptr<Font >outlineFont = BobFont::ttf_outline_8;
+	TTF_shared_ptr<Font >ttfFont = OKFont::ttf_8;
+	TTF_shared_ptr<Font >outlineFont = OKFont::ttf_outline_8;
 
 	int OUTLINE_SIZE = 1;
 	// render text and text outline 
 
-	BobColor outlineBobColor = BobColor(*color);
-	outlineBobColor.darker();
-	outlineBobColor.darker();
-	SDL_Color outlineColor = { (Uint8)outlineBobColor.ri() ,(Uint8)outlineBobColor.gi(),(Uint8)outlineBobColor.bi(),(Uint8)outlineBobColor.ai() };
+	OKColor outlineOKColor = OKColor(*color);
+	outlineOKColor.darker();
+	outlineOKColor.darker();
+	SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
 	shared_ptr<SDL_Surface> surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
 	shared_ptr<SDL_Surface >fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
 	SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
@@ -2422,13 +2422,13 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 
 	if (surface == NULL || surface == nullptr)
 	{
-		log.error("surface is null");
+		log->error("surface is null");
 	}
 
 	int width = fg_surface->w + OUTLINE_SIZE * 2;
 	int height = fg_surface->h + OUTLINE_SIZE * 2;
 
-	shared_ptr<BobTexture> texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
+	shared_ptr<OKTexture> texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
 	SDL_FreeSurface(surface);
 
 	int texWidth = texture->getTextureWidth();
@@ -2470,9 +2470,9 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
  //		{
  //			try
  //			{
- //				InputStream inputStream = FileUtils::getResourceAsStream("res/fonts/BobsGame::ttf");
+ //				InputStream inputStream = FileUtils::getResourceAsStream("res/fonts/OKGame::ttf");
  //
- //				BobFont awtFont = BobFont.createFont(BobFont.TRUETYPE_FONT, inputStream);
+ //				OKFont awtFont = OKFont.createFont(OKFont.TRUETYPE_FONT, inputStream);
  //				awtFont = awtFont.deriveFont(8f); // set font size
  //				font = make_shared<TrueTypeFont>(awtFont, antiAlias);
  //			}
@@ -2482,8 +2482,8 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
  //			}
  //		}
 
- //if(font==null){log.error("BobFont is null");return;}
- //if(getText==null){log.error("Text is null");return;}
+ //if(font==null){log->error("OKFont is null");return;}
+ //if(getText==null){log->error("Text is null");return;}
 
 
 	//
@@ -2951,7 +2951,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	}
 //
 //
-//	SpriteBatch batch=BobsGame::spriteBatch;
+//	SpriteBatch batch=OKGame::spriteBatch;
 //
 //	batch->begin();
 //	batch.draw(rect,x,y,width,thickness);
@@ -2980,8 +2980,8 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	}
 //
 //
-//	float w = (float)BobsGame::FBOWidth;
-//	float h = (float)BobsGame::FBOHeight;
+//	float w = (float)OKGame::FBOWidth;
+//	float h = (float)OKGame::FBOHeight;
 //	float heightWidthRatio = h / w;
 //
 //	x = x / w;
@@ -2990,7 +2990,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	height = height / h; // * heightWidthRatio;
 //
 //
-//	//shared_ptr<SpriteBatch >spriteBatch = BobsGame::spriteBatch;
+//	//shared_ptr<SpriteBatch >spriteBatch = OKGame::spriteBatch;
 //	//spriteBatch->setColor(r, g, b, a);
 //	//spriteBatch->draw(rect,x,y,width,height);
 //
@@ -3013,8 +3013,8 @@ void GLUtils::drawLine(float x1, float y1, float x2, float y2, int thickness)
 //	{//=========================================================================================================================
 //
 //
-//		float w = BobsGame::FBOWidth;
-//		float h = BobsGame::FBOHeight;
+//		float w = OKGame::FBOWidth;
+//		float h = OKGame::FBOHeight;
 //		float heightWidthRatio = h / w;
 //
 //		x = x/w;
@@ -3022,14 +3022,14 @@ void GLUtils::drawLine(float x1, float y1, float x2, float y2, int thickness)
 //		width = width/w;
 //		height = height/h;// * heightWidthRatio;
 //
-//		//Camera camera = BobsGame::camera;
+//		//Camera camera = OKGame::camera;
 //		//camera.update();
 //
 //
 //
 //
 //
-//		ShapeRenderer shapeRenderer = BobsGame::shapeRenderer;
+//		ShapeRenderer shapeRenderer = OKGame::shapeRenderer;
 //
 //		//shapeRenderer.setProjectionMatrix(camera.combined);
 //
@@ -3151,14 +3151,14 @@ void GLUtils::old_render()
 
 
 //===========================================================================================================================
-shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string filename, shared_ptr<SDL_Surface> surfacein)
+shared_ptr<OKTexture> GLUtils::loadTextureFromSurface(string filename, shared_ptr<SDL_Surface> surfacein)
 {//===========================================================================================================================
 
 	shared_ptr<SDL_Surface> surface = surfacein;
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<BobTexture >tex = nullptr;
+	shared_ptr<OKTexture >tex = nullptr;
 
 	if (textureCache.containsKey(filename))
 	{
@@ -3171,7 +3171,7 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string filename, shared_p
 
 
 	GLuint textureID = createTextureID();
-	tex = make_shared<BobTexture>(filename, textureID);
+	tex = make_shared<OKTexture>(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3194,7 +3194,7 @@ shared_ptr<BobTexture> GLUtils::loadTextureFromSurface(string filename, shared_p
 	int max = maxTexSizeArray[0];
 	if ((texWidth > max) || (texHeight > max))
 	{
-		log.error("Allocating a texture too big for the current hardware");
+		log->error("Allocating a texture too big for the current hardware");
 	}
 	delete[] maxTexSizeArray;
 	//int srcPixelFormat = hasAlpha ? GL_RGBA : GL_RGB;
@@ -3312,13 +3312,13 @@ GLuint GLUtils::createTextureID()
 }
 
 //=========================================================================================================================
-shared_ptr<BobTexture >GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data)
+shared_ptr<OKTexture >GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<BobTexture >tex = nullptr;
+	shared_ptr<OKTexture >tex = nullptr;
 
 	if (textureCache.containsKey(textureName))
 	{
@@ -3331,7 +3331,7 @@ shared_ptr<BobTexture >GLUtils::getTextureFromData(string textureName, int image
 
 
 	GLuint textureID = createTextureID();
-	tex = make_shared<BobTexture>(textureName, textureID);
+	tex = make_shared<OKTexture>(textureName, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3354,7 +3354,7 @@ shared_ptr<BobTexture >GLUtils::getTextureFromData(string textureName, int image
 	int max = maxTexSize[0];
 	if ((texWidth > max) || (texHeight > max))
 	{
-		log.error("Allocating a texture too big for the current hardware");
+		log->error("Allocating a texture too big for the current hardware");
 	}
 
 
@@ -3403,7 +3403,7 @@ shared_ptr<BobTexture >GLUtils::getTextureFromData(string textureName, int image
 }
 
 //=========================================================================================================================
-shared_ptr<BobTexture >GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+shared_ptr<OKTexture >GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
@@ -3412,13 +3412,13 @@ shared_ptr<BobTexture >GLUtils::getTextureFromPNGExePath(string filename)// , co
 
 }
 //=========================================================================================================================
-shared_ptr<BobTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+shared_ptr<OKTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<BobTexture >tex = nullptr;
+	shared_ptr<OKTexture >tex = nullptr;
 
 
 	if (textureCache.containsKey(filename))
@@ -3432,7 +3432,7 @@ shared_ptr<BobTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 
 
 	GLuint textureID = createTextureID();
-	tex = make_shared<BobTexture>(filename, textureID);
+	tex = make_shared<OKTexture>(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3441,7 +3441,7 @@ shared_ptr<BobTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 	//shared_ptr<SDL_Surface> imageSurface = STBIMG_Load(filename.c_str());
 	if (imageSurface == NULL)
 	{
-		log.error("ERROR: Couldn't load "+ filename +": "+string(SDL_GetError()));
+		log->error("ERROR: Couldn't load "+ filename +": "+string(SDL_GetError()));
 		//exit(1);
 		return nullptr;
 	}
@@ -3465,7 +3465,7 @@ shared_ptr<BobTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 	int max = maxTexSizeArray[0];
 	if ((texWidth > max) || (texHeight > max))
 	{
-		log.error("Allocating a texture too big for the current hardware");
+		log->error("Allocating a texture too big for the current hardware");
 	}
 	
 	
@@ -3531,7 +3531,7 @@ shared_ptr<BobTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)//
 
 	delete[] t;
 
-	//log.info("SDL_FreeSurface");
+	//log->info("SDL_FreeSurface");
 	SDL_FreeSurface(imageSurface);
 
 

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -16,7 +16,7 @@ class Logger;
 
 class ND;
 
-class BobTexture;
+class OKTexture;
 class Caption;
 
 class NDGameEngine : public MiniGameEngine

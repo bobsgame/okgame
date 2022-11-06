@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "Piece.h"
 #include "Block.h"
 #include "../Utility/FileUtils.h"
@@ -56,7 +56,7 @@ public:
 
 	ArrayList<shared_ptr<PieceType>> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
 	ArrayList<shared_ptr<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
-	//ArrayList<shared_ptr<BobColor>> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
+	//ArrayList<shared_ptr<OKColor>> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
 
 	ArrayList<string> pieceTypesToDisallow_UUID;
 	ArrayList<string> blockTypesToDisallow_UUID;
@@ -197,73 +197,73 @@ public:
 	//BlockType noBlockType;
 	//ArrayList<Color> emptyColors;
 
-//	const BobColor clear = *BobColor::clear;
-//	const BobColor transparent = *BobColor::transparent;
-//	const BobColor black = *BobColor::black;
-//	const BobColor darkerGray = *BobColor::darkerGray;
-//	const BobColor darkGray = *BobColor::darkGray;
-//	const BobColor gray = *BobColor::gray;
-//	const BobColor lightGray = *BobColor::lightGray;
-//	const BobColor lighterGray = *BobColor::lighterGray;
-//	const BobColor white = *BobColor::white;
-//	const BobColor cyan = *BobColor::cyan; 
-//	const BobColor lightCyan = *BobColor::lightCyan; 
-//	const BobColor lighterCyan = *BobColor::lighterCyan; 
-//	const BobColor darkCyan = *BobColor::darkCyan; 
-//	const BobColor darkerCyan = *BobColor::darkerCyan; 
-//	const BobColor magenta = *BobColor::magenta; 
-//	const BobColor lightMagenta = *BobColor::lightMagenta; 
-//	const BobColor lighterMagenta = *BobColor::lighterMagenta; 
-//	const BobColor darkMagenta = *BobColor::darkMagenta; 
-//	const BobColor darkerMagenta = *BobColor::darkerMagenta; 
-//	const BobColor yellow = *BobColor::yellow; 
-//	const BobColor lightYellow = *BobColor::lightYellow; 
-//	const BobColor lighterYellow = *BobColor::lighterYellow; 
-//	const BobColor darkYellow = *BobColor::darkYellow; 
-//	const BobColor darkerYellow = *BobColor::darkerYellow; 
-//	const BobColor orange = *BobColor::orange; 
-//	const BobColor lightOrange = *BobColor::lightOrange; 
-//	const BobColor lighterOrange = *BobColor::lighterOrange; 
-//	const BobColor darkOrange = *BobColor::darkOrange; 
-//	const BobColor darkerOrange = *BobColor::darkerOrange; 
-//	const BobColor red = *BobColor::red; 
-//	const BobColor lightRed = *BobColor::lightRed; 
-//	const BobColor lighterRed = *BobColor::lighterRed; 
-//	const BobColor darkRed = *BobColor::darkRed; 
-//	const BobColor darkerRed = *BobColor::darkerRed; 
-//	const BobColor pink = *BobColor::pink; 
-//	const BobColor lightPink = *BobColor::lightPink; 
-//	const BobColor lighterPink = *BobColor::lighterPink; 
-//	const BobColor darkPink = *BobColor::darkPink; 
-//	const BobColor darkerPink = *BobColor::darkerPink; 
-//	const BobColor purple = *BobColor::purple; 
-//	const BobColor darkPurple = *BobColor::darkPurple; 
-//	const BobColor darkerPurple = *BobColor::darkerPurple; 
-//	const BobColor lightPurple = *BobColor::lightPurple; 
-//	const BobColor lighterPurple = *BobColor::lighterPurple; 
-//	const BobColor blue = *BobColor::blue; 
-//	const BobColor lightBlue = *BobColor::lightBlue; 
-//	const BobColor lighterBlue = *BobColor::lighterBlue; 
-//	const BobColor darkBlue = *BobColor::darkBlue; 
-//	const BobColor darkerBlue = *BobColor::darkerBlue; 
-//	const BobColor green = *BobColor::green;
-//	const BobColor lighterGreen = *BobColor::lighterGreen;
-//	const BobColor lightGreen = *BobColor::lightGreen;
-//	const BobColor darkGreen = *BobColor::darkGreen;
-//	const BobColor darkerGreen = *BobColor::darkerGreen;
-//	const BobColor aqua = *BobColor::aqua;
-//	const BobColor lighterAqua = *BobColor::lighterAqua;
-//	const BobColor lightAqua = *BobColor::lightAqua;
-//	const BobColor darkAqua = *BobColor::darkAqua;
-//	const BobColor darkerAqua = *BobColor::darkerAqua;
-//	const BobColor turquoise = *BobColor::turquoise;
-//	const BobColor lighterTurquoise = *BobColor::lighterTurquoise;
-//	const BobColor lightTurquoise = *BobColor::lightTurquoise;
-//	const BobColor darkTurquoise = *BobColor::darkTurquoise;
-//	const BobColor darkerTurquoise = *BobColor::darkerTurquoise;
-//	const BobColor olive = *BobColor::olive;
-//	const BobColor burgandy = *BobColor::burgandy;
-//	const BobColor wine = *BobColor::wine;
+//	const OKColor clear = *OKColor::clear;
+//	const OKColor transparent = *OKColor::transparent;
+//	const OKColor black = *OKColor::black;
+//	const OKColor darkerGray = *OKColor::darkerGray;
+//	const OKColor darkGray = *OKColor::darkGray;
+//	const OKColor gray = *OKColor::gray;
+//	const OKColor lightGray = *OKColor::lightGray;
+//	const OKColor lighterGray = *OKColor::lighterGray;
+//	const OKColor white = *OKColor::white;
+//	const OKColor cyan = *OKColor::cyan; 
+//	const OKColor lightCyan = *OKColor::lightCyan; 
+//	const OKColor lighterCyan = *OKColor::lighterCyan; 
+//	const OKColor darkCyan = *OKColor::darkCyan; 
+//	const OKColor darkerCyan = *OKColor::darkerCyan; 
+//	const OKColor magenta = *OKColor::magenta; 
+//	const OKColor lightMagenta = *OKColor::lightMagenta; 
+//	const OKColor lighterMagenta = *OKColor::lighterMagenta; 
+//	const OKColor darkMagenta = *OKColor::darkMagenta; 
+//	const OKColor darkerMagenta = *OKColor::darkerMagenta; 
+//	const OKColor yellow = *OKColor::yellow; 
+//	const OKColor lightYellow = *OKColor::lightYellow; 
+//	const OKColor lighterYellow = *OKColor::lighterYellow; 
+//	const OKColor darkYellow = *OKColor::darkYellow; 
+//	const OKColor darkerYellow = *OKColor::darkerYellow; 
+//	const OKColor orange = *OKColor::orange; 
+//	const OKColor lightOrange = *OKColor::lightOrange; 
+//	const OKColor lighterOrange = *OKColor::lighterOrange; 
+//	const OKColor darkOrange = *OKColor::darkOrange; 
+//	const OKColor darkerOrange = *OKColor::darkerOrange; 
+//	const OKColor red = *OKColor::red; 
+//	const OKColor lightRed = *OKColor::lightRed; 
+//	const OKColor lighterRed = *OKColor::lighterRed; 
+//	const OKColor darkRed = *OKColor::darkRed; 
+//	const OKColor darkerRed = *OKColor::darkerRed; 
+//	const OKColor pink = *OKColor::pink; 
+//	const OKColor lightPink = *OKColor::lightPink; 
+//	const OKColor lighterPink = *OKColor::lighterPink; 
+//	const OKColor darkPink = *OKColor::darkPink; 
+//	const OKColor darkerPink = *OKColor::darkerPink; 
+//	const OKColor purple = *OKColor::purple; 
+//	const OKColor darkPurple = *OKColor::darkPurple; 
+//	const OKColor darkerPurple = *OKColor::darkerPurple; 
+//	const OKColor lightPurple = *OKColor::lightPurple; 
+//	const OKColor lighterPurple = *OKColor::lighterPurple; 
+//	const OKColor blue = *OKColor::blue; 
+//	const OKColor lightBlue = *OKColor::lightBlue; 
+//	const OKColor lighterBlue = *OKColor::lighterBlue; 
+//	const OKColor darkBlue = *OKColor::darkBlue; 
+//	const OKColor darkerBlue = *OKColor::darkerBlue; 
+//	const OKColor green = *OKColor::green;
+//	const OKColor lighterGreen = *OKColor::lighterGreen;
+//	const OKColor lightGreen = *OKColor::lightGreen;
+//	const OKColor darkGreen = *OKColor::darkGreen;
+//	const OKColor darkerGreen = *OKColor::darkerGreen;
+//	const OKColor aqua = *OKColor::aqua;
+//	const OKColor lighterAqua = *OKColor::lighterAqua;
+//	const OKColor lightAqua = *OKColor::lightAqua;
+//	const OKColor darkAqua = *OKColor::darkAqua;
+//	const OKColor darkerAqua = *OKColor::darkerAqua;
+//	const OKColor turquoise = *OKColor::turquoise;
+//	const OKColor lighterTurquoise = *OKColor::lighterTurquoise;
+//	const OKColor lightTurquoise = *OKColor::lightTurquoise;
+//	const OKColor darkTurquoise = *OKColor::darkTurquoise;
+//	const OKColor darkerTurquoise = *OKColor::darkerTurquoise;
+//	const OKColor olive = *OKColor::olive;
+//	const OKColor burgandy = *OKColor::burgandy;
+//	const OKColor wine = *OKColor::wine;
 
 	//---------------------------------------------------
 	// music and sound

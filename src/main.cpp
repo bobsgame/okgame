@@ -173,15 +173,15 @@ using Poco::Path;
 //shared_ptr<FileUtils >Main::cacheManager = make_shared<FileUtils>();
 //bool Main::isApplet = false;
 
-string Main::serverAddressString = BobNet::releaseServerAddress;
-string Main::STUNServerAddressString = BobNet::releaseSTUNServerAddress;
-int Main::serverTCPPort = BobNet::serverTCPPort;
-int Main::STUNServerUDPPort = BobNet::STUNServerUDPPort;
-int Main::clientUDPPortStartRange = BobNet::clientUDPPortStartRange;
+string Main::serverAddressString = OKNet::releaseServerAddress;
+string Main::STUNServerAddressString = OKNet::releaseSTUNServerAddress;
+int Main::serverTCPPort = OKNet::serverTCPPort;
+int Main::STUNServerUDPPort = OKNet::STUNServerUDPPort;
+int Main::clientUDPPortStartRange = OKNet::clientUDPPortStartRange;
 
 string Main::version = "";
 
-shared_ptr<BobNet> Main::bobNet = nullptr;
+shared_ptr<OKNet> Main::bobNet = nullptr;
 shared_ptr<Console> Main::console = nullptr;
 shared_ptr<Console> Main::rightConsole = nullptr;
 //shared_ptr<AudioManager> Main::audioManager = nullptr;
@@ -190,7 +190,7 @@ shared_ptr<StateManager> Main::stateManager = nullptr;
 shared_ptr<System> Main::systemUtils = nullptr;
 shared_ptr<GlobalSettings> Main::globalSettings = nullptr;
 //shared_ptr<ControlsManager> Main::controlsManager = nullptr;
-shared_ptr<BGClientEngine> Main::gameEngine = nullptr;
+BGClientEngine* Main::gameEngine = nullptr;
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
 Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
@@ -235,7 +235,7 @@ void Main::mainInit()
 	make_shared<Logger>();
 	Logger::initLogger();
 
-	BobColor::initPresetColors();
+	OKColor::initPresetColors();
 
 
 	fileUtils = make_shared<FileUtils>();
@@ -332,7 +332,7 @@ void Main::mainInit()
 	ControlsManager::initControllers();
 	GLUtils::e();
 
-	BobFont::initFonts();
+	OKFont::initFonts();
 	GLUtils::e();
 
 
@@ -409,13 +409,13 @@ void Main::mainInit()
 	//	bool debugOnLiveServer = true;
 	//	if (debugOnLiveServer == false)
 	//	{
-	//		serverAddressString = BobNet::debugServerAddress;
-	//		STUNServerAddressString = BobNet::debugSTUNServerAddress;
+	//		serverAddressString = OKNet::debugServerAddress;
+	//		STUNServerAddressString = OKNet::debugSTUNServerAddress;
 	//	}
 	//	else
 	{
-		serverAddressString = BobNet::releaseServerAddress;
-		STUNServerAddressString = BobNet::releaseSTUNServerAddress;
+		serverAddressString = OKNet::releaseServerAddress;
+		STUNServerAddressString = OKNet::releaseSTUNServerAddress;
 	}
 
 	//for testing on second PC locally
@@ -431,8 +431,8 @@ void Main::mainInit()
 		File f("/localServer");
 		if (f.exists())
 		{
-			serverAddressString = "192.168.1.3";// BobNet::debugServerAddress;
-			STUNServerAddressString = "192.168.1.3";//BobNet::debugSTUNServerAddress;
+			serverAddressString = "192.168.1.3";// OKNet::debugServerAddress;
+			STUNServerAddressString = "192.168.1.3";//OKNet::debugSTUNServerAddress;
 
 			//stun server port is incremented by 1 to prevent bind conflict when running local server
 
@@ -442,8 +442,8 @@ void Main::mainInit()
 
 
 
-	log.debug("Init BobNet");
-	bobNet = make_shared<BobNet>();
+	log.debug("Init OKNet");
+	bobNet = make_shared<OKNet>();
 
 
 
@@ -484,8 +484,8 @@ void Main::mainInit()
 
 				gameEngine->cinematicsManager->fadeFromBlack(10000);
 
-				//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
-				gameEngine->mapManager->changeMap("ALPHABobsApartment", "atDesk");
+				//gameEngine->mapManager->changeMap("ALPHAOKElevator", "center");
+				gameEngine->mapManager->changeMap("ALPHAOKApartment", "atDesk");
 				//gameEngine.mapManager.changeMap("GENERIC1UpstairsBedroom1",12*8*2,17*8*2);
 
 				//gameEngine->textManager->text("yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay <PLAYER>Yep  \"Yuu\" yay. Yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay yay. a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa <.><1><PLAYER>bob! yay, \"bob\" yay! <.><0><PLAYER>\"Yuu\" yay, nD. yay yay \"bob's game\" yay- bob's? yay \"bob's\" yay bob's game<1>yep");
@@ -496,7 +496,7 @@ void Main::mainInit()
 				stateManager->pushState(loginState);
 			}
 
-			//gameEngine->mapManager->changeMap("ALPHABobElevator", "center");
+			//gameEngine->mapManager->changeMap("ALPHAOKElevator", "center");
 			//gameEngine->mapManager->changeMap("TOWNYUUDownstairs", 30, 18);
 
 
@@ -505,8 +505,8 @@ void Main::mainInit()
 	else
 	{
 
-		log.debug("Create BobsGame");
-		bobsGame = make_shared<BobsGame>();
+		log.debug("Create OKGame");
+		bobsGame = make_shared<OKGame>();
 		stateManager->pushState(bobsGame);
 		bobsGame->init();
 
@@ -1083,7 +1083,7 @@ void Main::doScreenShotCheck()
 		{
 			log.info("Saved screenshot to " + fileName);
 
-			Main::console->add("Saved screenshot to "+ fileName, 3000, BobColor::green);
+			Main::console->add("Saved screenshot to "+ fileName, 3000, OKColor::green);
 			//getFileName = System::getProperty("user.home") + "/" + "Desktop" + "/" + imageName;
 		}
 		//  				else
@@ -1304,7 +1304,7 @@ void Main::doLegalScreen()
   //			{
   //
   //				{
-  //				//if(BobNet.debugMode==false)
+  //				//if(OKNet.debugMode==false)
   //
   //					log.info("Legal Screen...");
   //
@@ -1355,7 +1355,7 @@ void Main::showControlsImage()
   //			{
   //
   //				{
-  //				//if(BobNet.debugMode==false)
+  //				//if(OKNet.debugMode==false)
   //					shared_ptr<KeyboardScreen >keyboardScreen = make_shared<KeyboardScreen>();
   //					GUI *keyboardScreenGUI = new GUI(keyboardScreen, GLUtils::TWLrenderer);
   //					keyboardScreenGUI->applyTheme(GLUtils::TWLthemeManager);
@@ -1537,7 +1537,7 @@ void Main::checkVersion()
 	string pocoPath = Path::current();
 	log.info("Poco::Path::current():" + pocoPath);//this is the current working dir i.e. bobsgame/
 
-	log.info("SDL_GetPrefPath():" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
+	log.info("SDL_GetPrefPath():" + string(SDL_GetPrefPath("OK Corporation", "bob's game")));
 	log.info("Poco::Path::home():" + Path::home());
 
 	if (exePath.find("itch") != std::string::npos)
@@ -1564,10 +1564,10 @@ void Main::checkVersion()
 			{
 				f.remove();
 				//shared_ptr<Caption> c =
-				//((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", BobFont::ttf_oswald_32, BobColor::green, BobColor::clear, RenderOrder::OVER_GUI);
+				//((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", OKFont::ttf_oswald_32, OKColor::green, OKColor::clear, RenderOrder::OVER_GUI);
 				//doesn't go away because we're not updating captionManager??
 
-				shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN,0 , 0, -1, "Update installed!", 16, true, BobColor::white, BobColor::clear);
+				shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN,0 , 0, -1, "Update installed!", 16, true, OKColor::white, OKColor::clear);
 
 				for (int i = 0; i < 40; i++)
 				{
@@ -1651,9 +1651,9 @@ void Main::checkVersion()
 
 		if (serverVersion > localVersion)
 		{
-			Main::console->add("Your version is out of date!", BobColor::red);
-			Main::console->add("Your version: " + versionString, BobColor::red);
-			Main::console->add("Latest version: " + serverString, BobColor::red);
+			Main::console->add("Your version is out of date!", OKColor::red);
+			Main::console->add("Your version: " + versionString, OKColor::red);
+			Main::console->add("Latest version: " + serverString, OKColor::red);
 
 			//bobsgame.exe can update itself, download latest.zip, rename itself, unzip in directory and overwrite, reopen itself, exit
 			//in linux it doesnt even have to rename itself
@@ -1687,8 +1687,8 @@ void Main::checkVersion()
 				return;
 			}
 
-			//shared_ptr<Caption> c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", BobFont::ttf_oswald_16, BobColor::white, BobColor::clear);
-			shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Update available! Press Space to download, Esc to skip.", 16, true, BobColor::white, BobColor::clear);
+			//shared_ptr<Caption> c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Update available! Press Space to download, Esc to skip.", OKFont::ttf_oswald_16, OKColor::white, OKColor::clear);
+			shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Update available! Press Space to download, Esc to skip.", 16, true, OKColor::white, OKColor::clear);
 			System::updateRenderTimers();
 			System::updateStats();
 			System::updateUpdateTimers();
@@ -1722,9 +1722,9 @@ void Main::checkVersion()
 
 			//put caption in middle of screen, updating, press esc to skip
 			log.info("Downloading update...");
-			//c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, BobColor::white, BobColor::clear);
-			c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Downloading update...", 16, true, BobColor::white, BobColor::clear);
-			//shared_ptr<Caption> c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", BobFont::ttf_oswald_32, Color::white, Color::black,RenderOrder::OVER_GUI);
+			//c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", OKFont::ttf_oswald_32, OKColor::white, OKColor::clear);
+			c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "Downloading update...", 16, true, OKColor::white, OKColor::clear);
+			//shared_ptr<Caption> c = ((shared_ptr<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, -1, "Downloading update...", OKFont::ttf_oswald_32, Color::white, Color::black,RenderOrder::OVER_GUI);
 
 			glClear(GL_COLOR_BUFFER_BIT);
 			//Main::delay(100); //bobsGame doesn't render captionManager
@@ -1950,7 +1950,7 @@ void Main::cleanup()
 	}
 
 
-	BobFont::cleanup();
+	OKFont::cleanup();
 	GLUtils::cleanup();
 
 	//delete bobNet;

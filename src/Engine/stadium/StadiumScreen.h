@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -37,7 +37,7 @@ public:
 	void update();
 
 
-	void setGame(shared_ptr<MiniGameEngine> game, shared_ptr<Area> area);
+	void setGame(MiniGameEngine* game, shared_ptr<Area> area);
 
 
 	shared_ptr<MiniGameEngine> getGame();

@@ -22,7 +22,7 @@ UDPPeerConnection::UDPPeerConnection(long long friendUserID, int type)
 	this->peerUserID = friendUserID;
 	this->peerType = type;
 
-	//   log.info("UDP Channel: " + channel->getId()->toString());
+	//   log->info("UDP Channel: " + channel->getId()->toString());
 
 }
 
@@ -54,7 +54,7 @@ void UDPPeerConnection::update()
 
 	if (threadStarted == false)
 	{
-		log.debug("Created peer thread");
+		log->debug("Created peer thread");
 		t = thread(&UDPPeerConnection::updateThreadLoop, this);
 		threadStarted = true;
 	}
@@ -66,13 +66,13 @@ void UDPPeerConnection::update()
 		string s = peerMessageQueueFront_S();
 		peerMessageQueuePop_S();
 
-		if (String::startsWith(s, "PARTIAL:"))
+		if (OKString::startsWith(s, "PARTIAL:"))
 		{
 			s = s.substr(s.find(":") + 1);
 			partialPacketString += s;
 		}
 		else
-			if (String::startsWith(s, "FINAL:"))
+			if (OKString::startsWith(s, "FINAL:"))
 			{
 				s = s.substr(s.find(":") + 1);
 				partialPacketString += s;
@@ -82,7 +82,7 @@ void UDPPeerConnection::update()
 			else
 				if (partialPacketString.length()>0)
 				{
-					log.error("Partial packet from client was not completed! Client:"+to_string(peerUserID));
+					log->error("Partial packet from client was not completed! Client:"+to_string(peerUserID));
 				}
 				else
 				{
@@ -248,7 +248,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 //#ifndef _DEBUG
 //						if (packet->address.host != getPeerIPAddress_S()->host)
 //						{
-//							log.warn("Peer address didn't match in incoming packet. Peer IP:" + to_string(getPeerIPAddress_S()->host) + " Packet IP:" + to_string(packet->address.host));
+//							log->warn("Peer address didn't match in incoming packet. Peer IP:" + to_string(getPeerIPAddress_S()->host) + " Packet IP:" + to_string(packet->address.host));
 //							break;
 //						}
 //#endif
@@ -290,7 +290,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						_truncatedPacketString = "";
 					}
 
-					if (s.find(BobNet::endline) == string::npos)
+					if (s.find(OKNet::endline) == string::npos)
 					{
 						threadLogWarn_S("Packet doesn't contain endline, waiting for next packet to append to.");
 						_truncatedPacketString += s;
@@ -298,11 +298,11 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 					else
 					{
 
-						if (String::startsWith(s, "ping"))
+						if (OKString::startsWith(s, "ping"))
 						{
 							if (getPeerIPAddress_S() != nullptr)
 							{
-								writeUnreliable_S("pong" + BobNet::endline);
+								writeUnreliable_S("pong" + OKNet::endline);
 							}
 							else
 							{
@@ -312,7 +312,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 							continue;
 						}
 
-						if (String::startsWith(s, "pong"))
+						if (OKString::startsWith(s, "pong"))
 						{
 							delete sp;
 							continue;
@@ -320,7 +320,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 
 						//if starts with ACK, compare id to front of queue, remove, SDL_FreePacket
 						//set lastSentPacketTime to currentTime if we remove a packet from hashmap
-						if (String::startsWith(s, "ACK:"))
+						if (OKString::startsWith(s, "ACK:"))
 						{
 							string ackPacketIDString = s.substr(s.find(":") + 1);
 							long long ackPacketID = -1;
@@ -399,7 +399,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						}
 
 						//send ACK
-						writeUnreliable_S("ACK:" + to_string(packetID) + BobNet::endline);
+						writeUnreliable_S("ACK:" + to_string(packetID) + OKNet::endline);
 
 						if (packetID < _lastPacketIDReceived)//don't process packets multiple times
 						{
@@ -434,13 +434,13 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						_lastPacketIDReceived = packetID;
 
 						//process the packet into messages
-						while (s.find(BobNet::endline) != string::npos)
+						while (s.find(OKNet::endline) != string::npos)
 						{
 
 							//strip off message
-							string message = s.substr(0, s.find(BobNet::endline));
+							string message = s.substr(0, s.find(OKNet::endline));
 							//skip endline
-							s = s.substr(s.find(BobNet::endline) + BobNet::endline.length());
+							s = s.substr(s.find(OKNet::endline) + OKNet::endline.length());
 
 							peerMessageQueuePush_S(message);
 
@@ -522,11 +522,11 @@ void UDPPeerConnection::_processQueuedMessagesIntoPackets()
 		//split messages more than 1400 bytes
 		if (s.length() > 1400)
 		{
-			s = s.substr(0, s.find(BobNet::endline));
+			s = s.substr(0, s.find(OKNet::endline));
 
 			while (s.length() > 1380)
 			{
-				string partial = "PARTIAL:" + s.substr(0, 1380) + BobNet::endline;
+				string partial = "PARTIAL:" + s.substr(0, 1380) + OKNet::endline;
 				s = s.substr(1380);
 
 				long long packetID = getPacketCounter_S();
@@ -535,7 +535,7 @@ void UDPPeerConnection::_processQueuedMessagesIntoPackets()
 				packetMessageQueuePush_S(partial);
 			}
 
-			string finalString = "FINAL:" + s + BobNet::endline;
+			string finalString = "FINAL:" + s + OKNet::endline;
 
 			long long packetID = getPacketCounter_S();
 			finalString = to_string(packetID) + ":" + finalString;
@@ -610,7 +610,7 @@ void UDPPeerConnection::_writeQueuedPackets()
 				threadLogDebug_S("SENT PEER: " + c);
 			}
 			else
-			threadLogDebug_S("SENT PEER: " + s.substr(0,s.find(BobNet::endline)));
+			threadLogDebug_S("SENT PEER: " + s.substr(0,s.find(OKNet::endline)));
 #endif
 
 			string packetIDString = s.substr(0, s.find(":"));
@@ -655,14 +655,14 @@ void UDPPeerConnection::_getAddressFromSTUNServer()
 			if (getPeerIPAddress_S() == nullptr)
 			{
 				//threadLogDebug_S("Sending STUN request");
-				BobNet::sendSTUNRequest(getServerConnection()->getUserID_S(), peerUserID, localUDPPort);
+				OKNet::sendSTUNRequest(getServerConnection()->getUserID_S(), peerUserID, localUDPPort);
 			}
 			else
 			{
 				if (getGotPeerConnectResponse_S() == false)
 				{
 
-					writeReliable_S(BobNet::Friend_Connect_Request + to_string(getServerConnection()->getUserID_S()) + BobNet::endline);
+					writeReliable_S(OKNet::Friend_Connect_Request + to_string(getServerConnection()->getUserID_S()) + OKNet::endline);
 					_connectTries++;
 					if (_connectTries > 30)
 					{
@@ -695,7 +695,7 @@ void UDPPeerConnection::_sendKeepAlivePing()
 		if (pingTicksPassed > 10000)
 		{
 			_lastSentPingTime = currentTime;
-			writeUnreliable_S("ping" + BobNet::endline);
+			writeUnreliable_S("ping" + OKNet::endline);
 		}
 	}
 
@@ -714,7 +714,7 @@ void UDPPeerConnection::_checkForTimeout()
 
 		if (getGotFriendData_S() == true)
 		{
-			Main::console->add("" + getFriendData_S().userName + " has gone offline.", 5000, BobColor::lightRed);//" escaped from reality and has descended into the inferior meat world. What a traitor."
+			Main::console->add("" + getFriendData_S().userName + " has gone offline.", 5000, OKColor::lightRed);//" escaped from reality and has descended into the inferior meat world. What a traitor."
 		}
 	}
 
@@ -734,7 +734,7 @@ void UDPPeerConnection::_getFriendData()
 			if (getGotFriendData_S() == false)
 			{
 				_lastSentFriendDataRequestTime = currentTime;
-				writeReliable_S(BobNet::Friend_Data_Request + BobNet::endline);
+				writeReliable_S(OKNet::Friend_Data_Request + OKNet::endline);
 			}
 			else
 			{
@@ -752,7 +752,7 @@ void UDPPeerConnection::setDisconnectedFromPeer_S(string reason)
 	setPeerIPAddress_S("", -1);
 
 	threadLogWarn_S(string("Disconnected from " + getFriendData_S().userName + ": " + reason));
-	Main::console->add("Disconnected from " + getFriendData_S().userName + ": " + reason, 5000, BobColor::red);
+	Main::console->add("Disconnected from " + getFriendData_S().userName + ": " + reason, 5000, OKColor::red);
 
 	SDLNet_UDP_Close(getSocket_S());
 
@@ -790,10 +790,10 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// shared_ptr<ChannelHan
 		string idmd5 = c.substr(0, c.find(":") + 1);//195,e43d6f5f2951a1f767d634346812ad73:
 		c = c.substr(c.find(":") + 1);
 
-		log.warn("FROM PEER: " + command + frame + playerid + idmd5);
+		log->warn("FROM PEER: " + command + frame + playerid + idmd5);
 	}
 	else
-	if(String::startsWith(s, "BOBSGAME:HOSTING:") || String::startsWith(s, "BOBSGAME:PLAYERCONFIRM:"))
+	if(OKString::startsWith(s, "BOBSGAME:HOSTING:") || OKString::startsWith(s, "BOBSGAME:PLAYERCONFIRM:"))
 	{
 
 		//BOBSGAME:HOSTING:...:xml
@@ -805,42 +805,42 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// shared_ptr<ChannelHan
 		string data = c.substr(0, c.find(":") + 1);//1.2078078643:
 		c = c.substr(c.find(":") + 1);
 
-		log.warn("FROM PEER: " + command + hosting + data);
+		log->warn("FROM PEER: " + command + hosting + data);
 	}
 	else
-	if (String::startsWith(s, "Friend_Location_Update") == false && String::startsWith(s, "ACK:") == false)
+	if (OKString::startsWith(s, "Friend_Location_Update") == false && OKString::startsWith(s, "ACK:") == false)
 	{
-		log.warn("FROM PEER: " + s);// +channel->getId() + " | " + s);
+		log->warn("FROM PEER: " + s);// +channel->getId() + " | " + s);
 	}
 #endif
 
 	//s = s.substr(s.find(":") + 1);
 
-	if (String::startsWith(s, BobNet::Friend_Connect_Request))
+	if (OKString::startsWith(s, OKNet::Friend_Connect_Request))
 	{
 		sendPeerConnectResponse();
 		return true;
 	}
-	if (String::startsWith(s, BobNet::Friend_Connect_Response))
+	if (OKString::startsWith(s, OKNet::Friend_Connect_Response))
 	{
 		incomingPeerConnectResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Friend_Data_Request))
+	if (OKString::startsWith(s, OKNet::Friend_Data_Request))
 	{
 		incomingFriendDataRequest(s);
 		return true;
 	}
-	if (String::startsWith(s, BobNet::Friend_Data_Response))
+	if (OKString::startsWith(s, OKNet::Friend_Data_Response))
 	{
 		incomingFriendDataResponse(s);
 		return true;
 	}
 
-	for (int i = 0; i < BobNet::engines.size(); i++)
+	for (int i = 0; i < OKNet::engines.size(); i++)
 	{
-		if (BobNet::engines.get(i)->udpPeerMessageReceived(this, s))return true;
+		if (OKNet::engines.get(i)->udpPeerMessageReceived(this, s))return true;
 	}
 
 	for (int i = 0; i < engineParts.size(); i++)
@@ -848,7 +848,7 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// shared_ptr<ChannelHan
 		if (engineParts.get(i)->udpPeerMessageReceived(this, s))return true;
 	}
 
-	log.error("Did not handle UDP packet:" + s);
+	log->error("Did not handle UDP packet:" + s);
 	return false;
 
 }
@@ -856,10 +856,10 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// shared_ptr<ChannelHan
 
 void UDPPeerConnection::writeUnreliable_S(string s)
 { //===============================================================================================
-	if (s.find(BobNet::endline) == string::npos)
+	if (s.find(OKNet::endline) == string::npos)
 	{
 		threadLogError_S("Packet doesn't end with endline");
-		s = s + BobNet::endline;
+		s = s + OKNet::endline;
 	}
 
 	shared_ptr<IPaddress> peerAddress = getPeerIPAddress_S();
@@ -891,15 +891,15 @@ bool UDPPeerConnection::writeReliable_S(string s)
 { //===============================================================================================
 
 
-   if (s.find(BobNet::endline) == string::npos)
+   if (s.find(OKNet::endline) == string::npos)
    {
       threadLogError_S("Packet doesn't end with endline");
-      s = s + BobNet::endline;
+      s = s + OKNet::endline;
    }
 
 //#ifdef _DEBUG
 //   //BOBSGAME:FRAME:1.2078078643:195,e43d6f5f2951a1f767d634346812ad73:
-//   if (String::startsWith(s, "BOBSGAME:FRAME:"))
+//   if (OKString::startsWith(s, "BOBSGAME:FRAME:"))
 //   {
 //		string c = s;
 //		string command = c.substr(0, c.find(":") + 1);//BOBSGAME:
@@ -914,7 +914,7 @@ bool UDPPeerConnection::writeReliable_S(string s)
 //		threadLogDebug_S("Queued sending message: " + command+frame+ playerid+idmd5);
 //   }
 //   else
-//      //if (String::startsWith(s,"Friend_Location_Update") == false && String::startsWith(s,"Friend_Connect_Request") == false)
+//      //if (OKString::startsWith(s,"Friend_Location_Update") == false && OKString::startsWith(s,"Friend_Connect_Request") == false)
 //      {
 //#ifdef _DEBUG
 //         threadLogDebug_S("Queued sending message: " + s.substr(0, s.length() - 2));
@@ -927,7 +927,7 @@ bool UDPPeerConnection::writeReliable_S(string s)
 
 //   if (SDLNet_UDP_Send(socket, -1, packet) == 0)
 //   {
-//	   log.warn("Could not send UDP packet");
+//	   log->warn("Could not send UDP packet");
 //	   return false;
 //   }
 //   lastSentPacketTime = System::currentHighResTimer();
@@ -942,7 +942,7 @@ bool UDPPeerConnection::writeReliable_S(string s)
 
 void UDPPeerConnection::sendPeerConnectResponse()
 {
-	writeReliable_S(BobNet::Friend_Connect_Response + to_string(getServerConnection()->getUserID_S()) +":"+ BobNet::endline);
+	writeReliable_S(OKNet::Friend_Connect_Response + to_string(getServerConnection()->getUserID_S()) +":"+ OKNet::endline);
 }
 
 void UDPPeerConnection::incomingPeerConnectResponse(string e)//shared_ptr<MessageEvent> e)
@@ -961,13 +961,13 @@ void UDPPeerConnection::incomingPeerConnectResponse(string e)//shared_ptr<Messag
 	}
 	catch (exception)
 	{
-		log.warn(friendUserIDString);
-		log.error("Could not parse replyFriendUserID in incomingPeerConnectResponse");
+		log->warn(friendUserIDString);
+		log->error("Could not parse replyFriendUserID in incomingPeerConnectResponse");
 	}
 
 	if (peerUserID != replyFriendUserID)
 	{
-		log.error("Friend userID did not match in Friend reply.");
+		log->error("Friend userID did not match in Friend reply.");
 
 		return;
 	}
@@ -994,7 +994,7 @@ void UDPPeerConnection::incomingFriendDataRequest(string e)//shared_ptr<MessageE
 
 	string s = myFriendData->encode(peerType);
 
-	writeReliable_S(BobNet::Friend_Data_Response + s +":"+ BobNet::endline);
+	writeReliable_S(OKNet::Friend_Data_Response + s +":"+ OKNet::endline);
 }
 
 void UDPPeerConnection::incomingFriendDataResponse(string e)//shared_ptr<MessageEvent> e)
@@ -1112,7 +1112,7 @@ void FriendData::decode(string s)
 	}
 	catch (exception ex)//NumberFormatException ex)
 	{
-		log.error("Could not parse friendType");
+		log->error("Could not parse friendType");
 
 	}
 	s = s.substr(s.find(",") + 1);
@@ -1161,7 +1161,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse accountType");
+				log->error("Could not parse accountType");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1179,7 +1179,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse accountCreatedTime");
+				log->error("Could not parse accountCreatedTime");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1197,7 +1197,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse timesLoggedIn");
+				log->error("Could not parse timesLoggedIn");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1215,7 +1215,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse totalTimePlayed");
+				log->error("Could not parse totalTimePlayed");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1288,7 +1288,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse lat");
+				log->error("Could not parse lat");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1306,7 +1306,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse lon");
+				log->error("Could not parse lon");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1324,7 +1324,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse miniGamesTimesPlayed");
+				log->error("Could not parse miniGamesTimesPlayed");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1342,7 +1342,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse miniGamesTimesBattled");
+				log->error("Could not parse miniGamesTimesBattled");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1360,7 +1360,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse miniGamesTimesChallenged");
+				log->error("Could not parse miniGamesTimesChallenged");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1378,7 +1378,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse miniGamesTimesChallenger");
+				log->error("Could not parse miniGamesTimesChallenger");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1396,7 +1396,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse miniGamesTimesWon");
+				log->error("Could not parse miniGamesTimesWon");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1414,7 +1414,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse miniGamesTimesLost");
+				log->error("Could not parse miniGamesTimesLost");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1432,7 +1432,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log.error("Could not parse miniGamesTimesTied");
+				log->error("Could not parse miniGamesTimesTied");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1575,6 +1575,6 @@ void FriendData::decode(string s)
 
 shared_ptr<TCPServerConnection> UDPPeerConnection::getServerConnection()
 {
-	return &BobNet::tcpServerConnection;
+	return &OKNet::tcpServerConnection;
 }
 

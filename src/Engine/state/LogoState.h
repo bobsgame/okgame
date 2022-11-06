@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -29,8 +29,8 @@ public:
 
 	int count = 0;
 
-	shared_ptr<BobTexture> logo = nullptr;
-	shared_ptr<BobTexture> gradient = nullptr;
+	shared_ptr<OKTexture> logo = nullptr;
+	shared_ptr<OKTexture> gradient = nullptr;
 
 	long long totalTicksPassed = 0;
 	long long ticksToShow = 2000;

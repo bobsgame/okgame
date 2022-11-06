@@ -117,12 +117,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("pushable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pushable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	pushable = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("nonWalkable:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	nonWalkable = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	nonWalkable = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("toAlpha:`") + 1);
@@ -137,12 +137,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("disableShadow:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	disableShadow = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	disableShadow = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("aboveTopLayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	aboveTopLayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	aboveTopLayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("layer:`") + 1);
@@ -157,22 +157,22 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("aboveWhenEqual:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	aboveWhenEqual = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	aboveWhenEqual = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("alwaysOnBottom:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	alwaysOnBottom = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	alwaysOnBottom = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("alwaysOnTop:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	alwaysOnTop = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	alwaysOnTop = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("animateThroughFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animateThroughFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	animateThroughFrames = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ticksBetweenFrames:`") + 1);
@@ -182,12 +182,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("randomUpToTicksBetweenFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomUpToTicksBetweenFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomUpToTicksBetweenFrames = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomFrames:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomFrames = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomFrames = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ticksBetweenAnimation:`") + 1);
@@ -197,7 +197,7 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("randomTimeBetweenAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomTimeBetweenAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomTimeBetweenAnimation = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("walkSpeed:`") + 1);
@@ -217,7 +217,7 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("onlyHereDuringEvent:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	onlyHereDuringEvent = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	onlyHereDuringEvent = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 //
 //	t = t.substr(t.find("mapID:`") + 1);
@@ -232,12 +232,12 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("animateThroughCurrentAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animateThroughCurrentAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	animateThroughCurrentAnimation = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("loopAnimation:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	loopAnimation = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	loopAnimation = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("voicePitch:`") + 1);
@@ -247,40 +247,40 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("animationDisabled:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	animationDisabled = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	animationDisabled = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("hitLayerDisabled:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	hitLayerDisabled = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	hitLayerDisabled = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ignoreHitPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	ignoreHitPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	ignoreHitPlayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("ignoreHitEntities:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	ignoreHitEntities = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	ignoreHitEntities = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("dontUsePathfinding:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	dontUsePathfinding = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	dontUsePathfinding = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("pullPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pullPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	pullPlayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("pushPlayer:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	pushPlayer = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	pushPlayer = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
-	while (String::startsWith(t,"behaviorList:`"))
+	while (OKString::startsWith(t,"behaviorList:`"))
 	{
 		t = t.substr(t.find("behaviorList:`") + 1);
 		t = t.substr(t.find("`") + 1);
@@ -288,7 +288,7 @@ string& EntityData::initFromString(string& t)
 		t = t.substr(t.find("`,") + 2);
 	}
 
-	while (String::startsWith(t,"connectionTYPEIDList:`"))
+	while (OKString::startsWith(t,"connectionTYPEIDList:`"))
 	{
 		t = t.substr(t.find("connectionTYPEIDList:`") + 1);
 		t = t.substr(t.find("`") + 1);
@@ -303,13 +303,13 @@ string& EntityData::initFromString(string& t)
 
 	t = t.substr(t.find("isNPC:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNPC = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isNPC = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 
 	t = t.substr(t.find("eventData:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t, "}") == false)
+	while (OKString::startsWith(t, "}") == false)
 	{
 		shared_ptr<EventData> data = make_shared<EventData>();
 		t = data->initFromString(t);

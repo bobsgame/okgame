@@ -16,14 +16,14 @@
 Logger StatusBar::log = Logger("StatusBar");
 
 
-shared_ptr<BobTexture> StatusBar::blackBackgroundTexture = nullptr;
-shared_ptr<BobTexture> StatusBar::blackForegroundTexture = nullptr;
-shared_ptr<BobTexture> StatusBar::whiteBackgroundTexture = nullptr;
-shared_ptr<BobTexture> StatusBar::whiteForegroundTexture = nullptr;
-shared_ptr<BobTexture> StatusBar::backgroundTexture = nullptr;
-shared_ptr<BobTexture> StatusBar::foregroundTexture = nullptr;
-shared_ptr<BobTexture> StatusBar::glowTexture = nullptr;
-shared_ptr<BobTexture> StatusBar::dividerTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::blackBackgroundTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::blackForegroundTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::whiteBackgroundTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::whiteForegroundTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::backgroundTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::foregroundTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::glowTexture = nullptr;
+shared_ptr<OKTexture> StatusBar::dividerTexture = nullptr;
 int StatusBar::sizeY = 26;
 float StatusBar::glossAlpha = 1.0f;
 bool StatusBar::useLightTheme = false;
@@ -93,9 +93,9 @@ void StatusBar::setLightTheme()
 		foregroundTexture = whiteForegroundTexture;
 
 
-		clockCaption->setColors(make_shared<BobColor>(200, 0, 0), BobColor::lightRed, nullptr);
-		dayCaption->setColors(BobColor::black, BobColor::lighterGray, nullptr);
-		moneyCaption->setColors(BobColor::green, BobColor::darkerGreen, nullptr);
+		clockCaption->setColors(make_shared<OKColor>(200, 0, 0), OKColor::lightRed, nullptr);
+		dayCaption->setColors(OKColor::black, OKColor::lighterGray, nullptr);
+		moneyCaption->setColors(OKColor::green, OKColor::darkerGreen, nullptr);
 	}
 }
 
@@ -108,9 +108,9 @@ void StatusBar::setDarkTheme()
 		foregroundTexture = blackForegroundTexture;
 
 
-		clockCaption->setColors(BobColor::red, BobColor::darkerRed, nullptr);
-		dayCaption->setColors(BobColor::white, BobColor::darkerGray, nullptr);
-		moneyCaption->setColors(BobColor::green, BobColor::darkerGreen, nullptr);
+		clockCaption->setColors(OKColor::red, OKColor::darkerRed, nullptr);
+		dayCaption->setColors(OKColor::white, OKColor::darkerGray, nullptr);
+		moneyCaption->setColors(OKColor::green, OKColor::darkerGreen, nullptr);
 	}
 }
 
@@ -166,7 +166,7 @@ void StatusBar::render(int layer)
 		return;
 	}
 
-	shared_ptr<BobTexture> texture = nullptr;
+	shared_ptr<OKTexture> texture = nullptr;
 	if (layer == 0)
 	{
 		texture = backgroundTexture;

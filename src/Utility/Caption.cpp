@@ -35,22 +35,22 @@ SetWidth is the width to truncate to a newline. It won't truncate words. setWidt
 
 */
 //=========================================================================================================================
-Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, shared_ptr<BobFont> font, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textAAColor, shared_ptr<BobColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, shared_ptr<OKFont> font, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textAAColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 	init(g, fixedPosition, screenX, screenY, ticks, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 }
 //=========================================================================================================================
-Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area)
+Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area)
 {//=========================================================================================================================
 
 	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
 }
 
 //=========================================================================================================================
-Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, shared_ptr<BobColor> textColor, RenderOrder layer)
+Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, shared_ptr<OKColor> textColor, RenderOrder layer)
 {//=========================================================================================================================
 
-	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, BobColor::clear, layer, 1, nullptr, nullptr, outline);
+	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, OKColor::clear, layer, 1, nullptr, nullptr, outline);
 }
 //=========================================================================================================================
 void Caption::setText(const string& text, bool force)
@@ -65,7 +65,7 @@ void Caption::setText(const string& text, bool force)
 	if (texture != nullptr)
 	{
 		texture->release();
-		delete texture;
+		//delete texture;
 		texture = nullptr;
 	}
 
@@ -77,7 +77,7 @@ void Caption::setText(const string& text, bool force)
 }
 
 //=========================================================================================================================
-shared_ptr<BobColor> Caption::getTextColor()
+shared_ptr<OKColor> Caption::getTextColor()
 {//=========================================================================================================================
 	return textColor;
 
@@ -86,7 +86,7 @@ shared_ptr<BobColor> Caption::getTextColor()
 
 
 //=========================================================================================================================
-void Caption::setTextColor(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, shared_ptr<BobColor> bg)
+void Caption::setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, shared_ptr<OKColor> bg)
 {//=========================================================================================================================
 
 
@@ -103,9 +103,9 @@ void Caption::setTextColor(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, sha
 	//color 1 = getText color
 	//color 2 = antialiasing color
 
-	shared_ptr<BobColor> tempFG = this->textColor;
-	shared_ptr<BobColor> tempBG = this->textBGColor;
-	shared_ptr<BobColor> tempAA = this->textAAColor;
+	shared_ptr<OKColor> tempFG = this->textColor;
+	shared_ptr<OKColor> tempBG = this->textBGColor;
+	shared_ptr<OKColor> tempAA = this->textAAColor;
 
 
 	if (fg != nullptr)
@@ -125,11 +125,11 @@ void Caption::setTextColor(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, sha
 	else
 	{
 
-		if (font->outlined == true) { tempAA = BobColor::black; }
+		if (font->outlined == true) { tempAA = OKColor::black; }
 		else
-		if (tempBG == BobColor::white)
+		if (tempBG == OKColor::white)
 		{
-			tempAA = make_shared<BobColor>(*fg);
+			tempAA = make_shared<OKColor>(*fg);
 			tempAA->lighter();
 			tempAA->lighter();
 			tempAA->lighter();
@@ -147,9 +147,9 @@ void Caption::setTextColor(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, sha
 		}
 		else
 		{
-			if (tempBG == BobColor::black) //||textBGColor==Color.CLEAR)
+			if (tempBG == OKColor::black) //||textBGColor==Color.CLEAR)
 			{
-				tempAA = make_shared<BobColor>(*fg);
+				tempAA = make_shared<OKColor>(*fg);
 				tempAA->darker();
 				tempAA->darker();
 				tempAA->darker();
@@ -167,9 +167,9 @@ void Caption::setTextColor(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, sha
 			}
 			else
 			{
-				if (tempBG == BobColor::clear)
+				if (tempBG == OKColor::clear)
 				{
-					tempAA = make_shared<BobColor>((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f)*255);
+					tempAA = make_shared<OKColor>((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f)*255);
 				}
 			}
 		}
@@ -199,7 +199,7 @@ void Caption::setTextColor(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, sha
 
 
 //=========================================================================================================================
-void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area, bool outline)
+void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area, bool outline)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -243,7 +243,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 		texture = nullptr;
 	}
 
-	if (textBGColor == nullptr)textBGColor = BobColor::clear;
+	if (textBGColor == nullptr)textBGColor = OKColor::clear;
 	setTextColor(textColor, textAAColor, textBGColor);
 
 
@@ -256,35 +256,35 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 	TTF_shared_ptr<Font> outlineFont = nullptr;
 
-	if (fontSize < 7)  { this->ttfFont = BobFont::ttf_6;  outlineFont = BobFont::ttf_outline_6;  this->fontSize = 6; }
-	if (fontSize == 7)  { this->ttfFont = BobFont::ttf_7;  outlineFont = BobFont::ttf_outline_7;  }
-	if (fontSize == 8)  { this->ttfFont = BobFont::ttf_8;  outlineFont = BobFont::ttf_outline_8;  }
-	if (fontSize == 9)  { this->ttfFont = BobFont::ttf_9;  outlineFont = BobFont::ttf_outline_9;  }
-	if (fontSize == 10) { this->ttfFont = BobFont::ttf_10; outlineFont = BobFont::ttf_outline_10; }
-	if (fontSize == 11) { this->ttfFont = BobFont::ttf_11; outlineFont = BobFont::ttf_outline_11; }
-	if (fontSize == 12) { this->ttfFont = BobFont::ttf_12; outlineFont = BobFont::ttf_outline_12; }
-	if (fontSize == 13) { this->ttfFont = BobFont::ttf_13; outlineFont = BobFont::ttf_outline_13; }
-	if (fontSize == 14) { this->ttfFont = BobFont::ttf_14; outlineFont = BobFont::ttf_outline_14; }
-	if (fontSize == 15) { this->ttfFont = BobFont::ttf_15; outlineFont = BobFont::ttf_outline_15; }
-	if (fontSize == 16) { this->ttfFont = BobFont::ttf_16; outlineFont = BobFont::ttf_outline_16; }
-	if (fontSize == 17) { this->ttfFont = BobFont::ttf_17; outlineFont = BobFont::ttf_outline_17; }
-	if (fontSize == 18) { this->ttfFont = BobFont::ttf_18; outlineFont = BobFont::ttf_outline_18; }
-	if (fontSize == 19) { this->ttfFont = BobFont::ttf_19; outlineFont = BobFont::ttf_outline_19; }
-	if (fontSize == 20) { this->ttfFont = BobFont::ttf_20; outlineFont = BobFont::ttf_outline_20; }
-	if (fontSize == 21) { this->ttfFont = BobFont::ttf_21; outlineFont = BobFont::ttf_outline_21; }
-	if (fontSize == 22) { this->ttfFont = BobFont::ttf_22; outlineFont = BobFont::ttf_outline_22; }
-	if (fontSize == 23) { this->ttfFont = BobFont::ttf_23; outlineFont = BobFont::ttf_outline_23; }
-	if (fontSize == 24) { this->ttfFont = BobFont::ttf_24; outlineFont = BobFont::ttf_outline_24; }
-	if (fontSize == 25) { this->ttfFont = BobFont::ttf_25; outlineFont = BobFont::ttf_outline_25; }
-	if (fontSize == 26) { this->ttfFont = BobFont::ttf_26; outlineFont = BobFont::ttf_outline_26; }
-	if (fontSize == 27) { this->ttfFont = BobFont::ttf_27; outlineFont = BobFont::ttf_outline_27; }
-	if (fontSize == 28) { this->ttfFont = BobFont::ttf_28; outlineFont = BobFont::ttf_outline_28; }
-	if (fontSize == 29) { this->ttfFont = BobFont::ttf_29; outlineFont = BobFont::ttf_outline_29; }
-	if (fontSize == 30) { this->ttfFont = BobFont::ttf_30; outlineFont = BobFont::ttf_outline_30; }
-	if (fontSize == 31) { this->ttfFont = BobFont::ttf_31; outlineFont = BobFont::ttf_outline_31; }
-	if (fontSize >= 32 && fontSize < 48) { this->ttfFont = BobFont::ttf_32; outlineFont = BobFont::ttf_outline_32; this->fontSize = 32; }
-	if (fontSize >= 48 && fontSize < 64) { this->ttfFont = BobFont::ttf_48; outlineFont = BobFont::ttf_outline_48; this->fontSize = 48; }
-	if (fontSize >= 64) { this->ttfFont = BobFont::ttf_64; outlineFont = BobFont::ttf_outline_64; this->fontSize = 64; }
+	if (fontSize < 7)  { this->ttfFont = OKFont::ttf_6;  outlineFont = OKFont::ttf_outline_6;  this->fontSize = 6; }
+	if (fontSize == 7)  { this->ttfFont = OKFont::ttf_7;  outlineFont = OKFont::ttf_outline_7;  }
+	if (fontSize == 8)  { this->ttfFont = OKFont::ttf_8;  outlineFont = OKFont::ttf_outline_8;  }
+	if (fontSize == 9)  { this->ttfFont = OKFont::ttf_9;  outlineFont = OKFont::ttf_outline_9;  }
+	if (fontSize == 10) { this->ttfFont = OKFont::ttf_10; outlineFont = OKFont::ttf_outline_10; }
+	if (fontSize == 11) { this->ttfFont = OKFont::ttf_11; outlineFont = OKFont::ttf_outline_11; }
+	if (fontSize == 12) { this->ttfFont = OKFont::ttf_12; outlineFont = OKFont::ttf_outline_12; }
+	if (fontSize == 13) { this->ttfFont = OKFont::ttf_13; outlineFont = OKFont::ttf_outline_13; }
+	if (fontSize == 14) { this->ttfFont = OKFont::ttf_14; outlineFont = OKFont::ttf_outline_14; }
+	if (fontSize == 15) { this->ttfFont = OKFont::ttf_15; outlineFont = OKFont::ttf_outline_15; }
+	if (fontSize == 16) { this->ttfFont = OKFont::ttf_16; outlineFont = OKFont::ttf_outline_16; }
+	if (fontSize == 17) { this->ttfFont = OKFont::ttf_17; outlineFont = OKFont::ttf_outline_17; }
+	if (fontSize == 18) { this->ttfFont = OKFont::ttf_18; outlineFont = OKFont::ttf_outline_18; }
+	if (fontSize == 19) { this->ttfFont = OKFont::ttf_19; outlineFont = OKFont::ttf_outline_19; }
+	if (fontSize == 20) { this->ttfFont = OKFont::ttf_20; outlineFont = OKFont::ttf_outline_20; }
+	if (fontSize == 21) { this->ttfFont = OKFont::ttf_21; outlineFont = OKFont::ttf_outline_21; }
+	if (fontSize == 22) { this->ttfFont = OKFont::ttf_22; outlineFont = OKFont::ttf_outline_22; }
+	if (fontSize == 23) { this->ttfFont = OKFont::ttf_23; outlineFont = OKFont::ttf_outline_23; }
+	if (fontSize == 24) { this->ttfFont = OKFont::ttf_24; outlineFont = OKFont::ttf_outline_24; }
+	if (fontSize == 25) { this->ttfFont = OKFont::ttf_25; outlineFont = OKFont::ttf_outline_25; }
+	if (fontSize == 26) { this->ttfFont = OKFont::ttf_26; outlineFont = OKFont::ttf_outline_26; }
+	if (fontSize == 27) { this->ttfFont = OKFont::ttf_27; outlineFont = OKFont::ttf_outline_27; }
+	if (fontSize == 28) { this->ttfFont = OKFont::ttf_28; outlineFont = OKFont::ttf_outline_28; }
+	if (fontSize == 29) { this->ttfFont = OKFont::ttf_29; outlineFont = OKFont::ttf_outline_29; }
+	if (fontSize == 30) { this->ttfFont = OKFont::ttf_30; outlineFont = OKFont::ttf_outline_30; }
+	if (fontSize == 31) { this->ttfFont = OKFont::ttf_31; outlineFont = OKFont::ttf_outline_31; }
+	if (fontSize >= 32 && fontSize < 48) { this->ttfFont = OKFont::ttf_32; outlineFont = OKFont::ttf_outline_32; this->fontSize = 32; }
+	if (fontSize >= 48 && fontSize < 64) { this->ttfFont = OKFont::ttf_48; outlineFont = OKFont::ttf_outline_48; this->fontSize = 48; }
+	if (fontSize >= 64) { this->ttfFont = OKFont::ttf_64; outlineFont = OKFont::ttf_outline_64; this->fontSize = 64; }
 
 	if (outline)this->outline = true;
 	if (outline)
@@ -295,10 +295,10 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 		
 		SDL_Color textSDLColor = { (Uint8)textColor->ri() ,(Uint8)textColor->gi(),(Uint8)textColor->bi(),(Uint8)textColor->ai() };
 
-		BobColor outlineBobColor = BobColor(*textColor);
-		outlineBobColor.darker();
-		outlineBobColor.darker();
-		SDL_Color outlineColor = { (Uint8)outlineBobColor.ri() ,(Uint8)outlineBobColor.gi(),(Uint8)outlineBobColor.bi(),(Uint8)outlineBobColor.ai() };
+		OKColor outlineOKColor = OKColor(*textColor);
+		outlineOKColor.darker();
+		outlineOKColor.darker();
+		SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
 		surface = TTF_RenderText_Blended(outlineFont, this->text.c_str(), outlineColor);
 		shared_ptr<SDL_Surface >fg_surface = TTF_RenderText_Blended(ttfFont, this->text.c_str(), textSDLColor);
 		SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
@@ -314,7 +314,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 		if (surface == NULL || surface == nullptr)
 		{
-			log.error("surface is null");
+			log->error("surface is null");
 		}
 
 
@@ -341,7 +341,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 		SDL_Color bgSDLColor = { (Uint8)textBGColor->ri() ,(Uint8)textBGColor->gi(),(Uint8)textBGColor->bi(),(Uint8)textBGColor->ai() };
 
 		surface = nullptr;
-		if (textBGColor != BobColor::clear)surface = TTF_RenderText_Shaded(ttfFont, this->text.c_str(), textSDLColor, bgSDLColor);
+		if (textBGColor != OKColor::clear)surface = TTF_RenderText_Shaded(ttfFont, this->text.c_str(), textSDLColor, bgSDLColor);
 		else surface = TTF_RenderText_Blended(ttfFont, this->text.c_str(), textSDLColor);// , bgSDLColor);
 
 		this->width = surface->w;
@@ -349,7 +349,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 		if (surface == NULL || surface == nullptr)
 		{
-			log.error("surface is null");
+			log->error("surface is null");
 		}
 
 	}
@@ -369,7 +369,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 
 //=========================================================================================================================
-void Caption::init(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, shared_ptr<BobFont> font, shared_ptr<BobColor> textColor, shared_ptr<BobColor> textAAColor, shared_ptr<BobColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+void Caption::init(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, shared_ptr<OKFont> font, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textAAColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -575,7 +575,7 @@ void Caption::increaseMaxWidthToLongestWord()
 	while (position < textCharacterLength)
 	{
 		//skip over newlines
-		if (BobFont::isCurrentPositionANewline(text, position) == true)
+		if (OKFont::isCurrentPositionANewline(text, position) == true)
 		{
 			//skip over <NEWLINE> and <NEXTLINE> and <.>
 			if (text[position] == '<')
@@ -602,7 +602,7 @@ void Caption::increaseMaxWidthToLongestWord()
 			continue;
 		}
 
-		int nextWordLength = BobFont::getNextWordLength(text, position, font);
+		int nextWordLength = OKFont::getNextWordLength(text, position, font);
 
 		if (text[position] == ' ')
 		{
@@ -630,7 +630,7 @@ int Caption::skipNextWord(int position)
 { //=========================================================================================================================
 	int nextWordPosition = position;
 
-	while (nextWordPosition < textCharacterLength && (text[nextWordPosition] != ' ' || nextWordPosition == position) && BobFont::isCurrentPositionANewline(text, nextWordPosition) == false) //if it's the start of the string or it's not a space
+	while (nextWordPosition < textCharacterLength && (text[nextWordPosition] != ' ' || nextWordPosition == position) && OKFont::isCurrentPositionANewline(text, nextWordPosition) == false) //if it's the start of the string or it's not a space
 	{
 		//we should be starting on a space or the beginning of the test. include the starting space, up to the next space
 		//skip over tags
@@ -660,7 +660,7 @@ int Caption::getCurrentLineLength(int position)
 		//-----------------------------
 		//skip over newlines
 		//-----------------------------
-		if (BobFont::isCurrentPositionANewline(text, position) == true)
+		if (OKFont::isCurrentPositionANewline(text, position) == true)
 		{
 			//skip over <NEWLINE> and <NEXTLINE> and <.>
 			if (text[position] == '<')
@@ -689,7 +689,7 @@ int Caption::getCurrentLineLength(int position)
 			continue;
 		}
 
-		int nextWordLength = BobFont::getNextWordLength(text, position, font);
+		int nextWordLength = OKFont::getNextWordLength(text, position, font);
 
 		//-----------------------------
 		//if the next word will fit within the set width, add it
@@ -733,7 +733,7 @@ void Caption::calculateTextureWidthAndHeightByParsingEachLine()
 		while (position < textCharacterLength)
 		{
 			//skip over newlines
-			if (BobFont::isCurrentPositionANewline(text, position) == true)
+			if (OKFont::isCurrentPositionANewline(text, position) == true)
 			{
 				//skip over <NEWLINE> and <NEXTLINE> and <.>
 				if (text[position] == '<')
@@ -761,7 +761,7 @@ void Caption::calculateTextureWidthAndHeightByParsingEachLine()
 				continue;
 			}
 
-			int nextWordLength = BobFont::getNextWordLength(text, position, font);
+			int nextWordLength = OKFont::getNextWordLength(text, position, font);
 
 			//-----------------------------
 			//if the next word will fit within the set width, add it
@@ -806,7 +806,7 @@ void Caption::calculateTextureWidthAndHeightByParsingEachLine()
 	if (font != nullptr)maxCharHeight = font->maxCharHeight;
 	else
 	{
-		log.error("calculateTextureWidthAndHeightByParsingEachLine font is null!");
+		log->error("calculateTextureWidthAndHeightByParsingEachLine font is null!");
 	}
 
 	width = longestLineWidth;
@@ -863,7 +863,7 @@ void Caption::drawText()
 		//check each word length and start a new line if it is too long to fit
 		if (position == 0 || text[position] == ' ') //if we're on a space
 		{
-			int nextWordLength = BobFont::getNextWordLength(text, position, font);
+			int nextWordLength = OKFont::getNextWordLength(text, position, font);
 
 			if (xInLine + nextWordLength > maxWidth) //if the next word won't fit in the remaining space
 			{
@@ -879,7 +879,7 @@ void Caption::drawText()
 			}
 		}
 
-		if (BobFont::isCurrentPositionANewline(text, position) == true)
+		if (OKFont::isCurrentPositionANewline(text, position) == true)
 		{
 			//skip over tags here
 			if (text[position] == '<')
@@ -919,7 +919,7 @@ void Caption::drawText()
 		}
 
 
-		int i = BobFont::getFontIndexForChar(text[position]);
+		int i = OKFont::getFontIndexForChar(text[position]);
 		drawLetter(i);
 		position++;
 	}
@@ -930,149 +930,149 @@ void Caption::parseOptions(const string& optionBuffer)
 
 	if (optionBuffer.compare("BLACK") == 0)
 	{
-		textBGColor = BobColor::white;
-		textColor = BobColor::black;
-		textAAColor = BobColor::lightGray;
+		textBGColor = OKColor::white;
+		textColor = OKColor::black;
+		textAAColor = OKColor::lightGray;
 	}
 	else
 	{
 		if (optionBuffer.compare("WHITE") == 0)
 		{
-			textBGColor = BobColor::black;
-			textColor = BobColor::white;
-			textAAColor = BobColor::gray;
+			textBGColor = OKColor::black;
+			textColor = OKColor::white;
+			textAAColor = OKColor::gray;
 		}
 		else
 		{
 			if (optionBuffer.compare("GRAY") == 0)
 			{
-				textColor = BobColor::gray;
-				if (textBGColor == BobColor::black)
+				textColor = OKColor::gray;
+				if (textBGColor == OKColor::black)
 				{
-					textAAColor = BobColor::darkGray;
+					textAAColor = OKColor::darkGray;
 				}
-				else if (textBGColor == BobColor::white)
+				else if (textBGColor == OKColor::white)
 				{
-					textAAColor = BobColor::lightGray;
+					textAAColor = OKColor::lightGray;
 				}
 			}
 			else
 			{
 				if (optionBuffer.compare("RED") == 0)
 				{
-					textColor = BobColor::red;
-					if (textBGColor == BobColor::black)
+					textColor = OKColor::red;
+					if (textBGColor == OKColor::black)
 					{
-						textAAColor = BobColor::darkRed;
+						textAAColor = OKColor::darkRed;
 					}
-					else if (textBGColor == BobColor::white)
+					else if (textBGColor == OKColor::white)
 					{
-						textAAColor = BobColor::lightRed;
+						textAAColor = OKColor::lightRed;
 					}
 				}
 				else
 				{
 					if (optionBuffer.compare("ORANGE") == 0)
 					{
-						textColor = BobColor::orange;
-						if (textBGColor == BobColor::black)
+						textColor = OKColor::orange;
+						if (textBGColor == OKColor::black)
 						{
-							textAAColor = BobColor::darkOrange;
+							textAAColor = OKColor::darkOrange;
 						}
-						else if (textBGColor == BobColor::white)
+						else if (textBGColor == OKColor::white)
 						{
-							textAAColor = BobColor::lightOrange;
+							textAAColor = OKColor::lightOrange;
 						}
 					}
 					else
 					{
 						if (optionBuffer.compare("YELLOW") == 0)
 						{
-							textColor = BobColor::yellow;
-							if (textBGColor == BobColor::black)
+							textColor = OKColor::yellow;
+							if (textBGColor == OKColor::black)
 							{
-								textAAColor = BobColor::darkYellow;
+								textAAColor = OKColor::darkYellow;
 							}
-							else if (textBGColor == BobColor::white)
+							else if (textBGColor == OKColor::white)
 							{
-								textAAColor = BobColor::lightYellow;
+								textAAColor = OKColor::lightYellow;
 							}
 						}
 						else
 						{
 							if (optionBuffer.compare("GREEN") == 0)
 							{
-								textColor = BobColor::green;
-								if (textBGColor == BobColor::black)
+								textColor = OKColor::green;
+								if (textBGColor == OKColor::black)
 								{
-									textAAColor = BobColor::darkGreen;
+									textAAColor = OKColor::darkGreen;
 								}
-								else if (textBGColor == BobColor::white)
+								else if (textBGColor == OKColor::white)
 								{
-									textAAColor = BobColor::lightGreen;
+									textAAColor = OKColor::lightGreen;
 								}
 							}
 							else
 							{
 								if (optionBuffer.compare("BLUE") == 0)
 								{
-									textColor = BobColor::blue;
-									if (textBGColor == BobColor::black)
+									textColor = OKColor::blue;
+									if (textBGColor == OKColor::black)
 									{
-										textAAColor = BobColor::darkBlue;
+										textAAColor = OKColor::darkBlue;
 									}
-									else if (textBGColor == BobColor::white)
+									else if (textBGColor == OKColor::white)
 									{
-										textAAColor = BobColor::lightBlue;
+										textAAColor = OKColor::lightBlue;
 									}
 								}
 								else
 								{
 									if (optionBuffer.compare("PURPLE") == 0)
 									{
-										textColor = BobColor::purple;
-										if (textBGColor == BobColor::black)
+										textColor = OKColor::purple;
+										if (textBGColor == OKColor::black)
 										{
-											textAAColor = BobColor::darkPurple;
+											textAAColor = OKColor::darkPurple;
 										}
-										else if (textBGColor == BobColor::white)
+										else if (textBGColor == OKColor::white)
 										{
-											textAAColor = BobColor::lightPurple;
+											textAAColor = OKColor::lightPurple;
 										}
 									}
 									else
 									{
 										if (optionBuffer.compare("PINK") == 0)
 										{
-											textColor = BobColor::pink;
-											if (textBGColor == BobColor::black)
+											textColor = OKColor::pink;
+											if (textBGColor == OKColor::black)
 											{
-												textAAColor = BobColor::darkPink;
+												textAAColor = OKColor::darkPink;
 											}
-											else if (textBGColor == BobColor::white)
+											else if (textBGColor == OKColor::white)
 											{
-												textAAColor = BobColor::lightPink;
+												textAAColor = OKColor::lightPink;
 											}
 										}
 										else
 										{
 											if (optionBuffer.compare("BGBLACK") == 0)
 											{
-												textBGColor = BobColor::black;
+												textBGColor = OKColor::black;
 												//TODO: if(textColor==COLOR)textAAColor=DARKCOLOR;
 											}
 											else
 											{
 												if (optionBuffer.compare("BGWHITE") == 0)
 												{
-													textBGColor = BobColor::white;
+													textBGColor = OKColor::white;
 													//if(textColor==COLOR)textAAColor=LIGHTCOLOR;
 												}
 												else
 												{
 													if (optionBuffer.compare("BGCLEAR") == 0)
 													{
-														textBGColor = BobColor::clear;
+														textBGColor = OKColor::clear;
 														//if(textColor==COLOR)textAAColor=LIGHTCOLOR;
 													}
 													else
@@ -1107,17 +1107,17 @@ int Caption::getLetterPixelColor(int letterIndex, int y, int xInLetter, bool bla
 	if (font != nullptr)blockHeight = font->blockHeight;
 	if (font != nullptr)blockWidth = font->blockWidth;
 
-	int index = BobFont::getFontPixelValueAtIndex((letterIndex * blockHeight * blockWidth) + (y * blockWidth) + xInLetter, font);
+	int index = OKFont::getFontPixelValueAtIndex((letterIndex * blockHeight * blockWidth) + (y * blockWidth) + xInLetter, font);
 
 	return index;
 }
 
-void Caption::setPixel(int index, shared_ptr<BobColor> c)
+void Caption::setPixel(int index, shared_ptr<OKColor> c)
 { //=========================================================================================================================
 
 	if (c == nullptr)
 	{
-		log.error("setPixel Color c was null, should never happen!");
+		log->error("setPixel Color c was null, should never happen!");
 		return;
 	}
 
@@ -1268,25 +1268,25 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 			index = getLetterPixelColor(letterIndex, y - 1, xInLetter, blank);
 		}
 
-		shared_ptr<BobColor> c = nullptr;
+		shared_ptr<OKColor> c = nullptr;
 
 		if (index == 0)
 		{
-			c = make_shared<BobColor>(*textBGColor);
+			c = make_shared<OKColor>(*textBGColor);
 		}
 		else if (index == 1)
 		{
-			c = make_shared<BobColor>(*textColor);
+			c = make_shared<OKColor>(*textColor);
 		}
 		else if (index == 2)
 		{
-			c = make_shared<BobColor>(*textAAColor);
+			c = make_shared<OKColor>(*textAAColor);
 		}
 		else if (index > 2) //additional aa pixels, use the color value to set the opacity
 		{
 			//get the gray color from the getText palette
-			int byte1 = (int)(BobFont::font_Palette_ByteArray->data()[index * 2 + 0] & 255);
-			//int byte2 = (int)(BobFont::font_Palette_ByteArray[index * 2 + 1] & 255);
+			int byte1 = (int)(OKFont::font_Palette_ByteArray->data()[index * 2 + 0] & 255);
+			//int byte2 = (int)(OKFont::font_Palette_ByteArray[index * 2 + 1] & 255);
 			//int abgr1555 = (byte2 << 8) + byte1;
 			int r = 255 - (int)((((byte1 & 31)) / 32.0f) * 255.0f);
 			//int r = 255-(int)((((byte1&0b00011111))/32.0f)*255.0f);
@@ -1302,7 +1302,7 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 			a *= textAAColor->ai();
 
 			//shared_ptr<Color> tc = textColor;
-			c = make_shared<BobColor>(textColor->ri(), textColor->gi(), textColor->bi(), a);
+			c = make_shared<OKColor>(textColor->ri(), textColor->gi(), textColor->bi(), a);
 		}
 
 
@@ -1316,7 +1316,7 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 				u8 a = c->ai();
 
 				if (c != nullptr)delete c;
-				c = make_shared<BobColor>(r, g, b, a);
+				c = make_shared<OKColor>(r, g, b, a);
 			}
 		}
 
@@ -1339,7 +1339,7 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 void Caption::drawLetter(int letterIndex)
 { //=========================================================================================================================
 
-	int letterWidth = BobFont::getCharWidth(letterIndex, font);
+	int letterWidth = OKFont::getCharWidth(letterIndex, font);
 
 	int xInLetter = 0;
 	for (xInLetter = 0; xInLetter < letterWidth; xInLetter++)

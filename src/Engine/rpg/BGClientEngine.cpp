@@ -20,7 +20,7 @@ bool BGClientEngine::debugMode = true;
 BGClientEngine::BGClientEngine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log.info("BGClientEngine()");
+	log->info("BGClientEngine()");
 #endif
 }
 
@@ -28,7 +28,7 @@ BGClientEngine::~BGClientEngine()
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("~BGClientEngine()");
+	log->info("~BGClientEngine()");
 #endif
 
 
@@ -43,7 +43,7 @@ void BGClientEngine::init()
 
 
 #ifdef _DEBUG
-	log.info("BGClientEngine::init()");
+	log->info("BGClientEngine::init()");
 #endif
 	
 
@@ -82,7 +82,7 @@ void BGClientEngine::init()
 	nDMenu->init();
 	
 
-	shared_ptr<BobsGame> bobsgame = make_shared<BobsGame>(nD);
+	shared_ptr<OKGame> bobsgame = make_shared<OKGame>(nD);
 	bobsgame->init();
 	
 
@@ -95,17 +95,17 @@ void BGClientEngine::init()
 	
 
 
-	nDMenu->addGame(ping, "Ping", BobColor::blue);
-	nDMenu->addGame(ramio,"Ramio",BobColor::red);
-	nDMenu->addGame(bobsgame,"\"bob's game\"",BobColor::green);
+	nDMenu->addGame(ping, "Ping", OKColor::blue);
+	nDMenu->addGame(ramio,"Ramio",OKColor::red);
+	nDMenu->addGame(bobsgame,"\"bob's game\"",OKColor::green);
 
 	nD->setGame(nDMenu);
 
 
 	friendManager->init();
 
-	//mapManager->changeMap("ALPHABobsApartment","atDesk");
-	//mapManager->changeMap("ALPHABobElevator","center");
+	//mapManager->changeMap("ALPHAOKApartment","atDesk");
+	//mapManager->changeMap("ALPHAOKElevator","center");
 	//mapManager->changeMap("TOWNYUUDownstairs",30,18);
 	//mapManager.changeMap("TOWNVideoRentAdultRoom",10,10);
 	//mapManager.changeMap("CITYTheCafe",10,10);
@@ -565,7 +565,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)
 	{
-		log.error("Could not load PreloadSkillData");
+		log->error("Could not load PreloadSkillData");
 	}
 	if (b64List->size() > 0)
 	{
@@ -582,7 +582,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log.debug("Preload Skill id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Skill id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -609,7 +609,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->dialogueList.add(m);
 				if (debug)
 				{
-					log.debug("Preload Dialogue id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Dialogue id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -636,7 +636,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->flagList.add(m);
 				if (debug)
 				{
-					log.debug("Preload Flag id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Flag id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -663,7 +663,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->gameStringList.add(m);
 				if (debug)
 				{
-					log.debug("Preload GameString id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload GameString id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -690,7 +690,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->eventList.add(m);
 				if (debug)
 				{
-					log.debug("Preload Event id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Event id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -724,14 +724,14 @@ void BGClientEngine::loadPreCachedObjectData()
 				}
 				else
 				{
-					log.error("Sprite already exists:" + data->getName());
+					log->error("Sprite already exists:" + data->getName());
 				}
 
 				//System.out.println(spriteData.name);
 
 				if (debug)
 				{
-					log.debug("Preload Sprite id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Sprite id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -775,7 +775,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log.debug("Preload Sound id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Sound id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -815,7 +815,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log.debug("Preload Music id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Music id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -849,12 +849,12 @@ void BGClientEngine::loadPreCachedObjectData()
 				}
 				else
 				{
-					log.error("Map already exists:" + data->getName());
+					log->error("Map already exists:" + data->getName());
 				}
 
 				if (debug)
 				{
-					log.debug("Preload Map id:" + to_string(data->getID()) + " name:" + data->getName());
+					log->debug("Preload Map id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -1031,7 +1031,7 @@ void BGClientEngine::initializeGameFromSave_S()
 		}
 	}
 
-	//mapManager.changeMap("ALPHABobsApartment",18,15);//g.lastKnownRoom, g.lastKnownX/8, g.lastKnownY/8);
+	//mapManager.changeMap("ALPHAOKApartment",18,15);//g.lastKnownRoom, g.lastKnownX/8, g.lastKnownY/8);
 	//mapManager.changeMap(g.lastKnownRoom, g.lastKnownX/8, g.lastKnownY/8);
 
 
@@ -1049,7 +1049,7 @@ void BGClientEngine::setPlayerAppearanceFromGameSave_S()
 	player->setCharacterNameAndCaption(getNameColor(g.accountRank), g.characterName, getAccountRankColor(g.accountRank), getAccountRankString(g.accountRank));
 }
 
-shared_ptr<BobColor> BGClientEngine::getNameColor(int accountType)
+shared_ptr<OKColor> BGClientEngine::getNameColor(int accountType)
 { //=========================================================================================================================
 	return getAccountRankColor(accountType);
 }
@@ -1122,68 +1122,68 @@ string BGClientEngine::getAccountRankString(int accountRank)
 	return accountRankString;
 }
 
-shared_ptr<BobColor> BGClientEngine::getAccountRankColor(int accountRank)
+shared_ptr<OKColor> BGClientEngine::getAccountRankColor(int accountRank)
 { //=========================================================================================================================
-	shared_ptr<BobColor> accountRankColor = BobColor::white;
+	shared_ptr<OKColor> accountRankColor = OKColor::white;
 	if (accountRank == 0)
 	{
-		accountRankColor = BobColor::white; //"Free";
+		accountRankColor = OKColor::white; //"Free";
 	}
 	if (accountRank == 1)
 	{
-		accountRankColor = BobColor::purple; //"Premium";
+		accountRankColor = OKColor::purple; //"Premium";
 	}
 	if (accountRank == 2)
 	{
-		accountRankColor = BobColor::blue; //"nD Dev";
+		accountRankColor = OKColor::blue; //"nD Dev";
 	}
 	if (accountRank == 3)
 	{
-		accountRankColor = BobColor::red; //"Mod";
+		accountRankColor = OKColor::red; //"Mod";
 	}
 	if (accountRank == 4)
 	{
-		accountRankColor = BobColor::red; //"Admin";
+		accountRankColor = OKColor::red; //"Admin";
 	}
 	if (accountRank == 5)
 	{
-		accountRankColor = BobColor::red; //"Champion";
+		accountRankColor = OKColor::red; //"Champion";
 	}
 	if (accountRank == 6)
 	{
-		accountRankColor = BobColor::red; //"Legend";
+		accountRankColor = OKColor::red; //"Legend";
 	}
 	if (accountRank == 7)
 	{
-		accountRankColor = BobColor::red; //"Saint";
+		accountRankColor = OKColor::red; //"Saint";
 	}
 	if (accountRank == 8)
 	{
-		accountRankColor = BobColor::red; //"Prophet";
+		accountRankColor = OKColor::red; //"Prophet";
 	}
 	if (accountRank == 9)
 	{
-		accountRankColor = BobColor::red; //"Genius";
+		accountRankColor = OKColor::red; //"Genius";
 	}
 	if (accountRank == 10)
 	{
-		accountRankColor = BobColor::red; //"Uberman";
+		accountRankColor = OKColor::red; //"Uberman";
 	}
 	if (accountRank == 11)
 	{
-		accountRankColor = BobColor::red; //"Angel";
+		accountRankColor = OKColor::red; //"Angel";
 	}
 	if (accountRank == 12)
 	{
-		accountRankColor = BobColor::red; //"Christ";
+		accountRankColor = OKColor::red; //"Christ";
 	}
 	if (accountRank == 13)
 	{
-		accountRankColor = BobColor::red; //"God";
+		accountRankColor = OKColor::red; //"God";
 	}
 	if (accountRank == 14)
 	{
-		accountRankColor = BobColor::green; //"\"bob\"";
+		accountRankColor = OKColor::green; //"\"bob\"";
 	}
 
 	return accountRankColor;
@@ -1311,7 +1311,7 @@ bool BGClientEngine::serverMessageReceived(string e)// shared_ptr<ChannelHandler
 		return true;
 	}
 	else
-	if (String::startsWith(e, BobNet::Load_Event_Response))
+	if (OKString::startsWith(e, OKNet::Load_Event_Response))
 	{
 		incomingLoadEventResponse(e);
 		return true;
@@ -1321,7 +1321,7 @@ bool BGClientEngine::serverMessageReceived(string e)// shared_ptr<ChannelHandler
 }
 void BGClientEngine::sendProjectLoadEventRequest()
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Load_Event_Request + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Load_Event_Request + OKNet::endline);
 }
 
 void BGClientEngine::incomingLoadEventResponse(string s)
@@ -1337,7 +1337,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Load Event could not be decompressed.");
+		log->error("Load Event could not be decompressed.");
 	}
 	else
 	{
@@ -1348,7 +1348,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 
 		if (data->getID() == -1)
 		{
-			log.error("Load eventID is -1");
+			log->error("Load eventID is -1");
 		}
 	}
 }

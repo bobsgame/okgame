@@ -5,25 +5,25 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "GameLogic.h"
 #include "src/Utility/Color.h"
 
 //=========================================================================================================================
-class PuzzlePlayer
+class PuzzlePlayer : public std::enable_shared_from_this<PuzzlePlayer>
 {//=========================================================================================================================
 public:
 	//=========================================================================================================================
 	PuzzlePlayer(shared_ptr<GameLogic >g)
 	{//=========================================================================================================================
 		this->gameLogic = g;
-		if (g != nullptr)g->player = this;
+		if (g != nullptr)g->player = shared_from_this();
 	}
 	//=========================================================================================================================
 	~PuzzlePlayer()
 	{//=========================================================================================================================
-		if (gameLogic != nullptr)delete gameLogic;
-		if (menu != nullptr)delete menu;
+		//if (gameLogic != nullptr)delete gameLogic;
+		//if (menu != nullptr)delete menu;
 		if (nameCaption != nullptr)
 		{
 			nameCaption->setToBeDeletedImmediately();
@@ -55,7 +55,7 @@ public:
 
 	shared_ptr<GameLogic> gameLogic = nullptr;
 	bool confirmed = false;
-	shared_ptr<BobMenu >menu = nullptr;
+	shared_ptr<OKMenu >menu = nullptr;
 	bool selectGameSequenceOrSingleGameTypeMiniMenuShowing = true;
 	bool selectGameSequenceMiniMenuShowing = false;
 	bool gameSequenceOptionsMiniMenuShowing = false;
@@ -87,7 +87,7 @@ public:
 	bool useKeyboard = false;
 	shared_ptr<GameController >gameController = nullptr;
 
-	//shared_ptr<BobsGameNetwork >network = nullptr;
+	//shared_ptr<OKGameNetwork >network = nullptr;
 	shared_ptr<UDPPeerConnection >peerConnection = nullptr;
 	shared_ptr<Caption> nameCaption = nullptr;
 	shared_ptr<Caption> gameCaption = nullptr;
@@ -96,10 +96,10 @@ public:
 
 
 
-	shared_ptr<BobColor >gridBorderColor = make_shared<BobColor>(255, 255, 255);//TODO: move these to user settings!
-	shared_ptr<BobColor >gridCheckeredBackgroundColor1 = BobColor::black;
-	shared_ptr<BobColor >gridCheckeredBackgroundColor2 = make_shared<BobColor>(8, 8, 8);
-	shared_ptr<BobColor >screenBackgroundColor = BobColor::black;
+	shared_ptr<OKColor >gridBorderColor = make_shared<OKColor>(255, 255, 255);//TODO: move these to user settings!
+	shared_ptr<OKColor >gridCheckeredBackgroundColor1 = OKColor::black;
+	shared_ptr<OKColor >gridCheckeredBackgroundColor2 = make_shared<OKColor>(8, 8, 8);
+	shared_ptr<OKColor >screenBackgroundColor = OKColor::black;
 	bool gridRule_showWarningForFieldThreeQuartersFilled = true;//TODO: move these to user settings!
 
 

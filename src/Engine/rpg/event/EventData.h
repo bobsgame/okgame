@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "GameStringData.h"
 #include "DialogueData.h"
 #include "FlagData.h"
@@ -92,12 +92,12 @@ private:
 public:
 
 	//these are used for the client to preload dialogues, flags, music, etc without doing a server lookup.  USED FOR EXPORT ONLY IN TOOLS. not stored in data structure.
-	ArrayList<shared_ptr<DialogueData>>* dialogueDataList = make_shared<ArrayList><shared_ptr<DialogueData>>();
-	ArrayList<shared_ptr<FlagData>>* flagDataList = make_shared<ArrayList><shared_ptr<FlagData>>();
-	ArrayList<shared_ptr<SkillData>>* skillDataList = make_shared<ArrayList><shared_ptr<SkillData>>();
-	ArrayList<shared_ptr<GameStringData>>* gameStringDataList = make_shared<ArrayList><shared_ptr<GameStringData>>();
-	ArrayList<shared_ptr<AudioData>>* musicDataList = make_shared<ArrayList><shared_ptr<AudioData>>();
-	ArrayList<shared_ptr<AudioData>>* soundDataList = make_shared<ArrayList><shared_ptr<AudioData>>();
+	ArrayList<shared_ptr<DialogueData>> dialogueDataList;// = make_shared<ArrayList><shared_ptr<DialogueData>>();
+	ArrayList<shared_ptr<FlagData>> flagDataList;// = make_shared<ArrayList><shared_ptr<FlagData>>();
+	ArrayList<shared_ptr<SkillData>> skillDataList;// = make_shared<ArrayList><shared_ptr<SkillData>>();
+	ArrayList<shared_ptr<GameStringData>> gameStringDataList;// = make_shared<ArrayList><shared_ptr<GameStringData>>();
+	ArrayList<shared_ptr<AudioData>> musicDataList;// = make_shared<ArrayList><shared_ptr<AudioData>>();
+	ArrayList<shared_ptr<AudioData>> soundDataList;// = make_shared<ArrayList><shared_ptr<AudioData>>();
 
 
 
@@ -555,8 +555,8 @@ public:
 
 	const static shared_ptr<EventScriptCommand> setNDOpen_BOOL;
 	const static shared_ptr<EventScriptCommand> startGame;
-	const static shared_ptr<EventScriptCommand> startBobsGameOnStadiumScreen_AREA;
-	const static shared_ptr<EventScriptCommand> blockUntilBobsGameDead;
+	const static shared_ptr<EventScriptCommand> startOKGameOnStadiumScreen_AREA;
+	const static shared_ptr<EventScriptCommand> blockUntilOKGameDead;
 	const static shared_ptr<EventScriptCommand> showLoginScreen;
 	//public const static final EventScriptCommand closeND = make_shared<EventScriptCommand>("closeND","");
 

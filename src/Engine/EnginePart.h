@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class UDPPeerConnection;
 class TCPServerConnection;
 class Logger;
@@ -77,7 +77,7 @@ public:
 	int getSecondsSinceLastHere();
 	int getMinutesSinceLastHere();
 
-	shared_ptr<Engine> getEngine();
+	Engine* getEngine();
 	shared_ptr<Cameraman> getCameraman();
 	shared_ptr<MapManager> getMapManager();
 	shared_ptr<SpriteManager> getSpriteManager();

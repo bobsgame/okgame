@@ -177,12 +177,12 @@ string& MapData::initFromString(string& t)
 
 	t = t.substr(t.find("isOutside:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isOutside = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isOutside = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("preload:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	preload = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	preload = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("groundLayerMD5:`") + 1);
@@ -262,7 +262,7 @@ string& MapData::initFromString(string& t)
 
 	t = t.substr(t.find("stateDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t,"}") == false)
+	while (OKString::startsWith(t,"}") == false)
 	{
 		shared_ptr<MapStateData >data = make_shared<MapStateData>();
 		t = data->initFromString(t);
@@ -273,7 +273,7 @@ string& MapData::initFromString(string& t)
 
 	t = t.substr(t.find("eventDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t, "}") == false)
+	while (OKString::startsWith(t, "}") == false)
 	{
 		shared_ptr<EventData >data = make_shared<EventData>();
 		t = data->initFromString(t);
@@ -284,7 +284,7 @@ string& MapData::initFromString(string& t)
 
 	t = t.substr(t.find("doorDataList:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t,"}") == false)
+	while (OKString::startsWith(t,"}") == false)
 	{
 		shared_ptr<DoorData >data = make_shared<DoorData>();
 		t = data->initFromString(t);

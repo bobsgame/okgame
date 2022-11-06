@@ -27,9 +27,9 @@ void ClockCaption::init()
 	light = make_shared<Light>(getEngine(), "timeLight", -100, 4, 24, 2, 255, 0, 0, 90, 16, 2.0f, 1.0f, 0, true, true);
 
 
-	defaultFGColor = BobColor::red;
-	defaultAAColor = BobColor::darkRed;
-	defaultBGColor = BobColor::clear;
+	defaultFGColor = OKColor::red;
+	defaultAAColor = OKColor::darkRed;
+	defaultBGColor = OKColor::clear;
 
 	currentFGColor = defaultFGColor;
 	currentAAColor = defaultAAColor;
@@ -84,7 +84,7 @@ void ClockCaption::setFastColor()
 	setColors(fastFGColor, fastAAColor, fastBGColor);
 }
 
-void ClockCaption::setColors(shared_ptr<BobColor> fg, shared_ptr<BobColor> aa, shared_ptr<BobColor> bg)
+void ClockCaption::setColors(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, shared_ptr<OKColor> bg)
 { //=========================================================================================================================
 
 	StatusBarCaption::setColors(fg, aa, bg);

@@ -309,9 +309,9 @@ void LoginMenuPanel::update()
 				{
 					if (loginMenu == nullptr)
 					{
-						loginMenu = make_shared<BobMenu>(getEngine(), "Login");
+						loginMenu = make_shared<OKMenu>(getEngine(), "Login");
 						//loginMenu->center = false;
-						loginMenu->addInfo("Logging in...", "Logging in", BobMenu::statusColor);
+						loginMenu->addInfo("Logging in...", "Logging in", OKMenu::statusColor);
 
 					}
 				}
@@ -321,10 +321,10 @@ void LoginMenuPanel::update()
 				if (loginMenu == nullptr)
 				{
 
-					loginMenu = make_shared<BobMenu>(getEngine(), "Login");
+					loginMenu = make_shared<OKMenu>(getEngine(), "Login");
 					//loginMenu->center = false;
-					loginMenu->add("Username or Email: " + userNameOrEmailText, "Username or Email", BobMenu::statusColor);
-					loginMenu->add("Password: " + passwordStarsText, "Password", BobMenu::statusColor);
+					loginMenu->add("Username or Email: " + userNameOrEmailText, "Username or Email", OKMenu::statusColor);
+					loginMenu->add("Password: " + passwordStarsText, "Password", OKMenu::statusColor);
 					loginMenu->add("Stay logged in: Yes", "Stay logged in");
 					loginMenu->add("Log in");
 					loginMenu->addInfo(" ");
@@ -337,8 +337,8 @@ void LoginMenuPanel::update()
 				}
 			}
 
-			if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::statusColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
-			if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, BobMenu::errorColor, BobMenu::clearColor, RenderOrder::OVER_GUI);
+			if (statusLabel == nullptr)statusLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, OKMenu::statusColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
+			if (errorLabel == nullptr)errorLabel = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, " ", 16, true, OKMenu::errorColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
 
 			if (getIsScrolledUp())
 			{
@@ -535,7 +535,7 @@ void LoginMenuPanel::renderBefore()
 
 	GLUtils::drawFilledRect(255,255,255, w / 4 * 1, w / 4 * 3, screenY + h / 4 * 1, screenY + h / 4 * 3, 0.95f);
 
-	//shared_ptr<BobTexture> t = onlineTexture;
+	//shared_ptr<OKTexture> t = onlineTexture;
 
 	if (loginMenu == nullptr)return;
 
@@ -671,7 +671,7 @@ void LoginMenuPanel::doLoginWithFacebook()
 	//               {
 	//                  responseTries = 0;
 	//                  statusLabel->setText(" ");
-	//                  errorLabel->setText("Error: Did not receive a response from the Facebook OAuth dialog.");
+	//                  errorLabel->setText("Error: Did not receive a response from the Facebook OAuth dialog->");
 	//
 	//                  setButtonsVisible(true);
 	//
@@ -790,10 +790,10 @@ void LoginMenuPanel::doLoginWithFacebook()
 	//
 	//               Main::cacheManager->writeSessionTokenToCache(getServerConnection()->getUserID_S(), getServerConnection()->getSessionToken_S(), sendStatsToggleButton->isActive());
 	//               //String temp = Main.cacheManager.readSessionTokenFromCache();
-	//               //log.debug("Read session: "+temp);
+	//               //log->debug("Read session: "+temp);
 	//               //Main.cacheManager.deleteSessionTokenFromCache();
 	//               //temp = Main.cacheManager.readSessionTokenFromCache();
-	//               //log.debug("Deleted session: "+temp);
+	//               //log->debug("Deleted session: "+temp);
 	//            }
 	//
 	//            //-------------------------------------------------------
@@ -1214,10 +1214,10 @@ void LoginMenuPanel::doLogin()
 	//
 	//                  Main::cacheManager->writeSessionTokenToCache(getServerConnection()->getUserID_S(), getServerConnection()->getSessionToken_S(), sendStatsToggleButton->isActive());
 	//                  //String temp = Main.cacheManager.readSessionTokenFromCache();
-	//                  //log.debug("Read session: "+temp);
+	//                  //log->debug("Read session: "+temp);
 	//                  //Main.cacheManager.deleteSessionTokenFromCache();
 	//                  //temp = Main.cacheManager.readSessionTokenFromCache();
-	//                  //log.debug("Deleted session: "+temp);
+	//                  //log->debug("Deleted session: "+temp);
 	//               }
 	//
 	//               //-------------------------------------------------------
@@ -1281,17 +1281,17 @@ void LoginMenuPanel::checkForSessionTokenAndLogInIfExists()
 	//if session token cache exists, try to log in with that.
 	//set browser cookie, refresh iframe
 
-	log.debug("Checking for Session Token");
+	log->debug("Checking for Session Token");
 
 	const string token = FileUtils::readSessionTokenFromCache();
 
 	if (token != "")
 	{
-		log.debug("Session Token Found");
+		log->debug("Session Token Found");
 	}
 	else
 	{
-		log.debug("Session Token not found in cache.");
+		log->debug("Session Token not found in cache.");
 	}
 
 	if (token != "")

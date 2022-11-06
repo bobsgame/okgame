@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 #include "../../Utility/gl/GLUtils.h"
@@ -15,7 +15,7 @@ class Logger;
 
 class SpriteAnimationSequence;
 class SpriteData;
-class BobTexture;
+class OKTexture;
 //class TextureRegion;
 
 
@@ -34,8 +34,8 @@ public:
 	shared_ptr<IntArray> indexDataIntArray = nullptr;
 	shared_ptr<ByteArray> paletteRGBByteArray = nullptr;
 
-	shared_ptr<BobTexture> texture = nullptr;
-	shared_ptr<BobTexture> shadowTexture = nullptr;
+	shared_ptr<OKTexture> texture = nullptr;
+	shared_ptr<OKTexture> shadowTexture = nullptr;
 
 	//ArrayList<shared_ptr<TextureRegion>>* frameTextureRegionList = make_shared<ArrayList><shared_ptr<TextureRegion>>();
 
@@ -78,9 +78,9 @@ public:
 	void drawFrame(const string& animationName, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void drawFrameXYWH(const string& animationName, float x, float y, float w, float h, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void drawFrame(int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	void drawFrame(shared_ptr<BobTexture> texture, int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(shared_ptr<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void drawFrame(int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
-	void drawFrame(shared_ptr<BobTexture> texture, int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
+	void drawFrame(shared_ptr<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 	void draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1, float y0, float y1, float r = 1, float g = 1, float b = 1, float a = 1, int filter = GLUtils::FILTER_NEAREST);
 
 

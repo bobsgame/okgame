@@ -113,7 +113,7 @@ void Event::initEvent()
 		shared_ptr<Event >e = getEventManager()->eventList.get(i);
 		if (e->getID() == data->getID())
 		{
-			log.warn("Event already exists:" + data->getName());
+			log->warn("Event already exists:" + data->getName());
 			exists = true;
 
 			e->setData_S(data);
@@ -235,7 +235,7 @@ shared_ptr<Map> Event::getMap()
 
 shared_ptr<Map> Event::getCurrentMap()
 { //=========================================================================================================================
-	log.warn("Don't use getCurrentMap() in Events!");
+	log->warn("Don't use getCurrentMap() in Events!");
 	return ServerObject::getCurrentMap();
 }
 
@@ -278,15 +278,15 @@ void Event::parseEventString(string s)
 
 	while (s.length() > 0)
 	{
-		//log.info("Parsing Event String: "+s);
+		//log->info("Parsing Event String: "+s);
 
-		if (String::startsWith(s, "}"))
+		if (OKString::startsWith(s, "}"))
 		{
-			if (String::startsWith(s, "},"))
+			if (OKString::startsWith(s, "},"))
 			{
 				s = s.substr(2);
 			}
-			else if (String::startsWith(s, "}"))
+			else if (OKString::startsWith(s, "}"))
 			{
 				s = s.substr(1);
 			}
@@ -295,7 +295,7 @@ void Event::parseEventString(string s)
 		}
 		else
 		{
-			if (String::startsWith(s, "if("))
+			if (OKString::startsWith(s, "if("))
 			{
 				//handle qualifier
 
@@ -514,7 +514,7 @@ void Event::doCommand()
 		return;
 	}
 
-	log.debug("Current Command: " + currentCommand->commandString);
+	log->debug("Current Command: " + currentCommand->commandString);
 
 	//qualifiers. check if TRUE or FALSE. skip children if false.
 
@@ -2020,14 +2020,14 @@ void Event::doCommand()
 		startGame();
 		return;
 	}
-	if (currentCommand->commandString == EventData::startBobsGameOnStadiumScreen_AREA->getCommand())
+	if (currentCommand->commandString == EventData::startOKGameOnStadiumScreen_AREA->getCommand())
 	{
-		startBobsGameOnStadiumScreen_AREA();
+		startOKGameOnStadiumScreen_AREA();
 		return;
 	}
-	if (currentCommand->commandString == EventData::blockUntilBobsGameDead->getCommand())
+	if (currentCommand->commandString == EventData::blockUntilOKGameDead->getCommand())
 	{
-		blockUntilBobsGameDead();
+		blockUntilOKGameDead();
 		return;
 	}
 	if (currentCommand->commandString == EventData::showLoginScreen->getCommand())
@@ -2088,7 +2088,7 @@ void Event::doCommand()
 	//		 if(currentCommand.commandString.equals(EventData.runGlobalEvent.getCommand())){runGlobalEvent();return; }
 
 	{
-		log.error("Error! Unknown Command: " + currentCommand->commandString);
+		log->error("Error! Unknown Command: " + currentCommand->commandString);
 		getNextCommandInParent();
 		return;
 	}
@@ -2099,7 +2099,7 @@ void Event::isPlayerTouchingThisArea()
 
 	if (this->area == nullptr)
 	{
-		log.error("isPlayerTouchingThisArea() in event with no area!");
+		log->error("isPlayerTouchingThisArea() in event with no area!");
 	}
 
 	if ((dynamic_cast<shared_ptr<WarpArea>>(this->area) != NULL))
@@ -2117,7 +2117,7 @@ void Event::isPlayerWalkingIntoThisDoor()
 
 	if (this->door == nullptr)
 	{
-		log.error("isPlayerWalkingIntoThisDoor() in event with no door!");
+		log->error("isPlayerWalkingIntoThisDoor() in event with no door!");
 	}
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isWalkingIntoEntity(door));
@@ -2128,7 +2128,7 @@ void Event::isPlayerTouchingThisEntity()
 
 	if (this->entity == nullptr)
 	{
-		log.error("isPlayerTouchingThisEntity() in event with no entity!");
+		log->error("isPlayerTouchingThisEntity() in event with no entity!");
 	}
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isEntityHitBoxTouchingMyHitBox(entity));
@@ -2139,7 +2139,7 @@ void Event::isPlayerTouchingAnyEntityUsingThisSprite()
 
 	if (this->sprite == nullptr)
 	{
-		log.error("isPlayerTouchingAnyEntityUsingThisSprite() in event with no sprite!");
+		log->error("isPlayerTouchingAnyEntityUsingThisSprite() in event with no sprite!");
 	}
 
 	ArrayList<shared_ptr<Entity>>* e = getMap()->getAllEntitiesUsingSpriteAsset(sprite);
@@ -2552,7 +2552,7 @@ void Event::hasTalkedToThisToday()
 
 	if (area != nullptr)
 	{
-		shared_ptr<BobBool> b = area->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+		shared_ptr<OKBool> b = area->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 		if (b != nullptr)
 		{
 			gotServerValue = true;
@@ -2564,7 +2564,7 @@ void Event::hasTalkedToThisToday()
 	}
 	if (door != nullptr)
 	{
-		shared_ptr<BobBool> b = door->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+		shared_ptr<OKBool> b = door->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 		if (b != nullptr)
 		{
 			gotServerValue = true;
@@ -2576,7 +2576,7 @@ void Event::hasTalkedToThisToday()
 	}
 	if (entity != nullptr)
 	{
-		shared_ptr<BobBool> b = entity->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+		shared_ptr<OKBool> b = entity->checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 		if (b != nullptr)
 		{
 			gotServerValue = true;
@@ -5966,7 +5966,7 @@ void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 		if(x==-1)pos = Caption::Position::CENTERED_OVER_ENTITY;
 		if(x==-2)pos = Caption::Position::CENTERED_SCREEN;
 		if(x==-3)pos = Caption::Position::CENTERED_X;
-		getCaptionManager()->newManagedCaption(pos, x, y, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, make_shared<BobColor>(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		getCaptionManager()->newManagedCaption(pos, x, y, sec * 1000, s->text(), OKFont::font_small_16_outlined_smooth, make_shared<OKColor>(r, g, b), nullptr, OKColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		getNextCommand();
 	}
 }
@@ -5986,7 +5986,7 @@ void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 	}
 	else
 	{
-		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, make_shared<BobColor>(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), OKFont::font_small_16_outlined_smooth, make_shared<OKColor>(r, g, b), nullptr, OKColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		c->setEntity(getPlayer()); //not really necessary, it does this automatically
 		getNextCommand();
 	}
@@ -6008,7 +6008,7 @@ void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 	}
 	else
 	{
-		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), BobFont::font_small_16_outlined_smooth, make_shared<BobColor>(r, g, b), nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, -20, sec * 1000, s->text(), OKFont::font_small_16_outlined_smooth, make_shared<OKColor>(r, g, b), nullptr, OKColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 		c->setEntity(e);
 		getNextCommand();
 	}
@@ -6047,7 +6047,7 @@ void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 	u8 b = currentCommand->parameterList->get(p++)->i;
 	int ticks = currentCommand->parameterList->get(p++)->i;
 
-	Main::console->add(gameString->text(), ticks, make_shared<BobColor>(r, g, b));
+	Main::console->add(gameString->text(), ticks, make_shared<OKColor>(r, g, b));
 
 	getNextCommand();
 }
@@ -6248,12 +6248,12 @@ void Event::startGame()
 	getNextCommand();
 }
 
-void Event::startBobsGameOnStadiumScreen_AREA()
+void Event::startOKGameOnStadiumScreen_AREA()
 { //===============================================================================================
 	int p = 0;
 	shared_ptr<Area> a = static_cast<shared_ptr<Area>>(currentCommand->parameterList->get(p++)->object);
 
-	shared_ptr<BobsGameStadium> bobsGameStadium = make_shared<BobsGameStadium>(getClientGameEngine()->stadiumScreen, a);
+	shared_ptr<OKGameStadium> bobsGameStadium = make_shared<OKGameStadium>(getClientGameEngine()->stadiumScreen, a);
 	bobsGameStadium->init();
 
 	FileUtils::writeDidIntroFile();
@@ -6261,11 +6261,11 @@ void Event::startBobsGameOnStadiumScreen_AREA()
 	getNextCommand();
 }
 
-void Event::blockUntilBobsGameDead()
+void Event::blockUntilOKGameDead()
 { //===============================================================================================
 	//int p=0;
 
-	shared_ptr<BobsGameStadium> bobsGameStadium = static_cast<shared_ptr<BobsGameStadium>>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getCurrentState());
+	shared_ptr<OKGameStadium> bobsGameStadium = static_cast<shared_ptr<OKGameStadium>>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getCurrentState());
 
 	if (bobsGameStadium != nullptr)
 	{

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -48,7 +48,7 @@ public:
 	static Logger log;
 
 
-	shared_ptr<BobMenu >loginMenu = nullptr;
+	shared_ptr<OKMenu >loginMenu = nullptr;
 	int loginMenuCursorPosition = 0;
 	bool textStarted = false;
 	string userNameOrEmailText = "";

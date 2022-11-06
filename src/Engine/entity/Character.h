@@ -4,14 +4,14 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "Entity.h"
 class Logger;
 
 class PathFinder;
 class Engine;
 class EntityData;
-class BobTexture;
+class OKTexture;
 class Caption;
 class Sprite;
 class Area;
@@ -45,7 +45,7 @@ public:
 	bool standing = false;
 	bool running = false;
 
-	shared_ptr<BobTexture> uniqueTexture = nullptr; //if this is set it will render with this, otherwise it will try to render the normal spriteAsset.texture in Entity.render()
+	shared_ptr<OKTexture> uniqueTexture = nullptr; //if this is set it will render with this, otherwise it will try to render the normal spriteAsset.texture in Entity.render()
 
 	bool showName = false;
 	shared_ptr<Caption> nameCaption = nullptr;
@@ -53,8 +53,8 @@ public:
 	bool showAccountType = false;
 	shared_ptr<Caption> accountTypeCaption = nullptr;
 
-	shared_ptr<BobColor> nameColor = BobColor::white;
-	shared_ptr<BobColor> accountTypeNameColor = BobColor::white;
+	shared_ptr<OKColor> nameColor = OKColor::white;
+	shared_ptr<OKColor> accountTypeNameColor = OKColor::white;
 	string accountTypeName = "";
 
 	bool isMale = false;
@@ -100,7 +100,7 @@ public:
 
 	void setShowAccountType(bool b);
 
-	void setCharacterNameAndCaption(shared_ptr<BobColor> nameColor, const string& name, shared_ptr<BobColor> accountTypeNameColor, const string& accountTypeName);
+	void setCharacterNameAndCaption(shared_ptr<OKColor> nameColor, const string& name, shared_ptr<OKColor> accountTypeNameColor, const string& accountTypeName);
 
 	//
 	//	

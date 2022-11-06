@@ -5,11 +5,11 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
-#include "../network/BobNet.h"
+#include "../network/OKNet.h"
 
 
 class FriendManager : public EnginePart
@@ -21,7 +21,7 @@ public:
 
 
 	//ArrayList because threads will access it
-	ArrayList<shared_ptr<FriendCharacter>>* friendCharacters = make_shared<ArrayList><shared_ptr<FriendCharacter>>();
+	ArrayList<shared_ptr<FriendCharacter>> friendCharacters;// = make_shared<ArrayList><shared_ptr<FriendCharacter>>();
 
 
 

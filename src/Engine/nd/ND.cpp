@@ -175,11 +175,11 @@ void ND::setActivated(bool b)
 	{
 		if (b == true)
 		{
-			BobNet::myStatus = BobNet::status_PLAYING_GAME;
+			OKNet::myStatus = OKNet::status_PLAYING_GAME;
 		}
 		else
 		{
-			BobNet::myStatus = BobNet::status_AVAILABLE;
+			OKNet::myStatus = OKNet::status_AVAILABLE;
 		}
 	}
 

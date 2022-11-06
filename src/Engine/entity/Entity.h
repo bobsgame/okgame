@@ -4,8 +4,8 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
-#include "../../Utility/BobBool.h"
+#include "oktypes.h"
+#include "../../Utility/OKBool.h"
 #include "Sprite.h"
 #include "../rpg/event/EventData.h"
 class Logger;
@@ -104,8 +104,8 @@ public:
 
 	bool behaviorEnabled = true;
 
-	ArrayList<string>* eventBehaviorList = make_shared<ArrayList><string>(); //TODO: do something with this!
-	ArrayList<string>* eventTargetTYPEIDList = make_shared<ArrayList><string>(); //TODO: do something with this!
+	ArrayList<string> eventBehaviorList;// = make_shared<ArrayList><string>(); //TODO: do something with this!
+	ArrayList<string> eventTargetTYPEIDList;// = make_shared<ArrayList><string>(); //TODO: do something with this!
 
 	string currentAreaTYPEIDTarget = "";
 
@@ -159,7 +159,7 @@ public:
 
 	virtual void render(float mapAlpha);
 
-	virtual void render(float alpha, shared_ptr<BobTexture> texture, shared_ptr<BobTexture> shadowTexture);
+	virtual void render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture);
 
 	virtual shared_ptr<Map> getCurrentMap();
 
@@ -338,7 +338,7 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	shared_ptr<BobBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	shared_ptr<OKBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
 	void tellServerTalkedToToday();
 

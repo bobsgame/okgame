@@ -95,33 +95,33 @@ SortedList::SortedList(shared_ptr<PathFinder> outerInstance)
 
 shared_ptr<PotentialTile> SortedList::first()
 {
-	return list->get(0);
+	return list.get(0);
 }
 
 void SortedList::clear()
 {
-	list->clear();
+	list.clear();
 }
 
 void SortedList::addAndSort(shared_ptr<PotentialTile> o)
 {
-	list->add(o);
-	sort(list->v.begin(), list->v.end());
+	list.add(o);
+	sort(list.v.begin(), list.v.end());
 }
 
 void SortedList::remove(shared_ptr<PotentialTile> o)
 {
-	list->remove(o);
+	list.remove(o);
 }
 
 int SortedList::size()
 {
-	return list->size();
+	return list.size();
 }
 
 bool SortedList::contains(shared_ptr<PotentialTile> o)
 {
-	return find(list->v.begin(), list->v.end(), o) != list->v.end();
+	return find(list.v.begin(), list.v.end(), o) != list.v.end();
 }
 
 PotentialTile::PotentialTile(int x, int y)
@@ -415,7 +415,7 @@ PathFinder::PathFinder(shared_ptr<Entity> e, float middleStartXPixelsHQ, float m
 
 
 	//ORIGINAL LINE: potentialTiles = make_shared<PotentialTile>[w][h];
-	potentialTiles = new vector<shared_ptr<PotentialTile>>(w*h);
+	potentialTiles.clear();// = new vector<shared_ptr<PotentialTile>>(w * h);
 
 
 	for (int x = 0; x < w; x++)
@@ -449,9 +449,9 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 	// tile is in the open list and it's cost is zero, i.e. we're already there
 	(*potentialTiles)[startTileY*w+startTileX]->cumulativePathCost = 0;
 	(*potentialTiles)[startTileY*w+startTileX]->depth = 0;
-	blockedPotentialTilesList->clear();
-	openPotentialTilesList->clear();
-	openPotentialTilesList->addAndSort((*potentialTiles)[startTileY*w + startTileX]);
+	blockedPotentialTileslist.clear();
+	openPotentialTileslist.clear();
+	openPotentialTileslist.addAndSort((*potentialTiles)[startTileY*w + startTileX]);
 
 	(*potentialTiles)[toTileY*w + toTileX]->parent = nullptr;
 
@@ -459,18 +459,18 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 	int maxDepth = 0;
 
 
-	while ((maxDepth < maxSearchDistance) && (openPotentialTilesList->size() != 0))
+	while ((maxDepth < maxSearchDistance) && (openPotentialTileslist.size() != 0))
 	{
 		// pull out the first node in our open list, this is determined to
 		// be the most likely to be the next step based on our heuristic
-		shared_ptr<PotentialTile> current = openPotentialTilesList->first();
+		shared_ptr<PotentialTile> current = openPotentialTileslist.first();
 		if (current == (*potentialTiles)[toTileY*w + toTileX])
 		{
 			break;
 		}
 
-		openPotentialTilesList->remove(current);
-		blockedPotentialTilesList->add(current);
+		openPotentialTileslist.remove(current);
+		blockedPotentialTileslist.add(current);
 
 		// search through all the neighbours of the current node evaluating
 		// them as next steps
@@ -515,26 +515,26 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 					// this node so it needs to be re-evaluated
 					if (nextStepCost < neighbour->cumulativePathCost)
 					{
-						if (openPotentialTilesList->contains(neighbour))
+						if (openPotentialTileslist.contains(neighbour))
 						{
-							openPotentialTilesList->remove(neighbour);
+							openPotentialTileslist.remove(neighbour);
 						}
 
-						if (blockedPotentialTilesList->contains(neighbour))
+						if (blockedPotentialTileslist.contains(neighbour))
 						{
-							blockedPotentialTilesList->remove(neighbour);
+							blockedPotentialTileslist.remove(neighbour);
 						}
 					}
 
 					// if the node hasn't already been processed and discarded then
 					// reset it's cost to our current cost and add it as a next possible
 					// step (i.e. to the open list)
-					if (!openPotentialTilesList->contains(neighbour) && !(blockedPotentialTilesList->contains(neighbour)))
+					if (!openPotentialTileslist.contains(neighbour) && !(blockedPotentialTileslist.contains(neighbour)))
 					{
 						neighbour->cumulativePathCost = nextStepCost;
 						neighbour->heuristicCost = (float)getHeuristicCost(xp, yp, toTileX, toTileY);
 						maxDepth = max(maxDepth,neighbour->setParentTile(current));
-						openPotentialTilesList->addAndSort(neighbour);
+						openPotentialTileslist.addAndSort(neighbour);
 					}
 				}
 			}

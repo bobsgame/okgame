@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -22,10 +22,10 @@ public:
 	static Logger log;
 
 
-	ArrayList<shared_ptr<Notification>>* notificationList = make_shared<ArrayList><shared_ptr<Notification>>();
+	ArrayList<shared_ptr<Notification>> notificationList;// = make_shared<ArrayList><shared_ptr<Notification>>();
 
-	static shared_ptr<BobTexture> loadingBarTexture;
-	static shared_ptr<BobTexture> loadingBarBackgroundTexture;
+	static shared_ptr<OKTexture> loadingBarTexture;
+	static shared_ptr<OKTexture> loadingBarBackgroundTexture;
 
 
 	NotificationManager(shared_ptr<BGClientEngine> g);

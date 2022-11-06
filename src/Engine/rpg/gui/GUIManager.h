@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -31,7 +31,7 @@ public:
 	shared_ptr<PlayerEditMenu> playerEditMenu = nullptr;
 	//GUI* playerEditGUI = nullptr;
 
-	ArrayList<shared_ptr<GameChallengeNotificationPanel>>* gameChallenges = make_shared<ArrayList><shared_ptr<GameChallengeNotificationPanel>>();
+	ArrayList<shared_ptr<GameChallengeNotificationPanel>> gameChallenges;// = make_shared<ArrayList><shared_ptr<GameChallengeNotificationPanel>>();
 	//ArrayList<GUI> gameChallengesGUIs;
 
 	shared_ptr<KeyboardMenuPanel> keyboardScreen = nullptr;

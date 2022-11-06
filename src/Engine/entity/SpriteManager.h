@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -49,10 +49,10 @@ public:
 	HashMap<string, shared_ptr<Sprite>> spriteByNameHashMap;//make_shared<HashMap><string, shared_ptr<Sprite>>();
 
 
-	ArrayList<shared_ptr<ScreenSprite>> screenSpriteList;
+	ArrayList<ScreenSprite*> screenSpriteList;
 
 
-	static shared_ptr<BobTexture> actionTexture;// = nullptr;
+	static shared_ptr<OKTexture> actionTexture;// = nullptr;
 
 	int actionTextureFrame = 0;
 	int actionTextureAnimTicks = 0;

@@ -4,11 +4,11 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "Engine.h"
 #include "../Utility/CaptionManager.h"
 #include "../Utility/gl/Texture.h"
-#include "../Utility/BobMenu.h"
+#include "../Utility/OKMenu.h"
 class Logger;
 class GameDataLoader;
 class UDPPeerConnection;
@@ -40,19 +40,19 @@ public:
 
 
 	int numTitleMenuTextureFrames = 0;
-	ArrayList<shared_ptr<BobTexture>> *titleMenuTextures = make_shared<ArrayList><shared_ptr<BobTexture>>();
-	shared_ptr<BobTexture> titleMenuTexture = nullptr;
+	ArrayList<shared_ptr<OKTexture>> titleMenuTextures;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
+	shared_ptr<OKTexture> titleMenuTexture = nullptr;
 	long long titleMenuFrameTicks = 0;
 	int currentTitleMenuTextureFrame = 0;
 	bool currentTitleMenuTextureFrameIncrementDecrementToggle = false;
 	bool titleMenuShowing = false;
 
 	bool pauseMenuShowing = false;
-	shared_ptr<BobMenu >pauseMenu = nullptr;
+	shared_ptr<OKMenu >pauseMenu = nullptr;
 	//shared_ptr<Caption> volumeCaption = nullptr;
 	int pauseMenuCursorPosition = 0;
 
-	shared_ptr<BobMenu >titleMenu = nullptr;
+	shared_ptr<OKMenu >titleMenu = nullptr;
 	int titleMenuCursorPosition = 0;
 
 	virtual void setupMenus();
@@ -82,8 +82,8 @@ protected:
 	long long whichDifficultyToShow = 0;
 	long long updateFriendsTime = 0;
 	long long updatePublicGamesTime = 0;
-	ArrayList<shared_ptr<Caption>>* onlineFriendCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
-	ArrayList<shared_ptr<Caption>>* waitingForFriendCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
+	ArrayList<shared_ptr<Caption>> onlineFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
+	ArrayList<shared_ptr<Caption>> waitingForFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
 	void waitingForFriendScreenUpdate();
 	void waitingForFriendScreenRender();
 

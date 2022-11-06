@@ -1,5 +1,5 @@
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 #include <vector>
 #include <algorithm>
@@ -35,7 +35,7 @@ public:
 //{
 //	return 0 != stoi(s);
 //}
-class BobBoolean
+class OKBoolean
 {
 public:
 	//Parses the string argument as a boolean. The boolean returned represents the value true if the string argument is not null and is equal, ignoring case, to the string "true". 
@@ -270,7 +270,7 @@ void ArrayList<E>::remove(E e)
 
 	if (index < 0 || index >= size())
 	{
-		log.error("Index out of bounds!");
+		log->error("Index out of bounds!");
 		return;
 	}
 

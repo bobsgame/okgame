@@ -1,5 +1,5 @@
 
-#include "bobtypes.h"
+#include "oktypes.h"
 
 #include "Gwen/Platform.h"
 #include <Gwen/Controls/Base.h>
@@ -66,7 +66,7 @@ public:
 	const char* GetTypeName(){ return "EditRectangle"; }
 	const char* GetBaseTypeName(){ return Gwen::Controls::Rectangle::GetTypeName(); }
     //GWEN_CONTROL_CONSTRUCTOR(EditRectangle)
-    EditRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+    EditRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
     {
         bobsGame = b;
         m_Color = Gwen::Color(255, 255, 255, 255);
@@ -75,7 +75,7 @@ public:
     
 	void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown);
     
-    shared_ptr<BobsGame> bobsGame = nullptr;
+    shared_ptr<OKGame> bobsGame = nullptr;
 	//void Render(Skin::Base* skin);
 };
 
@@ -106,13 +106,13 @@ public:
 	const char* GetTypeName() { return "RotationPreviewRectangle"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
     //GWEN_CONTROL_CONSTRUCTOR(RotationPreviewRectangle)
-    RotationPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+    RotationPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
     {
         bobsGame = b;
         m_Color = Gwen::Color(255, 255, 255, 255);
     }
     
-    shared_ptr<BobsGame> bobsGame = nullptr;
+    shared_ptr<OKGame> bobsGame = nullptr;
     
 	//void Render(Skin::Base* skin);
 };
@@ -143,7 +143,7 @@ public:
 	const char* GetTypeName() { return "PreviewRectangle"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
 	//GWEN_CONTROL_CONSTRUCTOR(PreviewRectangle)
-    PreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+    PreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
     {
         bobsGame = b;
         m_Color = Gwen::Color(255, 255, 0, 255);
@@ -151,7 +151,7 @@ public:
     
 	void Render(Gwen::Skin::Base* skin);
     
-	shared_ptr<BobsGame >bobsGame = nullptr;
+	shared_ptr<OKGame >bobsGame = nullptr;
 };
 
 
@@ -179,7 +179,7 @@ public:
 	}
 	const char* GetTypeName() { return "CustomGameEditorControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame >b);
+	CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame >b);
     
     
     
@@ -270,7 +270,7 @@ public:
 	void onSelectedPresetRotationOK(Gwen::Controls::Base* control);
 	void onSelectedPresetRotationCancel(Gwen::Controls::Base* control);
 	void renderRotationPreview();
-	void renderRotationEditor(shared_ptr<BobsGame >g);
+	void renderRotationEditor(shared_ptr<OKGame >g);
 	void updateRotationEditor();
 	void onRotationEditMouseClick(int x, int y, bool bDown);
     
@@ -427,7 +427,7 @@ public:
 	bool presetRotationWindowOpen = false;
     
 	bool windowOpen = false;
-	shared_ptr<BobsGame> bobsGame = nullptr;
+	shared_ptr<OKGame> bobsGame = nullptr;
 private:
     
 	int maxNumBlocks = 0;
@@ -435,7 +435,7 @@ private:
 	float previewSpeed = 0.5;
 	long long lastPreviewTime = 0;
 	int currentPreviewRotationIndex = 0;
-	ArrayList<shared_ptr<BobColor>> colors;
+	ArrayList<shared_ptr<OKColor>> colors;
     
 	ArrayList<RotationSet> rotationSets;
     

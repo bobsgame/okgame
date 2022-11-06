@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -57,7 +57,7 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	shared_ptr<BobBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	shared_ptr<OKBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
 	void tellServerTalkedToToday();
 

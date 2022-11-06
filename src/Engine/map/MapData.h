@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -186,11 +186,11 @@ private:
 
 	//these are ASSET lists only populated with objectDatas to convert into JSON and fill the regular Map lists at runtime with.
 	
-	ArrayList<shared_ptr<MapStateData>>* stateDataList = make_shared<ArrayList><shared_ptr<MapStateData>>();
+	ArrayList<shared_ptr<MapStateData>> stateDataList;// = make_shared<ArrayList><shared_ptr<MapStateData>>();
 	
-	ArrayList<shared_ptr<EventData>>* eventDataList = make_shared<ArrayList><shared_ptr<EventData>>();
+	ArrayList<shared_ptr<EventData>> eventDataList;// = make_shared<ArrayList><shared_ptr<EventData>>();
 	
-	ArrayList<shared_ptr<DoorData>>* doorDataList = make_shared<ArrayList><shared_ptr<DoorData>>();
+	ArrayList<shared_ptr<DoorData>> doorDataList;// = make_shared<ArrayList><shared_ptr<DoorData>>();
 
 
 public:

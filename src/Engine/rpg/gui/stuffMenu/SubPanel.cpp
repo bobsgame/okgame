@@ -152,7 +152,7 @@ void SubPanel::render()
 //
 //shared_ptr<TCPServerConnection> SubPanel::getServerConnection()
 //{
-//	return BobNet::tcpServerConnection;
+//	return OKNet::tcpServerConnection;
 //}
 //
 //shared_ptr<GameSave> SubPanel::getGameSave()

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -56,9 +56,9 @@ public:
 	int dieSequenceStep = 0;
 
 
-	ArrayList<shared_ptr<RamioBoba>>* bobas = make_shared<ArrayList><shared_ptr<RamioBoba>>();
-	ArrayList<shared_ptr<RamioBrickBlock>>* brickBlocks = make_shared<ArrayList><shared_ptr<RamioBrickBlock>>();
-	ArrayList<shared_ptr<RamioMoneyBlock>>* moneyBlocks = make_shared<ArrayList><shared_ptr<RamioMoneyBlock>>();
+	ArrayList<shared_ptr<RamioOKa>> bobas;// = make_shared<ArrayList><shared_ptr<RamioOKa>>();
+	ArrayList<shared_ptr<RamioBrickBlock>> brickBlocks;/// = make_shared<ArrayList><shared_ptr<RamioBrickBlock>>();
+	ArrayList<shared_ptr<RamioMoneyBlock>> moneyBlocks;// = make_shared<ArrayList><shared_ptr<RamioMoneyBlock>>();
 
 
 	shared_ptr<RamioGuy> guy = nullptr;
@@ -79,7 +79,7 @@ public:
 	void doDeathSequence();
 
 
-	shared_ptr<ConsoleText> ramioText = Main::console->add("ramioText", BobColor::green);
+	shared_ptr<ConsoleText> ramioText = Main::console->add("ramioText", OKColor::green);
 
 	virtual void update() override;
 

@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -25,18 +25,18 @@ public:
 	static Logger log;
 
 
-	static shared_ptr<BobTexture> blackBackgroundTexture;
-	static shared_ptr<BobTexture> blackForegroundTexture;
+	static shared_ptr<OKTexture> blackBackgroundTexture;
+	static shared_ptr<OKTexture> blackForegroundTexture;
 
-	static shared_ptr<BobTexture> whiteBackgroundTexture;
-	static shared_ptr<BobTexture> whiteForegroundTexture;
+	static shared_ptr<OKTexture> whiteBackgroundTexture;
+	static shared_ptr<OKTexture> whiteForegroundTexture;
 
-	static shared_ptr<BobTexture> backgroundTexture;
-	static shared_ptr<BobTexture> foregroundTexture;
+	static shared_ptr<OKTexture> backgroundTexture;
+	static shared_ptr<OKTexture> foregroundTexture;
 
 
-	static shared_ptr<BobTexture> glowTexture;
-	static shared_ptr<BobTexture> dividerTexture;
+	static shared_ptr<OKTexture> glowTexture;
+	static shared_ptr<OKTexture> dividerTexture;
 
 
 	static int sizeY;

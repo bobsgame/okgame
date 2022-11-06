@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "src/Engine/state/StateManager.h"
 class Logger;
 
@@ -19,7 +19,7 @@ public:
 	static Logger log;
 
 
-	shared_ptr<BobTexture> texture = nullptr;
+	shared_ptr<OKTexture> texture = nullptr;
 
 	float nDDrawAlpha = 1.0f;
 	float nDZoom = 0.01f;

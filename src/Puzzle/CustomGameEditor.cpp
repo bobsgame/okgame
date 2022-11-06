@@ -128,7 +128,7 @@ using namespace Gwen::Controls;
 
 
 //GWEN_CONTROL_CONSTRUCTOR(CustomGameEditorControl)
-CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame >b) : Base(pParent, pName)
+CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame >b) : Base(pParent, pName)
 {//=========================================================================================================================
 
 
@@ -459,7 +459,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 			saveButton = make_shared<Button>(applyButtonsBase);
 			saveButton->SetText(L"Save");
-			saveButton->SetToolTip("Saves to XML in "+string(SDL_GetPrefPath("Bob Corporation","bob's game"))+". Renames existing file with versioning. Do this often as some combinations may crash. Ctrl-S works too.");
+			saveButton->SetToolTip("Saves to XML in "+string(SDL_GetPrefPath("OK Corporation","bob's game"))+". Renames existing file with versioning. Do this often as some combinations may crash. Ctrl-S works too.");
 			saveButton->Dock(Pos::Left | Pos::Center);
 			saveButton->SetWidth(50);
 			saveButton->onPress.Add(this, &CustomGameEditorControl::onSaveButton);
@@ -573,7 +573,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	shared_ptr<BlockType> bt(make_shared<BlockType>());
 	bt->name = "Gray Square";
 	//bt->spriteName = "Square";
-	bt->colors.add(BobColor::gray);
+	bt->colors.add(OKColor::gray);
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
 	bt->useAsGarbage = true;
@@ -616,29 +616,29 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 //		piecePropTree = nullptr;
 //	}
 
-	colors.add(BobColor::cyan);
-	colors.add(BobColor::magenta);
-	colors.add(BobColor::green);
-	colors.add(BobColor::lighterPurple);//was purple, seeing if it helps differentiate from blue
-	colors.add(BobColor::darkBlue);
-	colors.add(BobColor::orange);
-	colors.add(BobColor::yellow);
-	colors.add(BobColor::lighterPink);
-	colors.add(BobColor::red);
-	colors.add(BobColor::white);
-	colors.add(BobColor::burgandy);
-	colors.add(BobColor::olive);
-	colors.add(BobColor::darkerCyan);
-	colors.add(BobColor::darkerMagenta);
-	colors.add(BobColor::darkerGreen);
-	colors.add(BobColor::darkerPurple);
-	colors.add(BobColor::lighterBlue);
-	colors.add(BobColor::darkerOrange);
-	colors.add(BobColor::darkerYellow);
-	colors.add(BobColor::darkerPink);
-	colors.add(BobColor::darkerRed);
-	colors.add(BobColor::darkerBurgandy);
-	colors.add(BobColor::darkerOlive);
+	colors.add(OKColor::cyan);
+	colors.add(OKColor::magenta);
+	colors.add(OKColor::green);
+	colors.add(OKColor::lighterPurple);//was purple, seeing if it helps differentiate from blue
+	colors.add(OKColor::darkBlue);
+	colors.add(OKColor::orange);
+	colors.add(OKColor::yellow);
+	colors.add(OKColor::lighterPink);
+	colors.add(OKColor::red);
+	colors.add(OKColor::white);
+	colors.add(OKColor::burgandy);
+	colors.add(OKColor::olive);
+	colors.add(OKColor::darkerCyan);
+	colors.add(OKColor::darkerMagenta);
+	colors.add(OKColor::darkerGreen);
+	colors.add(OKColor::darkerPurple);
+	colors.add(OKColor::lighterBlue);
+	colors.add(OKColor::darkerOrange);
+	colors.add(OKColor::darkerYellow);
+	colors.add(OKColor::darkerPink);
+	colors.add(OKColor::darkerRed);
+	colors.add(OKColor::darkerBurgandy);
+	colors.add(OKColor::darkerOlive);
 
 	rotationSets.add(Piece::get2BlockRotateAround00RotationSet());
 	rotationSets.add(Piece::get2BlockBottomLeftAlwaysFilledRotationSet());
@@ -960,7 +960,7 @@ void CustomGameEditorControl::onBlockListRowSelect(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find blocktype with uuid:" + uuid);
+		OKGame::log->error("Could not find blocktype with uuid:" + uuid);
 		return;
 	}
 	currentBlockType = bt;
@@ -1268,7 +1268,7 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	shared_ptr<Properties> p = settingsPropTree->Find("Game Rules");
 	if (p == nullptr)
 	{
-		BobsGame::log.error("Could not find Settings Properties");
+		OKGame::log->error("Could not find Settings Properties");
 		return;
 	}
 
@@ -1738,7 +1738,7 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 					shared_ptr<PieceType> pt = currentGameType->getPieceTypeByUUID(b->makePieceTypeWhenCleared_UUID.get(i));
 					string pieceName = "";
 					if (pt != nullptr)pieceName = pt->name;
-					else { pieceName = "ERROR"; bobsGame->log.error("Could not find PieceType in makePieceTypeWhenCleared"); }
+					else { pieceName = "ERROR"; bobsGame->log->error("Could not find PieceType in makePieceTypeWhenCleared"); }
 					pieceTypesString = pieceTypesString + pieceName + ",";
 				}
 				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
@@ -1831,23 +1831,23 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 	shared_ptr<Properties> p = blockPropTree->Find("Block Properties");
 	if (p == nullptr)
 	{
-		BobsGame::log.error("Could not find Block Properties");
+		OKGame::log->error("Could not find Block Properties");
 		return;
 	}
 
 	BlockType defaultBlockType;
 
 	shared_ptr<PropertyRow> pr = p->Find(currentBlockType->name_Info.label);
-	//	BobsGame::log.debug("GetLabel"+string(pr->GetLabel()->GetText().c_str()));
-	//	BobsGame::log.debug("GetName"+ pr->GetName());
-	//	BobsGame::log.debug("GetValue"+ string(pr->GetValue().c_str()));
-	//	BobsGame::log.debug("GetTypeName"+ string(pr->GetTypeName()));
+	//	OKGame::log->debug("GetLabel"+string(pr->GetLabel()->GetText().c_str()));
+	//	OKGame::log->debug("GetName"+ pr->GetName());
+	//	OKGame::log->debug("GetValue"+ string(pr->GetValue().c_str()));
+	//	OKGame::log->debug("GetTypeName"+ string(pr->GetTypeName()));
 	//	Property::Base *prop = pr->GetProperty();
 	//
-	//	BobsGame::log.debug("GetPropertyValue" + string(prop->GetPropertyValue().c_str()));
-	//	BobsGame::log.debug("GetName" + prop->GetName());
-	//	BobsGame::log.debug("GetValue" + string(prop->GetValue().c_str()));
-	//	BobsGame::log.debug("GetTypeName" + string(prop->GetTypeName()));
+	//	OKGame::log->debug("GetPropertyValue" + string(prop->GetPropertyValue().c_str()));
+	//	OKGame::log->debug("GetName" + prop->GetName());
+	//	OKGame::log->debug("GetValue" + string(prop->GetValue().c_str()));
+	//	OKGame::log->debug("GetTypeName" + string(prop->GetTypeName()));
 
 
 	string newName = pr->GetProperty()->GetPropertyValue().c_str();
@@ -1909,12 +1909,12 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 		if (i == 10)
 		{
 			colorName = p->Find(currentBlockType->specialColor_Info.label)->GetProperty()->GetPropertyValue().c_str();
-			currentBlockType->specialColor = BobColor::getColorByName(colorName);
+			currentBlockType->specialColor = OKColor::getColorByName(colorName);
 		}
 		else
 		{
 			colorName = p->Find("Color " + to_string(i))->GetProperty()->GetPropertyValue().c_str();
-			if (colorName != "")currentBlockType->colors.add(BobColor::getColorByName(colorName));
+			if (colorName != "")currentBlockType->colors.add(OKColor::getColorByName(colorName));
 		}
 	}
 
@@ -2000,7 +2000,7 @@ void CustomGameEditorControl::onPieceListRowSelect(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find piecetype with uuid:" + uuid);
+		OKGame::log->error("Could not find piecetype with uuid:" + uuid);
 		return;
 	}
 	currentPieceType = bt;
@@ -2203,7 +2203,7 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 	shared_ptr<Properties> p = piecePropTree->Find("Piece Properties");
 	if (p == nullptr)
 	{
-		BobsGame::log.error("Could not find Piece Properties");
+		OKGame::log->error("Could not find Piece Properties");
 		return;
 	}
 
@@ -2249,7 +2249,7 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 	PieceType defaultPieceType;
 
 	string colorName = p->Find("Color")->GetProperty()->GetPropertyValue().c_str();
-	currentPieceType->color = BobColor::getColorByName(colorName);
+	currentPieceType->color = OKColor::getColorByName(colorName);
 
 
 	try {
@@ -2354,7 +2354,7 @@ void CustomGameEditorControl::onDuplicateBlockButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find blocktype with uuid:" + uuid);
+		OKGame::log->error("Could not find blocktype with uuid:" + uuid);
 		return;
 	}
 
@@ -2415,7 +2415,7 @@ void CustomGameEditorControl::onDeleteBlockButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find blocktype with uuid:" + uuid);
+		OKGame::log->error("Could not find blocktype with uuid:" + uuid);
 		return;
 	}
 
@@ -2553,7 +2553,7 @@ void CustomGameEditorControl::onDuplicatePieceButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find pieceType with uuid:" + uuid);
+		OKGame::log->error("Could not find pieceType with uuid:" + uuid);
 		return;
 	}
 
@@ -2614,7 +2614,7 @@ void CustomGameEditorControl::onDeletePieceButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find pieceType with uuid:" + uuid);
+		OKGame::log->error("Could not find pieceType with uuid:" + uuid);
 		return;
 	}
 
@@ -3207,7 +3207,7 @@ void CustomGameEditorControl::deleteTurnFromBlockTypeToType(shared_ptr<Base> con
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find TurnFromBlockTypeToType with name:" + name);
+		OKGame::log->error("Could not find TurnFromBlockTypeToType with name:" + name);
 		return;
 	}
 
@@ -3333,7 +3333,7 @@ void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(shared_ptr<Base> c
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find type with name:" + name);
+		OKGame::log->error("Could not find type with name:" + name);
 		return;
 	}
 	currentTurnFromBlockTypeToType = bt;
@@ -3350,14 +3350,14 @@ void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(shared_ptr<Base> c
 void CustomGameEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameType>, pair<string, shared_ptr<BobColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	ArrayList<pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<shared_ptr<GameType>, pair<string, shared_ptr<BobColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
 		shared_ptr<GameType >g = gameTypeStringColorPairPair.first;
-		pair<string, shared_ptr<BobColor>> stringColorPair = gameTypeStringColorPairPair.second;
+		pair<string, shared_ptr<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<BobColor >color = stringColorPair.second;
+		shared_ptr<OKColor >color = stringColorPair.second;
 
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &CustomGameEditorControl::onGameTypesListSelect);
@@ -3393,7 +3393,7 @@ void CustomGameEditorControl::onGameTypesListSelect(shared_ptr<Base> control)
 
 	if (s == nullptr)
 	{
-		BobsGame::log.error("Could not find game type with uuid:" + uuid);
+		OKGame::log->error("Could not find game type with uuid:" + uuid);
 		return;
 	}
 
@@ -3626,7 +3626,7 @@ void CustomGameEditorControl::createNewGameType(shared_ptr<Base> control)
 	shared_ptr<BlockType> bt(make_shared<BlockType>());
 	bt->name = "Gray Square";
 	//bt->spriteName = "Square";
-	bt->colors.add(BobColor::gray);
+	bt->colors.add(OKColor::gray);
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
 	bt->useAsGarbage = true;
@@ -3667,7 +3667,7 @@ void CustomGameEditorControl::duplicateGameType(shared_ptr<Base> control)
  //the only thing we would do is load the selected game type and then append the name with "copy"
 	if (gameTypesListBox->IsAnyRowSelected() == false)return;
 
-	//BobsGame::log.debug(to_string(currentGameType->pieceTypes.size()));
+	//OKGame::log->debug(to_string(currentGameType->pieceTypes.size()));
 
 	shared_ptr<GameType >s = make_shared<GameType>();
 	string uuid = s->uuid;
@@ -3676,7 +3676,7 @@ void CustomGameEditorControl::duplicateGameType(shared_ptr<Base> control)
 	//s->builtInType = false;
 	s->downloaded = false;
 	//s->loadedFilename = "";
-	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
+	//OKGame::log->debug(to_string(s->pieceTypes.size()));
 
 	s->name += " Copy";
 	bool taken = false;
@@ -3730,7 +3730,7 @@ void CustomGameEditorControl::deleteGameType(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find gameType with uuid:" + uuid);
+		OKGame::log->error("Could not find gameType with uuid:" + uuid);
 		return;
 	}
 
@@ -3821,7 +3821,7 @@ void CustomGameEditorControl::onUploadButton(shared_ptr<Base> control)
 
 
 	//GameType:XML:name:uuid
-	bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Upload_Request+"GameType:"+ zip + ":`"+g.name+"`:"+g.uuid+":"+BobNet::endline);
+	bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Upload_Request+"GameType:"+ zip + ":`"+g.name+"`:"+g.uuid+":"+OKNet::endline);
 
 	string response = "";
 	int tries = 0;
@@ -3829,7 +3829,7 @@ void CustomGameEditorControl::onUploadButton(shared_ptr<Base> control)
 	{
 		tries++;
 		Main::delay(500);
-		response = bobsGame->getServerConnection()->getAndResetBobsGameGameTypesAndSequencesUploadResponse_S();
+		response = bobsGame->getServerConnection()->getAndResetOKGameGameTypesAndSequencesUploadResponse_S();
 		if (response != "")
 		{
 			break;
@@ -4120,7 +4120,7 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 
 
 
-void CustomGameEditorControl::renderRotationEditor(shared_ptr<BobsGame >g)
+void CustomGameEditorControl::renderRotationEditor(shared_ptr<OKGame >g)
 {//=========================================================================================================================
 
 
@@ -4161,7 +4161,7 @@ void CustomGameEditorControl::renderRotationEditor(shared_ptr<BobsGame >g)
 			int x = b->x;
 			int y = b->y;
 
-			BobColor c = BobColor(255, 255, 255, 255);
+			OKColor c = OKColor(255, 255, 255, 255);
 			if (i < colors.size())c = *colors.get(i);
 			GLUtils::drawFilledRectXYWH(sx + ((cells / 2) * cellW) + cellW*x, sy + ((cells / 2) * cellW) + cellW*y, cellW, cellW, c.rf(), c.gf(), c.bf(), 0.2f);
 			if (i < 10)
@@ -4179,7 +4179,7 @@ void CustomGameEditorControl::renderRotationEditor(shared_ptr<BobsGame >g)
 		int x = b->x;
 		int y = b->y;
 
-		BobColor c = BobColor(128, 0, 128, 255);
+		OKColor c = OKColor(128, 0, 128, 255);
 		if(i<colors.size())c = *colors.get(i);
 		GLUtils::drawFilledRectXYWH(sx + ((cells / 2) * cellW) + cellW*x, sy + ((cells / 2) * cellW) + cellW*y, cellW, cellW, c.rf(),c.gf(),c.bf(), 1.0f);
 		if (i < 10)
@@ -4232,7 +4232,7 @@ void CustomGameEditorControl::renderRotationPreview()
 		int x = b->x;
 		int y = b->y;
 
-		BobColor c = BobColor(255, 255, 255, 255);
+		OKColor c = OKColor(255, 255, 255, 255);
 		if (i<colors.size())c = *colors.get(i);
 		GLUtils::drawFilledRectXYWH(sx + ((cells / 2) * cellW) + cellW*x, sy + ((cells / 2) * cellW) + cellW*y, cellW, cellW, c.rf(), c.gf(), c.bf(), 1.0f);
 	}
@@ -4364,7 +4364,7 @@ void CustomGameEditorControl::onRotationListRowSelect(shared_ptr<Base> control)
 	}
 	catch(exception)
 	{
-		BobsGame::log.error("Could not find rotation with num " + num);
+		OKGame::log->error("Could not find rotation with num " + num);
 		return;
 	}
 
@@ -4408,7 +4408,7 @@ void CustomGameEditorControl::deleteRotation(shared_ptr<Base> control)
 	}
 	catch (exception)
 	{
-		BobsGame::log.error("Could not find rotation with num " + num);
+		OKGame::log->error("Could not find rotation with num " + num);
 		return;
 	}
 
@@ -4750,7 +4750,7 @@ void CustomGameEditorControl::initPreviewGame()
 //
 //	if (bt == nullptr)
 //	{
-//		BobsGame::log.error("Could not find difficultyType with name:" + name);
+//		OKGame::log->error("Could not find difficultyType with name:" + name);
 //		return;
 //	}
 //
@@ -4809,7 +4809,7 @@ void CustomGameEditorControl::onDifficultyListRowSelect(shared_ptr<Base> control
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find difficultyType with name:" + name);
+		OKGame::log->error("Could not find difficultyType with name:" + name);
 		return;
 	}
 	currentDifficultyType = bt;
@@ -4949,7 +4949,7 @@ void CustomGameEditorControl::saveDifficultyPropTreeToCurrentDifficultyType()
 	shared_ptr<Properties> p = difficultyPropTree->Find("Difficulty Properties");
 	if (p == nullptr)
 	{
-		BobsGame::log.error("Could not find Difficulty Properties");
+		OKGame::log->error("Could not find Difficulty Properties");
 		return;
 	}
 
@@ -5227,7 +5227,7 @@ void PreviewRectangle::Render(Skin::Base* skin)
 	skin->GetRender()->SetDrawColor(m_Color);
 	//glPushMatrix();
 	//glLoadIdentity();
-	//bobsGame->setBobsGameFBOSize();
+	//bobsGame->setOKGameFBOSize();
 	//bobsGame->renderGameIntoFBO(bobsGame->getPlayer1Game());
 	//float x0 = customGameEditor->darkRectangle->LocalPosToCanvas(customGameEditor->darkRectangle->X()).x;
 	//float x1 = x0 + customGameEditor->darkRectangle->Width();
@@ -5237,8 +5237,8 @@ void PreviewRectangle::Render(Skin::Base* skin)
 	//GLUtils::bindFBO(0);
 	//GLUtils::drawIntoFBOAttachment(GLUtils::preColorFilterFBO); //draw to nD FBO screen texture
 	//GLUtils::setPreColorFilterViewport();
-	//bobsGame->drawBobsGameFBO(x0, x1, y0, y1);
-	//bobsGame->drawBobsGameFBO(0,Width(),0,Height());
+	//bobsGame->drawOKGameFBO(x0, x1, y0, y1);
+	//bobsGame->drawOKGameFBO(0,Width(),0,Height());
 	//glPopMatrix();
 	//customGameEditor->renderRotationPreview(skin);
 
@@ -5253,16 +5253,16 @@ void PreviewRectangle::Render(Skin::Base* skin)
 }
 
 //=========================================================================================================================
-void BobsGame::customGameEditorMenuUpdate()
+void OKGame::customGameEditorMenuUpdate()
 {//=========================================================================================================================
 
  //	if (customGameEditorMenu == nullptr)
  //	{
  //		customGameEditorMenu = make_shared<Menu>(this);
  //
- //		customGameEditorMenu->add("Back To Game", "Back To Game", BobColor::white);
- //		customGameEditorMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", BobColor::white);
- //		customGameEditorMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", BobColor::white);
+ //		customGameEditorMenu->add("Back To Game", "Back To Game", OKColor::white);
+ //		customGameEditorMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", OKColor::white);
+ //		customGameEditorMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", OKColor::white);
  //
  //		customGameEditorMenu->cursorPosition = customGameEditorMenuCursorPosition;
  //	}
@@ -5372,12 +5372,12 @@ void BobsGame::customGameEditorMenuUpdate()
 
 
 //=========================================================================================================================
-void BobsGame::customGameEditorMenuRender()
+void OKGame::customGameEditorMenuRender()
 {//=========================================================================================================================
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 	//
-	//	shared_ptr<BobTexture> t = keyboardTexture;
+	//	shared_ptr<OKTexture> t = keyboardTexture;
 	//
 	//	if (customGameEditorMenu == nullptr)return;
 	//
@@ -5412,7 +5412,7 @@ void BobsGame::customGameEditorMenuRender()
 
 		if (customGameEditor->windowOpen == false)
 		{
-			setBobsGameFBOSize();
+			setOKGameFBOSize();
 			renderGameIntoFBO(getPlayer1Game(), true);
 			//		float x0 = customGameEditor->darkRectangle->LocalPosToCanvas(customGameEditor->darkRectangle->X()).x;
 			//		float x1 = x0 + customGameEditor->darkRectangle->Width();
@@ -5422,7 +5422,7 @@ void BobsGame::customGameEditorMenuRender()
 			GLUtils::bindFBO(GLUtils::preColorFilterFBO);
 			GLUtils::drawIntoFBOAttachment(0); //draw to nD FBO screen texture
 			GLUtils::setPreColorFilterViewport();
-			//		drawBobsGameFBO(x0, x1, y0, y1);
+			//		drawOKGameFBO(x0, x1, y0, y1);
 
 
 

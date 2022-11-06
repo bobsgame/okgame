@@ -22,7 +22,7 @@ EnginePart::EnginePart(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 
-	//if(g==null)log.error("e is null");
+	//if(g==null)log->error("e is null");
 }
 
 //
@@ -133,7 +133,7 @@ int EnginePart::getMinutesSinceLastHere()
 	return (int)((ticksPassed / 1000) / 60);
 }
 
-shared_ptr<Engine> EnginePart::getEngine()
+Engine* EnginePart::getEngine()
 {
 	if(e==nullptr)return Main::gameEngine;
 	return e;
@@ -281,7 +281,7 @@ shared_ptr<NotificationManager> EnginePart::getNotificationManager()
 
 shared_ptr<TCPServerConnection> EnginePart::getServerConnection()
 {
-	return &BobNet::tcpServerConnection;
+	return &OKNet::tcpServerConnection;
 }
 
 GameSave EnginePart::getGameSave()

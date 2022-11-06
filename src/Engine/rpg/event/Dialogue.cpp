@@ -24,7 +24,7 @@ Dialogue::Dialogue(shared_ptr<Engine> g, int id)
 	{
 		if (getEventManager()->dialogueList.get(i)->getID() == data->getID())
 		{
-			log.error("Dialogue already exists:" + data->getName());
+			log->error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}
@@ -42,7 +42,7 @@ Dialogue::Dialogue(shared_ptr<Engine> g, shared_ptr<DialogueData> data)
 	{
 		if (getEventManager()->dialogueList.get(i)->getID() == data->getID())
 		{
-			log.error("Dialogue already exists:" + data->getName());
+			log->error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}

@@ -3,8 +3,8 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 #pragma once
-#include "bobtypes.h"
-#include "BobsGame.h"
+#include "oktypes.h"
+#include "OKGame.h"
 
 class Logger;
 class Grid;
@@ -208,9 +208,9 @@ public:
 	//int numBlocks = 1;
 	//int lastRotation = 0;
 
-	shared_ptr<BobColor >color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
+	shared_ptr<OKColor >color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
 private:
-	BobColor importExport_color;
+	OKColor importExport_color;
 public:
 
 	RotationSet rotationSet;												Info rotationSet_Info = Info("Block Placement And Rotation", "Design the layout of the blocks and rotation of the piece.");
@@ -281,7 +281,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	PieceType(const string &name, const string& spriteName = "", shared_ptr<BobColor >color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
+	PieceType(const string &name, const string& spriteName = "", shared_ptr<OKColor >color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
 	{//=========================================================================================================================
 		this->name = name;
 

@@ -57,7 +57,7 @@ void Engine::init()
 	//super::init();
 
 //#ifdef _DEBUG
-//	log.debug("Engine::init()");
+//	log->debug("Engine::init()");
 //#endif
 
 
@@ -98,12 +98,12 @@ void Engine::update()
 { //=========================================================================================================================
 
 	onlineFriends.clear();
-	for (int i = 0; i < (int)BobNet::udpConnections.size(); i++)
+	for (int i = 0; i < (int)OKNet::udpConnections.size(); i++)
 	{
-		shared_ptr<UDPPeerConnection> f = BobNet::udpConnections.get(i);
+		shared_ptr<UDPPeerConnection> f = OKNet::udpConnections.get(i);
 		if (f->getConnectedToPeer_S() == true && 
 			f->getGotFriendData_S() == true && 
-			f->peerStatus == BobNet::status_AVAILABLE)
+			f->peerStatus == OKNet::status_AVAILABLE)
 		{
 			if (onlineFriends.contains(f) == false)
 				onlineFriends.add(f);
@@ -161,7 +161,7 @@ void Engine::updateChatConsole()
 		{
 			if (!textStarted) { SDL_StartTextInput(); chatControlsManager->text = ""; textStarted = true; }
 
-			if (chatConsoleText == nullptr) { chatConsoleText = Main::rightConsole->add("Say: ",BobColor::magenta); chatConsoleText->alwaysOnBottom = true; }
+			if (chatConsoleText == nullptr) { chatConsoleText = Main::rightConsole->add("Say: ",OKColor::magenta); chatConsoleText->alwaysOnBottom = true; }
 
 			chatConsoleText->text = "Say: "+chatControlsManager->text;
 		}
@@ -296,72 +296,72 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	}
 	catch (exception)
 	{
-		log.error("Could not parse id in typeIDName");
+		log->error("Could not parse id in typeIDName");
 	}
 	
 
 
 	//global objects
-	if (String::startsWith(typeIDName, "MAP."))
+	if (OKString::startsWith(typeIDName, "MAP."))
 	{
 		return getMapManager()->getMapByIDBlockUntilLoaded(id);
 	}
-	if (String::startsWith(typeIDName, "SPRITE."))
+	if (OKString::startsWith(typeIDName, "SPRITE."))
 	{
 		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "DIALOGUE."))
+	if (OKString::startsWith(typeIDName, "DIALOGUE."))
 	{
 		return getEventManager()->getDialogueByIDCreateIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "CUTSCENEEVENT."))
+	if (OKString::startsWith(typeIDName, "CUTSCENEEVENT."))
 	{
 		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "EVENT."))
+	if (OKString::startsWith(typeIDName, "EVENT."))
 	{
 		return getEventManager()->getEventByIDCreateIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "FLAG."))
+	if (OKString::startsWith(typeIDName, "FLAG."))
 	{
 		return getEventManager()->getFlagByIDCreateIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "SKILL."))
+	if (OKString::startsWith(typeIDName, "SKILL."))
 	{
 		return getEventManager()->getSkillByIDCreateIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "GAMESTRING."))
+	if (OKString::startsWith(typeIDName, "GAMESTRING."))
 	{
 		return getEventManager()->getGameStringByIDCreateIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "MUSIC."))
+	if (OKString::startsWith(typeIDName, "MUSIC."))
 	{
 		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
 	}
-	if (String::startsWith(typeIDName, "SOUND."))
+	if (OKString::startsWith(typeIDName, "SOUND."))
 	{
 		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
 	}
 
 
 	//map objects (will only exist within the current map)
-	if (String::startsWith(typeIDName, "STATE."))
+	if (OKString::startsWith(typeIDName, "STATE."))
 	{
 		return getMapManager()->getMapStateByID(id);
 	}
-	if (String::startsWith(typeIDName, "ENTITY."))
+	if (OKString::startsWith(typeIDName, "ENTITY."))
 	{
 		return getMapManager()->getEntityByID(id);
 	}
-	if (String::startsWith(typeIDName, "AREA."))
+	if (OKString::startsWith(typeIDName, "AREA."))
 	{
 		return getMapManager()->getAreaByID(id);
 	}
-	if (String::startsWith(typeIDName, "LIGHT."))
+	if (OKString::startsWith(typeIDName, "LIGHT."))
 	{
 		return getMapManager()->getLightByID(id);
 	}
-	if (String::startsWith(typeIDName, "DOOR."))
+	if (OKString::startsWith(typeIDName, "DOOR."))
 	{
 		return getMapManager()->getDoorByID(id);
 	}
@@ -458,7 +458,7 @@ void Engine::updateTimers()
 	{
 		ticksThisSecond = 0;
 
-		//log.info("" + to_string(rendersThisSecond));
+		//log->info("" + to_string(rendersThisSecond));
 		framesThisSecond = 0;
 	}
 
@@ -614,7 +614,7 @@ bool Engine::serverMessageReceived(string e)// shared_ptr<ChannelHandlerContext>
   //
   //   try
   //   {
-  //      Thread::currentThread().setName("ClientTCP_BobsGameClientHandler");
+  //      Thread::currentThread().setName("ClientTCP_OKGameClientHandler");
   //   }
   //   catch (SecurityException ex)
   //   {
@@ -631,55 +631,55 @@ bool Engine::serverMessageReceived(string e)// shared_ptr<ChannelHandlerContext>
 //		return true;
 //	}
 //	else
-	if (String::startsWith(s, BobNet::Sprite_Response))
+	if (OKString::startsWith(s, OKNet::Sprite_Response))
 	{
 		incomingSpriteData(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::Map_Response))
+	if (OKString::startsWith(s, OKNet::Map_Response))
 	{
 		incomingMapData(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::Dialogue_Response))
+	if (OKString::startsWith(s, OKNet::Dialogue_Response))
 	{
 		incomingDialogue(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::Flag_Response))
+	if (OKString::startsWith(s, OKNet::Flag_Response))
 	{
 		incomingFlag(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::Skill_Response))
+	if (OKString::startsWith(s, OKNet::Skill_Response))
 	{
 		incomingSkill(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::Event_Response))
+	if (OKString::startsWith(s, OKNet::Event_Response))
 	{
 		incomingEvent(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::GameString_Response))
+	if (OKString::startsWith(s, OKNet::GameString_Response))
 	{
 		incomingGameString(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::Music_Response))
+	if (OKString::startsWith(s, OKNet::Music_Response))
 	{
 		incomingMusic(s);
 		return true;
 	}
 	else
-	if (String::startsWith(s, BobNet::Sound_Response))
+	if (OKString::startsWith(s, OKNet::Sound_Response))
 	{
 		incomingSound(s);
 		return true;
@@ -694,12 +694,12 @@ bool Engine::serverMessageReceived(string e)// shared_ptr<ChannelHandlerContext>
 
 void Engine::sendSpriteDataRequestByName(string spriteAssetName)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Sprite_Request_By_Name + spriteAssetName + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Sprite_Request_By_Name + spriteAssetName + OKNet::endline);
 }
 
 void Engine::sendSpriteDataRequestByID(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Sprite_Request_By_ID + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Sprite_Request_By_ID + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingSpriteData(string s)
@@ -714,7 +714,7 @@ void Engine::incomingSpriteData(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Sprite could not be decompressed.");
+		log->error("Sprite could not be decompressed.");
 	}
 	else
 	{
@@ -736,12 +736,12 @@ void Engine::incomingSpriteData(string s)
 
 void Engine::sendMapDataRequestByName(string mapName)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Map_Request_By_Name + mapName + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Map_Request_By_Name + mapName + OKNet::endline);
 }
 
 void Engine::sendMapDataRequestByID(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Map_Request_By_ID + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Map_Request_By_ID + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingMapData(string s)
@@ -755,7 +755,7 @@ void Engine::incomingMapData(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Map could not be decompressed.");
+		log->error("Map could not be decompressed.");
 	}
 	else
 	{
@@ -800,7 +800,7 @@ void Engine::sendServerObjectRequest(shared_ptr<ServerObject> serverObject)
 
 void Engine::sendDialogueRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Dialogue_Request + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Dialogue_Request + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingDialogue(string s)
@@ -815,7 +815,7 @@ void Engine::incomingDialogue(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Dialogue could not be decompressed.");
+		log->error("Dialogue could not be decompressed.");
 	}
 	else
 	{
@@ -827,7 +827,7 @@ void Engine::incomingDialogue(string s)
 
 void Engine::sendEventRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Event_Request + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Event_Request + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingEvent(string s)
@@ -842,7 +842,7 @@ void Engine::incomingEvent(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Event could not be decompressed.");
+		log->error("Event could not be decompressed.");
 	}
 	else
 	{
@@ -854,7 +854,7 @@ void Engine::incomingEvent(string s)
 
 void Engine::sendGameStringRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::GameString_Request + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::GameString_Request + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingGameString(string s)
@@ -869,7 +869,7 @@ void Engine::incomingGameString(string s)
 
 	if (data == nullptr)
 	{
-		log.error("GameString could not be decompressed.");
+		log->error("GameString could not be decompressed.");
 	}
 	else
 	{
@@ -880,7 +880,7 @@ void Engine::incomingGameString(string s)
 
 void Engine::sendFlagRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Flag_Request + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Flag_Request + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingFlag(string s)
@@ -895,7 +895,7 @@ void Engine::incomingFlag(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Flag could not be decompressed.");
+		log->error("Flag could not be decompressed.");
 	}
 	else
 	{
@@ -906,7 +906,7 @@ void Engine::incomingFlag(string s)
 
 void Engine::sendSkillRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Skill_Request + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Skill_Request + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingSkill(string s)
@@ -921,7 +921,7 @@ void Engine::incomingSkill(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Skill could not be decompressed.");
+		log->error("Skill could not be decompressed.");
 	}
 	else
 	{
@@ -932,7 +932,7 @@ void Engine::incomingSkill(string s)
 
 void Engine::sendMusicRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Music_Request + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Music_Request + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingMusic(string s)
@@ -946,7 +946,7 @@ void Engine::incomingMusic(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Music could not be decompressed.");
+		log->error("Music could not be decompressed.");
 	}
 	else
 	{
@@ -957,7 +957,7 @@ void Engine::incomingMusic(string s)
 
 void Engine::sendSoundRequest(int id)
 { //=========================================================================================================================
-	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Sound_Request + to_string(id) + BobNet::endline);
+	getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Sound_Request + to_string(id) + OKNet::endline);
 }
 
 void Engine::incomingSound(string s)
@@ -972,7 +972,7 @@ void Engine::incomingSound(string s)
 
 	if (data == nullptr)
 	{
-		log.error("Sound could not be decompressed.");
+		log->error("Sound could not be decompressed.");
 	}
 	else
 	{

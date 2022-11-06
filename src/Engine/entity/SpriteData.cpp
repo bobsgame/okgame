@@ -92,7 +92,7 @@ SpriteData::SpriteData
 
 void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X)
 { //=========================================================================================================================
-	animationList->add(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
+	animationList.add(new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
 }
 
 //shared_ptr<SpriteData> SpriteData::fromBase64ZippedJSON(const string& b64)
@@ -209,72 +209,72 @@ string& SpriteData::initFromString(string& t)
 
 	t = t.substr(t.find("isNPC:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isNPC = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isNPC = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isKid:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isKid = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isKid = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAdult:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAdult = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isAdult = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isMale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isMale = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isMale = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isFemale:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isFemale = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isFemale = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isCar:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isCar = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isCar = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isAnimal:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isAnimal = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isAnimal = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("hasShadow:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	hasShadow = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	hasShadow = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isRandom:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isRandom = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isRandom = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isDoor:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isDoor = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isDoor = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isGame:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isGame = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isGame = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("isItem:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	isItem = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	isItem = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceHQ2X:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceHQ2X = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	forceHQ2X = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("forceMD5Export:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	forceMD5Export = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	forceMD5Export = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 //
 //	t = t.substr(t.find("eventID:`") + 1);
@@ -313,7 +313,7 @@ string& SpriteData::initFromString(string& t)
 	t = t.substr(t.find("`,") + 2);
 
 
-	while(String::startsWith(t,"animationList:"))
+	while(OKString::startsWith(t,"animationList:"))
 	{
 		string frameSequenceName = "";
 		int frameStart = 0;
@@ -353,13 +353,13 @@ string& SpriteData::initFromString(string& t)
 		t = t.substr(t.find("`,") + 2);
 
 		shared_ptr<SpriteAnimationSequence >s = make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
-		animationList->add(s);
+		animationList.add(s);
 	}
 
 
 	t = t.substr(t.find("eventData:{") + 1);
 	t = t.substr(t.find("{") + 1);
-	while (String::startsWith(t, "}") == false)
+	while (OKString::startsWith(t, "}") == false)
 	{
 		shared_ptr<EventData> data = make_shared<EventData>();
 		t = data->initFromString(t);
@@ -537,9 +537,9 @@ string& SpriteData::getPaletteMD5()
 	return paletteMD5;
 }
 
-ArrayList<shared_ptr<SpriteAnimationSequence>>* SpriteData::getAnimationList()
+ArrayList<SpriteAnimationSequence>* SpriteData::getAnimationList()
 {
-	return animationList;
+	return &animationList;
 }
 
 

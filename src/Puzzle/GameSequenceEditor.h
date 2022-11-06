@@ -1,5 +1,5 @@
 
-#include "bobtypes.h"
+#include "oktypes.h"
 
 #include "Gwen/Platform.h"
 #include <Gwen/Controls/Base.h>
@@ -58,7 +58,7 @@ public:
 	}
 	const char* GetTypeName() { return "GameSequenceEditorControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",shared_ptr<BobsGame >b = nullptr);
+	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",shared_ptr<OKGame >b = nullptr);
     
     
 	void openLoadOrCreateDialog(bool allowedToClose);
@@ -185,7 +185,7 @@ private:
     
 public:
 	bool windowOpen = false;
-	shared_ptr<BobsGame> bobsGame = nullptr;
+	shared_ptr<OKGame> bobsGame = nullptr;
     
     
 	int fontHeight = 20;

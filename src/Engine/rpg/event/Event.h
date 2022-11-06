@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -710,9 +710,9 @@ private:
 
 	void startGame();
 
-	void startBobsGameOnStadiumScreen_AREA();
+	void startOKGameOnStadiumScreen_AREA();
 
-	void blockUntilBobsGameDead();
+	void blockUntilOKGameDead();
 
 	void showLoginScreen();
 

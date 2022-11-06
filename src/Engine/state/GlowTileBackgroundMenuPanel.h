@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -38,9 +38,9 @@ public:
 	};
 
 public:
-	ArrayList<shared_ptr<GlowTile>>* glowTiles = make_shared<ArrayList><shared_ptr<GlowTile>>();
-	ArrayList<shared_ptr<BobTexture>>* glowTileFramesTexture = make_shared<ArrayList><shared_ptr<BobTexture>>();
-	shared_ptr<BobTexture> bgScrollTexture = nullptr;
+	ArrayList<shared_ptr<GlowTile>> glowTiles;// = make_shared<ArrayList><shared_ptr<GlowTile>>();
+	ArrayList<shared_ptr<OKTexture>> glowTileFramesTexture;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
+	shared_ptr<OKTexture> bgScrollTexture = nullptr;
 	float bgScrollX = 0;
 	float bgScrollY = 0;
 	long long ticksPassed = 0;

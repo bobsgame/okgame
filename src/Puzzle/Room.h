@@ -6,7 +6,7 @@
 
 #pragma once
 #include <string>
-#include "bobtypes.h"
+#include "oktypes.h"
 #include <src/Engine/network/UDPPeerConnection.h>
 #include "GameSequence.h"
 
@@ -387,7 +387,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("hostUserID could not be parsed");
+			OKGame::log.error("hostUserID could not be parsed");
 			
 		}
 		multiplayer_HostUserID = hostUserID;
@@ -515,7 +515,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("numPlayers could not be parsed");
+			OKGame::log.error("numPlayers could not be parsed");
 			
 		}
 		multiplayer_NumPlayers = numPlayers;
@@ -526,7 +526,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse maxPlayers");
+			OKGame::log.error("Could not parse maxPlayers");
 			
 		}
 
@@ -536,7 +536,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse privateRoom");
+			OKGame::log.error("Could not parse privateRoom");
 			
 		}
 
@@ -546,7 +546,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse tournamentRoom");
+			OKGame::log.error("Could not parse tournamentRoom");
 			
 		}
 
@@ -558,7 +558,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse endlessMode");
+			OKGame::log.error("Could not parse endlessMode");
 			
 		}
 
@@ -568,7 +568,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse multiplayer_AllowDifferentDifficulties");
+			OKGame::log.error("Could not parse multiplayer_AllowDifferentDifficulties");
 			
 		}
 
@@ -578,7 +578,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse multiplayer_AllowDifferentGameSequences");
+			OKGame::log.error("Could not parse multiplayer_AllowDifferentGameSequences");
 			
 		}
 
@@ -588,7 +588,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse multiplayer_GameEndsWhenAllOpponentsLose");
+			OKGame::log.error("Could not parse multiplayer_GameEndsWhenAllOpponentsLose");
 			
 		}
 
@@ -598,7 +598,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel");
+			OKGame::log.error("Could not parse multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel");
 			
 		}
 
@@ -608,7 +608,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse multiplayer_DisableVSGarbage");
+			OKGame::log.error("Could not parse multiplayer_DisableVSGarbage");
 			
 		}
 
@@ -645,7 +645,7 @@ public:
 		}
 		catch (exception)
 		{
-			BobsGame::log.error("Could not parse room options");
+			OKGame::log.error("Could not parse room options");
 			
 		}
 
@@ -658,10 +658,10 @@ public:
 
 				if (gs == nullptr)
 				{
-					BobsGame::log.error("Could not parse received GameSequence");
+					OKGame::log.error("Could not parse received GameSequence");
 				}
 
-				BobsGame::saveUnknownGameSequencesAndTypesToXML(gs);
+				OKGame::saveUnknownGameSequencesAndTypesToXML(gs);
 
 				gameSequence = gs;
 				if (gs->gameTypes.size() == 1)
@@ -746,7 +746,7 @@ public:
 //		catch (exception)
 //		{
 //			rs = Room();
-//			BobsGame::log.error("Could not unserialize Room");
+//			OKGame::log.error("Could not unserialize Room");
 //		}
 //
 //		shared_ptr<Room >newRoom = make_shared<Room>();
@@ -761,11 +761,11 @@ public:
 //
 //				if (gs == nullptr)
 //				{
-//					BobsGame::log.error("Could not parse received GameSequence");
+//					OKGame::log.error("Could not parse received GameSequence");
 //					return nullptr;
 //				}
 //
-//				BobsGame::saveUnknownGameSequencesAndTypesToXML(gs);
+//				OKGame::saveUnknownGameSequencesAndTypesToXML(gs);
 //
 //				newRoom->gameSequence = gs;
 //				if (gs->gameTypes.size() == 1)

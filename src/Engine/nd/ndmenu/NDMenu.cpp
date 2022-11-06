@@ -18,7 +18,7 @@ Logger NDMenu::log = Logger("NDMenu");
 NDMenu::NDMenu()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log.info("NDMenu()");
+	log->info("NDMenu()");
 #endif
 
 }
@@ -28,7 +28,7 @@ NDMenu::NDMenu()
 NDMenu::~NDMenu()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log.info("~NDMenu()");
+	log->info("~NDMenu()");
 #endif
 }
 
@@ -38,7 +38,7 @@ NDMenu::NDMenu(ND* nD)
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("NDMenu(ND* nD)");
+	log->info("NDMenu(ND* nD)");
 #endif
 
 	this->nD = nD;
@@ -58,7 +58,7 @@ void NDMenu::init()
 
 
 #ifdef _DEBUG
-	log.info("NDMenu::init()");
+	log->info("NDMenu::init()");
 #endif
 
 
@@ -69,7 +69,7 @@ void NDMenu::init()
 	getAudioManager()->playMusic("nDMenuBackgroundMusic", 1.0f, 1.0f, true);
 }
 
-void NDMenu::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color)
+void NDMenu::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color)
 { //=========================================================================================================================
 
 	wheel->addGame(game, name, color);

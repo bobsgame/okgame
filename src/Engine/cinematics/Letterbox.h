@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -39,7 +39,7 @@ private:
 	bool on = false;
 
 
-	shared_ptr<BobColor> color = BobColor::black;
+	shared_ptr<OKColor> color = OKColor::black;
 
 	int ticksSlideDuration = 0;
 

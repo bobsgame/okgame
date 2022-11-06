@@ -114,7 +114,7 @@ void Grid::update()
 	//			for(int x=0;x<getWidth();x++)
 	//			{
 	//				Block b = get(x,y);
-	//				if(b!=null)b.update(BobsGame().ticksPassed());
+	//				if(b!=null)b.update(OKGame().ticksPassed());
 	//			}
 	//		}
 }
@@ -163,7 +163,7 @@ void Grid::reformat(int oldWidth, int oldHeight)
 	}
 #endif
 
-	//log.warn("Removed "+blockList.Count+" blocks");
+	//log->warn("Removed "+blockList.Count+" blocks");
 	
 	int x = 0;
 	int y = getHeight() - 1;
@@ -299,7 +299,7 @@ void Grid::replaceAllBlocksWithNewGameBlocks()
 
 				if (p->blocks.size() > 1)
 				{
-					log.error("Should not put a piece with multiple blocks in the grid");//could do this for tetrid, etc
+					log->error("Should not put a piece with multiple blocks in the grid");//could do this for tetrid, etc
 				}
 
 				if (p->blocks.size() > 0)
@@ -332,7 +332,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 	//ArrayList<shared_ptr<BlockType>> playingFieldBlockTypes = getCurrentGameType()->getPlayingFieldBlockTypes();
 	//ArrayList<shared_ptr<PieceType>> playingFieldPieceTypes = getCurrentGameType()->getPlayingFieldPieceTypes();
 
-	ArrayList<shared_ptr<BobColor>> acceptableColors;
+	ArrayList<shared_ptr<OKColor>> acceptableColors;
 	for (int b = 0; b < (int)blockTypes.size(); b++)
 	{
 		shared_ptr<BlockType> blockType = blockTypes.get(b);
@@ -381,7 +381,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 
 	if (acceptableColors.size() > 0)
 	{
-		shared_ptr<BobColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
+		shared_ptr<OKColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
 
 		if (p == nullptr)
 		{
@@ -416,7 +416,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<Piece> p, int x, int y, ArrayList<shared_ptr<PieceType>> &pieceTypes, ArrayList<shared_ptr<BlockType>> &blockTypes)
 {//=========================================================================================================================
 
-	ArrayList<shared_ptr<BobColor>> acceptableColors;
+	ArrayList<shared_ptr<OKColor>> acceptableColors;
 
 	for (int b = 0; b < (int)blockTypes.size(); b++)
 	{
@@ -429,7 +429,7 @@ shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<P
 
 			for (int i = 0; i < amtColors; i++)
 			{
-				shared_ptr<BobColor >c = blockType->colors.get(i);
+				shared_ptr<OKColor >c = blockType->colors.get(i);
 
 				if (acceptableColors.contains(c) == false)
 				{
@@ -443,25 +443,25 @@ shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<P
 	if (x > 0 && get(x - 1, y) != nullptr && get(x - 1, y)->getColor() != nullptr)
 	{
 		 //left
-		shared_ptr<BobColor >c = get(x - 1, y)->getColor();
+		shared_ptr<OKColor >c = get(x - 1, y)->getColor();
 		if(acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 	if (y < getHeight() - 1 && get(x, y + 1) != nullptr && get(x, y + 1)->getColor() != nullptr)
 	{
 		//down
-		shared_ptr<BobColor >c = get(x, y + 1)->getColor();
+		shared_ptr<OKColor >c = get(x, y + 1)->getColor();
 		if (acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 	if (y > 0 && get(x, y - 1) != nullptr && get(x, y - 1)->getColor() != nullptr)
 	{
 		 //up
-		shared_ptr<BobColor >c = get(x, y - 1)->getColor();
+		shared_ptr<OKColor >c = get(x, y - 1)->getColor();
 		if (acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 
 	if (acceptableColors.size() > 0)
 	{
-		shared_ptr<BobColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
+		shared_ptr<OKColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
 
 		if (p == nullptr)
 		{
@@ -601,7 +601,7 @@ void Grid::removeAndDestroyAllBlocksInGrid()
 
 			if (get(x, y) != nullptr)
 			{
-				log.error("2 blocks in the same place in deleteAllBlocks() fix this");
+				log->error("2 blocks in the same place in deleteAllBlocks() fix this");
 			}
 		}
 	}
@@ -1554,14 +1554,14 @@ void Grid::shakeHard()
 //{ //=========================================================================================================================
 //  //getGameEngine()->getCameraman()->setShakeScreen(600,20,20,60);
 //}
-//void BobsGameStadium::shakeSmall()
+//void OKGameStadium::shakeSmall()
 //{ //=========================================================================================================================
 //	getClientGameEngine()->getCameraman()->popZOOMto = getClientGameEngine()->getCameraman()->getZoom() - 0.1f;
 //	getClientGameEngine()->getCameraman()->setShakeScreen(300, 2, 2, 30);
 //	getClientGameEngine()->getCinematicsManager()->fadeColorFromTransparentToAlphaBackToTransparent(200, 255, 255, 255, 0.5f);
 //}
 //
-//void BobsGameStadium::shakeHard()
+//void OKGameStadium::shakeHard()
 //{ //=========================================================================================================================
 //	getClientGameEngine()->getCameraman()->popZOOMto = getClientGameEngine()->getCameraman()->getZoom() - 0.5f;
 //	getClientGameEngine()->getCameraman()->setShakeScreen(1000, 5, 5, 30);
@@ -1598,7 +1598,7 @@ void Grid::updateShake()
 
 		long long startTime = shakePlayingFieldStartTime;
 		long long currentTime = System::currentHighResTimer();
-		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime) * getGameLogic()->getBobsGame()->engineSpeed);
+		int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime) * getGameLogic()->getOKGame()->engineSpeed);
 
 		double xOverShakeTime = (Easing::easeInOutCircular(shakePlayingFieldTicksDuration/2 + ticksPassed, 0, shakePlayingFieldMaxX, shakePlayingFieldTicksDuration*2));
 		double yOverShakeTime = (Easing::easeInOutCircular(shakePlayingFieldTicksDuration/2 + ticksPassed, 0, shakePlayingFieldMaxY, shakePlayingFieldTicksDuration*2));
@@ -1700,7 +1700,7 @@ void Grid::add(int x, int y, shared_ptr<Block> b)
 {//=========================================================================================================================
 	if (b == nullptr || b == nullBlock)
 	{
-		log.error("Trying to add a null block to the grid");
+		log->error("Trying to add a null block to the grid");
 		return;
 	}
 
@@ -1710,19 +1710,19 @@ void Grid::add(int x, int y, shared_ptr<Block> b)
 
 	if (x < 0 || y < 0)
 	{
-		log.error("Trying to add a negative xy value block to the grid");
+		log->error("Trying to add a negative xy value block to the grid");
 		return; //don't put negative values in grid, but still set the xGrid yGrid since it's still attached to the piece.
 	}
 
 	if (x >= getWidth() || y >= getHeight())
 	{
-		log.error("Trying to add a block to the grid with xy value outside the grid");
+		log->error("Trying to add a block to the grid with xy value outside the grid");
 		return;
 	}
 
 	if (contains(x,y))
 	{
-		log.error("Trying to add a block in an occupied xy value.");
+		log->error("Trying to add a block in an occupied xy value.");
 		return;
 	}
 
@@ -1740,14 +1740,14 @@ bool Grid::contains(int x, int y)
 
 //	if (x < 0 || y < 0)
 //	{
-//		log.error("Trying to get a block with xy value less than 0");
+//		log->error("Trying to get a block with xy value less than 0");
 //		return false;
 //	}
 //
 //
 //	if (x >= getWidth() || y >= getHeight())
 //	{
-//		log.error("Trying to get a block from the grid with xy value greater than width or height");
+//		log->error("Trying to get a block from the grid with xy value greater than width or height");
 //		return false;
 //	}
 
@@ -1761,12 +1761,12 @@ bool Grid::contains(int index)
 
 //	if (index < 0)
 //	{
-//		log.error("Trying to get a block with index value less than 0");
+//		log->error("Trying to get a block with index value less than 0");
 //		return false;
 //	}
 //	if (index >= blocks.size())
 //	{
-//		log.error("Trying to get a block from the grid with index greater than size");
+//		log->error("Trying to get a block from the grid with index greater than size");
 //		return false;
 //	}
 
@@ -1795,13 +1795,13 @@ shared_ptr<Block> Grid::get(int x, int y)
 
 	if (x < 0 || y < 0)
 	{
-		log.error("Trying to get a block with xy value less than 0");
+		log->error("Trying to get a block with xy value less than 0");
 		return nullptr;
 	}
 
 	if (x >= getWidth() || y >= getHeight())
 	{
-		log.error("Trying to get a block from the grid with xy value greater than width or height");
+		log->error("Trying to get a block from the grid with xy value greater than width or height");
 		return nullptr;
 	}
 
@@ -1830,14 +1830,14 @@ shared_ptr<Block> Grid::remove(int x, int y, bool fadeOut, bool breakConnections
 
 	if (x < 0 || y < 0)
 	{
-		log.error("Trying to remove a block outside of bounds");
+		log->error("Trying to remove a block outside of bounds");
 		return nullptr;
 	}
 	else
 	{
 		if (contains(x,y) == false)
 		{
-			//log.error("Trying to remove a block that doesnt exist");
+			//log->error("Trying to remove a block that doesnt exist");
 
 			return nullptr;
 		}
@@ -1867,7 +1867,7 @@ shared_ptr<Block> Grid::remove(int x, int y, bool fadeOut, bool breakConnections
 
 			if (blocks.containsValue(b))
   			{
-  				log.error("Grid still contains block after removing it. Figure out why!");
+  				log->error("Grid still contains block after removing it. Figure out why!");
 			}
 
 			return b;
@@ -1881,7 +1881,7 @@ void Grid::remove(shared_ptr<Block> b, bool fadeOut, bool breakConnections)
 
 	if (b->xGrid < 0 || b->yGrid < 0)
 	{
-		log.error("Trying to remove a block outside of bounds");
+		log->error("Trying to remove a block outside of bounds");
 		return;
 	}
 
@@ -1889,14 +1889,14 @@ void Grid::remove(shared_ptr<Block> b, bool fadeOut, bool breakConnections)
 
 	if (c == nullptr)
 	{
-		log.warn("Trying to remove null block at " + to_string(b->xGrid) + "," + to_string(b->yGrid) + " Block trying to remove name: " + b->blockType->name + " Current game:" + getGameLogic()->currentGameType->name + " Previous game:" + getGameLogic()->previousGameString);
+		log->warn("Trying to remove null block at " + to_string(b->xGrid) + "," + to_string(b->yGrid) + " Block trying to remove name: " + b->blockType->name + " Current game:" + getGameLogic()->currentGameType->name + " Previous game:" + getGameLogic()->previousGameString);
 		return;
 	}
 
 	if (c != b)
 	{
 		string blockInGridName = c->blockType->name;
-		log.error("Removed block at " + to_string(b->xGrid) + "," + to_string(b->yGrid) + " does not match requested block, must have been two blocks in the same space"+" Block trying to remove name: "+b->blockType->name+" Block in grid name: "+blockInGridName+ " Current game:" + getGameLogic()->currentGameType->name + " Previous game:" + getGameLogic()->previousGameString);
+		log->error("Removed block at " + to_string(b->xGrid) + "," + to_string(b->yGrid) + " does not match requested block, must have been two blocks in the same space"+" Block trying to remove name: "+b->blockType->name+" Block in grid name: "+blockInGridName+ " Current game:" + getGameLogic()->currentGameType->name + " Previous game:" + getGameLogic()->previousGameString);
 	}
 }
 
@@ -2692,7 +2692,7 @@ void Grid::renderBackground()
 		for(int y=-1;y<height;y++)
 		{
 	
-			shared_ptr<BobColor >color = getGameLogic()->player->gridCheckeredBackgroundColor1;
+			shared_ptr<OKColor >color = getGameLogic()->player->gridCheckeredBackgroundColor1;
 	
 			if(y%2==0)
 			{
@@ -2718,13 +2718,13 @@ void Grid::renderBackground()
 	float b = getGameLogic()->player->gridCheckeredBackgroundColor1->bf();
 	
 	//draw danger zone
-	BobColor c(48, 48, 48);
+	OKColor c(48, 48, 48);
 
 	float y = getYInFBO();
 	float h = (float)cellH()*GameLogic::aboveGridBuffer;
 	GLUtils::drawFilledRectXYWH(getXInFBO(), y, (float)cellW()*getWidth(), (float)cellH()*GameLogic::aboveGridBuffer, c.rf(), c.gf(), c.bf(), alpha);
 
-	c = *BobColor::lightGray;
+	c = *OKColor::lightGray;
 	GLUtils::drawFilledRectXYWH(getXInFBO(), y+h-1, (float)cellW()*getWidth(), 1, c.rf(), c.gf(), c.bf(), alpha);
 
 
@@ -2907,14 +2907,14 @@ void Grid::renderBorder()
 	}
 
 
-	GLUtils::drawTexture(BobsGame::upperLeft, leftX0, leftX1, topY0, topY1, a, f);
-	GLUtils::drawTexture(BobsGame::top, leftX1, rightX0, topY0, topY1, a, f);
-	GLUtils::drawTexture(BobsGame::upperRight, rightX0, rightX1, topY0, topY1, a, f);
-	GLUtils::drawTexture(BobsGame::left, leftX0, leftX1, topY1, bottomY0, a, f);
-	GLUtils::drawTexture(BobsGame::right, rightX0, rightX1, topY1, bottomY0, a, f);
-	GLUtils::drawTexture(BobsGame::lowerLeft, leftX0, leftX1, bottomY0, bottomY1, a, f);
-	GLUtils::drawTexture(BobsGame::lowerRight, rightX0, rightX1, bottomY0, bottomY1, a, f);
-	GLUtils::drawTexture(BobsGame::bottom, leftX1, rightX0, bottomY0, bottomY1, a, f);
+	GLUtils::drawTexture(OKGame::upperLeft, leftX0, leftX1, topY0, topY1, a, f);
+	GLUtils::drawTexture(OKGame::top, leftX1, rightX0, topY0, topY1, a, f);
+	GLUtils::drawTexture(OKGame::upperRight, rightX0, rightX1, topY0, topY1, a, f);
+	GLUtils::drawTexture(OKGame::left, leftX0, leftX1, topY1, bottomY0, a, f);
+	GLUtils::drawTexture(OKGame::right, rightX0, rightX1, topY1, bottomY0, a, f);
+	GLUtils::drawTexture(OKGame::lowerLeft, leftX0, leftX1, bottomY0, bottomY1, a, f);
+	GLUtils::drawTexture(OKGame::lowerRight, rightX0, rightX1, bottomY0, bottomY1, a, f);
+	GLUtils::drawTexture(OKGame::bottom, leftX1, rightX0, bottomY0, bottomY1, a, f);
 
 
 
@@ -3134,7 +3134,7 @@ void Grid::setPiece(shared_ptr<Piece> piece, int x, int y)
 {//=========================================================================================================================
 	if (isWithinBounds(piece, x, y) == false)
 	{
-		log.error("Tried to set Piece outside of Grid bounds");
+		log->error("Tried to set Piece outside of Grid bounds");
 		return;
 	}
 
@@ -3257,7 +3257,7 @@ bool Grid::moveDownDisconnectedBlocksAboveBlankSpacesOneLine(ArrayList<shared_pt
 			{
 				if (b->xGrid != x || b->yGrid != y)
 				{
-					log.error(("xyGrid does not match! b.xGrid:") + to_string(b->xGrid) + (" b.yGrid:") + to_string(b->yGrid) + (" x:") + to_string(x) + (" y:") + to_string(y));
+					log->error(("xyGrid does not match! b.xGrid:") + to_string(b->xGrid) + (" b.yGrid:") + to_string(b->yGrid) + (" x:") + to_string(x) + (" y:") + to_string(y));
 				}
 
 				shared_ptr<Block> c = nullptr;
@@ -3384,8 +3384,8 @@ void Grid::setRandomBlockColors()
 void Grid::setRandomMatrixBlockColors()
 {//=========================================================================================================================
 	//
-	//		backgroundColor1 = make_shared<Color>(0.0f,BobsGame::randLessThanFloat(1.0f),0.0f);
-	//		backgroundColor2 = make_shared<Color>(0.0f,BobsGame::randLessThanFloat(1.0f),0.0f);
+	//		backgroundColor1 = make_shared<Color>(0.0f,OKGame::randLessThanFloat(1.0f),0.0f);
+	//		backgroundColor2 = make_shared<Color>(0.0f,OKGame::randLessThanFloat(1.0f),0.0f);
 	//
 	//
 	//		for(int x=0;x<getWidth();x++)

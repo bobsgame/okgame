@@ -94,7 +94,7 @@ string& DoorData::initFromString(string& t)
 
 	t = t.substr(t.find("randomNPCSpawnPoint:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomNPCSpawnPoint = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomNPCSpawnPoint = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnChance:`") + 1);
@@ -104,7 +104,7 @@ string& DoorData::initFromString(string& t)
 
 	t = t.substr(t.find("randomPointOfInterestOrExit:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomPointOfInterestOrExit = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomPointOfInterestOrExit = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnDelay:`") + 1);
@@ -114,22 +114,22 @@ string& DoorData::initFromString(string& t)
 
 	t = t.substr(t.find("randomSpawnKids:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnKids = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnKids = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnAdults:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnAdults = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnAdults = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnMales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnMales = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnMales = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("randomSpawnFemales:`") + 1);
 	t = t.substr(t.find("`") + 1);
-	randomSpawnFemales = BobBoolean::parseBoolean(t.substr(0, t.find("`")));
+	randomSpawnFemales = OKBoolean::parseBoolean(t.substr(0, t.find("`")));
 	t = t.substr(t.find("`,") + 2);
 
 	t = t.substr(t.find("destinationMapName:`") + 1);

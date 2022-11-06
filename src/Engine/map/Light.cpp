@@ -38,7 +38,7 @@ Light::Light(shared_ptr<Engine> g, const string& name, int mapXPixels1X, int map
 
 	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == false)
 	{
-		shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
+		shared_ptr<OKFile> textureFile = make_shared<OKFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
 		if (textureFile->exists())
 		{
 			MapManager::setLightTexturePNGFileExists_S(getFileName(),true);
@@ -53,9 +53,9 @@ Light::Light(shared_ptr<Engine> g, const string& name, int mapXPixels1X, int map
 
 	if (MapManager::getLightTexturePNGFileExists_S(getFileName()) == true)
 	{
-		shared_ptr<BobFile> textureFile = nullptr;
+		shared_ptr<OKFile> textureFile = nullptr;
 
-		textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
+		textureFile = make_shared<OKFile>(FileUtils::cacheDir + "l" + "/" + getFileName());
 
 
 		if (textureFile->exists() == false)
@@ -64,7 +64,7 @@ Light::Light(shared_ptr<Engine> g, const string& name, int mapXPixels1X, int map
 		}
 
 
-		shared_ptr<BobTexture> t = nullptr;
+		shared_ptr<OKTexture> t = nullptr;
 
 		if (getMapManager()->lightTextureHashMap.containsKey(getFileName()))
 			t = getMapManager()->lightTextureHashMap.get(getFileName());
@@ -78,7 +78,7 @@ Light::Light(shared_ptr<Engine> g, const string& name, int mapXPixels1X, int map
 			//				if(t==null || t==GLUtils.boxTexture)
 			//				{
 			//
-			//					log.error("Light graphic could not be created. Retrying...");
+			//					log->error("Light graphic could not be created. Retrying...");
 			//
 			//					createLightTexturePNG(FileUtils.cacheDir+"l"+FileUtils.slash+getFileName());
 			//
@@ -829,7 +829,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 					}
 				}
 
-				shared_ptr<BobColor >c = make_shared<BobColor>(r, g, b, alpha);
+				shared_ptr<OKColor >c = make_shared<OKColor>(r, g, b, alpha);
 				lightImage->setColor(c);
 				//set pixel
 				lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
@@ -843,7 +843,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	else
 	{
 		{
-			shared_ptr<BobColor >c = make_shared<BobColor>(r, g, b, maxBrightness);
+			shared_ptr<OKColor >c = make_shared<OKColor>(r, g, b, maxBrightness);
 			lightImage->setColor(c);
 			//lightImageGraphics.fillRect(lightBoxX, lightBoxY, lightBoxWidth, lightBoxHeight);
 			lightImage->fillRect(centerX, centerY, lightBoxWidth / 2, lightBoxHeight / 2);
@@ -902,9 +902,9 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 					}
 
 
-					//log.debug("X: "+xFromCenter+" | Y: "+yFromCenter);
-					//log.debug("Angle from center to x,y (radians): "+angle+" | Degrees: "+Math.toDegrees(angle));
-					//log.debug("Distance to edge of box from center: "+distanceToEdgeFromCenter);
+					//log->debug("X: "+xFromCenter+" | Y: "+yFromCenter);
+					//log->debug("Angle from center to x,y (radians): "+angle+" | Degrees: "+Math.toDegrees(angle));
+					//log->debug("Distance to edge of box from center: "+distanceToEdgeFromCenter);
 
 					if (distanceFromBoxEdgeToXY <= maxDistFromBox)
 					{
@@ -912,16 +912,16 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 
 						int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-						shared_ptr<BobColor >c = nullptr;
+						shared_ptr<OKColor >c = nullptr;
 
 						if (alpha > 255 || alpha < 0)
 						{
-							c = (make_shared<BobColor>(255, 0, 255, 255));
+							c = (make_shared<OKColor>(255, 0, 255, 255));
 						}
 						else
 						{
 							//set color
-							c = (make_shared<BobColor>(r, g, b, alpha));
+							c = (make_shared<OKColor>(r, g, b, alpha));
 						}
 						lightImage->setColor(c);
 						//set pixel
@@ -945,14 +945,14 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			shared_ptr<BobColor >c = nullptr;
+			shared_ptr<OKColor >c = nullptr;
 			if (alpha > 255)
 			{
-				c = (make_shared<BobColor>(255, 0, 255, 255));
+				c = (make_shared<OKColor>(255, 0, 255, 255));
 			}
 			else
 			{
-				c = (make_shared<BobColor>(r, g, b, alpha));
+				c = (make_shared<OKColor>(r, g, b, alpha));
 			}
 			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
@@ -976,14 +976,14 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			shared_ptr<BobColor >c = nullptr;
+			shared_ptr<OKColor >c = nullptr;
 			if (alpha > 255)
 			{
-				c = (make_shared<BobColor>(255, 0, 255, 255));
+				c = (make_shared<OKColor>(255, 0, 255, 255));
 			}
 			else
 			{
-				c = (make_shared<BobColor>(r, g, b, alpha));
+				c = (make_shared<OKColor>(r, g, b, alpha));
 			}
 			lightImage->setColor(c);
 			lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);

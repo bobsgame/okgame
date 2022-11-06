@@ -40,7 +40,7 @@ using namespace Gwen::Controls;
 
 
 //GWEN_CONTROL_CONSTRUCTOR(GameSequenceEditorControl)
-GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<BobsGame >b) : Base(pParent, pName)
+GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame >b) : Base(pParent, pName)
 {//=========================================================================================================================
 
 	this->bobsGame = b;
@@ -83,7 +83,7 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 
 		saveButton = make_shared<Button>(applyButtonsBase);
 		saveButton->SetText(L"Save");
-		//saveButton->SetToolTip("Saves to XML in " + string(SDL_GetPrefPath("Bob Corporation", "bob's game")) + ".  Renames existing file with versioning.");
+		//saveButton->SetToolTip("Saves to XML in " + string(SDL_GetPrefPath("OK Corporation", "bob's game")) + ".  Renames existing file with versioning.");
 		saveButton->Dock(Pos::Left | Pos::Center);
 		saveButton->SetWidth(50);
 		saveButton->onPress.Add(this, &GameSequenceEditorControl::onSaveButton);
@@ -408,14 +408,14 @@ using Poco::Path;
 void GameSequenceEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameType>, pair<string, shared_ptr<BobColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	ArrayList<pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<shared_ptr<GameType>, pair<string, shared_ptr<BobColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
 		shared_ptr<GameType >g = gameTypeStringColorPairPair.first;
-		pair<string, shared_ptr<BobColor>> stringColorPair = gameTypeStringColorPairPair.second;
+		pair<string, shared_ptr<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<BobColor >color = stringColorPair.second;
+		shared_ptr<OKColor >color = stringColorPair.second;
 
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		//row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameTypesListSelect);
@@ -428,14 +428,14 @@ void GameSequenceEditorControl::populateGameTypesListBox()
 void GameSequenceEditorControl::populateGameSequencesListBox()
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<BobColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<shared_ptr<GameSequence>, pair<string, shared_ptr<BobColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
 		shared_ptr<GameSequence >g = gameSequenceStringColorPairPair.first;
-		pair<string, shared_ptr<BobColor>> stringColorPair = gameSequenceStringColorPairPair.second;
+		pair<string, shared_ptr<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<BobColor >color = stringColorPair.second;
+		shared_ptr<OKColor >color = stringColorPair.second;
 
 		Layout::TableRow *row = gameSequencesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameSequencesListSelect);
@@ -465,7 +465,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	}
 
 	string name = currentGameSequenceNameTextBox->GetText().c_str();
-	BobsGame::log.debug(name);
+	OKGame::log->debug(name);
 
 	while (name.find("`") != string::npos)
 	{
@@ -499,7 +499,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	currentGameSequence->name = name;
 
 	string desc = currentGameSequenceDescriptionTextBox->GetText().c_str();
-	BobsGame::log.debug(desc);
+	OKGame::log->debug(desc);
 	if (desc == "")desc = "This is my new game sequence description.";
 	currentGameSequence->description = desc;
 
@@ -534,7 +534,7 @@ void GameSequenceEditorControl::onGameSequencesListSelect(shared_ptr<Base> contr
 
 	if (s == nullptr)
 	{
-		BobsGame::log.error("Could not find game sequence with uuid:" + uuid);
+		OKGame::log->error("Could not find game sequence with uuid:" + uuid);
 		return;
 	}
 
@@ -761,7 +761,7 @@ void GameSequenceEditorControl::duplicateGameSequence(shared_ptr<Base> control)
  //the only thing we would do is load the selected game type and then append the name with "copy"
 	if (gameSequencesListBox->IsAnyRowSelected() == false)return;
 
-	//BobsGame::log.debug(to_string(currentGameType->pieceTypes.size()));
+	//OKGame::log->debug(to_string(currentGameType->pieceTypes.size()));
 
 	shared_ptr<GameSequence >s = make_shared<GameSequence>();
 	string uuid = s->uuid;
@@ -769,7 +769,7 @@ void GameSequenceEditorControl::duplicateGameSequence(shared_ptr<Base> control)
 	s->uuid = uuid;
 	//s->builtInType = false;
 	s->downloaded = false;
-	//BobsGame::log.debug(to_string(s->pieceTypes.size()));
+	//OKGame::log->debug(to_string(s->pieceTypes.size()));
 
 
 	s->name += " Copy";
@@ -821,7 +821,7 @@ void GameSequenceEditorControl::deleteGameSequence(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		BobsGame::log.error("Could not find GameSequence with uuid:" + uuid);
+		OKGame::log->error("Could not find GameSequence with uuid:" + uuid);
 		return;
 	}
 
@@ -922,7 +922,7 @@ void GameSequenceEditorControl::onUploadButton(shared_ptr<Base> control)
 
 
 	//GameType:XML:name:uuid
-	bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameTypesAndSequences_Upload_Request+"GameSequence:" + zip + ":`" + g.name + "`:" + g.uuid + ":" + BobNet::endline);
+	bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Upload_Request+"GameSequence:" + zip + ":`" + g.name + "`:" + g.uuid + ":" + OKNet::endline);
 
 	string response = "";
 	int tries = 0;
@@ -930,7 +930,7 @@ void GameSequenceEditorControl::onUploadButton(shared_ptr<Base> control)
 	{
 		tries++;
 		Main::delay(500);
-		response = bobsGame->getServerConnection()->getAndResetBobsGameGameTypesAndSequencesUploadResponse_S();
+		response = bobsGame->getServerConnection()->getAndResetOKGameGameTypesAndSequencesUploadResponse_S();
 		if (response != "")
 		{
 			break;
@@ -1142,16 +1142,16 @@ void GameSequenceEditorControl::onDownButton(shared_ptr<Base> control)
 
 
 //=========================================================================================================================
-void BobsGame::gameSequenceEditorMenuUpdate()
+void OKGame::gameSequenceEditorMenuUpdate()
 {//=========================================================================================================================
 
  //	if (gameSequenceEditorMenu == nullptr)
  //	{
  //		gameSequenceEditorMenu = make_shared<Menu>(this);
  //
- //		gameSequenceEditorMenu->add("Back To Game", "Back To Game", BobColor::white);
- //		gameSequenceEditorMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", BobColor::white);
- //		gameSequenceEditorMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", BobColor::white);
+ //		gameSequenceEditorMenu->add("Back To Game", "Back To Game", OKColor::white);
+ //		gameSequenceEditorMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", OKColor::white);
+ //		gameSequenceEditorMenu->add("Quit Game And Return To Title Screen", "Quit Game And Return To Title Screen", OKColor::white);
  //
  //		gameSequenceEditorMenu->cursorPosition = gameSequenceEditorMenuCursorPosition;
  //	}
@@ -1247,12 +1247,12 @@ void BobsGame::gameSequenceEditorMenuUpdate()
 }
 
 //=========================================================================================================================
-void BobsGame::gameSequenceEditorMenuRender()
+void OKGame::gameSequenceEditorMenuRender()
 {//=========================================================================================================================
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 	//
-	//	shared_ptr<BobTexture> t = keyboardTexture;
+	//	shared_ptr<OKTexture> t = keyboardTexture;
 	//
 	//	if (gameSequenceEditorMenu == nullptr)return;
 	//

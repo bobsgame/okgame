@@ -4,9 +4,9 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include <src/Engine/rpg/FriendCharacter.h>
-#include "BobNet.h"
+#include "OKNet.h"
 #include <src/Engine/EnginePart.h>
 #include <queue>
 #include <mutex>
@@ -84,7 +84,7 @@ public:
 
 	long long peerUserID = -1;
 	int peerType = -1;
-	int peerStatus = BobNet::status_AVAILABLE;// TODO need to send current status, away, busy, private, do not disturb, playing nD game, etc.
+	int peerStatus = OKNet::status_AVAILABLE;// TODO need to send current status, away, busy, private, do not disturb, playing nD game, etc.
 
 	static const int FACEBOOK_TYPE = 0;
 	static const int USERNAME_TYPE = 1;
@@ -236,7 +236,7 @@ public:
 #endif
 			if (_peerIPAddress_S != nullptr)
 			{
-				delete _peerIPAddress_S;
+				//delete _peerIPAddress_S;
 				_peerIPAddress_S = nullptr;
 			}
 			_peerPort_S = port;
@@ -246,7 +246,7 @@ public:
 			_peerIPAddress_S = make_shared<IPaddress>();
 			_peerPort_S = port;
 
-			if (SDLNet_ResolveHost(_peerIPAddress_S, ipAddressString.c_str(), port) < 0)
+			if (SDLNet_ResolveHost(_peerIPAddress_S.get(), ipAddressString.c_str(), port) < 0)
 			{
 				threadLogWarn_S("Could not resolve peer host: " + string(SDLNet_GetError()));
 				SDL_ClearError();
@@ -506,7 +506,7 @@ private:
 	};
 	typedef HashMap<long long, long long> HashMapLongLongLongLong;
 	shared_ptr<HashMapLongLongLongLong >_frameSentTimes = make_shared<HashMapLongLongLongLong>();
-	ArrayList<long long> *_frameRoundaboutTicks = make_shared<ArrayList><long long>();
+	ArrayList<long long> _frameRoundaboutTicks;// = make_shared<ArrayList><long long>();
 	//------------------------------------
 	//thread only functions
 	//------------------------------------

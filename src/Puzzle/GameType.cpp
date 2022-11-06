@@ -238,10 +238,10 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     
 	if (version < 5)
 	{
-		BobColor gridBorderColor = BobColor();
-		BobColor gridCheckeredBackgroundColor1 = BobColor();
-		BobColor gridCheckeredBackgroundColor2 = BobColor();
-		BobColor screenBackgroundColor = BobColor();
+		OKColor gridBorderColor = OKColor();
+		OKColor gridCheckeredBackgroundColor1 = OKColor();
+		OKColor gridCheckeredBackgroundColor2 = OKColor();
+		OKColor screenBackgroundColor = OKColor();
 		ar & BOOST_SERIALIZATION_NVP(gridBorderColor);
 		ar & BOOST_SERIALIZATION_NVP(gridCheckeredBackgroundColor1);
 		ar & BOOST_SERIALIZATION_NVP(gridCheckeredBackgroundColor2);
@@ -523,7 +523,7 @@ string GameType::toBase64GZippedXML()
 	std::stringstream ss;
 	boost::archive::xml_oarchive oarchive(ss);
 	oarchive << BOOST_SERIALIZATION_NVP(gs);
-	log.debug(ss.str());
+	log->debug(ss.str());
 	string zip = FileUtils::zipStringToBase64String(ss.str());
 	return zip;
 }
@@ -552,7 +552,7 @@ shared_ptr<GameType >GameType::fromBase64GZippedXML(string b64GZipXML)
 	}
 	catch(exception)
 	{
-		log.error("Could not unserialize GameType");
+		log->error("Could not unserialize GameType");
 	}
 
 	return nullptr;
@@ -878,7 +878,7 @@ shared_ptr<BlockType> GameType::getBlockTypeByName(string s)
 		}
 	}
 
-	log.error("Could not find blockType: " + s + " in " + name);
+	log->error("Could not find blockType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -894,7 +894,7 @@ shared_ptr<PieceType> GameType::getPieceTypeByName(string s)
 		}
 	}
 
-	log.error("Could not find PieceType: " + s + " in " + name);
+	log->error("Could not find PieceType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -910,7 +910,7 @@ shared_ptr<BlockType> GameType::getBlockTypeByUUID(string s)
 		}
 	}
 
-	log.error("Could not find blockType: " + s + " in " + name);
+	log->error("Could not find blockType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -926,7 +926,7 @@ shared_ptr<PieceType> GameType::getPieceTypeByUUID(string s)
 		}
 	}
 
-	log.error("Could not find PieceType: " + s + " in " + name);
+	log->error("Could not find PieceType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -944,7 +944,7 @@ shared_ptr<DifficultyType> GameType::getDifficultyByName(string s)
 		}
 	}
 
-	log.error("Could not find difficulty: " + s + " in " + name);
+	log->error("Could not find difficulty: " + s + " in " + name);
 	
 	return nullptr;
 }

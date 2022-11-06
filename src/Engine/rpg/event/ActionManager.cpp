@@ -235,7 +235,7 @@ void ActionManager::makeCaption(const string& label)
 	*/
 
 
-	actionCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, label, BobFont::font_small_16_outlined_smooth, BobColor::white, nullptr, BobColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
+	actionCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, label, OKFont::font_small_16_outlined_smooth, OKColor::white, nullptr, OKColor::clear, RenderOrder::ABOVE_TOP, 1.0f, 0);
 
 
 	actionIconScreenSprite->screenXPixelsHQ = actionCaption->screenX - (actionIconScreenSprite->getWidth() + 4); //move action icon sprite

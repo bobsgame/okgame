@@ -25,7 +25,7 @@ AudioFile::AudioFile(shared_ptr<AudioData> data)
 		if (AudioManager::globalAudioFileList.get(i)->getName() == data->getName())
 		{
 			if (AudioManager::globalAudioFileList.get(i)->getID() == -1)AudioManager::globalAudioFileList.get(i)->setID(data->getID());
-			//log.warn("Sound already exists:" + data->getName());
+			//log->warn("Sound already exists:" + data->getName());
 			return;
 		}
 	}
@@ -37,7 +37,7 @@ AudioFile::AudioFile(string filename)
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("Loading " + filename);
+	log->info("Loading " + filename);
 #endif
 	string name = string(filename);
 	int found = (int)name.find('/');
@@ -63,7 +63,7 @@ AudioFile::AudioFile(string filename)
 
 	AudioManager::globalAudioFileList.add(this);
 
-	log.info("Loaded " + filename);
+	log->info("Loaded " + filename);
 
 }
 
@@ -196,7 +196,7 @@ void AudioFile::update()
 				}
 				//               else
 				//               {
-				//                  log.warn("Download thread timed out for Sound: " + name());
+				//                  log->warn("Download thread timed out for Sound: " + name());
 				//                  downloadThread->start();
 				//               }
 				//            }

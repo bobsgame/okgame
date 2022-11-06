@@ -55,7 +55,7 @@ void TCPServerConnection::update()
 
 		//log.info("LZ4: " + s.substr(0, min(s.length(),160)));
 
-		if (String::startsWith(s, "PARTIAL:"))
+		if (OKString::startsWith(s, "PARTIAL:"))
 		{
 			s = s.substr(s.find(":") + 1);
 
@@ -63,7 +63,7 @@ void TCPServerConnection::update()
 			partialPacketString += s;
 		}
 		else
-		if (String::startsWith(s, "FINAL:"))
+		if (OKString::startsWith(s, "FINAL:"))
 		{
 			s = s.substr(s.find(":") + 1);
 
@@ -74,7 +74,7 @@ void TCPServerConnection::update()
 			partialPacketString = "";
 
 			//strip off endline
-			packet = packet.substr(0, packet.find(BobNet::endline));
+			packet = packet.substr(0, packet.find(OKNet::endline));
 
 #ifdef _DEBUG
 			if(packet.find("Login")!=string::npos || packet.find("Reconnect") != string::npos || packet.find("Create_Account") != string::npos)log.info("FROM SERVER: " + packet.substr(0, packet.find(":")+1));
@@ -94,7 +94,7 @@ void TCPServerConnection::update()
 			string packet = FileUtils::unlz4Base64StringToString(s);
 
 			//strip off endline
-			packet = packet.substr(0, packet.find(BobNet::endline));
+			packet = packet.substr(0, packet.find(OKNet::endline));
 
 #ifdef _DEBUG
 			if (packet.find("Login") != string::npos || packet.find("Reconnect") != string::npos || packet.find("Create_Account") != string::npos)log.info("FROM SERVER: " + packet.substr(0, packet.find(":") + 1));
@@ -196,7 +196,7 @@ void TCPServerConnection::_updateServerStats()
 		{
 
 			_lastSentGetServerStatsTime = currentTime;
-			write_S(BobNet::Server_Stats_Request + BobNet::endline);
+			write_S(OKNet::Server_Stats_Request + OKNet::endline);
 
 		}
 
@@ -209,7 +209,7 @@ void TCPServerConnection::_getClientLocation()
 	if (ensureConnectedToServerThreadBlock_S() && _requestedClientLocation == false)
 	{
 		_requestedClientLocation = true;
-		write_S(BobNet::Client_Location_Request + BobNet::endline);
+		write_S(OKNet::Client_Location_Request + OKNet::endline);
 	}
 }
 	
@@ -232,7 +232,7 @@ void TCPServerConnection::_sendKeepAlivePing()
 			if (pingTicksPassed > 10000)
 			{
 				_lastSentPingTime = currentTime;
-				write_S("ping" + BobNet::endline);
+				write_S("ping" + OKNet::endline);
 			}
 		}
 	}
@@ -279,7 +279,7 @@ void TCPServerConnection::_getInitialGameSave()
 			else
 			{
 				_initialGameSaveReceived_nonThreaded = true; //non threaded, a bit faster.
-				Main::console->add("Authorized on server: " + getGameSave_S().userName, 5000, BobColor::green);
+				Main::console->add("Authorized on server: " + getGameSave_S().userName, 5000, OKColor::green);
 			}
 		}
 		return;
@@ -295,7 +295,7 @@ void TCPServerConnection::setDisconnectedFromServer_S(string reason)
 	//initialGameSaveReceived_nonThreaded = false;
 
 	threadLogWarn_S(string("Disconnected from server: "+reason));
-	Main::console->add("Disconnected from Server: "+ reason, 5000, BobColor::red);
+	Main::console->add("Disconnected from Server: "+ reason, 5000, OKColor::red);
 
 	SDLNet_TCP_Close(getSocket_S());
 
@@ -401,7 +401,7 @@ void TCPServerConnection::_checkForIncomingTraffic()
 				_truncatedPacketString = "";
 			}
 
-			if (s.find(BobNet::endline) == string::npos)
+			if (s.find(OKNet::endline) == string::npos)
 			{
 				//threadLogWarn_S("Packet doesn't contain endline, waiting for next packet to append to.");
 				_truncatedPacketString += s;
@@ -409,17 +409,17 @@ void TCPServerConnection::_checkForIncomingTraffic()
 			else
 			{
 				//handled below
-//				if (s.substr(s.length() - BobNet::endline.length()) != BobNet::endline)
+//				if (s.substr(s.length() - OKNet::endline.length()) != OKNet::endline)
 //				{
-//					threadLogWarn_S("Packet doesn't end in endline, ends in: " + s.substr(s.length() - BobNet::endline.length()) + " | Full packet: "+s);
+//					threadLogWarn_S("Packet doesn't end in endline, ends in: " + s.substr(s.length() - OKNet::endline.length()) + " | Full packet: "+s);
 //				}
 
-				while (s.find(BobNet::endline) != string::npos)
+				while (s.find(OKNet::endline) != string::npos)
 				{
 
 					//strip off endline
-					string packet = s.substr(0, s.find(BobNet::endline));
-					s = s.substr(s.find(BobNet::endline) + BobNet::endline.length());
+					string packet = s.substr(0, s.find(OKNet::endline));
+					s = s.substr(s.find(OKNet::endline) + OKNet::endline.length());
 
 					setLastReceivedDataTime_S(System::currentHighResTimer());
 
@@ -428,15 +428,15 @@ void TCPServerConnection::_checkForIncomingTraffic()
 //					threadLogInfo_S("RAW FROM SERVER: " + packet.substr(0, min(packet.length(), 160)));
 //#endif
 
-					if (String::startsWith(packet, "ping"))
+					if (OKString::startsWith(packet, "ping"))
 					{
 						//log.debug("SERVER: ping");
-						write_S("pong" + BobNet::endline);
+						write_S("pong" + OKNet::endline);
 						delete sp;
 						return;
 					}
 
-					if (String::startsWith(packet, "pong"))
+					if (OKString::startsWith(packet, "pong"))
 					{
 						delete sp;
 						return;
@@ -501,7 +501,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 				//resolve load balancer
 				if(_loadBalancerAddress == nullptr)
 				{
-					Main::console->add("Connecting to server...", 5000, BobColor::green);
+					Main::console->add("Connecting to server...", 5000, OKColor::green);
 					//Main::whilefix();
 					threadLogDebug_S("Resolving host to load balancer...");
 
@@ -512,7 +512,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 						SDL_ClearError();
 						_couldNotResolveLoadBalancer = true;
 						threadLogWarn_S("Networking is disabled");
-						Main::console->add("Could not connect to server: Networking is disabled.", 5000, BobColor::red);
+						Main::console->add("Could not connect to server: Networking is disabled.", 5000, OKColor::red);
 						return false;
 					}
 
@@ -572,7 +572,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 				_lastSentServerIPRequestTime = currentTime;
 
-				write_S(BobNet::Server_IP_Address_Request + BobNet::endline);
+				write_S(OKNet::Server_IP_Address_Request + OKNet::endline);
 			}
 			//wait for server to return IP in message response (handled elsewhere)
 			//message response will set server IP which will break out of the loop or try again with a new server
@@ -669,7 +669,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 				setSocketAddedToSet_S(true);
 
 			threadLogDebug_S("Connected to server.");
-			Main::console->add("Connected to server.", 5000, BobColor::green);
+			Main::console->add("Connected to server.", 5000, OKColor::green);
 
 			//wait for the server to open the channel
 
@@ -698,7 +698,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 //			//set session authorized
 //
 //			//write immediately in this thread, don't create another thread, because the queue is already blocking on this one!
-//			write_S(BobNet::Reconnect_Request + "`" + to_string(getUserID_S()) + "`,`" + getSessionToken_S() + "`" + BobNet::endline);
+//			write_S(OKNet::Reconnect_Request + "`" + to_string(getUserID_S()) + "`,`" + getSessionToken_S() + "`" + OKNet::endline);
 //		}
 //		else
 //		{
@@ -734,139 +734,139 @@ bool TCPServerConnection::messageReceived(string &s)// shared_ptr<ChannelHandler
 
 
 
-	if (String::startsWith(s, BobNet::Server_IP_Address_Response))
+	if (OKString::startsWith(s, OKNet::Server_IP_Address_Response))
 	{
 		incomingServerIPAddressResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Server_Stats_Response))
+	if (OKString::startsWith(s, OKNet::Server_Stats_Response))
 	{
 		incomingServerStatsResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Client_Location_Response))
+	if (OKString::startsWith(s, OKNet::Client_Location_Response))
 	{
 		incomingClientLocationResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Login_Response))
+	if (OKString::startsWith(s, OKNet::Login_Response))
 	{
 		incomingLoginResponse(s);
 		return true;
 	}
 
-//	if (String::startsWith(s, BobNet::Facebook_Login_Response))
+//	if (OKString::startsWith(s, OKNet::Facebook_Login_Response))
 //	{
 //		incomingFacebookCreateAccountOrLoginResponse(s);
 //		return true;
 //	}
 
-	if (String::startsWith(s, BobNet::Reconnect_Response))
+	if (OKString::startsWith(s, OKNet::Reconnect_Response))
 	{
 		incomingReconnectResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Tell_Client_Their_Session_Was_Logged_On_Somewhere_Else))
+	if (OKString::startsWith(s, OKNet::Tell_Client_Their_Session_Was_Logged_On_Somewhere_Else))
 	{
 		incomingSessionWasLoggedOnSomewhereElse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Tell_Client_Servers_Are_Shutting_Down))
+	if (OKString::startsWith(s, OKNet::Tell_Client_Servers_Are_Shutting_Down))
 	{
 		incomingServersAreShuttingDown(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Tell_Client_Servers_Have_Shut_Down))
+	if (OKString::startsWith(s, OKNet::Tell_Client_Servers_Have_Shut_Down))
 	{
 		incomingServersHaveShutDown(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Password_Recovery_Response))
+	if (OKString::startsWith(s, OKNet::Password_Recovery_Response))
 	{
 		incomingPasswordRecoveryResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Create_Account_Response))
+	if (OKString::startsWith(s, OKNet::Create_Account_Response))
 	{
 		incomingCreateAccountResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Initial_GameSave_Response))
+	if (OKString::startsWith(s, OKNet::Initial_GameSave_Response))
 	{
 		incomingInitialGameSaveResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Encrypted_GameSave_Update_Response))
+	if (OKString::startsWith(s, OKNet::Encrypted_GameSave_Update_Response))
 	{
 		incomingGameSaveUpdateResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Update_Facebook_Account_In_DB_Response))
+	if (OKString::startsWith(s, OKNet::Update_Facebook_Account_In_DB_Response))
 	{
 		incomingUpdateFacebookAccountInDBResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Online_Friends_List_Response))
+	if (OKString::startsWith(s, OKNet::Online_Friends_List_Response))
 	{
 		incomingOnlineFriendsListResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Friend_Is_Online_Notification))
+	if (OKString::startsWith(s, OKNet::Friend_Is_Online_Notification))
 	{
 		incomingFriendOnlineNotification(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Add_Friend_By_UserName_Response))
+	if (OKString::startsWith(s, OKNet::Add_Friend_By_UserName_Response))
 	{
 		incomingAddFriendByUserNameResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Bobs_Game_GameTypesAndSequences_Download_Response))
+	if (OKString::startsWith(s, OKNet::OK_Game_GameTypesAndSequences_Download_Response))
 	{
-		incomingBobsGameGameTypesAndSequencesDownloadResponse(s);
+		incomingOKGameGameTypesAndSequencesDownloadResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Bobs_Game_GameTypesAndSequences_Upload_Response))
+	if (OKString::startsWith(s, OKNet::OK_Game_GameTypesAndSequences_Upload_Response))
 	{
-		incomingBobsGameGameTypesAndSequencesUploadResponse(s);
+		incomingOKGameGameTypesAndSequencesUploadResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Bobs_Game_GameTypesAndSequences_Vote_Response))
+	if (OKString::startsWith(s, OKNet::OK_Game_GameTypesAndSequences_Vote_Response))
 	{
-		incomingBobsGameGameTypesAndSequencesVoteResponse(s);
+		incomingOKGameGameTypesAndSequencesVoteResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Bobs_Game_RoomList_Response))
+	if (OKString::startsWith(s, OKNet::OK_Game_RoomList_Response))
 	{
-		incomingBobsGameRoomListResponse(s);
+		incomingOKGameRoomListResponse(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Bobs_Game_NewRoomCreatedUpdate))
+	if (OKString::startsWith(s, OKNet::OK_Game_NewRoomCreatedUpdate))
 	{
-		incomingBobsGameNewRoomCreatedUpdate(s);
+		incomingOKGameNewRoomCreatedUpdate(s);
 		return true;
 	}
 
-	if (String::startsWith(s, BobNet::Chat_Message))
+	if (OKString::startsWith(s, OKNet::Chat_Message))
 	{
 		incomingChatMessage(s);
 		return true;
@@ -874,7 +874,7 @@ bool TCPServerConnection::messageReceived(string &s)// shared_ptr<ChannelHandler
 
 
 
-	if (String::startsWith(s, BobNet::Bobs_Game_UserStatsLeaderBoardsAndHighScoresBatched))
+	if (OKString::startsWith(s, OKNet::OK_Game_UserStatsLeaderBoardsAndHighScoresBatched))
 	{
 		//cut off first command
 		s = s.substr(s.find(":") + 1);
@@ -882,10 +882,10 @@ bool TCPServerConnection::messageReceived(string &s)// shared_ptr<ChannelHandler
 		while (s.length() > 0)
 		{
 			string stats = "";
-			if (s.find(BobNet::batch) != string::npos)
+			if (s.find(OKNet::batch) != string::npos)
 			{
-				stats = s.substr(0, s.find(BobNet::batch));
-				s = s.substr(s.find(BobNet::batch) + BobNet::batch.length());
+				stats = s.substr(0, s.find(OKNet::batch));
+				s = s.substr(s.find(OKNet::batch) + OKNet::batch.length());
 			}
 			else
 			{
@@ -893,44 +893,44 @@ bool TCPServerConnection::messageReceived(string &s)// shared_ptr<ChannelHandler
 				s = "";
 			}
 
-			if (String::startsWith(stats, BobNet::Bobs_Game_UserStatsForSpecificGameAndDifficulty))
+			if (OKString::startsWith(stats, OKNet::OK_Game_UserStatsForSpecificGameAndDifficulty))
 			{
-				incomingBobsGameUserStatsForSpecificGameAndDifficulty(stats);
+				incomingOKGameUserStatsForSpecificGameAndDifficulty(stats);
 			}
 			else
-			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByTotalTimePlayed))
+			if (OKString::startsWith(stats, OKNet::OK_Game_LeaderBoardsByTotalTimePlayed))
 			{
-				incomingBobsGameLeaderBoardByTotalTimePlayed(stats);
+				incomingOKGameLeaderBoardByTotalTimePlayed(stats);
 
 			}
 			else
-			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByTotalBlocksCleared))
+			if (OKString::startsWith(stats, OKNet::OK_Game_LeaderBoardsByTotalBlocksCleared))
 			{
-				incomingBobsGameLeaderBoardByTotalBlocksCleared(stats);
+				incomingOKGameLeaderBoardByTotalBlocksCleared(stats);
 
 			}
 			else
-			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByPlaneswalkerPoints))
+			if (OKString::startsWith(stats, OKNet::OK_Game_LeaderBoardsByPlaneswalkerPoints))
 			{
-				incomingBobsGameLeaderBoardByPlaneswalkerPoints(stats);
+				incomingOKGameLeaderBoardByPlaneswalkerPoints(stats);
 
 			}
 			else
-			if (String::startsWith(stats, BobNet::Bobs_Game_LeaderBoardsByEloScore))
+			if (OKString::startsWith(stats, OKNet::OK_Game_LeaderBoardsByEloScore))
 			{
-				incomingBobsGameLeaderBoardByEloScore(stats);
+				incomingOKGameLeaderBoardByEloScore(stats);
 
 			}
 			else
-			if (String::startsWith(stats, BobNet::Bobs_Game_HighScoreBoardsByTimeLasted))
+			if (OKString::startsWith(stats, OKNet::OK_Game_HighScoreBoardsByTimeLasted))
 			{
-				incomingBobsGameHighScoreBoardsByTimeLasted(stats);
+				incomingOKGameHighScoreBoardsByTimeLasted(stats);
 
 			}
 			else
-			if (String::startsWith(stats, BobNet::Bobs_Game_HighScoreBoardsByBlocksCleared))
+			if (OKString::startsWith(stats, OKNet::OK_Game_HighScoreBoardsByBlocksCleared))
 			{
-				incomingBobsGameHighScoreBoardsByBlocksCleared(stats);
+				incomingOKGameHighScoreBoardsByBlocksCleared(stats);
 
 			}		
 
@@ -940,27 +940,27 @@ bool TCPServerConnection::messageReceived(string &s)// shared_ptr<ChannelHandler
 	}
 
 	
-	if (String::startsWith(s, BobNet::Bobs_Game_GameStats_Response))
+	if (OKString::startsWith(s, OKNet::OK_Game_GameStats_Response))
 	{
-		incomingBobsGameGameStatsResponse_S(s);
+		incomingOKGameGameStatsResponse_S(s);
 		return true;
 	}	
 
-	if (String::startsWith(s, BobNet::Bobs_Game_ActivityStream_Response))
+	if (OKString::startsWith(s, OKNet::OK_Game_ActivityStream_Response))
 	{
-		incomingBobsGameActivityStreamResponse_S(s);
+		incomingOKGameActivityStreamResponse_S(s);
 		return true;
 	}
-	if (String::startsWith(s, BobNet::Bobs_Game_ActivityStream_Update))
+	if (OKString::startsWith(s, OKNet::OK_Game_ActivityStream_Update))
 	{
-		incomingBobsGameActivityStreamUpdate_S(s);
+		incomingOKGameActivityStreamUpdate_S(s);
 		return true;
 	}
 
 	bool processed = false;
-	for (int i = 0; i < BobNet::engines.size(); i++)
+	for (int i = 0; i < OKNet::engines.size(); i++)
 	{
-		if (BobNet::engines.get(i)->serverMessageReceived(s))processed = true;
+		if (OKNet::engines.get(i)->serverMessageReceived(s))processed = true;
 	}
 	if (processed)return true;
 
@@ -972,17 +972,17 @@ bool TCPServerConnection::messageReceived(string &s)// shared_ptr<ChannelHandler
 bool TCPServerConnection::write_S(string s)
 { //===============================================================================================
 
-	if (s.find(BobNet::endline) == string::npos)
+	if (s.find(OKNet::endline) == string::npos)
 	{
 		threadLogError_S("Message doesn't end with endline");
-		s = s + BobNet::endline;
+		s = s + OKNet::endline;
 	}
 
 #ifdef _DEBUG
-	//if (String::startsWith(s, "ping")==false && String::startsWith(s, "pong") == false)
+	//if (OKString::startsWith(s, "ping")==false && OKString::startsWith(s, "pong") == false)
 	{
 		if (s.find("Login") != string::npos || s.find("Reconnect") != string::npos || s.find("Create_Account") != string::npos)threadLogDebug_S("SEND SERVER: " + s.substr(0, s.find(":") + 1));
-		else threadLogDebug_S("SEND SERVER: " + s.substr(0, s.length() - BobNet::endline.length()));
+		else threadLogDebug_S("SEND SERVER: " + s.substr(0, s.length() - OKNet::endline.length()));
 	}
 #endif
 
@@ -1116,13 +1116,13 @@ void TCPServerConnection::sendLoginRequest(string email, string password, bool s
 
 	if (stats == false)
 	{
-		message = BobNet::Login_Request + "`" + email + "`,`" + password + "`" + BobNet::endline;
+		message = OKNet::Login_Request + "`" + email + "`,`" + password + "`" + OKNet::endline;
 	}
 	else
 	{
 		//send session info
 		string clientInfoString = "";// Main::mainObject->clientInfo->encode();
-		message = BobNet::Login_Request + "`" + email + "`,`" + password + "`," + clientInfoString + BobNet::endline;
+		message = OKNet::Login_Request + "`" + email + "`,`" + password + "`," + clientInfoString + OKNet::endline;
 	}
 
 	connectAndWriteToChannelBeforeAuthorization_S(message);
@@ -1137,14 +1137,14 @@ void TCPServerConnection::sendReconnectRequest(long long userID, string sessionT
 
 	if (stats == false)
 	{
-		message = BobNet::Reconnect_Request + "`" + to_string(userID) + "`,`" + sessionToken + "`" + BobNet::endline;
+		message = OKNet::Reconnect_Request + "`" + to_string(userID) + "`,`" + sessionToken + "`" + OKNet::endline;
 	}
 	else
 	{
 		//send session info
 		string clientInfoString = "";// Main::mainObject->clientInfo->encode();
 
-		message = BobNet::Reconnect_Request + "`" + to_string(userID) + "`,`" + sessionToken + "`," + clientInfoString + BobNet::endline;
+		message = OKNet::Reconnect_Request + "`" + to_string(userID) + "`,`" + sessionToken + "`," + clientInfoString + OKNet::endline;
 	}
 
 	connectAndWriteToChannelBeforeAuthorization_S(message);
@@ -1157,7 +1157,7 @@ void TCPServerConnection::incomingLoginResponse(string s)
   //LoginResponse:Success,userID,`sessionToken`
 	s = s.substr(s.find(":") + 1); //Success,userID,`sessionToken`
 
-	if (String::startsWith(s, "Success") == false)
+	if (OKString::startsWith(s, "Success") == false)
 	{
 		setLoginResponse_S(true, false);
 	}
@@ -1193,7 +1193,7 @@ void TCPServerConnection::incomingReconnectResponse(string s)
   //ReconnectResponse:Success,userID,`sessionToken`
 	s = s.substr(s.find(":") + 1); //Success,userID,`sessionToken`
 
-	if (String::startsWith(s, "Success") == false)
+	if (OKString::startsWith(s, "Success") == false)
 	{
 		setReconnectResponse_S(true, false);
 	}
@@ -1261,7 +1261,7 @@ void TCPServerConnection::sendInitialGameSaveRequest()
 //	if (ticksPassed > 3000)
 //	{
 		//lastInitialGameSaveRequestTime = currentTime;
-		connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Initial_GameSave_Request + BobNet::endline);
+		connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Initial_GameSave_Request + OKNet::endline);
 	//}
 }
 
@@ -1303,7 +1303,7 @@ void TCPServerConnection::sendQueuedGameSaveUpdates()
 			if (ticksPassed > 3000)
 			{
 				g.timeLastSent = currentTime;
-				connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Encrypted_GameSave_Update_Request + to_string(g.requestID) + "," + g.requestString + ",gameSave:" + getEncryptedGameSave_S() + BobNet::endline);
+				connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Encrypted_GameSave_Update_Request + to_string(g.requestID) + "," + g.requestString + ",gameSave:" + getEncryptedGameSave_S() + OKNet::endline);
 
 				threadLogInfo_S("Sent Game Save Update Request:" + to_string(g.requestID));
 			}
@@ -1311,7 +1311,7 @@ void TCPServerConnection::sendQueuedGameSaveUpdates()
 		else
 		{
 			//GameSaveUpdateRequest:14,flagsSet:`3`,gameSave
-			connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Encrypted_GameSave_Update_Request + to_string(g.requestID) + "," + g.requestString + ",gameSave:" + getEncryptedGameSave_S() + BobNet::endline);
+			connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Encrypted_GameSave_Update_Request + to_string(g.requestID) + "," + g.requestString + ",gameSave:" + getEncryptedGameSave_S() + OKNet::endline);
 			g.sent = true;
 
 			threadLogInfo_S("Sent Game Save Update Request:" + to_string(g.requestID));
@@ -1356,13 +1356,13 @@ void TCPServerConnection::incomingGameSaveUpdateResponse(string s)
 //
 //	if (stats == false)
 //	{
-//		message = BobNet::Facebook_Login_Request + "`" + facebookID + "`,`" + accessToken + "`" + BobNet::endline;
+//		message = OKNet::Facebook_Login_Request + "`" + facebookID + "`,`" + accessToken + "`" + OKNet::endline;
 //	}
 //	else
 //	{
 //		//send session info
 //		string clientInfoString = Main::mainObject->clientInfo->encode();
-//		message = BobNet::Facebook_Login_Request + "`" + facebookID + "`,`" + accessToken + "`," + clientInfoString + BobNet::endline;
+//		message = OKNet::Facebook_Login_Request + "`" + facebookID + "`,`" + accessToken + "`," + clientInfoString + OKNet::endline;
 //	}
 //
 //	connectAndWriteToChannelBeforeAuthorization_S(message);
@@ -1375,7 +1375,7 @@ void TCPServerConnection::incomingGameSaveUpdateResponse(string s)
 //  //FacebookLoginResponse:Success,userID,`sessionToken`
 //	s = s.substr(s.find(":") + 1); //Success,userID,`sessionToken`
 //
-//	if (String::startsWith(s, "Success") == false)
+//	if (OKString::startsWith(s, "Success") == false)
 //	{
 //		setFacebookLoginResponse_S(true, false);
 //	}
@@ -1409,7 +1409,7 @@ void TCPServerConnection::incomingGameSaveUpdateResponse(string s)
 void TCPServerConnection::sendCreateAccountRequest(string userName, string email, string password)
 { //=========================================================================================================================
 
-	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Create_Account_Request + "`" + userName + "`,`" + email + "`,`" + password + "`" + BobNet::endline);
+	connectAndWriteToChannelBeforeAuthorization_S(OKNet::Create_Account_Request + "`" + userName + "`,`" + email + "`,`" + password + "`" + OKNet::endline);
 }
 
 void TCPServerConnection::incomingCreateAccountResponse(string s)
@@ -1427,7 +1427,7 @@ void TCPServerConnection::incomingCreateAccountResponse(string s)
 
 void TCPServerConnection::sendPasswordRecoveryRequest(string email)
 {
-	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Password_Recovery_Request + "`" + email + "`" + BobNet::endline);
+	connectAndWriteToChannelBeforeAuthorization_S(OKNet::Password_Recovery_Request + "`" + email + "`" + OKNet::endline);
 }
 
 void TCPServerConnection::incomingPasswordRecoveryResponse(string s)
@@ -1441,7 +1441,7 @@ void TCPServerConnection::incomingPasswordRecoveryResponse(string s)
 
 void TCPServerConnection::sendUpdateFacebookAccountInDBRequest_S()
 {
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Update_Facebook_Account_In_DB_Request + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Update_Facebook_Account_In_DB_Request + OKNet::endline);
 }
 
 void TCPServerConnection::incomingUpdateFacebookAccountInDBResponse(string s)
@@ -1451,11 +1451,11 @@ void TCPServerConnection::incomingUpdateFacebookAccountInDBResponse(string s)
 
 	s = s.substr(s.find(":") + 1); //Success
 
-	if (String::startsWith(s, "Success") == true)
+	if (OKString::startsWith(s, "Success") == true)
 	{
 		setFacebookAccountUpdateResponseState_S(true, true);
 
-		//	BobNet.UpdateFacebookAccountInDBResponse+"Success:`"+
+		//	OKNet.UpdateFacebookAccountInDBResponse+"Success:`"+
 		//	facebookID+"`,`"+
 		//	facebookAccessToken+"`,`"+
 		//	facebookEmail+"`,`"+
@@ -1507,78 +1507,78 @@ void TCPServerConnection::incomingUpdateFacebookAccountInDBResponse(string s)
 void TCPServerConnection::sendOnlineFriendListRequest_S()
 {//===============================================================================================
 
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Online_Friends_List_Request + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Online_Friends_List_Request + OKNet::endline);
 
 }
 
 //===============================================================================================
-void TCPServerConnection::sendBobsGameGameTypesAndSequencesDownloadRequest_S()
+void TCPServerConnection::sendOKGameGameTypesAndSequencesDownloadRequest_S()
 {//===============================================================================================
 
-	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Bobs_Game_GameTypesAndSequences_Download_Request + BobNet::endline);
+	connectAndWriteToChannelBeforeAuthorization_S(OKNet::OK_Game_GameTypesAndSequences_Download_Request + OKNet::endline);
 
 }
 //===============================================================================================
-void TCPServerConnection::sendBobsGameGetHighScoresAndLeaderboardsRequest_S()
+void TCPServerConnection::sendOKGameGetHighScoresAndLeaderboardsRequest_S()
 {//===============================================================================================
 
-	connectAndWriteToChannelBeforeAuthorization_S(BobNet::Bobs_Game_GetHighScoresAndLeaderboardsRequest + BobNet::endline);
+	connectAndWriteToChannelBeforeAuthorization_S(OKNet::OK_Game_GetHighScoresAndLeaderboardsRequest + OKNet::endline);
 
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameGameTypesAndSequencesDownloadResponse(string &s)
+void TCPServerConnection::incomingOKGameGameTypesAndSequencesDownloadResponse(string &s)
 { //=========================================================================================================================
-	//BobsGameGamesResponse:GameType:MD5:XML:userid:username:name:uuid:datecreated:lastmodified:howmanytimesupdated:upvotes:downvotes:haveyouvoted
+	//OKGameGamesResponse:GameType:MD5:XML:userid:username:name:uuid:datecreated:lastmodified:howmanytimesupdated:upvotes:downvotes:haveyouvoted
 	//					GameSequence:MD5
 	s = s.substr(s.find(":") + 1);
 
-	setGotBobsGameGameTypesAndSequencesDownloadResponse_S(true);
+	setGotOKGameGameTypesAndSequencesDownloadResponse_S(true);
 
 	//threadsafe store gametypes
 
-	BobsGame::parseIncomingGameTypesAndSequencesFromServer_S(s);
+	OKGame::parseIncomingGameTypesAndSequencesFromServer_S(s);
 
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameGameTypesAndSequencesUploadResponse(string &s)
+void TCPServerConnection::incomingOKGameGameTypesAndSequencesUploadResponse(string &s)
 { //=========================================================================================================================
-  //BobsGameGamesResponse:Success:
-  //BobsGameGamesResponse:Failed:
+  //OKGameGamesResponse:Success:
+  //OKGameGamesResponse:Failed:
 	s = s.substr(s.find(":") + 1);
 
-	setGotBobsGameGameTypesAndSequencesUploadResponse_S(s);
+	setGotOKGameGameTypesAndSequencesUploadResponse_S(s);
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameGameTypesAndSequencesVoteResponse(string &s)
+void TCPServerConnection::incomingOKGameGameTypesAndSequencesVoteResponse(string &s)
 { //=========================================================================================================================
-  //BobsGameGamesResponse:Success:
-  //BobsGameGamesResponse:Failed:
+  //OKGameGamesResponse:Success:
+  //OKGameGamesResponse:Failed:
 	s = s.substr(s.find(":") + 1);
 
-	setGotBobsGameGameTypesAndSequencesVoteResponse_S(s);
+	setGotOKGameGameTypesAndSequencesVoteResponse_S(s);
 }
 
 //===============================================================================================
-void TCPServerConnection::sendBobsGameRoomListRequest_S()
+void TCPServerConnection::sendOKGameRoomListRequest_S()
 {//===============================================================================================
 
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_RoomList_Request + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_RoomList_Request + OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameRoomListResponse(string &s)
+void TCPServerConnection::incomingOKGameRoomListResponse(string &s)
 { //=========================================================================================================================
-	//Bobs_Game_RoomList_Response:
+	//OK_Game_RoomList_Response:
 	s = s.substr(s.find(":") + 1);
 
-	setBobsGameRoomListResponse_S(s);
+	setOKGameRoomListResponse_S(s);
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
+void TCPServerConnection::incomingOKGameNewRoomCreatedUpdate(string &s)
 { //=========================================================================================================================
  
 	s = s.substr(s.find(":") + 1);
@@ -1588,51 +1588,51 @@ void TCPServerConnection::incomingBobsGameNewRoomCreatedUpdate(string &s)
 
 	if (Main::globalSettings->hideNotifications == false)
 	{
-		Main::rightConsole->add("" + userName + " is hosting a multiplayer room!", 5000, BobColor::green);
+		Main::rightConsole->add("" + userName + " is hosting a multiplayer room!", 5000, OKColor::green);
 	}
 }
 
 
 //===============================================================================================
-void TCPServerConnection::tellBobsGameRoomHostMyUserID_S(const string& roomUUID)
+void TCPServerConnection::tellOKGameRoomHostMyUserID_S(const string& roomUUID)
 {//===============================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_TellRoomHostToAddMyUserID+roomUUID +":"+ BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_TellRoomHostToAddMyUserID+roomUUID +":"+ OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameHostingPublicGameUpdate_S(const string& roomDescription)
+void TCPServerConnection::tellServerOKGameHostingPublicGameUpdate_S(const string& roomDescription)
 {//===============================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomUpdate + roomDescription + ":" + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_HostingPublicRoomUpdate + roomDescription + ":" + OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameIHaveCanceledTheGame_S(const string& roomUUID)
+void TCPServerConnection::tellServerOKGameIHaveCanceledTheGame_S(const string& roomUUID)
 {//===============================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomCanceled + roomUUID + ":" + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_HostingPublicRoomCanceled + roomUUID + ":" + OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameIHaveStartedTheGame_S(const string& roomUUID)
+void TCPServerConnection::tellServerOKGameIHaveStartedTheGame_S(const string& roomUUID)
 {//===============================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomStarted + roomUUID + ":" + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_HostingPublicRoomStarted + roomUUID + ":" + OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::tellServerBobsGameTheGameHasEnded_S(const string& roomUUID, const string& results)
+void TCPServerConnection::tellServerOKGameTheGameHasEnded_S(const string& roomUUID, const string& results)
 {//===============================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_HostingPublicRoomEnded + roomUUID + ":" + results + ":" + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_HostingPublicRoomEnded + roomUUID + ":" + results + ":" + OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::sendBobsGameGameStats_S(const string& statsString)
+void TCPServerConnection::sendOKGameGameStats_S(const string& statsString)
 {//===============================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_GameStats + statsString + ":" + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameStats + statsString + ":" + OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameGameStatsResponse_S(string s)
+void TCPServerConnection::incomingOKGameGameStatsResponse_S(string s)
 { //=========================================================================================================================
-  //Bobs_Game_GameStats_Response:
+  //OK_Game_GameStats_Response:
 	s = s.substr(s.find(":") + 1);
 
 	ArrayList<string> responseStrings;
@@ -1644,38 +1644,38 @@ void TCPServerConnection::incomingBobsGameGameStatsResponse_S(string s)
 		s = s.substr(s.find(",") + 1);
 	}
 
-	setBobsGameGameStatsResponse_S(responseStrings);
-	setGotBobsGameGameStatsResponse_S(true);
+	setOKGameGameStatsResponse_S(responseStrings);
+	setGotOKGameGameStatsResponse_S(true);
 }
 
 //===============================================================================================
-void TCPServerConnection::sendBobsGameActivityStreamRequest_S()
+void TCPServerConnection::sendOKGameActivityStreamRequest_S()
 {//===============================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Bobs_Game_ActivityStream_Request + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_ActivityStream_Request + OKNet::endline);
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameActivityStreamResponse_S(string s)
+void TCPServerConnection::incomingOKGameActivityStreamResponse_S(string s)
 { //=========================================================================================================================
-  //Bobs_Game_ActivityStream_Response:
+  //OK_Game_ActivityStream_Response:
 	s = s.substr(s.find(":") + 1);
 
 	
 	while(s.find("`")!=string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		BobsGame::activityStream.add(FileUtils::removeSwearWords(s.substr(0, s.find("`"))));
+		OKGame::activityStream.add(FileUtils::removeSwearWords(s.substr(0, s.find("`"))));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
 
-	//setGotBobsGameActivityStreamResponse_S(true);
+	//setGotOKGameActivityStreamResponse_S(true);
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
+void TCPServerConnection::incomingOKGameActivityStreamUpdate_S(string s)
 { //=========================================================================================================================
-  //Bobs_Game_ActivityStream_Update:
+  //OK_Game_ActivityStream_Update:
 	s = s.substr(s.find(":") + 1);
 
 	ArrayList<string> strings;
@@ -1689,25 +1689,25 @@ void TCPServerConnection::incomingBobsGameActivityStreamUpdate_S(string s)
 	for(int i=strings.size()-1;i<=0;i--)
 	{
 		string a = FileUtils::removeSwearWords(strings.get(i));
-		BobsGame::activityStream.insert(0,a);
+		OKGame::activityStream.insert(0,a);
 
 		if (Main::globalSettings->hideNotifications == false)
 		{
-			Main::rightConsole->add(a, 5000, BobColor::magenta);
+			Main::rightConsole->add(a, 5000, OKColor::magenta);
 		}
 	}
 
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(string &s)
+void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty >gameStats = make_shared<BobsGameUserStatsForSpecificGameAndDifficulty>(s);
-	for(int i=0;i<BobsGame::userStatsPerGameAndDifficulty.size();i++)
+	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >gameStats = make_shared<OKGameUserStatsForSpecificGameAndDifficulty>(s);
+	for(int i=0;i<OKGame::userStatsPerGameAndDifficulty.size();i++)
 	{
-		shared_ptr<BobsGameUserStatsForSpecificGameAndDifficulty >temp = BobsGame::userStatsPerGameAndDifficulty.get(i);
+		shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >temp = OKGame::userStatsPerGameAndDifficulty.get(i);
 		if(
 			temp->isGameTypeOrSequence == gameStats->isGameTypeOrSequence &&
 			temp->gameTypeUUID == gameStats->gameTypeUUID &&
@@ -1716,21 +1716,21 @@ void TCPServerConnection::incomingBobsGameUserStatsForSpecificGameAndDifficulty(
 			temp->objectiveString == gameStats->objectiveString
 			)
 		{
-			BobsGame::userStatsPerGameAndDifficulty.removeAt(i);
-			BobsGame::userStatsPerGameAndDifficulty.insert(i, gameStats);
+			OKGame::userStatsPerGameAndDifficulty.removeAt(i);
+			OKGame::userStatsPerGameAndDifficulty.insert(i, gameStats);
 			delete temp;
 			return;
 		}
 	}
-	BobsGame::userStatsPerGameAndDifficulty.add(gameStats);
+	OKGame::userStatsPerGameAndDifficulty.add(gameStats);
 }
 //===============================================================================================
-void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<BobsGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard)
+void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard)
 {//===============================================================================================
 
 	for (int i = 0; i<boardArray.size(); i++)
 	{
-		shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >temp = boardArray.get(i);
+		shared_ptr<OKGameLeaderBoardAndHighScoreBoard >temp = boardArray.get(i);
 		if (
 			temp->isGameTypeOrSequence == leaderBoard->isGameTypeOrSequence &&
 			temp->gameTypeUUID == leaderBoard->gameTypeUUID &&
@@ -1749,69 +1749,69 @@ void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<BobsGameLeaderBo
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameLeaderBoardByTotalTimePlayed(string &s)
+void TCPServerConnection::incomingOKGameLeaderBoardByTotalTimePlayed(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(BobsGame::topPlayersByTotalTimePlayed, leaderBoard);
+	addToLeaderboard(OKGame::topPlayersByTotalTimePlayed, leaderBoard);
 
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameLeaderBoardByTotalBlocksCleared(string &s)
+void TCPServerConnection::incomingOKGameLeaderBoardByTotalBlocksCleared(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(BobsGame::topPlayersByTotalBlocksCleared, leaderBoard);
+	addToLeaderboard(OKGame::topPlayersByTotalBlocksCleared, leaderBoard);
 
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameLeaderBoardByPlaneswalkerPoints(string &s)
+void TCPServerConnection::incomingOKGameLeaderBoardByPlaneswalkerPoints(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(BobsGame::topPlayersByPlaneswalkerPoints, leaderBoard);
+	addToLeaderboard(OKGame::topPlayersByPlaneswalkerPoints, leaderBoard);
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameLeaderBoardByEloScore(string &s)
+void TCPServerConnection::incomingOKGameLeaderBoardByEloScore(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(BobsGame::topPlayersByEloScore, leaderBoard);
-
-}
-
-//===============================================================================================
-void TCPServerConnection::incomingBobsGameHighScoreBoardsByTimeLasted(string &s)
-{//===============================================================================================
-	s = s.substr(s.find(":") + 1);
-
-	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
-
-	addToLeaderboard(BobsGame::topGamesByTimeLasted, leaderBoard);
-
+	addToLeaderboard(OKGame::topPlayersByEloScore, leaderBoard);
 
 }
 
 //===============================================================================================
-void TCPServerConnection::incomingBobsGameHighScoreBoardsByBlocksCleared(string &s)
+void TCPServerConnection::incomingOKGameHighScoreBoardsByTimeLasted(string &s)
+{//===============================================================================================
+	s = s.substr(s.find(":") + 1);
+
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
+
+	addToLeaderboard(OKGame::topGamesByTimeLasted, leaderBoard);
+
+
+}
+
+//===============================================================================================
+void TCPServerConnection::incomingOKGameHighScoreBoardsByBlocksCleared(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
 
-	shared_ptr<BobsGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<BobsGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(BobsGame::topGamesByBlocksCleared, leaderBoard);
+	addToLeaderboard(OKGame::topGamesByBlocksCleared, leaderBoard);
 
 
 
@@ -1824,7 +1824,7 @@ void TCPServerConnection::incomingBobsGameHighScoreBoardsByBlocksCleared(string 
 void TCPServerConnection::sendChatMessage(string s)
 { //==============================================================================================
 
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Chat_Message +s+ BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Chat_Message +s+ OKNet::endline);
 
 }
 //===============================================================================================
@@ -1837,7 +1837,7 @@ void TCPServerConnection::incomingChatMessage(string s)
 
 	if (Main::globalSettings->hideChat==false)
 	{
-		Main::rightConsole->add(FileUtils::removeSwearWords(s), BobColor::white);
+		Main::rightConsole->add(FileUtils::removeSwearWords(s), OKColor::white);
 
 		Main::rightConsole->pruneChats(10);
 	}
@@ -1888,7 +1888,7 @@ void TCPServerConnection::incomingOnlineFriendsListResponse(string s)
 
 		s = s.substr(s.find(",") + 1);
 
-		BobNet::addFriendID(friendUserID, type);
+		OKNet::addFriendID(friendUserID, type);
 	}
 }
 
@@ -1935,7 +1935,7 @@ void TCPServerConnection::incomingFriendOnlineNotification(string s)
 		return;
 	}
 
-	BobNet::addFriendID(friendUserID, type);
+	OKNet::addFriendID(friendUserID, type);
 }
 
 
@@ -1953,7 +1953,7 @@ string& TCPServerConnection::getAddFriendByUserNameResponse()
 
 void TCPServerConnection::sendAddFriendByUserNameRequest_S(string friendUserName)
 { //=========================================================================================================================
-	connectAndAuthorizeAndQueueWriteToChannel_S(BobNet::Add_Friend_By_UserName_Request + "`" + friendUserName + "`" + BobNet::endline);
+	connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Add_Friend_By_UserName_Request + "`" + friendUserName + "`" + OKNet::endline);
 }
 
 void TCPServerConnection::incomingAddFriendByUserNameResponse(string s)
@@ -1961,7 +1961,7 @@ void TCPServerConnection::incomingAddFriendByUserNameResponse(string s)
 
 	s = s.substr(s.find(":") + 1); //Success
 
-	if (String::startsWith(s, "Success") == true)
+	if (OKString::startsWith(s, "Success") == true)
 	{
 		setAddFriendByUserNameResponse("Success");
 	}

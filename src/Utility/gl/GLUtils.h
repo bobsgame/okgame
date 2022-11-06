@@ -3,14 +3,14 @@
 //All Rights Reserved.
 //------------------------------------------------------------------------------
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "src/Utility/HashMap.h"
 #include "src/Utility/ArrayList.h"
 #include "src/Utility/HashMap.h"
 #include "src/Utility/ArrayList.h"
 
 class Logger;
-class BobTexture;
+class OKTexture;
 
 
 class GLUtils
@@ -18,15 +18,15 @@ class GLUtils
 public:
 	static void old_clear();
 	static void old_render();
-	static shared_ptr<BobTexture> loadTextureFromSurface(string filename, shared_ptr<SDL_Surface> surface);
+	static shared_ptr<OKTexture> loadTextureFromSurface(string filename, shared_ptr<SDL_Surface> surface);
 	static void draw_texture_struct(texture_STRUCT* PLAYER_TEXTURE, float x, float y);
-	static HashMap<string, shared_ptr<BobTexture>> textureCache;
+	static HashMap<string, shared_ptr<OKTexture>> textureCache;
 	static void clearCache(const string &name);// Remove a particular named image from the cache
 	static void clearCache();
 	static GLuint createTextureID();
-	static shared_ptr<BobTexture >getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data);
-	static shared_ptr<BobTexture >getTextureFromPNGAbsolutePath(string filename);
-	static shared_ptr<BobTexture >getTextureFromPNGExePath(string filename);
+	static shared_ptr<OKTexture >getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data);
+	static shared_ptr<OKTexture >getTextureFromPNGAbsolutePath(string filename);
+	static shared_ptr<OKTexture >getTextureFromPNGExePath(string filename);
 	static void draw_sprite(SPRITE* s);
 	static void gl_draw_flipped(GLuint textureid, float x, float y, float w, float h);
 	static void draw_texture(GLuint textureid, float x, float y, float w, float h);
@@ -62,11 +62,11 @@ private:
 public:
 	static int texturesLoaded;
 	static long long textureBytesLoaded;
-	static shared_ptr<BobTexture> blankTexture;
-	static shared_ptr<BobTexture> boxTexture;
+	static shared_ptr<OKTexture> blankTexture;
+	static shared_ptr<OKTexture> boxTexture;
 
 	static float globalDrawScale;
-	static shared_ptr<BobTexture> rect;
+	static shared_ptr<OKTexture> rect;
 	static shared_ptr<GLfloat> box;
 	static shared_ptr<GLfloat> col;
 	static shared_ptr<GLfloat> tex;
@@ -74,16 +74,16 @@ public:
 	static void cleanup();
 	static int getOutlinedTextWidth(string cs);
 	static void setDefaultTextureParams();
-	static void drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, int filter);
-	static void drawTexture(shared_ptr<BobTexture> texture, float sx0, float sy0, float alpha, int filter);
-	static void drawTexture(shared_ptr<BobTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
-	static void drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
+	static void drawTexture(shared_ptr<OKTexture> texture, float sx0, float sy0, int filter);
+	static void drawTexture(shared_ptr<OKTexture> texture, float sx0, float sy0, float alpha, int filter);
+	static void drawTexture(shared_ptr<OKTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
+	static void drawTexture(shared_ptr<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
 	static void drawTexture(int textureID, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
 	static void drawTexture(float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter);
-	static void drawTexture(shared_ptr<BobTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter);
+	static void drawTexture(shared_ptr<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter);
 	static void drawTexture(float textureX0, float textureX1, float textureY0, float textureY1, float screenX0, float screenX1, float screenY0, float screenY1, float r, float g, float b, float a, int filter);
-	static void drawOutlinedString(const string& text, float screenX, float screenY, shared_ptr<BobColor> color);
-	//static void drawOutlinedString(float screenX0, float screenY0, const string& text, shared_ptr<BobColor> color);
+	static void drawOutlinedString(const string& text, float screenX, float screenY, shared_ptr<OKColor> color);
+	//static void drawOutlinedString(float screenX0, float screenY0, const string& text, shared_ptr<OKColor> color);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, int r, int g, int b);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, float r, float g, float b);
 	static void drawLine(float screenX0, float screenY0, float screenX1, float screenY1, float r, float g, float b, float a);
@@ -172,7 +172,7 @@ public:
 	static void setRealWindowViewport();
 	static void setPostColorFilterViewport();
 	static void setPreColorFilterViewport();
-	static void setBobsGameMainFBOFilterViewport();
+	static void setOKGameMainFBOFilterViewport();
 	static void setBloomViewport();
 	static void setShaderViewport();
 	
@@ -199,7 +199,7 @@ public:
 	static bool fullscreen;// = false;
 	static void toggleFullscreen();
 	static void doResize();
-	static void resizeBobsGameFBO(float w, float h);
+	static void resizeOKGameFBO(float w, float h);
 	static void setBlendMode(int src, int dst);
 	static void setShaderVar1i(int shader, char* name, int i);
 	static void setShaderVar1f(int shader, char* name, float f);

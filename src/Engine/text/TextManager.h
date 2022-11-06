@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -27,7 +27,7 @@ private:
 	bool antiAlias = true;
 
 public:
-	ArrayList<shared_ptr<TextWindow>>* textBox = make_shared<ArrayList><shared_ptr<TextWindow>>();
+	ArrayList<shared_ptr<TextWindow>> textBox;// = make_shared<ArrayList><shared_ptr<TextWindow>>();
 
 
 	int width = 64 * 6 * 2; // *2 because we draw everything at 2x to allow for scaling (and higher res 1x unicode fonts)
@@ -85,22 +85,22 @@ public:
 	bool delay = false;
 	int delayTicks = 0;
 
-	shared_ptr<BobFont> font = nullptr; // this isn't per-getText window because we want to share the state across the boxes. is that right, or would per-box be better?
-	shared_ptr<BobColor> textColor = BobColor::white;
-	shared_ptr<BobColor> textBGColor = BobColor::black;
-	shared_ptr<BobColor> textAAColor = BobColor::gray;
-	shared_ptr<BobColor> textShadowColor = BobColor::darkGray;
+	shared_ptr<OKFont> font = nullptr; // this isn't per-getText window because we want to share the state across the boxes. is that right, or would per-box be better?
+	shared_ptr<OKColor> textColor = OKColor::white;
+	shared_ptr<OKColor> textBGColor = OKColor::black;
+	shared_ptr<OKColor> textAAColor = OKColor::gray;
+	shared_ptr<OKColor> textShadowColor = OKColor::darkGray;
 
-	shared_ptr<BobColor> tC0 = BobColor::black;
-	shared_ptr<BobColor> tC1 = BobColor::white;
-	shared_ptr<BobColor> tC2 = BobColor::gray;
-	shared_ptr<BobColor> tC3 = BobColor::darkGray;
+	shared_ptr<OKColor> tC0 = OKColor::black;
+	shared_ptr<OKColor> tC1 = OKColor::white;
+	shared_ptr<OKColor> tC2 = OKColor::gray;
+	shared_ptr<OKColor> tC3 = OKColor::darkGray;
 
 	bool skipText = false;
 
 	bool buttonIconUpDownToggle = false;
 	int buttonTimer = 0;
-	shared_ptr<BobTexture> buttonTexture = nullptr;
+	shared_ptr<OKTexture> buttonTexture = nullptr;
 	// TODO: load button texture, draw where appropriate during render
 
 	int MAX_ANSWER_LENGTH = 255;
@@ -130,7 +130,7 @@ public:
 	//public float TOP_INACTIVE_POSITION_Y=5000;
 	//public float POSITION_X=5000;
 
-	static shared_ptr<BobTexture> questionMarkTexture;
+	static shared_ptr<OKTexture> questionMarkTexture;
 
 	//public long textEngineSpeedTicksPerLetter=10;
 	//public long drawLetterTicksCounter=100;

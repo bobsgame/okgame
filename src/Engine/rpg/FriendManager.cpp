@@ -22,7 +22,7 @@ FriendManager::FriendManager(shared_ptr<BGClientEngine> g)
 void FriendManager::init()
 { //===============================================================================================
 
-	//if (BobNet::debugMode)
+	//if (OKNet::debugMode)
 	{
 		//int timesRun = 0;
 
@@ -66,7 +66,7 @@ void FriendManager::init()
 		//         if (line.length() > 0)
 		//         {
 		//            timesRun = stoi(line);
-		//            log.debug("" + to_string(timesRun));
+		//            log->debug("" + to_string(timesRun));
 		//         }
 		//      }
 		//

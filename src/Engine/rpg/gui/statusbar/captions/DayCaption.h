@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -27,17 +27,17 @@ public:
 	virtual void update() override;
 
 
-	shared_ptr<BobColor> pausedFGColor = BobColor::darkGray;
-	shared_ptr<BobColor> pausedAAColor = BobColor::gray;
-	shared_ptr<BobColor> pausedBGColor = BobColor::lightGray;
+	shared_ptr<OKColor> pausedFGColor = OKColor::darkGray;
+	shared_ptr<OKColor> pausedAAColor = OKColor::gray;
+	shared_ptr<OKColor> pausedBGColor = OKColor::lightGray;
 
-	shared_ptr<BobColor> fastFGColor = BobColor::darkerBlue;
-	shared_ptr<BobColor> fastAAColor = BobColor::darkBlue;
-	shared_ptr<BobColor> fastBGColor = BobColor::blue;
+	shared_ptr<OKColor> fastFGColor = OKColor::darkerBlue;
+	shared_ptr<OKColor> fastAAColor = OKColor::darkBlue;
+	shared_ptr<OKColor> fastBGColor = OKColor::blue;
 
-	shared_ptr<BobColor> unknownFGColor = BobColor::white;
-	shared_ptr<BobColor> unknownAAColor = BobColor::lightGray;
-	shared_ptr<BobColor> unknownBGColor = BobColor::black;
+	shared_ptr<OKColor> unknownFGColor = OKColor::white;
+	shared_ptr<OKColor> unknownAAColor = OKColor::lightGray;
+	shared_ptr<OKColor> unknownBGColor = OKColor::black;
 
 
 	void setPausedColor();

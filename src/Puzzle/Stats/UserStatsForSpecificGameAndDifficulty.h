@@ -4,16 +4,16 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include <src/Utility/Logger.h>
 
 //===============================================================================================
 //high score collects stats per user for a specific game or sequence at a specific difficulty in order to track their progress and high score
-class BobsGameUserStatsForSpecificGameAndDifficulty
+class OKGameUserStatsForSpecificGameAndDifficulty
 {//===============================================================================================
 public:
 
-	Logger log = Logger("BobsGameUserStatsForSpecificGameAndDifficulty");
+	Logger log = Logger("OKGameUserStatsForSpecificGameAndDifficulty");
 
 	string userName = "";
 	long long userID = -1;
@@ -61,7 +61,7 @@ public:
 
 
 	//===============================================================================================
-	BobsGameUserStatsForSpecificGameAndDifficulty()
+	OKGameUserStatsForSpecificGameAndDifficulty()
 	{//===============================================================================================
 
 	}
@@ -120,7 +120,7 @@ public:
 	}
 
 	//===============================================================================================
-	BobsGameUserStatsForSpecificGameAndDifficulty(string &s)
+	OKGameUserStatsForSpecificGameAndDifficulty(string &s)
 	{//===============================================================================================
 
 		decode(s);

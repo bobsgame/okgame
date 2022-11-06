@@ -66,11 +66,11 @@ void AudioManager::initAudioLibrary()
 
 #ifdef USE_SDL_MIXER
 
-	log.debug("Init SDL Mixer");
+	log->debug("Init SDL Mixer");
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
 	{
-		log.error("Couldn't set up audio: " + string(SDL_GetError()));
+		log->error("Couldn't set up audio: " + string(SDL_GetError()));
 	}
 	Mix_AllocateChannels(32);
 
@@ -85,7 +85,7 @@ void AudioManager::initAudioLibrary()
 
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("Init SDL Mixer took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("Init SDL Mixer took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -99,18 +99,18 @@ void AudioManager::initAudioLibrary()
 		start = SDL_GetPerformanceCounter();
 		totalStart = SDL_GetPerformanceCounter();
 
-		log.debug("Loading built in sounds");
+		log->debug("Loading built in sounds");
 		{
-			log.debug("get path");
+			log->debug("get path");
 			string spriteFolderString = Main::getPath() + "data/sounds/";
-			//log.debug("create path");
+			//log->debug("create path");
 			//Path spriteFolderPath(spriteFolderString);
-			log.debug("create file");
+			log->debug("create file");
 			File spriteFolderPathDir(spriteFolderString);
-			log.debug("createDirectories");
+			log->debug("createDirectories");
 			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
 			vector<string> files;
-			log.debug("list");
+			log->debug("list");
 			spriteFolderPathDir.list(files);
 			vector<string>::iterator it = files.begin();
 			for (; it != files.end(); ++it)
@@ -125,11 +125,11 @@ void AudioManager::initAudioLibrary()
 		}
 
 		now = SDL_GetPerformanceCounter();
-		log.debug("Loading sounds took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+		log->debug("Loading sounds took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 		start = SDL_GetPerformanceCounter();
 
 
-		log.debug("Loading built in music");
+		log->debug("Loading built in music");
 		{
 			string spriteFolderString = Main::getPath() + "data/music/";
 			Path spriteFolderPath(spriteFolderString);
@@ -150,11 +150,11 @@ void AudioManager::initAudioLibrary()
 		}
 
 		now = SDL_GetPerformanceCounter();
-		log.debug("Loading music took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+		log->debug("Loading music took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 		start = SDL_GetPerformanceCounter();
 
 		totalNow = SDL_GetPerformanceCounter();
-		log.debug("initAudioLibrary took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+		log->debug("initAudioLibrary took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 		//GLUtils::e();
@@ -189,7 +189,7 @@ void AudioManager::initAudioLibrary()
 void AudioManager::cleanup()
 {//=========================================================================================================================
 
-	log.info("Cleaning up audio");
+	log->info("Cleaning up audio");
 #ifdef USE_SDL_MIXER
  //	if(Mix_PlayingMusic())
  //	{
@@ -277,7 +277,7 @@ shared_ptr<Sound> AudioManager::getSoundByName(const string& musicName)
 	{
 		string name = playingAudioList.get(i)->getName();
 
-		if (String::startsWith(name, clippedName))
+		if (OKString::startsWith(name, clippedName))
 		{
 			
 			return playingAudioList.get(i);
@@ -289,7 +289,7 @@ shared_ptr<Sound> AudioManager::getSoundByName(const string& musicName)
 	{
 		string name = globalAudioFileList.get(i)->getName();
 
-		if (String::startsWith(name, clippedName))
+		if (OKString::startsWith(name, clippedName))
 		{
 			shared_ptr<Sound > s = make_shared<Sound>(getEngine(), globalAudioFileList.get(i));
 			playingAudioList.add(s);

@@ -364,7 +364,7 @@ void MenuPanel::render()
 //
 //shared_ptr<TCPServerConnection> MenuPanel::getServerConnection()
 //{
-//	return BobNet::tcpServerConnection;
+//	return OKNet::tcpServerConnection;
 //}
 //
 //shared_ptr<GameSave> MenuPanel::getGameSave()

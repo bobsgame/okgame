@@ -80,7 +80,7 @@ void Logger::initLogger()
 	{
 		outputFileInit = true;
 
-		outputFile.open("log.html", ofstream::out);
+		outputFile.open("log->html", ofstream::out);
 
 		outputFile << "<html><body>" << endl;
 	}

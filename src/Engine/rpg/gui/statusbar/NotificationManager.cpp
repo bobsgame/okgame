@@ -16,8 +16,8 @@
 Logger NotificationManager::log = Logger("NotificationManager");
 
 
-shared_ptr<BobTexture> NotificationManager::loadingBarTexture = nullptr;
-shared_ptr<BobTexture> NotificationManager::loadingBarBackgroundTexture = nullptr;
+shared_ptr<OKTexture> NotificationManager::loadingBarTexture = nullptr;
+shared_ptr<OKTexture> NotificationManager::loadingBarBackgroundTexture = nullptr;
 
 NotificationManager::NotificationManager(shared_ptr<BGClientEngine> g)
 { //=========================================================================================================================

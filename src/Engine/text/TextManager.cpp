@@ -16,7 +16,7 @@
 Logger TextManager::log = Logger("TextManager");
 
 
-shared_ptr<BobTexture> TextManager::questionMarkTexture = nullptr;
+shared_ptr<OKTexture> TextManager::questionMarkTexture = nullptr;
 
 TextManager::TextManager(shared_ptr<Engine> g)
 { //=========================================================================================================================
@@ -62,12 +62,12 @@ bool TextManager::isTextAnswerBoxOpen()
 void TextManager::init()
 { //=========================================================================================================================
 
-	//log.debug("Init TextManager");
+	//log->debug("Init TextManager");
 	/*
 	 * // load a default java font
 	 * try
 	 * {
-	 * BobFont awtFont = make_shared<BobFont>("bobsgame", BobFont.PLAIN, 8);
+	 * OKFont awtFont = make_shared<OKFont>("bobsgame", OKFont.PLAIN, 8);
 	 * font = make_shared<TrueTypeFont>(awtFont, antiAlias);
 	 * }
 	 * catch (Exception e)
@@ -81,7 +81,7 @@ void TextManager::init()
 	//   {
 	//      shared_ptr<InputStream> inputStream = FileUtils::getResourceAsStream("res/fonts/bobsgame.ttf");
 	//
-	//      java::awt::BobFont* awtFont = java::awt::BobFont::createFont(java::awt::BobFont::TRUETYPE_FONT, inputStream);
+	//      java::awt::OKFont* awtFont = java::awt::OKFont::createFont(java::awt::OKFont::TRUETYPE_FONT, inputStream);
 	//      awtFont = awtFont->deriveFont(8.0f); // set font size
 	//      ttfFont = make_shared<TrueTypeFont>(awtFont, antiAlias);
 	//   }
@@ -113,12 +113,12 @@ void TextManager::reset()
 { //=========================================================================================================================
 
 
-	font = BobFont::font_normal_8;
+	font = OKFont::font_normal_8;
 
-	textBGColor = BobColor::black;
-	textColor = BobColor::white;
-	textAAColor = BobColor::darkerGray;
-	textShadowColor = BobColor::darkerGray;
+	textBGColor = OKColor::black;
+	textColor = OKColor::white;
+	textAAColor = OKColor::darkerGray;
+	textShadowColor = OKColor::darkerGray;
 
 	selectedTextbox = BOTTOM;
 	topBoxActivated = false;
@@ -334,171 +334,171 @@ void TextManager::parseColorizedTags()
 
 		// automatically colorize "Yuu"
 
-		if (position < length - 2 && String::startsWith(currentText.substr(position), "Yuu"))
+		if (position < length - 2 && OKString::startsWith(currentText.substr(position), "Yuu"))
 		{
 			tC0 = textBGColor;
 			tC1 = textColor;
 			tC2 = textAAColor;
 			tC3 = textShadowColor;
 
-			textColor = BobColor::purple;
-			if (textBGColor == BobColor::black)
+			textColor = OKColor::purple;
+			if (textBGColor == OKColor::black)
 			{
-				textAAColor = BobColor::darkerPurple;
+				textAAColor = OKColor::darkerPurple;
 			}
 			else
 			{
-				textAAColor = BobColor::lightPurple;
+				textAAColor = OKColor::lightPurple;
 			}
-			if (textBGColor == BobColor::black)
+			if (textBGColor == OKColor::black)
 			{
-				textShadowColor = BobColor::darkerPurple;
+				textShadowColor = OKColor::darkerPurple;
 			}
 			else
 			{
-				textShadowColor = BobColor::lightPurple;
+				textShadowColor = OKColor::lightPurple;
 			}
 		}
 
 		//"bob's game"
 		else
 		{
-			if (position < length - 11 && String::startsWith(currentText.substr(position), "\"bob's game\""))
+			if (position < length - 11 && OKString::startsWith(currentText.substr(position), "\"bob's game\""))
 			{
 				tC0 = textBGColor;
 				tC1 = textColor;
 				tC2 = textAAColor;
 				tC3 = textShadowColor;
 
-				textColor = BobColor::green;
-				if (textBGColor == BobColor::black)
+				textColor = OKColor::green;
+				if (textBGColor == OKColor::black)
 				{
-					textAAColor = BobColor::darkerGreen;
+					textAAColor = OKColor::darkerGreen;
 				}
 				else
 				{
-					textAAColor = BobColor::lightGreen;
+					textAAColor = OKColor::lightGreen;
 				}
 
-				if (textBGColor == BobColor::black)
+				if (textBGColor == OKColor::black)
 				{
-					textShadowColor = BobColor::darkerGreen;
+					textShadowColor = OKColor::darkerGreen;
 				}
 				else
 				{
-					textShadowColor = BobColor::lightGreen;
+					textShadowColor = OKColor::lightGreen;
 				}
 			}
 			else
 			{
-				if (position < length - 9 && String::startsWith(currentText.substr(position), "bob's game") && (position >= length - 10 || String::startsWith(currentText.substr(position), "bob's game\"") == false))
+				if (position < length - 9 && OKString::startsWith(currentText.substr(position), "bob's game") && (position >= length - 10 || OKString::startsWith(currentText.substr(position), "bob's game\"") == false))
 				{
 					tC0 = textBGColor;
 					tC1 = textColor;
 					tC2 = textAAColor;
 					tC3 = textShadowColor;
 
-					textColor = BobColor::green;
-					if (textBGColor == BobColor::black)
+					textColor = OKColor::green;
+					if (textBGColor == OKColor::black)
 					{
-						textAAColor = BobColor::darkerGreen;
+						textAAColor = OKColor::darkerGreen;
 					}
 					else
 					{
-						textAAColor = BobColor::lightGreen;
+						textAAColor = OKColor::lightGreen;
 					}
 
-					if (textBGColor == BobColor::black)
+					if (textBGColor == OKColor::black)
 					{
-						textShadowColor = BobColor::darkerGreen;
+						textShadowColor = OKColor::darkerGreen;
 					}
 					else
 					{
-						textShadowColor = BobColor::lightGreen;
+						textShadowColor = OKColor::lightGreen;
 					}
 				}
 				else //bob's
 				{
-					if (position < length - 4 && String::startsWith(currentText.substr(position), "bob's") && (position >= length - 9 || String::startsWith(currentText.substr(position), "bob's game") == false))
+					if (position < length - 4 && OKString::startsWith(currentText.substr(position), "bob's") && (position >= length - 9 || OKString::startsWith(currentText.substr(position), "bob's game") == false))
 					{
 						tC0 = textBGColor;
 						tC1 = textColor;
 						tC2 = textAAColor;
 						tC3 = textShadowColor;
 
-						textColor = BobColor::green;
-						if (textBGColor == BobColor::black)
+						textColor = OKColor::green;
+						if (textBGColor == OKColor::black)
 						{
-							textAAColor = BobColor::darkGreen;
+							textAAColor = OKColor::darkGreen;
 						}
 						else
 						{
-							textAAColor = BobColor::lightGreen;
+							textAAColor = OKColor::lightGreen;
 						}
 
-						if (textBGColor == BobColor::black)
+						if (textBGColor == OKColor::black)
 						{
-							textShadowColor = BobColor::darkerGreen;
+							textShadowColor = OKColor::darkerGreen;
 						}
 						else
 						{
-							textShadowColor = BobColor::lightGreen;
+							textShadowColor = OKColor::lightGreen;
 						}
 					}
 					else //bob
 					{
-						if (position < length - 2 && String::startsWith(currentText.substr(position), "bob") && (position >= length - 4 || String::startsWith(currentText.substr(position), "bob's") == false))
+						if (position < length - 2 && OKString::startsWith(currentText.substr(position), "bob") && (position >= length - 4 || OKString::startsWith(currentText.substr(position), "bob's") == false))
 						{
 							tC0 = textBGColor;
 							tC1 = textColor;
 							tC2 = textAAColor;
 							tC3 = textShadowColor;
 
-							textColor = BobColor::green;
-							if (textBGColor == BobColor::black)
+							textColor = OKColor::green;
+							if (textBGColor == OKColor::black)
 							{
-								textAAColor = BobColor::darkerGreen;
+								textAAColor = OKColor::darkerGreen;
 							}
 							else
 							{
-								textAAColor = BobColor::lightGreen;
+								textAAColor = OKColor::lightGreen;
 							}
 
-							if (textBGColor == BobColor::black)
+							if (textBGColor == OKColor::black)
 							{
-								textShadowColor = BobColor::darkerGreen;
+								textShadowColor = OKColor::darkerGreen;
 							}
 							else
 							{
-								textShadowColor = BobColor::lightGreen;
+								textShadowColor = OKColor::lightGreen;
 							}
 						}
 						else //nD
 						{
-							if (position < length - 1 && String::startsWith(currentText.substr(position), "nD"))
+							if (position < length - 1 && OKString::startsWith(currentText.substr(position), "nD"))
 							{
 								tC0 = textBGColor;
 								tC1 = textColor;
 								tC2 = textAAColor;
 								tC3 = textShadowColor;
 
-								textColor = BobColor::green;
-								if (textBGColor == BobColor::black)
+								textColor = OKColor::green;
+								if (textBGColor == OKColor::black)
 								{
-									textAAColor = BobColor::darkerGreen;
+									textAAColor = OKColor::darkerGreen;
 								}
 								else
 								{
-									textAAColor = BobColor::lightGreen;
+									textAAColor = OKColor::lightGreen;
 								}
 
-								if (textBGColor == BobColor::black)
+								if (textBGColor == OKColor::black)
 								{
-									textShadowColor = BobColor::darkerGreen;
+									textShadowColor = OKColor::darkerGreen;
 								}
 								else
 								{
-									textShadowColor = BobColor::lightGreen;
+									textShadowColor = OKColor::lightGreen;
 								}
 							}
 						}
@@ -514,7 +514,7 @@ void TextManager::postparseColorizedTags()
 
 	// automatically colorize "Yuu" back to white
 
-	if (position >= 2 && String::startsWith(currentText.substr(position - 2), "Yuu"))
+	if (position >= 2 && OKString::startsWith(currentText.substr(position - 2), "Yuu"))
 	{
 		textBGColor = tC0;
 		textColor = tC1;
@@ -525,7 +525,7 @@ void TextManager::postparseColorizedTags()
 	//"bob's game"
 	else
 	{
-		if (position >= 11 && String::startsWith(currentText.substr(position - 11), "\"bob's game\""))
+		if (position >= 11 && OKString::startsWith(currentText.substr(position - 11), "\"bob's game\""))
 		{
 			textBGColor = tC0;
 			textColor = tC1;
@@ -534,7 +534,7 @@ void TextManager::postparseColorizedTags()
 		}
 		else
 		{
-			if (position >= 9 && String::startsWith(currentText.substr(position - 9), "bob's game") && (position >= length - 1 || String::startsWith(currentText.substr(position - 9), "bob's game\"") == false))
+			if (position >= 9 && OKString::startsWith(currentText.substr(position - 9), "bob's game") && (position >= length - 1 || OKString::startsWith(currentText.substr(position - 9), "bob's game\"") == false))
 			{
 				textBGColor = tC0;
 				textColor = tC1;
@@ -543,7 +543,7 @@ void TextManager::postparseColorizedTags()
 			}
 			else
 			{
-				if (position >= 4 && String::startsWith(currentText.substr(position - 4), "bob's") && (position >= length - 5 || String::startsWith(currentText.substr(position - 4), "bob's game") == false))
+				if (position >= 4 && OKString::startsWith(currentText.substr(position - 4), "bob's") && (position >= length - 5 || OKString::startsWith(currentText.substr(position - 4), "bob's game") == false))
 				{
 					textBGColor = tC0;
 					textColor = tC1;
@@ -552,7 +552,7 @@ void TextManager::postparseColorizedTags()
 				}
 				else
 				{
-					if (position >= 2 && String::startsWith(currentText.substr(position - 2), "bob") && (position >= length - 2 || String::startsWith(currentText.substr(position - 2), "bob's") == false))
+					if (position >= 2 && OKString::startsWith(currentText.substr(position - 2), "bob") && (position >= length - 2 || OKString::startsWith(currentText.substr(position - 2), "bob's") == false))
 					{
 						textBGColor = tC0;
 						textColor = tC1;
@@ -561,7 +561,7 @@ void TextManager::postparseColorizedTags()
 					}
 					else
 					{
-						if (position >= 1 && String::startsWith(currentText.substr(position - 1), "nD"))
+						if (position >= 1 && OKString::startsWith(currentText.substr(position - 1), "nD"))
 						{
 							textBGColor = tC0;
 							textColor = tC1;
@@ -570,24 +570,24 @@ void TextManager::postparseColorizedTags()
 						}
 						else
 						{
-							if (String::startsWith(currentText.substr(position), "nD"))
+							if (OKString::startsWith(currentText.substr(position), "nD"))
 							{
-								textColor = BobColor::purple;
-								if (textBGColor == BobColor::black)
+								textColor = OKColor::purple;
+								if (textBGColor == OKColor::black)
 								{
-									textAAColor = BobColor::darkerPurple;
+									textAAColor = OKColor::darkerPurple;
 								}
 								else
 								{
-									textAAColor = BobColor::lightPurple;
+									textAAColor = OKColor::lightPurple;
 								}
-								if (textBGColor == BobColor::black)
+								if (textBGColor == OKColor::black)
 								{
-									textShadowColor = BobColor::darkerPurple;
+									textShadowColor = OKColor::darkerPurple;
 								}
 								else
 								{
-									textShadowColor = BobColor::lightPurple;
+									textShadowColor = OKColor::lightPurple;
 								}
 							}
 						}
@@ -627,7 +627,7 @@ void TextManager::drawText(long long ticksPassed)
 
 				string e = "A tag was parsed inside drawText()";
 				Main::console->error(e);
-				log.error(e);
+				log->error(e);
 			}
 
 			else
@@ -639,7 +639,7 @@ void TextManager::drawText(long long ticksPassed)
 				if (currentText[position] == ' ')
 				{
 					// get next word length including the space
-					int nextWordLength = BobFont::getNextWordLength(currentText, position, font);
+					int nextWordLength = OKFont::getNextWordLength(currentText, position, font);
 
 					// THIS SKIPS WORDS LONGER THEN THE MAXIMUM LENGTH
 					if (nextWordLength > getLineSizeX())
@@ -648,9 +648,9 @@ void TextManager::drawText(long long ticksPassed)
 
 						string e = "A word was too long for the getText engine.";
 						Main::console->error(e);
-						log.error(e);
+						log->error(e);
 
-						nextWordLength = BobFont::getNextWordLength(currentText, position, font);
+						nextWordLength = OKFont::getNextWordLength(currentText, position, font);
 					}
 
 					// see if it fits on the current line
@@ -693,7 +693,7 @@ void TextManager::drawText(long long ticksPassed)
 			postparseColorizedTags();
 
 
-			if (position + 1 < length - 3 && String::startsWith(currentText.substr(position + 1), "<.") == false)
+			if (position + 1 < length - 3 && OKString::startsWith(currentText.substr(position + 1), "<.") == false)
 			{
 				//auto delay on punctuation
 				if ((currentText[position] == '.' || currentText[position] == '?' || currentText[position] == '!'))
@@ -1239,20 +1239,20 @@ void TextManager::drawLetter()
 { //=========================================================================================================================
 
 
-	int letterIndex = BobFont::getFontIndexForChar(currentText[position]);
+	int letterIndex = OKFont::getFontIndexForChar(currentText[position]);
 	if (letterIndex == -1)
 	{
 		return;
 	}
 
 
-	int letterWidth = BobFont::getCharWidth(letterIndex, font);
+	int letterWidth = OKFont::getCharWidth(letterIndex, font);
 
 
 	// play sound sometimes, for vowels
-	if ((textBox->get(selectedTextbox)->xInLine == 0 && textBox->get(selectedTextbox)->line == 0) || (position % 2 == 0 && position < length - 1 && (BobFont::is_a_vowel(currentText[position - 1]) != BobFont::is_a_vowel(currentText[position]) || BobFont::is_a_vowel(currentText[position]) != BobFont::is_a_vowel(currentText[position + 1]))))
+	if ((textBox->get(selectedTextbox)->xInLine == 0 && textBox->get(selectedTextbox)->line == 0) || (position % 2 == 0 && position < length - 1 && (OKFont::is_a_vowel(currentText[position - 1]) != OKFont::is_a_vowel(currentText[position]) || OKFont::is_a_vowel(currentText[position]) != OKFont::is_a_vowel(currentText[position + 1]))))
 	{
-		if (font == BobFont::font_bob_16)
+		if (font == OKFont::font_bob_16)
 		{
 			getAudioManager()->playSound("blah", 0.5f, textBox->get(selectedTextbox)->voicePitch + ((10 + Math::randUpToIncluding(20)) / 10.0f), 1);
 		}
@@ -1432,198 +1432,198 @@ void TextManager::parseOption()
 	}
 	else if (optionBuffer == "BOB")
 	{
-		font = BobFont::font_bob_16;
+		font = OKFont::font_bob_16;
 	}
 	else if (optionBuffer == "SMALL")
 	{
-		font = BobFont::font_small_16;
+		font = OKFont::font_small_16;
 	}
 	else if (optionBuffer == "NORMAL")
 	{
-		font = BobFont::font_normal_16;
+		font = OKFont::font_normal_16;
 	}
 	else if (optionBuffer == "BLACK")
 	{
-		textBGColor = BobColor::white;
-		textColor = BobColor::black;
-		textAAColor = BobColor::lightGray;
-		textShadowColor = BobColor::gray;
+		textBGColor = OKColor::white;
+		textColor = OKColor::black;
+		textAAColor = OKColor::lightGray;
+		textShadowColor = OKColor::gray;
 	}
 	else if (optionBuffer == "WHITE")
 	{
-		textBGColor = BobColor::black;
-		textColor = BobColor::white;
-		textAAColor = BobColor::gray;
-		textShadowColor = BobColor::darkGray;
+		textBGColor = OKColor::black;
+		textColor = OKColor::white;
+		textAAColor = OKColor::gray;
+		textShadowColor = OKColor::darkGray;
 	}
 	else if (optionBuffer == "GRAY")
 	{
-		textColor = BobColor::gray;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::gray;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkGray;
+			textAAColor = OKColor::darkGray;
 		}
 		else
 		{
-			textAAColor = BobColor::lightGray;
+			textAAColor = OKColor::lightGray;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerGray;
+			textShadowColor = OKColor::darkerGray;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightGray;
+			textShadowColor = OKColor::lightGray;
 		}
 	}
 	else if (optionBuffer == "RED")
 	{
-		textColor = BobColor::red;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::red;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkRed;
+			textAAColor = OKColor::darkRed;
 		}
 		else
 		{
-			textAAColor = BobColor::lightRed;
+			textAAColor = OKColor::lightRed;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerRed;
+			textShadowColor = OKColor::darkerRed;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightRed;
+			textShadowColor = OKColor::lightRed;
 		}
 	}
 	else if (optionBuffer == "ORANGE")
 	{
-		textColor = BobColor::orange;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::orange;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkOrange;
+			textAAColor = OKColor::darkOrange;
 		}
 		else
 		{
-			textAAColor = BobColor::lightOrange;
+			textAAColor = OKColor::lightOrange;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerOrange;
+			textShadowColor = OKColor::darkerOrange;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightOrange;
+			textShadowColor = OKColor::lightOrange;
 		}
 	}
 	else if (optionBuffer == "YELLOW")
 	{
-		textColor = BobColor::yellow;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::yellow;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkYellow;
+			textAAColor = OKColor::darkYellow;
 		}
 		else
 		{
-			textAAColor = BobColor::lightYellow;
+			textAAColor = OKColor::lightYellow;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerYellow;
+			textShadowColor = OKColor::darkerYellow;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightYellow;
+			textShadowColor = OKColor::lightYellow;
 		}
 	}
 	else if (optionBuffer == "GREEN")
 	{
-		textColor = BobColor::green;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::green;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkGreen;
+			textAAColor = OKColor::darkGreen;
 		}
 		else
 		{
-			textAAColor = BobColor::lightGreen;
+			textAAColor = OKColor::lightGreen;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerGreen;
+			textShadowColor = OKColor::darkerGreen;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightGreen;
+			textShadowColor = OKColor::lightGreen;
 		}
 	}
 	else if (optionBuffer == "BLUE")
 	{
-		textColor = BobColor::blue;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::blue;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkBlue;
+			textAAColor = OKColor::darkBlue;
 		}
 		else
 		{
-			textAAColor = BobColor::lightBlue;
+			textAAColor = OKColor::lightBlue;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerBlue;
+			textShadowColor = OKColor::darkerBlue;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightBlue;
+			textShadowColor = OKColor::lightBlue;
 		}
 	}
 	else if (optionBuffer == "PURPLE")
 	{
-		textColor = BobColor::purple;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::purple;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkPurple;
+			textAAColor = OKColor::darkPurple;
 		}
 		else
 		{
-			textAAColor = BobColor::lightPurple;
+			textAAColor = OKColor::lightPurple;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerPurple;
+			textShadowColor = OKColor::darkerPurple;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightPurple;
+			textShadowColor = OKColor::lightPurple;
 		}
 	}
 	else if (optionBuffer == "PINK")
 	{
-		textColor = BobColor::pink;
-		if (textBGColor == BobColor::black)
+		textColor = OKColor::pink;
+		if (textBGColor == OKColor::black)
 		{
-			textAAColor = BobColor::darkPink;
+			textAAColor = OKColor::darkPink;
 		}
 		else
 		{
-			textAAColor = BobColor::lightPink;
+			textAAColor = OKColor::lightPink;
 		}
-		if (textBGColor == BobColor::black)
+		if (textBGColor == OKColor::black)
 		{
-			textShadowColor = BobColor::darkerPink;
+			textShadowColor = OKColor::darkerPink;
 		}
 		else
 		{
-			textShadowColor = BobColor::lightPink;
+			textShadowColor = OKColor::lightPink;
 		}
 	}
 	else if (optionBuffer == "BGBLACK")
 	{
-		textBGColor = BobColor::black;
+		textBGColor = OKColor::black;
 		// TODO: if(textColor==COLOR)textAAColor=DARKCOLOR;
 	}
 	else if (optionBuffer == "BGWHITE")
 	{
-		textBGColor = BobColor::white;
+		textBGColor = OKColor::white;
 		// TODO: if(textColor==COLOR)textAAColor=LIGHTCOLOR;
 	}
 
@@ -1653,7 +1653,7 @@ void TextManager::parseOption()
 		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
 	}
 
-	else if (String::startsWith(optionBuffer, "SHAKE:"))
+	else if (OKString::startsWith(optionBuffer, "SHAKE:"))
 	{
 		int ticks = 0;
 		try
@@ -1662,7 +1662,7 @@ void TextManager::parseOption()
 		}
 		catch (exception)
 		{
-			log.error("Could not parse ticks in optionBuffer");
+			log->error("Could not parse ticks in optionBuffer");
 		}
 		textBox->get(selectedTextbox)->shakeTicksXTotal = ticks;
 		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
@@ -1711,7 +1711,7 @@ void TextManager::parseOption()
 			delay = true;
 			delayTicks = 2000;
 		}
-		else if (String::startsWith(optionBuffer, "DELAY:"))
+		else if (OKString::startsWith(optionBuffer, "DELAY:"))
 		{
 			int ticks = 0;
 			try
@@ -1720,12 +1720,12 @@ void TextManager::parseOption()
 			}
 			catch (exception)
 			{
-				log.error("Could not parse ticks in optionBuffer");
+				log->error("Could not parse ticks in optionBuffer");
 			}
 			delay = true;
 			delayTicks = ticks;
 		}
-		else if (String::startsWith(optionBuffer, "TICKSPERLETTER:"))
+		else if (OKString::startsWith(optionBuffer, "TICKSPERLETTER:"))
 		{
 			int ticks = 0;
 			try
@@ -1734,7 +1734,7 @@ void TextManager::parseOption()
 			}
 			catch (exception)
 			{
-				log.error("Could not parse ticks in optionBuffer");
+				log->error("Could not parse ticks in optionBuffer");
 			}
 
 			ticksPerLetter = ticks;
@@ -1819,7 +1819,7 @@ void TextManager::parseOption()
 			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity6, nullptr, "");
 			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
 		}
-		else if (String::startsWith(optionBuffer, "SETSPRITEBOX0TOENTITY:"))
+		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
 			shared_ptr<Entity> e = getCurrentMap()->getEntityByName(s);
@@ -1828,7 +1828,7 @@ void TextManager::parseOption()
 				textBox->get(0)->setSpriteWindow(e, nullptr, "");
 			}
 		}
-		else if (String::startsWith(optionBuffer, "SETSPRITEBOX1TOENTITY:"))
+		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
 			shared_ptr<Entity> e = getCurrentMap()->getEntityByName(s);
@@ -1837,7 +1837,7 @@ void TextManager::parseOption()
 				textBox->get(1)->setSpriteWindow(e, nullptr, "");
 			}
 		}
-		else if (String::startsWith(optionBuffer, "SETSPRITEBOX0TOSPRITE:"))
+		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
 			shared_ptr<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
@@ -1846,7 +1846,7 @@ void TextManager::parseOption()
 				textBox->get(0)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
 			}
 		}
-		else if (String::startsWith(optionBuffer, "SETSPRITEBOX1TOSPRITE:"))
+		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
 			shared_ptr<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
@@ -1855,7 +1855,7 @@ void TextManager::parseOption()
 				textBox->get(1)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
 			}
 		}
-		else if (String::startsWith(optionBuffer, "PITCH:"))
+		else if (OKString::startsWith(optionBuffer, "PITCH:"))
 		{
 			float pitch = 1.0f;
 			try
@@ -1864,12 +1864,12 @@ void TextManager::parseOption()
 			}
 			catch(exception)
 			{
-				log.error("Could not parse pitch");
+				log->error("Could not parse pitch");
 			}
 
 			textBox->get(selectedTextbox)->voicePitch = pitch;
 		}
-		else if (String::startsWith(optionBuffer, "Q:"))
+		else if (OKString::startsWith(optionBuffer, "Q:"))
 		{
 			getAnswerToQuestionWithQuestionBox(optionBuffer, optionLength);
 		}
@@ -1885,7 +1885,7 @@ void TextManager::parseOption()
 		{
 			string e = "Unknown tag parsed in TextEngine: " + optionBuffer;
 			Main::console->error(e);
-			log.error(e);
+			log->error(e);
 		}
 	}
 }

@@ -16,8 +16,8 @@
 Logger NDMenuWheel::log = Logger("NDMenuWheel");
 
 
-shared_ptr<BobTexture> NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
-shared_ptr<BobTexture> NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
+shared_ptr<OKTexture> NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
+shared_ptr<OKTexture> NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
 
 NDMenuWheel::NDMenuWheel(shared_ptr<Engine> g)
 { //=========================================================================================================================
@@ -64,11 +64,11 @@ void NDMenuWheel::init()
 	NDMenuWheelItem::wheelItemGlossyOverlayTexture = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/glossyOverlay.png");
 
 
-	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "GameStore", BobColor::magenta));
-	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "Settings", BobColor::green));
+	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "GameStore", OKColor::magenta));
+	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "Settings", OKColor::green));
 }
 
-void NDMenuWheel::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<BobColor> color)
+void NDMenuWheel::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color)
 { //=========================================================================================================================
 
 	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), game, name, color));

@@ -63,7 +63,7 @@ void LogoState::render()
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, w, 0, h, 1.0f);
 
-	//shared_ptr<BobTexture> t = onlineTexture;
+	//shared_ptr<OKTexture> t = onlineTexture;
 //
 //	if (loginMenu == nullptr)return;
 //
@@ -85,9 +85,9 @@ void LogoState::render()
 
 
 //
-//	shared_ptr<BobTexture> t = Main::glowTileBackgroundMenuPanel->bgScrollTexture;
+//	shared_ptr<OKTexture> t = Main::glowTileBackgroundMenuPanel->bgScrollTexture;
 //
-//	shared_ptr<BobTexture> over = Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->get(frame);
+//	shared_ptr<OKTexture> over = Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->get(frame);
 //
 //	float screenWidth = (float)GLUtils::getViewportWidth();
 //	float screenHeight = (float)GLUtils::getViewportHeight();

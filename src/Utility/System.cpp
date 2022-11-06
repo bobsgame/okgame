@@ -111,7 +111,7 @@ void System::initSystemInfo()
 { //=========================================================================================================================
 
 
-	log.debug("Init system info");
+	log->debug("Init system info");
 
 
 
@@ -124,9 +124,9 @@ void System::initSystemInfo()
 	GLUtils::e();
 	for (int i = 0; i < numAudioDevices; i++)
 	{
-		log.info("SDL_GetAudioDeviceName" + to_string(i) + ":" + SDL_GetAudioDeviceName(i, 0));
+		log->info("SDL_GetAudioDeviceName" + to_string(i) + ":" + SDL_GetAudioDeviceName(i, 0));
 		GLUtils::e();
-		//log.info("SDL_GetAudioDeviceStatus" + to_string(i) + ":" + to_string(SDL_GetAudioDeviceStatus(i)));
+		//log->info("SDL_GetAudioDeviceStatus" + to_string(i) + ":" + to_string(SDL_GetAudioDeviceStatus(i)));
 		//GLUtils::e();
 	}
 	GLUtils::e();
@@ -134,84 +134,84 @@ void System::initSystemInfo()
 	int numAudioDrivers = SDL_GetNumAudioDrivers();
 	for (int i = 0; i < numAudioDrivers; i++)
 	{
-		log.info("SDL_GetAudioDriver" + to_string(i) + ":" + SDL_GetAudioDriver(i));
+		log->info("SDL_GetAudioDriver" + to_string(i) + ":" + SDL_GetAudioDriver(i));
 	}
 	GLUtils::e();
 
-	log.info("SDL_GetAudioStatus:" + to_string(SDL_GetAudioStatus()));
+	log->info("SDL_GetAudioStatus:" + to_string(SDL_GetAudioStatus()));
 	GLUtils::e();
-	log.info("SDL_GetCurrentAudioDriver:" + string(SDL_GetCurrentAudioDriver()));
+	log->info("SDL_GetCurrentAudioDriver:" + string(SDL_GetCurrentAudioDriver()));
 	GLUtils::e();
 
 
 	//os
-	log.info("SDL_GetBasePath:" + string(SDL_GetBasePath()));
+	log->info("SDL_GetBasePath:" + string(SDL_GetBasePath()));
 
-	log.info("SDL_GetPerformanceCounter:" + to_string(SDL_GetPerformanceCounter()));
-	log.info("SDL_GetPerformanceFrequency:" + to_string(SDL_GetPerformanceFrequency()));
-	log.info("SDL_GetPlatform:" + string(SDL_GetPlatform()));
-	log.info("SDL_GetPrefPath:" + string(SDL_GetPrefPath("Bob Corporation", "bob's game")));
-	log.info("SDL_GetRevision:" + string(SDL_GetRevision()));
-	log.info("SDL_GetRevisionNumber:" + to_string(SDL_GetRevisionNumber()));
-	log.info("SDL_GetSystemRAM:" + to_string(SDL_GetSystemRAM()));
+	log->info("SDL_GetPerformanceCounter:" + to_string(SDL_GetPerformanceCounter()));
+	log->info("SDL_GetPerformanceFrequency:" + to_string(SDL_GetPerformanceFrequency()));
+	log->info("SDL_GetPlatform:" + string(SDL_GetPlatform()));
+	log->info("SDL_GetPrefPath:" + string(SDL_GetPrefPath("OK Corporation", "bob's game")));
+	log->info("SDL_GetRevision:" + string(SDL_GetRevision()));
+	log->info("SDL_GetRevisionNumber:" + to_string(SDL_GetRevisionNumber()));
+	log->info("SDL_GetSystemRAM:" + to_string(SDL_GetSystemRAM()));
 
 
-	//log.info("SDL_GetVersion" + string(SDL_GetVersion()));
+	//log->info("SDL_GetVersion" + string(SDL_GetVersion()));
 	SDL_version compiled;
 	SDL_version linked;
 	SDL_VERSION(&compiled);
 	SDL_GetVersion(&linked);
-	log.info("Compiled against SDL version:" + to_string(compiled.major) + to_string(compiled.minor) + to_string(compiled.patch));
-	log.info("Linked against SDL version:" + to_string(linked.major) + to_string(linked.minor) + to_string(linked.patch));
+	log->info("Compiled against SDL version:" + to_string(compiled.major) + to_string(compiled.minor) + to_string(compiled.patch));
+	log->info("Linked against SDL version:" + to_string(linked.major) + to_string(linked.minor) + to_string(linked.patch));
 
 
 	//window
 	//SDL_GetGrabbedWindow();
-	log.info("SDL_GetWindowBrightness:" + to_string(SDL_GetWindowBrightness(GLUtils::window)));
-	log.info("SDL_GetWindowDisplayIndex:" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
-	log.info("SDL_GetWindowFlags:" + to_string(SDL_GetWindowFlags(GLUtils::window)));
-	log.info("SDL_GetWindowGrab:" + to_string(SDL_GetWindowGrab(GLUtils::window)));
-	log.info("SDL_GetWindowID:" + to_string(SDL_GetWindowID(GLUtils::window)));
-	log.info("SDL_GetWindowPixelFormat:" + to_string(SDL_GetWindowPixelFormat(GLUtils::window)));
-	log.info("SDL_GetWindowTitle:" + string(SDL_GetWindowTitle(GLUtils::window)));
+	log->info("SDL_GetWindowBrightness:" + to_string(SDL_GetWindowBrightness(GLUtils::window)));
+	log->info("SDL_GetWindowDisplayIndex:" + to_string(SDL_GetWindowDisplayIndex(GLUtils::window)));
+	log->info("SDL_GetWindowFlags:" + to_string(SDL_GetWindowFlags(GLUtils::window)));
+	log->info("SDL_GetWindowGrab:" + to_string(SDL_GetWindowGrab(GLUtils::window)));
+	log->info("SDL_GetWindowID:" + to_string(SDL_GetWindowID(GLUtils::window)));
+	log->info("SDL_GetWindowPixelFormat:" + to_string(SDL_GetWindowPixelFormat(GLUtils::window)));
+	log->info("SDL_GetWindowTitle:" + string(SDL_GetWindowTitle(GLUtils::window)));
 
 
 	//mouse
-	log.info("SDL_GetNumTouchDevices:" + to_string(SDL_GetNumTouchDevices()));
-	log.info("SDL_GetRelativeMouseMode:" + to_string(SDL_GetRelativeMouseMode()));
+	log->info("SDL_GetNumTouchDevices:" + to_string(SDL_GetNumTouchDevices()));
+	log->info("SDL_GetRelativeMouseMode:" + to_string(SDL_GetRelativeMouseMode()));
 
 	//key
-	log.info("SDL_HasScreenKeyboardSupport:" + to_string(SDL_HasScreenKeyboardSupport()));
+	log->info("SDL_HasScreenKeyboardSupport:" + to_string(SDL_HasScreenKeyboardSupport()));
 
 	//cpu
-	log.info("SDL_GetCPUCacheLineSize:" + to_string(SDL_GetCPUCacheLineSize()));
-	log.info("SDL_GetCPUCount:" + to_string(SDL_GetCPUCount()));
-	log.info("SDL_Has3DNow:" + to_string(SDL_Has3DNow()));
-	log.info("SDL_HasAVX:" + to_string(SDL_HasAVX()));
-	log.info("SDL_HasAltiVec:" + to_string(SDL_HasAltiVec()));
-	log.info("SDL_HasMMX:" + to_string(SDL_HasMMX()));
-	log.info("SDL_HasRDTSC:" + to_string(SDL_HasRDTSC()));
-	log.info("SDL_HasSSE:" + to_string(SDL_HasSSE()));
-	log.info("SDL_HasSSE2:" + to_string(SDL_HasSSE2()));
-	log.info("SDL_HasSSE3:" + to_string(SDL_HasSSE3()));
-	log.info("SDL_HasSSE41:" + to_string(SDL_HasSSE41()));
-	log.info("SDL_HasSSE42:" + to_string(SDL_HasSSE42()));
+	log->info("SDL_GetCPUCacheLineSize:" + to_string(SDL_GetCPUCacheLineSize()));
+	log->info("SDL_GetCPUCount:" + to_string(SDL_GetCPUCount()));
+	log->info("SDL_Has3DNow:" + to_string(SDL_Has3DNow()));
+	log->info("SDL_HasAVX:" + to_string(SDL_HasAVX()));
+	log->info("SDL_HasAltiVec:" + to_string(SDL_HasAltiVec()));
+	log->info("SDL_HasMMX:" + to_string(SDL_HasMMX()));
+	log->info("SDL_HasRDTSC:" + to_string(SDL_HasRDTSC()));
+	log->info("SDL_HasSSE:" + to_string(SDL_HasSSE()));
+	log->info("SDL_HasSSE2:" + to_string(SDL_HasSSE2()));
+	log->info("SDL_HasSSE3:" + to_string(SDL_HasSSE3()));
+	log->info("SDL_HasSSE41:" + to_string(SDL_HasSSE41()));
+	log->info("SDL_HasSSE42:" + to_string(SDL_HasSSE42()));
 
 
 	//video
-	log.info("SDL_GetNumRenderDrivers:" + to_string(SDL_GetNumRenderDrivers()));
-	log.info("SDL_GetNumVideoDisplays:" + to_string(SDL_GetNumVideoDisplays()));
-	log.info("SDL_GetNumVideoDrivers:" + to_string(SDL_GetNumVideoDrivers()));
+	log->info("SDL_GetNumRenderDrivers:" + to_string(SDL_GetNumRenderDrivers()));
+	log->info("SDL_GetNumVideoDisplays:" + to_string(SDL_GetNumVideoDisplays()));
+	log->info("SDL_GetNumVideoDrivers:" + to_string(SDL_GetNumVideoDrivers()));
 
 	now = SDL_GetPerformanceCounter();
-	log.debug("SDL info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log->debug("SDL info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
-	log.info("Poco::libraryVersion:" + to_string(Environment::libraryVersion()));
-	log.info("Poco::osName:" + string(Environment::osName()));
-	log.info("Poco::osVersion:" + string(Environment::osVersion()));
-	log.info("Poco::processorCount:" + to_string(Environment::processorCount()));
+	log->info("Poco::libraryVersion:" + to_string(Environment::libraryVersion()));
+	log->info("Poco::osName:" + string(Environment::osName()));
+	log->info("Poco::osVersion:" + string(Environment::osVersion()));
+	log->info("Poco::processorCount:" + to_string(Environment::processorCount()));
 
 
 #ifdef USE_SIGAR
@@ -235,10 +235,10 @@ else
 	for (i = 0; i < (int)cpulist.number; i++)
 	{
 		sigar_cpu_info_t cpu = cpulist.data[i];
-		log.info("Sigar::CPU " + to_string(i) + " Vendor:" + string(cpu.vendor));
-		log.info("Sigar::CPU " + to_string(i) + " Model:" + string(cpu.model));
-		log.info("Sigar::CPU " + to_string(i) + " Mhz:" + to_string(cpu.mhz));
-		log.info("Sigar::CPU " + to_string(i) + " Cores:" + to_string(cpu.total_cores));
+		log->info("Sigar::CPU " + to_string(i) + " Vendor:" + string(cpu.vendor));
+		log->info("Sigar::CPU " + to_string(i) + " Model:" + string(cpu.model));
+		log->info("Sigar::CPU " + to_string(i) + " Mhz:" + to_string(cpu.mhz));
+		log->info("Sigar::CPU " + to_string(i) + " Cores:" + to_string(cpu.total_cores));
 	}
 	sigar_cpu_info_list_destroy(sigar, &cpulist);
 }
@@ -253,14 +253,14 @@ if (status != SIGAR_OK)
 }
 else
 {
-	log.info("Sigar::Ram:" + to_string(mem.ram));
-	log.info("Sigar::Total:" + to_string(mem.total / 1024 / 1024));
-	log.info("Sigar::Used:" + to_string(mem.used / 1024 / 1024));
-	log.info("Sigar::Free:" + to_string(mem.free / 1024 / 1024));
-	log.info("Sigar::Actual Used:" + to_string(mem.actual_used / 1024 / 1024));
-	log.info("Sigar::Actual Free:" + to_string(mem.actual_free / 1024 / 1024));
-	log.info("Sigar::Used %:" + to_string(mem.used_percent));
-	log.info("Sigar::Free %:" + to_string(mem.free_percent));
+	log->info("Sigar::Ram:" + to_string(mem.ram));
+	log->info("Sigar::Total:" + to_string(mem.total / 1024 / 1024));
+	log->info("Sigar::Used:" + to_string(mem.used / 1024 / 1024));
+	log->info("Sigar::Free:" + to_string(mem.free / 1024 / 1024));
+	log->info("Sigar::Actual Used:" + to_string(mem.actual_used / 1024 / 1024));
+	log->info("Sigar::Actual Free:" + to_string(mem.actual_free / 1024 / 1024));
+	log->info("Sigar::Used %:" + to_string(mem.used_percent));
+	log->info("Sigar::Free %:" + to_string(mem.free_percent));
 }
 
 sigar_sys_info_t sys;
@@ -273,15 +273,15 @@ if (status != SIGAR_OK)
 }
 else
 {
-	log.info("Sigar::System Name:" + string(sys.name));
-	log.info("Sigar::System Version:" + string(sys.version));
-	log.info("Sigar::System Arch:" + string(sys.arch));
-	log.info("Sigar::System Machine:" + string(sys.machine));
-	log.info("Sigar::System Description:" + string(sys.description));
-	log.info("Sigar::System Vendor:" + string(sys.vendor));
-	log.info("Sigar::System Vendor Version:" + string(sys.vendor_version));
-	log.info("Sigar::System Vendor Name:" + string(sys.vendor_name));
-	log.info("Sigar::System Vendor Code Name:" + string(sys.vendor_code_name));
+	log->info("Sigar::System Name:" + string(sys.name));
+	log->info("Sigar::System Version:" + string(sys.version));
+	log->info("Sigar::System Arch:" + string(sys.arch));
+	log->info("Sigar::System Machine:" + string(sys.machine));
+	log->info("Sigar::System Description:" + string(sys.description));
+	log->info("Sigar::System Vendor:" + string(sys.vendor));
+	log->info("Sigar::System Vendor Version:" + string(sys.vendor_version));
+	log->info("Sigar::System Vendor Name:" + string(sys.vendor_name));
+	log->info("Sigar::System Vendor Code Name:" + string(sys.vendor_code_name));
 }
 
 sigar_proc_mem_t proc;
@@ -294,9 +294,9 @@ if (status != SIGAR_OK)
 }
 else
 {
-	log.info("Sigar::Proc Mem Size:" + to_string(proc.size / 1024 / 1024));
-	log.info("Sigar::Proc Mem Resident:" + to_string(proc.resident / 1024 / 1024));
-	log.info("Sigar::Proc Mem Share:" + to_string(proc.share / 1024 / 1024));
+	log->info("Sigar::Proc Mem Size:" + to_string(proc.size / 1024 / 1024));
+	log->info("Sigar::Proc Mem Resident:" + to_string(proc.resident / 1024 / 1024));
+	log->info("Sigar::Proc Mem Share:" + to_string(proc.share / 1024 / 1024));
 }
 
 //sigar_proc_stat_t procstat;
@@ -309,19 +309,19 @@ else
 //}
 //else
 //{
-//	log.info("Sigar::Proc Total:" + to_string(procstat.total));
-//	log.info("Sigar::Proc Sleeping:" + to_string(procstat.sleeping));
-//	log.info("Sigar::Proc Running:" + to_string(procstat.running));
-//	log.info("Sigar::Proc Zombie:" + to_string(procstat.zombie));
-//	log.info("Sigar::Proc Stopped:" + to_string(procstat.stopped));
-//	log.info("Sigar::Proc Idle:" + to_string(procstat.idle));
-//	log.info("Sigar::Proc Threads:" + to_string(procstat.threads));
+//	log->info("Sigar::Proc Total:" + to_string(procstat.total));
+//	log->info("Sigar::Proc Sleeping:" + to_string(procstat.sleeping));
+//	log->info("Sigar::Proc Running:" + to_string(procstat.running));
+//	log->info("Sigar::Proc Zombie:" + to_string(procstat.zombie));
+//	log->info("Sigar::Proc Stopped:" + to_string(procstat.stopped));
+//	log->info("Sigar::Proc Idle:" + to_string(procstat.idle));
+//	log->info("Sigar::Proc Threads:" + to_string(procstat.threads));
 //}
 
 sigar_close(sigar);
 
 now = SDL_GetPerformanceCounter();
-log.debug("Sigar info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+log->debug("Sigar info took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 start = SDL_GetPerformanceCounter();
 
 
@@ -345,12 +345,12 @@ start = SDL_GetPerformanceCounter();
 //	if (extensionsString != NULL)glExtensions = string(extensionsString);
 
 	//logSystemInfo();
-	//log.info("Window Width:" + to_string(GLUtils::getRealWindowWidth()));
-	//log.info("Window Height:" + to_string(GLUtils::getRealWindowHeight()));
+	//log->info("Window Width:" + to_string(GLUtils::getRealWindowWidth()));
+	//log->info("Window Height:" + to_string(GLUtils::getRealWindowHeight()));
 
 
 totalNow = SDL_GetPerformanceCounter();
-log.debug("Init system info took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+log->debug("Init system info took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 }
@@ -373,7 +373,7 @@ using namespace Poco::Net;
 void System::initClockAndTimeZone()
 { //=========================================================================================================================
 
-	log.debug("Init clock");
+	log->debug("Init clock");
 	
 	time_t t = time(0); // get time now 
 	struct tm * now = localtime(&t);
@@ -385,9 +385,9 @@ void System::initClockAndTimeZone()
 //	// for more information about date/time format
 //	strftime(buf, sizeof(buf), "%Y-%m-%d.%X", now);
 //	string formattedTime(buf);
-//	//log.info(formattedTime);
+//	//log->info(formattedTime);
 
-	log.info("Local time: "+to_string(now->tm_year + 1900)+"-"+to_string((now->tm_mon + 1))+"-"+to_string(now->tm_mday)+" "+ to_string(now->tm_hour)+":"+ to_string(now->tm_min)+":"+ to_string(now->tm_sec));
+	log->info("Local time: "+to_string(now->tm_year + 1900)+"-"+to_string((now->tm_mon + 1))+"-"+to_string(now->tm_mday)+" "+ to_string(now->tm_hour)+":"+ to_string(now->tm_min)+":"+ to_string(now->tm_sec));
 	
 	//time zone
 
@@ -408,7 +408,7 @@ void System::initClockAndTimeZone()
 //		}
 //		catch (std::exception& e)
 //		{
-//			log.error("Error getting NTP time: "+string(e.what()));
+//			log->error("Error getting NTP time: "+string(e.what()));
 //		}
 //	
 //		if(responses>0)
@@ -711,12 +711,12 @@ void System::updateStats()
 			int usersOnline = Main::bobNet->tcpServerConnection.serverStats->usersOnline;
 			if(usersOnline==1)onlineStatusText->text = "Connected: " + to_string(usersOnline) + " player online";
 			else onlineStatusText->text = "Connected: " + to_string(usersOnline) + " players online";
-			onlineStatusText->color = BobColor::green;
+			onlineStatusText->color = OKColor::green;
 		}
 		else
 		{
 			onlineStatusText->text = "Connected";
-			onlineStatusText->color = BobColor::green;
+			onlineStatusText->color = OKColor::green;
 		}
 	}
 	else
@@ -740,11 +740,11 @@ void System::updateStats()
 		else
 			if (rendersThisSecond >= 30)
 			{
-				rendersPerSecondText->color = BobColor::yellow;
+				rendersPerSecondText->color = OKColor::yellow;
 			}
 			else
 			{
-				rendersPerSecondText->color = BobColor::red;
+				rendersPerSecondText->color = OKColor::red;
 			}
 
 
@@ -755,11 +755,11 @@ void System::updateStats()
 		else
 			if (updatesThisSecond >= 30)
 			{
-				updatesPerSecondText->color = BobColor::yellow;
+				updatesPerSecondText->color = OKColor::yellow;
 			}
 			else
 			{
-				updatesPerSecondText->color = BobColor::red;
+				updatesPerSecondText->color = OKColor::red;
 			}
 
 
@@ -795,14 +795,14 @@ void System::updateStats()
 				averageFPSTestSecondsPassed = 0;
 				if (GLUtils::SHADER_FBO_SCALE == 1.0f)
 				{
-					log.debug("Downscaled shaders to try for higher framerate");
+					log->debug("Downscaled shaders to try for higher framerate");
 					GLUtils::SHADER_FBO_SCALE = 0.5f;
 					GLUtils::doResize();
 				}
 				else
 					if (GLUtils::SHADER_FBO_SCALE == 0.5f)
 					{
-						log.debug("Downscaled shaders again to try for higher framerate");
+						log->debug("Downscaled shaders again to try for higher framerate");
 						GLUtils::SHADER_FBO_SCALE = 0.25f;
 						GLUtils::doResize();
 					}
@@ -817,14 +817,14 @@ void System::updateStats()
 			//			averageFPSTestSecondsPassed = 0;
 			//			if (GLUtils::SHADER_FBO_SCALE == 0.25f)
 			//			{
-			//				log.debug("Upscaled shaders to try for higher framerate");
+			//				log->debug("Upscaled shaders to try for higher framerate");
 			//				GLUtils::SHADER_FBO_SCALE = 0.5f;
 			//				GLUtils::doResize();
 			//			}
 			//			else			
 			//			if (GLUtils::SHADER_FBO_SCALE == 0.5f)
 			//			{
-			//				log.debug("Upscaled shaders to try for higher framerate");
+			//				log->debug("Upscaled shaders to try for higher framerate");
 			//				GLUtils::SHADER_FBO_SCALE = 1.0f;
 			//				GLUtils::doResize();
 			//			}
@@ -846,7 +846,7 @@ void System::updateStats()
 			ticksText[i]->text = string("Ticks Passed " + to_string(i) + ": ") + to_string(debugTicksPassed);
 			if (debugTicksPassed > 17)
 			{
-				ticksText[i]->color = BobColor::red;
+				ticksText[i]->color = OKColor::red;
 			}
 			else
 			{
@@ -877,9 +877,9 @@ void System::updateStats()
 	//			status, sigar_strerror(sigar, status));
 	//		exit(1);
 	//	}
-	//	//log.info("Proc Mem Size:" + to_string(proc.size / 1024 / 1024));
-	//	//log.info("Proc Mem Resident:" + to_string(proc.resident / 1024 / 1024));
-	//	//log.info("Proc Mem Share:" + to_string(proc.share / 1024 / 1024));
+	//	//log->info("Proc Mem Size:" + to_string(proc.size / 1024 / 1024));
+	//	//log->info("Proc Mem Resident:" + to_string(proc.resident / 1024 / 1024));
+	//	//log->info("Proc Mem Share:" + to_string(proc.share / 1024 / 1024));
 	//
 	//
 	//	int procMemUsed = (int)(proc.size / 1024 / 1024);
@@ -891,14 +891,14 @@ void System::updateStats()
 	//			status, sigar_strerror(sigar, status));
 	//		exit(1);
 	//	}
-	////			log.info("Ram:" + to_string(mem.ram));
-	////			log.info("Total:" + to_string(mem.total / 1024 / 1024));
-	////			log.info("Used:" + to_string(mem.used / 1024 / 1024));
-	////			log.info("Free:" + to_string(mem.free / 1024 / 1024));
-	////			log.info("Actual Used:" + to_string(mem.actual_used / 1024 / 1024));
-	////			log.info("Actual Free:" + to_string(mem.actual_free / 1024 / 1024));
-	////			log.info("Used %:" + to_string(mem.used_percent));
-	////			log.info("Free %:" + to_string(mem.free_percent));
+	////			log->info("Ram:" + to_string(mem.ram));
+	////			log->info("Total:" + to_string(mem.total / 1024 / 1024));
+	////			log->info("Used:" + to_string(mem.used / 1024 / 1024));
+	////			log->info("Free:" + to_string(mem.free / 1024 / 1024));
+	////			log->info("Actual Used:" + to_string(mem.actual_used / 1024 / 1024));
+	////			log->info("Actual Free:" + to_string(mem.actual_free / 1024 / 1024));
+	////			log->info("Used %:" + to_string(mem.used_percent));
+	////			log->info("Free %:" + to_string(mem.free_percent));
 	//
 	//	totalMemory = (mem.ram);//rt->totalMemory();
 	//	freeMemory = (mem.free / 1024 / 1024);//rt->freeMemory();
@@ -937,13 +937,13 @@ void System::updateStats()
 	//			status, sigar_strerror(sigar, status));
 	//		exit(1);
 	//	}
-	////	log.info("Proc Total:" + to_string(procstat.total));
-	////	log.info("Proc Sleeping:" + to_string(procstat.sleeping));
-	////	log.info("Proc Running:" + to_string(procstat.running));
-	////	log.info("Proc Zombie:" + to_string(procstat.zombie));
-	////	log.info("Proc Stopped:" + to_string(procstat.stopped));
-	////	log.info("Proc Idle:" + to_string(procstat.idle));
-	////	log.info("Proc Threads:" + to_string(procstat.threads));
+	////	log->info("Proc Total:" + to_string(procstat.total));
+	////	log->info("Proc Sleeping:" + to_string(procstat.sleeping));
+	////	log->info("Proc Running:" + to_string(procstat.running));
+	////	log->info("Proc Zombie:" + to_string(procstat.zombie));
+	////	log->info("Proc Stopped:" + to_string(procstat.stopped));
+	////	log->info("Proc Idle:" + to_string(procstat.idle));
+	////	log->info("Proc Threads:" + to_string(procstat.threads));
 	//
 	//	mxThreadCountText->text = string("Thread Count: "+ to_string(procstat.threads));// +ManagementFactory::getThreadMXBean().getThreadCount() + " | Daemon Thread Count: " + ManagementFactory::getThreadMXBean().getDaemonThreadCount() + " | Peak Thread Count: " + ManagementFactory::getThreadMXBean().getPeakThreadCount() + " | Total Started: " + ManagementFactory::getThreadMXBean().getTotalStartedThreadCount();
 	//

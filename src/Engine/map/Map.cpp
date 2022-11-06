@@ -27,7 +27,7 @@ ctpl::thread_pool* Map::generateLightPNGThreadPool = nullptr;
 Map::Map()
 {//=========================================================================================================================
 
-	//chunkTexture = make_shared<HashMap><int, shared_ptr<BobTexture>>();
+	//chunkTexture = make_shared<HashMap><int, shared_ptr<OKTexture>>();
 }
 
 
@@ -35,7 +35,7 @@ Map::Map()
 Map::Map(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 { //=========================================================================================================================
 
-	//chunkTexture = make_shared<HashMap><int, shared_ptr<BobTexture>>();
+	//chunkTexture = make_shared<HashMap><int, shared_ptr<OKTexture>>();
 
 	initMap(g, mapData);
 
@@ -269,7 +269,7 @@ shared_ptr<Character> Map::getCharacterByName(const string& name)
 shared_ptr<Light> Map::getLightByName(const string& name)
 { //=========================================================================================================================
 
-	//log.debug("getLightByName: "+name);
+	//log->debug("getLightByName: "+name);
 
 	return currentState->lightByNameHashtable.get(name);
 }
@@ -280,9 +280,9 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByName(string name)
 { //=========================================================================================================================
 
 
-	//log.debug("getAreaOrWarpAreaByName: "+name);
+	//log->debug("getAreaOrWarpAreaByName: "+name);
 
-	if (String::startsWith(name, "AREA."))
+	if (OKString::startsWith(name, "AREA."))
 	{
 		name = name.substr(name.find(".") + 1);
 	}
@@ -322,7 +322,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByName(string name)
 
 	if (a == nullptr)
 	{
-		log.error("Could not find Area/WarpArea: getAreaOrWarpAreaByName() Name:" + name);
+		log->error("Could not find Area/WarpArea: getAreaOrWarpAreaByName() Name:" + name);
 	}
 
 
@@ -333,9 +333,9 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 { //=========================================================================================================================
 
 
-	//log.debug("getAreaOrWarpAreaByName: "+name);
+	//log->debug("getAreaOrWarpAreaByName: "+name);
 
-	if (String::startsWith(typeID, "AREA.") == false)
+	if (OKString::startsWith(typeID, "AREA.") == false)
 	{
 		typeID = "AREA." + typeID;
 	}
@@ -378,7 +378,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 
 	if (a == nullptr)
 	{
-		log.debug("Could not find Area/WarpArea: getAreaOrWarpAreaByTYPEID() TypeID:" + typeID);
+		log->debug("Could not find Area/WarpArea: getAreaOrWarpAreaByTYPEID() TypeID:" + typeID);
 	}
 
 
@@ -389,9 +389,9 @@ shared_ptr<Door> Map::getDoorByTYPEID(const string& typeID_in)
 { //=========================================================================================================================
 
 	string typeID = typeID_in;
-	//log.debug("getDoorByName: "+name);
+	//log->debug("getDoorByName: "+name);
 
-	if (String::startsWith(typeID, "DOOR.") == false)
+	if (OKString::startsWith(typeID, "DOOR.") == false)
 	{
 		typeID = "DOOR." + typeID;
 	}
@@ -412,7 +412,7 @@ shared_ptr<Door> Map::getDoorByTYPEID(const string& typeID_in)
 		}
 	}
 
-	log.error("Could not find Door: getDoorByTYPEID() TypeID:" + typeID);
+	log->error("Could not find Door: getDoorByTYPEID() TypeID:" + typeID);
 
 	return nullptr;
 }
@@ -422,9 +422,9 @@ shared_ptr<Door> Map::getDoorByName(const string& name_in)
 
 	string name = name_in;
 
-	//log.debug("getDoorByName: "+name);
+	//log->debug("getDoorByName: "+name);
 
-	if (String::startsWith(name, "DOOR."))
+	if (OKString::startsWith(name, "DOOR."))
 	{
 		name = name.substr(name.find(".") + 1);
 	}
@@ -445,7 +445,7 @@ shared_ptr<Door> Map::getDoorByName(const string& name_in)
 		}
 	}
 
-	log.error("Could not find Door: getDoorByName(): " + name);
+	log->error("Could not find Door: getDoorByName(): " + name);
 
 	return nullptr;
 }
@@ -464,7 +464,7 @@ shared_ptr<MapState> Map::getMapStateByName(const string& name)
 
 
 	//we didn't find it. make a new one. throw an error.
-	log.error("Could not find Map State:" + name + ". This should never happen.");
+	log->error("Could not find Map State:" + name + ". This should never happen.");
 
 	//MapState s = make_shared<MapState>(-1,name);
 	//stateList.add(s);
@@ -486,7 +486,7 @@ shared_ptr<MapState> Map::getMapStateByID(int id)
 	}
 
 
-	log.error("Could not find State ID:" + to_string(id) + " in currentMap stateList. This should never happen.");
+	log->error("Could not find State ID:" + to_string(id) + " in currentMap stateList. This should never happen.");
 	//then it should look through every map mapStateList, since state ID is guaranteed to be unique.
 
 	//MapState s = make_shared<MapState>(id,"????");
@@ -875,7 +875,7 @@ void Map::update()
 //	   if(generatePNGThreadPool.isShutdown()==false)
 //	   {
 //		   generatePNGThreadPool.shutdown();
-//	      log.debug("generatePNGExecutorService Shut Down");
+//	      log->debug("generatePNGExecutorService Shut Down");
 //	   }
 //	}
 }
@@ -1167,12 +1167,12 @@ void Map::zOrderEntities()
 	}
 
 
-	//		log.debug("---------------------");
+	//		log->debug("---------------------");
 	//
 	//		for(int i=0;i<zList.size();i++)
 	//		{
 	//			Entity e = zList.get(i);
-	//			log.debug(e.getSpriteName());
+	//			log->debug(e.getSpriteName());
 	//		}
 
 
@@ -1256,7 +1256,7 @@ void Map::sortLightLayers()
 				}
 			}
 
-			//log.debug("Light layer "+layer);
+			//log->debug("Light layer "+layer);
 			//layer++;
 			sortedLightsLayers.add(thisLayerList);
 		}
@@ -1303,7 +1303,7 @@ void Map::render(RenderOrder renderOrder, bool disableClip, bool disableFloorOff
 	}
 
 
-	shared_ptr<BobTexture> texture = nullptr;
+	shared_ptr<OKTexture> texture = nullptr;
 
 	float sw = (float)getEngine()->getWidth();
 	float sh = (float)getEngine()->getHeight();
@@ -2205,11 +2205,11 @@ void Map::releaseAllTextures()
 
 
 	
-	ArrayList<shared_ptr<BobTexture>>* chunks = chunkTexture.getAllValues();
+	ArrayList<shared_ptr<OKTexture>>* chunks = chunkTexture.getAllValues();
 	{
 		for (int i = 0; i < chunks->size(); i++)
 		{
-			shared_ptr<BobTexture >t = chunks->get(i);
+			shared_ptr<OKTexture >t = chunks->get(i);
 
 			if (t != nullptr)
 			{
@@ -2583,7 +2583,7 @@ bool Map::isXYWithinScreen(float x, float y)
 
 
 //The following method was originally marked 'synchronized':
-shared_ptr<BobTexture> Map::getChunkTexture(int index)
+shared_ptr<OKTexture> Map::getChunkTexture(int index)
 { //=========================================================================================================================
 
 	if (chunkTexture.containsKey(index) == false)return nullptr;
@@ -2591,7 +2591,7 @@ shared_ptr<BobTexture> Map::getChunkTexture(int index)
 }
 
 //The following method was originally marked 'synchronized':
-void Map::setChunkTexture(int index, shared_ptr<BobTexture> t)
+void Map::setChunkTexture(int index, shared_ptr<OKTexture> t)
 { //=========================================================================================================================
 	chunkTexture.put(index, t);
 }
@@ -2693,16 +2693,16 @@ bool Map::loadChunkTexturesFromCachePNGs()
 
 						if (getChunkPNGFileExists_S(chunkIndex) == true || (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true))
 						{
-							shared_ptr<BobFile> textureFile = nullptr;
+							shared_ptr<OKFile> textureFile = nullptr;
 
 							if (MapManager::generateHQ2XChunks == true && getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 							{
-								textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+								textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 								(*usingHQ2XTexture)[chunkIndex] = true;
 							}
 							else
 							{
-								textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+								textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
 							}
 
 							if (textureFile->exists() == false)
@@ -2869,7 +2869,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 					if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == true)
 					{
 						//floatcheck it exists, this should never be false.
-						shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+						shared_ptr<OKFile> textureFile = make_shared<OKFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						if (textureFile->exists() == false)
 						{
 							//(exception())->printStackTrace();
@@ -2877,7 +2877,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 						}
 
 
-						shared_ptr<BobTexture> t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+						shared_ptr<OKTexture> t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 						getMapManager()->lightTextureHashMap.put(l->getFileName(), t);
 
 						l->texture = t;
@@ -2918,11 +2918,11 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 
 					if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 					{
-						shared_ptr<BobFile> textureFile = nullptr;
+						shared_ptr<OKFile> textureFile = nullptr;
 
 						if (getHQ2XChunkPNGFileExists_S(chunkIndex) == true)
 						{
-							textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+							textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 						}
 
 						if (textureFile->exists() == false)
@@ -2931,7 +2931,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							continue;
 						}
 
-						shared_ptr<BobTexture> t = getChunkTexture(chunkIndex);
+						shared_ptr<OKTexture> t = getChunkTexture(chunkIndex);
 
 						if (t != nullptr)
 						{
@@ -3042,8 +3042,8 @@ void Map::startThreadsForMissingChunkPNGs()
 
 
 				//check for existence of texture in groundMD5
-				shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-				shared_ptr<BobFile> hq2xTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+				shared_ptr<OKFile> textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+				shared_ptr<OKFile> hq2xTextureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 
 				if (hq2xTextureFile->exists())
@@ -3261,7 +3261,7 @@ void Map::startThreadsForMissingLightPNGs()
 			if (MapManager::getLightTexturePNGFileExists_S(l->getFileName()) == false)
 			{
 				//check for existence of texture in cache folder
-				shared_ptr<BobFile> textureFile = make_shared<BobFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
+				shared_ptr<OKFile> textureFile = make_shared<OKFile>(FileUtils::cacheDir + "l" + "/" + l->getFileName());
 				if (textureFile->exists())
 				{
 					MapManager::setLightTexturePNGFileExists_S(l->getFileName(),true);
@@ -3393,7 +3393,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 			int chunkIndexOverLayer = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
 			//check for existence of texture in groundMD5
-			shared_ptr<BobFile> hq2xTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
+			shared_ptr<OKFile> hq2xTextureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(chunkIndex));
 
 			if (hq2xTextureFile->exists())
 			{
@@ -3622,11 +3622,11 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 
 	if (blank == true)
 	{
-		//log.debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
+		//log->debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
 
 		//save 0 byte placeholder, this will always load blank texture
-		shared_ptr<BobFile> f = make_shared<BobFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
-		shared_ptr<BobFile> f2 = make_shared<BobFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex));
+		shared_ptr<OKFile> f = make_shared<OKFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
+		shared_ptr<OKFile> f2 = make_shared<OKFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex));
 
 		try
 		{
@@ -3762,14 +3762,14 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 							unsigned int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
 
 
-//							log.info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
-//							log.info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
+//							log->info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
+//							log->info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
 //
 //							//int result;
 //							//raf.read((char*)&result, 4);
 //							if (result<0 || result > 1000 || byte1 > 0 || byte2 > 0 || byte3 > 0)
 //							{
-//								log.error("ok");
+//								log->error("ok");
 //							}
 							
 
@@ -3819,13 +3819,13 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 							unsigned int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
 
 
-//							log.info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
-//							log.info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
+//							log->info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
+//							log->info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
 //
 //
 //							if(result < 0 || result > 1000 || byte1 > 0 || byte2 > 0 || byte3 > 0)
 //							{
-//								log.error("ok");
+//								log->error("ok");
 //							}
 
 							//int result;
@@ -3850,7 +3850,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 	}
 	catch (exception e)//IOException e)
 	{
-		log.error("Could not read file");
+		log->error("Could not read file");
 	}
 
 	raf.close();
@@ -3912,12 +3912,12 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 						u8 paletteG = paletteRGBByteArray->data()[(paletteIndex * 3) + (1)];
 						u8 paletteB = paletteRGBByteArray->data()[(paletteIndex * 3) + (2)];
 
-						shared_ptr<BobColor> c = make_shared<BobColor>(paletteR, paletteG, paletteB);
+						shared_ptr<OKColor> c = make_shared<OKColor>(paletteR, paletteG, paletteB);
 
 						if (shadowLayer) //shadow layer
 						{
 							int oldPixel = chunkImageBorder->getRGBA(((tx - 1) * 8 + px) + 1, ((ty - 1) * 8 + py) + 1);
-							shared_ptr<BobColor> oldColor = make_shared<BobColor>(oldPixel);// , true);
+							shared_ptr<OKColor> oldColor = make_shared<OKColor>(oldPixel);// , true);
 
 							u8 alpha = 255;
 							if (oldColor->getRGBA() == 0)
@@ -3932,7 +3932,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 
 							delete oldColor;
 
-							c = make_shared<BobColor>(blendedRed, blendedGreen, blendedBlue, alpha);
+							c = make_shared<OKColor>(blendedRed, blendedGreen, blendedBlue, alpha);
 						}
 
 
@@ -3968,8 +3968,8 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	int underChunkIndex = (chunksWidth * chunksHeight * 0) + ((chunkY * chunksWidth) + chunkX);
 	int overChunkIndex = (chunksWidth * chunksHeight * 1) + ((chunkY * chunksWidth) + chunkX);
 
-	shared_ptr<BobFile> underLayerTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(underChunkIndex));
-	shared_ptr<BobFile> overLayerTextureFile = make_shared<BobFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(overChunkIndex));
+	shared_ptr<OKFile> underLayerTextureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(underChunkIndex));
+	shared_ptr<OKFile> overLayerTextureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(overChunkIndex));
 
 
 	//TODO: handle if 1x file doesn't exist, make it again from md5!
@@ -4004,7 +4004,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		}
 		catch (exception e)//IOException e)
 		{
-			log.error("Cannot read PNG file: " + underLayerTextureFile->getName() + " ");// +e->getMessage());
+			log->error("Cannot read PNG file: " + underLayerTextureFile->getName() + " ");// +e->getMessage());
 		}
 	}
 
@@ -4026,7 +4026,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		}
 		catch (exception e)//IOException e)
 		{
-			log.error("Cannot read PNG file: " + overLayerTextureFile->getName() + " ");// +e->getMessage());
+			log->error("Cannot read PNG file: " + overLayerTextureFile->getName() + " ");// +e->getMessage());
 		}
 	}
 
@@ -4354,7 +4354,7 @@ void Map::antialiasBufferedImage(shared_ptr<BufferedImage> bufferedImage)
 
 				if (black == 1)
 				{
-					bufferedImage->setRGB(x, y, BobColor::getRGBA(0, 0, 0, 127));
+					bufferedImage->setRGB(x, y, OKColor::getRGBA(0, 0, 0, 127));
 				}
 			}
 		}

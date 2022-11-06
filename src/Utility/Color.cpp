@@ -10,103 +10,103 @@
 
 
 
-Logger BobColor::log = Logger("Color");
-bool BobColor::colorsInitialized = false;
+Logger OKColor::log = Logger("Color");
+bool OKColor::colorsInitialized = false;
 
 
-ArrayList<shared_ptr<BobColor>> BobColor::colors;
+ArrayList<shared_ptr<OKColor>> OKColor::colors;
 
-shared_ptr<BobColor> BobColor::clear = make_shared<BobColor>(0, 0, 0, 0);
-shared_ptr<BobColor> BobColor::transparent = clear;
-shared_ptr<BobColor> BobColor::black = make_shared<BobColor>(0, 0, 0);
-shared_ptr<BobColor> BobColor::darkerGray = make_shared<BobColor>(0.2f * 255, 0.2f * 255, 0.2f * 255);
-shared_ptr<BobColor> BobColor::darkGray = make_shared<BobColor>(0.35f * 255, 0.35f * 255, 0.35f * 255);
-shared_ptr<BobColor> BobColor::gray = make_shared<BobColor>(0.5f * 255, 0.5f * 255, 0.5f * 255);
-shared_ptr<BobColor> BobColor::lightGray = make_shared<BobColor>(0.65f * 255, 0.65f * 255, 0.65f * 255);
-shared_ptr<BobColor> BobColor::lighterGray = make_shared<BobColor>(0.8f * 255, 0.8f * 255, 0.8f * 255);
-shared_ptr<BobColor> BobColor::white = make_shared<BobColor>(1.0f*255, 1.0f * 255, 1.0f * 255);
+shared_ptr<OKColor> OKColor::clear = make_shared<OKColor>(0, 0, 0, 0);
+shared_ptr<OKColor> OKColor::transparent = clear;
+shared_ptr<OKColor> OKColor::black = make_shared<OKColor>(0, 0, 0);
+shared_ptr<OKColor> OKColor::darkerGray = make_shared<OKColor>(0.2f * 255, 0.2f * 255, 0.2f * 255);
+shared_ptr<OKColor> OKColor::darkGray = make_shared<OKColor>(0.35f * 255, 0.35f * 255, 0.35f * 255);
+shared_ptr<OKColor> OKColor::gray = make_shared<OKColor>(0.5f * 255, 0.5f * 255, 0.5f * 255);
+shared_ptr<OKColor> OKColor::lightGray = make_shared<OKColor>(0.65f * 255, 0.65f * 255, 0.65f * 255);
+shared_ptr<OKColor> OKColor::lighterGray = make_shared<OKColor>(0.8f * 255, 0.8f * 255, 0.8f * 255);
+shared_ptr<OKColor> OKColor::white = make_shared<OKColor>(1.0f*255, 1.0f * 255, 1.0f * 255);
 
-shared_ptr<BobColor> BobColor::cyan = make_shared<BobColor>(0, 255, 255);
-shared_ptr<BobColor> BobColor::lightCyan = make_shared<BobColor>(0, 255, 255); //cyan->lighter();
-shared_ptr<BobColor> BobColor::lighterCyan = make_shared<BobColor>(0, 255, 255); //cyan->lighter();
-shared_ptr<BobColor> BobColor::darkCyan = make_shared<BobColor>(0, 255, 255); //cyan->darker();
-shared_ptr<BobColor> BobColor::darkerCyan = make_shared<BobColor>(0, 255, 255); //cyan->darker()->darker();
+shared_ptr<OKColor> OKColor::cyan = make_shared<OKColor>(0, 255, 255);
+shared_ptr<OKColor> OKColor::lightCyan = make_shared<OKColor>(0, 255, 255); //cyan->lighter();
+shared_ptr<OKColor> OKColor::lighterCyan = make_shared<OKColor>(0, 255, 255); //cyan->lighter();
+shared_ptr<OKColor> OKColor::darkCyan = make_shared<OKColor>(0, 255, 255); //cyan->darker();
+shared_ptr<OKColor> OKColor::darkerCyan = make_shared<OKColor>(0, 255, 255); //cyan->darker()->darker();
 
-shared_ptr<BobColor> BobColor::magenta = make_shared<BobColor>(255, 0, 127);
-shared_ptr<BobColor> BobColor::lightMagenta = make_shared<BobColor>(255, 0, 127); //magenta->lighter();
-shared_ptr<BobColor> BobColor::lighterMagenta = make_shared<BobColor>(255, 0, 127); //magenta->lighter();
-shared_ptr<BobColor> BobColor::darkMagenta = make_shared<BobColor>(255, 0, 127); //magenta->darker();
-shared_ptr<BobColor> BobColor::darkerMagenta = make_shared<BobColor>(255, 0, 127); //magenta->darker()->darker();
+shared_ptr<OKColor> OKColor::magenta = make_shared<OKColor>(255, 0, 127);
+shared_ptr<OKColor> OKColor::lightMagenta = make_shared<OKColor>(255, 0, 127); //magenta->lighter();
+shared_ptr<OKColor> OKColor::lighterMagenta = make_shared<OKColor>(255, 0, 127); //magenta->lighter();
+shared_ptr<OKColor> OKColor::darkMagenta = make_shared<OKColor>(255, 0, 127); //magenta->darker();
+shared_ptr<OKColor> OKColor::darkerMagenta = make_shared<OKColor>(255, 0, 127); //magenta->darker()->darker();
 
-shared_ptr<BobColor> BobColor::yellow = make_shared<BobColor>(255, 255, 0);
-shared_ptr<BobColor> BobColor::lightYellow = make_shared<BobColor>(255, 255, 0); //yellow->lighter();
-shared_ptr<BobColor> BobColor::lighterYellow = make_shared<BobColor>(255, 255, 0); //yellow->lighter();
-shared_ptr<BobColor> BobColor::darkYellow = make_shared<BobColor>(255, 255, 0); //yellow->darker();
-shared_ptr<BobColor> BobColor::darkerYellow = make_shared<BobColor>(255, 255, 0); //yellow->darker()->darker();
+shared_ptr<OKColor> OKColor::yellow = make_shared<OKColor>(255, 255, 0);
+shared_ptr<OKColor> OKColor::lightYellow = make_shared<OKColor>(255, 255, 0); //yellow->lighter();
+shared_ptr<OKColor> OKColor::lighterYellow = make_shared<OKColor>(255, 255, 0); //yellow->lighter();
+shared_ptr<OKColor> OKColor::darkYellow = make_shared<OKColor>(255, 255, 0); //yellow->darker();
+shared_ptr<OKColor> OKColor::darkerYellow = make_shared<OKColor>(255, 255, 0); //yellow->darker()->darker();
 
-shared_ptr<BobColor> BobColor::orange = make_shared<BobColor>(255, 140, 0);
-shared_ptr<BobColor> BobColor::lightOrange = make_shared<BobColor>(255, 140, 0); //orange->lighter();
-shared_ptr<BobColor> BobColor::lighterOrange = make_shared<BobColor>(255, 140, 0); //orange->lighter();
-shared_ptr<BobColor> BobColor::darkOrange = make_shared<BobColor>(255, 140, 0); //orange->darker();
-shared_ptr<BobColor> BobColor::darkerOrange = make_shared<BobColor>(255, 140, 0); //orange->darker()->darker();
+shared_ptr<OKColor> OKColor::orange = make_shared<OKColor>(255, 140, 0);
+shared_ptr<OKColor> OKColor::lightOrange = make_shared<OKColor>(255, 140, 0); //orange->lighter();
+shared_ptr<OKColor> OKColor::lighterOrange = make_shared<OKColor>(255, 140, 0); //orange->lighter();
+shared_ptr<OKColor> OKColor::darkOrange = make_shared<OKColor>(255, 140, 0); //orange->darker();
+shared_ptr<OKColor> OKColor::darkerOrange = make_shared<OKColor>(255, 140, 0); //orange->darker()->darker();
 
-shared_ptr<BobColor> BobColor::red = make_shared<BobColor>(255, 0, 0);
-shared_ptr<BobColor> BobColor::lightRed = make_shared<BobColor>(255, 0, 0); //red->lighter();
-shared_ptr<BobColor> BobColor::lighterRed = make_shared<BobColor>(255, 0, 0); //red->lighter();
-shared_ptr<BobColor> BobColor::darkRed = make_shared<BobColor>(255, 0, 0); //red->darker();
-shared_ptr<BobColor> BobColor::darkerRed = make_shared<BobColor>(255, 0, 0); //red->darker()->darker();
+shared_ptr<OKColor> OKColor::red = make_shared<OKColor>(255, 0, 0);
+shared_ptr<OKColor> OKColor::lightRed = make_shared<OKColor>(255, 0, 0); //red->lighter();
+shared_ptr<OKColor> OKColor::lighterRed = make_shared<OKColor>(255, 0, 0); //red->lighter();
+shared_ptr<OKColor> OKColor::darkRed = make_shared<OKColor>(255, 0, 0); //red->darker();
+shared_ptr<OKColor> OKColor::darkerRed = make_shared<OKColor>(255, 0, 0); //red->darker()->darker();
 
-shared_ptr<BobColor> BobColor::pink = make_shared<BobColor>(255, 0, 255);
-shared_ptr<BobColor> BobColor::lightPink = make_shared<BobColor>(255, 0, 255); //pink->lighter();
-shared_ptr<BobColor> BobColor::lighterPink = make_shared<BobColor>(255, 0, 255); //pink->lighter();
-shared_ptr<BobColor> BobColor::darkPink = make_shared<BobColor>(255, 0, 255); //pink->darker();
-shared_ptr<BobColor> BobColor::darkerPink = make_shared<BobColor>(255, 0, 255); //pink->darker()->darker();
+shared_ptr<OKColor> OKColor::pink = make_shared<OKColor>(255, 0, 255);
+shared_ptr<OKColor> OKColor::lightPink = make_shared<OKColor>(255, 0, 255); //pink->lighter();
+shared_ptr<OKColor> OKColor::lighterPink = make_shared<OKColor>(255, 0, 255); //pink->lighter();
+shared_ptr<OKColor> OKColor::darkPink = make_shared<OKColor>(255, 0, 255); //pink->darker();
+shared_ptr<OKColor> OKColor::darkerPink = make_shared<OKColor>(255, 0, 255); //pink->darker()->darker();
 
-shared_ptr<BobColor> BobColor::purple = make_shared<BobColor>(127, 0, 255);
-shared_ptr<BobColor> BobColor::lightPurple = make_shared<BobColor>(127, 0, 255); //purple->lighter();
-shared_ptr<BobColor> BobColor::lighterPurple = make_shared<BobColor>(127, 0, 255); //purple->lighter();
-shared_ptr<BobColor> BobColor::darkPurple = make_shared<BobColor>(127, 0, 255); //purple->darker();
-shared_ptr<BobColor> BobColor::darkerPurple = make_shared<BobColor>(127, 0, 255); //purple->darker()->darker();
-
-
-shared_ptr<BobColor> BobColor::blue = make_shared<BobColor>(0, 0, 255);
-shared_ptr<BobColor> BobColor::lighterBlue = make_shared<BobColor>(0, 0, 255); //blue->lighter();
-shared_ptr<BobColor> BobColor::lightBlue = make_shared<BobColor>(0, 0, 255); //blue->lighter();
-shared_ptr<BobColor> BobColor::darkBlue = make_shared<BobColor>(0, 0, 255); //blue->darker();
-shared_ptr<BobColor> BobColor::darkerBlue = make_shared<BobColor>(0, 0, 255); //blue->darker()->darker();
-
-shared_ptr<BobColor> BobColor::green = make_shared<BobColor>(0, 255, 0);
-shared_ptr<BobColor> BobColor::lighterGreen = make_shared<BobColor>(0, 255, 0); //green->lighter()->lighter();
-shared_ptr<BobColor> BobColor::lightGreen = make_shared<BobColor>(0, 255, 0); //green->lighter();
-shared_ptr<BobColor> BobColor::darkGreen = make_shared<BobColor>(0, 255, 0); //green->darker();
-shared_ptr<BobColor> BobColor::darkerGreen = make_shared<BobColor>(0, 255, 0); //green->darker()->darker();
-
-shared_ptr<BobColor> BobColor::aqua = make_shared<BobColor>(0, 150, 255);
-shared_ptr<BobColor> BobColor::lighterAqua = make_shared<BobColor>(0, 150, 255); //aqua->lighter()->lighter();
-shared_ptr<BobColor> BobColor::lightAqua = make_shared<BobColor>(0, 150, 255); //aqua->lighter();
-shared_ptr<BobColor> BobColor::darkAqua = make_shared<BobColor>(0, 150, 255); //aqua->darker();
-shared_ptr<BobColor> BobColor::darkerAqua = make_shared<BobColor>(0, 150, 255); //aqua->darker()->darker();
-
-shared_ptr<BobColor> BobColor::turquoise = make_shared<BobColor>(0, 255, 150);
-shared_ptr<BobColor> BobColor::lighterTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->lighter()->lighter();
-shared_ptr<BobColor> BobColor::lightTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->lighter();
-shared_ptr<BobColor> BobColor::darkTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->darker();
-shared_ptr<BobColor> BobColor::darkerTurquoise = make_shared<BobColor>(0, 255, 150); //turquoise->darker()->darker();
-
-shared_ptr<BobColor> BobColor::olive = make_shared<BobColor>(64, 72, 0);
-shared_ptr<BobColor> BobColor::darkerOlive = make_shared<BobColor>(64, 72, 0);
-shared_ptr<BobColor> BobColor::darkOlive = make_shared<BobColor>(64, 72, 0);
-shared_ptr<BobColor> BobColor::lighterOlive = make_shared<BobColor>(64, 72, 0);
-shared_ptr<BobColor> BobColor::lightOlive = make_shared<BobColor>(64, 72, 0);
-
-shared_ptr<BobColor> BobColor::burgandy = make_shared<BobColor>(220, 70, 0);
-shared_ptr<BobColor> BobColor::darkerBurgandy = make_shared<BobColor>(220, 70, 0);
-shared_ptr<BobColor> BobColor::darkBurgandy = make_shared<BobColor>(220, 70, 0);
-shared_ptr<BobColor> BobColor::lighterBurgandy = make_shared<BobColor>(220, 70, 0);
-shared_ptr<BobColor> BobColor::lightBurgandy = make_shared<BobColor>(220, 70, 0);
+shared_ptr<OKColor> OKColor::purple = make_shared<OKColor>(127, 0, 255);
+shared_ptr<OKColor> OKColor::lightPurple = make_shared<OKColor>(127, 0, 255); //purple->lighter();
+shared_ptr<OKColor> OKColor::lighterPurple = make_shared<OKColor>(127, 0, 255); //purple->lighter();
+shared_ptr<OKColor> OKColor::darkPurple = make_shared<OKColor>(127, 0, 255); //purple->darker();
+shared_ptr<OKColor> OKColor::darkerPurple = make_shared<OKColor>(127, 0, 255); //purple->darker()->darker();
 
 
-shared_ptr<BobColor> BobColor::wine = make_shared<BobColor>(200, 80, 0);
+shared_ptr<OKColor> OKColor::blue = make_shared<OKColor>(0, 0, 255);
+shared_ptr<OKColor> OKColor::lighterBlue = make_shared<OKColor>(0, 0, 255); //blue->lighter();
+shared_ptr<OKColor> OKColor::lightBlue = make_shared<OKColor>(0, 0, 255); //blue->lighter();
+shared_ptr<OKColor> OKColor::darkBlue = make_shared<OKColor>(0, 0, 255); //blue->darker();
+shared_ptr<OKColor> OKColor::darkerBlue = make_shared<OKColor>(0, 0, 255); //blue->darker()->darker();
+
+shared_ptr<OKColor> OKColor::green = make_shared<OKColor>(0, 255, 0);
+shared_ptr<OKColor> OKColor::lighterGreen = make_shared<OKColor>(0, 255, 0); //green->lighter()->lighter();
+shared_ptr<OKColor> OKColor::lightGreen = make_shared<OKColor>(0, 255, 0); //green->lighter();
+shared_ptr<OKColor> OKColor::darkGreen = make_shared<OKColor>(0, 255, 0); //green->darker();
+shared_ptr<OKColor> OKColor::darkerGreen = make_shared<OKColor>(0, 255, 0); //green->darker()->darker();
+
+shared_ptr<OKColor> OKColor::aqua = make_shared<OKColor>(0, 150, 255);
+shared_ptr<OKColor> OKColor::lighterAqua = make_shared<OKColor>(0, 150, 255); //aqua->lighter()->lighter();
+shared_ptr<OKColor> OKColor::lightAqua = make_shared<OKColor>(0, 150, 255); //aqua->lighter();
+shared_ptr<OKColor> OKColor::darkAqua = make_shared<OKColor>(0, 150, 255); //aqua->darker();
+shared_ptr<OKColor> OKColor::darkerAqua = make_shared<OKColor>(0, 150, 255); //aqua->darker()->darker();
+
+shared_ptr<OKColor> OKColor::turquoise = make_shared<OKColor>(0, 255, 150);
+shared_ptr<OKColor> OKColor::lighterTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->lighter()->lighter();
+shared_ptr<OKColor> OKColor::lightTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->lighter();
+shared_ptr<OKColor> OKColor::darkTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->darker();
+shared_ptr<OKColor> OKColor::darkerTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->darker()->darker();
+
+shared_ptr<OKColor> OKColor::olive = make_shared<OKColor>(64, 72, 0);
+shared_ptr<OKColor> OKColor::darkerOlive = make_shared<OKColor>(64, 72, 0);
+shared_ptr<OKColor> OKColor::darkOlive = make_shared<OKColor>(64, 72, 0);
+shared_ptr<OKColor> OKColor::lighterOlive = make_shared<OKColor>(64, 72, 0);
+shared_ptr<OKColor> OKColor::lightOlive = make_shared<OKColor>(64, 72, 0);
+
+shared_ptr<OKColor> OKColor::burgandy = make_shared<OKColor>(220, 70, 0);
+shared_ptr<OKColor> OKColor::darkerBurgandy = make_shared<OKColor>(220, 70, 0);
+shared_ptr<OKColor> OKColor::darkBurgandy = make_shared<OKColor>(220, 70, 0);
+shared_ptr<OKColor> OKColor::lighterBurgandy = make_shared<OKColor>(220, 70, 0);
+shared_ptr<OKColor> OKColor::lightBurgandy = make_shared<OKColor>(220, 70, 0);
+
+
+shared_ptr<OKColor> OKColor::wine = make_shared<OKColor>(200, 80, 0);
 
 
 
@@ -421,12 +421,12 @@ void HARDWARE_create_brightened_palette(int* pal, int* newpal, int bright)//HARD
 
 
 //=========================================================================================================================
-void BobColor::initPresetColors()
+void OKColor::initPresetColors()
 {//=========================================================================================================================
 	if (colorsInitialized)return;
 
 	colorsInitialized = true;
-	BobColor c;
+	OKColor c;
 
 	lightCyan->lighter();
 	lighterCyan->lighter();
@@ -698,13 +698,13 @@ void BobColor::initPresetColors()
 
 
 //==========================================================================================================================
-shared_ptr<BobColor> BobColor::getColorByName(string name)
+shared_ptr<OKColor> OKColor::getColorByName(string name)
 {//==========================================================================================================================
 
 	if (name == "" || name == "empty")return nullptr;
 	for(int i=0;i<colors.size();i++)
 	{
-		shared_ptr<BobColor >c = colors.get(i);
+		shared_ptr<OKColor >c = colors.get(i);
 
 		if (c->name == name)return c;
 
@@ -716,7 +716,7 @@ shared_ptr<BobColor> BobColor::getColorByName(string name)
 
 
 //=========================================================================================================================
-BobColor::BobColor()
+OKColor::OKColor()
 {//=========================================================================================================================
 	name = "empty";
 
@@ -725,7 +725,7 @@ BobColor::BobColor()
 
 }
 ////=========================================================================================================================
-//BobColor::BobColor(shared_ptr<BobColor> c)
+//OKColor::OKColor(shared_ptr<OKColor> c)
 //{//=========================================================================================================================
 //	if (c != nullptr)
 //	{
@@ -736,11 +736,11 @@ BobColor::BobColor()
 //		a = c->ai();
 //	}
 //	else
-//		log.error("Color c was null!");
+//		log->error("Color c was null!");
 //}
 //
 ////=========================================================================================================================
-//BobColor::BobColor(const BobColor &c)
+//OKColor::OKColor(const OKColor &c)
 //{//=========================================================================================================================
 //
 ////	boost::uuids::random_generator generator;
@@ -754,7 +754,7 @@ BobColor::BobColor()
 //
 //}
 //=========================================================================================================================
-BobColor::BobColor(BobColor c, u8 a)
+OKColor::OKColor(OKColor c, u8 a)
 {//=========================================================================================================================
 //
 //	boost::uuids::random_generator generator;
@@ -770,7 +770,7 @@ BobColor::BobColor(BobColor c, u8 a)
 
 
 ////=========================================================================================================================
-//BobColor::BobColor(BobColor c, float af)
+//OKColor::OKColor(OKColor c, float af)
 //{//=========================================================================================================================
 ////
 ////	boost::uuids::random_generator generator;
@@ -785,7 +785,7 @@ BobColor::BobColor(BobColor c, u8 a)
 //}
 //
 ////=========================================================================================================================
-//BobColor::BobColor(BobColor c, float af)
+//OKColor::OKColor(OKColor c, float af)
 //{//=========================================================================================================================
 //	if (c != nullptr)
 //	{
@@ -796,10 +796,10 @@ BobColor::BobColor(BobColor c, u8 a)
 //		a = (int)(af * 255.0f);
 //	}
 //	else
-//		log.error("Color c was null!");
+//		log->error("Color c was null!");
 //}
 ////=========================================================================================================================
-//BobColor::BobColor(float rf, float gf, float bf)
+//OKColor::OKColor(float rf, float gf, float bf)
 //{//=========================================================================================================================
 //
 ////	boost::uuids::random_generator generator;
@@ -813,7 +813,7 @@ BobColor::BobColor(BobColor c, u8 a)
 //
 //
 ////=========================================================================================================================
-//BobColor::BobColor(float rf, float gf, float bf, float af)
+//OKColor::OKColor(float rf, float gf, float bf, float af)
 //{//=========================================================================================================================
 //
 ////	boost::uuids::random_generator generator;
@@ -827,7 +827,7 @@ BobColor::BobColor(BobColor c, u8 a)
 
 
 //=========================================================================================================================
-BobColor::BobColor(u8 r, u8 g, u8 b)
+OKColor::OKColor(u8 r, u8 g, u8 b)
 {//=========================================================================================================================
 
 //	boost::uuids::random_generator generator;
@@ -841,7 +841,7 @@ BobColor::BobColor(u8 r, u8 g, u8 b)
 
 
 //=========================================================================================================================
-BobColor::BobColor(u8 r, u8 g, u8 b, u8 a)
+OKColor::OKColor(u8 r, u8 g, u8 b, u8 a)
 {//=========================================================================================================================
 //
 //	boost::uuids::random_generator generator;
@@ -855,7 +855,7 @@ BobColor::BobColor(u8 r, u8 g, u8 b, u8 a)
 
 
 //=========================================================================================================================
-BobColor::BobColor(int rgb)
+OKColor::OKColor(int rgb)
 {//=========================================================================================================================
 
 //	boost::uuids::random_generator generator;
@@ -875,7 +875,7 @@ BobColor::BobColor(int rgb)
 
 
 //=========================================================================================================================
-BobColor::BobColor(float hf, float sf, float bf, float af, bool hsbOverload)
+OKColor::OKColor(float hf, float sf, float bf, float af, bool hsbOverload)
 {//=========================================================================================================================
 
 //	boost::uuids::random_generator generator;
@@ -895,63 +895,63 @@ BobColor::BobColor(float hf, float sf, float bf, float af, bool hsbOverload)
 
 
 //=========================================================================================================================
-float BobColor::rf()
+float OKColor::rf()
 {//=========================================================================================================================
 	return (float)(r / 255.0f);
 }
 
 
 //=========================================================================================================================
-float BobColor::gf()
+float OKColor::gf()
 {//=========================================================================================================================
 	return (float)(g / 255.0f);
 }
 
 
 //=========================================================================================================================
-float BobColor::bf()
+float OKColor::bf()
 {//=========================================================================================================================
 	return (float)(b / 255.0f);
 }
 
 
 //=========================================================================================================================
-float BobColor::af()
+float OKColor::af()
 {//=========================================================================================================================
 	return (float)(a / 255.0f);
 }
 
 
 //=========================================================================================================================
-u8 BobColor::ri()
+u8 OKColor::ri()
 {//=========================================================================================================================
 	return r;
 }
 
 
 //=========================================================================================================================
-u8 BobColor::gi()
+u8 OKColor::gi()
 {//=========================================================================================================================
 	return g;
 }
 
 
 //=========================================================================================================================
-u8 BobColor::bi()
+u8 OKColor::bi()
 {//=========================================================================================================================
 	return b;
 }
 
 
 //=========================================================================================================================
-u8 BobColor::ai()
+u8 OKColor::ai()
 {//=========================================================================================================================
 	return a;
 }
 
 
 //=========================================================================================================================
-float* BobColor::RGBtoHSB(u8 r, u8 g, u8 b)
+float* OKColor::RGBtoHSB(u8 r, u8 g, u8 b)
 {//=========================================================================================================================
 	float hue, saturation, brightness;
 
@@ -1013,7 +1013,7 @@ float* BobColor::RGBtoHSB(u8 r, u8 g, u8 b)
 
 
 //=========================================================================================================================
-int BobColor::HSBtoRGB(float hue, float saturation, float brightness)
+int OKColor::HSBtoRGB(float hue, float saturation, float brightness)
 {//=========================================================================================================================
 	int r = 0, g = 0, b = 0;
 	if (saturation == 0)
@@ -1071,14 +1071,14 @@ int BobColor::HSBtoRGB(float hue, float saturation, float brightness)
 
 
 //=========================================================================================================================
-void BobColor::darker()
+void OKColor::darker()
 {//=========================================================================================================================
 	darker(0.4f);
 }
 
 
 //=========================================================================================================================
-void BobColor::darker(float scale)
+void OKColor::darker(float scale)
 {//=========================================================================================================================
 	scale = 1 - scale;
 
@@ -1113,7 +1113,7 @@ void BobColor::darker(float scale)
 
 
 //=========================================================================================================================
-void BobColor::lighter()
+void OKColor::lighter()
 {//=========================================================================================================================
 
 	//if(lighter!=null)return lighter;
@@ -1123,7 +1123,7 @@ void BobColor::lighter()
 
 
 //=========================================================================================================================
-void BobColor::lighter(float scale)
+void OKColor::lighter(float scale)
 {//=========================================================================================================================
 
 	if (scale < 1.0f)
@@ -1178,7 +1178,7 @@ void Color::scaleCopy(float value)
 */
 
 
-//int BobColor::rgbatoABGRInt(u8 r, u8 g, u8 b, u8 a)
+//int OKColor::rgbatoABGRInt(u8 r, u8 g, u8 b, u8 a)
 //{ //==========================================================================================================================
 //	return ((a << 15) + ((b) << 10) + ((g) << 5) + (r));
 //}
@@ -1188,28 +1188,28 @@ void Color::scaleCopy(float value)
 //   return int::valueOf(hexst, 16);
 //}
 
-int BobColor::DecToRed(int dec)
+int OKColor::DecToRed(int dec)
 { //===============================================================================================
 	return (dec % 32) * 8;
 }
 
-int BobColor::DecToGreen(int dec)
+int OKColor::DecToGreen(int dec)
 { //===============================================================================================
 	return ((dec / 32) % 32) * 8;
 }
 
-int BobColor::DecToBlue(int dec)
+int OKColor::DecToBlue(int dec)
 { //===============================================================================================
 	return (dec / 1024) * 8;
 }
 
 //==========================================================================================================================
-int BobColor::getRGBA()
+int OKColor::getRGBA()
 {//==========================================================================================================================
 	return (r << 24) + (g << 16) + (b << 8) + a;
 }
 
-int BobColor::getRGBA(u8 r, u8 g, u8 b, u8 a)
+int OKColor::getRGBA(u8 r, u8 g, u8 b, u8 a)
 {
 	return (r << 24) + (g << 16) + (b << 8) + a;
 }

@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -15,7 +15,7 @@ public:
 
 	static Logger log;
 
-	shared_ptr<BobTexture> texture = nullptr;
+	shared_ptr<OKTexture> texture = nullptr;
 
 	bool pulse = false;
 	bool pulseInOut = false;

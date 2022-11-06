@@ -24,7 +24,7 @@ Skill::Skill(shared_ptr<Engine> g, int id)
 	{
 		if (getEventManager()->skillList.get(i)->getID() == data->getID())
 		{
-			log.error("Skill already exists:" + data->getName());
+			log->error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
@@ -42,7 +42,7 @@ Skill::Skill(shared_ptr<Engine> g, shared_ptr<SkillData> data)
 	{
 		if (getEventManager()->skillList.get(i)->getID() == data->getID())
 		{
-			log.error("Skill already exists:" + data->getName());
+			log->error("Skill already exists:" + data->getName());
 			return;
 		}
 	}

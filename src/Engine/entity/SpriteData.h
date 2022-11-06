@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include <src/Engine/rpg/event/EventData.h>
 class Logger;
 
@@ -104,7 +104,7 @@ private:
 
 
 	
-	ArrayList<shared_ptr<SpriteAnimationSequence>>* animationList = make_shared<ArrayList><shared_ptr<SpriteAnimationSequence>>();
+	ArrayList<SpriteAnimationSequence*> animationList;// = make_shared<ArrayList><shared_ptr<SpriteAnimationSequence>>();
 
 	shared_ptr<EventData> eventData = nullptr;
 

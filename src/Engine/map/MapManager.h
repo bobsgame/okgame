@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
@@ -41,7 +41,7 @@ public:
 
 
 	//textures mapped to light filenames
-	static HashMap<string, shared_ptr<BobTexture>> lightTextureHashMap;//make_shared<HashMap><string, shared_ptr<Texture>>();
+	static HashMap<string, shared_ptr<OKTexture>> lightTextureHashMap;//make_shared<HashMap><string, shared_ptr<Texture>>();
 
 
 

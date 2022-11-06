@@ -608,7 +608,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//   if (resultNodeList == nullptr)
 	//   {
 	//      
-	//      log.debug("No errormessage in Yahoo GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
+	//      log->debug("No errormessage in Yahoo GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }
 	//
@@ -616,7 +616,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//   {
 	//      if (resultNodeList->item(i).getTextContent().equals("No error") == false)
 	//      {
-	//         log.debug("Error in Yahoo GeoCoding API: " + resultNodeList->item(i).getTextContent());
+	//         log->debug("Error in Yahoo GeoCoding API: " + resultNodeList->item(i).getTextContent());
 	//         return nullptr;
 	//      }
 	//   }
@@ -637,7 +637,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No postal code in Yahoo GeoCoding API");
+	//      log->debug("No postal code in Yahoo GeoCoding API");
 	//      return nullptr;
 	//   }
 	//
@@ -662,7 +662,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No locality (city/placeName) in Yahoo GeoCoding API");
+	//      log->debug("No locality (city/placeName) in Yahoo GeoCoding API");
 	//      a->placeName = "?";
 	//   }
 	//
@@ -687,7 +687,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No state in Yahoo GeoCoding API");
+	//      log->debug("No state in Yahoo GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -711,7 +711,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No lat in Yahoo GeoCoding API");
+	//      log->debug("No lat in Yahoo GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -741,7 +741,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryYahooGeocodingAPI(const string
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No lon in Yahoo GeoCoding API");
+	//      log->debug("No lon in Yahoo GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -895,7 +895,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//   if (resultNodeList == nullptr)
 	//   {
 	//      
-	//      log.debug("No status in Google GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
+	//      log->debug("No status in Google GeoCoding API (It returned nothing?)" + geocoderResultDocument->toString());
 	//      return nullptr;
 	//   }
 	//
@@ -903,7 +903,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//   {
 	//      if (resultNodeList->item(i).getTextContent().equals("OK") == false)
 	//      {
-	//         log.debug("Status Error in Google GeoCoding API: " + resultNodeList->item(i).getTextContent());
+	//         log->debug("Status Error in Google GeoCoding API: " + resultNodeList->item(i).getTextContent());
 	//         return nullptr;
 	//      }
 	//   }
@@ -924,7 +924,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No postal code in Google GeoCoding API");
+	//      log->debug("No postal code in Google GeoCoding API");
 	//      return nullptr;
 	//   }
 	//
@@ -949,7 +949,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No locality (city/placeName) in Google GeoCoding API");
+	//      log->debug("No locality (city/placeName) in Google GeoCoding API");
 	//      a->placeName = "?";
 	//   }
 	//
@@ -974,7 +974,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No state in Google GeoCoding API");
+	//      log->debug("No state in Google GeoCoding API");
 	//      a->stateName = "?";
 	//   }
 	//
@@ -998,7 +998,7 @@ PlayerEditMenu::AddressInfo* PlayerEditMenu::queryGoogleGeocodingAPI(const strin
 	//
 	//   if (resultNodeList == nullptr)
 	//   {
-	//      log.debug("No lat/lon in Google GeoCoding API");
+	//      log->debug("No lat/lon in Google GeoCoding API");
 	//      return nullptr;
 	//   }
 	//
@@ -1258,7 +1258,7 @@ void PlayerEditMenu::linkFacebookAccount()
 	//               shared_ptr<User> user = facebookClient->fetchObject("me", User::typeid);
 	//
 	//               string facebookID = user->getId();
-	//               log.debug("Facebook ID: " + facebookID);
+	//               log->debug("Facebook ID: " + facebookID);
 	//            }
 	//            catch (exception& ex)
 	//            {
@@ -1356,7 +1356,7 @@ void PlayerEditMenu::linkFacebookAccount()
 	//               }
 	//               catch (IOException e)
 	//               {
-	//                  log.error("Could not open browser: " + e->getMessage());
+	//                  log->error("Could not open browser: " + e->getMessage());
 	//               }
 	//
 	//

@@ -96,13 +96,13 @@ bool FriendCharacter::udpPeerMessageReceived(shared_ptr<UDPPeerConnection >c, st
 
 	//string s = e;// static_cast<string>(e->getMessage());
 
-	if (String::startsWith(e, BobNet::Friend_LocationStatus_Update))
+	if (OKString::startsWith(e, OKNet::Friend_LocationStatus_Update))
 	{
 		incomingFriendLocationStatusUpdate(e);
 		return true;
 	}
 
-	if (String::startsWith(e, BobNet::Game_Challenge_Request))
+	if (OKString::startsWith(e, OKNet::Game_Challenge_Request))
 	{
 		incomingGameChallengeRequest(e);
 		return true;
@@ -200,11 +200,11 @@ void FriendCharacter::sendFriendLocationStatusUpdate()
 { //===============================================================================================
 
 	connection->writeReliable_S(
-		BobNet::Friend_LocationStatus_Update +
+		OKNet::Friend_LocationStatus_Update +
 		string(getMap()->getName()) + "," +
 		to_string(getPlayer()->getRoundedMiddleX()) + "," +
 		to_string(getPlayer()->getRoundedMiddleY()) + "," +
-		to_string(BobNet::myStatus) + BobNet::endline);
+		to_string(OKNet::myStatus) + OKNet::endline);
 }
 
 void FriendCharacter::incomingFriendLocationStatusUpdate(string e)//shared_ptr<MessageEvent> e)
@@ -306,11 +306,11 @@ void FriendCharacter::sendGameChallengeResponse(bool b)
 
 	if (b == true)
 	{
-		connection->writeReliable_S(BobNet::Game_Challenge_Response + "Accept" + BobNet::endline);
+		connection->writeReliable_S(OKNet::Game_Challenge_Response + "Accept" + OKNet::endline);
 	}
 	else
 	{
-		connection->writeReliable_S(BobNet::Game_Challenge_Response + "Decline" + BobNet::endline);
+		connection->writeReliable_S(OKNet::Game_Challenge_Response + "Decline" + OKNet::endline);
 	}
 }
 
@@ -327,7 +327,7 @@ void FriendCharacter::incomingGameChallengeRequest(string e)//shared_ptr<Message
 	//if player is already in game, they should not show up in the minigame challenge list, should broadcast current status constantly.
 	//however, if they got populated before the broadcast was received, automatically deny the request
 
-	if (BobNet::myStatus != BobNet::status_AVAILABLE)
+	if (OKNet::myStatus != OKNet::status_AVAILABLE)
 	{
 		sendGameChallengeResponse(false);
 		return;

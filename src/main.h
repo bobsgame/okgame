@@ -6,14 +6,14 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 #include "src/Utility/System.h"
 #include "src/Utility/HashMap.h"
 #include "src/Utility/ArrayList.h"
 #include <lib/GWEN-master/gwen/include/Gwen/Input/gwen_input_sdl2.h>
 #include <lib/GWEN-master/gwen/include/Gwen/Skins/TexturedBase.h>
 #include <lib/GWEN-master/gwen/include/Gwen/Renderers/OpenGL.h>
-#include "Engine/network/BobNet.h"
+#include "Engine/network/OKNet.h"
 #include "Engine/rpg/BGClientEngine.h"
 
 #include "Puzzle/GlobalSettings.h"
@@ -23,7 +23,7 @@ class Logger;
 class BGClientTCP;
 class Console;
 class ControlsManager;
-class BobsGame;
+class OKGame;
 class FileUtils;
 class StateManager;
 class LoggedOutState;
@@ -82,7 +82,7 @@ public:
 	//static int cheater;
 
 
-	shared_ptr<BobsGame> bobsGame = nullptr;
+	shared_ptr<OKGame> bobsGame = nullptr;
 
 	static Gwen::Controls::Canvas* gwenCanvas;
 	static Gwen::Input::GwenSDL2 *gwenInput;
@@ -132,7 +132,7 @@ public:
 	static shared_ptr<System> systemUtils;
 	//static shared_ptr<ControlsManager> controlsManager;// = nullptr;
 
-	static shared_ptr<BGClientEngine> gameEngine;// = nullptr;
+	static BGClientEngine* gameEngine;// = nullptr;
 	
 	//shared_ptr<BGClientEngine> getGameEngine();
 
@@ -165,7 +165,7 @@ public:
 	//shared_ptr<GLUtils> glUtils = nullptr;
 	// static shared_ptr<AudioUtils> audioUtils;
 
-	static shared_ptr<BobNet> bobNet;
+	static shared_ptr<OKNet> bobNet;
 
 
 

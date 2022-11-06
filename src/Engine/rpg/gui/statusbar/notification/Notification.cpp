@@ -41,7 +41,7 @@ Notification::Notification(shared_ptr<BGClientEngine> g, const string& s)
 
 	if (caption == nullptr)
 	{
-		caption = make_shared<Caption>(g, Caption::Position::NONE, 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
+		caption = make_shared<Caption>(g, Caption::Position::NONE, 0, 5, -1, notificationString, OKFont::font_normal_11_shadow1, OKColor::purple, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
 		caption->setAlphaImmediately(1.0f);
 	}
 
@@ -58,7 +58,7 @@ void Notification::update()
 
 	if (caption == nullptr)
 	{
-		caption = make_shared<Caption>(getEngine(), Caption::Position::NONE, 0, 5, -1, notificationString, BobFont::font_normal_11_shadow1, BobColor::purple, BobColor::white, BobColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
+		caption = make_shared<Caption>(getEngine(), Caption::Position::NONE, 0, 5, -1, notificationString, OKFont::font_normal_11_shadow1, OKColor::purple, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI, 1.0f, GLUtils::getViewportWidth());
 		caption->setAlphaImmediately(1.0f);
 	}
 
@@ -180,7 +180,7 @@ void Notification::render(int layer)
 			GL.drawTexture(bg,0,bgtx1,0,bgty1,getScreenX,getScreenX+maxWidth,0,25,1.0f,1);*/
 
 
-			shared_ptr<BobTexture> fg = NotificationManager::loadingBarTexture;
+			shared_ptr<OKTexture> fg = NotificationManager::loadingBarTexture;
 			int fgImageWidth = fg->getImageWidth();
 			int fgTextureWidth = fg->getTextureWidth();
 			int fgImageHeight = fg->getImageHeight();

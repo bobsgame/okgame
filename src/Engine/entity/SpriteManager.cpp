@@ -15,7 +15,7 @@
 Logger SpriteManager::log = Logger("SpriteManager");
 
 
-shared_ptr<BobTexture> SpriteManager::actionTexture = nullptr;
+shared_ptr<OKTexture> SpriteManager::actionTexture = nullptr;
 
 
 SpriteManager::SpriteManager(shared_ptr<Engine> g)
@@ -134,7 +134,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExis
 
 	//String e = "SpriteAsset not found! getSpriteByID():"+id;
 	//Console.error(e);
-	//log.error(e);
+	//log->error(e);
 
 	return nullptr;
 }
@@ -210,7 +210,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(s
 
 	//String e = "SpriteAsset not found! getSpriteByName():"+spriteAssetName;//this is normal
 	//Console.error(e);
-	//log.warn(e);
+	//log->warn(e);
 
 	return nullptr;
 }
@@ -223,19 +223,19 @@ shared_ptr<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(s
 shared_ptr<Sprite> SpriteManager::preloadSpriteFromDataFile(const string& spriteAssetName)
 { //=========================================================================================================================
 
-	//log.info(spriteAssetName);
+	//log->info(spriteAssetName);
   //get sprite from hashmap if exists
   //if it doesnt, create sprite, sprite will load what it needs
 	shared_ptr<Sprite> s = nullptr;
 
 
-	//log.info("if spriteByNameHashMap.containsKey " + spriteAssetName);
+	//log->info("if spriteByNameHashMap.containsKey " + spriteAssetName);
 	if (spriteByNameHashMap.containsKey(spriteAssetName))
 		s = spriteByNameHashMap.get(spriteAssetName);
 
 	if (s == nullptr)
 	{
-		//log.info("make_shared<Sprite> "+ spriteAssetName);
+		//log->info("make_shared<Sprite> "+ spriteAssetName);
 		//TODO: here instead of returning preloaded sprite, could check if file exists, if it does load, else check cache, else check network, else create and load from network?
 		s = make_shared<Sprite>(getEngine());
 
@@ -264,7 +264,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteByName(const string& spriteAssetName)
 
 	if (s == nullptr)
 	{
-		log.error("getSpriteByName not found in spriteByNameHashMap:" + spriteAssetName);
+		log->error("getSpriteByName not found in spriteByNameHashMap:" + spriteAssetName);
 	}
 
 

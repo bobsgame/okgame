@@ -5,14 +5,14 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 
 
 #include "Logger.h"
 
 
-class BobColor;
+class OKColor;
 
 
 class BufferedImage
@@ -24,7 +24,7 @@ public:
 	int w = 0;
 	int h = 0;
 
-	shared_ptr<BobColor> currentFillColor = nullptr;
+	shared_ptr<OKColor> currentFillColor = nullptr;
 
 	BufferedImage();
 	BufferedImage(u8* rgbadata, int w, int h);
@@ -32,7 +32,7 @@ public:
 	void setRGB(int x, int y, int rgb);
 	int getRGBA(int x, int y);
 	u8* getData();
-	void setColor(shared_ptr<BobColor> c);
+	void setColor(shared_ptr<OKColor> c);
 	void fillRect(int x, int y, int w, int h);
 	static shared_ptr<BufferedImage> loadFromPNG(string filename);
 	const static int TYPE_INT_ARGB = 0;

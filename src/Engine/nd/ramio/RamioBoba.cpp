@@ -11,27 +11,27 @@
 
 
 
-Logger RamioBoba::log = Logger("RamioBoba");
+Logger RamioOKa::log = Logger("RamioOKa");
 
 
-RamioBoba::RamioBoba(shared_ptr<Engine> g)
+RamioOKa::RamioOKa(shared_ptr<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
 
-bool RamioBoba::checkHitLayerBlocksAndOtherBobas(int dir)
+bool RamioOKa::checkHitLayerBlocksAndOtherOKas(int dir)
 {
 	return false;
 }
 
-void RamioBoba::update()
+void RamioOKa::update()
 { //=========================================================================================================================
 
 
 	if (dead == false)
 	{
 		//check down
-		if (checkHitLayerBlocksAndOtherBobas(DOWN) == false)
+		if (checkHitLayerBlocksAndOtherOKas(DOWN) == false)
 		{
 			incY();
 		}
@@ -40,7 +40,7 @@ void RamioBoba::update()
 		if (movementDirection == LEFT)
 		{
 			//check getHit
-			if (checkHitLayerBlocksAndOtherBobas(LEFT) == false)
+			if (checkHitLayerBlocksAndOtherOKas(LEFT) == false)
 			{
 				//move left
 				decX();
@@ -54,7 +54,7 @@ void RamioBoba::update()
 		if (movementDirection == RIGHT)
 		{
 			//heck getHit
-			if (checkHitLayerBlocksAndOtherBobas(RIGHT) == false)
+			if (checkHitLayerBlocksAndOtherOKas(RIGHT) == false)
 			{
 				//move right
 				incX();
@@ -81,7 +81,7 @@ void RamioBoba::update()
 	}
 }
 
-bool RamioBoba::checkStomp(shared_ptr<RamioGuy> guy)
+bool RamioOKa::checkStomp(shared_ptr<RamioGuy> guy)
 {
 	// int r=rand()%5;
 	// if(r==0)CAPTION_make_caption(&yuu_ramio_caption, 1,CAPTION_CENTERED_OVER_SPRITE,PLAYER_npc->screen_y-10,3,"Squish!",FONT_NORMAL_ID,WHITE,BLACK,1,1);
@@ -98,7 +98,7 @@ bool RamioBoba::checkStomp(shared_ptr<RamioGuy> guy)
 	return false;
 }
 
-bool RamioBoba::checkRunningInto(shared_ptr<RamioGuy> guy)
+bool RamioOKa::checkRunningInto(shared_ptr<RamioGuy> guy)
 {
 	// TODO
 	return false;

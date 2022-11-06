@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 class AudioFile;
 
@@ -28,7 +28,7 @@ public:
 	SoLoud::Wav *soLoudWave = nullptr;
 #endif
 #ifdef USE_SDL_MIXER
-	Mix_shared_ptr<Chunk> mixChunk = nullptr;
+	shared_ptr<Mix_Chunk> mixChunk = nullptr;
 #endif
 
 	Sound(shared_ptr<Engine> g, shared_ptr<AudioFile >f);

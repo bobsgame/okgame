@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "bobtypes.h"
+#include "oktypes.h"
 class Logger;
 #include <deque>
 
@@ -92,7 +92,7 @@ public:
 	/// <summary>
 	/// The list of elements </summary>
 private:
-	ArrayList<shared_ptr<PotentialTile>>* list = make_shared<ArrayList><shared_ptr<PotentialTile>>();
+	ArrayList<shared_ptr<PotentialTile>> list;// = make_shared<ArrayList><shared_ptr<PotentialTile>>();
 
 
 	/// <summary>
@@ -180,11 +180,11 @@ public:
 	shared_ptr<TilePath> path = nullptr;
 
 private:
-	ArrayList<shared_ptr<PotentialTile>>* blockedPotentialTilesList = make_shared<ArrayList><shared_ptr<PotentialTile>>();
+	ArrayList<shared_ptr<PotentialTile>> blockedPotentialTilesList;// = make_shared<ArrayList><shared_ptr<PotentialTile>>();
 	shared_ptr<SortedList> openPotentialTilesList = make_shared<SortedList>(this);
 
 	//ArrayList<ArrayList<shared_ptr<PotentialTile>>>* potentialTiles = make_shared<ArrayList><ArrayList<shared_ptr<PotentialTile>>>();
-	vector<shared_ptr<PotentialTile>> *potentialTiles = nullptr;
+	vector<shared_ptr<PotentialTile>> potentialTiles;// = nullptr;
 	bool* checkedTileArray = nullptr;
 
 

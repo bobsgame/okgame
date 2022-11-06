@@ -152,7 +152,7 @@ void Character::update()
 			if (currentAreaTYPEIDTarget.length() > 0)
 			{
 				//find current area
-				if (String::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
+				if (OKString::startsWith(currentAreaTYPEIDTarget, "DOOR.") == false)
 				{
 					//get current area x and y
 					shared_ptr<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
@@ -250,7 +250,7 @@ void Character::update()
 	//if (this->getClass().equals(Character::typeid)) //this will ONLY do Character
 	if (dynamic_cast<shared_ptr<Character>>(this) != NULL)
 	{
-		//log.debug(""+getName());
+		//log->debug(""+getName());
 		checkIfMoved();
 
 		doCharacterAnimation();
@@ -1529,7 +1529,7 @@ void Character::setShowAccountType(bool b)
 }
 
 //=========================================================================================================================
-void Character::setCharacterNameAndCaption(shared_ptr<BobColor> nameColor, const string& name, shared_ptr<BobColor> accountTypeNameColor, const string& accountTypeName)
+void Character::setCharacterNameAndCaption(shared_ptr<OKColor> nameColor, const string& name, shared_ptr<OKColor> accountTypeNameColor, const string& accountTypeName)
 { //=========================================================================================================================
 
 	this->nameColor = nameColor;
@@ -1543,7 +1543,7 @@ void Character::setCharacterNameAndCaption(shared_ptr<BobColor> nameColor, const
 		{
 			if (name != "" && name.length() > 0)
 			{
-				nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, name, BobFont::font_normal_16_outlined_smooth, nameColor);
+				nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, name, OKFont::font_normal_16_outlined_smooth, nameColor);
 			}
 			nameCaption->setEntity(this);
 		}
@@ -1568,7 +1568,7 @@ void Character::setCharacterNameAndCaption(shared_ptr<BobColor> nameColor, const
 		{
 			if (accountTypeName != "" && accountTypeName.length() > 0)
 			{
-				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, accountTypeName, BobFont::font_normal_8_outlined, accountTypeNameColor);
+				accountTypeCaption = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_OVER_ENTITY, 0, 0, -1, accountTypeName, OKFont::font_normal_8_outlined, accountTypeNameColor);
 			}
 			nameCaption->setEntity(this);
 		}
@@ -2850,7 +2850,7 @@ int Character::walkToXYNoHitAvoidOthersPushMain(float x, float y)
 
 	if (getPlayer() == nullptr)
 	{
-		log.error("Player null in walk_to_xy_nohit_avoidothers_pushmain()");
+		log->error("Player null in walk_to_xy_nohit_avoidothers_pushmain()");
 		return 0;
 	}
 
@@ -3371,7 +3371,7 @@ bool Character::walkToXYIntelligentHitPushOthers(float x, float y)
 
 	if (getPlayer() == nullptr)
 	{
-		log.error("Player null in walk_to_xy_intelligenthit_pushothers()");
+		log->error("Player null in walk_to_xy_intelligenthit_pushothers()");
 		return false;
 	}
 
@@ -4057,7 +4057,7 @@ int Character::walk_to_xy_intelligenthit_stopforothers_pushmain(float x, float y
 
 	if (getPlayer() == nullptr)
 	{
-		log.error("Player null in walk_to_xy_intelligenthit_stopforothers_pushmain()");
+		log->error("Player null in walk_to_xy_intelligenthit_stopforothers_pushmain()");
 		return 0;
 	}
 
@@ -4574,7 +4574,7 @@ int Character::walk_to_xy_intelligenthit_avoidothers_pushmain(float x, float y)
 
 	if (getPlayer() == nullptr)
 	{
-		log.error("Player null in walk_to_xy_intelligenthit_avoidothers_pushmain()");
+		log->error("Player null in walk_to_xy_intelligenthit_avoidothers_pushmain()");
 		return 0;
 	}
 
