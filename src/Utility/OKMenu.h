@@ -26,7 +26,7 @@ public:
 	//gl draw ratio fit between height or width
 
 private:
-	//TTF_shared_ptr<Font >font = OKFont::ttf_18;
+	//shared_ptr<TTF_Font >font = OKFont::ttf_18;
 
 	int fontSize = 22;
 	int scaledFontSize = 22;

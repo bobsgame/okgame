@@ -20,7 +20,7 @@ bool BGClientEngine::debugMode = true;
 BGClientEngine::BGClientEngine()
 { //=========================================================================================================================
 #ifdef _DEBUG
-	log->info("BGClientEngine()");
+	log.info("BGClientEngine()");
 #endif
 }
 
@@ -28,7 +28,7 @@ BGClientEngine::~BGClientEngine()
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log->info("~BGClientEngine()");
+	log.info("~BGClientEngine()");
 #endif
 
 
@@ -43,7 +43,7 @@ void BGClientEngine::init()
 
 
 #ifdef _DEBUG
-	log->info("BGClientEngine::init()");
+	log.info("BGClientEngine::init()");
 #endif
 	
 
@@ -565,7 +565,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	}
 	catch (exception e)
 	{
-		log->error("Could not load PreloadSkillData");
+		log.error("Could not load PreloadSkillData");
 	}
 	if (b64List->size() > 0)
 	{
@@ -582,7 +582,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log->debug("Preload Skill id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Skill id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -609,7 +609,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->dialogueList.add(m);
 				if (debug)
 				{
-					log->debug("Preload Dialogue id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Dialogue id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -636,7 +636,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->flagList.add(m);
 				if (debug)
 				{
-					log->debug("Preload Flag id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Flag id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -663,7 +663,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->gameStringList.add(m);
 				if (debug)
 				{
-					log->debug("Preload GameString id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload GameString id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -690,7 +690,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				//getEventManager()->eventList.add(m);
 				if (debug)
 				{
-					log->debug("Preload Event id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Event id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -724,14 +724,14 @@ void BGClientEngine::loadPreCachedObjectData()
 				}
 				else
 				{
-					log->error("Sprite already exists:" + data->getName());
+					log.error("Sprite already exists:" + data->getName());
 				}
 
 				//System.out.println(spriteData.name);
 
 				if (debug)
 				{
-					log->debug("Preload Sprite id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Sprite id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -775,7 +775,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log->debug("Preload Sound id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Sound id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -815,7 +815,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 				if (debug)
 				{
-					log->debug("Preload Music id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Music id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -849,12 +849,12 @@ void BGClientEngine::loadPreCachedObjectData()
 				}
 				else
 				{
-					log->error("Map already exists:" + data->getName());
+					log.error("Map already exists:" + data->getName());
 				}
 
 				if (debug)
 				{
-					log->debug("Preload Map id:" + to_string(data->getID()) + " name:" + data->getName());
+					log.debug("Preload Map id:" + to_string(data->getID()) + " name:" + data->getName());
 				}
 			}
 		}
@@ -1337,7 +1337,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 
 	if (data == nullptr)
 	{
-		log->error("Load Event could not be decompressed.");
+		log.error("Load Event could not be decompressed.");
 	}
 	else
 	{
@@ -1348,7 +1348,7 @@ void BGClientEngine::incomingLoadEventResponse(string s)
 
 		if (data->getID() == -1)
 		{
-			log->error("Load eventID is -1");
+			log.error("Load eventID is -1");
 		}
 	}
 }

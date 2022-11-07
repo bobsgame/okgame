@@ -55,8 +55,8 @@ public:
 	//static bool vbl_done;
 	//static bool timer_done;
 
-	//static TTF_shared_ptr<Font> ttf_bobsgame_8;
-	//static TTF_shared_ptr<Font> ttf_bobsgame_16;
+	//static shared_ptr<TTF_Font> ttf_bobsgame_8;
+	//static shared_ptr<TTF_Font> ttf_bobsgame_16;
 	//static bool seeded;
 	//static bool vbl_init;
 	//static bool GAME_is_running;
@@ -132,7 +132,7 @@ public:
 	static shared_ptr<System> systemUtils;
 	//static shared_ptr<ControlsManager> controlsManager;// = nullptr;
 
-	static BGClientEngine* gameEngine;// = nullptr;
+	static shared_ptr<BGClientEngine> gameEngine;// = nullptr;
 	
 	//shared_ptr<BGClientEngine> getGameEngine();
 

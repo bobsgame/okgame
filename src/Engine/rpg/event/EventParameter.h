@@ -16,7 +16,8 @@ class EventParameter : public EnginePart
 public:
 	static Logger log;
 
-	void* object = nullptr;
+	shared_ptr<Map> mapObject = nullptr;
+	shared_ptr<Entity> entityObject = nullptr;
 
 	int type = -1;
 

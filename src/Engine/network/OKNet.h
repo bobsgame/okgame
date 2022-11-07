@@ -23,7 +23,7 @@ public:
 	static void update();
 
 	static ArrayList<shared_ptr<UDPPeerConnection>> udpConnections;
-	static TCPServerConnection tcpServerConnection;// = nullptr;
+	static shared_ptr<TCPServerConnection> tcpServerConnection;// = nullptr;
 
 	static const int status_AVAILABLE = 0;
 	static const int status_PLAYING_GAME = 1;

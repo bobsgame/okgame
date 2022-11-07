@@ -38,7 +38,7 @@ public:
 	ArrayList<shared_ptr<EventCommand>> children;// = make_shared<ArrayList><shared_ptr<EventCommand>>();
 
 
-	EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>>* parameterList, int type);
+	EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>> &parameterList, int type);
 
 	int getNumParams();
 

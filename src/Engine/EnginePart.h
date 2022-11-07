@@ -77,7 +77,7 @@ public:
 	int getSecondsSinceLastHere();
 	int getMinutesSinceLastHere();
 
-	Engine* getEngine();
+	shared_ptr<Engine> getEngine();
 	shared_ptr<Cameraman> getCameraman();
 	shared_ptr<MapManager> getMapManager();
 	shared_ptr<SpriteManager> getSpriteManager();

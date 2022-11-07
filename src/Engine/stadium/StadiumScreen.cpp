@@ -45,7 +45,7 @@ void StadiumScreen::update()
 	GLUtils::globalDrawScale = 1.0f;
 }
 
-void StadiumScreen::setGame(MiniGameEngine* game, shared_ptr<Area> area)
+void StadiumScreen::setGame(shared_ptr<MiniGameEngine> game, shared_ptr<Area> area)
 { //=========================================================================================================================
 
 	this->area = area;

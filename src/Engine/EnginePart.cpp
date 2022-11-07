@@ -133,7 +133,7 @@ int EnginePart::getMinutesSinceLastHere()
 	return (int)((ticksPassed / 1000) / 60);
 }
 
-Engine* EnginePart::getEngine()
+shared_ptr<Engine> EnginePart::getEngine()
 {
 	if(e==nullptr)return Main::gameEngine;
 	return e;
@@ -281,7 +281,7 @@ shared_ptr<NotificationManager> EnginePart::getNotificationManager()
 
 shared_ptr<TCPServerConnection> EnginePart::getServerConnection()
 {
-	return &OKNet::tcpServerConnection;
+	return OKNet::tcpServerConnection;
 }
 
 GameSave EnginePart::getGameSave()

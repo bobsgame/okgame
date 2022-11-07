@@ -5122,7 +5122,7 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu >menu, 
 	for (int i = 0; i < stats->entries.size(); i++)
 	{
 
-		OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry* e = stats->entries.get(i);
+		OKGameLeaderBoardAndHighScoreBoard::Oshared_ptr<KGameLeaderBoardAndHighScoreBoardEntry> e = stats->entries.get(i);
 
 		if (e->userName == "") { continue; }
 

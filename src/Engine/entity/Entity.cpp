@@ -307,7 +307,9 @@ void Entity::renderDebugInfo()
 	//if(movementDirection==RIGHT)GL.drawOutlinedString("movementDirection: Right", x, y+(++strings*9),Color.white);
 
 	//if (this->getClass().equals(char::typeid) || this->getClass().equals(Player::typeid) || this->getClass().equals(RandomCharacter::typeid))
-	if (dynamic_cast<shared_ptr<Character>>(this) != nullptr || dynamic_cast<shared_ptr<Player>>(this) != nullptr || dynamic_cast<shared_ptr<RandomCharacter>>(this) != nullptr)
+	if (dynamic_cast<Character*>(this) != nullptr || 
+		dynamic_cast<Player*>(this) != nullptr || 
+		dynamic_cast<RandomCharacter*>(this) != nullptr)
 	{
 		GLUtils::drawOutlinedString("getTicksPerPixelMoved: " + to_string(getTicksPerPixelMoved()), x, y + (++strings * 9), OKColor::white);
 		GLUtils::drawOutlinedString("pixelsToMoveThisFrame: " + to_string(pixelsToMoveThisFrame), x, y + (++strings * 9), OKColor::white);
@@ -566,9 +568,9 @@ void Entity::render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTex
 	//special case for rendering doors action icon doorknob glow thing. maybe should override render in door for this.
 	//------------------
 	//if (this->getClass().equals(Door::typeid))
-	if (dynamic_cast<shared_ptr<Door>>(this) != NULL)
+	if (dynamic_cast<Door*>(this) != NULL)
 	{
-		shared_ptr<Door> d = static_cast<shared_ptr<Door>>(this);
+		Door* d = static_cast<Door*>(this);
 		d->renderActionIcon();
 	}
 }
@@ -786,20 +788,20 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 		{
 			shared_ptr<Entity> m = getMap()->activeEntityList.get(i);
 
-			if (m != this &&
-				(dynamic_cast<shared_ptr<Door>>(m) != NULL) == false &&
-				(dynamic_cast<shared_ptr<RandomCharacter>>(m) != NULL) == false &&
-				(dynamic_cast<shared_ptr<Character>>(m) != NULL) == false &&
+			if (m.get() != this &&
+				(dynamic_cast<Door*>(m.get()) != NULL) == false &&
+				(dynamic_cast<RandomCharacter*>(m.get()) != NULL) == false &&
+				(dynamic_cast<Character*>(m.get()) != NULL) == false &&
 				m->getNonWalkable() == true && x < m->getRight() && x > m->getLeft() && y < m->getBottom() && y > m->getTop())
 			{
 				return true; //TODO use touching functions - using full hitbox.
 			}
 
-			if (m != this &&
+			if (m.get() != this &&
 				(
-					(dynamic_cast<shared_ptr<Character>>(m) != NULL) ||
-					(dynamic_cast<shared_ptr<RandomCharacter>>(m) != NULL) ||
-					(dynamic_cast<shared_ptr<Player>>(m) != NULL)
+					(dynamic_cast<Character*>(m.get()) != NULL) ||
+					(dynamic_cast<RandomCharacter*>(m.get()) != NULL) ||
+					(dynamic_cast<Player*>(m.get()) != NULL)
 				)
 				&& x < m->getMiddleX() + 6 && x > m->getMiddleX() - 6 && y < m->getMiddleY() + 6 && y > m->getMiddleY() - 6)
 			{
@@ -827,7 +829,7 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 			continue;
 		}
 
-		if (e == this)
+		if (e.get() == this)
 		{
 			continue;
 		}
@@ -1455,7 +1457,7 @@ void Entity::fadeOutAndDelete()
 void Entity::deleteFromMapEntityListAndReleaseTexture()
 { //=========================================================================================================================
 
-	shared_ptr<Map >m = getMap();
+	shared_ptr<Map>m = getMap();
 	if (m != nullptr)
 	{
 		if (m->activeEntityList.contains(this))
@@ -1464,11 +1466,11 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 		}
 	}
 
-	if ((dynamic_cast<shared_ptr<Player>>(this) != NULL) || (dynamic_cast<shared_ptr<Character>>(this) != NULL) || (dynamic_cast<shared_ptr<RandomCharacter>>(this) != NULL))
+	if ((dynamic_cast<Player*>(this) != NULL) || (dynamic_cast<Character*>(this) != NULL) || (dynamic_cast<RandomCharacter*>(this) != NULL))
 	{
-		shared_ptr<Character> r = static_cast<shared_ptr<Character>>(this);
+		Character* r = static_cast<Character*>(this);
 		r->uniqueTexture->release();
-		delete r->uniqueTexture;
+		//delete r->uniqueTexture;
 		r->uniqueTexture = nullptr;
 
 	}

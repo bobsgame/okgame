@@ -585,7 +585,7 @@ public:
 	shared_ptr<Caption> garbageWaitCaption = nullptr;
 
 	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >myHighScore = nullptr;
-	OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry *currentLeaderboardEntry = nullptr;
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry>currentLeaderboardEntry = nullptr;
 	bool triedToGetHighScore = false;
 	shared_ptr<Caption> scoreBarTypeCaption = nullptr;
 	shared_ptr<Caption> myScoreBarCaption = nullptr;

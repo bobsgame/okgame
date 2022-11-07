@@ -18,16 +18,16 @@ class GLUtils
 public:
 	static void old_clear();
 	static void old_render();
-	static shared_ptr<OKTexture> loadTextureFromSurface(string filename, shared_ptr<SDL_Surface> surface);
-	static void draw_texture_struct(texture_STRUCT* PLAYER_TEXTURE, float x, float y);
+	static shared_ptr<OKTexture> loadTextureFromSurface(string filename, shared_ptr<SDL_Surface*> surface);
+	static void draw_texture_struct(shared_ptr <texture_STRUCT> PLAYER_TEXTURE, float x, float y);
 	static HashMap<string, shared_ptr<OKTexture>> textureCache;
 	static void clearCache(const string &name);// Remove a particular named image from the cache
 	static void clearCache();
 	static GLuint createTextureID();
-	static shared_ptr<OKTexture >getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data);
-	static shared_ptr<OKTexture >getTextureFromPNGAbsolutePath(string filename);
-	static shared_ptr<OKTexture >getTextureFromPNGExePath(string filename);
-	static void draw_sprite(SPRITE* s);
+	static shared_ptr<OKTexture> getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data);
+	static shared_ptr<OKTexture> getTextureFromPNGAbsolutePath(string filename);
+	static shared_ptr<OKTexture> getTextureFromPNGExePath(string filename);
+	static void draw_sprite(shared_ptr <SPRITE> s);
 	static void gl_draw_flipped(GLuint textureid, float x, float y, float w, float h);
 	static void draw_texture(GLuint textureid, float x, float y, float w, float h);
 	static void draw_texture_alpha(GLuint textureid, float x, float y, float w, float h, float tw, float th, float f, float a);
@@ -38,8 +38,8 @@ public:
 	static void checkGLError(const string &whereErrorOccurredString);
 	static void e(const string &whereErrorOccurredString);
 	static void e();
-	static shared_ptr<SDL_Window >window;
-	static shared_ptr<SDL_Renderer >renderer;
+	static shared_ptr<SDL_Window> window;
+	static shared_ptr<SDL_Renderer> renderer;
 	//static unsigned char* rgba_fbo_data; //framebuffer array
 	//static unsigned char* filtered_rgba_fbo_data;
 	static Uint32 rmask;

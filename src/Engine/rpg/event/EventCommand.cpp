@@ -17,27 +17,28 @@ int EventCommand::TYPE_COMMAND = 0;
 int EventCommand::TYPE_QUALIFIER_TRUE = 1;
 int EventCommand::TYPE_QUALIFIER_FALSE = 2;
 
-EventCommand::EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>>* parameterList, int type)
+EventCommand::EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>> &parameterList, int type)
 { //===============================================================================================
 
 	this->e = g;
 
 	this->type = type;
 
-	if(parameterList!=nullptr)this->parameterList = parameterList;
+	//if(parameterList!=nullptr)
+		this->parameterList = parameterList;
 
 	this->commandString = command;
 }
 
 int EventCommand::getNumParams()
 { //===============================================================================================
-	if (parameterList->isEmpty())
+	if (parameterList.isEmpty())
 	{
 		return 0;
 	}
 	else
 	{
-		return parameterList->size();
+		return parameterList.size();
 	}
 }
 
@@ -88,7 +89,7 @@ shared_ptr<EventCommand> EventCommand::parseEventCommandFromCommandString(shared
 
 	if (commandString.find("(") != string::npos)
 	{
-		ArrayList<shared_ptr<EventParameter>>* newParameterList = make_shared<ArrayList><shared_ptr<EventParameter>>();
+		ArrayList<shared_ptr<EventParameter>> newParameterList;// = make_shared<ArrayList><shared_ptr<EventParameter>>();
 
 		string command = commandString.substr(0, commandString.find("("));
 
@@ -105,7 +106,7 @@ shared_ptr<EventCommand> EventCommand::parseEventCommandFromCommandString(shared
 				//commandString now looks like "thing)" or "thing|thing)"
 
 				//all parameters looks like THING.ID
-				newParameterList->add(make_shared<EventParameter>(g, parameterString));
+				newParameterList.add(make_shared<EventParameter>(g, parameterString));
 			}
 			else //commandString looks like thing)
 			{
@@ -114,7 +115,7 @@ shared_ptr<EventCommand> EventCommand::parseEventCommandFromCommandString(shared
 				//commandString now looks like ")"
 
 				//all parameters looks like THING.ID
-				newParameterList->add(make_shared<EventParameter>(g, parameterString));
+				newParameterList.add(make_shared<EventParameter>(g, parameterString));
 			}
 		}
 
@@ -140,8 +141,8 @@ shared_ptr<EventCommand> EventCommand::getParent()
 void EventCommand::addChild(shared_ptr<EventCommand> e)
 { //=========================================================================================================================
 
-	children->add(e);
-	e->parent = this;
+	children.add(e);
+	e->parent = shared_from_this();
 }
 
 shared_ptr<EventCommand> EventCommand::getNextChild()
@@ -158,9 +159,9 @@ shared_ptr<EventCommand> EventCommand::getNextChild()
 	//if we are [doThing], we return [doNextThing]
 	//if we are [doNextThing], we return [ifPlayerInArea FALSE]
 
-	if (currentChildIndex < children->size())
+	if (currentChildIndex < children.size())
 	{
-		shared_ptr<EventCommand> e = children->get(currentChildIndex);
+		shared_ptr<EventCommand> e = children.get(currentChildIndex);
 		currentChildIndex++;
 
 		return e;

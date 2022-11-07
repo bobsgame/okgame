@@ -539,14 +539,14 @@ void FileUtils::makeDir(const string& cs)
 //}
 
 //=========================================================================================================================
-IntArray* FileUtils::loadIntFile(string filename)
+shared_ptr<IntArray> FileUtils::loadIntFile(string filename)
 {//=========================================================================================================================
 
-	ByteArray* byteArray = loadByteFile(filename);
+	shared_ptr<ByteArray> byteArray = loadByteFile(filename);
 	//delete byteArray;
 	//byteArray = loadByteFile(filename);
 
-	IntArray* intArray = new IntArray(byteArray->size() / 4);
+	shared_ptr<IntArray> intArray = make_shared<IntArray>(byteArray->size() / 4);
 
 	for (int x = 0; x<intArray->size(); x++)
 	{
@@ -577,7 +577,7 @@ IntArray* FileUtils::loadIntFile(string filename)
 
 }
 
-IntArray* FileUtils::loadIntFileFromExePath(string filename)
+shared_ptr<IntArray> FileUtils::loadIntFileFromExePath(string filename)
 {//=========================================================================================================================
 	filename = Main::getPath() + filename;
 
@@ -585,10 +585,10 @@ IntArray* FileUtils::loadIntFileFromExePath(string filename)
 }
 
 // ===============================================================================================
-ByteArray* FileUtils::getByteArrayFromIntArray(IntArray* intArray)
+shared_ptr<ByteArray> FileUtils::getByteArrayFromIntArray(shared_ptr<IntArray> intArray)
 {// ===============================================================================================
 
-	ByteArray* byteArray = new ByteArray(intArray->size() * 4);
+	shared_ptr<ByteArray> byteArray = make_shared<ByteArray>(intArray->size() * 4);
 
 	for (int i = 0; i < intArray->size(); i++)
 	{
@@ -709,7 +709,7 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 ArrayList<string>* FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
-	ArrayList<string>* lines = new ArrayList<string>();// = make_shared<ArrayList><string>();
+	ArrayList<string>* lines = make_shared<ArrayList><string>();// = make_shared<ArrayList><string>();
 
 	string line;
 	stringstream dosString;
@@ -802,7 +802,7 @@ ArrayList<string>* FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 
 
 //=========================================================================================================================
-ByteArray* FileUtils::loadByteFile(string filename)
+shared_ptr<ByteArray> FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
@@ -842,7 +842,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 	}
 	fclose(cfile);
 
-	ByteArray* byteArray = new ByteArray((u8*)cfilepointer, csize);
+	shared_ptr<ByteArray> byteArray = make_shared<ByteArray>((u8*)cfilepointer, csize);
 
 	return byteArray;
 
@@ -911,7 +911,7 @@ ByteArray* FileUtils::loadByteFile(string filename)
 }
 
 //=========================================================================================================================
-ByteArray* FileUtils::loadByteFileFromExePath(string filename)
+shared_ptr<ByteArray> FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -1000,7 +1000,7 @@ std::string FileUtils::encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encod
 #include "Poco/Base64Decoder.h"
 
 //=========================================================================================================================
-ByteArray* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
+shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 	{
@@ -1009,7 +1009,7 @@ ByteArray* FileUtils::decodeBase64StringToByteArrayAlt(std::string const& encode
 		Base64::Decode(in, &outs);
 
 
-		ByteArray* outv = new ByteArray(outs.length());
+		shared_ptr<ByteArray> outv = make_shared<ByteArray>(outs.length());
 		for (int i = 0; i < outs.length(); i++)
 		{
 			outv->data()[i]=(outs[i]);
@@ -1082,7 +1082,7 @@ std::string FileUtils::encodeByteArrayToBase64String(u8 const* bytes_to_encode, 
 
 }
 //=========================================================================================================================
-ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
+shared_ptr<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encoded_string)//, unsigned long &returnLength)
 {//=========================================================================================================================
 
 
@@ -1132,7 +1132,7 @@ ByteArray* FileUtils::decodeBase64StringToByteArray(std::string const& encoded_s
 		for (j = 0; (j < i - 1); j++) vec->push_back(char_array_3[j]);
 	}
 
-	ByteArray* ret = new ByteArray(vec->size());
+	shared_ptr<ByteArray> ret = make_shared<ByteArray>(vec->size());
 	for(int x=0;x<vec->size();x++)
 	{
 		ret->data()[x] = (*vec)[x];
@@ -1309,7 +1309,7 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 {// ===============================================================================================
 
  //unsigned long zippedLength;
-	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	shared_ptr<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1612,7 +1612,7 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	
 
 	//unsigned long zippedLength;
-	ByteArray* zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
+	shared_ptr<ByteArray> zippedBytes = decodeBase64StringToByteArray(zippedBytesAsBase64String);// , zippedLength);
 	//log.debug("Decoded " + to_string(zippedBytesAsString.length()) + " bytes into " + to_string(zippedLength) + " bytes");
 
 
@@ -1779,7 +1779,7 @@ using Poco::MD5Engine;
 string FileUtils::getFileMD5Checksum(const string& filename)
 { //===============================================================================================
 
-	ByteArray* bytes = loadByteFileFromExePath(filename);
+	shared_ptr<ByteArray> bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
 	delete bytes;
 	return md5;
@@ -1788,7 +1788,7 @@ string FileUtils::getFileMD5Checksum(const string& filename)
 
 #include "md5.h"
 
-string FileUtils::getByteArrayMD5Checksum(ByteArray* bytes)
+string FileUtils::getByteArrayMD5Checksum(shared_ptr<ByteArray> bytes)
 { //===============================================================================================
 
 	return md5(bytes->data(), bytes->size());
@@ -1816,7 +1816,7 @@ string FileUtils::getStringMD5(const string& stringToMD5)
 #include <lib/stb_image.h>
 #include <lib/stb_image_write.h>
 //TODO: 
-void FileUtils::saveImage(const string& s, BufferedImage* i)
+void FileUtils::saveImage(const string& s, shared_ptr<BufferedImage> i)
 { //===============================================================================================
 
 	//		Iterator<ImageWriter> imageWritersIterator = ImageIO.getImageWritersByFormatName("png");
@@ -2539,14 +2539,14 @@ void FileUtils::downloadSmallFileToCacheIfNotExist(const string& fileName)
 
 }
 
-ByteArray* FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
+shared_ptr<ByteArray> FileUtils::loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);
 	return loadByteFile(cacheDir + fileName);
 }
 
-IntArray* FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
+shared_ptr<IntArray> FileUtils::loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName)
 { //===============================================================================================
 
 	downloadSmallFileToCacheIfNotExist(fileName);

@@ -18,14 +18,14 @@ class Engine;
 class Area;
 
 
-class Cameraman : public Entity
+class Cameraman : public Entity, public std::enable_shared_from_this<Cameraman>
 {
 public:
 
 	static Logger log;
 
 
-	Entity* targetEntity = nullptr;
+	shared_ptr<Entity> targetEntity = nullptr;
 
 	int lastXTarget = -1;
 	int lastYTarget = -1;

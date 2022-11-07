@@ -233,7 +233,7 @@ shared_ptr<Map> RandomCharacter::getCurrentMap()
 { //=========================================================================================================================
 
 
-	log->error("Bug: Don't use getCurrentMap() in Characters. Use this.map or getMap()");
+	log.error("Bug: Don't use getCurrentMap() in Characters. Use this.map or getMap()");
 
 	return nullptr;
 }

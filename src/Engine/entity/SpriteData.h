@@ -104,7 +104,7 @@ private:
 
 
 	
-	ArrayList<SpriteAnimationSequence*> animationList;// = make_shared<ArrayList><shared_ptr<SpriteAnimationSequence>>();
+	ArrayList<shared_ptr<SpriteAnimationSequence>> animationList;// = make_shared<ArrayList><shared_ptr<SpriteAnimationSequence>>();
 
 	shared_ptr<EventData> eventData = nullptr;
 

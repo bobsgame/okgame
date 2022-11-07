@@ -92,7 +92,7 @@ void Sprite::preloadFromDataFile(string name)
 				}
 				catch(exception)
 				{
-					log->error("Could not parse sprite file: "+name);
+					log.error("Could not parse sprite file: "+name);
 				}
 
 			}
@@ -174,7 +174,7 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 
 		spriteData = make_shared<SpriteData>();
 
-		log->warn("Sprite::initializeWithSpriteData spriteData was null");
+		log.warn("Sprite::initializeWithSpriteData spriteData was null");
 	}
 
 	this->data = spriteData;
@@ -208,7 +208,7 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 void Sprite::sendDataRequest(const string &spriteName)
 {//=========================================================================================================================
 	//if engine is NOT gameEngine return, i.e. it is OKGame and all the sprites are preloaded, should never get here though because it only calls this is sprite isnt initialized, etc.
-	if ((dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != nullptr) == false)return;
+	if ((dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr) == false)return;
 
 	long long startTime = lastSentDataRequestTime;
 	long long currentTime = System::currentHighResTimer();
@@ -225,7 +225,7 @@ void Sprite::sendDataRequest(const string &spriteName)
 void Sprite::sendDataRequest(int id)
 {//=========================================================================================================================
 
-	if ((dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != nullptr) == false)return;
+	if ((dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr) == false)return;
 
 	long long startTime = lastSentDataRequestTime;
 	long long currentTime = System::currentHighResTimer();
@@ -548,12 +548,12 @@ void Sprite::loadTextures()
 
 				if (indexDataIntArray != nullptr)
 				{
-					delete indexDataIntArray;
+					//delete indexDataIntArray;
 					indexDataIntArray = nullptr;
 				}
 				if (paletteRGBByteArray != nullptr)
 				{
-					delete paletteRGBByteArray;
+					//delete paletteRGBByteArray;
 					paletteRGBByteArray = nullptr;
 				}
 			}
@@ -903,7 +903,9 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 									}
 								}
 
-								if (rgb != nullptr) delete rgb;
+								if (rgb != nullptr)
+									//delete rgb;
+									rgb = nullptr;
 							}
 						}
 					}
@@ -929,12 +931,12 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 
 	if (useHQ2X)
 	{
-		shared_ptr<BufferedImage> hq2xSpriteBufferedImage = (new HQ2X())->hq2x(spriteBufferedImage);
+		shared_ptr<BufferedImage> hq2xSpriteBufferedImage = make_shared<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
 
 		setHQ2XAlphaFromOriginal(hq2xSpriteBufferedImage, spriteBufferedImage);
 
 		//spriteBufferedImage.flush();
-		delete spriteBufferedImage;
+		//delete spriteBufferedImage;
 
 		antialiasBufferedImage(hq2xSpriteBufferedImage);
 
@@ -953,7 +955,7 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 			}
 		}
 
-		delete hq2xSpriteBufferedImage;
+		//delete hq2xSpriteBufferedImage;
 
 		//make texture out of the bytebuffer
 	}
@@ -1042,11 +1044,11 @@ void Sprite::createSpriteTexturePNG_S()
 
 	if (useHQ2X)
 	{
-		shared_ptr<BufferedImage> hq2xSpriteBufferedImage = (new HQ2X())->hq2x(spriteBufferedImage);
+		shared_ptr<BufferedImage> hq2xSpriteBufferedImage = make_shared<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
 
 		setHQ2XAlphaFromOriginal(hq2xSpriteBufferedImage, spriteBufferedImage);
 
-		delete spriteBufferedImage;
+		//delete spriteBufferedImage;
 
 		antialiasBufferedImage(hq2xSpriteBufferedImage);
 
@@ -1055,7 +1057,7 @@ void Sprite::createSpriteTexturePNG_S()
 		//---------------------------
 		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5(), hq2xSpriteBufferedImage);
 
-		delete hq2xSpriteBufferedImage;
+		//delete hq2xSpriteBufferedImage;
 	}
 	else
 	{
@@ -1130,13 +1132,13 @@ void Sprite::createSpriteShadowTexturePNG_S()
 
 	if (useHQ2X)
 	{
-	    shared_ptr<BufferedImage> hq2xShadowBufferedImage = (new HQ2X())->hq2x(spriteBufferedImage);
+	    shared_ptr<BufferedImage> hq2xShadowBufferedImage = make_shared<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
 	
 	    setHQ2XAlphaFromOriginal(hq2xShadowBufferedImage, spriteBufferedImage);
 	
 	    //spriteBufferedImage.flush();
 	    //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	    delete spriteBufferedImage;
+	    //delete spriteBufferedImage;
 	
 	    antialiasBufferedImage(hq2xShadowBufferedImage);
 	
@@ -1148,7 +1150,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 	
 	    //hq2xShadowBufferedImage.flush();
 	    //Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	    delete hq2xShadowBufferedImage;
+	    //delete hq2xShadowBufferedImage;
 	}
 	else
 	{
@@ -1161,11 +1163,11 @@ void Sprite::releaseSpriteTexture_S()
 { //=========================================================================================================================
 
 	texture->release();
-	delete texture;
+	//delete texture;
 	texture = nullptr;
 
 	shadowTexture->release();
-	delete shadowTexture;
+	//delete shadowTexture;
 	shadowTexture = nullptr;
 
 }
@@ -1211,7 +1213,7 @@ shared_ptr<SpriteAnimationSequence> Sprite::getFirstAnimation()
 	else
 	{
 		getAnimationList()->add(make_shared<SpriteAnimationSequence>("Default", 0, 0, 0, 0, 0));
-		log->warn("First animation sequence not found in SpriteAsset: " + getName());
+		log.warn("First animation sequence not found in SpriteAsset: " + getName());
 	}
 
 	return getAnimationList()->get(0);
@@ -1291,7 +1293,7 @@ int Sprite::getAnimationNumFramesByAnimation(shared_ptr<SpriteAnimationSequence>
 
 	if (a == nullptr)
 	{
-		log->error("Animation was null in getAnimationNumFramesByAnimation");
+		log.error("Animation was null in getAnimationNumFramesByAnimation");
 		return getNumFrames();
 	}
 	if (a->cachedNumFrames > -1)return a->cachedNumFrames;

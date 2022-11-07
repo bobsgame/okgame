@@ -18,7 +18,7 @@ StateManager::StateManager()
 { //=========================================================================================================================
 }
 
-Engine* StateManager::getCurrentState()
+shared_ptr<Engine> StateManager::getCurrentState()
 { //=========================================================================================================================
 
 	if(states.size()>0)
@@ -31,7 +31,7 @@ Engine* StateManager::getCurrentState()
 //	currentState = s;
 //}
 
-void StateManager::pushState(Engine* s)
+void StateManager::pushState(shared_ptr<Engine> s)
 { //=========================================================================================================================
 	states.insert(0, s);
 }

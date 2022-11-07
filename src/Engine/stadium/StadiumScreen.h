@@ -37,7 +37,7 @@ public:
 	void update();
 
 
-	void setGame(MiniGameEngine* game, shared_ptr<Area> area);
+	void setGame(shared_ptr<MiniGameEngine> game, shared_ptr<Area> area);
 
 
 	shared_ptr<MiniGameEngine> getGame();

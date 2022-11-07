@@ -426,7 +426,7 @@ PathFinder::PathFinder(shared_ptr<Entity> e, float middleStartXPixelsHQ, float m
 		for (int y = 0; y < h; y++)
 		{
 			//potentialTiles->get(x)->add(make_shared<PotentialTile>(x, y));
-			(*potentialTiles)[y*w + x] = make_shared<PotentialTile>(x, y);
+			potentialTiles[y*w + x] = make_shared<PotentialTile>(x, y);
 		}
 	}
 
@@ -447,30 +447,30 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 
 	// initial state for A*. The closed group is empty. Only the starting
 	// tile is in the open list and it's cost is zero, i.e. we're already there
-	(*potentialTiles)[startTileY*w+startTileX]->cumulativePathCost = 0;
-	(*potentialTiles)[startTileY*w+startTileX]->depth = 0;
-	blockedPotentialTileslist.clear();
-	openPotentialTileslist.clear();
-	openPotentialTileslist.addAndSort((*potentialTiles)[startTileY*w + startTileX]);
+	potentialTiles[startTileY*w+startTileX]->cumulativePathCost = 0;
+	potentialTiles[startTileY*w+startTileX]->depth = 0;
+	blockedPotentialTilesList.clear();
+	openPotentialTilesList->clear();
+	openPotentialTilesList->addAndSort(potentialTiles[startTileY*w + startTileX]);
 
-	(*potentialTiles)[toTileY*w + toTileX]->parent = nullptr;
+	potentialTiles[toTileY*w + toTileX]->parent = nullptr;
 
 	// while we haven't found the goal and haven't exceeded our max search depth
 	int maxDepth = 0;
 
 
-	while ((maxDepth < maxSearchDistance) && (openPotentialTileslist.size() != 0))
+	while ((maxDepth < maxSearchDistance) && (openPotentialTilesList->size() != 0))
 	{
 		// pull out the first node in our open list, this is determined to
 		// be the most likely to be the next step based on our heuristic
-		shared_ptr<PotentialTile> current = openPotentialTileslist.first();
-		if (current == (*potentialTiles)[toTileY*w + toTileX])
+		shared_ptr<PotentialTile> current = openPotentialTilesList->first();
+		if (current == potentialTiles[toTileY*w + toTileX])
 		{
 			break;
 		}
 
-		openPotentialTileslist.remove(current);
-		blockedPotentialTileslist.add(current);
+		openPotentialTilesList->remove(current);
+		blockedPotentialTilesList.add(current);
 
 		// search through all the neighbours of the current node evaluating
 		// them as next steps
@@ -505,7 +505,7 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 					// in the sorted open list
 					float nextStepCost = current->cumulativePathCost + getTileTypeCost(current->x, current->y, xp, yp);
 
-					shared_ptr<PotentialTile> neighbour = (*potentialTiles)[yp*w + xp];
+					shared_ptr<PotentialTile> neighbour = potentialTiles[yp*w + xp];
 
 					setTileChecked(xp, yp);
 
@@ -515,26 +515,26 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 					// this node so it needs to be re-evaluated
 					if (nextStepCost < neighbour->cumulativePathCost)
 					{
-						if (openPotentialTileslist.contains(neighbour))
+						if (openPotentialTilesList->contains(neighbour))
 						{
-							openPotentialTileslist.remove(neighbour);
+							openPotentialTilesList->remove(neighbour);
 						}
 
-						if (blockedPotentialTileslist.contains(neighbour))
+						if (blockedPotentialTilesList.contains(neighbour))
 						{
-							blockedPotentialTileslist.remove(neighbour);
+							blockedPotentialTilesList.remove(neighbour);
 						}
 					}
 
 					// if the node hasn't already been processed and discarded then
 					// reset it's cost to our current cost and add it as a next possible
 					// step (i.e. to the open list)
-					if (!openPotentialTileslist.contains(neighbour) && !(blockedPotentialTileslist.contains(neighbour)))
+					if (!openPotentialTilesList->contains(neighbour) && !(blockedPotentialTilesList.contains(neighbour)))
 					{
 						neighbour->cumulativePathCost = nextStepCost;
 						neighbour->heuristicCost = (float)getHeuristicCost(xp, yp, toTileX, toTileY);
 						maxDepth = max(maxDepth,neighbour->setParentTile(current));
-						openPotentialTileslist.addAndSort(neighbour);
+						openPotentialTilesList->addAndSort(neighbour);
 					}
 				}
 			}
@@ -543,7 +543,7 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 
 	// since we've got an empty open list or we've run out of search
 	// there was no path. Just return null
-	if ((*potentialTiles)[toTileY*w + toTileX]->parent == nullptr)
+	if (potentialTiles[toTileY*w + toTileX]->parent == nullptr)
 	{
 		return nullptr;
 	}
@@ -556,8 +556,8 @@ shared_ptr<TilePath> PathFinder::findPath(int startTileX, int startTileY, int to
 	// references of the nodes to find out way from the target location back
 	// to the start recording the nodes on the way.
 	shared_ptr<TilePath> path = make_shared<TilePath>(this);
-	shared_ptr<PotentialTile> target = (*potentialTiles)[toTileY*w + toTileX];
-	while (target != (*potentialTiles)[startTileY*w + startTileX])
+	shared_ptr<PotentialTile> target = potentialTiles[toTileY*w + toTileX];
+	while (target != potentialTiles[startTileY*w + startTileX])
 	{
 		path->addPathTileToBeginning(target->x, target->y);
 		target = target->parent;

@@ -81,7 +81,7 @@ void TextManager::init()
 	//   {
 	//      shared_ptr<InputStream> inputStream = FileUtils::getResourceAsStream("res/fonts/bobsgame.ttf");
 	//
-	//      java::awt::OKFont* awtFont = java::awt::OKFont::createFont(java::awt::OKFont::TRUETYPE_FONT, inputStream);
+	//      java::awt::Oshared_ptr<KFont> awtFont = java::awt::OKFont::createFont(java::awt::OKFont::TRUETYPE_FONT, inputStream);
 	//      awtFont = awtFont->deriveFont(8.0f); // set font size
 	//      ttfFont = make_shared<TrueTypeFont>(awtFont, antiAlias);
 	//   }

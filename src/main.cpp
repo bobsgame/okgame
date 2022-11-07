@@ -190,7 +190,7 @@ shared_ptr<StateManager> Main::stateManager = nullptr;
 shared_ptr<System> Main::systemUtils = nullptr;
 shared_ptr<GlobalSettings> Main::globalSettings = nullptr;
 //shared_ptr<ControlsManager> Main::controlsManager = nullptr;
-BGClientEngine* Main::gameEngine = nullptr;
+shared_ptr<BGClientEngine> Main::gameEngine = nullptr;
 
 Gwen::Controls::Canvas* Main::gwenCanvas = nullptr;
 Gwen::Input::GwenSDL2 *Main::gwenInput = nullptr;
@@ -584,17 +584,17 @@ void Main::initGWEN()
 	Uint64 start=0, now=0;
 	start = SDL_GetPerformanceCounter();
 
-	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
+	gwenRenderer = make_shared<Gwen>::Renderer::OpenGL_TruetypeFont();
 	gwenRenderer->Init();
 	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
-	gwenSkin = new Gwen::Skin::TexturedBase(gwenRenderer);
+	gwenSkin = make_shared<Gwen>::Skin::TexturedBase(gwenRenderer);
 	string path = Main::getPath();
 	gwenSkin->Init(path + "data/DefaultSkin.png");
 	gwenSkin->SetDefaultFont(Gwen::Utility::StringToUnicode(path + "data/fonts/Lato-Medium.ttf"), 16);
-	gwenCanvas = new Gwen::Controls::Canvas(gwenSkin);
+	gwenCanvas = make_shared<Gwen>::Controls::Canvas(gwenSkin);
 	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
 	gwenCanvas->SetDrawBackground(false);
-	gwenInput = new Gwen::Input::GwenSDL2();
+	gwenInput = make_shared<Gwen>::Input::GwenSDL2();
 	gwenInput->Initialize(gwenCanvas);
 
 	now = SDL_GetPerformanceCounter();
@@ -769,9 +769,9 @@ void Main::whilefix()
 			rightConsole->update();
 			bobNet->tcpServerConnection.update();
 
-			if (dynamic_cast<Engine*>(mainObject->stateManager->getCurrentState()) != NULL)
+			if (dynamic_cast<shared_ptr<Engine>>(mainObject->stateManager->getCurrentState()) != NULL)
 			{
-				((Engine*)mainObject->stateManager->getCurrentState())->getCaptionManager()->update();
+				((shared_ptr<Engine>)mainObject->stateManager->getCurrentState())->getCaptionManager()->update();
 			}
 
 
@@ -1108,7 +1108,7 @@ void Main::doScreenShotCheck()
 				flipdata[(((y*w) + x) * 4) + 3] = buffer[(((((h - 1) - y)*w) + x) * 4) + 3];
 
 			}
-		SDL_Surface* s = SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask);// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
+		shared_ptr<SDL_Surface*> s = SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask);// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
 		IMG_SavePNG(s, fileName.c_str());
 		SDL_FreeSurface(s);
 		delete[] buffer;

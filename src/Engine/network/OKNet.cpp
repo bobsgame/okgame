@@ -151,7 +151,7 @@ Logger OKNet::log = Logger("OKNet");
 shared_ptr<Logger> OKNet::_threadLog = make_shared<Logger>("OKNet");
 
 ArrayList<shared_ptr<UDPPeerConnection>> OKNet::udpConnections;
-TCPServerConnection OKNet::tcpServerConnection;
+shared_ptr<TCPServerConnection> OKNet::tcpServerConnection = make_shared<TCPServerConnection>();
 int OKNet::myStatus = status_AVAILABLE;
 ArrayList<shared_ptr<Engine>> OKNet::engines;
 

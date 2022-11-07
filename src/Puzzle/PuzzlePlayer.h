@@ -44,7 +44,7 @@ public:
 	string getID()
 	{//=========================================================================================================================
 		if (peerConnection != nullptr)return to_string(peerConnection->peerUserID) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
-		else return to_string(gameLogic->getEngine()->getUserID_S()) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
+		else return to_string((gameLogic.get()->getEngine()).get()->getUserID_S()) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
 	}
 	//=========================================================================================================================
 	bool isNetworkPlayer()

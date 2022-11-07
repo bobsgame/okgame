@@ -92,7 +92,7 @@ SpriteData::SpriteData
 
 void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X)
 { //=========================================================================================================================
-	animationList.add(new SpriteAnimationSequence(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
+	animationList.add(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
 }
 
 //shared_ptr<SpriteData> SpriteData::fromBase64ZippedJSON(const string& b64)

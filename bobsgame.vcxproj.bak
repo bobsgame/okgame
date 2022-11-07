@@ -388,6 +388,7 @@
     <ClInclude Include="src\Utility\OKBool.h" />
     <ClInclude Include="src\Utility\OKMath.h" />
     <ClInclude Include="src\Utility\OKMenu.h" />
+    <ClInclude Include="src\Utility\OKString.h" />
     <ClInclude Include="src\Utility\stringconverter.h" />
     <ClInclude Include="src\Puzzle\Block.h" />
     <ClInclude Include="src\Puzzle\OKGame.h" />
@@ -575,6 +576,7 @@
     <ClCompile Include="src\Utility\audio\Sound.cpp" />
     <ClCompile Include="src\Utility\OKBool.cpp" />
     <ClCompile Include="src\Utility\OKMath.cpp" />
+    <ClCompile Include="src\Utility\OKString.cpp" />
     <ClCompile Include="src\Utility\BufferedImage.cpp" />
     <ClCompile Include="src\Utility\Console.cpp" />
     <ClCompile Include="src\Utility\ConsoleText.cpp" />

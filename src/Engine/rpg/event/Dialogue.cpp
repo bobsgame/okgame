@@ -24,11 +24,11 @@ Dialogue::Dialogue(shared_ptr<Engine> g, int id)
 	{
 		if (getEventManager()->dialogueList.get(i)->getID() == data->getID())
 		{
-			log->error("Dialogue already exists:" + data->getName());
+			log.error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->dialogueList.add(this);
+	getEventManager()->dialogueList.add(shared_from_this());
 }
 
 Dialogue::Dialogue(shared_ptr<Engine> g, shared_ptr<DialogueData> data)
@@ -42,11 +42,11 @@ Dialogue::Dialogue(shared_ptr<Engine> g, shared_ptr<DialogueData> data)
 	{
 		if (getEventManager()->dialogueList.get(i)->getID() == data->getID())
 		{
-			log->error("Dialogue already exists:" + data->getName());
+			log.error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->dialogueList.add(this);
+	getEventManager()->dialogueList.add(shared_from_this());
 }
 
 //The following method was originally marked 'synchronized':

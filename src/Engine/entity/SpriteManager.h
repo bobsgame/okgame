@@ -49,7 +49,7 @@ public:
 	HashMap<string, shared_ptr<Sprite>> spriteByNameHashMap;//make_shared<HashMap><string, shared_ptr<Sprite>>();
 
 
-	ArrayList<ScreenSprite*> screenSpriteList;
+	ArrayList<shared_ptr<ScreenSprite>> screenSpriteList;
 
 
 	static shared_ptr<OKTexture> actionTexture;// = nullptr;

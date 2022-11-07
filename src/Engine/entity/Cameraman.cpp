@@ -34,11 +34,11 @@ Cameraman::Cameraman(shared_ptr<Engine> g)
 
 	//set map x and map y to target x y
 
-	targetEntity = this;
+	targetEntity = shared_from_this();
 
 	getData()->setDisableShadow(true);
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), shared_from_this());
 }
 
 void Cameraman::initCurrentAnimationFromSprite()
@@ -178,7 +178,7 @@ void Cameraman::update()
 	float maxDistY = (float)getEngine()->getHeight();
 
 
-	if (dynamic_cast<BGClientEngine*>(getEngine()) != nullptr)
+	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr)
 	{
 		float playerSpeedX = ((abs(getPlayer()->forceX * (getPlayer()->pixelsToMoveThisFrame + 1))) / getEngine()->engineTicksPassed()) / 0.01f;
 		float playerSpeedY = ((abs(getPlayer()->forceY * (getPlayer()->pixelsToMoveThisFrame + 1))) / getEngine()->engineTicksPassed()) / 0.01f;
@@ -756,7 +756,7 @@ int Cameraman::getYTarget()
 
 	int statusBarSize = 0;
 
-	if (dynamic_cast<shared_ptr<BGClientEngine>>(getEngine()) != NULL)
+	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != NULL)
 	// if (getEngine()->getClass().equals(BGClientEngine::typeid))
 	{
 		//statusBarSize = StatusBar::sizeY;
@@ -966,7 +966,7 @@ void Cameraman::setTarget(shared_ptr<Area> area)
 
 void Cameraman::setDummyTarget()
 { //=========================================================================================================================
-	targetEntity = this; //make_shared<Entity>(getEngine(),make_shared<EntityData>(-1,"Null Target","",getX(),getY()));
+	targetEntity = shared_from_this(); //make_shared<Entity>(getEngine(),make_shared<EntityData>(-1,"Null Target","",getX(),getY()));
 }
 
 void Cameraman::setAutoZoomByPlayerMovement(bool b)

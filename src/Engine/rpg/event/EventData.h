@@ -143,8 +143,8 @@ public:
 
 
 public:
-	static ArrayList<shared_ptr<EventScriptCommand>>* commandList;
-	static ArrayList<shared_ptr<EventScriptQualifier>>* qualifierList;
+	static ArrayList<shared_ptr<EventScriptCommand>> commandList;
+	static ArrayList<shared_ptr<EventScriptQualifier>> qualifierList;
 
 
 	const static shared_ptr<EventScriptQualifier> isPlayerTouchingThisArea;

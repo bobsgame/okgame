@@ -23,9 +23,9 @@ ScreenSprite::ScreenSprite(shared_ptr<Engine> g, const string& name, const strin
 
 	setRenderOrder(RenderOrder::OVER_TEXT);
 
-	getSpriteManager()->screenSpriteList.add(this);
+	getSpriteManager()->screenSpriteList.add(shared_from_this());
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), shared_from_this());
 }
 
 float ScreenSprite::getScreenLeft()
@@ -144,9 +144,9 @@ bool ScreenSprite::shouldDraw()
 
 void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 { //=========================================================================================================================
-	if (getSpriteManager()->screenSpriteList.contains(this))
+	if (getSpriteManager()->screenSpriteList.contains(shared_from_this()))
 	{
-		getSpriteManager()->screenSpriteList.remove(this);
+		getSpriteManager()->screenSpriteList.remove(shared_from_this());
 	}
 }
 

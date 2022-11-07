@@ -239,7 +239,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 	if (texture != nullptr)
 	{
 		texture->release();
-		delete texture;
+		//delete texture;
 		texture = nullptr;
 	}
 
@@ -251,10 +251,10 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 	
 
-	shared_ptr<SDL_Surface> surface = nullptr;
+	shared_ptr<SDL_Surface*> surface = nullptr;
 
 
-	TTF_shared_ptr<Font> outlineFont = nullptr;
+	shared_ptr<TTF_Font> outlineFont = nullptr;
 
 	if (fontSize < 7)  { this->ttfFont = OKFont::ttf_6;  outlineFont = OKFont::ttf_outline_6;  this->fontSize = 6; }
 	if (fontSize == 7)  { this->ttfFont = OKFont::ttf_7;  outlineFont = OKFont::ttf_outline_7;  }
@@ -299,8 +299,8 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 		outlineOKColor.darker();
 		outlineOKColor.darker();
 		SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
-		surface = TTF_RenderText_Blended(outlineFont, this->text.c_str(), outlineColor);
-		shared_ptr<SDL_Surface >fg_surface = TTF_RenderText_Blended(ttfFont, this->text.c_str(), textSDLColor);
+		surface = TTF_RenderText_Blended(outlineFont.get(), this->text.c_str(), outlineColor);
+		shared_ptr<SDL_Surface*> fg_surface = TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor);
 		SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 		// blit text onto its outline 
@@ -314,7 +314,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 		if (surface == NULL || surface == nullptr)
 		{
-			log->error("surface is null");
+			log.error("surface is null");
 		}
 
 
@@ -341,15 +341,15 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 		SDL_Color bgSDLColor = { (Uint8)textBGColor->ri() ,(Uint8)textBGColor->gi(),(Uint8)textBGColor->bi(),(Uint8)textBGColor->ai() };
 
 		surface = nullptr;
-		if (textBGColor != OKColor::clear)surface = TTF_RenderText_Shaded(ttfFont, this->text.c_str(), textSDLColor, bgSDLColor);
-		else surface = TTF_RenderText_Blended(ttfFont, this->text.c_str(), textSDLColor);// , bgSDLColor);
+		if (textBGColor != OKColor::clear)surface = TTF_RenderText_Shaded(ttfFont.get(), this->text.c_str(), textSDLColor, bgSDLColor);
+		else surface = TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor);// , bgSDLColor);
 
 		this->width = surface->w;
 		this->height = surface->h;
 
 		if (surface == NULL || surface == nullptr)
 		{
-			log->error("surface is null");
+			log.error("surface is null");
 		}
 
 	}

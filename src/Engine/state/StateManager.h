@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	ArrayList<Engine*> states;
+	ArrayList<shared_ptr<Engine>> states;
 
 	//shared_ptr<Engine> currentState = nullptr;
 
@@ -26,10 +26,10 @@ public:
 	StateManager();
 
 
-	Engine* getCurrentState();
+	shared_ptr<Engine> getCurrentState();
 
 
-	void pushState(Engine* s);
+	void pushState(shared_ptr<Engine> s);
 	void popState();
 
 

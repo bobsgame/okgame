@@ -33,7 +33,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 		}
 		catch (exception)
 		{
-			log->error("Could not parse bool in primitiveValueString");
+			log.error("Could not parse bool in primitiveValueString");
 		}
 		
 	}
@@ -48,7 +48,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 			}
 			catch (exception)
 			{
-				log->error("Could not parse int in primitiveValueString");
+				log.error("Could not parse int in primitiveValueString");
 			}
 		}
 		else
@@ -62,7 +62,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 				}
 				catch (exception)
 				{
-					log->error("Could not parse float in primitiveValueString");
+					log.error("Could not parse float in primitiveValueString");
 				}
 			}
 		}
@@ -101,7 +101,7 @@ void EventParameter::updateParameterVariablesFromString(shared_ptr<Event> event)
 				{
 					if (parameterString == "PLAYER")
 					{
-						this->object = getPlayer();
+						this->entityObject = (shared_ptr<Entity>)getPlayer().get();
 					}
 					else
 					{
@@ -118,22 +118,22 @@ void EventParameter::updateParameterVariablesFromString(shared_ptr<Event> event)
 								o = event->entity;
 							}
 
-							this->object = o;
+							this->entityObject = o;
 						}
 						else
 						{
 							//if we made it here, it's a map object.
-							shared_ptr<Map> o = (shared_ptr<Map>)getEngine()->getGameObjectByTYPEIDName(parameterString);
+							shared_ptr<Map> o = make_shared<Map>(getEngine()->getGameObjectByTYPEIDName(parameterString));
 
 							if (o == nullptr)
 							{
-								log->error("Could not find GameObject: " + parameterString + " when parsing Event Parameter.");
+								log.error("Could not find GameObject: " + parameterString + " when parsing Event Parameter.");
 							}
 							else
 							{
 								//String newTypeString = parameterString.substring(parameterString.indexOf("."));
 
-								this->object = o;
+								this->mapObject = o;
 							}
 						}
 					}
@@ -148,7 +148,7 @@ string EventParameter::toString()
 { //===============================================================================================
 
 
-	log->error("Should never call toString in EventParameter");
+	log.error("Should never call toString in EventParameter");
 
 
 	return "";

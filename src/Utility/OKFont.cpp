@@ -12,66 +12,66 @@
 Logger OKFont::log = Logger("OKFont");
 
 
-TTF_shared_ptr<Font> OKFont::ttf_bobsgame_8 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_bobsgame_16 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_6 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_7 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_8 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_9 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_10 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_11 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_12 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_13 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_14 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_15 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_16 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_17 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_18 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_19 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_20 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_21 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_22 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_23 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_24 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_25 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_26 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_27 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_28 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_29 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_30 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_31 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_32 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_48 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_64 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_6 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_7 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_8 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_9 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_10 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_11 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_12 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_13 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_14 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_15 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_16 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_17 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_18 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_19 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_20 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_21 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_22 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_23 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_24 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_25 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_26 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_27 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_28 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_29 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_30 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_31 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_32 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_48 = nullptr;
-TTF_shared_ptr<Font> OKFont::ttf_outline_64 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_bobsgame_8 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_bobsgame_16 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_6 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_7 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_8 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_9 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_10 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_11 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_12 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_13 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_14 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_15 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_16 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_17 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_18 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_19 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_20 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_21 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_22 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_23 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_24 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_25 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_26 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_27 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_28 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_29 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_30 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_31 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_32 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_48 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_64 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_6 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_7 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_8 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_9 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_10 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_11 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_12 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_13 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_14 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_15 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_16 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_17 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_18 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_19 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_20 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_21 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_22 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_23 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_24 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_25 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_26 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_27 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_28 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_29 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_30 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_31 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_32 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_48 = nullptr;
+shared_ptr<TTF_Font*> OKFont::ttf_outline_64 = nullptr;
 
 
 shared_ptr<OKFont> OKFont::font_32 = nullptr;
@@ -121,7 +121,7 @@ OKFont::OKFont(const string& filename, int maxCharHeight, int blockHeight, bool 
 void OKFont::initFonts()
 {//=========================================================================================================================
 
-	log->debug("Init fonts");
+	log.debug("Init fonts");
 
 	Uint64 start=0, now=0, totalStart, totalNow;
 	start = SDL_GetPerformanceCounter();
@@ -133,7 +133,7 @@ void OKFont::initFonts()
 	TTF_Init();
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("TTF Init took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("TTF Init took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -172,7 +172,7 @@ void OKFont::initFonts()
 	ttf_64 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 64);
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("Load fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Load fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	ttf_outline_6 = TTF_OpenFont(string(path + "data/fonts/Muli-Bold.ttf").c_str(), 6);
@@ -236,7 +236,7 @@ void OKFont::initFonts()
 	TTF_SetFontOutline(ttf_outline_64, 1);
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("Load outline fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Load outline fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 	//shared_ptr<FreeTypeFontGenerator >generator = make_shared<FreeTypeFontGenerator>(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
@@ -293,12 +293,12 @@ void OKFont::initFonts()
 
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("Load bitmap fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Load bitmap fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
 	totalNow = SDL_GetPerformanceCounter();
-	log->debug("Init fonts took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Init fonts took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 }
@@ -308,7 +308,7 @@ void OKFont::initFonts()
 void OKFont::cleanup()
 {//=========================================================================================================================
 
-	log->info("OKFont::cleanup");
+	log.info("OKFont::cleanup");
 
 	TTF_CloseFont(ttf_bobsgame_8);
 	TTF_CloseFont(ttf_bobsgame_16);
@@ -1016,7 +1016,7 @@ int OKFont::getFontIndexForChar(char c)
 		{
 			string e = "Parsed a '<'.";
 
-			log->error(e);
+			log.error(e);
 
 			i = -1;
 			break;
@@ -1025,7 +1025,7 @@ int OKFont::getFontIndexForChar(char c)
 		{
 			string e = "Parsed a '>'.";
 
-			log->error(e);
+			log.error(e);
 
 			i = -1;
 			break;
@@ -1107,7 +1107,7 @@ int OKFont::getFontPixelValueAtIndex(int index, shared_ptr<OKFont> font)
 
 	if(font==nullptr || font == NULL)
 	{
-		log->error("OKFont::getFontPixelValueAtIndex font is null");
+		log.error("OKFont::getFontPixelValueAtIndex font is null");
 		return 0;
 	}
 
@@ -1117,7 +1117,7 @@ int OKFont::getFontPixelValueAtIndex(int index, shared_ptr<OKFont> font)
 //
 //	if (index >= size)
 //	{
-//		log->error("OKFont::getFontPixelValueAtIndex index >=size should never happen!");
+//		log.error("OKFont::getFontPixelValueAtIndex index >=size should never happen!");
 //		return -1;
 //	}
 	return font->byteArray->data()[index];

@@ -16,7 +16,7 @@ class Caption;
 class Sprite;
 class Area;
 
-class Character : public Entity
+class Character : public Entity , public std::enable_shared_from_this<Character>
 {
 public:
 	static Logger log;
@@ -142,9 +142,9 @@ public:
 
 	ArrayList<shared_ptr<Entity>>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 
-	bool checkTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>>* list, float x, float y);
+	bool checkTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>> &list, float x, float y);
 
-	bool checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>>* list, float x, float y);
+	bool checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>> &list, float x, float y);
 
 	bool checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y);
 
