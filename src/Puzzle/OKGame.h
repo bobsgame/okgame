@@ -61,7 +61,7 @@ protected:
 public:
 
 	//static shared_ptr<OKGame> b;
-	shared_ptr<Sound >music = nullptr;
+	shared_ptr<Sound>music = nullptr;
 	shared_ptr<OKTexture> keyboardTexture = nullptr;
 	shared_ptr<OKTexture> controllerTexture = nullptr;
 	shared_ptr<OKTexture> controllerIconTexture = nullptr;
@@ -139,11 +139,11 @@ public:
 	virtual bool updateMenus() override;
 
 	bool startScreenMenuShowing = false;
-	shared_ptr<OKMenu >startScreenMenu = nullptr;
-	shared_ptr<OKMenu >infoMenu = nullptr;
-	shared_ptr<OKMenu >patreonMenu = nullptr;
-	shared_ptr<OKMenu >forumMenu = nullptr;
-	shared_ptr<OKMenu >activityMenu = nullptr;
+	shared_ptr<OKMenu>startScreenMenu = nullptr;
+	shared_ptr<OKMenu>infoMenu = nullptr;
+	shared_ptr<OKMenu>patreonMenu = nullptr;
+	shared_ptr<OKMenu>forumMenu = nullptr;
+	shared_ptr<OKMenu>activityMenu = nullptr;
 	int startScreenMenuCursorPosition = 0;
 	void startScreenMenuUpdate();
 	void startScreenMenuRender();
@@ -154,7 +154,7 @@ public:
 	//bool gotActivityStream = false;
 	//long long lastCheckedActivityResponseTime = 0;
 
-	shared_ptr<OKMenu >gettingGamesFromServerMenu = nullptr;
+	shared_ptr<OKMenu>gettingGamesFromServerMenu = nullptr;
 	void gettingGamesFromServerMenuUpdate();
 	void gettingGamesFromServerMenuRender();
 	bool gettingGamesFromServerMenuShowing = false;
@@ -178,38 +178,38 @@ public:
 	void difficultyMenuUpdate();
 	//void difficultyMenuRender();
 	bool difficultyMenuShowing = false;
-	shared_ptr<OKMenu >difficultyMenu = nullptr;
+	shared_ptr<OKMenu>difficultyMenu = nullptr;
 	int difficultyMenuCursorPosition = 0;
 
 	void controllerMenuUpdate();
 	void controllerMenuRender();
 	bool controllerMenuShowing = false;
-	shared_ptr<OKMenu >controllerMenu = nullptr;
+	shared_ptr<OKMenu>controllerMenu = nullptr;
 	int controllerMenuCursorPosition = 0;
 	bool controllerMenuTestingButtons = false;
 
 	void localMultiplayerPlayerJoinMenuUpdate();
 	void localMultiplayerPlayerJoinMenuRender();
 	bool localMultiplayerPlayerJoinMenuShowing = false;
-	shared_ptr<OKMenu >localMultiplayerPlayerJoinMenu = nullptr;
+	shared_ptr<OKMenu>localMultiplayerPlayerJoinMenu = nullptr;
 	int localMultiplayerPlayerJoinMenuCursorPosition = 0;
 	shared_ptr<Caption> localMultiplayerPressStartCaption = nullptr;
 
-	void playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer >p);
-	void playerDifficultyMiniMenuRender(shared_ptr<PuzzlePlayer >p, float x, float y);
+	void playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer>p);
+	void playerDifficultyMiniMenuRender(shared_ptr<PuzzlePlayer>p, float x, float y);
 
-	void playerControllerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p);
-	void playerControllerSettingsMenuToggle(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p);
-	void playerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p);
-	void playerSettingsMenuLeft(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p);
-	void playerSettingsMenuRight(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p);
-	void playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer >p);
-	void playerPauseMiniMenuRender(shared_ptr<PuzzlePlayer >p, float x0, float x1, float y0, float y1);
+	void playerControllerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p);
+	void playerControllerSettingsMenuToggle(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p);
+	void playerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p);
+	void playerSettingsMenuLeft(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p);
+	void playerSettingsMenuRight(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p);
+	void playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer>p);
+	void playerPauseMiniMenuRender(shared_ptr<PuzzlePlayer>p, float x0, float x1, float y0, float y1);
 
 	void loginMenuUpdate();
 	void loginMenuRender();
 	bool loginMenuShowing = false;
-	shared_ptr<OKMenu >loginMenu = nullptr;
+	shared_ptr<OKMenu>loginMenu = nullptr;
 	int loginMenuCursorPosition = 0;
 	bool textStarted = false;
 	string saveRoomConfigNameText = "";
@@ -233,7 +233,7 @@ public:
 	bool createAccountMenuShowing = false;
 	int lastMX = 0;
 	int lastMY = 0;
-	shared_ptr<OKMenu >createAccountMenu = nullptr;
+	shared_ptr<OKMenu>createAccountMenu = nullptr;
 	int createAccountMenuCursorPosition = 0;
 	
 	ArrayList<shared_ptr<Room>> rooms;
@@ -253,24 +253,24 @@ public:
 	//ArrayList<shared_ptr<Caption>> *hostingFriendCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
 	//ArrayList<shared_ptr<Caption>> *playingFriendCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
 	//int hostingFriendsCursorPosition = 0;
-	shared_ptr<OKMenu >networkMultiplayerLobbyMenu = nullptr;
-	shared_ptr<OKMenu >yourStatsMenu = nullptr;
-	shared_ptr<OKMenu >leaderBoardMenu = nullptr;
-	shared_ptr<OKMenu >roomsMenu = nullptr;
-	shared_ptr<OKMenu >friendsOnlineMenu = nullptr;
-	//shared_ptr<Caption >onlineFriendsLabel = nullptr;
+	shared_ptr<OKMenu>networkMultiplayerLobbyMenu = nullptr;
+	shared_ptr<OKMenu>yourStatsMenu = nullptr;
+	shared_ptr<OKMenu>leaderBoardMenu = nullptr;
+	shared_ptr<OKMenu>roomsMenu = nullptr;
+	shared_ptr<OKMenu>friendsOnlineMenu = nullptr;
+	//shared_ptr<Caption>onlineFriendsLabel = nullptr;
 	int networkMultiplayerLobbyMenuCursorPosition = 0;
 	bool selectingHostedGame = false;
-	//shared_ptr<UDPPeerConnection >hostPeer = nullptr;
+	//shared_ptr<UDPPeerConnection>hostPeer = nullptr;
 	ArrayList<shared_ptr<UDPPeerConnection>> joinedPeers;// = make_shared<ArrayList><shared_ptr<UDPPeerConnection>>();
 	bool hostStartedGame = false;
 	string friendUserName = "";
 
 	void networkMultiplayerPlayerJoinMenuUpdate();
 	void networkMultiplayerPlayerJoinMenuRender();
-	shared_ptr<OKMenu >networkMultiplayerPlayerJoinMenu = nullptr;
-	shared_ptr<OKMenu >networkMultiplayerJoinedPeersMenu = nullptr;
-	shared_ptr<OKMenu >networkMultiplayerRoomRulesMenu = nullptr;
+	shared_ptr<OKMenu>networkMultiplayerPlayerJoinMenu = nullptr;
+	shared_ptr<OKMenu>networkMultiplayerJoinedPeersMenu = nullptr;
+	shared_ptr<OKMenu>networkMultiplayerRoomRulesMenu = nullptr;
 	shared_ptr<Caption> networkMultiplayerPlayerJoinMenuPressStartCaption = nullptr;
 	bool networkMultiplayerPlayerJoinMenuShowing = false;
 	bool hosting = false;
@@ -295,26 +295,26 @@ public:
 	long long lastTimeTriedToCloseGame = 0;
 	virtual void tryToCloseGame() override;
 
-	shared_ptr<CustomGameEditorControl >customGameEditor = nullptr;
-	shared_ptr<GameSequenceEditorControl >gameSequenceEditor = nullptr;
-	shared_ptr<GameTestMenuControl >gameTestMenu = nullptr;
+	shared_ptr<CustomGameEditorControl>customGameEditor = nullptr;
+	shared_ptr<GameSequenceEditorControl>gameSequenceEditor = nullptr;
+	shared_ptr<GameTestMenuControl>gameTestMenu = nullptr;
 
 	void customGameEditorMenuUpdate();
 	void customGameEditorMenuRender();
-	shared_ptr<OKMenu >customGameEditorMenu = nullptr;
+	shared_ptr<OKMenu>customGameEditorMenu = nullptr;
 	bool customGameEditorMenuShowing = false;
 	int customGameEditorMenuCursorPosition = 0;
     
 
 	void gameSequenceEditorMenuUpdate();
 	void gameSequenceEditorMenuRender();
-	shared_ptr<OKMenu >gameSequenceEditorMenu = nullptr;
+	shared_ptr<OKMenu>gameSequenceEditorMenu = nullptr;
 	bool gameSequenceEditorMenuShowing = false;
 	int gameSequenceEditorMenuCursorPosition = 0;
 
 	void gameTestMenuUpdate();
 	void gameTestMenuRender();
-	//shared_ptr<OKMenu >gameTestMenu = nullptr;
+	//shared_ptr<OKMenu>gameTestMenu = nullptr;
 	bool gameTestMenuShowing = false;
 	int gameTestMenuCursorPosition = 0;
 
@@ -326,14 +326,14 @@ public:
 	void settingsMenuSetDefaults(shared_ptr<OKMenu> m, bool isSettingsMenu);
 	void globalSettingsMenuUpdate();
 	void globalSettingsMenuRender();
-	shared_ptr<OKMenu >globalSettingsMenu = nullptr;
+	shared_ptr<OKMenu>globalSettingsMenu = nullptr;
 	bool globalSettingsMenuShowing = false;
 	int globalSettingsMenuCursorPosition = 0;
 
 	void statsMenuUpdate();
 	void statsMenuRender();
-	shared_ptr<OKMenu >statsMenu = nullptr;
-	shared_ptr<OKMenu >whichStatsMiniMenu = nullptr;
+	shared_ptr<OKMenu>statsMenu = nullptr;
+	shared_ptr<OKMenu>whichStatsMiniMenu = nullptr;
 	bool whichStatsMiniMenuShowing = false;
 	void resetAllStatsMenuVars();
 	void whichStatsMiniMenuUpdate();
@@ -356,19 +356,19 @@ public:
 	void leftRightMenuAdjustInt(int& variable, int min, int max, int minIncrement, int maxIncrement);
 
 	void saveRoomConfigMenuUpdate();
-	shared_ptr<OKMenu >saveRoomConfigMenu = nullptr;
+	shared_ptr<OKMenu>saveRoomConfigMenu = nullptr;
 	bool saveRoomConfigMenuShowing = false;
 	int saveRoomConfigMenuCursorPosition = 0;
 
 	void loadRoomConfigMenuUpdate();
-	shared_ptr<OKMenu >loadRoomConfigMenu = nullptr;
+	shared_ptr<OKMenu>loadRoomConfigMenu = nullptr;
 	bool loadRoomConfigMenuShowing = false;
 	int loadRoomConfigMenuCursorPosition = 0;
 
 
 	void roomOptionsMenuUpdate();
 	//void roomOptionsMenuRender();
-	shared_ptr<OKMenu >roomOptionsMenu = nullptr;
+	shared_ptr<OKMenu>roomOptionsMenu = nullptr;
 	bool roomOptionsMenuShowing = false;
 	int roomOptionsMenuCursorPosition = 0;
 
@@ -377,7 +377,7 @@ public:
 
 	void gameSetupMenuUpdate();
 	void gameSetupMenuRender();
-	shared_ptr<OKMenu >gameSetupMenu = nullptr;
+	shared_ptr<OKMenu>gameSetupMenu = nullptr;
 	bool gameSetupMenuShowing = false;
 	int gameSetupMenuCursorPosition = 0;
 	int selectedDifficultyIndex = 0;
@@ -390,13 +390,13 @@ public:
 
 	void selectGameSequenceOrSingleGameTypeMenuUpdate();
 	void selectGameSequenceOrSingleGameTypeMenuRender();
-	shared_ptr<OKMenu >selectGameSequenceOrSingleGameTypeMenu = nullptr;
+	shared_ptr<OKMenu>selectGameSequenceOrSingleGameTypeMenu = nullptr;
 	bool selectGameSequenceOrSingleGameTypeMenuShowing = false;
 	int selectGameSequenceOrSingleGameTypeMenuCursorPosition = 0;
 
 	void selectGameSequenceMenuUpdate();
 	void selectGameSequenceMenuRender();
-	shared_ptr<OKMenu >selectGameSequenceMenu = nullptr;
+	shared_ptr<OKMenu>selectGameSequenceMenu = nullptr;
 	bool selectGameSequenceMenuShowing = false;
 	int selectGameSequenceMenuCursorPosition = 0;
 
@@ -408,7 +408,7 @@ public:
 	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
 	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty> getUserStatsForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);
 	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
-	void populateUserStatsForSpecificGameAndDifficultyMenu(shared_ptr<OKMenu >menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);
+	void populateUserStatsForSpecificGameAndDifficultyMenu(shared_ptr<OKMenu>menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);
 
 	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
 	shared_ptr<OKGameLeaderBoardAndHighScoreBoard> getLeaderboardOrHighScoreBoardForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
@@ -420,7 +420,7 @@ public:
 		bool blocksCleared);
 
 	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
-	string populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu >menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
+	string populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu>menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 		bool totalTimePlayed,
 		bool totalBlocksCleared,
 		bool planeswalkerPoints,
@@ -431,11 +431,11 @@ public:
 
 	ArrayList<GameTypeStringColorPairPair> getSortedGameTypes();
 	ArrayList<GameSequenceStringColorPairPair> getSortedGameSequences();
-	void populateGameTypesMenu(shared_ptr<OKMenu >m);
-	void populateGameSequencesMenu(shared_ptr<OKMenu >m);
+	void populateGameTypesMenu(shared_ptr<OKMenu>m);
+	void populateGameSequencesMenu(shared_ptr<OKMenu>m);
 	void selectSingleGameTypeMenuUpdate();
 	//void selectSingleGameTypeMenuRender();
-	shared_ptr<OKMenu >selectSingleGameTypeMenu = nullptr;
+	shared_ptr<OKMenu>selectSingleGameTypeMenu = nullptr;
 	bool selectSingleGameTypeMenuShowing = false;
 	int selectSingleGameTypeMenuCursorPosition = 0;
 
@@ -449,25 +449,25 @@ public:
 
 	void gameSequenceOptionsMenuUpdate();
 	void gameSequenceOptionsMenuRender();
-	shared_ptr<OKMenu >gameSequenceOptionsMenu = nullptr;
+	shared_ptr<OKMenu>gameSequenceOptionsMenu = nullptr;
 	bool gameSequenceOptionsMenuShowing = false;
 	int gameSequenceOptionsMenuCursorPosition = 0;
 
 	void gameObjectiveMenuUpdate();
 	//void gameObjectiveMenuRender();
-	shared_ptr<OKMenu >gameObjectiveMenu = nullptr;
+	shared_ptr<OKMenu>gameObjectiveMenu = nullptr;
 	bool gameObjectiveMenuShowing = false;
 	int gameObjectiveMenuCursorPosition = 0;
 
 	void sendGarbageToMenuUpdate();
 	//void sendGarbageToMenuRender();
-	shared_ptr<OKMenu >sendGarbageToMenu = nullptr;
+	shared_ptr<OKMenu>sendGarbageToMenu = nullptr;
 	bool sendGarbageToMenuShowing = false;
 	int sendGarbageToMenuCursorPosition = 0;
 
 	void multiplayerOptionsMenuUpdate();
 	void multiplayerOptionsMenuRender();
-	shared_ptr<OKMenu >multiplayerOptionsMenu = nullptr;
+	shared_ptr<OKMenu>multiplayerOptionsMenu = nullptr;
 	bool multiplayerOptionsMenuShowing = false;
 	int multiplayerOptionsMenuCursorPosition = 0;
 
@@ -478,7 +478,7 @@ public:
 	//bool multiplayer_DisableVSGarbage = false;
 	bool localMultiplayer = false;
 	bool networkMultiplayer = false;
-	//shared_ptr<GameSequence >multiplayer_SelectedGameSequence = nullptr;
+	//shared_ptr<GameSequence>multiplayer_SelectedGameSequence = nullptr;
 	//string multiplayer_SelectedDifficultyName = "Beginner";
 
 	void sendGameStatsToServer();
@@ -497,8 +497,8 @@ public:
 	
 
 
-	void playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p);
-	void playerGameSequenceMiniMenuRender(shared_ptr<PuzzlePlayer >p, float x, float y);
+	void playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer>p);
+	void playerGameSequenceMiniMenuRender(shared_ptr<PuzzlePlayer>p, float x, float y);
 
 
 
@@ -514,7 +514,7 @@ public:
 
 
 	void sendAllJoinedPeers(const string& s);
-	void sendPeer(shared_ptr<UDPPeerConnection >c, const string& s);
+	void sendPeer(shared_ptr<UDPPeerConnection>c, const string& s);
 	void sendAllPeers(const string& s);
 
 	static const string lobbyCommand_STARTGAME;
@@ -536,29 +536,29 @@ public:
 
 	//ArrayList<shared_ptr<PuzzlePlayer>>* bobsGameNetworkPlayers = make_shared<ArrayList><shared_ptr<PuzzlePlayer>>();
 
-	void tellAllPeersOneOfMyPlayersForfeitsGame(shared_ptr<PuzzlePlayer >p);
+	void tellAllPeersOneOfMyPlayersForfeitsGame(shared_ptr<PuzzlePlayer>p);
 	//void cancelNetworkGame();
 	void tellHostPeerIAmJoiningTheirGame();
 	void tellAllPeersIAmHosting();
 	void tellAllPeersIAmNotHosting();
-	void tellAllJoinedPeersThatANewPeerHasJoinedMyHostedGame(shared_ptr<UDPPeerConnection >c);
+	void tellAllJoinedPeersThatANewPeerHasJoinedMyHostedGame(shared_ptr<UDPPeerConnection>c);
 	void tellAllPeersIAmPlayingAGame();
 	void tellAllJoinedPeersIHaveCanceledMyHostedGame();
 	void tellAllJoinedPeersMyHostedGameHasStarted();
 	void tellAllJoinedPeersIHaveLeftTheGame();
-	void tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(shared_ptr<PuzzlePlayer >p);
-	void tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(shared_ptr<PuzzlePlayer >p);
+	void tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(shared_ptr<PuzzlePlayer>p);
+	void tellAllJoinedPeersOneOfMyPlayersHasJoinedTheLobby(shared_ptr<PuzzlePlayer>p);
 	void tellPeerThatOtherPeerHasJoined(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<UDPPeerConnection> joinedPeer);
 	void tellPeerThatIHaveJoined(shared_ptr<UDPPeerConnection> peerToTell);
-	void tellPeerThatPlayerHasJoined(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer >p);
-	void tellPeerThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer >p);
-	void tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<PuzzlePlayer >p);
+	void tellPeerThatPlayerHasJoined(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer>p);
+	void tellPeerThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<UDPPeerConnection> peerToTell, shared_ptr<PuzzlePlayer>p);
+	void tellAllPeersThatPlayerHasConfirmedAndSendGameSequence(shared_ptr<PuzzlePlayer>p);
 	void tellServerIAmHostingOrUpdateRoomStatus(const string& roomDescription);
 	void tellServerIHaveCanceledTheGame(const string& roomUUID);
 	void tellServerIHaveStartedTheGame(const string& roomUUID);
 	void tellServerTheGameHasEnded(const string& roomUUID, const string& results);
 	static void getUserIDAndRandomSeedAndUUIDFromPlayerIDString(string s, long long &userID, long long &randomSeed, string& uuid);
-	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection >c, string s) override;
+	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string s) override;
 
   
 	static ArrayList<shared_ptr<GameType>> loadedGameTypes;
@@ -571,10 +571,10 @@ public:
 	static ArrayList<string> getRoomConfigsList();
 	static shared_ptr<Room> loadRoomConfig(string configName);
 
-	static void saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence >gs);
-	static void saveGameSequenceToXML(shared_ptr<GameSequence >gs, bool downloaded);
-	static void saveGameTypeToXML(shared_ptr<GameType >gt, bool downloaded);
-	static void loadGameSequenceUUIDsToGamesArray(shared_ptr<GameSequence >g);
+	static void saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence>gs);
+	static void saveGameSequenceToXML(shared_ptr<GameSequence>gs, bool downloaded);
+	static void saveGameTypeToXML(shared_ptr<GameType>gt, bool downloaded);
+	static void loadGameSequenceUUIDsToGamesArray(shared_ptr<GameSequence>g);
 	static shared_ptr<GameType> getGameTypeByName(string name);
 	static shared_ptr<GameType> getGameTypeByUUID(string uuid);
 	static shared_ptr<GameSequence> getGameSequenceByName(string name);
@@ -610,11 +610,11 @@ public:
 	static shared_ptr<GameType> incomingGameTypesQueuePop_S()
 	{
 		lock_guard<mutex> lock(_incomingGameTypes_Mutex);
-		shared_ptr<GameType >g = _incomingGameTypes.front();
+		shared_ptr<GameType>g = _incomingGameTypes.front();
 		_incomingGameTypes.pop();
 		return g;
 	}
-	static void incomingGameTypesQueuePush_S(shared_ptr<GameType >p)
+	static void incomingGameTypesQueuePush_S(shared_ptr<GameType>p)
 	{
 		lock_guard<mutex> lock(_incomingGameTypes_Mutex);
 		_incomingGameTypes.push(p);
@@ -635,11 +635,11 @@ public:
 	static shared_ptr<GameSequence> incomingGameSequencesQueuePop_S()
 	{
 		lock_guard<mutex> lock(_incomingGameSequences_Mutex);
-		shared_ptr<GameSequence >g = _incomingGameSequences.front();
+		shared_ptr<GameSequence>g = _incomingGameSequences.front();
 		_incomingGameSequences.pop();
 		return g;
 	}
-	static void incomingGameSequencesQueuePush_S(shared_ptr<GameSequence >p)
+	static void incomingGameSequencesQueuePush_S(shared_ptr<GameSequence>p)
 	{
 		lock_guard<mutex> lock(_incomingGameSequences_Mutex);
 		_incomingGameSequences.push(p);

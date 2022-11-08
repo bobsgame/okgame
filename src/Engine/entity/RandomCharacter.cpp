@@ -374,7 +374,8 @@ void RandomCharacter::update()
 					uniqueTexture = GLUtils::getTextureFromData("random" + to_string(Math::randLessThan(500)), sprite->getImageWidth(), sprite->getImageHeight() * sprite->getNumFrames(), bb);
 
 					setByteBuffer_S(nullptr);
-					delete bb;
+					//delete bb;
+					bb = nullptr;
 				}
 			}
 		}
@@ -614,7 +615,7 @@ void RandomCharacter::update()
 								currentAreaTYPEIDTarget = "stayHere";
 							}
 
-							if ((dynamic_cast<shared_ptr<WarpArea>>(a) != nullptr) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
+							if ((dynamic_cast<WarpArea*>(a.get()) != nullptr) && (a->randomPointOfInterestOrExit() == true) && a->randomNPCStayHere() == false)
 							{
 								fadeOutAndDelete();
 							}

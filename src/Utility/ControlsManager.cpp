@@ -385,7 +385,7 @@ void ControlsManager::resetPressedButtons()
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController >g = gameControllers.get(i);
+		shared_ptr<GameController>g = gameControllers.get(i);
 		g->resetPressedButtons();
 	}
 
@@ -706,7 +706,7 @@ void ControlsManager::setButtonStates()
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController >g = gameControllers.get(i);
+		shared_ptr<GameController>g = gameControllers.get(i);
 		g->setButtonStates();
 	}
 
@@ -1067,7 +1067,7 @@ SDL_JoyHatEvent
 
 				for (int n = 0; n < gameControllers.size(); n++)
 				{
-					shared_ptr<GameController >g = gameControllers.get(n);
+					shared_ptr<GameController>g = gameControllers.get(n);
 					if (g->id == joystickID)
 					{
 						gameControllers.removeAt(n);
@@ -1117,7 +1117,7 @@ SDL_JoyHatEvent
 
 				for (int i = 0; i < gameControllers.size(); i++)
 				{
-					shared_ptr<GameController >g = gameControllers.get(i);
+					shared_ptr<GameController>g = gameControllers.get(i);
 					if (g->id == joystickID)
 					{
 						if(g->haptic!=nullptr)SDL_HapticClose(g->haptic);
@@ -1167,7 +1167,7 @@ SDL_JoyHatEvent
 		
 					for (int i = 0; i < gameControllers.size(); i++)
 					{
-						shared_ptr<GameController >g = gameControllers.get(i);
+						shared_ptr<GameController>g = gameControllers.get(i);
 						if(g->id == joystickID)
 						{
 							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = true;
@@ -1225,7 +1225,7 @@ SDL_JoyHatEvent
 #endif
 					for (int i = 0; i < gameControllers.size(); i++)
 					{
-						shared_ptr<GameController >g = gameControllers.get(i);
+						shared_ptr<GameController>g = gameControllers.get(i);
 						if (g->id == id)
 						{
 							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = false;
@@ -1286,7 +1286,7 @@ SDL_JoyHatEvent
 
 						for (int i = 0; i < gameControllers.size(); i++)
 						{
-							shared_ptr<GameController >g = gameControllers.get(i);
+							shared_ptr<GameController>g = gameControllers.get(i);
 							if (g->id == id)
 							{
 								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= dz)g->L_HELD = true;
@@ -1309,7 +1309,7 @@ SDL_JoyHatEvent
 							//none of this works, have to check axis manually:
 							for (int i = 0; i < gameControllers.size(); i++)
 							{
-								shared_ptr<GameController >g = gameControllers.get(i);
+								shared_ptr<GameController>g = gameControllers.get(i);
 								if (g->id == id)
 								{
 									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)g->ANALOGLEFT_HELD = true;
@@ -1405,7 +1405,7 @@ SDL_JoyHatEvent
 
 						for (int i = 0; i < gameControllers.size(); i++)
 						{
-							shared_ptr<GameController >g = gameControllers.get(i);
+							shared_ptr<GameController>g = gameControllers.get(i);
 							if (g->id == id)
 							{
 								//						if (leftTrigger&&value >= 32768)g->L_HELD = true;
@@ -1428,7 +1428,7 @@ SDL_JoyHatEvent
 						{
 							for (int i = 0; i < gameControllers.size(); i++)
 							{
-								shared_ptr<GameController >g = gameControllers.get(i);
+								shared_ptr<GameController>g = gameControllers.get(i);
 								if (g->id == id)
 								{
 									//none of this works, have to check axis manually:
@@ -1844,7 +1844,7 @@ SDL_JoyHatEvent
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController >g = gameControllers.get(i);
+		shared_ptr<GameController>g = gameControllers.get(i);
 		g->setPressedButtons();
 	}
 
@@ -1872,7 +1872,7 @@ SDL_JoyHatEvent
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController >g = gameControllers.get(i);
+		shared_ptr<GameController>g = gameControllers.get(i);
 		if (g->UP_HELD == true)BGCLIENT_UP_HELD = true;
 		if (g->DOWN_HELD == true)BGCLIENT_DOWN_HELD = true;
 		if (g->LEFT_HELD == true)BGCLIENT_LEFT_HELD = true;
@@ -1910,7 +1910,7 @@ SDL_JoyHatEvent
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController >g = gameControllers.get(i);
+		shared_ptr<GameController>g = gameControllers.get(i);
 		if (g->UP_HELD == true)MINIGAME_UP_HELD = true;
 		if (g->DOWN_HELD == true)MINIGAME_DOWN_HELD = true;
 		if (g->LEFT_HELD == true)MINIGAME_LEFT_HELD = true;
@@ -1980,7 +1980,7 @@ SDL_JoyHatEvent
 
 
 //=========================================================================================================================
-void ControlsManager::doHaptic(shared_ptr<GameController >g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
+void ControlsManager::doHaptic(shared_ptr<GameController>g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
 {//=========================================================================================================================
 
 	log->debug("doHaptic");

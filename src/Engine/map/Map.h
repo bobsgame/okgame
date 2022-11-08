@@ -29,8 +29,8 @@ public:
 	bool randomSpawnEnabled = true;
 
 
-	ArrayList<shared_ptr<MapState>> stateList;
-	ArrayList<shared_ptr<Event>> mapEventList;
+	vector<shared_ptr<MapState>> stateList;
+	vector<shared_ptr<Event>> mapEventList;
 	//ArrayList<int> mapEventIDList;
 
 
@@ -42,19 +42,19 @@ public:
 
 
 	//this is a ArrayList of ArrayLists of sorted lights per layer. this is filled in on map first load.
-	ArrayList<ArrayList<shared_ptr<Light>>> sortedLightsLayers;
+	vector<ArrayList<shared_ptr<Light>>> sortedLightsLayers;
 
 
 	//these are entities that exist in this map
-	ArrayList<shared_ptr<Entity>> activeEntityList;
+	vector<shared_ptr<Entity>> activeEntityList;
 	//this gets filled in once per frame with entities from entityList that are on the screen
-	ArrayList<shared_ptr<Entity>> drawList;
+	vector<shared_ptr<Entity>> drawList;
 	//that gets sorted into zList which is drawn in sequence.
-	ArrayList<shared_ptr<Entity>> zList;
+	vector<shared_ptr<Entity>> zList;
 
 	//door/warp list
-	ArrayList<shared_ptr<Door>> doorList;
-	ArrayList<shared_ptr<WarpArea>> warpAreaList;
+	vector<shared_ptr<Door>> doorList;
+	vector<shared_ptr<WarpArea>> warpAreaList;
 
 
 	shared_ptr<IntArray> hitLayer = nullptr;

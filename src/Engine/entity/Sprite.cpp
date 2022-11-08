@@ -197,7 +197,7 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 
 	if (getIsItem() || getIsGame())
 	{
-		make_shared<Item>(getEngine(), this);
+		make_shared<Item>(getEngine(), shared_from_this());
 	}
 
 	if (getEventData() != nullptr)this->event = make_shared<Event>(e, getEventData(), this);
@@ -416,7 +416,7 @@ void Sprite::draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1
 		//Camera camera = OKGame::camera;
 		//camera.update();
 
-		shared_ptr<SpriteBatch >spriteBatch = OKGame::spriteBatch;
+		shared_ptr<SpriteBatch>spriteBatch = OKGame::spriteBatch;
 
 		//spriteBatch.setProjectionMatrix(camera.combined);
 		//spriteBatch->begin();

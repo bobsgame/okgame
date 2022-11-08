@@ -8,7 +8,7 @@
 class Logger;
 
 
-class ScreenSprite : public Entity
+class ScreenSprite : public Entity, public std::enable_shared_from_this<ScreenSprite>
 {
 public:
 

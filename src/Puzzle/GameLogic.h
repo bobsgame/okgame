@@ -169,7 +169,7 @@ public:
 	//static OKColor noColor;
 	//static ArrayList<OKColor> emptyColors;
 
-	shared_ptr<GameSequence >currentGameSequence = nullptr;
+	shared_ptr<GameSequence>currentGameSequence = nullptr;
 	shared_ptr<PuzzlePlayer> player = nullptr;
 
 public:
@@ -384,7 +384,7 @@ private:
 	void initGame();
 
 public:
-	//void setGridXY(shared_ptr<PuzzlePlayer >p, int gameIndex, int numGames);
+	//void setGridXY(shared_ptr<PuzzlePlayer>p, int gameIndex, int numGames);
 
 private:
 	void flashScreen();
@@ -584,7 +584,7 @@ public:
 	shared_ptr<Caption> loseCaption = nullptr;
 	shared_ptr<Caption> garbageWaitCaption = nullptr;
 
-	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >myHighScore = nullptr;
+	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>myHighScore = nullptr;
 	shared_ptr<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry>currentLeaderboardEntry = nullptr;
 	bool triedToGetHighScore = false;
 	shared_ptr<Caption> scoreBarTypeCaption = nullptr;
@@ -713,7 +713,7 @@ public:
 	ArrayListString _gotPacketsLog;
 	bool packetProcessThreadStarted = false;
 	thread packetProcessThread;
-	static void _packetProcessThreadLoop(shared_ptr<GameLogic >g);
+	static void _packetProcessThreadLoop(shared_ptr<GameLogic>g);
 	void _processIncomingPackets();
 private:
 		bool _stopThread = false;

@@ -108,7 +108,7 @@ private:
 	bool threadStarted = false;
 	thread t;
 public:
-	static void updateThreadLoop(shared_ptr<UDPPeerConnection >u);
+	static void updateThreadLoop(shared_ptr<UDPPeerConnection>u);
 	//------------------------------------
 private:
 	static shared_ptr<Logger> _threadLog;
@@ -505,7 +505,7 @@ private:
 		long long timeGotACK = 0;
 	};
 	typedef HashMap<long long, long long> HashMapLongLongLongLong;
-	shared_ptr<HashMapLongLongLongLong >_frameSentTimes = make_shared<HashMapLongLongLongLong>();
+	shared_ptr<HashMapLongLongLongLong>_frameSentTimes = make_shared<HashMapLongLongLongLong>();
 	ArrayList<long long> _frameRoundaboutTicks;// = make_shared<ArrayList><long long>();
 	//------------------------------------
 	//thread only functions
@@ -535,13 +535,13 @@ public:
 	//bool bobsGameHosting = false;
 	//bool bobsGamePlaying = false;
 	//string hostedRoomUUID = "";
-	//shared_ptr<Caption >caption = nullptr;
+	//shared_ptr<Caption>caption = nullptr;
 	//bool multiplayer_AllowDifferentDifficulties = true;
 	//bool multiplayer_AllowDifferentGameSequences = true;
 	//bool multiplayer_GameEndsWhenOnePlayerRemains = true;
 	//bool multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
 	//bool multiplayer_DisableVSGarbage = false;
-	//shared_ptr<GameSequence >multiplayer_SelectedGameSequence = nullptr;
+	//shared_ptr<GameSequence>multiplayer_SelectedGameSequence = nullptr;
 	//string multiplayer_SelectedDifficultyName = "Beginner";
 
 	//engine parts to forward udp messages to, they also get forwarded to engines which dispatch them

@@ -17,7 +17,7 @@ int EventCommand::TYPE_COMMAND = 0;
 int EventCommand::TYPE_QUALIFIER_TRUE = 1;
 int EventCommand::TYPE_QUALIFIER_FALSE = 2;
 
-EventCommand::EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>> &parameterList, int type)
+EventCommand::EventCommand(shared_ptr<Engine> g, const string& command, vector<shared_ptr<EventParameter>> &parameterList, int type)
 { //===============================================================================================
 
 	this->e = g;
@@ -32,7 +32,7 @@ EventCommand::EventCommand(shared_ptr<Engine> g, const string& command, ArrayLis
 
 int EventCommand::getNumParams()
 { //===============================================================================================
-	if (parameterList.isEmpty())
+	if (parameterList.empty())
 	{
 		return 0;
 	}
@@ -141,7 +141,7 @@ shared_ptr<EventCommand> EventCommand::getParent()
 void EventCommand::addChild(shared_ptr<EventCommand> e)
 { //=========================================================================================================================
 
-	children.add(e);
+	children.push_back(e);
 	e->parent = shared_from_this();
 }
 
@@ -161,7 +161,7 @@ shared_ptr<EventCommand> EventCommand::getNextChild()
 
 	if (currentChildIndex < children.size())
 	{
-		shared_ptr<EventCommand> e = children.get(currentChildIndex);
+		shared_ptr<EventCommand> e = children.at(currentChildIndex);
 		currentChildIndex++;
 
 		return e;

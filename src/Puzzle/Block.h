@@ -64,7 +64,7 @@ public:
 private:
 	ArrayList<OKColor> importExport_colors;	
 public:
-	shared_ptr<OKColor >specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
+	shared_ptr<OKColor>specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
 private:
 	OKColor importExport_specialColor;
 public:
@@ -137,7 +137,7 @@ public:
 		uuid = to_string(generator());
 	}
 	//=========================================================================================================================
-	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<OKColor>> *colorsArray, shared_ptr<OKColor >specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
+	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<OKColor>> *colorsArray, shared_ptr<OKColor>specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
 	{//=========================================================================================================================
 		this->name = name;
 		this->spriteName = spriteName;
@@ -236,7 +236,7 @@ public:
 		toType_UUID = toUUID;
 	}
 
-	string getName(shared_ptr<GameType >g) { return g->getBlockTypeByUUID(fromType_UUID)->name + "->" + g->getBlockTypeByUUID(toType_UUID)->name; }
+	string getName(shared_ptr<GameType>g) { return g->getBlockTypeByUUID(fromType_UUID)->name + "->" + g->getBlockTypeByUUID(toType_UUID)->name; }
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -294,7 +294,7 @@ public:
 	shared_ptr<BlockType> blockType = nullptr;
 
 private:
-	shared_ptr<OKColor >color = nullptr;
+	shared_ptr<OKColor>color = nullptr;
 
 public:
 	float effectAlphaFrom = 0.5f;
@@ -455,7 +455,7 @@ public:
 	void renderDisappearing();
 	void render(float screenX, float screenY, float a, float scale, bool interpolate, bool ghost);
 	void renderOutlines(float screenX, float screenY, float s);
-	void setColor(shared_ptr<OKColor >color);
+	void setColor(shared_ptr<OKColor>color);
 	void setRandomBlockTypeColor();
 //	Color getRandomMatrixColor();
 //	Color getRandomRainbowColor();
@@ -467,7 +467,7 @@ public:
 	shared_ptr<GameType> getSettings();
 	shared_ptr<GameLogic> getGameLogic();
 	shared_ptr<OKGame> getOKGame();
-	shared_ptr<OKColor >getColor();
-	shared_ptr<OKColor >specialColor();
+	shared_ptr<OKColor>getColor();
+	shared_ptr<OKColor>specialColor();
 };
 

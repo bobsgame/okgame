@@ -170,7 +170,7 @@ using Poco::Process;
 using Poco::Path;
 
 
-//shared_ptr<FileUtils >Main::cacheManager = make_shared<FileUtils>();
+//shared_ptr<FileUtils>Main::cacheManager = make_shared<FileUtils>();
 //bool Main::isApplet = false;
 
 string Main::serverAddressString = OKNet::releaseServerAddress;
@@ -558,7 +558,7 @@ void Main::mainInit()
 //	log.debug(u);
 //#endif
 
-//	shared_ptr<GameType >s = make_shared<GameType>();
+//	shared_ptr<GameType>s = make_shared<GameType>();
 //	s->tetsosumi();
 //	string zip = s->toBase64GZippedXML();
 //	string xml = FileUtils::unzipBase64StringToString(zip);
@@ -645,7 +645,7 @@ void Main::loadGlobalSettingsFromXML()
 			log.error("Could not unserialize GlobalSettings");
 		}
 
-		shared_ptr<GlobalSettings >s = make_shared<GlobalSettings>();
+		shared_ptr<GlobalSettings>s = make_shared<GlobalSettings>();
 		*s = gs;
 		globalSettings = s;
 
@@ -1256,7 +1256,7 @@ void Main::processEvents()
 }
 
 
-shared_ptr<ControlsManager > Main::getControlsManager()
+shared_ptr<ControlsManager> Main::getControlsManager()
 {
 	return stateManager->getCurrentState()->getControlsManager();
 }
@@ -1308,7 +1308,7 @@ void Main::doLegalScreen()
   //
   //					log.info("Legal Screen...");
   //
-  //					shared_ptr<LegalScreen >legalScreen = make_shared<LegalScreen>();
+  //					shared_ptr<LegalScreen>legalScreen = make_shared<LegalScreen>();
   //					GUI *legalScreenGUI = new GUI(legalScreen, GLUtils::TWLrenderer);
   //					legalScreenGUI->applyTheme(GLUtils::TWLthemeManager);
   //
@@ -1356,7 +1356,7 @@ void Main::showControlsImage()
   //
   //				{
   //				//if(OKNet.debugMode==false)
-  //					shared_ptr<KeyboardScreen >keyboardScreen = make_shared<KeyboardScreen>();
+  //					shared_ptr<KeyboardScreen>keyboardScreen = make_shared<KeyboardScreen>();
   //					GUI *keyboardScreenGUI = new GUI(keyboardScreen, GLUtils::TWLrenderer);
   //					keyboardScreenGUI->applyTheme(GLUtils::TWLthemeManager);
   //

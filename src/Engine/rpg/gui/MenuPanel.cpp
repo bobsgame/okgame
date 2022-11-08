@@ -18,7 +18,7 @@ MenuPanel::MenuPanel()
 
 }
 
-MenuPanel::MenuPanel(shared_ptr<Engine >e)
+MenuPanel::MenuPanel(shared_ptr<Engine>e)
 { //=========================================================================================================================
 
 	this->e = e;

@@ -104,18 +104,18 @@ void FriendManager::init()
 void FriendManager::cleanup()
 { //===============================================================================================
 
-	for (int i = 0; i < friendCharacters->size(); i++)
+	for (int i = 0; i < friendCharacters.size(); i++)
 	{
-		friendCharacters->get(i)->cleanup();
+		friendCharacters.get(i)->cleanup();
 	}
 }
 
 void FriendManager::update()
 { //===============================================================================================
 
-	for (int i = 0; i < friendCharacters->size(); i++)
+	for (int i = 0; i < friendCharacters.size(); i++)
 	{
-		friendCharacters->get(i)->update();
+		friendCharacters.get(i)->update();
 	}
 
 }

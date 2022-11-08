@@ -92,7 +92,7 @@ SpriteData::SpriteData
 
 void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X)
 { //=========================================================================================================================
-	animationList.add(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
+	animationList.push_back(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
 }
 
 //shared_ptr<SpriteData> SpriteData::fromBase64ZippedJSON(const string& b64)
@@ -352,8 +352,8 @@ string& SpriteData::initFromString(string& t)
 		hitBoxFromBottomPixels1X = stoi(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 
-		shared_ptr<SpriteAnimationSequence >s = make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
-		animationList.add(s);
+		shared_ptr<SpriteAnimationSequence>s = make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
+		animationList.push_back(s);
 	}
 
 
@@ -537,7 +537,7 @@ string& SpriteData::getPaletteMD5()
 	return paletteMD5;
 }
 
-ArrayList<SpriteAnimationSequence>* SpriteData::getAnimationList()
+vector<shared_ptr<SpriteAnimationSequence>>* SpriteData::getAnimationList()
 {
 	return &animationList;
 }

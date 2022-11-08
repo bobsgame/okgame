@@ -264,7 +264,7 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (OKString::startsWith(t,"}") == false)
 	{
-		shared_ptr<MapStateData >data = make_shared<MapStateData>();
+		shared_ptr<MapStateData>data = make_shared<MapStateData>();
 		t = data->initFromString(t);
 		stateDataList->add(data);
 	}
@@ -275,7 +275,7 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (OKString::startsWith(t, "}") == false)
 	{
-		shared_ptr<EventData >data = make_shared<EventData>();
+		shared_ptr<EventData>data = make_shared<EventData>();
 		t = data->initFromString(t);
 		eventDataList->add(data);
 	}
@@ -286,7 +286,7 @@ string& MapData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (OKString::startsWith(t,"}") == false)
 	{
-		shared_ptr<DoorData >data = make_shared<DoorData>();
+		shared_ptr<DoorData>data = make_shared<DoorData>();
 		t = data->initFromString(t);
 		doorDataList->add(data);
 	}

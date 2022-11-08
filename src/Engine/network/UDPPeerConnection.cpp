@@ -94,7 +94,7 @@ void UDPPeerConnection::update()
 
 }
 
-void UDPPeerConnection::updateThreadLoop(shared_ptr<UDPPeerConnection >u)
+void UDPPeerConnection::updateThreadLoop(shared_ptr<UDPPeerConnection>u)
 {//===============================================================================================
 
 	//threadLogDebug_S("Starting peer thread");
@@ -239,7 +239,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 
 				while (numPacketsReceived > 0)
 				{
-					shared_ptr<UDPpacket >packet = SDLNet_AllocPacket(65535);
+					shared_ptr<UDPpacket>packet = SDLNet_AllocPacket(65535);
 					numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet);
 
 					if (numPacketsReceived > 0)
@@ -337,7 +337,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 
 							if (sentPacketQueueSize_S() > 0)
 							{
-								shared_ptr<UDPpacket >q = sentPacketQueueFront_S();
+								shared_ptr<UDPpacket>q = sentPacketQueueFront_S();
 								string queuedIDString = string((char*)q->data);
 								queuedIDString = queuedIDString.substr(0, queuedIDString.find(":"));
 								long long queuedID = -1;
@@ -478,7 +478,7 @@ shared_ptr<UDPpacket> UDPPeerConnection::makePacket(string s)
 		return nullptr;
 	}
 
-	shared_ptr<UDPpacket > packet = SDLNet_AllocPacket((int)s.length());
+	shared_ptr<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)
@@ -584,7 +584,7 @@ void UDPPeerConnection::_writeQueuedPackets()
 
 		string s = packetMessageQueueFront_S();
 
-		shared_ptr<UDPpacket >packet = makePacket(s);
+		shared_ptr<UDPpacket>packet = makePacket(s);
 		if (packet == nullptr)
 		{
 			_writePacketWait += 2000;
@@ -869,7 +869,7 @@ void UDPPeerConnection::writeUnreliable_S(string s)
 		return;
 	}
 
-	shared_ptr<UDPpacket > packet = SDLNet_AllocPacket((int)s.length());
+	shared_ptr<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)

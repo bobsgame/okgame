@@ -172,7 +172,7 @@ OKNet::~OKNet()
 
 	for(int i=0;i<udpConnections.size();i++)
 	{
-		shared_ptr<UDPPeerConnection >c = udpConnections.get(i);
+		shared_ptr<UDPPeerConnection>c = udpConnections.get(i);
 		delete c;
 	}
 	udpConnections.clear();
@@ -236,7 +236,7 @@ void OKNet::update()
 
 	for (int i = 0; i < udpConnections.size(); i++)
 	{
-		shared_ptr<UDPPeerConnection >p = udpConnections.get(i);
+		shared_ptr<UDPPeerConnection>p = udpConnections.get(i);
 		p->update();
 	}
 }
@@ -333,7 +333,7 @@ bool OKNet::_checkForIncomingSTUNTraffic()
 
 		if (rd > 0)
 		{
-			shared_ptr<UDPpacket >packet = SDLNet_AllocPacket(10000);
+			shared_ptr<UDPpacket>packet = SDLNet_AllocPacket(10000);
 			numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet);
 
 			if (numPacketsReceived > 0)
@@ -459,7 +459,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 		bool found = false;
 		for(int i=0;i<udpConnections.size();i++)
 		{
-			shared_ptr<UDPPeerConnection >c = udpConnections.get(i);
+			shared_ptr<UDPPeerConnection>c = udpConnections.get(i);
 			if(c->peerUserID==replyFriendUserID)
 			{
 				c->setPeerIPAddress_S(friendIPString, friendPort);
@@ -493,7 +493,7 @@ void OKNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myPo
 
 	int sent = 0;
 
-	//shared_ptr<UDPpacket > packet = SDLNet_AllocPacket(s.length());
+	//shared_ptr<UDPpacket> packet = SDLNet_AllocPacket(s.length());
 	UDPpacket packet;
 	packet.channel = -1;
 	packet.address = *getStunServerIPAddress_S();

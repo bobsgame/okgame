@@ -14,7 +14,7 @@ class PuzzlePlayer : public std::enable_shared_from_this<PuzzlePlayer>
 {//=========================================================================================================================
 public:
 	//=========================================================================================================================
-	PuzzlePlayer(shared_ptr<GameLogic >g)
+	PuzzlePlayer(shared_ptr<GameLogic>g)
 	{//=========================================================================================================================
 		this->gameLogic = g;
 		if (g != nullptr)g->player = shared_from_this();
@@ -44,7 +44,7 @@ public:
 	string getID()
 	{//=========================================================================================================================
 		if (peerConnection != nullptr)return to_string(peerConnection->peerUserID) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
-		else return to_string((gameLogic.get()->getEngine()).get()->getUserID_S()) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
+		else return to_string((gameLogic)->getEngine()->getUserID_S()) + "." + to_string(gameLogic->randomSeed) + "." + gameLogic->uuid;
 	}
 	//=========================================================================================================================
 	bool isNetworkPlayer()
@@ -55,7 +55,7 @@ public:
 
 	shared_ptr<GameLogic> gameLogic = nullptr;
 	bool confirmed = false;
-	shared_ptr<OKMenu >menu = nullptr;
+	shared_ptr<OKMenu>menu = nullptr;
 	bool selectGameSequenceOrSingleGameTypeMiniMenuShowing = true;
 	bool selectGameSequenceMiniMenuShowing = false;
 	bool gameSequenceOptionsMiniMenuShowing = false;
@@ -85,10 +85,10 @@ public:
 	
 
 	bool useKeyboard = false;
-	shared_ptr<GameController >gameController = nullptr;
+	shared_ptr<GameController>gameController = nullptr;
 
-	//shared_ptr<OKGameNetwork >network = nullptr;
-	shared_ptr<UDPPeerConnection >peerConnection = nullptr;
+	//shared_ptr<OKGameNetwork>network = nullptr;
+	shared_ptr<UDPPeerConnection>peerConnection = nullptr;
 	shared_ptr<Caption> nameCaption = nullptr;
 	shared_ptr<Caption> gameCaption = nullptr;
 	shared_ptr<Caption> difficultyCaption = nullptr;
@@ -96,10 +96,10 @@ public:
 
 
 
-	shared_ptr<OKColor >gridBorderColor = make_shared<OKColor>(255, 255, 255);//TODO: move these to user settings!
-	shared_ptr<OKColor >gridCheckeredBackgroundColor1 = OKColor::black;
-	shared_ptr<OKColor >gridCheckeredBackgroundColor2 = make_shared<OKColor>(8, 8, 8);
-	shared_ptr<OKColor >screenBackgroundColor = OKColor::black;
+	shared_ptr<OKColor>gridBorderColor = make_shared<OKColor>(255, 255, 255);//TODO: move these to user settings!
+	shared_ptr<OKColor>gridCheckeredBackgroundColor1 = OKColor::black;
+	shared_ptr<OKColor>gridCheckeredBackgroundColor2 = make_shared<OKColor>(8, 8, 8);
+	shared_ptr<OKColor>screenBackgroundColor = OKColor::black;
 	bool gridRule_showWarningForFieldThreeQuartersFilled = true;//TODO: move these to user settings!
 
 

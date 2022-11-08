@@ -12,7 +12,7 @@ class Logger;
 
 class SkillData;
 
-class Skill : public ServerObject
+class Skill : public ServerObject, public std::enable_shared_from_this<Skill>
 {
 private:
 	long long timeSet = -1;

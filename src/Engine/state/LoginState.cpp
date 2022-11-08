@@ -53,7 +53,7 @@ void LoginState::cleanup()
 Logger LoginMenuPanel::log = Logger("LoginScreen");
 
 
-LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine >e)
+LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 { //=========================================================================================================================
 
 

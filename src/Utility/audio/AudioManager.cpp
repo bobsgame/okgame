@@ -171,7 +171,7 @@ void AudioManager::initAudioLibrary()
 	//
 	//			if (s.length() > 0)
 	//			{
-	//				//shared_ptr<Sound >sound =
+	//				//shared_ptr<Sound>sound =
 	//				make_shared<Sound>(this, "data/sounds/" + s);
 	//				//sound.byteData = dataFile.readBytes();
 	//			}
@@ -216,7 +216,7 @@ void AudioManager::cleanup()
 //
 //	if (s == nullptr)
 //	{
-//		HashMap<string, shared_ptr<Sound >>::const_iterator got = soundByNameHashMap->find(fileName);
+//		HashMap<string, shared_ptr<Sound>>::const_iterator got = soundByNameHashMap->find(fileName);
 //		if (got != soundByNameHashMap->end())
 //			s = soundByNameHashMap->get(fileName);
 //	}
@@ -291,7 +291,7 @@ shared_ptr<Sound> AudioManager::getSoundByName(const string& musicName)
 
 		if (OKString::startsWith(name, clippedName))
 		{
-			shared_ptr<Sound > s = make_shared<Sound>(getEngine(), globalAudioFileList.get(i));
+			shared_ptr<Sound> s = make_shared<Sound>(getEngine(), globalAudioFileList.get(i));
 			playingAudioList.add(s);
 			return s;
 		}
@@ -538,7 +538,7 @@ void AudioManager::stopAllLoopingSounds()
 { //=========================================================================================================================
 	for (int i = 0; i < playingAudioList.size(); i++)
 	{
-		shared_ptr<Sound >m = playingAudioList.get(i);
+		shared_ptr<Sound>m = playingAudioList.get(i);
 		if(m->getLoop())m->stop();
 	}
 	

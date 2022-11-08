@@ -356,8 +356,8 @@ void OKGame::updateTitleMenuLogoTexture()
 
 	//titleScreenTexture = GLUtils::getTextureFromPNG("data/guiBackground/logo/"+numString+".png");
 
-	if(titleMenuTextures==nullptr)titleMenuTextures = make_shared<ArrayList><shared_ptr<OKTexture>>();// [numTileScreenTextureFrames];
-	if(titleMenuTextures->size()==0)
+	//if(titleMenuTextures==nullptr)titleMenuTextures = make_shared<ArrayList><shared_ptr<OKTexture>>();// [numTileScreenTextureFrames];
+	if(titleMenuTextures.size()==0)
 	{
 		for (int i = 0; i<numTitleMenuTextureFrames; i++)
 		{
@@ -365,7 +365,7 @@ void OKGame::updateTitleMenuLogoTexture()
 			int len = (int)numString.length();
 			for (int n = 0; n<2 - len; n++)numString = "0" + numString;//pad to 2 zeros
 
-			titleMenuTextures->add(GLUtils::getTextureFromPNGExePath("data/guiBackground/logo/" + numString + ".png"));
+			titleMenuTextures.add(GLUtils::getTextureFromPNGExePath("data/guiBackground/logo/" + numString + ".png"));
 		}
 	}
 }
@@ -459,7 +459,7 @@ void OKGame::titleMenuUpdate()
 		if (titleMenu != nullptr)
 		{
 			titleMenuCursorPosition = titleMenu->cursorPosition;
-			delete titleMenu;
+			//delete titleMenu;
 			titleMenu = nullptr;
 		}
 	}
@@ -470,9 +470,12 @@ void OKGame::titleMenuRender()
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 
-	shared_ptr<OKTexture >t = nullptr;
+	shared_ptr<OKTexture>t = nullptr;
 
-	if (titleMenuTextures != nullptr && titleMenuTextures->size()>0)t = titleMenuTextures->get(currentTitleMenuTextureFrame);
+	if (
+		//titleMenuTextures != nullptr && 
+		titleMenuTextures.size()>0)t = titleMenuTextures.get(currentTitleMenuTextureFrame);
+
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
 	if (titleMenu == nullptr)return;
@@ -706,27 +709,27 @@ void OKGame::startScreenMenuUpdate()
 			if(startScreenMenu!=nullptr)
 			{
 				startScreenMenuCursorPosition = startScreenMenu->cursorPosition;
-				delete startScreenMenu;
+				//delete startScreenMenu;
 				startScreenMenu = nullptr;
 			}
 			if (infoMenu != nullptr)
 			{
-				delete infoMenu;
+				//delete infoMenu;
 				infoMenu = nullptr;
 			}
 			if (patreonMenu != nullptr)
 			{
-				delete patreonMenu;
+				//delete patreonMenu;
 				patreonMenu = nullptr;
 			}
 			if (forumMenu != nullptr)
 			{
-				delete forumMenu;
+				//delete forumMenu;
 				forumMenu = nullptr;
 			}
 			if (activityMenu != nullptr)
 			{
-				delete activityMenu;
+				//delete activityMenu;
 				activityMenu = nullptr;				
 			}
 		}
@@ -738,9 +741,11 @@ void OKGame::startScreenMenuRender()
 
 	GLUtils::drawFilledRect(255,255,255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 
-	shared_ptr<OKTexture >t = nullptr;
+	shared_ptr<OKTexture>t = nullptr;
 
-	if (titleMenuTextures != nullptr && titleMenuTextures->size()>0)t = titleMenuTextures->get(currentTitleMenuTextureFrame);
+	if (
+		//titleMenuTextures != nullptr && 
+		titleMenuTextures.size()>0)t = titleMenuTextures.get(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
 	if (startScreenMenu == nullptr)return;
@@ -766,7 +771,7 @@ void OKGame::startScreenMenuRender()
 
 //	if(patreonMenu!=nullptr)
 //	{
-//		shared_ptr<Caption >c = infoMenu->getMenuItemByID("Build Number")->caption;
+//		shared_ptr<Caption>c = infoMenu->getMenuItemByID("Build Number")->caption;
 //		int x = c->screenX + c->getWidth();
 //		int y = c->screenY;
 //		patreonMenu->render(y, x);
@@ -774,7 +779,7 @@ void OKGame::startScreenMenuRender()
 //
 	if(forumMenu!=nullptr)
 	{
-		shared_ptr<Caption >c = infoMenu->getMenuItemByID("Open Forum")->caption;
+		shared_ptr<Caption>c = infoMenu->getMenuItemByID("Open Forum")->caption;
 		int x = x = c->screenX + c->getWidth();
 		int y = y = c->screenY;
 		forumMenu->render(y, x);
@@ -813,9 +818,11 @@ void OKGame::gettingGamesFromServerMenuRender()
 
 	GLUtils::drawFilledRect(255,255,255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 
-	shared_ptr<OKTexture >t = nullptr;
+	shared_ptr<OKTexture>t = nullptr;
 
-	if (titleMenuTextures != nullptr && titleMenuTextures->size()>0)t = titleMenuTextures->get(currentTitleMenuTextureFrame);
+	if (
+		//titleMenuTextures != nullptr && 
+		titleMenuTextures.size()>0)t = titleMenuTextures.get(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
 	if (gettingGamesFromServerMenu == nullptr)return;
@@ -933,7 +940,7 @@ void OKGame::pauseMenuUpdate()
 		if (pauseMenu != nullptr)
 		{
 			pauseMenuCursorPosition = pauseMenu->cursorPosition;
-			delete pauseMenu;
+			//delete pauseMenu;
 			pauseMenu = nullptr;
 		}
 	}
@@ -1018,11 +1025,11 @@ void OKGame::controllerMenuUpdate()
 		controllerMenu->getMenuItemByID("Testing Caption")->setColor(OKColor::lightGreen);
 		controllerMenu->getMenuItemByID("Testing Caption")->setText("Testing buttons... Press Esc key or hold Start and Select on controller to stop");
 
-		OKMenu::MenuItem *m = controllerMenu->getMenuItemByID("Button Press Caption");
+		shared_ptr<OKMenu::MenuItem> m = controllerMenu->getMenuItemByID("Button Press Caption");
 
 		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
 		{
-			shared_ptr<GameController >g = getControlsManager()->gameControllers.get(i);
+			shared_ptr<GameController>g = getControlsManager()->gameControllers.get(i);
 
 			m->setColor(OKColor::lightRed);
 
@@ -1107,7 +1114,7 @@ void OKGame::controllerMenuUpdate()
 			if (controllerMenu != nullptr)
 			{
 				controllerMenuCursorPosition = controllerMenu->cursorPosition;
-				delete controllerMenu;
+				//delete controllerMenu;
 				controllerMenu = nullptr;
 			}
 		}
@@ -1135,13 +1142,13 @@ void OKGame::controllerMenuRender()
 
 
 //=========================================================================================================================
-void OKGame::playerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p)
+void OKGame::playerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	m->add("Player Hue Shift: " + to_string((int)(p->hue * 100)) + "%", "Player Hue Shift");
 }
 //=========================================================================================================================
-void OKGame::playerSettingsMenuLeft(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p)
+void OKGame::playerSettingsMenuLeft(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	if (m->isSelectedID("Player Hue Shift"))
@@ -1162,7 +1169,7 @@ void OKGame::playerSettingsMenuLeft(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlaye
 }
 
 //=========================================================================================================================
-void OKGame::playerSettingsMenuRight(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p)
+void OKGame::playerSettingsMenuRight(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	if (m->isSelectedID("Player Hue Shift"))
@@ -1182,7 +1189,7 @@ void OKGame::playerSettingsMenuRight(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlay
 
 }
 //=========================================================================================================================
-void OKGame::playerControllerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p)
+void OKGame::playerControllerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	m->add("Slam With Up: " + string(p->slamWithUp ? "On" : "Off"), "Slam With Up");
@@ -1193,7 +1200,7 @@ void OKGame::playerControllerSettingsMenuInit(shared_ptr<OKMenu> m, shared_ptr<P
 }
 
 //=========================================================================================================================
-void OKGame::playerControllerSettingsMenuToggle(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer >p)
+void OKGame::playerControllerSettingsMenuToggle(shared_ptr<OKMenu> m, shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	if (m->isSelectedID("Slam With Up"))
@@ -1257,7 +1264,7 @@ void OKGame::playerControllerSettingsMenuToggle(shared_ptr<OKMenu> m, shared_ptr
 }
 
 //=========================================================================================================================
-void OKGame::playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
+void OKGame::playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	if (p != nullptr)
@@ -1351,7 +1358,7 @@ void OKGame::playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 					bool allLocalPlayersDead = true;
 					for (int i = 0; i < players.size(); i++)
 					{
-						shared_ptr<PuzzlePlayer >o = players.get(i);
+						shared_ptr<PuzzlePlayer>o = players.get(i);
 						if (o->isNetworkPlayer() == false && o->gameLogic->died==false)allLocalPlayersDead = false;
 					}
 
@@ -1369,7 +1376,7 @@ void OKGame::playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 							tellAllJoinedPeersIHaveLeftTheGame();
 
 							OKNet::myStatus = OKNet::status_AVAILABLE;
-							joinedPeers->clear();
+							joinedPeers.clear();
 							networkMultiplayerLobbyMenuShowing = true;
 						}
 						else
@@ -1394,7 +1401,7 @@ void OKGame::playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 		{
 			if (p->menu != nullptr)
 			{
-				delete p->menu;
+				//delete p->menu;
 				p->menu = nullptr;
 			}
 			p->gameLogic->pauseMiniMenuShowing = false;
@@ -1411,7 +1418,7 @@ void OKGame::playerPauseMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 }
 
 //=========================================================================================================================
-void OKGame::playerPauseMiniMenuRender(shared_ptr<PuzzlePlayer >p, float x0, float x1, float y0, float y1)
+void OKGame::playerPauseMiniMenuRender(shared_ptr<PuzzlePlayer>p, float x0, float x1, float y0, float y1)
 {//=========================================================================================================================
 
 	//GLUtils::drawFilledRect(255,255,255, x0,x1,y0,y1, 0.7f);
@@ -1573,7 +1580,7 @@ void OKGame::loginMenuUpdate()
 		if (loginMenu != nullptr)
 		{
 			loginMenuCursorPosition = loginMenu->cursorPosition;
-			delete loginMenu;
+			//delete loginMenu;
 			loginMenu = nullptr;
 		}
 
@@ -1763,7 +1770,7 @@ void OKGame::createAccountMenuUpdate()
 
 		if(createAccountMenu != nullptr)
 		{
-			delete createAccountMenu;
+			//delete createAccountMenu;
 			createAccountMenu = nullptr;
 		}
 
@@ -2214,7 +2221,7 @@ void OKGame::globalSettingsMenuUpdate()
 		if (globalSettingsMenu != nullptr)
 		{
 			globalSettingsMenuCursorPosition = globalSettingsMenu->cursorPosition;
-			delete globalSettingsMenu;
+			//delete globalSettingsMenu;
 			globalSettingsMenu = nullptr;
 		}
 
@@ -2333,7 +2340,7 @@ void OKGame::whichStatsMiniMenuUpdate()
 
 		if (whichStatsMiniMenu != nullptr)
 		{
-			delete whichStatsMiniMenu;
+			//delete whichStatsMiniMenu;
 			whichStatsMiniMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -2601,17 +2608,17 @@ void OKGame::statsMenuUpdate()
 		if (statsMenu != nullptr)
 		{
 			statsMenuCursorPosition = statsMenu->cursorPosition;
-			delete statsMenu;
+			//delete statsMenu;
 			statsMenu = nullptr;
 		}
 		if (yourStatsMenu != nullptr)
 		{
-			delete yourStatsMenu;
+			//delete yourStatsMenu;
 			yourStatsMenu = nullptr;
 		}
 		if (leaderBoardMenu != nullptr)
 		{
-			delete leaderBoardMenu;
+			//delete leaderBoardMenu;
 			leaderBoardMenu = nullptr;
 		}
 
@@ -2644,31 +2651,31 @@ void OKGame::statsMenuRender()
 
 	if (whichStatsMiniMenuShowing && whichStatsMiniMenu != nullptr)
 	{
-		shared_ptr<Caption >c = statsMenu->getCaptionByID("Stats Type");
+		shared_ptr<Caption>c = statsMenu->getCaptionByID("Stats Type");
 		whichStatsMiniMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
-		shared_ptr<Caption >c = statsMenu->getCaptionByID("Game");
+		shared_ptr<Caption>c = statsMenu->getCaptionByID("Game");
 		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceMenuShowing && selectGameSequenceMenu != nullptr)
 	{
-		shared_ptr<Caption >c = statsMenu->getCaptionByID("Game");
+		shared_ptr<Caption>c = statsMenu->getCaptionByID("Game");
 		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectSingleGameTypeMenuShowing && selectSingleGameTypeMenu != nullptr)
 	{
-		shared_ptr<Caption >c = statsMenu->getCaptionByID("Game");
+		shared_ptr<Caption>c = statsMenu->getCaptionByID("Game");
 		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (difficultyMenuShowing && difficultyMenu != nullptr)
 	{
-		shared_ptr<Caption >c = statsMenu->getCaptionByID("Difficulty");
+		shared_ptr<Caption>c = statsMenu->getCaptionByID("Difficulty");
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
@@ -2676,25 +2683,25 @@ void OKGame::statsMenuRender()
 
 
 //
-//void selectedGameSequence(shared_ptr<OKGame >b, string name)
+//void selectedGameSequence(shared_ptr<OKGame>b, string name)
 //{
 //	//get game sequence by name
 //	//set current game sequence
 //}
 //
-//void selectedGameType(shared_ptr<OKGame >b, string name)
+//void selectedGameType(shared_ptr<OKGame>b, string name)
 //{
 //	//select game type by name
 //	//create new game sequence with only that one game type
 //	//set current game sequence
 //}
 //
-//void selectedDifficulty(shared_ptr<OKGame >b, string name)
+//void selectedDifficulty(shared_ptr<OKGame>b, string name)
 //{
 //	//set current difficulty type
 //}
 //
-//void selectedObjective(shared_ptr<OKGame >b, string& name)
+//void selectedObjective(shared_ptr<OKGame>b, string& name)
 //{
 //	if(name=="End At Credits Level")
 //	{
@@ -2840,7 +2847,7 @@ void OKGame::saveRoomConfigMenuUpdate()
 		if (saveRoomConfigMenu != nullptr)
 		{
 			saveRoomConfigMenuCursorPosition = saveRoomConfigMenu->cursorPosition;
-			delete saveRoomConfigMenu;
+			//delete saveRoomConfigMenu;
 			saveRoomConfigMenu = nullptr;
 		}
 	}
@@ -2901,7 +2908,7 @@ void OKGame::loadRoomConfigMenuUpdate()
 			{
 				if (loadRoomConfigMenu->isSelectedID(ids.get(i), clicked, mx, my))
 				{
-					shared_ptr<Room >r = OKGame::loadRoomConfig(ids.get(i));
+					shared_ptr<Room>r = OKGame::loadRoomConfig(ids.get(i));
 
 					if (r != nullptr)currentRoom = r;
 					leaveMenu = true;
@@ -2919,7 +2926,7 @@ void OKGame::loadRoomConfigMenuUpdate()
 		if (loadRoomConfigMenu != nullptr)
 		{
 			loadRoomConfigMenuCursorPosition = loadRoomConfigMenu->cursorPosition;
-			delete loadRoomConfigMenu;
+			//delete loadRoomConfigMenu;
 			loadRoomConfigMenu = nullptr;
 		}
 	}
@@ -2978,7 +2985,7 @@ void OKGame::gameObjectiveMenuUpdate()
 		if (gameObjectiveMenu != nullptr)
 		{
 			gameObjectiveMenuCursorPosition = gameObjectiveMenu->cursorPosition;
-			delete gameObjectiveMenu;
+			//delete gameObjectiveMenu;
 			gameObjectiveMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -3041,7 +3048,7 @@ void OKGame::sendGarbageToMenuUpdate()
 		if (sendGarbageToMenu != nullptr)
 		{
 			sendGarbageToMenuCursorPosition = sendGarbageToMenu->cursorPosition;
-			delete sendGarbageToMenu;
+			//delete sendGarbageToMenu;
 			sendGarbageToMenu = nullptr;
 		}
 	}
@@ -3147,7 +3154,11 @@ void OKGame::roomOptionsMenuUpdate()
 
 	if (roomOptionsMenu == nullptr)
 	{
-		if (descriptionCaption != nullptr) { delete descriptionCaption; descriptionCaption = nullptr; }
+		if (descriptionCaption != nullptr) 
+		{ 
+			//delete descriptionCaption; 
+			descriptionCaption = nullptr; 
+		}
 		descriptionCaption = make_shared<Caption>(this, Caption::Position::CENTERED_X, 0, 0, -1, "", 18, false, OKColor::darkGray, OKColor::clear);
 		roomOptionsMenu = make_shared<OKMenu>(this, "");
 		roomOptionsMenu->center = false;
@@ -3250,7 +3261,7 @@ void OKGame::roomOptionsMenuUpdate()
 		}
 
 		roomOptionsMenu->getMenuItemByID("Garbage Rule")->setText("VS Garbage: " + string((currentRoom->multiplayer_DisableVSGarbage) ? "Off" : "On"));
-		roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: " + to_string((int)(currentRoom->multiplayer_shared_ptr<GarbageMultiplier > 100)) + "%");
+		roomOptionsMenu->getMenuItemByID("Garbage Multiplier")->setText("Garbage Multiplier: " + to_string((int)(currentRoom->multiplayer_GarbageMultiplier > 100)) + "%");
 		roomOptionsMenu->getMenuItemByID("Garbage Limit")->setText("Garbage Limit: " + string((currentRoom->multiplayer_GarbageLimit > 0) ? to_string(currentRoom->multiplayer_GarbageLimit) : "No Limit"));
 		roomOptionsMenu->getMenuItemByID("Garbage Scale")->setText("Scale Garbage By Difficulty: " + string(currentRoom->multiplayer_GarbageScaleByDifficulty ? "On" : "Off"));
 
@@ -3593,12 +3604,16 @@ void OKGame::roomOptionsMenuUpdate()
 		{
 			roomOptionsMenuShowing = false;
 
-			if (descriptionCaption != nullptr) { delete descriptionCaption; descriptionCaption = nullptr; }
+			if (descriptionCaption != nullptr) 
+			{ 
+				//delete descriptionCaption; 
+				descriptionCaption = nullptr; 
+			}
 
 			if (roomOptionsMenu != nullptr)
 			{
 				roomOptionsMenuCursorPosition = roomOptionsMenu->cursorPosition;
-				delete roomOptionsMenu;
+				//delete roomOptionsMenu;
 				roomOptionsMenu = nullptr;
 			}
 		}
@@ -3649,7 +3664,7 @@ void OKGame::gameSetupMenuUpdate()
 
 
 	{
-		shared_ptr<GameSequence >selectedGameSequence = nullptr;
+		shared_ptr<GameSequence>selectedGameSequence = nullptr;
 		if (localMultiplayer || networkMultiplayer)
 		{
 			selectedGameSequence = currentRoom->gameSequence;
@@ -3672,7 +3687,7 @@ void OKGame::gameSetupMenuUpdate()
 		}
 
 		{
-			OKMenu::MenuItem *c = gameSetupMenu->getMenuItemByID("Select Game");
+			shared_ptr<OKMenu::MenuItem> c = gameSetupMenu->getMenuItemByID("Select Game");
 			if (c != nullptr)
 			{
 				if (selectedGameSequence->gameTypes.size() > 1)
@@ -3909,7 +3924,7 @@ void OKGame::gameSetupMenuUpdate()
 					if (selectedDifficultyIndex >= gt.difficultyTypes.size())selectedDifficultyIndex = 0;
 				}
 
-				shared_ptr<DifficultyType >d = gt.difficultyTypes.get(selectedDifficultyIndex);
+				shared_ptr<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex);
 				string difficultyName = d->name;
 				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -3927,7 +3942,7 @@ void OKGame::gameSetupMenuUpdate()
 		//assign controller to p1 if start or b pressed
 		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
 		{
-			shared_ptr<GameController >g = getControlsManager()->gameControllers.get(i);
+			shared_ptr<GameController>g = getControlsManager()->gameControllers.get(i);
 			if (g->b_Pressed())
 			{
 				confirm = true;
@@ -4015,7 +4030,7 @@ void OKGame::gameSetupMenuUpdate()
 				if(getPlayer1Game()->currentGameSequence == nullptr)getPlayer1Game()->currentGameSequence = currentRoom->gameSequence;
 
 				GameType gt;
-				shared_ptr<DifficultyType >d = gt.difficultyTypes.get(selectedDifficultyIndex);
+				shared_ptr<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex);
 				string difficultyName = d->name;
 				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -4101,26 +4116,26 @@ void OKGame::gameSetupMenuUpdate()
 
 			if(errorLabel!=nullptr)
 			{
-				delete errorLabel;
+				//delete errorLabel;
 				errorLabel = nullptr;
 			}
 
 			if (gameSetupMenu != nullptr)
 			{
 				gameSetupMenuCursorPosition = gameSetupMenu->cursorPosition;
-				delete gameSetupMenu;
+				//delete gameSetupMenu;
 				gameSetupMenu = nullptr;
 			}
 
 			if (yourStatsMenu != nullptr)
 			{
-				delete yourStatsMenu;
+				//delete yourStatsMenu;
 				yourStatsMenu = nullptr;
 			}
 
 			if (leaderBoardMenu != nullptr)
 			{
-				delete leaderBoardMenu;
+				//delete leaderBoardMenu;
 				leaderBoardMenu = nullptr;
 			}
 		}
@@ -4166,49 +4181,49 @@ void OKGame::gameSetupMenuRender()
 
 	if(selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Select Game");
 		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceMenuShowing && selectGameSequenceMenu != nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Select Game");
 		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectSingleGameTypeMenuShowing && selectSingleGameTypeMenu != nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Select Game");
 		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (gameSequenceOptionsMenuShowing && gameSequenceOptionsMenu != nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Select Game");
 		gameSequenceOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (difficultyMenuShowing && difficultyMenu!=nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Difficulty");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Difficulty");
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (saveRoomConfigMenuShowing && saveRoomConfigMenu!=nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Save");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Save");
 		saveRoomConfigMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (loadRoomConfigMenuShowing && loadRoomConfigMenu!=nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Load");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Load");
 		loadRoomConfigMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
 	{
-		shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Objective");
+		shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Objective");
 		gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
@@ -4217,7 +4232,7 @@ void OKGame::gameSetupMenuRender()
 		int bottomOfCaptions = 0;
 
 		{
-			//shared_ptr<Caption >c = gameSetupMenu->getCaptionByID("Options");
+			//shared_ptr<Caption>c = gameSetupMenu->getCaptionByID("Options");
 			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, &bottomOfCaptions, true);
 			roomOptionsMenu->render(getHeight()/6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
 		}
@@ -4231,7 +4246,7 @@ void OKGame::gameSetupMenuRender()
 
 		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
 		{
-			shared_ptr<Caption >c = roomOptionsMenu->getCaptionByID("Send Garbage To");
+			shared_ptr<Caption>c = roomOptionsMenu->getCaptionByID("Send Garbage To");
 			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 	}
@@ -4343,7 +4358,7 @@ void OKGame::selectGameSequenceOrSingleGameTypeMenuUpdate()
 		if (selectGameSequenceOrSingleGameTypeMenu != nullptr)
 		{
 			selectGameSequenceOrSingleGameTypeMenuCursorPosition = selectGameSequenceOrSingleGameTypeMenu->cursorPosition;
-			delete selectGameSequenceOrSingleGameTypeMenu;
+			//delete selectGameSequenceOrSingleGameTypeMenu;
 			selectGameSequenceOrSingleGameTypeMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -4405,7 +4420,7 @@ void OKGame::selectGameSequenceMenuUpdate()
 	{
 		for (int i = 0; i<loadedGameSequences.size(); i++)
 		{
-			shared_ptr<GameSequence >g = loadedGameSequences.get(i);
+			shared_ptr<GameSequence>g = loadedGameSequences.get(i);
 			if (selectGameSequenceMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 				if(statsMenuShowing)
@@ -4439,7 +4454,7 @@ void OKGame::selectGameSequenceMenuUpdate()
 		if (selectGameSequenceMenu != nullptr)
 		{
 			selectGameSequenceMenuCursorPosition = selectGameSequenceMenu->cursorPosition;
-			delete selectGameSequenceMenu;
+			//delete selectGameSequenceMenu;
 			selectGameSequenceMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -4533,7 +4548,7 @@ void OKGame::gameSequenceOptionsMenuUpdate()
 		if (gameSequenceOptionsMenu != nullptr)
 		{
 			gameSequenceOptionsMenuCursorPosition = gameSequenceOptionsMenu->cursorPosition;
-			delete gameSequenceOptionsMenu;
+			//delete gameSequenceOptionsMenu;
 			gameSequenceOptionsMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -4587,11 +4602,11 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,shared_ptr<OKColor>>>> OKGame::g
 
 //	for (int i = 0; i<loadedGameTypes.size(); i++)
 //	{
-//		shared_ptr<GameType >g = loadedGameTypes.get(i);
+//		shared_ptr<GameType>g = loadedGameTypes.get(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
-//			shared_ptr<OKColor >color = OKColor::darkGreen;
+//			shared_ptr<OKColor>color = OKColor::darkGreen;
 //			pair<string, shared_ptr<OKColor>> stringColorPair = pair<string, shared_ptr<OKColor>>(name,color);
 //			pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>>(g, stringColorPair);
 //			gamesStringColor.add(gameTypeStringColorPairPair);
@@ -4599,11 +4614,11 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,shared_ptr<OKColor>>>> OKGame::g
 //	}
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType >g = loadedGameTypes.get(i);
+		shared_ptr<GameType>g = loadedGameTypes.get(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
-			shared_ptr<OKColor >color = OKColor::purple;
+			shared_ptr<OKColor>color = OKColor::purple;
 			pair<string, shared_ptr<OKColor>> stringColorPair = pair<string, shared_ptr<OKColor>>(name, color);
 			pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>>(g, stringColorPair);
 			gamesStringColor.add(gameTypeStringColorPairPair);
@@ -4613,7 +4628,7 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,shared_ptr<OKColor>>>> OKGame::g
 	ArrayList<shared_ptr<GameType>> downloadedGames;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType >g = loadedGameTypes.get(i);
+		shared_ptr<GameType>g = loadedGameTypes.get(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
 			downloadedGames.add(g);
@@ -4623,7 +4638,7 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,shared_ptr<OKColor>>>> OKGame::g
 	multimap<double, shared_ptr<GameType>> games;
 	for (int i = 0; i < downloadedGames.size(); i++)
 	{
-		shared_ptr<GameType >g = downloadedGames.get(i);
+		shared_ptr<GameType>g = downloadedGames.get(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
@@ -4637,7 +4652,7 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,shared_ptr<OKColor>>>> OKGame::g
 	multimap<double, shared_ptr<GameType>>::iterator pos;
 	for (pos = games.begin(); pos != games.end(); ++pos)
 	{
-		shared_ptr<GameType >g = pos->second;
+		shared_ptr<GameType>g = pos->second;
 
 		long long secondsSinceEpoch = g->dateCreated / 1000;
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
@@ -4645,7 +4660,7 @@ ArrayList<pair<shared_ptr<GameType>,pair<string,shared_ptr<OKColor>>>> OKGame::g
 
 		string name = g->creatorUserName + " - " + g->name + " | Score: " + to_string(g->upVotes - g->downVotes) + " Age: " + to_string(daysExisted) + " days";
 
-		shared_ptr<OKColor >color = OKColor::darkGray;
+		shared_ptr<OKColor>color = OKColor::darkGray;
 		pair<string, shared_ptr<OKColor>> stringColorPair = pair<string, shared_ptr<OKColor>>(name, color);
 		pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>>(g, stringColorPair);
 		gamesStringColor.add(gameTypeStringColorPairPair);
@@ -4663,11 +4678,11 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> OKG
 
 //	for (int i = 0; i<loadedGameSequences.size(); i++)
 //	{
-//		shared_ptr<GameSequence >g = loadedGameSequences.get(i);
+//		shared_ptr<GameSequence>g = loadedGameSequences.get(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
-//			shared_ptr<OKColor >color = OKColor::darkGreen;
+//			shared_ptr<OKColor>color = OKColor::darkGreen;
 //			pair<string, shared_ptr<OKColor>> stringColorPair = pair<string, shared_ptr<OKColor>>(name, color);
 //			pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>> gameSequenceStringColorPairPair = pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>(g, stringColorPair);
 //			gamesStringColor.add(gameSequenceStringColorPairPair);
@@ -4675,11 +4690,11 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> OKG
 //	}
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence >g = loadedGameSequences.get(i);
+		shared_ptr<GameSequence>g = loadedGameSequences.get(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
-			shared_ptr<OKColor >color = OKColor::purple;
+			shared_ptr<OKColor>color = OKColor::purple;
 			pair<string, shared_ptr<OKColor>> stringColorPair = pair<string, shared_ptr<OKColor>>(name, color);
 			pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>> gameSequenceStringColorPairPair = pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>(g, stringColorPair);
 			gamesStringColor.add(gameSequenceStringColorPairPair);
@@ -4689,7 +4704,7 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> OKG
 	ArrayList<shared_ptr<GameSequence>> downloadedGames;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence >g = loadedGameSequences.get(i);
+		shared_ptr<GameSequence>g = loadedGameSequences.get(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
 			downloadedGames.add(g);
@@ -4699,7 +4714,7 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> OKG
 	multimap<double, shared_ptr<GameSequence>> games;
 	for (int i = 0; i < downloadedGames.size(); i++)
 	{
-		shared_ptr<GameSequence >g = downloadedGames.get(i);
+		shared_ptr<GameSequence>g = downloadedGames.get(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
@@ -4713,7 +4728,7 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> OKG
 	multimap<double, shared_ptr<GameSequence>>::iterator pos;
 	for (pos = games.begin(); pos != games.end(); ++pos)
 	{
-		shared_ptr<GameSequence >g = pos->second;
+		shared_ptr<GameSequence>g = pos->second;
 
 		long long secondsSinceEpoch = g->dateCreated / 1000;
 		long long secondsExisted = currentSecondsSinceEpoch - secondsSinceEpoch;
@@ -4721,7 +4736,7 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> OKG
 
 		string name = g->creatorUserName + " - " + g->name + " | Score: " + to_string(g->upVotes - g->downVotes) + " Age: " + to_string(daysExisted) + " days";
 
-		shared_ptr<OKColor >color = OKColor::darkGray;
+		shared_ptr<OKColor>color = OKColor::darkGray;
 		pair<string, shared_ptr<OKColor>> stringColorPair = pair<string, shared_ptr<OKColor>>(name, color);
 		pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>> gameSequenceStringColorPairPair = pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>(g, stringColorPair);
 		gamesStringColor.add(gameSequenceStringColorPairPair);
@@ -4731,7 +4746,7 @@ ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> OKG
 
 }
 //=========================================================================================================================
-void OKGame::populateGameTypesMenu(shared_ptr<OKMenu >menu)
+void OKGame::populateGameTypesMenu(shared_ptr<OKMenu>menu)
 {//=========================================================================================================================
 
 
@@ -4746,12 +4761,12 @@ void OKGame::populateGameTypesMenu(shared_ptr<OKMenu >menu)
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
 		pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameType >g = gameTypeStringColorPairPair.first;
+		shared_ptr<GameType>g = gameTypeStringColorPairPair.first;
 		pair<string, shared_ptr<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<OKColor >color = stringColorPair.second;
+		shared_ptr<OKColor>color = stringColorPair.second;
 
-		OKMenu::MenuItem *m = menu->add(name, g->uuid);
+		shared_ptr<OKMenu::MenuItem> m = menu->add(name, g->uuid);
 		m->setColor(color);
 
 	}
@@ -4759,19 +4774,19 @@ void OKGame::populateGameTypesMenu(shared_ptr<OKMenu >menu)
 }
 
 //=========================================================================================================================
-void OKGame::populateGameSequencesMenu(shared_ptr<OKMenu >menu)
+void OKGame::populateGameSequencesMenu(shared_ptr<OKMenu>menu)
 {//=========================================================================================================================
 
 	ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> gamesStringColor = getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
 		pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameSequence >g = gameSequenceStringColorPairPair.first;
+		shared_ptr<GameSequence>g = gameSequenceStringColorPairPair.first;
 		pair<string, shared_ptr<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<OKColor >color = stringColorPair.second;
+		shared_ptr<OKColor>color = stringColorPair.second;
 
-		OKMenu::MenuItem *m = menu->add(name, g->uuid);
+		shared_ptr<OKMenu::MenuItem> m = menu->add(name, g->uuid);
 		m->setColor(color);
 
 	}
@@ -4849,10 +4864,10 @@ string getDateFromEpochTime(long long ms)
 //gameTypeOrSequenceString or difficulty string can be "OVERALL"
 shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty> OKGame::getUserStatsForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString)
 {//=========================================================================================================================
-	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >stats = nullptr;
+	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>stats = nullptr;
 	for (int i = 0; i < userStatsPerGameAndDifficulty.size(); i++)
 	{
-		shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >s = userStatsPerGameAndDifficulty.get(i);
+		shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>s = userStatsPerGameAndDifficulty.get(i);
 		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
 		{
 			if (s->difficultyName == difficultyString)
@@ -4872,11 +4887,11 @@ shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty> OKGame::getUserStatsForG
 
 //=========================================================================================================================
 //gameTypeOrSequenceString or difficulty string can be "OVERALL"
-void OKGame::populateUserStatsForSpecificGameAndDifficultyMenu(shared_ptr<OKMenu >menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString)
+void OKGame::populateUserStatsForSpecificGameAndDifficultyMenu(shared_ptr<OKMenu>menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString)
 {//=========================================================================================================================
 
 
-	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >stats = getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
+	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>stats = getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
 
 	bool deleteStats = false;
 	if (stats == nullptr)
@@ -4893,7 +4908,7 @@ void OKGame::populateUserStatsForSpecificGameAndDifficultyMenu(shared_ptr<OKMenu
 	else
 	{
 		shared_ptr<GameType> gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
-		shared_ptr<GameSequence >gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
+		shared_ptr<GameSequence>gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
 		if (gt != nullptr)gameName = "Game Type: " + gt->name;
 		if (gs != nullptr)gameName = "Game Sequence: " + gs->name;
 	}
@@ -4958,7 +4973,11 @@ void OKGame::populateUserStatsForSpecificGameAndDifficultyMenu(shared_ptr<OKMenu
 			
 
 
-			if (deleteStats)delete stats;
+			if (deleteStats)
+			{
+				//delete stats;
+				stats = nullptr;
+			}
 		}
 		else
 		{
@@ -4996,7 +5015,7 @@ shared_ptr<OKGameLeaderBoardAndHighScoreBoard> OKGame::getLeaderboardOrHighScore
 	bool blocksCleared)
 {//=========================================================================================================================
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >stats = nullptr;
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>stats = nullptr;
 
 	ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> *board = &topPlayersByTotalTimePlayed;
 
@@ -5009,7 +5028,7 @@ shared_ptr<OKGameLeaderBoardAndHighScoreBoard> OKGame::getLeaderboardOrHighScore
 
 	for (int i = 0; i<board->size(); i++)
 	{
-		shared_ptr<OKGameLeaderBoardAndHighScoreBoard >s = board->get(i);
+		shared_ptr<OKGameLeaderBoardAndHighScoreBoard>s = board->get(i);
 		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
 		{
 			if (s->difficultyName == difficultyString)
@@ -5027,7 +5046,7 @@ shared_ptr<OKGameLeaderBoardAndHighScoreBoard> OKGame::getLeaderboardOrHighScore
 }
 
 //=========================================================================================================================
-string OKGame::populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu >menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
+string OKGame::populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu>menu, string gameTypeOrSequenceUUID, string difficultyString, string objectiveString,
 	bool totalTimePlayed,
 	bool totalBlocksCleared,
 	bool planeswalkerPoints,
@@ -5037,7 +5056,7 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu >menu, 
 )
 {//=========================================================================================================================
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >stats = getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>stats = getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
 		totalTimePlayed,
 		totalBlocksCleared,
 		planeswalkerPoints,
@@ -5061,7 +5080,7 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu >menu, 
 	else
 	{
 		shared_ptr<GameType> gt = getGameTypeByUUID(gameTypeOrSequenceUUID);
-		shared_ptr<GameSequence >gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
+		shared_ptr<GameSequence>gs = getGameSequenceByUUID(gameTypeOrSequenceUUID);
 		if (gt != nullptr)gameName = "Game Type: "+gt->name;
 		if (gs != nullptr)gameName = "Game Sequence: "+gs->name;
 	}
@@ -5122,7 +5141,7 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu >menu, 
 	for (int i = 0; i < stats->entries.size(); i++)
 	{
 
-		OKGameLeaderBoardAndHighScoreBoard::Oshared_ptr<KGameLeaderBoardAndHighScoreBoardEntry> e = stats->entries.get(i);
+		shared_ptr<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry> e = stats->entries.get(i);
 
 		if (e->userName == "") { continue; }
 
@@ -5187,7 +5206,11 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(shared_ptr<OKMenu >menu, 
 		menu->addInfo(" ");
 	}
 
-	if (deleteStats)delete stats;
+	if (deleteStats)
+	{
+		//delete stats;
+		stats = nullptr;
+	}
 
 	return titleName;
 
@@ -5304,7 +5327,7 @@ void OKGame::selectSingleGameTypeMenuUpdate()
 
 		for (int i = 0; i<loadedGameTypes.size(); i++)
 		{
-			shared_ptr<GameType >g = loadedGameTypes.get(i);
+			shared_ptr<GameType>g = loadedGameTypes.get(i);
 			if (selectSingleGameTypeMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 
@@ -5344,7 +5367,7 @@ void OKGame::selectSingleGameTypeMenuUpdate()
 		if (selectSingleGameTypeMenu != nullptr)
 		{
 			selectSingleGameTypeMenuCursorPosition = selectSingleGameTypeMenu->cursorPosition;
-			delete selectSingleGameTypeMenu;
+			//delete selectSingleGameTypeMenu;
 			selectSingleGameTypeMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -5479,7 +5502,7 @@ void OKGame::difficultyMenuUpdate()
 		if (difficultyMenu != nullptr)
 		{
 			difficultyMenuCursorPosition = difficultyMenu->cursorPosition;
-			delete difficultyMenu;
+			//delete difficultyMenu;
 			difficultyMenu = nullptr;
 		}
 		updateStatsMenu = true;
@@ -5559,7 +5582,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 	if (currentRoom->gameSequence != nullptr)
 	{
 		{
-			OKMenu::MenuItem *c = multiplayerOptionsMenu->getMenuItemByID("Select Game");
+			shared_ptr<OKMenu::MenuItem> c = multiplayerOptionsMenu->getMenuItemByID("Select Game");
 			if (c != nullptr)
 			{
 				if (currentRoom->gameSequence->gameTypes.size() > 1)c->setText("Game Sequence: " + currentRoom->gameSequence->name);
@@ -5583,7 +5606,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 			if (currentRoom->room_DifficultyName == difficultyName)selectedDifficultyIndex = i + 1;
 		}
 
-		shared_ptr<DifficultyType >d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
+		shared_ptr<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
 		string difficultyName = d->name;
 		currentRoom->room_DifficultyName = difficultyName;
 		if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -5693,7 +5716,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 				if (selectedDifficultyIndex > 0)
 				{
 					currentRoom->multiplayer_AllowDifferentDifficulties = false;
-					shared_ptr<DifficultyType >d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
+					shared_ptr<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
 					string difficultyName = d->name;
 					currentRoom->room_DifficultyName = difficultyName;
 					if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -5874,7 +5897,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 			if (multiplayerOptionsMenu != nullptr)
 			{
 				multiplayerOptionsMenuCursorPosition = multiplayerOptionsMenu->cursorPosition;
-				delete multiplayerOptionsMenu;
+				//delete multiplayerOptionsMenu;
 				multiplayerOptionsMenu = nullptr;
 			}
 		}
@@ -5901,37 +5924,37 @@ void OKGame::multiplayerOptionsMenuRender()
 
 	if (selectGameSequenceOrSingleGameTypeMenuShowing && selectGameSequenceOrSingleGameTypeMenu != nullptr)
 	{
-		shared_ptr<Caption >c = multiplayerOptionsMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = multiplayerOptionsMenu->getCaptionByID("Select Game");
 		selectGameSequenceOrSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectGameSequenceMenuShowing && selectGameSequenceMenu != nullptr)
 	{
-		shared_ptr<Caption >c = multiplayerOptionsMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = multiplayerOptionsMenu->getCaptionByID("Select Game");
 		selectGameSequenceMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (selectSingleGameTypeMenuShowing && selectSingleGameTypeMenu != nullptr)
 	{
-		shared_ptr<Caption >c = multiplayerOptionsMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = multiplayerOptionsMenu->getCaptionByID("Select Game");
 		selectSingleGameTypeMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (gameSequenceOptionsMenuShowing && gameSequenceOptionsMenu != nullptr)
 	{
-		shared_ptr<Caption >c = multiplayerOptionsMenu->getCaptionByID("Select Game");
+		shared_ptr<Caption>c = multiplayerOptionsMenu->getCaptionByID("Select Game");
 		gameSequenceOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (difficultyMenuShowing && difficultyMenu != nullptr)
 	{
-		shared_ptr<Caption >c = multiplayerOptionsMenu->getCaptionByID("Difficulty");
+		shared_ptr<Caption>c = multiplayerOptionsMenu->getCaptionByID("Difficulty");
 		difficultyMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
 	if (gameObjectiveMenuShowing && gameObjectiveMenu != nullptr)
 	{
-		shared_ptr<Caption >c = multiplayerOptionsMenu->getCaptionByID("Objective");
+		shared_ptr<Caption>c = multiplayerOptionsMenu->getCaptionByID("Objective");
 		gameObjectiveMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 	}
 
@@ -5940,7 +5963,7 @@ void OKGame::multiplayerOptionsMenuRender()
 		int bottomOfCaptions = 0;
 
 		{
-			//shared_ptr<Caption >c = multiplayerOptionsMenu->getCaptionByID("Options");
+			//shared_ptr<Caption>c = multiplayerOptionsMenu->getCaptionByID("Options");
 			//roomOptionsMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, &bottomOfCaptions, true);
 			roomOptionsMenu->render(getHeight() / 6, 0, getHeight(), true, nullptr, &bottomOfCaptions, true);
 		}
@@ -5954,7 +5977,7 @@ void OKGame::multiplayerOptionsMenuRender()
 
 		if (sendGarbageToMenuShowing && sendGarbageToMenu != nullptr)
 		{
-			shared_ptr<Caption >c = roomOptionsMenu->getCaptionByID("Send Garbage To");
+			shared_ptr<Caption>c = roomOptionsMenu->getCaptionByID("Send Garbage To");
 			sendGarbageToMenu->render(c->screenY + c->getHeight() + 8, c->screenX + c->getWidth() / 2, getHeight(), true, nullptr, nullptr, true);
 		}
 	}
@@ -5977,7 +6000,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		players.deleteAll();
 //		while (players.size()>0)
 //		{
-//			shared_ptr<PuzzlePlayer >p = players.get(players.size() - 1);
+//			shared_ptr<PuzzlePlayer>p = players.get(players.size() - 1);
 //			players.removeAt(players.size() - 1);
 //			delete p;
 //		}
@@ -5993,7 +6016,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 	bool ready = true;
 	for (int i = 0; i<players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 		if (p->confirmed == false)
 		{
 			ready = false;
@@ -6073,12 +6096,12 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 			bool alreadyInUse = false;
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer >p = players.get(i);
+				shared_ptr<PuzzlePlayer> p = players.get(i);
 				if (p->useKeyboard)alreadyInUse = true;
 			}
 			if (!alreadyInUse)
 			{
-				shared_ptr<PuzzlePlayer >p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+				shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
 				p->useKeyboard = true;
 				players.add(p);
 				p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
@@ -6089,11 +6112,12 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 	{
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer >p = players.get(i);
+			shared_ptr<PuzzlePlayer> p = players.get(i);
 			if (p->useKeyboard)
 			{
 				players.removeAt(i);
-				delete p;
+				//delete p;
+				p = nullptr;
 				i = 0;
 			}
 		}
@@ -6101,7 +6125,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 
 	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers.size(); controllerNum++)
 	{
-		shared_ptr<GameController >g = getControlsManager()->gameControllers.get(controllerNum);
+		shared_ptr<GameController> g = getControlsManager()->gameControllers.get(controllerNum);
 
 		if (g->a_Pressed())
 		{
@@ -6110,13 +6134,13 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 				bool alreadyInUse = false;
 				for (int i = 0; i < players.size(); i++)
 				{
-					shared_ptr<PuzzlePlayer >p = players.get(i);
+					shared_ptr<PuzzlePlayer> p = players.get(i);
 					if (p->gameController == g)alreadyInUse = true;
 				}
 
 				if (!alreadyInUse)
 				{
-					shared_ptr<PuzzlePlayer >p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+					shared_ptr<PuzzlePlayer> p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
 					p->gameController = g;
 					players.add(p);
 					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
@@ -6128,11 +6152,12 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer >p = players.get(i);
+				shared_ptr<PuzzlePlayer> p = players.get(i);
 				if (p->gameController == g)
 				{
 					players.removeAt(i);
-					delete p;
+					//delete p;
+					p = nullptr;
 					i = 0;
 				}
 			}
@@ -6153,7 +6178,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 
 		if (localMultiplayerPlayerJoinMenu != nullptr)
 		{
-			delete localMultiplayerPlayerJoinMenu;
+			//delete localMultiplayerPlayerJoinMenu;
 			localMultiplayerPlayerJoinMenu = nullptr;
 		}
 
@@ -6177,9 +6202,9 @@ void OKGame::localMultiplayerPlayerJoinMenuRender()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 
-		shared_ptr<OKTexture >t = nullptr;
+		shared_ptr<OKTexture>t = nullptr;
 
 		if (p->useKeyboard)t = kt;
 		else
@@ -6252,7 +6277,7 @@ void OKGame::localMultiplayerPlayerJoinMenuRender()
 
 
 //=========================================================================================================================
-void OKGame::playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
+void OKGame::playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	if (p != nullptr)
@@ -6285,7 +6310,7 @@ void OKGame::playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 			}
 			else
 			{
-				shared_ptr<GameController >g = p->gameController;
+				shared_ptr<GameController>g = p->gameController;
 				if (g != nullptr)
 				{
 					if (g->up_Pressed())up = true;
@@ -6306,7 +6331,7 @@ void OKGame::playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 
 			if (a)
 			{
-				shared_ptr<GameLogic >game = p->gameLogic;
+				shared_ptr<GameLogic>game = p->gameLogic;
 				GameType g;
 
 				for (int i = 0; i<g.difficultyTypes.size(); i++)
@@ -6322,7 +6347,7 @@ void OKGame::playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 
 				if (p->menu != nullptr)
 				{
-					delete p->menu;
+					//delete p->menu;
 					p->menu = nullptr;
 				}
 
@@ -6334,7 +6359,7 @@ void OKGame::playerDifficultyMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 }
 
 //=========================================================================================================================
-void OKGame::playerDifficultyMiniMenuRender(shared_ptr<PuzzlePlayer >p, float x, float y)
+void OKGame::playerDifficultyMiniMenuRender(shared_ptr<PuzzlePlayer>p, float x, float y)
 {//=========================================================================================================================
 
 	if (p->menu != nullptr)
@@ -6344,7 +6369,7 @@ void OKGame::playerDifficultyMiniMenuRender(shared_ptr<PuzzlePlayer >p, float x,
 }
 
 //=========================================================================================================================
-void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
+void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer>p)
 {//=========================================================================================================================
 
 	const string PLAY_GAME_SEQUENCE = "Play Game Sequence";
@@ -6397,7 +6422,7 @@ void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 			}
 			else
 			{
-				shared_ptr<GameController >g = p->gameController;
+				shared_ptr<GameController>g = p->gameController;
 				if (g != nullptr)
 				{
 					if (g->UP_HELD)up = true;
@@ -6489,7 +6514,7 @@ void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 
 			if (a)
 			{
-				shared_ptr<GameLogic >game = p->gameLogic;
+				shared_ptr<GameLogic>game = p->gameLogic;
 
 				if (p->selectGameSequenceOrSingleGameTypeMiniMenuShowing)
 				{
@@ -6510,7 +6535,7 @@ void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 					for (int i = 0; i<loadedGameSequences.size(); i++)
 					{
 
-						shared_ptr<GameSequence >gs = loadedGameSequences.get(i);
+						shared_ptr<GameSequence>gs = loadedGameSequences.get(i);
 						if (p->menu->isSelectedID(gs->uuid))
 						{
 							game->currentGameSequence = gs;
@@ -6544,7 +6569,7 @@ void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 
 					for (int i = 0; i<loadedGameTypes.size(); i++)
 					{
-						shared_ptr<GameType >g = loadedGameTypes.get(i);
+						shared_ptr<GameType>g = loadedGameTypes.get(i);
 						if (p->menu->isSelectedID(g->uuid))
 						{
 							game->currentGameSequence = make_shared<GameSequence>();
@@ -6560,7 +6585,7 @@ void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 
 				if (p->menu != nullptr)
 				{
-					delete p->menu;
+					//delete p->menu;
 					p->menu = nullptr;
 				}
 
@@ -6571,7 +6596,7 @@ void OKGame::playerGameSequenceMiniMenuUpdate(shared_ptr<PuzzlePlayer >p)
 }
 
 //=========================================================================================================================
-void OKGame::playerGameSequenceMiniMenuRender(shared_ptr<PuzzlePlayer >p, float x, float y)
+void OKGame::playerGameSequenceMiniMenuRender(shared_ptr<PuzzlePlayer>p, float x, float y)
 {//=========================================================================================================================
 
 	if (p->menu != nullptr)

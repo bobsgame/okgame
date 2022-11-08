@@ -704,7 +704,7 @@ shared_ptr<OKColor> OKColor::getColorByName(string name)
 	if (name == "" || name == "empty")return nullptr;
 	for(int i=0;i<colors.size();i++)
 	{
-		shared_ptr<OKColor >c = colors.get(i);
+		shared_ptr<OKColor>c = colors.get(i);
 
 		if (c->name == name)return c;
 
@@ -1161,12 +1161,12 @@ void OKColor::lighter(float scale)
 }
 
 /*
-void Color::multiply(shared_ptr<Color >c)
+void Color::multiply(shared_ptr<Color>c)
 {
    return make_shared<Color>(rf() * c->rf(), gf() * c->gf(), bf() * c->bf(), af() * c->af());
 }
 
-void Color::addToCopy(shared_ptr<Color >c)
+void Color::addToCopy(shared_ptr<Color>c)
 {
    return make_shared<Color>(rf() + c->rf(), gf() + c->gf(), bf() + c->bf(), af() + c->af());
 }

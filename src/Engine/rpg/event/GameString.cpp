@@ -22,13 +22,15 @@ GameString::GameString(shared_ptr<Engine> g, int id)
 
 	for (int i = 0; i < (int)getEventManager()->gameStringList.size(); i++)
 	{
-		if (getEventManager()->gameStringList.get(i)->getID() == data->getID())
+		if (getEventManager()->gameStringList.at(i)->getID() == data->getID())
 		{
-			log->error("GameString already exists:" + data->getName());
+			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->gameStringList.add(this);
+
+	getEventManager()->gameStringList.push_back(shared_from_this());
+
 }
 
 GameString::GameString(shared_ptr<Engine> g, shared_ptr<GameStringData> data)
@@ -40,13 +42,15 @@ GameString::GameString(shared_ptr<Engine> g, shared_ptr<GameStringData> data)
 
 	for (int i = 0; i < (int)getEventManager()->gameStringList.size(); i++)
 	{
-		if (getEventManager()->gameStringList.get(i)->getID() == data->getID())
+		if (getEventManager()->gameStringList.at(i)->getID() == data->getID())
 		{
-			log->error("GameString already exists:" + data->getName());
+			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->gameStringList.add(this);
+
+	getEventManager()->gameStringList.push_back(shared_from_this());
+
 }
 
 //The following method was originally marked 'synchronized':

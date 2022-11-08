@@ -78,7 +78,7 @@ public:
 
 	//------------------------------------
 public:
-	static void updateThreadLoop(shared_ptr<TCPServerConnection >u);
+	static void updateThreadLoop(shared_ptr<TCPServerConnection>u);
 
 private:
 	void _sendKeepAlivePing();
@@ -93,7 +93,7 @@ private:
 	long long _lastLoadBalancerConnectTime = 0;
 	bool _couldNotResolveLoadBalancer = false;
 	int _couldNotOpenConnectionToLoadBalancerCount = 0;
-	shared_ptr<IPaddress > _loadBalancerAddress = nullptr;
+	shared_ptr<IPaddress> _loadBalancerAddress = nullptr;
 	
 	long long _lastServerConnectTime = 0;
 	long long _lastSentServerIPRequestTime = 0;
@@ -295,14 +295,14 @@ public:
 	//------------------------------------
 
 
-	shared_ptr<IPaddress > _serverAddress = nullptr;
+	shared_ptr<IPaddress> _serverAddress = nullptr;
 	mutex _serverAddress_Mutex;
 	shared_ptr<IPaddress> getServerAddress_S()
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		return _serverAddress;
 	}
-	void setServerAddress_S(shared_ptr<IPaddress >b)
+	void setServerAddress_S(shared_ptr<IPaddress>b)
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		_serverAddress = b;
@@ -869,7 +869,7 @@ public:
 	void incomingOKGameActivityStreamResponse_S(string s);
 	void incomingOKGameActivityStreamUpdate_S(string s);
 	void incomingOKGameUserStatsForSpecificGameAndDifficulty(string &s);
-	void addToLeaderboard(ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard);
+	void addToLeaderboard(ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard);
 	void incomingOKGameLeaderBoardByTotalTimePlayed(string &s);
 	void incomingOKGameLeaderBoardByTotalBlocksCleared(string &s);
 	void incomingOKGameLeaderBoardByPlaneswalkerPoints(string &s);
@@ -955,10 +955,10 @@ public:
 	string addFriendByUserNameResponse = "";
 
 	bool _doLoginNoCaptions(string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doLogin(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doCreateAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userName, string &email, string &password, string &confirmPassword);
+	bool doLogin(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
+	bool doCreateAccount(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userName, string &email, string &password, string &confirmPassword);
 	bool checkForSessionTokenAndLogInIfExists();
-	bool doForgotPassword(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail);
-	bool linkFacebookAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel);
-	bool doAddFriendByUsername(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, const string& friendUserName);
+	bool doForgotPassword(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userNameOrEmail);
+	bool linkFacebookAccount(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel);
+	bool doAddFriendByUsername(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, const string& friendUserName);
 };

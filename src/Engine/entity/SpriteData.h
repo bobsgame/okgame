@@ -104,7 +104,7 @@ private:
 
 
 	
-	ArrayList<shared_ptr<SpriteAnimationSequence>> animationList;// = make_shared<ArrayList><shared_ptr<SpriteAnimationSequence>>();
+	vector<shared_ptr<SpriteAnimationSequence>> animationList;// = make_shared<ArrayList><shared_ptr<SpriteAnimationSequence>>();
 
 	shared_ptr<EventData> eventData = nullptr;
 
@@ -156,7 +156,7 @@ public:
 	int getUtilityOffsetYPixelsHQ();
 	string& getDataMD5();
 	string& getPaletteMD5();
-	ArrayList<shared_ptr<SpriteAnimationSequence>>* getAnimationList();
+	vector<shared_ptr<SpriteAnimationSequence>>* getAnimationList();
 	string& getComment();
 	bool getForceMD5Export();
 

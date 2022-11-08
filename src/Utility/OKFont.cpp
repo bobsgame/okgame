@@ -239,9 +239,9 @@ void OKFont::initFonts()
 	log.debug("Load outline fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
-	//shared_ptr<FreeTypeFontGenerator >generator = make_shared<FreeTypeFontGenerator>(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
-	//shared_ptr<BitmapFont >font12 = generator->generateFont(12); // font size 12 pixels
-	//shared_ptr<BitmapFont >font25 = generator->generateFont(25); // font size 25 pixels
+	//shared_ptr<FreeTypeFontGenerator>generator = make_shared<FreeTypeFontGenerator>(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
+	//shared_ptr<BitmapFont>font12 = generator->generateFont(12); // font size 12 pixels
+	//shared_ptr<BitmapFont>font25 = generator->generateFont(25); // font size 25 pixels
 	//generator->dispose(); // don't forget to dispose to avoid memory leaks!
 
 

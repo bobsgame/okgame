@@ -15,7 +15,7 @@ class Logger;
 
 class GameStringData;
 
-class GameString : public ServerObject
+class GameString : public ServerObject, public std::enable_shared_from_this<GameString>
 {
 private:
 	shared_ptr<GameStringData> data = nullptr;

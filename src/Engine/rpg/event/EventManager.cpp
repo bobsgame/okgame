@@ -21,41 +21,41 @@ EventManager::EventManager(shared_ptr<Engine> g)
 void EventManager::update()
 { //=========================================================================================================================
 
-	for(int i=0;i<eventList.size();i++)eventList.get(i)->update();//only update running events, otherwise we update events that we might not have access to yet.
+	for(int i=0;i<eventList.size();i++)eventList.at(i)->update();//only update running events, otherwise we update events that we might not have access to yet.
 
 	for (int i = 0; i < itemList.size(); i++)
 	{
-		itemList.get(i)->update();
+		itemList.at(i)->update();
 	}
 
 	for (int i = 0; i < gameStringList.size(); i++)
 	{
-		gameStringList.get(i)->update();
+		gameStringList.at(i)->update();
 	}
 
 	for (int i = 0; i < dialogueList.size(); i++)
 	{
-		dialogueList.get(i)->update();
+		dialogueList.at(i)->update();
 	}
 
 	for (int i = 0; i < flagList.size(); i++)
 	{
-		flagList.get(i)->update();
+		flagList.at(i)->update();
 	}
 
 	for (int i = 0; i < skillList.size(); i++)
 	{
-		skillList.get(i)->update();
+		skillList.at(i)->update();
 	}
 
 //	for (int i = 0; i < cutsceneEventList.size(); i++)
 //	{
-//		cutsceneEventList.get(i)->update();
+//		cutsceneEventList.at(i)->update();
 //	}
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
 	{
-		shared_ptr<Event> s = runningEventQueue.get(i);
+		shared_ptr<Event> s = runningEventQueue.at(i);
 		s->run();
 	}
 }
@@ -65,7 +65,7 @@ void EventManager::addToEventQueueIfNotThere(shared_ptr<Event> event)
 
 	if (event->getWasAddedToQueue() == false)
 	{
-		runningEventQueue.add(event);
+		runningEventQueue.push_back(event);
 		event->setAddedToQueue();
 	}
 
@@ -79,7 +79,7 @@ bool EventManager::isEventInQueue(shared_ptr<Event> event)
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
 	{
-		shared_ptr<Event> s = runningEventQueue.get(i);
+		shared_ptr<Event> s = runningEventQueue.at(i);
 
 		if (s == event)
 		{
@@ -94,13 +94,13 @@ void EventManager::unloadCurrentMapEvents()
 
 	for (int i = 0; i < (int)getCurrentMap()->mapEventList.size(); i++)
 	{
-		shared_ptr<Event> s = getCurrentMap()->mapEventList.get(i);// getEventManager()->getEventByID(getCurrentMap()->mapEventIDList.get(i));
+		shared_ptr<Event> s = getCurrentMap()->mapEventList.at(i);// getEventManager()->getEventByID(getCurrentMap()->mapEventIDList.at(i));
 		if(s!=nullptr)s->reset();
 	}
 
 	for (int i = 0; i < runningEventQueue.size(); i++)
 	{
-		shared_ptr<Event> s = runningEventQueue.get(i);
+		shared_ptr<Event> s = runningEventQueue.at(i);
 
 		if (s->type() != EventData::TYPE_PROJECT_INITIAL_LOADER && s->type() != EventData::TYPE_PROJECT_CUTSCENE_DONT_RUN_UNTIL_CALLED)
 		{
@@ -115,7 +115,7 @@ shared_ptr<Item> EventManager::getItemByID(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < itemList.size(); i++)
 	{
-		shared_ptr<Item> s = itemList.get(i);
+		shared_ptr<Item> s = itemList.at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -133,7 +133,7 @@ shared_ptr<Dialogue> EventManager::getDialogueByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < dialogueList.size(); i++)
 	{
-		shared_ptr<Dialogue> d = dialogueList.get(i);
+		shared_ptr<Dialogue> d = dialogueList.at(i);
 		if (d->getID() == id)
 		{
 			return d;
@@ -148,7 +148,7 @@ shared_ptr<Dialogue> EventManager::getDialogueByIDCreateIfNotExist(int id)
 //	//if event doesn't exist, make new one
 //	for (int i = 0; i < cutsceneEventList.size(); i++)
 //	{
-//		shared_ptr<Event> d = cutsceneEventList.get(i);
+//		shared_ptr<Event> d = cutsceneEventList.at(i);
 //		if (d->getID() == id)
 //		{
 //			return d;
@@ -164,7 +164,7 @@ shared_ptr<Event> EventManager::getEventByIDCreateIfNotExist(int id)
 	//if event doesn't exist, make new one
 	for (int i = 0; i < eventList.size(); i++)
 	{
-		shared_ptr<Event> d = eventList.get(i);
+		shared_ptr<Event> d = eventList.at(i);
 		if (d->getID() == id)
 		{
 			return d;
@@ -185,7 +185,7 @@ shared_ptr<Skill> EventManager::getSkillByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < skillList.size(); i++)
 	{
-		shared_ptr<Skill> s = skillList.get(i);
+		shared_ptr<Skill> s = skillList.at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -206,7 +206,7 @@ shared_ptr<GameString> EventManager::getGameStringByIDCreateIfNotExist(int id)
 
 	for (int i = 0; i < gameStringList.size(); i++)
 	{
-		shared_ptr<GameString> s = gameStringList.get(i);
+		shared_ptr<GameString> s = gameStringList.at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -220,7 +220,7 @@ shared_ptr<Flag> EventManager::getFlagByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	for (int i = 0; i < flagList.size(); i++)
 	{
-		shared_ptr<Flag> s = flagList.get(i);
+		shared_ptr<Flag> s = flagList.at(i);
 		if (s->getID() == id)
 		{
 			return s;

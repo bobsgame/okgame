@@ -98,7 +98,7 @@ public:
 
 	}
 	//=========================================================================================================================
-	void add(shared_ptr<BlockOffset >b)
+	void add(shared_ptr<BlockOffset>b)
 	{//=========================================================================================================================
 		blockOffsets.add(b);
 	}
@@ -112,7 +112,7 @@ public:
 		{
 			for (int i = 0; i<blockOffsets.size(); i++)
 			{
-				shared_ptr<BlockOffset >b = blockOffsets.get(i);
+				shared_ptr<BlockOffset>b = blockOffsets.get(i);
 				importExport_blockOffsets.add(*b);
 			}
 		}
@@ -122,7 +122,7 @@ public:
 			for (int i = 0; i<importExport_blockOffsets.size(); i++)
 			{
 				BlockOffset b = importExport_blockOffsets.get(i);
-				shared_ptr<BlockOffset >bp = make_shared<BlockOffset>();
+				shared_ptr<BlockOffset>bp = make_shared<BlockOffset>();
 				*bp = b;
 				blockOffsets.add(bp);
 			}
@@ -155,7 +155,7 @@ public:
 		this->name = name;
 	}
 	//=========================================================================================================================
-	void add(shared_ptr<Rotation >r)
+	void add(shared_ptr<Rotation>r)
 	{//=========================================================================================================================
 		rotationSet.add(r);
 	}
@@ -176,7 +176,7 @@ public:
 		{
 			for (int i = 0; i<rotationSet.size(); i++)
 			{
-				shared_ptr<Rotation >b = rotationSet.get(i);
+				shared_ptr<Rotation>b = rotationSet.get(i);
 				importExport_rotationSet.add(*b);
 			}
 		}
@@ -186,7 +186,7 @@ public:
 			for (int i = 0; i<importExport_rotationSet.size(); i++)
 			{
 				Rotation b = importExport_rotationSet.get(i);
-				shared_ptr<Rotation >bp = make_shared<Rotation>();
+				shared_ptr<Rotation>bp = make_shared<Rotation>();
 				*bp = b;
 				rotationSet.add(bp);
 			}
@@ -208,7 +208,7 @@ public:
 	//int numBlocks = 1;
 	//int lastRotation = 0;
 
-	shared_ptr<OKColor >color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
+	shared_ptr<OKColor>color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
 private:
 	OKColor importExport_color;
 public:
@@ -272,8 +272,8 @@ public:
 		//this->numBlocks = 1;
 		//this->lastRotation = 0;
 
-		shared_ptr<BlockOffset >b = make_shared<BlockOffset>(0, 0);
-		shared_ptr<Rotation >r = make_shared<Rotation>();
+		shared_ptr<BlockOffset>b = make_shared<BlockOffset>(0, 0);
+		shared_ptr<Rotation>r = make_shared<Rotation>();
 		r->add(b);
 		//rotationSet = make_shared<ArrayList><shared_ptr<Rotation>>();
 		rotationSet = RotationSet("");
@@ -281,7 +281,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	PieceType(const string &name, const string& spriteName = "", shared_ptr<OKColor >color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
+	PieceType(const string &name, const string& spriteName = "", shared_ptr<OKColor>color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
 	{//=========================================================================================================================
 		this->name = name;
 

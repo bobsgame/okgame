@@ -82,9 +82,9 @@ void OKMenu::MenuItem::setText(string s)
 	caption->setText(s);
 }
 
-//shared_ptr<OKSubMenu> OKMenu::addSubMenu(string caption, string id, shared_ptr<OKGame >b, void(*f) (shared_ptr<OKGame>, string))
+//shared_ptr<OKSubMenu> OKMenu::addSubMenu(string caption, string id, shared_ptr<OKGame>b, void(*f) (shared_ptr<OKGame>, string))
 //{
-//	shared_ptr<MenuItem >m = make_shared<MenuItem>();
+//	shared_ptr<MenuItem>m = make_shared<MenuItem>();
 //	m->caption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, 0, -1, caption, font, menuColor, OKColor::clear, RenderOrder::OVER_GUI);
 //	m->subMenu = make_shared<OKSubMenu>(e);
 //	m->subMenu->parentMenu = this;
@@ -100,7 +100,7 @@ void OKMenu::MenuItem::setText(string s)
 //}
 
 //=========================================================================================================================
-OKMenu::OKMenu(shared_ptr<Engine >g, string title, string subtitle)
+OKMenu::OKMenu(shared_ptr<Engine>g, string title, string subtitle)
 {//=========================================================================================================================
 	this->e = g;
 	if (rectangleCursorTexture == nullptr)rectangleCursorTexture = GLUtils::getTextureFromPNGExePath("data/textbox/rectangleCursor.png");
@@ -168,13 +168,13 @@ void OKMenu::setAllCaptionsToFullAlpha()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if(m->caption!=nullptr)m->caption->setAlphaImmediately(1.0f);
 	}
 }
 
 //=========================================================================================================================
-void OKMenu::update(shared_ptr<Engine >g, int ticksPassed)
+void OKMenu::update(shared_ptr<Engine>g, int ticksPassed)
 {//=========================================================================================================================
 	cursorInOutToggleTicks += ticksPassed;
 	if (cursorInOutToggleTicks > 300)
@@ -195,17 +195,17 @@ void OKMenu::update(shared_ptr<Engine >g, int ticksPassed)
 
 	for(int i = 0; i < activeMenus.size(); i++)
 	{
-		shared_ptr<OKMenu >m = activeMenus.get(i);
+		shared_ptr<OKMenu>m = activeMenus.get(i);
 
 		for(int n = 0; n < m->menuItems.size(); n++)
 		{
-			shared_ptr<MenuItem >mi = m->menuItems.get(n);
+			shared_ptr<MenuItem>mi = m->menuItems.get(n);
 
 			if (mi->info)continue;
 			if (mi->hidden)continue;
 
 
-			shared_ptr<Caption >c = mi->caption;
+			shared_ptr<Caption>c = mi->caption;
 			if (c->visible == false)continue;
 
 			int x0 = c->screenX + (c->getWidth() * 0.05);
@@ -231,7 +231,7 @@ bool OKMenu::areAllMenusDisabled()
 	bool allDisabled = true;
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if (m->hidden == false && m->info == false)
 		{
 			allDisabled = false;
@@ -269,14 +269,14 @@ void OKMenu::down(bool noSound)
 }
 
 //=========================================================================================================================
-OKMenu::MenuItem* OKMenu::addInfo(string caption, string id, shared_ptr<OKColor >color)
+OKMenu::MenuItem* OKMenu::addInfo(string caption, string id, shared_ptr<OKColor>color)
 {//=========================================================================================================================
 
 	if (color == nullptr)color = infoColor;
 
 	
 
-	shared_ptr<MenuItem >m = make_shared<MenuItem>();
+	shared_ptr<MenuItem>m = make_shared<MenuItem>();
 
 	//outline = false;
 	m->outline = false;
@@ -297,12 +297,12 @@ OKMenu::MenuItem* OKMenu::addInfo(string caption, string id, shared_ptr<OKColor 
 }
 
 //=========================================================================================================================
-OKMenu::MenuItem* OKMenu::add(string caption, string id, shared_ptr<OKColor >color)
+OKMenu::MenuItem* OKMenu::add(string caption, string id, shared_ptr<OKColor>color)
 {//=========================================================================================================================
 
 	if (color == nullptr)color = defaultMenuColor;
 
-	shared_ptr<MenuItem >m = make_shared<MenuItem>();
+	shared_ptr<MenuItem>m = make_shared<MenuItem>();
 	m->outline = outline;
 	m->caption = make_shared<Caption>(e, Caption::Position::CENTERED_X, 0, 0, -1, caption, fontSize, m->outline, color, RenderOrder::OVER_GUI);
 	m->captionText = caption;
@@ -320,8 +320,8 @@ OKMenu::MenuItem* OKMenu::addYesNo(string caption, bool yesNo)
 	//string value = "";
 	//if (yesNo==false)value = " - (No)";
 	//else value = "   ";
-	//shared_ptr<MenuItem >m = add(caption + value, caption);
-	shared_ptr<MenuItem >m = add(caption, caption);
+	//shared_ptr<MenuItem>m = add(caption + value, caption);
+	shared_ptr<MenuItem>m = add(caption, caption);
 	m->captionText = caption;
 	
 	m->isYesNoType = true;
@@ -337,7 +337,7 @@ void OKMenu::setHidden(string id, bool b)
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if (m->id == id)
 		{
 			m->hidden = b;
@@ -350,7 +350,7 @@ void OKMenu::setAllInvisible()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if (m->caption != nullptr)m->caption->visible = false;
 	}
 }
@@ -360,7 +360,7 @@ void OKMenu::setAllVisible()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if (m->caption != nullptr)m->caption->visible = true;
 	}
 }
@@ -375,10 +375,10 @@ bool OKMenu::isSelectedID(string id, bool clicked, int mx, int my)
 	{
 		for(int i=0;i<menuItems.size();i++)
 		{
-			shared_ptr<MenuItem >m = menuItems.get(i);
+			shared_ptr<MenuItem>m = menuItems.get(i);
 			if (m->id != id)continue;
 
-			shared_ptr<Caption >c = m->caption;
+			shared_ptr<Caption>c = m->caption;
 			if (c->visible == false)continue;
 
 			int x0 = c->screenX + (c->getWidth()*0.01);
@@ -414,7 +414,7 @@ void OKMenu::setSelectedID(string id)
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if (m->id == id)
 		{
 			cursorPosition = i;
@@ -428,7 +428,7 @@ shared_ptr<Caption> OKMenu::getCaptionByID(string id)
 
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if (m->id == id)
 		{
 			return m->caption;
@@ -444,7 +444,7 @@ OKMenu::MenuItem* OKMenu::getMenuItemByID(string id)
 
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		shared_ptr<MenuItem >m = menuItems.get(i);
+		shared_ptr<MenuItem>m = menuItems.get(i);
 		if (m->id == id)
 		{
 			return m;
@@ -628,8 +628,8 @@ void OKMenu::render
 		//populate visibleMenuItems
 		for (int i = 0; i < menuItems.size(); i++)
 		{
-			shared_ptr<MenuItem >m = menuItems.get(i);
-			shared_ptr<Caption >c = m->caption;
+			shared_ptr<MenuItem>m = menuItems.get(i);
+			shared_ptr<Caption>c = m->caption;
 
 			if (c != nullptr)
 			{
@@ -663,8 +663,8 @@ void OKMenu::render
 
 			for (int i = 0; i < visibleMenuItems.size(); i++)
 			{
-				shared_ptr<MenuItem >m = visibleMenuItems.get(i);
-				shared_ptr<Caption >c = m->caption;
+				shared_ptr<MenuItem>m = visibleMenuItems.get(i);
+				shared_ptr<Caption>c = m->caption;
 
 				if (c != nullptr)
 				{
@@ -699,8 +699,8 @@ void OKMenu::render
 				//decrease the font size for all menu items
 				for (int i = 0; i < menuItems.size(); i++)
 				{
-					shared_ptr<MenuItem >m = menuItems.get(i);
-					shared_ptr<Caption >c = m->caption;
+					shared_ptr<MenuItem>m = menuItems.get(i);
+					shared_ptr<Caption>c = m->caption;
 					scaledFontSize = c->reduceHeightByOne();
 
 					topMenuItemDrawn = nullptr;
@@ -720,8 +720,8 @@ void OKMenu::render
 				//increase the font size for all menu items only up to the default size
 				for (int i = 0; i < menuItems.size(); i++)
 				{
-					shared_ptr<MenuItem >m = menuItems.get(i);
-					shared_ptr<Caption >c = m->caption;
+					shared_ptr<MenuItem>m = menuItems.get(i);
+					shared_ptr<Caption>c = m->caption;
 					scaledFontSize = c->increaseHeightByOne();
 
 					topMenuItemDrawn = nullptr;
@@ -751,8 +751,8 @@ void OKMenu::render
 		//set them all invisible so i can only enable the ones to fit on the screen
 		for (int i = 0; i < visibleMenuItems.size(); i++)
 		{
-			shared_ptr<MenuItem >m = visibleMenuItems.get(i);
-			shared_ptr<Caption >c = m->caption;
+			shared_ptr<MenuItem>m = visibleMenuItems.get(i);
+			shared_ptr<Caption>c = m->caption;
 
 			if (c != nullptr)
 			{
@@ -855,8 +855,8 @@ void OKMenu::render
 			}
 			if (i < 0)i = 0;
 
-			shared_ptr<MenuItem >m = visibleMenuItems.get(i);
-			shared_ptr<Caption >c = m->caption;
+			shared_ptr<MenuItem>m = visibleMenuItems.get(i);
+			shared_ptr<Caption>c = m->caption;
 
 			if (c != nullptr)
 			{
@@ -985,7 +985,7 @@ void OKMenu::render
 
 
 
-			shared_ptr<OKTexture >cursor = rectangleCursorTexture;
+			shared_ptr<OKTexture>cursor = rectangleCursorTexture;
 
 			if (cursor != nullptr && menuItems.size() > 0)
 			{
@@ -1003,9 +1003,9 @@ void OKMenu::render
 		//getCaptionManager()->render(RenderOrder::OVER_GUI);
 		for (int i = 0; i < menuItems.size(); i++)
 		{
-			shared_ptr<MenuItem >m = menuItems.get(i);
+			shared_ptr<MenuItem>m = menuItems.get(i);
 			if (i != cursorPosition)m->caption->setTextColor(m->color);
-			shared_ptr<Caption >c = m->caption;
+			shared_ptr<Caption>c = m->caption;
 			c->update();
 			c->render();
 		}
@@ -1023,7 +1023,7 @@ void OKMenu::render
 		//			if (areAllMenusDisabled() == false && drawCursor)
 		//			{
 		//
-		//				shared_ptr<OKTexture >cursor = cursorTexture;
+		//				shared_ptr<OKTexture>cursor = cursorTexture;
 		//
 		//				if (cursor != nullptr && menuItems != nullptr && menuItems.size() > 0)
 		//				{
@@ -1041,7 +1041,7 @@ void OKMenu::render
 
 		if (drawUpArrow)
 		{
-			shared_ptr<OKTexture >t = upCursorTexture;
+			shared_ptr<OKTexture>t = upCursorTexture;
 			if (t != nullptr)
 			{
 				float sx0 = (float)(GLUtils::getViewportWidth() / 2 - 4);
@@ -1060,7 +1060,7 @@ void OKMenu::render
 
 		if (drawDownArrow)
 		{
-			shared_ptr<OKTexture >t = downCursorTexture;
+			shared_ptr<OKTexture>t = downCursorTexture;
 			if (t != nullptr)
 			{
 				float sx0 = (float)(GLUtils::getViewportWidth() / 2 - 4);

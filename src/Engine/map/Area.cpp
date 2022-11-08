@@ -832,7 +832,7 @@ float Area::screenX()
 		screenXPixelsHQ = (left - screenleft);
 	}
 
-	return screenXshared_ptr<PixelsHQ > zoom;
+	return screenXshared_ptr<PixelsHQ> zoom;
 }
 
 float Area::screenY()
@@ -863,7 +863,7 @@ float Area::screenY()
 		screenYPixelsHQ = top - screentop;
 	}
 
-	return screenYshared_ptr<PixelsHQ > zoom;
+	return screenYshared_ptr<PixelsHQ> zoom;
 }
 
 float Area::screenLeft()

@@ -66,7 +66,7 @@ public:
 
 	void Render(Gwen::Skin::Base* skin);
 
-	shared_ptr<OKGame >bobsGame = nullptr;
+	shared_ptr<OKGame>bobsGame = nullptr;
 };
 
 
@@ -91,7 +91,7 @@ public:
 	}
 	const char* GetTypeName() { return "GameTestMenuControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "", shared_ptr<OKGame >b = nullptr);
+	GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "", shared_ptr<OKGame>b = nullptr);
 
 
 
@@ -162,7 +162,7 @@ public:
 	bool exit = false;
 private:
 
-	shared_ptr<GameSequence >currentGameSequence = nullptr;
+	shared_ptr<GameSequence>currentGameSequence = nullptr;
 
 
 public:

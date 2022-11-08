@@ -27,7 +27,7 @@ Logger Sound::log = Logger("Sound");
 //	Main::audioManager->soundList->add(this);
 //}
 
-Sound::Sound(shared_ptr<Engine> g, shared_ptr<AudioFile >f)
+Sound::Sound(shared_ptr<Engine> g, shared_ptr<AudioFile>f)
 { //=========================================================================================================================
 	this->e = g;
 

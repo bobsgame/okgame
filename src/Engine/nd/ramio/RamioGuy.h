@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	RamioGuy(shared_ptr<Engine> g, shared_ptr<Map >m);
+	RamioGuy(shared_ptr<Engine> g, shared_ptr<Map>m);
 
 
 	int framesSincePressedA = 0;

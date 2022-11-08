@@ -33,7 +33,7 @@ public:
 
 	string mapName = "";
 
-	shared_ptr<UDPPeerConnection > connection = nullptr;
+	shared_ptr<UDPPeerConnection> connection = nullptr;
 
 
 public:
@@ -60,7 +60,7 @@ public:
 	void setGameToForwardPacketsTo(shared_ptr<MiniGameEngine> game);
 
 
-	bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection >c, string e) override;
+	bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string e) override;
 
 
 

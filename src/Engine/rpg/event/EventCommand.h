@@ -14,7 +14,7 @@ class Logger;
 class EventParameter;
 
 
-class EventCommand : public EnginePart
+class EventCommand : public EnginePart, public std::enable_shared_from_this<EventCommand>
 {
 public:
 
@@ -30,15 +30,15 @@ public:
 	static int TYPE_QUALIFIER_FALSE;
 
 
-	ArrayList<shared_ptr<EventParameter>> parameterList;// = make_shared<ArrayList><shared_ptr<EventParameter>>();
+	vector<shared_ptr<EventParameter>> parameterList;// = make_shared<ArrayList><shared_ptr<EventParameter>>();
 
 	shared_ptr<EventCommand> parent = nullptr;
 
 
-	ArrayList<shared_ptr<EventCommand>> children;// = make_shared<ArrayList><shared_ptr<EventCommand>>();
+	vector<shared_ptr<EventCommand>> children;// = make_shared<ArrayList><shared_ptr<EventCommand>>();
 
 
-	EventCommand(shared_ptr<Engine> g, const string& command, ArrayList<shared_ptr<EventParameter>> &parameterList, int type);
+	EventCommand(shared_ptr<Engine> g, const string& command, vector<shared_ptr<EventParameter>> &parameterList, int type);
 
 	int getNumParams();
 

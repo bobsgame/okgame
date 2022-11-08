@@ -1370,7 +1370,7 @@ void Caption::updateScreenXY()
 	//-----------------------------
 	if (fixedPosition == Position::CENTERED_OVER_ENTITY)
 	{
-		shared_ptr<Entity >e = entity;
+		shared_ptr<Entity>e = entity;
 		if (e == nullptr)e = getPlayer();
 
 		if(e!=nullptr)

@@ -15,7 +15,7 @@ class Logger;
 
 class FlagData;
 
-class Flag : public ServerObject
+class Flag : public ServerObject, public std::enable_shared_from_this<Flag>
 {
 private:
 	bool value = false;

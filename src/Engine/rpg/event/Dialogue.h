@@ -15,7 +15,7 @@ class ServerObject;
 class DialogueData;
 
 
-class Dialogue : public ServerObject
+class Dialogue : public ServerObject, public std::enable_shared_from_this<Dialogue>
 {
 public:
 

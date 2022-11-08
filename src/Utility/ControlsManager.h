@@ -616,7 +616,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController >g = gameControllers.get(i);
+			shared_ptr<GameController>g = gameControllers.get(i);
 			if (g->start_Pressed())return true;
 		}
 		return false;
@@ -631,7 +631,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController >g = gameControllers.get(i);
+			shared_ptr<GameController>g = gameControllers.get(i);
 			if (g->select_Pressed())return true;
 		}
 		return false;
@@ -644,7 +644,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController >g = gameControllers.get(i);
+			shared_ptr<GameController>g = gameControllers.get(i);
 			if (g->b_Pressed())return true;
 		}
 		return false;
@@ -658,7 +658,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController >g = gameControllers.get(i);
+			shared_ptr<GameController>g = gameControllers.get(i);
 			if (g->a_Pressed())return true;
 		}
 		return false;
@@ -729,7 +729,7 @@ public:
 
 	static void cleanup();
 
-	void doHaptic(shared_ptr<GameController >g, int length, int magnitude = 32767, int attackLength = 500, int fadeLength = 500, int wavePeriod = 500);
+	void doHaptic(shared_ptr<GameController>g, int length, int magnitude = 32767, int attackLength = 500, int fadeLength = 500, int wavePeriod = 500);
 	int getMouseX();
 	int getMouseY();
 };

@@ -31,7 +31,7 @@ public:
 	shared_ptr<Mix_Chunk> mixChunk = nullptr;
 #endif
 
-	Sound(shared_ptr<Engine> g, shared_ptr<AudioFile >f);
+	Sound(shared_ptr<Engine> g, shared_ptr<AudioFile>f);
 
 
 

@@ -304,66 +304,66 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	//global objects
 	if (OKString::startsWith(typeIDName, "MAP."))
 	{
-		return getMapManager()->getMapByIDBlockUntilLoaded(id);
+		return &(getMapManager()->getMapByIDBlockUntilLoaded(id));
 	}
 	if (OKString::startsWith(typeIDName, "SPRITE."))
 	{
-		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id);
+		return &(getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "DIALOGUE."))
 	{
-		return getEventManager()->getDialogueByIDCreateIfNotExist(id);
+		return &(getEventManager()->getDialogueByIDCreateIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "CUTSCENEEVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id);
+		return &(getEventManager()->getEventByIDCreateIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "EVENT."))
 	{
-		return getEventManager()->getEventByIDCreateIfNotExist(id);
+		return &(getEventManager()->getEventByIDCreateIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "FLAG."))
 	{
-		return getEventManager()->getFlagByIDCreateIfNotExist(id);
+		return &(getEventManager()->getFlagByIDCreateIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "SKILL."))
 	{
-		return getEventManager()->getSkillByIDCreateIfNotExist(id);
+		return &(getEventManager()->getSkillByIDCreateIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "GAMESTRING."))
 	{
-		return getEventManager()->getGameStringByIDCreateIfNotExist(id);
+		return &(getEventManager()->getGameStringByIDCreateIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "MUSIC."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
+		return &(getAudioManager()->getSoundByIDCreateIfNotExist(id));
 	}
 	if (OKString::startsWith(typeIDName, "SOUND."))
 	{
-		return getAudioManager()->getSoundByIDCreateIfNotExist(id);
+		return &(getAudioManager()->getSoundByIDCreateIfNotExist(id));
 	}
 
 
 	//map objects (will only exist within the current map)
 	if (OKString::startsWith(typeIDName, "STATE."))
 	{
-		return getMapManager()->getMapStateByID(id);
+		return &(getMapManager()->getMapStateByID(id));
 	}
 	if (OKString::startsWith(typeIDName, "ENTITY."))
 	{
-		return getMapManager()->getEntityByID(id);
+		return &(getMapManager()->getEntityByID(id));
 	}
 	if (OKString::startsWith(typeIDName, "AREA."))
 	{
-		return getMapManager()->getAreaByID(id);
+		return &(getMapManager()->getAreaByID(id));
 	}
 	if (OKString::startsWith(typeIDName, "LIGHT."))
 	{
-		return getMapManager()->getLightByID(id);
+		return &(getMapManager()->getLightByID(id));
 	}
 	if (OKString::startsWith(typeIDName, "DOOR."))
 	{
-		return getMapManager()->getDoorByID(id);
+		return &(getMapManager()->getDoorByID(id));
 	}
 
 
@@ -548,7 +548,7 @@ shared_ptr<BGClientEngine> Engine::getClientGameEngine()
 
 shared_ptr<TCPServerConnection> Engine::getServerConnection()
 {
-	return &(Main::bobNet->tcpServerConnection);
+	return Main::bobNet->tcpServerConnection;
 }
 
 long long Engine::getUserID_S()
@@ -771,29 +771,29 @@ void Engine::incomingMapData(string s)
 
 void Engine::sendServerObjectRequest(shared_ptr<ServerObject> serverObject)
 { //====================================================
-     if(dynamic_cast<shared_ptr<Dialogue>>(serverObject) != nullptr)
+     if(dynamic_cast<Dialogue*>(serverObject.get()) != nullptr)
      {
-        sendDialogueRequest((static_cast<shared_ptr<Dialogue>>(serverObject))->getID());
+        sendDialogueRequest((static_cast<Dialogue*>(serverObject.get()))->getID());
      }
-     if (dynamic_cast<shared_ptr<Flag>>(serverObject) != nullptr)
+     if (dynamic_cast<Flag*>(serverObject.get()) != nullptr)
      {
-        sendFlagRequest((static_cast<shared_ptr<Flag>>(serverObject))->getID());
+        sendFlagRequest((static_cast<Flag*>(serverObject.get()))->getID());
      }
-     if (dynamic_cast<shared_ptr<GameString>>(serverObject) != nullptr)
+     if (dynamic_cast<GameString*>(serverObject.get()) != nullptr)
      {
-        sendGameStringRequest((static_cast<shared_ptr<GameString>>(serverObject))->getID());
+        sendGameStringRequest((static_cast<GameString*>(serverObject.get()))->getID());
      }
-     if (dynamic_cast<shared_ptr<Skill>>(serverObject) != nullptr)
+     if (dynamic_cast<Skill*>(serverObject.get()) != nullptr)
      {
-        sendSkillRequest((static_cast<shared_ptr<Skill>>(serverObject))->getID());
+        sendSkillRequest((static_cast<Skill*>(serverObject.get()))->getID());
      }
-     if (dynamic_cast<shared_ptr<Event>>(serverObject) != nullptr)
+     if (dynamic_cast<Event*>(serverObject.get()) != nullptr)
      {
-        sendEventRequest((static_cast<shared_ptr<Event>>(serverObject))->getID());
+        sendEventRequest((static_cast<Event*>(serverObject.get()))->getID());
      }
-     if (dynamic_cast<shared_ptr<AudioFile>>(serverObject) != nullptr)
+     if (dynamic_cast<AudioFile*>(serverObject.get()) != nullptr)
      {
-        sendSoundRequest((static_cast<shared_ptr<AudioFile>>(serverObject))->getID());
+        sendSoundRequest((static_cast<AudioFile*>(serverObject.get()))->getID());
      }
 
 }

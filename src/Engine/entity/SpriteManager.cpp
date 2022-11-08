@@ -264,7 +264,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteByName(const string& spriteAssetName)
 
 	if (s == nullptr)
 	{
-		log->error("getSpriteByName not found in spriteByNameHashMap:" + spriteAssetName);
+		log.error("getSpriteByName not found in spriteByNameHashMap:" + spriteAssetName);
 	}
 
 
@@ -887,15 +887,15 @@ GLuint HARDWARE_preload_sprite_texture_frame(GFX* gfx, int frame, int IndexInCac
 	if (IndexInCachedTextureIDArray != -2)///for normal textures
 	{
 		//if there is already a texture there delete it and throw error
-		if (USED_preloaded_sprite_textures_USED[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame] && glIsTexture(GLTex_preloaded_sprite_textures[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame]))
+		if (USED_preloaded_sprite_textures_USED[IndexInCachedTextureIDArray > 8 * 8 + frame] && glIsTexture(GLTex_preloaded_sprite_textures[IndexInCachedTextureIDArray> 8 * 8 + frame]))
 			///THIS IS THE MULTIPLE SPRITE BUG SINCE THERE IS A TEXTURE ZERO, EVERY SINGLE ENTRY IS GETTING DELETED
 		{
-			glDeleteTextures(1, &GLTex_preloaded_sprite_textures[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame]);
+			glDeleteTextures(1, &GLTex_preloaded_sprite_textures[IndexInCachedTextureIDArray> 8 * 8 + frame]);
 			//fprintf(stderr,"texture %s already existed and was overwritten. this shouldn't normally happen, so find out why!\n",gfx->FileName);
 		}
 
-		glGenTextures(1, &GLTex_preloaded_sprite_textures[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame]);
-		glBindTexture(GL_TEXTURE_2D, GLTex_preloaded_sprite_textures[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame]);
+		glGenTextures(1, &GLTex_preloaded_sprite_textures[IndexInCachedTextureIDArray> 8 * 8 + frame]);
+		glBindTexture(GL_TEXTURE_2D, GLTex_preloaded_sprite_textures[IndexInCachedTextureIDArray> 8 * 8 + frame]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, g);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -908,9 +908,9 @@ GLuint HARDWARE_preload_sprite_texture_frame(GFX* gfx, int frame, int IndexInCac
 			rgba_data = NULL;
 		}
 
-		USED_preloaded_sprite_textures_USED[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame] = 1;
+		USED_preloaded_sprite_textures_USED[IndexInCachedTextureIDArray> 8 * 8 + frame] = 1;
 
-		return GLTex_preloaded_sprite_textures[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame]; //dont have to do this
+		return GLTex_preloaded_sprite_textures[IndexInCachedTextureIDArray> 8 * 8 + frame]; //dont have to do this
 	}
 	else /// is -2, for captions ONLY right now
 	{
@@ -993,7 +993,7 @@ void HARDWARE_update_sprite_texture(SPRITE* sprite, int gfx_index)
 			if (
 
 
-				USED_preloaded_sprite_textures_USED[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame] == 0 //it hasnt been preloaded
+				USED_preloaded_sprite_textures_USED[IndexInCachedTextureIDArray> 8 * 8 + frame] == 0 //it hasnt been preloaded
 				||
 				gfx_data_is_file == 0
 				)
@@ -1003,17 +1003,17 @@ void HARDWARE_update_sprite_texture(SPRITE* sprite, int gfx_index)
 			}
 
 
-			if (glIsTexture(GLTex_preloaded_sprite_textures[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame]) == 0)
+			if (glIsTexture(GLTex_preloaded_sprite_textures[IndexInCachedTextureIDArray> 8 * 8 + frame]) == 0)
 			{
 				ERROR_set_error("HARDWARE_update_sprite_texture: the texture was created but isnt a texture!\n");
 			}
 
-			if (USED_preloaded_sprite_textures_USED[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame] == 0)
+			if (USED_preloaded_sprite_textures_USED[IndexInCachedTextureIDArray> 8 * 8 + frame] == 0)
 			{
 				ERROR_set_error("HARDWARE_update_sprite_texture: it wasn't marked as used!\n");
 			}
 
-			sprite->texture_id = GLTex_preloaded_sprite_textures[IndexInCachedTextureIshared_ptr<DArray > 8 * 8 + frame];
+			sprite->texture_id = GLTex_preloaded_sprite_textures[IndexInCachedTextureIDArray> 8 * 8 + frame];
 		}
 	}
 }

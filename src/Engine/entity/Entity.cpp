@@ -215,7 +215,7 @@ void Entity::renderDebugBoxes()
 			//go through doorlist
 			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
 			{
-				shared_ptr<Door> door = getMap()->doorList.get(d);
+				shared_ptr<Door> door = getMap()->doorList.at(d);
 
 				if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
 				{
@@ -240,7 +240,7 @@ void Entity::renderDebugBoxes()
 
 				for (int j = 0; j < (int)getMap()->currentState->areaList.size(); j++)
 				{
-					shared_ptr<Area> a = getMap()->currentState->areaList.get(j);
+					shared_ptr<Area> a = getMap()->currentState->areaList.at(j);
 
 					if (getConnectionTYPEIDList()->get(i) == a->getName())
 					{
@@ -255,7 +255,7 @@ void Entity::renderDebugBoxes()
 			//if not found, go through warparea list
 			for (int j = 0; j < (int)getMap()->warpAreaList.size(); j++)
 			{
-				shared_ptr<Area> a = getMap()->warpAreaList.get(j);
+				shared_ptr<Area> a = getMap()->warpAreaList.at(j);
 
 				if (getConnectionTYPEIDList()->get(i) == a->getName())
 				{
@@ -786,7 +786,7 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 
 		for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
 		{
-			shared_ptr<Entity> m = getMap()->activeEntityList.get(i);
+			shared_ptr<Entity> m = getMap()->activeEntityList.at(i);
 
 			if (m.get() != this &&
 				(dynamic_cast<Door*>(m.get()) != NULL) == false &&
@@ -822,7 +822,7 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 
 	for (int s = 0; s < (int)getMap()->activeEntityList.size(); s++)
 	{
-		shared_ptr<Entity> e = getMap()->activeEntityList.get(s);
+		shared_ptr<Entity> e = getMap()->activeEntityList.at(s);
 
 		if (e->getNonWalkable() == false)
 		{
@@ -847,7 +847,7 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 
 	for (int s = 0; s < (int)getMap()->doorList.size(); s++)
 	{
-		shared_ptr<Door> e = getMap()->doorList.get(s);
+		shared_ptr<Door> e = getMap()->doorList.at(s);
 
 		if (e->getNonWalkable() == false || e->isOpen())
 		{
@@ -1460,10 +1460,18 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 	shared_ptr<Map>m = getMap();
 	if (m != nullptr)
 	{
-		if (m->activeEntityList.contains(this))
+		for (int i=0; i<m->activeEntityList.size();i++)
 		{
-			m->activeEntityList.remove(this);
+			shared_ptr<Entity> se = m->activeEntityList.at(i);
+			if (se.get() == this)
+			{
+				m->activeEntityList.erase(m->activeEntityList.begin() + i);
+			}
 		}
+		//if (m->activeEntityList.contains(this))
+		//{
+		//	m->activeEntityList.remove(this);
+		//}
 	}
 
 	if ((dynamic_cast<Player*>(this) != NULL) || (dynamic_cast<Character*>(this) != NULL) || (dynamic_cast<RandomCharacter*>(this) != NULL))
@@ -1478,7 +1486,7 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 
 void Entity::addEventBehavior(const string& s)
 { //=========================================================================================================================
-	eventBehaviorList->add(s); //TODO: handle this stuff right!
+	eventBehaviorList.add(s); //TODO: handle this stuff right!
 }
 
 shared_ptr<OKBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
@@ -1506,9 +1514,9 @@ shared_ptr<Entity> Entity::findNearestEntity()
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		shared_ptr<Entity> currentEntity = getMap()->activeEntityList.get(n);
+		shared_ptr<Entity> currentEntity = getMap()->activeEntityList.at(n);
 
-		if (this != currentEntity)
+		if (this != currentEntity.get())
 		{
 			float x = getMiddleX() - (currentEntity->getMiddleX());
 			float y = getMiddleY() - (currentEntity->getMiddleY());
@@ -1543,9 +1551,9 @@ shared_ptr<Entity> Entity::findNearestEntityInDirection(int dir)
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		shared_ptr<Entity> e = getMap()->activeEntityList.get(n);
+		shared_ptr<Entity> e = getMap()->activeEntityList.at(n);
 
-		if (this != e)
+		if (this != e.get())
 		{
 			float eMiddleX = e->getMiddleX();
 			float eMiddleY = e->getMiddleY();
@@ -2057,7 +2065,7 @@ bool Entity::isTouchingPlayerInDirection(int dir)
 	{
 		return false;
 	}
-	if (this == getPlayer())
+	if (this == getPlayer().get())
 	{
 		return false;
 	}
@@ -2280,7 +2288,7 @@ float Entity::getScreenX()
 		screenXPixelsHQ = (left - screenleft);
 	}
 
-	return screenXshared_ptr<PixelsHQ > zoom;
+	return screenXPixelsHQ > zoom;
 }
 
 float Entity::getScreenY()
@@ -2308,7 +2316,7 @@ float Entity::getScreenY()
 		screenYPixelsHQ = top - screentop;
 	}
 
-	return screenYshared_ptr<PixelsHQ > zoom;
+	return screenYPixelsHQ > zoom;
 }
 
 float Entity::getScreenLeft()

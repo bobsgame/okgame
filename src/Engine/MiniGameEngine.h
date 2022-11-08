@@ -48,11 +48,11 @@ public:
 	bool titleMenuShowing = false;
 
 	bool pauseMenuShowing = false;
-	shared_ptr<OKMenu >pauseMenu = nullptr;
+	shared_ptr<OKMenu>pauseMenu = nullptr;
 	//shared_ptr<Caption> volumeCaption = nullptr;
 	int pauseMenuCursorPosition = 0;
 
-	shared_ptr<OKMenu >titleMenu = nullptr;
+	shared_ptr<OKMenu>titleMenu = nullptr;
 	int titleMenuCursorPosition = 0;
 
 	virtual void setupMenus();
@@ -134,7 +134,7 @@ public:
 	void setIncomingGameChallengeResponse(int s);
 
 	//void setConnection(shared_ptr<UDPPeerConnection> connection);
-	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection >c, string e);
+	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string e);
 
 private:
 	void incoming_GameChallengeResponse(const string& s);

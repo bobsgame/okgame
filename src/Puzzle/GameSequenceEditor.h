@@ -58,7 +58,7 @@ public:
 	}
 	const char* GetTypeName() { return "GameSequenceEditorControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",shared_ptr<OKGame >b = nullptr);
+	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",shared_ptr<OKGame>b = nullptr);
     
     
 	void openLoadOrCreateDialog(bool allowedToClose);
@@ -169,7 +169,7 @@ private:
 	Gwen::Controls::Button* duplicateGameSequenceButton = nullptr;
 	Gwen::Controls::Button* deleteGameSequenceButton = nullptr;
     
-	shared_ptr<GameSequence >currentGameSequence = nullptr;
+	shared_ptr<GameSequence>currentGameSequence = nullptr;
     
     
 	//shared_ptr<WindowControl> selectWindow = nullptr;

@@ -109,7 +109,7 @@ void TCPServerConnection::update()
 }
 
 //===============================================================================================
-void TCPServerConnection::updateThreadLoop(shared_ptr<TCPServerConnection >u)
+void TCPServerConnection::updateThreadLoop(shared_ptr<TCPServerConnection>u)
 {//===============================================================================================
 
 	long long _queuedSaveGameUpdateDelayTime = 0;
@@ -358,7 +358,7 @@ void TCPServerConnection::_checkForIncomingTraffic()
 					{
 						string *s = new string(buf, bytesReceived);
 
-						packetsToProcess.push(s);
+						packetsToProcess.push(*s);
 						delete[] buf;
 
 					}
@@ -388,16 +388,16 @@ void TCPServerConnection::_checkForIncomingTraffic()
 		while (packetsToProcess.size() > 0)
 		{
 
-			string *sp = packetsToProcess.front();
+			string s(packetsToProcess.front());
 			packetsToProcess.pop();
-			string s = *sp;
+			//string s = *sp;
 
 			if (_truncatedPacketString != "")
 			{
-				string *temp = new string(_truncatedPacketString + *sp);
-				delete sp;
-				sp = temp;
-				s = *sp;
+				s = _truncatedPacketString + s;
+				//delete sp;
+				//sp = temp;
+				//s = *sp;
 				_truncatedPacketString = "";
 			}
 
@@ -432,13 +432,13 @@ void TCPServerConnection::_checkForIncomingTraffic()
 					{
 						//log.debug("SERVER: ping");
 						write_S("pong" + OKNet::endline);
-						delete sp;
+						//delete sp;
 						return;
 					}
 
 					if (OKString::startsWith(packet, "pong"))
 					{
-						delete sp;
+						//delete sp;
 						return;
 					}
 
@@ -454,7 +454,7 @@ void TCPServerConnection::_checkForIncomingTraffic()
 				}
 			}
 
-			delete sp;
+			//delete sp;
 		}
 
 	}
@@ -506,7 +506,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 					threadLogDebug_S("Resolving host to load balancer...");
 
 					_loadBalancerAddress = make_shared<IPaddress>();
-					if (SDLNet_ResolveHost(_loadBalancerAddress, Main::serverAddressString.c_str(), Main::serverTCPPort) < 0 )
+					if (SDLNet_ResolveHost(_loadBalancerAddress.get(), Main::serverAddressString.c_str(), Main::serverTCPPort) < 0)
 					{
 						threadLogWarn_S("Could not resolve load balancer IP: " + string(SDLNet_GetError()) + string(SDL_GetError()));
 						SDL_ClearError();
@@ -529,7 +529,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 
 						threadLogDebug_S("Connecting to load balancer...");
 
-						setSocket_S(SDLNet_TCP_Open(_loadBalancerAddress));//TODO: if it can't connect to the server the thread stalls here
+						setSocket_S(SDLNet_TCP_Open(_loadBalancerAddress.get()));//TODO: if it can't connect to the server the thread stalls here
 						if (!getSocket_S())
 						{
 							//SDLNet_FreeSocketSet(set);
@@ -617,7 +617,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 			if (Main::serverAddressString == "localhost")setServerIPAddressString_S("localhost");
 
 			_serverAddress = make_shared<IPaddress>();
-			if (SDLNet_ResolveHost(_serverAddress, getServerIPAddressString_S().c_str(), Main::serverTCPPort) < 0)
+			if (SDLNet_ResolveHost(_serverAddress.get(), getServerIPAddressString_S().c_str(), Main::serverTCPPort) < 0)
 			{
 				threadLogError_S("Could not resolve server address: " + string(SDL_GetError()));
 				setDisconnectedFromServer_S("Could not resolve server address.");
@@ -651,7 +651,7 @@ bool TCPServerConnection::ensureConnectedToServerThreadBlock_S()
 			_lastServerConnectTime = currentTime;
 
 			//connect to the server
-			setSocket_S(SDLNet_TCP_Open(_serverAddress));
+			setSocket_S(SDLNet_TCP_Open(_serverAddress.get()));
 			if (!getSocket_S())
 			{
 				threadLogWarn_S("Could not open connection to server: " + string(SDLNet_GetError()) + string(SDL_GetError()));
@@ -1022,7 +1022,7 @@ void TCPServerConnection::incomingServerStatsResponse(string s)
   //Server_Stats_Response:stats object
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<ServerStats >stats = make_shared<ServerStats>();
+	shared_ptr<ServerStats>stats = make_shared<ServerStats>();
 	stats->initFromString(s);
 
 	serverStats = stats;
@@ -1584,7 +1584,7 @@ void TCPServerConnection::incomingOKGameNewRoomCreatedUpdate(string &s)
 	s = s.substr(s.find(":") + 1);
 	string userName = FileUtils::removeSwearWords(s.substr(0, s.find(":")));
 	s = s.substr(s.find(":") + 1);
-	//shared_ptr<Room >r = Room::decodeRoomData(s, false);
+	//shared_ptr<Room>r = Room::decodeRoomData(s, false);
 
 	if (Main::globalSettings->hideNotifications == false)
 	{
@@ -1704,10 +1704,10 @@ void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(st
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >gameStats = make_shared<OKGameUserStatsForSpecificGameAndDifficulty>(s);
+	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>gameStats = make_shared<OKGameUserStatsForSpecificGameAndDifficulty>(s);
 	for(int i=0;i<OKGame::userStatsPerGameAndDifficulty.size();i++)
 	{
-		shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty >temp = OKGame::userStatsPerGameAndDifficulty.get(i);
+		shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>temp = OKGame::userStatsPerGameAndDifficulty.get(i);
 		if(
 			temp->isGameTypeOrSequence == gameStats->isGameTypeOrSequence &&
 			temp->gameTypeUUID == gameStats->gameTypeUUID &&
@@ -1718,19 +1718,19 @@ void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(st
 		{
 			OKGame::userStatsPerGameAndDifficulty.removeAt(i);
 			OKGame::userStatsPerGameAndDifficulty.insert(i, gameStats);
-			delete temp;
+			//delete temp;
 			return;
 		}
 	}
 	OKGame::userStatsPerGameAndDifficulty.add(gameStats);
 }
 //===============================================================================================
-void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard)
+void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard)
 {//===============================================================================================
 
 	for (int i = 0; i<boardArray.size(); i++)
 	{
-		shared_ptr<OKGameLeaderBoardAndHighScoreBoard >temp = boardArray.get(i);
+		shared_ptr<OKGameLeaderBoardAndHighScoreBoard>temp = boardArray.get(i);
 		if (
 			temp->isGameTypeOrSequence == leaderBoard->isGameTypeOrSequence &&
 			temp->gameTypeUUID == leaderBoard->gameTypeUUID &&
@@ -1741,7 +1741,7 @@ void TCPServerConnection::addToLeaderboard(ArrayList<shared_ptr<OKGameLeaderBoar
 		{
 			boardArray.removeAt(i);
 			boardArray.insert(i, leaderBoard);
-			delete temp;
+			//delete temp;
 			return;
 		}
 	}
@@ -1753,7 +1753,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByTotalTimePlayed(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(OKGame::topPlayersByTotalTimePlayed, leaderBoard);
 
@@ -1764,7 +1764,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByTotalBlocksCleared(string &
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(OKGame::topPlayersByTotalBlocksCleared, leaderBoard);
 
@@ -1775,7 +1775,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByPlaneswalkerPoints(string &
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(OKGame::topPlayersByPlaneswalkerPoints, leaderBoard);
 }
@@ -1785,7 +1785,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByEloScore(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(OKGame::topPlayersByEloScore, leaderBoard);
 
@@ -1796,7 +1796,7 @@ void TCPServerConnection::incomingOKGameHighScoreBoardsByTimeLasted(string &s)
 {//===============================================================================================
 	s = s.substr(s.find(":") + 1);
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(OKGame::topGamesByTimeLasted, leaderBoard);
 
@@ -1809,7 +1809,7 @@ void TCPServerConnection::incomingOKGameHighScoreBoardsByBlocksCleared(string &s
 	s = s.substr(s.find(":") + 1);
 
 
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard >leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
+	shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = make_shared<OKGameLeaderBoardAndHighScoreBoard>(s);
 
 	addToLeaderboard(OKGame::topGamesByBlocksCleared, leaderBoard);
 
@@ -2152,7 +2152,7 @@ bool TCPServerConnection::_doLoginNoCaptions(string &userNameOrEmail, string &pa
 
 }
 
-bool TCPServerConnection::doLogin(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn)
+bool TCPServerConnection::doLogin(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn)
 { //=========================================================================================================================
 
 
@@ -2331,7 +2331,7 @@ bool TCPServerConnection::doLogin(shared_ptr<Caption >statusLabel, shared_ptr<Ca
 
 }
 
-bool TCPServerConnection::doCreateAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userName, string &email, string &password, string &confirmPassword)
+bool TCPServerConnection::doCreateAccount(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userName, string &email, string &password, string &confirmPassword)
 { //=========================================================================================================================
 
 	statusLabel->setText(" ");
@@ -2656,7 +2656,7 @@ bool TCPServerConnection::checkForSessionTokenAndLogInIfExists()
 	return false;
 }
 
-bool TCPServerConnection::doForgotPassword(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, string &userNameOrEmail)
+bool TCPServerConnection::doForgotPassword(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userNameOrEmail)
 { //=========================================================================================================================
 
   //send forgot password request to server, wait for response
@@ -2773,7 +2773,7 @@ bool TCPServerConnection::doForgotPassword(shared_ptr<Caption >statusLabel, shar
 }
 
 
-bool TCPServerConnection::linkFacebookAccount(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel)
+bool TCPServerConnection::linkFacebookAccount(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel)
 { //=========================================================================================================================
 
 	errorLabel->setText(" ");
@@ -2894,7 +2894,7 @@ bool TCPServerConnection::linkFacebookAccount(shared_ptr<Caption >statusLabel, s
 }
 
 //=========================================================================================================================
-bool TCPServerConnection::doAddFriendByUsername(shared_ptr<Caption >statusLabel, shared_ptr<Caption >errorLabel, const string& friendUserName)
+bool TCPServerConnection::doAddFriendByUsername(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, const string& friendUserName)
 {//=========================================================================================================================
 
 	statusLabel->setText(" ");

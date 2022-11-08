@@ -22,13 +22,13 @@ Flag::Flag(shared_ptr<Engine> g, int id)
 
 	for (int i = 0; i < (int)getEventManager()->flagList.size(); i++)
 	{
-		if (getEventManager()->flagList.get(i)->getID() == data->getID())
+		if (getEventManager()->flagList.at(i)->getID() == data->getID())
 		{
-			log->error("Flag already exists:" + data->getName());
+			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->flagList.add(this);
+	getEventManager()->flagList.push_back(shared_from_this());
 
 	//we don't particularly need to know what the actual flag name is... ID is fine.
 	//so, don't really care about getting the flag name from the server.
@@ -44,13 +44,13 @@ Flag::Flag(shared_ptr<Engine> g, shared_ptr<FlagData> data)
 
 	for (int i = 0; i < (int)getEventManager()->flagList.size(); i++)
 	{
-		if (getEventManager()->flagList.get(i)->getID() == data->getID())
+		if (getEventManager()->flagList.at(i)->getID() == data->getID())
 		{
-			log->error("Flag already exists:" + data->getName());
+			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->flagList.add(this);
+	getEventManager()->flagList.push_back(shared_from_this());
 }
 
 //The following method was originally marked 'synchronized':

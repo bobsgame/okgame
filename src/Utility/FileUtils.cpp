@@ -510,7 +510,7 @@ void FileUtils::makeDir(const string& cs)
 //vector<uint16_t>* FileUtils::loadShortFile(string filename)
 //{//=========================================================================================================================
 //
-//	shared_ptr<ByteArray >byteArray = loadByteFileFromExePath(filename);
+//	shared_ptr<ByteArray>byteArray = loadByteFileFromExePath(filename);
 //	
 //	vector<uint16_t> *shortArray = new vector<uint16_t>(byteArray->size() / 2);
 //	

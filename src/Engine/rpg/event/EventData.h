@@ -21,7 +21,7 @@ class Logger;
 //TODO make comment structure for these
 
 
-class EventScriptCommand
+class EventScriptCommand : public std::enable_shared_from_this<EventScriptCommand>
 {
 protected:
 	string command;
@@ -46,7 +46,7 @@ public:
 };
 
 
-class EventScriptQualifier : public EventScriptCommand
+class EventScriptQualifier : public EventScriptCommand, public std::enable_shared_from_this<EventScriptQualifier>
 {
 public:
 	EventScriptQualifier(const string& command, const string& comment);
@@ -56,7 +56,7 @@ public:
 
 
 
-class EventData : public AssetData
+class EventData : public AssetData, public std::enable_shared_from_this<EventData>
 {
 private:
 	typedef AssetData super;
@@ -92,12 +92,12 @@ private:
 public:
 
 	//these are used for the client to preload dialogues, flags, music, etc without doing a server lookup.  USED FOR EXPORT ONLY IN TOOLS. not stored in data structure.
-	ArrayList<shared_ptr<DialogueData>> dialogueDataList;// = make_shared<ArrayList><shared_ptr<DialogueData>>();
-	ArrayList<shared_ptr<FlagData>> flagDataList;// = make_shared<ArrayList><shared_ptr<FlagData>>();
-	ArrayList<shared_ptr<SkillData>> skillDataList;// = make_shared<ArrayList><shared_ptr<SkillData>>();
-	ArrayList<shared_ptr<GameStringData>> gameStringDataList;// = make_shared<ArrayList><shared_ptr<GameStringData>>();
-	ArrayList<shared_ptr<AudioData>> musicDataList;// = make_shared<ArrayList><shared_ptr<AudioData>>();
-	ArrayList<shared_ptr<AudioData>> soundDataList;// = make_shared<ArrayList><shared_ptr<AudioData>>();
+	vector<shared_ptr<DialogueData>> dialogueDataList;// = make_shared<ArrayList><shared_ptr<DialogueData>>();
+	vector<shared_ptr<FlagData>> flagDataList;// = make_shared<ArrayList><shared_ptr<FlagData>>();
+	vector<shared_ptr<SkillData>> skillDataList;// = make_shared<ArrayList><shared_ptr<SkillData>>();
+	vector<shared_ptr<GameStringData>> gameStringDataList;// = make_shared<ArrayList><shared_ptr<GameStringData>>();
+	vector<shared_ptr<AudioData>> musicDataList;// = make_shared<ArrayList><shared_ptr<AudioData>>();
+	vector<shared_ptr<AudioData>> soundDataList;// = make_shared<ArrayList><shared_ptr<AudioData>>();
 
 
 
@@ -143,8 +143,8 @@ public:
 
 
 public:
-	static ArrayList<shared_ptr<EventScriptCommand>> commandList;
-	static ArrayList<shared_ptr<EventScriptQualifier>> qualifierList;
+	static vector<shared_ptr<EventScriptCommand>> commandList;
+	static vector<shared_ptr<EventScriptQualifier>> qualifierList;
 
 
 	const static shared_ptr<EventScriptQualifier> isPlayerTouchingThisArea;

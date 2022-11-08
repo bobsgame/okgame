@@ -140,11 +140,11 @@ public:
 	//
 	//	}
 
-	ArrayList<shared_ptr<Entity>>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
+	vector<shared_ptr<Entity>> getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 
-	bool checkTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>> &list, float x, float y);
+	bool checkTouchingAnyEntityInEntityList(vector<shared_ptr<Entity>> &list, float x, float y);
 
-	bool checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>> &list, float x, float y);
+	bool checkHitLayerAndTouchingAnyEntityInEntityList(vector<shared_ptr<Entity>> &list, float x, float y);
 
 	bool checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y);
 

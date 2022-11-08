@@ -22,13 +22,13 @@ Skill::Skill(shared_ptr<Engine> g, int id)
 
 	for (int i = 0; i < (int)getEventManager()->skillList.size(); i++)
 	{
-		if (getEventManager()->skillList.get(i)->getID() == data->getID())
+		if (getEventManager()->skillList.at(i)->getID() == data->getID())
 		{
-			log->error("Skill already exists:" + data->getName());
+			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->skillList.add(this);
+	getEventManager()->skillList.push_back(shared_from_this());
 }
 
 Skill::Skill(shared_ptr<Engine> g, shared_ptr<SkillData> data)
@@ -40,13 +40,13 @@ Skill::Skill(shared_ptr<Engine> g, shared_ptr<SkillData> data)
 
 	for (int i = 0; i < (int)getEventManager()->skillList.size(); i++)
 	{
-		if (getEventManager()->skillList.get(i)->getID() == data->getID())
+		if (getEventManager()->skillList.at(i)->getID() == data->getID())
 		{
-			log->error("Skill already exists:" + data->getName());
+			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->skillList.add(this);
+	getEventManager()->skillList.push_back(shared_from_this());
 }
 
 shared_ptr<SkillData> Skill::getData()

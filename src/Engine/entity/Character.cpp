@@ -25,7 +25,7 @@ Character::Character()
 //
 //}
 
-Character::Character(shared_ptr<Engine> g, shared_ptr<EntityData> data, shared_ptr<Map >m)
+Character::Character(shared_ptr<Engine> g, shared_ptr<EntityData> data, shared_ptr<Map>m)
 { //=========================================================================================================================
 
 
@@ -74,7 +74,7 @@ Character::Character(shared_ptr<Engine> g, string name, shared_ptr<Sprite> sprit
 	this->map = m;
 
 
-	getCurrentMap()->currentState->characterList.add(shared_from_this());
+	getCurrentMap()->currentState->characterList.push_back(shared_from_this());
 	getCurrentMap()->currentState->characterByNameHashtable.put(name, shared_from_this());
 
 	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), shared_from_this());
@@ -1588,15 +1588,15 @@ void Character::setCharacterNameAndCaption(shared_ptr<OKColor> nameColor, const 
 }
 
 //=========================================================================================================================
-ArrayList<shared_ptr<Entity>> Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
+vector<shared_ptr<Entity>> Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
 { //=========================================================================================================================
 
 
-	ArrayList<shared_ptr<Entity>> list;// = make_shared<ArrayList><shared_ptr<Entity>>();
+	vector<shared_ptr<Entity>> list;// = make_shared<ArrayList><shared_ptr<Entity>>();
 
 	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		shared_ptr<Entity> e = getMap()->zList.get(s);
+		shared_ptr<Entity> e = getMap()->zList.at(s);
 
 		if (dynamic_cast<Character*>(e.get()) != NULL || 
 			dynamic_cast<RandomCharacter*>(e.get()) != NULL || 
@@ -1616,7 +1616,7 @@ ArrayList<shared_ptr<Entity>> Character::getOnScreenNonCharacterEntitiesWithinRa
 			getBottom() + amt >= e->getTop() && 
 			getTop() - amt <= e->getBottom())
 		{
-			list.add(e);
+			list.push_back(e);
 		}
 	}
 
@@ -1624,7 +1624,7 @@ ArrayList<shared_ptr<Entity>> Character::getOnScreenNonCharacterEntitiesWithinRa
 }
 
 //=========================================================================================================================
-bool Character::checkTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>> &list, float x, float y)
+bool Character::checkTouchingAnyEntityInEntityList(vector<shared_ptr<Entity>> &list, float x, float y)
 { //=========================================================================================================================
 
 	if (getEngine()->hitLayerEnabled == false)
@@ -1634,7 +1634,7 @@ bool Character::checkTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>>
 
 	for (int s = 0; s < list.size(); s++)
 	{
-		shared_ptr<Entity> e = list.get(s);
+		shared_ptr<Entity> e = list.at(s);
 
 		if (dynamic_cast<Character*>(e.get()) != NULL || 
 			dynamic_cast<RandomCharacter*>(e.get()) != NULL || 
@@ -1659,7 +1659,7 @@ bool Character::checkTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>>
 }
 
 //=========================================================================================================================
-bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(ArrayList<shared_ptr<Entity>> &list, float x, float y)
+bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(vector<shared_ptr<Entity>> &list, float x, float y)
 { //=========================================================================================================================
 	if (getMap()->getHitLayerValueAtXYPixels(x, y) == false && 
 		checkTouchingAnyEntityInEntityList(list, x, y) == false)
@@ -1681,7 +1681,7 @@ bool Character::checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x,
 
 	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		shared_ptr<Entity> e = getMap()->zList.get(s);
+		shared_ptr<Entity> e = getMap()->zList.at(s);
 
 
 		if (dynamic_cast<Character*>(e.get()) != NULL || 
@@ -2122,7 +2122,7 @@ shared_ptr<Character> Character::findNearestCharacter()
 
 	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
 	{
-		shared_ptr<Entity> currentEntity = getMap()->activeEntityList.get(n);
+		shared_ptr<Entity> currentEntity = getMap()->activeEntityList.at(n);
 
 
 		if (this != currentEntity.get() &&

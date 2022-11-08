@@ -1098,7 +1098,7 @@ void PlayerEditMenu::doOKButton()
 	//         getGameSave()->characterAppearance = characterAppearance;
 	//
 	//
-	//         shared_ptr<Player > p = getPlayer();
+	//         shared_ptr<Player> p = getPlayer();
 	//         if (p != nullptr)
 	//         {
 	//            p->setCharacterNameAndCaption(getGameEngine()->getNameColor(getGameSave()->accountType), nameString, getGameEngine()->getAccountTypeColor(getGameSave()->accountType), getGameEngine()->getAccountTypeString(getGameSave()->accountType));
@@ -1490,7 +1490,7 @@ void PlayerEditMenu::redrawPlayer()
 	//   hairColorIndex = hairColorComboBox->getSelected();
 	//
 	//
-	//   shared_ptr<Player > p = getPlayer();
+	//   shared_ptr<Player> p = getPlayer();
 	//
 	//   if (p != nullptr)
 	//   {

@@ -211,7 +211,7 @@ public:
 
 
 	shared_ptr<Sprite> getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
-	shared_ptr<Sprite > preloadSpriteFromDataFile(const string & spriteAssetName);
-	shared_ptr<Sprite > getSpriteByName(const string & spriteAssetName);
+	shared_ptr<Sprite> preloadSpriteFromDataFile(const string & spriteAssetName);
+	shared_ptr<Sprite> getSpriteByName(const string & spriteAssetName);
 };
 

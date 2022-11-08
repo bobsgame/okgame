@@ -151,7 +151,7 @@ public:
     
 	void Render(Gwen::Skin::Base* skin);
     
-	shared_ptr<OKGame >bobsGame = nullptr;
+	shared_ptr<OKGame>bobsGame = nullptr;
 };
 
 
@@ -179,7 +179,7 @@ public:
 	}
 	const char* GetTypeName() { return "CustomGameEditorControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame >b);
+	CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame>b);
     
     
     
@@ -231,7 +231,7 @@ public:
 	void doEditTurnFromBlockTypeToTypeWindowButton(Gwen::Controls::Base* control);
 	void doEditRotationSetWindowButton(Gwen::Controls::Base* control);
 	void doOverrideBlockTypesSelectionWindowButton(Gwen::Controls::Base* control);
-	void initSettingsPropTree(shared_ptr<GameType >b);
+	void initSettingsPropTree(shared_ptr<GameType>b);
 	void saveSettingsPropTreeToCurrentGameType();
 	void initBlockSelectionListBox();
 	void initPieceSelectionListBox();
@@ -270,14 +270,14 @@ public:
 	void onSelectedPresetRotationOK(Gwen::Controls::Base* control);
 	void onSelectedPresetRotationCancel(Gwen::Controls::Base* control);
 	void renderRotationPreview();
-	void renderRotationEditor(shared_ptr<OKGame >g);
+	void renderRotationEditor(shared_ptr<OKGame>g);
 	void updateRotationEditor();
 	void onRotationEditMouseClick(int x, int y, bool bDown);
     
 	//void onAddDifficultyButton(shared_ptr<Base> control);
 	//void onDeleteDifficultyButton(shared_ptr<Base> control);
 	void onDifficultyListRowSelect(Gwen::Controls::Base* control);
-	void initDifficultyPropTree(shared_ptr<DifficultyType >b);
+	void initDifficultyPropTree(shared_ptr<DifficultyType>b);
 	void saveDifficultyPropTreeToCurrentDifficultyType();
 	void initDifficultySelectionListBox();
 	void doDifficultyDisallowPieceTypesSelectionWindowButton(Gwen::Controls::Base* control);
@@ -377,7 +377,7 @@ private:
 	Gwen::Controls::Button* duplicateGameTypeButton = nullptr;
 	Gwen::Controls::Button* deleteGameTypeButton = nullptr;
     
-	shared_ptr<GameType >currentGameType = nullptr;
+	shared_ptr<GameType>currentGameType = nullptr;
 	shared_ptr<BlockType> currentBlockType = nullptr;
     
 	//i use these temp arrays because i need to save the modifications to something
@@ -386,7 +386,7 @@ private:
 	//ArrayList<shared_ptr<TurnFromBlockTypeToType>> currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
     
 	shared_ptr<PieceType> currentPieceType = nullptr;
-	shared_ptr<DifficultyType >currentDifficultyType = nullptr;
+	shared_ptr<DifficultyType>currentDifficultyType = nullptr;
 	//RotationSet currentPieceType_rotationSet;
 	//ArrayList<shared_ptr<BlockType>> currentPieceType_overrideBlockTypes;
     
@@ -403,7 +403,7 @@ private:
 	Gwen::Controls::ListBox* toFromListBox = nullptr;
 	Gwen::Controls::ComboBox* fromCombo = nullptr;
 	Gwen::Controls::ComboBox* toCombo = nullptr;
-	shared_ptr<TurnFromBlockTypeToType >currentTurnFromBlockTypeToType = nullptr;
+	shared_ptr<TurnFromBlockTypeToType>currentTurnFromBlockTypeToType = nullptr;
     
 	Gwen::Controls::WindowControl* rotationEditWindow = nullptr;
 	Gwen::Controls::WindowControl* rotationPresetSelectWindow = nullptr;
@@ -418,9 +418,9 @@ private:
 	//shared_ptr<Button> deleteRotationButton = nullptr;
 	//shared_ptr<Button> saveRotationButton = nullptr;
     
-	shared_ptr<EditRectangle >rotationEditRectangle = nullptr;
+	shared_ptr<EditRectangle>rotationEditRectangle = nullptr;
 	Gwen::Controls::HorizontalSlider *rotationPreviewAnimationSpeedSlider = nullptr;
-	shared_ptr<RotationPreviewRectangle >rotationPreviewRectangle = nullptr;
+	shared_ptr<RotationPreviewRectangle>rotationPreviewRectangle = nullptr;
     
 public:
 	bool rotationEditorOpen = false;

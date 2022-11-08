@@ -27,7 +27,7 @@ private:
 	bool antiAlias = true;
 
 public:
-	ArrayList<shared_ptr<TextWindow>> textBox;// = make_shared<ArrayList><shared_ptr<TextWindow>>();
+	vector<shared_ptr<TextWindow>> textBox;// = make_shared<ArrayList><shared_ptr<TextWindow>>();
 
 
 	int width = 64 * 6 * 2; // *2 because we draw everything at 2x to allow for scaling (and higher res 1x unicode fonts)

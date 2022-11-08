@@ -506,7 +506,7 @@ public:
 	//int creditsLevel = 0;
 	GameType();
 	shared_ptr<DifficultyType> getDifficultyByName(string s);
-	//GameType(shared_ptr<DifficultyType >d);
+	//GameType(shared_ptr<DifficultyType>d);
 
 	//void setTimingBasedOnDifficulty(DifficultyType d);
 
@@ -607,15 +607,15 @@ public:
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version);
 
-	ArrayList<shared_ptr<BlockType>> getNormalBlockTypes(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<BlockType>> getGarbageBlockTypes(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<BlockType>> getPlayingFieldBlockTypes(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenCheckingChain(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenMovingDown(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<BlockType>> getBlockTypesChainMustContain(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<PieceType>> getNormalPieceTypes(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<PieceType>> getGarbagePieceTypes(shared_ptr<DifficultyType >d);
-	ArrayList<shared_ptr<PieceType>> getPlayingFieldPieceTypes(shared_ptr<DifficultyType >d);
+	ArrayList<shared_ptr<BlockType>> getNormalBlockTypes(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<BlockType>> getGarbageBlockTypes(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<BlockType>> getPlayingFieldBlockTypes(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenCheckingChain(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesToIgnoreWhenMovingDown(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<BlockType>> getBlockTypesChainMustContain(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<PieceType>> getNormalPieceTypes(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<PieceType>> getGarbagePieceTypes(shared_ptr<DifficultyType>d);
+	ArrayList<shared_ptr<PieceType>> getPlayingFieldPieceTypes(shared_ptr<DifficultyType>d);
 
 };
 

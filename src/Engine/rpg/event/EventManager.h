@@ -19,15 +19,14 @@ public:
 
 	static Logger log;
 
-	//ArrayList<shared_ptr<Event>> cutsceneEventList;//project events and unattached events
-	ArrayList<shared_ptr<Event>> eventList;//all events get put here for global lookup
-	ArrayList<shared_ptr<Dialogue>> dialogueList;
-	ArrayList<shared_ptr<GameString>> gameStringList;
-	ArrayList<shared_ptr<Flag>> flagList;
-	ArrayList<shared_ptr<Skill>> skillList;
-	ArrayList<shared_ptr<Item>> itemList;
-
-	ArrayList<shared_ptr<Event>> runningEventQueue;
+	//vector<shared_ptr<Event>> cutsceneEventList;//project events and unattached events
+	vector<shared_ptr<Event>> eventList;//all events get put here for global lookup
+	vector<shared_ptr<Dialogue>> dialogueList;
+	vector<shared_ptr<GameString>> gameStringList;
+	vector<shared_ptr<Flag>> flagList;
+	vector<shared_ptr<Skill>> skillList;
+	vector<shared_ptr<Item>> itemList;
+	vector<shared_ptr<Event>> runningEventQueue;
 
 	EventManager(shared_ptr<Engine> g);
 

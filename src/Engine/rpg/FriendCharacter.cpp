@@ -91,7 +91,7 @@ void FriendCharacter::setGameToForwardPacketsTo(shared_ptr<MiniGameEngine> game)
 	this->game = game;
 }
 
-bool FriendCharacter::udpPeerMessageReceived(shared_ptr<UDPPeerConnection >c, string e)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
+bool FriendCharacter::udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string e)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
 { //===============================================================================================
 
 	//string s = e;// static_cast<string>(e->getMessage());

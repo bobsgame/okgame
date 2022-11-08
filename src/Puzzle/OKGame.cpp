@@ -76,7 +76,7 @@ OKGame::~OKGame()
 
 	for (int i = 0; i<players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 
 		if (p->gameLogic != nullptr)
 		{
@@ -138,7 +138,7 @@ void OKGame::initPlayer()
 {//=========================================================================================================================
 	for (int i = 0; i<players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 
 		if (p->gameLogic != nullptr)
 		{
@@ -167,7 +167,7 @@ void OKGame::initPlayer()
 	}
 	players.clear();
 
-	shared_ptr<PuzzlePlayer >p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+	shared_ptr<PuzzlePlayer>p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
 	
 	p->useKeyboard = true;
 	//if (getControlsManager()->gameControllers.size() > 0)p->gameController = getControlsManager()->gameControllers.get(0);
@@ -492,8 +492,8 @@ void OKGame::renderGameIntoFBO(shared_ptr<GameLogic> g, bool useColorFilter)
 		captionManager->render(RenderOrder::OVER_GUI);
 //		for (int i = 0; i < players.size(); i++)
 //		{
-//			shared_ptr<PuzzlePlayer >p = players.get(i);
-//			shared_ptr<GameLogic >g = p->gameLogic;
+//			shared_ptr<PuzzlePlayer>p = players.get(i);
+//			shared_ptr<GameLogic>g = p->gameLogic;
 //			g->getCaptionManager()->render(RenderOrder::ABOVE);
 //			g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
 //			g->getCaptionManager()->render(RenderOrder::OVER_TEXT);
@@ -615,8 +615,8 @@ void OKGame::render()
 			captionManager->render(RenderOrder::OVER_GUI);
 //			for (int i = 0; i < players.size(); i++)
 //			{
-//				shared_ptr<PuzzlePlayer >p = players.get(i);
-//				shared_ptr<GameLogic >g = p->gameLogic;
+//				shared_ptr<PuzzlePlayer>p = players.get(i);
+//				shared_ptr<GameLogic>g = p->gameLogic;
 //				g->getCaptionManager()->render(RenderOrder::OVER_GUI);
 //			}
 //		}
@@ -741,8 +741,8 @@ void OKGame::render()
 		for (int i = 0; i < players.size(); i++)
 		{
 
-			shared_ptr<PuzzlePlayer >p = players.get(i);
-			shared_ptr<GameLogic >g = p->gameLogic;
+			shared_ptr<PuzzlePlayer>p = players.get(i);
+			shared_ptr<GameLogic>g = p->gameLogic;
 
 			//render into mainGameFBO
 			renderGameIntoFBO(g, false);
@@ -819,8 +819,8 @@ void OKGame::render()
 			captionManager->render(RenderOrder::OVER_GUI);
 //			for (int i = 0; i < players.size(); i++)
 //			{
-//				shared_ptr<PuzzlePlayer >p = players.get(i);
-//				shared_ptr<GameLogic >g = p->gameLogic;
+//				shared_ptr<PuzzlePlayer>p = players.get(i);
+//				shared_ptr<GameLogic>g = p->gameLogic;
 //				g->getCaptionManager()->render(RenderOrder::ABOVE);
 //				g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
 //				g->getCaptionManager()->render(RenderOrder::OVER_TEXT);
@@ -830,7 +830,7 @@ void OKGame::render()
 
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer >p = players.get(i);
+			shared_ptr<PuzzlePlayer>p = players.get(i);
 
 			if (p->gameLogic->pauseMiniMenuShowing)playerPauseMiniMenuRender(p, p->gameLogic->playingFieldX0, p->gameLogic->playingFieldX1, p->gameLogic->playingFieldY0, p->gameLogic->playingFieldY1);;
 		}
@@ -1020,9 +1020,9 @@ void OKGame::update()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 
-		shared_ptr<GameLogic >g = p->gameLogic;
+		shared_ptr<GameLogic>g = p->gameLogic;
 
 		//actual game update
 		g->update(i,players.size());
@@ -1056,7 +1056,7 @@ void OKGame::update()
 	bool allPlayersDead = true;
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 		if (p->gameLogic->died == false)
 		{
 			allPlayersDead = false;
@@ -1072,7 +1072,7 @@ void OKGame::update()
 		int alivePlayers = 0;
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer >p = players.get(i);
+			shared_ptr<PuzzlePlayer>p = players.get(i);
 			if (p->gameLogic->died == false)
 			{
 				alivePlayers++;
@@ -1083,7 +1083,7 @@ void OKGame::update()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer >p = players.get(i);
+				shared_ptr<PuzzlePlayer>p = players.get(i);
 				if (p->gameLogic->died == false)
 				{
 					p->gameLogic->won = true;
@@ -1099,7 +1099,7 @@ void OKGame::update()
 		bool someoneWon = false;
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer >p = players.get(i);
+			shared_ptr<PuzzlePlayer>p = players.get(i);
 			if (p->gameLogic->complete == true)
 			{
 				someoneWon = true;
@@ -1110,7 +1110,7 @@ void OKGame::update()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer >p = players.get(i);
+				shared_ptr<PuzzlePlayer>p = players.get(i);
 				if (p->gameLogic->complete == false)
 				{
 					p->gameLogic->lost = true;
@@ -1166,7 +1166,7 @@ void OKGame::update()
 
 				if (players.size() == 1)
 				{
-					shared_ptr<GameSequence >gs = getPlayer1Game()->currentGameSequence;
+					shared_ptr<GameSequence>gs = getPlayer1Game()->currentGameSequence;
 					initPlayer();
 					getPlayer1Game()->currentGameSequence = gs;
 				}
@@ -1240,11 +1240,11 @@ void OKGame::sendGameStatsToServer()
 
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer >p = players.get(i);
+			shared_ptr<PuzzlePlayer>p = players.get(i);
 			if (p->isNetworkPlayer() == false)
 			{
 
-				shared_ptr<GameLogic >g = p->gameLogic;
+				shared_ptr<GameLogic>g = p->gameLogic;
 
 				OKGameGameStats s;
 				s.userName = g->getEngine()->getUserName_S();
@@ -1294,7 +1294,7 @@ void OKGame::sendGameStatsToServer()
 
 				for (int n = 0; n < players.size(); n++)
 				{
-					shared_ptr<PuzzlePlayer >pp = players.get(n);
+					shared_ptr<PuzzlePlayer>pp = players.get(n);
 					long long playerUserID = -1;
 					if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
 						playerUserID = pp->peerConnection->peerUserID;
@@ -1415,12 +1415,12 @@ void OKGame::doVoting()
 	if (sentVote == false)
 	{
 		string type = "game sequence";
-		shared_ptr<GameSequence >gs = getPlayer1Game()->currentGameSequence;
+		shared_ptr<GameSequence>gs = getPlayer1Game()->currentGameSequence;
 		string name = gs->name;
 		if (gs->gameTypes.size() == 1)
 		{
 			type = "game type";
-			shared_ptr<GameType >g = gs->gameTypes.get(0);
+			shared_ptr<GameType>g = gs->gameTypes.get(0);
 			name = g->name;
 			if (g->downloaded == false || g->yourVote != "none")
 			{
@@ -1596,7 +1596,7 @@ void OKGame::resetPressedButtons()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 		p->resetPressedButtons();
 	}
 
@@ -1607,7 +1607,7 @@ void OKGame::setButtonStates()
 {//=========================================================================================================================
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer >p = players.get(i);
+		shared_ptr<PuzzlePlayer>p = players.get(i);
 		p->setButtonStates();
 	}
 
@@ -1621,7 +1621,7 @@ void OKGame::setButtonStates()
 //
 //		//use MINIGAME controls
 //
-//		shared_ptr<PuzzlePlayer >p = players.get(0);
+//		shared_ptr<PuzzlePlayer>p = players.get(0);
 //
 //		if (getControlsManager()->MINIGAME_UP_HELD == true)p->UP_HELD = true;
 //		if (getControlsManager()->MINIGAME_DOWN_HELD == true)p->DOWN_HELD = true;
@@ -1667,7 +1667,7 @@ void OKGame::setButtonStates()
 //	else
 //	if (players.size() > 1)
 //	{
-	shared_ptr<PuzzlePlayer >p = nullptr;// = players.get(0);
+	shared_ptr<PuzzlePlayer>p = nullptr;// = players.get(0);
 
 		for (int i = 0; i < players.size();i++)
 		{
@@ -1710,7 +1710,7 @@ void OKGame::setButtonStates()
 
 			if (p->gameController!=nullptr)
 			{
-				shared_ptr<GameController >g = p->gameController;
+				shared_ptr<GameController>g = p->gameController;
 
 				if (g->UP_HELD == true)p->UP_HELD = true;
 				if (g->DOWN_HELD == true)p->DOWN_HELD = true;
@@ -1852,7 +1852,7 @@ void OKGame::loadGameTypesFromXML()
 				try
 				{
 					ia >> BOOST_SERIALIZATION_NVP(gt);
-					shared_ptr<GameType >s = make_shared<GameType>();
+					shared_ptr<GameType>s = make_shared<GameType>();
 					*s = gt;
 
 					//if(i==0)s->builtInType = true;
@@ -1937,7 +1937,7 @@ void OKGame::loadGameSequencesFromXML()
 				{
 					ia >> BOOST_SERIALIZATION_NVP(gs);
 
-					shared_ptr<GameSequence >s = make_shared<GameSequence>();
+					shared_ptr<GameSequence>s = make_shared<GameSequence>();
 					*s = gs;
 
 					//if (i == 0)s->builtInType = true;
@@ -1963,7 +1963,7 @@ void OKGame::loadGameSequencesFromXML()
 
 		for(int i=0;i<loadedGameSequences.size();i++)
 		{
-			shared_ptr<GameSequence >g = loadedGameSequences.get(i);
+			shared_ptr<GameSequence>g = loadedGameSequences.get(i);
 
 			loadGameSequenceUUIDsToGamesArray(g);
 		}
@@ -1973,7 +1973,7 @@ void OKGame::loadGameSequencesFromXML()
 }
 
 //=========================================================================================================================
-void OKGame::loadGameSequenceUUIDsToGamesArray(shared_ptr<GameSequence >g)
+void OKGame::loadGameSequenceUUIDsToGamesArray(shared_ptr<GameSequence>g)
 {//=========================================================================================================================
 
 	g->gameTypes.clear();
@@ -1981,7 +1981,7 @@ void OKGame::loadGameSequenceUUIDsToGamesArray(shared_ptr<GameSequence >g)
 	for (int n = 0; n<g->importExport_gameUUIDs.size(); n++)
 	{
 		string uuid = g->importExport_gameUUIDs.get(n);
-		shared_ptr<GameType >s = getGameTypeByUUID(uuid);
+		shared_ptr<GameType>s = getGameTypeByUUID(uuid);
 
 		if (s != nullptr)
 		{
@@ -2000,10 +2000,10 @@ shared_ptr<GameType> OKGame::getGameTypeByName(string name)
 
 	if (name == "")return nullptr;
 
-	shared_ptr<GameType >bt = nullptr;
+	shared_ptr<GameType>bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType >b = loadedGameTypes.get(i);
+		shared_ptr<GameType>b = loadedGameTypes.get(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -2017,10 +2017,10 @@ shared_ptr<GameType> OKGame::getGameTypeByUUID(string uuid)
 
 	if (uuid == "")return nullptr;
 
-	shared_ptr<GameType >bt = nullptr;
+	shared_ptr<GameType>bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType >b = loadedGameTypes.get(i);
+		shared_ptr<GameType>b = loadedGameTypes.get(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -2034,10 +2034,10 @@ shared_ptr<GameSequence> OKGame::getGameSequenceByName(string name)
 
 	if (name == "")return nullptr;
 
-	shared_ptr<GameSequence >bt = nullptr;
+	shared_ptr<GameSequence>bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence >b = loadedGameSequences.get(i);
+		shared_ptr<GameSequence>b = loadedGameSequences.get(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -2050,10 +2050,10 @@ shared_ptr<GameSequence> OKGame::getGameSequenceByUUID(string uuid)
 {//=========================================================================================================================
 	if (uuid == "")return nullptr;
 
-	shared_ptr<GameSequence >bt = nullptr;
+	shared_ptr<GameSequence>bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence >b = loadedGameSequences.get(i);
+		shared_ptr<GameSequence>b = loadedGameSequences.get(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -2147,7 +2147,7 @@ shared_ptr<Room> OKGame::loadRoomConfig(string configName)
 
 
 	
-	shared_ptr<Room >room = make_shared<Room>();
+	shared_ptr<Room>room = make_shared<Room>();
 	try
 	{
 
@@ -2202,7 +2202,7 @@ shared_ptr<Room> OKGame::loadRoomConfig(string configName)
 
 
 //=========================================================================================================================
-void OKGame::saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence >gs)
+void OKGame::saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence>gs)
 {//=========================================================================================================================
 
 	//save game sequence locally and each game type locally!
@@ -2214,7 +2214,7 @@ void OKGame::saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence >gs)
 	}
 	for (int i = 0; i < gs->gameTypes.size(); i++)
 	{
-		shared_ptr<GameType >g = gs->gameTypes.get(i);
+		shared_ptr<GameType>g = gs->gameTypes.get(i);
 		if (g->creatorUserID != -1 && g->dateCreated != -1 && getGameTypeByUUID(g->uuid) == nullptr)
 		{
 
@@ -2225,7 +2225,7 @@ void OKGame::saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence >gs)
 }
 
 //=========================================================================================================================
-void OKGame::saveGameSequenceToXML(shared_ptr<GameSequence >gs, bool downloaded)
+void OKGame::saveGameSequenceToXML(shared_ptr<GameSequence>gs, bool downloaded)
 {//=========================================================================================================================
 
 	string userDataPathString = FileUtils::appDataPath + "gameSequences/";
@@ -2273,7 +2273,7 @@ void OKGame::saveGameSequenceToXML(shared_ptr<GameSequence >gs, bool downloaded)
 }
 
 //=========================================================================================================================
-void OKGame::saveGameTypeToXML(shared_ptr<GameType >gs, bool downloaded)
+void OKGame::saveGameTypeToXML(shared_ptr<GameType>gs, bool downloaded)
 {//=========================================================================================================================
 	string userDataPathString = FileUtils::appDataPath + "gameTypes/";
 	if (downloaded)userDataPathString = FileUtils::appDataPath + "downloadedGameTypes/";
@@ -2392,9 +2392,9 @@ void OKGame::getGameTypesAndSequencesFromServer()
 
 						while (incomingGameTypesQueueSize_S() > 0)
 						{
-							shared_ptr<GameType >g = incomingGameTypesQueuePop_S();
+							shared_ptr<GameType>g = incomingGameTypesQueuePop_S();
 
-							shared_ptr<GameType >existing = getGameTypeByUUID(g->uuid);
+							shared_ptr<GameType>existing = getGameTypeByUUID(g->uuid);
 							if (existing != nullptr)
 							{
 								if (existing->downloaded == true)
@@ -2414,7 +2414,7 @@ void OKGame::getGameTypesAndSequencesFromServer()
 
 						while (incomingGameSequencesQueueSize_S()>0)
 						{
-							shared_ptr<GameSequence >g = incomingGameSequencesQueuePop_S();
+							shared_ptr<GameSequence>g = incomingGameSequencesQueuePop_S();
 
 							shared_ptr<GameSequence> existing = getGameSequenceByUUID(g->uuid);
 							if (existing != nullptr)
@@ -2432,7 +2432,7 @@ void OKGame::getGameTypesAndSequencesFromServer()
 
 						for (int i = 0; i<loadedGameSequences.size(); i++)
 						{
-							shared_ptr<GameSequence >g = loadedGameSequences.get(i);
+							shared_ptr<GameSequence>g = loadedGameSequences.get(i);
 
 							loadGameSequenceUUIDsToGamesArray(g);
 						}
@@ -2638,7 +2638,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			try
 			{
 				ia >> BOOST_SERIALIZATION_NVP(gs);
-				shared_ptr<GameType >g = make_shared<GameType>();
+				shared_ptr<GameType>g = make_shared<GameType>();
 				*g = gs;
 
 				g->creatorUserID = userID;
@@ -2675,7 +2675,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			{
 				ia >> BOOST_SERIALIZATION_NVP(gs);
 
-				shared_ptr<GameSequence >g = make_shared<GameSequence>();
+				shared_ptr<GameSequence>g = make_shared<GameSequence>();
 				*g = gs;
 
 				g->creatorUserID = userID;
@@ -2732,7 +2732,7 @@ void OKGame::updateVersion0ToVersion1()
 	bool resave = false;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType >g = loadedGameTypes.get(i);
+		shared_ptr<GameType>g = loadedGameTypes.get(i);
 
 		for (int n = 0; n < g->pieceTypes.size(); n++)
 		{
@@ -2839,7 +2839,7 @@ void OKGame::updateVersion0ToVersion1()
 
 		for(int n=0;n<g->difficultyTypes.size();n++)
 		{
-			shared_ptr<DifficultyType >d = g->difficultyTypes.get(n);
+			shared_ptr<DifficultyType>d = g->difficultyTypes.get(n);
 
 			for (int x = 0; x < d->pieceTypesToDisallow_DEPRECATED.size(); x++)
 			{
@@ -2878,7 +2878,7 @@ void OKGame::updateVersion0ToVersion1()
 	{
 		for (int i = 0; i < loadedGameTypes.size(); i++)
 		{
-			shared_ptr<GameType >g = loadedGameTypes.get(i);
+			shared_ptr<GameType>g = loadedGameTypes.get(i);
 			//if (g->builtInType == false)
 				saveGameTypeToXML(g,g->downloaded);
 		}

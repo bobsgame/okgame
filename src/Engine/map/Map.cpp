@@ -2209,7 +2209,7 @@ void Map::releaseAllTextures()
 	{
 		for (int i = 0; i < chunks->size(); i++)
 		{
-			shared_ptr<OKTexture >t = chunks->get(i);
+			shared_ptr<OKTexture>t = chunks->get(i);
 
 			if (t != nullptr)
 			{
@@ -2321,7 +2321,7 @@ float Map::getScreenX(float mapX, float width)
 	}
 
 
-	return screenXshared_ptr<PixelsHQ > zoom;
+	return screenXshared_ptr<PixelsHQ> zoom;
 }
 
 float Map::getScreenY(float mapY, float height)
@@ -2352,7 +2352,7 @@ float Map::getScreenY(float mapY, float height)
 	}
 
 
-	return screenYshared_ptr<PixelsHQ > zoom;
+	return screenYshared_ptr<PixelsHQ> zoom;
 }
 
 float Map::screenX()

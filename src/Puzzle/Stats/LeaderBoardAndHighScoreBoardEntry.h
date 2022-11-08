@@ -1053,7 +1053,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			string diff = "_" + to_string(i);
-			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry >s = entries.get(i);
+			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry>s = entries.get(i);
 
 			gameSavestring += ",userName:`" + s->userName + "`";
 			gameSavestring += ",userID:`" + to_string(s->userID) + "`";
@@ -1144,7 +1144,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			//string diff = "_" + to_string(i);
-			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry >stats = entries.get(i);
+			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry>stats = entries.get(i);
 
 			s = s.substr(s.find('`') + 1);
 			t = s.substr(0, s.find('`'));

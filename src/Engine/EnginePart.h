@@ -38,7 +38,7 @@ class FriendManager;
 class StatusBar;
 class NotificationManager;
 
-class EnginePart : public std::enable_shared_from_this<EnginePart>
+class EnginePart// : public std::enable_shared_from_this<EnginePart>
 {
 public:
 	virtual ~EnginePart()

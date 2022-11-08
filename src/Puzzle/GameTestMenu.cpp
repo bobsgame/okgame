@@ -12,7 +12,7 @@ using namespace Gwen::Controls;
 
 
 //GWEN_CONTROL_CONSTRUCTOR(GameTestMenuControl)
-GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame >b) : Gwen::Controls::Base(pParent, pName)
+GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame>b) : Gwen::Controls::Base(pParent, pName)
 {//=========================================================================================================================
 
 	this->bobsGame = b;
@@ -276,10 +276,10 @@ using Poco::Path;
 //shared_ptr<GameSequence> GameTestMenuControl::getGameSequenceByName(string name)
 //{//=========================================================================================================================
 //
-//	shared_ptr<GameSequence >bt = nullptr;
+//	shared_ptr<GameSequence>bt = nullptr;
 //	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
 //	{
-//		shared_ptr<GameSequence >b = bobsGame->loadedGameSequences.get(i);
+//		shared_ptr<GameSequence>b = bobsGame->loadedGameSequences.get(i);
 //		if (b->name == name)
 //		{
 //			bt = b;
@@ -299,10 +299,10 @@ void GameTestMenuControl::populateGameTypesListBox()
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
 		pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameType >g = gameTypeStringColorPairPair.first;
+		shared_ptr<GameType>g = gameTypeStringColorPairPair.first;
 		pair<string, shared_ptr<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<OKColor >color = stringColorPair.second;
+		shared_ptr<OKColor>color = stringColorPair.second;
 
 		//if (g->builtInType)
 //		{
@@ -336,10 +336,10 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
 		pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameSequence >g = gameSequenceStringColorPairPair.first;
+		shared_ptr<GameSequence>g = gameSequenceStringColorPairPair.first;
 		pair<string, shared_ptr<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<OKColor >color = stringColorPair.second;
+		shared_ptr<OKColor>color = stringColorPair.second;
 
 //		if (g->builtInType)
 //		{
@@ -368,7 +368,7 @@ void GameTestMenuControl::onGameTypesListSelect(shared_ptr<Base> control)
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	shared_ptr<GameType >s = bobsGame->getGameTypeByUUID(uuid);
+	shared_ptr<GameType>s = bobsGame->getGameTypeByUUID(uuid);
 
 	if (s == nullptr)
 	{
@@ -389,7 +389,7 @@ void GameTestMenuControl::onGameSequencesListSelect(shared_ptr<Base> control)
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	shared_ptr<GameSequence >s = bobsGame->getGameSequenceByUUID(uuid);
+	shared_ptr<GameSequence>s = bobsGame->getGameSequenceByUUID(uuid);
 
 	if (s == nullptr)
 	{
@@ -459,7 +459,7 @@ void GameTestMenuControl::vote(bool upDown)
 		}
 	}
 	
-	shared_ptr<WindowControl >result = make_shared<WindowControl>(GetCanvas());
+	shared_ptr<WindowControl>result = make_shared<WindowControl>(GetCanvas());
 	result->SetTitle("Result");
 	result->SetSize(300, 60);
 	result->MakeModal(true);
@@ -529,7 +529,7 @@ void GameTestMenuControl::initPreviewGame()
 	{
 		
 
-		shared_ptr<GameType >g = make_shared<GameType>();
+		shared_ptr<GameType>g = make_shared<GameType>();
 		shared_ptr<BlockType> bt(make_shared<BlockType>());
 		bt->name = "Gray Square";
 		bt->colors.add(OKColor::gray);

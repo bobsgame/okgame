@@ -16,7 +16,7 @@ class Door;
 class EventCommand;
 class EventData;
 
-class Event : public ServerObject
+class Event : public ServerObject, public std::enable_shared_from_this<Event>
 {
 public:
 	static Logger log;

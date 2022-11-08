@@ -20,14 +20,14 @@ class OKTexture;
 
 
 
-class Sprite : public EnginePart
+class Sprite : public EnginePart, public std::enable_shared_from_this<Sprite>
 {
 public:
 	static Logger log;
 
 	shared_ptr<Event> event = nullptr;
 
-	//static shared_ptr<ExecutorService >generatePNGExecutorService;
+	//static shared_ptr<ExecutorService>generatePNGExecutorService;
 	static ctpl::thread_pool* generatePNGThreadPool;
 
 

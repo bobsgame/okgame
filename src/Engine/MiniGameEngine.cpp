@@ -278,7 +278,7 @@ void MiniGameEngine::titleMenuUpdate()
 void MiniGameEngine::titleMenuRender()
 { //=========================================================================================================================
 
-	shared_ptr<OKTexture >t = nullptr;
+	shared_ptr<OKTexture>t = nullptr;
 
 	if (titleMenuTextures != nullptr && titleMenuTextures->size()>0)t = titleMenuTextures->get(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
@@ -663,7 +663,7 @@ void MiniGameEngine::tryToCloseGame()
 //	this->connection = connection;
 //	//this.multiplayer = true;
 //}
-bool MiniGameEngine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection >c, string e)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
+bool MiniGameEngine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string e)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
 { //=========================================================================================================================
 
 	string s = e;// static_cast<string>(e->getMessage());

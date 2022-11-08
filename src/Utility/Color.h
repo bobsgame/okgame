@@ -199,9 +199,9 @@ public:
 	void lighter();
 	void lighter(float scale);
 
-	// void *multiply(shared_ptr<Color >c);
-	//shared_ptr<Color >addToCopy(shared_ptr<Color >c);
-	//shared_ptr<Color >scaleCopy(float value);
+	// void *multiply(shared_ptr<Color>c);
+	//shared_ptr<Color>addToCopy(shared_ptr<Color>c);
+	//shared_ptr<Color>scaleCopy(float value);
 
 
 	//static int rgbatoABGRInt(u8 r, u8 g, u8 b, u8 a);

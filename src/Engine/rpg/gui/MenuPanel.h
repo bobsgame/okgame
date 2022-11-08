@@ -44,7 +44,7 @@ public:
 
 	MenuPanel();
 
-	MenuPanel(shared_ptr<Engine >e);
+	MenuPanel(shared_ptr<Engine>e);
 
 	virtual void update();
 

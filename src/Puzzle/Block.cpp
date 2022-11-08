@@ -144,7 +144,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	importExport_colors.clear();
 	for (int i = 0; i < colors.size(); i++)
 	{
-		shared_ptr<OKColor >bp = colors.get(i);
+		shared_ptr<OKColor>bp = colors.get(i);
 		if (bp->name != "" && bp->name != "empty")
 		{
 			OKColor b;//keep this, custom copy constructor which doesnt copy uuid
@@ -166,7 +166,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	for (int i = 0; i < importExport_colors.size(); i++)
 	{
 		OKColor b = importExport_colors.get(i);
-		shared_ptr<OKColor >bp = OKColor::getColorByName(b.name);
+		shared_ptr<OKColor>bp = OKColor::getColorByName(b.name);
 		if (bp != nullptr && bp->name != "" && bp->name != "empty")
 		{
 			colors.add(bp);
@@ -270,7 +270,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	{
 		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
-			shared_ptr<TurnFromBlockTypeToType >bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+			shared_ptr<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
 			TurnFromBlockTypeToType b;
 			b = *bp;
 			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(b);
@@ -282,7 +282,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
 			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
-			shared_ptr<TurnFromBlockTypeToType >bp = make_shared<TurnFromBlockTypeToType>();
+			shared_ptr<TurnFromBlockTypeToType>bp = make_shared<TurnFromBlockTypeToType>();
 			*bp = b;
 			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(bp);
 		}
@@ -563,7 +563,7 @@ void Block::update()
 				shared_ptr<Block> a = grid->get(xGrid, yGrid + 1);
 				if (a != nullptr && a->getColor() != nullptr && a->getColor() != this->getColor() && a->blockType->removeAllBlocksOfColorOnFieldBlockIsSetOn == false && a->blockType->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor == false)//dont remove other diamonds
 				{
-					shared_ptr<OKColor >colorToReplace = a->getColor();
+					shared_ptr<OKColor>colorToReplace = a->getColor();
 
 					for (int y = 0; y < grid->getHeight(); y++)
 					{
@@ -1193,7 +1193,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		)
 	)
 	{
-		shared_ptr<OKColor >c = nullptr;
+		shared_ptr<OKColor>c = nullptr;
 		
 		if (color != nullptr)c = color;
 				
@@ -1425,11 +1425,11 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float spriteImageHeight = (float)sprite->getImageHeight();
 
 		float imageToTextureRatioX = (spriteImageWidth / (float)texture->getTextureWidth());
-		float tx0 = x0shared_ptr<InImage > imageToTextureRatioX;
-		float tx1 = x1shared_ptr<InImage > imageToTextureRatioX;
+		float tx0 = x0shared_ptr<InImage> imageToTextureRatioX;
+		float tx1 = x1shared_ptr<InImage> imageToTextureRatioX;
 		float imageToTextureRatioY = (spriteImageHeight / (float)texture->getTextureHeight());
-		float ty0 = y0shared_ptr<InImage > imageToTextureRatioY;
-		float ty1 = y1shared_ptr<InImage > imageToTextureRatioY;
+		float ty0 = y0shared_ptr<InImage> imageToTextureRatioY;
+		float ty1 = y1shared_ptr<InImage> imageToTextureRatioY;
 
 		//log->info(""+tx0+" "+tx1+" "+ty0+" "+ty1);
 
@@ -1572,7 +1572,7 @@ void Block::renderOutlines(float screenX, float screenY, float s)
 }
 
 //=========================================================================================================================
-void Block::setColor(shared_ptr<OKColor >color)
+void Block::setColor(shared_ptr<OKColor>color)
 {//=========================================================================================================================
 	this->color = color;
 }

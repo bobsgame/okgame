@@ -76,7 +76,7 @@ public:
 	
 	static ArrayList<shared_ptr<OKMenu>> activeMenus;
 
-	shared_ptr<OKTexture >graphic = nullptr;
+	shared_ptr<OKTexture>graphic = nullptr;
 	int filter = GLUtils::FILTER_NEAREST;
 	float spacing = 1.0f;
 	bool center = true;
@@ -91,7 +91,7 @@ public:
 	public:
 		shared_ptr<Caption> caption = nullptr;
 		string id = "";
-		shared_ptr<OKColor >color = nullptr;
+		shared_ptr<OKColor>color = nullptr;
 		bool hidden = false;
 		bool info = false;
 		bool isYesNoType = false;
@@ -100,7 +100,7 @@ public:
 
 		bool outline = true;
 
-		//shared_ptr<OKSubMenu >subMenu = nullptr;
+		//shared_ptr<OKSubMenu>subMenu = nullptr;
 
 		~MenuItem();
 		void setYesNo(bool yesNo);
@@ -116,13 +116,13 @@ public:
 	int lastWidth = 0;
 	int lastHeight = 0;
 
-	OKMenu(shared_ptr<Engine >g, string title = "", string subtitle = "");
+	OKMenu(shared_ptr<Engine>g, string title = "", string subtitle = "");
 	~OKMenu();
 
 	void setGraphic(shared_ptr<OKTexture> t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
 	void clear();
 	void setAllCaptionsToFullAlpha();
-	static void update(shared_ptr<Engine >g, int ticksPassed);
+	static void update(shared_ptr<Engine>g, int ticksPassed);
 
 private:
 	bool areAllMenusDisabled();
@@ -130,8 +130,8 @@ public:
 
 	void up(bool noSound = false);
 	void down(bool noSound = false);
-	shared_ptr<MenuItem> addInfo(string caption, string id = "", shared_ptr<OKColor >color = nullptr);
-	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<OKColor >color = nullptr);
+	shared_ptr<MenuItem> addInfo(string caption, string id = "", shared_ptr<OKColor>color = nullptr);
+	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<OKColor>color = nullptr);
 	shared_ptr<MenuItem> addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
@@ -166,7 +166,7 @@ public:
 	//bool *onQuitToggle;
 
 	//	//=========================================================================================================================
-	//	shared_ptr<OKSubMenu> addSubMenu(string caption, string id, shared_ptr<OKGame >b, void(*f) (shared_ptr<OKGame>, string))
+	//	shared_ptr<OKSubMenu> addSubMenu(string caption, string id, shared_ptr<OKGame>b, void(*f) (shared_ptr<OKGame>, string))
 	//	{//=========================================================================================================================
 	//		
 	//
@@ -180,12 +180,12 @@ public:
 //class OKSubMenu : public OKMenu
 //{//=========================================================================================================================
 //public:
-//	shared_ptr<OKMenu >parentMenu = nullptr;
-//	shared_ptr<OKGame >bobsGame = nullptr;
+//	shared_ptr<OKMenu>parentMenu = nullptr;
+//	shared_ptr<OKGame>bobsGame = nullptr;
 //	void (*callBack)(shared_ptr<OKGame>, string) = nullptr;
 //	bool isOpen = false;
 //
-//	OKSubMenu(shared_ptr<Engine >g) : OKMenu(g, "")
+//	OKSubMenu(shared_ptr<Engine>g) : OKMenu(g, "")
 //	{
 //		
 //	}
@@ -193,9 +193,9 @@ public:
 //	{
 //		
 //	}
-//	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<OKColor >color = menuColor)
+//	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<OKColor>color = menuColor)
 //	{
-//		shared_ptr<MenuItem > m = OKMenu::add(caption, id, color);
+//		shared_ptr<MenuItem> m = OKMenu::add(caption, id, color);
 //		menuItems->get(menuItems->size()-1)->caption->visible = false;
 //		return m;
 //

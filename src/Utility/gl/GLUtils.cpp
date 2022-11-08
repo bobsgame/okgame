@@ -1531,7 +1531,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 	{
 		const char* c_str = code.c_str();
 
-		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const shared_ptr<GLcharARB >*strings,const shared_ptr<GLint >lengths)
+		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const shared_ptr<GLcharARB>*strings,const shared_ptr<GLint>lengths)
 		glShaderSourceARB(shader, 1, &c_str, NULL);
 		e();
 		glCompileShaderARB(shader);
@@ -2974,7 +2974,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	if (rect == nullptr)
 //	{
 //
-//		//shared_ptr<Pixmap >pixmap = make_shared<Pixmap>(1, 1, Pixmap::Format::RGBA8888);
+//		//shared_ptr<Pixmap>pixmap = make_shared<Pixmap>(1, 1, Pixmap::Format::RGBA8888);
 //		//pixmap->setColor(1.0f, 1.0f, 1.0f, 1.0f);
 //		//pixmap->fill();
 //		//rect = make_shared<Texture>(pixmap);
@@ -2992,7 +2992,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	height = height / h; // * heightWidthRatio;
 //
 //
-//	//shared_ptr<SpriteBatch >spriteBatch = OKGame::spriteBatch;
+//	//shared_ptr<SpriteBatch>spriteBatch = OKGame::spriteBatch;
 //	//spriteBatch->setColor(r, g, b, a);
 //	//spriteBatch->draw(rect,x,y,width,height);
 //
@@ -3241,7 +3241,7 @@ shared_ptr<OKTexture> GLUtils::loadTextureFromSurface(string filename, shared_pt
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const shared_ptr<GLvoid > data);
+	const shared_ptr<GLvoid> data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3314,13 +3314,13 @@ GLuint GLUtils::createTextureID()
 }
 
 //=========================================================================================================================
-shared_ptr<OKTexture >GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data)
+shared_ptr<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<OKTexture >tex = nullptr;
+	shared_ptr<OKTexture>tex = nullptr;
 
 	if (textureCache.containsKey(textureName))
 	{
@@ -3385,7 +3385,7 @@ shared_ptr<OKTexture >GLUtils::getTextureFromData(string textureName, int imageW
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const shared_ptr<GLvoid > data);
+	const shared_ptr<GLvoid> data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3405,7 +3405,7 @@ shared_ptr<OKTexture >GLUtils::getTextureFromData(string textureName, int imageW
 }
 
 //=========================================================================================================================
-shared_ptr<OKTexture >GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+shared_ptr<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
@@ -3414,13 +3414,13 @@ shared_ptr<OKTexture >GLUtils::getTextureFromPNGExePath(string filename)// , con
 
 }
 //=========================================================================================================================
-shared_ptr<OKTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+shared_ptr<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<OKTexture >tex = nullptr;
+	shared_ptr<OKTexture>tex = nullptr;
 
 
 	if (textureCache.containsKey(filename))
@@ -3525,7 +3525,7 @@ shared_ptr<OKTexture >GLUtils::getTextureFromPNGAbsolutePath(string filename)// 
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const shared_ptr<GLvoid > data);
+	const shared_ptr<GLvoid> data);
 	*/
 	GLint level = 0;
 	GLint border = 0;

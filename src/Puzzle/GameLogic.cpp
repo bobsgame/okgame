@@ -641,7 +641,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 			vector<shared_ptr<GameLogic>> otherPlayers;
 			for (int n = 0; n < getOKGame()->players.size(); n++)
 			{
-				shared_ptr<GameLogic >g2 = getOKGame()->players.get(n)->gameLogic;
+				shared_ptr<GameLogic>g2 = getOKGame()->players.get(n)->gameLogic;
 				if (g2 != this)otherPlayers.push_back(g2);
 			}
 
@@ -701,7 +701,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 							if (queuedVSGarbageAmountToSend > 0)
 							{
 
-								shared_ptr<GameLogic >leastBlocksPlayer = nullptr;
+								shared_ptr<GameLogic>leastBlocksPlayer = nullptr;
 								int leastBlocks = 1000;
 								for (auto g2 : alivePlayers)
 								{
@@ -730,7 +730,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 						{
 							if (queuedVSGarbageAmountToSend > 0)
 							{
-								shared_ptr<GameLogic >g2 = alivePlayers.at(getRandomIntLessThan(alivePlayers.size(), "sendGarbage"));
+								shared_ptr<GameLogic>g2 = alivePlayers.at(getRandomIntLessThan(alivePlayers.size(), "sendGarbage"));
 								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
 								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
 
@@ -1108,7 +1108,7 @@ void GameLogic::incoming_FramePacket(const string &s)
 }
 
 //=========================================================================================================================
-void GameLogic::_packetProcessThreadLoop(shared_ptr<GameLogic >g)
+void GameLogic::_packetProcessThreadLoop(shared_ptr<GameLogic>g)
 {//=========================================================================================================================
 
 	//log->debug("Started frame processing thread");
@@ -3361,7 +3361,7 @@ void GameLogic::renderHighScoreMeters()
 
 		myHighScore = getOKGame()->getUserStatsForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString);
 
-		shared_ptr<OKGameLeaderBoardAndHighScoreBoard >currentLeaderboard = nullptr;
+		shared_ptr<OKGameLeaderBoardAndHighScoreBoard>currentLeaderboard = nullptr;
 		if (getRoom()->endlessMode)
 		{
 			currentLeaderboard = getOKGame()->getLeaderboardOrHighScoreBoardForGame(gameTypeOrSequenceUUID, difficultyString, objectiveString,
@@ -3477,7 +3477,7 @@ void GameLogic::renderHighScoreMeters()
 
 		int amount = 0;
 		amount = height * (float)((float)currentScore / (float)highestScore);
-		shared_ptr<OKColor >c = OKColor::cyan;
+		shared_ptr<OKColor>c = OKColor::cyan;
 		GLUtils::drawFilledRectXYWH((float)startX, (float)startY + (height - amount), barWidth, amount, c->rf(), c->gf(), c->bf(), 0.7f);
 
 		if (myScoreBarCaption == nullptr)myScoreBarCaption = make_shared<Caption>(getOKGame(),Caption::Position::NONE, startX, startY + height, -1, "Current", 10, true, OKColor::white, OKColor::clear);

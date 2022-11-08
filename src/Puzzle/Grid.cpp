@@ -381,7 +381,7 @@ shared_ptr<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(shar
 
 	if (acceptableColors.size() > 0)
 	{
-		shared_ptr<OKColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
+		shared_ptr<OKColor>color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
 
 		if (p == nullptr)
 		{
@@ -429,7 +429,7 @@ shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<P
 
 			for (int i = 0; i < amtColors; i++)
 			{
-				shared_ptr<OKColor >c = blockType->colors.get(i);
+				shared_ptr<OKColor>c = blockType->colors.get(i);
 
 				if (acceptableColors.contains(c) == false)
 				{
@@ -443,25 +443,25 @@ shared_ptr<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(shared_ptr<P
 	if (x > 0 && get(x - 1, y) != nullptr && get(x - 1, y)->getColor() != nullptr)
 	{
 		 //left
-		shared_ptr<OKColor >c = get(x - 1, y)->getColor();
+		shared_ptr<OKColor>c = get(x - 1, y)->getColor();
 		if(acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 	if (y < getHeight() - 1 && get(x, y + 1) != nullptr && get(x, y + 1)->getColor() != nullptr)
 	{
 		//down
-		shared_ptr<OKColor >c = get(x, y + 1)->getColor();
+		shared_ptr<OKColor>c = get(x, y + 1)->getColor();
 		if (acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 	if (y > 0 && get(x, y - 1) != nullptr && get(x, y - 1)->getColor() != nullptr)
 	{
 		 //up
-		shared_ptr<OKColor >c = get(x, y - 1)->getColor();
+		shared_ptr<OKColor>c = get(x, y - 1)->getColor();
 		if (acceptableColors.contains(c))acceptableColors.remove(c);
 	}
 
 	if (acceptableColors.size() > 0)
 	{
-		shared_ptr<OKColor >color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
+		shared_ptr<OKColor>color = acceptableColors.get(getGameLogic()->getRandomIntLessThan(acceptableColors.size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
 
 		if (p == nullptr)
 		{
@@ -2692,7 +2692,7 @@ void Grid::renderBackground()
 		for(int y=-1;y<height;y++)
 		{
 	
-			shared_ptr<OKColor >color = getGameLogic()->player->gridCheckeredBackgroundColor1;
+			shared_ptr<OKColor>color = getGameLogic()->player->gridCheckeredBackgroundColor1;
 	
 			if(y%2==0)
 			{
@@ -3182,7 +3182,7 @@ void Grid::setPiece(shared_ptr<Piece> piece, int x, int y)
 				{
 					for (int s = 0; s < b->blockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); s++)
 					{
-						shared_ptr<TurnFromBlockTypeToType >turn = b->blockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(s);
+						shared_ptr<TurnFromBlockTypeToType>turn = b->blockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(s);
 
 						if (touchingBlock->blockType->uuid == turn->fromType_UUID)
 						{

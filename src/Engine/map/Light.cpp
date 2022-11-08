@@ -829,7 +829,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 					}
 				}
 
-				shared_ptr<OKColor >c = make_shared<OKColor>(r, g, b, alpha);
+				shared_ptr<OKColor>c = make_shared<OKColor>(r, g, b, alpha);
 				lightImage->setColor(c);
 				//set pixel
 				lightImage->fillRect((centerX + xFromCenter), (centerY + yFromCenter), 1, 1);
@@ -843,7 +843,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 	else
 	{
 		{
-			shared_ptr<OKColor >c = make_shared<OKColor>(r, g, b, maxBrightness);
+			shared_ptr<OKColor>c = make_shared<OKColor>(r, g, b, maxBrightness);
 			lightImage->setColor(c);
 			//lightImageGraphics.fillRect(lightBoxX, lightBoxY, lightBoxWidth, lightBoxHeight);
 			lightImage->fillRect(centerX, centerY, lightBoxWidth / 2, lightBoxHeight / 2);
@@ -912,7 +912,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 
 						int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-						shared_ptr<OKColor >c = nullptr;
+						shared_ptr<OKColor>c = nullptr;
 
 						if (alpha > 255 || alpha < 0)
 						{
@@ -945,7 +945,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			shared_ptr<OKColor >c = nullptr;
+			shared_ptr<OKColor>c = nullptr;
 			if (alpha > 255)
 			{
 				c = (make_shared<OKColor>(255, 0, 255, 255));
@@ -976,7 +976,7 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//int alpha = maxBrightness-(int)((((distanceFromBoxEdgeToXY/maxDistFromBox)*maxRadius)/(float)maxRadius)*(float)maxBrightness);
 			int alpha = maxBrightness - (int)(pow((distanceFromBoxEdgeToXY / maxDistFromBox), 1.0f / decayExp) * (float)(maxBrightness));
 
-			shared_ptr<OKColor >c = nullptr;
+			shared_ptr<OKColor>c = nullptr;
 			if (alpha > 255)
 			{
 				c = (make_shared<OKColor>(255, 0, 255, 255));

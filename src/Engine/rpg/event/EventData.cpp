@@ -89,7 +89,7 @@ string& EventData::initFromString(string& t)
 		{
 			shared_ptr<DialogueData> data = make_shared<DialogueData>();
 			t = data->initFromString(t);
-			dialogueDataList.add(data);
+			dialogueDataList.push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -100,7 +100,7 @@ string& EventData::initFromString(string& t)
 		{
 			shared_ptr<FlagData> data = make_shared<FlagData>();
 			t = data->initFromString(t);
-			flagDataList.add(data);
+			flagDataList.push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -111,7 +111,7 @@ string& EventData::initFromString(string& t)
 		{
 			shared_ptr<SkillData> data = make_shared<SkillData>();
 			t = data->initFromString(t);
-			skillDataList.add(data);
+			skillDataList.push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -122,7 +122,7 @@ string& EventData::initFromString(string& t)
 		{
 			shared_ptr<GameStringData> data = make_shared<GameStringData>();
 			t = data->initFromString(t);
-			gameStringDataList.add(data);
+			gameStringDataList.push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -133,7 +133,7 @@ string& EventData::initFromString(string& t)
 		{
 			shared_ptr<AudioData> data = make_shared<AudioData>();
 			t = data->initFromString(t);
-			musicDataList.add(data);
+			musicDataList.push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -144,7 +144,7 @@ string& EventData::initFromString(string& t)
 		{
 			shared_ptr<AudioData> data = make_shared<AudioData>();
 			t = data->initFromString(t);
-			soundDataList.add(data);
+			soundDataList.push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -249,11 +249,11 @@ EventScriptQualifier::EventScriptQualifier(const string& command, const string& 
 	this->command = command;
 	this->comment = comment;
 
-	EventData::qualifierList.add(shared_from_this());
+	EventData::qualifierList.push_back(shared_from_this());
 }
 
-ArrayList<shared_ptr<EventScriptCommand>> EventData::commandList;// = make_shared<ArrayList><shared_ptr<EventScriptCommand>>();
-ArrayList<shared_ptr<EventScriptQualifier>> EventData::qualifierList;// = make_shared<ArrayList><shared_ptr<EventScriptQualifier>>();
+vector<shared_ptr<EventScriptCommand>> EventData::commandList;// = make_shared<ArrayList><shared_ptr<EventScriptCommand>>();
+vector<shared_ptr<EventScriptQualifier>> EventData::qualifierList;// = make_shared<ArrayList><shared_ptr<EventScriptQualifier>>();
 
 const shared_ptr<EventScriptQualifier> EventData::isPlayerTouchingThisArea = make_shared<EventScriptQualifier>("isPlayerTouchingThisArea", "");
 const shared_ptr<EventScriptQualifier> EventData::isPlayerWalkingIntoThisDoor = make_shared<EventScriptQualifier>("isPlayerWalkingIntoThisDoor", "");

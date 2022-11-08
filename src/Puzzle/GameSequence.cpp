@@ -33,7 +33,7 @@ void NetworkGameSequence::serialize(Archive & ar, const unsigned int version)
 	{
 		for (int i = 0; i < gameTypes.size(); i++)
 		{
-			shared_ptr<GameType >bp = gameTypes.get(i);
+			shared_ptr<GameType>bp = gameTypes.get(i);
 			GameType b;
 			b = *bp;
 			importExport_games.add(b);
@@ -44,7 +44,7 @@ void NetworkGameSequence::serialize(Archive & ar, const unsigned int version)
 	for (int i = 0; i<importExport_games.size(); i++)
 	{
 		GameType b = importExport_games.get(i);
-		shared_ptr<GameType >bp = make_shared<GameType>();
+		shared_ptr<GameType>bp = make_shared<GameType>();
 		*bp = b;
 		gameTypes.add(bp);
 	}

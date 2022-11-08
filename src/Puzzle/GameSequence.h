@@ -172,7 +172,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	static shared_ptr<NetworkGameSequence >fromBase64GZippedXML(string b64GZipXML)
+	static shared_ptr<NetworkGameSequence>fromBase64GZippedXML(string b64GZipXML)
 	{//=========================================================================================================================
 		string xml = FileUtils::unzipBase64StringToString(b64GZipXML);
 
@@ -189,7 +189,7 @@ public:
 		{
 			NetworkGameSequence gs;
 			ia >> BOOST_SERIALIZATION_NVP(gs);
-			shared_ptr<NetworkGameSequence >s = make_shared<NetworkGameSequence>();
+			shared_ptr<NetworkGameSequence>s = make_shared<NetworkGameSequence>();
 			*s = gs;
 
 			return s;
