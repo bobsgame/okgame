@@ -254,10 +254,10 @@ void Event::reset()
 { //=========================================================================================================================
 
 	//reset to the first command
-	delete commandTree; //we're going to have to reparse it each time because the MapObjects aren't persistent and the parameters point to them.
+	//delete commandTree; //we're going to have to reparse it each time because the MapObjects aren't persistent and the parameters point to them.
 	commandTree = nullptr;
 
-	delete currentCommand;
+	//delete currentCommand;
 	currentCommand = nullptr;
 
 	addedToQueue = false;
@@ -291,7 +291,7 @@ void Event::parseEventString(string s)
 				s = s.substr(1);
 			}
 
-			currentParent = dynamic_cast<EventCommand>>(currentParent->getParent());
+			currentParent = make_shared<EventCommand>(dynamic_cast<EventCommand*>(currentParent->getParent().get()));
 		}
 		else
 		{
@@ -304,7 +304,7 @@ void Event::parseEventString(string s)
 				string qualifier = s.substr(0, s.find("{") - 1); //get "qualifier == TRUE"
 				s = s.substr(s.find("{") + 1); //string now looks like "command,command}"
 
-				shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, qualifier);
+				shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), shared_from_this(), qualifier);
 
 				currentParent->addChild(e);
 
@@ -319,7 +319,7 @@ void Event::parseEventString(string s)
 						string command = s.substr(0, s.find("}")); //get command
 						s = s.substr(s.find("}")); //split off command and comma
 
-						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), shared_from_this(), command);
 
 						currentParent->addChild(e);
 					}
@@ -330,7 +330,7 @@ void Event::parseEventString(string s)
 							string command = s.substr(0, s.find("),") + 1); //get command
 							s = s.substr(s.find("),") + 2); //split off command and comma
 
-							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), shared_from_this(), command);
 
 							currentParent->addChild(e);
 						}
@@ -339,7 +339,7 @@ void Event::parseEventString(string s)
 							string command = s.substr(0, s.find(",")); //get command
 							s = s.substr(s.find(",") + 1); //split off command and comma
 
-							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+							shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), shared_from_this(), command);
 
 							currentParent->addChild(e);
 						}
@@ -352,7 +352,7 @@ void Event::parseEventString(string s)
 						string command = s.substr(0, s.find("}")); //get command
 						s = s.substr(s.find("}")); //split off command and comma
 
-						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), shared_from_this(), command);
 
 						currentParent->addChild(e);
 					}
@@ -362,7 +362,7 @@ void Event::parseEventString(string s)
 
 						s = s.substr(command.length());
 
-						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), this, command);
+						shared_ptr<EventCommand> e = EventCommand::parseEventCommandFromCommandString(getEngine(), shared_from_this(), command);
 
 						currentParent->addChild(e);
 					}
@@ -432,7 +432,17 @@ void Event::run()
 				if (type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD || type() == EventData::TYPE_MAP_RUN_ONCE_AFTER_LOAD || type() == EventData::TYPE_PROJECT_INITIAL_LOADER)
 				{
 					reset();
-					getEventManager()->runningEventQueue.remove(this);
+
+
+					for (int i = 0; i < getEventManager()->runningEventQueue.size(); i++)
+					{
+						shared_ptr<Event> se = getEventManager()->runningEventQueue.at(i);
+						if (se.get() == this)
+						{
+							getEventManager()->runningEventQueue.erase(getEventManager()->runningEventQueue.begin()+i);
+						}
+					}
+					
 				}
 				else
 				{
@@ -452,7 +462,7 @@ void Event::getNextCommandInParent()
 	{
 		if (currentCommand->getParent() == nullptr) //this was the last command
 		{
-			delete currentCommand;
+			//delete currentCommand;
 			currentCommand = nullptr;
 		}
 		else
@@ -523,7 +533,7 @@ void Event::doCommand()
 		for (int i = 0; i < (int)currentCommand->parameterList.size(); i++)
 		{
 			shared_ptr<EventParameter> e = currentCommand->parameterList.at(i);
-			e->updateParameterVariablesFromString(this);
+			e->updateParameterVariablesFromString(shared_from_this());
 		}
 	}
 
@@ -2142,13 +2152,13 @@ void Event::isPlayerTouchingAnyEntityUsingThisSprite()
 		log.error("isPlayerTouchingAnyEntityUsingThisSprite() in event with no sprite!");
 	}
 
-	ArrayList<shared_ptr<Entity>>* e = getMap()->getAllEntitiesUsingSpriteAsset(sprite);
+	shared_ptr<vector<shared_ptr<Entity>>> e = make_shared<vector<shared_ptr<Entity>>>(getMap()->getAllEntitiesUsingSpriteAsset(sprite));
 
 	bool b = false;
 
-	for (int i = 0; i < e.size(); i++)
+	for (int i = 0; i < e->size(); i++)
 	{
-		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e.at(i)))
+		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e->at(i)))
 		{
 			b = true;
 		}
@@ -2377,13 +2387,14 @@ void Event::isAnyEntityUsingSpriteAtArea_SPRITE_AREA()
 		return; //block until sprite has loaded.
 	}
 
-	ArrayList<shared_ptr<Entity>>* e = a->getMap()->getAllEntitiesTouchingArea(a);
+
+	shared_ptr<vector<shared_ptr<Entity>>> e = make_shared<vector<shared_ptr<Entity>>>(a->getMap()->getAllEntitiesTouchingArea(a));
 
 	bool b = false;
 
-	for (int i = 0; i < e.size(); i++)
+	for (int i = 0; i < e->size(); i++)
 	{
-		if (e.at(i)->sprite == sprite)
+		if (e->at(i)->sprite == sprite)
 		{
 			b = true;
 		}
@@ -2934,7 +2945,16 @@ void Event::clearEvent_EVENT()
 	int p = 0;
 	shared_ptr<Event> e = make_shared<Event>(dynamic_cast<Event*>(currentCommand->parameterList.at(p++)->entityObject.get()));
 	e->reset();
-	getEventManager()->runningEventQueue.remove(e);
+
+	//getEventManager()->runningEventQueue.remove(e);
+	for (int i = 0; i < getEventManager()->runningEventQueue.size(); i++)
+	{
+		shared_ptr<Event> se = getEventManager()->runningEventQueue.at(i);
+		if (se.get() == e.get())
+		{
+			getEventManager()->runningEventQueue.erase(getEventManager()->runningEventQueue.begin() + i);
+		}
+	}
 
 	getNextCommand();
 }
@@ -2942,7 +2962,7 @@ void Event::clearEvent_EVENT()
 void Event::clearThisEvent()
 { //===============================================================================================
 
-	delete currentCommand;
+	//delete currentCommand;
 	currentCommand = nullptr;
 }
 
@@ -3169,9 +3189,9 @@ void Event::changeMap_MAP_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	shared_ptr<Map> m = (shared_ptr<Map>)currentCommand->parameterList.at(p++)->mapObject.get();
+	shared_ptr<Map> m = make_shared<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
 
-	shared_ptr<Area> o = (shared_ptr<Area>)currentCommand->parameterList.at(p++)->entityObject.get());
+	shared_ptr<Area> o = make_shared<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3183,9 +3203,9 @@ void Event::changeMap_MAP_DOOR()
 { //===============================================================================================
 	int p = 0;
 
-	shared_ptr<Map> m = (shared_ptr<Map>)currentCommand->parameterList.at(p++)->mapObject.get());
+	shared_ptr<Map> m = make_shared<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
 
-	shared_ptr<Door> o = (shared_ptr<Door>)currentCommand->parameterList.at(p++)->entityObject.get());
+	shared_ptr<Door> o = make_shared<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3197,9 +3217,9 @@ void Event::changeMap_MAP_WARP()
 { //===============================================================================================
 	int p = 0;
 
-	shared_ptr<Map> m = (shared_ptr<Map>)(currentCommand->parameterList.at(p++)->entityObject.get()));
+	shared_ptr<Map> m = make_shared<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
 
-	shared_ptr<WarpArea> o = (shared_ptr<WarpArea>)currentCommand->parameterList.at(p++)->entityObject.get());
+	shared_ptr<WarpArea> o = make_shared<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList.at(p++)->entityObject.get()));
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3211,7 +3231,7 @@ void Event::changeMap_MAP_INT_INT()
 { //===============================================================================================
 	int p = 0;
 
-	shared_ptr<Map> m = (shared_ptr<Map>)(currentCommand->parameterList.at(p++)->entityObject.get()));
+	shared_ptr<Map> m = make_shared<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
 
 	int mapXTiles1X = currentCommand->parameterList.at(p++)->i * 2;
 	int mapYTiles1X = currentCommand->parameterList.at(p++)->i * 2;
@@ -3369,7 +3389,7 @@ void Event::setSpriteBox0_SPRITE()
 		return; //block until loaded.
 	}
 
-	getTextManager()->textBox.at(0)->setSpriteWindow(nullptr, s, s->getDisplayName());
+	getTextManager()->textBox.at(0)->setSpriteWindow(nullptr, s->texture, s->getDisplayName());
 
 	getNextCommand();
 }
@@ -3500,7 +3520,16 @@ void Event::setPlayerExists_BOOL()
 	bool b = currentCommand->parameterList.at(p++)->b;
 
 	getClientGameEngine()->playerExistsInMap = b;
-	getMap()->activeEntityList.remove(getPlayer());
+
+	//getMap()->activeEntityList.remove(getPlayer());
+	for (int i = 0; i < getMap()->activeEntityList.size(); i++)
+	{
+		shared_ptr<Entity> se = getMap()->activeEntityList.at(i);
+		if (se.get() == getPlayer().get())
+		{
+			getMap()->activeEntityList.erase(getMap()->activeEntityList.begin() + i);
+		}
+	}
 
 	getNextCommand();
 }
@@ -4905,7 +4934,7 @@ void Event::entityDeleteInstantly_ENTITY()
 	shared_ptr<Entity> e = make_shared<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
 
 	e->deleteFromMapEntityListAndReleaseTexture();
-	delete e;
+	//delete e;
 	e = nullptr;
 
 	getNextCommand();
@@ -5894,7 +5923,7 @@ void Event::toggleAllLightsOnOff()
 
 	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
 	{
-		getMap()->currentState->lightList.get(i)->toggle();
+		getMap()->currentState->lightList.at(i)->toggle();
 	}
 
 	getNextCommand();
@@ -5908,7 +5937,7 @@ void Event::setAllLightsOnOff_BOOL()
 
 	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
 	{
-		getMap()->currentState->lightList.get(i)->setOnOff(b);
+		getMap()->currentState->lightList.at(i)->setOnOff(b);
 	}
 
 	getNextCommand();
@@ -5931,9 +5960,9 @@ void Event::deleteRandoms()
 
 	for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
 	{
-		shared_ptr<Entity> e = getMap()->activeEntityList.get(i);
+		shared_ptr<Entity> e = getMap()->activeEntityList.at(i);
 
-		if ((dynamic_cast<shared_ptr<RandomCharacter>>(e) != NULL))
+		if ((dynamic_cast<RandomCharacter*>(e.get()) != nullptr))
 		{
 			e->fadeOutAndDelete();
 		}
@@ -6265,7 +6294,7 @@ void Event::blockUntilOKGameDead()
 { //===============================================================================================
 	//int p=0;
 
-	shared_ptr<OKGameStadium> bobsGameStadium = make_shared<OKGameStadium>(dynamic_cast<OKGameStadium*>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getCurrentState());
+	shared_ptr<OKGameStadium> bobsGameStadium = make_shared<OKGameStadium>(dynamic_cast<OKGameStadium*>(getClientGameEngine()->stadiumScreen->stadiumGameStateManager->getCurrentState().get()));
 
 	if (bobsGameStadium != nullptr)
 	{

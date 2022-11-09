@@ -236,7 +236,7 @@ public:
 	shared_ptr<OKMenu>createAccountMenu = nullptr;
 	int createAccountMenuCursorPosition = 0;
 	
-	ArrayList<shared_ptr<Room>> rooms;
+	vector<shared_ptr<Room>> rooms;
 	shared_ptr<Room> currentRoom = nullptr;
 
 	void addToRoomsMenu(shared_ptr<Room> c, string name, string id);
@@ -262,7 +262,7 @@ public:
 	int networkMultiplayerLobbyMenuCursorPosition = 0;
 	bool selectingHostedGame = false;
 	//shared_ptr<UDPPeerConnection>hostPeer = nullptr;
-	ArrayList<shared_ptr<UDPPeerConnection>> joinedPeers;// = make_shared<ArrayList><shared_ptr<UDPPeerConnection>>();
+	vector<shared_ptr<UDPPeerConnection>> joinedPeers;// = make_shared<ArrayList><shared_ptr<UDPPeerConnection>>();
 	bool hostStartedGame = false;
 	string friendUserName = "";
 
@@ -429,8 +429,8 @@ public:
 		bool blocksCleared
 	);
 
-	ArrayList<GameTypeStringColorPairPair> getSortedGameTypes();
-	ArrayList<GameSequenceStringColorPairPair> getSortedGameSequences();
+	shared_ptr<vector<shared_ptr<GameTypeStringColorPairPair>>> getSortedGameTypes();
+	shared_ptr<vector<shared_ptr<GameSequenceStringColorPairPair>>> getSortedGameSequences();
 	void populateGameTypesMenu(shared_ptr<OKMenu>m);
 	void populateGameSequencesMenu(shared_ptr<OKMenu>m);
 	void selectSingleGameTypeMenuUpdate();
@@ -503,13 +503,13 @@ public:
 
 
 
-	static ArrayList<shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>> userStatsPerGameAndDifficulty;
-	static ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalTimePlayed;
-	static ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalBlocksCleared;
-	static ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByPlaneswalkerPoints;
-	static ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByEloScore;
-	static ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topGamesByTimeLasted;
-	static ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topGamesByBlocksCleared;
+	static vector<shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>> userStatsPerGameAndDifficulty;
+	static vector<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalTimePlayed;
+	static vector<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalBlocksCleared;
+	static vector<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByPlaneswalkerPoints;
+	static vector<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByEloScore;
+	static vector<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topGamesByTimeLasted;
+	static vector<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> topGamesByBlocksCleared;
 
 
 
@@ -561,14 +561,14 @@ public:
 	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string s) override;
 
   
-	static ArrayList<shared_ptr<GameType>> loadedGameTypes;
-	static ArrayList<shared_ptr<GameSequence>> loadedGameSequences;
-	static ArrayList<shared_ptr<Sprite>> loadedSprites;
+	static vector<shared_ptr<GameType>> loadedGameTypes;
+	static vector<shared_ptr<GameSequence>> loadedGameSequences;
+	static vector<shared_ptr<Sprite>> loadedSprites;
 	void loadGameSequencesFromXML();
 	void loadGameTypesFromXML();
 
 	static void saveRoomConfigToFile(shared_ptr<Room> currentRoom, string name);
-	static ArrayList<string> getRoomConfigsList();
+	static shared_ptr<vector<string>> getRoomConfigsList();
 	static shared_ptr<Room> loadRoomConfig(string configName);
 
 	static void saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence>gs);

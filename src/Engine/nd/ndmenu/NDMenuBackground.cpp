@@ -42,16 +42,16 @@ void NDMenuBackground::init()
 	//glowTileFramesTexture = make_shared<ArrayList><shared_ptr<Texture>>();
 	for (int i = 0; i < tileFrames; i++)
 	{
-		glowTileFramesTexture->add(GLUtils::getTextureFromPNGExePath("data/guiBackground/nDmenu/" + to_string(i) + ".png"));
+		glowTileFramesTexture.push_back(GLUtils::getTextureFromPNGExePath("data/guiBackground/nDmenu/" + to_string(i) + ".png"));
 	}
 
-	glowTiles->clear();
+	glowTiles.clear();
 
 	for (int i = 0; i < numActiveTiles; i++)
 	{
-		glowTiles->add(make_shared<GlowTileBackgroundMenuPanel>::GlowTile(this));
+		glowTiles.push_back(make_shared<GlowTileBackgroundMenuPanel::GlowTile>(shared_from_this()));
 	}
 
-	glowTiles->get(0)->started = true;
+	glowTiles.at(0)->started = true;
 }
 

@@ -86,7 +86,7 @@ void Sprite::preloadFromDataFile(string name)
 						int frameStart = stoi(s);
 
 						//log->info("make_shared<SpriteAnimationSequence> " + frameSequenceName);
-						getAnimationList()->add(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, 0, 0, 0, 0));
+						getAnimationList()->push_back(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, 0, 0, 0, 0));
 						//log->debug("Animation:"+frameSequenceName+":"+to_string(frameStart));
 					}
 				}
@@ -197,7 +197,7 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 
 	if (getIsItem() || getIsGame())
 	{
-		make_shared<Item>(getEngine(), shared_from_this());
+		make_shared<Item>(Item(getEngine(), shared_from_this()));
 	}
 
 	if (getEventData() != nullptr)this->event = make_shared<Event>(e, getEventData(), this);
@@ -1197,7 +1197,7 @@ void Sprite::releaseSpriteTexture_S()
 
 int Sprite::getNumberOfAnimations()
 { //=========================================================================================================================
-	return getAnimationList()->size();
+	return (int)getAnimationList()->size();
 }
 
 
@@ -1212,11 +1212,11 @@ shared_ptr<SpriteAnimationSequence> Sprite::getFirstAnimation()
 	}
 	else
 	{
-		getAnimationList()->add(make_shared<SpriteAnimationSequence>("Default", 0, 0, 0, 0, 0));
+		getAnimationList()->push_back(make_shared<SpriteAnimationSequence>("Default", 0, 0, 0, 0, 0));
 		log.warn("First animation sequence not found in SpriteAsset: " + getName());
 	}
 
-	return getAnimationList()->get(0);
+	return getAnimationList()->at(0);
 }
 
 shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByName(const string& name)
@@ -1224,9 +1224,9 @@ shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByName(const string& nam
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
 	{
-		if (getAnimationList()->get(i)->frameSequenceName == name)
+		if (getAnimationList()->at(i)->frameSequenceName == name)
 		{
-			return getAnimationList()->get(i);
+			return getAnimationList()->at(i);
 		}
 	}
 
@@ -1237,17 +1237,17 @@ shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByFrame(int frame)
 { //=========================================================================================================================
 
 
-	if (getAnimationList()->isEmpty())
+	if (getAnimationList()->empty())
 	{
 		return nullptr;
 	}
 
-	shared_ptr<SpriteAnimationSequence> a = getAnimationList()->get(0);
+	shared_ptr<SpriteAnimationSequence> a = getAnimationList()->at(0);
 	if (a->frameStart == frame)return a;
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
 	{
-		shared_ptr<SpriteAnimationSequence> temp = getAnimationList()->get(i);
+		shared_ptr<SpriteAnimationSequence> temp = getAnimationList()->at(i);
 		if (temp->frameStart == frame)return temp;
 		if (temp->frameStart <= frame && temp->frameStart >= a->frameStart)
 		{
@@ -1265,7 +1265,7 @@ shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByIndex(int index)
 		return nullptr;
 	}
 
-	return getAnimationList()->get(index);
+	return getAnimationList()->at(index);
 }
 
 int Sprite::getAnimationNumFramesByIndex(int index)
@@ -1303,7 +1303,7 @@ int Sprite::getAnimationNumFramesByAnimation(shared_ptr<SpriteAnimationSequence>
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
 	{
-		shared_ptr<SpriteAnimationSequence> temp = getAnimationList()->get(i);
+		shared_ptr<SpriteAnimationSequence> temp = getAnimationList()->at(i);
 		if (temp->frameStart > a->frameStart && temp->frameStart < endFrame)
 		{
 			endFrame = temp->frameStart;
@@ -1318,14 +1318,14 @@ int Sprite::getAnimationNumFramesByAnimation(shared_ptr<SpriteAnimationSequence>
 int Sprite::getAnimationIndexByName(const string& name)
 { //=========================================================================================================================
 
-	if (getAnimationList()->isEmpty())
+	if (getAnimationList()->empty())
 	{
 		return -1;
 	}
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
 	{
-		if (getAnimationList()->get(i)->frameSequenceName == name)
+		if (getAnimationList()->at(i)->frameSequenceName == name)
 		{
 			return i;
 		}
@@ -1339,7 +1339,7 @@ int Sprite::getAnimationIndexByAnimation(shared_ptr<SpriteAnimationSequence> a)
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
 	{
-		if (getAnimationList()->get(i) == a)
+		if (getAnimationList()->at(i) == a)
 		{
 			return i;
 		}
@@ -1362,7 +1362,7 @@ string Sprite::getAnimationNameByIndex(int index)
 		return "";
 	}
 
-	return getAnimationList()->get(index)->frameSequenceName;
+	return getAnimationList()->at(index)->frameSequenceName;
 }
 
 
@@ -1755,11 +1755,8 @@ int Sprite::getUtilityOffsetYPixelsHQ()
 	return s->getUtilityOffsetYPixelsHQ();
 }
 
-ArrayList<shared_ptr<SpriteAnimationSequence>>* Sprite::getAnimationList()
+vector<shared_ptr<SpriteAnimationSequence>>* Sprite::getAnimationList()
 {
-	shared_ptr<SpriteData> s = getData();
-
-
-	return s->getAnimationList();
+	return getData()->getAnimationList();
 }
 

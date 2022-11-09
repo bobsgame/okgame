@@ -224,7 +224,7 @@ public:
 	float getGamePrice();
 	int getUtilityOffsetXPixelsHQ();
 	int getUtilityOffsetYPixelsHQ();
-	ArrayList<shared_ptr<SpriteAnimationSequence>>* getAnimationList();
+	vector<shared_ptr<SpriteAnimationSequence>>* getAnimationList();
 
 
 	//	public void setName(String s){getData().setName(s);}

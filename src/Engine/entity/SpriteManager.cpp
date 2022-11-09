@@ -52,19 +52,19 @@ void SpriteManager::update()
 
 	for (int n = 0; n < screenSpriteList.size(); n++)
 	{
-		shared_ptr<Entity> e = screenSpriteList.get(n);
+		shared_ptr<Entity> e = screenSpriteList.at(n);
 		e->update();
 	}
 
 
 	//TODO: update sprites here, initialize them from server etc. need to reorganize this better.
 
-	ArrayList<shared_ptr<Sprite>>* sprites = spriteByIDHashMap.getAllValues();
+	shared_ptr<vector<shared_ptr<Sprite>>> sprites = make_shared<vector<shared_ptr<Sprite>>>(spriteByIDHashMap.getAllValues());
 	for (int n = 0; n < sprites->size(); n++)
 	{
-		sprites->get(n)->update();
+		sprites->at(n)->update();
 	}
-	delete sprites;
+	//delete sprites;
 }
 
 void SpriteManager::renderScreenSprites(RenderOrder layer)
@@ -76,7 +76,7 @@ void SpriteManager::renderScreenSprites(RenderOrder layer)
 
 		for (int n = 0; n < screenSpriteList.size(); n++)
 		{
-			shared_ptr<ScreenSprite> e = screenSpriteList.get(n);
+			shared_ptr<ScreenSprite> e = screenSpriteList.at(n);
 
 			if (e->getRenderOrder() == layer)
 			{

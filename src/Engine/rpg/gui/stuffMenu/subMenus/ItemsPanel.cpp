@@ -38,13 +38,13 @@ void ItemsPanel::updateItems()
 { //=========================================================================================================================
 
 
-	ArrayList<shared_ptr<Item>>* items = make_shared<ArrayList><shared_ptr<Item>>();
+	vector<shared_ptr<Item>> items;
 
 	for (int i = 0; i < (int)getEventManager()->itemList.size(); i++)
 	{
-		if (getEventManager()->itemList.get(i)->getHaveItemValue_S() == true)
+		if (getEventManager()->itemList.at(i)->getHaveItemValue_S() == true)
 		{
-			items->add(getEventManager()->itemList.get(i));
+			items.push_back(getEventManager()->itemList.at(i));
 		}
 	}
 	//

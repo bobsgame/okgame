@@ -270,7 +270,7 @@ void ArrayList<E>::remove(E e)
 
 	if (index < 0 || index >= size())
 	{
-		log->error("Index out of bounds!");
+		log.error("Index out of bounds!");
 		return;
 	}
 
@@ -328,7 +328,9 @@ template <typename E>
 int ArrayList<E>::indexOf(E e)
 {
 	//typename ArrayList<E>::iterator 
-		auto it = v.begin(); find(v.begin(), v.end(), e);
+		auto it = v.begin(); 
+		
+		find(v.begin(), v.end(), e);
 
 	if (it == v.end())return -1;
 

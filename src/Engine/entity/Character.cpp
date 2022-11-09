@@ -1588,11 +1588,11 @@ void Character::setCharacterNameAndCaption(shared_ptr<OKColor> nameColor, const 
 }
 
 //=========================================================================================================================
-vector<shared_ptr<Entity>> Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
+vector<shared_ptr<Entity>>* Character::getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt)
 { //=========================================================================================================================
 
 
-	vector<shared_ptr<Entity>> list;// = make_shared<ArrayList><shared_ptr<Entity>>();
+	vector<shared_ptr<Entity>>* list = new vector<shared_ptr<Entity>>();
 
 	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
 	{
@@ -1616,7 +1616,7 @@ vector<shared_ptr<Entity>> Character::getOnScreenNonCharacterEntitiesWithinRange
 			getBottom() + amt >= e->getTop() && 
 			getTop() - amt <= e->getBottom())
 		{
-			list.push_back(e);
+			list->push_back(e);
 		}
 	}
 

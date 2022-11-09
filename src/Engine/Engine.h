@@ -131,7 +131,7 @@ public:
 	virtual void setButtonStates();
 
 
-	virtual shared_ptr <TCPServerConnection> getServerConnection();
+	static shared_ptr <TCPServerConnection> getServerConnection();
 
 	static long long getUserID_S();
 	static string getUserName_S();

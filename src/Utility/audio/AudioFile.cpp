@@ -29,7 +29,7 @@ AudioFile::AudioFile(shared_ptr<AudioData> data)
 			return;
 		}
 	}
-	AudioManager::globalAudioFileList.add(this);
+	AudioManager::globalAudioFileList.add(shared_from_this());
 }
 
 
@@ -37,7 +37,7 @@ AudioFile::AudioFile(string filename)
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log->info("Loading " + filename);
+	log.info("Loading " + filename);
 #endif
 	string name = string(filename);
 	int found = (int)name.find('/');
@@ -61,9 +61,9 @@ AudioFile::AudioFile(string filename)
 	_fileExists = true;
 	setInitialized_S(true);
 
-	AudioManager::globalAudioFileList.add(this);
+	AudioManager::globalAudioFileList.add(shared_from_this());
 
-	log->info("Loaded " + filename);
+	log.info("Loaded " + filename);
 
 }
 

@@ -14,7 +14,7 @@ Logger MiniGameEngine::log = Logger("MiniGameEngine");
 MiniGameEngine::MiniGameEngine()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log->debug("MiniGameEngine()");
+	log.debug("MiniGameEngine()");
 #endif
 
 }
@@ -22,10 +22,11 @@ MiniGameEngine::MiniGameEngine()
 MiniGameEngine::~MiniGameEngine()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log->debug("~MiniGameEngine()");
+	log.debug("~MiniGameEngine()");
 #endif
 
-	delete gameDataLoader;
+	//delete gameDataLoader;
+	gameDataLoader = nullptr;
 }
 //=========================================================================================================================
 void MiniGameEngine::init()
@@ -34,7 +35,7 @@ void MiniGameEngine::init()
 	super::init();
 
 #ifdef _DEBUG
-	log->debug("MiniGameEngine::init()");
+	log.debug("MiniGameEngine::init()");
 #endif
 
 	setupMenus();
@@ -91,7 +92,7 @@ bool MiniGameEngine::updateMenus()
 		multiplayerScreenShowing = false;
 	}
 
-	OKMenu::update(this,super::engineTicksPassed());
+	OKMenu::update(shared_from_this(), super::engineTicksPassed());
 
 	if (titleMenuShowing)
 	{
@@ -174,7 +175,10 @@ void MiniGameEngine::updateTitleMenuLogoTexture()
 
 void MiniGameEngine::unloadTitleMenuTextures()
 {//=========================================================================================================================
-	if(titleMenuTextures!= nullptr && titleMenuTextures->size()>0)
+	if(
+		titleMenuTextures!= nullptr && 
+		titleMenuTextures->size()>0
+		)
 	{
 		for (int i = 0; i < numTitleMenuTextureFrames; i++)
 		{
@@ -510,7 +514,7 @@ void MiniGameEngine::waitingForFriendScreenUpdate()
 
 				//send "play game request"
 
-				//log->debug("Game_Challenge_Request:bobsgame");
+				//log.debug("Game_Challenge_Request:bobsgame");
 				connection->writeReliable_S(OKNet::Game_Challenge_Request + getGameName() + OKNet::endline);
 			}
 		}
@@ -668,7 +672,7 @@ bool MiniGameEngine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, stri
 
 	string s = e;// static_cast<string>(e->getMessage());
 
-				 //log->debug(s);
+				 //log.debug(s);
 
 	if (s.find(":") == string::npos)
 	{

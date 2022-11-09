@@ -140,7 +140,7 @@ public:
 	//
 	//	}
 
-	vector<shared_ptr<Entity>> getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
+	vector<shared_ptr<Entity>>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 
 	bool checkTouchingAnyEntityInEntityList(vector<shared_ptr<Entity>> &list, float x, float y);
 

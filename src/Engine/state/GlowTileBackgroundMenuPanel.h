@@ -38,8 +38,8 @@ public:
 	};
 
 public:
-	ArrayList<shared_ptr<GlowTile>> glowTiles;// = make_shared<ArrayList><shared_ptr<GlowTile>>();
-	ArrayList<shared_ptr<OKTexture>> glowTileFramesTexture;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
+	vector<shared_ptr<GlowTile>> glowTiles;// = make_shared<ArrayList><shared_ptr<GlowTile>>();
+	vector<shared_ptr<OKTexture>> glowTileFramesTexture;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
 	shared_ptr<OKTexture> bgScrollTexture = nullptr;
 	float bgScrollX = 0;
 	float bgScrollY = 0;

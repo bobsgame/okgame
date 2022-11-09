@@ -108,9 +108,9 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 
 		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
 		{
-			if (getEventManager()->eventList.get(k)->getID() == eventData->getID())
+			if (getEventManager()->eventList.at(k)->getID() == eventData->getID())
 			{
-				event = getEventManager()->eventList.get(k);
+				event = getEventManager()->eventList.at(k);
 			}
 		}
 
@@ -120,7 +120,7 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 		}
 
 
-		mapEventList.add(event);
+		mapEventList.push_back(event);
 
 	}
 
@@ -136,7 +136,7 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 		//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 		//also check and make sure it is sending event update
 
-		doorList.add(door);
+		doorList.push_back(door);
 	}
 
 
@@ -148,7 +148,7 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 		//create state, add to state list.
 		shared_ptr<MapState> mapState = make_shared<MapState>(mapStateData, this);
 
-		stateList.add(mapState);
+		stateList.push_back(mapState);
 
 
 		for (int n = 0; n < (int)mapStateData->getAreaDataList()->size(); n++)
@@ -163,7 +163,7 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 				//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 				//also check and make sure it is sending event update
 
-				warpAreaList.add(warpArea);
+				warpAreaList.push_back(warpArea);
 				//note that warp areas DON'T get added to the currentMap.areaHashmap.
 				//i go through each map and search for the appropriate warparea in that list
 			}
@@ -172,7 +172,7 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 				shared_ptr<Area> area = make_shared<Area>(getEngine(), areaData, this);
 				mapState->areaByNameHashtable.put(area->getName(), area);
 				mapState->areaByTYPEIDHashtable.put(area->getTYPEIDString(), area);
-				mapState->areaList.add(area);
+				mapState->areaList.push_back(area);
 			}
 		}
 
@@ -183,7 +183,7 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 			shared_ptr<Light> light = make_shared<Light>(getEngine(), lightData, this);
 
 
-			mapState->lightList.add(light);
+			mapState->lightList.push_back(light);
 			mapState->lightByNameHashtable.put(light->getName(), light);
 		}
 
@@ -196,14 +196,14 @@ void Map::initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData)
 			{
 				shared_ptr<Character> character = make_shared<Character>(getEngine(), entityData, this);
 
-				mapState->characterList.add(character);
+				mapState->characterList.push_back(character);
 				mapState->characterByNameHashtable.put(character->getName(), character);
 			}
 			else
 			{
 				shared_ptr<Entity> entity = make_shared<Entity>(getEngine(), entityData, this);
 
-				mapState->entityList.add(entity);
+				mapState->entityList.push_back(entity);
 				mapState->entityByNameHashtable.put(entity->getName(), entity);
 			}
 		}
@@ -231,9 +231,9 @@ shared_ptr<Entity> Map::getEntityByName(const string& name)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			if (activeEntityList.get(i)->getName() == name)
+			if (activeEntityList.at(i)->getName() == name)
 			{
-				e = activeEntityList.get(i);
+				e = activeEntityList.at(i);
 			}
 		}
 	}
@@ -242,9 +242,9 @@ shared_ptr<Entity> Map::getEntityByName(const string& name)
 	{
 		for (int i = 0; i < (int)getSpriteManager()->screenSpriteList.size(); i++)
 		{
-			if (getSpriteManager()->screenSpriteList.get(i)->getName().compare(name) == 0)
+			if (getSpriteManager()->screenSpriteList.at(i)->getName().compare(name) == 0)
 			{
-				e = getSpriteManager()->screenSpriteList.get(i);
+				e = getSpriteManager()->screenSpriteList.at(i);
 			}
 		}
 	}
@@ -269,7 +269,7 @@ shared_ptr<Character> Map::getCharacterByName(const string& name)
 shared_ptr<Light> Map::getLightByName(const string& name)
 { //=========================================================================================================================
 
-	//log->debug("getLightByName: "+name);
+	//log.debug("getLightByName: "+name);
 
 	return currentState->lightByNameHashtable.get(name);
 }
@@ -280,7 +280,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByName(string name)
 { //=========================================================================================================================
 
 
-	//log->debug("getAreaOrWarpAreaByName: "+name);
+	//log.debug("getAreaOrWarpAreaByName: "+name);
 
 	if (OKString::startsWith(name, "AREA."))
 	{
@@ -299,7 +299,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByName(string name)
 	{
 		for (int i = 0; i < stateList.size(); i++)
 		{
-			shared_ptr<MapState> s = stateList.get(i);
+			shared_ptr<MapState> s = stateList.at(i);
 			if (s->areaByNameHashtable.containsKey(name))
 			a = s->areaByNameHashtable.get(name);
 			if (a != nullptr)
@@ -313,16 +313,16 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByName(string name)
 	{
 		for (int i = 0; i < warpAreaList.size(); i++)
 		{
-			if (warpAreaList.get(i)->getName() == name)
+			if (warpAreaList.at(i)->getName() == name)
 			{
-				a = warpAreaList.get(i);
+				a = warpAreaList.at(i);
 			}
 		}
 	}
 
 	if (a == nullptr)
 	{
-		log->error("Could not find Area/WarpArea: getAreaOrWarpAreaByName() Name:" + name);
+		log.error("Could not find Area/WarpArea: getAreaOrWarpAreaByName() Name:" + name);
 	}
 
 
@@ -333,7 +333,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 { //=========================================================================================================================
 
 
-	//log->debug("getAreaOrWarpAreaByName: "+name);
+	//log.debug("getAreaOrWarpAreaByName: "+name);
 
 	if (OKString::startsWith(typeID, "AREA.") == false)
 	{
@@ -352,9 +352,9 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	{
 		for (int i = 0; i < warpAreaList.size(); i++)
 		{
-			if (warpAreaList.get(i)->getTYPEIDString() == typeID)
+			if (warpAreaList.at(i)->getTYPEIDString() == typeID)
 			{
-				a = warpAreaList.get(i);
+				a = warpAreaList.at(i);
 			}
 		}
 	}
@@ -363,7 +363,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	{
 		for (int i = 0; i < stateList.size(); i++)
 		{
-			shared_ptr<MapState> s = stateList.get(i);
+			shared_ptr<MapState> s = stateList.at(i);
 
 			if (s->areaByTYPEIDHashtable.containsKey(typeID))
 			a = s->areaByTYPEIDHashtable.get(typeID);
@@ -378,7 +378,7 @@ shared_ptr<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 
 	if (a == nullptr)
 	{
-		log->debug("Could not find Area/WarpArea: getAreaOrWarpAreaByTYPEID() TypeID:" + typeID);
+		log.debug("Could not find Area/WarpArea: getAreaOrWarpAreaByTYPEID() TypeID:" + typeID);
 	}
 
 
@@ -389,7 +389,7 @@ shared_ptr<Door> Map::getDoorByTYPEID(const string& typeID_in)
 { //=========================================================================================================================
 
 	string typeID = typeID_in;
-	//log->debug("getDoorByName: "+name);
+	//log.debug("getDoorByName: "+name);
 
 	if (OKString::startsWith(typeID, "DOOR.") == false)
 	{
@@ -399,11 +399,11 @@ shared_ptr<Door> Map::getDoorByTYPEID(const string& typeID_in)
 	//doors
 	//for(int n=0;n<MapAssetIndex.mapList.size();n++)
 	{
-		//MapAsset m = MapAssetIndex.mapList.get(n);
+		//MapAsset m = MapAssetIndex.mapList.at(n);
 
 		for (int i = 0; i < doorList.size(); i++)
 		{
-			shared_ptr<Door> d = doorList.get(i);
+			shared_ptr<Door> d = doorList.at(i);
 
 			if (typeID == d->getTYPEIDString())
 			{
@@ -412,7 +412,7 @@ shared_ptr<Door> Map::getDoorByTYPEID(const string& typeID_in)
 		}
 	}
 
-	log->error("Could not find Door: getDoorByTYPEID() TypeID:" + typeID);
+	log.error("Could not find Door: getDoorByTYPEID() TypeID:" + typeID);
 
 	return nullptr;
 }
@@ -422,7 +422,7 @@ shared_ptr<Door> Map::getDoorByName(const string& name_in)
 
 	string name = name_in;
 
-	//log->debug("getDoorByName: "+name);
+	//log.debug("getDoorByName: "+name);
 
 	if (OKString::startsWith(name, "DOOR."))
 	{
@@ -432,11 +432,11 @@ shared_ptr<Door> Map::getDoorByName(const string& name_in)
 	//doors
 	//for(int n=0;n<MapAssetIndex.mapList.size();n++)
 	{
-		//MapAsset m = MapAssetIndex.mapList.get(n);
+		//MapAsset m = MapAssetIndex.mapList.at(n);
 
 		for (int i = 0; i < doorList.size(); i++)
 		{
-			shared_ptr<Door> d = doorList.get(i);
+			shared_ptr<Door> d = doorList.at(i);
 
 			if (name == d->getName())
 			{
@@ -445,7 +445,7 @@ shared_ptr<Door> Map::getDoorByName(const string& name_in)
 		}
 	}
 
-	log->error("Could not find Door: getDoorByName(): " + name);
+	log.error("Could not find Door: getDoorByName(): " + name);
 
 	return nullptr;
 }
@@ -454,7 +454,7 @@ shared_ptr<MapState> Map::getMapStateByName(const string& name)
 { //=========================================================================================================================
 	for (int i = 0; i < stateList.size(); i++)
 	{
-		shared_ptr<MapState> mapState = stateList.get(i);
+		shared_ptr<MapState> mapState = stateList.at(i);
 
 		if (name == mapState->getName())
 		{
@@ -464,10 +464,10 @@ shared_ptr<MapState> Map::getMapStateByName(const string& name)
 
 
 	//we didn't find it. make a new one. throw an error.
-	log->error("Could not find Map State:" + name + ". This should never happen.");
+	log.error("Could not find Map State:" + name + ". This should never happen.");
 
 	//MapState s = make_shared<MapState>(-1,name);
-	//stateList.add(s);
+	//stateList.push_back(s);
 
 
 	return nullptr;
@@ -478,7 +478,7 @@ shared_ptr<MapState> Map::getMapStateByID(int id)
 	//this should look through the current map mapStateList first
 	for (int i = 0; i < stateList.size(); i++)
 	{
-		shared_ptr<MapState> s = stateList.get(i);
+		shared_ptr<MapState> s = stateList.at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -486,11 +486,11 @@ shared_ptr<MapState> Map::getMapStateByID(int id)
 	}
 
 
-	log->error("Could not find State ID:" + to_string(id) + " in currentMap stateList. This should never happen.");
+	log.error("Could not find State ID:" + to_string(id) + " in currentMap stateList. This should never happen.");
 	//then it should look through every map mapStateList, since state ID is guaranteed to be unique.
 
 	//MapState s = make_shared<MapState>(id,"????");
-	//stateList.add(s);
+	//stateList.push_back(s);
 
 
 	return nullptr;
@@ -524,7 +524,7 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//warpareas
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		shared_ptr<Area> a = warpAreaList.get(i);
+		shared_ptr<Area> a = warpAreaList.at(i);
 		if (a->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->add(a->getTYPEIDString());
@@ -535,7 +535,7 @@ ArrayList<string>* Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//doors
 	for (int i = 0; i < doorList.size(); i++)
 	{
-		shared_ptr<Door> d = doorList.get(i);
+		shared_ptr<Door> d = doorList.at(i);
 		if (d->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->add(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
@@ -620,8 +620,8 @@ void Map::update()
 				eventsAllLoadedThisTime = true;
 				for (int i = 0; i < mapEventList.size(); i++)
 				{
-					//int eventID = mapEventList.get(i);
-					shared_ptr<Event> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
+					//int eventID = mapEventList.at(i);
+					shared_ptr<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
 					event->map = this;
 					if (event->getInitialized_S() == false)
 					{
@@ -647,7 +647,7 @@ void Map::update()
 	//DONE: need to choose a MapState here.
 	//this is decided by the DEFAULT map Event, which should be loaded and run exactly once before the map loads.
 	//so we need to go through currentMap's event list, find event type -1, and run that- before the map actually starts running. how to do that?
-	//m.currentState = m.stateList.get(0);
+	//m.currentState = m.stateList.at(0);
 
 
 	if (currentState == nullptr)
@@ -660,7 +660,7 @@ void Map::update()
 			lastLoadEventRequestTime = currentTime;
 			for (int i = 0; i < mapEventList.size(); i++)
 			{
-				shared_ptr<Event> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+				shared_ptr<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.at(i));
 				event->map = this;
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
@@ -719,7 +719,7 @@ void Map::update()
 		//run all events, **this will also run post-load events for this map, which stop executing after one loop.
 		for (int i = 0; i < mapEventList.size(); i++)
 		{
-			shared_ptr<Event> event = mapEventList.get(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.get(i));
+			shared_ptr<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.at(i));
 			event->map = this;
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
@@ -875,7 +875,7 @@ void Map::update()
 //	   if(generatePNGThreadPool.isShutdown()==false)
 //	   {
 //		   generatePNGThreadPool.shutdown();
-//	      log->debug("generatePNGExecutorService Shut Down");
+//	      log.debug("generatePNGExecutorService Shut Down");
 //	   }
 //	}
 }
@@ -998,7 +998,7 @@ void Map::updateEntities()
 	//for all entities update
 	for (int n = 0; n < activeEntityList.size(); n++)
 	{
-		shared_ptr<Entity> e = activeEntityList.get(n);
+		shared_ptr<Entity> e = activeEntityList.at(n);
 
 		e->update();
 	}
@@ -1009,7 +1009,7 @@ void Map::updateDoors()
 
 	for (int n = 0; n < doorList.size(); n++)
 	{
-		shared_ptr<Door> e = doorList.get(n);
+		shared_ptr<Door> e = doorList.at(n);
 
 		e->update();
 	}
@@ -1032,7 +1032,7 @@ void Map::updateAreas()
 
 	for (int i = 0; i < (int)currentState->areaList.size(); i++)
 	{
-		shared_ptr<Area> a = currentState->areaList.get(i);
+		shared_ptr<Area> a = currentState->areaList.at(i);
 		a->update();
 	}
 }
@@ -1042,8 +1042,8 @@ void Map::updateWarpAreas()
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
 		{
-			//if(warpAreaList.get(i).mapAsset==currentMap)
-			warpAreaList.get(i)->update();
+			//if(warpAreaList.at(i).mapAsset==currentMap)
+			warpAreaList.at(i)->update();
 		}
 	}
 }
@@ -1053,7 +1053,7 @@ void Map::updateLights()
 
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		currentState->lightList.get(i)->update();
+		currentState->lightList.at(i)->update();
 	}
 }
 
@@ -1066,7 +1066,7 @@ void Map::zOrderEntities()
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1074,14 +1074,14 @@ void Map::zOrderEntities()
 		{
 			if (drawList.contains(e) == false)
 			{
-				drawList.add(e);
+				drawList.push_back(e);
 			}
 		}
 	}
 
 	for (int i = 0; i < doorList.size(); i++)
 	{
-		shared_ptr<Door> e = doorList.get(i);
+		shared_ptr<Door> e = doorList.at(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1089,7 +1089,7 @@ void Map::zOrderEntities()
 		{
 			if (drawList.contains(e) == false)
 			{
-				drawList.add(e);
+				drawList.push_back(e);
 			}
 		}
 	}
@@ -1102,7 +1102,7 @@ void Map::zOrderEntities()
 			{
 				if ((drawList.contains(getPlayer())) == false)
 				{
-					drawList.add(getPlayer());
+					drawList.push_back(getPlayer());
 				}
 			}
 		}
@@ -1122,7 +1122,7 @@ void Map::zOrderEntities()
 				{
 					if (drawList.contains(f) == false)
 					{
-						drawList.add(f);
+						drawList.push_back(f);
 					}
 				}
 			}
@@ -1144,7 +1144,7 @@ void Map::zOrderEntities()
 
 		for (int n = 0; n < drawList.size(); n++)
 		{
-			shared_ptr<Entity> e = drawList.get(n);
+			shared_ptr<Entity> e = drawList.at(n);
 
 			//store topmost entity on screen
 			//check for non-zordering entities, entities always on top, entities always on bottom here.
@@ -1163,16 +1163,16 @@ void Map::zOrderEntities()
 		}
 
 		drawList.remove(highestOnScreenEntity);
-		zList.add(highestOnScreenEntity);
+		zList.push_back(highestOnScreenEntity);
 	}
 
 
-	//		log->debug("---------------------");
+	//		log.debug("---------------------");
 	//
 	//		for(int i=0;i<zList.size();i++)
 	//		{
-	//			Entity e = zList.get(i);
-	//			log->debug(e.getSpriteName());
+	//			Entity e = zList.at(i);
+	//			log.debug(e.getSpriteName());
 	//		}
 
 
@@ -1191,7 +1191,7 @@ void Map::sortLightLayers()
 
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		shared_ptr<Light> l = currentState->lightList.get(i);
+		shared_ptr<Light> l = currentState->lightList.at(i);
 		//if light is not drawn
 		if (l->sortingState != Light::DRAWN)
 		{
@@ -1203,7 +1203,7 @@ void Map::sortLightLayers()
 			//for all lights from this light to the end
 			for (int a = i + 1; a < (int)currentState->lightList.size(); a++)
 			{
-				shared_ptr<Light> compareLight = currentState->lightList.get(a);
+				shared_ptr<Light> compareLight = currentState->lightList.at(a);
 
 				//if that light isn't already drawn
 				if (compareLight->sortingState != Light::DRAWN)
@@ -1211,7 +1211,7 @@ void Map::sortLightLayers()
 					//for all lights
 					for (int b = 0; b < (int)currentState->lightList.size(); b++)
 					{
-						shared_ptr<Light> overlapLight = currentState->lightList.get(b);
+						shared_ptr<Light> overlapLight = currentState->lightList.at(b);
 
 						//if this light isn't
 						if (a != b && overlapLight->sortingState == Light::DRAWING)
@@ -1246,7 +1246,7 @@ void Map::sortLightLayers()
 
 			for (int d = 0; d < (int)currentState->lightList.size(); d++)
 			{
-				shared_ptr<Light> drawLight = currentState->lightList.get(d);
+				shared_ptr<Light> drawLight = currentState->lightList.at(d);
 				if (drawLight->sortingState == Light::DRAWING)
 				{
 					thisLayerList->add(drawLight);
@@ -1256,9 +1256,9 @@ void Map::sortLightLayers()
 				}
 			}
 
-			//log->debug("Light layer "+layer);
+			//log.debug("Light layer "+layer);
 			//layer++;
-			sortedLightsLayers.add(thisLayerList);
+			sortedLightsLayers.push_back(thisLayerList);
 		}
 	}
 }
@@ -1562,7 +1562,7 @@ void Map::renderEntities(RenderOrder layer)
 
 		for (int n = 0; n < zList.size(); n++)
 		{
-			shared_ptr<Entity> e = zList.get(n);
+			shared_ptr<Entity> e = zList.at(n);
 
 
 			if (layer == RenderOrder::SPRITE_DEBUG_OUTLINES)
@@ -1593,7 +1593,7 @@ void Map::renderAllLightsUnsorted()
 	{
 		for (int i = 0; i < (int)currentState->lightList.size(); i++)
 		{
-			shared_ptr<Light> l = currentState->lightList.get(i);
+			shared_ptr<Light> l = currentState->lightList.at(i);
 			l->renderLight();
 		}
 	}
@@ -1629,7 +1629,7 @@ void Map::renderAreaActionIcons()
 	//warpareas
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
-		shared_ptr<Area> a = warpAreaList.get(i);
+		shared_ptr<Area> a = warpAreaList.at(i);
 		//if(a.isAnAction)
 		a->renderActionIcon();
 	}
@@ -1828,8 +1828,8 @@ void Map::renderWarpAreaDebugBoxes()
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
 		{
-			//if(warpAreaList.get(i).mapAsset==currentMap)
-			warpAreaList.get(i)->renderDebugBoxes();
+			//if(warpAreaList.at(i).mapAsset==currentMap)
+			warpAreaList.at(i)->renderDebugBoxes();
 		}
 	}
 }
@@ -1840,8 +1840,8 @@ void Map::renderWarpAreaDebugInfo()
 	for (int i = 0; i < warpAreaList.size(); i++)
 	{
 		{
-			//if(warpAreaList.get(i).mapAsset==currentMap)
-			warpAreaList.get(i)->renderDebugInfo();
+			//if(warpAreaList.at(i).mapAsset==currentMap)
+			warpAreaList.at(i)->renderDebugInfo();
 		}
 	}
 }
@@ -2111,7 +2111,7 @@ void Map::unloadLight(const string& s)
 
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
-		if (currentState->lightList.get(i)->getName() == s)
+		if (currentState->lightList.at(i)->getName() == s)
 		{
 			currentState->lightList.removeAt(i);
 			i--;
@@ -2150,7 +2150,7 @@ void Map::unloadMapEntity(const string& s)
 
 	for (int i = 0; i < (int)currentState->entityList.size(); i++)
 	{
-		if (currentState->entityList.get(i)->getName() == s)
+		if (currentState->entityList.at(i)->getName() == s)
 		{
 			currentState->entityList.removeAt(i);
 			i--;
@@ -2411,7 +2411,7 @@ void Map::updateLastKnownScreenXYBasedOnCamera()
 //			//go through all mapsprites, check if map characters
 //			for(int i=0;i<activeEntityList.size();i++)
 //			{
-//				Entity m = activeEntityList.get(i);
+//				Entity m = activeEntityList.at(i);
 //				if(m.getNonWalkable()==true
 //						&&x<m.getRight()
 //						&&x>m.getLeft()
@@ -2846,8 +2846,8 @@ bool Map::loadLightTexturesFromCachePNGs()
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
 		{
-			//if(lightList.get(i).mapAsset==this)
-			shared_ptr<Light> l = currentState->lightList.get(i);
+			//if(lightList.at(i).mapAsset==this)
+			shared_ptr<Light> l = currentState->lightList.at(i);
 
 			//check if tile has texture already in gpu
 			if (l->texture == nullptr)
@@ -3237,8 +3237,8 @@ void Map::startThreadsForMissingLightPNGs()
 	for (int i = 0; i < (int)currentState->lightList.size(); i++)
 	{
 		{
-			//if(lightList.get(i).mapAsset==this)
-			shared_ptr<Light> l = currentState->lightList.get(i);
+			//if(lightList.at(i).mapAsset==this)
+			shared_ptr<Light> l = currentState->lightList.at(i);
 
 
 			//don't create a thread to generate a texture that is already being made.
@@ -3246,7 +3246,7 @@ void Map::startThreadsForMissingLightPNGs()
 			bool c = false;
 			for (int j = 0; j < i; j++)
 			{
-				if (currentState->lightList.get(j)->getFileName() == l->getFileName())
+				if (currentState->lightList.at(j)->getFileName() == l->getFileName())
 				{
 					c = true;
 					break;
@@ -3622,7 +3622,7 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 
 	if (blank == true)
 	{
-		//log->debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
+		//log.debug("Made blank file: "+chunkLayer+"_"+chunkIndex);
 
 		//save 0 byte placeholder, this will always load blank texture
 		shared_ptr<OKFile> f = make_shared<OKFile>("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + to_string(chunkIndex));
@@ -3762,14 +3762,14 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 							unsigned int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
 
 
-//							log->info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
-//							log->info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
+//							log.info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
+//							log.info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
 //
 //							//int result;
 //							//raf.read((char*)&result, 4);
 //							if (result<0 || result > 1000 || byte1 > 0 || byte2 > 0 || byte3 > 0)
 //							{
-//								log->error("ok");
+//								log.error("ok");
 //							}
 							
 
@@ -3819,13 +3819,13 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 							unsigned int result = (byte1 << 24) + (byte2 << 16) + (byte3 << 8) + byte4;
 
 
-//							log->info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
-//							log->info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
+//							log.info("" + to_string(byte1) + " " + to_string(byte2) + " " + to_string(byte3) + " " + to_string(byte4) + " " + to_string(result));
+//							log.info("" + to_string(sbyte1) + " " + to_string(sbyte2) + " " + to_string(sbyte3) + " " + to_string(sbyte4) + " " + to_string(result));
 //
 //
 //							if(result < 0 || result > 1000 || byte1 > 0 || byte2 > 0 || byte3 > 0)
 //							{
-//								log->error("ok");
+//								log.error("ok");
 //							}
 
 							//int result;
@@ -3850,7 +3850,7 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr
 	}
 	catch (exception e)//IOException e)
 	{
-		log->error("Could not read file");
+		log.error("Could not read file");
 	}
 
 	raf.close();
@@ -4004,7 +4004,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		}
 		catch (exception e)//IOException e)
 		{
-			log->error("Cannot read PNG file: " + underLayerTextureFile->getName() + " ");// +e->getMessage());
+			log.error("Cannot read PNG file: " + underLayerTextureFile->getName() + " ");// +e->getMessage());
 		}
 	}
 
@@ -4026,7 +4026,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 		}
 		catch (exception e)//IOException e)
 		{
-			log->error("Cannot read PNG file: " + overLayerTextureFile->getName() + " ");// +e->getMessage());
+			log.error("Cannot read PNG file: " + overLayerTextureFile->getName() + " ");// +e->getMessage());
 		}
 	}
 
@@ -4388,19 +4388,19 @@ void Map::addEntitiesAndCharactersFromCurrentStateToActiveEntityList()
 
 	for (int n = 0; n < (int)currentState->entityList.size(); n++)
 	{
-		shared_ptr<Entity> ms = currentState->entityList.get(n);
-		activeEntityList.add(ms);
+		shared_ptr<Entity> ms = currentState->entityList.at(n);
+		activeEntityList.push_back(ms);
 	}
 
 	for (int n = 0; n < (int)currentState->characterList.size(); n++)
 	{
-		shared_ptr<Character> ms = currentState->characterList.get(n);
-		activeEntityList.add(ms);
+		shared_ptr<Character> ms = currentState->characterList.at(n);
+		activeEntityList.push_back(ms);
 	}
 
 	if (getPlayer() != nullptr && getClientGameEngine()->playerExistsInMap)
 	{
-		activeEntityList.add(getPlayer());
+		activeEntityList.push_back(getPlayer());
 	}
 }
 
@@ -4410,7 +4410,7 @@ void Map::clearActiveEntityList()
 	//have to release unique textures on random entities
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 		if ((dynamic_cast<shared_ptr<RandomCharacter>>(e) != NULL))
 		{
 			shared_ptr<RandomCharacter> r = static_cast<shared_ptr<RandomCharacter>>(e);
@@ -4424,8 +4424,8 @@ void Map::clearActiveEntityList()
 	}
 
 	activeEntityList.clear();
-	//if(getPlayer()!=null)entityList.add(getPlayer());
-	//entityList.add(getCameraman());
+	//if(getPlayer()!=null)entityList.push_back(getPlayer());
+	//entityList.push_back(getCameraman());
 }
 
 bool Map::isAnyoneOverlappingXY(float x, float y)
@@ -4433,7 +4433,7 @@ bool Map::isAnyoneOverlappingXY(float x, float y)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 
 		if (x > e->getLeft() && x < e->getRight() && y > e->getTop() && y < e->getBottom())
 		{
@@ -4449,7 +4449,7 @@ bool Map::isAnyoneOverlappingXYXY(float x, float y, float x2, float y2)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 
 		if (x < e->getRight() && x2 > e->getLeft() && y < e->getBottom() && y2 > e->getTop())
 		{
@@ -4465,7 +4465,7 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		//find any characters
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 
 		if ((dynamic_cast<shared_ptr<RandomCharacter>>(e) != NULL))
 		{
@@ -4532,7 +4532,7 @@ bool Map::isAnyCharacterTouchingArea(shared_ptr<Area> a)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			shared_ptr<Entity> e = activeEntityList.get(i);
+			shared_ptr<Entity> e = activeEntityList.at(i);
 
 			if (
 				(
@@ -4569,7 +4569,7 @@ bool Map::isAnyEntityTouchingArea(shared_ptr<Area> a)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			shared_ptr<Entity> e = activeEntityList.get(i);
+			shared_ptr<Entity> e = activeEntityList.at(i);
 
 			if (a->isEntityHitBoxTouchingMyBoundary(e))
 			{
@@ -4581,42 +4581,40 @@ bool Map::isAnyEntityTouchingArea(shared_ptr<Area> a)
 	return false;
 }
 
-ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesTouchingArea(shared_ptr<Area> a)
+vector<shared_ptr<Entity>> Map::getAllEntitiesTouchingArea(shared_ptr<Area> a)
 { //=========================================================================================================================
 
-	ArrayList<shared_ptr<Entity>>* entitiesInArea = make_shared<ArrayList><shared_ptr<Entity>>();
+	vector<shared_ptr<Entity>> entitiesInArea;// = make_shared<ArrayList><shared_ptr<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 
 		if (a->isEntityHitBoxTouchingMyBoundary(e))
 		{
-			entitiesInArea->add(e);
+			entitiesInArea.push_back(e);
 		}
 	}
-
 
 	return entitiesInArea;
 }
 
-ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesPlayerIsTouching()
+vector<shared_ptr<Entity>> Map::getAllEntitiesPlayerIsTouching()
 { //=========================================================================================================================
 
-	ArrayList<shared_ptr<Entity>>* entitiesTouching = make_shared<ArrayList><shared_ptr<Entity>>();
+	vector<shared_ptr<Entity>> entitiesTouching;// = make_shared<ArrayList><shared_ptr<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 
 		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e))
 		{
-			entitiesTouching->add(e);
+			entitiesTouching.push_back(e);
 		}
 	}
-
 
 	return entitiesTouching;
 }
@@ -4627,7 +4625,7 @@ bool Map::isAnyoneTryingToGoToArea(shared_ptr<Area> a)
 	{
 		for (int i = 0; i < activeEntityList.size(); i++)
 		{
-			if (activeEntityList.get(i)->currentAreaTYPEIDTarget == a->getName())
+			if (activeEntityList.at(i)->currentAreaTYPEIDTarget == a->getName())
 			{
 				return true;
 			}
@@ -4641,7 +4639,7 @@ bool Map::isAnyEntityUsingSpriteAsset(shared_ptr<Sprite> s)
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		if (activeEntityList.get(i)->sprite == s)
+		if (activeEntityList.at(i)->sprite == s)
 		{
 			return true;
 		}
@@ -4651,18 +4649,18 @@ bool Map::isAnyEntityUsingSpriteAsset(shared_ptr<Sprite> s)
 	return false;
 }
 
-ArrayList<shared_ptr<Entity>>* Map::getAllEntitiesUsingSpriteAsset(shared_ptr<Sprite> s)
+vector<shared_ptr<Entity>> Map::getAllEntitiesUsingSpriteAsset(shared_ptr<Sprite> s)
 { //=========================================================================================================================
 
-	ArrayList<shared_ptr<Entity>>* entitiesUsingSprite = make_shared<ArrayList><shared_ptr<Entity>>();
+	vector<shared_ptr<Entity>> entitiesUsingSprite;// = make_shared<vector><shared_ptr<Entity>>();
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
-		shared_ptr<Entity> e = activeEntityList.get(i);
+		shared_ptr<Entity> e = activeEntityList.at(i);
 
 		if (e->sprite == s)
 		{
-			entitiesUsingSprite->add(e);
+			entitiesUsingSprite.push_back(e);
 		}
 	}
 
@@ -4676,9 +4674,9 @@ shared_ptr<Entity> Map::createEntity(const string& spriteName, shared_ptr<Sprite
 
 	shared_ptr<EntityData> entityData = make_shared<EntityData>(-1, spriteName, spriteAsset->getName(), (int)(mapX / 2), (int)(mapY / 2));
 
-	shared_ptr<Entity> e = make_shared<Entity>(getEngine(), entityData, this);
+	shared_ptr<Entity> e = make_shared<Entity>(getEngine(), entityData, shared_from_this());
 
-	getCurrentMap()->currentState->entityList.add(e);
+	getCurrentMap()->currentState->entityList.push_back(e);
 	getCurrentMap()->currentState->entityByNameHashtable.put(e->getName(),e);
 
 	return e;

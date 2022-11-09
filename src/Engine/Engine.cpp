@@ -304,66 +304,66 @@ void* Engine::getGameObjectByTYPEIDName(const string& typeIDName)
 	//global objects
 	if (OKString::startsWith(typeIDName, "MAP."))
 	{
-		return &(getMapManager()->getMapByIDBlockUntilLoaded(id));
+		return getMapManager()->getMapByIDBlockUntilLoaded(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "SPRITE."))
 	{
-		return &(getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id));
+		return getSpriteManager()->getSpriteAssetByIDOrRequestFromServerIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "DIALOGUE."))
 	{
-		return &(getEventManager()->getDialogueByIDCreateIfNotExist(id));
+		return getEventManager()->getDialogueByIDCreateIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "CUTSCENEEVENT."))
 	{
-		return &(getEventManager()->getEventByIDCreateIfNotExist(id));
+		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "EVENT."))
 	{
-		return &(getEventManager()->getEventByIDCreateIfNotExist(id));
+		return getEventManager()->getEventByIDCreateIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "FLAG."))
 	{
-		return &(getEventManager()->getFlagByIDCreateIfNotExist(id));
+		return getEventManager()->getFlagByIDCreateIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "SKILL."))
 	{
-		return &(getEventManager()->getSkillByIDCreateIfNotExist(id));
+		return getEventManager()->getSkillByIDCreateIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "GAMESTRING."))
 	{
-		return &(getEventManager()->getGameStringByIDCreateIfNotExist(id));
+		return getEventManager()->getGameStringByIDCreateIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "MUSIC."))
 	{
-		return &(getAudioManager()->getSoundByIDCreateIfNotExist(id));
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "SOUND."))
 	{
-		return &(getAudioManager()->getSoundByIDCreateIfNotExist(id));
+		return getAudioManager()->getSoundByIDCreateIfNotExist(id).get();
 	}
 
 
 	//map objects (will only exist within the current map)
 	if (OKString::startsWith(typeIDName, "STATE."))
 	{
-		return &(getMapManager()->getMapStateByID(id));
+		return getMapManager()->getMapStateByID(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "ENTITY."))
 	{
-		return &(getMapManager()->getEntityByID(id));
+		return getMapManager()->getEntityByID(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "AREA."))
 	{
-		return &(getMapManager()->getAreaByID(id));
+		return getMapManager()->getAreaByID(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "LIGHT."))
 	{
-		return &(getMapManager()->getLightByID(id));
+		return getMapManager()->getLightByID(id).get();
 	}
 	if (OKString::startsWith(typeIDName, "DOOR."))
 	{
-		return &(getMapManager()->getDoorByID(id));
+		return getMapManager()->getDoorByID(id).get();
 	}
 
 

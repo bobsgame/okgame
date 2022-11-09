@@ -15,7 +15,7 @@
 //#define ADD_UNIT_TEST( name )\
 //	shared_ptr<GUnit> RegisterUnitTest_##name( Gwen::Base* tab );\
 //	{\
-//		shared_ptr<Button> pButton = cat->Add( #name );\
+//		Button* pButton = cat->Add( #name );\
 //		pButton->SetName( #name );\
 //		shared_ptr<GUnit> test = RegisterUnitTest_##name( pCenter );\
 //		test->Hide();\
@@ -29,12 +29,12 @@
 //	shared_ptr<CollapsibleList> pList = make_shared<CollapsibleList>(this);
 //	GetLeft()->GetTabControl()->AddPage("CollapsibleList", pList);
 //	GetLeft()->SetWidth(150);
-//	m_TextOutput = make_shared<ListBox>(GetBottom());
+//	m_TextOutput = new ListBox(GetBottom());
 //	pButton = GetBottom()->GetTabControl()->AddPage("Output", m_TextOutput);
 //	GetBottom()->SetHeight(200);
 //	m_StatusBar = make_shared<StatusBar>(this);
 //	m_StatusBar->Dock(Pos::Bottom);
-//	Layout::Center* pCenter = make_shared<Layout>::Center(this);
+//	Layout::Center* pCenter = new Layout::Center(this);
 //
 //	pCenter->Dock(Pos::Fill);
 //	{
@@ -43,7 +43,7 @@
 //		ADD_UNIT_TEST(Button);
 ////		shared_ptr<GUnit> RegisterUnitTest_Button(Gwen::Base* tab);
 ////		{
-////			shared_ptr<Button> pButton = cat->Add("Button");
+////			Button* pButton = cat->Add("Button");
 ////			pButton->SetName( "Button" );
 ////			shared_ptr<GUnit> test = RegisterUnitTest_Button( pCenter );
 ////			test->Hide();
@@ -154,30 +154,30 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	int w = GLUtils::getViewportWidth();
 	int h = GLUtils::getViewportHeight();
 
-	mainWindowSplitter = make_shared<Gwen>::Controls::HorizontalSplitter(this);
+	mainWindowSplitter = new Gwen::Controls::HorizontalSplitter(this);
 	mainWindowSplitter->GetSplitter()->onDragged.Add(this, &CustomGameEditorControl::doResize);
 	mainWindowSplitter->SetSize(w,h);
 
 
-	leftBase = make_shared<Base>(mainWindowSplitter);
+	leftBase = new Base(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(0, leftBase);
 	//leftBase->SetSize(w * 3 / 5, h - 20);
 	//leftBase->Dock(Pos::Fill);
 	{
-		leftBaseTabControl = make_shared<Controls>::TabControl(leftBase);
+		leftBaseTabControl = new Controls::TabControl(leftBase);
 		leftBaseTabControl->Dock(Pos::Fill);
 
 		settingsTab = leftBaseTabControl->AddPage(L"Game Settings");
 		settingsPage = settingsTab->GetPage();
 		settingsPage->Dock(Pos::Fill);
 
-		Controls::Label *label = make_shared<Controls>::Label(settingsPage, "label");
+		Controls::Label *label = new Controls::Label(settingsPage, "label");
 		label->SetText("Will crash on some combinations, SAVE OFTEN! Please request capabilities and features (and report bugs!) in the support forum and I will try and add them!");
 		label->Dock(Pos::Top);
 		label->SetHeight(15);
 
 		//settings panel
-		settingsWindow = make_shared<WindowControl>(settingsPage);
+		settingsWindow = new WindowControl(settingsPage);
 		settingsWindow->SetTitle("Game Settings");
 		settingsWindow->SetToolTip("This is where you set all of the general settings of the game and the rules by which you score or objectives, etc.");
 		settingsWindow->SetClosable(false);
@@ -185,7 +185,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		settingsWindow->Dock(Pos::Fill);
 		{
 
-			settingsScrollControl = make_shared<ScrollControl>(settingsWindow);
+			settingsScrollControl = new ScrollControl(settingsWindow);
 			settingsScrollControl->Dock(Pos::Fill);
 			settingsScrollControl->SetAutoHideBars(false);
 			settingsScrollControl->SetScroll(true, true);
@@ -200,7 +200,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		blockPage->Dock(Pos::Fill);
 
 
-		blockWindow = make_shared<WindowControl>(blockPage);
+		blockWindow = new WindowControl(blockPage);
 		blockWindow->SetTitle("Block Designer");
 		blockWindow->SetToolTip("This is where you create and modify blocks.  Blocks are used inside of pieces, or to fill the grid, or to describe \"garbage\" that rises from the floor or drops from the top when your opponent scores.");
 		blockWindow->SetClosable(false);
@@ -208,22 +208,22 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		blockWindow->Dock(Pos::Fill);
 		{
 
-			blockWindowSplitter = make_shared<Gwen>::Controls::HorizontalSplitter(blockWindow);
+			blockWindowSplitter = new Gwen::Controls::HorizontalSplitter(blockWindow);
 			blockWindowSplitter->GetSplitter()->onDragged.Add(this, &CustomGameEditorControl::doResize);
 			blockWindowSplitter->Dock(Pos::Fill);
 
 
-			blockListBase = make_shared<Base>(blockWindowSplitter);
+			blockListBase = new Base(blockWindowSplitter);
 			blockWindowSplitter->SetPanel(0, blockListBase);
 			//blockListBase->SetSize(blockWindow->Width() / 5 * 2, blockWindowSplitter->Height());
 			{
 
-				//blockSelectionListBase = make_shared<Base>(blockListBase);
+				//blockSelectionListBase = new Base(blockListBase);
 				//blockSelectionListBase->SetToolTip("This is a list of all the active blocks in this game.");
 				//blockSelectionListBase->Dock(Pos::Top);
 				//blockSelectionListBase->SetSize(blockListBase->Width() - 14, blockListBase->Height() - 55);
 				{
-					blockSelectionListBox = make_shared<ListBox>(blockListBase);
+					blockSelectionListBox = new ListBox(blockListBase);
 					//blockSelectionListBox->SetMargin(Margin(0, 0, 0, 0));
 					blockSelectionListBox->Dock(Pos::Fill);
 					blockSelectionListBox->SetAllowMultiSelect(false);
@@ -232,26 +232,26 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 
 
-					blockButtonBase = make_shared<Base>(blockListBase);
+					blockButtonBase = new Base(blockListBase);
 					blockButtonBase->Dock(Pos::Bottom);
 					//blockButtonBase->SetSize(blockListBase->Width(), 20);
 					{
 
-						//	Layout::Position* positioner = make_shared<Layout>::Position(buttonBase);
+						//	Layout::Position* positioner = new Layout::Position(buttonBase);
 						//	positioner->Dock(Pos::Fill);
 
-						addBlockButton = make_shared<Button>(blockButtonBase);
+						addBlockButton = new Button(blockButtonBase);
 						addBlockButton->SetText(L"New Block");
 						addBlockButton->SetToolTip("Create a new empty gray square block and add it to the list.");
 						addBlockButton->Dock(Pos::Left | Pos::CenterV);
 						addBlockButton->onPress.Add(this, &CustomGameEditorControl::onAddBlockButton);
 
-						duplicateBlockButton = make_shared<Button>(blockButtonBase);
+						duplicateBlockButton = new Button(blockButtonBase);
 						duplicateBlockButton->SetText(L"Duplicate Block");
 						duplicateBlockButton->Dock(Pos::Left | Pos::CenterV);
 						duplicateBlockButton->onPress.Add(this, &CustomGameEditorControl::onDuplicateBlockButton);
 
-						deleteBlockButton = make_shared<Button>(blockButtonBase);
+						deleteBlockButton = new Button(blockButtonBase);
 						deleteBlockButton->SetText(L"Delete Block");
 						deleteBlockButton->SetToolTip("Delete the selected block from the list.  It will be removed from any pieces that contain it as well.");
 						deleteBlockButton->Dock(Pos::Left | Pos::CenterV);
@@ -264,7 +264,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 			}
 
-			blockPropertiesScrollControl = make_shared<ScrollControl>(blockWindowSplitter);
+			blockPropertiesScrollControl = new ScrollControl(blockWindowSplitter);
 			blockWindowSplitter->SetPanel(1, blockPropertiesScrollControl);
 			blockPropertiesScrollControl->SetAutoHideBars(false);
 			blockPropertiesScrollControl->SetScroll(true, true);
@@ -279,7 +279,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		piecePage = pieceTab->GetPage();
 		piecePage->Dock(Pos::Fill);
 
-		pieceWindow = make_shared<WindowControl>(piecePage);
+		pieceWindow = new WindowControl(piecePage);
 		pieceWindow->SetTitle("Piece Designer");
 		pieceWindow->SetToolTip("This is where you create and modify pieces.  Pieces are made up of one or more blocks.  They are usually what the player controls.");
 		pieceWindow->SetClosable(false);
@@ -287,49 +287,49 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		pieceWindow->DisableResizing();
 		{
 
-			pieceWindowSplitter = make_shared<Gwen>::Controls::HorizontalSplitter(pieceWindow);
+			pieceWindowSplitter = new Gwen::Controls::HorizontalSplitter(pieceWindow);
 			pieceWindowSplitter->GetSplitter()->onDragged.Add(this, &CustomGameEditorControl::doResize);
 			pieceWindowSplitter->Dock(Pos::Fill);
 
 
-			pieceListBase = make_shared<Base>(pieceWindowSplitter);
+			pieceListBase = new Base(pieceWindowSplitter);
 			pieceWindowSplitter->SetPanel(0, pieceListBase);
 			//pieceListBase->SetSize(pieceWindow->Width() / 5 * 2, pieceWindowSplitter->Height());
 			{
 
-				//pieceSelectionListBase = make_shared<Base>(pieceListBase);
+				//pieceSelectionListBase = new Base(pieceListBase);
 				//pieceSelectionListBase->SetToolTip("This is a list of all the active pieces in this game.");
 				//pieceSelectionListBase->Dock(Pos::Top);
 				//pieceSelectionListBase->SetSize(pieceListBase->Width() - 14, pieceListBase->Height() - 55);
 				{
 
-					pieceSelectionListBox = make_shared<ListBox>(pieceListBase);
+					pieceSelectionListBox = new ListBox(pieceListBase);
 					//pieceSelectionListBox->SetMargin(Margin(0, 0, 0, 0));
 					pieceSelectionListBox->Dock(Pos::Fill);
 					pieceSelectionListBox->SetAllowMultiSelect(false);
 					//pieceSelectionListBox->SetSize(pieceListBase->Width() - 30, pieceListBase->Height() - 60);
 				}
 
-				pieceButtonBase = make_shared<Base>(pieceListBase);
+				pieceButtonBase = new Base(pieceListBase);
 				pieceButtonBase->Dock(Pos::Bottom);
 				//pieceButtonBase->SetSize(pieceListBase->Width(), 20);
 				{
 
-					//	Layout::Position* positioner = make_shared<Layout>::Position(buttonBase);
+					//	Layout::Position* positioner = new Layout::Position(buttonBase);
 					//	positioner->Dock(Pos::Fill);
 
-					addPieceButton = make_shared<Button>(pieceButtonBase);
+					addPieceButton = new Button(pieceButtonBase);
 					addPieceButton->SetText(L"New Piece");
 					addPieceButton->SetToolTip("Create a new empty piece populated with a single gray square block.");
 					addPieceButton->Dock(Pos::Left | Pos::CenterV);
 					addPieceButton->onPress.Add(this, &CustomGameEditorControl::onAddPieceButton);
 
-					duplicatePieceButton = make_shared<Button>(pieceButtonBase);
+					duplicatePieceButton = new Button(pieceButtonBase);
 					duplicatePieceButton->SetText(L"Duplicate Piece");
 					duplicatePieceButton->Dock(Pos::Left | Pos::CenterV);
 					duplicatePieceButton->onPress.Add(this, &CustomGameEditorControl::onDuplicatePieceButton);
 
-					deletePieceButton = make_shared<Button>(pieceButtonBase);
+					deletePieceButton = new Button(pieceButtonBase);
 					deletePieceButton->SetText(L"Delete Piece");
 					deletePieceButton->SetToolTip("Delete the selected piece from the list of pieces.");
 					deletePieceButton->Dock(Pos::Left | Pos::CenterV);
@@ -338,7 +338,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 				}
 			}
 
-			piecePropertiesScrollControl = make_shared<ScrollControl>(pieceWindowSplitter);
+			piecePropertiesScrollControl = new ScrollControl(pieceWindowSplitter);
 			pieceWindowSplitter->SetPanel(1, piecePropertiesScrollControl);
 			piecePropertiesScrollControl->SetAutoHideBars(false);
 			piecePropertiesScrollControl->SetScroll(true, true);
@@ -352,7 +352,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		difficultyPage = difficultyTab->GetPage();
 		difficultyPage->Dock(Pos::Fill);
 
-		difficultyWindow = make_shared<WindowControl>(difficultyPage);
+		difficultyWindow = new WindowControl(difficultyPage);
 		difficultyWindow->SetTitle("Difficulty Editor");
 		difficultyWindow->SetToolTip("This is where you create and modify difficulty settings.");
 		difficultyWindow->SetClosable(false);
@@ -360,44 +360,44 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 		difficultyWindow->DisableResizing();
 		{
 
-			difficultyWindowSplitter = make_shared<Gwen>::Controls::HorizontalSplitter(difficultyWindow);
+			difficultyWindowSplitter = new Gwen::Controls::HorizontalSplitter(difficultyWindow);
 			difficultyWindowSplitter->GetSplitter()->onDragged.Add(this, &CustomGameEditorControl::doResize);
 			difficultyWindowSplitter->Dock(Pos::Fill);
 
 
-			difficultyListBase = make_shared<Base>(difficultyWindowSplitter);
+			difficultyListBase = new Base(difficultyWindowSplitter);
 			difficultyWindowSplitter->SetPanel(0, difficultyListBase);
 			//difficultyListBase->SetSize(difficultyWindow->Width() / 5 * 2, difficultyWindowSplitter->Height());
 			{
 
-				//difficultySelectionListBase = make_shared<Base>(difficultyListBase);
+				//difficultySelectionListBase = new Base(difficultyListBase);
 				//difficultySelectionListBase->SetToolTip("This is a list of all the active difficultys in this game.");
 				//difficultySelectionListBase->Dock(Pos::Top);
 				//difficultySelectionListBase->SetSize(difficultyListBase->Width() - 14, difficultyListBase->Height() - 55);
 				{
 
-					difficultySelectionListBox = make_shared<ListBox>(difficultyListBase);
+					difficultySelectionListBox = new ListBox(difficultyListBase);
 					//difficultySelectionListBox->SetMargin(Margin(0, 0, 0, 0));
 					difficultySelectionListBox->Dock(Pos::Fill);
 					difficultySelectionListBox->SetAllowMultiSelect(false);
 					//difficultySelectionListBox->SetSize(difficultyListBase->Width() - 30, difficultyListBase->Height() - 60);
 				}
 
-//				difficultyButtonBase = make_shared<Base>(difficultyListBase);
+//				difficultyButtonBase = new Base(difficultyListBase);
 //				difficultyButtonBase->Dock(Pos::Bottom);
 //				//difficultyButtonBase->SetSize(difficultyListBase->Width(), 20);
 //				{
 //
-//					//	Layout::Position* positioner = make_shared<Layout>::Position(buttonBase);
+//					//	Layout::Position* positioner = new Layout::Position(buttonBase);
 //					//	positioner->Dock(Pos::Fill);
 //
-//					addDifficultyButton = make_shared<Button>(difficultyButtonBase);
+//					addDifficultyButton = new Button(difficultyButtonBase);
 //					addDifficultyButton->SetText(L"New Difficulty");
 //					addDifficultyButton->SetToolTip("Create a new empty difficulty populated with a single gray square block.");
 //					addDifficultyButton->Dock(Pos::Left | Pos::CenterV);
 //					addDifficultyButton->onPress.Add(this, &CustomGameEditorControl::onAddDifficultyButton);
 //
-//					deleteDifficultyButton = make_shared<Button>(difficultyButtonBase);
+//					deleteDifficultyButton = new Button(difficultyButtonBase);
 //					deleteDifficultyButton->SetText(L"Delete Difficulty");
 //					deleteDifficultyButton->SetToolTip("Delete the selected difficulty from the list of difficultys.");
 //					deleteDifficultyButton->Dock(Pos::Left | Pos::CenterV);
@@ -406,7 +406,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 //				}
 			}
 
-			difficultyPropertiesScrollControl = make_shared<ScrollControl>(difficultyWindowSplitter);
+			difficultyPropertiesScrollControl = new ScrollControl(difficultyWindowSplitter);
 			difficultyWindowSplitter->SetPanel(1, difficultyPropertiesScrollControl);
 			difficultyPropertiesScrollControl->SetAutoHideBars(false);
 			difficultyPropertiesScrollControl->SetScroll(true, true);
@@ -419,25 +419,25 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 
 
-	previewBase = make_shared<Base>(mainWindowSplitter);
+	previewBase = new Base(mainWindowSplitter);
 	mainWindowSplitter->SetPanel(1, previewBase);
 	//previewBase->SetSize(w * 2 / 5, h - 20);
 	//previewBase->Dock(Pos::Fill);
 	{
 
-		applyButtonsBase = make_shared<Base>(previewBase);
+		applyButtonsBase = new Base(previewBase);
 		applyButtonsBase->Dock(Pos::Top);
 		applyButtonsBase->SetSize(previewBase->Width(), 20);
 		{
 
-			previewButton = make_shared<Button>(applyButtonsBase);
+			previewButton = new Button(applyButtonsBase);
 			previewButton->SetText(L"Reset Game");
 			previewButton->SetToolTip("Apply your changes and preview in the simulator area.");
 			previewButton->Dock(Pos::Left | Pos::Center);
 			previewButton->SetWidth(80);
 			previewButton->onPress.Add(this, &CustomGameEditorControl::onPreviewButton);
 
-			garbageButton = make_shared<Button>(applyButtonsBase);
+			garbageButton = new Button(applyButtonsBase);
 			garbageButton->SetText(L"Garbage");
 			garbageButton->SetToolTip("Simulates multiplayer garbage.");
 			garbageButton->Dock(Pos::Left | Pos::Center);
@@ -445,19 +445,19 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 			garbageButton->onPress.Add(this, &CustomGameEditorControl::onGarbageButton);
 
 			{
-				Layout::Position* positioner = make_shared<Layout>::Position(applyButtonsBase);
+				Layout::Position* positioner = new Layout::Position(applyButtonsBase);
 				positioner->Dock(Pos::Left | Pos::Center);
 				positioner->SetWidth(10);
 			}
 
-			loadButton = make_shared<Button>(applyButtonsBase);
+			loadButton = new Button(applyButtonsBase);
 			loadButton->SetText(L"Load or create new");
 			//loadButton->SetToolTip("Load an existing game or create a new one.");
 			loadButton->Dock(Pos::Left | Pos::Center);
 			loadButton->SetWidth(150);
 			loadButton->onPress.Add(this, &CustomGameEditorControl::onLoadOrCreateButton);
 
-			saveButton = make_shared<Button>(applyButtonsBase);
+			saveButton = new Button(applyButtonsBase);
 			saveButton->SetText(L"Save");
 			saveButton->SetToolTip("Saves to XML in "+string(SDL_GetPrefPath("OK Corporation","bob's game"))+". Renames existing file with versioning. Do this often as some combinations may crash. Ctrl-S works too.");
 			saveButton->Dock(Pos::Left | Pos::Center);
@@ -465,7 +465,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 			saveButton->onPress.Add(this, &CustomGameEditorControl::onSaveButton);
 
 
-			uploadButton = make_shared<Button>(applyButtonsBase);
+			uploadButton = new Button(applyButtonsBase);
 			uploadButton->SetText(L"Upload");
 			uploadButton->SetToolTip("Upload this game to the server so others can play it. Reuploading modified versions will overwrite the version on the server. You can only upload one new game type every 10 minutes. Please do not upload broken or unfinished games.");
 			uploadButton->Dock(Pos::Left | Pos::Center);
@@ -474,7 +474,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 
 
 
-			exitButton = make_shared<Button>(applyButtonsBase);
+			exitButton = new Button(applyButtonsBase);
 			exitButton->SetText(L"Exit To Title Screen");
 			//exitButton->SetToolTip("Leave (Ask to save changes).");
 			exitButton->Dock(Pos::Right | Pos::Center);
@@ -482,12 +482,12 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 			exitButton->onPress.Add(this, &CustomGameEditorControl::onExitButton);
 
 			{
-				Layout::Position* positioner = make_shared<Layout>::Position(applyButtonsBase);
+				Layout::Position* positioner = new Layout::Position(applyButtonsBase);
 				positioner->Dock(Pos::Right | Pos::Center);
 				positioner->SetWidth(10);
 			}
 
-			tutorialButton = make_shared<Button>(applyButtonsBase);
+			tutorialButton = new Button(applyButtonsBase);
 			tutorialButton->SetText(L"Watch Tutorial");
 			//tutorialButton->SetToolTip("");
 			tutorialButton->Dock(Pos::Right | Pos::Center);
@@ -938,7 +938,7 @@ shared_ptr<DifficultyType> CustomGameEditorControl::getDifficultyTypeByName(stri
 	return bt;
 }
 
-void CustomGameEditorControl::onBlockListRowSelect(shared_ptr<Base> control)
+void CustomGameEditorControl::onBlockListRowSelect(Base* control)
 {//=========================================================================================================================
 
 	if (control == nullptr)return;
@@ -960,7 +960,7 @@ void CustomGameEditorControl::onBlockListRowSelect(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find blocktype with uuid:" + uuid);
+		OKGame::log.error("Could not find blocktype with uuid:" + uuid);
 		return;
 	}
 	currentBlockType = bt;
@@ -1045,13 +1045,13 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 	}
 
 
-	settingsPropTree = make_shared<PropertyTree>(settingsScrollControl);
+	settingsPropTree = new PropertyTree(settingsScrollControl);
 	//settingsPropTree->Dock(Pos::Fill);
 	settingsPropTree->SetWidth(settingsScrollControl->Width()-20);
 	//settingsPropTree->SetHeight(settingsScrollControl->Height() - 20);
 	{
 		int n = 0;
-		shared_ptr<Properties> p = nullptr;
+		Properties* p = nullptr;
 		n++; p = settingsPropTree->Add("Game Rules"); p->SetToolTip("General game settings");
 		{
 
@@ -1060,7 +1060,7 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 			n++; p->Add(s->rules2_Info.label, string(s->rules2))->SetToolTip(s->rules2_Info.tip);
 			n++; p->Add(s->rules3_Info.label, string(s->rules3))->SetToolTip(s->rules3_Info.tip);
 
-			Property::ComboBox* scoreTypeCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* scoreTypeCombo = new Property::ComboBox(p);
 			{
 				scoreTypeCombo->GetComboBox()->AddItem(L"Blocks cleared", to_string((int)ScoreType::BLOCKS_CLEARED));
 				scoreTypeCombo->GetComboBox()->AddItem(L"Lines cleared", to_string((int)ScoreType::LINES_CLEARED));
@@ -1070,23 +1070,23 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 			}
 			n++; p->Add(s->scoreTypeAmountPerLevelGained_Info.label, to_string(s->scoreTypeAmountPerLevelGained))->SetToolTip(s->scoreTypeAmountPerLevelGained_Info.tip);
 
-			n++; p->Add(s->nextPieceEnabled_Info.label, make_shared<Property>::Checkbox(p), to_string(s->nextPieceEnabled))->SetToolTip(s->nextPieceEnabled_Info.tip);
+			n++; p->Add(s->nextPieceEnabled_Info.label, new Property::Checkbox(p), to_string(s->nextPieceEnabled))->SetToolTip(s->nextPieceEnabled_Info.tip);
 			n++; p->Add(s->numberOfNextPiecesToShow_Info.label, to_string(s->numberOfNextPiecesToShow))->SetToolTip(s->numberOfNextPiecesToShow_Info.tip);
 
-			n++; p->Add(s->holdPieceEnabled_Info.label, make_shared<Property>::Checkbox(p), to_string(s->holdPieceEnabled))->SetToolTip(s->holdPieceEnabled_Info.tip);
-			n++; p->Add(s->resetHoldPieceRotation_Info.label, make_shared<Property>::Checkbox(p), to_string(s->resetHoldPieceRotation))->SetToolTip(s->resetHoldPieceRotation_Info.tip);
+			n++; p->Add(s->holdPieceEnabled_Info.label, new Property::Checkbox(p), to_string(s->holdPieceEnabled))->SetToolTip(s->holdPieceEnabled_Info.tip);
+			n++; p->Add(s->resetHoldPieceRotation_Info.label, new Property::Checkbox(p), to_string(s->resetHoldPieceRotation))->SetToolTip(s->resetHoldPieceRotation_Info.tip);
 
 			n++; p->Add(s->chainRule_AmountPerChain_Info.label, to_string(s->chainRule_AmountPerChain))->SetToolTip(s->chainRule_AmountPerChain_Info.tip);
-			n++; p->Add(s->chainRule_CheckEntireLine_Info.label, make_shared<Property>::Checkbox(p), to_string(s->chainRule_CheckEntireLine))->SetToolTip(s->chainRule_CheckEntireLine_Info.tip);
-			n++; p->Add(s->chainRule_CheckRow_Info.label, make_shared<Property>::Checkbox(p), to_string(s->chainRule_CheckRow))->SetToolTip(s->chainRule_CheckRow_Info.tip);
-			n++; p->Add(s->chainRule_CheckColumn_Info.label, make_shared<Property>::Checkbox(p), to_string(s->chainRule_CheckColumn))->SetToolTip(s->chainRule_CheckColumn_Info.tip);
-			n++; p->Add(s->chainRule_CheckDiagonal_Info.label, make_shared<Property>::Checkbox(p), to_string(s->chainRule_CheckDiagonal))->SetToolTip(s->chainRule_CheckDiagonal_Info.tip);
-			n++; p->Add(s->chainRule_CheckRecursiveConnections_Info.label, make_shared<Property>::Checkbox(p), to_string(s->chainRule_CheckRecursiveConnections))->SetToolTip(s->chainRule_CheckRecursiveConnections_Info.tip);
-			n++; p->Add(s->chainRule_CheckTouchingBreakerBlocksChain_Info.label, make_shared<Property>::Checkbox(p), to_string(s->chainRule_CheckTouchingBreakerBlocksChain))->SetToolTip(s->chainRule_CheckTouchingBreakerBlocksChain_Info.tip);
+			n++; p->Add(s->chainRule_CheckEntireLine_Info.label, new Property::Checkbox(p), to_string(s->chainRule_CheckEntireLine))->SetToolTip(s->chainRule_CheckEntireLine_Info.tip);
+			n++; p->Add(s->chainRule_CheckRow_Info.label, new Property::Checkbox(p), to_string(s->chainRule_CheckRow))->SetToolTip(s->chainRule_CheckRow_Info.tip);
+			n++; p->Add(s->chainRule_CheckColumn_Info.label, new Property::Checkbox(p), to_string(s->chainRule_CheckColumn))->SetToolTip(s->chainRule_CheckColumn_Info.tip);
+			n++; p->Add(s->chainRule_CheckDiagonal_Info.label, new Property::Checkbox(p), to_string(s->chainRule_CheckDiagonal))->SetToolTip(s->chainRule_CheckDiagonal_Info.tip);
+			n++; p->Add(s->chainRule_CheckRecursiveConnections_Info.label, new Property::Checkbox(p), to_string(s->chainRule_CheckRecursiveConnections))->SetToolTip(s->chainRule_CheckRecursiveConnections_Info.tip);
+			n++; p->Add(s->chainRule_CheckTouchingBreakerBlocksChain_Info.label, new Property::Checkbox(p), to_string(s->chainRule_CheckTouchingBreakerBlocksChain))->SetToolTip(s->chainRule_CheckTouchingBreakerBlocksChain_Info.tip);
 
-			n++; p->Add(s->gravityRule_onlyMoveDownDisconnectedBlocks_Info.label, make_shared<Property>::Checkbox(p), to_string(s->gravityRule_onlyMoveDownDisconnectedBlocks))->SetToolTip(s->gravityRule_onlyMoveDownDisconnectedBlocks_Info.tip);
+			n++; p->Add(s->gravityRule_onlyMoveDownDisconnectedBlocks_Info.label, new Property::Checkbox(p), to_string(s->gravityRule_onlyMoveDownDisconnectedBlocks))->SetToolTip(s->gravityRule_onlyMoveDownDisconnectedBlocks_Info.tip);
 
-			Property::ComboBox* playingFieldGarbageTypeCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* playingFieldGarbageTypeCombo = new Property::ComboBox(p);
 			{
 				playingFieldGarbageTypeCombo->GetComboBox()->AddItem(L"Match bottom row", to_string((int)GarbageType::MATCH_BOTTOM_ROW));
 				playingFieldGarbageTypeCombo->GetComboBox()->AddItem(L"Random", to_string((int)GarbageType::RANDOM));
@@ -1094,7 +1094,7 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 				n++; p->Add(s->playingFieldGarbageType_Info.label, playingFieldGarbageTypeCombo, to_string((int)s->playingFieldGarbageType))->SetToolTip(s->playingFieldGarbageType_Info.tip);
 				//pRow->onChange.Add(this, &LevelSelectMenuControl::OnFirstNameChanged);
 			}
-			Property::ComboBox* playingFieldGarbageSpawnRuleCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* playingFieldGarbageSpawnRuleCombo = new Property::ComboBox(p);
 			{
 				playingFieldGarbageSpawnRuleCombo->GetComboBox()->AddItem(L"None", to_string((int)GarbageSpawnRule::NONE));
 				playingFieldGarbageSpawnRuleCombo->GetComboBox()->AddItem(L"Milliseconds passed", to_string((int)GarbageSpawnRule::TICKS));
@@ -1106,13 +1106,13 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 			}
 			//n++; p->Add(s->playingFieldGarbageSpawnRuleAmount_Info.label, to_string(s->playingFieldGarbageSpawnRuleAmount))->SetToolTip(s->playingFieldGarbageSpawnRuleAmount_Info.tip);
 
-			n++; p->Add(s->hardDropPunchThroughToLowestValidGridPosition_Info.label, make_shared<Property>::Checkbox(p), to_string(s->hardDropPunchThroughToLowestValidGridPosition))->SetToolTip(s->hardDropPunchThroughToLowestValidGridPosition_Info.tip);
+			n++; p->Add(s->hardDropPunchThroughToLowestValidGridPosition_Info.label, new Property::Checkbox(p), to_string(s->hardDropPunchThroughToLowestValidGridPosition))->SetToolTip(s->hardDropPunchThroughToLowestValidGridPosition_Info.tip);
 
-			n++; p->Add(s->twoSpaceWallKickAllowed_Info.label, make_shared<Property>::Checkbox(p), to_string(s->twoSpaceWallKickAllowed))->SetToolTip(s->twoSpaceWallKickAllowed_Info.tip);
-			n++; p->Add(s->diagonalWallKickAllowed_Info.label, make_shared<Property>::Checkbox(p), to_string(s->diagonalWallKickAllowed))->SetToolTip(s->diagonalWallKickAllowed_Info.tip);
-			n++; p->Add(s->pieceClimbingAllowed_Info.label, make_shared<Property>::Checkbox(p), to_string(s->pieceClimbingAllowed))->SetToolTip(s->pieceClimbingAllowed_Info.tip);
-			n++; p->Add(s->flip180Allowed_Info.label, make_shared<Property>::Checkbox(p), to_string(s->flip180Allowed))->SetToolTip(s->flip180Allowed_Info.tip);
-			n++; p->Add(s->floorKickAllowed_Info.label, make_shared<Property>::Checkbox(p), to_string(s->floorKickAllowed))->SetToolTip(s->floorKickAllowed_Info.tip);
+			n++; p->Add(s->twoSpaceWallKickAllowed_Info.label, new Property::Checkbox(p), to_string(s->twoSpaceWallKickAllowed))->SetToolTip(s->twoSpaceWallKickAllowed_Info.tip);
+			n++; p->Add(s->diagonalWallKickAllowed_Info.label, new Property::Checkbox(p), to_string(s->diagonalWallKickAllowed))->SetToolTip(s->diagonalWallKickAllowed_Info.tip);
+			n++; p->Add(s->pieceClimbingAllowed_Info.label, new Property::Checkbox(p), to_string(s->pieceClimbingAllowed))->SetToolTip(s->pieceClimbingAllowed_Info.tip);
+			n++; p->Add(s->flip180Allowed_Info.label, new Property::Checkbox(p), to_string(s->flip180Allowed))->SetToolTip(s->flip180Allowed_Info.tip);
+			n++; p->Add(s->floorKickAllowed_Info.label, new Property::Checkbox(p), to_string(s->floorKickAllowed))->SetToolTip(s->floorKickAllowed_Info.tip);
 
 			p->SetSplitWidth(settingsPropTree->Width()/2);
 		}
@@ -1120,7 +1120,7 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 
 		n++; p = settingsPropTree->Add("VS Rules Settings");
 		{
-			Property::ComboBox* vsGarbageRuleCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* vsGarbageRuleCombo = new Property::ComboBox(p);
 			{
 				vsGarbageRuleCombo->GetComboBox()->AddItem(L"Fall from ceiling in even rows", to_string((int)VSGarbageDropRule::FALL_FROM_CEILING_IN_EVEN_ROWS));
 				vsGarbageRuleCombo->GetComboBox()->AddItem(L"Rise from floor in even rows", to_string((int)VSGarbageDropRule::RISE_FROM_FLOOR_IN_EVEN_ROWS));
@@ -1140,7 +1140,7 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 			n++; p->Add(s->gridPixelsBetweenRows_Info.label, to_string(s->gridPixelsBetweenRows))->SetToolTip(s->gridPixelsBetweenRows_Info.tip);
 			n++; p->Add(s->gridPixelsBetweenColumns_Info.label, to_string(s->gridPixelsBetweenColumns))->SetToolTip(s->gridPixelsBetweenColumns_Info.tip);
 
-			Property::ComboBox* gameModeCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* gameModeCombo = new Property::ComboBox(p);
 			{
 				gameModeCombo->GetComboBox()->AddItem(L"Drop (Falling block)", to_string((int)GameMode::DROP));
 				gameModeCombo->GetComboBox()->AddItem(L"Stack (Rise from floor)", to_string((int)GameMode::STACK));
@@ -1150,22 +1150,22 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 
 
 
-			//n++; p->Add(s->stackRiseGame_Info.label, make_shared<Property>::Checkbox(p), to_string(s->stackRiseGame))->SetToolTip(s->stackRiseGame_Info.tip);
-			n++; p->Add(s->stackDontPutSameColorNextToEachOther_Info.label, make_shared<Property>::Checkbox(p), to_string(s->stackDontPutSameColorNextToEachOther))->SetToolTip(s->stackDontPutSameColorNextToEachOther_Info.tip);
-			n++; p->Add(s->stackDontPutSameBlockTypeNextToEachOther_Info.label, make_shared<Property>::Checkbox(p), to_string(s->stackDontPutSameBlockTypeNextToEachOther))->SetToolTip(s->stackDontPutSameBlockTypeNextToEachOther_Info.tip);
-			n++; p->Add(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info.label, make_shared<Property>::Checkbox(p), to_string(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull))->SetToolTip(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info.tip);
-			n++; p->Add(s->stackLeaveAtLeastOneGapPerRow_Info.label, make_shared<Property>::Checkbox(p), to_string(s->stackLeaveAtLeastOneGapPerRow))->SetToolTip(s->stackLeaveAtLeastOneGapPerRow_Info.tip);
+			//n++; p->Add(s->stackRiseGame_Info.label, new Property::Checkbox(p), to_string(s->stackRiseGame))->SetToolTip(s->stackRiseGame_Info.tip);
+			n++; p->Add(s->stackDontPutSameColorNextToEachOther_Info.label, new Property::Checkbox(p), to_string(s->stackDontPutSameColorNextToEachOther))->SetToolTip(s->stackDontPutSameColorNextToEachOther_Info.tip);
+			n++; p->Add(s->stackDontPutSameBlockTypeNextToEachOther_Info.label, new Property::Checkbox(p), to_string(s->stackDontPutSameBlockTypeNextToEachOther))->SetToolTip(s->stackDontPutSameBlockTypeNextToEachOther_Info.tip);
+			n++; p->Add(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info.label, new Property::Checkbox(p), to_string(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull))->SetToolTip(s->stackDontPutSameColorDiagonalOrNextToEachOtherReturnNull_Info.tip);
+			n++; p->Add(s->stackLeaveAtLeastOneGapPerRow_Info.label, new Property::Checkbox(p), to_string(s->stackLeaveAtLeastOneGapPerRow))->SetToolTip(s->stackLeaveAtLeastOneGapPerRow_Info.tip);
 
-//			n++; p->Add(s->randomlyFillStack_Info.label, make_shared<Property>::Checkbox(p), to_string(s->randomlyFillStack))->SetToolTip(s->randomlyFillStack_Info.tip);
+//			n++; p->Add(s->randomlyFillStack_Info.label, new Property::Checkbox(p), to_string(s->randomlyFillStack))->SetToolTip(s->randomlyFillStack_Info.tip);
 //			//n++; p->Add(s->randomlyFillStackAmount_Info.label, to_string(s->randomlyFillStackAmount))->SetToolTip(s->randomlyFillStackAmount_Info.tip);
 //			n++; p->Add(s->randomlyFillStackStartY_Info.label, to_string(s->randomlyFillStackStartY))->SetToolTip(s->randomlyFillStackStartY_Info.tip);
 
-			//n++; p->Add(s->useCurrentPieceAsCursor_Info.label, make_shared<Property>::Checkbox(p), to_string(s->useCurrentPieceAsCursor))->SetToolTip(s->useCurrentPieceAsCursor_Info.tip);
-			//n++; p->Add(s->makeNewPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(s->makeNewPiece))->SetToolTip(s->makeNewPiece_Info.tip);
-			//n++; p->Add(s->makeCursorPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(s->makeCursorPiece))->SetToolTip(s->makeCursorPiece_Info.tip);
+			//n++; p->Add(s->useCurrentPieceAsCursor_Info.label, new Property::Checkbox(p), to_string(s->useCurrentPieceAsCursor))->SetToolTip(s->useCurrentPieceAsCursor_Info.tip);
+			//n++; p->Add(s->makeNewPiece_Info.label, new Property::Checkbox(p), to_string(s->makeNewPiece))->SetToolTip(s->makeNewPiece_Info.tip);
+			//n++; p->Add(s->makeCursorPiece_Info.label, new Property::Checkbox(p), to_string(s->makeCursorPiece))->SetToolTip(s->makeCursorPiece_Info.tip);
 			//n++; p->Add(s->cursorPieceSize_Info.label, to_string(s->cursorPieceSize))->SetToolTip(s->cursorPieceSize_Info.tip);
 
-			Property::ComboBox* cursorTypeCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* cursorTypeCombo = new Property::ComboBox(p);
 			{
 				cursorTypeCombo->GetComboBox()->AddItem(L"One block pick up", to_string((int)::CursorType::ONE_BLOCK_PICK_UP));
 				cursorTypeCombo->GetComboBox()->AddItem(L"Two block horizontal swap", to_string((int)::CursorType::TWO_BLOCK_HORIZONTAL));
@@ -1183,18 +1183,18 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 
 		n++; p = settingsPropTree->Add("Block Settings");
 		{
-			//n++; p->Add(s->whenGeneratingBlockDontGetBlockColorThatIsntOnGrid_Info.label, make_shared<Property>::Checkbox(p), to_string(s->whenGeneratingBlockDontGetBlockColorThatIsntOnGrid))->SetToolTip(s->whenGeneratingBlockDontGetBlockColorThatIsntOnGrid_Info.tip);
+			//n++; p->Add(s->whenGeneratingBlockDontGetBlockColorThatIsntOnGrid_Info.label, new Property::Checkbox(p), to_string(s->whenGeneratingBlockDontGetBlockColorThatIsntOnGrid))->SetToolTip(s->whenGeneratingBlockDontGetBlockColorThatIsntOnGrid_Info.tip);
 
-			//n++; p->Add(s->blockRule_drawDotToSquareOffBlockCorners_Info.label, make_shared<Property>::Checkbox(p), to_string(s->blockRule_drawDotToSquareOffBlockCorners))->SetToolTip(s->blockRule_drawDotToSquareOffBlockCorners_Info.tip);
-			//n++; p->Add(s->drawDotOnCenterOfRotation_Info.label, make_shared<Property>::Checkbox(p), to_string(s->drawDotOnCenterOfRotation))->SetToolTip(s->drawDotOnCenterOfRotation_Info.tip);
-			n++; p->Add(s->gridRule_outlineOpenBlockEdges_Info.label, make_shared<Property>::Checkbox(p), to_string(s->gridRule_outlineOpenBlockEdges))->SetToolTip(s->gridRule_outlineOpenBlockEdges_Info.tip);
-			n++; p->Add(s->fadeBlocksDarkerWhenLocking_Info.label, make_shared<Property>::Checkbox(p), to_string(s->fadeBlocksDarkerWhenLocking))->SetToolTip(s->fadeBlocksDarkerWhenLocking_Info.tip);
-			n++; p->Add(s->blockRule_drawBlocksDarkerWhenLocked_Info.label, make_shared<Property>::Checkbox(p), to_string(s->blockRule_drawBlocksDarkerWhenLocked))->SetToolTip(s->blockRule_drawBlocksDarkerWhenLocked_Info.tip);
-			n++; p->Add(s->blockRule_fillSolidSquareWhenSetInGrid_Info.label, make_shared<Property>::Checkbox(p), to_string(s->blockRule_fillSolidSquareWhenSetInGrid))->SetToolTip(s->blockRule_fillSolidSquareWhenSetInGrid_Info.tip);
+			//n++; p->Add(s->blockRule_drawDotToSquareOffBlockCorners_Info.label, new Property::Checkbox(p), to_string(s->blockRule_drawDotToSquareOffBlockCorners))->SetToolTip(s->blockRule_drawDotToSquareOffBlockCorners_Info.tip);
+			//n++; p->Add(s->drawDotOnCenterOfRotation_Info.label, new Property::Checkbox(p), to_string(s->drawDotOnCenterOfRotation))->SetToolTip(s->drawDotOnCenterOfRotation_Info.tip);
+			n++; p->Add(s->gridRule_outlineOpenBlockEdges_Info.label, new Property::Checkbox(p), to_string(s->gridRule_outlineOpenBlockEdges))->SetToolTip(s->gridRule_outlineOpenBlockEdges_Info.tip);
+			n++; p->Add(s->fadeBlocksDarkerWhenLocking_Info.label, new Property::Checkbox(p), to_string(s->fadeBlocksDarkerWhenLocking))->SetToolTip(s->fadeBlocksDarkerWhenLocking_Info.tip);
+			n++; p->Add(s->blockRule_drawBlocksDarkerWhenLocked_Info.label, new Property::Checkbox(p), to_string(s->blockRule_drawBlocksDarkerWhenLocked))->SetToolTip(s->blockRule_drawBlocksDarkerWhenLocked_Info.tip);
+			n++; p->Add(s->blockRule_fillSolidSquareWhenSetInGrid_Info.label, new Property::Checkbox(p), to_string(s->blockRule_fillSolidSquareWhenSetInGrid))->SetToolTip(s->blockRule_fillSolidSquareWhenSetInGrid_Info.tip);
 
-			n++; p->Add(s->blockRule_drawBlocksConnectedByPieceIgnoringColor_Info.label, make_shared<Property>::Checkbox(p), to_string(s->blockRule_drawBlocksConnectedByPieceIgnoringColor))->SetToolTip(s->blockRule_drawBlocksConnectedByPieceIgnoringColor_Info.tip);
-			n++; p->Add(s->blockRule_drawBlocksConnectedByColorIgnoringPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(s->blockRule_drawBlocksConnectedByColorIgnoringPiece))->SetToolTip(s->blockRule_drawBlocksConnectedByColorIgnoringPiece_Info.tip);
-			n++; p->Add(s->blockRule_drawBlocksConnectedByColorInPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(s->blockRule_drawBlocksConnectedByColorInPiece))->SetToolTip(s->blockRule_drawBlocksConnectedByColorInPiece_Info.tip);
+			n++; p->Add(s->blockRule_drawBlocksConnectedByPieceIgnoringColor_Info.label, new Property::Checkbox(p), to_string(s->blockRule_drawBlocksConnectedByPieceIgnoringColor))->SetToolTip(s->blockRule_drawBlocksConnectedByPieceIgnoringColor_Info.tip);
+			n++; p->Add(s->blockRule_drawBlocksConnectedByColorIgnoringPiece_Info.label, new Property::Checkbox(p), to_string(s->blockRule_drawBlocksConnectedByColorIgnoringPiece))->SetToolTip(s->blockRule_drawBlocksConnectedByColorIgnoringPiece_Info.tip);
+			n++; p->Add(s->blockRule_drawBlocksConnectedByColorInPiece_Info.label, new Property::Checkbox(p), to_string(s->blockRule_drawBlocksConnectedByColorInPiece))->SetToolTip(s->blockRule_drawBlocksConnectedByColorInPiece_Info.tip);
 
 			n++; p->Add(s->blockMovementInterpolationTicks_Info.label, to_string(s->blockMovementInterpolationTicks))->SetToolTip(s->blockMovementInterpolationTicks_Info.tip);
 			n++; p->Add(s->blockAnimationTicksRandomUpToBetweenLoop_Info.label, to_string(s->blockAnimationTicksRandomUpToBetweenLoop))->SetToolTip(s->blockAnimationTicksRandomUpToBetweenLoop_Info.tip);
@@ -1206,18 +1206,18 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 		n++; p = settingsPropTree->Add("Piece Settings");
 		{
 
-			n++; p->Add(s->whenGeneratingPieceDontMatchAllBlockColors_Info.label, make_shared<Property>::Checkbox(p), to_string(s->whenGeneratingPieceDontMatchAllBlockColors))->SetToolTip(s->whenGeneratingPieceDontMatchAllBlockColors_Info.tip);
-			n++; p->Add(s->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor_Info.label, make_shared<Property>::Checkbox(p), to_string(s->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor))->SetToolTip(s->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor_Info.tip);
-			n++; p->Add(s->whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor_Info.label, make_shared<Property>::Checkbox(p), to_string(s->whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor))->SetToolTip(s->whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor_Info.tip);
+			n++; p->Add(s->whenGeneratingPieceDontMatchAllBlockColors_Info.label, new Property::Checkbox(p), to_string(s->whenGeneratingPieceDontMatchAllBlockColors))->SetToolTip(s->whenGeneratingPieceDontMatchAllBlockColors_Info.tip);
+			n++; p->Add(s->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor_Info.label, new Property::Checkbox(p), to_string(s->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor))->SetToolTip(s->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor_Info.tip);
+			n++; p->Add(s->whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor_Info.label, new Property::Checkbox(p), to_string(s->whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor))->SetToolTip(s->whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor_Info.tip);
 
-			//n++; p->Add(s->currentPieceRenderAsNormalPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(s->currentPieceRenderAsNormalPiece))->SetToolTip(s->currentPieceRenderAsNormalPiece_Info.tip);
-			//n++; p->Add(s->drawCursorInsteadOfCurrentPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(s->drawCursorInsteadOfCurrentPiece))->SetToolTip(s->drawCursorInsteadOfCurrentPiece_Info.tip);
-			n++; p->Add(s->currentPieceOutlineFirstBlockRegardlessOfPosition_Info.label, make_shared<Property>::Checkbox(p), to_string(s->currentPieceOutlineFirstBlockRegardlessOfPosition))->SetToolTip(s->currentPieceOutlineFirstBlockRegardlessOfPosition_Info.tip);
-			n++; p->Add(s->currentPieceRule_OutlineBlockAtZeroZero_Info.label, make_shared<Property>::Checkbox(p), to_string(s->currentPieceRule_OutlineBlockAtZeroZero))->SetToolTip(s->currentPieceRule_OutlineBlockAtZeroZero_Info.tip);
-			//n++; p->Add(s->currentPieceRenderHoldingBlock_Info.label, make_shared<Property>::Checkbox(p), to_string(s->currentPieceRenderHoldingBlock))->SetToolTip(s->currentPieceRenderHoldingBlock_Info.tip);
-			//n++; p->Add(s->currentPieceMoveUpHalfABlock_Info.label, make_shared<Property>::Checkbox(p), to_string(s->currentPieceMoveUpHalfABlock))->SetToolTip(s->currentPieceMoveUpHalfABlock_Info.tip);
+			//n++; p->Add(s->currentPieceRenderAsNormalPiece_Info.label, new Property::Checkbox(p), to_string(s->currentPieceRenderAsNormalPiece))->SetToolTip(s->currentPieceRenderAsNormalPiece_Info.tip);
+			//n++; p->Add(s->drawCursorInsteadOfCurrentPiece_Info.label, new Property::Checkbox(p), to_string(s->drawCursorInsteadOfCurrentPiece))->SetToolTip(s->drawCursorInsteadOfCurrentPiece_Info.tip);
+			n++; p->Add(s->currentPieceOutlineFirstBlockRegardlessOfPosition_Info.label, new Property::Checkbox(p), to_string(s->currentPieceOutlineFirstBlockRegardlessOfPosition))->SetToolTip(s->currentPieceOutlineFirstBlockRegardlessOfPosition_Info.tip);
+			n++; p->Add(s->currentPieceRule_OutlineBlockAtZeroZero_Info.label, new Property::Checkbox(p), to_string(s->currentPieceRule_OutlineBlockAtZeroZero))->SetToolTip(s->currentPieceRule_OutlineBlockAtZeroZero_Info.tip);
+			//n++; p->Add(s->currentPieceRenderHoldingBlock_Info.label, new Property::Checkbox(p), to_string(s->currentPieceRenderHoldingBlock))->SetToolTip(s->currentPieceRenderHoldingBlock_Info.tip);
+			//n++; p->Add(s->currentPieceMoveUpHalfABlock_Info.label, new Property::Checkbox(p), to_string(s->currentPieceMoveUpHalfABlock))->SetToolTip(s->currentPieceMoveUpHalfABlock_Info.tip);
 
-			n++; p->Add(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info.label, make_shared<Property>::Checkbox(p), to_string(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty))->SetToolTip(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info.tip);
+			n++; p->Add(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info.label, new Property::Checkbox(p), to_string(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty))->SetToolTip(s->currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info.tip);
 
 
 			p->SetSplitWidth(settingsPropTree->Width() / 2);
@@ -1233,7 +1233,7 @@ void CustomGameEditorControl::initSettingsPropTree(shared_ptr<GameType>s)
 
 			n++; p->Add(s->gravityRule_ticksToMoveDownBlocksOverBlankSpaces_Info.label, to_string(s->gravityRule_ticksToMoveDownBlocksOverBlankSpaces))->SetToolTip(s->gravityRule_ticksToMoveDownBlocksOverBlankSpaces_Info.tip);
 
-			n++; p->Add(s->moveDownAllLinesOverBlankSpacesAtOnce_Info.label, make_shared<Property>::Checkbox(p), to_string(s->moveDownAllLinesOverBlankSpacesAtOnce))->SetToolTip(s->moveDownAllLinesOverBlankSpacesAtOnce_Info.tip);
+			n++; p->Add(s->moveDownAllLinesOverBlankSpacesAtOnce_Info.label, new Property::Checkbox(p), to_string(s->moveDownAllLinesOverBlankSpacesAtOnce))->SetToolTip(s->moveDownAllLinesOverBlankSpacesAtOnce_Info.tip);
 
 			n++; p->Add(s->removingBlocksDelayTicksBetweenEachBlock_Info.label, to_string(s->removingBlocksDelayTicksBetweenEachBlock))->SetToolTip(s->removingBlocksDelayTicksBetweenEachBlock_Info.tip);
 
@@ -1265,16 +1265,16 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 
 	//parse all fields
 	//if name equals any other blocktype names besides currentBlockType add a number afterwards until it doesnt
-	shared_ptr<Properties> p = settingsPropTree->Find("Game Rules");
+	Properties* p = settingsPropTree->Find("Game Rules");
 	if (p == nullptr)
 	{
-		OKGame::log->error("Could not find Settings Properties");
+		OKGame::log.error("Could not find Settings Properties");
 		return;
 	}
 
 	GameType defaultGameType;
 
-	shared_ptr<PropertyRow> pr = p->Find(currentGameType->name_Info.label);
+	PropertyRow* pr = p->Find(currentGameType->name_Info.label);
 	string gameTypeName = pr->GetProperty()->GetPropertyValue().c_str();
 
 
@@ -1568,7 +1568,7 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 
 	if (b == nullptr)return;
 
-	blockPropTree = make_shared<PropertyTree>(blockPropertiesScrollControl);
+	blockPropTree = new PropertyTree(blockPropertiesScrollControl);
 	//blockPropTree->Dock(Pos::Fill);
 	blockPropTree->SetWidth(blockPropertiesScrollControl->Width()-20);
 	//blockPropTree->SetHeight(1000);
@@ -1577,12 +1577,12 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 
 		int n = 0;
 
-		shared_ptr<Properties> p = nullptr;
+		Properties* p = nullptr;
 		n++; p = blockPropTree->Add("Block Properties");
 		{
 			n++; p->Add(b->name_Info.label, string(b->name))->SetToolTip(b->name_Info.tip);
 
-			Property::ComboBox* spriteNameCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* spriteNameCombo = new Property::ComboBox(p);
 			{
 				spriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(""), "");
 				for(int i=0;i<bobsGame->loadedSprites.size();i++)
@@ -1595,7 +1595,7 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 				spriteNameCombo->GetComboBox()->SelectItemByName(b->spriteName);
 			}
 
-			Property::ComboBox* specialSpriteNameCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* specialSpriteNameCombo = new Property::ComboBox(p);
 			{
 				specialSpriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(""),"");
 				for (int i = 0; i<bobsGame->loadedSprites.size(); i++)
@@ -1610,16 +1610,16 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 
 
 
-			n++; p->Add(b->useInNormalPieces_Info.label, make_shared<Property>::Checkbox(p), to_string(b->useInNormalPieces))->SetToolTip(b->useInNormalPieces_Info.tip);
-			n++; p->Add(b->useAsGarbage_Info.label, make_shared<Property>::Checkbox(p), to_string(b->useAsGarbage))->SetToolTip(b->useAsGarbage_Info.tip);
-			n++; p->Add(b->useAsPlayingFieldFiller_Info.label, make_shared<Property>::Checkbox(p), to_string(b->useAsPlayingFieldFiller))->SetToolTip(b->useAsPlayingFieldFiller_Info.tip);
-			n++; p->Add(b->ignoreWhenMovingDownBlocks_Info.label, make_shared<Property>::Checkbox(p), to_string(b->ignoreWhenMovingDownBlocks))->SetToolTip(b->ignoreWhenMovingDownBlocks_Info.tip);
-			n++; p->Add(b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info.label, make_shared<Property>::Checkbox(p), to_string(b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue))->SetToolTip(b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info.tip);
-			n++; p->Add(b->ignoreWhenCheckingChainConnections_Info.label, make_shared<Property>::Checkbox(p), to_string(b->ignoreWhenCheckingChainConnections))->SetToolTip(b->ignoreWhenCheckingChainConnections_Info.tip);
+			n++; p->Add(b->useInNormalPieces_Info.label, new Property::Checkbox(p), to_string(b->useInNormalPieces))->SetToolTip(b->useInNormalPieces_Info.tip);
+			n++; p->Add(b->useAsGarbage_Info.label, new Property::Checkbox(p), to_string(b->useAsGarbage))->SetToolTip(b->useAsGarbage_Info.tip);
+			n++; p->Add(b->useAsPlayingFieldFiller_Info.label, new Property::Checkbox(p), to_string(b->useAsPlayingFieldFiller))->SetToolTip(b->useAsPlayingFieldFiller_Info.tip);
+			n++; p->Add(b->ignoreWhenMovingDownBlocks_Info.label, new Property::Checkbox(p), to_string(b->ignoreWhenMovingDownBlocks))->SetToolTip(b->ignoreWhenMovingDownBlocks_Info.tip);
+			n++; p->Add(b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info.label, new Property::Checkbox(p), to_string(b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue))->SetToolTip(b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info.tip);
+			n++; p->Add(b->ignoreWhenCheckingChainConnections_Info.label, new Property::Checkbox(p), to_string(b->ignoreWhenCheckingChainConnections))->SetToolTip(b->ignoreWhenCheckingChainConnections_Info.tip);
 
 			for (int i = 0; i < 11; i++)
 			{
-				Property::ComboBox* colorCombo = make_shared<Property>::ComboBox(p);
+				Property::ComboBox* colorCombo = new Property::ComboBox(p);
 				{
 					colorCombo->GetComboBox()->AddItem(L"", "");
 
@@ -1728,7 +1728,7 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 			n++; p->Add(b->randomSpecialBlockChanceOneOutOf_Info.label, to_string(b->randomSpecialBlockChanceOneOutOf))->SetToolTip(b->randomSpecialBlockChanceOneOutOf_Info.tip);
 			n++; p->Add(b->frequencySpecialBlockTypeOnceEveryNPieces_Info.label, to_string(b->frequencySpecialBlockTypeOnceEveryNPieces))->SetToolTip(b->frequencySpecialBlockTypeOnceEveryNPieces_Info.tip);
 
-			n++; p->Add(b->flashingSpecialType_Info.label, make_shared<Property>::Checkbox(p), to_string(b->flashingSpecialType))->SetToolTip(b->flashingSpecialType_Info.tip);
+			n++; p->Add(b->flashingSpecialType_Info.label, new Property::Checkbox(p), to_string(b->flashingSpecialType))->SetToolTip(b->flashingSpecialType_Info.tip);
 			n++; p->Add(b->turnBackToNormalBlockAfterNPiecesLock_Info.label, to_string(b->turnBackToNormalBlockAfterNPiecesLock))->SetToolTip(b->turnBackToNormalBlockAfterNPiecesLock_Info.tip);
 
 			{
@@ -1738,18 +1738,18 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 					shared_ptr<PieceType> pt = currentGameType->getPieceTypeByUUID(b->makePieceTypeWhenCleared_UUID.get(i));
 					string pieceName = "";
 					if (pt != nullptr)pieceName = pt->name;
-					else { pieceName = "ERROR"; bobsGame->log->error("Could not find PieceType in makePieceTypeWhenCleared"); }
+					else { pieceName = "ERROR"; bobsGame->log.error("Could not find PieceType in makePieceTypeWhenCleared"); }
 					pieceTypesString = pieceTypesString + pieceName + ",";
 				}
-				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
+				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
 				n++; p->Add(b->makePieceTypeWhenCleared_Info.label, tb, pieceTypesString)->SetToolTip(b->makePieceTypeWhenCleared_Info.tip);
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doEditMakePieceTypeWhenClearedWindowButton);
 			}
 
-			n++; p->Add(b->clearEveryOtherLineOnGridWhenCleared_Info.label, make_shared<Property>::Checkbox(p), to_string(b->clearEveryOtherLineOnGridWhenCleared))->SetToolTip(b->clearEveryOtherLineOnGridWhenCleared_Info.tip);
-			n++; p->Add(b->counterType_Info.label, make_shared<Property>::Checkbox(p), to_string(b->counterType))->SetToolTip(b->counterType_Info.tip);
-			n++; p->Add(b->pacmanType_Info.label, make_shared<Property>::Checkbox(p), to_string(b->pacmanType))->SetToolTip(b->pacmanType_Info.tip);
-			n++; p->Add(b->pacJarType_Info.label, make_shared<Property>::Checkbox(p), to_string(b->pacJarType))->SetToolTip(b->pacJarType_Info.tip);
+			n++; p->Add(b->clearEveryOtherLineOnGridWhenCleared_Info.label, new Property::Checkbox(p), to_string(b->clearEveryOtherLineOnGridWhenCleared))->SetToolTip(b->clearEveryOtherLineOnGridWhenCleared_Info.tip);
+			n++; p->Add(b->counterType_Info.label, new Property::Checkbox(p), to_string(b->counterType))->SetToolTip(b->counterType_Info.tip);
+			n++; p->Add(b->pacmanType_Info.label, new Property::Checkbox(p), to_string(b->pacmanType))->SetToolTip(b->pacmanType_Info.tip);
+			n++; p->Add(b->pacJarType_Info.label, new Property::Checkbox(p), to_string(b->pacJarType))->SetToolTip(b->pacJarType_Info.tip);
 			n++; p->Add(b->ticksToChangeDirection_Info.label, to_string(b->ticksToChangeDirection))->SetToolTip(b->ticksToChangeDirection_Info.tip);
 
 			{
@@ -1762,12 +1762,12 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 					else blockName = bt->name;
 					blockTypesString = blockTypesString + blockName + ",";
 				}
-				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
+				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
 				n++; p->Add(b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info.label, tb, blockTypesString)->SetToolTip(b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info.tip);
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doEditConnectedUDLRChangeIntoBlockTypeWindowButton);
 			}
 
-			n++; p->Add(b->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info.label, make_shared<Property>::Checkbox(p), to_string(b->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks))->SetToolTip(b->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info.tip);
+			n++; p->Add(b->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info.label, new Property::Checkbox(p), to_string(b->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks))->SetToolTip(b->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info.tip);
 
 			{
 				string blockTypesString = "";
@@ -1776,14 +1776,14 @@ void CustomGameEditorControl::initBlockPropTree(shared_ptr<BlockType> b)
 					shared_ptr<TurnFromBlockTypeToType>bt = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
 					blockTypesString = blockTypesString + bt->getName(currentGameType) + ",";
 				}
-				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
+				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
 				n++; p->Add(b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info.label, tb, blockTypesString)->SetToolTip(b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info.tip);
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton);
 			}
 
-			n++; p->Add(b->removeAllBlocksOfColorOnFieldBlockIsSetOn_Info.label, make_shared<Property>::Checkbox(p), to_string(b->removeAllBlocksOfColorOnFieldBlockIsSetOn))->SetToolTip(b->removeAllBlocksOfColorOnFieldBlockIsSetOn_Info.tip);
-			n++; p->Add(b->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor_Info.label, make_shared<Property>::Checkbox(p), to_string(b->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor))->SetToolTip(b->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor_Info.tip);
-			n++; p->Add(b->matchAnyColor_Info.label, make_shared<Property>::Checkbox(p), to_string(b->matchAnyColor))->SetToolTip(b->matchAnyColor_Info.tip);
+			n++; p->Add(b->removeAllBlocksOfColorOnFieldBlockIsSetOn_Info.label, new Property::Checkbox(p), to_string(b->removeAllBlocksOfColorOnFieldBlockIsSetOn))->SetToolTip(b->removeAllBlocksOfColorOnFieldBlockIsSetOn_Info.tip);
+			n++; p->Add(b->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor_Info.label, new Property::Checkbox(p), to_string(b->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor))->SetToolTip(b->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor_Info.tip);
+			n++; p->Add(b->matchAnyColor_Info.label, new Property::Checkbox(p), to_string(b->matchAnyColor))->SetToolTip(b->matchAnyColor_Info.tip);
 
 
 
@@ -1828,26 +1828,26 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 
 	//parse all fields
 	//if name equals any other blocktype names besides currentBlockType add a number afterwards until it doesnt
-	shared_ptr<Properties> p = blockPropTree->Find("Block Properties");
+	Properties* p = blockPropTree->Find("Block Properties");
 	if (p == nullptr)
 	{
-		OKGame::log->error("Could not find Block Properties");
+		OKGame::log.error("Could not find Block Properties");
 		return;
 	}
 
 	BlockType defaultBlockType;
 
-	shared_ptr<PropertyRow> pr = p->Find(currentBlockType->name_Info.label);
-	//	OKGame::log->debug("GetLabel"+string(pr->GetLabel()->GetText().c_str()));
-	//	OKGame::log->debug("GetName"+ pr->GetName());
-	//	OKGame::log->debug("GetValue"+ string(pr->GetValue().c_str()));
-	//	OKGame::log->debug("GetTypeName"+ string(pr->GetTypeName()));
+	PropertyRow* pr = p->Find(currentBlockType->name_Info.label);
+	//	OKGame::log.debug("GetLabel"+string(pr->GetLabel()->GetText().c_str()));
+	//	OKGame::log.debug("GetName"+ pr->GetName());
+	//	OKGame::log.debug("GetValue"+ string(pr->GetValue().c_str()));
+	//	OKGame::log.debug("GetTypeName"+ string(pr->GetTypeName()));
 	//	Property::Base *prop = pr->GetProperty();
 	//
-	//	OKGame::log->debug("GetPropertyValue" + string(prop->GetPropertyValue().c_str()));
-	//	OKGame::log->debug("GetName" + prop->GetName());
-	//	OKGame::log->debug("GetValue" + string(prop->GetValue().c_str()));
-	//	OKGame::log->debug("GetTypeName" + string(prop->GetTypeName()));
+	//	OKGame::log.debug("GetPropertyValue" + string(prop->GetPropertyValue().c_str()));
+	//	OKGame::log.debug("GetName" + prop->GetName());
+	//	OKGame::log.debug("GetValue" + string(prop->GetValue().c_str()));
+	//	OKGame::log.debug("GetTypeName" + string(prop->GetTypeName()));
 
 
 	string newName = pr->GetProperty()->GetPropertyValue().c_str();
@@ -1979,7 +1979,7 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 }
 
 
-void CustomGameEditorControl::onPieceListRowSelect(shared_ptr<Base> control)
+void CustomGameEditorControl::onPieceListRowSelect(Base* control)
 {//=========================================================================================================================
 
 	if (control == nullptr)return;
@@ -2000,7 +2000,7 @@ void CustomGameEditorControl::onPieceListRowSelect(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find piecetype with uuid:" + uuid);
+		OKGame::log.error("Could not find piecetype with uuid:" + uuid);
 		return;
 	}
 	currentPieceType = bt;
@@ -2020,20 +2020,20 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 
 	if (b == nullptr)return;
 
-	piecePropTree = make_shared<PropertyTree>(piecePropertiesScrollControl);
+	piecePropTree = new PropertyTree(piecePropertiesScrollControl);
 	//piecePropTree->Dock(Pos::Fill);
 	piecePropTree->SetWidth(piecePropertiesScrollControl->Width() - 20);
 	//piecePropTree->SetHeight(1000);
 	{
 
 		int n = 0;
-		shared_ptr<Properties> p = nullptr;
+		Properties* p = nullptr;
 		n++; p = piecePropTree->Add("Piece Properties");
 		{
 			n++; p->Add(b->name_Info.label, string(b->name))->SetToolTip(b->name_Info.tip);
 
 
-			Property::ComboBox* colorCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* colorCombo = new Property::ComboBox(p);
 			{
 				colorCombo->GetComboBox()->AddItem(L"", "");
 
@@ -2128,7 +2128,7 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 			}
 
 			{
-				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
+				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
 				n++; p->Add(b->rotationSet_Info.label, tb, b->rotationSet.name)->SetToolTip(b->rotationSet_Info.tip);
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doEditRotationSetWindowButton);
 			}
@@ -2136,18 +2136,18 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 			n++; p->Add(b->frequencySpecialPieceTypeOnceEveryNPieces_Info.label, to_string(b->frequencySpecialPieceTypeOnceEveryNPieces))->SetToolTip(b->frequencySpecialPieceTypeOnceEveryNPieces_Info.tip);
 			n++; p->Add(b->randomSpecialPieceChanceOneOutOf_Info.label, to_string(b->randomSpecialPieceChanceOneOutOf))->SetToolTip(b->randomSpecialPieceChanceOneOutOf_Info.tip);
 
-			n++; p->Add(b->flashingSpecialType_Info.label, make_shared<Property>::Checkbox(p), to_string(b->flashingSpecialType))->SetToolTip(b->flashingSpecialType_Info.tip);
-			n++; p->Add(b->clearEveryRowPieceIsOnIfAnySingleRowCleared_Info.label, make_shared<Property>::Checkbox(p), to_string(b->clearEveryRowPieceIsOnIfAnySingleRowCleared))->SetToolTip(b->clearEveryRowPieceIsOnIfAnySingleRowCleared_Info.tip);
+			n++; p->Add(b->flashingSpecialType_Info.label, new Property::Checkbox(p), to_string(b->flashingSpecialType))->SetToolTip(b->flashingSpecialType_Info.tip);
+			n++; p->Add(b->clearEveryRowPieceIsOnIfAnySingleRowCleared_Info.label, new Property::Checkbox(p), to_string(b->clearEveryRowPieceIsOnIfAnySingleRowCleared))->SetToolTip(b->clearEveryRowPieceIsOnIfAnySingleRowCleared_Info.tip);
 
 			n++; p->Add(b->turnBackToNormalPieceAfterNPiecesLock_Info.label, to_string(b->turnBackToNormalPieceAfterNPiecesLock))->SetToolTip(b->turnBackToNormalPieceAfterNPiecesLock_Info.tip);
-			n++; p->Add(b->fadeOutOnceSetInsteadOfAddedToGrid_Info.label, make_shared<Property>::Checkbox(p), to_string(b->fadeOutOnceSetInsteadOfAddedToGrid))->SetToolTip(b->fadeOutOnceSetInsteadOfAddedToGrid_Info.tip);
-			n++; p->Add(b->useAsNormalPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->useAsNormalPiece))->SetToolTip(b->useAsNormalPiece_Info.tip);
-			n++; p->Add(b->useAsGarbagePiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->useAsGarbagePiece))->SetToolTip(b->useAsGarbagePiece_Info.tip);
-			n++; p->Add(b->useAsPlayingFieldFillerPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->useAsPlayingFieldFillerPiece))->SetToolTip(b->useAsPlayingFieldFillerPiece_Info.tip);
-			n++; p->Add(b->disallowAsFirstPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->disallowAsFirstPiece))->SetToolTip(b->disallowAsFirstPiece_Info.tip);
+			n++; p->Add(b->fadeOutOnceSetInsteadOfAddedToGrid_Info.label, new Property::Checkbox(p), to_string(b->fadeOutOnceSetInsteadOfAddedToGrid))->SetToolTip(b->fadeOutOnceSetInsteadOfAddedToGrid_Info.tip);
+			n++; p->Add(b->useAsNormalPiece_Info.label, new Property::Checkbox(p), to_string(b->useAsNormalPiece))->SetToolTip(b->useAsNormalPiece_Info.tip);
+			n++; p->Add(b->useAsGarbagePiece_Info.label, new Property::Checkbox(p), to_string(b->useAsGarbagePiece))->SetToolTip(b->useAsGarbagePiece_Info.tip);
+			n++; p->Add(b->useAsPlayingFieldFillerPiece_Info.label, new Property::Checkbox(p), to_string(b->useAsPlayingFieldFillerPiece))->SetToolTip(b->useAsPlayingFieldFillerPiece_Info.tip);
+			n++; p->Add(b->disallowAsFirstPiece_Info.label, new Property::Checkbox(p), to_string(b->disallowAsFirstPiece))->SetToolTip(b->disallowAsFirstPiece_Info.tip);
 
 
-			Property::ComboBox* spriteNameCombo = make_shared<Property>::ComboBox(p);
+			Property::ComboBox* spriteNameCombo = new Property::ComboBox(p);
 			{
 				spriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(""), "");
 				for (int i = 0; i<bobsGame->loadedSprites.size(); i++)
@@ -2160,10 +2160,10 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 				spriteNameCombo->GetComboBox()->SelectItemByName(b->spriteName);
 			}
 
-			n++; p->Add(b->bombPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->bombPiece))->SetToolTip(b->bombPiece_Info.tip);
-			n++; p->Add(b->weightPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->weightPiece))->SetToolTip(b->weightPiece_Info.tip);
-			n++; p->Add(b->pieceRemovalShooterPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->pieceRemovalShooterPiece))->SetToolTip(b->pieceRemovalShooterPiece_Info.tip);
-			n++; p->Add(b->pieceShooterPiece_Info.label, make_shared<Property>::Checkbox(p), to_string(b->pieceShooterPiece))->SetToolTip(b->pieceShooterPiece_Info.tip);
+			n++; p->Add(b->bombPiece_Info.label, new Property::Checkbox(p), to_string(b->bombPiece))->SetToolTip(b->bombPiece_Info.tip);
+			n++; p->Add(b->weightPiece_Info.label, new Property::Checkbox(p), to_string(b->weightPiece))->SetToolTip(b->weightPiece_Info.tip);
+			n++; p->Add(b->pieceRemovalShooterPiece_Info.label, new Property::Checkbox(p), to_string(b->pieceRemovalShooterPiece))->SetToolTip(b->pieceRemovalShooterPiece_Info.tip);
+			n++; p->Add(b->pieceShooterPiece_Info.label, new Property::Checkbox(p), to_string(b->pieceShooterPiece))->SetToolTip(b->pieceShooterPiece_Info.tip);
 
 			{
 				string blockTypesString = "";
@@ -2175,7 +2175,7 @@ void CustomGameEditorControl::initPiecePropTree(shared_ptr<PieceType> b)
 					else blockName = "ERROR";
 					blockTypesString = blockTypesString + blockName + ",";
 				}
-				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
+				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
 				n++; p->Add(b->overrideBlockTypes_Info.label, tb, blockTypesString)->SetToolTip(b->overrideBlockTypes_Info.tip);
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doOverrideBlockTypesSelectionWindowButton);
 			}
@@ -2200,15 +2200,15 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 
 	//parse all fields
 	//if name equals any other piecetype names besides currentPieceType add a number afterwards until it doesnt
-	shared_ptr<Properties> p = piecePropTree->Find("Piece Properties");
+	Properties* p = piecePropTree->Find("Piece Properties");
 	if (p == nullptr)
 	{
-		OKGame::log->error("Could not find Piece Properties");
+		OKGame::log.error("Could not find Piece Properties");
 		return;
 	}
 
 
-	shared_ptr<PropertyRow> pr = p->Find(currentPieceType->name_Info.label);
+	PropertyRow* pr = p->Find(currentPieceType->name_Info.label);
 	string pieceTypeName = pr->GetProperty()->GetPropertyValue().c_str();
 	if (pieceTypeName == "")pieceTypeName = "New Piece";
 
@@ -2296,7 +2296,7 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 
 
 
-void CustomGameEditorControl::onAddBlockButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onAddBlockButton(Base* control)
 {//=========================================================================================================================
 
 	//create new blocktype, add it to list, select it, populate block fields
@@ -2341,7 +2341,7 @@ void CustomGameEditorControl::onAddBlockButton(shared_ptr<Base> control)
 	onBlockListRowSelect(row);
 }
 
-void CustomGameEditorControl::onDuplicateBlockButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onDuplicateBlockButton(Base* control)
 {//=========================================================================================================================
 
 
@@ -2354,7 +2354,7 @@ void CustomGameEditorControl::onDuplicateBlockButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find blocktype with uuid:" + uuid);
+		OKGame::log.error("Could not find blocktype with uuid:" + uuid);
 		return;
 	}
 
@@ -2400,7 +2400,7 @@ void CustomGameEditorControl::onDuplicateBlockButton(shared_ptr<Base> control)
 
 
 }
-void CustomGameEditorControl::onDeleteBlockButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onDeleteBlockButton(Base* control)
 {//=========================================================================================================================
 
 
@@ -2415,7 +2415,7 @@ void CustomGameEditorControl::onDeleteBlockButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find blocktype with uuid:" + uuid);
+		OKGame::log.error("Could not find blocktype with uuid:" + uuid);
 		return;
 	}
 
@@ -2497,7 +2497,7 @@ void CustomGameEditorControl::onDeleteBlockButton(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::onAddPieceButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onAddPieceButton(Base* control)
 {//=========================================================================================================================
 	//add a generic piece to the bottom of the list and populate the fields
 
@@ -2540,7 +2540,7 @@ void CustomGameEditorControl::onAddPieceButton(shared_ptr<Base> control)
 	onPieceListRowSelect(row);
 }
 
-void CustomGameEditorControl::onDuplicatePieceButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onDuplicatePieceButton(Base* control)
 {//=========================================================================================================================
 
 
@@ -2553,7 +2553,7 @@ void CustomGameEditorControl::onDuplicatePieceButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find pieceType with uuid:" + uuid);
+		OKGame::log.error("Could not find pieceType with uuid:" + uuid);
 		return;
 	}
 
@@ -2600,7 +2600,7 @@ void CustomGameEditorControl::onDuplicatePieceButton(shared_ptr<Base> control)
 	onPieceListRowSelect(newRow);
 
 }
-void CustomGameEditorControl::onDeletePieceButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onDeletePieceButton(Base* control)
 {//=========================================================================================================================
 
 	//TODO: warn that it is included in piece or block
@@ -2614,7 +2614,7 @@ void CustomGameEditorControl::onDeletePieceButton(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find pieceType with uuid:" + uuid);
+		OKGame::log.error("Could not find pieceType with uuid:" + uuid);
 		return;
 	}
 
@@ -2672,7 +2672,7 @@ void CustomGameEditorControl::makeSelectionWindow(string name)
 	int w = GLUtils::getViewportWidth() / 2;
 	int h = GLUtils::getViewportHeight() / 2;
 
-	selectWindow = make_shared<WindowControl>(GetCanvas());
+	selectWindow = new WindowControl(GetCanvas());
 	selectWindow->SetTitle(name);
 	selectWindow->SetSize(w, h);
 	selectWindow->MakeModal(true);
@@ -2681,35 +2681,35 @@ void CustomGameEditorControl::makeSelectionWindow(string name)
 	selectWindow->SetDeleteOnClose(true);
 	//selectWindow->SetClosable(false);
 
-	Controls::Base *topBase = make_shared<Base>(selectWindow);
+	Controls::Base *topBase = new Base(selectWindow);
 	topBase->Dock(Pos::Top);
 	topBase->SetWidth(selectWindow->Width());
 	topBase->SetHeight(selectWindow->Height()-60);
 
-	selectListBox = make_shared<ListBox>(topBase);
+	selectListBox = new ListBox(topBase);
 	{
 		selectListBox->Dock(Pos::Left);
 		selectListBox->SetAllowMultiSelect(false);
 		selectListBox->SetWidth(topBase->Width() / 2 - 60);
 	}
 
-	selectAddRemoveButtonBase = make_shared<Base>(topBase);
+	selectAddRemoveButtonBase = new Base(topBase);
 	selectAddRemoveButtonBase->Dock(Pos::Left);
 	selectAddRemoveButtonBase->SetWidth(70);
 	{
 
-		Layout::Position* positioner = make_shared<Layout>::Position(selectAddRemoveButtonBase);
+		Layout::Position* positioner = new Layout::Position(selectAddRemoveButtonBase);
 		positioner->Dock(Pos::Top);
 		positioner->SetHeight(topBase->Height() / 2 - 20);
 
-		selectAddButton = make_shared<Button>(selectAddRemoveButtonBase);
+		selectAddButton = new Button(selectAddRemoveButtonBase);
 		selectAddButton->SetText(L"Add ->");
 		//selectAddButton->SetToolTip(b->_Info.tip);
 		selectAddButton->Dock(Pos::Top);
 		selectAddButton->SetWidth(70);
 		selectAddButton->SetHeight(20);
 
-		selectRemoveButton = make_shared<Button>(selectAddRemoveButtonBase);
+		selectRemoveButton = new Button(selectAddRemoveButtonBase);
 		selectRemoveButton->SetText(L"<- Remove");
 		//selectRemoveButton->SetToolTip(b->_Info.tip);
 		selectRemoveButton->Dock(Pos::Top);
@@ -2720,7 +2720,7 @@ void CustomGameEditorControl::makeSelectionWindow(string name)
 
 	}
 
-	chosenTypesListBox = make_shared<ListBox>(topBase);
+	chosenTypesListBox = new ListBox(topBase);
 	{
 		chosenTypesListBox->Dock(Pos::Left);
 		chosenTypesListBox->SetAllowMultiSelect(false);
@@ -2728,17 +2728,17 @@ void CustomGameEditorControl::makeSelectionWindow(string name)
 	}
 
 
-	selectConfirmCancelButtonBase = make_shared<Base>(selectWindow);
+	selectConfirmCancelButtonBase = new Base(selectWindow);
 	selectConfirmCancelButtonBase->Dock(Pos::Bottom);
 	selectConfirmCancelButtonBase->SetWidth(selectWindow->Width());
 	selectConfirmCancelButtonBase->SetHeight(20);
 	{
-		Layout::Position* positioner = make_shared<Layout>::Position(selectAddRemoveButtonBase);
+		Layout::Position* positioner = new Layout::Position(selectAddRemoveButtonBase);
 		positioner->Dock(Pos::Left);
 		positioner->SetWidth(selectConfirmCancelButtonBase->Width() / 2 - 160);
 
 
-		selectConfirmButton = make_shared<Button>(selectConfirmCancelButtonBase);
+		selectConfirmButton = new Button(selectConfirmCancelButtonBase);
 		selectConfirmButton->SetText(L"Save");
 		//selectConfirmButton->SetToolTip(b->_Info.tip);
 		selectConfirmButton->Dock(Pos::Left);
@@ -2746,7 +2746,7 @@ void CustomGameEditorControl::makeSelectionWindow(string name)
 		selectConfirmButton->SetMargin(Margin(0, 0, 0, 0));
 
 
-		selectCancelButton = make_shared<Button>(selectConfirmCancelButtonBase);
+		selectCancelButton = new Button(selectConfirmCancelButtonBase);
 		selectCancelButton->SetText(L"Cancel");
 		//selectCancelButton->SetToolTip(b->_Info.tip);
 		selectCancelButton->Dock(Pos::Left);
@@ -2757,7 +2757,7 @@ void CustomGameEditorControl::makeSelectionWindow(string name)
 }
 
 
-void CustomGameEditorControl::doEditMakePieceTypeWhenClearedWindowButton(shared_ptr<Base> control)
+void CustomGameEditorControl::doEditMakePieceTypeWhenClearedWindowButton(Base* control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -2787,7 +2787,7 @@ void CustomGameEditorControl::doEditMakePieceTypeWhenClearedWindowButton(shared_
 }
 
 
-void CustomGameEditorControl::addType(shared_ptr<Base> control)
+void CustomGameEditorControl::addType(Base* control)
 {//=========================================================================================================================
 	//add selected row to listbox if doesnt exist already
 	if(selectListBox->IsAnyRowSelected())
@@ -2808,13 +2808,13 @@ void CustomGameEditorControl::addType(shared_ptr<Base> control)
 	}
 }
 
-void CustomGameEditorControl::removeType(shared_ptr<Base> control)
+void CustomGameEditorControl::removeType(Base* control)
 {//=========================================================================================================================
 	//remove selected row from listbox
 	if(chosenTypesListBox->IsAnyRowSelected())chosenTypesListBox->RemoveItem(chosenTypesListBox->GetSelectedRow());
 }
 
-void CustomGameEditorControl::saveMakePieceTypes(shared_ptr<Base> control)
+void CustomGameEditorControl::saveMakePieceTypes(Base* control)
 {//=========================================================================================================================
 	//save listbox to currentBlockType_makePieceTypeWhenCleared
 
@@ -2832,8 +2832,8 @@ void CustomGameEditorControl::saveMakePieceTypes(shared_ptr<Base> control)
 	}
 
 
-	shared_ptr<Properties> p = blockPropTree->Find("Block Properties");
-	shared_ptr<PropertyRow> pr = p->Find(currentBlockType->makePieceTypeWhenCleared_Info.label);
+	Properties* p = blockPropTree->Find("Block Properties");
+	PropertyRow* pr = p->Find(currentBlockType->makePieceTypeWhenCleared_Info.label);
 	{
 		string typesString = "";
 		for (int i = 0; i < currentBlockType->makePieceTypeWhenCleared_UUID.size(); i++)
@@ -2853,7 +2853,7 @@ void CustomGameEditorControl::saveMakePieceTypes(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::doEditConnectedUDLRChangeIntoBlockTypeWindowButton(shared_ptr<Base> control)
+void CustomGameEditorControl::doEditConnectedUDLRChangeIntoBlockTypeWindowButton(Base* control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -2887,7 +2887,7 @@ void CustomGameEditorControl::doEditConnectedUDLRChangeIntoBlockTypeWindowButton
 
 }
 
-void CustomGameEditorControl::saveConnectedUDLRChangeIntoBlockTypes(shared_ptr<Base> control)
+void CustomGameEditorControl::saveConnectedUDLRChangeIntoBlockTypes(Base* control)
 {//=========================================================================================================================
  //save listbox to currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType
 
@@ -2903,8 +2903,8 @@ void CustomGameEditorControl::saveConnectedUDLRChangeIntoBlockTypes(shared_ptr<B
 
 	}
 
-	shared_ptr<Properties> p = blockPropTree->Find("Block Properties");
-	shared_ptr<PropertyRow> pr = p->Find(currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info.label);
+	Properties* p = blockPropTree->Find("Block Properties");
+	PropertyRow* pr = p->Find(currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info.label);
 	{
 		string typesString = "";
 		for (int i = 0; i < currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.size(); i++)
@@ -2923,7 +2923,7 @@ void CustomGameEditorControl::saveConnectedUDLRChangeIntoBlockTypes(shared_ptr<B
 	windowOpen = false;
 	initPreviewGame();
 }
-void CustomGameEditorControl::cancelTypesWindow(shared_ptr<Base> control)
+void CustomGameEditorControl::cancelTypesWindow(Base* control)
 {//=========================================================================================================================
  //just close window
 	selectWindow->CloseButtonPressed();
@@ -2932,7 +2932,7 @@ void CustomGameEditorControl::cancelTypesWindow(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::doOverrideBlockTypesSelectionWindowButton(shared_ptr<Base> control)
+void CustomGameEditorControl::doOverrideBlockTypesSelectionWindowButton(Base* control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -2968,7 +2968,7 @@ void CustomGameEditorControl::doOverrideBlockTypesSelectionWindowButton(shared_p
 
 
 
-void CustomGameEditorControl::saveOverrideBlockTypes(shared_ptr<Base> control)
+void CustomGameEditorControl::saveOverrideBlockTypes(Base* control)
 {//=========================================================================================================================
  //save listbox to currentPieceType_overrideBlockTypes
 
@@ -2986,8 +2986,8 @@ void CustomGameEditorControl::saveOverrideBlockTypes(shared_ptr<Base> control)
 
 	}
 
-	shared_ptr<Properties> p = piecePropTree->Find("Piece Properties");
-	shared_ptr<PropertyRow> pr = p->Find(currentPieceType->overrideBlockTypes_Info.label);
+	Properties* p = piecePropTree->Find("Piece Properties");
+	PropertyRow* pr = p->Find(currentPieceType->overrideBlockTypes_Info.label);
 	{
 		string typesString = "";
 		for (int i = 0; i < currentPieceType->overrideBlockTypes_UUID.size(); i++)
@@ -3010,7 +3010,7 @@ void CustomGameEditorControl::saveOverrideBlockTypes(shared_ptr<Base> control)
 
 
 
-void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_ptr<Base> control)
+void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(Base* control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -3018,7 +3018,7 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_p
 	int w = GLUtils::getViewportWidth() / 2;
 	int h = GLUtils::getViewportHeight() / 2;
 
-	selectWindow = make_shared<WindowControl>(GetCanvas());
+	selectWindow = new WindowControl(GetCanvas());
 	selectWindow->SetTitle("Edit turnFromBlockTypeToType");
 	selectWindow->SetSize(w, h);
 	selectWindow->MakeModal(true);
@@ -3027,18 +3027,18 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_p
 	selectWindow->SetDeleteOnClose(true);
 	selectWindow->SetClosable(false);
 
-	Controls::Base *topBase = make_shared<Base>(selectWindow);
+	Controls::Base *topBase = new Base(selectWindow);
 	topBase->Dock(Pos::Top);
 	topBase->SetWidth(selectWindow->Width());
 	topBase->SetHeight(selectWindow->Height() - 60);
 	{
 
 
-		Controls::Base *listBase = make_shared<Base>(topBase);
+		Controls::Base *listBase = new Base(topBase);
 		listBase->Dock(Pos::Left);
 		listBase->SetSize(topBase->Width()/2, topBase->Height()-10);
 		{
-			toFromListBox = make_shared<ListBox>(listBase);
+			toFromListBox = new ListBox(listBase);
 			{
 				toFromListBox->Dock(Pos::Top);
 				toFromListBox->SetAllowMultiSelect(false);
@@ -3053,18 +3053,18 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_p
 			}
 
 
-			Controls::Base *listButtonBase = make_shared<Base>(listBase);
+			Controls::Base *listButtonBase = new Base(listBase);
 			listButtonBase->Dock(Pos::Bottom);
 			listButtonBase->SetHeight(20);
 			{
-				Controls::Button *newButton = make_shared<Button>(listButtonBase);
+				Controls::Button *newButton = new Button(listButtonBase);
 				newButton->SetText(L"New");
 				newButton->Dock(Pos::Left);
 				newButton->SetWidth(40);
 				newButton->SetHeight(20);
 				newButton->onPress.Add(this, &CustomGameEditorControl::newTurnFromBlockTypeToType);
 
-				Controls::Button *deleteButton = make_shared<Button>(listButtonBase);
+				Controls::Button *deleteButton = new Button(listButtonBase);
 				deleteButton->SetText(L"Delete");
 				deleteButton->Dock(Pos::Left);
 				deleteButton->SetWidth(60);
@@ -3074,26 +3074,26 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_p
 
 		}
 
-		Controls::Base *rightBase = make_shared<Base>(topBase);
+		Controls::Base *rightBase = new Base(topBase);
 		rightBase->Dock(Pos::Left);
 		rightBase->SetSize(topBase->Width() / 2 - 20,topBase->Height());
 		{
 
-			Layout::Position* positioner = make_shared<Layout>::Position(rightBase);
+			Layout::Position* positioner = new Layout::Position(rightBase);
 			positioner->Dock(Pos::Top);
 			positioner->SetHeight(rightBase->Height() / 2 - 20);
 
-			//Controls::Base *toFromComboBase = make_shared<Base>(rightBase);
+			//Controls::Base *toFromComboBase = new Base(rightBase);
 			//toFromComboBase->Dock(Pos::Top);
 			//toFromComboBase->SetSize(rightBase->Width(),40);
 			{
-				Controls::Label *fromLabel = make_shared<Controls>::Label(rightBase, "From");
+				Controls::Label *fromLabel = new Controls::Label(rightBase, "From");
 				fromLabel->SetText("From");
 				fromLabel->Dock(Pos::Top);
 				fromLabel->SetSize(50, 15);
 
 
-				fromCombo = make_shared<Controls>::ComboBox(rightBase, "fromType");
+				fromCombo = new Controls::ComboBox(rightBase, "fromType");
 				fromCombo->Dock(Pos::Top);
 				fromCombo->SetSize(100, 20);
 				for (int i = 0; i < currentGameType->blockTypes.size(); i++)
@@ -3104,13 +3104,13 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_p
 				}
 
 
-				Controls::Label *toLabel = make_shared<Controls>::Label(rightBase, "To");
+				Controls::Label *toLabel = new Controls::Label(rightBase, "To");
 				toLabel->SetText("To");
 				toLabel->Dock(Pos::Top);
 				toLabel->SetSize(50, 15);
 
 
-				toCombo = make_shared<Controls>::ComboBox(rightBase, "toType");
+				toCombo = new Controls::ComboBox(rightBase, "toType");
 				toCombo->Dock(Pos::Top);
 				toCombo->SetSize(100, 20);
 				for (int i = 0; i < currentGameType->blockTypes.size(); i++)
@@ -3126,17 +3126,17 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_p
 
 
 
-	selectConfirmCancelButtonBase = make_shared<Base>(selectWindow);
+	selectConfirmCancelButtonBase = new Base(selectWindow);
 	selectConfirmCancelButtonBase->Dock(Pos::Bottom);
 	selectConfirmCancelButtonBase->SetWidth(selectWindow->Width());
 	selectConfirmCancelButtonBase->SetHeight(20);
 	{
-		Layout::Position* positioner = make_shared<Layout>::Position(selectConfirmCancelButtonBase);
+		Layout::Position* positioner = new Layout::Position(selectConfirmCancelButtonBase);
 		positioner->Dock(Pos::Left);
 		positioner->SetWidth(selectConfirmCancelButtonBase->Width() / 2 - 160);
 
 
-		selectConfirmButton = make_shared<Button>(selectConfirmCancelButtonBase);
+		selectConfirmButton = new Button(selectConfirmCancelButtonBase);
 		selectConfirmButton->SetText(L"Save and close");
 		//selectConfirmButton->SetToolTip(b->_Info.tip);
 		selectConfirmButton->Dock(Pos::Left);
@@ -3152,7 +3152,7 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(shared_p
 }
 
 
-void CustomGameEditorControl::newTurnFromBlockTypeToType(shared_ptr<Base> control)
+void CustomGameEditorControl::newTurnFromBlockTypeToType(Base* control)
 {//=========================================================================================================================
 
 
@@ -3183,7 +3183,7 @@ void CustomGameEditorControl::newTurnFromBlockTypeToType(shared_ptr<Base> contro
 }
 
 
-void CustomGameEditorControl::deleteTurnFromBlockTypeToType(shared_ptr<Base> control)
+void CustomGameEditorControl::deleteTurnFromBlockTypeToType(Base* control)
 {//=========================================================================================================================
 	//delete from array
 	//delete from tree
@@ -3207,7 +3207,7 @@ void CustomGameEditorControl::deleteTurnFromBlockTypeToType(shared_ptr<Base> con
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find TurnFromBlockTypeToType with name:" + name);
+		OKGame::log.error("Could not find TurnFromBlockTypeToType with name:" + name);
 		return;
 	}
 
@@ -3237,7 +3237,7 @@ void CustomGameEditorControl::deleteTurnFromBlockTypeToType(shared_ptr<Base> con
 
 
 
-void CustomGameEditorControl::closeTurnFromBlockTypeToTypeEditor(shared_ptr<Base> control)
+void CustomGameEditorControl::closeTurnFromBlockTypeToTypeEditor(Base* control)
 {//=========================================================================================================================
 
 	//save selected combobox values to currentTurnFromBlockTypeToType
@@ -3248,8 +3248,8 @@ void CustomGameEditorControl::closeTurnFromBlockTypeToTypeEditor(shared_ptr<Base
 
 	//save to blockListPropTree
 
-	shared_ptr<Properties> p = blockPropTree->Find("Block Properties");
-	shared_ptr<PropertyRow> pr = p->Find(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info.label);
+	Properties* p = blockPropTree->Find("Block Properties");
+	PropertyRow* pr = p->Find(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info.label);
 	{
 		string typesString = "";
 		for (int i = 0; i < currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
@@ -3308,7 +3308,7 @@ void CustomGameEditorControl::saveCurrentTurnFromBlockTypeToType()
 }
 
 
-void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(shared_ptr<Base> control)
+void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(Base* control)
 {//=========================================================================================================================
 	//if something is selected, save it
 	if (currentTurnFromBlockTypeToType != nullptr)
@@ -3333,7 +3333,7 @@ void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(shared_ptr<Base> c
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find type with name:" + name);
+		OKGame::log.error("Could not find type with name:" + name);
 		return;
 	}
 	currentTurnFromBlockTypeToType = bt;
@@ -3383,7 +3383,7 @@ using Poco::Process;
 using Poco::Path;
 
 
-void CustomGameEditorControl::onGameTypesListSelect(shared_ptr<Base> control)
+void CustomGameEditorControl::onGameTypesListSelect(Base* control)
 {//=========================================================================================================================
 
 	Layout::TableRow* row = (Layout::TableRow*)control;
@@ -3393,7 +3393,7 @@ void CustomGameEditorControl::onGameTypesListSelect(shared_ptr<Base> control)
 
 	if (s == nullptr)
 	{
-		OKGame::log->error("Could not find game type with uuid:" + uuid);
+		OKGame::log.error("Could not find game type with uuid:" + uuid);
 		return;
 	}
 
@@ -3416,7 +3416,7 @@ void CustomGameEditorControl::saveCurrentGameTypeToXML()
 
 
 
-void CustomGameEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onLoadOrCreateButton(Base* control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -3425,7 +3425,7 @@ void CustomGameEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
  //opening a new game will overwrite the currently open game
  //make sure you have saved before editing a different game
 
-	askToSaveBase = make_shared<WindowControl>(GetCanvas());
+	askToSaveBase = new WindowControl(GetCanvas());
 	askToSaveBase->SetTitle("Save changes?");
 	askToSaveBase->SetSize(200, 60);
 	askToSaveBase->MakeModal(true);
@@ -3435,7 +3435,7 @@ void CustomGameEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
 	//exitAskToSaveWindow->SetClosable(false);
 	{
 
-		askToSaveYesButton = make_shared<Button>(askToSaveBase);
+		askToSaveYesButton = new Button(askToSaveBase);
 		askToSaveYesButton->SetText(L"Save");
 		//askToSaveYesButton->SetToolTip(b->_Info.tip);
 		askToSaveYesButton->Dock(Pos::Center | Pos::Left);
@@ -3443,7 +3443,7 @@ void CustomGameEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
 		askToSaveYesButton->onPress.Add(this, &CustomGameEditorControl::saveAndOpen);
 
 
-		askToSaveNoButton = make_shared<Button>(askToSaveBase);
+		askToSaveNoButton = new Button(askToSaveBase);
 		askToSaveNoButton->SetText(L"Don't Save");
 		//askToSaveNoButton->SetToolTip(b->_Info.tip);
 		askToSaveNoButton->Dock(Pos::Center | Pos::Left);
@@ -3454,7 +3454,7 @@ void CustomGameEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
 
 }
 
-void CustomGameEditorControl::saveAndOpen(shared_ptr<Base> control)
+void CustomGameEditorControl::saveAndOpen(Base* control)
 {//=========================================================================================================================
 
 	askToSaveBase->CloseButtonPressed();
@@ -3471,7 +3471,7 @@ void CustomGameEditorControl::saveAndOpen(shared_ptr<Base> control)
 	initPreviewGame();
 }
 
-void CustomGameEditorControl::dontSaveAndOpen(shared_ptr<Base> control)
+void CustomGameEditorControl::dontSaveAndOpen(Base* control)
 {//=========================================================================================================================
 
 	askToSaveBase->CloseButtonPressed();
@@ -3494,7 +3494,7 @@ void CustomGameEditorControl::openLoadOrCreateDialog(bool allowedToClose = true)
 	int w = GLUtils::getViewportWidth() / 2;
 	int h = GLUtils::getViewportHeight() / 2;
 
-	loadOrCreateGameWindow = make_shared<WindowControl>(GetCanvas());
+	loadOrCreateGameWindow = new WindowControl(GetCanvas());
 	{
 		loadOrCreateGameWindow->SetTitle("Load existing or create new game type");
 		loadOrCreateGameWindow->SetSize(w, h);
@@ -3512,7 +3512,7 @@ void CustomGameEditorControl::openLoadOrCreateDialog(bool allowedToClose = true)
 		}
 
 
-		gameTypesListBox = make_shared<ListBox>(loadOrCreateGameWindow);
+		gameTypesListBox = new ListBox(loadOrCreateGameWindow);
 		{
 			gameTypesListBox->SetMargin(Margin(0, 0, 0, 0));
 			gameTypesListBox->Dock(Pos::Top);
@@ -3534,18 +3534,18 @@ void CustomGameEditorControl::openLoadOrCreateDialog(bool allowedToClose = true)
 			//gameTypeListBox->SetSelectedRow(row);
 		}
 
-		gameTypeSelectLabel = make_shared<Label>(loadOrCreateGameWindow);
+		gameTypeSelectLabel = new Label(loadOrCreateGameWindow);
 		gameTypeSelectLabel->Dock(Pos::Top);
 		gameTypeSelectLabel->SetText("");
 		gameTypeSelectLabel->SetHeight(20);
 		gameTypeSelectLabel->SetTextColor(Gwen::Color(255,0,128,255));
 
-		gameTypeSelectButtonBase = make_shared<Base>(loadOrCreateGameWindow);
+		gameTypeSelectButtonBase = new Base(loadOrCreateGameWindow);
 		gameTypeSelectButtonBase->Dock(Pos::Bottom);
 		gameTypeSelectButtonBase->SetWidth(loadOrCreateGameWindow->Width());
 		gameTypeSelectButtonBase->SetHeight(20);
 		{
-			editSelectedGameTypeButton = make_shared<Button>(gameTypeSelectButtonBase);//TODO: this should be greyed out if a preset game type is selected
+			editSelectedGameTypeButton = new Button(gameTypeSelectButtonBase);//TODO: this should be greyed out if a preset game type is selected
 			editSelectedGameTypeButton->SetText(L"Edit");
 			//editSelectedGameTypeButton->SetToolTip(b->_Info.tip);
 			editSelectedGameTypeButton->Dock(Pos::Left | Pos::CenterV);
@@ -3553,7 +3553,7 @@ void CustomGameEditorControl::openLoadOrCreateDialog(bool allowedToClose = true)
 			editSelectedGameTypeButton->onPress.Add(this, &CustomGameEditorControl::editSelectedGameType);
 
 
-			createNewGameTypeButton = make_shared<Button>(gameTypeSelectButtonBase);
+			createNewGameTypeButton = new Button(gameTypeSelectButtonBase);
 			createNewGameTypeButton->SetText(L"Create new");
 			//createNewGameTypeButton->SetToolTip(b->_Info.tip);
 			createNewGameTypeButton->Dock(Pos::Left | Pos::CenterV);
@@ -3561,7 +3561,7 @@ void CustomGameEditorControl::openLoadOrCreateDialog(bool allowedToClose = true)
 			createNewGameTypeButton->onPress.Add(this, &CustomGameEditorControl::createNewGameType);
 
 
-			duplicateGameTypeButton = make_shared<Button>(gameTypeSelectButtonBase);
+			duplicateGameTypeButton = new Button(gameTypeSelectButtonBase);
 			duplicateGameTypeButton->SetText(L"Duplicate");
 			//duplicateGameTypeButton->SetToolTip(b->_Info.tip);
 			duplicateGameTypeButton->Dock(Pos::Left | Pos::CenterV);
@@ -3569,7 +3569,7 @@ void CustomGameEditorControl::openLoadOrCreateDialog(bool allowedToClose = true)
 			duplicateGameTypeButton->onPress.Add(this, &CustomGameEditorControl::duplicateGameType);
 
 
-			deleteGameTypeButton = make_shared<Button>(gameTypeSelectButtonBase);
+			deleteGameTypeButton = new Button(gameTypeSelectButtonBase);
 			deleteGameTypeButton->SetText(L"Delete");
 			//deleteGameTypeButton->SetToolTip(b->_Info.tip);
 			deleteGameTypeButton->Dock(Pos::Left | Pos::CenterV);
@@ -3582,7 +3582,7 @@ void CustomGameEditorControl::openLoadOrCreateDialog(bool allowedToClose = true)
 }
 
 
-void CustomGameEditorControl::editSelectedGameType(shared_ptr<Base> control)
+void CustomGameEditorControl::editSelectedGameType(Base* control)
 {//=========================================================================================================================
 
 	//make sure the type is editable, if not, do nothing, or dont even allow the button to get here in the first place
@@ -3618,7 +3618,7 @@ void CustomGameEditorControl::editSelectedGameType(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::createNewGameType(shared_ptr<Base> control)
+void CustomGameEditorControl::createNewGameType(Base* control)
 {//=========================================================================================================================
  //create new settings with defaults and close the list
 	shared_ptr<GameType>s = make_shared<GameType>();
@@ -3661,13 +3661,13 @@ void CustomGameEditorControl::createNewGameType(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::duplicateGameType(shared_ptr<Base> control)
+void CustomGameEditorControl::duplicateGameType(Base* control)
 {//=========================================================================================================================
 
  //the only thing we would do is load the selected game type and then append the name with "copy"
 	if (gameTypesListBox->IsAnyRowSelected() == false)return;
 
-	//OKGame::log->debug(to_string(currentGameType->pieceTypes.size()));
+	//OKGame::log.debug(to_string(currentGameType->pieceTypes.size()));
 
 	shared_ptr<GameType>s = make_shared<GameType>();
 	string uuid = s->uuid;
@@ -3676,7 +3676,7 @@ void CustomGameEditorControl::duplicateGameType(shared_ptr<Base> control)
 	//s->builtInType = false;
 	s->downloaded = false;
 	//s->loadedFilename = "";
-	//OKGame::log->debug(to_string(s->pieceTypes.size()));
+	//OKGame::log.debug(to_string(s->pieceTypes.size()));
 
 	s->name += " Copy";
 	bool taken = false;
@@ -3716,7 +3716,7 @@ void CustomGameEditorControl::duplicateGameType(shared_ptr<Base> control)
 	initPreviewGame();
 }
 
-void CustomGameEditorControl::deleteGameType(shared_ptr<Base> control)
+void CustomGameEditorControl::deleteGameType(Base* control)
 {//=========================================================================================================================
 
 
@@ -3730,7 +3730,7 @@ void CustomGameEditorControl::deleteGameType(shared_ptr<Base> control)
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find gameType with uuid:" + uuid);
+		OKGame::log.error("Could not find gameType with uuid:" + uuid);
 		return;
 	}
 
@@ -3787,7 +3787,7 @@ void CustomGameEditorControl::deleteGameType(shared_ptr<Base> control)
 
 
 
-void CustomGameEditorControl::onSaveButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onSaveButton(Base* control)
 {//=========================================================================================================================
 
  //save current game to xml in userdata, maybe upload to server as userid:gametype if user is logged in
@@ -3804,7 +3804,7 @@ void CustomGameEditorControl::onSaveButton(shared_ptr<Base> control)
 
 }
 
-void CustomGameEditorControl::onUploadButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onUploadButton(Base* control)
 {//=========================================================================================================================
 
 	onSaveButton(control);
@@ -3838,25 +3838,25 @@ void CustomGameEditorControl::onUploadButton(shared_ptr<Base> control)
 
 	if (response == "")response = "Did not get a response from the server. Try again later.";
 
-	shared_ptr<WindowControl>result = make_shared<WindowControl>(GetCanvas());
+	WindowControl*result = new WindowControl(GetCanvas());
 	result->SetTitle("Result");
 	result->SetSize(300, 60);
 	result->MakeModal(true);
 	result->SetPos(GLUtils::getViewportWidth() / 2 - 150, GLUtils::getViewportHeight() / 2 - 30);
 	result->SetDeleteOnClose(true);
 
-	shared_ptr<Label> label = make_shared<Label>(result);
+	Label* label = new Label(result);
 	label->SetText(response);
 	label->Dock(Pos::Fill);
 }
 
-void CustomGameEditorControl::onExitButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onExitButton(Base* control)
 {//=========================================================================================================================
 
  //Utility::Format(L"Window %i", m_iWindowCount)
 
 
-	askToSaveBase = make_shared<WindowControl>(GetCanvas());
+	askToSaveBase = new WindowControl(GetCanvas());
 	askToSaveBase->SetTitle("Save changes?");
 	askToSaveBase->SetSize(300, 60);
 	askToSaveBase->MakeModal(true);
@@ -3866,7 +3866,7 @@ void CustomGameEditorControl::onExitButton(shared_ptr<Base> control)
 	//exitAskToSaveWindow->SetClosable(false);
 	{
 
-		askToSaveYesButton = make_shared<Button>(askToSaveBase);
+		askToSaveYesButton = new Button(askToSaveBase);
 		askToSaveYesButton->SetText(L"Save and Leave");
 		//askToSaveYesButton->SetToolTip(b->_Info.tip);
 		askToSaveYesButton->Dock(Pos::Left | Pos::Center);
@@ -3874,7 +3874,7 @@ void CustomGameEditorControl::onExitButton(shared_ptr<Base> control)
 		askToSaveYesButton->onPress.Add(this, &CustomGameEditorControl::saveAndExit);
 
 
-		askToSaveNoButton = make_shared<Button>(askToSaveBase);
+		askToSaveNoButton = new Button(askToSaveBase);
 		askToSaveNoButton->SetText(L"Leave without saving");
 		//askToSaveNoButton->SetToolTip(b->_Info.tip);
 		askToSaveNoButton->Dock(Pos::Left | Pos::Center);
@@ -3882,7 +3882,7 @@ void CustomGameEditorControl::onExitButton(shared_ptr<Base> control)
 		askToSaveNoButton->onPress.Add(this, &CustomGameEditorControl::dontSaveAndExit);
 
 
-		//		cancelExitButton = make_shared<Button>(askToSaveBase);
+		//		cancelExitButton = new Button(askToSaveBase);
 		//		cancelExitButton->SetText(L"Cancel");
 		//		//cancelExitButton->SetToolTip(b->_Info.tip);
 		//		cancelExitButton->Dock(Pos::Left | Pos::Center);
@@ -3893,14 +3893,14 @@ void CustomGameEditorControl::onExitButton(shared_ptr<Base> control)
 
 }
 
-void CustomGameEditorControl::onTutorialButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onTutorialButton(Base* control)
 {//=========================================================================================================================
 	Main::openURL("https://www.youtube.com/watch?v=hLN18oZcIYE");
 
 }
 
 
-void CustomGameEditorControl::saveAndExit(shared_ptr<Base> control)
+void CustomGameEditorControl::saveAndExit(Base* control)
 {//=========================================================================================================================
  //save the game to appdata or home/userid-gamename
  //make sure that there arent any unallowable characters, sanitize, etc
@@ -3914,7 +3914,7 @@ void CustomGameEditorControl::saveAndExit(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::dontSaveAndExit(shared_ptr<Base> control)
+void CustomGameEditorControl::dontSaveAndExit(Base* control)
 {//=========================================================================================================================
  //go back to title screen
 	askToSaveBase->CloseButtonPressed();
@@ -3923,7 +3923,7 @@ void CustomGameEditorControl::dontSaveAndExit(shared_ptr<Base> control)
 
 
 
-void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> control)
+void CustomGameEditorControl::doEditRotationSetWindowButton(Base* control)
 {//=========================================================================================================================
 
 
@@ -3935,7 +3935,7 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 	int w = GLUtils::getViewportWidth() / 4 * 3;
 	int h = GLUtils::getViewportHeight() / 4 * 3;
 
-	rotationEditWindow = make_shared<WindowControl>(GetCanvas());
+	rotationEditWindow = new WindowControl(GetCanvas());
 	{
 		rotationEditWindow->SetTitle("Edit rotations and block placement");
 		rotationEditWindow->SetSize(w, h);
@@ -3945,30 +3945,30 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 		rotationEditWindow->SetDeleteOnClose(true);
 		rotationEditWindow->SetClosable(false);
 
-		shared_ptr<Base> rotationWindowTopBase = make_shared<Base>(rotationEditWindow);
+		Base* rotationWindowTopBase = new Base(rotationEditWindow);
 		rotationWindowTopBase->Dock(Pos::Top);
 		rotationWindowTopBase->SetSize(rotationEditWindow->Width(), rotationEditWindow->Height() - 20);
 		{
 
-			shared_ptr<Base>rotationLeftBase = make_shared<Base>(rotationWindowTopBase);
+			Base*rotationLeftBase = new Base(rotationWindowTopBase);
 			rotationLeftBase->Dock(Pos::Left);
 			rotationLeftBase->SetSize(rotationWindowTopBase->Width() / 2, rotationWindowTopBase->Height());
 			{
 
-				shared_ptr<Base>rotationListBoxBase = make_shared<Base>(rotationLeftBase);
+				Base*rotationListBoxBase = new Base(rotationLeftBase);
 				rotationListBoxBase->Dock(Pos::Top);
 				rotationListBoxBase->SetSize(rotationLeftBase->Width() - 40, rotationLeftBase->Height()/2 - 40);
 				{
 
 					//let's do a load preset button which opens a window
 
-					shared_ptr<Button> rotationPresetLoadButton = make_shared<Button>(rotationListBoxBase);
+					Button* rotationPresetLoadButton = new Button(rotationListBoxBase);
 					rotationPresetLoadButton->SetText("Load preset rotation set...");
 					rotationPresetLoadButton->SetHeight(15);
 					rotationPresetLoadButton->Dock(Pos::Top);
 					rotationPresetLoadButton->onPress.Add(this, &CustomGameEditorControl::onOpenPresetRotationWindow);
 
-					rotationListBox = make_shared<ListBox>(rotationListBoxBase);
+					rotationListBox = new ListBox(rotationListBoxBase);
 					{
 						//rotationListBox->SetMargin(Margin(0, 0, 0, 0));
 						rotationListBox->Dock(Pos::Top);
@@ -3991,12 +3991,12 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 
 
 					//buttons new, delete, preview checkbox
-					shared_ptr<Base>rotationListBoxButtonBase = make_shared<Base>(rotationListBoxBase);
+					Base*rotationListBoxButtonBase = new Base(rotationListBoxBase);
 					rotationListBoxButtonBase->Dock(Pos::Bottom);
 					rotationListBoxButtonBase->SetSize(rotationListBoxBase->Width(), 20);
 					{
 
-						shared_ptr<Button>addRotationButton = make_shared<Button>(rotationListBoxButtonBase);
+						Button*addRotationButton = new Button(rotationListBoxButtonBase);
 						addRotationButton->SetText(L"New");
 						//addRotationButton->SetToolTip(b->_Info.tip);
 						addRotationButton->Dock(Pos::Left | Pos::CenterV);
@@ -4004,7 +4004,7 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 						addRotationButton->onPress.Add(this, &CustomGameEditorControl::addRotation);
 
 
-						shared_ptr<Button>deleteRotationButton = make_shared<Button>(rotationListBoxButtonBase);
+						Button*deleteRotationButton = new Button(rotationListBoxButtonBase);
 						deleteRotationButton->SetText(L"Delete");
 						//deleteRotationButton->SetToolTip(b->_Info.tip);
 						deleteRotationButton->Dock(Pos::Left | Pos::CenterV);
@@ -4017,23 +4017,23 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 				//preview which animates through rotations
 				//preview speed slider ?
 				//preview checkbox ?
-				shared_ptr<Base>rotationPreviewBase = make_shared<Base>(rotationLeftBase);
+				Base*rotationPreviewBase = new Base(rotationLeftBase);
 				rotationPreviewBase->Dock(Pos::Top);
 				rotationPreviewBase->SetSize(rotationLeftBase->Width(), rotationLeftBase->Height() / 2);
 				{
 					int minSize = min(rotationPreviewBase->Width(), rotationPreviewBase->Height() - 60);
 
-					//Layout::Position* positioner = make_shared<Layout>::Position(rotationPreviewBase);
+					//Layout::Position* positioner = new Layout::Position(rotationPreviewBase);
 					//positioner->Dock(Pos::Top);
 					//positioner->SetSize(minSize, 20);
 
-					shared_ptr<Label>rotationEditorLabel = make_shared<Label>(rotationPreviewBase);
+					Label*rotationEditorLabel = new Label(rotationPreviewBase);
 					rotationEditorLabel->SetText("Preview Animation Speed");
 					rotationEditorLabel->SetPos(rotationPreviewBase->X(), rotationPreviewBase->Y() + 20);
 					//rotationEditorLabel->Dock(Pos::Top);
 					rotationEditorLabel->SetSize(minSize, 20);
 
-					rotationPreviewAnimationSpeedSlider = make_shared<HorizontalSlider>(rotationPreviewBase);
+					rotationPreviewAnimationSpeedSlider = new HorizontalSlider(rotationPreviewBase);
 					//rotationPreviewAnimationSpeedSlider->Dock(Pos::Top);
 					rotationPreviewAnimationSpeedSlider->SetPos(rotationEditorLabel->X(), rotationEditorLabel->Y() + 20);
 					rotationPreviewAnimationSpeedSlider->SetRange(0, 1);
@@ -4050,17 +4050,17 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 
 			}
 
-			shared_ptr<Base>rotationRightBase = make_shared<Base>(rotationWindowTopBase);
+			Base*rotationRightBase = new Base(rotationWindowTopBase);
 			rotationRightBase->Dock(Pos::Left);
 			rotationRightBase->SetSize(rotationWindowTopBase->Width() / 2 - 60, rotationWindowTopBase->Height()-20);
 			{
 
-				shared_ptr<Label>rotationEditorLabel = make_shared<Label>(rotationRightBase);
+				Label*rotationEditorLabel = new Label(rotationRightBase);
 				rotationEditorLabel->SetText("Click here to place blocks and create a rotation state.");
 				rotationEditorLabel->Dock(Pos::Top);
 
 				//block designer
-				shared_ptr<Base>rotationEditorBase = make_shared<Base>(rotationRightBase);
+				Base*rotationEditorBase = new Base(rotationRightBase);
 				rotationEditorBase->Dock(Pos::Top);
 				rotationEditorBase->SetSize(rotationRightBase->Width(), rotationRightBase->Height() - 20);
 				{
@@ -4074,11 +4074,11 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(shared_ptr<Base> con
 			}
 		}
 
-		shared_ptr<Base>rotationWindowBottomBase = make_shared<Base>(rotationEditWindow);
+		Base*rotationWindowBottomBase = new Base(rotationEditWindow);
 		rotationWindowBottomBase->Dock(Pos::Bottom);
 		rotationWindowBottomBase->SetSize(rotationEditWindow->Width(), 20);
 		{
-			shared_ptr<Button>saveRotationButton = make_shared<Button>(rotationWindowBottomBase);//TODO: this should be greyed out if a preset game type is selected
+			Button*saveRotationButton = new Button(rotationWindowBottomBase);//TODO: this should be greyed out if a preset game type is selected
 			saveRotationButton->SetText(L"Save and close");
 			//saveRotationButton->SetToolTip(b->_Info.tip);
 			saveRotationButton->Dock(Pos::Right);
@@ -4336,7 +4336,7 @@ void CustomGameEditorControl::onRotationEditMouseClick(int x, int y, bool bDown)
 }
 
 
-void CustomGameEditorControl::onRotationPreviewSpeedSliderMoved(shared_ptr<Base> control)
+void CustomGameEditorControl::onRotationPreviewSpeedSliderMoved(Base* control)
 {//=========================================================================================================================
 
 	Gwen::Controls::Slider* pSlider = (Gwen::Controls::Slider*) control;
@@ -4347,7 +4347,7 @@ void CustomGameEditorControl::onRotationPreviewSpeedSliderMoved(shared_ptr<Base>
 }
 
 
-void CustomGameEditorControl::onRotationListRowSelect(shared_ptr<Base> control)
+void CustomGameEditorControl::onRotationListRowSelect(Base* control)
 {//=========================================================================================================================
 
 
@@ -4364,7 +4364,7 @@ void CustomGameEditorControl::onRotationListRowSelect(shared_ptr<Base> control)
 	}
 	catch(exception)
 	{
-		OKGame::log->error("Could not find rotation with num " + num);
+		OKGame::log.error("Could not find rotation with num " + num);
 		return;
 	}
 
@@ -4374,7 +4374,7 @@ void CustomGameEditorControl::onRotationListRowSelect(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::addRotation(shared_ptr<Base> control)
+void CustomGameEditorControl::addRotation(Base* control)
 {//=========================================================================================================================
 
 	//add number
@@ -4389,7 +4389,7 @@ void CustomGameEditorControl::addRotation(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::deleteRotation(shared_ptr<Base> control)
+void CustomGameEditorControl::deleteRotation(Base* control)
 {//=========================================================================================================================
 	//delete number
 
@@ -4408,7 +4408,7 @@ void CustomGameEditorControl::deleteRotation(shared_ptr<Base> control)
 	}
 	catch (exception)
 	{
-		OKGame::log->error("Could not find rotation with num " + num);
+		OKGame::log.error("Could not find rotation with num " + num);
 		return;
 	}
 
@@ -4434,7 +4434,7 @@ void CustomGameEditorControl::deleteRotation(shared_ptr<Base> control)
 }
 
 
-void CustomGameEditorControl::closeRotationWindow(shared_ptr<Base> control)
+void CustomGameEditorControl::closeRotationWindow(Base* control)
 {//=========================================================================================================================
 
 	//need to save lastRotation, numBlocks
@@ -4447,7 +4447,7 @@ void CustomGameEditorControl::closeRotationWindow(shared_ptr<Base> control)
 	initPreviewGame();
 }
 
-void CustomGameEditorControl::onOpenPresetRotationWindow(shared_ptr<Base> control)
+void CustomGameEditorControl::onOpenPresetRotationWindow(Base* control)
 {//=========================================================================================================================
 	//modal window
 	//listbox populated with rotation sets from built in games
@@ -4461,7 +4461,7 @@ void CustomGameEditorControl::onOpenPresetRotationWindow(shared_ptr<Base> contro
 	int w = GLUtils::getViewportWidth() / 2;
 	int h = GLUtils::getViewportHeight() / 2;
 
-	rotationPresetSelectWindow = make_shared<WindowControl>(GetCanvas());
+	rotationPresetSelectWindow = new WindowControl(GetCanvas());
 	{
 		rotationPresetSelectWindow->SetTitle("Select preset rotation");
 		rotationPresetSelectWindow->SetSize(w, h);
@@ -4472,12 +4472,12 @@ void CustomGameEditorControl::onOpenPresetRotationWindow(shared_ptr<Base> contro
 		rotationPresetSelectWindow->SetClosable(false);
 
 
-		shared_ptr<Base>rotationListBoxBase = make_shared<Base>(rotationPresetSelectWindow);
+		Base*rotationListBoxBase = new Base(rotationPresetSelectWindow);
 		rotationListBoxBase->Dock(Pos::Top);
 		rotationListBoxBase->SetSize(rotationPresetSelectWindow->Width() - 40, rotationPresetSelectWindow->Height() - 40);
 		{
 
-			rotationPresetListBox = make_shared<ListBox>(rotationListBoxBase);
+			rotationPresetListBox = new ListBox(rotationListBoxBase);
 			{
 				//rotationListBox->SetMargin(Margin(0, 0, 0, 0));
 				rotationPresetListBox->Dock(Pos::Top);
@@ -4514,20 +4514,20 @@ void CustomGameEditorControl::onOpenPresetRotationWindow(shared_ptr<Base> contro
 			}
 		}
 
-		shared_ptr<Base>rotationListBoxButtonBase = make_shared<Base>(rotationPresetSelectWindow);
+		Base*rotationListBoxButtonBase = new Base(rotationPresetSelectWindow);
 		rotationListBoxButtonBase->Dock(Pos::Bottom);
 		rotationListBoxButtonBase->SetSize(rotationPresetSelectWindow->Width(), 20);
 		{
 
 
-			shared_ptr<Button>cancelButton = make_shared<Button>(rotationListBoxButtonBase);
+			Button*cancelButton = new Button(rotationListBoxButtonBase);
 			cancelButton->SetText(L"Cancel");
 			//cancelButton->SetToolTip(b->_Info.tip);
 			cancelButton->Dock(Pos::Right | Pos::CenterV);
 			//cancelButton->SetWidth(240);
 			cancelButton->onPress.Add(this, &CustomGameEditorControl::onSelectedPresetRotationCancel);
 
-			shared_ptr<Button>okButton = make_shared<Button>(rotationListBoxButtonBase);
+			Button*okButton = new Button(rotationListBoxButtonBase);
 			okButton->SetText(L"OK");
 			//okButton->SetToolTip(b->_Info.tip);
 			okButton->Dock(Pos::Right | Pos::CenterV);
@@ -4538,7 +4538,7 @@ void CustomGameEditorControl::onOpenPresetRotationWindow(shared_ptr<Base> contro
 
 }
 
-void CustomGameEditorControl::onSelectedPresetRotationOK(shared_ptr<Base> control)
+void CustomGameEditorControl::onSelectedPresetRotationOK(Base* control)
 {//=========================================================================================================================
 
 	//get current selected preset rotation from listbox
@@ -4618,7 +4618,7 @@ void CustomGameEditorControl::onSelectedPresetRotationOK(shared_ptr<Base> contro
 }
 
 //=========================================================================================================================
-void CustomGameEditorControl::onSelectedPresetRotationCancel(shared_ptr<Base> control)
+void CustomGameEditorControl::onSelectedPresetRotationCancel(Base* control)
 {//=========================================================================================================================
 	//just close without making any changes
 	rotationPresetSelectWindow->CloseButtonPressed();
@@ -4628,7 +4628,7 @@ void CustomGameEditorControl::onSelectedPresetRotationCancel(shared_ptr<Base> co
 }
 
 //=========================================================================================================================
-void CustomGameEditorControl::onPreviewButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onPreviewButton(Base* control)
 {//=========================================================================================================================
  //we basically already have the settings in memory so we can just create a new game instance and set the currentGameType to these ones
  //but we need to make a game sequence that is only this game
@@ -4638,7 +4638,7 @@ void CustomGameEditorControl::onPreviewButton(shared_ptr<Base> control)
 }
 
 //=========================================================================================================================
-void CustomGameEditorControl::onGarbageButton(shared_ptr<Base> control)
+void CustomGameEditorControl::onGarbageButton(Base* control)
 {//=========================================================================================================================
 
 
@@ -4688,11 +4688,11 @@ void CustomGameEditorControl::initPreviewGame()
 //
 //	}
 
-	ArrayList<shared_ptr<BlockType>>blockTypes = bobsGame->getPlayer1Game()->currentGameType->getNormalBlockTypes(bobsGame->getPlayer1Game()->getCurrentDifficulty());
-	ArrayList<shared_ptr<PieceType>>pieceTypes = bobsGame->getPlayer1Game()->currentGameType->getNormalPieceTypes(bobsGame->getPlayer1Game()->getCurrentDifficulty());
+	vector<shared_ptr<BlockType>>*blockTypes = bobsGame->getPlayer1Game()->currentGameType->getNormalBlockTypes(bobsGame->getPlayer1Game()->getCurrentDifficulty());
+	vector<shared_ptr<PieceType>>*pieceTypes = bobsGame->getPlayer1Game()->currentGameType->getNormalPieceTypes(bobsGame->getPlayer1Game()->getCurrentDifficulty());
 
-	shared_ptr<PieceType> p = bobsGame->getPlayer1Game()->grid->getRandomPieceType(pieceTypes);
-	shared_ptr<BlockType> b = bobsGame->getPlayer1Game()->grid->getRandomBlockType(blockTypes);
+	shared_ptr<PieceType> p = bobsGame->getPlayer1Game()->grid->getRandomPieceType(*pieceTypes);
+	shared_ptr<BlockType> b = bobsGame->getPlayer1Game()->grid->getRandomBlockType(*blockTypes);
 
 	if (currentPieceType != nullptr)p = currentPieceType;
 	if (currentBlockType != nullptr)b = currentBlockType;
@@ -4705,7 +4705,7 @@ void CustomGameEditorControl::initPreviewGame()
 
 
 //
-//void CustomGameEditorControl::onAddDifficultyButton(shared_ptr<Base> control)
+//void CustomGameEditorControl::onAddDifficultyButton(Base* control)
 //{//=========================================================================================================================
 // //add a generic difficulty to the bottom of the list and populate the fields
 //
@@ -4737,7 +4737,7 @@ void CustomGameEditorControl::initPreviewGame()
 //	onDifficultyListRowSelect(row);
 //}
 //
-//void CustomGameEditorControl::onDeleteDifficultyButton(shared_ptr<Base> control)
+//void CustomGameEditorControl::onDeleteDifficultyButton(Base* control)
 //{//=========================================================================================================================
 //
 //
@@ -4750,7 +4750,7 @@ void CustomGameEditorControl::initPreviewGame()
 //
 //	if (bt == nullptr)
 //	{
-//		OKGame::log->error("Could not find difficultyType with name:" + name);
+//		OKGame::log.error("Could not find difficultyType with name:" + name);
 //		return;
 //	}
 //
@@ -4792,7 +4792,7 @@ void CustomGameEditorControl::initPreviewGame()
 //	}
 //}
 
-void CustomGameEditorControl::onDifficultyListRowSelect(shared_ptr<Base> control)
+void CustomGameEditorControl::onDifficultyListRowSelect(Base* control)
 {//=========================================================================================================================
 
 	if (control == nullptr)return;
@@ -4809,7 +4809,7 @@ void CustomGameEditorControl::onDifficultyListRowSelect(shared_ptr<Base> control
 
 	if (bt == nullptr)
 	{
-		OKGame::log->error("Could not find difficultyType with name:" + name);
+		OKGame::log.error("Could not find difficultyType with name:" + name);
 		return;
 	}
 	currentDifficultyType = bt;
@@ -4859,14 +4859,14 @@ void CustomGameEditorControl::initDifficultyPropTree(shared_ptr<DifficultyType>b
 
 	if (b == nullptr)return;
 
-	difficultyPropTree = make_shared<PropertyTree>(difficultyPropertiesScrollControl);
+	difficultyPropTree = new PropertyTree(difficultyPropertiesScrollControl);
 	//difficultyPropTree->Dock(Pos::Fill);
 	difficultyPropTree->SetWidth(difficultyPropertiesScrollControl->Width() - 20);
 	//difficultyPropTree->SetHeight(1000);
 	{
 
 		int n = 0;
-		shared_ptr<Properties> p = nullptr;
+		Properties* p = nullptr;
 		n++; p = difficultyPropTree->Add("Difficulty Properties");
 		{
 			//n++; p->Add(b->name_Info.label, string(b->name))->SetToolTip(b->name_Info.tip);
@@ -4888,7 +4888,7 @@ void CustomGameEditorControl::initDifficultyPropTree(shared_ptr<DifficultyType>b
 			n++; p->Add(b->maximumBlockTypeColors_Info.label, to_string(b->maximumBlockTypeColors))->SetToolTip(b->maximumBlockTypeColors_Info.tip);
 
 
-			n++; p->Add(b->randomlyFillGrid_Info.label, make_shared<Property>::Checkbox(p), to_string(b->randomlyFillGrid))->SetToolTip(b->randomlyFillGrid_Info.tip);
+			n++; p->Add(b->randomlyFillGrid_Info.label, new Property::Checkbox(p), to_string(b->randomlyFillGrid))->SetToolTip(b->randomlyFillGrid_Info.tip);
 			n++; p->Add(b->randomlyFillGridStartY_Info.label, to_string(b->randomlyFillGridStartY))->SetToolTip(b->randomlyFillGridStartY_Info.tip);
 
 
@@ -4905,7 +4905,7 @@ void CustomGameEditorControl::initDifficultyPropTree(shared_ptr<DifficultyType>b
 					else pieceName = "ERROR";
 					typesString = typesString + pieceName + ",";
 				}
-				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
+				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
 				n++; p->Add(b->pieceTypesToDisallow_Info.label, tb, typesString)->SetToolTip(b->pieceTypesToDisallow_Info.tip);
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doDifficultyDisallowPieceTypesSelectionWindowButton);
 			}
@@ -4921,7 +4921,7 @@ void CustomGameEditorControl::initDifficultyPropTree(shared_ptr<DifficultyType>b
 					else blockName = "ERROR";
 					typesString = typesString + blockName + ",";
 				}
-				Property::TextWithButton *tb = make_shared<Property>::TextWithButton(p, "Edit");
+				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
 				n++; p->Add(b->blockTypesToDisallow_Info.label, tb, typesString)->SetToolTip(b->blockTypesToDisallow_Info.tip);
 				tb->GetButton()->onPress.Add(this, &CustomGameEditorControl::doDifficultyDisallowBlockTypesSelectionWindowButton);
 			}
@@ -4946,15 +4946,15 @@ void CustomGameEditorControl::saveDifficultyPropTreeToCurrentDifficultyType()
 
 	//parse all fields
 	//if name equals any other difficultytype names besides currentDifficultyType add a number afterwards until it doesnt
-	shared_ptr<Properties> p = difficultyPropTree->Find("Difficulty Properties");
+	Properties* p = difficultyPropTree->Find("Difficulty Properties");
 	if (p == nullptr)
 	{
-		OKGame::log->error("Could not find Difficulty Properties");
+		OKGame::log.error("Could not find Difficulty Properties");
 		return;
 	}
 
 //
-//	shared_ptr<PropertyRow> pr = p->Find(currentDifficultyType->name_Info.label);
+//	PropertyRow* pr = p->Find(currentDifficultyType->name_Info.label);
 //	string difficultyTypeName = pr->GetProperty()->GetPropertyValue().c_str();
 //	if (difficultyTypeName == "")difficultyTypeName = "Unnamed Difficulty";
 //	int n = 0;
@@ -5077,7 +5077,7 @@ void CustomGameEditorControl::saveDifficultyPropTreeToCurrentDifficultyType()
 }
 
 
-void CustomGameEditorControl::doDifficultyDisallowPieceTypesSelectionWindowButton(shared_ptr<Base> control)
+void CustomGameEditorControl::doDifficultyDisallowPieceTypesSelectionWindowButton(Base* control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -5108,7 +5108,7 @@ void CustomGameEditorControl::doDifficultyDisallowPieceTypesSelectionWindowButto
 
 
 
-void CustomGameEditorControl::saveDisallowPieceTypes(shared_ptr<Base> control)
+void CustomGameEditorControl::saveDisallowPieceTypes(Base* control)
 {//=========================================================================================================================
 
 	currentDifficultyType->pieceTypesToDisallow_UUID.clear();
@@ -5124,8 +5124,8 @@ void CustomGameEditorControl::saveDisallowPieceTypes(shared_ptr<Base> control)
 	}
 
 
-	shared_ptr<Properties> p = difficultyPropTree->Find("Difficulty Properties");
-	shared_ptr<PropertyRow> pr = p->Find(currentDifficultyType->pieceTypesToDisallow_Info.label);
+	Properties* p = difficultyPropTree->Find("Difficulty Properties");
+	PropertyRow* pr = p->Find(currentDifficultyType->pieceTypesToDisallow_Info.label);
 	{
 		string typesString = "";
 		for (int i = 0; i < currentDifficultyType->pieceTypesToDisallow_UUID.size(); i++)
@@ -5145,7 +5145,7 @@ void CustomGameEditorControl::saveDisallowPieceTypes(shared_ptr<Base> control)
 	initPreviewGame();
 }
 
-void CustomGameEditorControl::doDifficultyDisallowBlockTypesSelectionWindowButton(shared_ptr<Base> control)
+void CustomGameEditorControl::doDifficultyDisallowBlockTypesSelectionWindowButton(Base* control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -5176,7 +5176,7 @@ void CustomGameEditorControl::doDifficultyDisallowBlockTypesSelectionWindowButto
 
 
 
-void CustomGameEditorControl::saveDisallowBlockTypes(shared_ptr<Base> control)
+void CustomGameEditorControl::saveDisallowBlockTypes(Base* control)
 {//=========================================================================================================================
 
 	currentDifficultyType->blockTypesToDisallow_UUID.clear();
@@ -5191,8 +5191,8 @@ void CustomGameEditorControl::saveDisallowBlockTypes(shared_ptr<Base> control)
 		if (pt != nullptr)currentDifficultyType->blockTypesToDisallow_UUID.add(pt->uuid);
 	}
 
-	shared_ptr<Properties> p = difficultyPropTree->Find("Difficulty Properties");
-	shared_ptr<PropertyRow> pr = p->Find(currentDifficultyType->blockTypesToDisallow_Info.label);
+	Properties* p = difficultyPropTree->Find("Difficulty Properties");
+	PropertyRow* pr = p->Find(currentDifficultyType->blockTypesToDisallow_Info.label);
 	{
 		string typesString = "";
 		for (int i = 0; i < currentDifficultyType->blockTypesToDisallow_UUID.size(); i++)
@@ -5245,8 +5245,8 @@ void PreviewRectangle::Render(Skin::Base* skin)
 	//glPushMatrix();
 	//glLoadIdentity();
 	//GLUtils::setPreColorFilterViewport();
-	Gwen::Texture *t = make_shared<Gwen>::Texture();
-	t->data = (shared_ptr<GLuint>)&GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
+	Gwen::Texture *t = new Gwen::Texture();
+	t->data = (GLuint*)&GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
 	skin->GetRender()->DrawTexturedRect(t, Gwen::Rect(0, Height(), Width(), 0-Height()));
 	delete t;
 	//glPopMatrix();
@@ -5313,7 +5313,7 @@ void OKGame::customGameEditorMenuUpdate()
 //			}
 
 			leaveMenu = true;
-			delete customGameEditor;
+			//delete customGameEditor;
 			customGameEditor = nullptr;
 		}
 	}
@@ -5364,7 +5364,7 @@ void OKGame::customGameEditorMenuUpdate()
 		if (customGameEditorMenu != nullptr)
 		{
 			customGameEditorMenuCursorPosition = customGameEditorMenu->cursorPosition;
-			delete customGameEditorMenu;
+			//delete customGameEditorMenu;
 			customGameEditorMenu = nullptr;
 		}
 	}
@@ -5396,7 +5396,7 @@ void OKGame::customGameEditorMenuRender()
 	{
 		if (customGameEditor->rotationEditorOpen && customGameEditor->presetRotationWindowOpen == false)
 		{
-			customGameEditor->renderRotationEditor(this);
+			customGameEditor->renderRotationEditor(shared_from_this());
 			customGameEditor->renderRotationPreview();
 		}
 

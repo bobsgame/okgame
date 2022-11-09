@@ -219,7 +219,7 @@ EventScriptCommand::EventScriptCommand(const string& command, const string& comm
 	this->command = command;
 	this->comment = comment;
 
-	EventData::commandList.add(shared_from_this());
+	EventData::commandList.push_back(shared_from_this());
 }
 
 

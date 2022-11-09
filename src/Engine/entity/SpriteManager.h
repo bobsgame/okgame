@@ -26,12 +26,12 @@ class Logger;
 //================
 
 
-void HARDWARE_set_sprite_y(SPRITE* sprite, int screen_y);
+void HARDWARE_set_sprite_y(shared_ptr<SPRITE> sprite, int screen_y);
 
-SPRITE* HARDWARE_create_sprite(GFX* gfx, int gfx_index, int layer, float scale, int screen_x, int screen_y, int alpha);
-void HARDWARE_update_sprite_texture(SPRITE* sprite, int gfx_index);
-void HARDWARE_set_sprite_xy(SPRITE* sprite, int screen_x, int screen_y);
-void HARDWARE_delete_sprite(SPRITE* sprite);
+shared_ptr<SPRITE> HARDWARE_create_sprite(shared_ptr<GFX> gfx, int gfx_index, int layer, float scale, int screen_x, int screen_y, int alpha);
+void HARDWARE_update_sprite_texture(shared_ptr < SPRITE> sprite, int gfx_index);
+void HARDWARE_set_sprite_xy(shared_ptr < SPRITE> sprite, int screen_x, int screen_y);
+void HARDWARE_delete_sprite(shared_ptr<SPRITE> sprite);
 void HARDWARE_load_sprite_palette(int* palette);
 
 void HARDWARE_init_arrays();
@@ -49,7 +49,7 @@ public:
 	HashMap<string, shared_ptr<Sprite>> spriteByNameHashMap;//make_shared<HashMap><string, shared_ptr<Sprite>>();
 
 
-	ArrayList<shared_ptr<ScreenSprite>> screenSpriteList;
+	vector<shared_ptr<ScreenSprite>> screenSpriteList;
 
 
 	static shared_ptr<OKTexture> actionTexture;// = nullptr;

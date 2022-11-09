@@ -40,7 +40,7 @@ public:
 
 
 	int numTitleMenuTextureFrames = 0;
-	ArrayList<shared_ptr<OKTexture>> titleMenuTextures;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
+	vector<shared_ptr<OKTexture>> titleMenuTextures;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
 	shared_ptr<OKTexture> titleMenuTexture = nullptr;
 	long long titleMenuFrameTicks = 0;
 	int currentTitleMenuTextureFrame = 0;
@@ -82,8 +82,8 @@ protected:
 	long long whichDifficultyToShow = 0;
 	long long updateFriendsTime = 0;
 	long long updatePublicGamesTime = 0;
-	ArrayList<shared_ptr<Caption>> onlineFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
-	ArrayList<shared_ptr<Caption>> waitingForFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
+	vector<shared_ptr<Caption>> onlineFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
+	vector<shared_ptr<Caption>> waitingForFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
 	void waitingForFriendScreenUpdate();
 	void waitingForFriendScreenRender();
 

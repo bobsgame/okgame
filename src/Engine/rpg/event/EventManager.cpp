@@ -105,7 +105,7 @@ void EventManager::unloadCurrentMapEvents()
 		if (s->type() != EventData::TYPE_PROJECT_INITIAL_LOADER && s->type() != EventData::TYPE_PROJECT_CUTSCENE_DONT_RUN_UNTIL_CALLED)
 		{
 			s->reset();
-			runningEventQueue.removeAt(i);
+			runningEventQueue.erase(runningEventQueue.begin()+i);
 			i = -1;
 		}
 	}
@@ -124,7 +124,7 @@ shared_ptr<Item> EventManager::getItemByID(int id)
 
 	string e = "Item not found! getItemByID():" + to_string(id);
 	Main::console->error(e);
-	log->error(e);
+	log.error(e);
 
 	return nullptr;
 }
@@ -196,7 +196,7 @@ shared_ptr<Skill> EventManager::getSkillByIDCreateIfNotExist(int id)
 
 	string e = "Skill not found! getSkillByID():" + to_string(id);
 	Main::console->error(e);
-	log->error(e);
+	log.error(e);
 
 	return make_shared<Skill>(getEngine(), id);
 }

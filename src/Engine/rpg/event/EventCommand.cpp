@@ -38,7 +38,7 @@ int EventCommand::getNumParams()
 	}
 	else
 	{
-		return parameterList.size();
+		return (int)parameterList.size();
 	}
 }
 

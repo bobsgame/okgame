@@ -220,7 +220,8 @@ void GameChallengeNotificationPanel::doNo()
 		friendCharacter->setOutgoingGameChallengeResponse(NDGameEngine::gameChallengeResponse_DECLINE);
 
 		//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-		delete friendCharacter->gameChallengeNotification;
+		//delete friendCharacter->gameChallengeNotification;
+		friendCharacter->gameChallengeNotification = nullptr;
 
 		setActivated(false);
 
@@ -245,7 +246,8 @@ void GameChallengeNotificationPanel::doYes()
 		//getGUIManager()->openND();
 
 		//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-		delete friendCharacter->gameChallengeNotification;
+		//delete friendCharacter->gameChallengeNotification;
+		friendCharacter->gameChallengeNotification = nullptr;
 
 		setActivated(false);
 

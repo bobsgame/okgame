@@ -365,7 +365,7 @@ void OKGame::updateTitleMenuLogoTexture()
 			int len = (int)numString.length();
 			for (int n = 0; n<2 - len; n++)numString = "0" + numString;//pad to 2 zeros
 
-			titleMenuTextures.add(GLUtils::getTextureFromPNGExePath("data/guiBackground/logo/" + numString + ".png"));
+			titleMenuTextures.push_back(GLUtils::getTextureFromPNGExePath("data/guiBackground/logo/" + numString + ".png"));
 		}
 	}
 }
@@ -474,7 +474,7 @@ void OKGame::titleMenuRender()
 
 	if (
 		//titleMenuTextures != nullptr && 
-		titleMenuTextures.size()>0)t = titleMenuTextures.get(currentTitleMenuTextureFrame);
+		titleMenuTextures.size()>0)t = titleMenuTextures.at(currentTitleMenuTextureFrame);
 
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
@@ -745,7 +745,7 @@ void OKGame::startScreenMenuRender()
 
 	if (
 		//titleMenuTextures != nullptr && 
-		titleMenuTextures.size()>0)t = titleMenuTextures.get(currentTitleMenuTextureFrame);
+		titleMenuTextures.size()>0)t = titleMenuTextures.at(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
 	if (startScreenMenu == nullptr)return;
@@ -822,7 +822,7 @@ void OKGame::gettingGamesFromServerMenuRender()
 
 	if (
 		//titleMenuTextures != nullptr && 
-		titleMenuTextures.size()>0)t = titleMenuTextures.get(currentTitleMenuTextureFrame);
+		titleMenuTextures.size()>0)t = titleMenuTextures.at(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
 	if (gettingGamesFromServerMenu == nullptr)return;

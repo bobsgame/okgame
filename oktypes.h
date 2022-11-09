@@ -144,7 +144,8 @@
 using namespace std;
 
 typedef unsigned char u8;
-
+#define sp shared_ptr
+#define ms make_shared
 
 class ByteArray
 {

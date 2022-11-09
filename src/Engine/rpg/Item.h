@@ -11,7 +11,7 @@ class Logger;
 
 
 
-class Item : public ServerObject
+class Item : public ServerObject, public std::enable_shared_from_this<Item>
 {
 public:
 

@@ -521,10 +521,10 @@ public:
 	bool isAnyEntityTouchingArea(shared_ptr<Area> a);
 
 
-	ArrayList<shared_ptr<Entity>>* getAllEntitiesTouchingArea(shared_ptr<Area> a);
+	vector<shared_ptr<Entity>>* getAllEntitiesTouchingArea(shared_ptr<Area> a);
 
 
-	ArrayList<shared_ptr<Entity>>* getAllEntitiesPlayerIsTouching();
+	vector<shared_ptr<Entity>>* getAllEntitiesPlayerIsTouching();
 
 
 	bool isAnyoneTryingToGoToArea(shared_ptr<Area> a);
@@ -533,7 +533,7 @@ public:
 	bool isAnyEntityUsingSpriteAsset(shared_ptr<Sprite> s);
 
 
-	ArrayList<shared_ptr<Entity>>* getAllEntitiesUsingSpriteAsset(shared_ptr<Sprite> s);
+	vector<shared_ptr<Entity>>* getAllEntitiesUsingSpriteAsset(shared_ptr<Sprite> s);
 
 
 	shared_ptr<Entity> createEntity(const string& spriteName, shared_ptr<Sprite> spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET

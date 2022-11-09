@@ -13,7 +13,7 @@ class Logger;
 
 class Logger;
 
-class AudioFile : public ServerObject
+class AudioFile : public ServerObject, public std::enable_shared_from_this<AudioFile>
 {
 public:
 	static Logger log;

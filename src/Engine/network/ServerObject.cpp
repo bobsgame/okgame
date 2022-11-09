@@ -43,7 +43,7 @@ void ServerObject::sendServerRequest()
 
 		if (ticksPassed > 1000)
 		{
-			getEngine()->sendServerObjectRequest(this);
+			getEngine()->sendServerObjectRequest(shared_from_this());
 			lastTimeRequestedFromServer = currentTime;
 		}
 	}
