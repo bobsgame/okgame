@@ -295,8 +295,8 @@ public:
 		if (gameSequence->gameTypes.size() == 1)
 		{
 			room_IsGameSequenceOrType = "GameType";
-			room_GameTypeName = gameSequence->gameTypes.get(0)->name;
-			room_GameTypeUUID = gameSequence->gameTypes.get(0)->uuid;
+			room_GameTypeName = gameSequence->gameTypes.at(0)->name;
+			room_GameTypeUUID = gameSequence->gameTypes.at(0)->uuid;
 		}
 		else
 		{
@@ -667,8 +667,8 @@ public:
 				if (gs->gameTypes.size() == 1)
 				{
 					room_IsGameSequenceOrType = "GameType";
-					room_GameTypeName = gs->gameTypes.get(0)->name;
-					room_GameTypeUUID = gs->gameTypes.get(0)->uuid;
+					room_GameTypeName = gs->gameTypes.at(0)->name;
+					room_GameTypeUUID = gs->gameTypes.at(0)->uuid;
 				}
 				else
 				{
