@@ -18,18 +18,18 @@ public:
 	static Logger log;
 
 
-	//   shared_ptr<Label> gameTitleLabel = nullptr;
+	//   sp<Label> gameTitleLabel = nullptr;
 	//
-	//   shared_ptr<TextArea> textArea;
-	//   shared_ptr<SimpleTextAreaModel> textAreaModel;
+	//   sp<TextArea> textArea;
+	//   sp<SimpleTextAreaModel> textAreaModel;
 	//
-	//   shared_ptr<Widget> iconWidget;
-	//   shared_ptr<AnimatedImage> gamePreview;
+	//   sp<Widget> iconWidget;
+	//   sp<AnimatedImage> gamePreview;
 	//
-	//   shared_ptr<DialogLayout> thisDialogLayout;
+	//   sp<DialogLayout> thisDialogLayout;
 	//
-	//   shared_ptr<Button> buyButton;
-	//   shared_ptr<Label> priceLabel;
+	//   sp<Button> buyButton;
+	//   sp<Label> priceLabel;
 
 
 	GameItem();

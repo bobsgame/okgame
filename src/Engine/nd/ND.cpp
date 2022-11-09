@@ -29,7 +29,7 @@ ND::ND()
 	widthToHeightRatio = ((float)(texture->getTextureWidth()) / (float)(texture->getTextureHeight()));
 
 
-	nDGameStateManager = make_shared<StateManager>();
+	nDGameStateManager = ms<StateManager>();
 }
 
 void ND::init()
@@ -49,7 +49,7 @@ void ND::update()
 	MenuPanel::update();
 
 
-	shared_ptr<Engine> s = nDGameStateManager->getCurrentState();
+	sp<Engine> s = nDGameStateManager->getCurrentState();
 
 	if (isActivated == true)
 	{
@@ -116,18 +116,18 @@ void ND::update()
 	ndZoomText->text = "nD zoom: " + to_string(nDZoom);
 }
 
-void ND::setGame(shared_ptr<NDGameEngine> game)
+void ND::setGame(sp<NDGameEngine> game)
 { //=========================================================================================================================
 
-	light = make_shared<Light>(game, "nDScreenLight", 0, 0, GLUtils::getViewportWidth(), GLUtils::getViewportHeight(), 240, 240, 255, 60, 32, 2.0f, 1.0f, 0, true, true);
+	light = ms<Light>(game, "nDScreenLight", 0, 0, GLUtils::getViewportWidth(), GLUtils::getViewportHeight(), 240, 240, 255, 60, 32, 2.0f, 1.0f, 0, true, true);
 
 
 	nDGameStateManager->pushState(game);
 }
 
-shared_ptr<NDGameEngine> ND::getGame()
+sp<NDGameEngine> ND::getGame()
 { //=========================================================================================================================
-	return static_cast<shared_ptr<NDGameEngine>>(nDGameStateManager->getCurrentState());
+	return static_cast<sp<NDGameEngine>>(nDGameStateManager->getCurrentState());
 }
 
 void ND::toggleActivated()

@@ -166,8 +166,8 @@ public:
 
 
 	//don't export
-	shared_ptr<GameSequence>gameSequence = nullptr;
-	shared_ptr<UDPPeerConnection>hostPeer = nullptr;
+	sp<GameSequence>gameSequence = nullptr;
+	sp<UDPPeerConnection>hostPeer = nullptr;
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -362,9 +362,9 @@ public:
 
 
 	//=========================================================================================================================
-	static shared_ptr<Room> decodeRoomData(string s, bool decodeGameSequenceXML)
+	static sp<Room> decodeRoomData(string s, bool decodeGameSequenceXML)
 	{//=========================================================================================================================
-		shared_ptr<Room>newRoom = make_shared<Room>();
+		sp<Room>newRoom = ms<Room>();
 		newRoom->decode(s, decodeGameSequenceXML);
 		return newRoom;
 	}
@@ -654,7 +654,7 @@ public:
 		{
 			if (multiplayer_ZippedGameSequenceString.length() > 0)
 			{
-				shared_ptr<NetworkGameSequence>gs = NetworkGameSequence::fromBase64GZippedXML(multiplayer_ZippedGameSequenceString);
+				sp<NetworkGameSequence>gs = NetworkGameSequence::fromBase64GZippedXML(multiplayer_ZippedGameSequenceString);
 
 				if (gs == nullptr)
 				{
@@ -715,7 +715,7 @@ public:
 //	}
 //
 //	//=========================================================================================================================
-//	static shared_ptr<Room> deserializeRoomData(string &s, bool decodeGameSequenceXML)
+//	static sp<Room> deserializeRoomData(string &s, bool decodeGameSequenceXML)
 //	{//=========================================================================================================================
 //
 //		string roomLZ4 = "";
@@ -749,7 +749,7 @@ public:
 //			OKGame::log.error("Could not unserialize Room");
 //		}
 //
-//		shared_ptr<Room>newRoom = make_shared<Room>();
+//		sp<Room>newRoom = ms<Room>();
 //		*newRoom = rs;
 //
 //
@@ -757,7 +757,7 @@ public:
 //		{
 //			if (gameSequenceZip.length() > 0)
 //			{
-//				shared_ptr<NetworkGameSequence>gs = NetworkGameSequence::fromBase64GZippedXML(gameSequenceZip);
+//				sp<NetworkGameSequence>gs = NetworkGameSequence::fromBase64GZippedXML(gameSequenceZip);
 //
 //				if (gs == nullptr)
 //				{

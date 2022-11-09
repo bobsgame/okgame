@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	vector<shared_ptr<GameItem>> games;// = make_shared<ArrayList><shared_ptr<GameItem>>();
+	vector<sp<GameItem>> games;// = ms<ArrayList><sp<GameItem>>();
 	//public GameListPanel gameStorePanel;
 
 

@@ -21,13 +21,13 @@ int ActionManager::ACTIONCAPTIONTYPE_XYXY = 3;
 int ActionManager::ACTIONCAPTIONTYPE_NPC = 4;
 int ActionManager::ACTIONCAPTIONTYPE_AREA = 5;
 
-ActionManager::Coords::Coords(shared_ptr<ActionManager> outerInstance, int x, int y) : outerInstance(outerInstance)
+ActionManager::Coords::Coords(sp<ActionManager> outerInstance, int x, int y) : outerInstance(outerInstance)
 {
 	this->x = x;
 	this->y = y;
 }
 
-ActionManager::ActionManager(shared_ptr<Engine> g)
+ActionManager::ActionManager(sp<Engine> g)
 { //=========================================================================================================================
 
 
@@ -38,14 +38,14 @@ ActionManager::ActionManager(shared_ptr<Engine> g)
 
 	//send into new sprite
 
-	//DONE: make_shared<Entity>(texture filename) should add itself to the entity manager automatically.. G.entityManager.add(this)
+	//DONE: ms<Entity>(texture filename) should add itself to the entity manager automatically.. G.entityManager.add(this)
 
-	//make_shared<Caption>() should do this too
+	//ms<Caption>() should do this too
 
 
 	if (actionIconScreenSprite == nullptr)
 	{
-		actionIconScreenSprite = make_shared<ScreenSprite>(g, "button", "actionIcon"); //HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,actionx-8,actiony+1,255);
+		actionIconScreenSprite = ms<ScreenSprite>(g, "button", "actionIcon"); //HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,actionx-8,actiony+1,255);
 		actionIconScreenSprite->draw = false;
 
 		actionIconScreenSprite->setAnimateLoopThroughAllFrames();
@@ -78,7 +78,7 @@ bool ActionManager::xy(int x, int y, const string& label)
 	return checkAll(x, y, x + 1, y + 1, label, ACTIONCAPTIONTYPE_XY, nullptr, nullptr);
 }
 
-bool ActionManager::area(shared_ptr<Area> a, const string& label)
+bool ActionManager::area(sp<Area> a, const string& label)
 { //=========================================================================================================================
 
 	return checkAll(0, 0, 0, 0, label, ACTIONCAPTIONTYPE_AREA, nullptr, a);
@@ -90,13 +90,13 @@ bool ActionManager::xyxy(int x, int y, int x2, int y2, const string& label)
 	return checkAll(x, y, x2, y2, label, ACTIONCAPTIONTYPE_XYXY, nullptr, nullptr);
 }
 
-bool ActionManager::entity(shared_ptr<Entity> e, const string& label)
+bool ActionManager::entity(sp<Entity> e, const string& label)
 { //=========================================================================================================================
 
 	return checkAll(0, 0, 0, 0, label, ACTIONCAPTIONTYPE_NPC, e, nullptr);
 }
 
-bool ActionManager::checkAll(int x, int y, int x2, int y2, const string& label, int type, shared_ptr<Entity> e, shared_ptr<Area> a)
+bool ActionManager::checkAll(int x, int y, int x2, int y2, const string& label, int type, sp<Entity> e, sp<Area> a)
 { //=========================================================================================================================
 
 
@@ -148,7 +148,7 @@ bool ActionManager::checkAll(int x, int y, int x2, int y2, const string& label, 
 	}
 
 
-	actionsThisFrame.add(make_shared<Coords>(this, x + (x2 - x), y + (y2 - y)));
+	actionsThisFrame.add(ms<Coords>(this, x + (x2 - x), y + (y2 - y)));
 
 
 	if (inRange)

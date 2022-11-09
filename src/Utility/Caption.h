@@ -58,15 +58,15 @@ public:
 
 
 	string text = "";
-	shared_ptr<OKFont> font = OKFont::font_normal_8;
-	shared_ptr<TTF_Font> ttfFont = nullptr;
+	sp<OKFont> font = OKFont::font_normal_8;
+	sp<TTF_Font> ttfFont = nullptr;
 	int fontSize = 8;
 	bool outline = false;
 
 private:
-	shared_ptr<OKColor> textBGColor = OKColor::black;
-	shared_ptr<OKColor> textColor = OKColor::white;
-	shared_ptr<OKColor> textAAColor = OKColor::gray;
+	sp<OKColor> textBGColor = OKColor::black;
+	sp<OKColor> textColor = OKColor::white;
+	sp<OKColor> textAAColor = OKColor::gray;
 
 public:
 	float screenX = 0;
@@ -89,9 +89,9 @@ private:
 public:
 	float entityXWhenCreated = 0;
 	float entityYWhenCreated = 0;
-	shared_ptr<Entity> entity = nullptr;
+	sp<Entity> entity = nullptr;
 	int actionCaptionType = ActionManager::ACTIONCAPTIONTYPE_NONE;
-	shared_ptr<Area> area = nullptr;
+	sp<Area> area = nullptr;
 	int actionRangeX = 0;
 	int actionRangeY = 0;
 
@@ -113,8 +113,8 @@ private:
 	bool initialized = false;
 
 public:
-	shared_ptr<OKTexture> texture = nullptr;
-	shared_ptr<ByteArray> textureByteArray = nullptr;
+	sp<OKTexture> texture = nullptr;
+	sp<ByteArray> textureByteArray = nullptr;
 	int texWidth = 0;
 	int texHeight = 0;
 
@@ -130,15 +130,15 @@ public:
 
 
 
-	Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, shared_ptr<OKFont> font = OKFont::font_normal_8_outlined, shared_ptr<OKColor> textColor = OKColor::black, shared_ptr<OKColor> textAAColor=nullptr, shared_ptr<OKColor> textBGColor = OKColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, int maxWidth=0, shared_ptr<Entity> entity = nullptr, shared_ptr<Area> area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
-	Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, shared_ptr<OKColor> textColor = OKColor::black, shared_ptr<OKColor> textBGColor = OKColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, shared_ptr<Entity> entity = nullptr, shared_ptr<Area> area = nullptr);
-	Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, shared_ptr<OKColor> textColor = OKColor::black, RenderOrder layer = RenderOrder::ABOVE_TOP);
+	Caption(sp<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, sp<OKFont> font = OKFont::font_normal_8_outlined, sp<OKColor> textColor = OKColor::black, sp<OKColor> textAAColor=nullptr, sp<OKColor> textBGColor = OKColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, int maxWidth=0, sp<Entity> entity = nullptr, sp<Area> area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
+	Caption(sp<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, sp<OKColor> textColor = OKColor::black, sp<OKColor> textBGColor = OKColor::clear, RenderOrder layer = RenderOrder::ABOVE_TOP, float scale=1, sp<Entity> entity = nullptr, sp<Area> area = nullptr);
+	Caption(sp<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize = 16, bool outline = false, sp<OKColor> textColor = OKColor::black, RenderOrder layer = RenderOrder::ABOVE_TOP);
 
 	void setText(const string& text, bool force = false);
-	shared_ptr<OKColor> getTextColor();
-	void setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa = nullptr, shared_ptr<OKColor> bg = nullptr);
-	void initTTF(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area, bool outline);
-	void init(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, shared_ptr<OKFont> font, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textAAColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines);
+	sp<OKColor> getTextColor();
+	void setTextColor(sp<OKColor> fg, sp<OKColor> aa = nullptr, sp<OKColor> bg = nullptr);
+	void initTTF(sp<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, sp<OKColor> textColor, sp<OKColor> textBGColor, RenderOrder layer, float scale, sp<Entity> entity, sp<Area> area, bool outline);
+	void init(sp<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, sp<OKFont> font, sp<OKColor> textColor, sp<OKColor> textAAColor, sp<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, sp<Entity> entity, sp<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines);
 	void render();
 private:
 	void increaseMaxWidthToLongestWord();
@@ -148,7 +148,7 @@ private:
 	void drawText();
 	void parseOptions(const string& optionBuffer);
 	int getLetterPixelColor(int letterIndex, int y, int xInLetter, bool blank);
-	void setPixel(int index, shared_ptr<OKColor> c);
+	void setPixel(int index, sp<OKColor> c);
 public:
 	float getAlphaTo();
 	float getAlpha();
@@ -168,6 +168,6 @@ public:
 	void setToBeDeletedImmediately();
 	bool getBeingDeletedWhenFadeOutStatus();
 	void update();
-	void setEntity(shared_ptr<Entity> e);
+	void setEntity(sp<Entity> e);
 };
 

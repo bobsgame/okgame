@@ -57,14 +57,14 @@ public:
 	DoorData();
 
 
-	DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, shared_ptr<EventData> eventData, const string& comment);
+	DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, sp<EventData> eventData, const string& comment);
 
 
 	DoorData(int id, const string& name);
 
 
-	//static shared_ptr<DoorData> fromBase64ZippedJSON(const string& b64);
-	//static shared_ptr<DoorData> fromJSON(const string& json);
+	//static sp<DoorData> fromBase64ZippedJSON(const string& b64);
+	//static sp<DoorData> fromJSON(const string& json);
 
 
 	string& initFromString(string& t) override;

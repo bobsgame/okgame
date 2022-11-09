@@ -18,69 +18,69 @@ class OKFont
 public:
 	static Logger log;
 
-	static shared_ptr<ByteArray> font_Palette_ByteArray;
+	static sp<ByteArray> font_Palette_ByteArray;
 
 
-	static shared_ptr<TTF_Font> ttf_bobsgame_8;
-	static shared_ptr<TTF_Font> ttf_bobsgame_16;
-	static shared_ptr<TTF_Font> ttf_6; 
-	static shared_ptr<TTF_Font> ttf_7; 
-	static shared_ptr<TTF_Font> ttf_8; 
-	static shared_ptr<TTF_Font> ttf_9; 
-	static shared_ptr<TTF_Font> ttf_10;
-	static shared_ptr<TTF_Font> ttf_11;
-	static shared_ptr<TTF_Font> ttf_12;
-	static shared_ptr<TTF_Font> ttf_13;
-	static shared_ptr<TTF_Font> ttf_14;
-	static shared_ptr<TTF_Font> ttf_15;
-	static shared_ptr<TTF_Font> ttf_16;
-	static shared_ptr<TTF_Font> ttf_17;
-	static shared_ptr<TTF_Font> ttf_18;
-	static shared_ptr<TTF_Font> ttf_19;
-	static shared_ptr<TTF_Font> ttf_20;
-	static shared_ptr<TTF_Font> ttf_21;
-	static shared_ptr<TTF_Font> ttf_22;
-	static shared_ptr<TTF_Font> ttf_23;
-	static shared_ptr<TTF_Font> ttf_24;
-	static shared_ptr<TTF_Font> ttf_25;
-	static shared_ptr<TTF_Font> ttf_26;
-	static shared_ptr<TTF_Font> ttf_27;
-	static shared_ptr<TTF_Font> ttf_28;
-	static shared_ptr<TTF_Font> ttf_29;
-	static shared_ptr<TTF_Font> ttf_30;
-	static shared_ptr<TTF_Font> ttf_31;
-	static shared_ptr<TTF_Font> ttf_32;
-	static shared_ptr<TTF_Font> ttf_48;
-	static shared_ptr<TTF_Font> ttf_64;
-	static shared_ptr<TTF_Font> ttf_outline_6;
-	static shared_ptr<TTF_Font> ttf_outline_7;
-	static shared_ptr<TTF_Font> ttf_outline_8;
-	static shared_ptr<TTF_Font> ttf_outline_9;
-	static shared_ptr<TTF_Font> ttf_outline_10;
-	static shared_ptr<TTF_Font> ttf_outline_11;
-	static shared_ptr<TTF_Font> ttf_outline_12;
-	static shared_ptr<TTF_Font> ttf_outline_13;
-	static shared_ptr<TTF_Font> ttf_outline_14;
-	static shared_ptr<TTF_Font> ttf_outline_15;
-	static shared_ptr<TTF_Font> ttf_outline_16;
-	static shared_ptr<TTF_Font> ttf_outline_17;
-	static shared_ptr<TTF_Font> ttf_outline_18;
-	static shared_ptr<TTF_Font> ttf_outline_19;
-	static shared_ptr<TTF_Font> ttf_outline_20;
-	static shared_ptr<TTF_Font> ttf_outline_21;
-	static shared_ptr<TTF_Font> ttf_outline_22;
-	static shared_ptr<TTF_Font> ttf_outline_23;
-	static shared_ptr<TTF_Font> ttf_outline_24;
-	static shared_ptr<TTF_Font> ttf_outline_25;
-	static shared_ptr<TTF_Font> ttf_outline_26;
-	static shared_ptr<TTF_Font> ttf_outline_27;
-	static shared_ptr<TTF_Font> ttf_outline_28;
-	static shared_ptr<TTF_Font> ttf_outline_29;
-	static shared_ptr<TTF_Font> ttf_outline_30;
-	static shared_ptr<TTF_Font> ttf_outline_31;
-	static shared_ptr<TTF_Font> ttf_outline_32;
-	static shared_ptr<TTF_Font> ttf_outline_48;
-	static shared_ptr<TTF_Font> ttf_outline_64;
+	static sp<TTF_Font> ttf_bobsgame_8;
+	static sp<TTF_Font> ttf_bobsgame_16;
+	static sp<TTF_Font> ttf_6; 
+	static sp<TTF_Font> ttf_7; 
+	static sp<TTF_Font> ttf_8; 
+	static sp<TTF_Font> ttf_9; 
+	static sp<TTF_Font> ttf_10;
+	static sp<TTF_Font> ttf_11;
+	static sp<TTF_Font> ttf_12;
+	static sp<TTF_Font> ttf_13;
+	static sp<TTF_Font> ttf_14;
+	static sp<TTF_Font> ttf_15;
+	static sp<TTF_Font> ttf_16;
+	static sp<TTF_Font> ttf_17;
+	static sp<TTF_Font> ttf_18;
+	static sp<TTF_Font> ttf_19;
+	static sp<TTF_Font> ttf_20;
+	static sp<TTF_Font> ttf_21;
+	static sp<TTF_Font> ttf_22;
+	static sp<TTF_Font> ttf_23;
+	static sp<TTF_Font> ttf_24;
+	static sp<TTF_Font> ttf_25;
+	static sp<TTF_Font> ttf_26;
+	static sp<TTF_Font> ttf_27;
+	static sp<TTF_Font> ttf_28;
+	static sp<TTF_Font> ttf_29;
+	static sp<TTF_Font> ttf_30;
+	static sp<TTF_Font> ttf_31;
+	static sp<TTF_Font> ttf_32;
+	static sp<TTF_Font> ttf_48;
+	static sp<TTF_Font> ttf_64;
+	static sp<TTF_Font> ttf_outline_6;
+	static sp<TTF_Font> ttf_outline_7;
+	static sp<TTF_Font> ttf_outline_8;
+	static sp<TTF_Font> ttf_outline_9;
+	static sp<TTF_Font> ttf_outline_10;
+	static sp<TTF_Font> ttf_outline_11;
+	static sp<TTF_Font> ttf_outline_12;
+	static sp<TTF_Font> ttf_outline_13;
+	static sp<TTF_Font> ttf_outline_14;
+	static sp<TTF_Font> ttf_outline_15;
+	static sp<TTF_Font> ttf_outline_16;
+	static sp<TTF_Font> ttf_outline_17;
+	static sp<TTF_Font> ttf_outline_18;
+	static sp<TTF_Font> ttf_outline_19;
+	static sp<TTF_Font> ttf_outline_20;
+	static sp<TTF_Font> ttf_outline_21;
+	static sp<TTF_Font> ttf_outline_22;
+	static sp<TTF_Font> ttf_outline_23;
+	static sp<TTF_Font> ttf_outline_24;
+	static sp<TTF_Font> ttf_outline_25;
+	static sp<TTF_Font> ttf_outline_26;
+	static sp<TTF_Font> ttf_outline_27;
+	static sp<TTF_Font> ttf_outline_28;
+	static sp<TTF_Font> ttf_outline_29;
+	static sp<TTF_Font> ttf_outline_30;
+	static sp<TTF_Font> ttf_outline_31;
+	static sp<TTF_Font> ttf_outline_32;
+	static sp<TTF_Font> ttf_outline_48;
+	static sp<TTF_Font> ttf_outline_64;
 
 
 	string filename;
@@ -91,7 +91,7 @@ public:
 	int blockHeight = 32; //this is the height of each character block, including spacing between glyphs
 	int blockWidth = 32; //this is the width of the input bitmap
 
-	shared_ptr<ByteArray> byteArray = nullptr; //this holds the actual indexed pixel data
+	sp<ByteArray> byteArray = nullptr; //this holds the actual indexed pixel data
 
 	bool outlined = false;
 
@@ -134,40 +134,40 @@ public:
 	//	font_small_8_shadow1.bin ... ok
 
 public:
-	static shared_ptr<OKFont> font_32;
+	static sp<OKFont> font_32;
 
-	static shared_ptr<OKFont> font_bob_16;
-	static shared_ptr<OKFont> font_bob_16_shadow2;
+	static sp<OKFont> font_bob_16;
+	static sp<OKFont> font_bob_16_shadow2;
 
-	static shared_ptr<OKFont> font_bob_8;
-	static shared_ptr<OKFont> font_bob_8_shadow1;
+	static sp<OKFont> font_bob_8;
+	static sp<OKFont> font_bob_8_shadow1;
 
-	static shared_ptr<OKFont> font_normal_11;
-	static shared_ptr<OKFont> font_normal_11_outlined;
-	static shared_ptr<OKFont> font_normal_11_shadow1;
+	static sp<OKFont> font_normal_11;
+	static sp<OKFont> font_normal_11_outlined;
+	static sp<OKFont> font_normal_11_shadow1;
 
-	static shared_ptr<OKFont> font_normal_16;
-	static shared_ptr<OKFont> font_normal_16_outlined_smooth;
-	static shared_ptr<OKFont> font_normal_16_outlined_blocky;
-	static shared_ptr<OKFont> font_normal_16_outlined_blocky_shadow1;
-	static shared_ptr<OKFont> font_normal_16_shadow1;
+	static sp<OKFont> font_normal_16;
+	static sp<OKFont> font_normal_16_outlined_smooth;
+	static sp<OKFont> font_normal_16_outlined_blocky;
+	static sp<OKFont> font_normal_16_outlined_blocky_shadow1;
+	static sp<OKFont> font_normal_16_shadow1;
 
-	static shared_ptr<OKFont> font_normal_8;
-	static shared_ptr<OKFont> font_normal_8_outlined;
-	static shared_ptr<OKFont> font_normal_8_outlined_shadow1;
-	static shared_ptr<OKFont> font_normal_8_outlined_shadow2;
-	static shared_ptr<OKFont> font_normal_8_shadow1;
-	static shared_ptr<OKFont> font_normal_8_shadow3;
+	static sp<OKFont> font_normal_8;
+	static sp<OKFont> font_normal_8_outlined;
+	static sp<OKFont> font_normal_8_outlined_shadow1;
+	static sp<OKFont> font_normal_8_outlined_shadow2;
+	static sp<OKFont> font_normal_8_shadow1;
+	static sp<OKFont> font_normal_8_shadow3;
 
-	static shared_ptr<OKFont> font_small_16;
-	static shared_ptr<OKFont> font_small_16_shadow3;
-	static shared_ptr<OKFont> font_small_16_outlined_smooth;
-	static shared_ptr<OKFont> font_small_16_outlined_smooth_shadow;
-	static shared_ptr<OKFont> font_small_16_outlined_blocky;
+	static sp<OKFont> font_small_16;
+	static sp<OKFont> font_small_16_shadow3;
+	static sp<OKFont> font_small_16_outlined_smooth;
+	static sp<OKFont> font_small_16_outlined_smooth_shadow;
+	static sp<OKFont> font_small_16_outlined_blocky;
 
-	static shared_ptr<OKFont> font_small_8;
-	static shared_ptr<OKFont> font_small_8_outlined;
-	static shared_ptr<OKFont> font_small_8_shadow1;
+	static sp<OKFont> font_small_8;
+	static sp<OKFont> font_small_8_outlined;
+	static sp<OKFont> font_small_8_shadow1;
 
 
 	//static public int FONT_TINY_HEIGHT=7;
@@ -191,16 +191,16 @@ public:
 	static int getFontIndexForChar(char c);
 
 
-	static int getNextWordLength(const string& text, int in_position, shared_ptr<OKFont> font);
+	static int getNextWordLength(const string& text, int in_position, sp<OKFont> font);
 
 
 	static bool isCurrentPositionANewline(const string& t, int position);
 
 
-	static int getFontPixelValueAtIndex(int index, shared_ptr<OKFont> font);
+	static int getFontPixelValueAtIndex(int index, sp<OKFont> font);
 
 
-	static int getCharWidth(int letter_index, shared_ptr<OKFont> font);
+	static int getCharWidth(int letter_index, sp<OKFont> font);
 
 
 	//		 CHAR DEFINES

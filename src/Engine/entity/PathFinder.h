@@ -19,7 +19,7 @@ class TilePath;
 class PathTile
 { //=========================================================================================================================
 private:
-	shared_ptr<TilePath> outerInstance = nullptr;
+	sp<TilePath> outerInstance = nullptr;
 
 
 public:
@@ -27,7 +27,7 @@ public:
 	int tileY = 0;
 
 
-	PathTile(shared_ptr<TilePath> outerInstance, int tileX, int tileY);
+	PathTile(sp<TilePath> outerInstance, int tileX, int tileY);
 
 
 	int getX();
@@ -47,20 +47,20 @@ public:
 class TilePath
 { //=========================================================================================================================
 private:
-	shared_ptr<PathFinder> outerInstance = nullptr;
+	sp<PathFinder> outerInstance = nullptr;
 
 
 public:
-	deque<shared_ptr<PathTile>>* pathTiles = new deque<shared_ptr<PathTile>>();
+	deque<sp<PathTile>>* pathTiles = new deque<sp<PathTile>>();
 
 
-	TilePath(shared_ptr<PathFinder> outerInstance);
+	TilePath(sp<PathFinder> outerInstance);
 
 
 	int getLength();
 
 
-	shared_ptr<PathTile> getTileForPathIndex(int index);
+	sp<PathTile> getTileForPathIndex(int index);
 
 
 	int getTileXForPathIndex(int index);
@@ -84,15 +84,15 @@ public:
 class SortedList
 { //=========================================================================================================================
 private:
-	shared_ptr<PathFinder> outerInstance = nullptr;
+	sp<PathFinder> outerInstance = nullptr;
 
 public:
-	SortedList(shared_ptr<PathFinder> outerInstance);
+	SortedList(sp<PathFinder> outerInstance);
 
 	/// <summary>
 	/// The list of elements </summary>
 private:
-	ArrayList<shared_ptr<PotentialTile>> list;// = make_shared<ArrayList><shared_ptr<PotentialTile>>();
+	vector<sp<PotentialTile>> list;// = ms<ArrayList><sp<PotentialTile>>();
 
 
 	/// <summary>
@@ -100,7 +100,7 @@ private:
 	/// </summary>
 	/// <returns> The first element from the list </returns>
 public:
-	shared_ptr<PotentialTile> first();
+	sp<PotentialTile> first();
 
 
 	/// <summary>
@@ -109,22 +109,22 @@ public:
 	void clear();
 
 
-	void addAndSort(shared_ptr<PotentialTile> o);
+	void addAndSort(sp<PotentialTile> o);
 
 
-	void remove(shared_ptr<PotentialTile> o);
+	void remove(sp<PotentialTile> o);
 
 
 	int size();
 
 
-	bool contains(shared_ptr<PotentialTile> o);
+	bool contains(sp<PotentialTile> o);
 };
 
 class PotentialTile
 { //=========================================================================================================================
 public:
-	shared_ptr<PathFinder> outerInstance = nullptr;
+	sp<PathFinder> outerInstance = nullptr;
 
 
 	/// <summary>
@@ -138,7 +138,7 @@ public:
 	float cumulativePathCost = 0;
 	/// <summary>
 	/// The parent of this node, how we reached it in the search </summary>
-	shared_ptr<PotentialTile> parent;
+	sp<PotentialTile> parent;
 	/// <summary>
 	/// The heuristic cost of this node </summary>
 	float heuristicCost = 0;
@@ -153,12 +153,12 @@ public:
 
 
 	//=========================================================================================================================
-	int setParentTile(shared_ptr<PotentialTile> parent);
+	int setParentTile(sp<PotentialTile> parent);
 
 
 	/// <seealso cref= Comparable#compareTo(Object) </seealso>
 	//=========================================================================================================================
-	int compareTo(shared_ptr<PotentialTile> o);
+	int compareTo(sp<PotentialTile> o);
 };
 
 
@@ -177,14 +177,14 @@ private:
 
 
 public:
-	shared_ptr<TilePath> path = nullptr;
+	sp<TilePath> path = nullptr;
 
 private:
-	ArrayList<shared_ptr<PotentialTile>> blockedPotentialTilesList;// = make_shared<ArrayList><shared_ptr<PotentialTile>>();
-	shared_ptr<SortedList> openPotentialTilesList = make_shared<SortedList>(this);
+	vector<sp<PotentialTile>> blockedPotentialTilesList;// = ms<ArrayList><sp<PotentialTile>>();
+	sp<SortedList> openPotentialTilesList = ms<SortedList>(this);
 
-	//ArrayList<ArrayList<shared_ptr<PotentialTile>>>* potentialTiles = make_shared<ArrayList><ArrayList<shared_ptr<PotentialTile>>>();
-	vector<shared_ptr<PotentialTile>> potentialTiles;// = nullptr;
+	//ArrayList<ArrayList<sp<PotentialTile>>>* potentialTiles = ms<ArrayList><ArrayList<sp<PotentialTile>>>();
+	vector<sp<PotentialTile>> potentialTiles;// = nullptr;
 	bool* checkedTileArray = nullptr;
 
 
@@ -192,7 +192,7 @@ private:
 	bool allowDiagMovement = false;
 
 public:
-	shared_ptr<Entity> e = nullptr;
+	sp<Entity> e = nullptr;
 
 
 	int w = 0;
@@ -200,11 +200,11 @@ public:
 
 
 	//=========================================================================================================================
-	PathFinder(shared_ptr<Entity> e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X);
+	PathFinder(sp<Entity> e, float middleStartXPixelsHQ, float middleStartYPixelsHQ, float finishXPixelsHQ, float finishYPixelsHQ, int mapWidthTiles1X, int mapHeightTiles1X);
 
 
 	//=========================================================================================================================
-	shared_ptr<TilePath> findPath(int startTileX, int startTileY, int toTileX, int toTileY);
+	sp<TilePath> findPath(int startTileX, int startTileY, int toTileX, int toTileY);
 
 
 	//=========================================================================================================================

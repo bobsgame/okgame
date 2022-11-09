@@ -14,10 +14,10 @@
 
 
 Logger TextWindow::log = Logger("TextWindow");
-shared_ptr<OKTexture> TextWindow::borderTexture = nullptr;
+sp<OKTexture> TextWindow::borderTexture = nullptr;
 
 //=========================================================================================================================
-TextWindow::TextWindow(shared_ptr<Engine> g)
+TextWindow::TextWindow(sp<Engine> g)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -43,7 +43,7 @@ void TextWindow::init()
 		textBoxTextureByteArray = nullptr;
 	}
 
-	textBoxTextureByteArray = make_shared<ByteArray>(getTextManager()->width * getTextManager()->height * 4);
+	textBoxTextureByteArray = ms<ByteArray>(getTextManager()->width * getTextManager()->height * 4);
 
 
 	//		for(int i=0;i<getTextManager()->textureWidth*getTextManager()->textureHeight;i++)
@@ -70,7 +70,7 @@ void TextWindow::init()
 		spriteWindowTextureByteArray = nullptr;
 	}
 
-	spriteWindowTextureByteArray = make_shared<ByteArray>(((64) * (64)) * 4);
+	spriteWindowTextureByteArray = ms<ByteArray>(((64) * (64)) * 4);
 
 
 	for (int i = 0; i < (64) * (64); i++)
@@ -290,7 +290,7 @@ void TextWindow::updateSpriteWindowTexture()
 { //=========================================================================================================================
 
 
-	shared_ptr<ByteArray> oldtex = spriteWindowTexture->getTextureData();
+	sp<ByteArray> oldtex = spriteWindowTexture->getTextureData();
 	int size_x = spriteWindowTexture->getTextureWidth();
 	int size_y = spriteWindowTexture->getTextureHeight();
 
@@ -327,7 +327,7 @@ void TextWindow::updateSpriteWindowTexture()
 
 
 	// make 64 * 64 pixel box
-	shared_ptr<ByteArray> newtex = make_shared<ByteArray>(boxXY * boxXY * 4);
+	sp<ByteArray> newtex = ms<ByteArray>(boxXY * boxXY * 4);
 
 	// fill with transparent
 	for (int i = 0; i < boxXY * boxXY * 4; i++)
@@ -479,7 +479,7 @@ void TextWindow::updateSpriteWindowTexture()
 	 */
 }
 
-void TextWindow::setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<OKTexture> texture, const string& newLabel)
+void TextWindow::setSpriteWindow(sp<Entity> entity, sp<OKTexture> texture, const string& newLabel)
 { //=========================================================================================================================
 
 	if (entity != nullptr || texture != nullptr)
@@ -489,14 +489,14 @@ void TextWindow::setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<OKTexture
 		{
 			voicePitch = entity->getVoicePitch();
 
-			if ((dynamic_cast<shared_ptr<Player>>(entity) != NULL))
+			if ((dynamic_cast<sp<Player>>(entity) != NULL))
 			{
-				texture = (static_cast<shared_ptr<Player>>(entity))->uniqueTexture;
+				texture = (static_cast<sp<Player>>(entity))->uniqueTexture;
 			}
 
-			if ((dynamic_cast<shared_ptr<RandomCharacter>>(entity) != NULL))
+			if ((dynamic_cast<sp<RandomCharacter>>(entity) != NULL))
 			{
-				texture = (static_cast<shared_ptr<RandomCharacter>>(entity))->uniqueTexture;
+				texture = (static_cast<sp<RandomCharacter>>(entity))->uniqueTexture;
 			}
 
 
@@ -635,7 +635,7 @@ int TextWindow::getPixelValue(int letter_index, int y, int x_in_letter, bool bla
 	return index;
 }
 
-void TextWindow::setPixel(int index, shared_ptr<OKColor> c)
+void TextWindow::setPixel(int index, sp<OKColor> c)
 { //=========================================================================================================================
 
 
@@ -645,7 +645,7 @@ void TextWindow::setPixel(int index, shared_ptr<OKColor> c)
 	textBoxTextureByteArray->data()[index + 3] = c->ai(); // was 255
 }
 
-shared_ptr<ByteArray> OKFont::font_Palette_ByteArray = nullptr;
+sp<ByteArray> OKFont::font_Palette_ByteArray = nullptr;
 
 void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 { //=========================================================================================================================
@@ -676,7 +676,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 
 		if (index != 0)
 		{
-			shared_ptr<OKColor> pixelColor = getTextManager()->textColor;
+			sp<OKColor> pixelColor = getTextManager()->textColor;
 			if (index == 0)
 			{
 				pixelColor = getTextManager()->textBGColor;
@@ -705,7 +705,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 
 
 				// int r = 255-(int)((((byte1&0b00011111))/32.0f)*255.0f);
-				// Color gray = make_shared<Color>(b,b,b);
+				// Color gray = ms<Color>(b,b,b);
 
 
 				// now r is the gray value (since r=g=b)
@@ -715,7 +715,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 				{
 					a = 0;
 				}
-				pixelColor = make_shared<OKColor>(pixelColor->ri(), pixelColor->gi(), pixelColor->bi(), a);
+				pixelColor = ms<OKColor>(pixelColor->ri(), pixelColor->gi(), pixelColor->bi(), a);
 			}
 
 
@@ -726,7 +726,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 				u8 b = (int)(min(255,(int)(pixelColor->bi() + (((float)(h - y) / (float)(h))*255.0f))));
 
 
-				pixelColor = make_shared<OKColor>(r, g, b);
+				pixelColor = ms<OKColor>(r, g, b);
 			}
 
 
@@ -759,7 +759,7 @@ void TextWindow::drawColumn(int letter_index, int x_in_letter, bool blank)
 			// if this value is 1 and the value of x_in_letter+1 is 0, set x_in_letter+1 to 3
 			if (index == 1)
 			{
-				shared_ptr<OKColor> shadowColor = getTextManager()->textShadowColor;
+				sp<OKColor> shadowColor = getTextManager()->textShadowColor;
 
 				if (draw2X)
 				{

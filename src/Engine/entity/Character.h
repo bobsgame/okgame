@@ -31,7 +31,7 @@ public:
 
 	int animationDirection = 0;
 
-	shared_ptr<PathFinder> pathfinder = nullptr;
+	sp<PathFinder> pathfinder = nullptr;
 
 	int pathPosition = 0;
 
@@ -45,16 +45,16 @@ public:
 	bool standing = false;
 	bool running = false;
 
-	shared_ptr<OKTexture> uniqueTexture = nullptr; //if this is set it will render with this, otherwise it will try to render the normal spriteAsset.texture in Entity.render()
+	sp<OKTexture> uniqueTexture = nullptr; //if this is set it will render with this, otherwise it will try to render the normal spriteAsset.texture in Entity.render()
 
 	bool showName = false;
-	shared_ptr<Caption> nameCaption = nullptr;
+	sp<Caption> nameCaption = nullptr;
 
 	bool showAccountType = false;
-	shared_ptr<Caption> accountTypeCaption = nullptr;
+	sp<Caption> accountTypeCaption = nullptr;
 
-	shared_ptr<OKColor> nameColor = OKColor::white;
-	shared_ptr<OKColor> accountTypeNameColor = OKColor::white;
+	sp<OKColor> nameColor = OKColor::white;
+	sp<OKColor> accountTypeNameColor = OKColor::white;
 	string accountTypeName = "";
 
 	bool isMale = false;
@@ -64,13 +64,13 @@ public:
 	int rotationAnimationSpeedTicks = 160;
 
 	Character();
-	//Character(shared_ptr<Engine> g);
+	//Character(sp<Engine> g);
 
-	Character(shared_ptr<Engine> g, shared_ptr<EntityData> data, shared_ptr<Map> m);
+	Character(sp<Engine> g, sp<EntityData> data, sp<Map> m);
 
 	void initCharacter();
 
-	Character(shared_ptr<Engine> g, string name, shared_ptr<Sprite> sprite, shared_ptr<Area> a, shared_ptr<Map> m);
+	Character(sp<Engine> g, string name, sp<Sprite> sprite, sp<Area> a, sp<Map> m);
 
 	virtual void initCurrentAnimationFromSprite() override;
 
@@ -86,11 +86,11 @@ public:
 
 	void checkIfMoved();
 
-	void dontLookAtEntity(shared_ptr<Entity> e); //first id is entity to be avoiding LOOKING,second id is one to NOT BE LOOKED AT
+	void dontLookAtEntity(sp<Entity> e); //first id is entity to be avoiding LOOKING,second id is one to NOT BE LOOKED AT
 
-	void lookAtEntity(shared_ptr<Entity> e);
+	void lookAtEntity(sp<Entity> e);
 
-	void lookAtEntityButNotOppositeWalkingDirection(shared_ptr<Entity> stared_at_entity);
+	void lookAtEntityButNotOppositeWalkingDirection(sp<Entity> stared_at_entity);
 
 	void setAppearanceFromCharacterAppearanceString(string s);
 
@@ -100,7 +100,7 @@ public:
 
 	void setShowAccountType(bool b);
 
-	void setCharacterNameAndCaption(shared_ptr<OKColor> nameColor, const string& name, shared_ptr<OKColor> accountTypeNameColor, const string& accountTypeName);
+	void setCharacterNameAndCaption(sp<OKColor> nameColor, const string& name, sp<OKColor> accountTypeNameColor, const string& accountTypeName);
 
 	//
 	//	
@@ -140,11 +140,11 @@ public:
 	//
 	//	}
 
-	vector<shared_ptr<Entity>>* getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
+	sp<vector<sp<Entity>>> getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 
-	bool checkTouchingAnyEntityInEntityList(vector<shared_ptr<Entity>> &list, float x, float y);
+	bool checkTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, float x, float y);
 
-	bool checkHitLayerAndTouchingAnyEntityInEntityList(vector<shared_ptr<Entity>> &list, float x, float y);
+	bool checkHitLayerAndTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, float x, float y);
 
 	bool checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y);
 
@@ -175,7 +175,7 @@ public:
 
 	void twitchAroundRoom();
 
-	shared_ptr<Character> findNearestCharacter();
+	sp<Character> findNearestCharacter();
 
 	int walkToXYLRToUD(float x, float y);
 
@@ -211,7 +211,7 @@ public:
 
 	int walkDistance(int direction);
 
-	int avoidEntity(shared_ptr<Entity> e, int amt); //returns 1 if not in entity area,use it to do something else outside,standing,staring,walking randomly etc
+	int avoidEntity(sp<Entity> e, int amt); //returns 1 if not in entity area,use it to do something else outside,standing,staring,walking randomly etc
 
 	int avoidNearestEntity(int avoid_amt);
 

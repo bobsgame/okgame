@@ -14,8 +14,8 @@ Logger ControlsManager::log = Logger("ControlsManager");
 
 int ControlsManager::DEADZONE = 8000;
 
-//HashMap<int,shared_ptr<SDL_GameController>> *ControlsManager::controllersByJoystickNum = make_shared<HashMap><int,shared_ptr<SDL_GameController>>();
-HashMap<SDL_JoystickID,shared_ptr<SDL_GameController>> ControlsManager::controllersByJoystickID;
+//HashMap<int,sp<SDL_GameController>> *ControlsManager::controllersByJoystickNum = ms<HashMap><int,sp<SDL_GameController>>();
+HashMap<SDL_JoystickID,sp<SDL_GameController>> ControlsManager::controllersByJoystickID;
 
 float ControlsManager::MAXZOOM = 3.0f;
 float ControlsManager::MINZOOM = 1.0f;
@@ -24,7 +24,7 @@ float ControlsManager::ZOOMINCREMENT = 0.25f;
 int ControlsManager::numControllers = 0;
 string ControlsManager::controllerNames = "";
 
-ArrayList<shared_ptr<GameController>> ControlsManager::gameControllers;
+vector<sp<GameController>> ControlsManager::gameControllers;
 
 ControlsManager::ControlsManager()
 {
@@ -156,7 +156,7 @@ void ControlsManager::initControllers()
 	//
 	//   for (int n = 0; n < numControllers; n++)
 	//   {
-	//      shared_ptr<Controller> controller = Controllers::getController(n);
+	//      sp<Controller> controller = Controllers::getController(n);
 	//      log->info(controller->getName());
 	//
 	//      if (controllerNames.length() > 0)
@@ -189,11 +189,11 @@ void ControlsManager::initControllers()
 	{
 		if (SDL_IsGameController(i))
 		{
-			shared_ptr<SDL_GameController >controller = SDL_GameControllerOpen(i);
+			sp<SDL_GameController >controller = SDL_GameControllerOpen(i);
 			//controllersByJoystickNum->put(i, controller);
 
 			log->info("Found Controller " + to_string(i) + ": " + string(SDL_GameControllerName(controller)));
-			shared_ptr<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
+			sp<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
 
 			log->info("Found Joystick on Controller: " + string(SDL_JoystickName(joy)));
 
@@ -201,12 +201,12 @@ void ControlsManager::initControllers()
 			controllersByJoystickID.put(id, controller);
 
 
-			shared_ptr<GameController> g = make_shared<GameController>();
+			sp<GameController> g = ms<GameController>();
 			g->id = id;
 
 			gameControllers.add(g);
 
-			shared_ptr<SDL_Haptic >haptic = nullptr;
+			sp<SDL_Haptic >haptic = nullptr;
 			haptic = SDL_HapticOpenFromJoystick(joy);
 			if (haptic != NULL)
 			{
@@ -267,11 +267,11 @@ void ControlsManager::cleanup()
 
 	if (controllersByJoystickID.size()>0)
 	{
-		ArrayList<shared_ptr<SDL_GameController>> *controllers = controllersByJoystickID.getAllValues();
+		sp<vector<sp<SDL_GameController>>>controllers = controllersByJoystickID.getAllValues();
 
 		for (int i = 0; i < controllers->size(); i++)
 		{
-			shared_ptr<SDL_GameController >controller = controllers->get(i);
+			sp<SDL_GameController >controller = controllers->get(i);
 			SDL_GameControllerClose(controller);
 		}
 		delete controllers;
@@ -385,7 +385,7 @@ void ControlsManager::resetPressedButtons()
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController>g = gameControllers.get(i);
+		sp<GameController>g = gameControllers.get(i);
 		g->resetPressedButtons();
 	}
 
@@ -706,7 +706,7 @@ void ControlsManager::setButtonStates()
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController>g = gameControllers.get(i);
+		sp<GameController>g = gameControllers.get(i);
 		g->setButtonStates();
 	}
 
@@ -938,7 +938,7 @@ SDL_JoyHatEvent
 //int16 StickX = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTX);
 //int16 StickY = SDL_GameControllerGetAxis(ControllerHandles[ControllerIndex], SDL_CONTROLLER_AXIS_LEFTY);
 
-//shared_ptr<SDL_Joystick >JoystickHandle = SDL_GameControllerGetJoystick(ControllerHandles[ControllerIndex]);
+//sp<SDL_Joystick >JoystickHandle = SDL_GameControllerGetJoystick(ControllerHandles[ControllerIndex]);
 //RumbleHandles[ControllerIndex] = SDL_HapticOpenFromJoystick(JoystickHandle);
 //
 //if (SDL_HapticRumbleInit(RumbleHandles[ControllerIndex]) != 0)
@@ -968,11 +968,11 @@ SDL_JoyHatEvent
 
 
 //
-//ArrayList<shared_ptr<SDL_GameController>> *c = controllersByJoystickID.getAllValues();
+//ArrayList<sp<SDL_GameController>> *c = controllersByJoystickID.getAllValues();
 //
 //for (int i = 0; i < c->size(); i++)
 //{
-//	shared_ptr<SDL_GameController> controller = c->get(i);
+//	sp<SDL_GameController> controller = c->get(i);
 //
 //
 //	//doesn't work
@@ -995,7 +995,7 @@ SDL_JoyHatEvent
 //	string mapping = string(mappingChar);
 //	SDL_free(mappingChar);
 //
-//	shared_ptr<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
+//	sp<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
 //
 //	int axes = SDL_JoystickNumAxes(joy);
 //
@@ -1047,8 +1047,8 @@ SDL_JoyHatEvent
 			if (SDL_IsGameController(joystickDeviceIndex))
 			{
 
-				shared_ptr<SDL_GameController >controller = SDL_GameControllerOpen(joystickDeviceIndex);
-				shared_ptr<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
+				sp<SDL_GameController >controller = SDL_GameControllerOpen(joystickDeviceIndex);
+				sp<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
 				SDL_JoystickID joystickID = SDL_JoystickInstanceID(joy);
 
 				if (controllersByJoystickID.containsValue(controller) == false)
@@ -1067,7 +1067,7 @@ SDL_JoyHatEvent
 
 				for (int n = 0; n < gameControllers.size(); n++)
 				{
-					shared_ptr<GameController>g = gameControllers.get(n);
+					sp<GameController>g = gameControllers.get(n);
 					if (g->id == joystickID)
 					{
 						gameControllers.removeAt(n);
@@ -1077,11 +1077,11 @@ SDL_JoyHatEvent
 
 
 
-				shared_ptr<GameController> g = make_shared<GameController>();
+				sp<GameController> g = ms<GameController>();
 				g->id = joystickID;
 				gameControllers.add(g);
 
-				shared_ptr<SDL_Haptic >haptic = nullptr;
+				sp<SDL_Haptic >haptic = nullptr;
 				haptic = SDL_HapticOpenFromJoystick(joy);
 				if (haptic != NULL)
 				{
@@ -1109,7 +1109,7 @@ SDL_JoyHatEvent
 			 if (event.type == SDL_CONTROLLERDEVICEREMOVED)
 			 {
 				 SDL_JoystickID joystickID = event.cdevice.which;
-				 shared_ptr<SDL_GameController >controller = controllersByJoystickID.get(joystickID);
+				 sp<SDL_GameController >controller = controllersByJoystickID.get(joystickID);
 
 				//controllersByJoystickNum->removeAllValues(controller);
 				controllersByJoystickID.removeAllValues(controller);
@@ -1117,7 +1117,7 @@ SDL_JoyHatEvent
 
 				for (int i = 0; i < gameControllers.size(); i++)
 				{
-					shared_ptr<GameController>g = gameControllers.get(i);
+					sp<GameController>g = gameControllers.get(i);
 					if (g->id == joystickID)
 					{
 						if(g->haptic!=nullptr)SDL_HapticClose(g->haptic);
@@ -1139,7 +1139,7 @@ SDL_JoyHatEvent
 
 				if (controllersByJoystickID.containsKey(joystickID))
 				{
-					shared_ptr<SDL_GameController >controller = controllersByJoystickID.get(joystickID);
+					sp<SDL_GameController >controller = controllersByJoystickID.get(joystickID);
 					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
 					int value = event.cbutton.state;
 
@@ -1167,7 +1167,7 @@ SDL_JoyHatEvent
 		
 					for (int i = 0; i < gameControllers.size(); i++)
 					{
-						shared_ptr<GameController>g = gameControllers.get(i);
+						sp<GameController>g = gameControllers.get(i);
 						if(g->id == joystickID)
 						{
 							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = true;
@@ -1199,7 +1199,7 @@ SDL_JoyHatEvent
 
 				if (controllersByJoystickID.containsKey(id))
 				{
-					shared_ptr<SDL_GameController >controller = controllersByJoystickID.get(id);
+					sp<SDL_GameController >controller = controllersByJoystickID.get(id);
 					SDL_GameControllerButton b = (SDL_GameControllerButton)event.cbutton.button;
 					int value = event.cbutton.state;
 
@@ -1225,7 +1225,7 @@ SDL_JoyHatEvent
 #endif
 					for (int i = 0; i < gameControllers.size(); i++)
 					{
-						shared_ptr<GameController>g = gameControllers.get(i);
+						sp<GameController>g = gameControllers.get(i);
 						if (g->id == id)
 						{
 							if (b == SDL_CONTROLLER_BUTTON_A)g->A_HELD = false;
@@ -1258,7 +1258,7 @@ SDL_JoyHatEvent
 				//Oh, it does register an axis up event, it's just value 0 and not -
 				if (controllersByJoystickID.containsKey(id))
 				{
-					shared_ptr<SDL_GameController >controller = controllersByJoystickID.get(id);
+					sp<SDL_GameController >controller = controllersByJoystickID.get(id);
 					SDL_GameControllerAxis axis = (SDL_GameControllerAxis)event.caxis.axis;
 					int value = event.caxis.value;
 
@@ -1286,7 +1286,7 @@ SDL_JoyHatEvent
 
 						for (int i = 0; i < gameControllers.size(); i++)
 						{
-							shared_ptr<GameController>g = gameControllers.get(i);
+							sp<GameController>g = gameControllers.get(i);
 							if (g->id == id)
 							{
 								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value >= dz)g->L_HELD = true;
@@ -1309,7 +1309,7 @@ SDL_JoyHatEvent
 							//none of this works, have to check axis manually:
 							for (int i = 0; i < gameControllers.size(); i++)
 							{
-								shared_ptr<GameController>g = gameControllers.get(i);
+								sp<GameController>g = gameControllers.get(i);
 								if (g->id == id)
 								{
 									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)g->ANALOGLEFT_HELD = true;
@@ -1344,12 +1344,12 @@ SDL_JoyHatEvent
 			 if (event.type == SDL_JOYAXISMOTION)
 			 {
 				 SDL_JoystickID id = event.jaxis.which;
-				// shared_ptr<SDL_Joystick >joy = SDL_JoystickFromInstanceID(id);
+				// sp<SDL_Joystick >joy = SDL_JoystickFromInstanceID(id);
 				 
 
 				if (controllersByJoystickID.containsKey(id))
 				{
-					shared_ptr<SDL_GameController >controller = controllersByJoystickID.get(id);
+					sp<SDL_GameController >controller = controllersByJoystickID.get(id);
 					int axis = event.jaxis.axis;
 					int value = event.jaxis.value;
 					
@@ -1372,7 +1372,7 @@ SDL_JoyHatEvent
 						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= 32768)CONTROLLER1_R_HELD = true;
 						//if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value<=-30000)CONTROLLER1_R_HELD = false;
 
-						//shared_ptr<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
+						//sp<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
 						//get GUID mapping for axis number
 						//buffer in which to write the ASCII string
 						//int cbGUID = 4096; //the size of pszGUID
@@ -1405,7 +1405,7 @@ SDL_JoyHatEvent
 
 						for (int i = 0; i < gameControllers.size(); i++)
 						{
-							shared_ptr<GameController>g = gameControllers.get(i);
+							sp<GameController>g = gameControllers.get(i);
 							if (g->id == id)
 							{
 								//						if (leftTrigger&&value >= 32768)g->L_HELD = true;
@@ -1428,7 +1428,7 @@ SDL_JoyHatEvent
 						{
 							for (int i = 0; i < gameControllers.size(); i++)
 							{
-								shared_ptr<GameController>g = gameControllers.get(i);
+								sp<GameController>g = gameControllers.get(i);
 								if (g->id == id)
 								{
 									//none of this works, have to check axis manually:
@@ -1844,7 +1844,7 @@ SDL_JoyHatEvent
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController>g = gameControllers.get(i);
+		sp<GameController>g = gameControllers.get(i);
 		g->setPressedButtons();
 	}
 
@@ -1872,7 +1872,7 @@ SDL_JoyHatEvent
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController>g = gameControllers.get(i);
+		sp<GameController>g = gameControllers.get(i);
 		if (g->UP_HELD == true)BGCLIENT_UP_HELD = true;
 		if (g->DOWN_HELD == true)BGCLIENT_DOWN_HELD = true;
 		if (g->LEFT_HELD == true)BGCLIENT_LEFT_HELD = true;
@@ -1910,7 +1910,7 @@ SDL_JoyHatEvent
 
 	for (int i = 0; i < gameControllers.size(); i++)
 	{
-		shared_ptr<GameController>g = gameControllers.get(i);
+		sp<GameController>g = gameControllers.get(i);
 		if (g->UP_HELD == true)MINIGAME_UP_HELD = true;
 		if (g->DOWN_HELD == true)MINIGAME_DOWN_HELD = true;
 		if (g->LEFT_HELD == true)MINIGAME_LEFT_HELD = true;
@@ -1980,7 +1980,7 @@ SDL_JoyHatEvent
 
 
 //=========================================================================================================================
-void ControlsManager::doHaptic(shared_ptr<GameController>g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
+void ControlsManager::doHaptic(sp<GameController>g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
 {//=========================================================================================================================
 
 	log->debug("doHaptic");

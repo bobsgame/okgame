@@ -25,12 +25,12 @@ public:
 	static Logger log;
 
 
-	shared_ptr<MapState> currentState = nullptr;
+	sp<MapState> currentState = nullptr;
 	bool randomSpawnEnabled = true;
 
 
-	vector<shared_ptr<MapState>> stateList;
-	vector<shared_ptr<Event>> mapEventList;
+	vector<sp<MapState>> stateList;
+	vector<sp<Event>> mapEventList;
 	//ArrayList<int> mapEventIDList;
 
 
@@ -42,35 +42,35 @@ public:
 
 
 	//this is a ArrayList of ArrayLists of sorted lights per layer. this is filled in on map first load.
-	vector<ArrayList<shared_ptr<Light>>> sortedLightsLayers;
+	vector<ArrayList<sp<Light>>> sortedLightsLayers;
 
 
 	//these are entities that exist in this map
-	vector<shared_ptr<Entity>> activeEntityList;
+	vector<sp<Entity>> activeEntityList;
 	//this gets filled in once per frame with entities from entityList that are on the screen
-	vector<shared_ptr<Entity>> drawList;
+	vector<sp<Entity>> drawList;
 	//that gets sorted into zList which is drawn in sequence.
-	vector<shared_ptr<Entity>> zList;
+	vector<sp<Entity>> zList;
 
 	//door/warp list
-	vector<shared_ptr<Door>> doorList;
-	vector<shared_ptr<WarpArea>> warpAreaList;
+	vector<sp<Door>> doorList;
+	vector<sp<WarpArea>> warpAreaList;
 
 
-	shared_ptr<IntArray> hitLayer = nullptr;
-	shared_ptr<IntArray> cameraLayer = nullptr;
-	shared_ptr<IntArray> groundShaderLayer = nullptr;
-	shared_ptr<IntArray> lightMaskLayer = nullptr;
+	sp<IntArray> hitLayer = nullptr;
+	sp<IntArray> cameraLayer = nullptr;
+	sp<IntArray> groundShaderLayer = nullptr;
+	sp<IntArray> lightMaskLayer = nullptr;
 
 
-	HashMap<int,shared_ptr<OKTexture>> chunkTexture;//= make_shared<HashMap><int, shared_ptr<Texture>>();
+	HashMap<int,sp<OKTexture>> chunkTexture;//= ms<HashMap><int, sp<Texture>>();
 
-	vector<bool>* usingHQ2XTexture = nullptr;
+	sp<vector<bool>> usingHQ2XTexture = nullptr;
 
 
 	//these are accessed by threads but not modified by threads so it's probably OK
-	shared_ptr<IntArray> tilesetIntArray = nullptr;
-	shared_ptr<ByteArray> paletteRGBByteArray = nullptr;
+	sp<IntArray> tilesetIntArray = nullptr;
+	sp<ByteArray> paletteRGBByteArray = nullptr;
 
 	//when this happens i can delete the indexed data and palette data but until then they are being accessed by threads
 	bool allChunkPNGsLoadedAsTextures = false;
@@ -83,8 +83,8 @@ public:
 	const static int chunkSizeTiles1X = chunkSizePixels1X / 8;
 
 
-	//static shared_ptr<ExecutorService> generatePNGExecutorService;
-	//static shared_ptr<ExecutorService> generateLightPNGExecutorService;
+	//static sp<ExecutorService> generatePNGExecutorService;
+	//static sp<ExecutorService> generateLightPNGExecutorService;
 	//public ExecutorService generateHQ2XPNGExecutorService = null;
 
 
@@ -105,10 +105,10 @@ public:
 	int maxLightPNGThreadsCreated = 0;
 	int lightPNGThreadsCreated = 0;
 
-	shared_ptr<ConsoleText> texturesLoadedDebugText = nullptr;
-	shared_ptr<ConsoleText> hq2xChunkPNGThreadsDebugText = nullptr;
-	shared_ptr<ConsoleText> chunkPNGThreadsDebugText = nullptr;
-	shared_ptr<ConsoleText> lightPNGThreadsDebugText = nullptr;
+	sp<ConsoleText> texturesLoadedDebugText = nullptr;
+	sp<ConsoleText> hq2xChunkPNGThreadsDebugText = nullptr;
+	sp<ConsoleText> chunkPNGThreadsDebugText = nullptr;
+	sp<ConsoleText> lightPNGThreadsDebugText = nullptr;
 
 
 	int chunksWidth = 0;
@@ -128,7 +128,7 @@ public:
 	long long lastTimeMD5sRequested = 0;
 
 
-	shared_ptr<Notification> generatingAreaNotification = nullptr;
+	sp<Notification> generatingAreaNotification = nullptr;
 
 
 	bool addedEntitiesAndCharactersFromCurrentStateToActiveEntityList = false;
@@ -137,41 +137,41 @@ public:
 
 
 private:
-	shared_ptr<MapData> data = nullptr;
+	sp<MapData> data = nullptr;
 
 
 public:
 	Map();
-	Map(shared_ptr<Engine> g, shared_ptr<MapData> mapData);
-	void initMap(shared_ptr<Engine> g, shared_ptr<MapData> mapData);
+	Map(sp<Engine> g, sp<MapData> mapData);
+	void initMap(sp<Engine> g, sp<MapData> mapData);
 
 
-	shared_ptr<Entity> getEntityByName(const string& name);
+	sp<Entity> getEntityByName(const string& name);
 
-	shared_ptr<Character> getCharacterByName(const string& name);
-
-
-	shared_ptr<Light> getLightByName(const string& name);
+	sp<Character> getCharacterByName(const string& name);
 
 
-	shared_ptr<Area> getAreaOrWarpAreaByName(string name);
+	sp<Light> getLightByName(const string& name);
 
 
-	shared_ptr<Area> getAreaOrWarpAreaByTYPEID(string typeID);
+	sp<Area> getAreaOrWarpAreaByName(string name);
 
-	shared_ptr<Door> getDoorByTYPEID(const string& typeID);
 
-	shared_ptr<Door> getDoorByName(const string& name);
+	sp<Area> getAreaOrWarpAreaByTYPEID(string typeID);
+
+	sp<Door> getDoorByTYPEID(const string& typeID);
+
+	sp<Door> getDoorByName(const string& name);
 
 	//public MapState getStateByName(String name){return getMapStateByName(name);}
 
-	shared_ptr<MapState> getMapStateByName(const string& name);
+	sp<MapState> getMapStateByName(const string& name);
 
 
-	shared_ptr<MapState> getMapStateByID(int id);
+	sp<MapState> getMapStateByID(int id);
 
 
-	ArrayList<string>* getListOfRandomPointsOfInterestTYPEIDs();
+	sp<vector<string>> getListOfRandomPointsOfInterestTYPEIDs();
 
 
 	//public Tile getTileByName(String name)
@@ -186,7 +186,7 @@ public:
 	void fadeOut();
 
 
-	void loadMapState(shared_ptr<MapState> s);
+	void loadMapState(sp<MapState> s);
 
 
 private:
@@ -286,7 +286,7 @@ public:
 	void loadUtilityLayers();
 
 
-	void saveDataToCache(shared_ptr<IntArray> intArrayAllLayers, shared_ptr<IntArray> tiles, shared_ptr<ByteArray> pal);
+	void saveDataToCache(sp<IntArray> intArrayAllLayers, sp<IntArray> tiles, sp<ByteArray> pal);
 
 
 	void unloadArea(const string& s);
@@ -349,10 +349,10 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	shared_ptr<OKTexture> getChunkTexture(int index);
+	sp<OKTexture> getChunkTexture(int index);
 
 	//The following method was originally marked 'synchronized':
-	void setChunkTexture(int index, shared_ptr<OKTexture> t);
+	void setChunkTexture(int index, sp<OKTexture> t);
 
 
 	//The following method was originally marked 'synchronized':
@@ -366,7 +366,7 @@ public:
 
 
 	//------------------------------------
-	vector<bool>* _chunkPNGFileExists = nullptr;
+	sp<vector<bool>> _chunkPNGFileExists = nullptr;
 	mutex _chunkPNGFileExists_Mutex;
 	bool getChunkPNGFileExists_S(int index)
 	{ //=========================================================================================================================
@@ -383,7 +383,7 @@ public:
 
 
 	//------------------------------------
-	vector<bool>* _hq2xChunkPNGFileExists = nullptr;
+	sp<vector<bool>> _hq2xChunkPNGFileExists = nullptr;
 	mutex _hq2xChunkPNGFileExists_Mutex;
 	bool getHQ2XChunkPNGFileExists_S(int index)
 	{ //=========================================================================================================================
@@ -487,15 +487,15 @@ public:
 	/// <summary>
 	/// returns false if no image is needed
 	/// </summary>
-	bool drawTileLayerIntoBufferedImage(const string& layerFileName, shared_ptr<BufferedImage> chunkImage, shared_ptr<BufferedImage> chunkImageBorder, int chunkX, int chunkY, shared_ptr<IntArray> layerChunkBuffer, bool shadowLayer);
+	bool drawTileLayerIntoBufferedImage(const string& layerFileName, sp<BufferedImage> chunkImage, sp<BufferedImage> chunkImageBorder, int chunkX, int chunkY, sp<IntArray> layerChunkBuffer, bool shadowLayer);
 
 
 	void createHQ2XTexturePNG_THREAD(int chunkX, int chunkY);
 
 
-	void antialiasBufferedImage(shared_ptr<BufferedImage> bufferedImage);
+	void antialiasBufferedImage(sp<BufferedImage> bufferedImage);
 
-	void setHQ2XAlphaFromOriginal(shared_ptr<BufferedImage> hq2xBufferedImage, shared_ptr<BufferedImage> bufferedImage);
+	void setHQ2XAlphaFromOriginal(sp<BufferedImage> hq2xBufferedImage, sp<BufferedImage> bufferedImage);
 
 
 	void addEntitiesAndCharactersFromCurrentStateToActiveEntityList();
@@ -512,43 +512,43 @@ public:
 	bool isAnyRandomCharacterTryingToGoToXY(float x, float y);
 
 
-	int* findOpenSpaceInArea(shared_ptr<Area> a, int w, int h);
+	int* findOpenSpaceInArea(sp<Area> a, int w, int h);
 
 
-	bool isAnyCharacterTouchingArea(shared_ptr<Area> a);
+	bool isAnyCharacterTouchingArea(sp<Area> a);
 
 
-	bool isAnyEntityTouchingArea(shared_ptr<Area> a);
+	bool isAnyEntityTouchingArea(sp<Area> a);
 
 
-	vector<shared_ptr<Entity>>* getAllEntitiesTouchingArea(shared_ptr<Area> a);
+	sp<vector<sp<Entity>>> getAllEntitiesTouchingArea(sp<Area> a);
 
 
-	vector<shared_ptr<Entity>>* getAllEntitiesPlayerIsTouching();
+	sp<vector<sp<Entity>>> getAllEntitiesPlayerIsTouching();
 
 
-	bool isAnyoneTryingToGoToArea(shared_ptr<Area> a);
+	bool isAnyoneTryingToGoToArea(sp<Area> a);
 
 
-	bool isAnyEntityUsingSpriteAsset(shared_ptr<Sprite> s);
+	bool isAnyEntityUsingSpriteAsset(sp<Sprite> s);
 
 
-	vector<shared_ptr<Entity>>* getAllEntitiesUsingSpriteAsset(shared_ptr<Sprite> s);
+	sp<vector<sp<Entity>>> getAllEntitiesUsingSpriteAsset(sp<Sprite> s);
 
 
-	shared_ptr<Entity> createEntity(const string& spriteName, shared_ptr<Sprite> spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
+	sp<Entity> createEntity(const string& spriteName, sp<Sprite> spriteAsset, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE.. X AND Y ARE UPPER LEFT CORNER NOT FEET
 
 
-	shared_ptr<Entity> createEntityFeetAtXY(const string& spriteName, shared_ptr<Sprite> sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
+	sp<Entity> createEntityFeetAtXY(const string& spriteName, sp<Sprite> sprite, float mapX, float mapY); // SIZE X AND Y ARE ACTUAL Entity HEIGHT AND WIDTH NOT SPRITE SIZE,X AND Y ARE FEET PLACEMENT
 
 
-	shared_ptr<Entity> createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(shared_ptr<Entity> e, const string& spriteName, shared_ptr<Sprite> sprite, float mapX, float mapY, int amt);
+	sp<Entity> createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(sp<Entity> e, const string& spriteName, sp<Sprite> sprite, float mapX, float mapY, int amt);
 
 
-	shared_ptr<Entity> createEntityAtArea(const string& spriteName, shared_ptr<Sprite> spriteAsset, shared_ptr<Area> a);
+	sp<Entity> createEntityAtArea(const string& spriteName, sp<Sprite> spriteAsset, sp<Area> a);
 
 
-	shared_ptr<MapData> getData();
+	sp<MapData> getData();
 
 
 	int getID();

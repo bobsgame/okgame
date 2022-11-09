@@ -15,67 +15,67 @@ public:
 
 	static Logger log;
 
-	//   shared_ptr<Label> autoZoomLabel;
-	//   shared_ptr<ToggleButton>const autoZoomToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> autoZoomLabel;
+	//   sp<ToggleButton>const autoZoomToggleButton = ms<ToggleButton>("");
 	//
-	//   shared_ptr<Label> playerPhysicsLabel;
-	//   shared_ptr<ToggleButton>const playerPhysicsToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> playerPhysicsLabel;
+	//   sp<ToggleButton>const playerPhysicsToggleButton = ms<ToggleButton>("");
 	//
-	//   shared_ptr<Label> cameraPhysicsLabel;
-	//   shared_ptr<ToggleButton>const cameraPhysicsToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> cameraPhysicsLabel;
+	//   sp<ToggleButton>const cameraPhysicsToggleButton = ms<ToggleButton>("");
 	//
-	//   shared_ptr<Label> playerWalkSpeedLabel;
-	//   shared_ptr<Scrollbar>const playerWalkSpeedScrollbar = make_shared<Scrollbar>(Scrollbar::Orientation::HORIZONTAL);
-	//   shared_ptr<Label>const playerWalkSpeedValueLabel = make_shared<Label>("Default");
-	//
-	//
-	//   shared_ptr<DialogLayout> gameSettingsDialogLayout;
+	//   sp<Label> playerWalkSpeedLabel;
+	//   sp<Scrollbar>const playerWalkSpeedScrollbar = ms<Scrollbar>(Scrollbar::Orientation::HORIZONTAL);
+	//   sp<Label>const playerWalkSpeedValueLabel = ms<Label>("Default");
 	//
 	//
-	//   shared_ptr<Label> whiteStatusBarToggleButtonLabel;
-	//   shared_ptr<ToggleButton>const whiteThemeToggleButton = make_shared<ToggleButton>("");
+	//   sp<DialogLayout> gameSettingsDialogLayout;
+	//
+	//
+	//   sp<Label> whiteStatusBarToggleButtonLabel;
+	//   sp<ToggleButton>const whiteThemeToggleButton = ms<ToggleButton>("");
 	//
 	//   //	Label grayscaleToggleButtonLabel;
-	//   //	final ToggleButton grayscaleToggleButton = make_shared<ToggleButton>("");
+	//   //	final ToggleButton grayscaleToggleButton = ms<ToggleButton>("");
 	//
-	//   shared_ptr<Label> statusBarGlossLabel;
-	//   shared_ptr<Scrollbar>const statusBarGlossScrollbar = make_shared<Scrollbar>(Scrollbar::Orientation::HORIZONTAL);
-	//   shared_ptr<Label>const statusBarGlossValueLabel = make_shared<Label>("Default");
+	//   sp<Label> statusBarGlossLabel;
+	//   sp<Scrollbar>const statusBarGlossScrollbar = ms<Scrollbar>(Scrollbar::Orientation::HORIZONTAL);
+	//   sp<Label>const statusBarGlossValueLabel = ms<Label>("Default");
 	//
-	//   shared_ptr<DialogLayout> guiSettingsDialogLayout;
+	//   sp<DialogLayout> guiSettingsDialogLayout;
 	//
 	//
-	//   shared_ptr<Label> hq2xToggleButtonLabel;
-	//   shared_ptr<ToggleButton>const hq2xToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> hq2xToggleButtonLabel;
+	//   sp<ToggleButton>const hq2xToggleButton = ms<ToggleButton>("");
 	//
-	//   shared_ptr<Label> fboToggleButtonLabel;
-	//   shared_ptr<ToggleButton>const fboToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> fboToggleButtonLabel;
+	//   sp<ToggleButton>const fboToggleButton = ms<ToggleButton>("");
 	//
-	//   shared_ptr<Label> shadersToggleButtonLabel;
-	//   shared_ptr<ToggleButton>const shadersToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> shadersToggleButtonLabel;
+	//   sp<ToggleButton>const shadersToggleButton = ms<ToggleButton>("");
 	//
 	//
 	//   //	Label gammaScrollbarLabel;
-	//   //	final public Scrollbar gammaScrollbar = make_shared<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label gammaScrollbarValueLabel = make_shared<Label>("Default");
+	//   //	final public Scrollbar gammaScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
+	//   //	final Label gammaScrollbarValueLabel = ms<Label>("Default");
 	//   //
 	//   //
 	//   //	Label contrastScrollbarLabel;
-	//   //	final public Scrollbar contrastScrollbar = make_shared<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label contrastScrollbarValueLabel = make_shared<Label>("Default");
+	//   //	final public Scrollbar contrastScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
+	//   //	final Label contrastScrollbarValueLabel = ms<Label>("Default");
 	//   //
 	//   //
 	//   //	Label brightnessScrollbarLabel;
-	//   //	final public Scrollbar brightnessScrollbar = make_shared<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label brightnessScrollbarValueLabel = make_shared<Label>("Default");
+	//   //	final public Scrollbar brightnessScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
+	//   //	final Label brightnessScrollbarValueLabel = ms<Label>("Default");
 	//   //
 	//   //
 	//   //	Label saturationScrollbarLabel;
-	//   //	final public Scrollbar saturationScrollbar = make_shared<Scrollbar>(Orientation.HORIZONTAL);
-	//   //	final Label saturationScrollbarValueLabel = make_shared<Label>("Default");
+	//   //	final public Scrollbar saturationScrollbar = ms<Scrollbar>(Orientation.HORIZONTAL);
+	//   //	final Label saturationScrollbarValueLabel = ms<Label>("Default");
 	//
 	//
-	//   shared_ptr<DialogLayout> graphicsSettingsDialogLayout;
+	//   sp<DialogLayout> graphicsSettingsDialogLayout;
 
 	SettingsPanel();
 

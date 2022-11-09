@@ -18,19 +18,19 @@ private:
 	long long timeSet = -1;
 	float value = 0.0f;
 
-	shared_ptr<SkillData> data = nullptr;
+	sp<SkillData> data = nullptr;
 
 
 public:
 	static Logger log;
 
-	Skill(shared_ptr<Engine> g, int id);
+	Skill(sp<Engine> g, int id);
 
 
-	Skill(shared_ptr<Engine> g, shared_ptr<SkillData> data);
+	Skill(sp<Engine> g, sp<SkillData> data);
 
 
-	shared_ptr<SkillData> getData();
+	sp<SkillData> getData();
 
 
 	int getID();
@@ -44,7 +44,7 @@ public:
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(shared_ptr<SkillData> data);
+	void setData_S(sp<SkillData> data);
 
 
 	//The following method was originally marked 'synchronized':
@@ -103,7 +103,7 @@ public:
 	//	
 	//	public synchronized void setServerValue(float f)
 	//	{
-	//		serverValue = make_shared<Float>(f);
+	//		serverValue = ms<Float>(f);
 	//	}
 	//	
 	//	public synchronized Float getServerValue()

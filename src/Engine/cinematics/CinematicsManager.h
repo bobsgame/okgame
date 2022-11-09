@@ -24,10 +24,10 @@ public:
 	static Logger log;
 
 
-	shared_ptr<Letterbox> letterbox = nullptr;
-	shared_ptr<ScreenOverlay> screenOverlayOverLights = nullptr;
-	shared_ptr<ScreenOverlay> screenOverlayUnderLights = nullptr;
-	shared_ptr<ScreenOverlay> screenOverlayGroundLayer = nullptr;
+	sp<Letterbox> letterbox = nullptr;
+	sp<ScreenOverlay> screenOverlayOverLights = nullptr;
+	sp<ScreenOverlay> screenOverlayUnderLights = nullptr;
+	sp<ScreenOverlay> screenOverlayGroundLayer = nullptr;
 
 
 	//TODO: probably want to organize these effects in a linked list or something
@@ -88,7 +88,7 @@ public:
 	//rewind and fast forward
 
 
-	CinematicsManager(shared_ptr<Engine> g);
+	CinematicsManager(sp<Engine> g);
 
 	void init();
 
@@ -117,12 +117,12 @@ public:
 	//	
 	//	public void fadeColorFromCurrentAlphaToOpaque(int ticks, int ri, int gi, int bi)
 	//	{
-	//		screenOverlay.doTransition(make_shared<Color>(ri,gi,bi),-1,1.0f,ticks);
+	//		screenOverlay.doTransition(ms<Color>(ri,gi,bi),-1,1.0f,ticks);
 	//	}
 	//	
 	//	public void fadeColorFromOpaqueToTransparent(int ticks, int ri, int gi, int bi)
 	//	{
-	//		screenOverlay.doTransition(make_shared<Color>(ri,gi,bi),1.0f,0.0f,ticks);
+	//		screenOverlay.doTransition(ms<Color>(ri,gi,bi),1.0f,0.0f,ticks);
 	//	}
 
 
@@ -145,14 +145,14 @@ public:
 	//	
 	//	public void fadeColorFromTransparentToOpaqueAndBack(int ticks, int ri, int gi, int bi)
 	//	{
-	//		screenOverlay.doToAndFromTransition(make_shared<Color>(ri,gi,bi),ticks,1.0f);
+	//		screenOverlay.doToAndFromTransition(ms<Color>(ri,gi,bi),ticks,1.0f);
 	//	}
 
 	void fadeColorFromTransparentToAlphaBackToTransparent(int ticks, u8 ri, u8 gi, u8 bi, float toAlpha);
 	//	
 	//	public void fadeColorFromCurrentAlphaToAlphaBackToCurrentAlpha(int ticks, int ri, int gi, int bi, float getToAlpha)
 	//	{
-	//		screenOverlay.doToAndFromTransition(make_shared<Color>(ri,gi,bi),ticks, getToAlpha);
+	//		screenOverlay.doToAndFromTransition(ms<Color>(ri,gi,bi),ticks, getToAlpha);
 	//	}
 
 	void setInstantOverlayColor(u8 ri, u8 gi, u8 bi, float af);

@@ -26,12 +26,12 @@ class Logger;
 //================
 
 
-void HARDWARE_set_sprite_y(shared_ptr<SPRITE> sprite, int screen_y);
+void HARDWARE_set_sprite_y(sp<SPRITE> sprite, int screen_y);
 
-shared_ptr<SPRITE> HARDWARE_create_sprite(shared_ptr<GFX> gfx, int gfx_index, int layer, float scale, int screen_x, int screen_y, int alpha);
-void HARDWARE_update_sprite_texture(shared_ptr < SPRITE> sprite, int gfx_index);
-void HARDWARE_set_sprite_xy(shared_ptr < SPRITE> sprite, int screen_x, int screen_y);
-void HARDWARE_delete_sprite(shared_ptr<SPRITE> sprite);
+sp<SPRITE> HARDWARE_create_sprite(sp<GFX> gfx, int gfx_index, int layer, float scale, int screen_x, int screen_y, int alpha);
+void HARDWARE_update_sprite_texture(sp < SPRITE> sprite, int gfx_index);
+void HARDWARE_set_sprite_xy(sp < SPRITE> sprite, int screen_x, int screen_y);
+void HARDWARE_delete_sprite(sp<SPRITE> sprite);
 void HARDWARE_load_sprite_palette(int* palette);
 
 void HARDWARE_init_arrays();
@@ -45,20 +45,20 @@ public:
 	static Logger log;
 
 
-	HashMap<int, shared_ptr<Sprite>> spriteByIDHashMap;//make_shared<HashMap><int, shared_ptr<Sprite>>();
-	HashMap<string, shared_ptr<Sprite>> spriteByNameHashMap;//make_shared<HashMap><string, shared_ptr<Sprite>>();
+	HashMap<int, sp<Sprite>> spriteByIDHashMap;//ms<HashMap><int, sp<Sprite>>();
+	HashMap<string, sp<Sprite>> spriteByNameHashMap;//ms<HashMap><string, sp<Sprite>>();
 
 
-	vector<shared_ptr<ScreenSprite>> screenSpriteList;
+	vector<sp<ScreenSprite>> screenSpriteList;
 
 
-	static shared_ptr<OKTexture> actionTexture;// = nullptr;
+	static sp<OKTexture> actionTexture;// = nullptr;
 
 	int actionTextureFrame = 0;
 	int actionTextureAnimTicks = 0;
 
 
-	SpriteManager(shared_ptr<Engine> g);
+	SpriteManager(sp<Engine> g);
 
 
 
@@ -207,11 +207,11 @@ public:
 	//	}
 
 
-	shared_ptr<Sprite> getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
+	sp<Sprite> getSpriteAssetByIDOrRequestFromServerIfNotExist(int id);
 
 
-	shared_ptr<Sprite> getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
-	shared_ptr<Sprite> preloadSpriteFromDataFile(const string & spriteAssetName);
-	shared_ptr<Sprite> getSpriteByName(const string & spriteAssetName);
+	sp<Sprite> getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName);
+	sp<Sprite> preloadSpriteFromDataFile(const string & spriteAssetName);
+	sp<Sprite> getSpriteByName(const string & spriteAssetName);
 };
 

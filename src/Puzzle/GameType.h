@@ -54,12 +54,12 @@ public:
 	int randomlyFillGridAmount = 30;												Info randomlyFillGridAmount_Info = Info("Drop: Randomly Fill Grid Amount", "How many blocks to fill the playing field with.");
 	//int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
 
-	ArrayList<shared_ptr<PieceType>> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
-	ArrayList<shared_ptr<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
-	//ArrayList<shared_ptr<OKColor>> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
+	vector<sp<PieceType>> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
+	vector<sp<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
+	//ArrayList<sp<OKColor>> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
 
-	ArrayList<string> pieceTypesToDisallow_UUID;
-	ArrayList<string> blockTypesToDisallow_UUID;
+	vector<string> pieceTypesToDisallow_UUID;
+	vector<string> blockTypesToDisallow_UUID;
 
 private:
 	//ArrayList<PieceType> importExport_pieceTypesToDisallow;
@@ -176,21 +176,21 @@ public:
 	long long downVotes = 0;
 	string yourVote = "none";
 
-	static shared_ptr<DifficultyType> difficulty_BEGINNER;
-	static shared_ptr<DifficultyType> difficulty_EASY;
-	static shared_ptr<DifficultyType> difficulty_NORMAL;
-	static shared_ptr<DifficultyType> difficulty_HARD;
-	static shared_ptr<DifficultyType> difficulty_INSANE;
-	static shared_ptr<DifficultyType> difficulty_IMPOSSIBLE;
+	static sp<DifficultyType> difficulty_BEGINNER;
+	static sp<DifficultyType> difficulty_EASY;
+	static sp<DifficultyType> difficulty_NORMAL;
+	static sp<DifficultyType> difficulty_HARD;
+	static sp<DifficultyType> difficulty_INSANE;
+	static sp<DifficultyType> difficulty_IMPOSSIBLE;
 
 	static Logger log;
 
 	string toBase64GZippedXML();
-	shared_ptr<BlockType> getBlockTypeByName(string s);
-	shared_ptr<PieceType> getPieceTypeByName(string s);
-	shared_ptr<BlockType> getBlockTypeByUUID(string s);
-	shared_ptr<PieceType> getPieceTypeByUUID(string s);
-	static shared_ptr<GameType> fromBase64GZippedXML(string b64GZipJSON);
+	sp<BlockType> getBlockTypeByName(string s);
+	sp<PieceType> getPieceTypeByName(string s);
+	sp<BlockType> getBlockTypeByUUID(string s);
+	sp<PieceType> getPieceTypeByUUID(string s);
+	static sp<GameType> fromBase64GZippedXML(string b64GZipJSON);
 
 	//Color noColor;
 	//PieceType noPieceType;
@@ -453,9 +453,9 @@ public:
 	long long blockMovementInterpolationTicks = 100;						Info blockMovementInterpolationTicks_Info = Info("Visual: Block Movement Interpolation Ticks", "How many milliseconds to animate transitions between one movement to the next.");
 	int blockAnimationTicksRandomUpToBetweenLoop = 0;						Info blockAnimationTicksRandomUpToBetweenLoop_Info = Info("Visual: Block Animation Ticks Random Up To Between Loop", "If a block sprite has animation, maximum amount of milliseconds to wait before triggering animation cycle.");//drbob
 
-	ArrayList<shared_ptr<BlockType>> blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
+	vector<sp<BlockType>> blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
 	private:
-	ArrayList<BlockType> importExport_blockTypes;
+	vector<BlockType> importExport_blockTypes;
 	public:
 
 
@@ -478,14 +478,14 @@ public:
 	bool currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty = false;		Info currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info = Info("Get New Pieces Randomly Out Of Bag With One Of Each Piece Until Empty", "Get one of each piece type randomly until all of them have been used instead of generating a completely random piece each time.  Prevents many duplicates in a row and guarantees you will get each piece, but reduces randomness.");
 
 	//TODO: can change these to pieceType.garbage, etc
-	ArrayList<shared_ptr<PieceType>> pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
+	vector<sp<PieceType>> pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
 private:
-	ArrayList<PieceType> importExport_pieceTypes;
+	vector<PieceType> importExport_pieceTypes;
 public:
 
-	ArrayList<shared_ptr<DifficultyType>> difficultyTypes;
+	vector<sp<DifficultyType>> difficultyTypes;
 private:
-	ArrayList<DifficultyType> importExport_difficulties;
+	vector<DifficultyType> importExport_difficulties;
 public:
 
 	//---------------------------------------------------
@@ -493,7 +493,7 @@ public:
 	//---------------------------------------------------
 
 	//not user settable!---------------------
-	//shared_ptr<DifficultyType> currentDifficulty = nullptr;// = make_shared<DifficultyType>();
+	//sp<DifficultyType> currentDifficulty = nullptr;// = ms<DifficultyType>();
 	//long long initialLineDropSpeedTicks = 0;
 	//int minStackRise = 0;
 	//int maxStackRise = 0;
@@ -505,8 +505,8 @@ public:
 	//int extraStage4Level = 0;
 	//int creditsLevel = 0;
 	GameType();
-	shared_ptr<DifficultyType> getDifficultyByName(string s);
-	//GameType(shared_ptr<DifficultyType>d);
+	sp<DifficultyType> getDifficultyByName(string s);
+	//GameType(sp<DifficultyType>d);
 
 	//void setTimingBasedOnDifficulty(DifficultyType d);
 
@@ -607,15 +607,15 @@ public:
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version);
 
-	vector<shared_ptr<BlockType>>* getNormalBlockTypes(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<BlockType>>* getGarbageBlockTypes(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<BlockType>>* getPlayingFieldBlockTypes(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<BlockType>>* getBlockTypesToIgnoreWhenCheckingChain(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<BlockType>>* getBlockTypesToIgnoreWhenMovingDown(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<BlockType>>* getBlockTypesChainMustContain(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<PieceType>>* getNormalPieceTypes(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<PieceType>>* getGarbagePieceTypes(shared_ptr<DifficultyType>d);
-	vector<shared_ptr<PieceType>>* getPlayingFieldPieceTypes(shared_ptr<DifficultyType>d);
+	sp<vector<sp<BlockType>>> getNormalBlockTypes(sp<DifficultyType>d);
+	sp<vector<sp<BlockType>>> getGarbageBlockTypes(sp<DifficultyType>d);
+	sp<vector<sp<BlockType>>> getPlayingFieldBlockTypes(sp<DifficultyType>d);
+	sp<vector<sp<BlockType>>> getBlockTypesToIgnoreWhenCheckingChain(sp<DifficultyType>d);
+	sp<vector<sp<BlockType>>> getBlockTypesToIgnoreWhenMovingDown(sp<DifficultyType>d);
+	sp<vector<sp<BlockType>>> getBlockTypesChainMustContain(sp<DifficultyType>d);
+	sp<vector<sp<PieceType>>> getNormalPieceTypes(sp<DifficultyType>d);
+	sp<vector<sp<PieceType>>> getGarbagePieceTypes(sp<DifficultyType>d);
+	sp<vector<sp<PieceType>>> getPlayingFieldPieceTypes(sp<DifficultyType>d);
 
 };
 

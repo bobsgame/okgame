@@ -25,22 +25,22 @@ public:
 	//static const int FBO_SCALE = 1;
 
 
-	shared_ptr<StateManager> stadiumGameStateManager = nullptr;
+	sp<StateManager> stadiumGameStateManager = nullptr;
 
 
-	shared_ptr<Area> area = nullptr;
+	sp<Area> area = nullptr;
 
 
-	StadiumScreen(shared_ptr<Engine> g);
+	StadiumScreen(sp<Engine> g);
 
 
 	void update();
 
 
-	void setGame(shared_ptr<MiniGameEngine> game, shared_ptr<Area> area);
+	void setGame(sp<MiniGameEngine> game, sp<Area> area);
 
 
-	shared_ptr<MiniGameEngine> getGame();
+	sp<MiniGameEngine> getGame();
 
 
 	void render();

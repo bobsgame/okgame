@@ -40,7 +40,7 @@ void MiniGameEngine::init()
 
 	setupMenus();
 
-	this->gameDataLoader = make_shared<GameDataLoader>(this);
+	this->gameDataLoader = ms<GameDataLoader>(this);
 
 }
 
@@ -210,7 +210,7 @@ void MiniGameEngine::titleMenuUpdate()
 
 	if (titleMenu == nullptr)
 	{
-		titleMenu = make_shared<OKMenu>(this,"");
+		titleMenu = ms<OKMenu>(this,"");
 
 		//pressEnterCaption = getCaptionManager()->newManagedCaption(Caption::CENTERED_X, y-60, -1, "Press Enter to begin", oswald_24, infoColor, clearColor, RenderOrder::OVER_GUI);
 		//pressEnterCaption->flashing = true;
@@ -282,7 +282,7 @@ void MiniGameEngine::titleMenuUpdate()
 void MiniGameEngine::titleMenuRender()
 { //=========================================================================================================================
 
-	shared_ptr<OKTexture>t = nullptr;
+	sp<OKTexture>t = nullptr;
 
 	if (titleMenuTextures != nullptr && titleMenuTextures->size()>0)t = titleMenuTextures->get(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
@@ -301,7 +301,7 @@ void MiniGameEngine::pauseMenuUpdate()
 
 	if (pauseMenu == nullptr)
 	{
-		pauseMenu = make_shared<OKMenu>(this,"Pause");
+		pauseMenu = ms<OKMenu>(this,"Pause");
 
 		pauseMenu->add("Back To Game");
 		pauseMenu->add("Quit Game And Return To Title Screen");
@@ -375,19 +375,19 @@ void MiniGameEngine::multiplayerScreenUpdate()
 
 	if (onlineFriendCaptions->isEmpty())
 	{
-		//onlineFriendCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
+		//onlineFriendCaptions = ms<ArrayList><sp<Caption>>();
 
 		for (int i = 0; i < onlineFriends.size(); i++)
 		{
-			shared_ptr<UDPPeerConnection> f = onlineFriends.get(i);
+			sp<UDPPeerConnection> f = onlineFriends.get(i);
 			int y = (onlineFriendCaptions->size() + 1) * 20;
 
-			shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, f->getFriendData_S().characterName, 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
+			sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, f->getFriendData_S().characterName, 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
 			onlineFriendCaptions->add(c);
 		}
 
 		int y = (onlineFriendCaptions->size() + 1) * 20;
-		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
+		sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
 		onlineFriendCaptions->add(c);
 	}
 
@@ -422,7 +422,7 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		}
 		else
 		{
-			shared_ptr<UDPPeerConnection> f = onlineFriends.get(multiplayerScreenCursorPosition);
+			sp<UDPPeerConnection> f = onlineFriends.get(multiplayerScreenCursorPosition);
 			this->connection = f;
 			//OKNet::addEngineToForwardMessagesTo(this);
 
@@ -460,7 +460,7 @@ void MiniGameEngine::multiplayerScreenRender()
 
 	super::render(); //captions
 
-	shared_ptr<OKTexture> t = OKMenu::cursorTexture;
+	sp<OKTexture> t = OKMenu::cursorTexture;
 
 	if (t != nullptr && onlineFriendCaptions->size() > 0)
 	{
@@ -522,10 +522,10 @@ void MiniGameEngine::waitingForFriendScreenUpdate()
 
 	if (waitingForFriendCaptions->isEmpty())
 	{
-		//waitingForFriendCaptions = make_shared<ArrayList><shared_ptr<Caption>>();
+		//waitingForFriendCaptions = ms<ArrayList><sp<Caption>>();
 
 		int y = (waitingForFriendCaptions->size() + 1) * 20;
-		shared_ptr<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Sending game request...", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
+		sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Sending game request...", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
 		waitingForFriendCaptions->add(c);
 
 		y = (waitingForFriendCaptions->size() + 1) * 20;
@@ -623,7 +623,7 @@ void MiniGameEngine::waitingForFriendScreenRender()
 
 	super::render(); //captions
 
-	shared_ptr<OKTexture> t = OKMenu::cursorTexture;
+	sp<OKTexture> t = OKMenu::cursorTexture;
 
 	if (t != nullptr && waitingForFriendCaptions->size() > 0)
 	{
@@ -661,13 +661,13 @@ void MiniGameEngine::tryToCloseGame()
 
 
 //
-//void MiniGameEngine::setConnection(shared_ptr<UDPConnection> connection)
+//void MiniGameEngine::setConnection(sp<UDPConnection> connection)
 //{ //=========================================================================================================================
 //
 //	this->connection = connection;
 //	//this.multiplayer = true;
 //}
-bool MiniGameEngine::udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string e)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
+bool MiniGameEngine::udpPeerMessageReceived(sp<UDPPeerConnection>c, string e)// sp<ChannelHandlerContext> ctx, sp<MessageEvent> e)
 { //=========================================================================================================================
 
 	string s = e;// static_cast<string>(e->getMessage());

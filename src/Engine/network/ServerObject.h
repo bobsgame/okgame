@@ -17,7 +17,7 @@ public:
 
 	static Logger log;
 	ServerObject();
-	ServerObject(shared_ptr<Engine> g);
+	ServerObject(sp<Engine> g);
 
 protected:
 	bool _initialized = false;

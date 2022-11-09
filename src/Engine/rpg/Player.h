@@ -31,7 +31,7 @@ public:
 	bool noInput = false;
 
 
-	shared_ptr<Caption> autopilotCaption = nullptr;
+	sp<Caption> autopilotCaption = nullptr;
 
 
 	float forceX = 0.0f;
@@ -43,10 +43,10 @@ public:
 	float speedLimit = 1.5f;
 
 
-	Player(shared_ptr<Engine> g, const string& spriteName);
+	Player(sp<Engine> g, const string& spriteName);
 
 
-	Player(shared_ptr<Engine> g);
+	Player(sp<Engine> g);
 	void initPlayer();
 
 	virtual void update() override;

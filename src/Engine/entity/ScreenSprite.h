@@ -26,7 +26,7 @@ public:
 	bool centerX = false;
 	bool centerY = false;
 
-	ScreenSprite(shared_ptr<Engine> g, const string& name, const string& spriteName);
+	ScreenSprite(sp<Engine> g, const string& name, const string& spriteName);
 
 	virtual float getScreenLeft() override;
 
@@ -50,6 +50,6 @@ public:
 
 	virtual void deleteFromMapEntityListAndReleaseTexture() override;
 
-	virtual void render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture) override;
+	virtual void render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture) override;
 };
 

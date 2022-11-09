@@ -20,11 +20,11 @@ LegalMenuPanel::LegalMenuPanel()
 	//MenuPanel();
 
 	//
-	//   legalPanel = make_shared<DialogLayout>();
+	//   legalPanel = ms<DialogLayout>();
 	//   legalPanel->setTheme("legalpanel");
 	//
 	//
-	//   shared_ptr<Label> legalPanelLabel = make_shared<Label>("LEGAL");
+	//   sp<Label> legalPanelLabel = ms<Label>("LEGAL");
 	//   legalPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   legalPanelLabel->setTheme("bigLabel");
 	//
@@ -32,7 +32,7 @@ LegalMenuPanel::LegalMenuPanel()
 
 	//
 	//
-	//   okButton = make_shared<Button>("I Agree");
+	//   okButton = ms<Button>("I Agree");
 	//   okButton->setCanAcceptKeyboardFocus(false);
 	//   okButton->addCallback([&] ()
 	//      {
@@ -41,7 +41,7 @@ LegalMenuPanel::LegalMenuPanel()
 	//   );
 	//
 	//
-	//   noButton = make_shared<Button>("I Disagree");
+	//   noButton = ms<Button>("I Disagree");
 	//   noButton->setCanAcceptKeyboardFocus(false);
 	//   noButton->addCallback([&] ()
 	//      {
@@ -69,7 +69,7 @@ LegalMenuPanel::LegalMenuPanel()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -194,7 +194,7 @@ void LegalMenuPanel::doDisagree()
 	//      setButtonsVisible(false);
 	//
 	//      //create thread, this needs to be a thread because Button.doCallback(Runnable) only calls Runnable.run() which does NOT create a thread.
-	//      make_shared<Thread>([&] ()
+	//      ms<Thread>([&] ()
 	//         {
 	//            try
 	//            {
@@ -235,7 +235,7 @@ void LegalMenuPanel::doAgree()
 	//      setButtonsVisible(false);
 	//
 	//      //create thread, this needs to be a thread because Button.doCallback(Runnable) only calls Runnable.run() which does NOT create a thread.
-	//      make_shared<Thread>([&] ()
+	//      ms<Thread>([&] ()
 	//         {
 	//            try
 	//            {

@@ -17,10 +17,10 @@ public:
 	static Logger log;
 
 
-	//   shared_ptr<DialogLayout> legalPanel;
+	//   sp<DialogLayout> legalPanel;
 	//
-	//   shared_ptr<Button> noButton;
-	//   shared_ptr<Button> okButton;
+	//   sp<Button> noButton;
+	//   sp<Button> okButton;
 
 
 	LegalMenuPanel();

@@ -14,11 +14,11 @@
 Logger Flag::log = Logger("Flag");
 
 
-Flag::Flag(shared_ptr<Engine> g, int id)
+Flag::Flag(sp<Engine> g, int id)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = make_shared<FlagData>(id, "");
+	this->data = ms<FlagData>(id, "");
 
 	for (int i = 0; i < (int)getEventManager()->flagList.size(); i++)
 	{
@@ -35,7 +35,7 @@ Flag::Flag(shared_ptr<Engine> g, int id)
 	//it's a good idea for debugging.
 }
 
-Flag::Flag(shared_ptr<Engine> g, shared_ptr<FlagData> data)
+Flag::Flag(sp<Engine> g, sp<FlagData> data)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -54,13 +54,13 @@ Flag::Flag(shared_ptr<Engine> g, shared_ptr<FlagData> data)
 }
 
 //The following method was originally marked 'synchronized':
-void Flag::setData_S(shared_ptr<FlagData> data)
+void Flag::setData_S(sp<FlagData> data)
 { //=========================================================================================================================
 	this->data = data;
 	setInitialized_S(true);
 }
 
-shared_ptr<FlagData> Flag::getData()
+sp<FlagData> Flag::getData()
 {
 	return data;
 }

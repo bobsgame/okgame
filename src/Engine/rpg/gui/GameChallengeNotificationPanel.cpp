@@ -14,7 +14,7 @@
 Logger GameChallengeNotificationPanel::log = Logger("GameChallengeNotificationPanel");
 
 
-GameChallengeNotificationPanel::GameChallengeNotificationPanel(shared_ptr<FriendCharacter> friend_in, const string& gameName)
+GameChallengeNotificationPanel::GameChallengeNotificationPanel(sp<FriendCharacter> friend_in, const string& gameName)
 { //=========================================================================================================================
 
 	MenuPanel();
@@ -25,24 +25,24 @@ GameChallengeNotificationPanel::GameChallengeNotificationPanel(shared_ptr<Friend
 	this->gameName = gameName;
 
 	//
-	//   notificationPanel = make_shared<DialogLayout>();
+	//   notificationPanel = ms<DialogLayout>();
 	//   notificationPanel->setTheme("darkLayout");
 	//
 	//
-	//   shared_ptr<Label> notificationPanelLabel = make_shared<Label>("Game Challenge!");
+	//   sp<Label> notificationPanelLabel = ms<Label>("Game Challenge!");
 	//   notificationPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   notificationPanelLabel->setTheme("bigLabel");
 	//
-	//   shared_ptr<Label> challengeTextLabel = make_shared<Label>("" + friend->name() + " has challenged you to play " + gameName);
+	//   sp<Label> challengeTextLabel = ms<Label>("" + friend->name() + " has challenged you to play " + gameName);
 	//   challengeTextLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   timeLeftLabel = make_shared<Label>("");
+	//   timeLeftLabel = ms<Label>("");
 	//   timeLeftLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   //---------------------------------------------------------
 	//   //yes
 	//   //---------------------------------------------------------
-	//   yesButton = make_shared<Button>("Yes");
+	//   yesButton = ms<Button>("Yes");
 	//   yesButton->setCanAcceptKeyboardFocus(false);
 	//   yesButton->addCallback([&] ()
 	//      {
@@ -54,7 +54,7 @@ GameChallengeNotificationPanel::GameChallengeNotificationPanel(shared_ptr<Friend
 	//   //---------------------------------------------------------
 	//   //no
 	//   //---------------------------------------------------------
-	//   noButton = make_shared<Button>("No");
+	//   noButton = ms<Button>("No");
 	//   noButton->setCanAcceptKeyboardFocus(false);
 	//   noButton->addCallback([&] ()
 	//      {
@@ -101,7 +101,7 @@ GameChallengeNotificationPanel::GameChallengeNotificationPanel(shared_ptr<Friend
 	//   //		//scrollpane
 	//   //		//----------------------
 	//   //
-	//   //		scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
+	//   //		scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
 	//   //
 	//   //		scrollPane.setTheme(GUIManager.scrollPaneTheme);
 	//   //		scrollPane.setCanAcceptKeyboardFocus(false);

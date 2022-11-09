@@ -148,12 +148,12 @@ const string OKNet::Client_Location_Response = "Client_Location_Response:";
 
 
 Logger OKNet::log = Logger("OKNet");
-shared_ptr<Logger> OKNet::_threadLog = make_shared<Logger>("OKNet");
+sp<Logger> OKNet::_threadLog = ms<Logger>("OKNet");
 
-ArrayList<shared_ptr<UDPPeerConnection>> OKNet::udpConnections;
-shared_ptr<TCPServerConnection> OKNet::tcpServerConnection = make_shared<TCPServerConnection>();
+vector<sp<UDPPeerConnection>> OKNet::udpConnections;
+sp<TCPServerConnection> OKNet::tcpServerConnection = ms<TCPServerConnection>();
 int OKNet::myStatus = status_AVAILABLE;
-ArrayList<shared_ptr<Engine>> OKNet::engines;
+vector<sp<Engine>> OKNet::engines;
 
 bool OKNet::threadStarted = false;
 
@@ -172,7 +172,7 @@ OKNet::~OKNet()
 
 	for(int i=0;i<udpConnections.size();i++)
 	{
-		shared_ptr<UDPPeerConnection>c = udpConnections.get(i);
+		sp<UDPPeerConnection>c = udpConnections.get(i);
 		delete c;
 	}
 	udpConnections.clear();
@@ -201,7 +201,7 @@ mutex OKNet::_stopThread_Mutex;
 int OKNet::_stunChannel = -1;
 mutex OKNet::_stunChannel_Mutex;
 
-shared_ptr<IPaddress> OKNet::_stunServerIPAddress_S = nullptr;
+sp<IPaddress> OKNet::_stunServerIPAddress_S = nullptr;
 int OKNet::_stunServerPort_S = -1;
 mutex OKNet::_stunServerIPAddress_Mutex;
 
@@ -209,7 +209,7 @@ queue<string> OKNet::_stunMessageQueue;
 mutex OKNet::_stunMessageQueue_Mutex;
 
 //===============================================================================================
-void OKNet::addEngineToForwardMessagesTo(shared_ptr<Engine> e)
+void OKNet::addEngineToForwardMessagesTo(sp<Engine> e)
 {//===============================================================================================
 	if(engines.contains(e)==false)
 	engines.add(e);
@@ -236,7 +236,7 @@ void OKNet::update()
 
 	for (int i = 0; i < udpConnections.size(); i++)
 	{
-		shared_ptr<UDPPeerConnection>p = udpConnections.get(i);
+		sp<UDPPeerConnection>p = udpConnections.get(i);
 		p->update();
 	}
 }
@@ -333,7 +333,7 @@ bool OKNet::_checkForIncomingSTUNTraffic()
 
 		if (rd > 0)
 		{
-			shared_ptr<UDPpacket>packet = SDLNet_AllocPacket(10000);
+			sp<UDPpacket>packet = SDLNet_AllocPacket(10000);
 			numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet);
 
 			if (numPacketsReceived > 0)
@@ -459,7 +459,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 		bool found = false;
 		for(int i=0;i<udpConnections.size();i++)
 		{
-			shared_ptr<UDPPeerConnection>c = udpConnections.get(i);
+			sp<UDPPeerConnection>c = udpConnections.get(i);
 			if(c->peerUserID==replyFriendUserID)
 			{
 				c->setPeerIPAddress_S(friendIPString, friendPort);
@@ -493,7 +493,7 @@ void OKNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myPo
 
 	int sent = 0;
 
-	//shared_ptr<UDPpacket> packet = SDLNet_AllocPacket(s.length());
+	//sp<UDPpacket> packet = SDLNet_AllocPacket(s.length());
 	UDPpacket packet;
 	packet.channel = -1;
 	packet.address = *getStunServerIPAddress_S();
@@ -510,7 +510,7 @@ void OKNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myPo
 }
 
 //===============================================================================================
-shared_ptr<UDPPeerConnection> OKNet::addFriendID(long long friendID, int type)
+sp<UDPPeerConnection> OKNet::addFriendID(long long friendID, int type)
 {//===============================================================================================
 
 	//if (type == UDPPeerConnection::FACEBOOK_TYPE)
@@ -523,7 +523,7 @@ shared_ptr<UDPPeerConnection> OKNet::addFriendID(long long friendID, int type)
 			}
 		}
 
-		shared_ptr<UDPPeerConnection> f = make_shared<UDPPeerConnection>(friendID,type);
+		sp<UDPPeerConnection> f = ms<UDPPeerConnection>(friendID,type);
 		udpConnections.add(f);
 		log->debug("Added peer: " + to_string(friendID));
 		return f;
@@ -535,7 +535,7 @@ void OKNet::sendAllPeers(string s)
 {//===============================================================================================
 	for (int i = 0; i < udpConnections.size(); i++)
 	{
-		shared_ptr<UDPPeerConnection> c = udpConnections.get(i);
+		sp<UDPPeerConnection> c = udpConnections.get(i);
 		if (c->getConnectedToPeer_S())
 		{
 			c->writeReliable_S(s);

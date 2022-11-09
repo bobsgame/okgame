@@ -31,20 +31,20 @@ public:
 	static Logger log;
 
 
-	ArrayList<shared_ptr<Caption>> captionList;// = make_shared<ArrayList><shared_ptr<Caption>>();
+	vector<sp<Caption>> captionList;// = ms<ArrayList><sp<Caption>>();
 
 
 
 public:
-	CaptionManager(shared_ptr<Engine> g);
+	CaptionManager(sp<Engine> g);
 
 	void update();
 	void render(RenderOrder layer); //RenderOrder layer)
 
 	//TODO: add more getCaption creation functions to have lots of nice options?
 
-	shared_ptr<Caption> newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, shared_ptr<OKFont> font = OKFont::font_normal_8_outlined, shared_ptr<OKColor> textColor = OKColor::black, shared_ptr<OKColor> textAAColor = nullptr, shared_ptr<OKColor> textBGColor = OKColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, int width = 0, shared_ptr<Entity> entity = nullptr, shared_ptr<Area> area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
-	shared_ptr<Caption> newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize = 8, bool outline = false, shared_ptr<OKColor> textColor = OKColor::black, shared_ptr<OKColor> textBGColor = OKColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, shared_ptr<Entity> entity = nullptr, shared_ptr<Area> area = nullptr);
+	sp<Caption> newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, sp<OKFont> font = OKFont::font_normal_8_outlined, sp<OKColor> textColor = OKColor::black, sp<OKColor> textAAColor = nullptr, sp<OKColor> textBGColor = OKColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, int width = 0, sp<Entity> entity = nullptr, sp<Area> area = nullptr, bool fadeLetterColorTowardsTop = false, bool centerTextOnMultipleLines = false);
+	sp<Caption> newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize = 8, bool outline = false, sp<OKColor> textColor = OKColor::black, sp<OKColor> textBGColor = OKColor::clear, RenderOrder r = RenderOrder::ABOVE_TOP, float scale = 1, sp<Entity> entity = nullptr, sp<Area> area = nullptr);
 
 };
 

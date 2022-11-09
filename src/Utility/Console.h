@@ -48,7 +48,7 @@ DEBUG_overlay_STRUCT* DEBUG_make_overlay(string text, float x, float y);
 void DEBUG_update_overlay(DEBUG_overlay_STRUCT* overlay, string text, float, float);
 void DEBUG_draw_overlays();
 
-void DEBUG_draw_text(float screenX0, float screenY0, string text, shared_ptr<OKColor> color);
+void DEBUG_draw_text(float screenX0, float screenY0, string text, sp<OKColor> color);
 
 //void gl_check_errors(int val);
 void error_console(string error_string);
@@ -61,9 +61,9 @@ class Console
 public:
 	static Logger log;
 
-	static shared_ptr<CaptionManager> captionManager;
+	static sp<CaptionManager> captionManager;
 
-	ArrayList<shared_ptr<ConsoleText>>* consoleTextList = nullptr;
+	sp<vector<sp<ConsoleText>>> consoleTextList = nullptr;
 	mutex _consoleTextList_Mutex;
 
 	static bool showConsole;
@@ -77,14 +77,14 @@ public:
 
 	void pruneChats(int max);
 
-	shared_ptr<ConsoleText> error(const string& s, int ticks = -1, int x = -1, int y = -1, shared_ptr<OKColor> c = nullptr);
-	shared_ptr<ConsoleText> debug(const string& s, int ticks = -1, int x = -1, int y = -1, shared_ptr<OKColor> c = nullptr);
+	sp<ConsoleText> error(const string& s, int ticks = -1, int x = -1, int y = -1, sp<OKColor> c = nullptr);
+	sp<ConsoleText> debug(const string& s, int ticks = -1, int x = -1, int y = -1, sp<OKColor> c = nullptr);
 
 	/// <summary>
 	/// If x OR y is -1, it is centered on that axis. If both are -1, it is displayed in the console. </summary>
-	shared_ptr<ConsoleText> add(const string& s, int ticks = -1, int x = -1, int y = -1, shared_ptr<OKColor> c = nullptr, bool isDebug = false);
-	shared_ptr<ConsoleText> add(const string& s, int ticks, shared_ptr<OKColor> c);
-	shared_ptr<ConsoleText> add(const string& s, shared_ptr<OKColor> c);
+	sp<ConsoleText> add(const string& s, int ticks = -1, int x = -1, int y = -1, sp<OKColor> c = nullptr, bool isDebug = false);
+	sp<ConsoleText> add(const string& s, int ticks, sp<OKColor> c);
+	sp<ConsoleText> add(const string& s, sp<OKColor> c);
 
 
 

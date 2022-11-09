@@ -14,7 +14,7 @@
 Logger StuffButton::log = Logger("StuffButton");
 
 
-StuffButton::StuffButton(shared_ptr<BGClientEngine> g)
+StuffButton::StuffButton(sp<BGClientEngine> g)
 { //=========================================================================================================================
 	this->e = g;
 

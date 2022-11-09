@@ -19,17 +19,17 @@ public:
 	static Logger log;
 
 
-	shared_ptr<OKTexture> textBoxTexture = nullptr;
-	shared_ptr<OKTexture> spriteBoxTexture = nullptr;
-	static shared_ptr<OKTexture> borderTexture;
+	sp<OKTexture> textBoxTexture = nullptr;
+	sp<OKTexture> spriteBoxTexture = nullptr;
+	static sp<OKTexture> borderTexture;
 
 
 	float scrollPercent = 0;
 
-	shared_ptr<ByteArray> textBoxTextureByteArray = nullptr;
+	sp<ByteArray> textBoxTextureByteArray = nullptr;
 	//u8* textBoxTexturePixelsByteBuffer;
 
-	shared_ptr<ByteArray> spriteWindowTextureByteArray = nullptr;
+	sp<ByteArray> spriteWindowTextureByteArray = nullptr;
 	//u8* spriteWindowTexturePixelsByteBuffer;
 
 
@@ -39,9 +39,9 @@ public:
 	int xInLine = 0;
 	int line = 0;
 
-	shared_ptr<Entity> spriteWindowEntity = nullptr;
+	sp<Entity> spriteWindowEntity = nullptr;
 
-	shared_ptr<OKTexture> spriteWindowTexture = nullptr;
+	sp<OKTexture> spriteWindowTexture = nullptr;
 
 	bool redraw = false;
 
@@ -63,7 +63,7 @@ public:
 	int shakeMaxY = 2;
 	bool shakeUpDownToggle = false;
 
-	TextWindow(shared_ptr<Engine> g);
+	TextWindow(sp<Engine> g);
 
 
 	void init();
@@ -75,7 +75,7 @@ public:
 	void updateSpriteWindowTexture();
 
 
-	void setSpriteWindow(shared_ptr<Entity> entity, shared_ptr<OKTexture> texture, const string& newLabel);
+	void setSpriteWindow(sp<Entity> entity, sp<OKTexture> texture, const string& newLabel);
 
 
 	void updateTextureFromByteArray();
@@ -87,7 +87,7 @@ public:
 	int getPixelValue(int letter_index, int y, int x_in_letter, bool blank);
 
 
-	void setPixel(int index, shared_ptr<OKColor> c);
+	void setPixel(int index, sp<OKColor> c);
 
 
 	void drawColumn(int letter_index, int x_in_letter, bool blank);

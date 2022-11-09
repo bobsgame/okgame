@@ -19,12 +19,12 @@ class GameDataLoader : public EnginePart
 public:
 	static Logger log;
 
-	//static shared_ptr<GameDataLoader> gameDataLoader;
+	//static sp<GameDataLoader> gameDataLoader;
 
 	bool debug = false;
 
 
-	GameDataLoader(shared_ptr<Engine> g);
+	GameDataLoader(sp<Engine> g);
 
 
 	void loadGameData();

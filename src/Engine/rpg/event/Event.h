@@ -30,32 +30,32 @@ private:
 	long long ticksCounter = 0;
 
 public:
-	shared_ptr<Sprite> sprite = nullptr;
-	shared_ptr<Map> map = nullptr;
-	shared_ptr<Door> door = nullptr;
-	shared_ptr<Area> area = nullptr;
-	shared_ptr<Entity> entity = nullptr;
+	sp<Sprite> sprite = nullptr;
+	sp<Map> map = nullptr;
+	sp<Door> door = nullptr;
+	sp<Area> area = nullptr;
+	sp<Entity> entity = nullptr;
 
-	shared_ptr<EventCommand> commandTree = nullptr;
-	shared_ptr<EventCommand> currentCommand = nullptr;
+	sp<EventCommand> commandTree = nullptr;
+	sp<EventCommand> currentCommand = nullptr;
 
 private:
-	shared_ptr<EventData> data = nullptr;
+	sp<EventData> data = nullptr;
 
 public:
-	//Event(shared_ptr<Engine> g, int id);
+	//Event(sp<Engine> g, int id);
 
 	//for cutscenes only, string is not used, only to make unambiguous
-	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, string s);
+	Event(sp<Engine> g, sp<EventData> eventData, string s);
 
-	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Map> m);
-	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Area> a);
-	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Entity> e);
-	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Sprite> s);
-	Event(shared_ptr<Engine> g, shared_ptr<EventData> eventData, shared_ptr<Door> d);
+	Event(sp<Engine> g, sp<EventData> eventData, sp<Map> m);
+	Event(sp<Engine> g, sp<EventData> eventData, sp<Area> a);
+	Event(sp<Engine> g, sp<EventData> eventData, sp<Entity> e);
+	Event(sp<Engine> g, sp<EventData> eventData, sp<Sprite> s);
+	Event(sp<Engine> g, sp<EventData> eventData, sp<Door> d);
 	void initEvent();
 
-	shared_ptr<EventData> getData();
+	sp<EventData> getData();
 
 	int getID();
 	string& getName();
@@ -72,11 +72,11 @@ public:
 	void setText(const string& text);
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(shared_ptr<EventData> eventData);
+	void setData_S(sp<EventData> eventData);
 
-	shared_ptr<Map> getMap();
+	sp<Map> getMap();
 
-	virtual shared_ptr<Map> getCurrentMap() override;
+	virtual sp<Map> getCurrentMap() override;
 
 	bool getWasAddedToQueue();
 

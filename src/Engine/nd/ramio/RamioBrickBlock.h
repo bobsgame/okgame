@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	RamioBrickBlock(shared_ptr<Engine> g);
+	RamioBrickBlock(sp<Engine> g);
 
 
 	int open = 0;

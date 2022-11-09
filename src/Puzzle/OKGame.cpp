@@ -7,38 +7,38 @@
 
 
 Logger OKGame::log = Logger("OKGame");
-//shared_ptr<OKGame> OKGame::b = nullptr;
+//sp<OKGame> OKGame::b = nullptr;
 
-shared_ptr<OKTexture> OKGame::upperLeft = nullptr;
-shared_ptr<OKTexture> OKGame::top = nullptr;
-shared_ptr<OKTexture> OKGame::upperRight = nullptr;
-shared_ptr<OKTexture> OKGame::left = nullptr;
-shared_ptr<OKTexture> OKGame::right = nullptr;
-shared_ptr<OKTexture> OKGame::lowerLeft = nullptr;
-shared_ptr<OKTexture> OKGame::bottom = nullptr;
-shared_ptr<OKTexture> OKGame::lowerRight = nullptr;
+sp<OKTexture> OKGame::upperLeft = nullptr;
+sp<OKTexture> OKGame::top = nullptr;
+sp<OKTexture> OKGame::upperRight = nullptr;
+sp<OKTexture> OKGame::left = nullptr;
+sp<OKTexture> OKGame::right = nullptr;
+sp<OKTexture> OKGame::lowerLeft = nullptr;
+sp<OKTexture> OKGame::bottom = nullptr;
+sp<OKTexture> OKGame::lowerRight = nullptr;
 
 bool OKGame::_gotIncomingGamesFromServer = false;
 mutex OKGame::_gotIncomingGamesFromServer_Mutex;
-queue<shared_ptr<GameType>>OKGame::_incomingGameTypes;
+queue<sp<GameType>>OKGame::_incomingGameTypes;
 mutex OKGame::_incomingGameTypes_Mutex;
-queue<shared_ptr<GameSequence>>OKGame::_incomingGameSequences;
+queue<sp<GameSequence>>OKGame::_incomingGameSequences;
 mutex OKGame::_incomingGameSequences_Mutex;
-ArrayList<shared_ptr<GameType>> OKGame::loadedGameTypes;
-ArrayList<shared_ptr<GameSequence>> OKGame::loadedGameSequences;
-ArrayList<shared_ptr<Sprite>> OKGame::loadedSprites;
+vector<sp<GameType>> OKGame::loadedGameTypes;
+vector<sp<GameSequence>> OKGame::loadedGameSequences;
+vector<sp<Sprite>> OKGame::loadedSprites;
 
 
-ArrayList<shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>> OKGame::userStatsPerGameAndDifficulty;
-ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByTotalTimePlayed;
-ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByTotalBlocksCleared;
-ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByPlaneswalkerPoints;
-ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByEloScore;
-ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topGamesByTimeLasted;
-ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topGamesByBlocksCleared;
+vector<sp<OKGameUserStatsForSpecificGameAndDifficulty>> OKGame::userStatsPerGameAndDifficulty;
+vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByTotalTimePlayed;
+vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByTotalBlocksCleared;
+vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByPlaneswalkerPoints;
+vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByEloScore;
+vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topGamesByTimeLasted;
+vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topGamesByBlocksCleared;
 
 
-ArrayList<string> OKGame::activityStream;
+vector<string> OKGame::activityStream;
 
 
 
@@ -49,7 +49,7 @@ OKGame::OKGame()
 {//=========================================================================================================================
 
 #ifdef _DEBUG
-	log->debug("OKGame()");
+	log.debug("OKGame()");
 #endif
 
 	//constructors are called from the base class up, so State->Engine->GameEngine->OKGame
@@ -60,7 +60,7 @@ OKGame::OKGame(ND* nD)
 {//=========================================================================================================================
 
 #ifdef _DEBUG
-	log->debug("OKGame()");
+	log.debug("OKGame()");
 #endif
 
 	this->nD = nD;
@@ -71,12 +71,12 @@ OKGame::OKGame(ND* nD)
 OKGame::~OKGame()
 {//=========================================================================================================================
 #ifdef _DEBUG
-	log->debug("~OKGame()");
+	log.debug("~OKGame()");
 #endif
 
 	for (int i = 0; i<players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 
 		if (p->gameLogic != nullptr)
 		{
@@ -102,7 +102,7 @@ void OKGame::init()
 	super::init();
 
 #ifdef _DEBUG
-	log->debug("OKGame::init()");
+	log.debug("OKGame::init()");
 #endif
 
 	//the reason why i have an init function is because i can control the order of the subclass/superclass calling
@@ -117,19 +117,19 @@ void OKGame::init()
 
 	
 
-	log->debug("Init Player");
+	log.debug("Init Player");
 	initPlayer();
 
 
 
-	//music = make_shared<Music>(this, "data/music/slick_v10.ogg");
+	//music = ms<Music>(this, "data/music/slick_v10.ogg");
 	music = getAudioManager()->playMusic("slick_v10");
 	music->setVolume((((float)Main::globalSettings->musicVolume) / 100.0f));
 
 	//	games.put(randomSeed,ME);
-	//	player2 = make_shared<Game>(this);
+	//	player2 = ms<Game>(this);
 	//	player2.controlledByNetwork = true;
-	//	games.add(player2);
+	//	games.push_back(player2);
 
 }
 
@@ -138,7 +138,7 @@ void OKGame::initPlayer()
 {//=========================================================================================================================
 	for (int i = 0; i<players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 
 		if (p->gameLogic != nullptr)
 		{
@@ -167,13 +167,13 @@ void OKGame::initPlayer()
 	}
 	players.clear();
 
-	shared_ptr<PuzzlePlayer>p = make_shared<PuzzlePlayer>(make_shared<GameLogic>(this, -1));
+	sp<PuzzlePlayer>p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 	
 	p->useKeyboard = true;
-	//if (getControlsManager()->gameControllers.size() > 0)p->gameController = getControlsManager()->gameControllers.get(0);
-	players.add(p);
+	//if (getControlsManager()->gameControllers.size() > 0)p->gameController = getControlsManager()->gameControllers.at(0);
+	players.push_back(p);
 
-	if (currentRoom == nullptr)currentRoom = make_shared<Room>();
+	if (currentRoom == nullptr)currentRoom = ms<Room>();
 
 	//randomSeed = p->game->randomSeed;
 	//originalSettings = p->game->getCurrentGameType();
@@ -195,7 +195,7 @@ bool OKGame::isNetworkGame()
 {//=========================================================================================================================
 	for (int i = 0; i < players.size(); i++)
 	{
-		if (players.get(i)->isNetworkPlayer())return true;
+		if (players.at(i)->isNetworkPlayer())return true;
 	}
 	if (networkMultiplayer)return true;
 	return false;
@@ -218,13 +218,13 @@ using Poco::Path;
 void OKGame::initAssets()
 {//=========================================================================================================================
 
-	log->debug("OKGame::initAssets");
+	log.debug("OKGame::initAssets");
 
 	Uint64 start=0, now=0, totalStart, totalNow;
 	start = SDL_GetPerformanceCounter();
 	totalStart = SDL_GetPerformanceCounter();
 
-	log->debug("Loading icons");
+	log.debug("Loading icons");
 	keyboardTexture = GLUtils::getTextureFromPNGExePath("data/theme/keyboard.png");
 	controllerTexture = GLUtils::getTextureFromPNGExePath("data/theme/controller.png");
 	controllerIconTexture = GLUtils::getTextureFromPNGExePath("data/theme/controllerIcon.png");
@@ -234,7 +234,7 @@ void OKGame::initAssets()
 	gearsTexture = GLUtils::getTextureFromPNGExePath("data/theme/gears.png");
 	chartTexture = GLUtils::getTextureFromPNGExePath("data/theme/chart.png");
 
-	log->debug("Loading frame");
+	log.debug("Loading frame");
 	upperLeft = GLUtils::getTextureFromPNGExePath("data/frame/frame1-ul.png");
 	top = GLUtils::getTextureFromPNGExePath("data/frame/frame1-u.png");
 	upperRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-ur.png");
@@ -245,10 +245,10 @@ void OKGame::initAssets()
 	lowerRight = GLUtils::getTextureFromPNGExePath("data/frame/frame1-dr.png");
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("Loading graphics took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading graphics took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
-	log->debug("Loading sprites");
+	log.debug("Loading sprites");
 
 
 
@@ -268,12 +268,12 @@ void OKGame::initAssets()
 		if (name.find(".txt") != string::npos)
 		{
 			string nameWithoutExtension = name.substr(0, name.find(".txt"));
-			loadedSprites.add(spriteManager->preloadSpriteFromDataFile(nameWithoutExtension));
+			loadedSprites.push_back(spriteManager->preloadSpriteFromDataFile(nameWithoutExtension));
 		}
 	}
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("Loading sprites took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading sprites took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
@@ -281,7 +281,7 @@ void OKGame::initAssets()
 	//spriteManager.preloadSpriteFromFile("bobsGameLogoSmall");
 
 
-	log->debug("Loading GameTypes and GameSequences");
+	log.debug("Loading GameTypes and GameSequences");
 
 	loadGameTypesFromXML();
 	loadGameSequencesFromXML();
@@ -289,12 +289,12 @@ void OKGame::initAssets()
 	updateVersion0ToVersion1();
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("Loading GameTypes and GameSequences took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Loading GameTypes and GameSequences took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
 
 	totalNow = SDL_GetPerformanceCounter();
-	log->debug("OKGame::initAssets took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("OKGame::initAssets took " + to_string((double)((totalNow - totalStart) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 
@@ -302,7 +302,7 @@ void OKGame::initAssets()
 
 
 //=========================================================================================================================
-shared_ptr<Sprite> OKGame::getSpriteFromName(const string& name)
+sp<Sprite> OKGame::getSpriteFromName(const string& name)
 {//=========================================================================================================================
 
 	return spriteManager->getSpriteByName(name);
@@ -310,14 +310,14 @@ shared_ptr<Sprite> OKGame::getSpriteFromName(const string& name)
 }
 
 //=========================================================================================================================
-shared_ptr<GameLogic> OKGame::getPlayer1Game()
+sp<GameLogic> OKGame::getPlayer1Game()
 {//=========================================================================================================================
-	return players.get(0)->gameLogic;
+	return players.at(0)->gameLogic;
 }
 //=========================================================================================================================
-shared_ptr<PuzzlePlayer> OKGame::getPlayer1()
+sp<PuzzlePlayer> OKGame::getPlayer1()
 {//=========================================================================================================================
-	return players.get(0);
+	return players.at(0);
 }
 //=========================================================================================================================
 void OKGame::setOKGameFBOSize()
@@ -344,7 +344,7 @@ void OKGame::setOKGameFBOSize()
 }
 
 //=========================================================================================================================
-void OKGame::renderGameIntoFBO(shared_ptr<GameLogic> g, bool useColorFilter)
+void OKGame::renderGameIntoFBO(sp<GameLogic> g, bool useColorFilter)
 {//=========================================================================================================================
 
 	GLUtils::bindFBO(GLUtils::bobsGame_mainGameFBO);
@@ -409,7 +409,7 @@ void OKGame::renderGameIntoFBO(shared_ptr<GameLogic> g, bool useColorFilter)
 			{
 				GLUtils::useShader(GLUtils::gaussianShader);
 				{
-					GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"size", GLUtils::bobsGameFBO_shared_ptr<Width>GLUtils::BLOOM_FBO_SCALE, GLUtils::bobsGameFBO_shared_ptr<Height>GLUtils::BLOOM_FBO_SCALE);
+					GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"size", GLUtils::bobsGameFBO_Width*GLUtils::BLOOM_FBO_SCALE, GLUtils::bobsGameFBO_Height* GLUtils::BLOOM_FBO_SCALE);
 					GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"dir", 1.0f, 0.0f);
 					GLUtils::drawTexture(GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment0, 0, 1, 0, 1, -1, 1, -1, 1, 1.0f, GLUtils::DEFAULT_BLOOM_FBO_FILTER);
 				}
@@ -421,7 +421,7 @@ void OKGame::renderGameIntoFBO(shared_ptr<GameLogic> g, bool useColorFilter)
 			{
 				GLUtils::useShader(GLUtils::gaussianShader);
 				{
-					GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"size", GLUtils::bobsGameFBO_shared_ptr<Width>GLUtils::BLOOM_FBO_SCALE, GLUtils::bobsGameFBO_shared_ptr<Height>GLUtils::BLOOM_FBO_SCALE);
+					GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"size", GLUtils::bobsGameFBO_Width*GLUtils::BLOOM_FBO_SCALE, GLUtils::bobsGameFBO_Height* GLUtils::BLOOM_FBO_SCALE);
 					GLUtils::setShaderVar2f(GLUtils::gaussianShader, (char*)"dir", 0.0f, 1.0f);
 					GLUtils::drawTexture(GLUtils::bobsGame_bloomFBO_PingPongBlur_Texture_Attachment1, 0, 1, 0, 1, -1, 1, -1, 1, 1, GLUtils::DEFAULT_BLOOM_FBO_FILTER);
 
@@ -448,10 +448,10 @@ void OKGame::renderGameIntoFBO(shared_ptr<GameLogic> g, bool useColorFilter)
 
 //		float w = g->playingFieldX1 - g->playingFieldX0;
 //		float h = g->playingFieldY1 - g->playingFieldY0;
-//		log->debug(to_string(w));
-//		log->debug(to_string(h));
-//		log->debug(to_string(GLUtils::bobsGameFBO_Width));
-//		log->debug(to_string(GLUtils::bobsGameFBO_Height));
+//		log.debug(to_string(w));
+//		log.debug(to_string(h));
+//		log.debug(to_string(GLUtils::bobsGameFBO_Width));
+//		log.debug(to_string(GLUtils::bobsGameFBO_Height));
 
 		GLUtils::useShader(GLUtils::bloomShader);//draw the blurred and original blocks with bloom on top of shaders and playing field
 		{
@@ -492,8 +492,8 @@ void OKGame::renderGameIntoFBO(shared_ptr<GameLogic> g, bool useColorFilter)
 		captionManager->render(RenderOrder::OVER_GUI);
 //		for (int i = 0; i < players.size(); i++)
 //		{
-//			shared_ptr<PuzzlePlayer>p = players.get(i);
-//			shared_ptr<GameLogic>g = p->gameLogic;
+//			sp<PuzzlePlayer>p = players.at(i);
+//			sp<GameLogic>g = p->gameLogic;
 //			g->getCaptionManager()->render(RenderOrder::ABOVE);
 //			g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
 //			g->getCaptionManager()->render(RenderOrder::OVER_TEXT);
@@ -562,7 +562,7 @@ void OKGame::drawOKGameFBO(float x0, float x1, float y0, float y1)
 //{
 //	clearToggle++;
 //	if (clearToggle > 4)clearToggle = 0;
-//	log->debug("ClearToggle: " + to_string(clearToggle));
+//	log.debug("ClearToggle: " + to_string(clearToggle));
 //}
 //
 //if (clearToggle == 0)
@@ -615,8 +615,8 @@ void OKGame::render()
 			captionManager->render(RenderOrder::OVER_GUI);
 //			for (int i = 0; i < players.size(); i++)
 //			{
-//				shared_ptr<PuzzlePlayer>p = players.get(i);
-//				shared_ptr<GameLogic>g = p->gameLogic;
+//				sp<PuzzlePlayer>p = players.at(i);
+//				sp<GameLogic>g = p->gameLogic;
 //				g->getCaptionManager()->render(RenderOrder::OVER_GUI);
 //			}
 //		}
@@ -689,7 +689,7 @@ void OKGame::render()
 
 			float time = (float)(ticksPassed / 2000.0f);
 
-			int shaderInt = GLUtils::bgShaders.get(shaderCount)->value();
+			int shaderInt = GLUtils::bgShaders.at(shaderCount)->value();
 
 			GLUtils::useShader(shaderInt);
 			GLUtils::setShaderVar2f(shaderInt, (char*)"resolution", (float)GLUtils::getViewportWidth()*GLUtils::SHADER_FBO_SCALE, (float)GLUtils::getViewportHeight()*GLUtils::SHADER_FBO_SCALE);
@@ -741,8 +741,8 @@ void OKGame::render()
 		for (int i = 0; i < players.size(); i++)
 		{
 
-			shared_ptr<PuzzlePlayer>p = players.get(i);
-			shared_ptr<GameLogic>g = p->gameLogic;
+			sp<PuzzlePlayer>p = players.at(i);
+			sp<GameLogic>g = p->gameLogic;
 
 			//render into mainGameFBO
 			renderGameIntoFBO(g, false);
@@ -819,8 +819,8 @@ void OKGame::render()
 			captionManager->render(RenderOrder::OVER_GUI);
 //			for (int i = 0; i < players.size(); i++)
 //			{
-//				shared_ptr<PuzzlePlayer>p = players.get(i);
-//				shared_ptr<GameLogic>g = p->gameLogic;
+//				sp<PuzzlePlayer>p = players.at(i);
+//				sp<GameLogic>g = p->gameLogic;
 //				g->getCaptionManager()->render(RenderOrder::ABOVE);
 //				g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
 //				g->getCaptionManager()->render(RenderOrder::OVER_TEXT);
@@ -830,7 +830,7 @@ void OKGame::render()
 
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer>p = players.get(i);
+			sp<PuzzlePlayer>p = players.at(i);
 
 			if (p->gameLogic->pauseMiniMenuShowing)playerPauseMiniMenuRender(p, p->gameLogic->playingFieldX0, p->gameLogic->playingFieldX1, p->gameLogic->playingFieldY0, p->gameLogic->playingFieldY1);;
 		}
@@ -875,7 +875,7 @@ void OKGame::debugKeys()
 	{
 		shaderCount++;
 		if (shaderCount >= GLUtils::bgShaderCount)shaderCount = 0;
-		log->info("Shader: " + to_string(shaderCount));
+		log.info("Shader: " + to_string(shaderCount));
 		Main::console->add("Shader: " + to_string(shaderCount), 10000);
 
 		getPlayer1Game()->updateCaptions();
@@ -1020,9 +1020,9 @@ void OKGame::update()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 
-		shared_ptr<GameLogic>g = p->gameLogic;
+		sp<GameLogic>g = p->gameLogic;
 
 		//actual game update
 		g->update(i,players.size());
@@ -1048,7 +1048,7 @@ void OKGame::update()
 
 	bool gameOver = false;
 
-	if (players.size() == 1 && players.get(0)->gameLogic->complete)
+	if (players.size() == 1 && players.at(0)->gameLogic->complete)
 	{
 		gameOver = true;
 	}
@@ -1056,7 +1056,7 @@ void OKGame::update()
 	bool allPlayersDead = true;
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 		if (p->gameLogic->died == false)
 		{
 			allPlayersDead = false;
@@ -1072,7 +1072,7 @@ void OKGame::update()
 		int alivePlayers = 0;
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer>p = players.get(i);
+			sp<PuzzlePlayer>p = players.at(i);
 			if (p->gameLogic->died == false)
 			{
 				alivePlayers++;
@@ -1083,7 +1083,7 @@ void OKGame::update()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer>p = players.get(i);
+				sp<PuzzlePlayer>p = players.at(i);
 				if (p->gameLogic->died == false)
 				{
 					p->gameLogic->won = true;
@@ -1099,7 +1099,7 @@ void OKGame::update()
 		bool someoneWon = false;
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer>p = players.get(i);
+			sp<PuzzlePlayer>p = players.at(i);
 			if (p->gameLogic->complete == true)
 			{
 				someoneWon = true;
@@ -1110,7 +1110,7 @@ void OKGame::update()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				shared_ptr<PuzzlePlayer>p = players.get(i);
+				sp<PuzzlePlayer>p = players.at(i);
 				if (p->gameLogic->complete == false)
 				{
 					p->gameLogic->lost = true;
@@ -1166,7 +1166,7 @@ void OKGame::update()
 
 				if (players.size() == 1)
 				{
-					shared_ptr<GameSequence>gs = getPlayer1Game()->currentGameSequence;
+					sp<GameSequence>gs = getPlayer1Game()->currentGameSequence;
 					initPlayer();
 					getPlayer1Game()->currentGameSequence = gs;
 				}
@@ -1225,7 +1225,7 @@ void OKGame::sendGameStatsToServer()
 
 		if (statsUploadMenu == nullptr)
 		{
-			statsUploadMenu = make_shared<OKMenu>(this, "Results");
+			statsUploadMenu = ms<OKMenu>(this, "Results");
 			statsUploadMenu->outline = true;
 			statsUploadMenu->defaultMenuColor = OKColor::white;
 			statsUploadMenu->setFontSize(24);
@@ -1240,11 +1240,11 @@ void OKGame::sendGameStatsToServer()
 
 		for (int i = 0; i < players.size(); i++)
 		{
-			shared_ptr<PuzzlePlayer>p = players.get(i);
+			sp<PuzzlePlayer>p = players.at(i);
 			if (p->isNetworkPlayer() == false)
 			{
 
-				shared_ptr<GameLogic>g = p->gameLogic;
+				sp<GameLogic>g = p->gameLogic;
 
 				OKGameGameStats s;
 				s.userName = g->getEngine()->getUserName_S();
@@ -1253,8 +1253,8 @@ void OKGame::sendGameStatsToServer()
 				if (g->currentGameSequence->gameTypes.size() == 1)
 				{
 					s.isGameTypeOrSequence = "GameType";
-					s.gameTypeName = g->currentGameSequence->gameTypes.get(0)->name;
-					s.gameTypeUUID = g->currentGameSequence->gameTypes.get(0)->uuid;
+					s.gameTypeName = g->currentGameSequence->gameTypes.at(0)->name;
+					s.gameTypeUUID = g->currentGameSequence->gameTypes.at(0)->uuid;
 				}
 				else
 				{
@@ -1294,7 +1294,7 @@ void OKGame::sendGameStatsToServer()
 
 				for (int n = 0; n < players.size(); n++)
 				{
-					shared_ptr<PuzzlePlayer>pp = players.get(n);
+					sp<PuzzlePlayer>pp = players.at(n);
 					long long playerUserID = -1;
 					if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
 						playerUserID = pp->peerConnection->peerUserID;
@@ -1346,11 +1346,11 @@ void OKGame::sendGameStatsToServer()
 				if (getServerConnection()->getAndResetGotOKGameGameStatsResponse_S())
 				{
 					gotStatsResponse = true;
-					ArrayList<string> statsResponse = getServerConnection()->getAndResetOKGameGameStatsResponse_S();
+					vector<string> statsResponse = getServerConnection()->getAndResetOKGameGameStatsResponse_S();
 					for (int i = 0; i<statsResponse.size(); i++)
 					{
 						statsUploadMenu->clear();
-						statsUploadMenu->add(statsResponse.get(i));
+						statsUploadMenu->add(statsResponse.at(i));
 						statsUploadMenu->add(" ");
 						statsUploadMenu->add("Press Action", "", OKColor::green);
 					}
@@ -1415,12 +1415,12 @@ void OKGame::doVoting()
 	if (sentVote == false)
 	{
 		string type = "game sequence";
-		shared_ptr<GameSequence>gs = getPlayer1Game()->currentGameSequence;
+		sp<GameSequence>gs = getPlayer1Game()->currentGameSequence;
 		string name = gs->name;
 		if (gs->gameTypes.size() == 1)
 		{
 			type = "game type";
-			shared_ptr<GameType>g = gs->gameTypes.get(0);
+			sp<GameType>g = gs->gameTypes.at(0);
 			name = g->name;
 			if (g->downloaded == false || g->yourVote != "none")
 			{
@@ -1439,7 +1439,7 @@ void OKGame::doVoting()
 
 		if (voteMenu == nullptr)
 		{
-			voteMenu = make_shared<OKMenu>(this, "Vote");
+			voteMenu = ms<OKMenu>(this, "Vote");
 			voteMenu->outline = true;
 			voteMenu->setFontSize(32);
 			voteMenu->addInfo("Please vote on this "+type+" ("+name+")", "", OKColor::green)->outline = true;
@@ -1484,7 +1484,7 @@ void OKGame::doVoting()
 
 					if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
 					{
-						string uuid = getPlayer1Game()->currentGameSequence->gameTypes.get(0)->uuid;
+						string uuid = getPlayer1Game()->currentGameSequence->gameTypes.at(0)->uuid;
 						getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" + vote + ":" + OKNet::endline);
 					}
 					else
@@ -1495,8 +1495,8 @@ void OKGame::doVoting()
 
 					if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
 					{
-						if (vote=="up")getPlayer1Game()->currentGameSequence->gameTypes.get(0)->yourVote = "up";
-						else getPlayer1Game()->currentGameSequence->gameTypes.get(0)->yourVote = "down";
+						if (vote=="up")getPlayer1Game()->currentGameSequence->gameTypes.at(0)->yourVote = "up";
+						else getPlayer1Game()->currentGameSequence->gameTypes.at(0)->yourVote = "down";
 					}
 					else
 					{
@@ -1567,7 +1567,7 @@ void OKGame::changeBG()
 	//if(shaderCount>=LWJGLUtils.bgShaderCount)shaderCount=0;
 
 	shaderCount = Math::randLessThan(GLUtils::bgShaderCount);
-	//log->debug("Shader: " + to_string(shaderCount));
+	//log.debug("Shader: " + to_string(shaderCount));
 	//CaptionManager().newManagedCaption(0,0,1000,""+shaderCount,OKFont.font_normal_16_outlined_smooth,OKColor.white,OKColor.black,2.0f);
 
 }
@@ -1575,7 +1575,7 @@ void OKGame::changeBG()
 
 //
 ////=========================================================================================================================
-//shared_ptr<OKGame> OKGame::getThis()
+//sp<OKGame> OKGame::getThis()
 //{//=========================================================================================================================
 //
 //	return b;
@@ -1596,7 +1596,7 @@ void OKGame::resetPressedButtons()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 		p->resetPressedButtons();
 	}
 
@@ -1607,7 +1607,7 @@ void OKGame::setButtonStates()
 {//=========================================================================================================================
 	for (int i = 0; i < players.size(); i++)
 	{
-		shared_ptr<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 		p->setButtonStates();
 	}
 
@@ -1621,7 +1621,7 @@ void OKGame::setButtonStates()
 //
 //		//use MINIGAME controls
 //
-//		shared_ptr<PuzzlePlayer>p = players.get(0);
+//		sp<PuzzlePlayer>p = players.at(0);
 //
 //		if (getControlsManager()->MINIGAME_UP_HELD == true)p->UP_HELD = true;
 //		if (getControlsManager()->MINIGAME_DOWN_HELD == true)p->DOWN_HELD = true;
@@ -1667,11 +1667,11 @@ void OKGame::setButtonStates()
 //	else
 //	if (players.size() > 1)
 //	{
-	shared_ptr<PuzzlePlayer>p = nullptr;// = players.get(0);
+	sp<PuzzlePlayer>p = nullptr;// = players.at(0);
 
 		for (int i = 0; i < players.size();i++)
 		{
-			p = players.get(i);
+			p = players.at(i);
 
 			if (p->useKeyboard)
 			{
@@ -1710,7 +1710,7 @@ void OKGame::setButtonStates()
 
 			if (p->gameController!=nullptr)
 			{
-				shared_ptr<GameController>g = p->gameController;
+				sp<GameController>g = p->gameController;
 
 				if (g->UP_HELD == true)p->UP_HELD = true;
 				if (g->DOWN_HELD == true)p->DOWN_HELD = true;
@@ -1852,18 +1852,18 @@ void OKGame::loadGameTypesFromXML()
 				try
 				{
 					ia >> BOOST_SERIALIZATION_NVP(gt);
-					shared_ptr<GameType>s = make_shared<GameType>();
+					sp<GameType>s = ms<GameType>();
 					*s = gt;
 
 					//if(i==0)s->builtInType = true;
 					if(i==1) {s->creatorUserName = "(You)"; }//s->builtInType = false; 
 					if(i==2)s->downloaded = true;
 
-					loadedGameTypes.add(s);
+					loadedGameTypes.push_back(s);
 				}
 				catch(exception)
 				{
-					log->error("Could not load GameType: " + name);
+					log.error("Could not load GameType: " + name);
 				}
 			}
 		}
@@ -1937,18 +1937,18 @@ void OKGame::loadGameSequencesFromXML()
 				{
 					ia >> BOOST_SERIALIZATION_NVP(gs);
 
-					shared_ptr<GameSequence>s = make_shared<GameSequence>();
+					sp<GameSequence>s = ms<GameSequence>();
 					*s = gs;
 
 					//if (i == 0)s->builtInType = true;
 					if (i == 1) { s->creatorUserName = "(You)"; }//s->builtInType = false; 
 					if (i == 2)s->downloaded = true;
 
-					loadedGameSequences.add(s);
+					loadedGameSequences.push_back(s);
 				}
 				catch(exception)
 				{
-					log->error("Could not load GameSequence: " + name);
+					log.error("Could not load GameSequence: " + name);
 				}
 
 			}
@@ -1963,7 +1963,7 @@ void OKGame::loadGameSequencesFromXML()
 
 		for(int i=0;i<loadedGameSequences.size();i++)
 		{
-			shared_ptr<GameSequence>g = loadedGameSequences.get(i);
+			sp<GameSequence>g = loadedGameSequences.at(i);
 
 			loadGameSequenceUUIDsToGamesArray(g);
 		}
@@ -1973,37 +1973,37 @@ void OKGame::loadGameSequencesFromXML()
 }
 
 //=========================================================================================================================
-void OKGame::loadGameSequenceUUIDsToGamesArray(shared_ptr<GameSequence>g)
+void OKGame::loadGameSequenceUUIDsToGamesArray(sp<GameSequence>g)
 {//=========================================================================================================================
 
 	g->gameTypes.clear();
 
 	for (int n = 0; n<g->importExport_gameUUIDs.size(); n++)
 	{
-		string uuid = g->importExport_gameUUIDs.get(n);
-		shared_ptr<GameType>s = getGameTypeByUUID(uuid);
+		string uuid = g->importExport_gameUUIDs.at(n);
+		sp<GameType>s = getGameTypeByUUID(uuid);
 
 		if (s != nullptr)
 		{
-			g->gameTypes.add(s);
+			g->gameTypes.push_back(s);
 		}
 		else
 		{
-			log->debug("Could not load game UUID: " + uuid);
+			log.debug("Could not load game UUID: " + uuid);
 		}
 
 	}
 }
 //=========================================================================================================================
-shared_ptr<GameType> OKGame::getGameTypeByName(string name)
+sp<GameType> OKGame::getGameTypeByName(string name)
 {//=========================================================================================================================
 
 	if (name == "")return nullptr;
 
-	shared_ptr<GameType>bt = nullptr;
+	sp<GameType>bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType>b = loadedGameTypes.get(i);
+		sp<GameType>b = loadedGameTypes.at(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -2012,15 +2012,15 @@ shared_ptr<GameType> OKGame::getGameTypeByName(string name)
 	return bt;
 }
 //=========================================================================================================================
-shared_ptr<GameType> OKGame::getGameTypeByUUID(string uuid)
+sp<GameType> OKGame::getGameTypeByUUID(string uuid)
 {//=========================================================================================================================
 
 	if (uuid == "")return nullptr;
 
-	shared_ptr<GameType>bt = nullptr;
+	sp<GameType>bt = nullptr;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType>b = loadedGameTypes.get(i);
+		sp<GameType>b = loadedGameTypes.at(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -2029,15 +2029,15 @@ shared_ptr<GameType> OKGame::getGameTypeByUUID(string uuid)
 	return bt;
 }
 //=========================================================================================================================
-shared_ptr<GameSequence> OKGame::getGameSequenceByName(string name)
+sp<GameSequence> OKGame::getGameSequenceByName(string name)
 {//=========================================================================================================================
 
 	if (name == "")return nullptr;
 
-	shared_ptr<GameSequence>bt = nullptr;
+	sp<GameSequence>bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence>b = loadedGameSequences.get(i);
+		sp<GameSequence>b = loadedGameSequences.at(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -2046,14 +2046,14 @@ shared_ptr<GameSequence> OKGame::getGameSequenceByName(string name)
 	return bt;
 }
 //=========================================================================================================================
-shared_ptr<GameSequence> OKGame::getGameSequenceByUUID(string uuid)
+sp<GameSequence> OKGame::getGameSequenceByUUID(string uuid)
 {//=========================================================================================================================
 	if (uuid == "")return nullptr;
 
-	shared_ptr<GameSequence>bt = nullptr;
+	sp<GameSequence>bt = nullptr;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence>b = loadedGameSequences.get(i);
+		sp<GameSequence>b = loadedGameSequences.at(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -2063,7 +2063,7 @@ shared_ptr<GameSequence> OKGame::getGameSequenceByUUID(string uuid)
 }
 
 //=========================================================================================================================
-void OKGame::saveRoomConfigToFile(shared_ptr<Room> currentRoom,string name)
+void OKGame::saveRoomConfigToFile(sp<Room> currentRoom,string name)
 {//=========================================================================================================================
 	
 	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
@@ -2079,8 +2079,8 @@ void OKGame::saveRoomConfigToFile(shared_ptr<Room> currentRoom,string name)
 		if(currentRoom->gameSequence->gameTypes.size()==1)
 		{
 			currentRoom->room_IsGameSequenceOrType = "GameType";
-			currentRoom->room_GameTypeName = currentRoom->gameSequence->gameTypes.get(0)->name;
-			currentRoom->room_GameTypeUUID = currentRoom->gameSequence->gameTypes.get(0)->uuid;
+			currentRoom->room_GameTypeName = currentRoom->gameSequence->gameTypes.at(0)->name;
+			currentRoom->room_GameTypeUUID = currentRoom->gameSequence->gameTypes.at(0)->uuid;
 		}
 		else
 		{
@@ -2104,7 +2104,7 @@ void OKGame::saveRoomConfigToFile(shared_ptr<Room> currentRoom,string name)
 	}
 }
 //=========================================================================================================================
-ArrayList<string> OKGame::getRoomConfigsList()
+sp<vector<string>> OKGame::getRoomConfigsList()
 {//=========================================================================================================================
 	
 	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
@@ -2113,7 +2113,7 @@ ArrayList<string> OKGame::getRoomConfigsList()
 	if (userDataPathDir.exists() == false)userDataPathDir.createDirectories();
 
 
-	ArrayList<string> roomConfigFileNames;
+	sp<vector<string>> roomConfigFileNames;
 
 
 	vector<string> files;
@@ -2126,7 +2126,7 @@ ArrayList<string> OKGame::getRoomConfigsList()
 		string name = *it;
 		if (name.find(".roomConfig") != string::npos)
 		{
-			roomConfigFileNames.add(name.substr(0,name.find(".roomConfig")));
+			roomConfigFileNames->push_back(name.substr(0,name.find(".roomConfig")));
 		}
 	}
 	
@@ -2135,7 +2135,7 @@ ArrayList<string> OKGame::getRoomConfigsList()
 }
 
 //=========================================================================================================================
-shared_ptr<Room> OKGame::loadRoomConfig(string configName)
+sp<Room> OKGame::loadRoomConfig(string configName)
 {//=========================================================================================================================
 	
 	string userDataPathString = FileUtils::appDataPath + "savedRoomConfigs/";
@@ -2147,7 +2147,7 @@ shared_ptr<Room> OKGame::loadRoomConfig(string configName)
 
 
 	
-	shared_ptr<Room>room = make_shared<Room>();
+	sp<Room>room = ms<Room>();
 	try
 	{
 
@@ -2174,23 +2174,23 @@ shared_ptr<Room> OKGame::loadRoomConfig(string configName)
 	}
 	catch (exception)
 	{
-		log->error("Could not load Room: " + configName);
+		log.error("Could not load Room: " + configName);
 		return nullptr;
 	}
 
 
-	shared_ptr<GameSequence>gs = getGameSequenceByUUID(room->room_GameSequenceUUID);
+	sp<GameSequence>gs = getGameSequenceByUUID(room->room_GameSequenceUUID);
 	if(gs == nullptr)
 	{
-		gs = make_shared<GameSequence>();
-		shared_ptr<GameType> gt = getGameTypeByUUID(room->room_GameTypeUUID);
+		gs = ms<GameSequence>();
+		sp<GameType> gt = getGameTypeByUUID(room->room_GameTypeUUID);
 		if (gt != nullptr)
 		{
-			gs->gameTypes.add(gt);
+			gs->gameTypes.push_back(gt);
 		}
 		else
 		{
-			log->error("Could not load Room: " + configName);
+			log.error("Could not load Room: " + configName);
 			return nullptr;
 		}
 	}
@@ -2202,30 +2202,30 @@ shared_ptr<Room> OKGame::loadRoomConfig(string configName)
 
 
 //=========================================================================================================================
-void OKGame::saveUnknownGameSequencesAndTypesToXML(shared_ptr<GameSequence>gs)
+void OKGame::saveUnknownGameSequencesAndTypesToXML(sp<GameSequence>gs)
 {//=========================================================================================================================
 
 	//save game sequence locally and each game type locally!
 	//go through each game sequence and each game type and ignore if the uuid doesn't exist
 	if (gs->creatorUserID != -1 && gs->dateCreated != -1 && getGameSequenceByUUID(gs->uuid) == nullptr)
 	{
-		loadedGameSequences.add(gs);
+		loadedGameSequences.push_back(gs);
 		saveGameSequenceToXML(gs, true);
 	}
 	for (int i = 0; i < gs->gameTypes.size(); i++)
 	{
-		shared_ptr<GameType>g = gs->gameTypes.get(i);
+		sp<GameType>g = gs->gameTypes.at(i);
 		if (g->creatorUserID != -1 && g->dateCreated != -1 && getGameTypeByUUID(g->uuid) == nullptr)
 		{
 
-			loadedGameTypes.add(g);
+			loadedGameTypes.push_back(g);
 			saveGameTypeToXML(g, true);
 		}
 	}
 }
 
 //=========================================================================================================================
-void OKGame::saveGameSequenceToXML(shared_ptr<GameSequence>gs, bool downloaded)
+void OKGame::saveGameSequenceToXML(sp<GameSequence>gs, bool downloaded)
 {//=========================================================================================================================
 
 	string userDataPathString = FileUtils::appDataPath + "gameSequences/";
@@ -2273,7 +2273,7 @@ void OKGame::saveGameSequenceToXML(shared_ptr<GameSequence>gs, bool downloaded)
 }
 
 //=========================================================================================================================
-void OKGame::saveGameTypeToXML(shared_ptr<GameType>gs, bool downloaded)
+void OKGame::saveGameTypeToXML(sp<GameType>gs, bool downloaded)
 {//=========================================================================================================================
 	string userDataPathString = FileUtils::appDataPath + "gameTypes/";
 	if (downloaded)userDataPathString = FileUtils::appDataPath + "downloadedGameTypes/";
@@ -2392,9 +2392,9 @@ void OKGame::getGameTypesAndSequencesFromServer()
 
 						while (incomingGameTypesQueueSize_S() > 0)
 						{
-							shared_ptr<GameType>g = incomingGameTypesQueuePop_S();
+							sp<GameType>g = incomingGameTypesQueuePop_S();
 
-							shared_ptr<GameType>existing = getGameTypeByUUID(g->uuid);
+							sp<GameType>existing = getGameTypeByUUID(g->uuid);
 							if (existing != nullptr)
 							{
 								if (existing->downloaded == true)
@@ -2407,16 +2407,16 @@ void OKGame::getGameTypesAndSequencesFromServer()
 							if (existing == nullptr || existing->downloaded == true)//dont replace usermade game with downloaded version
 							{
 								g->downloaded = true;
-								loadedGameTypes.add(g);
+								loadedGameTypes.push_back(g);
 								saveGameTypeToXML(g, true);
 							}
 						}
 
 						while (incomingGameSequencesQueueSize_S()>0)
 						{
-							shared_ptr<GameSequence>g = incomingGameSequencesQueuePop_S();
+							sp<GameSequence>g = incomingGameSequencesQueuePop_S();
 
-							shared_ptr<GameSequence> existing = getGameSequenceByUUID(g->uuid);
+							sp<GameSequence> existing = getGameSequenceByUUID(g->uuid);
 							if (existing != nullptr)
 							{
 								if (existing->downloaded == true)
@@ -2425,14 +2425,14 @@ void OKGame::getGameTypesAndSequencesFromServer()
 							if (existing == nullptr || existing->downloaded == true)
 							{
 								g->downloaded = true;
-								loadedGameSequences.add(g);
+								loadedGameSequences.push_back(g);
 								saveGameSequenceToXML(g, true);
 							}
 						}
 
 						for (int i = 0; i<loadedGameSequences.size(); i++)
 						{
-							shared_ptr<GameSequence>g = loadedGameSequences.get(i);
+							sp<GameSequence>g = loadedGameSequences.at(i);
 
 							loadGameSequenceUUIDsToGamesArray(g);
 						}
@@ -2505,7 +2505,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 		else
 		{
-			log->error("Could not parse Game string from server: " + s);
+			log.error("Could not parse Game string from server: " + s);
 			return;
 		}
 
@@ -2546,7 +2546,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 		catch (exception)
 		{
-			log->error("userID could not be parsed");
+			log.error("userID could not be parsed");
 			return;
 		}
 
@@ -2557,7 +2557,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 		catch (exception)
 		{
-			log->error("dateCreated could not be parsed");
+			log.error("dateCreated could not be parsed");
 			return;
 		}
 
@@ -2568,7 +2568,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 		catch (exception)
 		{
-			log->error("lastModified could not be parsed");
+			log.error("lastModified could not be parsed");
 			return;
 		}
 
@@ -2580,7 +2580,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 		catch (exception)
 		{
-			log->error("howManyTimesUpdated could not be parsed");
+			log.error("howManyTimesUpdated could not be parsed");
 			return;
 		}
 
@@ -2592,7 +2592,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 		catch (exception)
 		{
-			log->error("upVotes could not be parsed");
+			log.error("upVotes could not be parsed");
 			return;
 		}
 
@@ -2604,7 +2604,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		}
 		catch (exception)
 		{
-			log->error("downVotes could not be parsed");
+			log.error("downVotes could not be parsed");
 			return;
 		}
 
@@ -2613,7 +2613,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 		string compMD5 = FileUtils::getStringMD5(b64zippedXMLString);
 		if (md5String == compMD5 == false)
 		{
-			log->error("GameType MD5 did not match in "+ gameNameString);
+			log.error("GameType MD5 did not match in "+ gameNameString);
 			continue;
 		}
 
@@ -2622,7 +2622,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 
 		if (xmlString == "" || xmlString.length() == 0)
 		{
-			log->error("Could not unzip GameType in "+ gameNameString);
+			log.error("Could not unzip GameType in "+ gameNameString);
 			continue;
 		}
 
@@ -2638,7 +2638,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			try
 			{
 				ia >> BOOST_SERIALIZATION_NVP(gs);
-				shared_ptr<GameType>g = make_shared<GameType>();
+				sp<GameType>g = ms<GameType>();
 				*g = gs;
 
 				g->creatorUserID = userID;
@@ -2660,7 +2660,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			}
 			catch (exception)
 			{
-				log->error("Could not load GameType from server:"+gameNameString+" "+uuidString);
+				log.error("Could not load GameType from server:"+gameNameString+" "+uuidString);
 			}
 		}
 
@@ -2675,7 +2675,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			{
 				ia >> BOOST_SERIALIZATION_NVP(gs);
 
-				shared_ptr<GameSequence>g = make_shared<GameSequence>();
+				sp<GameSequence>g = ms<GameSequence>();
 				*g = gs;
 
 				g->creatorUserID = userID;
@@ -2694,7 +2694,7 @@ void OKGame::parseIncomingGameTypesAndSequencesFromServer_S(string& s)
 			}
 			catch(exception)
 			{
-				log->error("Could not load GameSequence from server:" + gameNameString + " " + uuidString);
+				log.error("Could not load GameSequence from server:" + gameNameString + " " + uuidString);
 			}
 		}
 
@@ -2732,11 +2732,11 @@ void OKGame::updateVersion0ToVersion1()
 	bool resave = false;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		shared_ptr<GameType>g = loadedGameTypes.get(i);
+		sp<GameType>g = loadedGameTypes.at(i);
 
 		for (int n = 0; n < g->pieceTypes.size(); n++)
 		{
-			shared_ptr<PieceType> p = g->pieceTypes.get(n);
+			sp<PieceType> p = g->pieceTypes.at(n);
 			if (p->uuid == "")
 			{
 				boost::uuids::random_generator generator;
@@ -2745,7 +2745,7 @@ void OKGame::updateVersion0ToVersion1()
 		}
 		for (int n = 0; n < g->blockTypes.size(); n++)
 		{
-			shared_ptr<BlockType> b = g->blockTypes.get(n);
+			sp<BlockType> b = g->blockTypes.at(n);
 			if (b->uuid == "")
 			{
 				boost::uuids::random_generator generator;
@@ -2754,12 +2754,12 @@ void OKGame::updateVersion0ToVersion1()
 		}
 		for (int n = 0; n<g->pieceTypes.size(); n++)
 		{
-			shared_ptr<PieceType> p = g->pieceTypes.get(n);
+			sp<PieceType> p = g->pieceTypes.at(n);
 			for (int x = 0; x<p->overrideBlockTypes_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				shared_ptr<BlockType> b = p->overrideBlockTypes_DEPRECATED.get(x);//wrong block, instantiated by serialize
-				shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(b->name);
+				sp<BlockType> b = p->overrideBlockTypes_DEPRECATED.at(x);//wrong block, instantiated by serialize
+				sp<BlockType> correctBlock = g->getBlockTypeByName(b->name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")
@@ -2767,19 +2767,19 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctBlock->uuid = to_string(generator());
 					}
-					p->overrideBlockTypes_UUID.add(correctBlock->uuid);
+					p->overrideBlockTypes_UUID.push_back(correctBlock->uuid);
 				}
 			}
 		}
 		for (int n = 0; n < g->blockTypes.size(); n++)
 		{
-			shared_ptr<BlockType> b = g->blockTypes.get(n);
+			sp<BlockType> b = g->blockTypes.at(n);
 
 			for (int x = 0; x<b->makePieceTypeWhenCleared_DEPRECATED.size(); x++)
 			{
 				resave = true;
-				shared_ptr<PieceType> p = b->makePieceTypeWhenCleared_DEPRECATED.get(x);
-				shared_ptr<PieceType> correctPiece = g->getPieceTypeByName(p->name);
+				sp<PieceType> p = b->makePieceTypeWhenCleared_DEPRECATED.at(x);
+				sp<PieceType> correctPiece = g->getPieceTypeByName(p->name);
 				if (correctPiece != nullptr)
 				{
 					if (correctPiece->uuid == "")
@@ -2787,14 +2787,14 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctPiece->uuid = to_string(generator());
 					}
-					b->makePieceTypeWhenCleared_UUID.add(correctPiece->uuid);
+					b->makePieceTypeWhenCleared_UUID.push_back(correctPiece->uuid);
 				}
 			}
 			for (int x = 0; x<b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				shared_ptr<BlockType> bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.get(x);//wrong block, instantiated by serialize
-				shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
+				sp<BlockType> bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.at(x);//wrong block, instantiated by serialize
+				sp<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")
@@ -2802,15 +2802,15 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctBlock->uuid = to_string(generator());
 					}
-					b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.add(correctBlock->uuid);
+					b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.push_back(correctBlock->uuid);
 				}
 			}
 			for (int x = 0; x < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); x++)
 			{
-				shared_ptr<TurnFromBlockTypeToType> t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(x);
+				sp<TurnFromBlockTypeToType> t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(x);
 				if (t->fromType_DEPRECATED != "")
 				{
-					shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(t->fromType_DEPRECATED);
+					sp<BlockType> correctBlock = g->getBlockTypeByName(t->fromType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2823,7 +2823,7 @@ void OKGame::updateVersion0ToVersion1()
 				}
 				if (t->toType_DEPRECATED != "")
 				{
-					shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(t->toType_DEPRECATED);
+					sp<BlockType> correctBlock = g->getBlockTypeByName(t->toType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2839,13 +2839,13 @@ void OKGame::updateVersion0ToVersion1()
 
 		for(int n=0;n<g->difficultyTypes.size();n++)
 		{
-			shared_ptr<DifficultyType>d = g->difficultyTypes.get(n);
+			sp<DifficultyType>d = g->difficultyTypes.at(n);
 
 			for (int x = 0; x < d->pieceTypesToDisallow_DEPRECATED.size(); x++)
 			{
 				resave = true;
-				shared_ptr<PieceType> p = d->pieceTypesToDisallow_DEPRECATED.get(x);
-				shared_ptr<PieceType> correctPiece = g->getPieceTypeByName(p->name);
+				sp<PieceType> p = d->pieceTypesToDisallow_DEPRECATED.at(x);
+				sp<PieceType> correctPiece = g->getPieceTypeByName(p->name);
 				if (correctPiece != nullptr)
 				{
 					if (correctPiece->uuid == "")
@@ -2853,14 +2853,14 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctPiece->uuid = to_string(generator());
 					}
-					d->pieceTypesToDisallow_UUID.add(correctPiece->uuid);
+					d->pieceTypesToDisallow_UUID.push_back(correctPiece->uuid);
 				}
 			}
 			for (int x = 0; x<d->blockTypesToDisallow_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				shared_ptr<BlockType> bb = d->blockTypesToDisallow_DEPRECATED.get(x);//wrong block, instantiated by serialize
-				shared_ptr<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
+				sp<BlockType> bb = d->blockTypesToDisallow_DEPRECATED.at(x);//wrong block, instantiated by serialize
+				sp<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")
@@ -2868,7 +2868,7 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctBlock->uuid = to_string(generator());
 					}
-					d->blockTypesToDisallow_UUID.add(correctBlock->uuid);
+					d->blockTypesToDisallow_UUID.push_back(correctBlock->uuid);
 				}
 			}
 		}
@@ -2878,7 +2878,7 @@ void OKGame::updateVersion0ToVersion1()
 	{
 		for (int i = 0; i < loadedGameTypes.size(); i++)
 		{
-			shared_ptr<GameType>g = loadedGameTypes.get(i);
+			sp<GameType>g = loadedGameTypes.at(i);
 			//if (g->builtInType == false)
 				saveGameTypeToXML(g,g->downloaded);
 		}

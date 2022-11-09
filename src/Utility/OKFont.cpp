@@ -12,95 +12,95 @@
 Logger OKFont::log = Logger("OKFont");
 
 
-shared_ptr<TTF_Font*> OKFont::ttf_bobsgame_8 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_bobsgame_16 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_6 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_7 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_8 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_9 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_10 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_11 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_12 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_13 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_14 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_15 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_16 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_17 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_18 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_19 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_20 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_21 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_22 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_23 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_24 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_25 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_26 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_27 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_28 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_29 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_30 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_31 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_32 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_48 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_64 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_6 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_7 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_8 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_9 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_10 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_11 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_12 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_13 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_14 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_15 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_16 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_17 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_18 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_19 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_20 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_21 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_22 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_23 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_24 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_25 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_26 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_27 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_28 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_29 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_30 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_31 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_32 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_48 = nullptr;
-shared_ptr<TTF_Font*> OKFont::ttf_outline_64 = nullptr;
+sp<TTF_Font*> OKFont::ttf_bobsgame_8 = nullptr;
+sp<TTF_Font*> OKFont::ttf_bobsgame_16 = nullptr;
+sp<TTF_Font*> OKFont::ttf_6 = nullptr;
+sp<TTF_Font*> OKFont::ttf_7 = nullptr;
+sp<TTF_Font*> OKFont::ttf_8 = nullptr;
+sp<TTF_Font*> OKFont::ttf_9 = nullptr;
+sp<TTF_Font*> OKFont::ttf_10 = nullptr;
+sp<TTF_Font*> OKFont::ttf_11 = nullptr;
+sp<TTF_Font*> OKFont::ttf_12 = nullptr;
+sp<TTF_Font*> OKFont::ttf_13 = nullptr;
+sp<TTF_Font*> OKFont::ttf_14 = nullptr;
+sp<TTF_Font*> OKFont::ttf_15 = nullptr;
+sp<TTF_Font*> OKFont::ttf_16 = nullptr;
+sp<TTF_Font*> OKFont::ttf_17 = nullptr;
+sp<TTF_Font*> OKFont::ttf_18 = nullptr;
+sp<TTF_Font*> OKFont::ttf_19 = nullptr;
+sp<TTF_Font*> OKFont::ttf_20 = nullptr;
+sp<TTF_Font*> OKFont::ttf_21 = nullptr;
+sp<TTF_Font*> OKFont::ttf_22 = nullptr;
+sp<TTF_Font*> OKFont::ttf_23 = nullptr;
+sp<TTF_Font*> OKFont::ttf_24 = nullptr;
+sp<TTF_Font*> OKFont::ttf_25 = nullptr;
+sp<TTF_Font*> OKFont::ttf_26 = nullptr;
+sp<TTF_Font*> OKFont::ttf_27 = nullptr;
+sp<TTF_Font*> OKFont::ttf_28 = nullptr;
+sp<TTF_Font*> OKFont::ttf_29 = nullptr;
+sp<TTF_Font*> OKFont::ttf_30 = nullptr;
+sp<TTF_Font*> OKFont::ttf_31 = nullptr;
+sp<TTF_Font*> OKFont::ttf_32 = nullptr;
+sp<TTF_Font*> OKFont::ttf_48 = nullptr;
+sp<TTF_Font*> OKFont::ttf_64 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_6 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_7 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_8 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_9 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_10 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_11 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_12 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_13 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_14 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_15 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_16 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_17 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_18 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_19 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_20 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_21 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_22 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_23 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_24 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_25 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_26 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_27 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_28 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_29 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_30 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_31 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_32 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_48 = nullptr;
+sp<TTF_Font*> OKFont::ttf_outline_64 = nullptr;
 
 
-shared_ptr<OKFont> OKFont::font_32 = nullptr;
-shared_ptr<OKFont> OKFont::font_bob_16 = nullptr;
-shared_ptr<OKFont> OKFont::font_bob_16_shadow2 = nullptr;
-shared_ptr<OKFont> OKFont::font_bob_8 = nullptr;
-shared_ptr<OKFont> OKFont::font_bob_8_shadow1 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_11 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_11_outlined = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_11_shadow1 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_16 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_16_outlined_smooth = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_16_outlined_blocky = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_16_outlined_blocky_shadow1 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_16_shadow1 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_8 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_8_outlined = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_8_outlined_shadow1 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_8_outlined_shadow2 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_8_shadow1 = nullptr;
-shared_ptr<OKFont> OKFont::font_normal_8_shadow3 = nullptr;
-shared_ptr<OKFont> OKFont::font_small_16 = nullptr;
-shared_ptr<OKFont> OKFont::font_small_16_shadow3 = nullptr;
-shared_ptr<OKFont> OKFont::font_small_16_outlined_smooth = nullptr;
-shared_ptr<OKFont> OKFont::font_small_16_outlined_smooth_shadow = nullptr;
-shared_ptr<OKFont> OKFont::font_small_16_outlined_blocky = nullptr;
-shared_ptr<OKFont> OKFont::font_small_8 = nullptr;
-shared_ptr<OKFont> OKFont::font_small_8_outlined = nullptr;
-shared_ptr<OKFont> OKFont::font_small_8_shadow1 = nullptr;
+sp<OKFont> OKFont::font_32 = nullptr;
+sp<OKFont> OKFont::font_bob_16 = nullptr;
+sp<OKFont> OKFont::font_bob_16_shadow2 = nullptr;
+sp<OKFont> OKFont::font_bob_8 = nullptr;
+sp<OKFont> OKFont::font_bob_8_shadow1 = nullptr;
+sp<OKFont> OKFont::font_normal_11 = nullptr;
+sp<OKFont> OKFont::font_normal_11_outlined = nullptr;
+sp<OKFont> OKFont::font_normal_11_shadow1 = nullptr;
+sp<OKFont> OKFont::font_normal_16 = nullptr;
+sp<OKFont> OKFont::font_normal_16_outlined_smooth = nullptr;
+sp<OKFont> OKFont::font_normal_16_outlined_blocky = nullptr;
+sp<OKFont> OKFont::font_normal_16_outlined_blocky_shadow1 = nullptr;
+sp<OKFont> OKFont::font_normal_16_shadow1 = nullptr;
+sp<OKFont> OKFont::font_normal_8 = nullptr;
+sp<OKFont> OKFont::font_normal_8_outlined = nullptr;
+sp<OKFont> OKFont::font_normal_8_outlined_shadow1 = nullptr;
+sp<OKFont> OKFont::font_normal_8_outlined_shadow2 = nullptr;
+sp<OKFont> OKFont::font_normal_8_shadow1 = nullptr;
+sp<OKFont> OKFont::font_normal_8_shadow3 = nullptr;
+sp<OKFont> OKFont::font_small_16 = nullptr;
+sp<OKFont> OKFont::font_small_16_shadow3 = nullptr;
+sp<OKFont> OKFont::font_small_16_outlined_smooth = nullptr;
+sp<OKFont> OKFont::font_small_16_outlined_smooth_shadow = nullptr;
+sp<OKFont> OKFont::font_small_16_outlined_blocky = nullptr;
+sp<OKFont> OKFont::font_small_8 = nullptr;
+sp<OKFont> OKFont::font_small_8_outlined = nullptr;
+sp<OKFont> OKFont::font_small_8_shadow1 = nullptr;
 
 //=========================================================================================================================
 OKFont::OKFont(const string& filename, int maxCharHeight, int blockHeight, bool outlined)
@@ -239,9 +239,9 @@ void OKFont::initFonts()
 	log.debug("Load outline fonts took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 	start = SDL_GetPerformanceCounter();
 
-	//shared_ptr<FreeTypeFontGenerator>generator = make_shared<FreeTypeFontGenerator>(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
-	//shared_ptr<BitmapFont>font12 = generator->generateFont(12); // font size 12 pixels
-	//shared_ptr<BitmapFont>font25 = generator->generateFont(25); // font size 25 pixels
+	//sp<FreeTypeFontGenerator>generator = ms<FreeTypeFontGenerator>(Gdx::files::internal("fonts/OpenSans-Regular.ttf"));
+	//sp<BitmapFont>font12 = generator->generateFont(12); // font size 12 pixels
+	//sp<BitmapFont>font25 = generator->generateFont(25); // font size 25 pixels
 	//generator->dispose(); // don't forget to dispose to avoid memory leaks!
 
 
@@ -255,41 +255,41 @@ void OKFont::initFonts()
 	//fontHugeByteArray = FileUtils::HARDWARE_load_file("assets/fonts/font_huge.bin");
 
 
-	font_32 = make_shared<OKFont>("data/fonts/font_32.bin", 32, 64, false);
+	font_32 = ms<OKFont>("data/fonts/font_32.bin", 32, 64, false);
 	font_32->blockWidth = 64;
 
-	font_bob_16 = make_shared<OKFont>("data/fonts/font_bob_16_hq2x.bin", 36, 32, false); //fix height
-	font_bob_16_shadow2 = make_shared<OKFont>("data/fonts/font_bob_16_hq2x_shadow2.bin", 38, 32, false); //fix height
+	font_bob_16 = ms<OKFont>("data/fonts/font_bob_16_hq2x.bin", 36, 32, false); //fix height
+	font_bob_16_shadow2 = ms<OKFont>("data/fonts/font_bob_16_hq2x_shadow2.bin", 38, 32, false); //fix height
 
-	font_bob_8 = make_shared<OKFont>("data/fonts/font_bob_8.bin", 20, 16, false); //fix height
-	font_bob_8_shadow1 = make_shared<OKFont>("data/fonts/font_bob_8_shadow1.bin", 22, 16, false); //fix height
+	font_bob_8 = ms<OKFont>("data/fonts/font_bob_8.bin", 20, 16, false); //fix height
+	font_bob_8_shadow1 = ms<OKFont>("data/fonts/font_bob_8_shadow1.bin", 22, 16, false); //fix height
 
-	font_normal_11 = make_shared<OKFont>("data/fonts/font_normal_11.bin", 15, 24, false);
-	font_normal_11_outlined = make_shared<OKFont>("data/fonts/font_normal_11_outlined.bin", 17, 24, true);
-	font_normal_11_shadow1 = make_shared<OKFont>("data/fonts/font_normal_11_shadow1.bin", 16, 24, false);
+	font_normal_11 = ms<OKFont>("data/fonts/font_normal_11.bin", 15, 24, false);
+	font_normal_11_outlined = ms<OKFont>("data/fonts/font_normal_11_outlined.bin", 17, 24, true);
+	font_normal_11_shadow1 = ms<OKFont>("data/fonts/font_normal_11_shadow1.bin", 16, 24, false);
 
-	font_normal_16 = make_shared<OKFont>("data/fonts/font_normal_16_hq2x.bin", 20, 32, false);
-	font_normal_16_outlined_smooth = make_shared<OKFont>("data/fonts/font_normal_16_hq2x_outlined.bin", 22, 32, true);
-	font_normal_16_outlined_blocky = make_shared<OKFont>("data/fonts/font_normal_16_nearest2x_outlined.bin", 22, 32, true);
-	font_normal_16_outlined_blocky_shadow1 = make_shared<OKFont>("data/fonts/font_normal_16_nearest2x_outlined_shadow1.bin", 23, 32, true);
-	font_normal_16_shadow1 = make_shared<OKFont>("data/fonts/font_normal_16_hq2x_shadow.bin", 22, 32, false);
+	font_normal_16 = ms<OKFont>("data/fonts/font_normal_16_hq2x.bin", 20, 32, false);
+	font_normal_16_outlined_smooth = ms<OKFont>("data/fonts/font_normal_16_hq2x_outlined.bin", 22, 32, true);
+	font_normal_16_outlined_blocky = ms<OKFont>("data/fonts/font_normal_16_nearest2x_outlined.bin", 22, 32, true);
+	font_normal_16_outlined_blocky_shadow1 = ms<OKFont>("data/fonts/font_normal_16_nearest2x_outlined_shadow1.bin", 23, 32, true);
+	font_normal_16_shadow1 = ms<OKFont>("data/fonts/font_normal_16_hq2x_shadow.bin", 22, 32, false);
 
-	font_normal_8 = make_shared<OKFont>("data/fonts/font_normal_8.bin", 10, 16, false);
-	font_normal_8_outlined = make_shared<OKFont>("data/fonts/font_normal_8_outlined.bin", 12, 16, true);
-	font_normal_8_outlined_shadow1 = make_shared<OKFont>("data/fonts/font_normal_8_outlined_shadow1.bin", 13, 16, true);
-	font_normal_8_outlined_shadow2 = make_shared<OKFont>("data/fonts/font_normal_8_outlined_shadow2.bin", 14, 16, true);
-	font_normal_8_shadow1 = make_shared<OKFont>("data/fonts/font_normal_8_shadow1.bin", 11, 16, false);
-	font_normal_8_shadow3 = make_shared<OKFont>("data/fonts/font_normal_8_shadow3.bin", 13, 16, false);
+	font_normal_8 = ms<OKFont>("data/fonts/font_normal_8.bin", 10, 16, false);
+	font_normal_8_outlined = ms<OKFont>("data/fonts/font_normal_8_outlined.bin", 12, 16, true);
+	font_normal_8_outlined_shadow1 = ms<OKFont>("data/fonts/font_normal_8_outlined_shadow1.bin", 13, 16, true);
+	font_normal_8_outlined_shadow2 = ms<OKFont>("data/fonts/font_normal_8_outlined_shadow2.bin", 14, 16, true);
+	font_normal_8_shadow1 = ms<OKFont>("data/fonts/font_normal_8_shadow1.bin", 11, 16, false);
+	font_normal_8_shadow3 = ms<OKFont>("data/fonts/font_normal_8_shadow3.bin", 13, 16, false);
 
-	font_small_16 = make_shared<OKFont>("data/fonts/font_small_16_hq2x.bin", 18, 32, false);
-	font_small_16_shadow3 = make_shared<OKFont>("data/fonts/font_small_16_hq2x_shadow3.bin", 20, 32, false);
-	font_small_16_outlined_smooth = make_shared<OKFont>("data/fonts/font_small_16_hq2x_outlined.bin", 20, 32, true);
-	font_small_16_outlined_smooth_shadow = make_shared<OKFont>("data/fonts/font_small_16_hq2x_outlined_shadow2.bin", 20, 32, true);
-	font_small_16_outlined_blocky = make_shared<OKFont>("data/fonts/font_small_16_nearest2x_outlined.bin", 20, 32, true);
+	font_small_16 = ms<OKFont>("data/fonts/font_small_16_hq2x.bin", 18, 32, false);
+	font_small_16_shadow3 = ms<OKFont>("data/fonts/font_small_16_hq2x_shadow3.bin", 20, 32, false);
+	font_small_16_outlined_smooth = ms<OKFont>("data/fonts/font_small_16_hq2x_outlined.bin", 20, 32, true);
+	font_small_16_outlined_smooth_shadow = ms<OKFont>("data/fonts/font_small_16_hq2x_outlined_shadow2.bin", 20, 32, true);
+	font_small_16_outlined_blocky = ms<OKFont>("data/fonts/font_small_16_nearest2x_outlined.bin", 20, 32, true);
 
-	font_small_8 = make_shared<OKFont>("data/fonts/font_small_8.bin", 9, 16, false);
-	font_small_8_outlined = make_shared<OKFont>("data/fonts/font_small_8_outlined.bin", 11, 16, true);
-	font_small_8_shadow1 = make_shared<OKFont>("data/fonts/font_small_8_shadow1.bin", 10, 16, false);
+	font_small_8 = ms<OKFont>("data/fonts/font_small_8.bin", 9, 16, false);
+	font_small_8_outlined = ms<OKFont>("data/fonts/font_small_8_outlined.bin", 11, 16, true);
+	font_small_8_shadow1 = ms<OKFont>("data/fonts/font_small_8_shadow1.bin", 10, 16, false);
 
 
 	now = SDL_GetPerformanceCounter();
@@ -1043,7 +1043,7 @@ int OKFont::getFontIndexForChar(char c)
 
 
 //=========================================================================================================================
-int OKFont::getNextWordLength(const string& text, int in_position, shared_ptr<OKFont> font)
+int OKFont::getNextWordLength(const string& text, int in_position, sp<OKFont> font)
 {//=========================================================================================================================
 
 	int next_word_length = 0;
@@ -1102,7 +1102,7 @@ bool OKFont::isCurrentPositionANewline(const string& t, int position)
 
 
 //=========================================================================================================================
-int OKFont::getFontPixelValueAtIndex(int index, shared_ptr<OKFont> font)
+int OKFont::getFontPixelValueAtIndex(int index, sp<OKFont> font)
 {//=========================================================================================================================
 
 	if(font==nullptr || font == NULL)
@@ -1125,7 +1125,7 @@ int OKFont::getFontPixelValueAtIndex(int index, shared_ptr<OKFont> font)
 
 
 //=========================================================================================================================
-int OKFont::getCharWidth(int letter_index, shared_ptr<OKFont> font)
+int OKFont::getCharWidth(int letter_index, sp<OKFont> font)
 {//=========================================================================================================================
 
 	if (letter_index == -1)

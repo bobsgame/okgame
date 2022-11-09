@@ -20,25 +20,25 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	// MenuPanel();
 
 	//
-	//   keyboardPanel = make_shared<DialogLayout>();
+	//   keyboardPanel = ms<DialogLayout>();
 	//   keyboardPanel->setTheme("keyboardPanel");
 	//
 	//
-	//   shared_ptr<Label> controlsPanelLabel = make_shared<Label>("Controls");
+	//   sp<Label> controlsPanelLabel = ms<Label>("Controls");
 	//   controlsPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   controlsPanelLabel->setTheme("bigLabel");
 	//
 	//
-	//   shared_ptr<Widget> keyboardImagePanel = make_shared<WidgetAnonymousInnerClassHelper>(this);
+	//   sp<Widget> keyboardImagePanel = ms<WidgetAnonymousInnerClassHelper>(this);
 	//   keyboardImagePanel->setTheme("keyboardImagePanel");
 	//
 	//
-	//   shared_ptr<Label> pressF1Label = make_shared<Label>("Press F1 to show controls at any time.");
+	//   sp<Label> pressF1Label = ms<Label>("Press F1 to show controls at any time.");
 	//   pressF1Label->setCanAcceptKeyboardFocus(false);
 	//   pressF1Label->setTheme("bigLabel");
 	//
 	//
-	//   okButton = make_shared<Button>("OK");
+	//   okButton = ms<Button>("OK");
 	//   okButton->setCanAcceptKeyboardFocus(false);
 	//   okButton->addCallback([&] ()
 	//      {
@@ -67,7 +67,7 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -99,7 +99,7 @@ KeyboardMenuPanel::KeyboardMenuPanel()
 	//   //insideScrollPaneLayout.setTheme(GUIManager.emptyDialogLayoutTheme);
 }
 
-KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(shared_ptr<KeyboardMenuPanel> outerInstance)
+KeyboardMenuPanel::WidgetAnonymousInnerClassHelper::WidgetAnonymousInnerClassHelper(sp<KeyboardMenuPanel> outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
@@ -206,7 +206,7 @@ void KeyboardMenuPanel::doOK()
 	//      //setButtonsVisible(false);
 	//
 	//      //create thread, this needs to be a thread because Button.doCallback(Runnable) only calls Runnable.run() which does NOT create a thread.
-	//      make_shared<Thread>([&] ()
+	//      ms<Thread>([&] ()
 	//         {
 	//            try
 	//            {

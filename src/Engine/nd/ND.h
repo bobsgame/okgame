@@ -19,7 +19,7 @@ public:
 	static Logger log;
 
 
-	shared_ptr<OKTexture> texture = nullptr;
+	sp<OKTexture> texture = nullptr;
 
 	float nDDrawAlpha = 1.0f;
 	float nDZoom = 0.01f;
@@ -37,10 +37,10 @@ public:
 	
 
 
-	shared_ptr<StateManager> nDGameStateManager = nullptr;
+	sp<StateManager> nDGameStateManager = nullptr;
 
 
-	shared_ptr<Light> light = nullptr;
+	sp<Light> light = nullptr;
 	float lightAlpha = 1.0f;
 	bool lightFadeInOutToggle = false;
 
@@ -49,7 +49,7 @@ public:
 	float lightMinAlpha = 0.70f;
 
 
-	shared_ptr<ConsoleText> ndZoomText = nullptr;// = Console::debug("ndZoomText");
+	sp<ConsoleText> ndZoomText = nullptr;// = Console::debug("ndZoomText");
 
 
 	long long fadeOutMeshTicks = 0;
@@ -67,9 +67,9 @@ public:
 	virtual void update() override;
 
 
-	void setGame(shared_ptr<NDGameEngine> game);
+	void setGame(sp<NDGameEngine> game);
 
-	shared_ptr<NDGameEngine> getGame();
+	sp<NDGameEngine> getGame();
 
 
 	virtual void toggleActivated() override;

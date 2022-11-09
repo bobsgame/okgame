@@ -15,7 +15,7 @@ public:
 
 	static Logger log;
 
-	GameStoreButton(shared_ptr<BGClientEngine> g);
+	GameStoreButton(sp<BGClientEngine> g);
 
 	virtual void init() override;
 

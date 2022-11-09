@@ -19,37 +19,37 @@ public:
 
 	static Logger log;
 
-	//vector<shared_ptr<Event>> cutsceneEventList;//project events and unattached events
-	vector<shared_ptr<Event>> eventList;//all events get put here for global lookup
-	vector<shared_ptr<Dialogue>> dialogueList;
-	vector<shared_ptr<GameString>> gameStringList;
-	vector<shared_ptr<Flag>> flagList;
-	vector<shared_ptr<Skill>> skillList;
-	vector<shared_ptr<Item>> itemList;
-	vector<shared_ptr<Event>> runningEventQueue;
+	//vector<sp<Event>> cutsceneEventList;//project events and unattached events
+	vector<sp<Event>> eventList;//all events get put here for global lookup
+	vector<sp<Dialogue>> dialogueList;
+	vector<sp<GameString>> gameStringList;
+	vector<sp<Flag>> flagList;
+	vector<sp<Skill>> skillList;
+	vector<sp<Item>> itemList;
+	vector<sp<Event>> runningEventQueue;
 
-	EventManager(shared_ptr<Engine> g);
+	EventManager(sp<Engine> g);
 
 
 	void update();
 
-	void addToEventQueueIfNotThere(shared_ptr<Event> event);
+	void addToEventQueueIfNotThere(sp<Event> event);
 
-	bool isEventInQueue(shared_ptr<Event> event);
+	bool isEventInQueue(sp<Event> event);
 
 	void unloadCurrentMapEvents();
 
-	shared_ptr<Item> getItemByID(int id);
+	sp<Item> getItemByID(int id);
 
-	shared_ptr<Dialogue> getDialogueByIDCreateIfNotExist(int id);
+	sp<Dialogue> getDialogueByIDCreateIfNotExist(int id);
 
-	//shared_ptr<Event> getCutsceneEventByID(int id);
-	shared_ptr<Event> getEventByIDCreateIfNotExist(int id);
+	//sp<Event> getCutsceneEventByID(int id);
+	sp<Event> getEventByIDCreateIfNotExist(int id);
 
-	shared_ptr<Skill> getSkillByIDCreateIfNotExist(int id);
+	sp<Skill> getSkillByIDCreateIfNotExist(int id);
 
-	shared_ptr<GameString> getGameStringByIDCreateIfNotExist(int id);
+	sp<GameString> getGameStringByIDCreateIfNotExist(int id);
 
-	shared_ptr<Flag> getFlagByIDCreateIfNotExist(int id);
+	sp<Flag> getFlagByIDCreateIfNotExist(int id);
 };
 

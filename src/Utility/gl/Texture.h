@@ -10,9 +10,9 @@ class Logger;
 
 
 	public:
-		static shared_ptr<OKTexture>lastBoundTexture;
+		static sp<OKTexture>lastBoundTexture;
 
-		static shared_ptr<OKTexture>getLastBoundTexture();
+		static sp<OKTexture>getLastBoundTexture();
 
 
 	private:
@@ -102,5 +102,5 @@ class Logger;
 
 
 	public:
-		shared_ptr<ByteArray> getTextureData();
+		sp<ByteArray> getTextureData();
 	};

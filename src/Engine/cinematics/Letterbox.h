@@ -39,7 +39,7 @@ private:
 	bool on = false;
 
 
-	shared_ptr<OKColor> color = OKColor::black;
+	sp<OKColor> color = OKColor::black;
 
 	int ticksSlideDuration = 0;
 
@@ -52,7 +52,7 @@ private:
 	/// speed must be low. 0.1f * ticks(16) * 60fps = 96 pixels per second.
 	/// </summary>
 public:
-	Letterbox(shared_ptr<Engine> g);
+	Letterbox(sp<Engine> g);
 
 
 	void init();

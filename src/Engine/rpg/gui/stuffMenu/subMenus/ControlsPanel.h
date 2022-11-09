@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//ArrayList<shared_ptr<Label>> buttonValueLabel;
+	//ArrayList<sp<Label>> buttonValueLabel;
 
 
 	ControlsPanel();
@@ -27,10 +27,10 @@ private:
 	class WidgetAnonymousInnerClassHelper// : public Widget
 	{
 	private:
-		shared_ptr<ControlsPanel> outerInstance = nullptr;
+		sp<ControlsPanel> outerInstance = nullptr;
 
 	public:
-		WidgetAnonymousInnerClassHelper(shared_ptr<ControlsPanel> outerInstance);
+		WidgetAnonymousInnerClassHelper(sp<ControlsPanel> outerInstance);
 
 		void layout();
 	};

@@ -19,7 +19,7 @@ class ImageData
 //class BufferedImageData : public ImageData
 //{
 //private:
-//	shared_ptr<Light> outerInstance = nullptr;
+//	sp<Light> outerInstance = nullptr;
 //
 //	int width = 0;
 //	int height = 0;
@@ -31,7 +31,7 @@ class ImageData
 //	int texHeight = 0;
 //
 //public:
-//	BufferedImageData(shared_ptr<Light> outerInstance, shared_ptr<BufferedImage> bufferedImage);
+//	BufferedImageData(sp<Light> outerInstance, sp<BufferedImage> bufferedImage);
 //
 //	/// <seealso cref= org.newdawn.slick.opengl.ImageData#getDepth() </seealso>
 //	int getDepth();
@@ -62,7 +62,7 @@ public:
 	static int OVERLAPS_SOMETHING;
 	static int DRAWN;
 
-	shared_ptr<OKTexture> texture = nullptr;
+	sp<OKTexture> texture = nullptr;
 
 	int sortingState = 0;
 
@@ -78,9 +78,9 @@ public:
 	/// <summary>
 	/// This constructor is specifically for creating lights not bound to the map, but to the screen instead. The mapX and mapY coords will be used as screen coords.
 	/// </summary>
-	Light(shared_ptr<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight);
+	Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, int red, int green, int blue, int alpha, int radiusPixels1X, float blendFalloff, float decayExponent, int focusRadius1X, bool isDayLight, bool isNightLight);
 
-	Light(shared_ptr<Engine> g, shared_ptr<LightData> lightAsset, shared_ptr<Map> m);
+	Light(sp<Engine> g, sp<LightData> lightAsset, sp<Map> m);
 
 	bool flickerOnOffToggle = true;
 	int onTicks = 0;
@@ -91,7 +91,7 @@ public:
 	bool drawLightThisFrame = true;
 
 	virtual void update() override;	
-	void initLight(shared_ptr<LightData> lightAsset);
+	void initLight(sp<LightData> lightAsset);
 	void toggle();
 	void setOnOff(bool b);
 	void setFlicker(bool b);
@@ -127,8 +127,8 @@ public:
 	virtual float getHitBoxFromTop() final override;
 	virtual float getHitBoxFromBottom() final override;
 
-	//virtual shared_ptr<EntityData> getData() override;
-	shared_ptr<LightData> getLightData();
+	//virtual sp<EntityData> getData() override;
+	sp<LightData> getLightData();
 
 	virtual float getWidth() override;
 	virtual float getHeight() override;

@@ -16,7 +16,7 @@ class TextManager : public EnginePart
 public:
 	static Logger log;
 
-	//static shared_ptr<TrueTypeFont> ttfFont;
+	//static sp<TrueTypeFont> ttfFont;
 
 	static string debugtext1;
 	static string debugtext2;
@@ -27,7 +27,7 @@ private:
 	bool antiAlias = true;
 
 public:
-	vector<shared_ptr<TextWindow>> textBox;// = make_shared<ArrayList><shared_ptr<TextWindow>>();
+	vector<sp<TextWindow>> textBox;// = ms<ArrayList><sp<TextWindow>>();
 
 
 	int width = 64 * 6 * 2; // *2 because we draw everything at 2x to allow for scaling (and higher res 1x unicode fonts)
@@ -85,32 +85,32 @@ public:
 	bool delay = false;
 	int delayTicks = 0;
 
-	shared_ptr<OKFont> font = nullptr; // this isn't per-getText window because we want to share the state across the boxes. is that right, or would per-box be better?
-	shared_ptr<OKColor> textColor = OKColor::white;
-	shared_ptr<OKColor> textBGColor = OKColor::black;
-	shared_ptr<OKColor> textAAColor = OKColor::gray;
-	shared_ptr<OKColor> textShadowColor = OKColor::darkGray;
+	sp<OKFont> font = nullptr; // this isn't per-getText window because we want to share the state across the boxes. is that right, or would per-box be better?
+	sp<OKColor> textColor = OKColor::white;
+	sp<OKColor> textBGColor = OKColor::black;
+	sp<OKColor> textAAColor = OKColor::gray;
+	sp<OKColor> textShadowColor = OKColor::darkGray;
 
-	shared_ptr<OKColor> tC0 = OKColor::black;
-	shared_ptr<OKColor> tC1 = OKColor::white;
-	shared_ptr<OKColor> tC2 = OKColor::gray;
-	shared_ptr<OKColor> tC3 = OKColor::darkGray;
+	sp<OKColor> tC0 = OKColor::black;
+	sp<OKColor> tC1 = OKColor::white;
+	sp<OKColor> tC2 = OKColor::gray;
+	sp<OKColor> tC3 = OKColor::darkGray;
 
 	bool skipText = false;
 
 	bool buttonIconUpDownToggle = false;
 	int buttonTimer = 0;
-	shared_ptr<OKTexture> buttonTexture = nullptr;
+	sp<OKTexture> buttonTexture = nullptr;
 	// TODO: load button texture, draw where appropriate during render
 
 	int MAX_ANSWER_LENGTH = 255;
 
-	shared_ptr<Entity> optionTargetEntity1 = nullptr;
-	shared_ptr<Entity> optionTargetEntity2 = nullptr;
-	shared_ptr<Entity> optionTargetEntity3 = nullptr;
-	shared_ptr<Entity> optionTargetEntity4 = nullptr;
-	shared_ptr<Entity> optionTargetEntity5 = nullptr;
-	shared_ptr<Entity> optionTargetEntity6 = nullptr;
+	sp<Entity> optionTargetEntity1 = nullptr;
+	sp<Entity> optionTargetEntity2 = nullptr;
+	sp<Entity> optionTargetEntity3 = nullptr;
+	sp<Entity> optionTargetEntity4 = nullptr;
+	sp<Entity> optionTargetEntity5 = nullptr;
+	sp<Entity> optionTargetEntity6 = nullptr;
 
 	int cursorTicks = 0;
 	bool cursorPixelUpDownToggle = true;
@@ -118,10 +118,10 @@ public:
 	int numberOfAnswers = 0;
 	int selectedAnswer = 0;
 
-	shared_ptr<ScreenSprite> cursorScreenSprite = nullptr;
+	sp<ScreenSprite> cursorScreenSprite = nullptr;
 	float keyboardY = 0;
-	shared_ptr<ScreenSprite> keyboardScreenSprite = nullptr;
-	shared_ptr<ScreenSprite> actionIconScreenSprite = nullptr;
+	sp<ScreenSprite> keyboardScreenSprite = nullptr;
+	sp<ScreenSprite> actionIconScreenSprite = nullptr;
 	string optionBuffer;
 
 	//public float BOTTOM_ACTIVE_POSITION_Y=5000;
@@ -130,13 +130,13 @@ public:
 	//public float TOP_INACTIVE_POSITION_Y=5000;
 	//public float POSITION_X=5000;
 
-	static shared_ptr<OKTexture> questionMarkTexture;
+	static sp<OKTexture> questionMarkTexture;
 
 	//public long textEngineSpeedTicksPerLetter=10;
 	//public long drawLetterTicksCounter=100;
 
 	
-	TextManager(shared_ptr<Engine> g);
+	TextManager(sp<Engine> g);
 
 	
 	bool isTextBoxOpen();
@@ -179,7 +179,7 @@ public:
 	
 	void parseOption();
 
-	void dialogue(shared_ptr<Dialogue> d);
+	void dialogue(sp<Dialogue> d);
 
 	void getTextFromOnscreenKeyboard();
 

@@ -14,7 +14,7 @@
 Logger ScreenOverlay::log = Logger("ScreenOverlay");
 
 
-ScreenOverlay::ScreenOverlay(shared_ptr<Engine> g)
+ScreenOverlay::ScreenOverlay(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -23,7 +23,7 @@ void ScreenOverlay::init()
 { //=========================================================================================================================
 }
 
-void ScreenOverlay::doTransition(shared_ptr<OKColor> color, float fromAlpha, float toAlpha, int ticks)
+void ScreenOverlay::doTransition(sp<OKColor> color, float fromAlpha, float toAlpha, int ticks)
 { //=========================================================================================================================
 
 	this->color = color;
@@ -48,7 +48,7 @@ void ScreenOverlay::doTransition(shared_ptr<OKColor> color, float fromAlpha, flo
 	this->transitionType = TYPE_ONE_WAY;
 }
 
-void ScreenOverlay::doToAndFromTransition(shared_ptr<OKColor> color, int ticks, float toAlpha)
+void ScreenOverlay::doToAndFromTransition(sp<OKColor> color, int ticks, float toAlpha)
 { //=========================================================================================================================
 
 
@@ -66,7 +66,7 @@ void ScreenOverlay::doToAndFromTransition(shared_ptr<OKColor> color, int ticks, 
 	this->transitionType = TYPE_ROUNDTRIP;
 }
 
-void ScreenOverlay::setInstantOverlay(shared_ptr<OKColor> color, float alpha)
+void ScreenOverlay::setInstantOverlay(sp<OKColor> color, float alpha)
 { //=========================================================================================================================
 
 	this->color = color;

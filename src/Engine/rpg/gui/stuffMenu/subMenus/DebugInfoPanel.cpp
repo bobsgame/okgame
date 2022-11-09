@@ -47,11 +47,11 @@ void DebugInfoPanel::update()
 		//
 		//      if (label->empty() || size != label->size())
 		//      {
-		//         label = ArrayList<shared_ptr<Label>>(size);
+		//         label = ArrayList<sp<Label>>(size);
 		//
 		//         for (int i = 0; i < size; i++)
 		//         {
-		//            label[i] = make_shared<Label>(Console::consoleTextList[i]->getText);
+		//            label[i] = ms<Label>(Console::consoleTextList[i]->getText);
 		//         }
 		//
 		//         insideLayout->removeAllChildren();

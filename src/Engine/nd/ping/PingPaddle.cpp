@@ -17,7 +17,7 @@ Logger PingPaddle::log = Logger("PingPaddle");
 int PingPaddle::h = 32;
 int PingPaddle::w = 8;
 
-PingPaddle::PingPaddle(shared_ptr<Engine> g)
+PingPaddle::PingPaddle(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }

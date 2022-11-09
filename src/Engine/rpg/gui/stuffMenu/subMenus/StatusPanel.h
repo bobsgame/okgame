@@ -75,52 +75,52 @@ public:
 	   public String itemsPurchased = "";
 	*/
 	//
-	//   shared_ptr<Button> editCharacterButton = nullptr;
+	//   sp<Button> editCharacterButton = nullptr;
 	//
 	//
-	//   shared_ptr<Label> moneyDescriptionLabel = nullptr;
-	//   shared_ptr<Label> moneyLabel = nullptr;
-	//   shared_ptr<Button> addMoneyButton = nullptr;
-	//   shared_ptr<Label> addMoneyButtonQuestionMark = nullptr;
+	//   sp<Label> moneyDescriptionLabel = nullptr;
+	//   sp<Label> moneyLabel = nullptr;
+	//   sp<Button> addMoneyButton = nullptr;
+	//   sp<Label> addMoneyButtonQuestionMark = nullptr;
 	//
-	//   shared_ptr<Label> accountTypeDescriptionLabel = nullptr;
-	//   shared_ptr<Label> accountTypeLabel = nullptr;
-	//   shared_ptr<Button> goPremiumButton = nullptr;
-	//   shared_ptr<Label> goPremiumButtonQuestionMark = nullptr;
+	//   sp<Label> accountTypeDescriptionLabel = nullptr;
+	//   sp<Label> accountTypeLabel = nullptr;
+	//   sp<Button> goPremiumButton = nullptr;
+	//   sp<Label> goPremiumButtonQuestionMark = nullptr;
 	//
 	//
 	//   //public String characterName = "";
-	//   shared_ptr<Label> characterNameDescriptionLabel = nullptr;
-	//   shared_ptr<Label> characterNameLabel = nullptr;
+	//   sp<Label> characterNameDescriptionLabel = nullptr;
+	//   sp<Label> characterNameLabel = nullptr;
 	//
 	//
-	//   shared_ptr<DialogLayout> accountDialogLayout;
-	//   shared_ptr<Label> accountPanelLabel;
+	//   sp<DialogLayout> accountDialogLayout;
+	//   sp<Label> accountPanelLabel;
 	//
 	//
 	//   //public String emailAddress = "";
-	//   shared_ptr<Label> emailAddressDescriptionLabel = nullptr;
-	//   shared_ptr<Label> emailAddressLabel = nullptr;
+	//   sp<Label> emailAddressDescriptionLabel = nullptr;
+	//   sp<Label> emailAddressLabel = nullptr;
 	//
 	//
 	//   //public long accountCreatedTime = 0;
-	//   shared_ptr<Label> accountCreatedTimeDescriptionLabel = nullptr;
-	//   shared_ptr<Label> accountCreatedTimeLabel = nullptr;
+	//   sp<Label> accountCreatedTimeDescriptionLabel = nullptr;
+	//   sp<Label> accountCreatedTimeLabel = nullptr;
 	//
 	//
 	//   //public long lastLoginTime = 0;
-	//   shared_ptr<Label> lastLoginTimeDescriptionLabel = nullptr;
-	//   shared_ptr<Label> lastLoginTimeLabel = nullptr;
+	//   sp<Label> lastLoginTimeDescriptionLabel = nullptr;
+	//   sp<Label> lastLoginTimeLabel = nullptr;
 	//
 	//
 	//   //public int timesLoggedIn = 0;
-	//   shared_ptr<Label> timesLoggedInDescriptionLabel = nullptr;
-	//   shared_ptr<Label> timesLoggedInLabel = nullptr;
+	//   sp<Label> timesLoggedInDescriptionLabel = nullptr;
+	//   sp<Label> timesLoggedInLabel = nullptr;
 	//
 	//
 	//   //public String lastIP = "";
-	//   shared_ptr<Label> lastIPDescriptionLabel = nullptr;
-	//   shared_ptr<Label> lastIPLabel = nullptr;
+	//   sp<Label> lastIPDescriptionLabel = nullptr;
+	//   sp<Label> lastIPLabel = nullptr;
 	//
 	//
 	//   //public String realName = "";
@@ -133,90 +133,90 @@ public:
 	//   //Label birthdayTimeLabel = null;
 	//
 	//
-	//   shared_ptr<DialogLayout> facebookDialogLayout;
-	//   shared_ptr<Label> facebookPanelLabel;
+	//   sp<DialogLayout> facebookDialogLayout;
+	//   sp<Label> facebookPanelLabel;
 	//
 	//   //public String facebookEmail = "";
-	//   shared_ptr<Label> facebookEmailDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookEmailLabel = nullptr;
+	//   sp<Label> facebookEmailDescriptionLabel = nullptr;
+	//   sp<Label> facebookEmailLabel = nullptr;
 	//
 	//
 	//   //public String facebookBirthday = "";
-	//   shared_ptr<Label> facebookBirthdayDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookBirthdayLabel = nullptr;
+	//   sp<Label> facebookBirthdayDescriptionLabel = nullptr;
+	//   sp<Label> facebookBirthdayLabel = nullptr;
 	//
 	//
 	//   //public String facebookFirstName = "";
-	//   shared_ptr<Label> facebookFirstNameDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookFirstNameLabel = nullptr;
+	//   sp<Label> facebookFirstNameDescriptionLabel = nullptr;
+	//   sp<Label> facebookFirstNameLabel = nullptr;
 	//
 	//
 	//   //public String facebookLastName = "";
-	//   shared_ptr<Label> facebookLastNameDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookLastNameLabel = nullptr;
+	//   sp<Label> facebookLastNameDescriptionLabel = nullptr;
+	//   sp<Label> facebookLastNameLabel = nullptr;
 	//
 	//
 	//   //public String facebookGender = "";
-	//   shared_ptr<Label> facebookGenderDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookGenderLabel = nullptr;
+	//   sp<Label> facebookGenderDescriptionLabel = nullptr;
+	//   sp<Label> facebookGenderLabel = nullptr;
 	//
 	//
 	//   //public String facebookLocale = "";
-	//   shared_ptr<Label> facebookLocaleDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookLocaleLabel = nullptr;
+	//   sp<Label> facebookLocaleDescriptionLabel = nullptr;
+	//   sp<Label> facebookLocaleLabel = nullptr;
 	//
 	//
 	//   //public Float facebookTimeZone = 0.0f;
-	//   shared_ptr<Label> facebookTimeZoneDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookTimeZoneLabel = nullptr;
+	//   sp<Label> facebookTimeZoneDescriptionLabel = nullptr;
+	//   sp<Label> facebookTimeZoneLabel = nullptr;
 	//
 	//
 	//   //public String facebookUsername = "";
-	//   shared_ptr<Label> facebookUsernameDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookUsernameLabel = nullptr;
+	//   sp<Label> facebookUsernameDescriptionLabel = nullptr;
+	//   sp<Label> facebookUsernameLabel = nullptr;
 	//
 	//
 	//   //public String facebookWebsite = "";
-	//   shared_ptr<Label> facebookWebsiteDescriptionLabel = nullptr;
-	//   shared_ptr<Label> facebookWebsiteLabel = nullptr;
+	//   sp<Label> facebookWebsiteDescriptionLabel = nullptr;
+	//   sp<Label> facebookWebsiteLabel = nullptr;
 	//
 	//
-	//   shared_ptr<DialogLayout> locationDialogLayout;
-	//   shared_ptr<Label> locationPanelLabel;
+	//   sp<DialogLayout> locationDialogLayout;
+	//   sp<Label> locationPanelLabel;
 	//
 	//   //public String postalCode = "";
-	//   shared_ptr<Label> postalCodeDescriptionLabel = nullptr;
-	//   shared_ptr<Label> postalCodeLabel = nullptr;
+	//   sp<Label> postalCodeDescriptionLabel = nullptr;
+	//   sp<Label> postalCodeLabel = nullptr;
 	//
 	//   //public String countryName = "";
-	//   shared_ptr<Label> countryNameDescriptionLabel = nullptr;
-	//   shared_ptr<Label> countryNameLabel = nullptr;
+	//   sp<Label> countryNameDescriptionLabel = nullptr;
+	//   sp<Label> countryNameLabel = nullptr;
 	//
 	//   //public String isoCountryCode = "";
-	//   shared_ptr<Label> isoCountryCodeDescriptionLabel = nullptr;
-	//   shared_ptr<Label> isoCountryCodeLabel = nullptr;
+	//   sp<Label> isoCountryCodeDescriptionLabel = nullptr;
+	//   sp<Label> isoCountryCodeLabel = nullptr;
 	//
 	//   //public String placeName = "";
-	//   shared_ptr<Label> placeNameDescriptionLabel = nullptr;
-	//   shared_ptr<Label> placeNameLabel = nullptr;
+	//   sp<Label> placeNameDescriptionLabel = nullptr;
+	//   sp<Label> placeNameLabel = nullptr;
 	//
 	//
 	//   //public String stateName = "";
-	//   shared_ptr<Label> stateNameDescriptionLabel = nullptr;
-	//   shared_ptr<Label> stateNameLabel = nullptr;
+	//   sp<Label> stateNameDescriptionLabel = nullptr;
+	//   sp<Label> stateNameLabel = nullptr;
 	//
 	//
 	//   //public float lat = 0;
-	//   shared_ptr<Label> latDescriptionLabel = nullptr;
-	//   shared_ptr<Label> latLabel = nullptr;
+	//   sp<Label> latDescriptionLabel = nullptr;
+	//   sp<Label> latLabel = nullptr;
 	//
 	//   //public float lon = 0;
-	//   shared_ptr<Label> lonDescriptionLabel = nullptr;
-	//   shared_ptr<Label> lonLabel = nullptr;
+	//   sp<Label> lonDescriptionLabel = nullptr;
+	//   sp<Label> lonLabel = nullptr;
 	//
 	//   //public int timeZone = 0;
-	//   shared_ptr<Label> timeZoneDescriptionLabel = nullptr;
-	//   shared_ptr<Label> timeZoneLabel = nullptr;
+	//   sp<Label> timeZoneDescriptionLabel = nullptr;
+	//   sp<Label> timeZoneLabel = nullptr;
 	//
 	//
 	//   //Label playerFacebookNameDescriptionLabel = null;

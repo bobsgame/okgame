@@ -14,7 +14,7 @@
 Logger WarpArea::log = Logger("WarpArea");
 
 
-WarpArea::WarpArea(shared_ptr<Engine> g, shared_ptr<AreaData> a, shared_ptr<Map> m)
+WarpArea::WarpArea(sp<Engine> g, sp<AreaData> a, sp<Map> m)
 { //=========================================================================================================================
 
 	this->e = g;
@@ -29,8 +29,8 @@ WarpArea::WarpArea(shared_ptr<Engine> g, shared_ptr<AreaData> a, shared_ptr<Map>
 
 	if (getEventData() != nullptr)
 	{
-		this->event = make_shared<Event>(g, getEventData(), this);
-		//shared_ptr<Event> event = EnginePart::getEventManager()->getEventByIDCreateIfNotExist(Area::getEventData()->getID());
+		this->event = ms<Event>(g, getEventData(), this);
+		//sp<Event> event = EnginePart::getEventManager()->getEventByIDCreateIfNotExist(Area::getEventData()->getID());
 		//event->area = this;
 	}
 }
@@ -64,13 +64,13 @@ void WarpArea::enter()
 	}
 
 
-	shared_ptr<Map> map = getMapManager()->getMapByNameBlockUntilLoaded(getDestinationMapName());
+	sp<Map> map = getMapManager()->getMapByNameBlockUntilLoaded(getDestinationMapName());
 
 	if (map != nullptr)
 	{
 		for (int i = 0; i < (int)map->warpAreaList.size(); i++)
 		{
-			shared_ptr<WarpArea> w = map->warpAreaList.get(i);
+			sp<WarpArea> w = map->warpAreaList.get(i);
 
 
 			//if(w.mapAsset==getMapManager()->getMapByName(getDestinationMapName()))//should always be true since we are checking the destination map above
@@ -118,14 +118,14 @@ void WarpArea::renderDebugInfo()
 	GLUtils::drawOutlinedString(getName(), x, y - 36, OKColor::white);
 
 
-	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y - 27, make_shared<OKColor>(200, 0, 255));
+	GLUtils::drawOutlinedString("getDestinationTYPEIDString: " + destinationTYPEIDString(), x, y - 27, ms<OKColor>(200, 0, 255));
 
 	if (destinationTYPEIDString() == "AREA." + to_string(getID()) || destinationTYPEIDString() == "" || destinationTYPEIDString() == "none" || destinationTYPEIDString() == "self") //if it doesn't have a destination set, mark it as problematic
 	{
 		GLUtils::drawOutlinedString("WarpArea: Has no destination!", x, y - 18, OKColor::red);
 	}
 	//else
-	GLUtils::drawOutlinedString("WarpArea: Goes to Map.Name: " + getDestinationMapName() + "." + getDestinationWarpAreaName(), x, y - 9, make_shared<OKColor>(200, 0, 255, 255));
+	GLUtils::drawOutlinedString("WarpArea: Goes to Map.Name: " + getDestinationMapName() + "." + getDestinationWarpAreaName(), x, y - 9, ms<OKColor>(200, 0, 255, 255));
 
 
 	Area::renderDebugInfo();

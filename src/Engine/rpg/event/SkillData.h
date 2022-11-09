@@ -26,8 +26,8 @@ public:
 	SkillData(int id, const string& name);
 
 
-	//static shared_ptr<SkillData> fromBase64ZippedJSON(const string& b64);
-	//static shared_ptr<SkillData> fromJSON(const string& json);
+	//static sp<SkillData> fromBase64ZippedJSON(const string& b64);
+	//static sp<SkillData> fromJSON(const string& json);
 
 
 	string& initFromString(string& t);

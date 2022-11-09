@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	RamioMoneyBlock(shared_ptr<Engine> g);
+	RamioMoneyBlock(sp<Engine> g);
 
 
 	bool open = false;

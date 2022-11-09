@@ -26,36 +26,36 @@ public:
 	//gl draw ratio fit between height or width
 
 private:
-	//shared_ptr<TTF_Font >font = OKFont::ttf_18;
+	//sp<TTF_Font >font = OKFont::ttf_18;
 
 	int fontSize = 22;
 	int scaledFontSize = 22;
 public:
 
 
-	static shared_ptr<OKColor> menuColor;
-	static shared_ptr<OKColor> disabledMenuColor;
-	static shared_ptr<OKColor> warningMenuColor;
-	static shared_ptr<OKColor> clearColor;
-	static shared_ptr<OKColor> infoColor;
-	static shared_ptr<OKColor> statusColor;
-	static shared_ptr<OKColor> errorColor;
-	static shared_ptr<OKColor> bgColor;
+	static sp<OKColor> menuColor;
+	static sp<OKColor> disabledMenuColor;
+	static sp<OKColor> warningMenuColor;
+	static sp<OKColor> clearColor;
+	static sp<OKColor> infoColor;
+	static sp<OKColor> statusColor;
+	static sp<OKColor> errorColor;
+	static sp<OKColor> bgColor;
 
-	shared_ptr<OKColor> defaultMenuColor = nullptr;
+	sp<OKColor> defaultMenuColor = nullptr;
 
-	shared_ptr<Caption> titleCaption = nullptr;
-	shared_ptr<Caption> subtitleCaption = nullptr;
+	sp<Caption> titleCaption = nullptr;
+	sp<Caption> subtitleCaption = nullptr;
 	
 	bool outline = true;
 	
 	bool scaleFontSizeToFit = true;
 
 	int cursorPosition = 0;
-	static shared_ptr<OKTexture> rectangleCursorTexture;
-	static shared_ptr<OKTexture> cursorTexture;
-	static shared_ptr<OKTexture> upCursorTexture;
-	static shared_ptr<OKTexture> downCursorTexture;
+	static sp<OKTexture> rectangleCursorTexture;
+	static sp<OKTexture> cursorTexture;
+	static sp<OKTexture> upCursorTexture;
+	static sp<OKTexture> downCursorTexture;
 	static long long cursorInOutToggleTicks;
 	static bool cursorInOutToggle;
 	static int lastMX;
@@ -74,9 +74,9 @@ public:
 	float rectangleCursorCurrentY = 0;
 
 	
-	static ArrayList<shared_ptr<OKMenu>> activeMenus;
+	static ArrayList<sp<OKMenu>> activeMenus;
 
-	shared_ptr<OKTexture>graphic = nullptr;
+	sp<OKTexture>graphic = nullptr;
 	int filter = GLUtils::FILTER_NEAREST;
 	float spacing = 1.0f;
 	bool center = true;
@@ -89,9 +89,9 @@ public:
 	class MenuItem
 	{//=========================================================================================================================
 	public:
-		shared_ptr<Caption> caption = nullptr;
+		sp<Caption> caption = nullptr;
 		string id = "";
-		shared_ptr<OKColor>color = nullptr;
+		sp<OKColor>color = nullptr;
 		bool hidden = false;
 		bool info = false;
 		bool isYesNoType = false;
@@ -100,29 +100,29 @@ public:
 
 		bool outline = true;
 
-		//shared_ptr<OKSubMenu>subMenu = nullptr;
+		//sp<OKSubMenu>subMenu = nullptr;
 
 		~MenuItem();
 		void setYesNo(bool yesNo);
 		void toggle();
-		void setColor(shared_ptr<OKColor> color, bool outline = true);
+		void setColor(sp<OKColor> color, bool outline = true);
 		void setText(string s);
 	};
 
-	ArrayList<shared_ptr<MenuItem>> menuItems;
+	vector<sp<MenuItem>> menuItems;
 
-	shared_ptr<MenuItem> topMenuItemDrawn = nullptr;
+	sp<MenuItem> topMenuItemDrawn = nullptr;
 
 	int lastWidth = 0;
 	int lastHeight = 0;
 
-	OKMenu(shared_ptr<Engine>g, string title = "", string subtitle = "");
+	OKMenu(sp<Engine>g, string title = "", string subtitle = "");
 	~OKMenu();
 
-	void setGraphic(shared_ptr<OKTexture> t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
+	void setGraphic(sp<OKTexture> t = nullptr, int graphicWidth = 0, int graphicYStartPosition = 0, int maxGraphicHeight = 0, int filter = GLUtils::FILTER_NEAREST);
 	void clear();
 	void setAllCaptionsToFullAlpha();
-	static void update(shared_ptr<Engine>g, int ticksPassed);
+	static void update(sp<Engine>g, int ticksPassed);
 
 private:
 	bool areAllMenusDisabled();
@@ -130,12 +130,12 @@ public:
 
 	void up(bool noSound = false);
 	void down(bool noSound = false);
-	shared_ptr<MenuItem> addInfo(string caption, string id = "", shared_ptr<OKColor>color = nullptr);
-	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<OKColor>color = nullptr);
-	shared_ptr<MenuItem> addYesNo(string caption, bool yesNo);
+	sp<MenuItem> addInfo(string caption, string id = "", sp<OKColor>color = nullptr);
+	sp<MenuItem> add(string caption, string id = "", sp<OKColor>color = nullptr);
+	sp<MenuItem> addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
-	ArrayList<string> getArrayListOfMenuItemIDs();
+	vector<string> getArrayListOfMenuItemIDs();
 
 	//returns bottom of graphic y position
 	void render(
@@ -155,9 +155,9 @@ public:
 	void setAllVisible();
 	bool isSelectedID(string id, bool clicked = false, int mx = 0, int my = 0);
 	void setSelectedID(string id);
-	shared_ptr<Caption> getCaptionByID(string id);
-	shared_ptr<MenuItem> getMenuItemByID(string id);
-	shared_ptr<MenuItem> getSelectedMenuItem();
+	sp<Caption> getCaptionByID(string id);
+	sp<MenuItem> getMenuItemByID(string id);
+	sp<MenuItem> getSelectedMenuItem();
 
 	void setFontSize(int size);
 
@@ -166,7 +166,7 @@ public:
 	//bool *onQuitToggle;
 
 	//	//=========================================================================================================================
-	//	shared_ptr<OKSubMenu> addSubMenu(string caption, string id, shared_ptr<OKGame>b, void(*f) (shared_ptr<OKGame>, string))
+	//	sp<OKSubMenu> addSubMenu(string caption, string id, sp<OKGame>b, void(*f) (sp<OKGame>, string))
 	//	{//=========================================================================================================================
 	//		
 	//
@@ -180,12 +180,12 @@ public:
 //class OKSubMenu : public OKMenu
 //{//=========================================================================================================================
 //public:
-//	shared_ptr<OKMenu>parentMenu = nullptr;
-//	shared_ptr<OKGame>bobsGame = nullptr;
-//	void (*callBack)(shared_ptr<OKGame>, string) = nullptr;
+//	sp<OKMenu>parentMenu = nullptr;
+//	sp<OKGame>bobsGame = nullptr;
+//	void (*callBack)(sp<OKGame>, string) = nullptr;
 //	bool isOpen = false;
 //
-//	OKSubMenu(shared_ptr<Engine>g) : OKMenu(g, "")
+//	OKSubMenu(sp<Engine>g) : OKMenu(g, "")
 //	{
 //		
 //	}
@@ -193,9 +193,9 @@ public:
 //	{
 //		
 //	}
-//	shared_ptr<MenuItem> add(string caption, string id = "", shared_ptr<OKColor>color = menuColor)
+//	sp<MenuItem> add(string caption, string id = "", sp<OKColor>color = menuColor)
 //	{
-//		shared_ptr<MenuItem> m = OKMenu::add(caption, id, color);
+//		sp<MenuItem> m = OKMenu::add(caption, id, color);
 //		menuItems->get(menuItems->size()-1)->caption->visible = false;
 //		return m;
 //

@@ -29,10 +29,10 @@ public:
 	string description = "This is an empty game sequence.";
 
 	//this is saved to XML, we don't want to save the entire currentGameType object
-	ArrayList<string> importExport_gameUUIDs;
+	vector<string> importExport_gameUUIDs;
 
 	//this is populated from loadedGameTypes when sequence is loaded, if a name from gameUUIDs cannot be found it will not be in here and an error will be logged
-	ArrayList<shared_ptr<GameType>>gameTypes;
+	vector<sp<GameType>>gameTypes;
 
 	bool randomizeSequence = true;
 
@@ -63,7 +63,7 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(description);
 		if (version < 3)
 		{
-			ArrayList<string> gameUUIDs;
+			vector<string> gameUUIDs;
 			ar & BOOST_SERIALIZATION_NVP(gameUUIDs);
 			importExport_gameUUIDs = gameUUIDs;
 		}
@@ -151,7 +151,7 @@ public:
 
 	}
 
-	ArrayList<GameType>importExport_games; //we do want the entire currentGameType objects for the games when we are playing multiplayer and need to send this to other players
+	vector<GameType>importExport_games; //we do want the entire currentGameType objects for the games when we are playing multiplayer and need to send this to other players
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version);
@@ -159,7 +159,7 @@ public:
 	//=========================================================================================================================
 	string toBase64GZippedXML()
 	{//=========================================================================================================================
-		shared_ptr<NetworkGameSequence> s = shared_from_this();
+		sp<NetworkGameSequence> s = shared_from_this();
 		NetworkGameSequence gs;
 		gs = *s;
 
@@ -172,7 +172,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	static shared_ptr<NetworkGameSequence>fromBase64GZippedXML(string b64GZipXML)
+	static sp<NetworkGameSequence>fromBase64GZippedXML(string b64GZipXML)
 	{//=========================================================================================================================
 		string xml = FileUtils::unzipBase64StringToString(b64GZipXML);
 
@@ -189,7 +189,7 @@ public:
 		{
 			NetworkGameSequence gs;
 			ia >> BOOST_SERIALIZATION_NVP(gs);
-			shared_ptr<NetworkGameSequence>s = make_shared<NetworkGameSequence>();
+			sp<NetworkGameSequence>s = ms<NetworkGameSequence>();
 			*s = gs;
 
 			return s;

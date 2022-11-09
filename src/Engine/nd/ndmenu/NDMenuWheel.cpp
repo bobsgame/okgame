@@ -16,15 +16,15 @@
 Logger NDMenuWheel::log = Logger("NDMenuWheel");
 
 
-shared_ptr<OKTexture> NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
-shared_ptr<OKTexture> NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
+sp<OKTexture> NDMenuWheelItem::wheelItemBackgroundTexture = nullptr;
+sp<OKTexture> NDMenuWheelItem::wheelItemGlossyOverlayTexture = nullptr;
 
-NDMenuWheel::NDMenuWheel(shared_ptr<Engine> g)
+NDMenuWheel::NDMenuWheel(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
 
-ArrayList<shared_ptr<NDMenuWheelItem>>* NDMenuWheel::wheelItems = make_shared<ArrayList><shared_ptr<NDMenuWheelItem>>();
+sp<vector<sp<NDMenuWheelItem>>> NDMenuWheel::wheelItems = ms<ArrayList><sp<NDMenuWheelItem>>();
 int NDMenuWheel::CLOCKWISE = 0;
 int NDMenuWheel::COUNTERCLOCKWISE = 1;
 float NDMenuWheel::highlightColor = 0;
@@ -64,14 +64,14 @@ void NDMenuWheel::init()
 	NDMenuWheelItem::wheelItemGlossyOverlayTexture = GLUtils::getTextureFromPNGExePath("data/nD/menu/wheelItem/glossyOverlay.png");
 
 
-	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "GameStore", OKColor::magenta));
-	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), nullptr, "Settings", OKColor::green));
+	wheelItems->add(ms<NDMenuWheelItem>(getEngine(), nullptr, "GameStore", OKColor::magenta));
+	wheelItems->add(ms<NDMenuWheelItem>(getEngine(), nullptr, "Settings", OKColor::green));
 }
 
-void NDMenuWheel::addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color)
+void NDMenuWheel::addGame(sp<NDGameEngine> game, const string& name, sp<OKColor> color)
 { //=========================================================================================================================
 
-	wheelItems->add(make_shared<NDMenuWheelItem>(getEngine(), game, name, color));
+	wheelItems->add(ms<NDMenuWheelItem>(getEngine(), game, name, color));
 
 
 	//------------------------------------------
@@ -122,7 +122,7 @@ void NDMenuWheel::render()
 	}
 
 
-	shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
+	sp<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 	//------------------------------------------
 	//draw selection box
 	//------------------------------------------
@@ -134,14 +134,14 @@ void NDMenuWheel::render()
 
 void NDMenuWheel::renderGameTitleCentered()
 { //=========================================================================================================================
-	//shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
+	//sp<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 	//draw game title
 	//NDGame.drawTexture(selected.labelTexture,ND.getViewportWidth()/2-selected.labelTexture.getImageWidth()/2,ND.getViewportHeight()/2-selected.labelTexture.getImageHeight()/2);
 }
 
 void NDMenuWheel::renderGameTitleCenteredGlow()
 { //=========================================================================================================================
-	//shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
+	//sp<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 	//draw game title glow
 	//NDGame.drawTextureAlpha(selected.labelGlowTexture,ND.getViewportWidth()/2-selected.labelTexture.getImageWidth()/2,ND.getViewportHeight()/2-selected.labelTexture.getImageHeight()/2,NDMenu.actionFadeCounter/255.0f);
 }
@@ -201,7 +201,7 @@ void NDMenuWheel::update()
 	}
 
 
-	shared_ptr<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
+	sp<NDMenuWheelItem> selected = wheelItems->get(selectedWheelItem);
 
 
 	float screenMiddleY = (float)(GLUtils::getViewportHeight() / 2);
@@ -284,8 +284,8 @@ void NDMenuWheel::update()
 		//------------------------------------------
 
 
-		shared_ptr<NDMenuWheelItem> bottomItem = wheelItems->get(0);
-		shared_ptr<NDMenuWheelItem> topItem = bottomItem;
+		sp<NDMenuWheelItem> bottomItem = wheelItems->get(0);
+		sp<NDMenuWheelItem> topItem = bottomItem;
 
 		for (int c = 0; c < wheelItems->size(); c++)
 		{

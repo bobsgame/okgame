@@ -16,30 +16,30 @@
 //Logger EasingTest::log = Logger("EasingTest");
 
 
-shared_ptr<Caption> EasingTest::linearTweenCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInQuadCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInCubicCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInQuartCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInQuintCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInExpoCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInCircCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInSineCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeOutQuadCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeOutCubicCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeOutQuartCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeOutQuintCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeOutExpoCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeOutCircCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeOutSineCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInOutQuadCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInOutCubicCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInOutQuartCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInOutQuintCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInOutExpoCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInOutCircCaption = nullptr;
-shared_ptr<Caption> EasingTest::easeInOutSineCaption = nullptr;
+sp<Caption> EasingTest::linearTweenCaption = nullptr;
+sp<Caption> EasingTest::easeInQuadCaption = nullptr;
+sp<Caption> EasingTest::easeInCubicCaption = nullptr;
+sp<Caption> EasingTest::easeInQuartCaption = nullptr;
+sp<Caption> EasingTest::easeInQuintCaption = nullptr;
+sp<Caption> EasingTest::easeInExpoCaption = nullptr;
+sp<Caption> EasingTest::easeInCircCaption = nullptr;
+sp<Caption> EasingTest::easeInSineCaption = nullptr;
+sp<Caption> EasingTest::easeOutQuadCaption = nullptr;
+sp<Caption> EasingTest::easeOutCubicCaption = nullptr;
+sp<Caption> EasingTest::easeOutQuartCaption = nullptr;
+sp<Caption> EasingTest::easeOutQuintCaption = nullptr;
+sp<Caption> EasingTest::easeOutExpoCaption = nullptr;
+sp<Caption> EasingTest::easeOutCircCaption = nullptr;
+sp<Caption> EasingTest::easeOutSineCaption = nullptr;
+sp<Caption> EasingTest::easeInOutQuadCaption = nullptr;
+sp<Caption> EasingTest::easeInOutCubicCaption = nullptr;
+sp<Caption> EasingTest::easeInOutQuartCaption = nullptr;
+sp<Caption> EasingTest::easeInOutQuintCaption = nullptr;
+sp<Caption> EasingTest::easeInOutExpoCaption = nullptr;
+sp<Caption> EasingTest::easeInOutCircCaption = nullptr;
+sp<Caption> EasingTest::easeInOutSineCaption = nullptr;
 
-EasingTest::EasingTest(shared_ptr<Engine> g) : EnginePart(g)
+EasingTest::EasingTest(sp<Engine> g) : EnginePart(g)
 {
 	linearTweenCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 20 * 2, -1, "linear", OKFont::font_small_8_outlined, OKColor::white, nullptr, OKColor::black, RenderOrder::OVER_GUI, 1.0f, 0);
 

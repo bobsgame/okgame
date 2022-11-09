@@ -25,18 +25,18 @@ public:
 	static Logger log;
 
 
-	static shared_ptr<OKTexture> blackBackgroundTexture;
-	static shared_ptr<OKTexture> blackForegroundTexture;
+	static sp<OKTexture> blackBackgroundTexture;
+	static sp<OKTexture> blackForegroundTexture;
 
-	static shared_ptr<OKTexture> whiteBackgroundTexture;
-	static shared_ptr<OKTexture> whiteForegroundTexture;
+	static sp<OKTexture> whiteBackgroundTexture;
+	static sp<OKTexture> whiteForegroundTexture;
 
-	static shared_ptr<OKTexture> backgroundTexture;
-	static shared_ptr<OKTexture> foregroundTexture;
+	static sp<OKTexture> backgroundTexture;
+	static sp<OKTexture> foregroundTexture;
 
 
-	static shared_ptr<OKTexture> glowTexture;
-	static shared_ptr<OKTexture> dividerTexture;
+	static sp<OKTexture> glowTexture;
+	static sp<OKTexture> dividerTexture;
 
 
 	static int sizeY;
@@ -45,20 +45,20 @@ public:
 
 	static bool useLightTheme;
 
-	shared_ptr<ClockCaption> clockCaption = nullptr;
-	shared_ptr<DayCaption> dayCaption = nullptr;
-	shared_ptr<MoneyCaption> moneyCaption = nullptr;
-	shared_ptr<NDButton> ndButton = nullptr;
-	shared_ptr<GameStoreButton> gameStoreButton = nullptr;
-	shared_ptr<StuffButton> stuffButton = nullptr;
+	sp<ClockCaption> clockCaption = nullptr;
+	sp<DayCaption> dayCaption = nullptr;
+	sp<MoneyCaption> moneyCaption = nullptr;
+	sp<NDButton> ndButton = nullptr;
+	sp<GameStoreButton> gameStoreButton = nullptr;
+	sp<StuffButton> stuffButton = nullptr;
 
-	shared_ptr<NotificationManager> notificationManager = nullptr;
+	sp<NotificationManager> notificationManager = nullptr;
 
 
 	bool enabled = true;
 
 
-	StatusBar(shared_ptr<BGClientEngine> g);
+	StatusBar(sp<BGClientEngine> g);
 
 
 	void init();

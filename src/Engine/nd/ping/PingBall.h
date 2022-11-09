@@ -29,7 +29,7 @@ public:
 	//float speed;
 
 
-	PingBall(shared_ptr<Engine> g);
+	PingBall(sp<Engine> g);
 
 
 	void update();

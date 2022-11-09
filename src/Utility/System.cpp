@@ -62,27 +62,27 @@ Logger System::log = Logger("System");
 //string System::glExtensions = "";
 
 
-shared_ptr<ConsoleText> System::totalRendersText = nullptr;
-shared_ptr<ConsoleText> System::totalUpdatesText = nullptr;
-shared_ptr<ConsoleText> System::rendersPerSecondText = nullptr;
-shared_ptr<ConsoleText> System::averageRendersPerSecondText = nullptr;
-shared_ptr<ConsoleText> System::updatesPerSecondText = nullptr;
-shared_ptr<ConsoleText> System::rendersSkippedText = nullptr;
-shared_ptr<ConsoleText> System::updatesSkippedText = nullptr;
-shared_ptr<ConsoleText> System::averageTicksPerFrameText = nullptr;
-shared_ptr<ConsoleText> System::averageTicksPerUpdateText = nullptr;
-shared_ptr<ConsoleText> System::onlineStatusText = nullptr;
+sp<ConsoleText> System::totalRendersText = nullptr;
+sp<ConsoleText> System::totalUpdatesText = nullptr;
+sp<ConsoleText> System::rendersPerSecondText = nullptr;
+sp<ConsoleText> System::averageRendersPerSecondText = nullptr;
+sp<ConsoleText> System::updatesPerSecondText = nullptr;
+sp<ConsoleText> System::rendersSkippedText = nullptr;
+sp<ConsoleText> System::updatesSkippedText = nullptr;
+sp<ConsoleText> System::averageTicksPerFrameText = nullptr;
+sp<ConsoleText> System::averageTicksPerUpdateText = nullptr;
+sp<ConsoleText> System::onlineStatusText = nullptr;
 
-shared_ptr<ConsoleText> System::upTimeText = nullptr;
+sp<ConsoleText> System::upTimeText = nullptr;
 
-shared_ptr<ConsoleText> System::ticksText[amtTicksTexts] = {nullptr};
+sp<ConsoleText> System::ticksText[amtTicksTexts] = {nullptr};
 
 
-shared_ptr<ConsoleText> System::mxThreadCountText = nullptr;
+sp<ConsoleText> System::mxThreadCountText = nullptr;
 
-shared_ptr<ConsoleText> System::memoryText = nullptr;
-shared_ptr<ConsoleText> System::texturesLoadedText = nullptr;// = Console::debug("texturesLoadedText");
-shared_ptr<ConsoleText> System::textureBytesLoadedText = nullptr;// = Console::debug("textureBytesLoadedText");
+sp<ConsoleText> System::memoryText = nullptr;
+sp<ConsoleText> System::texturesLoadedText = nullptr;// = Console::debug("texturesLoadedText");
+sp<ConsoleText> System::textureBytesLoadedText = nullptr;// = Console::debug("textureBytesLoadedText");
 
 
 

@@ -48,7 +48,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	shared_ptr<EventData> eventData,
+	sp<EventData> eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -118,7 +118,7 @@ AreaData::AreaData
 	bool autoPilot,
 	bool playerFaceDirection,
 	bool suckPlayerIntoMiddle,
-	shared_ptr<EventData> eventData,
+	sp<EventData> eventData,
 	const string& comment
 )
 { //=========================================================================================================================
@@ -158,25 +158,25 @@ void AreaData::addConnectionString(const string& s)
 	connectionTYPEIDList->add(s);
 }
 
-//shared_ptr<AreaData> AreaData::fromBase64ZippedJSON(const string& b64)
+//sp<AreaData> AreaData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = make_shared<Gson>();
+//	//Gson gson = ms<Gson>();
 //	//AreaData data = gson.fromJson(json,AreaData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//shared_ptr<AreaData> AreaData::fromJSON(const string& json)
+//sp<AreaData> AreaData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//shared_ptr<Gson> gson = make_shared<Gson>();
-//	shared_ptr<AreaData> data = nullptr;// gson->fromJson(json, AreaData::typeid);
+//	//sp<Gson> gson = ms<Gson>();
+//	sp<AreaData> data = nullptr;// gson->fromJson(json, AreaData::typeid);
 //
 //
 //	return data;
@@ -470,7 +470,7 @@ string& AreaData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (OKString::startsWith(t,"}") == false)
 	{
-		shared_ptr<EventData> data = make_shared<EventData>();
+		sp<EventData> data = ms<EventData>();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -653,12 +653,12 @@ bool AreaData::getSuckPlayerIntoMiddle()
 	return suckPlayerIntoMiddle;
 }
 
-shared_ptr<EventData> AreaData::getEventData()
+sp<EventData> AreaData::getEventData()
 {
 	return eventData;
 }
 
-ArrayList<string>* AreaData::getConnectionTYPEIDList()
+sp<vector<string>> AreaData::getConnectionTYPEIDList()
 {
 	return connectionTYPEIDList;
 }

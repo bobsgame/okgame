@@ -56,7 +56,7 @@ public:
 
 	string statsUUID = "";
 
-	shared_ptr<Room> room = nullptr;
+	sp<Room> room = nullptr;
 
 	//game type or sequence,
 	//sequence options

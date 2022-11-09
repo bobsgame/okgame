@@ -29,7 +29,7 @@ public:
 	static int ticksToAddForMoneyBlock;
 
 
-	shared_ptr<Caption> RAMIO_timercaption = nullptr;
+	sp<Caption> RAMIO_timercaption = nullptr;
 
 	bool easymode = true;
 
@@ -56,12 +56,12 @@ public:
 	int dieSequenceStep = 0;
 
 
-	ArrayList<shared_ptr<RamioOKa>> bobas;// = make_shared<ArrayList><shared_ptr<RamioOKa>>();
-	ArrayList<shared_ptr<RamioBrickBlock>> brickBlocks;/// = make_shared<ArrayList><shared_ptr<RamioBrickBlock>>();
-	ArrayList<shared_ptr<RamioMoneyBlock>> moneyBlocks;// = make_shared<ArrayList><shared_ptr<RamioMoneyBlock>>();
+	vector<sp<RamioOKa>> bobas;// = ms<ArrayList><sp<RamioOKa>>();
+	vector<sp<RamioBrickBlock>> brickBlocks;/// = ms<ArrayList><sp<RamioBrickBlock>>();
+	vector<sp<RamioMoneyBlock>> moneyBlocks;// = ms<ArrayList><sp<RamioMoneyBlock>>();
 
 
-	shared_ptr<RamioGuy> guy = nullptr;
+	sp<RamioGuy> guy = nullptr;
 
 
 	void updateScore();
@@ -79,7 +79,7 @@ public:
 	void doDeathSequence();
 
 
-	shared_ptr<ConsoleText> ramioText = Main::console->add("ramioText", OKColor::green);
+	sp<ConsoleText> ramioText = Main::console->add("ramioText", OKColor::green);
 
 	virtual void update() override;
 

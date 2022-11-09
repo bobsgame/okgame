@@ -15,7 +15,7 @@
 Logger NDButton::log = Logger("NDButton");
 
 
-NDButton::NDButton(shared_ptr<BGClientEngine> g)
+NDButton::NDButton(sp<BGClientEngine> g)
 { //=========================================================================================================================
 
 	this->e = g;

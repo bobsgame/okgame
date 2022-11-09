@@ -18,7 +18,7 @@ DoorData::DoorData()
 { //=========================================================================================================================
 }
 
-DoorData::DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, shared_ptr<EventData> eventData, const string& comment)
+DoorData::DoorData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, const string& destinationTYPEID, int arrivalXPixels, int arrivalYPixels, bool randomNPCSpawnPoint, float randomSpawnChance, bool randomExitPoint, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, sp<EventData> eventData, const string& comment)
 { //=========================================================================================================================
 
 
@@ -46,25 +46,25 @@ DoorData::DoorData(int id, const string& name)
 	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
 }
 
-//shared_ptr<DoorData> DoorData::fromBase64ZippedJSON(const string& b64)
+//sp<DoorData> DoorData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = make_shared<Gson>();
+//	//Gson gson = ms<Gson>();
 //	//DoorData data = gson.fromJson(json,DoorData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//shared_ptr<DoorData> DoorData::fromJSON(const string& json)
+//sp<DoorData> DoorData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//shared_ptr<Gson> gson = make_shared<Gson>();
-//	shared_ptr<DoorData> data = nullptr;// gson->fromJson(json, DoorData::typeid);
+//	//sp<Gson> gson = ms<Gson>();
+//	sp<DoorData> data = nullptr;// gson->fromJson(json, DoorData::typeid);
 //
 //
 //	return data;

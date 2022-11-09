@@ -14,11 +14,11 @@
 Logger StadiumScreen::log = Logger("StadiumScreen");
 
 
-StadiumScreen::StadiumScreen(shared_ptr<Engine> g)
+StadiumScreen::StadiumScreen(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 
-	stadiumGameStateManager = make_shared<StateManager>();
+	stadiumGameStateManager = ms<StateManager>();
 }
 
 void StadiumScreen::update()
@@ -30,7 +30,7 @@ void StadiumScreen::update()
 		return;
 	}
 
-	shared_ptr<Engine> s = stadiumGameStateManager->getCurrentState();
+	sp<Engine> s = stadiumGameStateManager->getCurrentState();
 	if (s == nullptr)
 	{
 		return;
@@ -45,7 +45,7 @@ void StadiumScreen::update()
 	GLUtils::globalDrawScale = 1.0f;
 }
 
-void StadiumScreen::setGame(shared_ptr<MiniGameEngine> game, shared_ptr<Area> area)
+void StadiumScreen::setGame(sp<MiniGameEngine> game, sp<Area> area)
 { //=========================================================================================================================
 
 	this->area = area;
@@ -56,9 +56,9 @@ void StadiumScreen::setGame(shared_ptr<MiniGameEngine> game, shared_ptr<Area> ar
 	this->setActivated(true);
 }
 
-shared_ptr<MiniGameEngine> StadiumScreen::getGame()
+sp<MiniGameEngine> StadiumScreen::getGame()
 { //=========================================================================================================================
-	return static_cast<shared_ptr<MiniGameEngine>>(stadiumGameStateManager->getCurrentState());
+	return static_cast<sp<MiniGameEngine>>(stadiumGameStateManager->getCurrentState());
 }
 
 void StadiumScreen::render()
@@ -209,10 +209,10 @@ void StadiumScreen::render()
 	//				glEnable(GL_TEXTURE_2D);
 	//
 	//
-	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, make_shared<StringBuffer>("Tex0")), 0);
-	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, make_shared<StringBuffer>("Tex1")), 1);
-	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, make_shared<StringBuffer>("width")), Display.getWidth());
-	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, make_shared<StringBuffer>("height")), Display.getHeight());
+	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("Tex0")), 0);
+	//				glUniform1i(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("Tex1")), 1);
+	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("width")), Display.getWidth());
+	//				glUniform1f(glGetUniformLocation(GLUtils.lightShader, ms<StringBuffer>("height")), Display.getHeight());
 	//
 	//
 	//				float lightOffset = 48*Cameraman().zoom;
@@ -250,12 +250,12 @@ void StadiumScreen::render()
 	//		{
 	//			glUseProgram(GLUtils.colorShader);
 	//
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, make_shared<StringBuffer>("gameHue")), 1.0f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, make_shared<StringBuffer>("gameSaturation")), 1.2f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, make_shared<StringBuffer>("gameBrightness")), 1.0f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, make_shared<StringBuffer>("gameContrast")), 1.2f);
-	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, make_shared<StringBuffer>("gameGamma")), 1.0f);
-	//			glUniform1i(glGetUniformLocation(GLUtils.colorShader, make_shared<StringBuffer>("Tex0")), 0);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameHue")), 1.0f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameSaturation")), 1.2f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameBrightness")), 1.0f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameContrast")), 1.2f);
+	//			glUniform1f(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("gameGamma")), 1.0f);
+	//			glUniform1i(glGetUniformLocation(GLUtils.colorShader, ms<StringBuffer>("Tex0")), 0);
 	//		}
 	//
 	//		//draw the framebuffer with the lights drawn into it into the screen buffer  (upside down because FBO is flipped)

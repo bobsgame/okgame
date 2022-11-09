@@ -18,18 +18,18 @@ public:
 	static Logger log;
 
 
-	ArrayList<shared_ptr<Engine>> states;
+	vector<sp<Engine>> states;
 
-	//shared_ptr<Engine> currentState = nullptr;
+	//sp<Engine> currentState = nullptr;
 
 
 	StateManager();
 
 
-	shared_ptr<Engine> getCurrentState();
+	sp<Engine> getCurrentState();
 
 
-	void pushState(shared_ptr<Engine> s);
+	void pushState(sp<Engine> s);
 	void popState();
 
 

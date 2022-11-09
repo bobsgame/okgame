@@ -31,7 +31,7 @@ public:
 	bool selected = false;
 
 
-	PingPaddle(shared_ptr<Engine> g);
+	PingPaddle(sp<Engine> g);
 
 
 	void update();

@@ -19,7 +19,7 @@ int NDMenuWheelItem::wheelItemHeight = 38;
 int NDMenuWheelItem::wheelItemLabelOffsetX = 6 / 2;
 int NDMenuWheelItem::wheelItemLabelOffsetY = 6 / 2;
 
-NDMenuWheelItem::NDMenuWheelItem(shared_ptr<Engine> g, shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color)
+NDMenuWheelItem::NDMenuWheelItem(sp<Engine> g, sp<NDGameEngine> game, const string& name, sp<OKColor> color)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -27,7 +27,7 @@ NDMenuWheelItem::NDMenuWheelItem(shared_ptr<Engine> g, shared_ptr<NDGameEngine> 
 	this->name = name;
 	this->color = color;
 
-	this->caption = make_shared<Caption>(g, Caption::Position::NONE, 0, 0, -1, name, OKFont::font_normal_16_outlined_smooth, color, nullptr, make_shared<OKColor>(0, 0, 0, 0), RenderOrder::ABOVE_TOP, 1.0f, 0);
+	this->caption = ms<Caption>(g, Caption::Position::NONE, 0, 0, -1, name, OKFont::font_normal_16_outlined_smooth, color, nullptr, ms<OKColor>(0, 0, 0, 0), RenderOrder::ABOVE_TOP, 1.0f, 0);
 	this->caption->setAlphaImmediately(1.0f);
 
 	y = (float)firstCartY + (NDMenuWheel::wheelItems->size() - 1) * wheelItemHeight;

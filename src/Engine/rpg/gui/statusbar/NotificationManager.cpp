@@ -16,10 +16,10 @@
 Logger NotificationManager::log = Logger("NotificationManager");
 
 
-shared_ptr<OKTexture> NotificationManager::loadingBarTexture = nullptr;
-shared_ptr<OKTexture> NotificationManager::loadingBarBackgroundTexture = nullptr;
+sp<OKTexture> NotificationManager::loadingBarTexture = nullptr;
+sp<OKTexture> NotificationManager::loadingBarBackgroundTexture = nullptr;
 
-NotificationManager::NotificationManager(shared_ptr<BGClientEngine> g)
+NotificationManager::NotificationManager(sp<BGClientEngine> g)
 { //=========================================================================================================================
 
 
@@ -56,14 +56,14 @@ void NotificationManager::render(int layer)
 	}
 }
 
-void NotificationManager::add(shared_ptr<Notification> n)
+void NotificationManager::add(sp<Notification> n)
 { //=========================================================================================================================
 
 
 	notificationList->add(n);
 }
 
-void NotificationManager::remove(shared_ptr<Notification> n)
+void NotificationManager::remove(sp<Notification> n)
 { //=========================================================================================================================
 
 	notificationList->remove(n);

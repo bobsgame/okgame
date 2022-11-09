@@ -12,14 +12,14 @@ Logger GLUtils::log = Logger("GLUtils");
 //#include "../../../lib/SDL_stbimage.h"
 //#define STB_IMAGE_IMPLEMENTATION
 
-HashMap<string, shared_ptr<OKTexture>> GLUtils::textureCache;
+HashMap<string, sp<OKTexture>> GLUtils::textureCache;
 
 //-----------------------------------------------
 //OLD STUFF
 //-----------------------------------------------
 
-shared_ptr<SDL_Window> GLUtils::window = nullptr;
-shared_ptr<SDL_Renderer> GLUtils::renderer = nullptr;
+sp<SDL_Window> GLUtils::window = nullptr;
+sp<SDL_Renderer> GLUtils::renderer = nullptr;
 
 void(*glDrawTexiES)(int, int, int, int, int);
 
@@ -61,21 +61,21 @@ float GLUtils::ZOOMto = 1.0f;
 bool GLUtils::antiAlias = true;
 int GLUtils::texturesLoaded = 0;
 long long GLUtils::textureBytesLoaded = 0;
-shared_ptr<OKTexture> GLUtils::blankTexture = nullptr;
-shared_ptr<OKTexture> GLUtils::boxTexture = nullptr;
+sp<OKTexture> GLUtils::blankTexture = nullptr;
+sp<OKTexture> GLUtils::boxTexture = nullptr;
 float GLUtils::globalDrawScale = 1.0f;
 
 
-shared_ptr<OKTexture> GLUtils::rect = nullptr;
+sp<OKTexture> GLUtils::rect = nullptr;
 
 
 //static float* boxBuffer = BufferUtils.newFloatBuffer(12);
 //static float* colBuffer = BufferUtils.newFloatBuffer(16);
 //static float* texBuffer = BufferUtils.newFloatBuffer(8);
 
-shared_ptr<GLfloat> GLUtils::box = nullptr;
-shared_ptr<GLfloat> GLUtils::col = nullptr;
-shared_ptr<GLfloat> GLUtils::tex = nullptr;
+sp<GLfloat> GLUtils::box = nullptr;
+sp<GLfloat> GLUtils::col = nullptr;
+sp<GLfloat> GLUtils::tex = nullptr;
 
 int GLUtils::windowWidth = 0;
 int GLUtils::windowHeight = 0;
@@ -84,7 +84,7 @@ int GLUtils::lastWindowWidth = 0;
 int GLUtils::lastWindowHeight = 0;
 
 SDL_DisplayMode GLUtils::currentDisplayMode;
-ArrayList<shared_ptr<SDL_DisplayMode>> GLUtils::displayModes;
+vector<sp<SDL_DisplayMode>> GLUtils::displayModes;
 int GLUtils::monitorWidth = 0;
 int GLUtils::monitorHeight = 0;
 
@@ -143,7 +143,7 @@ GLuint GLUtils::bobsGame_bgShaderFBO_Texture_Attachment1 = 0;
 
 
 
-ArrayList<shared_ptr<Integer>> GLUtils::bgShaders;
+vector<sp<Integer>> GLUtils::bgShaders;
 //ArrayList<int> GLUtils::bgShaders;
 int GLUtils::bgShaderCount = 80;
 
@@ -212,7 +212,7 @@ void GLUtils::initGL(char* windowName)
 
 
 
-	window = shared_ptr<SDL_Window>(SDL_CreateWindow(windowName,
+	window = sp<SDL_Window>(SDL_CreateWindow(windowName,
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		w, h,
@@ -255,13 +255,13 @@ void GLUtils::initGL(char* windowName)
 
 
 	//						  //if we want to disable deprecated GL functions below GL 3.3
-	//						  //			ContextAttribs ctxAttr = make_shared<ContextAttribs>(3, 3);
+	//						  //			ContextAttribs ctxAttr = ms<ContextAttribs>(3, 3);
 	//						  //			ctxAttr = ctxAttr.withForwardCompatible(true);
 	//						  //			ctxAttr = ctxAttr.withProfileCore(true);
 	//						  //			ctxAttr = ctxAttr.withProfileCompatibility(false);
 	//						  //			ctxAttr = ctxAttr.withDebug(true);
 	//
-	//	createGLContext(); //make_shared<PixelFormat>(),ctxAttr);
+	//	createGLContext(); //ms<PixelFormat>(),ctxAttr);
 
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -710,7 +710,7 @@ void GLUtils::initGL(char* windowName)
 			log.error("FBO not supported.");
 
 			log.error("This game requires a newer graphics card that supports FBO.");
-			shared_ptr<Caption> c = make_shared<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, OKColor::white, OKColor::black);
+			sp<Caption> c = ms<Caption>(nullptr, Caption::Position::CENTERED_SCREEN, 0, 0, -1, "This game requires a newer graphics card that supports FBO.", 12, true, OKColor::white, OKColor::black);
 
 			System::updateRenderTimers();
 			System::updateStats();
@@ -935,7 +935,7 @@ void GLUtils::initGL(char* windowName)
 				int p = GLUtils::createProgramObject();
 				//log.debug("createProgramObject bg " + to_string(p));
 				e("createProgramObject");
-				bgShaders.add(make_shared<Integer>(p));
+				bgShaders.add(ms<Integer>(p));
 			}
 
 			int count = 0;
@@ -1192,7 +1192,7 @@ SDL_DisplayMode GLUtils::getCurrentDisplayMode()
 }
 
 //=========================================================================================================================
-ArrayList<shared_ptr<SDL_DisplayMode*>> GLUtils::getAvailableDisplayModes()
+sp<vector<sp<SDL_DisplayMode>>> GLUtils::getAvailableDisplayModes()
 {//=========================================================================================================================
 
 	if (displayModes.size() > 0)return displayModes;
@@ -1207,7 +1207,7 @@ ArrayList<shared_ptr<SDL_DisplayMode*>> GLUtils::getAvailableDisplayModes()
 		int numDisplayModes = SDL_GetNumDisplayModes(d);
 		for (int m = 0; m < numDisplayModes; m++)
 		{
-			shared_ptr<SDL_DisplayMode*> mode = new SDL_DisplayMode();
+			sp<SDL_DisplayMode*> mode = new SDL_DisplayMode();
 
 			if (SDL_GetDisplayMode(d, m, mode) != 0)
 				SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
@@ -1238,9 +1238,9 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	//	try
 	//	{
-	shared_ptr<SDL_DisplayMode*> targetDisplayMode = nullptr;
+	sp<SDL_DisplayMode*> targetDisplayMode = nullptr;
 
-	ArrayList<shared_ptr<SDL_DisplayMode*>> modes = getAvailableDisplayModes();
+	sp<vector<sp<SDL_DisplayMode>>> modes = getAvailableDisplayModes();
 
 	{
 		//if(fullscreen)
@@ -1249,7 +1249,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 		int freq = 0;
 		for (int i = 0; i < modes.size(); i++)
 		{
-			shared_ptr<SDL_DisplayMode*> m = modes.get(i);
+			sp<SDL_DisplayMode*> m = modes.get(i);
 
 			if ((m->w == width) && (m->h == height))
 			{
@@ -1284,7 +1284,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	for (int i = 0; i < modes.size(); i++)
 	{
-		shared_ptr<SDL_DisplayMode*> m = modes.get(i);
+		sp<SDL_DisplayMode*> m = modes.get(i);
 
 		log.info(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
 	}
@@ -1531,7 +1531,7 @@ int GLUtils::compileShaderObject(const string& filename, int type)
 	{
 		const char* c_str = code.c_str();
 
-		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const shared_ptr<GLcharARB>*strings,const shared_ptr<GLint>lengths)
+		//void glShaderSourceARB( GLhandleARB shader,GLsizei nstrings,const sp<GLcharARB>*strings,const sp<GLint>lengths)
 		glShaderSourceARB(shader, 1, &c_str, NULL);
 		e();
 		glCompileShaderARB(shader);
@@ -1809,13 +1809,13 @@ void GLUtils::setPreColorFilterViewport()
 void GLUtils::setOKGameMainFBOFilterViewport()
 { //=========================================================================================================================
 
-	glViewport(0, 0, (int)(bobsGameFBO_shared_ptr<Width> FBO_SCALE), (int)(bobsGameFBO_shared_ptr<Height> FBO_SCALE));
+	glViewport(0, 0, (int)(bobsGameFBO_sp<Width> FBO_SCALE), (int)(bobsGameFBO_sp<Height> FBO_SCALE));
 	glLoadIdentity();
-	glOrtho(0, bobsGameFBO_shared_ptr<Width> FBO_SCALE, bobsGameFBO_shared_ptr<Height> FBO_SCALE, 0, -1, 1);
+	glOrtho(0, bobsGameFBO_sp<Width> FBO_SCALE, bobsGameFBO_sp<Height> FBO_SCALE, 0, -1, 1);
 }
 void GLUtils::setBloomViewport()
 { //=========================================================================================================================
-	glViewport(0, 0, (int)(bobsGameFBO_shared_ptr<Width> FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_shared_ptr<Height> FBO_SCALE * BLOOM_FBO_SCALE));
+	glViewport(0, 0, (int)(bobsGameFBO_sp<Width> FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_sp<Height> FBO_SCALE * BLOOM_FBO_SCALE));
 	glLoadIdentity();
 	glOrtho(-1, 1, -1, 1, -1, 1);
 }
@@ -2096,13 +2096,13 @@ void GLUtils::setDefaultTextureParams()
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sy0, int filter)//static
+void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sy0, int filter)//static
 {//=========================================================================================================================
 	drawTexture(texture, sx0, sy0, 1.0f, filter);
 }
 
 //=========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sy0, float alpha, int filter)//static
+void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sy0, float alpha, int filter)//static
 {//=========================================================================================================================
 
 	float sx1 = sx0 + texture->getImageWidth();
@@ -2112,7 +2112,7 @@ void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sy0, f
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(sp<OKTexture> texture, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 
 	float tXRatio = (float)texture->getImageWidth() / (float)texture->getTextureWidth();
@@ -2134,11 +2134,11 @@ void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float sx0, float sx1, f
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
+void GLUtils::drawTexture(sp<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float alpha, int filter)//static
 {//===========================================================================================================================
 	if (texture == nullptr)return;
 
-	//Sprite s = make_shared<Sprite>(texture);
+	//Sprite s = ms<Sprite>(texture);
 
 
 	drawTexture(texture->getTextureID(), tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, alpha, filter);
@@ -2160,7 +2160,7 @@ void GLUtils::drawTexture(float tx0, float tx1, float ty0, float ty1, float sx0,
 }
 
 //===========================================================================================================================
-void GLUtils::drawTexture(shared_ptr<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
+void GLUtils::drawTexture(sp<OKTexture> texture, float tx0, float tx1, float ty0, float ty1, float sx0, float sx1, float sy0, float sy1, float r, float g, float b, float a, int filter)
 {//===========================================================================================================================
 
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
@@ -2254,9 +2254,9 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 		return;
 	}
 
-	if (box == nullptr)box = make_shared<GLfloat>[12];
-	if (col == nullptr)col = make_shared<GLfloat>[16];
-	if (tex == nullptr)tex = make_shared<GLfloat>[8];
+	if (box == nullptr)box = ms<GLfloat>[12];
+	if (col == nullptr)col = ms<GLfloat>[16];
+	if (tex == nullptr)tex = ms<GLfloat>[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2391,7 +2391,7 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 //}
 
 //=========================================================================================================================
-void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, shared_ptr<OKColor> color)//static
+void GLUtils::drawOutlinedString(const string& text, float screenX0, float screenY0, sp<OKColor> color)//static
 {//=========================================================================================================================
 
 	screenX0 *= globalDrawScale;
@@ -2403,8 +2403,8 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	SDL_Color textSDLColor = { (Uint8)color->ri() ,(Uint8)color->gi(),(Uint8)color->bi(),(Uint8)color->ai() };
 	//SDL_Color bgSDLColor = { 0,0,0,0 };
 
-	shared_ptr<TTF_Font*> ttfFont = OKFont::ttf_8;
-	shared_ptr<TTF_Font*> outlineFont = OKFont::ttf_outline_8;
+	sp<TTF_Font*> ttfFont = OKFont::ttf_8;
+	sp<TTF_Font*> outlineFont = OKFont::ttf_outline_8;
 
 	int OUTLINE_SIZE = 1;
 	// render text and text outline 
@@ -2413,8 +2413,8 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	outlineOKColor.darker();
 	outlineOKColor.darker();
 	SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
-	shared_ptr<SDL_Surface*> surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
-	shared_ptr<SDL_Surface*> fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
+	sp<SDL_Surface*> surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
+	sp<SDL_Surface*> fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
 	SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 	// blit text onto its outline 
@@ -2430,7 +2430,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	int width = fg_surface->w + OUTLINE_SIZE * 2;
 	int height = fg_surface->h + OUTLINE_SIZE * 2;
 
-	shared_ptr<OKTexture> texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
+	sp<OKTexture> texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
 	SDL_FreeSurface(surface);
 
 	int texWidth = texture->getTextureWidth();
@@ -2476,7 +2476,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
  //
  //				OKFont awtFont = OKFont.createFont(OKFont.TRUETYPE_FONT, inputStream);
  //				awtFont = awtFont.deriveFont(8f); // set font size
- //				font = make_shared<TrueTypeFont>(awtFont, antiAlias);
+ //				font = ms<TrueTypeFont>(awtFont, antiAlias);
  //			}
  //			catch (Exception e)
  //			{
@@ -2510,7 +2510,7 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	//		font.drawString(screenX0-1,screenY0, getText, Color.black);
 	//		font.drawString(screenX0,screenY0+1, getText, Color.black);
 	//		font.drawString(screenX0,screenY0-1, getText, Color.black);
-	//		font.drawString(screenX0,screenY0, getText, make_shared<Color>(color.r(),color.g(),color.b()));
+	//		font.drawString(screenX0,screenY0, getText, ms<Color>(color.r(),color.g(),color.b()));
 	//
 	//
 	//		//glEnable(GL_TEXTURE_2D);
@@ -2818,9 +2818,9 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 		return;
 	}
 
-	if (box == nullptr)box = make_shared<GLfloat>[12];
-	if (col == nullptr)col = make_shared<GLfloat>[16];
-	if (tex == nullptr)tex = make_shared<GLfloat>[8];
+	if (box == nullptr)box = ms<GLfloat>[12];
+	if (col == nullptr)col = ms<GLfloat>[16];
+	if (tex == nullptr)tex = ms<GLfloat>[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2925,10 +2925,10 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	if(rect==null)
 //	{
 //
-//		Pixmap pixmap = make_shared<Pixmap>( 1, 1, Format.RGBA8888 );
+//		Pixmap pixmap = ms<Pixmap>( 1, 1, Format.RGBA8888 );
 //		pixmap.setColor( 1f, 1f, 1f, 1f );
 //		pixmap.fill();
-//		rect = make_shared<Texture>( pixmap );
+//		rect = ms<Texture>( pixmap );
 //		pixmap.dispose();
 //
 ////			//int width = 1; //1 pixel wide
@@ -2974,10 +2974,10 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	if (rect == nullptr)
 //	{
 //
-//		//shared_ptr<Pixmap>pixmap = make_shared<Pixmap>(1, 1, Pixmap::Format::RGBA8888);
+//		//sp<Pixmap>pixmap = ms<Pixmap>(1, 1, Pixmap::Format::RGBA8888);
 //		//pixmap->setColor(1.0f, 1.0f, 1.0f, 1.0f);
 //		//pixmap->fill();
-//		//rect = make_shared<Texture>(pixmap);
+//		//rect = ms<Texture>(pixmap);
 //		//pixmap->dispose();
 //	}
 //
@@ -2992,7 +2992,7 @@ void GLUtils::drawFilledRectXYWH(float x, float y, float w, float h, float r, fl
 //	height = height / h; // * heightWidthRatio;
 //
 //
-//	//shared_ptr<SpriteBatch>spriteBatch = OKGame::spriteBatch;
+//	//sp<SpriteBatch>spriteBatch = OKGame::spriteBatch;
 //	//spriteBatch->setColor(r, g, b, a);
 //	//spriteBatch->draw(rect,x,y,width,height);
 //
@@ -3153,14 +3153,14 @@ void GLUtils::old_render()
 
 
 //===========================================================================================================================
-shared_ptr<OKTexture> GLUtils::loadTextureFromSurface(string filename, shared_ptr<SDL_Surface*> surfacein)
+sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> surfacein)
 {//===========================================================================================================================
 
-	shared_ptr<SDL_Surface*> surface = surfacein;
+	sp<SDL_Surface*> surface = surfacein;
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<OKTexture> tex = nullptr;
+	sp<OKTexture> tex = nullptr;
 
 	if (textureCache.containsKey(filename))
 	{
@@ -3173,7 +3173,7 @@ shared_ptr<OKTexture> GLUtils::loadTextureFromSurface(string filename, shared_pt
 
 
 	GLuint textureID = createTextureID();
-	tex = make_shared<OKTexture>(filename, textureID);
+	tex = ms<OKTexture>(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3191,7 +3191,7 @@ shared_ptr<OKTexture> GLUtils::loadTextureFromSurface(string filename, shared_pt
 	tex->setAlpha(hasAlpha);
 
 
-	shared_ptr<GLint> maxTexSizeArray = make_shared<GLint>[16];
+	sp<GLint> maxTexSizeArray = ms<GLint>[16];
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTexSizeArray);
 	int max = maxTexSizeArray[0];
 	if ((texWidth > max) || (texHeight > max))
@@ -3204,7 +3204,7 @@ shared_ptr<OKTexture> GLUtils::loadTextureFromSurface(string filename, shared_pt
 
 
 	//have to do this because the surface is not power of 2
-	shared_ptr<SDL_Surface> temp = nullptr;
+	sp<SDL_Surface> temp = nullptr;
 	//bool freeTemp = false;
 
 	//if (surface->format->BytesPerPixel < 4)
@@ -3241,7 +3241,7 @@ shared_ptr<OKTexture> GLUtils::loadTextureFromSurface(string filename, shared_pt
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const shared_ptr<GLvoid> data);
+	const sp<GLvoid> data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3314,13 +3314,13 @@ GLuint GLUtils::createTextureID()
 }
 
 //=========================================================================================================================
-shared_ptr<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, shared_ptr<ByteArray> data)
+sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int imageHeight, sp<ByteArray> data)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<OKTexture>tex = nullptr;
+	sp<OKTexture>tex = nullptr;
 
 	if (textureCache.containsKey(textureName))
 	{
@@ -3333,7 +3333,7 @@ shared_ptr<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWi
 
 
 	GLuint textureID = createTextureID();
-	tex = make_shared<OKTexture>(textureName, textureID);
+	tex = ms<OKTexture>(textureName, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -3361,7 +3361,7 @@ shared_ptr<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWi
 
 
 
-	shared_ptr<ByteArray> t = make_shared<ByteArray>(texWidth*texHeight * 4);
+	sp<ByteArray> t = ms<ByteArray>(texWidth*texHeight * 4);
 
 	for (int y = 0; y<imageHeight; y++)
 		for (int x = 0; x<imageWidth; x++)
@@ -3385,7 +3385,7 @@ shared_ptr<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWi
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const shared_ptr<GLvoid> data);
+	const sp<GLvoid> data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3405,7 +3405,7 @@ shared_ptr<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWi
 }
 
 //=========================================================================================================================
-shared_ptr<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+sp<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
@@ -3414,13 +3414,13 @@ shared_ptr<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , cons
 
 }
 //=========================================================================================================================
-shared_ptr<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
 {//=========================================================================================================================
 
 
 	glEnable(GL_TEXTURE_2D);
 
-	shared_ptr<OKTexture>tex = nullptr;
+	sp<OKTexture>tex = nullptr;
 
 
 	if (textureCache.containsKey(filename))
@@ -3434,13 +3434,13 @@ shared_ptr<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// ,
 
 
 	GLuint textureID = createTextureID();
-	tex = make_shared<OKTexture>(filename, textureID);
+	tex = ms<OKTexture>(filename, textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 
-	shared_ptr<SDL_Surface> imageSurface = IMG_Load(filename.c_str());
-	//shared_ptr<SDL_Surface> imageSurface = STBIMG_Load(filename.c_str());
+	sp<SDL_Surface> imageSurface = IMG_Load(filename.c_str());
+	//sp<SDL_Surface> imageSurface = STBIMG_Load(filename.c_str());
 	if (imageSurface == NULL)
 	{
 		log.error("ERROR: Couldn't load "+ filename +": "+string(SDL_GetError()));
@@ -3525,7 +3525,7 @@ shared_ptr<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// ,
 	GLint border,
 	GLenum format,
 	GLenum type,
-	const shared_ptr<GLvoid> data);
+	const sp<GLvoid> data);
 	*/
 	GLint level = 0;
 	GLint border = 0;
@@ -3552,7 +3552,7 @@ shared_ptr<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// ,
 
 
 //===========================================================================================================================
-void GLUtils::draw_texture_struct(shared_ptr<texture_STRUCT> PLAYER_TEXTURE, float x, float y)
+void GLUtils::draw_texture_struct(sp<texture_STRUCT> PLAYER_TEXTURE, float x, float y)
 {//===========================================================================================================================
 
 	GLuint texture_id = PLAYER_TEXTURE->texture_id;

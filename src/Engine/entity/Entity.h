@@ -24,9 +24,9 @@ public:
 
 	static Logger log;
 
-	shared_ptr<Map> map = nullptr;
+	sp<Map> map = nullptr;
 
-	shared_ptr<Event> event = nullptr;
+	sp<Event> event = nullptr;
 
 	const static int DOWN;
 	const static int UP;
@@ -66,10 +66,10 @@ public:
 	bool isWalkingIntoPlayerThisFrame = false;
 	bool isWalkingIntoWallThisFrame = false;
 
-	shared_ptr<Sprite> sprite = nullptr;
+	sp<Sprite> sprite = nullptr;
 
 protected:
-	shared_ptr<EntityData> data = nullptr;
+	sp<EntityData> data = nullptr;
 
 public:
 	float mapX = 0;
@@ -85,7 +85,7 @@ public:
 private:
 	long long animationTicksCounter = 0; // was vbl_animation_timer
 	int frameIndexInTexture = 0; //based on current sequence (getAnimDirection()) and currentAnimationFrameInSequence, this is what will be rendered
-	shared_ptr<SpriteAnimationSequence> currentAnimation = nullptr;
+	sp<SpriteAnimationSequence> currentAnimation = nullptr;
 
 	int ticksBetweenAnimationLoopThisLoop = 0; //for storing random value between loops
 
@@ -104,8 +104,8 @@ public:
 
 	bool behaviorEnabled = true;
 
-	ArrayList<string> eventBehaviorList;// = make_shared<ArrayList><string>(); //TODO: do something with this!
-	ArrayList<string> eventTargetTYPEIDList;// = make_shared<ArrayList><string>(); //TODO: do something with this!
+	vector<string> eventBehaviorList;// = ms<ArrayList><string>(); //TODO: do something with this!
+	vector<string> eventTargetTYPEIDList;// = ms<ArrayList><string>(); //TODO: do something with this!
 
 	string currentAreaTYPEIDTarget = "";
 
@@ -114,11 +114,11 @@ private:
 
 public:
 	Entity();
-	Entity(shared_ptr<Engine> g, shared_ptr<Map> m);
+	Entity(sp<Engine> g, sp<Map> m);
 
-	Entity(shared_ptr<Engine> g, shared_ptr<EntityData> entityData, shared_ptr<Map> m);
+	Entity(sp<Engine> g, sp<EntityData> entityData, sp<Map> m);
 
-	void initEntity(shared_ptr<EntityData> entityData);
+	void initEntity(sp<EntityData> entityData);
 
 	virtual void initCurrentAnimationFromSprite();
 
@@ -139,7 +139,7 @@ public:
 	//
 	//			if(d!=null)dialogueList.add(d);
 	//			else
-	//			dialogueList.add(make_shared<Dialogue>(dialogueID));
+	//			dialogueList.add(ms<Dialogue>(dialogueID));
 	//
 	//		}
 	//	}
@@ -159,11 +159,11 @@ public:
 
 	virtual void render(float mapAlpha);
 
-	virtual void render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture);
+	virtual void render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture);
 
-	virtual shared_ptr<Map> getCurrentMap();
+	virtual sp<Map> getCurrentMap();
 
-	shared_ptr<Map> getMap();
+	sp<Map> getMap();
 
 	virtual bool shouldDraw();
 
@@ -256,9 +256,9 @@ protected:
 public:
 	bool haveTicksPassedSinceLastAnimated_ResetIfTrue(int ticks);
 
-	shared_ptr<SpriteAnimationSequence> getCurrentAnimation();
+	sp<SpriteAnimationSequence> getCurrentAnimation();
 
-	void setCurrentAnimation(shared_ptr<SpriteAnimationSequence> a);
+	void setCurrentAnimation(sp<SpriteAnimationSequence> a);
 
 	void setCurrentAnimationByName(const string& name);
 
@@ -266,7 +266,7 @@ public:
 
 	int getSpriteLastFrame();
 
-	shared_ptr<SpriteAnimationSequence> getAnimationBySpriteFrame(int frame);
+	sp<SpriteAnimationSequence> getAnimationBySpriteFrame(int frame);
 
 	void setCurrentAnimationBySpriteFrame(int frame);
 
@@ -338,59 +338,59 @@ public:
 	/// This function will continue asking the server for the value, returning null until the server has set the response value.
 	/// Upon finding a non-null response value set by the networking thread by a server response, we reset it to null and return that value, ensuring that it is always a fresh copy from the server.
 	/// </summary>
-	shared_ptr<OKBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
+	sp<OKBool> checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn();
 
 	void tellServerTalkedToToday();
 
-	float getDistanceFromEntity(shared_ptr<Entity> e);
+	float getDistanceFromEntity(sp<Entity> e);
 
-	shared_ptr<Entity> findNearestEntity();
+	sp<Entity> findNearestEntity();
 
-	shared_ptr<Entity> findNearestEntityInDirection(int dir);
+	sp<Entity> findNearestEntityInDirection(int dir);
 
-	bool isWalkingIntoEntity(shared_ptr<Entity> entity);
+	bool isWalkingIntoEntity(sp<Entity> entity);
 
-	bool isWalkingIntoArea(shared_ptr<Area> area);
+	bool isWalkingIntoArea(sp<Area> area);
 
-	bool isEntityHitBoxTouchingMyHitBox(shared_ptr<Entity> e);
+	bool isEntityHitBoxTouchingMyHitBox(sp<Entity> e);
 
 	bool isNearestEntityHitBoxTouchingMyHitBox();
 
-	bool isAreaCenterTouchingMyHitBox(shared_ptr<Area> a);
+	bool isAreaCenterTouchingMyHitBox(sp<Area> a);
 
-	bool isAreaBoundaryTouchingMyHitBox(shared_ptr<Area> a);
+	bool isAreaBoundaryTouchingMyHitBox(sp<Area> a);
 
 	bool isXYTouchingMyHitBox(float x, float y);
 
 	bool isXYXYTouchingMyHitBox(float left, float top, float right, float bottom);
 
-	bool isAreaBoundaryTouchingMyMiddleXY(shared_ptr<Area> a);
+	bool isAreaBoundaryTouchingMyMiddleXY(sp<Area> a);
 
-	bool isEntityMiddleXYTouchingMyMiddleXY(shared_ptr<Entity> e);
+	bool isEntityMiddleXYTouchingMyMiddleXY(sp<Entity> e);
 
-	bool isAreaCenterTouchingMyMiddleXY(shared_ptr<Area> a);
+	bool isAreaCenterTouchingMyMiddleXY(sp<Area> a);
 
 	bool isXYTouchingMyMiddleXY(float x, float y);
 
 	bool isXYXYTouchingMyMiddleXY(float left, float top, float right, float bottom);
 
-	bool isEntityHitBoxTouchingMyHitBoxByAmount(shared_ptr<Entity> e, int amt);
+	bool isEntityHitBoxTouchingMyHitBoxByAmount(sp<Entity> e, int amt);
 
 	bool isNearestEntityHitBoxTouchingMyHitBoxByAmount(int amt);
 
-	bool isAreaCenterTouchingMyHitBoxByAmount(shared_ptr<Area> a, int amt);
+	bool isAreaCenterTouchingMyHitBoxByAmount(sp<Area> a, int amt);
 
-	bool isAreaBoundaryTouchingMyHitBoxByAmount(shared_ptr<Area> a, int amt);
+	bool isAreaBoundaryTouchingMyHitBoxByAmount(sp<Area> a, int amt);
 
 	bool isXYTouchingMyHitBoxByAmount(float x, float y, int amt);
 
 	bool isXYXYTouchingMyHitBoxByAmount(float left, float top, float right, float bottom, int amt);
 
-	bool isAreaBoundaryTouchingMyMiddleXYByAmount(shared_ptr<Area> a, int amt);
+	bool isAreaBoundaryTouchingMyMiddleXYByAmount(sp<Area> a, int amt);
 
-	bool isEntityMiddleXYTouchingMyMiddleXYByAmount(shared_ptr<Entity> e, int amt);
+	bool isEntityMiddleXYTouchingMyMiddleXYByAmount(sp<Entity> e, int amt);
 
-	bool isAreaCenterTouchingMyMiddleXYByAmount(shared_ptr<Area> a, int amt);
+	bool isAreaCenterTouchingMyMiddleXYByAmount(sp<Area> a, int amt);
 
 	bool isXYTouchingMyMiddleXYByAmount(float x, float y, int amt);
 
@@ -398,7 +398,7 @@ public:
 
 	bool isTouchingPlayerInDirection(int dir);
 
-	bool isHitBoxTouchingEntityInDirectionByAmount(shared_ptr<Entity> e, int direction, int amt);
+	bool isHitBoxTouchingEntityInDirectionByAmount(sp<Entity> e, int direction, int amt);
 
 	bool isHitBoxTouchingXYInDirectionByAmount(float x, float y, int direction, int amt);
 
@@ -470,7 +470,7 @@ public:
 
 	virtual float getHeight();
 
-	virtual shared_ptr<EntityData> getData();
+	virtual sp<EntityData> getData();
 
 	string& getName();
 	string& getComment();
@@ -499,7 +499,7 @@ public:
 
 	float getTicksPerPixelMoved();
 
-	shared_ptr<EventData> getEventData();
+	sp<EventData> getEventData();
 	bool getOnlyHereDuringEvent();
 	float getVoicePitch();
 	bool getMovementAnimationDisabled();
@@ -511,8 +511,8 @@ public:
 	bool getAnimatingThroughCurrentAnimation();
 	bool getLoopAnimation();
 
-	ArrayList<string>* getConnectionTYPEIDList();
-	ArrayList<string>* getBehaviorList();
+	sp<vector<string>> getConnectionTYPEIDList();
+	sp<vector<string>> getBehaviorList();
 
 	string getTYPEIDString();
 

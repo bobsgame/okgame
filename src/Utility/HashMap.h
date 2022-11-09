@@ -29,7 +29,7 @@ public:
 	int size();
 	V get(K k);
 	K getFirstKey(V v);
-	vector<V>* getAllValues();
+	sp<vector<V>> getAllValues();
 
 
 
@@ -152,10 +152,10 @@ V HashMap<K, V>::get(K k)
 //}
 
 template <typename K, typename V>
-vector<V>* HashMap<K, V>::getAllValues()
+sp<vector<V>> HashMap<K, V>::getAllValues()
 {
 	//typename HashMap<K, V>::iterator it;
-	vector<V>* v = new vector<V>();
+	sp<vector<V>> v = new vector<V>();
 	for (auto it = m->begin(); it != m->end(); ++it)v->push_back(it->second);
 	return v;
 }

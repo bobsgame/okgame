@@ -60,11 +60,11 @@ public:
 	bool chainConnectionsMustContainAtLeastOneBlockWithThisTrue = false;	Info chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info = Info("Chain Connections Must Contain At Least One Of These Block Types", "When checking for chains, the chain must contain one of these blocks in order to qualify.");
 	bool ignoreWhenCheckingChainConnections = false;						Info ignoreWhenCheckingChainConnections_Info = Info("Ignore When Checking Chain Connections", "This block type is neutral and is ignored when checking chains.  It can only be cleared through other means.");
 
-	ArrayList<shared_ptr<OKColor>> colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
+	vector<OKColor> colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
 private:
-	ArrayList<OKColor> importExport_colors;	
+	vector<OKColor> importExport_colors;	
 public:
-	shared_ptr<OKColor>specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
+	sp<OKColor>specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
 private:
 	OKColor importExport_specialColor;
 public:
@@ -78,8 +78,8 @@ public:
 	//ArrayList<PieceType> importExport_makePieceTypeWhenCleared;
 public:
 	//don't use!!! use uuid!
-	ArrayList<shared_ptr<PieceType>> makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
-	ArrayList<string> makePieceTypeWhenCleared_UUID;
+	vector<PieceType> makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
+	vector<string> makePieceTypeWhenCleared_UUID;
 
 	bool clearEveryOtherLineOnGridWhenCleared = false;						Info clearEveryOtherLineOnGridWhenCleared_Info = Info("Special: Clear Every Other Line On Grid When Cleared", "When this block is cleared it will remove every other line on the grid.");
 
@@ -93,14 +93,14 @@ public:
 	//ArrayList<BlockType> importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 public:
 	//don't use!!! use uuid!
-	ArrayList<shared_ptr<BlockType>> ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED;		Info ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info = Info("If Connected Up Down Left Right To Cleared Block Change Into This Type", "If a block that is touching this one is cleared, this block will transform into one of these block types.");
-	ArrayList<string> ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID;
+	vector<BlockType> ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED;		Info ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info = Info("If Connected Up Down Left Right To Cleared Block Change Into This Type", "If a block that is touching this one is cleared, this block will transform into one of these block types.");
+	vector<string> ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID;
 
 	bool addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks = false;				Info addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info = Info("Add To Chain If Connected Up Down Left Right To Cleared Chain Blocks", "If a block that is touching this one is being cleared, this block should be cleared too even if it does not match.");
 
-	ArrayList<shared_ptr<TurnFromBlockTypeToType>> whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;	Info whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info = Info("When Set Turn All Touching Blocks Of FromTypes Into ToType And Fade Out", "When this block is set into the grid, turn any FromTypes into ToType and clear this block.");
+	vector<TurnFromBlockTypeToType> whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;	Info whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info = Info("When Set Turn All Touching Blocks Of FromTypes Into ToType And Fade Out", "When this block is set into the grid, turn any FromTypes into ToType and clear this block.");
 //private:
-	ArrayList<TurnFromBlockTypeToType> importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
+	vector<TurnFromBlockTypeToType> importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
 public:
 	bool removeAllBlocksOfColorOnFieldBlockIsSetOn = false;									Info removeAllBlocksOfColorOnFieldBlockIsSetOn_Info = Info("Remove All Blocks Of Color On Field Block Is Set On", "When this block is set down, any blocks with the color it touches will be removed from the grid.");
 	bool changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor = false;					Info changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor_Info = Info("Change All Blocks Of Color On Field Block Is Set On To This Color", "When this block is set down, any blocks with the color it touches will change into this color.");
@@ -115,18 +115,18 @@ public:
 	void serialize(Archive & ar, const unsigned int version);
 	
 
-	static shared_ptr<BlockType> emptyBlockType;
-	static shared_ptr<BlockType> squareBlockType;
-	static shared_ptr<BlockType> shotPieceBlockType;
+	static BlockType emptyBlockType;
+	static BlockType squareBlockType;
+	static BlockType shotPieceBlockType;
 
-	shared_ptr<Sprite> sprite = nullptr;//dont serialize these
-	shared_ptr<Sprite> specialSprite = nullptr;
+	sp<Sprite> sprite = nullptr;//dont serialize these
+	sp<Sprite> specialSprite = nullptr;
 //	BlockType();
-//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors);
-//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors, shared_ptr<Color> specialColor);
-//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
-//	BlockType(const string& spriteName, ArrayList<shared_ptr<Color>>* colors, shared_ptr<Color> specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
-//	BlockType(const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<Color>>* colors, shared_ptr<Color> specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
+//	BlockType(const string& spriteName, ArrayList<sp<Color>>* colors);
+//	BlockType(const string& spriteName, ArrayList<sp<Color>>* colors, sp<Color> specialColor);
+//	BlockType(const string& spriteName, ArrayList<sp<Color>>* colors, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
+//	BlockType(const string& spriteName, ArrayList<sp<Color>>* colors, sp<Color> specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
+//	BlockType(const string& spriteName, const string& specialSpriteName, ArrayList<sp<Color>>* colors, sp<Color> specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks);
 //	bool isSpecialType();
 //=========================================================================================================================
 	BlockType()
@@ -137,16 +137,16 @@ public:
 		uuid = to_string(generator());
 	}
 	//=========================================================================================================================
-	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, ArrayList<shared_ptr<OKColor>> *colorsArray, shared_ptr<OKColor>specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
+	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, vector<OKColor> colorsArray, sp<OKColor>specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
 	{//=========================================================================================================================
 		this->name = name;
 		this->spriteName = spriteName;
 		this->specialSpriteName = specialSpriteName;
-		if (colorsArray != nullptr)
+		//if (colorsArray != nullptr)
 		{
-			for(int i=0;i<colorsArray->size();i++)
+			for(int i=0;i<colorsArray.size();i++)
 			{
-				this->colors.add(colorsArray->get(i));
+				this->colors.push_back(colorsArray.at(i));
 			}
 			
 		}
@@ -236,7 +236,7 @@ public:
 		toType_UUID = toUUID;
 	}
 
-	string getName(shared_ptr<GameType>g) { return g->getBlockTypeByUUID(fromType_UUID)->name + "->" + g->getBlockTypeByUUID(toType_UUID)->name; }
+	string getName(sp<GameType>g) { return g->getBlockTypeByUUID(fromType_UUID)->name + "->" + g->getBlockTypeByUUID(toType_UUID)->name; }
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -274,16 +274,16 @@ public:
 
 	//Color noColor;
 
-	shared_ptr<GameLogic> game = nullptr;
-	shared_ptr<Grid> grid = nullptr;
+	sp<GameLogic> game = nullptr;
+	sp<Grid> grid = nullptr;
 
 
 
 
 
-	shared_ptr<Piece> piece = nullptr;
-	ArrayList<shared_ptr<Block>> connectedBlocksByPiece;
-	ArrayList<shared_ptr<Block>> connectedBlocksByColor;
+	sp<Piece> piece = nullptr;
+	vector<sp<Block>> connectedBlocksByPiece;
+	vector<sp<Block>> connectedBlocksByColor;
 
 	int xInPiece = 0; //offset in Piece() block is in
 	int yInPiece = 0;
@@ -291,10 +291,10 @@ public:
 	int xGrid = -1;
 	int yGrid = -1;
 
-	shared_ptr<BlockType> blockType = nullptr;
+	sp<BlockType> blockType = nullptr;
 
 private:
-	shared_ptr<OKColor>color = nullptr;
+	sp<OKColor>color = nullptr;
 
 public:
 	float effectAlphaFrom = 0.5f;
@@ -379,7 +379,7 @@ public:
 	bool connectedUpLeft = false;
 	bool connectedDownLeft = false;
 
-	shared_ptr<SpriteAnimationSequence> anim = nullptr;
+	sp<SpriteAnimationSequence> anim = nullptr;
 
 //	bool operator==(const Block& rhs) const
 //	{
@@ -445,7 +445,7 @@ public:
 //	}
 
 	Block();
-	Block(shared_ptr<GameLogic> game, shared_ptr<Grid> grid, shared_ptr<Piece> piece, shared_ptr<BlockType> blockType);
+	Block(sp<GameLogic> game, sp<Grid> grid, sp<Piece> piece, sp<BlockType> blockType);
 	void update();
 	void setXYOffsetInPiece(int x, int y);
 	void breakConnectionsInPiece();
@@ -455,7 +455,7 @@ public:
 	void renderDisappearing();
 	void render(float screenX, float screenY, float a, float scale, bool interpolate, bool ghost);
 	void renderOutlines(float screenX, float screenY, float s);
-	void setColor(shared_ptr<OKColor>color);
+	void setColor(sp<OKColor>color);
 	void setRandomBlockTypeColor();
 //	Color getRandomMatrixColor();
 //	Color getRandomRainbowColor();
@@ -464,10 +464,10 @@ public:
 	int cellH();
 	int blockW();
 	int blockH();
-	shared_ptr<GameType> getSettings();
-	shared_ptr<GameLogic> getGameLogic();
-	shared_ptr<OKGame> getOKGame();
-	shared_ptr<OKColor>getColor();
-	shared_ptr<OKColor>specialColor();
+	sp<GameType> getSettings();
+	sp<GameLogic> getGameLogic();
+	sp<OKGame> getOKGame();
+	sp<OKColor>getColor();
+	sp<OKColor>specialColor();
 };
 

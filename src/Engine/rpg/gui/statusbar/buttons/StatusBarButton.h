@@ -15,7 +15,7 @@ public:
 
 	static Logger log;
 
-	shared_ptr<OKTexture> texture = nullptr;
+	sp<OKTexture> texture = nullptr;
 
 	bool pulse = false;
 	bool pulseInOut = false;
@@ -47,7 +47,7 @@ public:
 	bool enabled = true;
 
 	StatusBarButton();
-	StatusBarButton(shared_ptr<BGClientEngine> g);
+	StatusBarButton(sp<BGClientEngine> g);
 
 	virtual void init();
 

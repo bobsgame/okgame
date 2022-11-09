@@ -58,7 +58,7 @@ public:
 	}
 	const char* GetTypeName() { return "GameSequenceEditorControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",shared_ptr<OKGame>b = nullptr);
+	GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName = "",sp<OKGame>b = nullptr);
     
     
 	void openLoadOrCreateDialog(bool allowedToClose);
@@ -91,7 +91,7 @@ public:
 	void populateGameTypesListBox();
 	void populateGameSequencesListBox();
 	void saveCurrentGameSequenceToXML();
-	//shared_ptr<GameSequence> getGameSequenceByName(string name);
+	//sp<GameSequence> getGameSequenceByName(string name);
 	void saveGameSequenceListToCurrentGameSequence();
 	void onGameSequencesListSelect(Gwen::Controls::Base* control);
 	void initFromCurrentGameSequence();
@@ -127,8 +127,8 @@ private:
 	Gwen::Controls::ListBox* gameSequencesListBox = nullptr;
     
 	//Controls::TabButton* settingsTab = nullptr;
-	//shared_ptr<ListBox> blockSelectionListBox = nullptr;
-	//shared_ptr<ListBox> pieceSelectionListBox = nullptr;
+	//sp<ListBox> blockSelectionListBox = nullptr;
+	//sp<ListBox> pieceSelectionListBox = nullptr;
     
     
 private:
@@ -145,8 +145,8 @@ private:
     
 	Gwen::Controls::WindowControl* gameTypesWindow = nullptr;
     
-	//shared_ptr<ScrollControl> settingsScrollControl = nullptr;
-	//shared_ptr<PropertyTree> settingsPropTree = nullptr;
+	//sp<ScrollControl> settingsScrollControl = nullptr;
+	//sp<PropertyTree> settingsPropTree = nullptr;
 	//int settingsPropTreeNumChildren = 0;
     
     
@@ -154,7 +154,7 @@ private:
     
 	Gwen::Controls::Button* askToSaveYesButton = nullptr;
 	Gwen::Controls::Button* askToSaveNoButton = nullptr;
-	//shared_ptr<Button> cancelExitButton = nullptr;
+	//sp<Button> cancelExitButton = nullptr;
     
 public:
 	Gwen::Controls::WindowControl* loadOrCreateGameSequenceWindow = nullptr;
@@ -169,14 +169,14 @@ private:
 	Gwen::Controls::Button* duplicateGameSequenceButton = nullptr;
 	Gwen::Controls::Button* deleteGameSequenceButton = nullptr;
     
-	shared_ptr<GameSequence>currentGameSequence = nullptr;
+	sp<GameSequence>currentGameSequence = nullptr;
     
     
-	//shared_ptr<WindowControl> selectWindow = nullptr;
-	//shared_ptr<ListBox> selectListBox = nullptr;
-	//shared_ptr<ListBox> chosenTypesListBox = nullptr;
-	//shared_ptr<Base> selectAddRemoveButtonBase = nullptr;
-	//shared_ptr<Base> selectConfirmCancelButtonBase = nullptr;
+	//sp<WindowControl> selectWindow = nullptr;
+	//sp<ListBox> selectListBox = nullptr;
+	//sp<ListBox> chosenTypesListBox = nullptr;
+	//sp<Base> selectAddRemoveButtonBase = nullptr;
+	//sp<Base> selectConfirmCancelButtonBase = nullptr;
 	Gwen::Controls::Button* selectAddButton = nullptr;
 	Gwen::Controls::Button* selectRemoveButton = nullptr;
 	Gwen::Controls::Button* selectConfirmButton = nullptr;
@@ -185,7 +185,7 @@ private:
     
 public:
 	bool windowOpen = false;
-	shared_ptr<OKGame> bobsGame = nullptr;
+	sp<OKGame> bobsGame = nullptr;
     
     
 	int fontHeight = 20;

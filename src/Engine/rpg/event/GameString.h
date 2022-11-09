@@ -18,23 +18,23 @@ class GameStringData;
 class GameString : public ServerObject, public std::enable_shared_from_this<GameString>
 {
 private:
-	shared_ptr<GameStringData> data = nullptr;
+	sp<GameStringData> data = nullptr;
 
 
 public:
 
 	static Logger log;
-	GameString(shared_ptr<Engine> g, int id);
+	GameString(sp<Engine> g, int id);
 
 
-	GameString(shared_ptr<Engine> g, shared_ptr<GameStringData> data);
+	GameString(sp<Engine> g, sp<GameStringData> data);
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(shared_ptr<GameStringData> data);
+	void setData_S(sp<GameStringData> data);
 
 
-	shared_ptr<GameStringData> getData();
+	sp<GameStringData> getData();
 
 	int getID();
 	string& getName();

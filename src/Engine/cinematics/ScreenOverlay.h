@@ -30,7 +30,7 @@ public:
 
 	static Logger log;
 
-	shared_ptr<OKColor> color = OKColor::black;
+	sp<OKColor> color = OKColor::black;
 
 
 private:
@@ -57,18 +57,18 @@ private:
 	/// speed should be low, 0.0f01f * ticks(16) = 0.0f16f* 60 fps = 0.96 seconds to full opacity.
 	/// </summary>
 public:
-	ScreenOverlay(shared_ptr<Engine> g);
+	ScreenOverlay(sp<Engine> g);
 
 
 	void init();
 
 
-	void doTransition(shared_ptr<OKColor> color, float fromAlpha, float toAlpha, int ticks);
+	void doTransition(sp<OKColor> color, float fromAlpha, float toAlpha, int ticks);
 
 
-	void doToAndFromTransition(shared_ptr<OKColor> color, int ticks, float toAlpha);
+	void doToAndFromTransition(sp<OKColor> color, int ticks, float toAlpha);
 
-	void setInstantOverlay(shared_ptr<OKColor> color, float alpha);
+	void setInstantOverlay(sp<OKColor> color, float alpha);
 
 
 	void update();

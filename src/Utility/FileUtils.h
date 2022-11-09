@@ -43,7 +43,7 @@ class FileUtils
 {
 public:
 
-	//static shared_ptr<FileUtils> fileUtils;
+	//static sp<FileUtils> fileUtils;
 
 	FileUtils();
 
@@ -51,7 +51,7 @@ public:
 	static string removeSwearWords(string s);
 	static string removeIllegalFilenameChars(string s);
 	//static void fixPath(string &fullname);
-	static shared_ptr<BufferedImage> readBufferedImageFromFile(shared_ptr<OKFile> file);
+	static sp<BufferedImage> readBufferedImageFromFile(sp<OKFile> file);
 	//static ArrayList<string>* readLines(u8* get_resource_as_stream);
 	static void makeDir(const string& cs);
 	//static unsigned char* decodeBase64StringToByteArray(const string& cs);
@@ -67,16 +67,16 @@ public:
 	static string rtrimmed(std::string s);
 	static string trimmed(std::string s);
 	//static short* oldLoadShortIntFile(const string& filename);
-	static shared_ptr<IntArray> loadIntFile(string filename);
-	static shared_ptr<IntArray> loadIntFileFromExePath(string filename);
+	static sp<IntArray> loadIntFile(string filename);
+	static sp<IntArray> loadIntFileFromExePath(string filename);
 	//static vector<uint16_t>* loadShortFile(string filename);
 	static string loadTextFileAndTrim(string filename);
 	static string loadTextFileFromExePathAndTrim(string filename);
 	static ArrayList<string>* loadTextFileIntoVectorOfStringsAndTrim(string filename);
 	static ArrayList<string>* loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename);
-	static shared_ptr<ByteArray> loadByteFile(string filename);
-	static shared_ptr<ByteArray> loadByteFileFromExePath(string filename);
-	//static shared_ptr<ByteArray> loadByteFileFromExePathIntoVector(string filename);
+	static sp<ByteArray> loadByteFile(string filename);
+	static sp<ByteArray> loadByteFileFromExePath(string filename);
+	//static sp<ByteArray> loadByteFileFromExePathIntoVector(string filename);
 
 	//static string lzoByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
 	//static u8* unlzoBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
@@ -97,17 +97,17 @@ public:
 	static string unzipBase64StringToString(const string& s);
 
 	static string getFileMD5Checksum(const string& filename);
-	static shared_ptr<ByteArray> getByteArrayFromIntArray(shared_ptr<IntArray> intArray);
-	static string getByteArrayMD5Checksum(shared_ptr<ByteArray> bytes);
+	static sp<ByteArray> getByteArrayFromIntArray(sp<IntArray> intArray);
+	static string getByteArrayMD5Checksum(sp<ByteArray> bytes);
 	static string getStringMD5(const string& stringToMD5);
-	static void saveImage(const string& s, shared_ptr<BufferedImage> bufferedImage);
+	static void saveImage(const string& s, sp<BufferedImage> bufferedImage);
 
 	static std::string byteArrayToHexString(u8 *data, unsigned long len);
 	static u8* hexStringToByteArray(const string &hex);
 	static std::string encodeByteArrayToBase64String(u8 const* bytes_to_encode, unsigned long in_len);
-	static shared_ptr<ByteArray> decodeBase64StringToByteArray(std::string const& encoded_string);//, unsigned long &returnLength);	
+	static sp<ByteArray> decodeBase64StringToByteArray(std::string const& encoded_string);//, unsigned long &returnLength);	
 	static std::string encodeByteArrayToBase64StringAlt(u8 const* bytes_to_encode, unsigned long in_len);
-	static shared_ptr<ByteArray> decodeBase64StringToByteArrayAlt(std::string const& encoded_string);//, unsigned long &returnLength);
+	static sp<ByteArray> decodeBase64StringToByteArrayAlt(std::string const& encoded_string);//, unsigned long &returnLength);
 
 
 	static string appDataPath;
@@ -129,7 +129,7 @@ public:
 	//static void writeBrowserSessionAndRefreshIFrame();
 
 	string downloadingDataNiceName = "";
-	shared_ptr<ConsoleText> statusConsoleText = nullptr;
+	sp<ConsoleText> statusConsoleText = nullptr;
 	long long downloadingFileSize = 0;
 
 	void setStatusText(const string& text);
@@ -146,10 +146,10 @@ public:
 	void initCache();
 	static void downloadBigFileToCacheIfNotExist(const string& fileName);
 	static void downloadSmallFileToCacheIfNotExist(const string& fileName);
-	static shared_ptr<ByteArray> loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName);
-	static shared_ptr<IntArray> loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName);
-	static void saveByteArrayToCache(shared_ptr<ByteArray> byteArray, const string& md5FileName);
-	static void writeByteArrayToFile(shared_ptr<ByteArray> byteArray, const string& fileName);
+	static sp<ByteArray> loadByteFileFromCacheOrDownloadIfNotExist(const string& fileName);
+	static sp<IntArray> loadIntFileFromCacheOrDownloadIfNotExist(const string& fileName);
+	static void saveByteArrayToCache(sp<ByteArray> byteArray, const string& md5FileName);
+	static void writeByteArrayToFile(sp<ByteArray> byteArray, const string& fileName);
 	static bool doesDidIntroFileExist();
 	static void writeDidIntroFile();
 

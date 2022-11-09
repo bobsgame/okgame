@@ -20,7 +20,7 @@ class GameController
 public:
 
 	SDL_JoystickID id;
-	shared_ptr<SDL_Haptic >haptic = nullptr;
+	sp<SDL_Haptic >haptic = nullptr;
 	//int hapticID = -1;
 
 	bool UP_HELD = false;
@@ -178,7 +178,7 @@ public:
 
 	ControlsManager();
 
-	ArrayList<SDL_Event> events;
+	vector<SDL_Event> events;
 
 	static int numControllers;
 	static string controllerNames;
@@ -186,15 +186,15 @@ public:
 	static int DEADZONE;
 
 	//static SDL_Event event;
-	//static HashMap<int,shared_ptr<SDL_GameController>> *controllersByJoystickNum;
-	static HashMap<SDL_JoystickID, shared_ptr<SDL_GameController>> controllersByJoystickID;
+	//static HashMap<int,sp<SDL_GameController>> *controllersByJoystickNum;
+	static HashMap<SDL_JoystickID, sp<SDL_GameController>> controllersByJoystickID;
 
 	static float MAXZOOM;
 	static float MINZOOM;
 	static float ZOOMINCREMENT;
 
 
-	static ArrayList<shared_ptr<GameController>> gameControllers;// = make_shared<ArrayList><shared_ptr<GameController>>();
+	static ArrayList<sp<GameController>> gameControllers;// = ms<ArrayList><sp<GameController>>();
 
 
 	//------------------------------------
@@ -616,7 +616,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.get(i);
 			if (g->start_Pressed())return true;
 		}
 		return false;
@@ -631,7 +631,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.get(i);
 			if (g->select_Pressed())return true;
 		}
 		return false;
@@ -644,7 +644,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.get(i);
 			if (g->b_Pressed())return true;
 		}
 		return false;
@@ -658,7 +658,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			shared_ptr<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.get(i);
 			if (g->a_Pressed())return true;
 		}
 		return false;
@@ -729,7 +729,7 @@ public:
 
 	static void cleanup();
 
-	void doHaptic(shared_ptr<GameController>g, int length, int magnitude = 32767, int attackLength = 500, int fadeLength = 500, int wavePeriod = 500);
+	void doHaptic(sp<GameController>g, int length, int magnitude = 32767, int attackLength = 500, int fadeLength = 500, int wavePeriod = 500);
 	int getMouseX();
 	int getMouseY();
 };

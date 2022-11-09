@@ -14,7 +14,7 @@ class PuzzlePlayer : public std::enable_shared_from_this<PuzzlePlayer>
 {//=========================================================================================================================
 public:
 	//=========================================================================================================================
-	PuzzlePlayer(shared_ptr<GameLogic>g)
+	PuzzlePlayer(sp<GameLogic>g)
 	{//=========================================================================================================================
 		this->gameLogic = g;
 		if (g != nullptr)g->player = shared_from_this();
@@ -53,9 +53,9 @@ public:
 		return false;
 	}
 
-	shared_ptr<GameLogic> gameLogic = nullptr;
+	sp<GameLogic> gameLogic = nullptr;
 	bool confirmed = false;
-	shared_ptr<OKMenu>menu = nullptr;
+	sp<OKMenu>menu = nullptr;
 	bool selectGameSequenceOrSingleGameTypeMiniMenuShowing = true;
 	bool selectGameSequenceMiniMenuShowing = false;
 	bool gameSequenceOptionsMiniMenuShowing = false;
@@ -85,21 +85,21 @@ public:
 	
 
 	bool useKeyboard = false;
-	shared_ptr<GameController>gameController = nullptr;
+	sp<GameController>gameController = nullptr;
 
-	//shared_ptr<OKGameNetwork>network = nullptr;
-	shared_ptr<UDPPeerConnection>peerConnection = nullptr;
-	shared_ptr<Caption> nameCaption = nullptr;
-	shared_ptr<Caption> gameCaption = nullptr;
-	shared_ptr<Caption> difficultyCaption = nullptr;
-
-
+	//sp<OKGameNetwork>network = nullptr;
+	sp<UDPPeerConnection>peerConnection = nullptr;
+	sp<Caption> nameCaption = nullptr;
+	sp<Caption> gameCaption = nullptr;
+	sp<Caption> difficultyCaption = nullptr;
 
 
-	shared_ptr<OKColor>gridBorderColor = make_shared<OKColor>(255, 255, 255);//TODO: move these to user settings!
-	shared_ptr<OKColor>gridCheckeredBackgroundColor1 = OKColor::black;
-	shared_ptr<OKColor>gridCheckeredBackgroundColor2 = make_shared<OKColor>(8, 8, 8);
-	shared_ptr<OKColor>screenBackgroundColor = OKColor::black;
+
+
+	sp<OKColor>gridBorderColor = ms<OKColor>(255, 255, 255);//TODO: move these to user settings!
+	sp<OKColor>gridCheckeredBackgroundColor1 = OKColor::black;
+	sp<OKColor>gridCheckeredBackgroundColor2 = ms<OKColor>(8, 8, 8);
+	sp<OKColor>screenBackgroundColor = OKColor::black;
 	bool gridRule_showWarningForFieldThreeQuartersFilled = true;//TODO: move these to user settings!
 
 

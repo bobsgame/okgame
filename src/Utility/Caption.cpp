@@ -35,19 +35,19 @@ SetWidth is the width to truncate to a newline. It won't truncate words. setWidt
 
 */
 //=========================================================================================================================
-Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, shared_ptr<OKFont> font, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textAAColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+Caption::Caption(sp<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, sp<OKFont> font, sp<OKColor> textColor, sp<OKColor> textAAColor, sp<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, sp<Entity> entity, sp<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 	init(g, fixedPosition, screenX, screenY, ticks, text, font, textColor, textAAColor, textBGColor, layer, scale, maxWidth, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 }
 //=========================================================================================================================
-Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area)
+Caption::Caption(sp<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, sp<OKColor> textColor, sp<OKColor> textBGColor, RenderOrder layer, float scale, sp<Entity> entity, sp<Area> area)
 {//=========================================================================================================================
 
 	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, textBGColor, layer, scale, entity, area, outline);
 }
 
 //=========================================================================================================================
-Caption::Caption(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, shared_ptr<OKColor> textColor, RenderOrder layer)
+Caption::Caption(sp<Engine> g, Position fixedPosition, float screenX, float screenY, int ticks, const string& text, int fontSize, bool outline, sp<OKColor> textColor, RenderOrder layer)
 {//=========================================================================================================================
 
 	initTTF(g, fixedPosition, screenX, screenY, ticks, text, fontSize, textColor, OKColor::clear, layer, 1, nullptr, nullptr, outline);
@@ -77,7 +77,7 @@ void Caption::setText(const string& text, bool force)
 }
 
 //=========================================================================================================================
-shared_ptr<OKColor> Caption::getTextColor()
+sp<OKColor> Caption::getTextColor()
 {//=========================================================================================================================
 	return textColor;
 
@@ -86,7 +86,7 @@ shared_ptr<OKColor> Caption::getTextColor()
 
 
 //=========================================================================================================================
-void Caption::setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, shared_ptr<OKColor> bg)
+void Caption::setTextColor(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg)
 {//=========================================================================================================================
 
 
@@ -103,9 +103,9 @@ void Caption::setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, share
 	//color 1 = getText color
 	//color 2 = antialiasing color
 
-	shared_ptr<OKColor> tempFG = this->textColor;
-	shared_ptr<OKColor> tempBG = this->textBGColor;
-	shared_ptr<OKColor> tempAA = this->textAAColor;
+	sp<OKColor> tempFG = this->textColor;
+	sp<OKColor> tempBG = this->textBGColor;
+	sp<OKColor> tempAA = this->textAAColor;
 
 
 	if (fg != nullptr)
@@ -129,7 +129,7 @@ void Caption::setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, share
 		else
 		if (tempBG == OKColor::white)
 		{
-			tempAA = make_shared<OKColor>(*fg);
+			tempAA = ms<OKColor>(*fg);
 			tempAA->lighter();
 			tempAA->lighter();
 			tempAA->lighter();
@@ -149,7 +149,7 @@ void Caption::setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, share
 		{
 			if (tempBG == OKColor::black) //||textBGColor==Color.CLEAR)
 			{
-				tempAA = make_shared<OKColor>(*fg);
+				tempAA = ms<OKColor>(*fg);
 				tempAA->darker();
 				tempAA->darker();
 				tempAA->darker();
@@ -169,7 +169,7 @@ void Caption::setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, share
 			{
 				if (tempBG == OKColor::clear)
 				{
-					tempAA = make_shared<OKColor>((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f)*255);
+					tempAA = ms<OKColor>((fg->rf()) * 255, (fg->gf()) * 255, (fg->bf()) * 255, (fg->af() / 2.0f)*255);
 				}
 			}
 		}
@@ -199,7 +199,7 @@ void Caption::setTextColor(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, share
 
 
 //=========================================================================================================================
-void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area, bool outline)
+void Caption::initTTF(sp<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, int fontSize, sp<OKColor> textColor, sp<OKColor> textBGColor, RenderOrder layer, float scale, sp<Entity> entity, sp<Area> area, bool outline)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -251,10 +251,10 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 	
 
-	shared_ptr<SDL_Surface*> surface = nullptr;
+	sp<SDL_Surface*> surface = nullptr;
 
 
-	shared_ptr<TTF_Font> outlineFont = nullptr;
+	sp<TTF_Font> outlineFont = nullptr;
 
 	if (fontSize < 7)  { this->ttfFont = OKFont::ttf_6;  outlineFont = OKFont::ttf_outline_6;  this->fontSize = 6; }
 	if (fontSize == 7)  { this->ttfFont = OKFont::ttf_7;  outlineFont = OKFont::ttf_outline_7;  }
@@ -300,7 +300,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 		outlineOKColor.darker();
 		SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
 		surface = TTF_RenderText_Blended(outlineFont.get(), this->text.c_str(), outlineColor);
-		shared_ptr<SDL_Surface*> fg_surface = TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor);
+		sp<SDL_Surface*> fg_surface = TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor);
 		SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 		// blit text onto its outline 
@@ -323,8 +323,8 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 		//TTF_SetFontOutline(font_outline, 2);
 		//SDL_Color white = { 0xFF, 0xFF, 0xFF };
 		//SDL_Color black = { 0x00, 0x00, 0x00 };
-		//shared_ptr<SDL_Surface >black_text_surface = TTF_RenderText_Blended(font_outline, text, black);
-		//shared_ptr<SDL_Surface >white_text_surface = TTF_RenderText_Blended(font, text,white);
+		//sp<SDL_Surface >black_text_surface = TTF_RenderText_Blended(font_outline, text, black);
+		//sp<SDL_Surface >white_text_surface = TTF_RenderText_Blended(font, text,white);
 		//SDL_TextureID black_text = SDL_CreateTextureFromSurface(0,black_text_surface);
 		//SDL_TextureID white_text = SDL_CreateTextureFromSurface(0,white_text_surface);
 		//SDL_Rect black_rect = { x, y, black_text_surface->w,black_text_surface->h };
@@ -369,7 +369,7 @@ void Caption::initTTF(shared_ptr<Engine> g, Position fixedPosition, float screen
 
 
 //=========================================================================================================================
-void Caption::init(shared_ptr<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, shared_ptr<OKFont> font, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textAAColor, shared_ptr<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+void Caption::init(sp<Engine> g, Position fixedPosition, float screenX, float screenY, long long ticks, const string& text, sp<OKFont> font, sp<OKColor> textColor, sp<OKColor> textAAColor, sp<OKColor> textBGColor, RenderOrder layer, float scale, int maxWidth, sp<Entity> entity, sp<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 	this->e = g;
 
@@ -456,7 +456,7 @@ void Caption::init(shared_ptr<Engine> g, Position fixedPosition, float screenX, 
 
 
 	//textureByteArray->data() = (u8*)malloc(sizeof(u8)*texWidth * texHeight * 4);
-	textureByteArray = make_shared<ByteArray>(texWidth * texHeight * 4);
+	textureByteArray = ms<ByteArray>(texWidth * texHeight * 4);
 
 
 	for (int i = 0; i < texWidth * texHeight; i++)
@@ -1112,7 +1112,7 @@ int Caption::getLetterPixelColor(int letterIndex, int y, int xInLetter, bool bla
 	return index;
 }
 
-void Caption::setPixel(int index, shared_ptr<OKColor> c)
+void Caption::setPixel(int index, sp<OKColor> c)
 { //=========================================================================================================================
 
 	if (c == nullptr)
@@ -1268,19 +1268,19 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 			index = getLetterPixelColor(letterIndex, y - 1, xInLetter, blank);
 		}
 
-		shared_ptr<OKColor> c = nullptr;
+		sp<OKColor> c = nullptr;
 
 		if (index == 0)
 		{
-			c = make_shared<OKColor>(*textBGColor);
+			c = ms<OKColor>(*textBGColor);
 		}
 		else if (index == 1)
 		{
-			c = make_shared<OKColor>(*textColor);
+			c = ms<OKColor>(*textColor);
 		}
 		else if (index == 2)
 		{
-			c = make_shared<OKColor>(*textAAColor);
+			c = ms<OKColor>(*textAAColor);
 		}
 		else if (index > 2) //additional aa pixels, use the color value to set the opacity
 		{
@@ -1290,7 +1290,7 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 			//int abgr1555 = (byte2 << 8) + byte1;
 			int r = 255 - (int)((((byte1 & 31)) / 32.0f) * 255.0f);
 			//int r = 255-(int)((((byte1&0b00011111))/32.0f)*255.0f);
-			//Color gray = make_shared<Color>(b,b,b);
+			//Color gray = ms<Color>(b,b,b);
 
 
 			int a = r; //gray.getRed();
@@ -1301,8 +1301,8 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 
 			a *= textAAColor->ai();
 
-			//shared_ptr<Color> tc = textColor;
-			c = make_shared<OKColor>(textColor->ri(), textColor->gi(), textColor->bi(), a);
+			//sp<Color> tc = textColor;
+			c = ms<OKColor>(textColor->ri(), textColor->gi(), textColor->bi(), a);
 		}
 
 
@@ -1316,7 +1316,7 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 				u8 a = c->ai();
 
 				if (c != nullptr)delete c;
-				c = make_shared<OKColor>(r, g, b, a);
+				c = ms<OKColor>(r, g, b, a);
 			}
 		}
 
@@ -1370,7 +1370,7 @@ void Caption::updateScreenXY()
 	//-----------------------------
 	if (fixedPosition == Position::CENTERED_OVER_ENTITY)
 	{
-		shared_ptr<Entity>e = entity;
+		sp<Entity>e = entity;
 		if (e == nullptr)e = getPlayer();
 
 		if(e!=nullptr)
@@ -1381,7 +1381,7 @@ void Caption::updateScreenXY()
 			int captionOverHeadOffset = 0;
 			for (int i = getCaptionManager()->captionList->size() - 1; i >= 0; i--)
 			{
-				shared_ptr<Caption> tempC = getCaptionManager()->captionList->get(i);
+				sp<Caption> tempC = getCaptionManager()->captionList->get(i);
 				if (tempC->fixedPosition == Position::CENTERED_OVER_ENTITY)
 				{
 					if (tempC == this)break;
@@ -1594,7 +1594,7 @@ void Caption::update()
 }
 
 
-void Caption::setEntity(shared_ptr<Entity> e)
+void Caption::setEntity(sp<Entity> e)
 {
 	this->entity = e;
 

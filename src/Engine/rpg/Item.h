@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	shared_ptr<Sprite> sprite = nullptr;
+	sp<Sprite> sprite = nullptr;
 
 	string spriteAssetName = "";
 	int spriteAssetID = -1;
@@ -29,13 +29,13 @@ private:
 
 
 public:
-	Item(shared_ptr<Engine> g, const string& spriteAssetName);
+	Item(sp<Engine> g, const string& spriteAssetName);
 
 
-	Item(shared_ptr<Engine> g, int spriteAssetID);
+	Item(sp<Engine> g, int spriteAssetID);
 
 
-	Item(shared_ptr<Engine> g, shared_ptr<Sprite> sprite);
+	Item(sp<Engine> g, sp<Sprite> sprite);
 
 
 	void sendServerRequest();

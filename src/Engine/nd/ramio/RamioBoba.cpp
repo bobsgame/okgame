@@ -14,7 +14,7 @@
 Logger RamioOKa::log = Logger("RamioOKa");
 
 
-RamioOKa::RamioOKa(shared_ptr<Engine> g)
+RamioOKa::RamioOKa(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -81,7 +81,7 @@ void RamioOKa::update()
 	}
 }
 
-bool RamioOKa::checkStomp(shared_ptr<RamioGuy> guy)
+bool RamioOKa::checkStomp(sp<RamioGuy> guy)
 {
 	// int r=rand()%5;
 	// if(r==0)CAPTION_make_caption(&yuu_ramio_caption, 1,CAPTION_CENTERED_OVER_SPRITE,PLAYER_npc->screen_y-10,3,"Squish!",FONT_NORMAL_ID,WHITE,BLACK,1,1);
@@ -98,7 +98,7 @@ bool RamioOKa::checkStomp(shared_ptr<RamioGuy> guy)
 	return false;
 }
 
-bool RamioOKa::checkRunningInto(shared_ptr<RamioGuy> guy)
+bool RamioOKa::checkRunningInto(sp<RamioGuy> guy)
 {
 	// TODO
 	return false;

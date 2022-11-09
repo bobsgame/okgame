@@ -107,7 +107,7 @@ public:
 
 
 
-	//GameSave(shared_ptr<ResultSet>databaseResultSet);
+	//GameSave(sp<ResultSet>databaseResultSet);
 
 
 	GameSave();

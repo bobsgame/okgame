@@ -22,7 +22,7 @@ SubPanel::SubPanel()
 	//   //----------------------
 	//   //setup layout inside scrollpane
 	//   //----------------------
-	//   insideLayout = make_shared<DialogLayout>();
+	//   insideLayout = ms<DialogLayout>();
 	//   insideLayout->setTheme(GUIManager::emptyDialogLayoutTheme);
 	//   insideLayout->setCanAcceptKeyboardFocus(false);
 	//
@@ -31,7 +31,7 @@ SubPanel::SubPanel()
 	//   //setup scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = make_shared<ScrollPane>(insideLayout);
+	//   scrollPane = ms<ScrollPane>(insideLayout);
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
 	//   scrollPane->setExpandContentSize(true);
@@ -85,42 +85,42 @@ void SubPanel::render()
 { //=========================================================================================================================
 }
 //
-//shared_ptr<BGClientEngine> SubPanel::getClientEngine()
+//sp<BGClientEngine> SubPanel::getClientEngine()
 //{
 //	return Main::gameEngine;
 //}
 //
-//shared_ptr<EventManager> SubPanel::getEventManager()
+//sp<EventManager> SubPanel::getEventManager()
 //{
 //	return getClientEngine()->eventManager;
 //}
 //
-//shared_ptr<Clock> SubPanel::getClock()
+//sp<Clock> SubPanel::getClock()
 //{
 //	return getClientEngine()->clock;
 //}
 //
-//shared_ptr<GUIManager> SubPanel::getGUIManager()
+//sp<GUIManager> SubPanel::getGUIManager()
 //{
 //	return getClientEngine()->guiManager;
 //}
 //
-//shared_ptr<StuffMenu> SubPanel::getStuffMenu()
+//sp<StuffMenu> SubPanel::getStuffMenu()
 //{
 //	return getGUIManager()->stuffMenu;
 //}
 //
-//shared_ptr<GameStore> SubPanel::getGameStore()
+//sp<GameStore> SubPanel::getGameStore()
 //{
 //	return getGUIManager()->gameStore;
 //}
 //
-//shared_ptr<PlayerEditMenu> SubPanel::getPlayerEditMenu()
+//sp<PlayerEditMenu> SubPanel::getPlayerEditMenu()
 //{
 //	return getGUIManager()->playerEditMenu;
 //}
 //
-//shared_ptr<Player> SubPanel::getPlayer()
+//sp<Player> SubPanel::getPlayer()
 //{
 //	return getClientEngine()->player;
 //}
@@ -130,32 +130,32 @@ void SubPanel::render()
 //	return getClientEngine()->nD;
 //}
 //
-//shared_ptr<Wallet> SubPanel::getWallet()
+//sp<Wallet> SubPanel::getWallet()
 //{
 //	return getClientEngine()->wallet;
 //}
 //
-//shared_ptr<FriendManager> SubPanel::getFriendManager()
+//sp<FriendManager> SubPanel::getFriendManager()
 //{
 //	return getClientEngine()->friendManager;
 //}
 //
-//shared_ptr<StatusBar> SubPanel::getStatusBar()
+//sp<StatusBar> SubPanel::getStatusBar()
 //{
 //	return getClientEngine()->statusBar;
 //}
 //
-//shared_ptr<NotificationManager> SubPanel::getNotificationManager()
+//sp<NotificationManager> SubPanel::getNotificationManager()
 //{
 //	return getStatusBar()->notificationManager;
 //}
 //
-//shared_ptr<TCPServerConnection> SubPanel::getServerConnection()
+//sp<TCPServerConnection> SubPanel::getServerConnection()
 //{
 //	return OKNet::tcpServerConnection;
 //}
 //
-//shared_ptr<GameSave> SubPanel::getGameSave()
+//sp<GameSave> SubPanel::getGameSave()
 //{
 //	return getServerConnection()->getGameSave_S();
 //}

@@ -127,21 +127,21 @@ public:
 	}
 
 	//=========================================================================================================================
-	static ArrayList<FrameState> getFramesArrayFromBase64LZ4XML(const string &b64LZ4XML)
+	static sp<vector<FrameState>> getFramesArrayFromBase64LZ4XML(const string &b64LZ4XML)
 	{ //=========================================================================================================================
 
 		string xml = FileUtils::unlz4Base64StringToString(b64LZ4XML);
 
 		if (xml == "" || xml.length() == 0)
 		{
-			return ArrayList<FrameState>();
+			return sp<vector<FrameState>>();
 		}
 
 		stringstream ss;
 		ss << xml;
 
 		boost::archive::xml_iarchive ia(ss);
-		ArrayList<FrameState> n;
+		sp<vector<FrameState>> n;
 		try
 		{
 			ia >> BOOST_SERIALIZATION_NVP(n);
@@ -169,23 +169,23 @@ public:
 	//static OKColor noColor;
 	//static ArrayList<OKColor> emptyColors;
 
-	shared_ptr<GameSequence>currentGameSequence = nullptr;
-	shared_ptr<PuzzlePlayer> player = nullptr;
+	sp<GameSequence>currentGameSequence = nullptr;
+	sp<PuzzlePlayer> player = nullptr;
 
 public:
 
 	//CaptionManager captionManager;
 
-	//virtual shared_ptr<CaptionManager> getCaptionManager() override;
+	//virtual sp<CaptionManager> getCaptionManager() override;
 
 	
-	ArrayList<shared_ptr<GameType>> gameTypeRandomBag;
-	shared_ptr<GameType> currentGameType = nullptr;//currentGameType
+	vector<sp<GameType>> gameTypeRandomBag;
+	sp<GameType> currentGameType = nullptr;//currentGameType
 
-	shared_ptr<Grid> grid = nullptr;
+	sp<Grid> grid = nullptr;
 
-	shared_ptr<OKGame> getOKGame();
-	shared_ptr<Room> getRoom();
+	sp<OKGame> getOKGame();
+	sp<Room> getRoom();
 
 	int blockWidth = 1;
 	int blockHeight = 1;
@@ -193,12 +193,12 @@ public:
 	static int aboveGridBuffer;
 	//static int gameTypeCount;
 
-	GameLogic(shared_ptr<Engine> g, long long seed);
+	GameLogic(sp<Engine> g, long long seed);
 	~GameLogic();
 
 	void initializeRandomGenerator();
 	void fillGameTypeRandomBag();
-	shared_ptr<GameType> getGameTypeFromRandomBag();
+	sp<GameType> getGameTypeFromRandomBag();
 
 	bool dontResetNextPieces = false;
 
@@ -301,16 +301,16 @@ private:
 	long long flashBlocksTicksCounter = 0;
 	int timesToFlashBlocksQueue = 0;
 	long long removeBlocksTicksCounter = 0;
-	ArrayList<shared_ptr<Block>> currentChainBlocks;
+	vector<sp<Block>> currentChainBlocks;
 public:
-	ArrayList<shared_ptr<Block>> fadingOutBlocks;
+	vector<sp<Block>> fadingOutBlocks;
 
-	shared_ptr<Piece> currentPiece = nullptr;
-	shared_ptr<Piece> lastPiece = nullptr;
+	sp<Piece> currentPiece = nullptr;
+	sp<Piece> lastPiece = nullptr;
 
-	shared_ptr<Piece> holdPiece = nullptr;
-	ArrayList<shared_ptr<Piece>> nextPieces;
-	ArrayList<shared_ptr<Piece>> nextPieceSpecialBuffer;
+	sp<Piece> holdPiece = nullptr;
+	vector<sp<Piece>> nextPieces;
+	vector<sp<Piece>> nextPieceSpecialBuffer;
 
 	int lastKnownLevel = 0;
 	int currentLevel = 0;
@@ -373,18 +373,18 @@ private:
 	int queuedVSGarbageAmountFromOtherPlayer = 0;
 	int garbageWaitForPiecesSetCount = 0;
 
-	//shared_ptr<Block> garbageBlock = nullptr;
+	//sp<Block> garbageBlock = nullptr;
 
 	bool checkForChainAgainIfNoBlocksPopping = false;
 
 public:
-	void setGameType(shared_ptr<GameType> gameType);
-	shared_ptr<DifficultyType> getCurrentDifficulty();
+	void setGameType(sp<GameType> gameType);
+	sp<DifficultyType> getCurrentDifficulty();
 private:
 	void initGame();
 
 public:
-	//void setGridXY(shared_ptr<PuzzlePlayer>p, int gameIndex, int numGames);
+	//void setGridXY(sp<PuzzlePlayer>p, int gameIndex, int numGames);
 
 private:
 	void flashScreen();
@@ -404,7 +404,7 @@ private:
 
 private:
 	void processFrame();
-	void addToChainBlocks(ArrayList<shared_ptr<Block>> &arr);
+	void addToChainBlocks(ArrayList<sp<Block>> &arr);
 	bool detectedChain();
 	void checkForChain();
 
@@ -510,87 +510,87 @@ private:
 	float captionScale = 1.0f;
 	int captionYSize = (int)(14 * 1.0f); // captionScale);
 
-	shared_ptr<OKColor> captionTextColor = nullptr;// = Color::white;
-	shared_ptr<OKColor> captionBGColor = nullptr;// = Color::black;
+	sp<OKColor> captionTextColor = nullptr;// = Color::white;
+	sp<OKColor> captionBGColor = nullptr;// = Color::black;
 	int captionFontSize = 0;// = OKFont::font_normal_8;
 
 	float announcementCaptionScale = 0.3f;
-	shared_ptr<OKColor> announcementCaptionTextColor = nullptr;// = Color::white;
-	shared_ptr<OKColor> announcementCaptionBGColor = nullptr;// = Color::clear;
+	sp<OKColor> announcementCaptionTextColor = nullptr;// = Color::white;
+	sp<OKColor> announcementCaptionBGColor = nullptr;// = Color::clear;
 	int announcementCaptionFontSize = 0;// = OKFont::font_32;
 	int resultCaptionFontSize = 0;// = OKFont::font_32;
 
 	int mediumCaptionFontSize = 0;// = OKFont::font_normal_16_outlined_smooth;
 
 public:
-	shared_ptr<Caption> levelCaption = nullptr;
+	sp<Caption> levelCaption = nullptr;
 	string levelCaptionText = "levelCaptionText";
 
-	shared_ptr<Caption> gameTypeCaption = nullptr;
-	shared_ptr<Caption> rulesCaption1 = nullptr;
-	shared_ptr<Caption> rulesCaption2 = nullptr;
-	shared_ptr<Caption> rulesCaption3 = nullptr;
+	sp<Caption> gameTypeCaption = nullptr;
+	sp<Caption> rulesCaption1 = nullptr;
+	sp<Caption> rulesCaption2 = nullptr;
+	sp<Caption> rulesCaption3 = nullptr;
 
-	shared_ptr<Caption> difficultyCaption = nullptr;
+	sp<Caption> difficultyCaption = nullptr;
 	//string difficultyCaptionText = "difficultyCaptionText";
 
-	shared_ptr<Caption> stopCounterCaption = nullptr;
+	sp<Caption> stopCounterCaption = nullptr;
 	string stopCounterCaptionText = "Go!";
 
-	shared_ptr<Caption> xCaption = nullptr;
-	shared_ptr<Caption> yCaption = nullptr;
-	shared_ptr<Caption> lineDropTicksCaption = nullptr;
-	shared_ptr<Caption> lockDelayCaption = nullptr;
-	shared_ptr<Caption> spawnDelayCaption = nullptr;
-	shared_ptr<Caption> lineClearDelayCaption = nullptr;
-	shared_ptr<Caption> gravityCaption = nullptr;
-	shared_ptr<Caption> rotationCaption = nullptr;
-	shared_ptr<Caption> holdCaption = nullptr;
-	shared_ptr<Caption> nextCaption = nullptr;
+	sp<Caption> xCaption = nullptr;
+	sp<Caption> yCaption = nullptr;
+	sp<Caption> lineDropTicksCaption = nullptr;
+	sp<Caption> lockDelayCaption = nullptr;
+	sp<Caption> spawnDelayCaption = nullptr;
+	sp<Caption> lineClearDelayCaption = nullptr;
+	sp<Caption> gravityCaption = nullptr;
+	sp<Caption> rotationCaption = nullptr;
+	sp<Caption> holdCaption = nullptr;
+	sp<Caption> nextCaption = nullptr;
 
-	shared_ptr<Caption> totalLinesClearedCaption = nullptr;
-	shared_ptr<Caption> totalBlocksClearedCaption = nullptr;
-	shared_ptr<Caption> totalPiecesMadeCaption = nullptr;
+	sp<Caption> totalLinesClearedCaption = nullptr;
+	sp<Caption> totalBlocksClearedCaption = nullptr;
+	sp<Caption> totalPiecesMadeCaption = nullptr;
 
-	shared_ptr<Caption> linesClearedThisGameCaption = nullptr;
-	shared_ptr<Caption> blocksClearedThisGameCaption = nullptr;
-	shared_ptr<Caption> piecesMadeThisGameCaption = nullptr;
+	sp<Caption> linesClearedThisGameCaption = nullptr;
+	sp<Caption> blocksClearedThisGameCaption = nullptr;
+	sp<Caption> piecesMadeThisGameCaption = nullptr;
 
-	shared_ptr<Caption> blocksInGridCaption = nullptr;
-	shared_ptr<Caption> currentChainCaption = nullptr;
-	shared_ptr<Caption> currentComboCaption = nullptr;
-	shared_ptr<Caption> comboChainTotalCaption = nullptr;
-	shared_ptr<Caption> seedCaption = nullptr;
-	shared_ptr<Caption> bgCaption = nullptr;
+	sp<Caption> blocksInGridCaption = nullptr;
+	sp<Caption> currentChainCaption = nullptr;
+	sp<Caption> currentComboCaption = nullptr;
+	sp<Caption> comboChainTotalCaption = nullptr;
+	sp<Caption> seedCaption = nullptr;
+	sp<Caption> bgCaption = nullptr;
 
-	shared_ptr<Caption> piecesToLevelUpThisLevelCaption = nullptr;
-	shared_ptr<Caption> piecesLeftToLevelUpCaption = nullptr;
+	sp<Caption> piecesToLevelUpThisLevelCaption = nullptr;
+	sp<Caption> piecesLeftToLevelUpCaption = nullptr;
 
 private:
-	ArrayList<shared_ptr<Caption>> infoCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
-	ArrayList<shared_ptr<Caption>> announcementCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
+	vector<sp<Caption>> infoCaptions;// = ms<ArrayList><sp<Caption>>();
+	vector<sp<Caption>> announcementCaptions;// = ms<ArrayList><sp<Caption>>();
 
 public:
-	shared_ptr<Caption> totalTicksPassedCaption = nullptr;
+	sp<Caption> totalTicksPassedCaption = nullptr;
 private:
 	int timeCaptionStandardizedWidth = 0;
 
 public:
-	shared_ptr<Caption> pressStartCaption = nullptr;
-	shared_ptr<Caption> waitingForPlayerCaption = nullptr;
-	shared_ptr<Caption> creditsCaption = nullptr;
-	shared_ptr<Caption> deadCaption = nullptr;
-	shared_ptr<Caption> winCaption = nullptr;
-	shared_ptr<Caption> loseCaption = nullptr;
-	shared_ptr<Caption> garbageWaitCaption = nullptr;
+	sp<Caption> pressStartCaption = nullptr;
+	sp<Caption> waitingForPlayerCaption = nullptr;
+	sp<Caption> creditsCaption = nullptr;
+	sp<Caption> deadCaption = nullptr;
+	sp<Caption> winCaption = nullptr;
+	sp<Caption> loseCaption = nullptr;
+	sp<Caption> garbageWaitCaption = nullptr;
 
-	shared_ptr<OKGameUserStatsForSpecificGameAndDifficulty>myHighScore = nullptr;
-	shared_ptr<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry>currentLeaderboardEntry = nullptr;
+	sp<OKGameUserStatsForSpecificGameAndDifficulty>myHighScore = nullptr;
+	sp<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry>currentLeaderboardEntry = nullptr;
 	bool triedToGetHighScore = false;
-	shared_ptr<Caption> scoreBarTypeCaption = nullptr;
-	shared_ptr<Caption> myScoreBarCaption = nullptr;
-	shared_ptr<Caption> myHighScoreBarCaption = nullptr;
-	shared_ptr<Caption> leaderboardBarCaption = nullptr;
+	sp<Caption> scoreBarTypeCaption = nullptr;
+	sp<Caption> myScoreBarCaption = nullptr;
+	sp<Caption> myHighScoreBarCaption = nullptr;
+	sp<Caption> leaderboardBarCaption = nullptr;
 
 	//lines cleared
 	//blocks cleared
@@ -625,10 +625,10 @@ public:
 
 private:
 	void makeAnnouncementCaption(const string& text);
-	void makeAnnouncementCaption(const string& text, shared_ptr<OKColor> color);
+	void makeAnnouncementCaption(const string& text, sp<OKColor> color);
 	void makeRandomLevelUpCaption();
 	void updateCaptionFadeValues();
-	shared_ptr<Caption> makeInfoCaption(const string& text);
+	sp<Caption> makeInfoCaption(const string& text);
 
 public:
 	void deleteAllCaptions();
@@ -646,8 +646,8 @@ public:
 	void updateScore();
 
 	//long long engineTicksPassed();
-	//shared_ptr<GameType> getGameType();
-	//void setCurrentGameType(shared_ptr<GameType> settings);
+	//sp<GameType> getGameType();
+	//void setCurrentGameType(sp<GameType> settings);
 	int getRandomIntLessThan(int i, string whereCalledFrom);
 	int cellW();
 	int cellH();
@@ -658,7 +658,7 @@ public:
 
 
 	long long ticks();
-	shared_ptr<FrameState> getFrameState();
+	sp<FrameState> getFrameState();
 
 
 
@@ -668,7 +668,7 @@ public:
 
 	bool isNetworkPlayer = false;
 
-	ArrayList<FrameState> framesArray;
+	sp<vector<FrameState>> framesArray;
 	FrameState frameState;
 
 	long long randomSeed = -1;
@@ -678,7 +678,7 @@ public:
 
 	int lastSentPacketID = 0;
 
-	typedef ArrayList<string> ArrayListString;
+	typedef sp<vector<string>> ArrayListString;
 	ArrayListString outboundPacketQueueVector;
 	
 	typedef HashMap<string, string> HashMapStringString;
@@ -687,8 +687,8 @@ public:
 	long long lastIncomingFramePacketID = 0;
 	long long storePacketsTicksCounter = 0;
 
-	typedef ArrayList<FrameState> FrameStateArray;
-	ArrayList<FrameStateArray> allNetworkPacketsSentUpUntilNow;
+	typedef sp<vector<FrameState>> FrameStateArray;
+	sp<vector<FrameStateArray>> allNetworkPacketsSentUpUntilNow;
 
 	void sendPacketsToOtherPlayers();
 	bool waitingForNetworkFrames = true;
@@ -713,7 +713,7 @@ public:
 	ArrayListString _gotPacketsLog;
 	bool packetProcessThreadStarted = false;
 	thread packetProcessThread;
-	static void _packetProcessThreadLoop(shared_ptr<GameLogic>g);
+	static void _packetProcessThreadLoop(sp<GameLogic>g);
 	void _processIncomingPackets();
 private:
 		bool _stopThread = false;
@@ -759,12 +759,12 @@ public:
 
 	//------------------------------------
 private:
-	typedef ArrayList<FrameState> ArrayListFrameState;
+	typedef sp<vector<FrameState>> ArrayListFrameState;
 	typedef HashMap<long long, ArrayListFrameState> HashMapLongLongArrayListFrameState;
 	HashMapLongLongArrayListFrameState _incomingFramePackets;
 	mutex _incomingFramePackets_Mutex;
 public:
-	ArrayListFrameState incomingFramePacketsGet_S(long long k)
+	sp<vector<FrameState>> incomingFramePacketsGet_S(long long k)
 	{
 		lock_guard<mutex> lock(_incomingFramePackets_Mutex);
 		return _incomingFramePackets.get(k);

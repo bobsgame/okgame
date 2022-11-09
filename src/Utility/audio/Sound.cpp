@@ -10,11 +10,11 @@
 
 Logger Sound::log = Logger("Sound");
 
-//Sound::Sound(shared_ptr<Engine> g, int id)
+//Sound::Sound(sp<Engine> g, int id)
 //{ //=========================================================================================================================
 //
 //	this->e = g;
-//	this->data = make_shared<SoundData>(id, "", "");
+//	this->data = ms<SoundData>(id, "", "");
 //
 //	for (int i = 0; i < (int)Main::audioManager->soundList->size(); i++)
 //	{
@@ -27,7 +27,7 @@ Logger Sound::log = Logger("Sound");
 //	Main::audioManager->soundList->add(this);
 //}
 
-Sound::Sound(shared_ptr<Engine> g, shared_ptr<AudioFile>f)
+Sound::Sound(sp<Engine> g, sp<AudioFile>f)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -55,13 +55,13 @@ void Sound::initFromByteData()
 	
 #ifdef USE_SOLOUD
 	filename = Main::getPath() + filename;
-	soLoudWave = make_shared<SoLoud>::Wav();
+	soLoudWave = ms<SoLoud>::Wav();
 	//log->debug(filename);
 	soLoudWave->load(filename.c_str());
 #endif
 #ifdef USE_SDL_MIXER
 
-	shared_ptr<SDL_RWops> file = SDL_RWFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
+	sp<SDL_RWops> file = SDL_RWFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
 	mixChunk = Mix_LoadWAV_RW(file, 0);
 	file->close(file);
 

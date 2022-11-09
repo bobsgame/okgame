@@ -20,7 +20,7 @@ class ConsoleText
 public:
 	static Logger log;
 
-	shared_ptr<Caption> caption = nullptr;
+	sp<Caption> caption = nullptr;
 
 	bool alwaysOnBottom = false;
 
@@ -31,14 +31,14 @@ public:
 
 	int ticks = -1;
 
-	shared_ptr<OKColor> color = nullptr;
+	sp<OKColor> color = nullptr;
 
-	static shared_ptr<OKColor> defaultColor;
+	static sp<OKColor> defaultColor;
 
 	bool isDebug = false;
 
 	ConsoleText();
-	ConsoleText(const string& s, shared_ptr<OKColor> c, int x, int y, int ticks, bool isDebug);
+	ConsoleText(const string& s, sp<OKColor> c, int x, int y, int ticks, bool isDebug);
 	float getWidth();
 	float getHeight();
 };

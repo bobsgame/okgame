@@ -40,7 +40,7 @@ using namespace Gwen::Controls;
 
 
 //GWEN_CONTROL_CONSTRUCTOR(GameSequenceEditorControl)
-GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame>b) : Base(pParent, pName)
+GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame>b) : Base(pParent, pName)
 {//=========================================================================================================================
 
 	this->bobsGame = b;
@@ -136,11 +136,11 @@ GameSequenceEditorControl::GameSequenceEditorControl(Gwen::Controls::Base* pPare
 
 				populateGameTypesListBox();
 
-//				gameTypesButtonBase = make_shared<Base>(gameTypesListBoxBase);
+//				gameTypesButtonBase = ms<Base>(gameTypesListBoxBase);
 //				gameTypesButtonBase->Dock(Pos::Bottom);
 //				gameTypesButtonBase->SetSize(gameTypesListBoxBase->Width(), 20);
 //				{
-//					downloadGameTypesButton = make_shared<Button>(gameTypesButtonBase);
+//					downloadGameTypesButton = ms<Button>(gameTypesButtonBase);
 //					downloadGameTypesButton->SetText(L"Download More Game Types");
 //					downloadGameTypesButton->SetToolTip("");
 //					downloadGameTypesButton->Dock(Pos::Left | Pos::CenterV);
@@ -389,13 +389,13 @@ using Poco::Process;
 using Poco::Path;
 
 
-//shared_ptr<GameSequence> GameSequenceEditorControl::getGameSequenceByName(string name)
+//sp<GameSequence> GameSequenceEditorControl::getGameSequenceByName(string name)
 //{//=========================================================================================================================
 //
-//	shared_ptr<GameSequence>bt = nullptr;
+//	sp<GameSequence>bt = nullptr;
 //	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
 //	{
-//		shared_ptr<GameSequence>b = bobsGame->loadedGameSequences.get(i);
+//		sp<GameSequence>b = bobsGame->loadedGameSequences.get(i);
 //		if (b->name == name)
 //		{
 //			bt = b;
@@ -408,14 +408,14 @@ using Poco::Path;
 void GameSequenceEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	vector<pair<sp<GameType>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<shared_ptr<GameType>, pair<string, shared_ptr<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameType>g = gameTypeStringColorPairPair.first;
-		pair<string, shared_ptr<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
+		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		sp<GameType>g = gameTypeStringColorPairPair.first;
+		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<OKColor>color = stringColorPair.second;
+		sp<OKColor>color = stringColorPair.second;
 
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		//row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameTypesListSelect);
@@ -428,14 +428,14 @@ void GameSequenceEditorControl::populateGameTypesListBox()
 void GameSequenceEditorControl::populateGameSequencesListBox()
 {//=========================================================================================================================
 
-	ArrayList<pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor.size(); i++)
 	{
-		pair<shared_ptr<GameSequence>, pair<string, shared_ptr<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
-		shared_ptr<GameSequence>g = gameSequenceStringColorPairPair.first;
-		pair<string, shared_ptr<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
+		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
+		pair<string, sp<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
-		shared_ptr<OKColor>color = stringColorPair.second;
+		sp<OKColor>color = stringColorPair.second;
 
 		Layout::TableRow *row = gameSequencesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameSequencesListSelect);
@@ -460,7 +460,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 
 		string uuid = row->GetName().c_str();
 
-		shared_ptr<GameType>gt = bobsGame->getGameTypeByUUID(uuid);
+		sp<GameType>gt = bobsGame->getGameTypeByUUID(uuid);
 		currentGameSequence->importExport_gameUUIDs.add(gt->uuid);
 	}
 
@@ -478,7 +478,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	bool taken = false;
 	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence>s = bobsGame->loadedGameSequences.get(i);
+		sp<GameSequence>s = bobsGame->loadedGameSequences.get(i);
 		if (s != currentGameSequence && s->name == name)taken = true;
 	}
 	if (taken)
@@ -486,7 +486,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 		int n = 0;
 		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 		{
-			shared_ptr<GameSequence>s = bobsGame->loadedGameSequences.get(i);
+			sp<GameSequence>s = bobsGame->loadedGameSequences.get(i);
 			if (s != currentGameSequence && s->name == name + " " + to_string(n))
 			{
 				n++;
@@ -515,7 +515,7 @@ void GameSequenceEditorControl::initFromCurrentGameSequence()
 	for(int i=0;i<currentGameSequence->importExport_gameUUIDs.size();i++)
 	{
 		string otheruuid = currentGameSequence->importExport_gameUUIDs.get(i);
-		shared_ptr<GameType>gt = bobsGame->getGameTypeByUUID(otheruuid);
+		sp<GameType>gt = bobsGame->getGameTypeByUUID(otheruuid);
 		currentGameSequenceListBox->AddItem(gt->name, gt->uuid);
 	}
 	currentGameSequenceNameTextBox->SetText(currentGameSequence->name);
@@ -524,13 +524,13 @@ void GameSequenceEditorControl::initFromCurrentGameSequence()
 }
 
 
-void GameSequenceEditorControl::onGameSequencesListSelect(shared_ptr<Base> control)
+void GameSequenceEditorControl::onGameSequencesListSelect(sp<Base> control)
 {//=========================================================================================================================
 
 	Layout::TableRow* row = (Layout::TableRow*)control;
 	string uuid = row->GetName().c_str();
 
-	shared_ptr<GameSequence>s = bobsGame->getGameSequenceByUUID(uuid);
+	sp<GameSequence>s = bobsGame->getGameSequenceByUUID(uuid);
 
 	if (s == nullptr)
 	{
@@ -552,7 +552,7 @@ void GameSequenceEditorControl::saveCurrentGameSequenceToXML()
 
 }
 
-void GameSequenceEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onLoadOrCreateButton(sp<Base> control)
 {//=========================================================================================================================
 
 	windowOpen = true;
@@ -561,7 +561,7 @@ void GameSequenceEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
 	//opening a new game will overwrite the currently open game
 	//make sure you have saved before editing a different game
 
-	askToSaveBase = make_shared<WindowControl>(GetCanvas());
+	askToSaveBase = ms<WindowControl>(GetCanvas());
 	askToSaveBase->SetTitle("Save changes?");
 	askToSaveBase->SetSize(200, 60);
 	askToSaveBase->MakeModal(true);
@@ -571,14 +571,14 @@ void GameSequenceEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
 	//exitAskToSaveWindow->SetClosable(false);
 	{
 
-		askToSaveYesButton = make_shared<Button>(askToSaveBase);
+		askToSaveYesButton = ms<Button>(askToSaveBase);
 		askToSaveYesButton->SetText(L"Save");
 		//askToSaveYesButton->SetToolTip(b->_Info.tip);
 		askToSaveYesButton->Dock(Pos::Center | Pos::Left);
 		askToSaveYesButton->SetWidth(80);
 		askToSaveYesButton->onPress.Add(this, &GameSequenceEditorControl::saveAndOpen);
 
-		askToSaveNoButton = make_shared<Button>(askToSaveBase);
+		askToSaveNoButton = ms<Button>(askToSaveBase);
 		askToSaveNoButton->SetText(L"Don't Save");
 		//askToSaveNoButton->SetToolTip(b->_Info.tip);
 		askToSaveNoButton->Dock(Pos::Center | Pos::Left);
@@ -589,7 +589,7 @@ void GameSequenceEditorControl::onLoadOrCreateButton(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::saveAndOpen(shared_ptr<Base> control)
+void GameSequenceEditorControl::saveAndOpen(sp<Base> control)
 {//=========================================================================================================================
 
 	askToSaveBase->CloseButtonPressed();
@@ -602,7 +602,7 @@ void GameSequenceEditorControl::saveAndOpen(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::dontSaveAndOpen(shared_ptr<Base> control)
+void GameSequenceEditorControl::dontSaveAndOpen(sp<Base> control)
 {//=========================================================================================================================
 
 	askToSaveBase->CloseButtonPressed();
@@ -623,7 +623,7 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 	int w = GLUtils::getViewportWidth() / 2;
 	int h = GLUtils::getViewportHeight() / 2;
 
-	loadOrCreateGameSequenceWindow = make_shared<WindowControl>(GetCanvas());
+	loadOrCreateGameSequenceWindow = ms<WindowControl>(GetCanvas());
 	{
 		loadOrCreateGameSequenceWindow->SetTitle("Load existing or create new game sequence");
 		loadOrCreateGameSequenceWindow->SetSize(w, h);
@@ -640,7 +640,7 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 			loadOrCreateGameSequenceWindow->SetClosable(false);
 		}
 
-		gameSequencesListBox = make_shared<ListBox>(loadOrCreateGameSequenceWindow);
+		gameSequencesListBox = ms<ListBox>(loadOrCreateGameSequenceWindow);
 		{
 			gameSequencesListBox->SetMargin(Margin(0, 0, 0, 0));
 			gameSequencesListBox->Dock(Pos::Top);
@@ -655,39 +655,39 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 
 		}
 
-		gameSequenceSelectLabel = make_shared<Label>(loadOrCreateGameSequenceWindow);
+		gameSequenceSelectLabel = ms<Label>(loadOrCreateGameSequenceWindow);
 		gameSequenceSelectLabel->Dock(Pos::Top);
 		gameSequenceSelectLabel->SetText("");
 		gameSequenceSelectLabel->SetHeight(20);
 		gameSequenceSelectLabel->SetTextColor(Gwen::Color(255,0,128,255));
 
-		gameSequenceSelectButtonBase = make_shared<Base>(loadOrCreateGameSequenceWindow);
+		gameSequenceSelectButtonBase = ms<Base>(loadOrCreateGameSequenceWindow);
 		gameSequenceSelectButtonBase->Dock(Pos::Bottom);
 		gameSequenceSelectButtonBase->SetWidth(loadOrCreateGameSequenceWindow->Width());
 		gameSequenceSelectButtonBase->SetHeight(20);
 		{
-			editSelectedGameSequenceButton = make_shared<Button>(gameSequenceSelectButtonBase);
+			editSelectedGameSequenceButton = ms<Button>(gameSequenceSelectButtonBase);
 			editSelectedGameSequenceButton->SetText(L"Edit");
 			//editSelectedGameSequenceButton->SetToolTip(b->_Info.tip);
 			editSelectedGameSequenceButton->Dock(Pos::Left | Pos::CenterV);
 			//editSelectedGameSequenceButton->SetWidth(160);
 			editSelectedGameSequenceButton->onPress.Add(this, &GameSequenceEditorControl::editSelectedGameSequence);
 
-			createNewGameSequenceButton = make_shared<Button>(gameSequenceSelectButtonBase);
+			createNewGameSequenceButton = ms<Button>(gameSequenceSelectButtonBase);
 			createNewGameSequenceButton->SetText(L"Create new");
 			//createNewGameSequenceButton->SetToolTip(b->_Info.tip);
 			createNewGameSequenceButton->Dock(Pos::Left | Pos::CenterV);
 			//createNewGameSequenceButton->SetWidth(160);
 			createNewGameSequenceButton->onPress.Add(this, &GameSequenceEditorControl::createNewGameSequence);
 
-			duplicateGameSequenceButton = make_shared<Button>(gameSequenceSelectButtonBase);
+			duplicateGameSequenceButton = ms<Button>(gameSequenceSelectButtonBase);
 			duplicateGameSequenceButton->SetText(L"Duplicate");
 			//duplicateGameSequenceButton->SetToolTip(b->_Info.tip);
 			duplicateGameSequenceButton->Dock(Pos::Left | Pos::CenterV);
 			//duplicateGameSequenceButton->SetWidth(240);
 			duplicateGameSequenceButton->onPress.Add(this, &GameSequenceEditorControl::duplicateGameSequence);
 
-			deleteGameSequenceButton = make_shared<Button>(gameSequenceSelectButtonBase);
+			deleteGameSequenceButton = ms<Button>(gameSequenceSelectButtonBase);
 			deleteGameSequenceButton->SetText(L"Delete");
 			//deleteGameSequenceButton->SetToolTip(b->_Info.tip);
 			deleteGameSequenceButton->Dock(Pos::Left | Pos::CenterV);
@@ -699,7 +699,7 @@ void GameSequenceEditorControl::openLoadOrCreateDialog(bool allowedToClose = tru
 }
 
 
-void GameSequenceEditorControl::editSelectedGameSequence(shared_ptr<Base> control)
+void GameSequenceEditorControl::editSelectedGameSequence(sp<Base> control)
 {//=========================================================================================================================
 
  //make sure the type is editable, if not, do nothing, or dont even allow the button to get here in the first place
@@ -732,10 +732,10 @@ void GameSequenceEditorControl::editSelectedGameSequence(shared_ptr<Base> contro
 	}
 }
 
-void GameSequenceEditorControl::createNewGameSequence(shared_ptr<Base> control)
+void GameSequenceEditorControl::createNewGameSequence(sp<Base> control)
 {//=========================================================================================================================
  //create new currentGameType with defaults and close the list
-	shared_ptr<GameSequence>s = make_shared<GameSequence>();
+	sp<GameSequence>s = ms<GameSequence>();
 	s->name += to_string(bobsGame->loadedGameSequences.size());
 	//bobsGame->loadedGameSequences.add(s);
 
@@ -755,7 +755,7 @@ void GameSequenceEditorControl::createNewGameSequence(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::duplicateGameSequence(shared_ptr<Base> control)
+void GameSequenceEditorControl::duplicateGameSequence(sp<Base> control)
 {//=========================================================================================================================
 
  //the only thing we would do is load the selected game type and then append the name with "copy"
@@ -763,7 +763,7 @@ void GameSequenceEditorControl::duplicateGameSequence(shared_ptr<Base> control)
 
 	//OKGame::log.debug(to_string(currentGameType->pieceTypes.size()));
 
-	shared_ptr<GameSequence>s = make_shared<GameSequence>();
+	sp<GameSequence>s = ms<GameSequence>();
 	string uuid = s->uuid;
 	*s = *currentGameSequence;
 	s->uuid = uuid;
@@ -776,7 +776,7 @@ void GameSequenceEditorControl::duplicateGameSequence(shared_ptr<Base> control)
 	bool taken = false;
 	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 	{
-		shared_ptr<GameSequence>g = bobsGame->loadedGameSequences.get(i);
+		sp<GameSequence>g = bobsGame->loadedGameSequences.get(i);
 		if (g != s && g->name == s->name)taken = true;
 	}
 	if (taken)
@@ -784,7 +784,7 @@ void GameSequenceEditorControl::duplicateGameSequence(shared_ptr<Base> control)
 		int n = 0;
 		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
 		{
-			shared_ptr<GameSequence>g = bobsGame->loadedGameSequences.get(i);
+			sp<GameSequence>g = bobsGame->loadedGameSequences.get(i);
 			if (g != s && g->name == s->name + " " + to_string(n))
 			{
 				n++;
@@ -809,7 +809,7 @@ void GameSequenceEditorControl::duplicateGameSequence(shared_ptr<Base> control)
 	windowOpen = false;
 }
 
-void GameSequenceEditorControl::deleteGameSequence(shared_ptr<Base> control)
+void GameSequenceEditorControl::deleteGameSequence(sp<Base> control)
 {//=========================================================================================================================
 
 	if (gameSequencesListBox->IsAnyRowSelected() == false)return;
@@ -817,7 +817,7 @@ void GameSequenceEditorControl::deleteGameSequence(shared_ptr<Base> control)
 	Layout::TableRow* row = gameSequencesListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
 
-	shared_ptr<GameSequence>bt = bobsGame->getGameSequenceByUUID(uuid);
+	sp<GameSequence>bt = bobsGame->getGameSequenceByUUID(uuid);
 
 	if (bt == nullptr)
 	{
@@ -873,7 +873,7 @@ void GameSequenceEditorControl::deleteGameSequence(shared_ptr<Base> control)
 }
 
 
-void GameSequenceEditorControl::onSaveButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onSaveButton(sp<Base> control)
 {//=========================================================================================================================
 
  //save current game to xml in userdata, maybe upload to server as userid:gametype if user is logged in
@@ -890,7 +890,7 @@ void GameSequenceEditorControl::onSaveButton(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::onUploadButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onUploadButton(sp<Base> control)
 {//=========================================================================================================================
 
 	onSaveButton(control);
@@ -898,14 +898,14 @@ void GameSequenceEditorControl::onUploadButton(shared_ptr<Base> control)
 	if (currentGameSequence->importExport_gameUUIDs.size() == 0)return;
 	if (currentGameSequence->importExport_gameUUIDs.size() == 1)
 	{
-		shared_ptr<WindowControl>result = make_shared<WindowControl>(GetCanvas());
+		sp<WindowControl>result = ms<WindowControl>(GetCanvas());
 		result->SetTitle("Result");
 		result->SetSize(300, 60);
 		result->MakeModal(true);
 		result->SetPos(GLUtils::getViewportWidth() / 2 - 150, GLUtils::getViewportHeight() / 2 - 30);
 		result->SetDeleteOnClose(true);
 
-		shared_ptr<Label> label = make_shared<Label>(result);
+		sp<Label> label = ms<Label>(result);
 		label->SetText("You cannot upload sequences with only one game type.");
 		label->Dock(Pos::Fill);
 		return;
@@ -939,25 +939,25 @@ void GameSequenceEditorControl::onUploadButton(shared_ptr<Base> control)
 
 	if (response == "")response = "Did not get a response from the server. Try again later.";
 
-	shared_ptr<WindowControl>result = make_shared<WindowControl>(GetCanvas());
+	sp<WindowControl>result = ms<WindowControl>(GetCanvas());
 	result->SetTitle("Result");
 	result->SetSize(300, 60);
 	result->MakeModal(true);
 	result->SetPos(GLUtils::getViewportWidth() / 2 - 150, GLUtils::getViewportHeight() / 2 - 30);
 	result->SetDeleteOnClose(true);
 
-	shared_ptr<Label> label = make_shared<Label>(result);
+	sp<Label> label = ms<Label>(result);
 	label->SetText(response);
 	label->Dock(Pos::Fill);
 
 }
 
-void GameSequenceEditorControl::onExitButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onExitButton(sp<Base> control)
 {//=========================================================================================================================
 
  //Utility::Format(L"Window %i", m_iWindowCount)
 
-	askToSaveBase = make_shared<WindowControl>(GetCanvas());
+	askToSaveBase = ms<WindowControl>(GetCanvas());
 	askToSaveBase->SetTitle("Save changes?");
 	askToSaveBase->SetSize(300, 60);
 	askToSaveBase->MakeModal(true);
@@ -967,21 +967,21 @@ void GameSequenceEditorControl::onExitButton(shared_ptr<Base> control)
 	//exitAskToSaveWindow->SetClosable(false);
 	{
 
-		askToSaveYesButton = make_shared<Button>(askToSaveBase);
+		askToSaveYesButton = ms<Button>(askToSaveBase);
 		askToSaveYesButton->SetText(L"Save and Leave");
 		//askToSaveYesButton->SetToolTip(b->_Info.tip);
 		askToSaveYesButton->Dock(Pos::Left | Pos::Center);
 		askToSaveYesButton->SetWidth(120);
 		askToSaveYesButton->onPress.Add(this, &GameSequenceEditorControl::saveAndExit);
 
-		askToSaveNoButton = make_shared<Button>(askToSaveBase);
+		askToSaveNoButton = ms<Button>(askToSaveBase);
 		askToSaveNoButton->SetText(L"Leave without saving");
 		//askToSaveNoButton->SetToolTip(b->_Info.tip);
 		askToSaveNoButton->Dock(Pos::Left | Pos::Center);
 		askToSaveNoButton->SetWidth(150);
 		askToSaveNoButton->onPress.Add(this, &GameSequenceEditorControl::dontSaveAndExit);
 
-		//		cancelExitButton = make_shared<Button>(askToSaveBase);
+		//		cancelExitButton = ms<Button>(askToSaveBase);
 		//		cancelExitButton->SetText(L"Cancel");
 		//		//cancelExitButton->SetToolTip(b->_Info.tip);
 		//		cancelExitButton->Dock(Pos::Left | Pos::Center);
@@ -991,7 +991,7 @@ void GameSequenceEditorControl::onExitButton(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::saveAndExit(shared_ptr<Base> control)
+void GameSequenceEditorControl::saveAndExit(sp<Base> control)
 {//=========================================================================================================================
  //save the game to appdata or home/userid-gamename
  //make sure that there arent any unallowable characters, sanitize, etc
@@ -1004,7 +1004,7 @@ void GameSequenceEditorControl::saveAndExit(shared_ptr<Base> control)
 	exit = true;
 }
 
-void GameSequenceEditorControl::dontSaveAndExit(shared_ptr<Base> control)
+void GameSequenceEditorControl::dontSaveAndExit(sp<Base> control)
 {//=========================================================================================================================
  //go back to title screen
 	askToSaveBase->CloseButtonPressed();
@@ -1013,7 +1013,7 @@ void GameSequenceEditorControl::dontSaveAndExit(shared_ptr<Base> control)
 }
 
 
-void GameSequenceEditorControl::onCurrentGameSequenceListRowSelect(shared_ptr<Base> control)
+void GameSequenceEditorControl::onCurrentGameSequenceListRowSelect(sp<Base> control)
 {//=========================================================================================================================
 
 	//don't need to do anything for this i don't think
@@ -1021,7 +1021,7 @@ void GameSequenceEditorControl::onCurrentGameSequenceListRowSelect(shared_ptr<Ba
 }
 
 
-void GameSequenceEditorControl::onAddButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onAddButton(sp<Base> control)
 {//=========================================================================================================================
 
 	if (gameTypesListBox->IsAnyRowSelected() == false)return;
@@ -1029,7 +1029,7 @@ void GameSequenceEditorControl::onAddButton(shared_ptr<Base> control)
 	Layout::TableRow* row = gameTypesListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
 
-	shared_ptr<GameType>gt = bobsGame->getGameTypeByUUID(uuid);
+	sp<GameType>gt = bobsGame->getGameTypeByUUID(uuid);
 
 	Layout::TableRow* newRow = currentGameSequenceListBox->AddItem(gt->name,gt->uuid);
 
@@ -1039,7 +1039,7 @@ void GameSequenceEditorControl::onAddButton(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::onRemoveButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onRemoveButton(sp<Base> control)
 {//=========================================================================================================================
 
 	if (currentGameSequenceListBox->IsAnyRowSelected() == false)return;
@@ -1060,14 +1060,14 @@ void GameSequenceEditorControl::onRemoveButton(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::onUpButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onUpButton(sp<Base> control)
 {//=========================================================================================================================
 
 	if (currentGameSequenceListBox->IsAnyRowSelected() == false)return;
 
 	Layout::TableRow* row = currentGameSequenceListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
-	shared_ptr<GameType>selectedGame = bobsGame->getGameTypeByUUID(uuid);
+	sp<GameType>selectedGame = bobsGame->getGameTypeByUUID(uuid);
 
 	int index = 0;
 	for (int i = 0; i < currentGameSequenceListBox->GetNumRows(); i++)
@@ -1089,7 +1089,7 @@ void GameSequenceEditorControl::onUpButton(shared_ptr<Base> control)
 		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs.size(); i++)
 		{
 			string newUUID = currentGameSequence->importExport_gameUUIDs.get(i);
-			shared_ptr<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
+			sp<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
 			currentGameSequenceListBox->AddItem(game->name, game->uuid);
 		}
 		currentGameSequenceListBox->SetSelectedRow(currentGameSequenceListBox->GetRow(index - 1));
@@ -1098,7 +1098,7 @@ void GameSequenceEditorControl::onUpButton(shared_ptr<Base> control)
 
 }
 
-void GameSequenceEditorControl::onDownButton(shared_ptr<Base> control)
+void GameSequenceEditorControl::onDownButton(sp<Base> control)
 {//=========================================================================================================================
 
 	if (currentGameSequenceListBox->IsAnyRowSelected() == false)return;
@@ -1106,7 +1106,7 @@ void GameSequenceEditorControl::onDownButton(shared_ptr<Base> control)
 	Layout::TableRow* row = currentGameSequenceListBox->GetSelectedRow();
 	string uuid = row->GetName().c_str();
 
-	shared_ptr<GameType>selectedGame = bobsGame->getGameTypeByUUID(uuid);
+	sp<GameType>selectedGame = bobsGame->getGameTypeByUUID(uuid);
 
 	int index = currentGameSequenceListBox->GetNumRows() - 1;
 	for (int i = 0; i < currentGameSequenceListBox->GetNumRows(); i++)
@@ -1128,7 +1128,7 @@ void GameSequenceEditorControl::onDownButton(shared_ptr<Base> control)
 		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs.size(); i++)
 		{
 			string newUUID = currentGameSequence->importExport_gameUUIDs.get(i);
-			shared_ptr<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
+			sp<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
 			currentGameSequenceListBox->AddItem(game->name, game->uuid);
 		}
 		currentGameSequenceListBox->SetSelectedRow(currentGameSequenceListBox->GetRow(index + 1));
@@ -1147,7 +1147,7 @@ void OKGame::gameSequenceEditorMenuUpdate()
 
  //	if (gameSequenceEditorMenu == nullptr)
  //	{
- //		gameSequenceEditorMenu = make_shared<Menu>(this);
+ //		gameSequenceEditorMenu = ms<Menu>(this);
  //
  //		gameSequenceEditorMenu->add("Back To Game", "Back To Game", OKColor::white);
  //		gameSequenceEditorMenu->add("Music Volume: " + to_string((int)(music->getVolume() * 100)) + "%", "Music Volume", OKColor::white);
@@ -1158,7 +1158,7 @@ void OKGame::gameSequenceEditorMenuUpdate()
 
 	if (gameSequenceEditor == nullptr)
 	{
-		gameSequenceEditor = make_shared<GameSequenceEditorControl>(Main::gwenCanvas,"GameSequenceEditorControl",this);
+		gameSequenceEditor = ms<GameSequenceEditorControl>(Main::gwenCanvas,"GameSequenceEditorControl",this);
 
 
 		gameSequenceEditor->openLoadOrCreateDialog(false);
@@ -1252,7 +1252,7 @@ void OKGame::gameSequenceEditorMenuRender()
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, (float)getWidth(), 0, (float)getHeight(), 1.0f);
 	//
-	//	shared_ptr<OKTexture> t = keyboardTexture;
+	//	sp<OKTexture> t = keyboardTexture;
 	//
 	//	if (gameSequenceEditorMenu == nullptr)return;
 	//

@@ -22,10 +22,10 @@ public:
 	static Logger log;
 
 
-	NDMenuWheel(shared_ptr<Engine> g);
+	NDMenuWheel(sp<Engine> g);
 
 
-	static ArrayList<shared_ptr<NDMenuWheelItem>>* wheelItems;
+	static ArrayList<sp<NDMenuWheelItem>>* wheelItems;
 
 
 	int selectedWheelItem = 0;
@@ -38,7 +38,7 @@ public:
 	static int COUNTERCLOCKWISE;
 
 
-	shared_ptr<OKTexture> selectedItemColorSpinTexture[15];
+	sp<OKTexture> selectedItemColorSpinTexture[15];
 
 
 	float cartSlideX = 0;
@@ -61,7 +61,7 @@ public:
 	void init();
 
 
-	void addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color);
+	void addGame(sp<NDGameEngine> game, const string& name, sp<OKColor> color);
 
 
 	void render();

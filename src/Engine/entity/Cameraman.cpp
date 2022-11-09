@@ -17,17 +17,17 @@
 Logger Cameraman::log = Logger("Cameraman");
 
 
-shared_ptr<ConsoleText> Cameraman::currentSpeedXText = make_shared<ConsoleText>();
-shared_ptr<ConsoleText> Cameraman::currentSpeedYText = make_shared<ConsoleText>();
-shared_ptr<ConsoleText> Cameraman::targetSpeedXText = make_shared<ConsoleText>();
-shared_ptr<ConsoleText> Cameraman::targetSpeedYText = make_shared<ConsoleText>();
+sp<ConsoleText> Cameraman::currentSpeedXText = ms<ConsoleText>();
+sp<ConsoleText> Cameraman::currentSpeedYText = ms<ConsoleText>();
+sp<ConsoleText> Cameraman::targetSpeedXText = ms<ConsoleText>();
+sp<ConsoleText> Cameraman::targetSpeedYText = ms<ConsoleText>();
 
-Cameraman::Cameraman(shared_ptr<Engine> g)
+Cameraman::Cameraman(sp<Engine> g)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	shared_ptr<EntityData> data = make_shared<EntityData>(-1, "Camera", "Camera", 0, 0);
+	sp<EntityData> data = ms<EntityData>(-1, "Camera", "Camera", 0, 0);
 	initEntity(data);
 
 	//set target
@@ -38,7 +38,7 @@ Cameraman::Cameraman(shared_ptr<Engine> g)
 
 	getData()->setDisableShadow(true);
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), shared_from_this());
+	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
 }
 
 void Cameraman::initCurrentAnimationFromSprite()
@@ -49,13 +49,13 @@ void Cameraman::initCurrentAnimationFromSprite()
 	setXYToTarget();
 }
 
-//shared_ptr<Map> Cameraman::getMap()
+//sp<Map> Cameraman::getMap()
 //{ //=========================================================================================================================
 //
 //	return getMapManager()->getCurrentMap();
 //}
 
-shared_ptr<Map> Cameraman::getCurrentMap()
+sp<Map> Cameraman::getCurrentMap()
 { //=========================================================================================================================
 
 	return getMapManager()->getCurrentMap();
@@ -403,7 +403,7 @@ void Cameraman::setZoomTO(float ZOOMto)
 	this->ZOOMto = ZOOMto;
 }
 
-void Cameraman::setZoomToFitArea(shared_ptr<Area> a)
+void Cameraman::setZoomToFitArea(sp<Area> a)
 {
 	//float screenWidth = (float)getEngine()->getWidth();
 	//float areaWidth = (float)a->getWidth();
@@ -567,7 +567,7 @@ void Cameraman::updateZoom()
 	      //round to nearest 0.25 (higher)
 	      //1.77-> 2.0f
 	      //1.74-> 1.75
-	      ZOOMto=((float)(((((int)(shared_ptr<ZOOMto>100))/25)+1)*25))/100.0f;
+	      ZOOMto=((float)(((((int)(sp<ZOOMto>100))/25)+1)*25))/100.0f;
 	      //Math.floor(ZOOMto);
 	            
 	      if(ZOOMto<MINZOOM)ZOOMto=MINZOOM;
@@ -579,7 +579,7 @@ void Cameraman::updateZoom()
 	   //if((float)Display.getHeight()>(float)maxCamHeight*ZOOMto)
 	   {
 	      ZOOMto=(float)Display.getHeight()/(float)maxCamHeight;
-	      ZOOMto=((float)(((((int)(shared_ptr<ZOOMto>100))/25)+1)*25))/100.0f;
+	      ZOOMto=((float)(((((int)(sp<ZOOMto>100))/25)+1)*25))/100.0f;
 	            
 	      if(ZOOMto<MINZOOM)ZOOMto=MINZOOM;
 	      if(ZOOMto>MAXZOOM)ZOOMto=MAXZOOM;
@@ -937,7 +937,7 @@ void Cameraman::setXYToTarget()
 	setY(targetEntity->getY() + (targetEntity->getHeight() / 2));
 }
 
-void Cameraman::setTarget(shared_ptr<Entity> t)
+void Cameraman::setTarget(sp<Entity> t)
 { //=========================================================================================================================
 	if (t == nullptr)
 	{
@@ -956,17 +956,17 @@ void Cameraman::setTarget(shared_ptr<Entity> t)
 
 void Cameraman::setTarget(float mapXPixelsHQ, float mapYPixelsHQ)
 { //=========================================================================================================================
-	targetEntity = make_shared<Entity>(getEngine(), make_shared<EntityData>(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2), nullptr);
+	targetEntity = ms<Entity>(getEngine(), ms<EntityData>(-1, "Null Target", "", (int)mapXPixelsHQ / 2, (int)mapYPixelsHQ / 2), nullptr);
 }
 
-void Cameraman::setTarget(shared_ptr<Area> area)
+void Cameraman::setTarget(sp<Area> area)
 { //=========================================================================================================================
-	targetEntity = make_shared<Entity>(getEngine(), make_shared<EntityData>(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2), nullptr);
+	targetEntity = ms<Entity>(getEngine(), ms<EntityData>(-1, "Null Target", "", (int)area->middleX() / 2, (int)area->middleY() / 2), nullptr);
 }
 
 void Cameraman::setDummyTarget()
 { //=========================================================================================================================
-	targetEntity = shared_from_this(); //make_shared<Entity>(getEngine(),make_shared<EntityData>(-1,"Null Target","",getX(),getY()));
+	targetEntity = shared_from_this(); //ms<Entity>(getEngine(),ms<EntityData>(-1,"Null Target","",getX(),getY()));
 }
 
 void Cameraman::setAutoZoomByPlayerMovement(bool b)

@@ -18,7 +18,7 @@ class Sound : EnginePart
 public:
 	static Logger log;
 
-	shared_ptr<AudioFile> audioFile = nullptr;
+	sp<AudioFile> audioFile = nullptr;
 
 
 
@@ -28,10 +28,10 @@ public:
 	SoLoud::Wav *soLoudWave = nullptr;
 #endif
 #ifdef USE_SDL_MIXER
-	shared_ptr<Mix_Chunk> mixChunk = nullptr;
+	sp<Mix_Chunk> mixChunk = nullptr;
 #endif
 
-	Sound(shared_ptr<Engine> g, shared_ptr<AudioFile>f);
+	Sound(sp<Engine> g, sp<AudioFile>f);
 
 
 

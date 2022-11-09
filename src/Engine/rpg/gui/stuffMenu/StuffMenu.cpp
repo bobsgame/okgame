@@ -23,22 +23,22 @@ StuffMenu::StuffMenu()
 	//setTheme("stuffmenu");
 
 
-	statusPanel = make_shared<StatusPanel>();
-	itemsPanel = make_shared<ItemsPanel>();
-	messagesPanel = make_shared<MessagesPanel>();
-	friendsPanel = make_shared<FriendsPanel>();
-	logsPanel = make_shared<LogsPanel>();
-	controlsPanel = make_shared<ControlsPanel>();
-	settingsPanel = make_shared<SettingsPanel>();
-	debugInfoPanel = make_shared<DebugInfoPanel>();
+	statusPanel = ms<StatusPanel>();
+	itemsPanel = ms<ItemsPanel>();
+	messagesPanel = ms<MessagesPanel>();
+	friendsPanel = ms<FriendsPanel>();
+	logsPanel = ms<LogsPanel>();
+	controlsPanel = ms<ControlsPanel>();
+	settingsPanel = ms<SettingsPanel>();
+	debugInfoPanel = ms<DebugInfoPanel>();
 
 	//
-	//   stuffMenuTabs = ArrayList<shared_ptr<ToggleButton>>(8);
-	//   shared_ptr<SimpleIntegerModel> startMenuTabsIntModel = make_shared<SimpleIntegerModel>(1, stuffMenuTabs->size(), 0);
+	//   stuffMenuTabs = ArrayList<sp<ToggleButton>>(8);
+	//   sp<SimpleIntegerModel> startMenuTabsIntModel = ms<SimpleIntegerModel>(1, stuffMenuTabs->size(), 0);
 	//
 	//   for (int i = 0; i < stuffMenuTabs->size(); i++)
 	//   {
-	//      stuffMenuTabs[i] = make_shared<ToggleButton>(make_shared<OptionBooleanModel>(startMenuTabsIntModel, i + 1));
+	//      stuffMenuTabs[i] = ms<ToggleButton>(ms<OptionBooleanModel>(startMenuTabsIntModel, i + 1));
 	//      stuffMenuTabs[i]->setCanAcceptKeyboardFocus(false);
 	//      stuffMenuTabs[i]->setTheme(GUIManager::buttonTheme);
 	//   }
@@ -146,7 +146,7 @@ StuffMenu::StuffMenu()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = make_shared<ScrollPane>();
+	//   scrollPane = ms<ScrollPane>();
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -193,7 +193,7 @@ void StuffMenu::setAllInvisible()
 	itemsPanel->setVisible(false);
 }
 
-void StuffMenu::openSubMenu()//shared_ptr<SubPanel> subPanel)
+void StuffMenu::openSubMenu()//sp<SubPanel> subPanel)
 { //=========================================================================================================================
 	setAllInvisible();
 	//subPanel->setVisible(true);

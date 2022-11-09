@@ -16,7 +16,7 @@
 Logger NDMenuBackground::log = Logger("NDMenuBackground");
 
 
-NDMenuBackground::NDMenuBackground(shared_ptr<Engine> g)
+NDMenuBackground::NDMenuBackground(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 	init();
@@ -39,7 +39,7 @@ void NDMenuBackground::init()
 
 	bgScrollTexture = GLUtils::getTextureFromPNGExePath("data/guiBackground/nDmenuBG.png");
 
-	//glowTileFramesTexture = make_shared<ArrayList><shared_ptr<Texture>>();
+	//glowTileFramesTexture = ms<ArrayList><sp<Texture>>();
 	for (int i = 0; i < tileFrames; i++)
 	{
 		glowTileFramesTexture.push_back(GLUtils::getTextureFromPNGExePath("data/guiBackground/nDmenu/" + to_string(i) + ".png"));
@@ -49,7 +49,7 @@ void NDMenuBackground::init()
 
 	for (int i = 0; i < numActiveTiles; i++)
 	{
-		glowTiles.push_back(make_shared<GlowTileBackgroundMenuPanel::GlowTile>(shared_from_this()));
+		glowTiles.push_back(ms<GlowTileBackgroundMenuPanel::GlowTile>(shared_from_this()));
 	}
 
 	glowTiles.at(0)->started = true;

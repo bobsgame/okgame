@@ -14,7 +14,7 @@
 Logger DayCaption::log = Logger("DayCaption");
 
 
-DayCaption::DayCaption(shared_ptr<BGClientEngine> g)
+DayCaption::DayCaption(sp<BGClientEngine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -22,7 +22,7 @@ DayCaption::DayCaption(shared_ptr<BGClientEngine> g)
 void DayCaption::init()
 { //=========================================================================================================================
 
-	light = make_shared<Light>(getEngine(), "dayLight", -100, 4, 10, 2, 255, 255, 255, 90, 16, 2.0f, 1.0f, 0, true, true);
+	light = ms<Light>(getEngine(), "dayLight", -100, 4, 10, 2, 255, 255, 255, 90, 16, 2.0f, 1.0f, 0, true, true);
 
 	defaultFGColor = OKColor::white;
 	defaultAAColor = OKColor::gray;

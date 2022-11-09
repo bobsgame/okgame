@@ -14,7 +14,7 @@
 Logger FriendManager::log = Logger("FriendManager");
 
 
-FriendManager::FriendManager(shared_ptr<BGClientEngine> g)
+FriendManager::FriendManager(sp<BGClientEngine> g)
 { //===============================================================================================
 	this->e = g;
 }
@@ -33,7 +33,7 @@ void FriendManager::init()
 
 		//write back with timesrun+1
 		//
-		//      shared_ptr<File> sessionFile = make_shared<File>("C:\\simulator.txt");
+		//      sp<File> sessionFile = ms<File>("C:\\simulator.txt");
 		//
 		//      if (sessionFile->exists() == false)
 		//      {
@@ -52,7 +52,7 @@ void FriendManager::init()
 		//
 		//      try
 		//      {
-		//         shared_ptr<BufferedReader> input = make_shared<BufferedReader>(make_shared<FileReader>(sessionFile));
+		//         sp<BufferedReader> input = ms<BufferedReader>(ms<FileReader>(sessionFile));
 		//         line = input->readLine();
 		//         input->close();
 		//      }
@@ -71,10 +71,10 @@ void FriendManager::init()
 		//      }
 		//
 		//
-		//      shared_ptr<Writer> output;
+		//      sp<Writer> output;
 		//      try
 		//      {
-		//         output = make_shared<BufferedWriter>(make_shared<FileWriter>(sessionFile));
+		//         output = ms<BufferedWriter>(ms<FileWriter>(sessionFile));
 		//         output->write("" + to_string(timesRun + 1));
 		//         output->close();
 		//      }
@@ -94,7 +94,7 @@ void FriendManager::init()
 		//      }
 		//
 		//
-		//      shared_ptr<FriendCharacter> f = make_shared<FriendCharacter>(getGameEngine(), 1, FriendCharacter::FACEBOOK_TYPE, myPort, theirPort);
+		//      sp<FriendCharacter> f = ms<FriendCharacter>(getGameEngine(), 1, FriendCharacter::FACEBOOK_TYPE, myPort, theirPort);
 		//
 		//
 		//      friendCharacters.push_back(f);
@@ -133,6 +133,6 @@ void FriendManager::update()
 //	}
 //
 //
-//	friendCharacters->add(make_shared<FriendCharacter>(getClientGameEngine(), userID, peerType));
+//	friendCharacters->add(ms<FriendCharacter>(getClientGameEngine(), userID, peerType));
 //}
 

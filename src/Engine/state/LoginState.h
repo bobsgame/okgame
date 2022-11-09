@@ -21,7 +21,7 @@ public:
 
 
 	//GUI* loginScreenGUI = nullptr;
-	shared_ptr<LoginMenuPanel> loginMenuPanel = nullptr;
+	sp<LoginMenuPanel> loginMenuPanel = nullptr;
 
 
 	LoginState();
@@ -48,7 +48,7 @@ public:
 	static Logger log;
 
 
-	shared_ptr<OKMenu>loginMenu = nullptr;
+	sp<OKMenu>loginMenu = nullptr;
 	int loginMenuCursorPosition = 0;
 	bool textStarted = false;
 	string userNameOrEmailText = "";
@@ -60,51 +60,51 @@ public:
 	string confirmPasswordStarsText = "";
 	bool stayLoggedIn = true;
 
-	shared_ptr<Caption> errorLabel = nullptr;
-	shared_ptr<Caption> statusLabel = nullptr;
+	sp<Caption> errorLabel = nullptr;
+	sp<Caption> statusLabel = nullptr;
 
 	int lastMX = 0;
 	int lastMY = 0;
 
-	//   shared_ptr<DialogLayout> loginPanel;
-	//   shared_ptr<EditField> emailEditField;
-	//   shared_ptr<EditField> passwordEditField;
-	//   shared_ptr<Button> loginWithFacebookButton;
-	//   shared_ptr<Button> loginButton;
-	//   shared_ptr<Button> createNewAccountButton;
-	//   shared_ptr<Button> forgotPasswordButton;
+	//   sp<DialogLayout> loginPanel;
+	//   sp<EditField> emailEditField;
+	//   sp<EditField> passwordEditField;
+	//   sp<Button> loginWithFacebookButton;
+	//   sp<Button> loginButton;
+	//   sp<Button> createNewAccountButton;
+	//   sp<Button> forgotPasswordButton;
 	//
-	//   shared_ptr<Label> errorLabel;
-	//   shared_ptr<Label> statusLabel;
+	//   sp<Label> errorLabel;
+	//   sp<Label> statusLabel;
 	//
 	//
-	//   shared_ptr<Label> emailLabel;
-	//   shared_ptr<Label> passwordLabel;
+	//   sp<Label> emailLabel;
+	//   sp<Label> passwordLabel;
 	//
 	bool loggedIn = false;
 	//bool leaveMenu = false;
 	bool createNewAccount = false;
 	//
 	//
-	//   shared_ptr<Label> sendStatsQuestionMark;
+	//   sp<Label> sendStatsQuestionMark;
 	//
-	//   shared_ptr<Label> stayLoggedInToggleButtonLabel;
-	//   shared_ptr<ToggleButton>const stayLoggedInToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> stayLoggedInToggleButtonLabel;
+	//   sp<ToggleButton>const stayLoggedInToggleButton = ms<ToggleButton>("");
 	//
-	//   shared_ptr<Label> sendStatsToggleButtonLabel;
-	//   shared_ptr<ToggleButton>const sendStatsToggleButton = make_shared<ToggleButton>("");
+	//   sp<Label> sendStatsToggleButtonLabel;
+	//   sp<ToggleButton>const sendStatsToggleButton = ms<ToggleButton>("");
 	//
 	//
-	LoginMenuPanel(shared_ptr<Engine> e);
+	LoginMenuPanel(sp<Engine> e);
 	//
 	//private:
 	//   class CallbackAnonymousInnerClassHelper : public EditField::Callback
 	//   {
 	//   private:
-	//      shared_ptr<LoginScreen> outerInstance;
+	//      sp<LoginScreen> outerInstance;
 	//
 	//   public:
-	//      CallbackAnonymousInnerClassHelper(shared_ptr<LoginScreen> outerInstance);
+	//      CallbackAnonymousInnerClassHelper(sp<LoginScreen> outerInstance);
 	//
 	//      void callback(int key);
 	//   };

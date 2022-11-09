@@ -24,10 +24,10 @@ public:
 	static Logger log;
 
 
-	shared_ptr<Caption> actionCaption = nullptr;
+	sp<Caption> actionCaption = nullptr;
 
 
-	shared_ptr<ScreenSprite> actionIconScreenSprite = nullptr;
+	sp<ScreenSprite> actionIconScreenSprite = nullptr;
 
 
 	int ACTION_in_action_range = 0;
@@ -44,20 +44,20 @@ public:
 	class Coords
 	{
 	private:
-		shared_ptr<ActionManager> outerInstance = nullptr;
+		sp<ActionManager> outerInstance = nullptr;
 
 	public:
 		int x = 0;
 		int y = 0;
 
-		Coords(shared_ptr<ActionManager> outerInstance, int x, int y);
+		Coords(sp<ActionManager> outerInstance, int x, int y);
 	};
 
 public:
-	ArrayList<shared_ptr<Coords>> actionsThisFrame;// = make_shared<ArrayList><shared_ptr<Coords>>();
+	vector<sp<Coords>> actionsThisFrame;// = ms<ArrayList><sp<Coords>>();
 
 
-	ActionManager(shared_ptr<Engine> g);
+	ActionManager(sp<Engine> g);
 
 
 
@@ -122,16 +122,16 @@ public:
 	bool xy(int x, int y, const string& label);
 
 
-	bool area(shared_ptr<Area> a, const string& label);
+	bool area(sp<Area> a, const string& label);
 
 
 	bool xyxy(int x, int y, int x2, int y2, const string& label);
 
 
-	bool entity(shared_ptr<Entity> e, const string& label);
+	bool entity(sp<Entity> e, const string& label);
 
 
-	bool checkAll(int x, int y, int x2, int y2, const string& label, int type, shared_ptr<Entity> e, shared_ptr<Area> a);
+	bool checkAll(int x, int y, int x2, int y2, const string& label, int type, sp<Entity> e, sp<Area> a);
 
 
 	void deleteCaptionNoSound();

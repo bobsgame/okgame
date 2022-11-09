@@ -14,7 +14,7 @@
 Logger GameDataLoader::log = Logger("GameDataLoader");
 
 
-GameDataLoader::GameDataLoader(shared_ptr<Engine> g)
+GameDataLoader::GameDataLoader(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -55,9 +55,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     shared_ptr<SpriteData> data = SpriteData::fromBase64ZippedJSON(s);
+	//                     sp<SpriteData> data = SpriteData::fromBase64ZippedJSON(s);
 	//
-	//                     shared_ptr<Sprite> sprite = make_shared<Sprite>(Engine());
+	//                     sp<Sprite> sprite = ms<Sprite>(Engine());
 	//                     sprite->initializeWithSpriteData(data);
 	//
 	//                     SpriteManager()->spriteByIDHashMap.put(sprite->id(), sprite);
@@ -98,7 +98,7 @@ void GameDataLoader::loadGameData()
 	//                     }
 	//                     for (int n = 0; n < data->getAnimationList()->size(); n++)
 	//                     {
-	//                        shared_ptr<SpriteAnimationSequence> a = data->getAnimationList()->get(n);
+	//                        sp<SpriteAnimationSequence> a = data->getAnimationList()->get(n);
 	//                        if (debug)
 	//                        {
 	//                           log->debug("Loaded Animation: " + a->frameSequenceName);
@@ -119,9 +119,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     shared_ptr<MapData> data = MapData::fromBase64ZippedJSON(s);
+	//                     sp<MapData> data = MapData::fromBase64ZippedJSON(s);
 	//
-	//                     shared_ptr<Map> map = make_shared<Map>(Engine(), data);
+	//                     sp<Map> map = ms<Map>(Engine(), data);
 	//
 	//
 	//                     getMapManager()->mapList.push_back(map);
@@ -156,9 +156,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     shared_ptr<SoundData> data = SoundData::fromBase64ZippedJSON(s);
+	//                     sp<SoundData> data = SoundData::fromBase64ZippedJSON(s);
 	//
-	//                     shared_ptr<Sound> sound = make_shared<Sound>(Engine(), data);
+	//                     sp<Sound> sound = ms<Sound>(Engine(), data);
 	//
 	//
 	//                     s = stringList[++i]; //tileData base64 GZipped intArray
@@ -184,9 +184,9 @@ void GameDataLoader::loadGameData()
 	//                  if (s.length() > 0)
 	//                  {
 	//                     s = s.substr(s.find(":") + 1);
-	//                     shared_ptr<MusicData> data = MusicData::fromBase64ZippedJSON(s);
+	//                     sp<MusicData> data = MusicData::fromBase64ZippedJSON(s);
 	//
-	//                     shared_ptr<Music> music = make_shared<Music>(Engine(), data);
+	//                     sp<Music> music = ms<Music>(Engine(), data);
 	//
 	//
 	//                     s = stringList[++i]; //tileData base64 GZipped intArray

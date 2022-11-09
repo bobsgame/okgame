@@ -16,12 +16,12 @@
 Logger Console::log = Logger("Console");
 
 
-shared_ptr<CaptionManager> Console::captionManager = nullptr;
+sp<CaptionManager> Console::captionManager = nullptr;
 
 
 
 
-//ArrayList<shared_ptr<ConsoleText>>* Console::consoleTextList = make_shared<ArrayList><shared_ptr<ConsoleText>>();
+//ArrayList<sp<ConsoleText>>* Console::consoleTextList = ms<ArrayList><sp<ConsoleText>>();
 //mutex Console::_consoleTextList_Mutex;
 
 Console::Console()
@@ -29,9 +29,9 @@ Console::Console()
 
 	log->debug("Init console");
 
-	if(captionManager==nullptr)captionManager = make_shared<CaptionManager>(nullptr);
+	if(captionManager==nullptr)captionManager = ms<CaptionManager>(nullptr);
 
-	consoleTextList = make_shared<ArrayList><shared_ptr<ConsoleText>>();
+	consoleTextList = ms<ArrayList><sp<ConsoleText>>();
 }
 
 bool Console::showConsole = true;
@@ -53,7 +53,7 @@ void Console::update()
 
 	for (int i = 0; i < consoleTextList->size(); i++)
 	{
-		shared_ptr<ConsoleText> d = consoleTextList->get(i);
+		sp<ConsoleText> d = consoleTextList->get(i);
 
 		int cx = d->x;
 		int cy = d->y;
@@ -89,42 +89,42 @@ void Console::pruneChats(int max)
 
 	while(consoleTextList->size()>max)
 	{
-		shared_ptr<ConsoleText> d = consoleTextList->get(0);
+		sp<ConsoleText> d = consoleTextList->get(0);
 		d->caption->setToBeDeletedImmediately();
 		consoleTextList->removeAt(0);
 		delete d;
 	}
 }
 
-shared_ptr<ConsoleText> Console::error(const string& s, int ticks, int x, int y, shared_ptr<OKColor> c)
+sp<ConsoleText> Console::error(const string& s, int ticks, int x, int y, sp<OKColor> c)
 { //=========================================================================================================================
 
 	if (c == nullptr)c = OKColor::red;
 	return add(s, ticks, x, y, c, true);
 }
 
-shared_ptr<ConsoleText> Console::debug(const string& s, int ticks, int x, int y, shared_ptr<OKColor> c)
+sp<ConsoleText> Console::debug(const string& s, int ticks, int x, int y, sp<OKColor> c)
 { //=========================================================================================================================
 
 	//if (c == nullptr)c = OKColor::yellow;
 	return add(s, ticks, x, y, c, true);
 }
 
-shared_ptr<ConsoleText> Console::add(const string& s, shared_ptr<OKColor> c)
+sp<ConsoleText> Console::add(const string& s, sp<OKColor> c)
 { //=========================================================================================================================
 	return add(s, -1, -1, -1, c);
 }
 
-shared_ptr<ConsoleText> Console::add(const string& s, int ticks, shared_ptr<OKColor> c)
+sp<ConsoleText> Console::add(const string& s, int ticks, sp<OKColor> c)
 { //=========================================================================================================================
 	return add(s, ticks, -1, -1, c);
 }
 
 
-shared_ptr<ConsoleText> Console::add(const string& s, int ticks, int x, int y, shared_ptr<OKColor> c, bool isDebug)
+sp<ConsoleText> Console::add(const string& s, int ticks, int x, int y, sp<OKColor> c, bool isDebug)
 { //=========================================================================================================================
 
-	shared_ptr<ConsoleText> dt = make_shared<ConsoleText>(s, c, x, y, ticks, isDebug);
+	sp<ConsoleText> dt = ms<ConsoleText>(s, c, x, y, ticks, isDebug);
 	lock_guard<mutex> lock(_consoleTextList_Mutex);
 	consoleTextList->add(dt);
 	return dt;
@@ -149,10 +149,10 @@ void Console::render()
 
 	int yPosition = 0;
 
-	ArrayList<shared_ptr<ConsoleText>> bottomList;
+	vector<sp<ConsoleText>> bottomList;
 	for(int i=0;i<consoleTextList->size();i++)
 	{
-		shared_ptr<ConsoleText> dt = consoleTextList->get(i);
+		sp<ConsoleText> dt = consoleTextList->get(i);
 		if (dt->alwaysOnBottom)
 		{
 			consoleTextList->removeAt(i);
@@ -169,7 +169,7 @@ void Console::render()
 	int numStrings = consoleTextList->size();
 	for (int n = numStrings; n > 0; n--)
 	{
-		shared_ptr<ConsoleText> dt = consoleTextList->get(n - 1);
+		sp<ConsoleText> dt = consoleTextList->get(n - 1);
 
 		if (dt->caption == nullptr)continue;
 
@@ -354,8 +354,8 @@ void ERROR_draw_error_console()
 	if (amount_of_errors > max_lines)start_error = amount_of_errors - max_lines;
 
 
-	shared_ptr<SDL_Surface> error_SURFACE = NULL;
-	shared_ptr<OKTexture> error_TEXTURE = NULL;
+	sp<SDL_Surface> error_SURFACE = NULL;
+	sp<OKTexture> error_TEXTURE = NULL;
 	SDL_Color green_COLOR = { 0,255,0,255 };
 	SDL_Color white_COLOR = { 255,255,255,255 };
 	SDL_Color black_COLOR = { 0,0,0,255 };
@@ -461,8 +461,8 @@ void DEBUG_draw_overlays()
 {//===========================================================================================================================
 
 
-	shared_ptr<SDL_Surface> error_SURFACE = NULL;
-	shared_ptr<OKTexture> error_TEXTURE = NULL;
+	sp<SDL_Surface> error_SURFACE = NULL;
+	sp<OKTexture> error_TEXTURE = NULL;
 	SDL_Color white_COLOR = { 255,255,255,255 };
 	SDL_Color black_COLOR = { 0,0,0,255 };
 
@@ -493,12 +493,12 @@ void DEBUG_draw_overlays()
 }
 
 //===========================================================================================================================
-void DEBUG_draw_text(float screenX0, float screenY0, string text, shared_ptr<OKColor> color)
+void DEBUG_draw_text(float screenX0, float screenY0, string text, sp<OKColor> color)
 {//===========================================================================================================================
 
 
-	shared_ptr<SDL_Surface> error_SURFACE = NULL;
-	shared_ptr<OKTexture> error_TEXTURE = NULL;
+	sp<SDL_Surface> error_SURFACE = NULL;
+	sp<OKTexture> error_TEXTURE = NULL;
 	SDL_Color white_COLOR = { (u8)color->ri(),(u8)color->gi(),(u8)color->bi(),255 };
 	SDL_Color black_COLOR = { 0,0,0,255 };
 

@@ -15,7 +15,7 @@ public:
 
 	static Logger log;
 
-	ClockCaption(shared_ptr<BGClientEngine> g);
+	ClockCaption(sp<BGClientEngine> g);
 
 	virtual void init() override;
 
@@ -25,17 +25,17 @@ public:
 
 	void setLightTheme();
 
-	shared_ptr<OKColor> pausedFGColor = OKColor::darkGray;
-	shared_ptr<OKColor> pausedAAColor = OKColor::gray;
-	shared_ptr<OKColor> pausedBGColor = OKColor::lightGray;
+	sp<OKColor> pausedFGColor = OKColor::darkGray;
+	sp<OKColor> pausedAAColor = OKColor::gray;
+	sp<OKColor> pausedBGColor = OKColor::lightGray;
 
-	shared_ptr<OKColor> fastFGColor = OKColor::darkerBlue;
-	shared_ptr<OKColor> fastAAColor = OKColor::darkBlue;
-	shared_ptr<OKColor> fastBGColor = OKColor::blue;
+	sp<OKColor> fastFGColor = OKColor::darkerBlue;
+	sp<OKColor> fastAAColor = OKColor::darkBlue;
+	sp<OKColor> fastBGColor = OKColor::blue;
 
-	shared_ptr<OKColor> unknownFGColor = OKColor::white;
-	shared_ptr<OKColor> unknownAAColor = OKColor::lightGray;
-	shared_ptr<OKColor> unknownBGColor = OKColor::black;
+	sp<OKColor> unknownFGColor = OKColor::white;
+	sp<OKColor> unknownAAColor = OKColor::lightGray;
+	sp<OKColor> unknownBGColor = OKColor::black;
 
 	void setPausedColor();
 
@@ -43,6 +43,6 @@ public:
 
 	void setFastColor();
 
-	void setColors(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, shared_ptr<OKColor> bg) override;
+	void setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg) override;
 };
 

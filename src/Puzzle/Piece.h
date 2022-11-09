@@ -74,9 +74,9 @@ class Rotation //static
 {//=========================================================================================================================
 
 public:
-	ArrayList<shared_ptr<BlockOffset>> blockOffsets;
+	vector<BlockOffset> blockOffsets;
 private:
-	ArrayList<BlockOffset> importExport_blockOffsets;
+	vector<BlockOffset> importExport_blockOffsets;
 public:
 	//=========================================================================================================================
 	bool operator==(const Rotation& rhs) const
@@ -98,9 +98,9 @@ public:
 
 	}
 	//=========================================================================================================================
-	void add(shared_ptr<BlockOffset>b)
+	void push_back(BlockOffset b)
 	{//=========================================================================================================================
-		blockOffsets.add(b);
+		blockOffsets.push_back(b);
 	}
 	//=========================================================================================================================
 	template <typename Archive>
@@ -112,8 +112,8 @@ public:
 		{
 			for (int i = 0; i<blockOffsets.size(); i++)
 			{
-				shared_ptr<BlockOffset>b = blockOffsets.get(i);
-				importExport_blockOffsets.add(*b);
+				sp<BlockOffset>b = blockOffsets.at(i);
+				importExport_blockOffsets.push_back(*b);
 			}
 		}
 		ar & BOOST_SERIALIZATION_NVP(importExport_blockOffsets);
@@ -121,10 +121,10 @@ public:
 		{
 			for (int i = 0; i<importExport_blockOffsets.size(); i++)
 			{
-				BlockOffset b = importExport_blockOffsets.get(i);
-				shared_ptr<BlockOffset>bp = make_shared<BlockOffset>();
+				BlockOffset b = importExport_blockOffsets.at(i);
+				sp<BlockOffset>bp = ms<BlockOffset>();
 				*bp = b;
-				blockOffsets.add(bp);
+				blockOffsets.push_back(bp);
 			}
 		}
 		importExport_blockOffsets.clear();
@@ -140,9 +140,9 @@ class RotationSet
 public:
 	string name = "";
 
-	ArrayList<shared_ptr<Rotation>> rotationSet;
+	vector<Rotation> rotationSet;
 private:
-	ArrayList<Rotation> importExport_rotationSet;
+	vector<Rotation> importExport_rotationSet;
 public:
 	//=========================================================================================================================
 	RotationSet()
@@ -155,13 +155,13 @@ public:
 		this->name = name;
 	}
 	//=========================================================================================================================
-	void add(shared_ptr<Rotation>r)
+	void push_back(Rotation r)
 	{//=========================================================================================================================
-		rotationSet.add(r);
+		rotationSet.push_back(r);
 	}
 
-	int size() { return rotationSet.size(); }
-	shared_ptr<Rotation> get(int i) { return rotationSet.get(i); }
+	int size() { return (int)rotationSet.size(); }
+	Rotation at(int i) { return rotationSet.at(i); }
 	void clear() { rotationSet.clear(); }
 	void removeAt(int i) { rotationSet.removeAt(i); }
 
@@ -176,8 +176,8 @@ public:
 		{
 			for (int i = 0; i<rotationSet.size(); i++)
 			{
-				shared_ptr<Rotation>b = rotationSet.get(i);
-				importExport_rotationSet.add(*b);
+				Rotation b = rotationSet.at(i);
+				importExport_rotationSet.push_back(b);
 			}
 		}
 		ar & BOOST_SERIALIZATION_NVP(importExport_rotationSet);
@@ -185,10 +185,10 @@ public:
 		{
 			for (int i = 0; i<importExport_rotationSet.size(); i++)
 			{
-				Rotation b = importExport_rotationSet.get(i);
-				shared_ptr<Rotation>bp = make_shared<Rotation>();
-				*bp = b;
-				rotationSet.add(bp);
+				Rotation b = importExport_rotationSet.at(i);
+				//sp<Rotation>bp = ms<Rotation>();
+				//*bp = b;
+				rotationSet.push_back(b);
 			}
 		}
 		importExport_rotationSet.clear();
@@ -208,7 +208,7 @@ public:
 	//int numBlocks = 1;
 	//int lastRotation = 0;
 
-	shared_ptr<OKColor>color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
+	sp<OKColor>color = nullptr;												Info color_Info = Info("Color", "If this is set, the blocks in the piece will have this color, ONLY if the block does not have a color already.  If the piece is set to Special Flashing Type, it will override the block color until it turns back into a normal piece.");
 private:
 	OKColor importExport_color;
 public:
@@ -235,8 +235,8 @@ public:
 	bool pieceShooterPiece = false;											Info pieceShooterPiece_Info = Info("Piece Shooter Piece", "This piece will create blocks below it when the rotate button is pressed.");
 
 	//don't use!!! use uuid!
-	ArrayList<shared_ptr<BlockType>> overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
-	ArrayList<string> overrideBlockTypes_UUID;
+	vector<sp<BlockType>> overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
+	vector<string> overrideBlockTypes_UUID;
 private:
 	//ArrayList<BlockType> importExport_overrideBlockTypes;
 public:
@@ -249,18 +249,18 @@ public:
 	
 
 //	PieceType();
-//	PieceType(shared_ptr<Color> color, int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet);
-//	PieceType(shared_ptr<Color> color, int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(const string& spriteName, shared_ptr<Color> color, int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(int numBlocks, ArrayList<shared_ptr<Rotation>>* rotationSet);
+//	PieceType(sp<Color> color, int numBlocks, ArrayList<sp<Rotation>>* rotationSet);
+//	PieceType(sp<Color> color, int numBlocks, ArrayList<sp<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(const string& spriteName, sp<Color> color, int numBlocks, ArrayList<sp<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(int numBlocks, ArrayList<sp<Rotation>>* rotationSet);
 
-	static shared_ptr<PieceType> emptyPieceType;
-	static shared_ptr<PieceType> oneBlockCursorPieceType;
-	static shared_ptr<PieceType> twoBlockHorizontalCursorPieceType;
-	static shared_ptr<PieceType> twoBlockVerticalCursorPieceType;
-	static shared_ptr<PieceType> threeBlockHorizontalCursorPieceType;
-	static shared_ptr<PieceType> threeBlockVerticalCursorPieceType;
-	static shared_ptr<PieceType> fourBlockCursorPieceType;
+	static sp<PieceType> emptyPieceType;
+	static sp<PieceType> oneBlockCursorPieceType;
+	static sp<PieceType> twoBlockHorizontalCursorPieceType;
+	static sp<PieceType> twoBlockVerticalCursorPieceType;
+	static sp<PieceType> threeBlockHorizontalCursorPieceType;
+	static sp<PieceType> threeBlockVerticalCursorPieceType;
+	static sp<PieceType> fourBlockCursorPieceType;
 	//=========================================================================================================================
 	PieceType()
 	{//=========================================================================================================================
@@ -272,16 +272,16 @@ public:
 		//this->numBlocks = 1;
 		//this->lastRotation = 0;
 
-		shared_ptr<BlockOffset>b = make_shared<BlockOffset>(0, 0);
-		shared_ptr<Rotation>r = make_shared<Rotation>();
-		r->add(b);
-		//rotationSet = make_shared<ArrayList><shared_ptr<Rotation>>();
+		BlockOffset b;// = ms<BlockOffset>(0, 0);
+		Rotation r;// = ms<Rotation>();
+		r.push_back(b);
+		//rotationSet = ms<ArrayList><sp<Rotation>>();
 		rotationSet = RotationSet("");
-		rotationSet.add(r);
+		rotationSet.push_back(r);
 	}
 
 	//=========================================================================================================================
-	PieceType(const string &name, const string& spriteName = "", shared_ptr<OKColor>color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
+	PieceType(const string &name, const string& spriteName = "", sp<OKColor>color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
 	{//=========================================================================================================================
 		this->name = name;
 
@@ -314,15 +314,15 @@ public:
 	//BlockType noBlockType;
 	//ArrayList<Color> emptyColors;
 
-	shared_ptr<Grid> grid = nullptr;
-	shared_ptr<GameLogic> game = nullptr;
+	sp<Grid> grid = nullptr;
+	sp<GameLogic> game = nullptr;
 
 	int currentRotation = 0;
 
 	int xGrid = 0;
 	int yGrid = 0;
 
-	ArrayList<shared_ptr<Block>> blocks;
+	vector<sp<Block>> blocks;
 
 	float cursorAlphaFrom = 0.3f;
 	float cursorAlphaTo = 1.0f;
@@ -342,8 +342,8 @@ private:
 	bool ghostFadeInOutToggle = false;
 
 public:
-	shared_ptr<Block> holdingBlock = nullptr;
-	shared_ptr<PieceType> pieceType = nullptr;
+	sp<Block> holdingBlock = nullptr;
+	sp<PieceType> pieceType = nullptr;
 	bool overrideAnySpecialBehavior = false;
 	int piecesSetSinceThisPieceSet = 0;
 	bool setInGrid = false;
@@ -380,8 +380,8 @@ public:
 //			;
 //	}
 
-	Piece(shared_ptr<GameLogic> gameInstance, shared_ptr<Grid> grid, shared_ptr<PieceType> pieceType, ArrayList<shared_ptr<BlockType>> &blockTypes);
-	Piece(shared_ptr<GameLogic> gameInstance, shared_ptr<Grid> grid, shared_ptr<PieceType> pieceType, shared_ptr<BlockType> blockType);
+	Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, sp<vector<sp<BlockType>>> blockTypes);
+	Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, sp<BlockType> blockType);
 	void init();
 	void initColors();
 	void setPieceBlockConnections();
@@ -434,7 +434,7 @@ public:
 	static RotationSet get4BlockZRotationSet(RotationType type);
 	int cellW();
 	int cellH();
-	shared_ptr<GameType> getGameType();
-	shared_ptr<GameLogic> getGameLogic();
+	sp<GameType> getGameType();
+	sp<GameLogic> getGameLogic();
 };
 

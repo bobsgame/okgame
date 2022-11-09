@@ -45,11 +45,11 @@ void OKGameStadium::init()
 	name = "ok game";
 }
 
-OKGameStadium::OKGameStadium(shared_ptr<StadiumScreen> stadiumScreen, shared_ptr<Area> area)
+OKGameStadium::OKGameStadium(sp<StadiumScreen> stadiumScreen, sp<Area> area)
 { //=========================================================================================================================
 
 #ifdef _DEBUG
-	log.info("OKGameStadium(shared_ptr<StadiumScreen> stadiumScreen, shared_ptr<Area> area)");
+	log.info("OKGameStadium(sp<StadiumScreen> stadiumScreen, sp<Area> area)");
 #endif
 
 	//StadiumGameEngine(stadiumScreen, area);
@@ -88,7 +88,7 @@ void OKGameStadium::titleMenuUpdate()
 
 	if (titleMenu == nullptr)
 	{
-		titleMenu = make_shared<OKMenu>(this,"");
+		titleMenu = ms<OKMenu>(this,"");
 		titleMenu->add("TOURNAMENT MODE");
 	}
 

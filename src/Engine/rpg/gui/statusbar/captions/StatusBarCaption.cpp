@@ -14,7 +14,7 @@ StatusBarCaption::StatusBarCaption()
 { //=========================================================================================================================
 }
 
-StatusBarCaption::StatusBarCaption(shared_ptr<BGClientEngine> g)
+StatusBarCaption::StatusBarCaption(sp<BGClientEngine> g)
 { //=========================================================================================================================
 	this->e = g;
 }
@@ -58,7 +58,7 @@ void StatusBarCaption::updateCaption(const string& s)
 
 	if (caption == nullptr)
 	{
-		caption = make_shared<Caption>(getEngine(), Caption::Position::NONE, 0, 2, -1, s, OKFont::font_small_16_outlined_smooth, currentFGColor, currentAAColor, currentBGColor, RenderOrder::OVER_TEXT, 1.0f, 0);
+		caption = ms<Caption>(getEngine(), Caption::Position::NONE, 0, 2, -1, s, OKFont::font_small_16_outlined_smooth, currentFGColor, currentAAColor, currentBGColor, RenderOrder::OVER_TEXT, 1.0f, 0);
 	}
 	else
 	{
@@ -69,7 +69,7 @@ void StatusBarCaption::updateCaption(const string& s)
 	}
 }
 
-void StatusBarCaption::setColors(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, shared_ptr<OKColor> bg)
+void StatusBarCaption::setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg)
 { //=========================================================================================================================
 
 	currentFGColor = fg;

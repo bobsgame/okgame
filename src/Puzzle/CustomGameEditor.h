@@ -66,7 +66,7 @@ public:
 	const char* GetTypeName(){ return "EditRectangle"; }
 	const char* GetBaseTypeName(){ return Gwen::Controls::Rectangle::GetTypeName(); }
     //GWEN_CONTROL_CONSTRUCTOR(EditRectangle)
-    EditRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+    EditRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
     {
         bobsGame = b;
         m_Color = Gwen::Color(255, 255, 255, 255);
@@ -75,7 +75,7 @@ public:
     
 	void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown);
     
-    shared_ptr<OKGame> bobsGame = nullptr;
+    sp<OKGame> bobsGame = nullptr;
 	//void Render(Skin::Base* skin);
 };
 
@@ -106,13 +106,13 @@ public:
 	const char* GetTypeName() { return "RotationPreviewRectangle"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
     //GWEN_CONTROL_CONSTRUCTOR(RotationPreviewRectangle)
-    RotationPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+    RotationPreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
     {
         bobsGame = b;
         m_Color = Gwen::Color(255, 255, 255, 255);
     }
     
-    shared_ptr<OKGame> bobsGame = nullptr;
+    sp<OKGame> bobsGame = nullptr;
     
 	//void Render(Skin::Base* skin);
 };
@@ -143,7 +143,7 @@ public:
 	const char* GetTypeName() { return "PreviewRectangle"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Rectangle::GetTypeName(); }
 	//GWEN_CONTROL_CONSTRUCTOR(PreviewRectangle)
-    PreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
+    PreviewRectangle(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame> b) : Gwen::Controls::Rectangle(pParent, pName)
     {
         bobsGame = b;
         m_Color = Gwen::Color(255, 255, 0, 255);
@@ -151,7 +151,7 @@ public:
     
 	void Render(Gwen::Skin::Base* skin);
     
-	shared_ptr<OKGame>bobsGame = nullptr;
+	sp<OKGame>bobsGame = nullptr;
 };
 
 
@@ -179,14 +179,14 @@ public:
 	}
 	const char* GetTypeName() { return "CustomGameEditorControl"; }
 	const char* GetBaseTypeName() { return Gwen::Controls::Base::GetTypeName(); }
-	CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, shared_ptr<OKGame>b);
+	CustomGameEditorControl(Gwen::Controls::Base* pParent, const Gwen::String& pName, sp<OKGame>b);
     
     
     
-	shared_ptr<BlockType> getBlockTypeByUUID(string uuid);
-	shared_ptr<PieceType> getPieceTypeByUUID(string uuid);
-	//shared_ptr<GameType> getGameTypeByName(string name);
-	shared_ptr<DifficultyType> getDifficultyTypeByName(string name);
+	sp<BlockType> getBlockTypeByUUID(string uuid);
+	sp<PieceType> getPieceTypeByUUID(string uuid);
+	//sp<GameType> getGameTypeByName(string name);
+	sp<DifficultyType> getDifficultyTypeByName(string name);
     
 	void onBlockListRowSelect(Gwen::Controls::Base* control);
 	void onPieceListRowSelect(Gwen::Controls::Base* control);
@@ -222,16 +222,16 @@ public:
 	void createNewGameType(Gwen::Controls::Base* control);
 	void duplicateGameType(Gwen::Controls::Base* control);
 	void deleteGameType(Gwen::Controls::Base* control);
-	void initBlockPropTree(shared_ptr<BlockType> b);
+	void initBlockPropTree(sp<BlockType> b);
 	void saveBlockPropTreeToCurrentBlockType();
-	void initPiecePropTree(shared_ptr<PieceType> b);
+	void initPiecePropTree(sp<PieceType> b);
 	void savePiecePropTreeToCurrentPieceType();
 	void doEditMakePieceTypeWhenClearedWindowButton(Gwen::Controls::Base* control);
 	void doEditConnectedUDLRChangeIntoBlockTypeWindowButton(Gwen::Controls::Base* control);
 	void doEditTurnFromBlockTypeToTypeWindowButton(Gwen::Controls::Base* control);
 	void doEditRotationSetWindowButton(Gwen::Controls::Base* control);
 	void doOverrideBlockTypesSelectionWindowButton(Gwen::Controls::Base* control);
-	void initSettingsPropTree(shared_ptr<GameType>b);
+	void initSettingsPropTree(sp<GameType>b);
 	void saveSettingsPropTreeToCurrentGameType();
 	void initBlockSelectionListBox();
 	void initPieceSelectionListBox();
@@ -270,14 +270,14 @@ public:
 	void onSelectedPresetRotationOK(Gwen::Controls::Base* control);
 	void onSelectedPresetRotationCancel(Gwen::Controls::Base* control);
 	void renderRotationPreview();
-	void renderRotationEditor(shared_ptr<OKGame>g);
+	void renderRotationEditor(sp<OKGame>g);
 	void updateRotationEditor();
 	void onRotationEditMouseClick(int x, int y, bool bDown);
     
-	//void onAddDifficultyButton(shared_ptr<Base> control);
-	//void onDeleteDifficultyButton(shared_ptr<Base> control);
+	//void onAddDifficultyButton(sp<Base> control);
+	//void onDeleteDifficultyButton(sp<Base> control);
 	void onDifficultyListRowSelect(Gwen::Controls::Base* control);
-	void initDifficultyPropTree(shared_ptr<DifficultyType>b);
+	void initDifficultyPropTree(sp<DifficultyType>b);
 	void saveDifficultyPropTreeToCurrentDifficultyType();
 	void initDifficultySelectionListBox();
 	void doDifficultyDisallowPieceTypesSelectionWindowButton(Gwen::Controls::Base* control);
@@ -311,7 +311,7 @@ private:
 	Gwen::Controls::Base* previewBase = nullptr;
 	
 public:
-	shared_ptr<PreviewRectangle> darkRectangle = nullptr;
+	sp<PreviewRectangle> darkRectangle = nullptr;
 private:
 	Gwen::Controls::Base* applyButtonsBase = nullptr;
 	Gwen::Controls::Button* previewButton = nullptr;
@@ -328,7 +328,7 @@ private:
 	int settingsPropTreeNumChildren = 0;
 	Gwen::Controls::WindowControl* blockWindow = nullptr;
 	Gwen::Controls::Base* blockListBase = nullptr;
-	//shared_ptr<Base> blockSelectionListBase = nullptr;
+	//sp<Base> blockSelectionListBase = nullptr;
 	Gwen::Controls::ScrollControl* blockPropertiesScrollControl = nullptr;
 	Gwen::Controls::PropertyTree* blockPropTree = nullptr;
 	int blockPropTreeNumChildren = 0;
@@ -336,10 +336,10 @@ private:
 	Gwen::Controls::Button* addBlockButton = nullptr;
 	Gwen::Controls::Button* duplicateBlockButton = nullptr;
 	Gwen::Controls::Button* deleteBlockButton = nullptr;
-	//shared_ptr<Button> addBlockToPieceButton;
+	//sp<Button> addBlockToPieceButton;
 	Gwen::Controls::WindowControl* pieceWindow = nullptr;
 	Gwen::Controls::Base* pieceListBase = nullptr;
-	//shared_ptr<Base> pieceSelectionListBase = nullptr;
+	//sp<Base> pieceSelectionListBase = nullptr;
 	Gwen::Controls::ScrollControl* piecePropertiesScrollControl = nullptr;
 	Gwen::Controls::PropertyTree* piecePropTree = nullptr;
 	int piecePropTreeNumChildren = 0;
@@ -347,23 +347,23 @@ private:
 	Gwen::Controls::Button* addPieceButton = nullptr;
 	Gwen::Controls::Button* duplicatePieceButton = nullptr;
 	Gwen::Controls::Button* deletePieceButton = nullptr;
-	//shared_ptr<Button> deleteBlockFromPieceButton;
+	//sp<Button> deleteBlockFromPieceButton;
     
 	Gwen::Controls::WindowControl* difficultyWindow = nullptr;
 	Gwen::Controls::Base* difficultyListBase = nullptr;
-	//shared_ptr<Base> difficultySelectionListBase = nullptr;
+	//sp<Base> difficultySelectionListBase = nullptr;
 	Gwen::Controls::ScrollControl* difficultyPropertiesScrollControl = nullptr;
 	Gwen::Controls::PropertyTree* difficultyPropTree = nullptr;
 	int difficultyPropTreeNumChildren = 0;
-	//shared_ptr<Base> difficultyButtonBase = nullptr;
-	//shared_ptr<Button> addDifficultyButton = nullptr;
-	//shared_ptr<Button> deleteDifficultyButton = nullptr;
+	//sp<Base> difficultyButtonBase = nullptr;
+	//sp<Button> addDifficultyButton = nullptr;
+	//sp<Button> deleteDifficultyButton = nullptr;
     
 	Gwen::Controls::WindowControl* askToSaveBase = nullptr;
     
 	Gwen::Controls::Button* askToSaveYesButton = nullptr;
 	Gwen::Controls::Button* askToSaveNoButton = nullptr;
-	//shared_ptr<Button> cancelExitButton = nullptr;
+	//sp<Button> cancelExitButton = nullptr;
     
 public:
 	Gwen::Controls::WindowControl* loadOrCreateGameWindow = nullptr;
@@ -377,18 +377,18 @@ private:
 	Gwen::Controls::Button* duplicateGameTypeButton = nullptr;
 	Gwen::Controls::Button* deleteGameTypeButton = nullptr;
     
-	shared_ptr<GameType>currentGameType = nullptr;
-	shared_ptr<BlockType> currentBlockType = nullptr;
+	sp<GameType>currentGameType = nullptr;
+	sp<BlockType> currentBlockType = nullptr;
     
 	//i use these temp arrays because i need to save the modifications to something
-	//ArrayList<shared_ptr<PieceType>> currentBlockType_makePieceTypeWhenCleared;
-	//ArrayList<shared_ptr<BlockType>> currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
-	//ArrayList<shared_ptr<TurnFromBlockTypeToType>> currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
+	//ArrayList<sp<PieceType>> currentBlockType_makePieceTypeWhenCleared;
+	//ArrayList<sp<BlockType>> currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
+	//ArrayList<sp<TurnFromBlockTypeToType>> currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
     
-	shared_ptr<PieceType> currentPieceType = nullptr;
-	shared_ptr<DifficultyType>currentDifficultyType = nullptr;
+	sp<PieceType> currentPieceType = nullptr;
+	sp<DifficultyType>currentDifficultyType = nullptr;
 	//RotationSet currentPieceType_rotationSet;
-	//ArrayList<shared_ptr<BlockType>> currentPieceType_overrideBlockTypes;
+	//ArrayList<sp<BlockType>> currentPieceType_overrideBlockTypes;
     
 	Gwen::Controls::WindowControl* selectWindow = nullptr;
 	Gwen::Controls::ListBox* selectListBox = nullptr;
@@ -403,41 +403,41 @@ private:
 	Gwen::Controls::ListBox* toFromListBox = nullptr;
 	Gwen::Controls::ComboBox* fromCombo = nullptr;
 	Gwen::Controls::ComboBox* toCombo = nullptr;
-	shared_ptr<TurnFromBlockTypeToType>currentTurnFromBlockTypeToType = nullptr;
+	sp<TurnFromBlockTypeToType>currentTurnFromBlockTypeToType = nullptr;
     
 	Gwen::Controls::WindowControl* rotationEditWindow = nullptr;
 	Gwen::Controls::WindowControl* rotationPresetSelectWindow = nullptr;
 	Gwen::Controls::ListBox* rotationListBox = nullptr;
 	Gwen::Controls::ListBox* rotationPresetListBox = nullptr;
-	//shared_ptr<Base> rotationLeftBase = nullptr;
-	//shared_ptr<Base> rotationRightBase = nullptr;
-	//shared_ptr<Base> rotationListBoxBase = nullptr;
-	//shared_ptr<Base> rotationListBoxButtonBase = nullptr;
-	//shared_ptr<Base> rotationWindowButtonBase = nullptr;
-	//shared_ptr<Button> addRotationButton = nullptr;
-	//shared_ptr<Button> deleteRotationButton = nullptr;
-	//shared_ptr<Button> saveRotationButton = nullptr;
+	//sp<Base> rotationLeftBase = nullptr;
+	//sp<Base> rotationRightBase = nullptr;
+	//sp<Base> rotationListBoxBase = nullptr;
+	//sp<Base> rotationListBoxButtonBase = nullptr;
+	//sp<Base> rotationWindowButtonBase = nullptr;
+	//sp<Button> addRotationButton = nullptr;
+	//sp<Button> deleteRotationButton = nullptr;
+	//sp<Button> saveRotationButton = nullptr;
     
-	shared_ptr<EditRectangle>rotationEditRectangle = nullptr;
+	sp<EditRectangle>rotationEditRectangle = nullptr;
 	Gwen::Controls::HorizontalSlider *rotationPreviewAnimationSpeedSlider = nullptr;
-	shared_ptr<RotationPreviewRectangle>rotationPreviewRectangle = nullptr;
+	sp<RotationPreviewRectangle>rotationPreviewRectangle = nullptr;
     
 public:
 	bool rotationEditorOpen = false;
 	bool presetRotationWindowOpen = false;
     
 	bool windowOpen = false;
-	shared_ptr<OKGame> bobsGame = nullptr;
+	sp<OKGame> bobsGame = nullptr;
 private:
     
 	int maxNumBlocks = 0;
-	shared_ptr<Rotation> currentRotation = nullptr;
+	sp<Rotation> currentRotation = nullptr;
 	float previewSpeed = 0.5;
 	long long lastPreviewTime = 0;
 	int currentPreviewRotationIndex = 0;
-	ArrayList<shared_ptr<OKColor>> colors;
+	vector<sp<OKColor>> colors;
     
-	ArrayList<RotationSet> rotationSets;
+	vector<RotationSet> rotationSets;
     
 	int fontHeight = 20;
 	int lastW = 0;

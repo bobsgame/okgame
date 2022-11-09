@@ -14,7 +14,7 @@
 Logger RamioBrickBlock::log = Logger("RamioBrickBlock");
 
 
-RamioBrickBlock::RamioBrickBlock(shared_ptr<Engine> g)
+RamioBrickBlock::RamioBrickBlock(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 }

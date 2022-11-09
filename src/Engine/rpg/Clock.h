@@ -30,7 +30,7 @@ public:
 	int day = 0;
 
 
-	Clock(shared_ptr<Engine> g);
+	Clock(sp<Engine> g);
 
 
 	void update();

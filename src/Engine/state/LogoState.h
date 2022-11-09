@@ -21,7 +21,7 @@ public:
 
 
 	//GUI* loginScreenGUI = nullptr;
-	//shared_ptr<LoginScreen> loginScreen = nullptr;
+	//sp<LoginScreen> loginScreen = nullptr;
 
 
 	int frame = 0;
@@ -29,8 +29,8 @@ public:
 
 	int count = 0;
 
-	shared_ptr<OKTexture> logo = nullptr;
-	shared_ptr<OKTexture> gradient = nullptr;
+	sp<OKTexture> logo = nullptr;
+	sp<OKTexture> gradient = nullptr;
 
 	long long totalTicksPassed = 0;
 	long long ticksToShow = 2000;

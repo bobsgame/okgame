@@ -55,10 +55,10 @@ public:
 	AudioData(int id, const string& name, const string& filename);
 
 
-	//static shared_ptr<AudioData> fromBase64ZippedJSON(const string& b64);
+	//static sp<AudioData> fromBase64ZippedJSON(const string& b64);
 
 
-	//static shared_ptr<AudioData> fromJSON(const string& json);
+	//static sp<AudioData> fromJSON(const string& json);
 
 	string& initFromString(string& t);
 

@@ -16,16 +16,16 @@
 Logger TextManager::log = Logger("TextManager");
 
 
-shared_ptr<OKTexture> TextManager::questionMarkTexture = nullptr;
+sp<OKTexture> TextManager::questionMarkTexture = nullptr;
 
-TextManager::TextManager(shared_ptr<Engine> g)
+TextManager::TextManager(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 
 
 	if (actionIconScreenSprite == nullptr)
 	{
-		actionIconScreenSprite = make_shared<ScreenSprite>(g, "button", "actionIcon"); //HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,actionx-8,actiony+1,255);
+		actionIconScreenSprite = ms<ScreenSprite>(g, "button", "actionIcon"); //HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,actionx-8,actiony+1,255);
 		actionIconScreenSprite->draw = false;
 
 		actionIconScreenSprite->setScale(2);
@@ -67,8 +67,8 @@ void TextManager::init()
 	 * // load a default java font
 	 * try
 	 * {
-	 * OKFont awtFont = make_shared<OKFont>("bobsgame", OKFont.PLAIN, 8);
-	 * font = make_shared<TrueTypeFont>(awtFont, antiAlias);
+	 * OKFont awtFont = ms<OKFont>("bobsgame", OKFont.PLAIN, 8);
+	 * font = ms<TrueTypeFont>(awtFont, antiAlias);
 	 * }
 	 * catch (Exception e)
 	 * {
@@ -79,11 +79,11 @@ void TextManager::init()
 	// load font from file
 	//   try
 	//   {
-	//      shared_ptr<InputStream> inputStream = FileUtils::getResourceAsStream("res/fonts/bobsgame.ttf");
+	//      sp<InputStream> inputStream = FileUtils::getResourceAsStream("res/fonts/bobsgame.ttf");
 	//
-	//      java::awt::Oshared_ptr<KFont> awtFont = java::awt::OKFont::createFont(java::awt::OKFont::TRUETYPE_FONT, inputStream);
+	//      java::awt::Osp<KFont> awtFont = java::awt::OKFont::createFont(java::awt::OKFont::TRUETYPE_FONT, inputStream);
 	//      awtFont = awtFont->deriveFont(8.0f); // set font size
-	//      ttfFont = make_shared<TrueTypeFont>(awtFont, antiAlias);
+	//      ttfFont = ms<TrueTypeFont>(awtFont, antiAlias);
 	//   }
 	//   catch (exception& e)
 	//   {
@@ -102,8 +102,8 @@ void TextManager::init()
 	//pow2TexHeight = Math::getClosestPowerOfTwo(height);
 
 	textBox->clear();
-	textBox->add(make_shared<TextWindow>(getEngine()));
-	textBox->add(make_shared<TextWindow>(getEngine()));
+	textBox->add(ms<TextWindow>(getEngine()));
+	textBox->add(ms<TextWindow>(getEngine()));
 
 	textBox->get(0)->init();
 	textBox->get(1)->init();
@@ -1761,7 +1761,7 @@ void TextManager::parseOption()
 		}
 		else if (optionBuffer == "MOM")
 		{
-			shared_ptr<Entity> e = getCurrentMap()->getEntityByName("mom");
+			sp<Entity> e = getCurrentMap()->getEntityByName("mom");
 			if (e == nullptr)
 			{
 				return;
@@ -1771,7 +1771,7 @@ void TextManager::parseOption()
 		}
 		else if (optionBuffer == "DAD")
 		{
-			shared_ptr<Entity> e = getCurrentMap()->getEntityByName("dad");
+			sp<Entity> e = getCurrentMap()->getEntityByName("dad");
 			if (e == nullptr)
 			{
 				return;
@@ -1781,7 +1781,7 @@ void TextManager::parseOption()
 		}
 		else if (optionBuffer == "BROTHER")
 		{
-			shared_ptr<Entity> e = getCurrentMap()->getEntityByName("brother");
+			sp<Entity> e = getCurrentMap()->getEntityByName("brother");
 			if (e == nullptr)
 			{
 				return;
@@ -1822,7 +1822,7 @@ void TextManager::parseOption()
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			shared_ptr<Entity> e = getCurrentMap()->getEntityByName(s);
+			sp<Entity> e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
 				textBox->get(0)->setSpriteWindow(e, nullptr, "");
@@ -1831,7 +1831,7 @@ void TextManager::parseOption()
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOENTITY:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			shared_ptr<Entity> e = getCurrentMap()->getEntityByName(s);
+			sp<Entity> e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
 				textBox->get(1)->setSpriteWindow(e, nullptr, "");
@@ -1840,7 +1840,7 @@ void TextManager::parseOption()
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			shared_ptr<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
+			sp<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
 				textBox->get(0)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
@@ -1849,7 +1849,7 @@ void TextManager::parseOption()
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOSPRITE:"))
 		{
 			string s = optionBuffer.substr(optionBuffer.find(":") + 1);
-			shared_ptr<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
+			sp<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
 				textBox->get(1)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
@@ -1890,7 +1890,7 @@ void TextManager::parseOption()
 	}
 }
 
-void TextManager::dialogue(shared_ptr<Dialogue> d)
+void TextManager::dialogue(sp<Dialogue> d)
 {
 	// TODO
 

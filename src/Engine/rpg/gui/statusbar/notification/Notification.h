@@ -17,7 +17,7 @@ public:
 
 	static Logger log;
 
-	shared_ptr<Caption> caption = nullptr;
+	sp<Caption> caption = nullptr;
 
 	string notificationString;
 
@@ -36,12 +36,12 @@ public:
 	float scrollX = 0;
 	bool scrolling = false;
 
-	Notification(shared_ptr<BGClientEngine> g, const string& s);
+	Notification(sp<BGClientEngine> g, const string& s);
 
 	virtual void update() override;
 
 	virtual void render(int layer) override;
 
-	shared_ptr<Notification> fadeOutAndDelete();
+	sp<Notification> fadeOutAndDelete();
 };
 

@@ -14,25 +14,25 @@ class Logger;
 class MapManager : public EnginePart
 {
 public:
-	ArrayList<shared_ptr<Map>> mapList;
-	HashMap<string, shared_ptr<Map>> mapByNameHashMap;//make_shared<HashMap><string, shared_ptr<Map>>();
-	HashMap<int, shared_ptr<Map>> mapByIDHashMap;//make_shared<HashMap><int, shared_ptr<Map>>();
+	vector<sp<Map>> mapList;
+	HashMap<string, sp<Map>> mapByNameHashMap;//ms<HashMap><string, sp<Map>>();
+	HashMap<int, sp<Map>> mapByIDHashMap;//ms<HashMap><int, sp<Map>>();
 
 	static Logger log;
 	
 
-	shared_ptr<Map> currentMap = nullptr;
+	sp<Map> currentMap = nullptr;
 private:
-	shared_ptr<Map> lastMap = nullptr;
+	sp<Map> lastMap = nullptr;
 
 
-	//	private final KahluaConverterManager converterManager = make_shared<KahluaConverterManager>();
+	//	private final KahluaConverterManager converterManager = ms<KahluaConverterManager>();
 	//	private final J2SEPlatform platform = new J2SEPlatform();
 	//	private final KahluaTable env = platform.newEnvironment();
-	//	private final KahluaThread thread = make_shared<KahluaThread>(platform, env);
-	//	private final LuaCaller caller = make_shared<LuaCaller>(converterManager);
+	//	private final KahluaThread thread = ms<KahluaThread>(platform, env);
+	//	private final LuaCaller caller = ms<LuaCaller>(converterManager);
 	//
-	//	private final LuaJavaClassExposer exposer = make_shared<LuaJavaClassExposer>(converterManager, platform, env);
+	//	private final LuaJavaClassExposer exposer = ms<LuaJavaClassExposer>(converterManager, platform, env);
 
 public:
 	static bool useThreads;
@@ -41,7 +41,7 @@ public:
 
 
 	//textures mapped to light filenames
-	static HashMap<string, shared_ptr<OKTexture>> lightTextureHashMap;//make_shared<HashMap><string, shared_ptr<Texture>>();
+	static HashMap<string, sp<OKTexture>> lightTextureHashMap;//ms<HashMap><string, sp<Texture>>();
 
 
 
@@ -76,11 +76,11 @@ public:
 
 
 
-	shared_ptr<Door> doorEntered = nullptr;
-	shared_ptr<Door> doorExited = nullptr;
+	sp<Door> doorEntered = nullptr;
+	sp<Door> doorExited = nullptr;
 
-	shared_ptr<WarpArea> warpEntered = nullptr;
-	shared_ptr<WarpArea> warpExited = nullptr;
+	sp<WarpArea> warpEntered = nullptr;
+	sp<WarpArea> warpExited = nullptr;
 
 
 	float drawAngle = 0; //TODO
@@ -96,7 +96,7 @@ public:
 	bool effectsBlackAndWhite = false; //TODO
 
 
-	MapManager(shared_ptr<Engine> g);
+	MapManager(sp<Engine> g);
 	~MapManager();
 
 
@@ -172,42 +172,42 @@ public:
 	void changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixelsHQ, bool updateGameSave);
 
 
-	void changeMap(shared_ptr<Map> m, int mapXTiles1X, int mapYTiles1X);
+	void changeMap(sp<Map> m, int mapXTiles1X, int mapYTiles1X);
 
 
-	void changeMap(shared_ptr<Map> m, shared_ptr<Door> door);
+	void changeMap(sp<Map> m, sp<Door> door);
 
 
-	void changeMap(shared_ptr<Map> m, shared_ptr<Area> area);
+	void changeMap(sp<Map> m, sp<Area> area);
 
 
-	void changeMap(shared_ptr<Map> m, shared_ptr<WarpArea> area);
+	void changeMap(sp<Map> m, sp<WarpArea> area);
 
 
 	void changeMap(const string& mapName, const string& areaName);
 
 
-	shared_ptr<Map> getMapByIDBlockUntilLoaded(int id);
+	sp<Map> getMapByIDBlockUntilLoaded(int id);
 
 
-	shared_ptr<Map> getMapByNameBlockUntilLoaded(const string& name);
+	sp<Map> getMapByNameBlockUntilLoaded(const string& name);
 
 
 	void requestMapDataIfNotLoadedYet(const string& name);
 
 
-	shared_ptr<MapState> getMapStateByID(int id);
+	sp<MapState> getMapStateByID(int id);
 
 
-	shared_ptr<Area> getAreaByID(int id);
+	sp<Area> getAreaByID(int id);
 
 
-	shared_ptr<Entity> getEntityByID(int id);
+	sp<Entity> getEntityByID(int id);
 
 
-	shared_ptr<Light> getLightByID(int id);
+	sp<Light> getLightByID(int id);
 
 
-	shared_ptr<Door> getDoorByID(int id);
+	sp<Door> getDoorByID(int id);
 };
 

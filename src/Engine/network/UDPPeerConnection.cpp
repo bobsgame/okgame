@@ -9,7 +9,7 @@
 
 Logger FriendData::log = Logger("FriendData");
 Logger UDPPeerConnection::log = Logger("UDPPeerConnection");
-shared_ptr<Logger> UDPPeerConnection::_threadLog = make_shared<Logger>("UDPPeerConnection");
+sp<Logger> UDPPeerConnection::_threadLog = ms<Logger>("UDPPeerConnection");
 
 
 int UDPPeerConnection::lastUsedUDPPort = Main::clientUDPPortStartRange;
@@ -36,13 +36,13 @@ UDPPeerConnection::~UDPPeerConnection()
 
 }
 
-void UDPPeerConnection::addEnginePartToForwardMessagesTo(shared_ptr<EnginePart> e)
+void UDPPeerConnection::addEnginePartToForwardMessagesTo(sp<EnginePart> e)
 {
 	if (engineParts.contains(e) == false)
 		engineParts.add(e);
 }
 
-void UDPPeerConnection::removeEnginePartToForwardMessagesTo(shared_ptr<EnginePart> e)
+void UDPPeerConnection::removeEnginePartToForwardMessagesTo(sp<EnginePart> e)
 {
 	if (engineParts.contains(e) == true)
 		engineParts.remove(e);
@@ -94,7 +94,7 @@ void UDPPeerConnection::update()
 
 }
 
-void UDPPeerConnection::updateThreadLoop(shared_ptr<UDPPeerConnection>u)
+void UDPPeerConnection::updateThreadLoop(sp<UDPPeerConnection>u)
 {//===============================================================================================
 
 	//threadLogDebug_S("Starting peer thread");
@@ -239,7 +239,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 
 				while (numPacketsReceived > 0)
 				{
-					shared_ptr<UDPpacket>packet = SDLNet_AllocPacket(65535);
+					sp<UDPpacket>packet = SDLNet_AllocPacket(65535);
 					numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet);
 
 					if (numPacketsReceived > 0)
@@ -337,7 +337,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 
 							if (sentPacketQueueSize_S() > 0)
 							{
-								shared_ptr<UDPpacket>q = sentPacketQueueFront_S();
+								sp<UDPpacket>q = sentPacketQueueFront_S();
 								string queuedIDString = string((char*)q->data);
 								queuedIDString = queuedIDString.substr(0, queuedIDString.find(":"));
 								long long queuedID = -1;
@@ -468,17 +468,17 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 }
 
 //===============================================================================================
-shared_ptr<UDPpacket> UDPPeerConnection::makePacket(string s)
+sp<UDPpacket> UDPPeerConnection::makePacket(string s)
 {//===============================================================================================
 
-	shared_ptr<IPaddress> peerAddress = getPeerIPAddress_S();
+	sp<IPaddress> peerAddress = getPeerIPAddress_S();
 	if (peerAddress == nullptr)
 	{
 		threadLogWarn_S("peerAddress was null.");
 		return nullptr;
 	}
 
-	shared_ptr<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
+	sp<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)
@@ -584,7 +584,7 @@ void UDPPeerConnection::_writeQueuedPackets()
 
 		string s = packetMessageQueueFront_S();
 
-		shared_ptr<UDPpacket>packet = makePacket(s);
+		sp<UDPpacket>packet = makePacket(s);
 		if (packet == nullptr)
 		{
 			_writePacketWait += 2000;
@@ -772,7 +772,7 @@ void UDPPeerConnection::setDisconnectedFromPeer_S(string reason)
 
 
 //===============================================================================================
-bool UDPPeerConnection::udpPeerMessageReceived(string s)// shared_ptr<ChannelHandlerContext> ctx, shared_ptr<MessageEvent> e)
+bool UDPPeerConnection::udpPeerMessageReceived(string s)// sp<ChannelHandlerContext> ctx, sp<MessageEvent> e)
 { //===============================================================================================
 
 #ifdef _DEBUG
@@ -862,14 +862,14 @@ void UDPPeerConnection::writeUnreliable_S(string s)
 		s = s + OKNet::endline;
 	}
 
-	shared_ptr<IPaddress> peerAddress = getPeerIPAddress_S();
+	sp<IPaddress> peerAddress = getPeerIPAddress_S();
 	if (peerAddress == nullptr)
 	{
 		threadLogWarn_S("peerAddress was null.");
 		return;
 	}
 
-	shared_ptr<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
+	sp<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)
@@ -945,7 +945,7 @@ void UDPPeerConnection::sendPeerConnectResponse()
 	writeReliable_S(OKNet::Friend_Connect_Response + to_string(getServerConnection()->getUserID_S()) +":"+ OKNet::endline);
 }
 
-void UDPPeerConnection::incomingPeerConnectResponse(string e)//shared_ptr<MessageEvent> e)
+void UDPPeerConnection::incomingPeerConnectResponse(string e)//sp<MessageEvent> e)
 {
 
   
@@ -976,7 +976,7 @@ void UDPPeerConnection::incomingPeerConnectResponse(string e)//shared_ptr<Messag
 }
 
 
-void UDPPeerConnection::incomingFriendDataRequest(string e)//shared_ptr<MessageEvent> e)
+void UDPPeerConnection::incomingFriendDataRequest(string e)//sp<MessageEvent> e)
 { //===============================================================================================
 
   //allowed info depends on type of friend, zip code friends should not get full name, etc.
@@ -987,7 +987,7 @@ void UDPPeerConnection::incomingFriendDataRequest(string e)//shared_ptr<MessageE
 		return;
 	}
 
-	shared_ptr<FriendData> myFriendData = make_shared<FriendData>();
+	sp<FriendData> myFriendData = ms<FriendData>();
 
 	GameSave g = getServerConnection()->getGameSave_S();
 	myFriendData->initWithGameSave(g);
@@ -997,7 +997,7 @@ void UDPPeerConnection::incomingFriendDataRequest(string e)//shared_ptr<MessageE
 	writeReliable_S(OKNet::Friend_Data_Response + s +":"+ OKNet::endline);
 }
 
-void UDPPeerConnection::incomingFriendDataResponse(string e)//shared_ptr<MessageEvent> e)
+void UDPPeerConnection::incomingFriendDataResponse(string e)//sp<MessageEvent> e)
 { //===============================================================================================
 
   
@@ -1573,7 +1573,7 @@ void FriendData::decode(string s)
 //	}
 }
 
-shared_ptr<TCPServerConnection> UDPPeerConnection::getServerConnection()
+sp<TCPServerConnection> UDPPeerConnection::getServerConnection()
 {
 	return &OKNet::tcpServerConnection;
 }

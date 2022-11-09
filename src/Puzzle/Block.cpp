@@ -43,40 +43,40 @@ class GLUtils;
 //string Block::Bomb = "Bomb";
 //string Block::Weight = "Weight";
 //
-//shared_ptr<Sprite> Block::circle = nullptr;
-//shared_ptr<Sprite> Block::square = nullptr;
-//shared_ptr<Sprite> Block::roundedSquareOutline = nullptr;
-//shared_ptr<Sprite> Block::squareGem = nullptr;
-//shared_ptr<Sprite> Block::diamondGem = nullptr;
-//shared_ptr<Sprite> Block::blob = nullptr;
-//shared_ptr<Sprite> Block::virus = nullptr;
-//shared_ptr<Sprite> Block::circleOutline = nullptr;
-//shared_ptr<Sprite> Block::squareOutline = nullptr;
-//shared_ptr<Sprite> Block::counter = nullptr;
-//shared_ptr<Sprite> Block::sparkBall = nullptr;
-//shared_ptr<Sprite> Block::happyBall = nullptr;
-//shared_ptr<Sprite> Block::angryBall = nullptr;
-//shared_ptr<Sprite> Block::pacJar = nullptr;
-//shared_ptr<Sprite> Block::pacBall = nullptr;
-//shared_ptr<Sprite> Block::ballJar = nullptr;
-//shared_ptr<Sprite> Block::exclamationIconBlock = nullptr;
-//shared_ptr<Sprite> Block::heartIconBlock = nullptr;
-//shared_ptr<Sprite> Block::circleIconBlock = nullptr;
-//shared_ptr<Sprite> Block::triangleIconBlock = nullptr;
-//shared_ptr<Sprite> Block::upsideDownTriangleIconBlock = nullptr;
-//shared_ptr<Sprite> Block::diamondIconBlock = nullptr;
-//shared_ptr<Sprite> Block::starIconBlock = nullptr;
-//shared_ptr<Sprite> Block::plusShooterBlock = nullptr;
-//shared_ptr<Sprite> Block::minusShooterBlock = nullptr;
-//shared_ptr<Sprite> Block::bombBlock = nullptr;
-//shared_ptr<Sprite> Block::weightBlock = nullptr;
-//shared_ptr<Sprite> Block::linesBlock = nullptr;
-//shared_ptr<Sprite> Block::bomb = nullptr;
-//shared_ptr<Sprite> Block::weight = nullptr;
+//sp<Sprite> Block::circle = nullptr;
+//sp<Sprite> Block::square = nullptr;
+//sp<Sprite> Block::roundedSquareOutline = nullptr;
+//sp<Sprite> Block::squareGem = nullptr;
+//sp<Sprite> Block::diamondGem = nullptr;
+//sp<Sprite> Block::blob = nullptr;
+//sp<Sprite> Block::virus = nullptr;
+//sp<Sprite> Block::circleOutline = nullptr;
+//sp<Sprite> Block::squareOutline = nullptr;
+//sp<Sprite> Block::counter = nullptr;
+//sp<Sprite> Block::sparkBall = nullptr;
+//sp<Sprite> Block::happyBall = nullptr;
+//sp<Sprite> Block::angryBall = nullptr;
+//sp<Sprite> Block::pacJar = nullptr;
+//sp<Sprite> Block::pacBall = nullptr;
+//sp<Sprite> Block::ballJar = nullptr;
+//sp<Sprite> Block::exclamationIconBlock = nullptr;
+//sp<Sprite> Block::heartIconBlock = nullptr;
+//sp<Sprite> Block::circleIconBlock = nullptr;
+//sp<Sprite> Block::triangleIconBlock = nullptr;
+//sp<Sprite> Block::upsideDownTriangleIconBlock = nullptr;
+//sp<Sprite> Block::diamondIconBlock = nullptr;
+//sp<Sprite> Block::starIconBlock = nullptr;
+//sp<Sprite> Block::plusShooterBlock = nullptr;
+//sp<Sprite> Block::minusShooterBlock = nullptr;
+//sp<Sprite> Block::bombBlock = nullptr;
+//sp<Sprite> Block::weightBlock = nullptr;
+//sp<Sprite> Block::linesBlock = nullptr;
+//sp<Sprite> Block::bomb = nullptr;
+//sp<Sprite> Block::weight = nullptr;
 
-shared_ptr<BlockType> BlockType::emptyBlockType(make_shared<BlockType>());
-shared_ptr<BlockType> BlockType::squareBlockType(make_shared<BlockType>("square", "Square", "", nullptr, OKColor::gray, 0, 0));
-shared_ptr<BlockType> BlockType::shotPieceBlockType(make_shared<BlockType>("shotPiece", "Square", "", nullptr, OKColor::gray, 0, 0));
+sp<BlockType> BlockType::emptyBlockType(ms<BlockType>());
+sp<BlockType> BlockType::squareBlockType(ms<BlockType>("square", "Square", "", nullptr, OKColor::gray, 0, 0));
+sp<BlockType> BlockType::shotPieceBlockType(ms<BlockType>("shotPiece", "Square", "", nullptr, OKColor::gray, 0, 0));
 //=========================================================================================================================
 bool BlockType::operator==(const BlockType& rhs) const
 {//=========================================================================================================================
@@ -144,7 +144,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	importExport_colors.clear();
 	for (int i = 0; i < colors.size(); i++)
 	{
-		shared_ptr<OKColor>bp = colors.get(i);
+		sp<OKColor>bp = colors.get(i);
 		if (bp->name != "" && bp->name != "empty")
 		{
 			OKColor b;//keep this, custom copy constructor which doesnt copy uuid
@@ -166,7 +166,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	for (int i = 0; i < importExport_colors.size(); i++)
 	{
 		OKColor b = importExport_colors.get(i);
-		shared_ptr<OKColor>bp = OKColor::getColorByName(b.name);
+		sp<OKColor>bp = OKColor::getColorByName(b.name);
 		if (bp != nullptr && bp->name != "" && bp->name != "empty")
 		{
 			colors.add(bp);
@@ -215,13 +215,13 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		ArrayList<PieceType> importExport_makePieceTypeWhenCleared;
+		vector<PieceType> importExport_makePieceTypeWhenCleared;
 		ar & BOOST_SERIALIZATION_NVP(importExport_makePieceTypeWhenCleared);
 		makePieceTypeWhenCleared_DEPRECATED.clear();
 		for (int i = 0; i < importExport_makePieceTypeWhenCleared.size(); i++)
 		{
 			PieceType b = importExport_makePieceTypeWhenCleared.get(i);
-			shared_ptr<PieceType> bp(make_shared<PieceType>());
+			sp<PieceType> bp(ms<PieceType>());
 			*bp = b;
 			makePieceTypeWhenCleared_DEPRECATED.add(bp);
 		}
@@ -243,14 +243,14 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		ArrayList<BlockType> importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
+		vector<BlockType> importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 		ar & BOOST_SERIALIZATION_NVP(importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType);
 		ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.clear();
 		{
 			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.size(); i++)
 			{
 				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.get(i);
-				shared_ptr<BlockType> bp(make_shared<BlockType>());
+				sp<BlockType> bp(ms<BlockType>());
 				*bp = b;
 				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.add(bp);
 			}
@@ -270,7 +270,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	{
 		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
-			shared_ptr<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+			sp<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
 			TurnFromBlockTypeToType b;
 			b = *bp;
 			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(b);
@@ -282,7 +282,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
 			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
-			shared_ptr<TurnFromBlockTypeToType>bp = make_shared<TurnFromBlockTypeToType>();
+			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>();
 			*bp = b;
 			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(bp);
 		}
@@ -309,7 +309,7 @@ Block::Block()
 }
 
 //=========================================================================================================================
-Block::Block(shared_ptr<GameLogic> game, shared_ptr<Grid> grid, shared_ptr<Piece> piece, shared_ptr<BlockType> blockType)
+Block::Block(sp<GameLogic> game, sp<Grid> grid, sp<Piece> piece, sp<BlockType> blockType)
 {//=========================================================================================================================
 
 	this->game = game;
@@ -522,14 +522,14 @@ void Block::update()
 		{
 			if (yGrid < grid->getHeight() - 1)
 			{
-				shared_ptr<Block> a = grid->get(xGrid, yGrid + 1);
+				sp<Block> a = grid->get(xGrid, yGrid + 1);
 				if (a != nullptr && a->getColor() != nullptr && a->blockType->removeAllBlocksOfColorOnFieldBlockIsSetOn==false && a->blockType->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor == false)//dont remove other diamonds
 				{
 					for (int y = 0; y < grid->getHeight(); y++)
 					{
 						for (int x = 0; x < grid->getWidth(); x++)
 						{
-							shared_ptr<Block> b = grid->get(x, y);
+							sp<Block> b = grid->get(x, y);
 							if (b != nullptr && b != this->shared_from_this())
 							{
 								if (b->getColor() == a->getColor())
@@ -560,16 +560,16 @@ void Block::update()
 		{
 			if (yGrid < grid->getHeight() - 1)
 			{
-				shared_ptr<Block> a = grid->get(xGrid, yGrid + 1);
+				sp<Block> a = grid->get(xGrid, yGrid + 1);
 				if (a != nullptr && a->getColor() != nullptr && a->getColor() != this->getColor() && a->blockType->removeAllBlocksOfColorOnFieldBlockIsSetOn == false && a->blockType->changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor == false)//dont remove other diamonds
 				{
-					shared_ptr<OKColor>colorToReplace = a->getColor();
+					sp<OKColor>colorToReplace = a->getColor();
 
 					for (int y = 0; y < grid->getHeight(); y++)
 					{
 						for (int x = 0; x < grid->getWidth(); x++)
 						{
-							shared_ptr<Block> b = grid->get(x, y);
+							sp<Block> b = grid->get(x, y);
 							if (b != nullptr && b != this->shared_from_this())
 							{
 								if (b->getColor() == colorToReplace)
@@ -639,7 +639,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByColor.size(); i++)
 			{
-				shared_ptr<Block> c = connectedBlocksByColor.get(i);
+				sp<Block> c = connectedBlocksByColor.get(i);
 				if (c->xGrid == xGrid && c->yGrid == yGrid - 1)
 				{
 					connectedUp = true;
@@ -683,7 +683,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 			{
-				shared_ptr<Block> c = connectedBlocksByPiece.get(i);
+				sp<Block> c = connectedBlocksByPiece.get(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1)
 				{
@@ -764,7 +764,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 			{
-				shared_ptr<Block> c = connectedBlocksByPiece.get(i);
+				sp<Block> c = connectedBlocksByPiece.get(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1 && c->color == color && color != nullptr)
 				{
@@ -949,7 +949,7 @@ void Block::update()
 		//if (anim == nullptr)anim = blockType->sprite->getFirstAnimation();
 		if (animationName.length() > 0)
 		{
-			shared_ptr<SpriteAnimationSequence> namedAnimation = blockType->sprite->getAnimationByName(animationName);
+			sp<SpriteAnimationSequence> namedAnimation = blockType->sprite->getAnimationByName(animationName);
 			if (namedAnimation != nullptr)anim = namedAnimation;
 		}
 		else anim = blockType->sprite->getFirstAnimation();
@@ -976,7 +976,7 @@ void Block::breakConnectionsInPiece()
 	for (int i = 0; i < connectedBlocksByColor.size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		shared_ptr<Block> connectedBlock = connectedBlocksByColor.get(i);
+		sp<Block> connectedBlock = connectedBlocksByColor.get(i);
 		connectedBlock->connectedBlocksByColor.remove(this->shared_from_this());
 	}
 	connectedBlocksByColor.clear();
@@ -984,7 +984,7 @@ void Block::breakConnectionsInPiece()
 	for (int i = 0; i < connectedBlocksByPiece.size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		shared_ptr<Block> connectedBlock = connectedBlocksByPiece.get(i);
+		sp<Block> connectedBlock = connectedBlocksByPiece.get(i);
 		connectedBlock->connectedBlocksByPiece.remove(this->shared_from_this());
 	}
 	connectedBlocksByPiece.clear();
@@ -994,7 +994,7 @@ void Block::breakConnectionsInPiece()
 		//these should never happen due to above
 		for (int i = 0; i < (int)piece->blocks.size(); i++)
 		{
-			shared_ptr<Block> c = piece->blocks.get(i);
+			sp<Block> c = piece->blocks.get(i);
 			while (c->connectedBlocksByColor.contains(this->shared_from_this()))
 			{
 				log->error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
@@ -1193,7 +1193,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		)
 	)
 	{
-		shared_ptr<OKColor>c = nullptr;
+		sp<OKColor>c = nullptr;
 		
 		if (color != nullptr)c = color;
 				
@@ -1413,8 +1413,8 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float lowestY = (float)piece->getLowestOffsetY();
 		float thisY = (float)yInPiece - lowestY;
 
-		shared_ptr<Sprite> sprite = getOKGame()->getSpriteFromName(piece->pieceType->spriteName);
-		shared_ptr<OKTexture> texture = sprite->texture;
+		sp<Sprite> sprite = getOKGame()->getSpriteFromName(piece->pieceType->spriteName);
+		sp<OKTexture> texture = sprite->texture;
 
 		float x0InImage = (thisX / blocksWidth) + 1.0f/ sprite->getImageWidth();
 		float x1InImage = ((thisX + 1) / blocksWidth) + 1.0f / sprite->getImageWidth();
@@ -1425,11 +1425,11 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float spriteImageHeight = (float)sprite->getImageHeight();
 
 		float imageToTextureRatioX = (spriteImageWidth / (float)texture->getTextureWidth());
-		float tx0 = x0shared_ptr<InImage> imageToTextureRatioX;
-		float tx1 = x1shared_ptr<InImage> imageToTextureRatioX;
+		float tx0 = x0sp<InImage> imageToTextureRatioX;
+		float tx1 = x1sp<InImage> imageToTextureRatioX;
 		float imageToTextureRatioY = (spriteImageHeight / (float)texture->getTextureHeight());
-		float ty0 = y0shared_ptr<InImage> imageToTextureRatioY;
-		float ty1 = y1shared_ptr<InImage> imageToTextureRatioY;
+		float ty0 = y0sp<InImage> imageToTextureRatioY;
+		float ty1 = y1sp<InImage> imageToTextureRatioY;
 
 		//log->info(""+tx0+" "+tx1+" "+ty0+" "+ty1);
 
@@ -1469,7 +1469,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 	{
 
 		GLUtils::drawFilledRectXYWH(screenX, screenY, w, h, r, g, b, a);
-		//shared_ptr<Sprite> s = getOKGame()->getSpriteFromName("Square");
+		//sp<Sprite> s = getOKGame()->getSpriteFromName("Square");
 		//s->drawFrame(0, screenX, screenX + w, screenY, screenY + h, r, g, b, a, GLUtils::FILTER_LINEAR);
 		
 	}
@@ -1572,7 +1572,7 @@ void Block::renderOutlines(float screenX, float screenY, float s)
 }
 
 //=========================================================================================================================
-void Block::setColor(shared_ptr<OKColor>color)
+void Block::setColor(sp<OKColor>color)
 {//=========================================================================================================================
 	this->color = color;
 }
@@ -1789,31 +1789,31 @@ int Block::blockH()
 }
 
 //=========================================================================================================================
-shared_ptr<GameType> Block::getSettings()
+sp<GameType> Block::getSettings()
 {//=========================================================================================================================
 	return getGameLogic()->currentGameType;
 }
 
 //=========================================================================================================================
-shared_ptr<GameLogic> Block::getGameLogic()
+sp<GameLogic> Block::getGameLogic()
 {//=========================================================================================================================
 	return game;
 }
 
 //=========================================================================================================================
-shared_ptr<OKGame> Block::getOKGame()
+sp<OKGame> Block::getOKGame()
 {//=========================================================================================================================
 	return getGameLogic()->getOKGame();
 }
 
 //=========================================================================================================================
-shared_ptr<OKColor> Block::getColor()
+sp<OKColor> Block::getColor()
 {//=========================================================================================================================
 	return color;
 }
 
 //=========================================================================================================================
-shared_ptr<OKColor> Block::specialColor()
+sp<OKColor> Block::specialColor()
 {//=========================================================================================================================
 
 

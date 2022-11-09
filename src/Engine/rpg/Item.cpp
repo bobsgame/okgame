@@ -14,7 +14,7 @@
 Logger Item::log = Logger("Item");
 
 
-Item::Item(shared_ptr<Engine> g, const string& spriteAssetName)
+Item::Item(sp<Engine> g, const string& spriteAssetName)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -23,7 +23,7 @@ Item::Item(shared_ptr<Engine> g, const string& spriteAssetName)
 	getEventManager()->itemList.push_back(shared_from_this());
 }
 
-Item::Item(shared_ptr<Engine> g, int spriteAssetID)
+Item::Item(sp<Engine> g, int spriteAssetID)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -32,7 +32,7 @@ Item::Item(shared_ptr<Engine> g, int spriteAssetID)
 	getEventManager()->itemList.push_back(shared_from_this());
 }
 
-Item::Item(shared_ptr<Engine> g, shared_ptr<Sprite> sprite)
+Item::Item(sp<Engine> g, sp<Sprite> sprite)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -49,7 +49,7 @@ void Item::sendServerRequest()
 { //=========================================================================================================================
 	if (getInitialized_S() == false)
 	{
-		shared_ptr<Sprite> sprite = nullptr;
+		sp<Sprite> sprite = nullptr;
 
 		if (spriteAssetName != "")
 		{

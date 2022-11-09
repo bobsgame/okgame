@@ -22,13 +22,13 @@ public:
 	static Logger log;
 
 
-	ArrayList<shared_ptr<Notification>> notificationList;// = make_shared<ArrayList><shared_ptr<Notification>>();
+	vector<sp<Notification>> notificationList;// = ms<ArrayList><sp<Notification>>();
 
-	static shared_ptr<OKTexture> loadingBarTexture;
-	static shared_ptr<OKTexture> loadingBarBackgroundTexture;
+	static sp<OKTexture> loadingBarTexture;
+	static sp<OKTexture> loadingBarBackgroundTexture;
 
 
-	NotificationManager(shared_ptr<BGClientEngine> g);
+	NotificationManager(sp<BGClientEngine> g);
 
 
 	void init();
@@ -40,9 +40,9 @@ public:
 	void render(int layer);
 
 
-	void add(shared_ptr<Notification> n);
+	void add(sp<Notification> n);
 
 
-	void remove(shared_ptr<Notification> n);
+	void remove(sp<Notification> n);
 };
 

@@ -186,11 +186,11 @@ private:
 
 	//these are ASSET lists only populated with objectDatas to convert into JSON and fill the regular Map lists at runtime with.
 	
-	ArrayList<shared_ptr<MapStateData>> stateDataList;// = make_shared<ArrayList><shared_ptr<MapStateData>>();
+	vector<sp<MapStateData>> stateDataList;// = ms<ArrayList><sp<MapStateData>>();
 	
-	ArrayList<shared_ptr<EventData>> eventDataList;// = make_shared<ArrayList><shared_ptr<EventData>>();
+	vector<sp<EventData>> eventDataList;// = ms<ArrayList><sp<EventData>>();
 	
-	ArrayList<shared_ptr<DoorData>> doorDataList;// = make_shared<ArrayList><shared_ptr<DoorData>>();
+	vector<sp<DoorData>> doorDataList;// = ms<ArrayList><sp<DoorData>>();
 
 
 public:
@@ -200,8 +200,8 @@ public:
 	MapData(int id, const string& name, int widthTiles1X, int heightTiles1X);
 
 
-	//static shared_ptr<MapData> fromBase64ZippedJSON(const string& b64);
-	//static shared_ptr<MapData> fromJSON(const string& json);
+	//static sp<MapData> fromBase64ZippedJSON(const string& b64);
+	//static sp<MapData> fromJSON(const string& json);
 
 	string& initFromString(string& t);
 
@@ -240,9 +240,9 @@ public:
 	int getHeightPixelsHQ();
 
 
-	ArrayList<shared_ptr<MapStateData>>* getStateDataList();
-	ArrayList<shared_ptr<EventData>>* getEventDataList();
-	ArrayList<shared_ptr<DoorData>>* getDoorDataList();
+	sp<vector<sp<MapStateData>>> getStateDataList();
+	sp<vector<sp<EventData>>> getEventDataList();
+	sp<vector<sp<DoorData>>> getDoorDataList();
 
 
 	void setGroundLayerMD5(const string& s);

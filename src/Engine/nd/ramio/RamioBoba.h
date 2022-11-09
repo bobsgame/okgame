@@ -20,7 +20,7 @@ public:
 	static Logger log;
 
 
-	RamioOKa(shared_ptr<Engine> g);
+	RamioOKa(sp<Engine> g);
 
 
 	bool dead = false;
@@ -32,9 +32,9 @@ public:
 	virtual void update() override;
 
 
-	bool checkStomp(shared_ptr<RamioGuy> guy);
+	bool checkStomp(sp<RamioGuy> guy);
 
 
-	bool checkRunningInto(shared_ptr<RamioGuy> guy);
+	bool checkRunningInto(sp<RamioGuy> guy);
 };
 

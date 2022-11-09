@@ -14,99 +14,99 @@ Logger OKColor::log = Logger("Color");
 bool OKColor::colorsInitialized = false;
 
 
-ArrayList<shared_ptr<OKColor>> OKColor::colors;
+vector<sp<OKColor>> OKColor::colors;
 
-shared_ptr<OKColor> OKColor::clear = make_shared<OKColor>(0, 0, 0, 0);
-shared_ptr<OKColor> OKColor::transparent = clear;
-shared_ptr<OKColor> OKColor::black = make_shared<OKColor>(0, 0, 0);
-shared_ptr<OKColor> OKColor::darkerGray = make_shared<OKColor>(0.2f * 255, 0.2f * 255, 0.2f * 255);
-shared_ptr<OKColor> OKColor::darkGray = make_shared<OKColor>(0.35f * 255, 0.35f * 255, 0.35f * 255);
-shared_ptr<OKColor> OKColor::gray = make_shared<OKColor>(0.5f * 255, 0.5f * 255, 0.5f * 255);
-shared_ptr<OKColor> OKColor::lightGray = make_shared<OKColor>(0.65f * 255, 0.65f * 255, 0.65f * 255);
-shared_ptr<OKColor> OKColor::lighterGray = make_shared<OKColor>(0.8f * 255, 0.8f * 255, 0.8f * 255);
-shared_ptr<OKColor> OKColor::white = make_shared<OKColor>(1.0f*255, 1.0f * 255, 1.0f * 255);
+sp<OKColor> OKColor::clear = ms<OKColor>(0, 0, 0, 0);
+sp<OKColor> OKColor::transparent = clear;
+sp<OKColor> OKColor::black = ms<OKColor>(0, 0, 0);
+sp<OKColor> OKColor::darkerGray = ms<OKColor>(0.2f * 255, 0.2f * 255, 0.2f * 255);
+sp<OKColor> OKColor::darkGray = ms<OKColor>(0.35f * 255, 0.35f * 255, 0.35f * 255);
+sp<OKColor> OKColor::gray = ms<OKColor>(0.5f * 255, 0.5f * 255, 0.5f * 255);
+sp<OKColor> OKColor::lightGray = ms<OKColor>(0.65f * 255, 0.65f * 255, 0.65f * 255);
+sp<OKColor> OKColor::lighterGray = ms<OKColor>(0.8f * 255, 0.8f * 255, 0.8f * 255);
+sp<OKColor> OKColor::white = ms<OKColor>(1.0f*255, 1.0f * 255, 1.0f * 255);
 
-shared_ptr<OKColor> OKColor::cyan = make_shared<OKColor>(0, 255, 255);
-shared_ptr<OKColor> OKColor::lightCyan = make_shared<OKColor>(0, 255, 255); //cyan->lighter();
-shared_ptr<OKColor> OKColor::lighterCyan = make_shared<OKColor>(0, 255, 255); //cyan->lighter();
-shared_ptr<OKColor> OKColor::darkCyan = make_shared<OKColor>(0, 255, 255); //cyan->darker();
-shared_ptr<OKColor> OKColor::darkerCyan = make_shared<OKColor>(0, 255, 255); //cyan->darker()->darker();
+sp<OKColor> OKColor::cyan = ms<OKColor>(0, 255, 255);
+sp<OKColor> OKColor::lightCyan = ms<OKColor>(0, 255, 255); //cyan->lighter();
+sp<OKColor> OKColor::lighterCyan = ms<OKColor>(0, 255, 255); //cyan->lighter();
+sp<OKColor> OKColor::darkCyan = ms<OKColor>(0, 255, 255); //cyan->darker();
+sp<OKColor> OKColor::darkerCyan = ms<OKColor>(0, 255, 255); //cyan->darker()->darker();
 
-shared_ptr<OKColor> OKColor::magenta = make_shared<OKColor>(255, 0, 127);
-shared_ptr<OKColor> OKColor::lightMagenta = make_shared<OKColor>(255, 0, 127); //magenta->lighter();
-shared_ptr<OKColor> OKColor::lighterMagenta = make_shared<OKColor>(255, 0, 127); //magenta->lighter();
-shared_ptr<OKColor> OKColor::darkMagenta = make_shared<OKColor>(255, 0, 127); //magenta->darker();
-shared_ptr<OKColor> OKColor::darkerMagenta = make_shared<OKColor>(255, 0, 127); //magenta->darker()->darker();
+sp<OKColor> OKColor::magenta = ms<OKColor>(255, 0, 127);
+sp<OKColor> OKColor::lightMagenta = ms<OKColor>(255, 0, 127); //magenta->lighter();
+sp<OKColor> OKColor::lighterMagenta = ms<OKColor>(255, 0, 127); //magenta->lighter();
+sp<OKColor> OKColor::darkMagenta = ms<OKColor>(255, 0, 127); //magenta->darker();
+sp<OKColor> OKColor::darkerMagenta = ms<OKColor>(255, 0, 127); //magenta->darker()->darker();
 
-shared_ptr<OKColor> OKColor::yellow = make_shared<OKColor>(255, 255, 0);
-shared_ptr<OKColor> OKColor::lightYellow = make_shared<OKColor>(255, 255, 0); //yellow->lighter();
-shared_ptr<OKColor> OKColor::lighterYellow = make_shared<OKColor>(255, 255, 0); //yellow->lighter();
-shared_ptr<OKColor> OKColor::darkYellow = make_shared<OKColor>(255, 255, 0); //yellow->darker();
-shared_ptr<OKColor> OKColor::darkerYellow = make_shared<OKColor>(255, 255, 0); //yellow->darker()->darker();
+sp<OKColor> OKColor::yellow = ms<OKColor>(255, 255, 0);
+sp<OKColor> OKColor::lightYellow = ms<OKColor>(255, 255, 0); //yellow->lighter();
+sp<OKColor> OKColor::lighterYellow = ms<OKColor>(255, 255, 0); //yellow->lighter();
+sp<OKColor> OKColor::darkYellow = ms<OKColor>(255, 255, 0); //yellow->darker();
+sp<OKColor> OKColor::darkerYellow = ms<OKColor>(255, 255, 0); //yellow->darker()->darker();
 
-shared_ptr<OKColor> OKColor::orange = make_shared<OKColor>(255, 140, 0);
-shared_ptr<OKColor> OKColor::lightOrange = make_shared<OKColor>(255, 140, 0); //orange->lighter();
-shared_ptr<OKColor> OKColor::lighterOrange = make_shared<OKColor>(255, 140, 0); //orange->lighter();
-shared_ptr<OKColor> OKColor::darkOrange = make_shared<OKColor>(255, 140, 0); //orange->darker();
-shared_ptr<OKColor> OKColor::darkerOrange = make_shared<OKColor>(255, 140, 0); //orange->darker()->darker();
+sp<OKColor> OKColor::orange = ms<OKColor>(255, 140, 0);
+sp<OKColor> OKColor::lightOrange = ms<OKColor>(255, 140, 0); //orange->lighter();
+sp<OKColor> OKColor::lighterOrange = ms<OKColor>(255, 140, 0); //orange->lighter();
+sp<OKColor> OKColor::darkOrange = ms<OKColor>(255, 140, 0); //orange->darker();
+sp<OKColor> OKColor::darkerOrange = ms<OKColor>(255, 140, 0); //orange->darker()->darker();
 
-shared_ptr<OKColor> OKColor::red = make_shared<OKColor>(255, 0, 0);
-shared_ptr<OKColor> OKColor::lightRed = make_shared<OKColor>(255, 0, 0); //red->lighter();
-shared_ptr<OKColor> OKColor::lighterRed = make_shared<OKColor>(255, 0, 0); //red->lighter();
-shared_ptr<OKColor> OKColor::darkRed = make_shared<OKColor>(255, 0, 0); //red->darker();
-shared_ptr<OKColor> OKColor::darkerRed = make_shared<OKColor>(255, 0, 0); //red->darker()->darker();
+sp<OKColor> OKColor::red = ms<OKColor>(255, 0, 0);
+sp<OKColor> OKColor::lightRed = ms<OKColor>(255, 0, 0); //red->lighter();
+sp<OKColor> OKColor::lighterRed = ms<OKColor>(255, 0, 0); //red->lighter();
+sp<OKColor> OKColor::darkRed = ms<OKColor>(255, 0, 0); //red->darker();
+sp<OKColor> OKColor::darkerRed = ms<OKColor>(255, 0, 0); //red->darker()->darker();
 
-shared_ptr<OKColor> OKColor::pink = make_shared<OKColor>(255, 0, 255);
-shared_ptr<OKColor> OKColor::lightPink = make_shared<OKColor>(255, 0, 255); //pink->lighter();
-shared_ptr<OKColor> OKColor::lighterPink = make_shared<OKColor>(255, 0, 255); //pink->lighter();
-shared_ptr<OKColor> OKColor::darkPink = make_shared<OKColor>(255, 0, 255); //pink->darker();
-shared_ptr<OKColor> OKColor::darkerPink = make_shared<OKColor>(255, 0, 255); //pink->darker()->darker();
+sp<OKColor> OKColor::pink = ms<OKColor>(255, 0, 255);
+sp<OKColor> OKColor::lightPink = ms<OKColor>(255, 0, 255); //pink->lighter();
+sp<OKColor> OKColor::lighterPink = ms<OKColor>(255, 0, 255); //pink->lighter();
+sp<OKColor> OKColor::darkPink = ms<OKColor>(255, 0, 255); //pink->darker();
+sp<OKColor> OKColor::darkerPink = ms<OKColor>(255, 0, 255); //pink->darker()->darker();
 
-shared_ptr<OKColor> OKColor::purple = make_shared<OKColor>(127, 0, 255);
-shared_ptr<OKColor> OKColor::lightPurple = make_shared<OKColor>(127, 0, 255); //purple->lighter();
-shared_ptr<OKColor> OKColor::lighterPurple = make_shared<OKColor>(127, 0, 255); //purple->lighter();
-shared_ptr<OKColor> OKColor::darkPurple = make_shared<OKColor>(127, 0, 255); //purple->darker();
-shared_ptr<OKColor> OKColor::darkerPurple = make_shared<OKColor>(127, 0, 255); //purple->darker()->darker();
-
-
-shared_ptr<OKColor> OKColor::blue = make_shared<OKColor>(0, 0, 255);
-shared_ptr<OKColor> OKColor::lighterBlue = make_shared<OKColor>(0, 0, 255); //blue->lighter();
-shared_ptr<OKColor> OKColor::lightBlue = make_shared<OKColor>(0, 0, 255); //blue->lighter();
-shared_ptr<OKColor> OKColor::darkBlue = make_shared<OKColor>(0, 0, 255); //blue->darker();
-shared_ptr<OKColor> OKColor::darkerBlue = make_shared<OKColor>(0, 0, 255); //blue->darker()->darker();
-
-shared_ptr<OKColor> OKColor::green = make_shared<OKColor>(0, 255, 0);
-shared_ptr<OKColor> OKColor::lighterGreen = make_shared<OKColor>(0, 255, 0); //green->lighter()->lighter();
-shared_ptr<OKColor> OKColor::lightGreen = make_shared<OKColor>(0, 255, 0); //green->lighter();
-shared_ptr<OKColor> OKColor::darkGreen = make_shared<OKColor>(0, 255, 0); //green->darker();
-shared_ptr<OKColor> OKColor::darkerGreen = make_shared<OKColor>(0, 255, 0); //green->darker()->darker();
-
-shared_ptr<OKColor> OKColor::aqua = make_shared<OKColor>(0, 150, 255);
-shared_ptr<OKColor> OKColor::lighterAqua = make_shared<OKColor>(0, 150, 255); //aqua->lighter()->lighter();
-shared_ptr<OKColor> OKColor::lightAqua = make_shared<OKColor>(0, 150, 255); //aqua->lighter();
-shared_ptr<OKColor> OKColor::darkAqua = make_shared<OKColor>(0, 150, 255); //aqua->darker();
-shared_ptr<OKColor> OKColor::darkerAqua = make_shared<OKColor>(0, 150, 255); //aqua->darker()->darker();
-
-shared_ptr<OKColor> OKColor::turquoise = make_shared<OKColor>(0, 255, 150);
-shared_ptr<OKColor> OKColor::lighterTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->lighter()->lighter();
-shared_ptr<OKColor> OKColor::lightTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->lighter();
-shared_ptr<OKColor> OKColor::darkTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->darker();
-shared_ptr<OKColor> OKColor::darkerTurquoise = make_shared<OKColor>(0, 255, 150); //turquoise->darker()->darker();
-
-shared_ptr<OKColor> OKColor::olive = make_shared<OKColor>(64, 72, 0);
-shared_ptr<OKColor> OKColor::darkerOlive = make_shared<OKColor>(64, 72, 0);
-shared_ptr<OKColor> OKColor::darkOlive = make_shared<OKColor>(64, 72, 0);
-shared_ptr<OKColor> OKColor::lighterOlive = make_shared<OKColor>(64, 72, 0);
-shared_ptr<OKColor> OKColor::lightOlive = make_shared<OKColor>(64, 72, 0);
-
-shared_ptr<OKColor> OKColor::burgandy = make_shared<OKColor>(220, 70, 0);
-shared_ptr<OKColor> OKColor::darkerBurgandy = make_shared<OKColor>(220, 70, 0);
-shared_ptr<OKColor> OKColor::darkBurgandy = make_shared<OKColor>(220, 70, 0);
-shared_ptr<OKColor> OKColor::lighterBurgandy = make_shared<OKColor>(220, 70, 0);
-shared_ptr<OKColor> OKColor::lightBurgandy = make_shared<OKColor>(220, 70, 0);
+sp<OKColor> OKColor::purple = ms<OKColor>(127, 0, 255);
+sp<OKColor> OKColor::lightPurple = ms<OKColor>(127, 0, 255); //purple->lighter();
+sp<OKColor> OKColor::lighterPurple = ms<OKColor>(127, 0, 255); //purple->lighter();
+sp<OKColor> OKColor::darkPurple = ms<OKColor>(127, 0, 255); //purple->darker();
+sp<OKColor> OKColor::darkerPurple = ms<OKColor>(127, 0, 255); //purple->darker()->darker();
 
 
-shared_ptr<OKColor> OKColor::wine = make_shared<OKColor>(200, 80, 0);
+sp<OKColor> OKColor::blue = ms<OKColor>(0, 0, 255);
+sp<OKColor> OKColor::lighterBlue = ms<OKColor>(0, 0, 255); //blue->lighter();
+sp<OKColor> OKColor::lightBlue = ms<OKColor>(0, 0, 255); //blue->lighter();
+sp<OKColor> OKColor::darkBlue = ms<OKColor>(0, 0, 255); //blue->darker();
+sp<OKColor> OKColor::darkerBlue = ms<OKColor>(0, 0, 255); //blue->darker()->darker();
+
+sp<OKColor> OKColor::green = ms<OKColor>(0, 255, 0);
+sp<OKColor> OKColor::lighterGreen = ms<OKColor>(0, 255, 0); //green->lighter()->lighter();
+sp<OKColor> OKColor::lightGreen = ms<OKColor>(0, 255, 0); //green->lighter();
+sp<OKColor> OKColor::darkGreen = ms<OKColor>(0, 255, 0); //green->darker();
+sp<OKColor> OKColor::darkerGreen = ms<OKColor>(0, 255, 0); //green->darker()->darker();
+
+sp<OKColor> OKColor::aqua = ms<OKColor>(0, 150, 255);
+sp<OKColor> OKColor::lighterAqua = ms<OKColor>(0, 150, 255); //aqua->lighter()->lighter();
+sp<OKColor> OKColor::lightAqua = ms<OKColor>(0, 150, 255); //aqua->lighter();
+sp<OKColor> OKColor::darkAqua = ms<OKColor>(0, 150, 255); //aqua->darker();
+sp<OKColor> OKColor::darkerAqua = ms<OKColor>(0, 150, 255); //aqua->darker()->darker();
+
+sp<OKColor> OKColor::turquoise = ms<OKColor>(0, 255, 150);
+sp<OKColor> OKColor::lighterTurquoise = ms<OKColor>(0, 255, 150); //turquoise->lighter()->lighter();
+sp<OKColor> OKColor::lightTurquoise = ms<OKColor>(0, 255, 150); //turquoise->lighter();
+sp<OKColor> OKColor::darkTurquoise = ms<OKColor>(0, 255, 150); //turquoise->darker();
+sp<OKColor> OKColor::darkerTurquoise = ms<OKColor>(0, 255, 150); //turquoise->darker()->darker();
+
+sp<OKColor> OKColor::olive = ms<OKColor>(64, 72, 0);
+sp<OKColor> OKColor::darkerOlive = ms<OKColor>(64, 72, 0);
+sp<OKColor> OKColor::darkOlive = ms<OKColor>(64, 72, 0);
+sp<OKColor> OKColor::lighterOlive = ms<OKColor>(64, 72, 0);
+sp<OKColor> OKColor::lightOlive = ms<OKColor>(64, 72, 0);
+
+sp<OKColor> OKColor::burgandy = ms<OKColor>(220, 70, 0);
+sp<OKColor> OKColor::darkerBurgandy = ms<OKColor>(220, 70, 0);
+sp<OKColor> OKColor::darkBurgandy = ms<OKColor>(220, 70, 0);
+sp<OKColor> OKColor::lighterBurgandy = ms<OKColor>(220, 70, 0);
+sp<OKColor> OKColor::lightBurgandy = ms<OKColor>(220, 70, 0);
+
+
+sp<OKColor> OKColor::wine = ms<OKColor>(200, 80, 0);
 
 
 
@@ -698,13 +698,13 @@ void OKColor::initPresetColors()
 
 
 //==========================================================================================================================
-shared_ptr<OKColor> OKColor::getColorByName(string name)
+sp<OKColor> OKColor::getColorByName(string name)
 {//==========================================================================================================================
 
 	if (name == "" || name == "empty")return nullptr;
 	for(int i=0;i<colors.size();i++)
 	{
-		shared_ptr<OKColor>c = colors.get(i);
+		sp<OKColor>c = colors.get(i);
 
 		if (c->name == name)return c;
 
@@ -725,7 +725,7 @@ OKColor::OKColor()
 
 }
 ////=========================================================================================================================
-//OKColor::OKColor(shared_ptr<OKColor> c)
+//OKColor::OKColor(sp<OKColor> c)
 //{//=========================================================================================================================
 //	if (c != nullptr)
 //	{
@@ -1161,19 +1161,19 @@ void OKColor::lighter(float scale)
 }
 
 /*
-void Color::multiply(shared_ptr<Color>c)
+void Color::multiply(sp<Color>c)
 {
-   return make_shared<Color>(rf() * c->rf(), gf() * c->gf(), bf() * c->bf(), af() * c->af());
+   return ms<Color>(rf() * c->rf(), gf() * c->gf(), bf() * c->bf(), af() * c->af());
 }
 
-void Color::addToCopy(shared_ptr<Color>c)
+void Color::addToCopy(sp<Color>c)
 {
-   return make_shared<Color>(rf() + c->rf(), gf() + c->gf(), bf() + c->bf(), af() + c->af());
+   return ms<Color>(rf() + c->rf(), gf() + c->gf(), bf() + c->bf(), af() + c->af());
 }
 
 void Color::scaleCopy(float value)
 {
-   return make_shared<Color>(rf() * value, gf() * value, bf() * value, af() * value);
+   return ms<Color>(rf() * value, gf() * value, bf() * value, af() * value);
 }
 */
 

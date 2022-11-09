@@ -17,7 +17,7 @@ Logger LogoState::log = Logger("LogoState");
 LogoState::LogoState()
 { //=========================================================================================================================
 
-	//loginScreen = make_shared<LoginMenuPanel>((shared_ptr<Engine>)this);
+	//loginScreen = ms<LoginMenuPanel>((sp<Engine>)this);
 	//
 	//   loginScreenGUI = new GUI(loginScreen, GLUtils::TWLrenderer);
 	//   loginScreenGUI->applyTheme(GLUtils::TWLthemeManager);
@@ -63,7 +63,7 @@ void LogoState::render()
 
 	GLUtils::drawFilledRect(255, 255, 255, 0, w, 0, h, 1.0f);
 
-	//shared_ptr<OKTexture> t = onlineTexture;
+	//sp<OKTexture> t = onlineTexture;
 //
 //	if (loginMenu == nullptr)return;
 //
@@ -85,9 +85,9 @@ void LogoState::render()
 
 
 //
-//	shared_ptr<OKTexture> t = Main::glowTileBackgroundMenuPanel->bgScrollTexture;
+//	sp<OKTexture> t = Main::glowTileBackgroundMenuPanel->bgScrollTexture;
 //
-//	shared_ptr<OKTexture> over = Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->get(frame);
+//	sp<OKTexture> over = Main::glowTileBackgroundMenuPanel->glowTileFramesTexture->get(frame);
 //
 //	float screenWidth = (float)GLUtils::getViewportWidth();
 //	float screenHeight = (float)GLUtils::getViewportHeight();

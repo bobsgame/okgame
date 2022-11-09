@@ -18,7 +18,7 @@ StateManager::StateManager()
 { //=========================================================================================================================
 }
 
-shared_ptr<Engine> StateManager::getCurrentState()
+sp<Engine> StateManager::getCurrentState()
 { //=========================================================================================================================
 
 	if(states.size()>0)
@@ -26,12 +26,12 @@ shared_ptr<Engine> StateManager::getCurrentState()
 	else return nullptr;
 }
 
-//void StateManager::setState(shared_ptr<Engine> s)
+//void StateManager::setState(sp<Engine> s)
 //{ //=========================================================================================================================
 //	currentState = s;
 //}
 
-void StateManager::pushState(shared_ptr<Engine> s)
+void StateManager::pushState(sp<Engine> s)
 { //=========================================================================================================================
 	states.insert(0, s);
 }

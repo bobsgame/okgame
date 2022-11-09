@@ -14,17 +14,17 @@
 Logger Player::log = Logger("Player");
 
 
-Player::Player(shared_ptr<Engine> g, const string& spriteName)
+Player::Player(sp<Engine> g, const string& spriteName)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	shared_ptr<EntityData> data = make_shared<EntityData>(-1, "Player", spriteName, 0, 0);
+	sp<EntityData> data = ms<EntityData>(-1, "Player", spriteName, 0, 0);
 	initEntity(data);
 	initCharacter();
 	initPlayer();
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
 }
 
 void Player::initPlayer()
@@ -34,16 +34,16 @@ void Player::initPlayer()
 	rotationAnimationSpeedTicks = 100; //80;
 }
 
-Player::Player(shared_ptr<Engine> g)
+Player::Player(sp<Engine> g)
 { //=========================================================================================================================
 
 	this->e = g;
-	shared_ptr<EntityData> data = make_shared<EntityData>(-1, "Player", "", 0, 0);
+	sp<EntityData> data = ms<EntityData>(-1, "Player", "", 0, 0);
 	initEntity(data);
 	initCharacter();
 	initPlayer();
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), this);
+	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
 }
 
 void Player::update()
@@ -101,16 +101,16 @@ void Player::handleAreas()
 		return;
 	}
 
-	//   java::util::Iterator<shared_ptr<Area>> aEnum = getMap()->currentState->areaByNameHashtable.elements();
+	//   java::util::Iterator<sp<Area>> aEnum = getMap()->currentState->areaByNameHashtable.elements();
 	//   //areas
 	//   while (aEnum->hasMoreElements())
 	//   {
-	//      shared_ptr<Area> a = aEnum->nextElement();
+	//      sp<Area> a = aEnum->nextElement();
 
-	ArrayList<shared_ptr<Area>> *areas = getMap()->currentState->areaByNameHashtable.getAllValues();
+	sp<vector<sp<Area>>>areas = getMap()->currentState->areaByNameHashtable.getAllValues();
 	for (int i=0;i<areas->size();i++)
 	{
-		shared_ptr<Area> a = areas->get(i);
+		sp<Area> a = areas->get(i);
 
 		if (a->isXYXYTouchingMyBoundary(getLeft(), getTop(), getRight(), getBottom()))
 		{

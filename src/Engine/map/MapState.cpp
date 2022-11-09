@@ -14,21 +14,21 @@
 //Logger MapState::log = Logger("MapState");
 
 
-MapState::MapState(shared_ptr<MapStateData> mapStateData, shared_ptr<Map> m)
+MapState::MapState(sp<MapStateData> mapStateData, sp<Map> m)
 { //=========================================================================================================================
 	
 	this->data = mapStateData;
 
 	this->map = m;
 
-	//lightByNameHashtable = make_shared<HashMap><string, shared_ptr<Light>>();
-	//entityByNameHashtable = make_shared<HashMap><string, shared_ptr<Entity>>();
-	//characterByNameHashtable = make_shared<HashMap><string, shared_ptr<Character>>();
-	//areaByNameHashtable = make_shared<HashMap><string, shared_ptr<Area>>();
-	//areaByTYPEIDHashtable = make_shared<HashMap><string, shared_ptr<Area>>();
+	//lightByNameHashtable = ms<HashMap><string, sp<Light>>();
+	//entityByNameHashtable = ms<HashMap><string, sp<Entity>>();
+	//characterByNameHashtable = ms<HashMap><string, sp<Character>>();
+	//areaByNameHashtable = ms<HashMap><string, sp<Area>>();
+	//areaByTYPEIDHashtable = ms<HashMap><string, sp<Area>>();
 }
 
-shared_ptr<MapStateData> MapState::getData()
+sp<MapStateData> MapState::getData()
 {
 	return data;
 }

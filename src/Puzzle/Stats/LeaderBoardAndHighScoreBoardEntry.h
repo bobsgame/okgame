@@ -93,7 +93,7 @@ public:
 
 	};
 
-	ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry>> entries;
+	vector<sp<OKGameLeaderBoardAndHighScoreBoardEntry>> entries;
 
 	int maxEntries = 10;
 
@@ -107,7 +107,7 @@ public:
 
 		for (int i = 0; i<maxEntries; i++)
 		{
-			entries.add(make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>());
+			entries.push_back(ms<OKGameLeaderBoardAndHighScoreBoardEntry>());
 		}
 
 	}
@@ -163,7 +163,7 @@ public:
 //
 //				if (resultSet.next())
 //				{
-//					stats = make_shared<OKGameLeaderBoardAndHighScoreBoard>(resultSet);
+//					stats = ms<OKGameLeaderBoardAndHighScoreBoard>(resultSet);
 //				}
 //
 //				resultSet.close();
@@ -176,7 +176,7 @@ public:
 //		//create it if it doesnt exist
 //		if (stats == nullptr)
 //		{
-//			stats = make_shared<OKGameLeaderBoardAndHighScoreBoard>();
+//			stats = ms<OKGameLeaderBoardAndHighScoreBoard>();
 //			stats.isGameTypeOrSequence = game.isGameTypeOrSequence;
 //			stats.gameTypeUUID = game.gameTypeUUID;
 //			stats.gameTypeName = game.gameTypeName;
@@ -209,7 +209,7 @@ public:
 //	static ArrayList<OKGameLeaderBoardAndHighScoreBoard> getAllLeaderBoardsAndHighScoreBoardsFromDB(Connection databaseConnection, string databaseName)
 //	{//===============================================================================================
 //
-//		ArrayList<OKGameLeaderBoardAndHighScoreBoard> leaderBoards = make_shared<ArrayList><OKGameLeaderBoardAndHighScoreBoard>();
+//		ArrayList<OKGameLeaderBoardAndHighScoreBoard> leaderBoards = ms<ArrayList><OKGameLeaderBoardAndHighScoreBoard>();
 //
 //		ResultSet resultSet = nullptr;
 //		PreparedStatement ps = nullptr;
@@ -235,7 +235,7 @@ public:
 //
 //			while (resultSet.next())
 //			{
-//				leaderBoards.add(make_shared<OKGameLeaderBoardAndHighScoreBoard>(resultSet));
+//				leaderBoards.add(ms<OKGameLeaderBoardAndHighScoreBoard>(resultSet));
 //			}
 //
 //			resultSet.close();
@@ -726,7 +726,7 @@ public:
 //			//			long longestTimeLastedThisGameAndDifficulty = 0;
 //
 //
-//			OKGameLeaderBoardAndHighScoreBoardEntry newStats = make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>();
+//			OKGameLeaderBoardAndHighScoreBoardEntry newStats = ms<OKGameLeaderBoardAndHighScoreBoardEntry>();
 //			newStats.userName = game.userName;
 //			newStats.userID = game.userID;
 //			newStats.statsUUID = game.statsUUID;
@@ -973,7 +973,7 @@ public:
 //
 //		for (int i = 0; i<maxEntries; i++)
 //		{
-//			entries.add(make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>());
+//			entries.add(ms<OKGameLeaderBoardAndHighScoreBoardEntry>());
 //		}
 //
 //
@@ -1053,7 +1053,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			string diff = "_" + to_string(i);
-			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry>s = entries.get(i);
+			sp<OKGameLeaderBoardAndHighScoreBoardEntry>s = entries.at(i);
 
 			gameSavestring += ",userName:`" + s->userName + "`";
 			gameSavestring += ",userID:`" + to_string(s->userID) + "`";
@@ -1093,7 +1093,7 @@ public:
 
 		for (int i = 0; i<maxEntries; i++)
 		{
-			entries.add(make_shared<OKGameLeaderBoardAndHighScoreBoardEntry>());
+			entries.push_back(ms<OKGameLeaderBoardAndHighScoreBoardEntry>());
 		}
 
 		decode(s);
@@ -1144,7 +1144,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			//string diff = "_" + to_string(i);
-			shared_ptr<OKGameLeaderBoardAndHighScoreBoardEntry>stats = entries.get(i);
+			sp<OKGameLeaderBoardAndHighScoreBoardEntry>stats = entries.at(i);
 
 			s = s.substr(s.find('`') + 1);
 			t = s.substr(0, s.find('`'));

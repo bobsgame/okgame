@@ -16,8 +16,8 @@ class EventParameter : public EnginePart
 public:
 	static Logger log;
 
-	shared_ptr<Map> mapObject = nullptr;
-	shared_ptr<Entity> entityObject = nullptr;
+	sp<Map> mapObject = nullptr;
+	sp<Entity> entityObject = nullptr;
 
 	int type = -1;
 
@@ -55,13 +55,13 @@ public:
 	string parameterString = "";
 
 
-	EventParameter(shared_ptr<Engine> g, const string& parameterString);
+	EventParameter(sp<Engine> g, const string& parameterString);
 
 
 	void parsePrimitive(const string& typeString, const string& primitiveValueString);
 
 
-	void updateParameterVariablesFromString(shared_ptr<Event> event);
+	void updateParameterVariablesFromString(sp<Event> event);
 
 
 	string toString();

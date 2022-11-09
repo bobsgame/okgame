@@ -23,7 +23,7 @@ LogsPanel::LogsPanel()
 	//TODO: connect to server and get last x logs
 
 	//
-	//   shared_ptr<Label> label = make_shared<Label>("Logs");
+	//   sp<Label> label = ms<Label>("Logs");
 	//   label->setCanAcceptKeyboardFocus(false);
 	//
 	//   insideLayout->setHorizontalGroup(insideLayout->createParallelGroup(label));

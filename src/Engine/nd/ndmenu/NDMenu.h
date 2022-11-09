@@ -28,17 +28,17 @@ public:
 	int quit = 0;
 
 
-	shared_ptr<NDMenuWheel> wheel = make_shared<NDMenuWheel>(this);
-	shared_ptr<NDMenuBackground> background = make_shared<NDMenuBackground>(this);
+	sp<NDMenuWheel> wheel = ms<NDMenuWheel>(this);
+	sp<NDMenuBackground> background = ms<NDMenuBackground>(this);
 
 
-	shared_ptr<OKColor> WHITE = make_shared<OKColor>(255, 255, 255);
-	shared_ptr<OKColor> BLACK = make_shared<OKColor>(0, 0, 0);
-	shared_ptr<OKColor> RED = make_shared<OKColor>(255, 0, 0);
-	shared_ptr<OKColor> GREEN = make_shared<OKColor>(0, 255, 0);
-	shared_ptr<OKColor> BLUE = make_shared<OKColor>(0, 0, 255);
-	shared_ptr<OKColor> MAGENTA = make_shared<OKColor>(255, 0, 255);
-	shared_ptr<OKColor> YELLOW = make_shared<OKColor>(0, 127, 127);
+	sp<OKColor> WHITE = ms<OKColor>(255, 255, 255);
+	sp<OKColor> BLACK = ms<OKColor>(0, 0, 0);
+	sp<OKColor> RED = ms<OKColor>(255, 0, 0);
+	sp<OKColor> GREEN = ms<OKColor>(0, 255, 0);
+	sp<OKColor> BLUE = ms<OKColor>(0, 0, 255);
+	sp<OKColor> MAGENTA = ms<OKColor>(255, 0, 255);
+	sp<OKColor> YELLOW = ms<OKColor>(0, 127, 127);
 
 
 	static bool actionButtonPressed;
@@ -76,7 +76,7 @@ public:
 	long long fadeOutTicks = 0;
 
 
-	void addGame(shared_ptr<NDGameEngine> game, const string& name, shared_ptr<OKColor> color);
+	void addGame(sp<NDGameEngine> game, const string& name, sp<OKColor> color);
 	virtual void update() override;
 	virtual void cleanup() override;
 	virtual void render() override;

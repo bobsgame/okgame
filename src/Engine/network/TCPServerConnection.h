@@ -68,7 +68,7 @@ public:
 
 	bool _requestedClientLocation = false;
 	string clientLocation = "";
-	shared_ptr<ServerStats> serverStats = nullptr;
+	sp<ServerStats> serverStats = nullptr;
 
 
 	bool threadStarted = false;
@@ -78,7 +78,7 @@ public:
 
 	//------------------------------------
 public:
-	static void updateThreadLoop(shared_ptr<TCPServerConnection>u);
+	static void updateThreadLoop(sp<TCPServerConnection>u);
 
 private:
 	void _sendKeepAlivePing();
@@ -93,7 +93,7 @@ private:
 	long long _lastLoadBalancerConnectTime = 0;
 	bool _couldNotResolveLoadBalancer = false;
 	int _couldNotOpenConnectionToLoadBalancerCount = 0;
-	shared_ptr<IPaddress> _loadBalancerAddress = nullptr;
+	sp<IPaddress> _loadBalancerAddress = nullptr;
 	
 	long long _lastServerConnectTime = 0;
 	long long _lastSentServerIPRequestTime = 0;
@@ -138,7 +138,7 @@ public:
 
 	//------------------------------------
 private:
-	static shared_ptr<Logger> _threadLog;
+	static sp<Logger> _threadLog;
 	mutex threadLog_Mutex;
 public:
 	void threadLogDebug_S(string s)
@@ -295,14 +295,14 @@ public:
 	//------------------------------------
 
 
-	shared_ptr<IPaddress> _serverAddress = nullptr;
+	sp<IPaddress> _serverAddress = nullptr;
 	mutex _serverAddress_Mutex;
-	shared_ptr<IPaddress> getServerAddress_S()
+	sp<IPaddress> getServerAddress_S()
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		return _serverAddress;
 	}
-	void setServerAddress_S(shared_ptr<IPaddress>b)
+	void setServerAddress_S(sp<IPaddress>b)
 	{
 		lock_guard<mutex> lock(_serverAddress_Mutex);
 		_serverAddress = b;
@@ -655,7 +655,7 @@ public:
 	};
 
 private:
-	ArrayList<GameSaveUpdateRequest> _gameSaveUpdateRequestQueue;
+	vector<GameSaveUpdateRequest> _gameSaveUpdateRequestQueue;
 	int _requestCounter = 0;
 	mutex _gameSaveUpdateRequestQueue_Mutex;
 public:
@@ -664,7 +664,7 @@ public:
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
 		int size = _gameSaveUpdateRequestQueue.size();
 		if (i >= size)return GameSaveUpdateRequest();
-		return _gameSaveUpdateRequestQueue.get(i);
+		return _gameSaveUpdateRequestQueue.at(i);
 	}
 	void addQueuedGameSaveUpdateRequest_S(string value)
 	{
@@ -672,7 +672,7 @@ public:
 	  //all game save updates should be instantly queued
 	  //any changes to the game save should happen instantly on the client
 		GameSaveUpdateRequest g = GameSaveUpdateRequest(value, _requestCounter);
-		_gameSaveUpdateRequestQueue.add(g);
+		_gameSaveUpdateRequestQueue.push_back(g);
 		_requestCounter++;
 	}
 	void removeQueuedGameSaveUpdateRequestByID_S(int requestID)
@@ -680,7 +680,7 @@ public:
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
 		int size = _gameSaveUpdateRequestQueue.size();
 		for (int i = 0; i < size; i++)
-			if (_gameSaveUpdateRequestQueue.get(i).requestID == requestID)
+			if (_gameSaveUpdateRequestQueue.at(i).requestID == requestID)
 			{
 				_gameSaveUpdateRequestQueue.removeAt(i);
 				i = size;
@@ -869,7 +869,7 @@ public:
 	void incomingOKGameActivityStreamResponse_S(string s);
 	void incomingOKGameActivityStreamUpdate_S(string s);
 	void incomingOKGameUserStatsForSpecificGameAndDifficulty(string &s);
-	void addToLeaderboard(ArrayList<shared_ptr<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, shared_ptr<OKGameLeaderBoardAndHighScoreBoard>leaderBoard);
+	void addToLeaderboard(ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard);
 	void incomingOKGameLeaderBoardByTotalTimePlayed(string &s);
 	void incomingOKGameLeaderBoardByTotalBlocksCleared(string &s);
 	void incomingOKGameLeaderBoardByPlaneswalkerPoints(string &s);
@@ -920,18 +920,18 @@ public:
 
 	//------------------------------------
 	private:
-		ArrayList<string> _bobsGameGameStatsResponse;
+		vector<string> _bobsGameGameStatsResponse;
 		mutex _bobsGameGameStatsResponse_Mutex;
 	public:
-		void setOKGameGameStatsResponse_S(ArrayList<string> s)
+		void setOKGameGameStatsResponse_S(vector<string> s)
 		{
 			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
 			_bobsGameGameStatsResponse = s;
 		}
-		ArrayList<string> getAndResetOKGameGameStatsResponse_S()
+		vector<string> getAndResetOKGameGameStatsResponse_S()
 		{
 			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
-			ArrayList<string> s = _bobsGameGameStatsResponse;
+			vector<string> s = _bobsGameGameStatsResponse;
 			_bobsGameGameStatsResponse.clear();
 			return s;
 		}
@@ -955,10 +955,10 @@ public:
 	string addFriendByUserNameResponse = "";
 
 	bool _doLoginNoCaptions(string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doLogin(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
-	bool doCreateAccount(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userName, string &email, string &password, string &confirmPassword);
+	bool doLogin(sp<Caption>statusLabel, sp<Caption>errorLabel, string &userNameOrEmail, string &password, bool stayLoggedIn);
+	bool doCreateAccount(sp<Caption>statusLabel, sp<Caption>errorLabel, string &userName, string &email, string &password, string &confirmPassword);
 	bool checkForSessionTokenAndLogInIfExists();
-	bool doForgotPassword(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, string &userNameOrEmail);
-	bool linkFacebookAccount(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel);
-	bool doAddFriendByUsername(shared_ptr<Caption>statusLabel, shared_ptr<Caption>errorLabel, const string& friendUserName);
+	bool doForgotPassword(sp<Caption>statusLabel, sp<Caption>errorLabel, string &userNameOrEmail);
+	bool linkFacebookAccount(sp<Caption>statusLabel, sp<Caption>errorLabel);
+	bool doAddFriendByUsername(sp<Caption>statusLabel, sp<Caption>errorLabel, const string& friendUserName);
 };

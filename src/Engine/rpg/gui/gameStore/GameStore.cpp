@@ -19,11 +19,11 @@ GameStore::GameStore()
 
 	//MenuPanel();
 
-	// games = make_shared<ArrayList><shared_ptr<GameItem>>();
+	// games = ms<ArrayList><sp<GameItem>>();
 
 	for (int i = 0; i < 3; i++)
 	{
-		games.push_back(make_shared<GameItem>());
+		games.push_back(ms<GameItem>());
 	}
 	//
 	//   games[0]->gameTitleLabel.setText("Tetrid LIVE");
@@ -44,7 +44,7 @@ GameStore::GameStore()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);

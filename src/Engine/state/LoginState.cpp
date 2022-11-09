@@ -17,7 +17,7 @@ Logger LoginState::log = Logger("LoginState");
 LoginState::LoginState()
 { //=========================================================================================================================
 
-	loginMenuPanel = make_shared<LoginMenuPanel>((shared_ptr<Engine>)this);
+	loginMenuPanel = ms<LoginMenuPanel>((sp<Engine>)this);
 	//
 	//   loginScreenGUI = new GUI(loginScreen, GLUtils::TWLrenderer);
 	//   loginScreenGUI->applyTheme(GLUtils::TWLthemeManager);
@@ -53,7 +53,7 @@ void LoginState::cleanup()
 Logger LoginMenuPanel::log = Logger("LoginScreen");
 
 
-LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
+LoginMenuPanel::LoginMenuPanel(sp<Engine>e)
 { //=========================================================================================================================
 
 
@@ -68,20 +68,20 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//MenuPanel();
 
 	
-	//   loginPanel = make_shared<DialogLayout>();
+	//   loginPanel = ms<DialogLayout>();
 	//   loginPanel->setTheme("loginpanel");
 	//
 	//
-	//   shared_ptr<Label> loginPanelLabel = make_shared<Label>("Login");
+	//   sp<Label> loginPanelLabel = ms<Label>("Login");
 	//   loginPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   loginPanelLabel->setTheme("bigLabel");
 	//
 	//
-	//   errorLabel = make_shared<Label>(" ");
+	//   errorLabel = ms<Label>(" ");
 	//   errorLabel->setTheme("errorLabel");
 	//   errorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   statusLabel = make_shared<Label>(" ");
+	//   statusLabel = ms<Label>(" ");
 	//   statusLabel->setTheme("statusLabel");
 	//   statusLabel->setCanAcceptKeyboardFocus(false);
 	//
@@ -89,7 +89,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //---------------------------------------------------------
 	//   //login with facebook button
 	//   //---------------------------------------------------------
-	//   loginWithFacebookButton = make_shared<Button>("Login using your Facebook account!");
+	//   loginWithFacebookButton = ms<Button>("Login using your Facebook account!");
 	//   loginWithFacebookButton->setTheme("smallButton");
 	//   loginWithFacebookButton->setCanAcceptKeyboardFocus(false);
 	//
@@ -109,10 +109,10 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //---------------------------------------------------------
 	//   //name
 	//   //---------------------------------------------------------
-	//   emailEditField = make_shared<EditField>();
+	//   emailEditField = ms<EditField>();
 	//
 	//
-	//   emailLabel = make_shared<Label>("Email");
+	//   emailLabel = ms<Label>("Email");
 	//   //emailLabel.setLabelFor(emailEditField);
 	//   emailLabel->setCanAcceptKeyboardFocus(false);
 	//
@@ -121,19 +121,19 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //password
 	//   //---------------------------------------------------------
 	//
-	//   passwordLabel = make_shared<Label>("Password");
+	//   passwordLabel = ms<Label>("Password");
 	//   //passwordLabel.setLabelFor(passwordEditField);
 	//   passwordLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   passwordEditField = make_shared<EditField>();
+	//   passwordEditField = ms<EditField>();
 	//   passwordEditField->setPasswordMasking(true);
 	//
-	//   passwordEditField->addCallback(make_shared<CallbackAnonymousInnerClassHelper>(this));
+	//   passwordEditField->addCallback(ms<CallbackAnonymousInnerClassHelper>(this));
 	//
 	//   //---------------------------------------------------------
 	//   //login
 	//   //---------------------------------------------------------
-	//   loginButton = make_shared<Button>("Login");
+	//   loginButton = ms<Button>("Login");
 	//   loginButton->setCanAcceptKeyboardFocus(false);
 	//   loginButton->addCallback([&] ()
 	//      {
@@ -144,7 +144,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //---------------------------------------------------------
 	//   //forgot pass
 	//   //---------------------------------------------------------
-	//   forgotPasswordButton = make_shared<Button>("Forgot Password?");
+	//   forgotPasswordButton = ms<Button>("Forgot Password?");
 	//   forgotPasswordButton->setCanAcceptKeyboardFocus(false);
 	//   forgotPasswordButton->setTheme("textButton");
 	//   forgotPasswordButton->addCallback([&] ()
@@ -156,7 +156,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //---------------------------------------------------------
 	//   //create new account
 	//   //---------------------------------------------------------
-	//   createNewAccountButton = make_shared<Button>("Create Account");
+	//   createNewAccountButton = ms<Button>("Create Account");
 	//   createNewAccountButton->setCanAcceptKeyboardFocus(false);
 	//   createNewAccountButton->addCallback([&] ()
 	//      {
@@ -172,7 +172,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   stayLoggedInToggleButton->setCanAcceptKeyboardFocus(false);
 	//   stayLoggedInToggleButton->setActive(true);
 	//
-	//   //		stayLoggedInToggleButton.addCallback(make_shared<Runnable>()
+	//   //		stayLoggedInToggleButton.addCallback(ms<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -180,7 +180,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //			}
 	//   //		});
 	//
-	//   stayLoggedInToggleButtonLabel = make_shared<Label>("Stay Logged In");
+	//   stayLoggedInToggleButtonLabel = ms<Label>("Stay Logged In");
 	//   stayLoggedInToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   stayLoggedInToggleButtonLabel->setLabelFor(stayLoggedInToggleButton);
 	//
@@ -191,7 +191,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   sendStatsToggleButton->setCanAcceptKeyboardFocus(false);
 	//   sendStatsToggleButton->setActive(true);
 	//
-	//   //		sendStatsToggleButton.addCallback(make_shared<Runnable>()
+	//   //		sendStatsToggleButton.addCallback(ms<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -199,11 +199,11 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //			}
 	//   //		});
 	//
-	//   sendStatsToggleButtonLabel = make_shared<Label>("Send PC Stats");
+	//   sendStatsToggleButtonLabel = ms<Label>("Send PC Stats");
 	//   sendStatsToggleButtonLabel->setCanAcceptKeyboardFocus(false);
 	//   sendStatsToggleButtonLabel->setLabelFor(sendStatsToggleButton);
 	//
-	//   sendStatsQuestionMark = make_shared<Label>(" ? ");
+	//   sendStatsQuestionMark = ms<Label>(" ? ");
 	//   sendStatsQuestionMark->setCanAcceptKeyboardFocus(false);
 	//   sendStatsQuestionMark->setTheme("descriptionLabel");
 	//   sendStatsQuestionMark->setTooltipContent("");
@@ -233,7 +233,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -263,7 +263,7 @@ LoginMenuPanel::LoginMenuPanel(shared_ptr<Engine>e)
 }
 
 //
-//LoginScreen::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(shared_ptr<LoginScreen> outerInstance)
+//LoginScreen::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(sp<LoginScreen> outerInstance)
 //{
 //   this->outerInstance = outerInstance;
 //}
@@ -309,7 +309,7 @@ void LoginMenuPanel::update()
 				{
 					if (loginMenu == nullptr)
 					{
-						loginMenu = make_shared<OKMenu>(getEngine(), "Login");
+						loginMenu = ms<OKMenu>(getEngine(), "Login");
 						//loginMenu->center = false;
 						loginMenu->addInfo("Logging in...", "Logging in", OKMenu::statusColor);
 
@@ -321,7 +321,7 @@ void LoginMenuPanel::update()
 				if (loginMenu == nullptr)
 				{
 
-					loginMenu = make_shared<OKMenu>(getEngine(), "Login");
+					loginMenu = ms<OKMenu>(getEngine(), "Login");
 					//loginMenu->center = false;
 					loginMenu->add("Username or Email: " + userNameOrEmailText, "Username or Email", OKMenu::statusColor);
 					loginMenu->add("Password: " + passwordStarsText, "Password", OKMenu::statusColor);
@@ -535,7 +535,7 @@ void LoginMenuPanel::renderBefore()
 
 	GLUtils::drawFilledRect(255,255,255, w / 4 * 1, w / 4 * 3, screenY + h / 4 * 1, screenY + h / 4 * 3, 0.95f);
 
-	//shared_ptr<OKTexture> t = onlineTexture;
+	//sp<OKTexture> t = onlineTexture;
 
 	if (loginMenu == nullptr)return;
 
@@ -623,7 +623,7 @@ void LoginMenuPanel::doLoginWithFacebook()
 { //=========================================================================================================================
 
 	//
-	//   make_shared<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
+	//   ms<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
 	//      {
 	//         try
 	//         {
@@ -857,7 +857,7 @@ void LoginMenuPanel::doForgotPassword()
 	//      setButtonsVisible(false);
 	//
 	//      //create thread, this needs to be a thread because Button.doCallback(Runnable) only calls Runnable.run() which does NOT create a thread.
-	//      make_shared<Thread>([&] ()
+	//      ms<Thread>([&] ()
 	//         {
 	//            try
 	//            {
@@ -1028,7 +1028,7 @@ void LoginMenuPanel::doLogin()
 	//      setButtonsVisible(false);
 	//
 	//      //create thread, needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
-	//      make_shared<Thread>([&] ()
+	//      ms<Thread>([&] ()
 	//         {
 	//            try
 	//            {
@@ -1303,7 +1303,7 @@ void LoginMenuPanel::checkForSessionTokenAndLogInIfExists()
 		//         setButtonsVisible(false);
 		//
 		//         //create thread
-		//         make_shared<Thread>([&] ()
+		//         ms<Thread>([&] ()
 		//            {
 		//               try
 		//               {

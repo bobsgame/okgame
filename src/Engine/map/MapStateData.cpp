@@ -23,26 +23,26 @@ MapStateData::MapStateData(int id, const string& name)
 	AssetData(id, name);
 }
 
-//shared_ptr<MapStateData> MapStateData::fromBase64ZippedJSON(const string& b64)
+//sp<MapStateData> MapStateData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = make_shared<Gson>();
+//	//Gson gson = ms<Gson>();
 //	//MapStateData data = gson.fromJson(json,MapStateData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//shared_ptr<MapStateData> MapStateData::fromJSON(const string& json)
+//sp<MapStateData> MapStateData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//shared_ptr<Gson> gson = make_shared<Gson>();
-//	shared_ptr<MapStateData> data = nullptr;// gson->fromJson(json, MapStateData::typeid);
+//	//sp<Gson> gson = ms<Gson>();
+//	sp<MapStateData> data = nullptr;// gson->fromJson(json, MapStateData::typeid);
 //
 //
 //	return data;
@@ -67,7 +67,7 @@ string& MapStateData::initFromString(string& t)
 	while (OKString::startsWith(t,"}") == false)
 	{
 
-		shared_ptr<LightData>data = make_shared<LightData>();
+		sp<LightData>data = ms<LightData>();
 		t = data->initFromString(t);
 		lightDataList.add(data);
 	}
@@ -79,7 +79,7 @@ string& MapStateData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (OKString::startsWith(t,"}") == false)
 	{
-		shared_ptr<EntityData>data = make_shared<EntityData>();
+		sp<EntityData>data = ms<EntityData>();
 		t = data->initFromString(t);
 		entityDataList.add(data);
 
@@ -92,7 +92,7 @@ string& MapStateData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (OKString::startsWith(t,"}") == false)
 	{
-		shared_ptr<AreaData>data = make_shared<AreaData>();
+		sp<AreaData>data = ms<AreaData>();
 		t = data->initFromString(t);
 		areaDataList.add(data);
 
@@ -113,17 +113,17 @@ string MapStateData::getTYPEIDString()
 	return "STATE." + to_string(getID());
 }
 
-ArrayList<shared_ptr<LightData>>* MapStateData::getLightDataList()
+sp<vector<sp<LightData>>> MapStateData::getLightDataList()
 {
 	return &lightDataList;
 }
 
-ArrayList<shared_ptr<EntityData>>* MapStateData::getEntityDataList()
+sp<vector<sp<EntityData>>> MapStateData::getEntityDataList()
 {
 	return &entityDataList;
 }
 
-ArrayList<shared_ptr<AreaData>>* MapStateData::getAreaDataList()
+sp<vector<sp<AreaData>>> MapStateData::getAreaDataList()
 {
 	return &areaDataList;
 }

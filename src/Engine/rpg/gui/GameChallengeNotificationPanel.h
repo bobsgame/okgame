@@ -16,19 +16,19 @@ class GameChallengeNotificationPanel : public MenuPanel
 public:
 	static Logger log;
 
-	//shared_ptr<DialogLayout> notificationPanel = nullptr;
+	//sp<DialogLayout> notificationPanel = nullptr;
 
-	//shared_ptr<Button> yesButton = nullptr;
-	//shared_ptr<Button> noButton = nullptr;
+	//sp<Button> yesButton = nullptr;
+	//sp<Button> noButton = nullptr;
 
-	shared_ptr<FriendCharacter> friendCharacter = nullptr;
+	sp<FriendCharacter> friendCharacter = nullptr;
 	string gameName = "";
 
 	long long notificationCreatedTime = 0;
 
-	//shared_ptr<Label> timeLeftLabel = nullptr;
+	//sp<Label> timeLeftLabel = nullptr;
 
-	GameChallengeNotificationPanel(shared_ptr<FriendCharacter> friend_in, const string& gameName);
+	GameChallengeNotificationPanel(sp<FriendCharacter> friend_in, const string& gameName);
 
 	virtual void update() override;
 

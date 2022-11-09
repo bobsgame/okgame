@@ -57,26 +57,26 @@ LightData::LightData(int id, const string& name)
 	EntityData(id, name, "", 0, 0, 0, false, true, 255, 1.0f, 12, false, false, false, false, false, 0, 0, false, false, true, nullptr, ""); //int eventID, - boolean getDisableShadow, - boolean getRandomFrames, - boolean getOnlyHereDuringEvent, - int ticksBetweenAnimation, - int getTicksBetweenFrames, - boolean randomTimeBetweenAnimation, - boolean animateThroughFrames, - boolean getAlwaysOnBottom, - boolean getAboveWhenEqual, - boolean getAboveTopLayer, - float getScale, - int alphaByte, - boolean getNonWalkable, - boolean getPushable, - int getInitialFrame, - int getSpawnYPixels1X, - int getSpawnXPixels1X, - String spriteAssetName, - String name, - int id,
 }
 
-//shared_ptr<LightData> LightData::fromBase64ZippedJSON(const string& b64)
+//sp<LightData> LightData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //
 //
 //	string json = FileUtils::unzipBase64StringToString(b64);
 //
-//	//Gson gson = make_shared<Gson>();
+//	//Gson gson = ms<Gson>();
 //	//LightData data = gson.fromJson(json,LightData.class);
 //
 //
 //	return fromJSON(json);
 //}
 //
-//shared_ptr<LightData> LightData::fromJSON(const string& json)
+//sp<LightData> LightData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//shared_ptr<Gson> gson = make_shared<Gson>();
-//	shared_ptr<LightData> data = nullptr;// gson->fromJson(json, LightData::typeid);
+//	//sp<Gson> gson = ms<Gson>();
+//	sp<LightData> data = nullptr;// gson->fromJson(json, LightData::typeid);
 //
 //
 //	return data;

@@ -15,16 +15,16 @@
 Logger SpriteManager::log = Logger("SpriteManager");
 
 
-shared_ptr<OKTexture> SpriteManager::actionTexture = nullptr;
+sp<OKTexture> SpriteManager::actionTexture = nullptr;
 
 
-SpriteManager::SpriteManager(shared_ptr<Engine> g)
+SpriteManager::SpriteManager(sp<Engine> g)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	//spriteByIDHashMap = make_shared<HashMap><int, shared_ptr<Sprite>>();
-	//spriteByNameHashMap = make_shared<HashMap><string, shared_ptr<Sprite>>();
+	//spriteByIDHashMap = ms<HashMap><int, sp<Sprite>>();
+	//spriteByNameHashMap = ms<HashMap><string, sp<Sprite>>();
 
 	if (actionTexture == nullptr)
 	{
@@ -52,14 +52,14 @@ void SpriteManager::update()
 
 	for (int n = 0; n < screenSpriteList.size(); n++)
 	{
-		shared_ptr<Entity> e = screenSpriteList.at(n);
+		sp<Entity> e = screenSpriteList.at(n);
 		e->update();
 	}
 
 
 	//TODO: update sprites here, initialize them from server etc. need to reorganize this better.
 
-	shared_ptr<vector<shared_ptr<Sprite>>> sprites = make_shared<vector<shared_ptr<Sprite>>>(spriteByIDHashMap.getAllValues());
+	sp<vector<sp<Sprite>>> sprites = ms<vector<sp<Sprite>>>(spriteByIDHashMap.getAllValues());
 	for (int n = 0; n < sprites->size(); n++)
 	{
 		sprites->at(n)->update();
@@ -76,7 +76,7 @@ void SpriteManager::renderScreenSprites(RenderOrder layer)
 
 		for (int n = 0; n < screenSpriteList.size(); n++)
 		{
-			shared_ptr<ScreenSprite> e = screenSpriteList.at(n);
+			sp<ScreenSprite> e = screenSpriteList.at(n);
 
 			if (e->getRenderOrder() == layer)
 			{
@@ -89,18 +89,18 @@ void SpriteManager::renderScreenSprites(RenderOrder layer)
 	}
 }
 
-shared_ptr<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExist(int id)
+sp<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExist(int id)
 { //=========================================================================================================================
 
 
 	if (id == -1)
 	{
-		shared_ptr<Sprite> s = nullptr;
+		sp<Sprite> s = nullptr;
 		if(spriteByIDHashMap.containsKey(id))
 		s = spriteByIDHashMap.get(id);
 		if (s == nullptr)
 		{
-			s = make_shared<Sprite>(getEngine());
+			s = ms<Sprite>(getEngine());
 			s->initializeWithSpriteData(nullptr);
 			spriteByNameHashMap.put(s->getName(), s);
 			spriteByIDHashMap.put(s->getID(), s);
@@ -109,7 +109,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExis
 	}
 
 
-	shared_ptr<Sprite> s = nullptr;
+	sp<Sprite> s = nullptr;
 	if (spriteByIDHashMap.containsKey(id))
 		s = spriteByIDHashMap.get(id);
 	if (s != nullptr)
@@ -125,7 +125,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExis
 	}
 	else
 	{
-		s = make_shared<Sprite>(getEngine());
+		s = ms<Sprite>(getEngine());
 		spriteByIDHashMap.put(id, s);
 
 		s->sendDataRequest(id);
@@ -139,7 +139,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExis
 	return nullptr;
 }
 
-shared_ptr<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName)
+sp<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(string spriteAssetName)
 { //=========================================================================================================================
 
 	if (spriteAssetName == "" || spriteAssetName == "" || spriteAssetName.length() == 0)
@@ -149,23 +149,23 @@ shared_ptr<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(s
 
 	if (spriteAssetName == "none" || spriteAssetName == "Camera")
 	{
-		shared_ptr<Sprite> s = nullptr;
+		sp<Sprite> s = nullptr;
 
 		if(spriteByNameHashMap.containsKey(spriteAssetName))
 			s = spriteByNameHashMap.get(spriteAssetName);
 
 		if (s == nullptr)
 		{
-			s = make_shared<Sprite>(getEngine());
+			s = ms<Sprite>(getEngine());
 
-			shared_ptr<SpriteData> d = nullptr;
+			sp<SpriteData> d = nullptr;
 			if (spriteAssetName == "Camera")
 			{
-				d = make_shared<SpriteData>(-1, "Camera", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
+				d = ms<SpriteData>(-1, "Camera", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
 			}
 			if (spriteAssetName == "none")
 			{
-				d = make_shared<SpriteData>(-1, "none", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
+				d = ms<SpriteData>(-1, "none", "", 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
 			}
 
 			s->initializeWithSpriteData(d);
@@ -178,7 +178,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(s
 	}
 
 
-	shared_ptr<Sprite> s = nullptr;
+	sp<Sprite> s = nullptr;
 
 	if (spriteByNameHashMap.containsKey(spriteAssetName))
 		s = spriteByNameHashMap.get(spriteAssetName);
@@ -197,7 +197,7 @@ shared_ptr<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(s
 	else
 	if (s == nullptr)
 	{
-		s = make_shared<Sprite>(getEngine());
+		s = ms<Sprite>(getEngine());
 
 		spriteByNameHashMap.put(spriteAssetName, s);
 		
@@ -220,13 +220,13 @@ shared_ptr<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(s
 
 
 //=========================================================================================================================
-shared_ptr<Sprite> SpriteManager::preloadSpriteFromDataFile(const string& spriteAssetName)
+sp<Sprite> SpriteManager::preloadSpriteFromDataFile(const string& spriteAssetName)
 { //=========================================================================================================================
 
 	//log->info(spriteAssetName);
   //get sprite from hashmap if exists
   //if it doesnt, create sprite, sprite will load what it needs
-	shared_ptr<Sprite> s = nullptr;
+	sp<Sprite> s = nullptr;
 
 
 	//log->info("if spriteByNameHashMap.containsKey " + spriteAssetName);
@@ -235,9 +235,9 @@ shared_ptr<Sprite> SpriteManager::preloadSpriteFromDataFile(const string& sprite
 
 	if (s == nullptr)
 	{
-		//log->info("make_shared<Sprite> "+ spriteAssetName);
+		//log->info("ms<Sprite> "+ spriteAssetName);
 		//TODO: here instead of returning preloaded sprite, could check if file exists, if it does load, else check cache, else check network, else create and load from network?
-		s = make_shared<Sprite>(getEngine());
+		s = ms<Sprite>(getEngine());
 
 		s->preloadFromDataFile(spriteAssetName);
 
@@ -254,10 +254,10 @@ shared_ptr<Sprite> SpriteManager::preloadSpriteFromDataFile(const string& sprite
 
 
 //=========================================================================================================================
-shared_ptr<Sprite> SpriteManager::getSpriteByName(const string& spriteAssetName)
+sp<Sprite> SpriteManager::getSpriteByName(const string& spriteAssetName)
 { //=========================================================================================================================
 
-	shared_ptr<Sprite> s = nullptr;
+	sp<Sprite> s = nullptr;
 
 	if (spriteByNameHashMap.containsKey(spriteAssetName))
 		s = spriteByNameHashMap.get(spriteAssetName);
@@ -645,7 +645,7 @@ GLuint HARDWARE_preload_sprite_texture_frame(GFX* gfx, int frame, int IndexInCac
 	//-----------------------------
 	//make the surface
 	//-----------------------------
-	//shared_ptr<SDL_Surface > surface = SDL_CreateRGBSurface(SDL_SWSURFACE, texture_size_x, texture_size_y, 32, rmask, gmask, bmask, amask);
+	//sp<SDL_Surface > surface = SDL_CreateRGBSurface(SDL_SWSURFACE, texture_size_x, texture_size_y, 32, rmask, gmask, bmask, amask);
 	//SDL_LockSurface( surface );
 
 	unsigned char* rgba_data = (unsigned char*)calloc(texture_size_x * texture_size_y * 4, sizeof(unsigned char));//(unsigned char *)surface->pixels;

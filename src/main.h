@@ -55,8 +55,8 @@ public:
 	//static bool vbl_done;
 	//static bool timer_done;
 
-	//static shared_ptr<TTF_Font> ttf_bobsgame_8;
-	//static shared_ptr<TTF_Font> ttf_bobsgame_16;
+	//static sp<TTF_Font> ttf_bobsgame_8;
+	//static sp<TTF_Font> ttf_bobsgame_16;
 	//static bool seeded;
 	//static bool vbl_init;
 	//static bool GAME_is_running;
@@ -82,7 +82,7 @@ public:
 	//static int cheater;
 
 
-	shared_ptr<OKGame> bobsGame = nullptr;
+	sp<OKGame> bobsGame = nullptr;
 
 	static Gwen::Controls::Canvas* gwenCanvas;
 	static Gwen::Input::GwenSDL2 *gwenInput;
@@ -94,15 +94,15 @@ public:
 	
 	static bool mainLoopStarted;
 
-	static shared_ptr<Main> getMain();
-	static void setMain(shared_ptr < Main> c);
+	static sp<Main> getMain();
+	static void setMain(sp < Main> c);
 
 	Main();
-	static shared_ptr<ControlsManager> getControlsManager();
+	static sp<ControlsManager> getControlsManager();
 	static void openURL(string url);
 	static string getPath();
 
-	shared_ptr<System> clientInfo = make_shared<System>();
+	sp<System> clientInfo = ms<System>();
 
 	//void initSystemInfo();
 
@@ -118,7 +118,7 @@ public:
 
 	void initGWEN();
 
-	static shared_ptr<GlobalSettings> globalSettings;
+	static sp<GlobalSettings> globalSettings;
 	void loadGlobalSettingsFromXML();
 	void saveGlobalSettingsToXML();
 
@@ -126,30 +126,30 @@ public:
 	//public volatile boolean exit = false;
 	static bool quit;// = false;
 
-	//static shared_ptr<AudioManager> audioManager;
-	static shared_ptr<FileUtils> fileUtils;
-	static shared_ptr<StateManager> stateManager;
-	static shared_ptr<System> systemUtils;
-	//static shared_ptr<ControlsManager> controlsManager;// = nullptr;
+	//static sp<AudioManager> audioManager;
+	static sp<FileUtils> fileUtils;
+	static sp<StateManager> stateManager;
+	static sp<System> systemUtils;
+	//static sp<ControlsManager> controlsManager;// = nullptr;
 
-	static shared_ptr<BGClientEngine> gameEngine;// = nullptr;
+	static sp<BGClientEngine> gameEngine;// = nullptr;
 	
-	//shared_ptr<BGClientEngine> getGameEngine();
+	//sp<BGClientEngine> getGameEngine();
 
-	//ArrayDeque<shared_ptr<BGClientEngine>> *gameStack = make_shared<ArrayDeque><shared_ptr<BGClientEngine>>();
+	//ArrayDeque<sp<BGClientEngine>> *gameStack = ms<ArrayDeque><sp<BGClientEngine>>();
 
-	static shared_ptr<Console> console;// = nullptr;
-	static shared_ptr<Console> rightConsole;// = nullptr;
+	static sp<Console> console;// = nullptr;
+	static sp<Console> rightConsole;// = nullptr;
 
-	shared_ptr<LogoState> logoScreenState = nullptr;
-	shared_ptr<LoginState> loginState = nullptr;
-	shared_ptr<LoggedOutState> loggedOutState = nullptr;
-	shared_ptr<ServersHaveShutDownState> serversHaveShutDownState = nullptr;
-	shared_ptr<CreateNewAccountState> createNewAccountState = nullptr;
-	shared_ptr<TitleScreenState> titleScreenState = nullptr;
+	sp<LogoState> logoScreenState = nullptr;
+	sp<LoginState> loginState = nullptr;
+	sp<LoggedOutState> loggedOutState = nullptr;
+	sp<ServersHaveShutDownState> serversHaveShutDownState = nullptr;
+	sp<CreateNewAccountState> createNewAccountState = nullptr;
+	sp<TitleScreenState> titleScreenState = nullptr;
 
-	shared_ptr<YouWillBeNotifiedState> youWillBeNotifiedState = nullptr;
-	static shared_ptr<GlowTileBackgroundMenuPanel> glowTileBackgroundMenuPanel;
+	sp<YouWillBeNotifiedState> youWillBeNotifiedState = nullptr;
+	static sp<GlowTileBackgroundMenuPanel> glowTileBackgroundMenuPanel;
 
 	bool serversAreShuttingDown = false;
 
@@ -157,15 +157,15 @@ public:
 
 					   //static bool isApplet;
 
-	shared_ptr<SDL_Window> SDLWindow = nullptr;
+	sp<SDL_Window> SDLWindow = nullptr;
 
-	//shared_ptr<FileUtils> utils;
-	//shared_ptr<GLUtils> lwjglUtils = nullptr;
+	//sp<FileUtils> utils;
+	//sp<GLUtils> lwjglUtils = nullptr;
 	
-	//shared_ptr<GLUtils> glUtils = nullptr;
-	// static shared_ptr<AudioUtils> audioUtils;
+	//sp<GLUtils> glUtils = nullptr;
+	// static sp<AudioUtils> audioUtils;
 
-	static shared_ptr<OKNet> bobNet;
+	static sp<OKNet> bobNet;
 
 
 
@@ -188,9 +188,9 @@ public:
 	static void doResizeCheck();
 	static void doScreenShotCheck();
 
-	//static ArrayList<SDL_Event> events;// = make_shared<ArrayList><SDL_Event>();
+	//static ArrayList<SDL_Event> events;// = ms<ArrayList><SDL_Event>();
 
-	void printEvent(const shared_ptr<SDL_Event> e);
+	void printEvent(const sp<SDL_Event> e);
 	void processEvents();
 	static void whilefix();
 	static void delay(int ticks);

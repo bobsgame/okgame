@@ -30,31 +30,31 @@ public:
 	static int TYPE_QUALIFIER_FALSE;
 
 
-	vector<shared_ptr<EventParameter>> parameterList;// = make_shared<ArrayList><shared_ptr<EventParameter>>();
+	vector<sp<EventParameter>> parameterList;// = ms<ArrayList><sp<EventParameter>>();
 
-	shared_ptr<EventCommand> parent = nullptr;
-
-
-	vector<shared_ptr<EventCommand>> children;// = make_shared<ArrayList><shared_ptr<EventCommand>>();
+	sp<EventCommand> parent = nullptr;
 
 
-	EventCommand(shared_ptr<Engine> g, const string& command, vector<shared_ptr<EventParameter>> &parameterList, int type);
+	vector<sp<EventCommand>> children;// = ms<ArrayList><sp<EventCommand>>();
+
+
+	EventCommand(sp<Engine> g, const string& command, vector<sp<EventParameter>> &parameterList, int type);
 
 	int getNumParams();
 
 
-	static shared_ptr<EventCommand> parseEventCommandFromCommandString(shared_ptr<Engine> g, shared_ptr<Event> event, string commandString);
+	static sp<EventCommand> parseEventCommandFromCommandString(sp<Engine> g, sp<Event> event, string commandString);
 
 
-	shared_ptr<EventCommand> getParent();
+	sp<EventCommand> getParent();
 
 
-	void addChild(shared_ptr<EventCommand> e);
+	void addChild(sp<EventCommand> e);
 
 
 	int currentChildIndex = 0;
 
 
-	shared_ptr<EventCommand> getNextChild();
+	sp<EventCommand> getNextChild();
 };
 

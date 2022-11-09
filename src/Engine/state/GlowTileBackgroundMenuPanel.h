@@ -18,17 +18,17 @@ public:
 	static Logger log;
 
 
-	shared_ptr<Engine> e = nullptr;
+	sp<Engine> e = nullptr;
 
 
 public:
 	class GlowTile
 	{
 	private:
-		shared_ptr<GlowTileBackgroundMenuPanel> outerInstance = nullptr;
+		sp<GlowTileBackgroundMenuPanel> outerInstance = nullptr;
 
 	public:
-		GlowTile(shared_ptr<GlowTileBackgroundMenuPanel> outerInstance);
+		GlowTile(sp<GlowTileBackgroundMenuPanel> outerInstance);
 
 		int tileX = 0;
 		int tileY = 0;
@@ -38,9 +38,9 @@ public:
 	};
 
 public:
-	vector<shared_ptr<GlowTile>> glowTiles;// = make_shared<ArrayList><shared_ptr<GlowTile>>();
-	vector<shared_ptr<OKTexture>> glowTileFramesTexture;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
-	shared_ptr<OKTexture> bgScrollTexture = nullptr;
+	vector<sp<GlowTile>> glowTiles;// = ms<ArrayList><sp<GlowTile>>();
+	vector<sp<OKTexture>> glowTileFramesTexture;// = ms<ArrayList><sp<OKTexture>>();
+	sp<OKTexture> bgScrollTexture = nullptr;
 	float bgScrollX = 0;
 	float bgScrollY = 0;
 	long long ticksPassed = 0;
@@ -60,7 +60,7 @@ public:
 	GlowTileBackgroundMenuPanel();
 
 
-	GlowTileBackgroundMenuPanel(shared_ptr<Engine> g);
+	GlowTileBackgroundMenuPanel(sp<Engine> g);
 
 
 	virtual void init();

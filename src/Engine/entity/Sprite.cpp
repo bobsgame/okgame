@@ -23,7 +23,7 @@ Sprite::Sprite()
 	//only for PreloadedSprite use
 }
 
-Sprite::Sprite(shared_ptr<Engine> g)
+Sprite::Sprite(sp<Engine> g)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -34,8 +34,8 @@ Sprite::Sprite(shared_ptr<Engine> g)
 void Sprite::preloadFromDataFile(string name)
 {//=========================================================================================================================
 
-	//log->info("make_shared<SpriteData> "+name);
-	this->data = make_shared<SpriteData>(-1, name, name, 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
+	//log->info("ms<SpriteData> "+name);
+	this->data = ms<SpriteData>(-1, name, name, 0, 0, 1, false, false, false, false, false, false, false, false, false, false, false, false, false, false, nullptr, "", 0, 0, 0, "", "");
 
 
 	int width = 0;
@@ -46,7 +46,7 @@ void Sprite::preloadFromDataFile(string name)
 	//load txt, parse id,width,height,frames,animations
 
 	//log->info("loadTextFileFromExePathIntoVectorOfStringsAndTrim "+name);
-	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sprite/" + name + ".txt");
+	sp<vector<string>> stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sprite/" + name + ".txt");
 
 	preloadedFromData = true;
 
@@ -85,8 +85,8 @@ void Sprite::preloadFromDataFile(string name)
 						s = s.substr(s.find(":") + 1);
 						int frameStart = stoi(s);
 
-						//log->info("make_shared<SpriteAnimationSequence> " + frameSequenceName);
-						getAnimationList()->push_back(make_shared<SpriteAnimationSequence>(frameSequenceName, frameStart, 0, 0, 0, 0));
+						//log->info("ms<SpriteAnimationSequence> " + frameSequenceName);
+						getAnimationList()->push_back(ms<SpriteAnimationSequence>(frameSequenceName, frameStart, 0, 0, 0, 0));
 						//log->debug("Animation:"+frameSequenceName+":"+to_string(frameStart));
 					}
 				}
@@ -119,7 +119,7 @@ void Sprite::preloadFromDataFile(string name)
 	texture = GLUtils::getTextureFromPNGExePath("data/sprite/" + name + ".png");
 
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(e, getEventData(), this);
+	if (getEventData() != nullptr)this->event = ms<Event>(e, getEventData(), this);
 	//System.out.println("Texture Size:"+texture.getWidth()+","+texture.getHeight());
 
 	//      
@@ -151,7 +151,7 @@ void Sprite::preloadFromDataFile(string name)
 	//	         //			ty0 = (float)((float)ty0/(float)texture.getHeight());
 	//	         //			ty1 = (float)((float)ty1/(float)texture.getHeight());
 	//   
-	//	   frameTextureRegionList->add(make_shared<TextureRegion>(texture,x,y,getWidth(),getHeight()));
+	//	   frameTextureRegionList->add(ms<TextureRegion>(texture,x,y,getWidth(),getHeight()));
 	//   
 	//	}
 	//   
@@ -159,7 +159,7 @@ void Sprite::preloadFromDataFile(string name)
 
 
 //The following method was originally marked 'synchronized':
-void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
+void Sprite::initializeWithSpriteData(sp<SpriteData> spriteData)
 { //=========================================================================================================================
 
 	if (this->data != nullptr)
@@ -172,7 +172,7 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 	if (spriteData == nullptr)
 	{
 
-		spriteData = make_shared<SpriteData>();
+		spriteData = ms<SpriteData>();
 
 		log.warn("Sprite::initializeWithSpriteData spriteData was null");
 	}
@@ -197,10 +197,10 @@ void Sprite::initializeWithSpriteData(shared_ptr<SpriteData> spriteData)
 
 	if (getIsItem() || getIsGame())
 	{
-		make_shared<Item>(Item(getEngine(), shared_from_this()));
+		ms<Item>(Item(getEngine(), shared_from_this()));
 	}
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(e, getEventData(), this);
+	if (getEventData() != nullptr)this->event = ms<Event>(e, getEventData(), this);
 }
 
 
@@ -258,7 +258,7 @@ void Sprite::setInitialized_S(bool i)
 void Sprite::drawFrame(const string& animationName, float x0, float x1, float y0, float y1, float r, float g, float b, float a, int filter)
 { //===============================================================================================
 
-	shared_ptr<SpriteAnimationSequence> s = getAnimationByName(animationName);
+	sp<SpriteAnimationSequence> s = getAnimationByName(animationName);
 
 	if (s != nullptr)
 	{
@@ -286,7 +286,7 @@ void Sprite::drawFrame(int frame, float x0, float x1, float y0, float y1, float 
 }
 
 //=========================================================================================================================
-void Sprite::drawFrame(shared_ptr<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float a, int filter)
+void Sprite::drawFrame(sp<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float a, int filter)
 { //===============================================================================================
 	drawFrame(texture, frame, x0, x1, y0, y1, 1.0f, 1.0f, 1.0f, a, filter);
 }
@@ -301,7 +301,7 @@ void Sprite::drawFrame(int frame, float x0, float x1, float y0, float y1, float 
 }
 
 //=========================================================================================================================
-void Sprite::drawFrame(shared_ptr<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float r, float g, float b, float a, int filter)
+void Sprite::drawFrame(sp<OKTexture> texture, int frame, float x0, float x1, float y0, float y1, float r, float g, float b, float a, int filter)
 { //===============================================================================================
 
 	if (texture != nullptr)
@@ -416,7 +416,7 @@ void Sprite::draw(float tx0, float tx1, float ty0, float ty1, float x0, float x1
 		//Camera camera = OKGame::camera;
 		//camera.update();
 
-		shared_ptr<SpriteBatch>spriteBatch = OKGame::spriteBatch;
+		sp<SpriteBatch>spriteBatch = OKGame::spriteBatch;
 
 		//spriteBatch.setProjectionMatrix(camera.combined);
 		//spriteBatch->begin();
@@ -438,7 +438,7 @@ void Sprite::update()
 
 	if (event != nullptr)
 	{
-		//shared_ptr<Event> event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
+		//sp<Event> event = getEventManager()->getEventByIDCreateIfNotExist(getEventData()->getID());
 		getEventManager()->addToEventQueueIfNotThere(event); //events update their own network data inside their run function
 	}
 
@@ -519,16 +519,16 @@ void Sprite::loadTextures()
 		{
 			checkedIfExist = true;
 
-			shared_ptr<OKFile> textureFile = nullptr;
+			sp<OKFile> textureFile = nullptr;
 
 
 			if (useHQ2X == true)
 			{
-				textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5());
+				textureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "2x" + "/" + getDataMD5());
 			}
 			else
 			{
-				textureFile = make_shared<OKFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5());
+				textureFile = ms<OKFile>(FileUtils::cacheDir + "_" + getDataMD5() + "/" + "1x" + "/" + getDataMD5());
 			}
 
 			if (textureFile->exists())
@@ -691,10 +691,10 @@ void Sprite::loadTextures()
 
 
 //=========================================================================================================================
-shared_ptr<ByteArray> Sprite::getReplacementRGBFromSet(u8 r, u8 g, u8 b, shared_ptr<Sprite> s, int set)
+sp<ByteArray> Sprite::getReplacementRGBFromSet(u8 r, u8 g, u8 b, sp<Sprite> s, int set)
 { //=========================================================================================================================
 
-	shared_ptr<ByteArray> rgb = make_shared<ByteArray>(3);
+	sp<ByteArray> rgb = ms<ByteArray>(3);
 	rgb->data()[0] = r;
 	rgb->data()[1] = g;
 	rgb->data()[2] = b;
@@ -727,12 +727,12 @@ shared_ptr<ByteArray> Sprite::getReplacementRGBFromSet(u8 r, u8 g, u8 b, shared_
 }
 
 //The following method was originally marked 'synchronized':
-shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet)
+sp<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, int skinSet, int hairSet, int shirtSet, int pantsSet, int shoeSet, int carSet)
 { //=========================================================================================================================
 
 
-	shared_ptr<IntArray> data = indexDataIntArray;
-	shared_ptr<ByteArray> pal = paletteRGBByteArray;
+	sp<IntArray> data = indexDataIntArray;
+	sp<ByteArray> pal = paletteRGBByteArray;
 
 
 	//create bytebuffer
@@ -749,7 +749,7 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 	int texHeight = Math::getClosestPowerOfTwo(imageHeight);
 
 
-	shared_ptr<ByteArray> textureByteArray = make_shared<ByteArray>(texWidth * texHeight * 4);
+	sp<ByteArray> textureByteArray = ms<ByteArray>(texWidth * texHeight * 4);
 
 
 
@@ -761,9 +761,9 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 	int w = getImageWidth();
 	int h = getImageHeight();
 
-	shared_ptr<BufferedImage> spriteBufferedImage = nullptr;
+	sp<BufferedImage> spriteBufferedImage = nullptr;
 
-	spriteBufferedImage = make_shared<BufferedImage>(w, h * getNumFrames());
+	spriteBufferedImage = ms<BufferedImage>(w, h * getNumFrames());
 
 
 	for (int f = 0; f < getNumFrames(); f++)
@@ -823,7 +823,7 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 								//DONE: have these in memory on load.
 								//random sprites should contain their own data and pal.
 
-								shared_ptr<ByteArray> rgb = nullptr;
+								sp<ByteArray> rgb = nullptr;
 
 								if (carSet != -1)
 								{
@@ -931,7 +931,7 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 
 	if (useHQ2X)
 	{
-		shared_ptr<BufferedImage> hq2xSpriteBufferedImage = make_shared<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
+		sp<BufferedImage> hq2xSpriteBufferedImage = ms<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
 
 		setHQ2XAlphaFromOriginal(hq2xSpriteBufferedImage, spriteBufferedImage);
 
@@ -946,7 +946,7 @@ shared_ptr<ByteArray> Sprite::createRandomSpriteTextureByteBuffer_S(int eyeSet, 
 		{
 			for (int x = 0; x < imageWidth; x++)
 			{
-				shared_ptr<OKColor> c = make_shared<OKColor>(hq2xSpriteBufferedImage->getRGBA(x, y));// , true);
+				sp<OKColor> c = ms<OKColor>(hq2xSpriteBufferedImage->getRGBA(x, y));// , true);
 
 				textureByteArray->data()[(y * texWidth + x) * 4 + 0] = static_cast<u8>(c->ri());
 				textureByteArray->data()[(y * texWidth + x) * 4 + 1] = static_cast<u8>(c->gi());
@@ -981,9 +981,9 @@ void Sprite::createSpriteTexturePNG_S()
 	//---------------------------
 	//make bufferedimage the size of all sprite frames and fill it
 	//---------------------------
-	shared_ptr<BufferedImage> spriteBufferedImage = nullptr;
+	sp<BufferedImage> spriteBufferedImage = nullptr;
 
-	spriteBufferedImage = make_shared<BufferedImage>(w, h * getNumFrames());
+	spriteBufferedImage = ms<BufferedImage>(w, h * getNumFrames());
 
 //	if(getName()=="bobSmallTable")
 //	{
@@ -1044,7 +1044,7 @@ void Sprite::createSpriteTexturePNG_S()
 
 	if (useHQ2X)
 	{
-		shared_ptr<BufferedImage> hq2xSpriteBufferedImage = make_shared<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
+		sp<BufferedImage> hq2xSpriteBufferedImage = ms<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
 
 		setHQ2XAlphaFromOriginal(hq2xSpriteBufferedImage, spriteBufferedImage);
 
@@ -1080,9 +1080,9 @@ void Sprite::createSpriteShadowTexturePNG_S()
 	int height = getImageHeight();
 
 
-	shared_ptr<BufferedImage> spriteBufferedImage = nullptr;
+	sp<BufferedImage> spriteBufferedImage = nullptr;
 
-	spriteBufferedImage = make_shared<BufferedImage>(width, height * getNumFrames());
+	spriteBufferedImage = ms<BufferedImage>(width, height * getNumFrames());
 	
 
 	for (int f = 0; f < getNumFrames(); f++)
@@ -1132,7 +1132,7 @@ void Sprite::createSpriteShadowTexturePNG_S()
 
 	if (useHQ2X)
 	{
-	    shared_ptr<BufferedImage> hq2xShadowBufferedImage = make_shared<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
+	    sp<BufferedImage> hq2xShadowBufferedImage = ms<BufferedImage>((new HQ2X())->hq2x(spriteBufferedImage.get()));
 	
 	    setHQ2XAlphaFromOriginal(hq2xShadowBufferedImage, spriteBufferedImage);
 	
@@ -1202,7 +1202,7 @@ int Sprite::getNumberOfAnimations()
 
 
 //=========================================================================================================================
-shared_ptr<SpriteAnimationSequence> Sprite::getFirstAnimation()
+sp<SpriteAnimationSequence> Sprite::getFirstAnimation()
 { //=========================================================================================================================
 	//go through getAnimationList
 
@@ -1212,14 +1212,14 @@ shared_ptr<SpriteAnimationSequence> Sprite::getFirstAnimation()
 	}
 	else
 	{
-		getAnimationList()->push_back(make_shared<SpriteAnimationSequence>("Default", 0, 0, 0, 0, 0));
+		getAnimationList()->push_back(ms<SpriteAnimationSequence>("Default", 0, 0, 0, 0, 0));
 		log.warn("First animation sequence not found in SpriteAsset: " + getName());
 	}
 
 	return getAnimationList()->at(0);
 }
 
-shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByName(const string& name)
+sp<SpriteAnimationSequence> Sprite::getAnimationByName(const string& name)
 { //=========================================================================================================================
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
@@ -1233,7 +1233,7 @@ shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByName(const string& nam
 	return nullptr;
 }
 
-shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByFrame(int frame)
+sp<SpriteAnimationSequence> Sprite::getAnimationByFrame(int frame)
 { //=========================================================================================================================
 
 
@@ -1242,12 +1242,12 @@ shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByFrame(int frame)
 		return nullptr;
 	}
 
-	shared_ptr<SpriteAnimationSequence> a = getAnimationList()->at(0);
+	sp<SpriteAnimationSequence> a = getAnimationList()->at(0);
 	if (a->frameStart == frame)return a;
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
 	{
-		shared_ptr<SpriteAnimationSequence> temp = getAnimationList()->at(i);
+		sp<SpriteAnimationSequence> temp = getAnimationList()->at(i);
 		if (temp->frameStart == frame)return temp;
 		if (temp->frameStart <= frame && temp->frameStart >= a->frameStart)
 		{
@@ -1258,7 +1258,7 @@ shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByFrame(int frame)
 	return a;
 }
 
-shared_ptr<SpriteAnimationSequence> Sprite::getAnimationByIndex(int index)
+sp<SpriteAnimationSequence> Sprite::getAnimationByIndex(int index)
 { //=========================================================================================================================
 	if (index < 0 || index >= getAnimationList()->size())
 	{
@@ -1288,7 +1288,7 @@ int Sprite::getAnimationNumFramesByFrame(int frame)
 
 
 //=========================================================================================================================
-int Sprite::getAnimationNumFramesByAnimation(shared_ptr<SpriteAnimationSequence> a)
+int Sprite::getAnimationNumFramesByAnimation(sp<SpriteAnimationSequence> a)
 { //=========================================================================================================================
 
 	if (a == nullptr)
@@ -1303,7 +1303,7 @@ int Sprite::getAnimationNumFramesByAnimation(shared_ptr<SpriteAnimationSequence>
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
 	{
-		shared_ptr<SpriteAnimationSequence> temp = getAnimationList()->at(i);
+		sp<SpriteAnimationSequence> temp = getAnimationList()->at(i);
 		if (temp->frameStart > a->frameStart && temp->frameStart < endFrame)
 		{
 			endFrame = temp->frameStart;
@@ -1334,7 +1334,7 @@ int Sprite::getAnimationIndexByName(const string& name)
 	return -1;
 }
 
-int Sprite::getAnimationIndexByAnimation(shared_ptr<SpriteAnimationSequence> a)
+int Sprite::getAnimationIndexByAnimation(sp<SpriteAnimationSequence> a)
 { //=========================================================================================================================
 
 	for (int i = 0; i < getAnimationList()->size(); i++)
@@ -1376,14 +1376,14 @@ string Sprite::getAnimationNameByFrame(int frame)
 
 }
 
-void Sprite::antialiasBufferedImage(shared_ptr<BufferedImage> bufferedImage)
+void Sprite::antialiasBufferedImage(sp<BufferedImage> bufferedImage)
 { //===============================================================================================
 
 	//go through hq2x image
 	//if pixel is transparent, and the pixel right and down, down and left, left and up, or up and right are black, this one is black
 
 	//have to make a copy otherwise the algorithm becomes recursive
-	shared_ptr<BufferedImage> copy = make_shared<BufferedImage>(bufferedImage->getWidth(), bufferedImage->getHeight());
+	sp<BufferedImage> copy = ms<BufferedImage>(bufferedImage->getWidth(), bufferedImage->getHeight());
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
 	{
 		for (int x = 0; x < bufferedImage->getWidth(); x++)
@@ -1448,7 +1448,7 @@ void Sprite::antialiasBufferedImage(shared_ptr<BufferedImage> bufferedImage)
 	}
 }
 
-void Sprite::setHQ2XAlphaFromOriginal(shared_ptr<BufferedImage> hq2xBufferedImage, shared_ptr<BufferedImage> bufferedImage)
+void Sprite::setHQ2XAlphaFromOriginal(sp<BufferedImage> hq2xBufferedImage, sp<BufferedImage> bufferedImage)
 { //===============================================================================================
 	//now go through original image again. take each transparent pixel and set the hq2x one with it at 2x
 	for (int y = 0; y < bufferedImage->getHeight(); y++)
@@ -1488,8 +1488,8 @@ int h = (getHeightPixelsHQ/2);
 //---------------------------
 //make bufferedimage the size of all sprite frames and fill it
 //---------------------------
-//BufferedImage bufferedImage = (make_shared<Frame>()).getGraphicsConfiguration().createCompatibleImage(width, (height) * num_Frames, Transparency.TRANSLUCENT);
-BufferedImage bufferedImage = make_shared<BufferedImage>( w, h * frames, BufferedImage.TYPE_INT_ARGB);
+//BufferedImage bufferedImage = (ms<Frame>()).getGraphicsConfiguration().createCompatibleImage(width, (height) * num_Frames, Transparency.TRANSLUCENT);
+BufferedImage bufferedImage = ms<BufferedImage>( w, h * frames, BufferedImage.TYPE_INT_ARGB);
 for(int f = 0; f < frames; f++)
 {
 for(int y = 0; y < h; y++)
@@ -1521,7 +1521,7 @@ CacheManager.saveImage(dirpath + "png\\sprite\\" + name + "_Sprite_HQ2X_" + widt
 //write shadow frames
 //---------------------------
 
-bufferedImage = make_shared<BufferedImage>(width, height* num_Frames, BufferedImage.TYPE_INT_ARGB);
+bufferedImage = ms<BufferedImage>(width, height* num_Frames, BufferedImage.TYPE_INT_ARGB);
 for(int f = 0; f < num_Frames; f++)
 {
 for(int y = 0; y < height; y++)
@@ -1580,7 +1580,7 @@ CacheManager.saveImage(dirpath + "png\\sprite\\" + name + "_SpriteShadow_HQ2X_" 
 }
 */
 
-shared_ptr<SpriteData> Sprite::getData()
+sp<SpriteData> Sprite::getData()
 {
 	return data;
 }
@@ -1720,42 +1720,42 @@ bool Sprite::getForceHQ2X()
 
 bool Sprite::getForceMD5Export()
 {
-	shared_ptr<SpriteData> s = getData();
+	sp<SpriteData> s = getData();
 	return s->getForceMD5Export();
 }
 
-shared_ptr<EventData> Sprite::getEventData()
+sp<EventData> Sprite::getEventData()
 {
-	shared_ptr<SpriteData> s = getData();
+	sp<SpriteData> s = getData();
 	return s->getEventData();
 }
 
 
 string& Sprite::getItemGameDescription()
 {
-	shared_ptr<SpriteData> s = getData();
+	sp<SpriteData> s = getData();
 	return s->getItemGameDescription();
 }
 
 float Sprite::getGamePrice()
 {
-	shared_ptr<SpriteData> s = getData();
+	sp<SpriteData> s = getData();
 	return s->getGamePrice();
 }
 
 int Sprite::getUtilityOffsetXPixelsHQ()
 {
-	shared_ptr<SpriteData> s = getData();
+	sp<SpriteData> s = getData();
 	return s->getUtilityOffsetXPixelsHQ();
 }
 
 int Sprite::getUtilityOffsetYPixelsHQ()
 {
-	shared_ptr<SpriteData> s = getData();
+	sp<SpriteData> s = getData();
 	return s->getUtilityOffsetYPixelsHQ();
 }
 
-vector<shared_ptr<SpriteAnimationSequence>>* Sprite::getAnimationList()
+sp<vector<sp<SpriteAnimationSequence>>> Sprite::getAnimationList()
 {
 	return getData()->getAnimationList();
 }

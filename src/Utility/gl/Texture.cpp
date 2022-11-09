@@ -7,10 +7,10 @@
 
 //Logger Texture::log = Logger("Texture");
 
-shared_ptr<OKTexture>OKTexture::lastBoundTexture = nullptr;
+sp<OKTexture>OKTexture::lastBoundTexture = nullptr;
 
 //=========================================================================================================================
-shared_ptr<OKTexture>OKTexture::getLastBoundTexture()
+sp<OKTexture>OKTexture::getLastBoundTexture()
 {//=========================================================================================================================
 	return lastBoundTexture;
 }
@@ -155,7 +155,7 @@ void OKTexture::release()
 {//=========================================================================================================================
 
 
-	shared_ptr<GLuint>textureIDs = make_shared<GLuint>[1];
+	sp<GLuint>textureIDs = ms<GLuint>[1];
 	textureIDs[0] = textureID;
 
 	glDeleteTextures(1, textureIDs);
@@ -192,9 +192,9 @@ void OKTexture::setTextureID(GLuint textureID)
 }
 
 //=========================================================================================================================
-shared_ptr<ByteArray> OKTexture::getTextureData()
+sp<ByteArray> OKTexture::getTextureData()
 {//=========================================================================================================================
-	shared_ptr<ByteArray>buffer = make_shared<ByteArray>((hasAlpha() ? 4 : 3) * texWidth * texHeight);
+	sp<ByteArray>buffer = ms<ByteArray>((hasAlpha() ? 4 : 3) * texWidth * texHeight);
 	bind();
 	glGetTexImage(GL_TEXTURE_2D, 0, hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, buffer->data());
 

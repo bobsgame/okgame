@@ -16,14 +16,14 @@ EntityData::EntityData()
 { //=========================================================================================================================
 }
 //=========================================================================================================================
-EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, shared_ptr<EventData> eventData, const string& comment)
+EntityData::EntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, sp<EventData> eventData, const string& comment)
 { //=========================================================================================================================
 
 	initEntityData(id, name, spriteAssetName, spawnXPixels1X, spawnYPixels1X, initialFrame, pushable, nonWalkable, alphaByte, scale, ticksPerPixelMoved, aboveTopLayer, aboveWhenEqual, alwaysOnBottom, animateThroughFrames, randomTimeBetweenAnimation, ticksBetweenFrames, ticksBetweenAnimation, onlyHereDuringEvent, randomFrames, disableShadow, eventData, comment);
 }
 
 //=========================================================================================================================
-void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, shared_ptr<EventData> eventData, const string& comment)
+void EntityData::initEntityData(int id, const string& name, const string& spriteAssetName, int spawnXPixels1X, int spawnYPixels1X, int initialFrame, bool pushable, bool nonWalkable, int alphaByte, float scale, int ticksPerPixelMoved, bool aboveTopLayer, bool aboveWhenEqual, bool alwaysOnBottom, bool animateThroughFrames, bool randomTimeBetweenAnimation, int ticksBetweenFrames, int ticksBetweenAnimation, bool onlyHereDuringEvent, bool randomFrames, bool disableShadow, sp<EventData> eventData, const string& comment)
 {//=========================================================================================================================
 	this->id = id;
 	this->name = name;
@@ -68,7 +68,7 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 }
 
 ////=========================================================================================================================
-//shared_ptr<EntityData> EntityData::fromBase64ZippedJSON(const string& b64)
+//sp<EntityData> EntityData::fromBase64ZippedJSON(const string& b64)
 //{ //===============================================================================================
 //
 //	// string decode64 = FileUtils::decodeBase64String(b64);
@@ -78,12 +78,12 @@ void EntityData::initEntityData(int id, const string& name, const string& sprite
 //	return fromJSON(json);
 //}
 //
-//shared_ptr<EntityData> EntityData::fromJSON(const string& json)
+//sp<EntityData> EntityData::fromJSON(const string& json)
 //{ //===============================================================================================
 //
 //
-//	//shared_ptr<Gson> gson = make_shared<Gson>();
-//	shared_ptr<EntityData> data = nullptr;// = gson->fromJson(json, EntityData::typeid);
+//	//sp<Gson> gson = ms<Gson>();
+//	sp<EntityData> data = nullptr;// = gson->fromJson(json, EntityData::typeid);
 //
 //	return data;
 //}
@@ -311,7 +311,7 @@ string& EntityData::initFromString(string& t)
 	t = t.substr(t.find("{") + 1);
 	while (OKString::startsWith(t, "}") == false)
 	{
-		shared_ptr<EventData> data = make_shared<EventData>();
+		sp<EventData> data = ms<EventData>();
 		t = data->initFromString(t);
 		eventData = data;
 	}
@@ -513,7 +513,7 @@ bool EntityData::getPushPlayer()
 	return pushPlayer;
 }
 
-shared_ptr<EventData> EntityData::getEventData()
+sp<EventData> EntityData::getEventData()
 {
 	return eventData;
 }
@@ -528,12 +528,12 @@ shared_ptr<EventData> EntityData::getEventData()
 //	return stateID;
 //}
 
-ArrayList<string>* EntityData::getConnectionTYPEIDList()
+sp<vector<string>> EntityData::getConnectionTYPEIDList()
 {
 	return connectionTYPEIDList;
 }
 
-ArrayList<string>* EntityData::getBehaviorList()
+sp<vector<string>> EntityData::getBehaviorList()
 {
 	return behaviorList;
 }

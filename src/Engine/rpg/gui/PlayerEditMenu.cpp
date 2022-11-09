@@ -20,63 +20,63 @@ PlayerEditMenu::PlayerEditMenu()
 	MenuPanel();
 
 	//
-	//   editPanel = make_shared<DialogLayout>();
+	//   editPanel = ms<DialogLayout>();
 	//   editPanel->setTheme("darkPanel");
 	//
 	//
-	//   animPanel = make_shared<DialogLayout>();
+	//   animPanel = ms<DialogLayout>();
 	//   //animPanel.setTheme("loginpanel");
 	//
 	//
-	//   playerEditPanelLabel = make_shared<Label>("Edit Your Character");
+	//   playerEditPanelLabel = ms<Label>("Edit Your Character");
 	//   playerEditPanelLabel->setCanAcceptKeyboardFocus(false);
 	//   playerEditPanelLabel->setTheme("bigLabel");
 	//
 	//
-	//   errorLabel = make_shared<Label>(" ");
+	//   errorLabel = ms<Label>(" ");
 	//   errorLabel->setTheme("errorLabel");
 	//   errorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   statusLabel = make_shared<Label>(" ");
+	//   statusLabel = ms<Label>(" ");
 	//   statusLabel->setTheme("statusLabel");
 	//   statusLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   //---------------------------------------------------------
 	//   //player name
 	//   //---------------------------------------------------------
-	//   nameLabel = make_shared<Label>("Player Name:");
+	//   nameLabel = ms<Label>("Player Name:");
 	//   nameLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   nameEditField = make_shared<EditField>();
+	//   nameEditField = ms<EditField>();
 	//   nameEditField->setTheme("editfield");
 	//   nameEditField->setText("New Player");
 	//   nameEditField->setMaxTextLength(40);
 	//
-	//   nameEditField->addCallback(make_shared<CallbackAnonymousInnerClassHelper>(this));
+	//   nameEditField->addCallback(ms<CallbackAnonymousInnerClassHelper>(this));
 	//
 	//
 	//   //---------------------------------------------------------
 	//   //zip code
 	//   //---------------------------------------------------------
-	//   zipCodeEditField = make_shared<EditField>();
+	//   zipCodeEditField = ms<EditField>();
 	//   zipCodeEditField->setText("");
 	//   zipCodeEditField->setMaxTextLength(40);
-	//   zipCodeEditField->addCallback(make_shared<CallbackAnonymousInnerClassHelper>2(this));
-	//   zipCodeLabel = make_shared<Label>("Zip/Postal Code:");
+	//   zipCodeEditField->addCallback(ms<CallbackAnonymousInnerClassHelper>2(this));
+	//   zipCodeLabel = ms<Label>("Zip/Postal Code:");
 	//   zipCodeLabel->setLabelFor(zipCodeEditField);
 	//   zipCodeLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   //---------------------------------------------------------
 	//   //country
 	//   //---------------------------------------------------------
-	//   countryLabel = make_shared<Label>("Country:");
+	//   countryLabel = ms<Label>("Country:");
 	//   countryLabel->setCanAcceptKeyboardFocus(false);
 	//
 	//   countryStrings = CountryCodes::getCountryList();
 	//
-	//   countryComboBox = make_shared<ComboBox><string>(countryStrings);
+	//   countryComboBox = ms<ComboBox><string>(countryStrings);
 	//
-	//   //		countryComboBox.addCallback(make_shared<Runnable>()
+	//   //		countryComboBox.addCallback(ms<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
@@ -88,9 +88,9 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //add facebook account button
 	//   //---------------------------------------------------------
 	//
-	//   addSocialAccountsLabel = make_shared<Label>("Link your Facebook or Google+ Account to play with your friends!");
+	//   addSocialAccountsLabel = ms<Label>("Link your Facebook or Google+ Account to play with your friends!");
 	//
-	//   addFacebookAccountButton = make_shared<Button>("Link Facebook Account");
+	//   addFacebookAccountButton = ms<Button>("Link Facebook Account");
 	//   addFacebookAccountButton->setCanAcceptKeyboardFocus(false);
 	//   addFacebookAccountButton->setTheme("button");
 	//   addFacebookAccountButton->addCallback([&] ()
@@ -98,7 +98,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//         linkFacebookAccount();
 	//      }
 	//   );
-	//   facebookAccountLabel = make_shared<Label>("Facebook: Not Connected");
+	//   facebookAccountLabel = ms<Label>("Facebook: Not Connected");
 	//   facebookAccountLabel->setLabelFor(addFacebookAccountButton);
 	//   facebookAccountLabel->setTheme("statusLabel");
 	//   facebookAccountLabel->setCanAcceptKeyboardFocus(false);
@@ -106,17 +106,17 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //add google plus account button
 	//   //---------------------------------------------------------
-	//   //		addGooglePlusAccountButton = make_shared<Button>("Link Google+ Account");
+	//   //		addGooglePlusAccountButton = ms<Button>("Link Google+ Account");
 	//   //		addGooglePlusAccountButton.setCanAcceptKeyboardFocus(false);
 	//   //		addGooglePlusAccountButton.setTheme("button");
-	//   //		addGooglePlusAccountButton.addCallback(make_shared<Runnable>()
+	//   //		addGooglePlusAccountButton.addCallback(ms<Runnable>()
 	//   //		{
 	//   //			public void run()
 	//   //			{
 	//   //
 	//   //			}
 	//   //		});
-	//   //		googlePlusAccountLabel = make_shared<Label>("Google+: Not Connected");
+	//   //		googlePlusAccountLabel = ms<Label>("Google+: Not Connected");
 	//   //		googlePlusAccountLabel.setLabelFor(addGooglePlusAccountButton);
 	//   //		googlePlusAccountLabel.setTheme("statusLabel");
 	//   //		googlePlusAccountLabel.setCanAcceptKeyboardFocus(false);
@@ -125,7 +125,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //random button
 	//   //---------------------------------------------------------
-	//   randomButton = make_shared<Button>("Randomize Appearance");
+	//   randomButton = ms<Button>("Randomize Appearance");
 	//   randomButton->setCanAcceptKeyboardFocus(false);
 	//   randomButton->setTheme("button");
 	//   randomButton->addCallback([&] ()
@@ -139,19 +139,19 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //gender
 	//   //---------------------------------------------------------
-	//   genderLabel = make_shared<Label>("Gender:");
+	//   genderLabel = ms<Label>("Gender:");
 	//   genderLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   genderButtons = ArrayList<shared_ptr<ToggleButton>>(2);
-	//   genderButtonLabels = ArrayList<shared_ptr<Label>>(2);
+	//   genderButtons = ArrayList<sp<ToggleButton>>(2);
+	//   genderButtonLabels = ArrayList<sp<Label>>(2);
 	//
-	//   genderButtonLabels[0] = make_shared<Label>("Male");
-	//   genderButtonLabels[1] = make_shared<Label>("Female");
+	//   genderButtonLabels[0] = ms<Label>("Male");
+	//   genderButtonLabels[1] = ms<Label>("Female");
 	//
-	//   genderOptionModel = make_shared<SimpleIntegerModel>(1, genderButtons->size(), 1);
+	//   genderOptionModel = ms<SimpleIntegerModel>(1, genderButtons->size(), 1);
 	//   for (int i = 0; i < genderButtons->size(); i++)
 	//   {
-	//      genderButtons[i] = make_shared<ToggleButton>(make_shared<OptionBooleanModel>(genderOptionModel, i + 1));
+	//      genderButtons[i] = ms<ToggleButton>(ms<OptionBooleanModel>(genderOptionModel, i + 1));
 	//      genderButtons[i]->setTheme("radiobutton");
 	//
 	//      genderButtons[i]->addCallback([&] ()
@@ -167,11 +167,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //archetype
 	//   //---------------------------------------------------------
-	//   archetypeLabel = make_shared<Label>("Archetype:");
+	//   archetypeLabel = ms<Label>("Archetype:");
 	//   archetypeLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   archetypeStrings = make_shared<SimpleChangableListModel><string>("Popular", "Hipster", "Gothy", "Tough", "Jock", "Nerdy", "Chunky", "Punk", "Skater", "Thuggin'", "Pimply", "Normal 1", "Normal 2", "Normal 3", "Normal 4", "Normal 5", "Normal 6", "Normal 7", "Normal 8", "Normal 9", "Normal 10", "Normal 11", "Normal 12", "Normal 13", "Normal 14", "Normal 15");
-	//   archetypeComboBox = make_shared<ComboBox><string>(archetypeStrings);
+	//   archetypeStrings = ms<SimpleChangableListModel><string>("Popular", "Hipster", "Gothy", "Tough", "Jock", "Nerdy", "Chunky", "Punk", "Skater", "Thuggin'", "Pimply", "Normal 1", "Normal 2", "Normal 3", "Normal 4", "Normal 5", "Normal 6", "Normal 7", "Normal 8", "Normal 9", "Normal 10", "Normal 11", "Normal 12", "Normal 13", "Normal 14", "Normal 15");
+	//   archetypeComboBox = ms<ComboBox><string>(archetypeStrings);
 	//
 	//   archetypeComboBox->addCallback([&] ()
 	//      {
@@ -183,11 +183,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //hair color
 	//   //---------------------------------------------------------
-	//   hairColorLabel = make_shared<Label>("Hair Color:");
+	//   hairColorLabel = ms<Label>("Hair Color:");
 	//   hairColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   hairColorStrings = make_shared<SimpleChangableListModel><string>("Black", "Dark Brown", "Light Brown", "Blonde", "Red");
-	//   hairColorComboBox = make_shared<ComboBox><string>(hairColorStrings);
+	//   hairColorStrings = ms<SimpleChangableListModel><string>("Black", "Dark Brown", "Light Brown", "Blonde", "Red");
+	//   hairColorComboBox = ms<ComboBox><string>(hairColorStrings);
 	//
 	//
 	//   hairColorComboBox->addCallback([&] ()
@@ -200,11 +200,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //eye color
 	//   //---------------------------------------------------------
-	//   eyeColorLabel = make_shared<Label>("Eye Color:");
+	//   eyeColorLabel = ms<Label>("Eye Color:");
 	//   eyeColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   eyeColorStrings = make_shared<SimpleChangableListModel><string>("Black", "Brown", "Green", "Blue", "Gray");
-	//   eyeColorComboBox = make_shared<ComboBox><string>(eyeColorStrings);
+	//   eyeColorStrings = ms<SimpleChangableListModel><string>("Black", "Brown", "Green", "Blue", "Gray");
+	//   eyeColorComboBox = ms<ComboBox><string>(eyeColorStrings);
 	//
 	//   eyeColorComboBox->addCallback([&] ()
 	//      {
@@ -215,11 +215,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //skin shade
 	//   //---------------------------------------------------------
-	//   skinColorLabel = make_shared<Label>("Skin Shade:");
+	//   skinColorLabel = ms<Label>("Skin Shade:");
 	//   skinColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   skinColorStrings = make_shared<SimpleChangableListModel><string>("Lightest", "Light", "Medium", "Dark", "Darkest");
-	//   skinColorComboBox = make_shared<ComboBox><string>(skinColorStrings);
+	//   skinColorStrings = ms<SimpleChangableListModel><string>("Lightest", "Light", "Medium", "Dark", "Darkest");
+	//   skinColorComboBox = ms<ComboBox><string>(skinColorStrings);
 	//
 	//   skinColorComboBox->addCallback([&] ()
 	//      {
@@ -230,11 +230,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //shirt color
 	//   //---------------------------------------------------------
-	//   shirtColorLabel = make_shared<Label>("Shirt Color:");
+	//   shirtColorLabel = ms<Label>("Shirt Color:");
 	//   shirtColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   shirtColorStrings = make_shared<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
-	//   shirtColorComboBox = make_shared<ComboBox><string>(shirtColorStrings);
+	//   shirtColorStrings = ms<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
+	//   shirtColorComboBox = ms<ComboBox><string>(shirtColorStrings);
 	//
 	//
 	//   shirtColorComboBox->addCallback([&] ()
@@ -246,11 +246,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //pants color
 	//   //---------------------------------------------------------
-	//   pantsColorLabel = make_shared<Label>("Pants Color:");
+	//   pantsColorLabel = ms<Label>("Pants Color:");
 	//   pantsColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   pantsColorStrings = make_shared<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
-	//   pantsColorComboBox = make_shared<ComboBox><string>(pantsColorStrings);
+	//   pantsColorStrings = ms<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
+	//   pantsColorComboBox = ms<ComboBox><string>(pantsColorStrings);
 	//
 	//   pantsColorComboBox->addCallback([&] ()
 	//      {
@@ -261,11 +261,11 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //shoe color
 	//   //---------------------------------------------------------
-	//   shoeColorLabel = make_shared<Label>("Shoe Color:");
+	//   shoeColorLabel = ms<Label>("Shoe Color:");
 	//   shoeColorLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   shoeColorStrings = make_shared<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
-	//   shoeColorComboBox = make_shared<ComboBox><string>(shoeColorStrings);
+	//   shoeColorStrings = ms<SimpleChangableListModel><string>("Black", "Gray", "White", "Brown", "Blue", "Purple", "Red", "Magenta", "Pink", "Orange", "Yellow", "Green", "Cyan");
+	//   shoeColorComboBox = ms<ComboBox><string>(shoeColorStrings);
 	//
 	//   shoeColorComboBox->addCallback([&] ()
 	//      {
@@ -277,7 +277,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //---------------------------------------------------------
 	//   //ok button
 	//   //---------------------------------------------------------
-	//   okButton = make_shared<Button>("Ok!");
+	//   okButton = ms<Button>("Ok!");
 	//   okButton->setCanAcceptKeyboardFocus(false);
 	//   okButton->setTheme("button");
 	//   okButton->addCallback([&] ()
@@ -330,7 +330,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//   //scrollpane
 	//   //----------------------
 	//
-	//   scrollPane = make_shared<ScrollPane>(insideScrollPaneLayout);
+	//   scrollPane = ms<ScrollPane>(insideScrollPaneLayout);
 	//
 	//   scrollPane->setTheme(GUIManager::scrollPaneTheme);
 	//   scrollPane->setCanAcceptKeyboardFocus(false);
@@ -357,7 +357,7 @@ PlayerEditMenu::PlayerEditMenu()
 	//   editPanel->adjustSize();
 }
 
-PlayerEditMenu::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(shared_ptr<PlayerEditMenu> outerInstance)
+PlayerEditMenu::CallbackAnonymousInnerClassHelper::CallbackAnonymousInnerClassHelper(sp<PlayerEditMenu> outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
@@ -367,7 +367,7 @@ void PlayerEditMenu::CallbackAnonymousInnerClassHelper::callback(int key)
 	outerInstance->redrawPlayer();
 }
 
-PlayerEditMenu::CallbackAnonymousInnerClassHelper2::CallbackAnonymousInnerClassHelper2(shared_ptr<PlayerEditMenu> outerInstance)
+PlayerEditMenu::CallbackAnonymousInnerClassHelper2::CallbackAnonymousInnerClassHelper2(sp<PlayerEditMenu> outerInstance)
 {
 	this->outerInstance = outerInstance;
 }
@@ -460,14 +460,14 @@ void PlayerEditMenu::setButtonsVisible(bool b)
 	//   okButton->setVisible(b);
 }
 
-PlayerEditMenu::AddressInfo::AddressInfo(shared_ptr<PlayerEditMenu> outerInstance) : outerInstance(outerInstance)
+PlayerEditMenu::AddressInfo::AddressInfo(sp<PlayerEditMenu> outerInstance) : outerInstance(outerInstance)
 {
 }
 
-shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const string& address)
+sp <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(const string& address)
 { //=========================================================================================================================
 
-	shared_ptr<AddressInfo> a = make_shared<AddressInfo>(this);
+	sp<AddressInfo> a = ms<AddressInfo>(this);
 
 
 	// URL prefix to the geocoder
@@ -491,10 +491,10 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//   }
 	//
 	//   // prepare an HTTP connection to the geocoder
-	//   shared_ptr<HttpURLConnection> conn = nullptr;
+	//   sp<HttpURLConnection> conn = nullptr;
 	//   try
 	//   {
-	//      conn = static_cast<shared_ptr<HttpURLConnection>>(url->openConnection());
+	//      conn = static_cast<sp<HttpURLConnection>>(url->openConnection());
 	//   }
 	//   catch (IOException e1)
 	//   {
@@ -502,7 +502,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//      return nullptr;
 	//   }
 	//
-	//   shared_ptr<Document> geocoderResultDocument = nullptr;
+	//   sp<Document> geocoderResultDocument = nullptr;
 	//
 	//   try
 	//   {
@@ -517,7 +517,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//
 	//   try
 	//   {
-	//      shared_ptr<InputSource> geocoderResultInputSource = make_shared<InputSource>(conn->getInputStream());
+	//      sp<InputSource> geocoderResultInputSource = ms<InputSource>(conn->getInputStream());
 	//      // read result and parse into XML Document
 	//      geocoderResultDocument = DocumentBuilderFactory::newInstance().newDocumentBuilder().parse(geocoderResultInputSource);
 	//   }
@@ -543,7 +543,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//      }
 	//
 	//   // prepare XPath
-	//   shared_ptr<XPath> xpath = XPathFactory::newInstance().newXPath();
+	//   sp<XPath> xpath = XPathFactory::newInstance().newXPath();
 	//
 	//   /*
 	//      http://where.yahooapis.com/geocode?q=95817,%20United%20States
@@ -592,12 +592,12 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//
 	//
 	//   // extract the result
-	//   shared_ptr<NodeList> resultNodeList = nullptr;
+	//   sp<NodeList> resultNodeList = nullptr;
 	//
 	//   //validate status
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/resultset/errormessage", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/errormessage", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -627,7 +627,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/resultset/result[1]/postal", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/postal", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -652,7 +652,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/resultset/result[1]/city", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/city", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -677,7 +677,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/resultset/result[1]/state", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/state", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -701,7 +701,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/resultset/result[1]/latitude", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/latitude", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -731,7 +731,7 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/resultset/result[1]/longitude", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/resultset/result[1]/longitude", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -761,9 +761,9 @@ shared_ptr <PlayerEditMenu::AddressInfo> PlayerEditMenu::queryYahooGeocodingAPI(
 	return a;
 }
 
-shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const string& address)
+sp < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAPI(const string& address)
 { //=========================================================================================================================
-	shared_ptr<AddressInfo> a = make_shared<AddressInfo>(this);
+	sp<AddressInfo> a = ms<AddressInfo>(this);
 
 
 	// URL prefix to the geocoder
@@ -787,10 +787,10 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//   }
 	//
 	//   // prepare an HTTP connection to the geocoder
-	//   shared_ptr<HttpURLConnection> conn = nullptr;
+	//   sp<HttpURLConnection> conn = nullptr;
 	//   try
 	//   {
-	//      conn = static_cast<shared_ptr<HttpURLConnection>>(url->openConnection());
+	//      conn = static_cast<sp<HttpURLConnection>>(url->openConnection());
 	//   }
 	//   catch (IOException e1)
 	//   {
@@ -798,7 +798,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//      return nullptr;
 	//   }
 	//
-	//   shared_ptr<Document> geocoderResultDocument = nullptr;
+	//   sp<Document> geocoderResultDocument = nullptr;
 	//
 	//   try
 	//   {
@@ -813,7 +813,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//
 	//   try
 	//   {
-	//      shared_ptr<InputSource> geocoderResultInputSource = make_shared<InputSource>(conn->getInputStream());
+	//      sp<InputSource> geocoderResultInputSource = ms<InputSource>(conn->getInputStream());
 	//      // read result and parse into XML Document
 	//      geocoderResultDocument = DocumentBuilderFactory::newInstance().newDocumentBuilder().parse(geocoderResultInputSource);
 	//   }
@@ -839,7 +839,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//      }
 	//
 	//   // prepare XPath
-	//   shared_ptr<XPath> xpath = XPathFactory::newInstance().newXPath();
+	//   sp<XPath> xpath = XPathFactory::newInstance().newXPath();
 	//
 	//
 	//   /*
@@ -879,12 +879,12 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//    */
 	//
 	//   // extract the result
-	//   shared_ptr<NodeList> resultNodeList = nullptr;
+	//   sp<NodeList> resultNodeList = nullptr;
 	//
 	//   //validate status
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/GeocodeResponse/status", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/status", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -914,7 +914,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'postal_code']/long_name", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'postal_code']/long_name", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -939,7 +939,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'locality']/long_name", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'locality']/long_name", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -964,7 +964,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'administrative_area_level_1']/long_name", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/address_component[type/getText() = 'administrative_area_level_1']/long_name", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -988,7 +988,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//   delete resultNodeList;
 	//   try
 	//   {
-	//      resultNodeList = static_cast<shared_ptr<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/geometry/location/*", geocoderResultDocument, XPathConstants::NODESET));
+	//      resultNodeList = static_cast<sp<NodeList>>(xpath->evaluate("/GeocodeResponse/result[1]/geometry/location/*", geocoderResultDocument, XPathConstants::NODESET));
 	//   }
 	//   catch (XPathExpressionException e1)
 	//   {
@@ -1004,7 +1004,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 	//
 	//   for (int i = 0; i < resultNodeList->getLength(); ++i)
 	//   {
-	//      shared_ptr<Node> node = resultNodeList->item(i);
+	//      sp<Node> node = resultNodeList->item(i);
 	//      if (("lat") == node->getNodeName())
 	//      {
 	//         try
@@ -1048,7 +1048,7 @@ shared_ptr < PlayerEditMenu::AddressInfo> PlayerEditMenu::queryGoogleGeocodingAP
 void PlayerEditMenu::doOKButton()
 { //=========================================================================================================================
 	//
-	//   make_shared<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
+	//   ms<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
 	//      {
 	//         try
 	//         {
@@ -1098,7 +1098,7 @@ void PlayerEditMenu::doOKButton()
 	//         getGameSave()->characterAppearance = characterAppearance;
 	//
 	//
-	//         shared_ptr<Player> p = getPlayer();
+	//         sp<Player> p = getPlayer();
 	//         if (p != nullptr)
 	//         {
 	//            p->setCharacterNameAndCaption(getGameEngine()->getNameColor(getGameSave()->accountType), nameString, getGameEngine()->getAccountTypeColor(getGameSave()->accountType), getGameEngine()->getAccountTypeString(getGameSave()->accountType));
@@ -1116,7 +1116,7 @@ void PlayerEditMenu::doOKButton()
 	//            string countryCode = GameSave::getCountryCodeFromCountryString(countryName);
 	//
 	//            //get locality info from google API
-	//            shared_ptr<AddressInfo> a = queryGoogleGeocodingAPI("" + postalCode + ", " + countryName);
+	//            sp<AddressInfo> a = queryGoogleGeocodingAPI("" + postalCode + ", " + countryName);
 	//
 	//            if (a == nullptr)
 	//            {
@@ -1215,7 +1215,7 @@ void PlayerEditMenu::linkFacebookAccount()
 { //=========================================================================================================================
 
 	//
-	//   make_shared<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
+	//   ms<Thread>([&] () //needs to be a thread because Button.doCallback only calls Runnable.run() which does NOT create a thread
 	//      {
 	//         try
 	//         {
@@ -1247,15 +1247,15 @@ void PlayerEditMenu::linkFacebookAccount()
 	//
 	//            //check if our session token is valid
 	//            //restFB stuff here
-	//            shared_ptr<FacebookClient> facebookClient = nullptr;
+	//            sp<FacebookClient> facebookClient = nullptr;
 	//
 	//            //------------------------
 	//            //log into facebook to test token
 	//            //------------------------
 	//            try
 	//            {
-	//               facebookClient = make_shared<DefaultFacebookClient>(facebookAccessToken);
-	//               shared_ptr<User> user = facebookClient->fetchObject("me", User::typeid);
+	//               facebookClient = ms<DefaultFacebookClient>(facebookAccessToken);
+	//               sp<User> user = facebookClient->fetchObject("me", User::typeid);
 	//
 	//               string facebookID = user->getId();
 	//               log->debug("Facebook ID: " + facebookID);
@@ -1490,7 +1490,7 @@ void PlayerEditMenu::redrawPlayer()
 	//   hairColorIndex = hairColorComboBox->getSelected();
 	//
 	//
-	//   shared_ptr<Player> p = getPlayer();
+	//   sp<Player> p = getPlayer();
 	//
 	//   if (p != nullptr)
 	//   {
@@ -1693,9 +1693,9 @@ void PlayerEditMenu::render()
 
 	//additional rendering calls go here (after gui is drawn)
 
-	//shared_ptr<Player> p = getPlayer();
+	//sp<Player> p = getPlayer();
 
-	//shared_ptr<Texture> texture = p->uniqueTexture;
+	//sp<Texture> texture = p->uniqueTexture;
 
 	long long startTime = lastTime;
 	long long currentTime = System::currentHighResTimer();

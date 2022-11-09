@@ -14,7 +14,7 @@
 Logger EventParameter::log = Logger("EventParameter");
 
 
-EventParameter::EventParameter(shared_ptr<Engine> g, const string& parameterString)
+EventParameter::EventParameter(sp<Engine> g, const string& parameterString)
 { //===============================================================================================
 
 	this->e = g;
@@ -69,7 +69,7 @@ void EventParameter::parsePrimitive(const string& typeString, const string& prim
 	}
 }
 
-void EventParameter::updateParameterVariablesFromString(shared_ptr<Event> event)
+void EventParameter::updateParameterVariablesFromString(sp<Event> event)
 { //===============================================================================================
 
 	//parameterName is always OBJECT.id
@@ -101,13 +101,13 @@ void EventParameter::updateParameterVariablesFromString(shared_ptr<Event> event)
 				{
 					if (parameterString == "PLAYER")
 					{
-						this->entityObject = (shared_ptr<Entity>)getPlayer().get();
+						this->entityObject = (sp<Entity>)getPlayer().get();
 					}
 					else
 					{
 						if (parameterString == "THIS")
 						{
-							shared_ptr<Entity> o = nullptr;
+							sp<Entity> o = nullptr;
 
 							if (event->door != nullptr)
 							{
@@ -123,7 +123,7 @@ void EventParameter::updateParameterVariablesFromString(shared_ptr<Event> event)
 						else
 						{
 							//if we made it here, it's a map object.
-							shared_ptr<Map> o = make_shared<Map>(getEngine()->getGameObjectByTYPEIDName(parameterString));
+							sp<Map> o = ms<Map>(getEngine()->getGameObjectByTYPEIDName(parameterString));
 
 							if (o == nullptr)
 							{

@@ -18,7 +18,7 @@ Logger CaptionManager::log = Logger("CaptionManager");
 
 
 //=========================================================================================================================
-CaptionManager::CaptionManager(shared_ptr<Engine> g)
+CaptionManager::CaptionManager(sp<Engine> g)
 {//=========================================================================================================================
 	this->e = g;
 }
@@ -46,7 +46,7 @@ void CaptionManager::update()
 	//-----------------------------
 	for (int n = 0; n < captionList->size(); n++)
 	{
-		shared_ptr<Caption> c = captionList->get(n);
+		sp<Caption> c = captionList->get(n);
 		if (c->ticksToRemain > 0)
 		{
 			c->ticksToRemain -= ticksPassed;
@@ -60,7 +60,7 @@ void CaptionManager::update()
 
 	for (int n = 0; n < captionList->size(); n++)
 	{
-		shared_ptr<Caption> c = captionList->get(n);
+		sp<Caption> c = captionList->get(n);
 		c->update();
 
 		if(c->deleteMe)
@@ -92,7 +92,7 @@ void CaptionManager::render(RenderOrder layer)
 
 	for (int n = captionList->size() - 1; n >= 0; n--)
 	{
-		shared_ptr<Caption> c = captionList->get(n);
+		sp<Caption> c = captionList->get(n);
 		if (c->layer == layer)
 		{
 			c->render();
@@ -102,7 +102,7 @@ void CaptionManager::render(RenderOrder layer)
 
 	//   for (int n = captionList->size() - 1; n >= 0; n--)
 	//   {
-	//      shared_ptr<Caption> c = captionList->get(n);
+	//      sp<Caption> c = captionList->get(n);
 	//      if (c->drawAbove == false)
 	//      {
 	//         c->render();
@@ -111,7 +111,7 @@ void CaptionManager::render(RenderOrder layer)
 	//
 	//   for (int n = captionList->size() - 1; n >= 0; n--)
 	//   {
-	//      shared_ptr<Caption> c = captionList->get(n);
+	//      sp<Caption> c = captionList->get(n);
 	//      if (c->drawAbove == true)
 	//      {
 	//         c->render();
@@ -121,7 +121,7 @@ void CaptionManager::render(RenderOrder layer)
 
 
 //=========================================================================================================================
-shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, shared_ptr<OKFont> font, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textAAColor, shared_ptr<OKColor> textBGColor, RenderOrder r, float scale, int width, shared_ptr<Entity> entity, shared_ptr<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
+sp<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, sp<OKFont> font, sp<OKColor> textColor, sp<OKColor> textAAColor, sp<OKColor> textBGColor, RenderOrder r, float scale, int width, sp<Entity> entity, sp<Area> area, bool fadeLetterColorTowardsTop, bool centerTextOnMultipleLines)
 {//=========================================================================================================================
 
 	if (ticks >= 0 && ticks < 100)
@@ -129,13 +129,13 @@ shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPos
 		log->log("Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
-	shared_ptr<Caption> c = make_shared<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, font, textColor, textAAColor, textBGColor, r, scale, width, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
+	sp<Caption> c = ms<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, font, textColor, textAAColor, textBGColor, r, scale, width, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
 	captionList->add(c);
 	return c;
 }
 
 //=========================================================================================================================
-shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, bool outline, shared_ptr<OKColor> textColor, shared_ptr<OKColor> textBGColor, RenderOrder r, float scale, shared_ptr<Entity> entity, shared_ptr<Area> area)
+sp<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, int x, int y, int ticks, const string& text, int fontSize, bool outline, sp<OKColor> textColor, sp<OKColor> textBGColor, RenderOrder r, float scale, sp<Entity> entity, sp<Area> area)
 {//=========================================================================================================================
 
 	if (ticks >= 0 && ticks < 100)
@@ -143,7 +143,7 @@ shared_ptr<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPos
 		log->log("TTF Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
-	shared_ptr<Caption> c = make_shared<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, fontSize, outline, textColor, textBGColor, r, scale, entity, area);
+	sp<Caption> c = ms<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, fontSize, outline, textColor, textBGColor, r, scale, entity, area);
 	captionList->add(c);
 	return c;
 }

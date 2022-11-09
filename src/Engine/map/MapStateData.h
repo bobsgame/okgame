@@ -22,15 +22,15 @@ private:
 
 private:
 	
-	ArrayList<shared_ptr<LightData>> lightDataList;
+	vector<sp<LightData>> lightDataList;
 
 	
-	ArrayList<shared_ptr<EntityData>> entityDataList;
+	vector<sp<EntityData>> entityDataList;
 
-	//public ArrayList<EntityData> characterDataList = make_shared<ArrayList><EntityData>();
+	//public ArrayList<EntityData> characterDataList = ms<ArrayList><EntityData>();
 
 	
-	ArrayList<shared_ptr<AreaData>> areaDataList;
+	vector<sp<AreaData>> areaDataList;
 
 
 	
@@ -44,16 +44,16 @@ public:
 	MapStateData(int id, const string& name);
 
 
-	//static shared_ptr<MapStateData> fromBase64ZippedJSON(const string& b64);
-	//static shared_ptr<MapStateData> fromJSON(const string& json);
+	//static sp<MapStateData> fromBase64ZippedJSON(const string& b64);
+	//static sp<MapStateData> fromJSON(const string& json);
 
 	string& initFromString(string& t);
 
 	string getTYPEIDString();
 
-	ArrayList<shared_ptr<LightData>>* getLightDataList();
-	ArrayList<shared_ptr<EntityData>>* getEntityDataList();
-	ArrayList<shared_ptr<AreaData>>* getAreaDataList();
+	sp<vector<sp<LightData>>> getLightDataList();
+	sp<vector<sp<EntityData>>> getEntityDataList();
+	sp<vector<sp<AreaData>>> getAreaDataList();
 
 
 	int getMapID();

@@ -26,21 +26,21 @@ private:
 	bool doneValue_S = false;
 	long long timeSet = -1;
 
-	shared_ptr<DialogueData> data = nullptr;
+	sp<DialogueData> data = nullptr;
 
 
 public:
-	Dialogue(shared_ptr<Engine> g, int id);
+	Dialogue(sp<Engine> g, int id);
 
 
-	Dialogue(shared_ptr<Engine> g, shared_ptr<DialogueData> data);
+	Dialogue(sp<Engine> g, sp<DialogueData> data);
 
 
 	//The following method was originally marked 'synchronized':
-	void setData_S(shared_ptr<DialogueData> data);
+	void setData_S(sp<DialogueData> data);
 
 
-	shared_ptr<DialogueData> getData();
+	sp<DialogueData> getData();
 
 	int getID();
 	string& getName();

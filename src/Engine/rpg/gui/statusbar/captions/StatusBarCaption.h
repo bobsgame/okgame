@@ -15,21 +15,21 @@ public:
 
 	static Logger log;
 
-	shared_ptr<Caption> caption = nullptr;
-	shared_ptr<Light> light = nullptr;
+	sp<Caption> caption = nullptr;
+	sp<Light> light = nullptr;
 
-	shared_ptr<OKColor> defaultFGColor = OKColor::white;
-	shared_ptr<OKColor> defaultAAColor = OKColor::darkerGray;
-	shared_ptr<OKColor> defaultBGColor = OKColor::clear;
+	sp<OKColor> defaultFGColor = OKColor::white;
+	sp<OKColor> defaultAAColor = OKColor::darkerGray;
+	sp<OKColor> defaultBGColor = OKColor::clear;
 
-	shared_ptr<OKColor> currentFGColor = OKColor::white;
-	shared_ptr<OKColor> currentAAColor = OKColor::darkerGray;
-	shared_ptr<OKColor> currentBGColor = OKColor::clear;
+	sp<OKColor> currentFGColor = OKColor::white;
+	sp<OKColor> currentAAColor = OKColor::darkerGray;
+	sp<OKColor> currentBGColor = OKColor::clear;
 
 	bool enabled = true;
 
 	StatusBarCaption();
-	StatusBarCaption(shared_ptr<BGClientEngine> g);
+	StatusBarCaption(sp<BGClientEngine> g);
 
 	void setEnabled(bool b);
 
@@ -41,7 +41,7 @@ public:
 
 	void updateCaption(const string& s);
 
-	virtual void setColors(shared_ptr<OKColor> fg, shared_ptr<OKColor> aa, shared_ptr<OKColor> bg);
+	virtual void setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg);
 
 	void setDefaultColor();
 };

@@ -24,21 +24,21 @@ protected:
 	bool startedDownloadThread = false;
 
 
-	shared_ptr<AudioData> data = nullptr;
+	sp<AudioData> data = nullptr;
 
-	shared_ptr<ByteArray> byteData = nullptr;
+	sp<ByteArray> byteData = nullptr;
 
 
 
 public:
 
 
-	AudioFile(shared_ptr<AudioData> data);
+	AudioFile(sp<AudioData> data);
 
 	//Only for use for preloading sound files not on server, they do not have IDs
 	AudioFile(string filename);
 
-	shared_ptr<AudioData> getData();
+	sp<AudioData> getData();
 
 	int getID();
 	string& getName();
@@ -60,10 +60,10 @@ public:
 	void setFileExists(bool i);
 
 public:
-	shared_ptr<ByteArray> getByteData();
+	sp<ByteArray> getByteData();
 
 
-	void setData_S(shared_ptr<AudioData> data);
+	void setData_S(sp<AudioData> data);
 
 
 	virtual void update() override;

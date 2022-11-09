@@ -51,7 +51,7 @@ private:
 
 	//can pull connections from sprites to areas and doors, should add these to points of interest list inside sprite.
 	//automatically connect lines from all random points to any random spawn points, when click on random spawn point, should go to other spawn points as well
-	ArrayList<string> connectionTYPEIDList;// = make_shared<ArrayList><string>(); //should ALWAYS be by ID
+	vector<string> connectionTYPEIDList;// = ms<ArrayList><string>(); //should ALWAYS be by ID
 
 
 	//warp area specific
@@ -66,28 +66,28 @@ private:
 	string destinationMapName = "";
 	string destinationWarpAreaName = "";
 
-	shared_ptr<EventData> eventData = nullptr;
+	sp<EventData> eventData = nullptr;
 
 public:
 	AreaData();
 
 
-	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, const string& destinationTYPEID, int arrivalXPixels1X, int arrivalYPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, shared_ptr<EventData> eventData, const string& comment);
+	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, const string& destinationTYPEID, int arrivalXPixels1X, int arrivalYPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, sp<EventData> eventData, const string& comment);
 
 
 	AreaData(int id, const string& name);
 
 
-	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, shared_ptr<EventData> eventData, const string& comment);
+	AreaData(int id, const string& name, int mapXPixels1X, int mapYPixels1X, int widthPixels1X, int heightPixels1X, bool randomPointOfInterestOrExit, bool randomNPCSpawnPoint, int standSpawnDirection, int waitHereTicks, bool randomWaitTime, bool onlyOneAllowed, bool randomNPCStayHere, float randomSpawnChance, bool randomSpawnOnlyTryOnce, bool randomSpawnOnlyOffscreen, int randomSpawnDelay, bool randomSpawnKids, bool randomSpawnAdults, bool randomSpawnMales, bool randomSpawnFemales, bool randomSpawnCars, bool autoPilot, bool playerFaceDirection, bool suckPlayerIntoMiddle, sp<EventData> eventData, const string& comment);
 
 
 	void addConnectionString(const string& s);
 
 
-//	static shared_ptr<AreaData> fromBase64ZippedJSON(const string& b64);
+//	static sp<AreaData> fromBase64ZippedJSON(const string& b64);
 //
 //
-//	static shared_ptr<AreaData> fromJSON(const string& json);
+//	static sp<AreaData> fromJSON(const string& json);
 
 
 	string& initFromString(string& t);
@@ -128,9 +128,9 @@ public:
 	bool getAutoPilot();
 	bool getPlayerFaceDirection();
 	bool getSuckPlayerIntoMiddle();
-	shared_ptr<EventData> getEventData();
+	sp<EventData> getEventData();
 	//public String stateName(){return data.stateName;}
-	ArrayList<string>* getConnectionTYPEIDList();
+	sp<vector<string>> getConnectionTYPEIDList();
 	string& getComment();
 	string& getDestinationTYPEIDString();
 	string& getDestinationMapName();

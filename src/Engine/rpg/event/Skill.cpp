@@ -14,11 +14,11 @@
 Logger Skill::log = Logger("Skill");
 
 
-Skill::Skill(shared_ptr<Engine> g, int id)
+Skill::Skill(sp<Engine> g, int id)
 { //=========================================================================================================================
 	this->e = g;
 
-	this->data = make_shared<SkillData>(id, "");
+	this->data = ms<SkillData>(id, "");
 
 	for (int i = 0; i < (int)getEventManager()->skillList.size(); i++)
 	{
@@ -31,7 +31,7 @@ Skill::Skill(shared_ptr<Engine> g, int id)
 	getEventManager()->skillList.push_back(shared_from_this());
 }
 
-Skill::Skill(shared_ptr<Engine> g, shared_ptr<SkillData> data)
+Skill::Skill(sp<Engine> g, sp<SkillData> data)
 { //=========================================================================================================================
 	this->e = g;
 
@@ -49,7 +49,7 @@ Skill::Skill(shared_ptr<Engine> g, shared_ptr<SkillData> data)
 	getEventManager()->skillList.push_back(shared_from_this());
 }
 
-shared_ptr<SkillData> Skill::getData()
+sp<SkillData> Skill::getData()
 {
 	return data;
 }
@@ -82,7 +82,7 @@ void Skill::setName(const string& name)
 }
 
 //The following method was originally marked 'synchronized':
-void Skill::setData_S(shared_ptr<SkillData> data)
+void Skill::setData_S(sp<SkillData> data)
 { //=========================================================================================================================
 	this->data = data;
 	setInitialized_S(true);

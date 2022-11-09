@@ -22,7 +22,7 @@ private:
 public:
 	static Logger log;
 
-	shared_ptr<GameDataLoader> gameDataLoader = nullptr;
+	sp<GameDataLoader> gameDataLoader = nullptr;
 
 	string name = "";
 
@@ -40,19 +40,19 @@ public:
 
 
 	int numTitleMenuTextureFrames = 0;
-	vector<shared_ptr<OKTexture>> titleMenuTextures;// = make_shared<ArrayList><shared_ptr<OKTexture>>();
-	shared_ptr<OKTexture> titleMenuTexture = nullptr;
+	vector<sp<OKTexture>> titleMenuTextures;// = ms<ArrayList><sp<OKTexture>>();
+	sp<OKTexture> titleMenuTexture = nullptr;
 	long long titleMenuFrameTicks = 0;
 	int currentTitleMenuTextureFrame = 0;
 	bool currentTitleMenuTextureFrameIncrementDecrementToggle = false;
 	bool titleMenuShowing = false;
 
 	bool pauseMenuShowing = false;
-	shared_ptr<OKMenu>pauseMenu = nullptr;
-	//shared_ptr<Caption> volumeCaption = nullptr;
+	sp<OKMenu>pauseMenu = nullptr;
+	//sp<Caption> volumeCaption = nullptr;
 	int pauseMenuCursorPosition = 0;
 
-	shared_ptr<OKMenu>titleMenu = nullptr;
+	sp<OKMenu>titleMenu = nullptr;
 	int titleMenuCursorPosition = 0;
 
 	virtual void setupMenus();
@@ -82,16 +82,16 @@ protected:
 	long long whichDifficultyToShow = 0;
 	long long updateFriendsTime = 0;
 	long long updatePublicGamesTime = 0;
-	vector<shared_ptr<Caption>> onlineFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
-	vector<shared_ptr<Caption>> waitingForFriendCaptions;// = make_shared<ArrayList><shared_ptr<Caption>>();
+	vector<sp<Caption>> onlineFriendCaptions;// = ms<ArrayList><sp<Caption>>();
+	vector<sp<Caption>> waitingForFriendCaptions;// = ms<ArrayList><sp<Caption>>();
 	void waitingForFriendScreenUpdate();
 	void waitingForFriendScreenRender();
 
 	//bool singlePlayerMultiPlayerSwitchToggle = false; //false = singleplayer
 	bool multiplayerScreenShowing = false;
-	//shared_ptr<Caption> singlePlayerCaption = nullptr;
-	//shared_ptr<Caption> onlineMultiplayerCaption = nullptr;
-	//shared_ptr<Caption> multiPlayerCaption = nullptr;
+	//sp<Caption> singlePlayerCaption = nullptr;
+	//sp<Caption> onlineMultiplayerCaption = nullptr;
+	//sp<Caption> multiPlayerCaption = nullptr;
 	int multiplayerScreenCursorPosition = 0;
 	void multiplayerScreenRender();
 	void multiplayerScreenUpdate();
@@ -107,12 +107,12 @@ protected:
 	long long nonThreadedTicksCounter = 0;
 
 public:
-	shared_ptr<UDPPeerConnection> connection = nullptr;
+	sp<UDPPeerConnection> connection = nullptr;
 
 	//public boolean multiplayer = false;
 
 protected:
-	//shared_ptr<UDPPeerConnection> friendCharacter = nullptr;
+	//sp<UDPPeerConnection> friendCharacter = nullptr;
 
 public:
 	static int gameChallengeResponse_NONE;
@@ -133,8 +133,8 @@ public:
 	//The following method was originally marked 'synchronized':
 	void setIncomingGameChallengeResponse(int s);
 
-	//void setConnection(shared_ptr<UDPPeerConnection> connection);
-	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection>c, string e);
+	//void setConnection(sp<UDPPeerConnection> connection);
+	virtual bool udpPeerMessageReceived(sp<UDPPeerConnection>c, string e);
 
 private:
 	void incoming_GameChallengeResponse(const string& s);

@@ -23,13 +23,13 @@ GameItem::GameItem()
 	//   thisDialogLayout = this;
 	//
 	//
-	//   gameTitleLabel = make_shared<Label>("Tetrid");
+	//   gameTitleLabel = ms<Label>("Tetrid");
 	//   gameTitleLabel->setCanAcceptKeyboardFocus(false);
 	//   gameTitleLabel->setTheme("gameLabel");
 	//
-	//   textAreaModel = make_shared<SimpleTextAreaModel>();
+	//   textAreaModel = ms<SimpleTextAreaModel>();
 	//
-	//   textArea = make_shared<TextArea>(textAreaModel);
+	//   textArea = ms<TextArea>(textAreaModel);
 	//   textArea->setCanAcceptKeyboardFocus(false);
 	//   textArea->setTheme("gameTextArea");
 	//
@@ -37,11 +37,11 @@ GameItem::GameItem()
 	//   textArea->setBorderSize(0, 0);
 	//
 	//
-	//   buyButton = make_shared<Button>("Buy now!");
+	//   buyButton = ms<Button>("Buy now!");
 	//   buyButton->setCanAcceptKeyboardFocus(false);
 	//   buyButton->setTheme("oppositeThemeButton");
 	//
-	//   priceLabel = make_shared<Label>("$0.99");
+	//   priceLabel = ms<Label>("$0.99");
 	//   priceLabel->setCanAcceptKeyboardFocus(false);
 	//   priceLabel->setTheme("priceLabel");
 	//
@@ -49,7 +49,7 @@ GameItem::GameItem()
 	//   //TODO: need to figure out how to alter the texture this points to. if i use the same size texture for all games it should work fine!
 	//
 	//
-	//   iconWidget = make_shared<WidgetAnonymousInnerClassHelper>(this);
+	//   iconWidget = ms<WidgetAnonymousInnerClassHelper>(this);
 	//
 	//   iconWidget->setCanAcceptKeyboardFocus(false);
 	//   iconWidget->setTheme("widget");
@@ -72,7 +72,7 @@ GameItem::GameItem()
 //
 //void GameItem::WidgetAnonymousInnerClassHelper::layout()
 //{
-//   outerInstance->gamePreview = static_cast<shared_ptr<AnimatedImage>>(GLUtils::TWLthemeManager->getImage("gamePreviewAnimation"));
+//   outerInstance->gamePreview = static_cast<sp<AnimatedImage>>(GLUtils::TWLthemeManager->getImage("gamePreviewAnimation"));
 //
 //   //if i set the background image in layout it works, if not it doesn't.
 //   setBackground(outerInstance->gamePreview);

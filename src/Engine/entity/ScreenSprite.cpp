@@ -14,18 +14,18 @@
 Logger ScreenSprite::log = Logger("ScreenSprite");
 
 
-ScreenSprite::ScreenSprite(shared_ptr<Engine> g, const string& name, const string& spriteName)
+ScreenSprite::ScreenSprite(sp<Engine> g, const string& name, const string& spriteName)
 { //=========================================================================================================================
 
 	this->e = g;
 
-	initEntity(make_shared<EntityData>(-1, name, spriteName, 0, 0));
+	initEntity(ms<EntityData>(-1, name, spriteName, 0, 0));
 
 	setRenderOrder(RenderOrder::OVER_TEXT);
 
 	getSpriteManager()->screenSpriteList.push_back(shared_from_this());
 
-	if (getEventData() != nullptr)this->event = make_shared<Event>(g, getEventData(), shared_from_this());
+	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
 }
 
 float ScreenSprite::getScreenLeft()
@@ -152,7 +152,7 @@ void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 
 	for (int i = 0; i < getSpriteManager()->screenSpriteList.size(); i++)
 	{
-		shared_ptr<ScreenSprite> se = getSpriteManager()->screenSpriteList.at(i);
+		sp<ScreenSprite> se = getSpriteManager()->screenSpriteList.at(i);
 		if (se.get() == this)
 		{
 			getSpriteManager()->screenSpriteList.erase(getSpriteManager()->screenSpriteList.begin() + i);
@@ -160,7 +160,7 @@ void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 	}
 }
 
-void ScreenSprite::render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture)
+void ScreenSprite::render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture)
 { //=========================================================================================================================
 
 

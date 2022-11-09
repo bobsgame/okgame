@@ -48,11 +48,11 @@ public:
 	static Logger log;
 
 protected:
-	shared_ptr<Engine> e = nullptr;
+	sp<Engine> e = nullptr;
 
 private:
-	//static shared_ptr<BGClientEngine> clientGameEngine;
-	//shared_ptr<ControlsManager> controlsManager = nullptr;
+	//static sp<BGClientEngine> clientGameEngine;
+	//sp<ControlsManager> controlsManager = nullptr;
 
 	
 	bool isActivated = false;
@@ -61,9 +61,9 @@ private:
 
 public:
 	EnginePart();
-	EnginePart(shared_ptr<Engine> e);
+	EnginePart(sp<Engine> e);
 
-	//void setControlsManager(shared_ptr<ControlsManager> controlsManager);
+	//void setControlsManager(sp<ControlsManager> controlsManager);
 
 	virtual void toggleActivated();
 	virtual void setActivated(bool b);
@@ -77,42 +77,42 @@ public:
 	int getSecondsSinceLastHere();
 	int getMinutesSinceLastHere();
 
-	shared_ptr<Engine> getEngine();
-	shared_ptr<Cameraman> getCameraman();
-	shared_ptr<MapManager> getMapManager();
-	shared_ptr<SpriteManager> getSpriteManager();
-	shared_ptr<ActionManager> getActionManager();
-	shared_ptr<TextManager> getTextManager();
-	shared_ptr<AudioManager> getAudioManager();
-	virtual shared_ptr<CaptionManager> getCaptionManager();
-	shared_ptr<EventManager> getEventManager();
-	shared_ptr<CinematicsManager> getCinematicsManager();
+	sp<Engine> getEngine();
+	sp<Cameraman> getCameraman();
+	sp<MapManager> getMapManager();
+	sp<SpriteManager> getSpriteManager();
+	sp<ActionManager> getActionManager();
+	sp<TextManager> getTextManager();
+	sp<AudioManager> getAudioManager();
+	virtual sp<CaptionManager> getCaptionManager();
+	sp<EventManager> getEventManager();
+	sp<CinematicsManager> getCinematicsManager();
 
-	virtual shared_ptr<Map> getCurrentMap();
+	virtual sp<Map> getCurrentMap();
 
-	shared_ptr<ControlsManager> getControlsManager();
+	sp<ControlsManager> getControlsManager();
 
-	//static void setClientGameEngine(shared_ptr<BGClientEngine> gameEngine);
+	//static void setClientGameEngine(sp<BGClientEngine> gameEngine);
 
-	static shared_ptr<BGClientEngine> getClientGameEngine();
+	static sp<BGClientEngine> getClientGameEngine();
 
-	static shared_ptr<TCPServerConnection> getServerConnection();
+	static sp<TCPServerConnection> getServerConnection();
 
-	static shared_ptr<Clock> getClock();
-	static shared_ptr<GUIManager> getGUIManager();
-	static shared_ptr<StuffMenu> getStuffMenu();
-	static shared_ptr<GameStore> getGameStore();
-	static shared_ptr<PlayerEditMenu> getPlayerEditMenu();
-	static shared_ptr<Player> getPlayer();
+	static sp<Clock> getClock();
+	static sp<GUIManager> getGUIManager();
+	static sp<StuffMenu> getStuffMenu();
+	static sp<GameStore> getGameStore();
+	static sp<PlayerEditMenu> getPlayerEditMenu();
+	static sp<Player> getPlayer();
 	static ND* getND();
-	static shared_ptr<Wallet> getWallet();
-	static shared_ptr<FriendManager> getFriendManager();
-	static shared_ptr<StatusBar> getStatusBar();
-	static shared_ptr<NotificationManager> getNotificationManager();
+	static sp<Wallet> getWallet();
+	static sp<FriendManager> getFriendManager();
+	static sp<StatusBar> getStatusBar();
+	static sp<NotificationManager> getNotificationManager();
 	//The following method was originally marked 'synchronized':
 	static GameSave getGameSave();
 
-	virtual bool udpPeerMessageReceived(shared_ptr<UDPPeerConnection> c, string e);
+	virtual bool udpPeerMessageReceived(sp<UDPPeerConnection> c, string e);
 	//
 	//	public String getIDString()
 	//	{

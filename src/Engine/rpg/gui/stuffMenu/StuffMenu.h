@@ -28,17 +28,17 @@ public:
 	static Logger log;
 
 
-	shared_ptr<FriendsPanel> friendsPanel = nullptr;
-	shared_ptr<DebugInfoPanel> debugInfoPanel = nullptr;
-	shared_ptr<StatusPanel> statusPanel = nullptr;
-	shared_ptr<MessagesPanel> messagesPanel = nullptr;
-	shared_ptr<ItemsPanel> itemsPanel = nullptr;
-	shared_ptr<LogsPanel> logsPanel = nullptr;
-	shared_ptr<ControlsPanel> controlsPanel = nullptr;
-	shared_ptr<SettingsPanel> settingsPanel = nullptr;
+	sp<FriendsPanel> friendsPanel = nullptr;
+	sp<DebugInfoPanel> debugInfoPanel = nullptr;
+	sp<StatusPanel> statusPanel = nullptr;
+	sp<MessagesPanel> messagesPanel = nullptr;
+	sp<ItemsPanel> itemsPanel = nullptr;
+	sp<LogsPanel> logsPanel = nullptr;
+	sp<ControlsPanel> controlsPanel = nullptr;
+	sp<SettingsPanel> settingsPanel = nullptr;
 
 
-	//ArrayList<shared_ptr<ToggleButton>> stuffMenuTabs;
+	//ArrayList<sp<ToggleButton>> stuffMenuTabs;
 
 
 	float subPanelScreenWidthPercent = 0.80f;
@@ -54,7 +54,7 @@ public:
 	void setAllInvisible();
 
 
-	void openSubMenu();// shared_ptr<SubPanel> subPanel);
+	void openSubMenu();// sp<SubPanel> subPanel);
 
 
 	void init();

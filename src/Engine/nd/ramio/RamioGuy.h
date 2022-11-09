@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	RamioGuy(shared_ptr<Engine> g, shared_ptr<Map>m);
+	RamioGuy(sp<Engine> g, sp<Map>m);
 
 
 	int framesSincePressedA = 0;
@@ -94,6 +94,6 @@ public:
 	void move(int direction, float floatPixels);
 
 
-	virtual void render(float alpha, shared_ptr<OKTexture> texture, shared_ptr<OKTexture> shadowTexture) override;
+	virtual void render(float alpha, sp<OKTexture> texture, sp<OKTexture> shadowTexture) override;
 };
 

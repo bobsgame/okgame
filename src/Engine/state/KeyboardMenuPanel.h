@@ -17,10 +17,10 @@ public:
 	static Logger log;
 
 
-	//shared_ptr<DialogLayout> keyboardPanel = nullptr;
+	//sp<DialogLayout> keyboardPanel = nullptr;
 
 
-	//shared_ptr<Button> okButton = nullptr;
+	//sp<Button> okButton = nullptr;
 
 
 	KeyboardMenuPanel();
@@ -29,10 +29,10 @@ private:
 	class WidgetAnonymousInnerClassHelper// : public Widget
 	{
 	private:
-		shared_ptr<KeyboardMenuPanel> outerInstance = nullptr;
+		sp<KeyboardMenuPanel> outerInstance = nullptr;
 
 	public:
-		WidgetAnonymousInnerClassHelper(shared_ptr<KeyboardMenuPanel> outerInstance);
+		WidgetAnonymousInnerClassHelper(sp<KeyboardMenuPanel> outerInstance);
 
 		void layout();
 	};
