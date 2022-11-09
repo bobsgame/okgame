@@ -27,7 +27,7 @@ public:
 	static sp<OKTexture> getTextureFromData(string textureName, int imageWidth, int imageHeight, sp<ByteArray> data);
 	static sp<OKTexture> getTextureFromPNGAbsolutePath(string filename);
 	static sp<OKTexture> getTextureFromPNGExePath(string filename);
-	static void draw_sprite(sp <SPRITE> s);
+	static void draw_sprite(sp<SPRITE> s);
 	static void gl_draw_flipped(GLuint textureid, float x, float y, float w, float h);
 	static void draw_texture(GLuint textureid, float x, float y, float w, float h);
 	static void draw_texture_alpha(GLuint textureid, float x, float y, float w, float h, float tw, float th, float f, float a);
@@ -93,7 +93,7 @@ public:
 	static void drawFilledRectXYWH(float x, float y, float width, float height, float r, float g, float b, float a);
 	static void drawLine(float x1, float y1, float x2, float y2, int thickness);
 	static SDL_DisplayMode currentDisplayMode;// = new SDL_DisplayMode();
-	static ArrayList<sp<SDL_DisplayMode>> displayModes;// = ms<ArrayList><sp<SDL_DisplayMode>>();
+	static vector<sp<SDL_DisplayMode>> displayModes;// = ms<ArrayList><sp<SDL_DisplayMode>>();
 	static int monitorWidth;// = 0;
 	static int monitorHeight;// = 0;
 	static int windowWidth;
@@ -101,7 +101,7 @@ public:
 	static int lastWindowWidth;// = 0;
 	static int lastWindowHeight;// = 0;
 	static SDL_DisplayMode getCurrentDisplayMode();
-	static ArrayList<sp<SDL_DisplayMode>> getAvailableDisplayModes();
+	static vector<sp<SDL_DisplayMode>> getAvailableDisplayModes();
 	static int getRealWindowWidth();
 	static int getRealWindowHeight();
 	static int getViewportWidth();
@@ -118,7 +118,7 @@ public:
 	static bool useShaders;
 	static int lightShader;
 	static int colorShader;
-	static ArrayList<sp<Integer>> bgShaders;
+	static vector<sp<Integer>> bgShaders;
 	static int bgShaderCount;
 	static GLuint gaussianShader;
 	static GLuint bloomMaskShader;

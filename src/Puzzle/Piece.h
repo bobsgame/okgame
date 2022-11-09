@@ -163,7 +163,7 @@ public:
 	int size() { return (int)rotationSet.size(); }
 	Rotation at(int i) { return rotationSet.at(i); }
 	void clear() { rotationSet.clear(); }
-	void removeAt(int i) { rotationSet.removeAt(i); }
+	void removeAt(int i) { rotationSet.erase(rotationSet.begin()+i); }
 
 	//=========================================================================================================================
 	template <typename Archive>

@@ -433,7 +433,7 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 					if (p->getID() == playerIDString)
 					{
 						found = true;
-						players.removeAt(i);
+						players.erase(players.begin()+i);
 						i--;
 						//delete p;
 						p = nullptr;
@@ -596,8 +596,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 					sp<Room>r = rooms.at(i);
 					if(r->hostPeer==c)
 					{
-						rooms.removeAt(i);
-						delete r;
+						rooms.erase(rooms.begin()+i);
+						//delete r;
+						r = nullptr;
 					}
 				}
 
@@ -1171,7 +1172,8 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 				sp<Room>r = rooms.at(i);
 				if (r->multiplayer_PrivateRoom == false)
 				{
-					delete r;
+					//delete r;
+					r = nullptr;
 					rooms.removeAt(i);
 					i--;
 				}
@@ -2183,7 +2185,8 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 				tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 
 				players.removeAt(i);
-				delete p;
+				//delete p;
+				p = nullptr;
 				i = 0;
 			}
 		}
@@ -2257,7 +2260,8 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 					tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 					
 					players.removeAt(i);
-					delete p;
+					//delete p;
+					p = nullptr;
 					i = 0;
 				}
 			}

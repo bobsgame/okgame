@@ -571,7 +571,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 			if (s.length() > 0)
 			{
 				sp<SkillData> data = ms<SkillData>(); data->initFromString(s);
@@ -600,7 +600,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 			if (s.length() > 0)
 			{
 				sp<DialogueData> data = ms<DialogueData>(); data->initFromString(s);
@@ -627,7 +627,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 			if (s.length() > 0)
 			{
 				sp<FlagData> data = ms<FlagData>(); data->initFromString(s);
@@ -654,7 +654,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 			if (s.length() > 0)
 			{
 				sp<GameStringData> data = ms<GameStringData>(); data->initFromString(s);
@@ -681,7 +681,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 			if (s.length() > 0)
 			{
 				sp<EventData> data = ms<EventData>(); data->initFromString(s);
@@ -708,7 +708,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 
 			if (s.length() > 0)
 			{
@@ -750,7 +750,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 
 			if (s.length() > 0)
 			{
@@ -794,7 +794,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 
 			if (s.length() > 0)
 			{
@@ -833,7 +833,7 @@ void BGClientEngine::loadPreCachedObjectData()
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
-			string s = b64List->get(i);
+			string s = b64List->at(i);
 
 			if (s.length() > 0)
 			{
@@ -843,7 +843,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				{
 					sp<Map> m = ms<Map>(this, data);
 
-					getMapManager()->mapList.add(m);
+					getMapManager()->mapList.push_back(m);
 					getMapManager()->mapByNameHashMap.put(data->getName(), m);
 					getMapManager()->mapByIDHashMap.put(data->getID(), m);
 				}
@@ -1194,7 +1194,6 @@ sp<OKColor> BGClientEngine::getAccountRankColor(int accountRank)
 void BGClientEngine::setPlayerToTempPlayerWithSprite(sp<Sprite> s)
 { //=========================================================================================================================
 
-
 	sp<Player> p = ms<Player>(this, s->getName());
 
 	p->update();
@@ -1204,14 +1203,21 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(sp<Sprite> s)
 	p->setSpawnXPixelsHQ(player->getX());
 	p->setSpawnYPixelsHQ(player->getY());
 
-
 	if (getCurrentMap() != nullptr)
 	{
-		if (getCurrentMap()->activeEntityList.contains(player))
+		for (int i = 0; i < getCurrentMap()->activeEntityList.size(); i++)
 		{
-			getCurrentMap()->activeEntityList.remove(player);
-			getCurrentMap()->activeEntityList.add(p);
+			if (getCurrentMap()->activeEntityList.at(i).get() == player.get())
+			{
+				getCurrentMap()->activeEntityList.erase(getCurrentMap()->activeEntityList.begin()+i);
+				getCurrentMap()->activeEntityList.push_back(p);
+			}
 		}
+		//if (getCurrentMap()->activeEntityList.contains(player))
+		//{
+		//	getCurrentMap()->activeEntityList.remove(player);
+		//	getCurrentMap()->activeEntityList.push_back(p);
+		//}
 	}
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)
@@ -1227,11 +1233,20 @@ void BGClientEngine::setPlayerToNormalPlayer()
 
 	if (getCurrentMap() != nullptr)
 	{
-		if (getCurrentMap()->activeEntityList.contains(player))
+
+		for (int i = 0; i < getCurrentMap()->activeEntityList.size(); i++)
 		{
-			getCurrentMap()->activeEntityList.remove(player);
-			getCurrentMap()->activeEntityList.add(normalPlayer);
+			if (getCurrentMap()->activeEntityList.at(i).get() == player.get())
+			{
+				getCurrentMap()->activeEntityList.erase(getCurrentMap()->activeEntityList.begin() + i);
+				getCurrentMap()->activeEntityList.push_back(normalPlayer);
+			}
 		}
+		//if (getCurrentMap()->activeEntityList.contains(player))
+		//{
+		//	getCurrentMap()->activeEntityList.remove(player);
+		//	getCurrentMap()->activeEntityList.push_back(normalPlayer);
+		//}
 	}
 
 	if (getCameraman() != nullptr && getCameraman()->targetEntity == player)

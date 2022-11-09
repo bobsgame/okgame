@@ -20,7 +20,7 @@ long long Engine::totalTicks = 0;
 long long Engine::ticksThisSecond = 0;
 int Engine::framesSkipped = 0;
 
-vector< sp<UDPPeerConnection>> Engine::onlineFriends;
+vector<sp<UDPPeerConnection>> Engine::onlineFriends;
 
 
 //=========================================================================================================================
@@ -100,13 +100,13 @@ void Engine::update()
 	onlineFriends.clear();
 	for (int i = 0; i < (int)OKNet::udpConnections.size(); i++)
 	{
-		sp<UDPPeerConnection> f = OKNet::udpConnections.get(i);
+		sp<UDPPeerConnection> f = OKNet::udpConnections.at(i);
 		if (f->getConnectedToPeer_S() == true && 
 			f->getGotFriendData_S() == true && 
 			f->peerStatus == OKNet::status_AVAILABLE)
 		{
 			if (onlineFriends.contains(f) == false)
-				onlineFriends.add(f);
+				onlineFriends.push_back(f);
 		}
 	}
 
@@ -762,7 +762,7 @@ void Engine::incomingMapData(string s)
 		if (getMapManager()->mapByNameHashMap.containsKey(data->getName()) == false)
 		{
 			sp<Map> m = ms<Map>(this, data);
-			getMapManager()->mapList.add(m);
+			getMapManager()->mapList.push_back(m);
 			getMapManager()->mapByNameHashMap.put(data->getName(), m);
 			getMapManager()->mapByIDHashMap.put(data->getID(), m);
 		}

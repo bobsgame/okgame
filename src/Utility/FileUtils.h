@@ -47,7 +47,7 @@ public:
 
 	FileUtils();
 
-	static ArrayList<string>* swearWords;
+	static sp<vector<string>> swearWords;
 	static string removeSwearWords(string s);
 	static string removeIllegalFilenameChars(string s);
 	//static void fixPath(string &fullname);
@@ -72,8 +72,8 @@ public:
 	//static vector<uint16_t>* loadShortFile(string filename);
 	static string loadTextFileAndTrim(string filename);
 	static string loadTextFileFromExePathAndTrim(string filename);
-	static ArrayList<string>* loadTextFileIntoVectorOfStringsAndTrim(string filename);
-	static ArrayList<string>* loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename);
+	static sp<vector<string>> loadTextFileIntoVectorOfStringsAndTrim(string filename);
+	static sp<vector<string>> loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename);
 	static sp<ByteArray> loadByteFile(string filename);
 	static sp<ByteArray> loadByteFileFromExePath(string filename);
 	//static sp<ByteArray> loadByteFileFromExePathIntoVector(string filename);

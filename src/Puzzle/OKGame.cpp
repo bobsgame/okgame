@@ -1211,7 +1211,7 @@ void OKGame::sendGameStatsToServer()
 		
 		if(statsUploadMenu !=nullptr)
 		{
-			delete statsUploadMenu;
+			//delete statsUploadMenu;
 			statsUploadMenu = nullptr;
 		}
 
@@ -1376,7 +1376,7 @@ void OKGame::sendGameStatsToServer()
 			{
 				if (statsUploadMenu != nullptr)
 				{
-					delete statsUploadMenu;
+					//delete statsUploadMenu;
 					statsUploadMenu = nullptr;
 				}
 			}
@@ -1405,7 +1405,7 @@ void OKGame::doVoting()
 		sentVote = true;
 		if (voteMenu != nullptr)
 		{
-			delete voteMenu;
+			//delete voteMenu;
 			voteMenu = nullptr;
 		}
 		return;
@@ -1513,7 +1513,7 @@ void OKGame::doVoting()
 			{
 				if (voteMenu != nullptr)
 				{
-					delete voteMenu;
+					//delete voteMenu;
 					voteMenu = nullptr;
 				}
 			}

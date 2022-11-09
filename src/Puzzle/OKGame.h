@@ -476,8 +476,10 @@ public:
 	//bool multiplayer_GameEndsWhenOnePlayerRemains = true;
 	//bool multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel = true;
 	//bool multiplayer_DisableVSGarbage = false;
+
 	bool localMultiplayer = false;
 	bool networkMultiplayer = false;
+
 	//sp<GameSequence>multiplayer_SelectedGameSequence = nullptr;
 	//string multiplayer_SelectedDifficultyName = "Beginner";
 

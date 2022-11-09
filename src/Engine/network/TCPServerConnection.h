@@ -662,7 +662,7 @@ public:
 	GameSaveUpdateRequest getQueuedGameSaveUpdateRequest_S(int i)
 	{ //=========================================================================================================================
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
-		int size = _gameSaveUpdateRequestQueue.size();
+		int size = (int)_gameSaveUpdateRequestQueue.size();
 		if (i >= size)return GameSaveUpdateRequest();
 		return _gameSaveUpdateRequestQueue.at(i);
 	}
@@ -678,11 +678,11 @@ public:
 	void removeQueuedGameSaveUpdateRequestByID_S(int requestID)
 	{
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
-		int size = _gameSaveUpdateRequestQueue.size();
+		int size = (int)_gameSaveUpdateRequestQueue.size();
 		for (int i = 0; i < size; i++)
 			if (_gameSaveUpdateRequestQueue.at(i).requestID == requestID)
 			{
-				_gameSaveUpdateRequestQueue.removeAt(i);
+				_gameSaveUpdateRequestQueue.erase(_gameSaveUpdateRequestQueue.begin()+i);
 				i = size;
 				break;
 			}

@@ -115,7 +115,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	static string getFrameStatesAsBase64LZ4XML(ArrayList<FrameState> &n)
+	static string getFrameStatesAsBase64LZ4XML(vector<FrameState> &n)
 	{ //=========================================================================================================================
 
 		std::stringstream ss;
@@ -141,17 +141,17 @@ public:
 		ss << xml;
 
 		boost::archive::xml_iarchive ia(ss);
-		sp<vector<FrameState>> n;
+		vector<FrameState>* n = new vector<FrameState>();
 		try
 		{
-			ia >> BOOST_SERIALIZATION_NVP(n);
+			ia >> BOOST_SERIALIZATION_NVP(*n);
 		}
 		catch (exception)
 		{
 			Main::log.error("Could not unserialize FramesArray");
 		}
 
-		return n;
+		return ms<vector<FrameState>>(*n);
 	}
 
 };
