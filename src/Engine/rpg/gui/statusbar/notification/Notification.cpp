@@ -49,7 +49,7 @@ Notification::Notification(sp<BGClientEngine> g, const string& s)
 	fadeIn = true;
 
 
-	getStatusBar()->notificationManager->add(this);
+	getStatusBar()->notificationManager->push_back(shared_from_this());
 }
 
 void Notification::update()
@@ -97,11 +97,11 @@ void Notification::update()
 			if (caption->texture != nullptr)
 			{
 				caption->texture->release();
-				delete caption->texture;
+				//delete caption->texture;
 				caption->texture = nullptr;
 			}
 
-			delete caption;
+			//delete caption;
 			caption = nullptr;
 
 			return;

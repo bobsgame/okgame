@@ -186,7 +186,7 @@ RandomCharacter::RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, 
 	}
 
 
-	getData()->setSpriteName(spriteNameList.at(Math::randLessThan(spriteNameList.size())));
+	getData()->setSpriteName(spriteNameList.at(Math::randLessThan((int)spriteNameList.size())));
 
 	this->sprite = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist(getSpriteName());
 
@@ -687,7 +687,7 @@ string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 	}
 
 
-	int index = Math::randLessThan(areaTYPEIDList->size());
+	int index = Math::randLessThan((int)areaTYPEIDList->size());
 
 
 	//don't select the target we already have
@@ -695,7 +695,7 @@ string RandomCharacter::getRandomAreaWarpOrDoorTYPEID()
 	{
 		while (areaTYPEIDList->at(index) == currentAreaTYPEIDTarget)
 		{
-			index = Math::randLessThan(areaTYPEIDList->size());
+			index = Math::randLessThan((int)areaTYPEIDList->size());
 		}
 	}
 
@@ -754,7 +754,7 @@ string RandomCharacter::getRandomConnectionTYPEIDFromCurrentPoint()
 
 
 	sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(currentAreaTYPEIDTarget);
-	string nextTargetTYPEID = a->connectionTYPEIDList()->at(Math::randLessThan(a->connectionTYPEIDList()->size()));
+	string nextTargetTYPEID = a->connectionTYPEIDList()->at(Math::randLessThan((int)a->connectionTYPEIDList()->size()));
 
 
 	if (OKString::startsWith(nextTargetTYPEID, "DOOR.") == false)

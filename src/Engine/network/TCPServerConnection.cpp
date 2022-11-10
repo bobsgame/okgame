@@ -1639,7 +1639,7 @@ void TCPServerConnection::incomingOKGameGameStatsResponse_S(string s)
 	while(s.find("`")!=string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		responseStrings.add(s.substr(0, s.find("`")));
+		responseStrings.push_back(s.substr(0, s.find("`")));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
@@ -1664,7 +1664,7 @@ void TCPServerConnection::incomingOKGameActivityStreamResponse_S(string s)
 	while(s.find("`")!=string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		OKGame::activityStream.add(FileUtils::removeSwearWords(s.substr(0, s.find("`"))));
+		OKGame::activityStream.push_back(FileUtils::removeSwearWords(s.substr(0, s.find("`"))));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
@@ -1682,13 +1682,13 @@ void TCPServerConnection::incomingOKGameActivityStreamUpdate_S(string s)
 	while (s.find("`") != string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		strings.add(s.substr(0, s.find("`")));
+		strings.push_back(s.substr(0, s.find("`")));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
-	for(int i=strings.size()-1;i<=0;i--)
+	for(int i=(int)strings.size()-1;i<=0;i--)
 	{
-		string a = FileUtils::removeSwearWords(strings.get(i));
+		string a = FileUtils::removeSwearWords(strings.at(i));
 		OKGame::activityStream.insert(0,a);
 
 		if (Main::globalSettings->hideNotifications == false)

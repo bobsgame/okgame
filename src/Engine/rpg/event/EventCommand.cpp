@@ -106,7 +106,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 				//commandString now looks like "thing)" or "thing|thing)"
 
 				//all parameters looks like THING.ID
-				newParameterList.add(ms<EventParameter>(g, parameterString));
+				newParameterList.push_back(ms<EventParameter>(g, parameterString));
 			}
 			else //commandString looks like thing)
 			{
@@ -115,7 +115,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 				//commandString now looks like ")"
 
 				//all parameters looks like THING.ID
-				newParameterList.add(ms<EventParameter>(g, parameterString));
+				newParameterList.push_back(ms<EventParameter>(g, parameterString));
 			}
 		}
 

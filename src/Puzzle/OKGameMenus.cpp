@@ -1358,7 +1358,7 @@ void OKGame::playerPauseMiniMenuUpdate(sp<PuzzlePlayer>p)
 					bool allLocalPlayersDead = true;
 					for (int i = 0; i < players.size(); i++)
 					{
-						sp<PuzzlePlayer>o = players.get(i);
+						sp<PuzzlePlayer>o = players.at(i);
 						if (o->isNetworkPlayer() == false && o->gameLogic->died==false)allLocalPlayersDead = false;
 					}
 

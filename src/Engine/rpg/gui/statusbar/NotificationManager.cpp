@@ -42,17 +42,17 @@ void NotificationManager::update()
 { //=========================================================================================================================
 
 
-	for (int i = 0; i < notificationList->size(); i++)
+	for (int i = 0; i < notificationList.size(); i++)
 	{
-		notificationList->get(i)->update();
+		notificationList.at(i)->update();
 	}
 }
 
 void NotificationManager::render(int layer)
 { //=========================================================================================================================
-	for (int i = 0; i < notificationList->size(); i++)
+	for (int i = 0; i < notificationList.size(); i++)
 	{
-		notificationList->get(i)->render(layer);
+		notificationList.at(i)->render(layer);
 	}
 }
 
@@ -60,12 +60,12 @@ void NotificationManager::add(sp<Notification> n)
 { //=========================================================================================================================
 
 
-	notificationList->add(n);
+	notificationList.push_back(n);
 }
 
 void NotificationManager::remove(sp<Notification> n)
 { //=========================================================================================================================
 
-	notificationList->remove(n);
+	notificationList.remove(n);
 }
 

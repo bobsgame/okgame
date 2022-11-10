@@ -55,7 +55,7 @@ OKGameStadium::OKGameStadium(sp<StadiumScreen> stadiumScreen, sp<Area> area)
 	//StadiumGameEngine(stadiumScreen, area);
 	this->stadiumScreen = stadiumScreen;
 	this->area = area;
-	stadiumScreen->setGame(this, area);
+	stadiumScreen->setGame(shared_from_this(), area);
 
 
 

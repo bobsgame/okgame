@@ -212,7 +212,7 @@ void Character::update()
 
 							if (getConnectionTYPEIDList()->size() > 0)
 							{
-								currentAreaTYPEIDTarget = getConnectionTYPEIDList()->get(Math::randLessThan(getConnectionTYPEIDList()->size()));
+								currentAreaTYPEIDTarget = getConnectionTYPEIDList()->at(Math::randLessThan((int)getConnectionTYPEIDList()->size()));
 							}
 						}
 					}
@@ -236,7 +236,7 @@ void Character::update()
 				//else pick a new point
 				if (getConnectionTYPEIDList()->size() > 0)
 				{
-					currentAreaTYPEIDTarget = getConnectionTYPEIDList()->get(Math::randLessThan(getConnectionTYPEIDList()->size()));
+					currentAreaTYPEIDTarget = getConnectionTYPEIDList()->at(Math::randLessThan((int)getConnectionTYPEIDList()->size()));
 				}
 			}
 		}

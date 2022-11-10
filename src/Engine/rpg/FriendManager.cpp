@@ -106,7 +106,7 @@ void FriendManager::cleanup()
 
 	for (int i = 0; i < friendCharacters.size(); i++)
 	{
-		friendCharacters.get(i)->cleanup();
+		friendCharacters.at(i)->cleanup();
 	}
 }
 
@@ -115,7 +115,7 @@ void FriendManager::update()
 
 	for (int i = 0; i < friendCharacters.size(); i++)
 	{
-		friendCharacters.get(i)->update();
+		friendCharacters.at(i)->update();
 	}
 
 }

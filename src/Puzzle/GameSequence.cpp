@@ -33,20 +33,20 @@ void NetworkGameSequence::serialize(Archive & ar, const unsigned int version)
 	{
 		for (int i = 0; i < gameTypes.size(); i++)
 		{
-			sp<GameType>bp = gameTypes.get(i);
+			sp<GameType>bp = gameTypes.at(i);
 			GameType b;
 			b = *bp;
-			importExport_games.add(b);
+			importExport_games.push_back(b);
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_games);
 	gameTypes.clear();
 	for (int i = 0; i<importExport_games.size(); i++)
 	{
-		GameType b = importExport_games.get(i);
+		GameType b = importExport_games.at(i);
 		sp<GameType>bp = ms<GameType>();
 		*bp = b;
-		gameTypes.add(bp);
+		gameTypes.push_back(bp);
 	}
 	importExport_games.clear();
 

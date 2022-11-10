@@ -85,9 +85,9 @@ void GUIManager::update()
 	playerEditMenu->update();
 	keyboardScreen->update();
 
-	for (int i = 0; i < gameChallenges->size(); i++)
+	for (int i = 0; i < gameChallenges.size(); i++)
 	{
-		sp<GameChallengeNotificationPanel> g = gameChallenges->get(i);
+		sp<GameChallengeNotificationPanel> g = gameChallenges.at(i);
 		g->update();
 	}
 }

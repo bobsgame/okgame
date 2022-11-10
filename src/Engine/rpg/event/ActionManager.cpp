@@ -148,7 +148,7 @@ bool ActionManager::checkAll(int x, int y, int x2, int y2, const string& label, 
 	}
 
 
-	actionsThisFrame.add(ms<Coords>(this, x + (x2 - x), y + (y2 - y)));
+	actionsThisFrame.push_back(ms<Coords>(this, x + (x2 - x), y + (y2 - y)));
 
 
 	if (inRange)

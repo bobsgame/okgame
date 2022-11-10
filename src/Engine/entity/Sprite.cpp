@@ -54,7 +54,7 @@ void Sprite::preloadFromDataFile(string name)
 	{
 		for (int i = 0; i < stringList->size(); i++)
 		{
-			string s = stringList->get(i);
+			string s = stringList->at(i);
 
 			if (s.length() > 0)
 			{
@@ -98,7 +98,8 @@ void Sprite::preloadFromDataFile(string name)
 			}
 		}
 	}
-	delete stringList;
+	//delete stringList;
+	stringList = nullptr;
 
 	getData()->setID(id);
 	getData()->setWidthPixels1X(width);

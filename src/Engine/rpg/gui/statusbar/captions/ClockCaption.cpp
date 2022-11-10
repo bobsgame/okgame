@@ -92,7 +92,7 @@ void ClockCaption::setColors(sp<OKColor> fg, sp<OKColor> aa, sp<OKColor> bg)
 	if (light != nullptr && (light->r() != fg->ri() || light->g() != fg->gi() || light->b() != fg->bi()))
 	{
 		//light->deleteFromMapEntityListAndReleaseTexture();
-		delete light;
+		//delete light;
 		light = nullptr;
 		light = ms<Light>(getEngine(), "timeLight", -100, 4, 24, 2, fg->ri(), fg->gi(), fg->bi(), 90, 16, 2.0f, 1.0f, 0, true, true);
 	}

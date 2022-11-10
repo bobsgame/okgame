@@ -95,7 +95,7 @@ SortedList::SortedList(sp<PathFinder> outerInstance)
 
 sp<PotentialTile> SortedList::first()
 {
-	return list.get(0);
+	return list.at(0);
 }
 
 void SortedList::clear()
@@ -105,23 +105,30 @@ void SortedList::clear()
 
 void SortedList::addAndSort(sp<PotentialTile> o)
 {
-	list.add(o);
-	sort(list.v.begin(), list.v.end());
+	list.push_back(o);
+	sort(list.begin(), list.end());
 }
 
 void SortedList::remove(sp<PotentialTile> o)
 {
-	list.remove(o);
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (list.at(i).get() == o.get())
+		{
+			list.erase(list.begin() + i);
+			i--;
+		}
+	}
 }
 
 int SortedList::size()
 {
-	return list.size();
+	return (int)list.size();
 }
 
 bool SortedList::contains(sp<PotentialTile> o)
 {
-	return find(list.v.begin(), list.v.end(), o) != list.v.end();
+	return find(list.begin(), list.end(), o) != list.end();
 }
 
 PotentialTile::PotentialTile(int x, int y)
@@ -470,7 +477,7 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 		}
 
 		openPotentialTilesList->remove(current);
-		blockedPotentialTilesList.add(current);
+		blockedPotentialTilesList.push_back(current);
 
 		// search through all the neighbours of the current node evaluating
 		// them as next steps
@@ -520,22 +527,32 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 							openPotentialTilesList->remove(neighbour);
 						}
 
-						if (blockedPotentialTilesList.contains(neighbour))
+
+						for (int i = 0; i < blockedPotentialTilesList.size(); i++)
 						{
-							blockedPotentialTilesList.remove(neighbour);
+							if (blockedPotentialTilesList.at(i).get() == neighbour.get())
+							{
+								blockedPotentialTilesList.erase(blockedPotentialTilesList.begin() + i);
+								i--;
+							}
 						}
+
 					}
 
 					// if the node hasn't already been processed and discarded then
 					// reset it's cost to our current cost and add it as a next possible
 					// step (i.e. to the open list)
-					if (!openPotentialTilesList->contains(neighbour) && !(blockedPotentialTilesList.contains(neighbour)))
+					if (
+						!openPotentialTilesList->contains(neighbour) &&
+						!(blockedPotentialTilesList.contains(neighbour))
+						)
 					{
 						neighbour->cumulativePathCost = nextStepCost;
 						neighbour->heuristicCost = (float)getHeuristicCost(xp, yp, toTileX, toTileY);
 						maxDepth = max(maxDepth,neighbour->setParentTile(current));
 						openPotentialTilesList->addAndSort(neighbour);
 					}
+
 				}
 			}
 		}

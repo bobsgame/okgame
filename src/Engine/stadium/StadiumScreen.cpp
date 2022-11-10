@@ -58,7 +58,7 @@ void StadiumScreen::setGame(sp<MiniGameEngine> game, sp<Area> area)
 
 sp<MiniGameEngine> StadiumScreen::getGame()
 { //=========================================================================================================================
-	return static_cast<sp<MiniGameEngine>>(stadiumGameStateManager->getCurrentState());
+	return ms<MiniGameEngine>(stadiumGameStateManager->getCurrentState().get());
 }
 
 void StadiumScreen::render()

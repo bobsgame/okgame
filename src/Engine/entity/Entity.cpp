@@ -210,14 +210,14 @@ void Entity::renderDebugBoxes()
 	for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (OKString::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
+		if (OKString::startsWith(getConnectionTYPEIDList()->at(i), "DOOR."))
 		{
 			//go through doorlist
 			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
 			{
 				sp<Door> door = getMap()->doorList.at(d);
 
-				if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
+				if (getConnectionTYPEIDList()->at(i) == "DOOR." + door->getName())
 				{
 					float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 					float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -242,7 +242,7 @@ void Entity::renderDebugBoxes()
 				{
 					sp<Area> a = getMap()->currentState->areaList.at(j);
 
-					if (getConnectionTYPEIDList()->get(i) == a->getName())
+					if (getConnectionTYPEIDList()->at(i) == a->getName())
 					{
 						float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 						float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -257,7 +257,7 @@ void Entity::renderDebugBoxes()
 			{
 				sp<Area> a = getMap()->warpAreaList.at(j);
 
-				if (getConnectionTYPEIDList()->get(i) == a->getName())
+				if (getConnectionTYPEIDList()->at(i) == a->getName())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;

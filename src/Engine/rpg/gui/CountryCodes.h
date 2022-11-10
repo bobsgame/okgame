@@ -14,6 +14,6 @@ class Logger;
 class CountryCodes
 {
 public:
-	static vector<string>* getCountryList();
+	static sp<vector<string>> getCountryList();
 };
 
