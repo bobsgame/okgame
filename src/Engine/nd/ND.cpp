@@ -127,7 +127,7 @@ void ND::setGame(sp<NDGameEngine> game)
 
 sp<NDGameEngine> ND::getGame()
 { //=========================================================================================================================
-	return static_cast<sp<NDGameEngine>>(nDGameStateManager->getCurrentState());
+	return ms<NDGameEngine>(dynamic_cast<NDGameEngine*>(nDGameStateManager->getCurrentState().get()));
 }
 
 void ND::toggleActivated()

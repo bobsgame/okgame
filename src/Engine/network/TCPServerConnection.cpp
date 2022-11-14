@@ -960,7 +960,7 @@ bool TCPServerConnection::messageReceived(string &s)// sp<ChannelHandlerContext>
 	bool processed = false;
 	for (int i = 0; i < OKNet::engines.size(); i++)
 	{
-		if (OKNet::engines.get(i)->serverMessageReceived(s))processed = true;
+		if (OKNet::engines.at(i)->serverMessageReceived(s))processed = true;
 	}
 	if (processed)return true;
 
@@ -1689,7 +1689,7 @@ void TCPServerConnection::incomingOKGameActivityStreamUpdate_S(string s)
 	for(int i=(int)strings.size()-1;i<=0;i--)
 	{
 		string a = FileUtils::removeSwearWords(strings.at(i));
-		OKGame::activityStream.insert(0,a);
+		OKGame::activityStream.insert(OKGame::activityStream.begin()+0, a);
 
 		if (Main::globalSettings->hideNotifications == false)
 		{
@@ -1707,7 +1707,7 @@ void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(st
 	sp<OKGameUserStatsForSpecificGameAndDifficulty>gameStats = ms<OKGameUserStatsForSpecificGameAndDifficulty>(s);
 	for(int i=0;i<OKGame::userStatsPerGameAndDifficulty.size();i++)
 	{
-		sp<OKGameUserStatsForSpecificGameAndDifficulty>temp = OKGame::userStatsPerGameAndDifficulty.get(i);
+		sp<OKGameUserStatsForSpecificGameAndDifficulty>temp = OKGame::userStatsPerGameAndDifficulty.at(i);
 		if(
 			temp->isGameTypeOrSequence == gameStats->isGameTypeOrSequence &&
 			temp->gameTypeUUID == gameStats->gameTypeUUID &&
@@ -1716,21 +1716,21 @@ void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(st
 			temp->objectiveString == gameStats->objectiveString
 			)
 		{
-			OKGame::userStatsPerGameAndDifficulty.removeAt(i);
-			OKGame::userStatsPerGameAndDifficulty.insert(i, gameStats);
+			OKGame::userStatsPerGameAndDifficulty.erase(OKGame::userStatsPerGameAndDifficulty.begin()+i);
+			OKGame::userStatsPerGameAndDifficulty.insert(OKGame::userStatsPerGameAndDifficulty.begin() + i, gameStats);
 			//delete temp;
 			return;
 		}
 	}
-	OKGame::userStatsPerGameAndDifficulty.add(gameStats);
+	OKGame::userStatsPerGameAndDifficulty.push_back(gameStats);
 }
 //===============================================================================================
-void TCPServerConnection::addToLeaderboard(ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard)
+void TCPServerConnection::addToLeaderboard(sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> boardArray, sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard)
 {//===============================================================================================
 
-	for (int i = 0; i<boardArray.size(); i++)
+	for (int i = 0; i<boardArray->size(); i++)
 	{
-		sp<OKGameLeaderBoardAndHighScoreBoard>temp = boardArray.get(i);
+		sp<OKGameLeaderBoardAndHighScoreBoard>temp = boardArray->at(i);
 		if (
 			temp->isGameTypeOrSequence == leaderBoard->isGameTypeOrSequence &&
 			temp->gameTypeUUID == leaderBoard->gameTypeUUID &&
@@ -1739,13 +1739,13 @@ void TCPServerConnection::addToLeaderboard(ArrayList<sp<OKGameLeaderBoardAndHigh
 			temp->objectiveString == leaderBoard->objectiveString
 			)
 		{
-			boardArray.removeAt(i);
-			boardArray.insert(i, leaderBoard);
+			boardArray->erase(boardArray->begin()+i);
+			boardArray->insert(boardArray->begin() + i, leaderBoard);
 			//delete temp;
 			return;
 		}
 	}
-	boardArray.add(leaderBoard);
+	boardArray->push_back(leaderBoard);
 }
 
 //===============================================================================================
@@ -1755,7 +1755,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByTotalTimePlayed(string &s)
 
 	sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = ms<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(OKGame::topPlayersByTotalTimePlayed, leaderBoard);
+	addToLeaderboard(ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(OKGame::topPlayersByTotalTimePlayed), leaderBoard);
 
 }
 
@@ -1766,7 +1766,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByTotalBlocksCleared(string &
 
 	sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = ms<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(OKGame::topPlayersByTotalBlocksCleared, leaderBoard);
+	addToLeaderboard(ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(OKGame::topPlayersByTotalBlocksCleared), leaderBoard);
 
 }
 
@@ -1777,7 +1777,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByPlaneswalkerPoints(string &
 
 	sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = ms<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(OKGame::topPlayersByPlaneswalkerPoints, leaderBoard);
+	addToLeaderboard(ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(OKGame::topPlayersByPlaneswalkerPoints), leaderBoard);
 }
 
 //===============================================================================================
@@ -1787,7 +1787,7 @@ void TCPServerConnection::incomingOKGameLeaderBoardByEloScore(string &s)
 
 	sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = ms<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(OKGame::topPlayersByEloScore, leaderBoard);
+	addToLeaderboard(ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(OKGame::topPlayersByEloScore), leaderBoard);
 
 }
 
@@ -1798,7 +1798,7 @@ void TCPServerConnection::incomingOKGameHighScoreBoardsByTimeLasted(string &s)
 
 	sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = ms<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(OKGame::topGamesByTimeLasted, leaderBoard);
+	addToLeaderboard(ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(OKGame::topGamesByTimeLasted), leaderBoard);
 
 
 }
@@ -1811,7 +1811,7 @@ void TCPServerConnection::incomingOKGameHighScoreBoardsByBlocksCleared(string &s
 
 	sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard = ms<OKGameLeaderBoardAndHighScoreBoard>(s);
 
-	addToLeaderboard(OKGame::topGamesByBlocksCleared, leaderBoard);
+	addToLeaderboard(ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(OKGame::topGamesByBlocksCleared), leaderBoard);
 
 
 

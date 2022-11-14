@@ -573,7 +573,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	sp<BlockType> bt(ms<BlockType>());
 	bt->name = "Gray Square";
 	//bt->spriteName = "Square";
-	bt->colors.add(OKColor::gray);
+	bt->colors.push_back(*OKColor::gray.get());
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
 	bt->useAsGarbage = true;
@@ -582,8 +582,8 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	pt->useAsNormalPiece = true;
 	pt->useAsPlayingFieldFillerPiece = true;
 	pt->useAsGarbagePiece = true;
-	currentGameType->blockTypes.add(bt);
-	currentGameType->pieceTypes.add(pt);
+	currentGameType->blockTypes.push_back(bt);
+	currentGameType->pieceTypes.push_back(pt);
 
 
 
@@ -616,73 +616,73 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 //		piecePropTree = nullptr;
 //	}
 
-	colors.add(OKColor::cyan);
-	colors.add(OKColor::magenta);
-	colors.add(OKColor::green);
-	colors.add(OKColor::lighterPurple);//was purple, seeing if it helps differentiate from blue
-	colors.add(OKColor::darkBlue);
-	colors.add(OKColor::orange);
-	colors.add(OKColor::yellow);
-	colors.add(OKColor::lighterPink);
-	colors.add(OKColor::red);
-	colors.add(OKColor::white);
-	colors.add(OKColor::burgandy);
-	colors.add(OKColor::olive);
-	colors.add(OKColor::darkerCyan);
-	colors.add(OKColor::darkerMagenta);
-	colors.add(OKColor::darkerGreen);
-	colors.add(OKColor::darkerPurple);
-	colors.add(OKColor::lighterBlue);
-	colors.add(OKColor::darkerOrange);
-	colors.add(OKColor::darkerYellow);
-	colors.add(OKColor::darkerPink);
-	colors.add(OKColor::darkerRed);
-	colors.add(OKColor::darkerBurgandy);
-	colors.add(OKColor::darkerOlive);
+	colors.push_back(OKColor::cyan);
+	colors.push_back(OKColor::magenta);
+	colors.push_back(OKColor::green);
+	colors.push_back(OKColor::lighterPurple);//was purple, seeing if it helps differentiate from blue
+	colors.push_back(OKColor::darkBlue);
+	colors.push_back(OKColor::orange);
+	colors.push_back(OKColor::yellow);
+	colors.push_back(OKColor::lighterPink);
+	colors.push_back(OKColor::red);
+	colors.push_back(OKColor::white);
+	colors.push_back(OKColor::burgandy);
+	colors.push_back(OKColor::olive);
+	colors.push_back(OKColor::darkerCyan);
+	colors.push_back(OKColor::darkerMagenta);
+	colors.push_back(OKColor::darkerGreen);
+	colors.push_back(OKColor::darkerPurple);
+	colors.push_back(OKColor::lighterBlue);
+	colors.push_back(OKColor::darkerOrange);
+	colors.push_back(OKColor::darkerYellow);
+	colors.push_back(OKColor::darkerPink);
+	colors.push_back(OKColor::darkerRed);
+	colors.push_back(OKColor::darkerBurgandy);
+	colors.push_back(OKColor::darkerOlive);
 
-	rotationSets.add(Piece::get2BlockRotateAround00RotationSet());
-	rotationSets.add(Piece::get2BlockBottomLeftAlwaysFilledRotationSet());
-	rotationSets.add(Piece::get3BlockVerticalRotationSet());
-	rotationSets.add(Piece::get3BlockHorizontalRotationSet());
-	rotationSets.add(Piece::get3BlockTRotationSet());
-	rotationSets.add(Piece::get3BlockLRotationSet());
-	rotationSets.add(Piece::get3BlockJRotationSet());
-	rotationSets.add(Piece::get3BlockIRotationSet());
-	rotationSets.add(Piece::get3BlockCRotationSet());
-	rotationSets.add(Piece::get3BlockDRotationSet());
-	rotationSets.add(Piece::get4BlockORotationSet());
-	rotationSets.add(Piece::get4BlockSolidRotationSet());
-	rotationSets.add(Piece::get9BlockSolidRotationSet());
-	rotationSets.add(Piece::get4BlockIRotationSet(RotationType::DTET));
-	rotationSets.add(Piece::get4BlockJRotationSet(RotationType::DTET));
-	rotationSets.add(Piece::get4BlockLRotationSet(RotationType::DTET));
-	rotationSets.add(Piece::get4BlockSRotationSet(RotationType::DTET));
-	rotationSets.add(Piece::get4BlockTRotationSet(RotationType::DTET));
-	rotationSets.add(Piece::get4BlockZRotationSet(RotationType::DTET));
-	rotationSets.add(Piece::get4BlockIRotationSet(RotationType::SRS));
-	rotationSets.add(Piece::get4BlockJRotationSet(RotationType::SRS));
-	rotationSets.add(Piece::get4BlockLRotationSet(RotationType::SRS));
-	rotationSets.add(Piece::get4BlockSRotationSet(RotationType::SRS));
-	rotationSets.add(Piece::get4BlockTRotationSet(RotationType::SRS));
-	rotationSets.add(Piece::get4BlockZRotationSet(RotationType::SRS));
-	rotationSets.add(Piece::get4BlockIRotationSet(RotationType::SEGA));
-	rotationSets.add(Piece::get4BlockJRotationSet(RotationType::SEGA));
-	rotationSets.add(Piece::get4BlockLRotationSet(RotationType::SEGA));
-	rotationSets.add(Piece::get4BlockSRotationSet(RotationType::SEGA));
-	rotationSets.add(Piece::get4BlockTRotationSet(RotationType::SEGA));
-	rotationSets.add(Piece::get4BlockZRotationSet(RotationType::SEGA));
-	rotationSets.add(Piece::get4BlockIRotationSet(RotationType::NES));
-	rotationSets.add(Piece::get4BlockJRotationSet(RotationType::NES));
-	rotationSets.add(Piece::get4BlockLRotationSet(RotationType::NES));
-	rotationSets.add(Piece::get4BlockSRotationSet(RotationType::NES));
-	rotationSets.add(Piece::get4BlockTRotationSet(RotationType::NES));
-	rotationSets.add(Piece::get4BlockZRotationSet(RotationType::NES));
-	rotationSets.add(Piece::get4BlockIRotationSet(RotationType::GB));
-	rotationSets.add(Piece::get4BlockJRotationSet(RotationType::GB));
-	rotationSets.add(Piece::get4BlockLRotationSet(RotationType::GB));
-	rotationSets.add(Piece::get4BlockSRotationSet(RotationType::GB));
-	rotationSets.add(Piece::get4BlockTRotationSet(RotationType::GB));
-	rotationSets.add(Piece::get4BlockZRotationSet(RotationType::GB));
+	rotationSets.push_back(Piece::get2BlockRotateAround00RotationSet());
+	rotationSets.push_back(Piece::get2BlockBottomLeftAlwaysFilledRotationSet());
+	rotationSets.push_back(Piece::get3BlockVerticalRotationSet());
+	rotationSets.push_back(Piece::get3BlockHorizontalRotationSet());
+	rotationSets.push_back(Piece::get3BlockTRotationSet());
+	rotationSets.push_back(Piece::get3BlockLRotationSet());
+	rotationSets.push_back(Piece::get3BlockJRotationSet());
+	rotationSets.push_back(Piece::get3BlockIRotationSet());
+	rotationSets.push_back(Piece::get3BlockCRotationSet());
+	rotationSets.push_back(Piece::get3BlockDRotationSet());
+	rotationSets.push_back(Piece::get4BlockORotationSet());
+	rotationSets.push_back(Piece::get4BlockSolidRotationSet());
+	rotationSets.push_back(Piece::get9BlockSolidRotationSet());
+	rotationSets.push_back(Piece::get4BlockIRotationSet(RotationType::DTET));
+	rotationSets.push_back(Piece::get4BlockJRotationSet(RotationType::DTET));
+	rotationSets.push_back(Piece::get4BlockLRotationSet(RotationType::DTET));
+	rotationSets.push_back(Piece::get4BlockSRotationSet(RotationType::DTET));
+	rotationSets.push_back(Piece::get4BlockTRotationSet(RotationType::DTET));
+	rotationSets.push_back(Piece::get4BlockZRotationSet(RotationType::DTET));
+	rotationSets.push_back(Piece::get4BlockIRotationSet(RotationType::SRS));
+	rotationSets.push_back(Piece::get4BlockJRotationSet(RotationType::SRS));
+	rotationSets.push_back(Piece::get4BlockLRotationSet(RotationType::SRS));
+	rotationSets.push_back(Piece::get4BlockSRotationSet(RotationType::SRS));
+	rotationSets.push_back(Piece::get4BlockTRotationSet(RotationType::SRS));
+	rotationSets.push_back(Piece::get4BlockZRotationSet(RotationType::SRS));
+	rotationSets.push_back(Piece::get4BlockIRotationSet(RotationType::SEGA));
+	rotationSets.push_back(Piece::get4BlockJRotationSet(RotationType::SEGA));
+	rotationSets.push_back(Piece::get4BlockLRotationSet(RotationType::SEGA));
+	rotationSets.push_back(Piece::get4BlockSRotationSet(RotationType::SEGA));
+	rotationSets.push_back(Piece::get4BlockTRotationSet(RotationType::SEGA));
+	rotationSets.push_back(Piece::get4BlockZRotationSet(RotationType::SEGA));
+	rotationSets.push_back(Piece::get4BlockIRotationSet(RotationType::NES));
+	rotationSets.push_back(Piece::get4BlockJRotationSet(RotationType::NES));
+	rotationSets.push_back(Piece::get4BlockLRotationSet(RotationType::NES));
+	rotationSets.push_back(Piece::get4BlockSRotationSet(RotationType::NES));
+	rotationSets.push_back(Piece::get4BlockTRotationSet(RotationType::NES));
+	rotationSets.push_back(Piece::get4BlockZRotationSet(RotationType::NES));
+	rotationSets.push_back(Piece::get4BlockIRotationSet(RotationType::GB));
+	rotationSets.push_back(Piece::get4BlockJRotationSet(RotationType::GB));
+	rotationSets.push_back(Piece::get4BlockLRotationSet(RotationType::GB));
+	rotationSets.push_back(Piece::get4BlockSRotationSet(RotationType::GB));
+	rotationSets.push_back(Piece::get4BlockTRotationSet(RotationType::GB));
+	rotationSets.push_back(Piece::get4BlockZRotationSet(RotationType::GB));
 }
 
 void CustomGameEditorControl::initFromCurrentGameType()
@@ -722,7 +722,7 @@ void CustomGameEditorControl::initFromCurrentGameType()
 	leftBaseTabControl->OnTabPressed(settingsTab); doResize();
 
 	bobsGame->getPlayer1Game()->currentGameSequence = ms<GameSequence>();
-	bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.add(currentGameType);
+	bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.push_back(currentGameType);
 	bobsGame->currentRoom->endlessMode = true;
 
 

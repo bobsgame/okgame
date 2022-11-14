@@ -586,7 +586,7 @@ void OKGame::startScreenMenuUpdate()
 
 			for (int i = 0; i < activityStream.size() && i < 20; i++)
 			{
-				activityMenu->addInfo(activityStream.get(i));
+				activityMenu->addInfo(activityStream.at(i));
 			}
 		}
 	}

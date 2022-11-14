@@ -105,8 +105,17 @@ void Engine::update()
 			f->getGotFriendData_S() == true && 
 			f->peerStatus == OKNet::status_AVAILABLE)
 		{
-			if (onlineFriends.contains(f) == false)
+			bool contains = false;
+			for (int j = 0; j < onlineFriends.size(); j++)
+			{
+				if (onlineFriends.at(j).get() == f.get())
+				{
+					contains = true;
+				}
+			}
+			if (contains == false)
 				onlineFriends.push_back(f);
+
 		}
 	}
 

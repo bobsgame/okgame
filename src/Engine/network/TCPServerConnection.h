@@ -869,7 +869,7 @@ public:
 	void incomingOKGameActivityStreamResponse_S(string s);
 	void incomingOKGameActivityStreamUpdate_S(string s);
 	void incomingOKGameUserStatsForSpecificGameAndDifficulty(string &s);
-	void addToLeaderboard(ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> &boardArray, sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard);
+	void addToLeaderboard(sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> boardArray, sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard);
 	void incomingOKGameLeaderBoardByTotalTimePlayed(string &s);
 	void incomingOKGameLeaderBoardByTotalBlocksCleared(string &s);
 	void incomingOKGameLeaderBoardByPlaneswalkerPoints(string &s);

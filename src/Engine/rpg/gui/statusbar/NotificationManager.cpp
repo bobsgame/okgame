@@ -66,6 +66,14 @@ void NotificationManager::add(sp<Notification> n)
 void NotificationManager::remove(sp<Notification> n)
 { //=========================================================================================================================
 
-	notificationList.remove(n);
+	for (int i = 0; i < notificationList.size(); i++)
+	{
+		if (notificationList.at(i).get() == n.get())
+		{
+			notificationList.erase(notificationList.begin() + i);
+			i--;
+		}
+		
+	}
 }
 

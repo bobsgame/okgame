@@ -21,9 +21,6 @@
     <ClInclude Include="src\Puzzle\Block.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Puzzle\BobsGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Puzzle\GameLogic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -180,9 +177,6 @@
     <ClInclude Include="src\Utility\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\BobBool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Utility\BufferedImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -229,9 +223,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="oktypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utility\BobFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility\Caption.h">
@@ -298,9 +289,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\nd\NDGameEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\stadium\BobsGameStadium.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\stadium\StadiumScreen.h">
@@ -462,19 +450,10 @@
     <ClInclude Include="src\Engine\rpg\BGClientEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\BobMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utility\BobString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\network\TCPServerConnection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\network\UDPPeerConnection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\network\BobNet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\network\GameSave.h">
@@ -502,9 +481,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Puzzle\GlobalSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utility\BobMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Puzzle\GameTestMenu.h">
@@ -591,15 +567,18 @@
     <ClInclude Include="src\Engine\stadium\OKGameStadium.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\network\OKNet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Puzzle\OKGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Puzzle\Block.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Puzzle\BobsGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Puzzle\GameLogic.cpp">
@@ -755,9 +734,6 @@
     <ClCompile Include="src\Utility\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\BobBool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Utility\BufferedImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -768,9 +744,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\HQ2X\HQ2X.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Utility\BobFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\Caption.cpp">
@@ -837,9 +810,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\nd\NDGameEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\stadium\BobsGameStadium.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\stadium\StadiumScreen.cpp">
@@ -1007,19 +977,10 @@
     <ClCompile Include="lib\glew-2.0.0\src\glew.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\BobMath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Utility\BobString.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\network\TCPServerConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\network\UDPPeerConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\network\BobNet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\network\GameSave.cpp">
@@ -1040,12 +1001,6 @@
     <ClCompile Include="src\Puzzle\GameType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Puzzle\BobsGameMenus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Puzzle\BobsGameNetwork.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Puzzle\GameSequence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1053,9 +1008,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\GWEN-master\gwen\src\input\gwen_input_sdl2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Utility\BobMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\md5.cpp">
@@ -1110,6 +1062,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\stadium\OKGameStadium.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Puzzle\OKGameMenus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Puzzle\OKGameNetwork.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\network\OKNet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Puzzle\OKGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

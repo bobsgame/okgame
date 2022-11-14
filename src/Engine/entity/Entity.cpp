@@ -1486,7 +1486,7 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 
 void Entity::addEventBehavior(const string& s)
 { //=========================================================================================================================
-	eventBehaviorList.add(s); //TODO: handle this stuff right!
+	eventBehaviorList.push_back(s); //TODO: handle this stuff right!
 }
 
 sp<OKBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()

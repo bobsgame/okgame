@@ -539,7 +539,7 @@ string& SpriteData::getPaletteMD5()
 
 sp<vector<sp<SpriteAnimationSequence>>> SpriteData::getAnimationList()
 {
-	return &animationList;
+	return ms<vector<sp<SpriteAnimationSequence>>>(animationList);
 }
 
 

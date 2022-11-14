@@ -49,7 +49,7 @@ Notification::Notification(sp<BGClientEngine> g, const string& s)
 	fadeIn = true;
 
 
-	getStatusBar()->notificationManager->push_back(shared_from_this());
+	getStatusBar()->notificationManager->add(shared_from_this());
 }
 
 void Notification::update()

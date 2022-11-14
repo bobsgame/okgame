@@ -402,14 +402,14 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		multiplayerScreenCursorPosition--;
 		if (multiplayerScreenCursorPosition < 0)
 		{
-			multiplayerScreenCursorPosition = onlineFriendCaptions.size() - 1;
+			multiplayerScreenCursorPosition = (int)(onlineFriendCaptions.size() - 1);
 		}
 	}
 
 	if (getControlsManager()->miniGame_DOWN_Pressed())
 	{
 		multiplayerScreenCursorPosition++;
-		if (multiplayerScreenCursorPosition > onlineFriendCaptions.size() - 1)
+		if (multiplayerScreenCursorPosition > (int)(onlineFriendCaptions.size() - 1))
 		{
 			multiplayerScreenCursorPosition = 0;
 		}
@@ -422,7 +422,7 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		
 		leaveMenu = true;
 
-		if (multiplayerScreenCursorPosition == onlineFriendCaptions.size() - 1)
+		if (multiplayerScreenCursorPosition == (int)(onlineFriendCaptions.size() - 1))
 		{
 			titleMenuShowing = true;
 		}

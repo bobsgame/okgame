@@ -74,7 +74,7 @@ OKGame::~OKGame()
 	log.debug("~OKGame()");
 #endif
 
-	for (int i = 0; i<players.size(); i++)
+	for (int i = 0; i < players.size(); i++)
 	{
 		sp<PuzzlePlayer>p = players.at(i);
 
@@ -82,9 +82,12 @@ OKGame::~OKGame()
 		{
 			p->gameLogic->deleteAllCaptions();
 		}
-		delete p->gameLogic;
+
+		//delete p->gameLogic;
 		p->gameLogic = nullptr;
-		delete p;
+
+		//delete p;
+		p = nullptr;
 
 	}
 
@@ -144,9 +147,12 @@ void OKGame::initPlayer()
 		{
 			p->gameLogic->deleteAllCaptions();
 		}
-		delete p->gameLogic;
+
+		//delete p->gameLogic;
 		p->gameLogic = nullptr;
-		delete p;
+
+		//delete p;
+		p = nullptr;
 
 		//for simulator connection
 		//if(friend==null&&connection!=null)OKGame::setConnection(connection);
@@ -2398,7 +2404,9 @@ void OKGame::getGameTypesAndSequencesFromServer()
 							if (existing != nullptr)
 							{
 								if (existing->downloaded == true)
+								{
 									loadedGameTypes.remove(existing);
+								}
 							}
 
 							//it won't replace your local version with the server version if you are the creator, 
@@ -2420,7 +2428,9 @@ void OKGame::getGameTypesAndSequencesFromServer()
 							if (existing != nullptr)
 							{
 								if (existing->downloaded == true)
+								{
 									loadedGameSequences.remove(existing);
+								}
 							}
 							if (existing == nullptr || existing->downloaded == true)
 							{
@@ -2453,8 +2463,10 @@ void OKGame::getGameTypesAndSequencesFromServer()
 
 						if (gettingGamesFromServerMenu != nullptr)
 						{
-							delete gettingGamesFromServerMenu;
+
+							//delete gettingGamesFromServerMenu;
 							gettingGamesFromServerMenu = nullptr;
+
 						}
 					}
 				}
@@ -2778,8 +2790,8 @@ void OKGame::updateVersion0ToVersion1()
 			for (int x = 0; x<b->makePieceTypeWhenCleared_DEPRECATED.size(); x++)
 			{
 				resave = true;
-				sp<PieceType> p = b->makePieceTypeWhenCleared_DEPRECATED.at(x);
-				sp<PieceType> correctPiece = g->getPieceTypeByName(p->name);
+				PieceType p = b->makePieceTypeWhenCleared_DEPRECATED.at(x);
+				sp<PieceType> correctPiece = g->getPieceTypeByName(p.name);
 				if (correctPiece != nullptr)
 				{
 					if (correctPiece->uuid == "")
@@ -2793,8 +2805,8 @@ void OKGame::updateVersion0ToVersion1()
 			for (int x = 0; x<b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				sp<BlockType> bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.at(x);//wrong block, instantiated by serialize
-				sp<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
+				BlockType bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.at(x);//wrong block, instantiated by serialize
+				sp<BlockType> correctBlock = g->getBlockTypeByName(bb.name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")
@@ -2807,10 +2819,10 @@ void OKGame::updateVersion0ToVersion1()
 			}
 			for (int x = 0; x < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); x++)
 			{
-				sp<TurnFromBlockTypeToType> t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(x);
-				if (t->fromType_DEPRECATED != "")
+				TurnFromBlockTypeToType t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(x);
+				if (t.fromType_DEPRECATED != "")
 				{
-					sp<BlockType> correctBlock = g->getBlockTypeByName(t->fromType_DEPRECATED);
+					sp<BlockType> correctBlock = g->getBlockTypeByName(t.fromType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2818,12 +2830,12 @@ void OKGame::updateVersion0ToVersion1()
 							boost::uuids::random_generator generator;
 							correctBlock->uuid = to_string(generator());
 						}
-						t->fromType_UUID = correctBlock->uuid;
+						t.fromType_UUID = correctBlock->uuid;
 					}
 				}
-				if (t->toType_DEPRECATED != "")
+				if (t.toType_DEPRECATED != "")
 				{
-					sp<BlockType> correctBlock = g->getBlockTypeByName(t->toType_DEPRECATED);
+					sp<BlockType> correctBlock = g->getBlockTypeByName(t.toType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2831,7 +2843,7 @@ void OKGame::updateVersion0ToVersion1()
 							boost::uuids::random_generator generator;
 							correctBlock->uuid = to_string(generator());
 						}
-						t->toType_UUID = correctBlock->uuid;
+						t.toType_UUID = correctBlock->uuid;
 					}
 				}
 			}

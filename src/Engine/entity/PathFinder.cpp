@@ -543,14 +543,24 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 					// reset it's cost to our current cost and add it as a next possible
 					// step (i.e. to the open list)
 					if (
-						!openPotentialTilesList->contains(neighbour) &&
-						!(blockedPotentialTilesList.contains(neighbour))
+						!openPotentialTilesList->contains(neighbour)
 						)
+						
 					{
-						neighbour->cumulativePathCost = nextStepCost;
-						neighbour->heuristicCost = (float)getHeuristicCost(xp, yp, toTileX, toTileY);
-						maxDepth = max(maxDepth,neighbour->setParentTile(current));
-						openPotentialTilesList->addAndSort(neighbour);
+						bool contains = false;
+
+						for (int i = 0; i < blockedPotentialTilesList.size(); i++)
+						{
+							if (blockedPotentialTilesList.at(i).get() == neighbour.get())contains = true;
+						}
+
+						if(contains==false)
+						{
+							neighbour->cumulativePathCost = nextStepCost;
+							neighbour->heuristicCost = (float)getHeuristicCost(xp, yp, toTileX, toTileY);
+							maxDepth = max(maxDepth, neighbour->setParentTile(current));
+							openPotentialTilesList->addAndSort(neighbour);
+						}
 					}
 
 				}
