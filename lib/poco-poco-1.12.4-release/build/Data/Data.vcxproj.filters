@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\AbstractBinder.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\AbstractBinding.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\AbstractExtraction.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\AbstractExtractor.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\AbstractPreparation.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\AbstractPreparator.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\ArchiveStrategy.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Bulk.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Connector.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\DataException.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Date.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\DynamicLOB.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\JSONRowFormatter.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Limit.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\MetaColumn.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\PooledSessionHolder.cpp">
+      <Filter>SessionPooling\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\PooledSessionImpl.cpp">
+      <Filter>SessionPooling\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Position.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Range.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\RecordSet.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Row.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\RowFilter.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\RowFormatter.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\RowIterator.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\SQLChannel.cpp">
+      <Filter>Logging\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Session.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\SessionFactory.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\SessionImpl.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\SessionPool.cpp">
+      <Filter>SessionPooling\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\SessionPoolContainer.cpp">
+      <Filter>SessionPooling\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\SimpleRowFormatter.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Statement.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\StatementCreator.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\StatementImpl.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Time.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Transaction.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\src\Transcoder.cpp">
+      <Filter>DataCore\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AbstractBinder.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AbstractBinding.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AbstractExtraction.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AbstractExtractor.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AbstractPreparation.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AbstractPreparator.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AbstractSessionImpl.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\ArchiveStrategy.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\AutoTransaction.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Binding.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Bulk.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\BulkBinding.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\BulkExtraction.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Column.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Connector.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Constants.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Data.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\DataException.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Date.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\DynamicDateTime.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\DynamicLOB.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Extraction.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\JSONRowFormatter.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\LOB.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\LOBStream.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Limit.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\MetaColumn.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\PooledSessionHolder.h">
+      <Filter>SessionPooling\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\PooledSessionImpl.h">
+      <Filter>SessionPooling\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Position.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Preparation.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Range.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\RecordSet.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Row.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\RowFilter.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\RowFormatter.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\RowIterator.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\SQLChannel.h">
+      <Filter>Logging\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Session.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\SessionFactory.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\SessionImpl.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\SessionPool.h">
+      <Filter>SessionPooling\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\SessionPoolContainer.h">
+      <Filter>SessionPooling\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\SimpleRowFormatter.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Statement.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\StatementCreator.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\StatementImpl.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Time.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Transaction.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\Transcoder.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\include\Poco\Data\TypeHandler.h">
+      <Filter>DataCore\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\okgame\lib\poco-poco-1.12.4-release\Data\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DataCore">
+      <UniqueIdentifier>{7C54AB49-3658-3733-97ED-B0C97676D27C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataCore\Header Files">
+      <UniqueIdentifier>{7B1535AD-951D-3E15-A271-CFD4C644C8CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataCore\Source Files">
+      <UniqueIdentifier>{8D75F731-ABA5-3943-90F6-C40F7C12E953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{BDB3C438-4C1B-3B15-A747-943D43F1410A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Header Files">
+      <UniqueIdentifier>{B29D191F-F5F5-3DAC-A95E-CD88361A32BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging\Source Files">
+      <UniqueIdentifier>{410D6C74-7A44-3501-B5A1-F6F169E83BA9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{31E462B8-E36D-3007-9856-C5003E932754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SessionPooling">
+      <UniqueIdentifier>{956CD908-683E-35B3-B992-C9D4C58635CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SessionPooling\Header Files">
+      <UniqueIdentifier>{F197F1CC-0A42-32F3-B0AA-EE73D5541029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SessionPooling\Source Files">
+      <UniqueIdentifier>{A5A919DC-DF2A-32A9-B8D0-49233F10FA09}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

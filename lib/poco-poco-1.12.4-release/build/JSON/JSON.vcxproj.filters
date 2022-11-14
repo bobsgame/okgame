@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\Array.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\Handler.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\JSONException.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\Object.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\ParseHandler.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\Parser.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\ParserImpl.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\PrintHandler.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\Query.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\Stringifier.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\Template.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\TemplateCache.cpp">
+      <Filter>JSON\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\src\pdjson.c">
+      <Filter>pdjson\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\Array.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\Handler.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\JSON.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\JSONException.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\Object.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\ParseHandler.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\Parser.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\ParserImpl.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\PrintHandler.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\Query.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\Stringifier.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\Template.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\include\Poco\JSON\TemplateCache.h">
+      <Filter>JSON\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\okgame\lib\poco-poco-1.12.4-release\JSON\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="JSON">
+      <UniqueIdentifier>{F3AB5C74-8351-376A-B905-96C4D16119F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSON\Header Files">
+      <UniqueIdentifier>{A170E9D2-36D7-3BFF-BFA2-0F35F51194A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSON\Source Files">
+      <UniqueIdentifier>{F747EA16-2CC0-3E91-975B-5989E2F7BEA0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{31E462B8-E36D-3007-9856-C5003E932754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pdjson">
+      <UniqueIdentifier>{3076504E-B92F-3B23-B82F-9A1D732B9D90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pdjson\Source Files">
+      <UniqueIdentifier>{748DABEF-5031-3D6A-B034-A68F7C8975E3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\AbstractContainerNode.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\AbstractNode.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Attr.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\AttrMap.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Attributes.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\AttributesImpl.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\CDATASection.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\CharacterData.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\ChildNodesList.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Comment.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\ContentHandler.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DOMBuilder.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DOMException.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DOMImplementation.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DOMObject.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DOMParser.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DOMSerializer.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DOMWriter.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DTDHandler.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DTDMap.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DeclHandler.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DefaultHandler.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Document.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DocumentEvent.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DocumentFragment.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\DocumentType.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Element.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\ElementsByTagNameList.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Entity.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\EntityReference.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\EntityResolver.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\EntityResolverImpl.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\ErrorHandler.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Event.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\EventDispatcher.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\EventException.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\EventListener.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\EventTarget.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\InputSource.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\LexicalHandler.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Locator.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\LocatorImpl.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\MutationEvent.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Name.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NamePool.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NamedNodeMap.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NamespaceStrategy.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NamespaceSupport.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Node.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NodeAppender.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NodeFilter.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NodeIterator.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\NodeList.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Notation.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\ParserEngine.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\ProcessingInstruction.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\QName.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\SAXException.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\SAXParser.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\Text.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\TreeWalker.cpp">
+      <Filter>DOM\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\ValueTraits.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\WhitespaceFilter.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLException.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLFilter.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLFilterImpl.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLReader.cpp">
+      <Filter>SAX\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLStreamParser.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLStreamParserException.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLString.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\XMLWriter.cpp">
+      <Filter>XML\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\xmlparse.cpp">
+      <Filter>expat\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\xmlrole.c">
+      <Filter>expat\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\xmltok.c">
+      <Filter>expat\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\xmltok_impl.c">
+      <Filter>expat\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\src\xmltok_ns.c">
+      <Filter>expat\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\AbstractContainerNode.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\AbstractNode.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Attr.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\AttrMap.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\AutoPtr.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\CDATASection.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\CharacterData.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\ChildNodesList.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Comment.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DOMBuilder.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DOMException.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DOMImplementation.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DOMObject.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DOMParser.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DOMSerializer.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DOMWriter.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DTDMap.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Document.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DocumentEvent.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DocumentFragment.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\DocumentType.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Element.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\ElementsByTagNameList.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Entity.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\EntityReference.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Event.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\EventDispatcher.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\EventException.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\EventListener.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\EventTarget.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\MutationEvent.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\NamedNodeMap.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Node.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\NodeAppender.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\NodeFilter.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\NodeIterator.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\NodeList.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Notation.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\ProcessingInstruction.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\Text.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\DOM\TreeWalker.h">
+      <Filter>DOM\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\Attributes.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\AttributesImpl.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\ContentHandler.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\DTDHandler.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\DeclHandler.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\DefaultHandler.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\EntityResolver.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\EntityResolverImpl.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\ErrorHandler.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\InputSource.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\LexicalHandler.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\Locator.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\LocatorImpl.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\NamespaceSupport.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\SAXException.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\SAXParser.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\WhitespaceFilter.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\XMLFilter.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\XMLFilterImpl.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\SAX\XMLReader.h">
+      <Filter>SAX\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\Content.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\Name.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\NamePool.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\NamespaceStrategy.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\ParserEngine.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\QName.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\ValueTraits.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\XML.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\XMLException.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\XMLStream.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\XMLStreamParser.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\XMLStreamParserException.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\XMLString.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\XMLWriter.h">
+      <Filter>XML\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\expat.h">
+      <Filter>Unknown\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\include\Poco\XML\expat_external.h">
+      <Filter>Unknown\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\okgame\lib\poco-poco-1.12.4-release\XML\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DOM">
+      <UniqueIdentifier>{BF10A760-F5EB-3A12-BD96-568FE0A2427E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DOM\Header Files">
+      <UniqueIdentifier>{1A3368ED-6083-366D-BC1F-7A6AE3B6E5E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DOM\Source Files">
+      <UniqueIdentifier>{CFB05659-E68E-3AEB-B77A-F1A2A64691C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{31E462B8-E36D-3007-9856-C5003E932754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SAX">
+      <UniqueIdentifier>{8652F511-BD9D-3992-AC2D-B0C1DCEF2E69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SAX\Header Files">
+      <UniqueIdentifier>{F6EA7A91-DE1A-3E48-B231-40BB474ABA12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SAX\Source Files">
+      <UniqueIdentifier>{FD9EC6FB-6062-3103-8F2D-5A1D66C307BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unknown">
+      <UniqueIdentifier>{E6D3B0B7-0914-3D28-B779-9375C8A1B6DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unknown\Header Files">
+      <UniqueIdentifier>{5162679B-EBE9-3ABD-B88E-A7EFFCE9A9AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{0753E148-8783-3B35-B0A1-33892624418A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML\Header Files">
+      <UniqueIdentifier>{0E7DAB9C-A26D-3210-80B1-A3D0CC49730B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML\Source Files">
+      <UniqueIdentifier>{D8E4F9DE-64CE-3788-8098-DD41C0F34010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="expat">
+      <UniqueIdentifier>{BD30D8AF-E5EE-3875-8353-0A1BE4315944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="expat\Source Files">
+      <UniqueIdentifier>{81727D0B-418F-30CB-8298-D211C83C596B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

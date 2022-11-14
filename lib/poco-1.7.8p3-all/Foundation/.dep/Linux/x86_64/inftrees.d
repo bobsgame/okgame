@@ -1,2 +1,0 @@
-/home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/debug_static/inftrees.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/release_static/inftrees.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/debug_shared/inftrees.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/release_shared/inftrees.o: src/inftrees.c src/zutil.h src/zlib.h src/zconf.h \
- src/inftrees.h

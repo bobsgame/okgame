@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\Collector.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\Counter.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\Gauge.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\Histogram.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\IntCounter.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\IntGauge.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\LabeledMetric.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\MetricsRequestHandler.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\MetricsServer.cpp">
+      <Filter>HTTP\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\ProcessCollector.cpp">
+      <Filter>Collectors\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\Registry.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\TextExporter.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\src\ThreadPoolCollector.cpp">
+      <Filter>Collectors\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\AtomicFloat.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\CallbackMetric.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Collector.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Counter.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Exporter.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Gauge.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Histogram.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\IntCounter.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\IntGauge.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\LabeledMetric.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\LabeledMetricImpl.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Metric.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\MetricsRequestHandler.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\MetricsServer.h">
+      <Filter>HTTP\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\ProcessCollector.h">
+      <Filter>Collectors\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Prometheus.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\Registry.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\TextExporter.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\include\Poco\Prometheus\ThreadPoolCollector.h">
+      <Filter>Collectors\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\okgame\lib\poco-poco-1.12.4-release\Prometheus\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Collectors">
+      <UniqueIdentifier>{0E97E6C1-4E97-32C5-841E-01E09DF29D34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collectors\Header Files">
+      <UniqueIdentifier>{6CECC732-6796-34AB-836E-F06DAE11D95F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collectors\Source Files">
+      <UniqueIdentifier>{D48DD63F-7FAD-33CA-AF9E-5E7D8ECCD24E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{7997A89B-1107-3649-9171-64570EE4CD44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header Files">
+      <UniqueIdentifier>{A8C7E3C9-8BDC-3F80-807F-D4524A87D8A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Source Files">
+      <UniqueIdentifier>{C7938BA2-6FA9-3442-BD48-C7CD86B5C3E3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP">
+      <UniqueIdentifier>{DD528F55-9108-30FC-B14B-D73C42120122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP\Header Files">
+      <UniqueIdentifier>{FE041FFF-81B5-3D2A-86F6-A3751B762511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTTP\Source Files">
+      <UniqueIdentifier>{9D8C2B7E-9C35-30C1-907A-CF8C7797FB30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{31E462B8-E36D-3007-9856-C5003E932754}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

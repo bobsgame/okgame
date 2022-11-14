@@ -1,0 +1,6 @@
+file(GLOB_RECURSE SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../cimgui")
+add_library(thirdParty_imgui_software ${SRC_CPP_FILES} ${SRC_FILES} ${HEADER_FILES})
+set_property(TARGET thirdParty_imgui_software PROPERTY FOLDER "DearImGuiSDL/ThirdParty")
+set_property(TARGET thirdParty_imgui_software PROPERTY CXX_STANDARD 11)

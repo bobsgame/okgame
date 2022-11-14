@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Array.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Binary.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Connection.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Cursor.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Database.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\DeleteRequest.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Document.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Element.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\GetMoreRequest.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\InsertRequest.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\JavaScriptCode.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\KillCursorsRequest.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\Message.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\MessageHeader.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\ObjectId.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\QueryRequest.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\RegularExpression.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\ReplicaSet.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\RequestMessage.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\ResponseMessage.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\src\UpdateRequest.cpp">
+      <Filter>MongoDB\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Array.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\BSONReader.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\BSONWriter.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Binary.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Connection.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Cursor.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Database.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\DeleteRequest.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Document.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Element.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\GetMoreRequest.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\InsertRequest.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\JavaScriptCode.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\KillCursorsRequest.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\Message.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\MessageHeader.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\MongoDB.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\ObjectId.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\PoolableConnectionFactory.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\QueryRequest.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\RegularExpression.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\ReplicaSet.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\RequestMessage.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\ResponseMessage.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\include\Poco\MongoDB\UpdateRequest.h">
+      <Filter>MongoDB\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\okgame\lib\poco-poco-1.12.4-release\MongoDB\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\DLLVersion.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MongoDB">
+      <UniqueIdentifier>{16919CE4-430D-3C54-9A25-2D93543A061C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MongoDB\Header Files">
+      <UniqueIdentifier>{E6A51F9A-09AC-3A35-A47A-79111FCE6CFC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MongoDB\Source Files">
+      <UniqueIdentifier>{D39D85A0-44CF-301F-A59E-C2F4BBB0E4EB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{31E462B8-E36D-3007-9856-C5003E932754}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,568 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C49F410D-CF0D-377E-B5F3-C3D65714AC05}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>Net</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Net.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PocoNetd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Net.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PocoNet</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\bin\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Net.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">PocoNet</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\bin\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Net.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">PocoNet</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;_DEBUG;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR="Debug";Net_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR=\"Debug\";Net_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\lib\Debug\PocoFoundationd.lib;iphlpapi.lib;ws2_32.lib;iphlpapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>F:/okgame/lib/poco-poco-1.12.4-release/build/lib/Debug/PocoNetd.lib</ImportLibrary>
+      <ProgramDataBaseFile>F:/okgame/lib/poco-poco-1.12.4-release/build/bin/Debug/PocoNetd.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR="Release";Net_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR=\"Release\";Net_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\lib\Release\PocoFoundation.lib;iphlpapi.lib;ws2_32.lib;iphlpapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>F:/okgame/lib/poco-poco-1.12.4-release/build/lib/Release/PocoNet.lib</ImportLibrary>
+      <ProgramDataBaseFile>F:/okgame/lib/poco-poco-1.12.4-release/build/bin/Release/PocoNet.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR="MinSizeRel";Net_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR=\"MinSizeRel\";Net_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\lib\MinSizeRel\PocoFoundation.lib;iphlpapi.lib;ws2_32.lib;iphlpapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>F:/okgame/lib/poco-poco-1.12.4-release/build/lib/MinSizeRel/PocoNet.lib</ImportLibrary>
+      <ProgramDataBaseFile>F:/okgame/lib/poco-poco-1.12.4-release/build/bin/MinSizeRel/PocoNet.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR="RelWithDebInfo";Net_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;POCO_ENABLE_CPP14;POCO_ENABLE_CPP11;POCO_OS_FAMILY_WINDOWS;UNICODE;_UNICODE;CMAKE_INTDIR=\"RelWithDebInfo\";Net_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>F:\okgame\lib\poco-poco-1.12.4-release\Net\include;F:\okgame\lib\poco-poco-1.12.4-release\Net\src;F:\okgame\lib\poco-poco-1.12.4-release\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\lib\RelWithDebInfo\PocoFoundation.lib;iphlpapi.lib;ws2_32.lib;iphlpapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>F:/okgame/lib/poco-poco-1.12.4-release/build/lib/RelWithDebInfo/PocoNet.lib</ImportLibrary>
+      <ProgramDataBaseFile>F:/okgame/lib/poco-poco-1.12.4-release/build/bin/RelWithDebInfo/PocoNet.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule F:/okgame/lib/poco-poco-1.12.4-release/Net/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SF:/okgame/lib/poco-poco-1.12.4-release -BF:/okgame/lib/poco-poco-1.12.4-release/build --check-stamp-file F:/okgame/lib/poco-poco-1.12.4-release/build/Net/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;F:\okgame\lib\poco-poco-1.12.4-release\Net\cmake\PocoNetConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\Net\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule F:/okgame/lib/poco-poco-1.12.4-release/Net/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SF:/okgame/lib/poco-poco-1.12.4-release -BF:/okgame/lib/poco-poco-1.12.4-release/build --check-stamp-file F:/okgame/lib/poco-poco-1.12.4-release/build/Net/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;F:\okgame\lib\poco-poco-1.12.4-release\Net\cmake\PocoNetConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\Net\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule F:/okgame/lib/poco-poco-1.12.4-release/Net/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SF:/okgame/lib/poco-poco-1.12.4-release -BF:/okgame/lib/poco-poco-1.12.4-release/build --check-stamp-file F:/okgame/lib/poco-poco-1.12.4-release/build/Net/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;F:\okgame\lib\poco-poco-1.12.4-release\Net\cmake\PocoNetConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\Net\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule F:/okgame/lib/poco-poco-1.12.4-release/Net/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SF:/okgame/lib/poco-poco-1.12.4-release -BF:/okgame/lib/poco-poco-1.12.4-release/build --check-stamp-file F:/okgame/lib/poco-poco-1.12.4-release/build/Net/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;F:\okgame\lib\poco-poco-1.12.4-release\Net\cmake\PocoNetConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">F:\okgame\lib\poco-poco-1.12.4-release\build\Net\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\AbstractHTTPRequestHandler.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\DNS.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\DatagramSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\DatagramSocketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\DialogSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\EscapeHTMLStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\FTPClientSession.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\FTPStreamFactory.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\FilePartSource.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTMLForm.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPAuthenticationParams.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPBasicCredentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPBufferAllocator.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPChunkedStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPClientSession.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPCookie.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPCredentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPDigestCredentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPFixedLengthStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPHeaderStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPIOStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPMessage.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPNTLMCredentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPRequest.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPRequestHandler.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPRequestHandlerFactory.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPResponse.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServer.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerConnection.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerConnectionFactory.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerParams.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerRequest.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerRequestImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerResponse.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerResponseImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPServerSession.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPSession.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPSessionFactory.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPSessionInstantiator.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HTTPStreamFactory.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\HostEntry.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ICMPClient.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ICMPEventArgs.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ICMPPacket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ICMPPacketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ICMPSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ICMPSocketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ICMPv4PacketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\IPAddress.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\IPAddressImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MailMessage.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MailRecipient.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MailStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MediaType.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MessageHeader.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MulticastSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MultipartReader.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\MultipartWriter.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NTLMCredentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NTPClient.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NTPEventArgs.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NTPPacket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NameValueCollection.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\Net.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NetException.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NetworkInterface.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\NullPartHandler.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\OAuth10Credentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\OAuth20Credentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\POP3ClientSession.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\PartHandler.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\PartSource.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\PartStore.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\PollSet.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\QuotedPrintableDecoder.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\QuotedPrintableEncoder.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\RawSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\RawSocketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\RemoteSyslogChannel.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\RemoteSyslogListener.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SMTPChannel.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SMTPClientSession.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SSPINTLMCredentials.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ServerSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\ServerSocketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\Socket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketAddress.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketAddressImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketNotification.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketNotifier.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketProactor.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketReactor.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\SocketStream.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\StreamSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\StreamSocketImpl.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\StringPartSource.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\TCPServer.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\TCPServerConnection.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\TCPServerConnectionFactory.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\TCPServerDispatcher.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\TCPServerParams.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\UDPClient.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\UDPServerParams.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\WebSocket.cpp" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\WebSocketImpl.cpp" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\AbstractHTTPRequestHandler.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\DNS.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\DatagramSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\DatagramSocketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\DialogSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\EscapeHTMLStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\FTPClientSession.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\FTPStreamFactory.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\FilePartSource.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTMLForm.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPAuthenticationParams.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPBasicCredentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPBasicStreamBuf.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPBufferAllocator.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPChunkedStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPClientSession.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPCookie.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPCredentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPDigestCredentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPFixedLengthStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPHeaderStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPIOStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPMessage.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPNTLMCredentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPRequest.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPRequestHandler.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPRequestHandlerFactory.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPResponse.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServer.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerConnection.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerConnectionFactory.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerParams.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerRequest.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerRequestImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerResponse.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerResponseImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPServerSession.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPSession.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPSessionFactory.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPSessionInstantiator.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HTTPStreamFactory.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\HostEntry.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ICMPClient.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ICMPEventArgs.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ICMPPacket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ICMPPacketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ICMPSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ICMPSocketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ICMPv4PacketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\IPAddress.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\IPAddressImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MailMessage.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MailRecipient.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MailStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MediaType.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MessageHeader.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MultiSocketPoller.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MulticastSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MultipartReader.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\MultipartWriter.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NTLMCredentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NTPClient.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NTPEventArgs.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NTPPacket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NameValueCollection.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\Net.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NetException.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NetworkInterface.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\NullPartHandler.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\OAuth10Credentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\OAuth20Credentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\POP3ClientSession.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ParallelSocketAcceptor.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ParallelSocketReactor.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\PartHandler.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\PartSource.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\PartStore.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\PollSet.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\QuotedPrintableDecoder.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\QuotedPrintableEncoder.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\RawSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\RawSocketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\RemoteSyslogChannel.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\RemoteSyslogListener.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SMTPChannel.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SMTPClientSession.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SSPINTLMCredentials.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ServerSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\ServerSocketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SingleSocketPoller.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\Socket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketAcceptor.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketAddress.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketAddressImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketConnector.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketDefs.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketNotification.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketNotifier.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketProactor.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketReactor.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\SocketStream.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\StreamSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\StreamSocketImpl.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\StringPartSource.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\TCPServer.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\TCPServerConnection.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\TCPServerConnectionFactory.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\TCPServerDispatcher.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\TCPServerParams.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\UDPClient.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\UDPHandler.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\UDPServer.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\UDPServerParams.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\UDPSocketReader.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\WebSocket.h" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\include\Poco\Net\WebSocketImpl.h" />
+    <ClCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\wepoll.c" />
+    <ClInclude Include="F:\okgame\lib\poco-poco-1.12.4-release\Net\src\wepoll.h" />
+    <ResourceCompile Include="F:\okgame\lib\poco-poco-1.12.4-release\DLLVersion.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="F:\okgame\lib\poco-poco-1.12.4-release\build\ZERO_CHECK.vcxproj">
+      <Project>{64DEF455-928C-3AD5-84E2-0C2ABBB96727}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="F:\okgame\lib\poco-poco-1.12.4-release\build\Foundation\Foundation.vcxproj">
+      <Project>{EA9396AE-D236-3E41-9656-14FEDED8FC1D}</Project>
+      <Name>Foundation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,2 +1,0 @@
-/home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/debug_static/pcre_version.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/release_static/pcre_version.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/debug_shared/pcre_version.o /home/bob/bobsgame/lib/poco-1.7.8p3-all/Foundation/obj/Linux/x86_64/release_shared/pcre_version.o: src/pcre_version.c src/pcre_config.h src/pcre_internal.h \
- src/pcre.h src/ucp.h
