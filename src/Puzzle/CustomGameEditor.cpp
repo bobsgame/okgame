@@ -692,13 +692,13 @@ void CustomGameEditorControl::initFromCurrentGameType()
 	currentPieceType = nullptr;// ms<PieceType>();
 	if (currentGameType->blockTypes.size() > 0)
 	{
-		currentBlockType = currentGameType->blockTypes.get(0);
+		currentBlockType = currentGameType->blockTypes.at(0);
 	}
 	if (currentGameType->pieceTypes.size() > 0)
 	{
-		currentPieceType = currentGameType->pieceTypes.get(0);
+		currentPieceType = currentGameType->pieceTypes.at(0);
 	}
-	currentDifficultyType = currentGameType->difficultyTypes.get(0);
+	currentDifficultyType = currentGameType->difficultyTypes.at(0);
 
 
 
@@ -901,7 +901,7 @@ sp<BlockType> CustomGameEditorControl::getBlockTypeByUUID(string uuid)
 	sp<BlockType> bt = nullptr;
 	for (int i = 0; i<currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> b = currentGameType->blockTypes.get(i);
+		sp<BlockType> b = currentGameType->blockTypes.at(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -915,7 +915,7 @@ sp<PieceType> CustomGameEditorControl::getPieceTypeByUUID(string uuid)
 	sp<PieceType> bt = nullptr;
 	for (int i = 0; i<currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> b = currentGameType->pieceTypes.get(i);
+		sp<PieceType> b = currentGameType->pieceTypes.at(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -929,7 +929,7 @@ sp<DifficultyType> CustomGameEditorControl::getDifficultyTypeByName(string name)
 	sp<DifficultyType>bt = nullptr;
 	for (int i = 0; i<currentGameType->difficultyTypes.size(); i++)
 	{
-		sp<DifficultyType>b = currentGameType->difficultyTypes.get(i);
+		sp<DifficultyType>b = currentGameType->difficultyTypes.at(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -985,13 +985,13 @@ void CustomGameEditorControl::initBlockSelectionListBox()
 //	{
 //		sp<BlockType> pt(ms<BlockType>());
 //		pt->name = "Square Block With Any Color";
-//		currentGameType->blockTypes.add(pt);
+//		currentGameType->blockTypes.push_back(pt);
 //	}
 
 
 	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> bt = currentGameType->blockTypes.get(i);
+		sp<BlockType> bt = currentGameType->blockTypes.at(i);
 		row = blockSelectionListBox->AddItem(bt->name, bt->uuid);
 		row->onRowSelected.Add(this, &CustomGameEditorControl::onBlockListRowSelect);
 		if (i == 0)
@@ -1015,13 +1015,13 @@ void CustomGameEditorControl::initPieceSelectionListBox()
 //	{
 //		sp<PieceType> pt(ms<PieceType>());
 //		pt->name = "Single Square Block Piece";
-//		currentGameType->pieceTypes.add(pt);
+//		currentGameType->pieceTypes.push_back(pt);
 //	}
 
 
 	for (int i = 0; i<currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> bt = currentGameType->pieceTypes.get(i);
+		sp<PieceType> bt = currentGameType->pieceTypes.at(i);
 		row = pieceSelectionListBox->AddItem(bt->name, bt->uuid);
 		row->onRowSelected.Add(this, &CustomGameEditorControl::onPieceListRowSelect);
 
@@ -1291,7 +1291,7 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 	bool taken = false;
 	for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
 	{
-		sp<GameType>s = bobsGame->loadedGameTypes.get(i);
+		sp<GameType>s = bobsGame->loadedGameTypes.at(i);
 		if (s != currentGameType && s->name == gameTypeName)taken = true;
 	}
 	if (taken)
@@ -1299,7 +1299,7 @@ void CustomGameEditorControl::saveSettingsPropTreeToCurrentGameType()
 		int n = 0;
 		for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
 		{
-			sp<GameType>s = bobsGame->loadedGameTypes.get(i);
+			sp<GameType>s = bobsGame->loadedGameTypes.at(i);
 			if (s != currentGameType && s->name == gameTypeName + " " + to_string(n))
 			{
 				n++;
@@ -1587,7 +1587,7 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 				spriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(""), "");
 				for(int i=0;i<bobsGame->loadedSprites.size();i++)
 				{
-					sp<Sprite>s = bobsGame->loadedSprites.get(i);
+					sp<Sprite>s = bobsGame->loadedSprites.at(i);
 					spriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(s->getName()), s->getName());
 				}
 
@@ -1600,7 +1600,7 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 				specialSpriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(""),"");
 				for (int i = 0; i<bobsGame->loadedSprites.size(); i++)
 				{
-					sp<Sprite>s = bobsGame->loadedSprites.get(i);
+					sp<Sprite>s = bobsGame->loadedSprites.at(i);
 					specialSpriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(s->getName()), s->getName());
 				}
 
@@ -1719,7 +1719,7 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 						n++; p->Add("Color " + to_string(i), colorCombo, "1")->SetToolTip(b->colors_Info.tip);
 						if (i < b->colors.size())
 						{
-							colorCombo->GetComboBox()->SelectItemByName(b->colors.get(i)->name);
+							colorCombo->GetComboBox()->SelectItemByName(b->colors.at(i).name);
 						}
 					}
 				}
@@ -1735,7 +1735,7 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 				string pieceTypesString = "";
 				for (int i = 0; i < b->makePieceTypeWhenCleared_UUID.size(); i++)
 				{
-					sp<PieceType> pt = currentGameType->getPieceTypeByUUID(b->makePieceTypeWhenCleared_UUID.get(i));
+					sp<PieceType> pt = currentGameType->getPieceTypeByUUID(b->makePieceTypeWhenCleared_UUID.at(i));
 					string pieceName = "";
 					if (pt != nullptr)pieceName = pt->name;
 					else { pieceName = "ERROR"; bobsGame->log.error("Could not find PieceType in makePieceTypeWhenCleared"); }
@@ -1756,7 +1756,7 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 				string blockTypesString = "";
 				for (int i = 0; i < b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.size(); i++)
 				{
-					sp<BlockType> bt = currentGameType->getBlockTypeByUUID(b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.get(i));
+					sp<BlockType> bt = currentGameType->getBlockTypeByUUID(b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.at(i));
 					string blockName = "";
 					if(bt==nullptr)blockName = "ERROR";
 					else blockName = bt->name;
@@ -1773,7 +1773,7 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 				string blockTypesString = "";
 				for (int i = 0; i < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 				{
-					sp<TurnFromBlockTypeToType>bt = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+					sp<TurnFromBlockTypeToType>bt = ms<TurnFromBlockTypeToType>(b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i));
 					blockTypesString = blockTypesString + bt->getName(currentGameType) + ",";
 				}
 				Property::TextWithButton *tb = new Property::TextWithButton(p, "Edit");
@@ -1793,22 +1793,22 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 //		currentBlockType_makePieceTypeWhenCleared.clear();
 //		for(int i=0;i<b->makePieceTypeWhenCleared.size();i++)
 //		{
-//			sp<PieceType> pt = b->makePieceTypeWhenCleared.get(i);
-//			currentBlockType_makePieceTypeWhenCleared.add(pt);
+//			sp<PieceType> pt = b->makePieceTypeWhenCleared.at(i);
+//			currentBlockType_makePieceTypeWhenCleared.push_back(pt);
 //		}
 //
 //		currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.clear();
 //		for (int i = 0; i<b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.size(); i++)
 //		{
-//			sp<BlockType> pt = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.get(i);
-//			currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.add(pt);
+//			sp<BlockType> pt = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.at(i);
+//			currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.push_back(pt);
 //		}
 //
 //		currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
 //		for (int i = 0; i<b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 //		{
-//			sp<TurnFromBlockTypeToType>pt = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
-//			currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(pt);
+//			sp<TurnFromBlockTypeToType>pt = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i);
+//			currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.push_back(pt);
 //		}
 
 		blockPropTree->ExpandAll();
@@ -1856,7 +1856,7 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 	bool taken = false;
 	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> bt = currentGameType->blockTypes.get(i);
+		sp<BlockType> bt = currentGameType->blockTypes.at(i);
 		if (bt != currentBlockType && bt->name == newName)taken = true;
 	}
 	if (taken)
@@ -1864,7 +1864,7 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 		int n = 0;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
-			sp<BlockType> bt = currentGameType->blockTypes.get(i);
+			sp<BlockType> bt = currentGameType->blockTypes.at(i);
 			if (bt != currentBlockType && bt->name == newName + " " + to_string(n))
 			{
 				n++;
@@ -1881,7 +1881,7 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 	//replace name in blockTypelist
 	for (int i = 0; i<currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> bt = currentGameType->blockTypes.get(i);
+		sp<BlockType> bt = currentGameType->blockTypes.at(i);
 		if (bt == currentBlockType)
 		{
 			blockSelectionListBox->GetTable()->GetRow(i)->SetCellText(0, newName);
@@ -1914,7 +1914,7 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 		else
 		{
 			colorName = p->Find("Color " + to_string(i))->GetProperty()->GetPropertyValue().c_str();
-			if (colorName != "")currentBlockType->colors.add(OKColor::getColorByName(colorName));
+			if (colorName != "")currentBlockType->colors.push_back(*OKColor::getColorByName(colorName).get());
 		}
 	}
 
@@ -1939,8 +1939,8 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 //	{
 //		for (int i = 0; i<currentBlockType_makePieceTypeWhenCleared.size(); i++)
 //		{
-//			sp<PieceType> pt = currentBlockType_makePieceTypeWhenCleared.get(i);
-//			currentBlockType->makePieceTypeWhenCleared.add(pt);
+//			sp<PieceType> pt = currentBlockType_makePieceTypeWhenCleared.at(i);
+//			currentBlockType->makePieceTypeWhenCleared.push_back(pt);
 //		}
 //	}
 
@@ -1956,8 +1956,8 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 //	currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.clear();
 //	for (int i = 0; i<currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.size(); i++)
 //	{
-//		sp<BlockType> pt = currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.get(i);
-//		currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.add(pt);
+//		sp<BlockType> pt = currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.at(i);
+//		currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.push_back(pt);
 //	}
 
 	currentBlockType->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks = 0 != stoi(p->Find(currentBlockType->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info.label)->GetProperty()->GetPropertyValue().c_str());
@@ -1967,8 +1967,8 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 //	currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
 //	for (int i = 0; i<currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 //	{
-//		sp<TurnFromBlockTypeToType>pt = currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
-//		currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(pt);
+//		sp<TurnFromBlockTypeToType>pt = currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i);
+//		currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.push_back(pt);
 //	}
 
 	currentBlockType->removeAllBlocksOfColorOnFieldBlockIsSetOn = 0 != stoi(p->Find(currentBlockType->removeAllBlocksOfColorOnFieldBlockIsSetOn_Info.label)->GetProperty()->GetPropertyValue().c_str());
@@ -2152,7 +2152,7 @@ void CustomGameEditorControl::initPiecePropTree(sp<PieceType> b)
 				spriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(""), "");
 				for (int i = 0; i<bobsGame->loadedSprites.size(); i++)
 				{
-					sp<Sprite>s = bobsGame->loadedSprites.get(i);
+					sp<Sprite>s = bobsGame->loadedSprites.at(i);
 					spriteNameCombo->GetComboBox()->AddItem(Utility::StringToUnicode(s->getName()), s->getName());
 				}
 
@@ -2169,7 +2169,7 @@ void CustomGameEditorControl::initPiecePropTree(sp<PieceType> b)
 				string blockTypesString = "";
 				for (int i = 0; i < b->overrideBlockTypes_UUID.size(); i++)
 				{
-					sp<BlockType> bt = currentGameType->getBlockTypeByUUID(b->overrideBlockTypes_UUID.get(i));
+					sp<BlockType> bt = currentGameType->getBlockTypeByUUID(b->overrideBlockTypes_UUID.at(i));
 					string blockName = "";
 					if (bt != nullptr)blockName = bt->name;
 					else blockName = "ERROR";
@@ -2215,7 +2215,7 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 	bool taken = false;
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> bt = currentGameType->pieceTypes.get(i);
+		sp<PieceType> bt = currentGameType->pieceTypes.at(i);
 		if (bt != currentPieceType && bt->name == pieceTypeName)taken = true;
 	}
 	if (taken)
@@ -2223,7 +2223,7 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 		int n = 0;
 		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 		{
-			sp<PieceType> bt = currentGameType->pieceTypes.get(i);
+			sp<PieceType> bt = currentGameType->pieceTypes.at(i);
 			if (bt != currentPieceType && bt->name == pieceTypeName + " " + to_string(n))
 			{
 				n++;
@@ -2238,7 +2238,7 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 
 	for (int i = 0; i<currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> bt = currentGameType->pieceTypes.get(i);
+		sp<PieceType> bt = currentGameType->pieceTypes.at(i);
 		if(bt == currentPieceType)
 		{
 			pieceSelectionListBox->GetTable()->GetRow(i)->SetCellText(0, pieceTypeName);
@@ -2288,8 +2288,8 @@ void CustomGameEditorControl::savePiecePropTreeToCurrentPieceType()
 //	{
 //		for (int i = 0; i < currentPieceType_overrideBlockTypes.size(); i++)
 //		{
-//			sp<BlockType> pt = currentPieceType_overrideBlockTypes.get(i);
-//			currentPieceType->overrideBlockTypes.add(pt);
+//			sp<BlockType> pt = currentPieceType_overrideBlockTypes.at(i);
+//			currentPieceType->overrideBlockTypes.push_back(pt);
 //		}
 //	}
 }
@@ -2309,7 +2309,7 @@ void CustomGameEditorControl::onAddBlockButton(Base* control)
 		bool taken = false;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
-			sp<BlockType> bt = currentGameType->blockTypes.get(i);
+			sp<BlockType> bt = currentGameType->blockTypes.at(i);
 			if (bt->name == newName)taken = true;
 		}
 		if (taken)
@@ -2317,7 +2317,7 @@ void CustomGameEditorControl::onAddBlockButton(Base* control)
 			int n = 0;
 			for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 			{
-				sp<BlockType> bt = currentGameType->blockTypes.get(i);
+				sp<BlockType> bt = currentGameType->blockTypes.at(i);
 				if (bt->name == newName + " " + to_string(n))
 				{
 					n++;
@@ -2333,7 +2333,7 @@ void CustomGameEditorControl::onAddBlockButton(Base* control)
 	b->useAsPlayingFieldFiller = true;
 	b->useAsGarbage = true;
 
-	currentGameType->blockTypes.add(b);
+	currentGameType->blockTypes.push_back(b);
 
 	Layout::TableRow *row = blockSelectionListBox->AddItem(b->name, b->uuid);
 	row->onRowSelected.Add(this, &CustomGameEditorControl::onBlockListRowSelect);
@@ -2370,7 +2370,7 @@ void CustomGameEditorControl::onDuplicateBlockButton(Base* control)
 	bool taken = false;
 	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> temp = currentGameType->blockTypes.get(i);
+		sp<BlockType> temp = currentGameType->blockTypes.at(i);
 		if (temp->name == newName)taken = true;
 	}
 	if (taken)
@@ -2378,7 +2378,7 @@ void CustomGameEditorControl::onDuplicateBlockButton(Base* control)
 		int n = 0;
 		for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 		{
-			sp<BlockType> temp = currentGameType->blockTypes.get(i);
+			sp<BlockType> temp = currentGameType->blockTypes.at(i);
 			if (temp->name == newName + " " + to_string(n))
 			{
 
@@ -2391,7 +2391,7 @@ void CustomGameEditorControl::onDuplicateBlockButton(Base* control)
 
 	b->name = newName;
 
-	currentGameType->blockTypes.add(b);
+	currentGameType->blockTypes.push_back(b);
 
 	Layout::TableRow *newRow = blockSelectionListBox->AddItem(b->name, bt->uuid);
 	newRow->onRowSelected.Add(this, &CustomGameEditorControl::onBlockListRowSelect);
@@ -2419,7 +2419,14 @@ void CustomGameEditorControl::onDeleteBlockButton(Base* control)
 		return;
 	}
 
-	if (currentGameType->blockTypes.contains(bt))currentGameType->blockTypes.remove(bt);
+	for(int i=0; i<currentGameType->blockTypes.size();i++)//.contains(bt))
+	{
+		if (currentGameType->blockTypes.at(i).get() == bt.get())
+		{
+			currentGameType->blockTypes.erase(currentGameType->blockTypes.begin() + i);
+			i--;
+		}
+	}
 
 
 	//remove it from any pieces being used
@@ -2428,16 +2435,24 @@ void CustomGameEditorControl::onDeleteBlockButton(Base* control)
 	//p->overrideBlockTypes
 	for(int i=0;i<currentGameType->blockTypes.size();i++)
 	{
-		sp<BlockType> b = currentGameType->blockTypes.get(i);
+		sp<BlockType> b = currentGameType->blockTypes.at(i);
 
-		if(b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.contains(bt->uuid))b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.remove(bt->uuid);
+
+		for (int i = 0; i < b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.size(); i++)//.contains(bt))
+		{
+			if (b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.at(i) == bt->uuid)
+			{
+				b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.erase(b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.begin() + i);
+				i--;
+			}
+		}
 
 		for(int n=0; n < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); n++)
 		{
-			sp<TurnFromBlockTypeToType>tb = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(n);
+			sp<TurnFromBlockTypeToType>tb = ms<TurnFromBlockTypeToType>(b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(n));
 			if (tb->fromType_UUID == bt->uuid || tb->toType_UUID == bt->uuid)
 			{
-				b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.removeAt(n);
+				b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.erase(b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.begin()+n);
 				n--;
 			}
 		}
@@ -2445,7 +2460,7 @@ void CustomGameEditorControl::onDeleteBlockButton(Base* control)
 
 //	for (int n = 0; n < currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); n++)
 //	{
-//		sp<TurnFromBlockTypeToType>tb = currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(n);
+//		sp<TurnFromBlockTypeToType>tb = currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(n);
 //		if (tb->fromType == bt->name || tb->toType == bt->name)
 //		{
 //			currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.removeAt(n);
@@ -2455,8 +2470,17 @@ void CustomGameEditorControl::onDeleteBlockButton(Base* control)
 
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> p = currentGameType->pieceTypes.get(i);
-		if (p->overrideBlockTypes_UUID.contains(bt->uuid))p->overrideBlockTypes_UUID.remove(bt->uuid);
+		sp<PieceType> p = currentGameType->pieceTypes.at(i);
+
+		for (int i = 0; i < p->overrideBlockTypes_UUID.size(); i++)//.contains(bt))
+		{
+			if (p->overrideBlockTypes_UUID.at(i) == bt->uuid)
+			{
+				p->overrideBlockTypes_UUID.erase(p->overrideBlockTypes_UUID.begin() + i);
+				i--;
+			}
+		}
+
 	}
 
 	//if (currentPieceType_overrideBlockTypes.contains(bt))currentPieceType_overrideBlockTypes.remove(bt);
@@ -2509,7 +2533,7 @@ void CustomGameEditorControl::onAddPieceButton(Base* control)
 	bool taken = false;
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> bt = currentGameType->pieceTypes.get(i);
+		sp<PieceType> bt = currentGameType->pieceTypes.at(i);
 		if (bt->name == newName)taken = true;
 	}
 	if (taken)
@@ -2517,7 +2541,7 @@ void CustomGameEditorControl::onAddPieceButton(Base* control)
 		int n = 0;
 		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 		{
-			sp<PieceType> bt = currentGameType->pieceTypes.get(i);
+			sp<PieceType> bt = currentGameType->pieceTypes.at(i);
 			if (bt->name == newName + " " + to_string(n))
 			{
 				n++;
@@ -2531,7 +2555,7 @@ void CustomGameEditorControl::onAddPieceButton(Base* control)
 	b->useAsNormalPiece = true;
 	b->useAsPlayingFieldFillerPiece = true;
 	b->useAsGarbagePiece = true;
-	currentGameType->pieceTypes.add(b);
+	currentGameType->pieceTypes.push_back(b);
 
 
 	Layout::TableRow *row = pieceSelectionListBox->AddItem(b->name, b->uuid);
@@ -2557,9 +2581,16 @@ void CustomGameEditorControl::onDuplicatePieceButton(Base* control)
 		return;
 	}
 
-	if (currentGameType->pieceTypes.contains(bt))currentGameType->pieceTypes.remove(bt);
 
 
+	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)//.contains(bt))
+	{
+		if (currentGameType->pieceTypes.at(i).get() == bt.get())
+		{
+			currentGameType->pieceTypes.erase(currentGameType->pieceTypes.begin() + i);
+			i--;
+		}
+	}
 
 	sp<PieceType> b(ms<PieceType>());
 	string newuuid = b->uuid;
@@ -2571,7 +2602,7 @@ void CustomGameEditorControl::onDuplicatePieceButton(Base* control)
 	bool taken = false;
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> temp = currentGameType->pieceTypes.get(i);
+		sp<PieceType> temp = currentGameType->pieceTypes.at(i);
 		if (temp->name == newName)taken = true;
 	}
 	if (taken)
@@ -2579,7 +2610,7 @@ void CustomGameEditorControl::onDuplicatePieceButton(Base* control)
 		int n = 0;
 		for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 		{
-			sp<PieceType> temp = currentGameType->pieceTypes.get(i);
+			sp<PieceType> temp = currentGameType->pieceTypes.at(i);
 			if (temp->name == newName + " " + to_string(n))
 			{
 				n++;
@@ -2591,7 +2622,7 @@ void CustomGameEditorControl::onDuplicatePieceButton(Base* control)
 
 	b->name = newName;
 
-	currentGameType->pieceTypes.add(b);
+	currentGameType->pieceTypes.push_back(b);
 
 
 	Layout::TableRow *newRow = pieceSelectionListBox->AddItem(b->name, b->uuid);
@@ -2618,15 +2649,30 @@ void CustomGameEditorControl::onDeletePieceButton(Base* control)
 		return;
 	}
 
-	if (currentGameType->pieceTypes.contains(bt))currentGameType->pieceTypes.remove(bt);
 
+	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)//.contains(bt))
+	{
+		if (currentGameType->pieceTypes.at(i).get() == bt.get())
+		{
+			currentGameType->pieceTypes.erase(currentGameType->pieceTypes.begin() + i);
+			i--;
+		}
+	}
 
 	//remove it from any pieces being used
 	//b->makePieceTypeWhenCleared
 	for (int i = 0; i<currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> b = currentGameType->blockTypes.get(i);
-		if (b->makePieceTypeWhenCleared_UUID.contains(bt->uuid))b->makePieceTypeWhenCleared_UUID.remove(bt->uuid);
+		sp<BlockType> b = currentGameType->blockTypes.at(i);
+
+		for (int i = 0; i < b->makePieceTypeWhenCleared_UUID.size(); i++)//.contains(bt))
+		{
+			if (b->makePieceTypeWhenCleared_UUID.at(i) == bt->uuid)
+			{
+				b->makePieceTypeWhenCleared_UUID.erase(b->makePieceTypeWhenCleared_UUID.begin() + i);
+				i--;
+			}
+		}
 	}
 	//if (currentBlockType_makePieceTypeWhenCleared.contains(bt))currentBlockType_makePieceTypeWhenCleared.remove(bt);
 
@@ -2767,13 +2813,13 @@ void CustomGameEditorControl::doEditMakePieceTypeWhenClearedWindowButton(Base* c
 
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> pt = currentGameType->pieceTypes.get(i);
+		sp<PieceType> pt = currentGameType->pieceTypes.at(i);
 		selectListBox->AddItem(pt->name, pt->uuid);
 	}
 
 	for (int i = 0; i < currentBlockType->makePieceTypeWhenCleared_UUID.size(); i++)
 	{
-		sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentBlockType->makePieceTypeWhenCleared_UUID.get(i));
+		sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentBlockType->makePieceTypeWhenCleared_UUID.at(i));
 		if (pt != nullptr)
 		{
 			chosenTypesListBox->AddItem(pt->name, pt->uuid);
@@ -2827,7 +2873,7 @@ void CustomGameEditorControl::saveMakePieceTypes(Base* control)
 
 		sp<PieceType> pt = getPieceTypeByUUID(uuid);
 
-		if(pt!=nullptr)currentBlockType->makePieceTypeWhenCleared_UUID.add(pt->uuid);
+		if(pt!=nullptr)currentBlockType->makePieceTypeWhenCleared_UUID.push_back(pt->uuid);
 
 	}
 
@@ -2838,7 +2884,7 @@ void CustomGameEditorControl::saveMakePieceTypes(Base* control)
 		string typesString = "";
 		for (int i = 0; i < currentBlockType->makePieceTypeWhenCleared_UUID.size(); i++)
 		{
-			sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentBlockType->makePieceTypeWhenCleared_UUID.get(i));
+			sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentBlockType->makePieceTypeWhenCleared_UUID.at(i));
 			if(pt!=nullptr)typesString = typesString + pt->name + ",";
 		}
 		//pr->SetValue(pieceTypesString);
@@ -2863,7 +2909,7 @@ void CustomGameEditorControl::doEditConnectedUDLRChangeIntoBlockTypeWindowButton
 
 	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> pt = currentGameType->blockTypes.get(i);
+		sp<BlockType> pt = currentGameType->blockTypes.at(i);
 		selectListBox->AddItem(pt->name, pt->uuid);
 	}
 
@@ -2873,7 +2919,7 @@ void CustomGameEditorControl::doEditConnectedUDLRChangeIntoBlockTypeWindowButton
 
 	for (int i = 0; i < currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.size(); i++)
 	{
-		sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.get(i));
+		sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.at(i));
 		if (pt != nullptr)
 		{
 			chosenTypesListBox->AddItem(pt->name, pt->uuid);
@@ -2899,7 +2945,7 @@ void CustomGameEditorControl::saveConnectedUDLRChangeIntoBlockTypes(Base* contro
 		string uuid = row->GetName().c_str();
 
 		sp<BlockType> bt = getBlockTypeByUUID(uuid);
-		if(bt!=nullptr)currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.add(bt->uuid);
+		if(bt!=nullptr)currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.push_back(bt->uuid);
 
 	}
 
@@ -2909,7 +2955,7 @@ void CustomGameEditorControl::saveConnectedUDLRChangeIntoBlockTypes(Base* contro
 		string typesString = "";
 		for (int i = 0; i < currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.size(); i++)
 		{
-			sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.get(i));
+			sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentBlockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.at(i));
 			string blockName = "";
 			if (pt != nullptr)blockName = pt->name;
 			else blockName = "ERROR";
@@ -2943,7 +2989,7 @@ void CustomGameEditorControl::doOverrideBlockTypesSelectionWindowButton(Base* co
 
 	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> pt = currentGameType->blockTypes.get(i);
+		sp<BlockType> pt = currentGameType->blockTypes.at(i);
 		selectListBox->AddItem(pt->name, pt->uuid);
 	}
 
@@ -2952,7 +2998,7 @@ void CustomGameEditorControl::doOverrideBlockTypesSelectionWindowButton(Base* co
 
 	for (int i = 0; i < currentPieceType->overrideBlockTypes_UUID.size(); i++)
 	{
-		sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentPieceType->overrideBlockTypes_UUID.get(i));
+		sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentPieceType->overrideBlockTypes_UUID.at(i));
 		if (pt != nullptr)
 		{
 			chosenTypesListBox->AddItem(pt->name, pt->uuid);
@@ -2981,7 +3027,7 @@ void CustomGameEditorControl::saveOverrideBlockTypes(Base* control)
 
 		sp<BlockType> bt = getBlockTypeByUUID(uuid);
 
-		if(bt!=nullptr)currentPieceType->overrideBlockTypes_UUID.add(bt->uuid);
+		if(bt!=nullptr)currentPieceType->overrideBlockTypes_UUID.push_back(bt->uuid);
 
 
 	}
@@ -2992,7 +3038,7 @@ void CustomGameEditorControl::saveOverrideBlockTypes(Base* control)
 		string typesString = "";
 		for (int i = 0; i < currentPieceType->overrideBlockTypes_UUID.size(); i++)
 		{
-			sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentPieceType->overrideBlockTypes_UUID.get(i));
+			sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentPieceType->overrideBlockTypes_UUID.at(i));
 			if (pt != nullptr)
 			{
 				typesString = typesString + pt->name + ",";
@@ -3047,7 +3093,7 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(Base* co
 
 			for(int i=0;i<currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size();i++)
 			{
-				sp<TurnFromBlockTypeToType>t = currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+				sp<TurnFromBlockTypeToType>t = ms<TurnFromBlockTypeToType>(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i));
 				Layout::TableRow *row = toFromListBox->AddItem(t->getName(currentGameType));
 				row->onRowSelected.Add(this, &CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect);
 			}
@@ -3098,7 +3144,7 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(Base* co
 				fromCombo->SetSize(100, 20);
 				for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 				{
-					sp<BlockType> bt = currentGameType->blockTypes.get(i);
+					sp<BlockType> bt = currentGameType->blockTypes.at(i);
 					fromCombo->AddItem(Utility::StringToUnicode(bt->name), bt->uuid);
 					fromCombo->onSelection.Add(this, &CustomGameEditorControl::saveFromTypeComboToCurrentType);
 				}
@@ -3115,7 +3161,7 @@ void CustomGameEditorControl::doEditTurnFromBlockTypeToTypeWindowButton(Base* co
 				toCombo->SetSize(100, 20);
 				for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 				{
-					sp<BlockType> bt = currentGameType->blockTypes.get(i);
+					sp<BlockType> bt = currentGameType->blockTypes.at(i);
 					toCombo->AddItem(Utility::StringToUnicode(bt->name), bt->uuid);
 					toCombo->onSelection.Add(this, &CustomGameEditorControl::saveToTypeComboToCurrentType);
 				}
@@ -3171,9 +3217,9 @@ void CustomGameEditorControl::newTurnFromBlockTypeToType(Base* control)
 	if (currentGameType->blockTypes.size() == 0)return;
 
 	sp<TurnFromBlockTypeToType>b = ms<TurnFromBlockTypeToType>();
-	b->fromType_UUID = currentGameType->blockTypes.get(0)->uuid;
-	b->toType_UUID = currentGameType->blockTypes.get(0)->uuid;
-	currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(b);
+	b->fromType_UUID = currentGameType->blockTypes.at(0)->uuid;
+	b->toType_UUID = currentGameType->blockTypes.at(0)->uuid;
+	currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.push_back(*b.get());
 
 	Layout::TableRow *row = toFromListBox->AddItem(b->getName(currentGameType));
 	row->onRowSelected.Add(this, &CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect);
@@ -3198,7 +3244,7 @@ void CustomGameEditorControl::deleteTurnFromBlockTypeToType(Base* control)
 	sp<TurnFromBlockTypeToType>bt = nullptr;
 	for (int i = 0; i<currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 	{
-		sp<TurnFromBlockTypeToType>b = currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+		sp<TurnFromBlockTypeToType>b = ms< TurnFromBlockTypeToType>(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i));
 		if (b->getName(currentGameType) == name)
 		{
 			bt = b;
@@ -3211,8 +3257,14 @@ void CustomGameEditorControl::deleteTurnFromBlockTypeToType(Base* control)
 		return;
 	}
 
-	if (currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.contains(bt))currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.remove(bt);
-
+	for (int i = 0; i < currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)//.contains(bt))
+	{
+		if (currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i) == *bt.get())
+		{
+			currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.erase(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.begin() + i);
+			i--;
+		}
+	}
 
 
 	toFromListBox->UnselectAll();
@@ -3254,7 +3306,7 @@ void CustomGameEditorControl::closeTurnFromBlockTypeToTypeEditor(Base* control)
 		string typesString = "";
 		for (int i = 0; i < currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
-			sp<TurnFromBlockTypeToType>pt = currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+			sp<TurnFromBlockTypeToType>pt = ms< TurnFromBlockTypeToType>(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i));
 			typesString = typesString + pt->getName(currentGameType) + ",";
 		}
 		//pr->SetValue(typesString);
@@ -3274,7 +3326,7 @@ void CustomGameEditorControl::saveFromTypeComboToCurrentType()
 	//replace name in blockTypelist
 	for (int i = 0; i<currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 	{
-		sp<TurnFromBlockTypeToType>bt = currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+		sp<TurnFromBlockTypeToType>bt = ms<TurnFromBlockTypeToType>(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i));
 		if (bt == currentTurnFromBlockTypeToType)
 		{
 			toFromListBox->GetTable()->GetRow(i)->SetCellText(0, bt->getName(currentGameType));
@@ -3293,7 +3345,7 @@ void CustomGameEditorControl::saveToTypeComboToCurrentType()
 	//replace name in blockTypelist
 	for (int i = 0; i<currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 	{
-		sp<TurnFromBlockTypeToType>bt = currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+		sp<TurnFromBlockTypeToType>bt = ms<TurnFromBlockTypeToType>(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i));
 		if (bt == currentTurnFromBlockTypeToType)
 		{
 			toFromListBox->GetTable()->GetRow(i)->SetCellText(0, bt->getName(currentGameType));
@@ -3324,7 +3376,7 @@ void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(Base* control)
 	sp<TurnFromBlockTypeToType>bt = nullptr;
 	for (int i = 0; i<currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 	{
-		sp<TurnFromBlockTypeToType>b = currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+		sp<TurnFromBlockTypeToType>b = ms<TurnFromBlockTypeToType>(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i));
 		if (b->getName(currentGameType) == name)
 		{
 			bt = b;
@@ -3350,10 +3402,10 @@ void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(Base* control)
 void CustomGameEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	vector<pair<sp<GameType>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
-	for (int i = 0; i < gamesStringColor.size(); i++)
+	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
 		sp<GameType>g = gameTypeStringColorPairPair.first;
 		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
@@ -3626,7 +3678,7 @@ void CustomGameEditorControl::createNewGameType(Base* control)
 	sp<BlockType> bt(ms<BlockType>());
 	bt->name = "Gray Square";
 	//bt->spriteName = "Square";
-	bt->colors.add(OKColor::gray);
+	bt->colors.push_back(*OKColor::gray.get());
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
 	bt->useAsGarbage = true;
@@ -3635,11 +3687,11 @@ void CustomGameEditorControl::createNewGameType(Base* control)
 	pt->useAsNormalPiece = true;
 	pt->useAsPlayingFieldFillerPiece = true;
 	pt->useAsGarbagePiece = true;
-	s->blockTypes.add(bt);
-	s->pieceTypes.add(pt);
+	s->blockTypes.push_back(bt);
+	s->pieceTypes.push_back(pt);
 
 	s->name += " "+to_string(bobsGame->loadedGameTypes.size());
-	//bobsGame->loadedGameTypes.add(s);
+	//bobsGame->loadedGameTypes.push_back(s);
 
 	currentGameType = s;
 	initFromCurrentGameType();
@@ -3682,7 +3734,7 @@ void CustomGameEditorControl::duplicateGameType(Base* control)
 	bool taken = false;
 	for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
 	{
-		sp<GameType>g = bobsGame->loadedGameTypes.get(i);
+		sp<GameType>g = bobsGame->loadedGameTypes.at(i);
 		if (g != s && g->name == s->name)taken = true;
 	}
 	if (taken)
@@ -3690,7 +3742,7 @@ void CustomGameEditorControl::duplicateGameType(Base* control)
 		int n = 0;
 		for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)
 		{
-			sp<GameType>g = bobsGame->loadedGameTypes.get(i);
+			sp<GameType>g = bobsGame->loadedGameTypes.at(i);
 			if (g != s && g->name == s->name + " " + to_string(n))
 			{
 				n++;
@@ -3700,7 +3752,7 @@ void CustomGameEditorControl::duplicateGameType(Base* control)
 		s->name = s->name + " " + to_string(n);
 	}
 
-	//bobsGame->loadedGameTypes.add(s);
+	//bobsGame->loadedGameTypes.push_back(s);
 	currentGameType = s;
 	initFromCurrentGameType();
 
@@ -3740,7 +3792,16 @@ void CustomGameEditorControl::deleteGameType(Base* control)
 //		return;
 //	}
 
-	if (bobsGame->loadedGameTypes.contains(bt))bobsGame->loadedGameTypes.remove(bt);
+
+	for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)//.contains(bt))
+	{
+		if (bobsGame->loadedGameTypes.at(i).get() == bt.get())
+		{
+			bobsGame->loadedGameTypes.erase(bobsGame->loadedGameTypes.begin() + i);
+			i--;
+		}
+	}
+
 
 	gameTypeSelectLabel->SetText("");
 
@@ -3798,10 +3859,21 @@ void CustomGameEditorControl::onSaveButton(Base* control)
 	saveCurrentGameTypeToXML();
 
 	//save new or duplicated gametype to loadedGameType list since we don't do this now until save
-	if (bobsGame->loadedGameTypes.contains(currentGameType) == false)
-		bobsGame->loadedGameTypes.add(currentGameType);
 
 
+	bool contains = false;
+	for (int i = 0; i < bobsGame->loadedGameTypes.size(); i++)//.contains(bt))
+	{
+		if (bobsGame->loadedGameTypes.at(i).get() == currentGameType.get())
+		{
+			contains = true;
+		}
+	}
+
+	if (contains == false)
+	{
+		bobsGame->loadedGameTypes.push_back(currentGameType);
+	}
 }
 
 void CustomGameEditorControl::onUploadButton(Base* control)
@@ -4147,22 +4219,22 @@ void CustomGameEditorControl::renderRotationEditor(sp<OKGame>g)
 	sp<Rotation>lastRotation = nullptr;
 	for(int i=0;i<currentPieceType->rotationSet.size();i++)
 	{
-		if(currentPieceType->rotationSet.get(i)==currentRotation)
+		if(currentPieceType->rotationSet.at(i) == *currentRotation.get())
 		{
-			if (i == 0)lastRotation = currentPieceType->rotationSet.get(currentPieceType->rotationSet.size()-1);
-			else lastRotation = currentPieceType->rotationSet.get(i - 1);
+			if (i == 0)*lastRotation = currentPieceType->rotationSet.at(currentPieceType->rotationSet.size()-1);
+			else *lastRotation = currentPieceType->rotationSet.at(i - 1);
 		}
 	}
 	if (lastRotation != nullptr)
 	{
 		for (int i = 0; i < lastRotation->blockOffsets.size(); i++)
 		{
-			sp<BlockOffset>b = lastRotation->blockOffsets.get(i);
+			sp<BlockOffset>b = ms<BlockOffset>(lastRotation->blockOffsets.at(i));
 			int x = b->x;
 			int y = b->y;
 
 			OKColor c = OKColor(255, 255, 255, 255);
-			if (i < colors.size())c = *colors.get(i);
+			if (i < colors.size())c = *colors.at(i);
 			GLUtils::drawFilledRectXYWH(sx + ((cells / 2) * cellW) + cellW*x, sy + ((cells / 2) * cellW) + cellW*y, cellW, cellW, c.rf(), c.gf(), c.bf(), 0.2f);
 			if (i < 10)
 			{
@@ -4175,12 +4247,12 @@ void CustomGameEditorControl::renderRotationEditor(sp<OKGame>g)
 
 	for(int i=0; i<currentRotation->blockOffsets.size(); i++)
 	{
-		sp<BlockOffset>b = currentRotation->blockOffsets.get(i);
+		sp<BlockOffset>b = ms< BlockOffset>(currentRotation->blockOffsets.at(i));
 		int x = b->x;
 		int y = b->y;
 
 		OKColor c = OKColor(128, 0, 128, 255);
-		if(i<colors.size())c = *colors.get(i);
+		if(i<colors.size())c = *colors.at(i);
 		GLUtils::drawFilledRectXYWH(sx + ((cells / 2) * cellW) + cellW*x, sy + ((cells / 2) * cellW) + cellW*y, cellW, cellW, c.rf(),c.gf(),c.bf(), 1.0f);
 		if (i < 10)
 		{
@@ -4226,14 +4298,14 @@ void CustomGameEditorControl::renderRotationPreview()
 	if (cells % 2 == 0)cells++;
 	float cellW = w / (float)cells;
 
-	for (int i = 0; i<currentPieceType->rotationSet.get(currentPreviewRotationIndex)->blockOffsets.size(); i++)
+	for (int i = 0; i < currentPieceType->rotationSet.at(currentPreviewRotationIndex).blockOffsets.size(); i++)
 	{
-		sp<BlockOffset>b = currentPieceType->rotationSet.get(currentPreviewRotationIndex)->blockOffsets.get(i);
+		sp<BlockOffset>b = ms<BlockOffset>(currentPieceType->rotationSet.at(currentPreviewRotationIndex).blockOffsets.at(i));
 		int x = b->x;
 		int y = b->y;
 
 		OKColor c = OKColor(255, 255, 255, 255);
-		if (i<colors.size())c = *colors.get(i);
+		if (i<colors.size())c = *colors.at(i);
 		GLUtils::drawFilledRectXYWH(sx + ((cells / 2) * cellW) + cellW*x, sy + ((cells / 2) * cellW) + cellW*y, cellW, cellW, c.rf(), c.gf(), c.bf(), 1.0f);
 	}
 
@@ -4256,7 +4328,7 @@ void CustomGameEditorControl::updateRotationEditor()
 	maxNumBlocks = 0;
 	for(int i=0;i<currentPieceType->rotationSet.size();i++)
 	{
-		sp<Rotation>r = currentPieceType->rotationSet.get(i);
+		sp<Rotation>r = ms<Rotation>(currentPieceType->rotationSet.at(i));
 
 		int num = r->blockOffsets.size();
 		maxNumBlocks = max(num, maxNumBlocks);
@@ -4308,7 +4380,7 @@ void CustomGameEditorControl::onRotationEditMouseClick(int x, int y, bool bDown)
 
 	for (int i = 0; i<currentRotation->blockOffsets.size(); i++)
 	{
-		sp<BlockOffset>b = currentRotation->blockOffsets.get(i);
+		sp<BlockOffset>b = ms<BlockOffset>(currentRotation->blockOffsets.at(i));
 		int bx = b->x;
 		int by = b->y;
 
@@ -4320,7 +4392,7 @@ void CustomGameEditorControl::onRotationEditMouseClick(int x, int y, bool bDown)
 		if(x > x0 && x < x1 && y > y0 && y < y1)
 		{
 			found = true;
-			currentRotation->blockOffsets.removeAt(i);
+			currentRotation->blockOffsets.erase(currentRotation->blockOffsets.begin()+i);
 			i--;
 		}
 	}
@@ -4331,7 +4403,7 @@ void CustomGameEditorControl::onRotationEditMouseClick(int x, int y, bool bDown)
 		b->x = floor((x - sx - (cells / 2) * cellW) / cellW);
 		b->y = floor((y - sy - (cells / 2) * cellW) / cellW);
 
-		currentRotation->blockOffsets.add(b);
+		currentRotation->blockOffsets.push_back(*b.get());
 	}
 }
 
@@ -4369,7 +4441,7 @@ void CustomGameEditorControl::onRotationListRowSelect(Base* control)
 	}
 
 
-	currentRotation = currentPieceType->rotationSet.get(i);
+	*currentRotation = currentPieceType->rotationSet.at(i);
 
 }
 
@@ -4379,7 +4451,7 @@ void CustomGameEditorControl::addRotation(Base* control)
 
 	//add number
 	sp<Rotation>r = ms<Rotation>();
-	currentPieceType->rotationSet.add(r);
+	currentPieceType->rotationSet.push_back(*r.get());
 
 	Layout::TableRow *row = rotationListBox->AddItem("Rotation " + to_string(currentPieceType->rotationSet.size()-1));
 	row->onRowSelected.Add(this, &CustomGameEditorControl::onRotationListRowSelect);
@@ -4490,7 +4562,7 @@ void CustomGameEditorControl::onOpenPresetRotationWindow(Base* control)
 
 				for (int i = 0; i < rotationSets.size(); i++)
 				{
-					RotationSet r = rotationSets.get(i);
+					RotationSet r = rotationSets.at(i);
 					//Layout::TableRow *row =
                     rotationPresetListBox->AddItem(r.name);
 				}
@@ -4498,12 +4570,12 @@ void CustomGameEditorControl::onOpenPresetRotationWindow(Base* control)
 //				//fill rotation list box
 //				for(int i=0;i<loadedGameTypes.size();i++)
 //				{
-//					sp<GameType>s = loadedGameTypes.get(i);
+//					sp<GameType>s = loadedGameTypes.at(i);
 //					if(s->builtInType)
 //					{
 //						for(int n=0;n<s->pieceTypes.size();n++)
 //						{
-//							sp<PieceType> p = s->pieceTypes.get(n);
+//							sp<PieceType> p = s->pieceTypes.at(n);
 //
 //							Layout::TableRow *row = rotationPresetListBox->AddItem(p->rotationSet.name);
 //							//row->onRowSelected.Add(this, &CustomGameEditorControl::onRotationListRowSelect);
@@ -4562,20 +4634,20 @@ void CustomGameEditorControl::onSelectedPresetRotationOK(Base* control)
 
 //	for (int i = 0; i<loadedGameTypes.size(); i++)
 //	{
-//		sp<GameType>s = loadedGameTypes.get(i);
+//		sp<GameType>s = loadedGameTypes.at(i);
 //		if (s->builtInType)
 //		{
 //			for (int n = 0; n<s->pieceTypes.size(); n++)
 //			{
-//				sp<PieceType> p = s->pieceTypes.get(n);
+//				sp<PieceType> p = s->pieceTypes.at(n);
 //
 //				if(p->rotationSet.name==name)
 //				{
 //
 //					for(int x=0;x<p->rotationSet.size();x++)
 //					{
-//						sp<Rotation>r = ms<Rotation>(*p->rotationSet.get(x));
-//						currentPieceType->rotationSet.add(r);
+//						sp<Rotation>r = ms<Rotation>(*p->rotationSet.at(x));
+//						currentPieceType->rotationSet.push_back(r);
 //					}
 //				}
 //			}
@@ -4584,14 +4656,14 @@ void CustomGameEditorControl::onSelectedPresetRotationOK(Base* control)
 
 	for (int i = 0; i < rotationSets.size(); i++)
 	{
-		RotationSet rs = rotationSets.get(i);
+		RotationSet rs = rotationSets.at(i);
 		if(rs.name==name)
 		{
 
 			for(int x=0;x<rs.size();x++)
 			{
-				sp<Rotation>rotation = ms<Rotation>(*rs.get(x));
-				currentPieceType->rotationSet.add(rotation);
+				sp<Rotation>rotation = ms<Rotation>(rs.at(x));
+				currentPieceType->rotationSet.push_back(*rotation);
 			}
 		}
 	}
@@ -4661,7 +4733,7 @@ void CustomGameEditorControl::initPreviewGame()
 	if (bobsGame->getPlayer1Game()->currentGameSequence == nullptr)
 	{
 		bobsGame->getPlayer1Game()->currentGameSequence = ms<GameSequence>();
-		bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.add(currentGameType);
+		bobsGame->getPlayer1Game()->currentGameSequence->gameTypes.push_back(currentGameType);
 		bobsGame->getPlayer1Game()->currentGameSequence->currentDifficultyName = "Beginner";
 		if (currentDifficultyType != nullptr)bobsGame->getPlayer1Game()->currentGameSequence->currentDifficultyName = currentDifficultyType->name;
 		bobsGame->currentRoom->endlessMode = true;
@@ -4675,13 +4747,13 @@ void CustomGameEditorControl::initPreviewGame()
 //	if(leftBaseTabControl->GetCurrentButton()==pieceTab && pieceSelectionListBox->IsAnyRowSelected())
 //	{
 //		ArrayList<sp<BlockType>>blockTypes = bobsGame->getPlayer1Game()->getCurrentGameType()->getNormalBlockTypes();
-//		if (currentPieceType != nullptr)bobsGame->getPlayer1Game()->nextPieces.add(ms<Piece>(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, currentPieceType, blockTypes));
+//		if (currentPieceType != nullptr)bobsGame->getPlayer1Game()->nextPieces.push_back(ms<Piece>(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, currentPieceType, blockTypes));
 //	}
 //	else
 //	if (leftBaseTabControl->GetCurrentButton() == blockTab && blockSelectionListBox->IsAnyRowSelected())
 //	{
 //		ArrayList<sp<PieceType>>pieceTypes = bobsGame->getPlayer1Game()->getCurrentGameType()->getNormalPieceTypes();
-//		if (currentBlockType != nullptr)bobsGame->getPlayer1Game()->nextPieces.add(ms<Piece>(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, bobsGame->getPlayer1Game()->grid->getRandomPieceType(pieceTypes), currentBlockType));
+//		if (currentBlockType != nullptr)bobsGame->getPlayer1Game()->nextPieces.push_back(ms<Piece>(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, bobsGame->getPlayer1Game()->grid->getRandomPieceType(pieceTypes), currentBlockType));
 //	}
 //	else
 //	{
@@ -4699,7 +4771,7 @@ void CustomGameEditorControl::initPreviewGame()
 
 	sp<Piece> piece(ms<Piece>(bobsGame->getPlayer1Game(), bobsGame->getPlayer1Game()->grid, p, b));
 	piece->init();
-	bobsGame->getPlayer1Game()->nextPieces.add(piece);
+	bobsGame->getPlayer1Game()->nextPieces.push_back(piece);
 
 }
 
@@ -4717,7 +4789,7 @@ void CustomGameEditorControl::initPreviewGame()
 //		int n = 0;
 //		for (int i = 0; i < currentGameType->difficultyTypes.size(); i++)
 //		{
-//			sp<DifficultyType>bt = currentGameType->difficultyTypes.get(i);
+//			sp<DifficultyType>bt = currentGameType->difficultyTypes.at(i);
 //			if (bt->name == newName)
 //			{
 //				newName = newName + to_string(n);
@@ -4728,7 +4800,7 @@ void CustomGameEditorControl::initPreviewGame()
 //	}
 //
 //	b->name = newName;
-//	currentGameType->difficultyTypes.add(b);
+//	currentGameType->difficultyTypes.push_back(b);
 //
 //
 //	Layout::TableRow *row = difficultySelectionListBox->AddItem(b->name);
@@ -4836,7 +4908,7 @@ void CustomGameEditorControl::initDifficultySelectionListBox()
 
 	for (int i = 0; i<currentGameType->difficultyTypes.size(); i++)
 	{
-		sp<DifficultyType>bt = currentGameType->difficultyTypes.get(i);
+		sp<DifficultyType>bt = currentGameType->difficultyTypes.at(i);
 		row = difficultySelectionListBox->AddItem(bt->name);
 		row->onRowSelected.Add(this, &CustomGameEditorControl::onDifficultyListRowSelect);
 		if (i == 0)
@@ -4899,7 +4971,7 @@ void CustomGameEditorControl::initDifficultyPropTree(sp<DifficultyType>b)
 				string typesString = "";
 				for (int i = 0; i < b->pieceTypesToDisallow_UUID.size(); i++)
 				{
-					sp<PieceType> bt = currentGameType->getPieceTypeByUUID(b->pieceTypesToDisallow_UUID.get(i));
+					sp<PieceType> bt = currentGameType->getPieceTypeByUUID(b->pieceTypesToDisallow_UUID.at(i));
 					string pieceName = "";
 					if (bt != nullptr)pieceName = bt->name;
 					else pieceName = "ERROR";
@@ -4915,7 +4987,7 @@ void CustomGameEditorControl::initDifficultyPropTree(sp<DifficultyType>b)
 				string typesString = "";
 				for (int i = 0; i < b->blockTypesToDisallow_UUID.size(); i++)
 				{
-					sp<BlockType> bt = currentGameType->getBlockTypeByUUID(b->blockTypesToDisallow_UUID.get(i));
+					sp<BlockType> bt = currentGameType->getBlockTypeByUUID(b->blockTypesToDisallow_UUID.at(i));
 					string blockName = "";
 					if (bt != nullptr)blockName = bt->name;
 					else blockName = "ERROR";
@@ -4960,7 +5032,7 @@ void CustomGameEditorControl::saveDifficultyPropTreeToCurrentDifficultyType()
 //	int n = 0;
 //	for (int i = 0; i < currentGameType->difficultyTypes.size(); i++)
 //	{
-//		sp<DifficultyType>bt = currentGameType->difficultyTypes.get(i);
+//		sp<DifficultyType>bt = currentGameType->difficultyTypes.at(i);
 //		if (bt != currentDifficultyType && bt->name == difficultyTypeName)
 //		{
 //			difficultyTypeName = difficultyTypeName + to_string(n);
@@ -4975,7 +5047,7 @@ void CustomGameEditorControl::saveDifficultyPropTreeToCurrentDifficultyType()
 //
 //	for (int i = 0; i<currentGameType->difficultyTypes.size(); i++)
 //	{
-//		sp<DifficultyType>bt = currentGameType->difficultyTypes.get(i);
+//		sp<DifficultyType>bt = currentGameType->difficultyTypes.at(i);
 //		if (bt == currentDifficultyType)
 //		{
 //			difficultySelectionListBox->GetTable()->GetRow(i)->SetCellText(0, difficultyTypeName);
@@ -5087,13 +5159,13 @@ void CustomGameEditorControl::doDifficultyDisallowPieceTypesSelectionWindowButto
 
 	for (int i = 0; i < currentGameType->pieceTypes.size(); i++)
 	{
-		sp<PieceType> pt = currentGameType->pieceTypes.get(i);
+		sp<PieceType> pt = currentGameType->pieceTypes.at(i);
 		selectListBox->AddItem(pt->name, pt->uuid);
 	}
 
 	for (int i = 0; i < currentDifficultyType->pieceTypesToDisallow_UUID.size(); i++)
 	{
-		sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentDifficultyType->pieceTypesToDisallow_UUID.get(i));
+		sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentDifficultyType->pieceTypesToDisallow_UUID.at(i));
 		if (pt != nullptr)
 		{
 			chosenTypesListBox->AddItem(pt->name, pt->uuid);
@@ -5120,7 +5192,7 @@ void CustomGameEditorControl::saveDisallowPieceTypes(Base* control)
 
 		sp<PieceType> pt = getPieceTypeByUUID(uuid);
 
-		if (pt != nullptr)currentDifficultyType->pieceTypesToDisallow_UUID.add(pt->uuid);
+		if (pt != nullptr)currentDifficultyType->pieceTypesToDisallow_UUID.push_back(pt->uuid);
 	}
 
 
@@ -5130,7 +5202,7 @@ void CustomGameEditorControl::saveDisallowPieceTypes(Base* control)
 		string typesString = "";
 		for (int i = 0; i < currentDifficultyType->pieceTypesToDisallow_UUID.size(); i++)
 		{
-			sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentDifficultyType->pieceTypesToDisallow_UUID.get(i));
+			sp<PieceType> pt = currentGameType->getPieceTypeByUUID(currentDifficultyType->pieceTypesToDisallow_UUID.at(i));
 			string pieceName = "";
 			if (pt != nullptr)pieceName = pt->name;
 			else pieceName = "ERROR";
@@ -5155,13 +5227,13 @@ void CustomGameEditorControl::doDifficultyDisallowBlockTypesSelectionWindowButto
 
 	for (int i = 0; i < currentGameType->blockTypes.size(); i++)
 	{
-		sp<BlockType> pt = currentGameType->blockTypes.get(i);
+		sp<BlockType> pt = currentGameType->blockTypes.at(i);
 		selectListBox->AddItem(pt->name, pt->uuid);
 	}
 
 	for (int i = 0; i < currentDifficultyType->blockTypesToDisallow_UUID.size(); i++)
 	{
-		sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentDifficultyType->blockTypesToDisallow_UUID.get(i));
+		sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentDifficultyType->blockTypesToDisallow_UUID.at(i));
 		if (pt != nullptr)
 		{
 			chosenTypesListBox->AddItem(pt->name, pt->uuid);
@@ -5188,7 +5260,7 @@ void CustomGameEditorControl::saveDisallowBlockTypes(Base* control)
 
 		sp<BlockType> pt = getBlockTypeByUUID(uuid);
 
-		if (pt != nullptr)currentDifficultyType->blockTypesToDisallow_UUID.add(pt->uuid);
+		if (pt != nullptr)currentDifficultyType->blockTypesToDisallow_UUID.push_back(pt->uuid);
 	}
 
 	Properties* p = difficultyPropTree->Find("Difficulty Properties");
@@ -5197,7 +5269,7 @@ void CustomGameEditorControl::saveDisallowBlockTypes(Base* control)
 		string typesString = "";
 		for (int i = 0; i < currentDifficultyType->blockTypesToDisallow_UUID.size(); i++)
 		{
-			sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentDifficultyType->blockTypesToDisallow_UUID.get(i));
+			sp<BlockType> pt = currentGameType->getBlockTypeByUUID(currentDifficultyType->blockTypesToDisallow_UUID.at(i));
 			string blockName = "";
 			if (pt != nullptr)blockName = pt->name;
 			else blockName = "ERROR";
@@ -5305,7 +5377,7 @@ void OKGame::customGameEditorMenuUpdate()
 			//remove unsaved gametypes
 //			for(int i=0;i<loadedGameTypes.size();i++)
 //			{
-//				if (loadedGameTypes.get(i)->loadedFilename == "")
+//				if (loadedGameTypes.at(i)->loadedFilename == "")
 //				{
 //					loadedGameTypes.removeAt(i);
 //					i--;

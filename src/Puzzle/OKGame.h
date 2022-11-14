@@ -429,8 +429,8 @@ public:
 		bool blocksCleared
 	);
 
-	sp<vector<sp<GameTypeStringColorPairPair>>> getSortedGameTypes();
-	sp<vector<sp<GameSequenceStringColorPairPair>>> getSortedGameSequences();
+	sp<vector<GameTypeStringColorPairPair>> getSortedGameTypes();
+	sp<vector<GameSequenceStringColorPairPair>> getSortedGameSequences();
 	void populateGameTypesMenu(sp<OKMenu>m);
 	void populateGameSequencesMenu(sp<OKMenu>m);
 	void selectSingleGameTypeMenuUpdate();
