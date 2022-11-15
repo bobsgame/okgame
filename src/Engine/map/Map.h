@@ -42,7 +42,7 @@ public:
 
 
 	//this is a ArrayList of ArrayLists of sorted lights per layer. this is filled in on map first load.
-	vector<ArrayList<sp<Light>>> sortedLightsLayers;
+	vector<vector<sp<Light>>> sortedLightsLayers;
 
 
 	//these are entities that exist in this map

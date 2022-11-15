@@ -69,7 +69,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	//these are thread safe variables but it's OK here because it's only on init
 	if (_chunkPNGFileExists == nullptr)
 	{
-		_chunkPNGFileExists = (new vector<bool>(chunksWidth * chunksHeight * 2));
+		_chunkPNGFileExists = ms<vector<bool>>(new vector<bool>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_chunkPNGFileExists)[i] = false;
@@ -78,7 +78,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (_hq2xChunkPNGFileExists == nullptr)
 	{
-		_hq2xChunkPNGFileExists = (new vector<bool>(chunksWidth * chunksHeight * 2));
+		_hq2xChunkPNGFileExists = ms<vector<bool>>(new vector<bool>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_hq2xChunkPNGFileExists)[i] = false;
@@ -87,7 +87,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (usingHQ2XTexture == nullptr)
 	{
-		usingHQ2XTexture = new vector<bool>(chunksWidth * chunksHeight * 2);
+		usingHQ2XTexture = ms<vector<bool>>(new vector<bool>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*usingHQ2XTexture)[i] = false;
@@ -101,7 +101,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	for (int i = 0; i < (int)mapData->getEventDataList()->size(); i++)
 	{
 		//create event, add to eventList
-		sp<EventData> eventData = mapData->getEventDataList()->get(i);
+		sp<EventData> eventData = mapData->getEventDataList()->at(i);
 
 
 		sp<Event> event = nullptr;
@@ -129,7 +129,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	{
 		//create door, add to doorList,
 
-		sp<DoorData> doorData = mapData->getDoorDataList()->get(i);
+		sp<DoorData> doorData = mapData->getDoorDataList()->at(i);
 		sp<Door> door = ms<Door>(getEngine(), doorData, this);
 
 
@@ -142,7 +142,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	for (int i = 0; i < (int)mapData->getStateDataList()->size(); i++)
 	{
-		sp<MapStateData> mapStateData = mapData->getStateDataList()->get(i);
+		sp<MapStateData> mapStateData = mapData->getStateDataList()->at(i);
 
 
 		//create state, add to state list.
@@ -153,7 +153,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 		for (int n = 0; n < (int)mapStateData->getAreaDataList()->size(); n++)
 		{
-			sp<AreaData> areaData = mapStateData->getAreaDataList()->get(n);
+			sp<AreaData> areaData = mapStateData->getAreaDataList()->at(n);
 
 			if (areaData->getIsWarpArea())
 			{
@@ -179,7 +179,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 		for (int n = 0; n < (int)mapStateData->getLightDataList()->size(); n++)
 		{
-			sp<LightData> lightData = mapStateData->getLightDataList()->get(n);
+			sp<LightData> lightData = mapStateData->getLightDataList()->at(n);
 			sp<Light> light = ms<Light>(getEngine(), lightData, this);
 
 
@@ -190,7 +190,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 		for (int n = 0; n < (int)mapStateData->getEntityDataList()->size(); n++)
 		{
-			sp<EntityData> entityData = mapStateData->getEntityDataList()->get(n);
+			sp<EntityData> entityData = mapStateData->getEntityDataList()->at(n);
 
 			if (entityData->getIsNPC())
 			{
@@ -499,7 +499,7 @@ sp<MapState> Map::getMapStateByID(int id)
 sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 { //=========================================================================================================================
 
-	sp<vector<string>> areaTYPEIDList = ms<ArrayList><string>();
+	sp<vector<string>> areaTYPEIDList;// = ms<ArrayList><string>();
 
 
 	//areas
@@ -511,12 +511,12 @@ sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->get(i);
+		sp<Area> a = areas->at(i);
 
 
 		if (a->randomPointOfInterestOrExit())
 		{
-			areaTYPEIDList->add(a->getTYPEIDString());
+			areaTYPEIDList->push_back(a->getTYPEIDString());
 		}
 	}
 
@@ -527,7 +527,7 @@ sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 		sp<Area> a = warpAreaList.at(i);
 		if (a->randomPointOfInterestOrExit())
 		{
-			areaTYPEIDList->add(a->getTYPEIDString());
+			areaTYPEIDList->push_back(a->getTYPEIDString());
 		}
 	}
 
@@ -538,7 +538,7 @@ sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 		sp<Door> d = doorList.at(i);
 		if (d->randomPointOfInterestOrExit())
 		{
-			areaTYPEIDList->add(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
+			areaTYPEIDList->push_back(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
 		}
 	}
 
@@ -622,7 +622,7 @@ void Map::update()
 				{
 					//int eventID = mapEventList.at(i);
 					sp<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
-					event->map = this;
+					event->map = shared_from_this();
 					if (event->getInitialized_S() == false)
 					{
 						eventsAllLoadedThisTime = false;
@@ -661,7 +661,7 @@ void Map::update()
 			for (int i = 0; i < mapEventList.size(); i++)
 			{
 				sp<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.at(i));
-				event->map = this;
+				event->map = shared_from_this();
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
 					getEventManager()->addToEventQueueIfNotThere(event);
@@ -696,7 +696,7 @@ void Map::update()
 	}
 
 
-	if (sortedLightsLayers.isEmpty())
+	if (sortedLightsLayers.empty())
 	{
 		sortLightLayers();
 	}
@@ -812,13 +812,13 @@ void Map::update()
 
 					if (tilesetIntArray != nullptr)
 					{
-						delete tilesetIntArray;
+						//delete tilesetIntArray;
 						tilesetIntArray = nullptr;
 					}
 
 					if (paletteRGBByteArray != nullptr)
 					{
-						delete paletteRGBByteArray;
+						//delete paletteRGBByteArray;
 						paletteRGBByteArray = nullptr;
 					}
 
@@ -847,13 +847,13 @@ void Map::update()
 		{
 			if (tilesetIntArray != nullptr)
 			{
-				delete tilesetIntArray;
+				//delete tilesetIntArray;
 				tilesetIntArray = nullptr;
 			}
 
 			if (paletteRGBByteArray != nullptr)
 			{
-				delete paletteRGBByteArray;
+				//delete paletteRGBByteArray;
 				paletteRGBByteArray = nullptr;
 			}
 
@@ -960,7 +960,7 @@ void Map::updateLoadingStatus()
 
 		if (generatingAreaNotification == nullptr)
 		{
-			generatingAreaNotification = ms<Notification>((static_cast<sp<BGClientEngine>>(getEngine())), "Loading Area...");
+			generatingAreaNotification = ms<Notification>(getEngine(), "Loading Area...");
 		}
 
 
@@ -1112,9 +1112,9 @@ void Map::zOrderEntities()
 	if (dynamic_cast<sp<BGClientEngine>>(getEngine()) != nullptr)
 	{
 		//add friends, they are not added to any entityList
-		for (int i = 0; i < (int)getClientGameEngine()->friendManager->friendCharacters->size(); i++)
+		for (int i = 0; i < (int)getClientGameEngine()->friendManager->friendCharacters.size(); i++)
 		{
-			sp<FriendCharacter> f = getFriendManager()->friendCharacters->get(i);
+			sp<FriendCharacter> f = getFriendManager()->friendCharacters.at(i);
 
 			if (f->mapName == getName())
 			{
@@ -1195,7 +1195,7 @@ void Map::sortLightLayers()
 		//if light is not drawn
 		if (l->sortingState != Light::DRAWN)
 		{
-			sp<vector<sp<Light>>> thisLayerList = ms<ArrayList><sp<Light>>();
+			sp<vector<sp<Light>>> thisLayerList;// = ms<ArrayList><sp<Light>>();
 
 			//light is drawing
 			l->sortingState = Light::DRAWING;
@@ -1249,7 +1249,7 @@ void Map::sortLightLayers()
 				sp<Light> drawLight = currentState->lightList.at(d);
 				if (drawLight->sortingState == Light::DRAWING)
 				{
-					thisLayerList->add(drawLight);
+					thisLayerList->push_back(drawLight);
 
 					//draw light
 					drawLight->sortingState = Light::DRAWN;
@@ -1258,7 +1258,7 @@ void Map::sortLightLayers()
 
 			//log.debug("Light layer "+layer);
 			//layer++;
-			sortedLightsLayers.push_back(thisLayerList);
+			sortedLightsLayers.push_back(thisLayerList.get());
 		}
 	}
 }
@@ -1619,7 +1619,7 @@ void Map::renderAreaActionIcons()
 	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->get(i);
+		sp<Area> a = areas->at(i);
 
 		//if(a.isAnAction)
 		a->renderActionIcon();
@@ -1762,10 +1762,10 @@ void Map::renderLightBoxes()
 	//light boxes
 	for (int i = 0; i < sortedLightsLayers.size(); i++)
 	{
-		sp<vector<sp<Light>>> thisLayer = sortedLightsLayers.get(i);
+		sp<vector<sp<Light>>> thisLayer = ms<vector<sp<Light>>>(sortedLightsLayers.at(i));
 		for (int n = 0; n < thisLayer->size(); n++)
 		{
-			thisLayer->get(n)->renderDebugBoxes();
+			thisLayer->at(n)->renderDebugBoxes();
 		}
 	}
 }
@@ -1787,7 +1787,7 @@ void Map::renderAreaDebugBoxes()
 	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->get(i);
+		sp<Area> a = areas->at(i);
 
 
 
@@ -1814,7 +1814,7 @@ void Map::renderAreaDebugInfo()
 	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
-		sp<Area> a = areas->get(i);
+		sp<Area> a = areas->at(i);
 
 
 		//a.renderDebugBoxes();
@@ -2113,7 +2113,7 @@ void Map::unloadLight(const string& s)
 	{
 		if (currentState->lightList.at(i)->getName() == s)
 		{
-			currentState->lightList.removeAt(i);
+			currentState->lightList.erase(currentState->lightList.begin()+i);
 			i--;
 			if (i < 0)
 			{
@@ -2126,11 +2126,11 @@ void Map::unloadLight(const string& s)
 
 	for (int i = 0; i < sortedLightsLayers.size(); i++)
 	{
-		for (int j = 0; j < (int)sortedLightsLayers.get(i)->size(); j++)
+		for (int j = 0; j < (int)sortedLightsLayers.at(i).size(); j++)
 		{
-			if (sortedLightsLayers.get(i)->get(j)->getName() == s)
+			if (sortedLightsLayers.at(i).at(j)->getName() == s)
 			{
-				sortedLightsLayers.get(i)->removeAt(j);
+				sortedLightsLayers.at(i).erase(sortedLightsLayers.at(i).begin()+j);
 				j--;
 				if (j < 0)
 				{
@@ -2152,7 +2152,7 @@ void Map::unloadMapEntity(const string& s)
 	{
 		if (currentState->entityList.at(i)->getName() == s)
 		{
-			currentState->entityList.removeAt(i);
+			currentState->entityList.erase(currentState->entityList.begin()+i);
 			i--;
 			if (i < 0)
 			{
@@ -2187,10 +2187,10 @@ void Map::releaseAllTextures()
 
 
 	//unload the utility layers
-	delete hitLayer;
-	delete cameraLayer;
-	delete groundShaderLayer;
-	delete lightMaskLayer;
+	//delete hitLayer;
+	//delete cameraLayer;
+	//delete groundShaderLayer;
+	//delete lightMaskLayer;
 	
 	hitLayer = nullptr;
 	cameraLayer = nullptr;
@@ -2209,7 +2209,7 @@ void Map::releaseAllTextures()
 	{
 		for (int i = 0; i < chunks->size(); i++)
 		{
-			sp<OKTexture>t = chunks->get(i);
+			sp<OKTexture>t = chunks->at(i);
 
 			if (t != nullptr)
 			{
@@ -2217,13 +2217,15 @@ void Map::releaseAllTextures()
 				if (t != GLUtils::blankTexture)
 				{
 					t->release();
-					delete t;
+					//delete t;
+					t = nullptr;
 				}
 				
 			}
 		}
 	}
-	delete chunks;
+	//delete chunks;
+	chunks = nullptr;
 
 	chunkTexture.clear();
 
@@ -2248,7 +2250,7 @@ void Map::releaseAllTextures()
 			(*usingHQ2XTexture)[i] = false;
 		}
 
-		delete usingHQ2XTexture;
+		//delete usingHQ2XTexture;
 		usingHQ2XTexture = nullptr;
 	}
 
@@ -2271,7 +2273,7 @@ void Map::releaseAllTextures()
 float Map::mapCamX()
 { //=========================================================================================================================
 	//centers the camera x and y on the screen and sets map cam to the upper left corner
-	if (this == getCurrentMap())
+	if (this == getCurrentMap().get())
 	{
 		return getCameraman()->getX() - (getEngine()->getWidthRelativeToZoom() / 2.0f); // divided by 2.0f because it is getting from the center to the upper left
 	}
@@ -2283,7 +2285,7 @@ float Map::mapCamX()
 
 float Map::mapCamY()
 { //=========================================================================================================================
-	if (this == getCurrentMap())
+	if (this == getCurrentMap().get())
 	{
 		return getCameraman()->getY() - (getEngine()->getHeightRelativeToZoom() / 2.0f);
 	}
@@ -2321,7 +2323,7 @@ float Map::getScreenX(float mapX, float width)
 	}
 
 
-	return screenXsp<PixelsHQ> zoom;
+	return screenXPixelsHQ * zoom;
 }
 
 float Map::getScreenY(float mapY, float height)
@@ -2352,12 +2354,12 @@ float Map::getScreenY(float mapY, float height)
 	}
 
 
-	return screenYsp<PixelsHQ> zoom;
+	return screenYPixelsHQ * zoom;
 }
 
 float Map::screenX()
 {
-	if (this == getCurrentMap())
+	if (this == getCurrentMap().get())
 	{
 		return 0 - mapCamX();
 	}
@@ -2369,7 +2371,7 @@ float Map::screenX()
 
 float Map::screenY()
 {
-	if (this == getCurrentMap())
+	if (this == getCurrentMap().get())
 	{
 		return 0 - mapCamY();
 	}
@@ -2600,7 +2602,8 @@ void Map::setChunkTexture(int index, sp<OKTexture> t)
 void Map::releaseChunkTexture(int index)
 { //=========================================================================================================================
 	chunkTexture.get(index)->release();
-	delete chunkTexture.get(index);
+	//delete chunkTexture.get(index);
+	chunkTexture.get(index) = nullptr;
 	chunkTexture.put(index, nullptr);
 }
 
@@ -2939,7 +2942,7 @@ bool Map::loadHQ2XTexturesFromCachePNGs()
 							if (t != GLUtils::blankTexture)
 							{
 								t->release();
-								delete t;
+								//delete t;
 								t = nullptr;
 							}
 							setChunkTexture(chunkIndex, nullptr);
@@ -3645,10 +3648,13 @@ void Map::createChunkTexturePNG_S(int chunkLayer, int chunkX, int chunkY, int ch
 		FileUtils::saveImage("" + FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "1x_padded" + "/" + to_string(chunkIndex), chunkImageBorder);
 	}
 
-	delete chunkImage;
-	delete chunkImageBorder;
-	delete layerChunkBuffer;
+	//delete chunkImage;
+	//delete chunkImageBorder;
+	//delete layerChunkBuffer;
 
+	chunkImage = nullptr;
+	chunkImageBorder = nullptr;
+	layerChunkBuffer = nullptr;
 
 }
 
@@ -3930,7 +3936,8 @@ bool Map::drawTileLayerIntoBufferedImage(const string& layerFileName, sp<Buffere
 							u8 blendedGreen = (u8)((shadowAlpha / 255.0f) * paletteG + (1.0f - (shadowAlpha / 255.0f)) * oldColor->gi());
 							u8 blendedBlue = (u8)((shadowAlpha / 255.0f) * paletteB + (1.0f - (shadowAlpha / 255.0f)) * oldColor->bi());
 
-							delete oldColor;
+							//delete oldColor;
+							oldColor = nullptr;
 
 							c = ms<OKColor>(blendedRed, blendedGreen, blendedBlue, alpha);
 						}
@@ -4068,7 +4075,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 	//dont need bottomandtop
 
-	delete bottomAndTop;
+	//delete bottomAndTop;
 	bottomAndTop = nullptr;
 
 	sp<BufferedImage> hq2xBottomAndTopCopy = ms<BufferedImage>(hq2xBottomAndTop->getWidth(), hq2xBottomAndTop->getHeight());
@@ -4173,11 +4180,11 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	FileUtils::saveImage(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(overChunkIndex), temp);
 
 	//don't need temp
-	delete temp;
+	//delete temp;
 	temp = nullptr;
 
 	//dont need hq2xBottomAndTop
-	delete hq2xBottomAndTop;
+	//delete hq2xBottomAndTop;
 	hq2xBottomAndTop = nullptr;
 
 
@@ -4194,11 +4201,11 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	setHQ2XAlphaFromOriginal(hq2xBottomAndTop, bottom);
 
 	//hq2x bottom
-	sp<BufferedImage> hq2xBottom = (new HQ2X())->hq2x(bottom);
+	sp<BufferedImage> hq2xBottom = ms<BufferedImage>(new HQ2X())->hq2x(bottom);
 
 
 	//dont need bottom
-	delete bottom;
+	//delete bottom;
 	bottom = nullptr;
 
 
@@ -4224,11 +4231,11 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 
 
 	//dont need top
-	delete top;
+	//delete top;
 	top = nullptr;
 
 	//dont need hq2xBottom
-	delete hq2xBottom;
+	//delete hq2xBottom;
 	hq2xBottom = nullptr;
 
 
@@ -4251,14 +4258,14 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	FileUtils::saveImage(FileUtils::cacheDir + "_" + getGroundLayerMD5() + "/" + "2x" + "/" + to_string(underChunkIndex), temp);
 
 	//don't need temp
-	delete temp;
+	//delete temp;
 	temp = nullptr;
 
 	//dont need hq2xBottomAndTop
-	delete hq2xBottomAndTop;
+	//delete hq2xBottomAndTop;
 	hq2xBottomAndTop = nullptr;
 
-	delete hq2xBottomAndTopCopy;
+	//delete hq2xBottomAndTopCopy;
 	hq2xBottomAndTopCopy = nullptr;
 
 
@@ -4283,9 +4290,9 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	underLayerTextureFile->deleteFile();
 	overLayerTextureFile->deleteFile();
 
-	delete underLayerTextureFile;
+	//delete underLayerTextureFile;
 	underLayerTextureFile = nullptr;
-	delete overLayerTextureFile;
+	//delete overLayerTextureFile;
 	overLayerTextureFile = nullptr;
 }
 
@@ -4411,7 +4418,7 @@ void Map::clearActiveEntityList()
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
 		sp<Entity> e = activeEntityList.at(i);
-		if ((dynamic_cast<sp<RandomCharacter>>(e) != NULL))
+		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
 		{
 			sp<RandomCharacter> r = static_cast<sp<RandomCharacter>>(e);
 			if (r->uniqueTexture != nullptr)
@@ -4467,9 +4474,9 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 		//find any characters
 		sp<Entity> e = activeEntityList.at(i);
 
-		if ((dynamic_cast<sp<RandomCharacter>>(e) != NULL))
+		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
 		{
-			sp<RandomCharacter> c = static_cast<sp<RandomCharacter>>(e);
+			sp<RandomCharacter> c = ms<RandomCharacter>(e.get());
 
 			if (x == c->targetX && y == c->targetY)
 			{
@@ -4484,7 +4491,7 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 { //=========================================================================================================================
 
-	sp<vector<int>> coords = ms<ArrayList><int>();
+	vector<int*> coords;// = new vector<int>();
 
 	for (int x = 1; x < a->getWidth() / 8; x++)
 	{
@@ -4493,14 +4500,14 @@ int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 			int* xy = new int[2];
 			xy[0] = x;
 			xy[1] = y;
-			coords->add(xy);
+			coords.push_back(xy);
 		}
 	}
 
-	while (coords->size() > 0)
+	while (coords.size() > 0)
 	{
-		int i = Math::randLessThan(coords->size());
-		int* xy = coords->get(i);
+		int i = Math::randLessThan(coords.size());
+		int* xy = coords.at(i);
 		int x = xy[0];
 		int y = xy[1];
 
@@ -4517,7 +4524,7 @@ int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 		}
 		else
 		{
-			coords->removeAt(i);
+			coords.erase(coords.begin()+i);
 		}
 	}
 	return nullptr;
@@ -4538,13 +4545,13 @@ bool Map::isAnyCharacterTouchingArea(sp<Area> a)
 				(
 					(
 						(
-							(dynamic_cast<sp<Character>>(e) != NULL)
+							(dynamic_cast<Character*>(e.get()) != NULL)
 							||
-							(dynamic_cast<sp<RandomCharacter>>(e) != NULL)
+							(dynamic_cast<RandomCharacter*>(e.get()) != NULL)
 						)
 					)
 					||
-					(dynamic_cast<sp<Player>>(e) != NULL)
+					(dynamic_cast<Player*>(e.get()) != NULL)
 				)
 				&&
 				a->isEntityHitBoxTouchingMyBoundary(e)
@@ -4581,10 +4588,10 @@ bool Map::isAnyEntityTouchingArea(sp<Area> a)
 	return false;
 }
 
-vector<sp<Entity>> Map::getAllEntitiesTouchingArea(sp<Area> a)
+sp<vector<sp<Entity>>> Map::getAllEntitiesTouchingArea(sp<Area> a)
 { //=========================================================================================================================
 
-	vector<sp<Entity>> entitiesInArea;// = ms<ArrayList><sp<Entity>>();
+	sp<vector<sp<Entity>>> entitiesInArea;// = ms<ArrayList><sp<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
@@ -4593,17 +4600,17 @@ vector<sp<Entity>> Map::getAllEntitiesTouchingArea(sp<Area> a)
 
 		if (a->isEntityHitBoxTouchingMyBoundary(e))
 		{
-			entitiesInArea.push_back(e);
+			entitiesInArea->push_back(e);
 		}
 	}
 
 	return entitiesInArea;
 }
 
-vector<sp<Entity>> Map::getAllEntitiesPlayerIsTouching()
+sp<vector<sp<Entity>>> Map::getAllEntitiesPlayerIsTouching()
 { //=========================================================================================================================
 
-	vector<sp<Entity>> entitiesTouching;// = ms<ArrayList><sp<Entity>>();
+	sp<vector<sp<Entity>>> entitiesTouching;// = ms<ArrayList><sp<Entity>>();
 
 
 	for (int i = 0; i < activeEntityList.size(); i++)
@@ -4612,7 +4619,7 @@ vector<sp<Entity>> Map::getAllEntitiesPlayerIsTouching()
 
 		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e))
 		{
-			entitiesTouching.push_back(e);
+			entitiesTouching->push_back(e);
 		}
 	}
 
@@ -4649,10 +4656,10 @@ bool Map::isAnyEntityUsingSpriteAsset(sp<Sprite> s)
 	return false;
 }
 
-vector<sp<Entity>> Map::getAllEntitiesUsingSpriteAsset(sp<Sprite> s)
+sp<vector<sp<Entity>>> Map::getAllEntitiesUsingSpriteAsset(sp<Sprite> s)
 { //=========================================================================================================================
 
-	vector<sp<Entity>> entitiesUsingSprite;// = ms<vector><sp<Entity>>();
+	sp<vector<sp<Entity>>> entitiesUsingSprite;// = ms<vector><sp<Entity>>();
 
 	for (int i = 0; i < activeEntityList.size(); i++)
 	{
@@ -4660,7 +4667,7 @@ vector<sp<Entity>> Map::getAllEntitiesUsingSpriteAsset(sp<Sprite> s)
 
 		if (e->sprite == s)
 		{
-			entitiesUsingSprite.push_back(e);
+			entitiesUsingSprite->push_back(e);
 		}
 	}
 
@@ -4711,7 +4718,7 @@ sp<Entity> Map::createEntityIfWithinRangeElseDelete_MUST_USE_RETURNVAL(sp<Entity
 		if (e != nullptr)
 		{
 			e->deleteFromMapEntityListAndReleaseTexture();
-			delete e;
+			//delete e;
 			e = nullptr;
 		}
 		return nullptr;

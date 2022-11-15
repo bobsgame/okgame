@@ -194,7 +194,7 @@ public:
 	static float ZOOMINCREMENT;
 
 
-	static ArrayList<sp<GameController>> gameControllers;// = ms<ArrayList><sp<GameController>>();
+	static vector<sp<GameController>> gameControllers;// = ms<ArrayList><sp<GameController>>();
 
 
 	//------------------------------------
@@ -616,7 +616,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.at(i);
 			if (g->start_Pressed())return true;
 		}
 		return false;
@@ -631,7 +631,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.at(i);
 			if (g->select_Pressed())return true;
 		}
 		return false;
@@ -644,7 +644,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.at(i);
 			if (g->b_Pressed())return true;
 		}
 		return false;
@@ -658,7 +658,7 @@ public:
 
 		for (int i = 0; i < gameControllers.size(); i++)
 		{
-			sp<GameController>g = gameControllers.get(i);
+			sp<GameController>g = gameControllers.at(i);
 			if (g->a_Pressed())return true;
 		}
 		return false;

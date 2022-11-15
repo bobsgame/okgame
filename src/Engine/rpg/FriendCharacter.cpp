@@ -345,7 +345,7 @@ void FriendCharacter::incomingGameChallengeRequest(string e)//sp<MessageEvent> e
 
 
 		//open dialog window with friendname, game name
-		this->gameChallengeNotification = getGUIManager()->makeGameChallengeNotification(this, gameName);
+		this->gameChallengeNotification = getGUIManager()->makeGameChallengeNotification(shared_from_this(), gameName);
 	}
 	else
 	{

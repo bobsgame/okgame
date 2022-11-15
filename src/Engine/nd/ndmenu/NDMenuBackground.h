@@ -15,7 +15,7 @@ class Logger;
 #include "../../state/GlowTileBackgroundMenuPanel.h"
 
 
-class NDMenuBackground : public GlowTileBackgroundMenuPanel
+class NDMenuBackground : public GlowTileBackgroundMenuPanel, public std::enable_shared_from_this<NDMenuBackground>
 {
 public:
 

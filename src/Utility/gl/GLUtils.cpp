@@ -73,9 +73,9 @@ sp<OKTexture> GLUtils::rect = nullptr;
 //static float* colBuffer = BufferUtils.newFloatBuffer(16);
 //static float* texBuffer = BufferUtils.newFloatBuffer(8);
 
-sp<GLfloat> GLUtils::box = nullptr;
-sp<GLfloat> GLUtils::col = nullptr;
-sp<GLfloat> GLUtils::tex = nullptr;
+GLfloat GLUtils::box[12];// = nullptr;
+GLfloat GLUtils::col[16];// = nullptr;
+GLfloat GLUtils::tex[8];// = nullptr;
 
 int GLUtils::windowWidth = 0;
 int GLUtils::windowHeight = 0;
@@ -935,7 +935,7 @@ void GLUtils::initGL(char* windowName)
 				int p = GLUtils::createProgramObject();
 				//log.debug("createProgramObject bg " + to_string(p));
 				e("createProgramObject");
-				bgShaders.add(ms<Integer>(p));
+				bgShaders.push_back(ms<Integer>(p));
 			}
 
 			int count = 0;
@@ -949,11 +949,11 @@ void GLUtils::initGL(char* windowName)
 					name = "0" + name;
 				}
 
-				if (GLUtils::makeShader(name, bgShaders.get(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
+				if (GLUtils::makeShader(name, bgShaders.at(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
 				{
 					log.error("Could not make bg shader "+name);
 					bgShaderCount--;
-					bgShaders.removeAt(i);
+					bgShaders.erase(bgShaders.begin()+i);
 					i--;
 				}
 
@@ -1195,7 +1195,7 @@ SDL_DisplayMode GLUtils::getCurrentDisplayMode()
 sp<vector<sp<SDL_DisplayMode>>> GLUtils::getAvailableDisplayModes()
 {//=========================================================================================================================
 
-	if (displayModes.size() > 0)return displayModes;
+	if (displayModes.size() > 0)return ms<vector<sp<SDL_DisplayMode>>>(&displayModes);
 	int displayCount = 0;
 
 	displayCount = SDL_GetNumVideoDisplays();
@@ -1207,20 +1207,20 @@ sp<vector<sp<SDL_DisplayMode>>> GLUtils::getAvailableDisplayModes()
 		int numDisplayModes = SDL_GetNumDisplayModes(d);
 		for (int m = 0; m < numDisplayModes; m++)
 		{
-			sp<SDL_DisplayMode*> mode = new SDL_DisplayMode();
+			sp<SDL_DisplayMode> mode = ms<SDL_DisplayMode>(SDL_DisplayMode());
 
-			if (SDL_GetDisplayMode(d, m, mode) != 0)
+			if (SDL_GetDisplayMode(d, m, mode.get()) != 0)
 				SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
 
 			SDL_Log("SDL_GetDisplayMode:\t\t%i bpp\t%i x %i",
 				SDL_BITSPERPIXEL(mode->format), mode->w, mode->h);
 
-			displayModes.add(mode);
+			displayModes.push_back(mode);
 		}
 	}
 	checkSDLError("getAvailableDisplayModes");
 
-	return displayModes;
+	return ms<vector<sp<SDL_DisplayMode>>>(&displayModes);
 }
 
 //=========================================================================================================================
@@ -1238,7 +1238,7 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 	//	try
 	//	{
-	sp<SDL_DisplayMode*> targetDisplayMode = nullptr;
+	sp<SDL_DisplayMode> targetDisplayMode = nullptr;
 
 	sp<vector<sp<SDL_DisplayMode>>> modes = getAvailableDisplayModes();
 
@@ -1247,9 +1247,9 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 
 		int freq = 0;
-		for (int i = 0; i < modes.size(); i++)
+		for (int i = 0; i < modes->size(); i++)
 		{
-			sp<SDL_DisplayMode*> m = modes.get(i);
+			sp<SDL_DisplayMode> m = modes->at(i);
 
 			if ((m->w == width) && (m->h == height))
 			{
@@ -1282,9 +1282,9 @@ void GLUtils::setFullscreenCompatibleDisplayMode(int width, int height, bool ful
 
 
 
-	for (int i = 0; i < modes.size(); i++)
+	for (int i = 0; i < modes->size(); i++)
 	{
-		sp<SDL_DisplayMode*> m = modes.get(i);
+		sp<SDL_DisplayMode> m = modes->at(i);
 
 		log.info(to_string(m->w) + "x" + to_string(m->h) + " BPP: " + to_string(SDL_BITSPERPIXEL(m->format)));// +" Frequency: " + to_string(m->getFrequency()) + "Hz");
 	}
@@ -1753,8 +1753,8 @@ void GLUtils::toggleFullscreen()
 	
 	fullscreen = !fullscreen;
 
-	if (fullscreen)SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-	else SDL_SetWindowFullscreen(window, 0);
+	if (fullscreen)SDL_SetWindowFullscreen(window.get(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else SDL_SetWindowFullscreen(window.get(), 0);
 
 	doResize();
 }
@@ -1809,13 +1809,13 @@ void GLUtils::setPreColorFilterViewport()
 void GLUtils::setOKGameMainFBOFilterViewport()
 { //=========================================================================================================================
 
-	glViewport(0, 0, (int)(bobsGameFBO_sp<Width> FBO_SCALE), (int)(bobsGameFBO_sp<Height> FBO_SCALE));
+	glViewport(0, 0, (int)(bobsGameFBO_Width * FBO_SCALE), (int)(bobsGameFBO_Height * FBO_SCALE));
 	glLoadIdentity();
-	glOrtho(0, bobsGameFBO_sp<Width> FBO_SCALE, bobsGameFBO_sp<Height> FBO_SCALE, 0, -1, 1);
+	glOrtho(0, bobsGameFBO_Width * FBO_SCALE, bobsGameFBO_Height * FBO_SCALE, 0, -1, 1);
 }
 void GLUtils::setBloomViewport()
 { //=========================================================================================================================
-	glViewport(0, 0, (int)(bobsGameFBO_sp<Width> FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_sp<Height> FBO_SCALE * BLOOM_FBO_SCALE));
+	glViewport(0, 0, (int)(bobsGameFBO_Width * FBO_SCALE * BLOOM_FBO_SCALE), (int)(bobsGameFBO_Height * FBO_SCALE * BLOOM_FBO_SCALE));
 	glLoadIdentity();
 	glOrtho(-1, 1, -1, 1, -1, 1);
 }
@@ -1883,7 +1883,7 @@ void GLUtils::doResize()
 
 	int w;
 	int h;
-	SDL_GL_GetDrawableSize(window, &w, &h);
+	SDL_GL_GetDrawableSize(window.get(), &w, &h);
 
 	windowWidth = w;
 	windowHeight = h;
@@ -2254,9 +2254,12 @@ void GLUtils::drawTexture(float textureX0, float textureX1, float textureY0, flo
 		return;
 	}
 
-	if (box == nullptr)box = ms<GLfloat>[12];
-	if (col == nullptr)col = ms<GLfloat>[16];
-	if (tex == nullptr)tex = ms<GLfloat>[8];
+
+
+
+	//if (box == nullptr)box = ms<GLfloat>(box)[12];
+	//if (col == nullptr)col = ms<GLfloat>[16];
+	//if (tex == nullptr)tex = ms<GLfloat>[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -2403,8 +2406,8 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	SDL_Color textSDLColor = { (Uint8)color->ri() ,(Uint8)color->gi(),(Uint8)color->bi(),(Uint8)color->ai() };
 	//SDL_Color bgSDLColor = { 0,0,0,0 };
 
-	sp<TTF_Font*> ttfFont = OKFont::ttf_8;
-	sp<TTF_Font*> outlineFont = OKFont::ttf_outline_8;
+	sp<TTF_Font> ttfFont = OKFont::ttf_8;
+	sp<TTF_Font> outlineFont = OKFont::ttf_outline_8;
 
 	int OUTLINE_SIZE = 1;
 	// render text and text outline 
@@ -2413,14 +2416,14 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	outlineOKColor.darker();
 	outlineOKColor.darker();
 	SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
-	sp<SDL_Surface*> surface = TTF_RenderText_Blended(outlineFont, text.c_str(), outlineColor);
-	sp<SDL_Surface*> fg_surface = TTF_RenderText_Blended(ttfFont, text.c_str(), textSDLColor);
+	sp<SDL_Surface> surface = ms<SDL_Surface>(TTF_RenderText_Blended(outlineFont.get(), text.c_str(), outlineColor));
+	sp<SDL_Surface> fg_surface = ms<SDL_Surface>(TTF_RenderText_Blended(ttfFont.get(), text.c_str(), textSDLColor));
 	SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 	// blit text onto its outline 
-	SDL_SetSurfaceBlendMode(fg_surface, SDL_BLENDMODE_BLEND);
-	SDL_BlitSurface(fg_surface, NULL, surface, &rect);
-	SDL_FreeSurface(fg_surface);
+	SDL_SetSurfaceBlendMode(fg_surface.get(), SDL_BLENDMODE_BLEND);
+	SDL_BlitSurface(fg_surface.get(), NULL, surface.get(), &rect);
+	SDL_FreeSurface(fg_surface.get());
 
 	if (surface == NULL || surface == nullptr)
 	{
@@ -2431,7 +2434,8 @@ void GLUtils::drawOutlinedString(const string& text, float screenX0, float scree
 	int height = fg_surface->h + OUTLINE_SIZE * 2;
 
 	sp<OKTexture> texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
-	SDL_FreeSurface(surface);
+	SDL_FreeSurface(surface.get());
+	surface = nullptr;
 
 	int texWidth = texture->getTextureWidth();
 	int texHeight = texture->getTextureHeight();
@@ -2818,9 +2822,9 @@ void GLUtils::drawFilledRect(int ri, int gi, int bi, float screenX0, float scree
 		return;
 	}
 
-	if (box == nullptr)box = ms<GLfloat>[12];
-	if (col == nullptr)col = ms<GLfloat>[16];
-	if (tex == nullptr)tex = ms<GLfloat>[8];
+	//if (box == nullptr)box = ms<GLfloat>[12];
+	//if (col == nullptr)col = ms<GLfloat>[16];
+	//if (tex == nullptr)tex = ms<GLfloat>[8];
 
 	box[0] = screenX0;
 	box[1] = screenY0;
@@ -3153,10 +3157,10 @@ void GLUtils::old_render()
 
 
 //===========================================================================================================================
-sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> surfacein)
+sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> surfacein)
 {//===========================================================================================================================
 
-	sp<SDL_Surface*> surface = surfacein;
+	sp<SDL_Surface> surface = surfacein;
 
 	glEnable(GL_TEXTURE_2D);
 
@@ -3191,7 +3195,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> 
 	tex->setAlpha(hasAlpha);
 
 
-	sp<GLint> maxTexSizeArray = ms<GLint>[16];
+	GLint maxTexSizeArray[16];// = ms<GLint>[16];
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTexSizeArray);
 	int max = maxTexSizeArray[0];
 	if ((texWidth > max) || (texHeight > max))
@@ -3199,6 +3203,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> 
 		log.error("Allocating a texture too big for the current hardware");
 	}
 	delete[] maxTexSizeArray;
+	//maxTexSizeArray = nullptr;
 	//int srcPixelFormat = hasAlpha ? GL_RGBA : GL_RGB;
 
 
@@ -3212,7 +3217,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> 
 		//freeTemp = true;
 
 		//blit from bitmap to a temporary surface with 32 bits per pixel
-		temp = SDL_CreateRGBSurface(SDL_SWSURFACE, texWidth, texHeight, 32, rmask, gmask, bmask, amask);
+		temp = ms<SDL_Surface>(SDL_CreateRGBSurface(SDL_SWSURFACE, texWidth, texHeight, 32, rmask, gmask, bmask, amask));
 
 		SDL_Rect srcArea;
 		srcArea.x = 0;
@@ -3220,7 +3225,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> 
 		srcArea.w = imageWidth;
 		srcArea.h = imageHeight;
 
-		SDL_BlitSurface(surface, &srcArea, temp, NULL);
+		SDL_BlitSurface(surface.get(), &srcArea, temp.get(), NULL);
 
 		surface = temp;
 	}
@@ -3229,8 +3234,8 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> 
 	GLUtils::setDefaultTextureParams();
 
 
-	if (SDL_MUSTLOCK(surface))
-		SDL_LockSurface(surface);
+	if (SDL_MUSTLOCK(surface.get()))
+		SDL_LockSurface(surface.get());
 
 	/*
 	void glTexImage2D(GLenum target,
@@ -3248,8 +3253,8 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> 
 	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
 
 
-	if (SDL_MUSTLOCK(surface))
-		SDL_UnlockSurface(surface);
+	if (SDL_MUSTLOCK(surface.get()))
+		SDL_UnlockSurface(surface.get());
 
 	//tex->setCacheName(filename);
 	textureCache.put(filename, tex);
@@ -3260,8 +3265,8 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface*> 
 
 	//free temporary surface
 	//if(freeTemp)
-		SDL_FreeSurface(temp);
-
+		SDL_FreeSurface(temp.get());
+		temp = nullptr;
 
 	return tex;
 
@@ -3391,7 +3396,8 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 	GLint border = 0;
 	glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, texWidth, texHeight, border, GL_RGBA, GL_UNSIGNED_BYTE, data->data());
 
-	delete t;
+	//delete t;
+	t = nullptr;
 
 
 	//tex->setCacheName(textureName);
@@ -3439,7 +3445,7 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 
-	sp<SDL_Surface> imageSurface = IMG_Load(filename.c_str());
+	sp<SDL_Surface> imageSurface = ms< SDL_Surface>(IMG_Load(filename.c_str()));
 	//sp<SDL_Surface> imageSurface = STBIMG_Load(filename.c_str());
 	if (imageSurface == NULL)
 	{
@@ -3534,7 +3540,7 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 	delete[] t;
 
 	//log.info("SDL_FreeSurface");
-	SDL_FreeSurface(imageSurface);
+	SDL_FreeSurface(imageSurface.get());
 
 
 
@@ -3731,7 +3737,7 @@ void GLUtils::gl_draw_flipped(GLuint textureid, float x, float y, float w, float
 }
 
 //===========================================================================================================================
-void GLUtils::draw_sprite(SPRITE* s)
+void GLUtils::draw_sprite(sp<SPRITE> s)
 {//===========================================================================================================================
 	GLuint texid = s->texture_id;
 	float x = s->screen_x * ZOOM;

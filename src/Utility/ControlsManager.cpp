@@ -133,7 +133,7 @@ ControlsManager::ControlsManager()
 void ControlsManager::initControllers()
 { //=========================================================================================================================
 
-	log->debug("Init controllers");
+	log.debug("Init controllers");
 
 
 	Uint64 start=0, now=0;
@@ -152,12 +152,12 @@ void ControlsManager::initControllers()
 	//   }
 	//
 	//   numControllers = Controllers::getControllerCount();
-	//   log->info(to_string(numControllers) + " Controllers Found");
+	//   log.info(to_string(numControllers) + " Controllers Found");
 	//
 	//   for (int n = 0; n < numControllers; n++)
 	//   {
 	//      sp<Controller> controller = Controllers::getController(n);
-	//      log->info(controller->getName());
+	//      log.info(controller->getName());
 	//
 	//      if (controllerNames.length() > 0)
 	//      {
@@ -189,31 +189,31 @@ void ControlsManager::initControllers()
 	{
 		if (SDL_IsGameController(i))
 		{
-			sp<SDL_GameController >controller = SDL_GameControllerOpen(i);
+			sp<SDL_GameController >controller = ms<SDL_GameController>(SDL_GameControllerOpen(i));
 			//controllersByJoystickNum->put(i, controller);
 
-			log->info("Found Controller " + to_string(i) + ": " + string(SDL_GameControllerName(controller)));
-			sp<SDL_Joystick >joy = SDL_GameControllerGetJoystick(controller);
+			log.info("Found Controller " + to_string(i) + ": " + string(SDL_GameControllerName(controller.get())));
+			sp<SDL_Joystick>joy = ms<SDL_Joystick>(SDL_GameControllerGetJoystick(controller.get()));
 
-			log->info("Found Joystick on Controller: " + string(SDL_JoystickName(joy)));
+			log.info("Found Joystick on Controller: " + string(SDL_JoystickName(joy.get())));
 
-			SDL_JoystickID id = SDL_JoystickInstanceID(joy);
+			SDL_JoystickID id = SDL_JoystickInstanceID(joy.get());
 			controllersByJoystickID.put(id, controller);
 
 
 			sp<GameController> g = ms<GameController>();
 			g->id = id;
 
-			gameControllers.add(g);
+			gameControllers.push_back(g);
 
 			sp<SDL_Haptic >haptic = nullptr;
-			haptic = SDL_HapticOpenFromJoystick(joy);
+			haptic = ms<SDL_Haptic>(SDL_HapticOpenFromJoystick(joy.get()));
 			if (haptic != NULL)
 			{
-				log->info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
+				log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy.get())));
 				g->haptic = haptic;
 
-				SDL_HapticRumbleInit(haptic);
+				SDL_HapticRumbleInit(haptic.get());
 
 
 //				// See if it can do sine waves
@@ -228,22 +228,22 @@ void ControlsManager::initControllers()
 			
 			
 
-			char* mapping = SDL_GameControllerMapping(controller);
-			log->info("Controller " + to_string(i) + " is mapped as " + string(mapping));
+			char* mapping = SDL_GameControllerMapping(controller.get());
+			log.info("Controller " + to_string(i) + " is mapped as " + string(mapping));
 
 		}
 		else
 		{
-			log->error("Found a controller device but it is not compatible.");
+			log.error("Found a controller device but it is not compatible.");
 		}
 
 	}
 	SDL_JoystickEventState(SDL_ENABLE);
 
-	//log->debug("Controllers Loaded.");
+	//log.debug("Controllers Loaded.");
 
 	now = SDL_GetPerformanceCounter();
-	log->debug("Init controllers took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+	log.debug("Init controllers took " + to_string((double)((now - start) * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 
 
 	//string path = string(SDL_GetPrefPath("OK Corporation", "bob's game")) + "controls.cfg";
@@ -255,13 +255,13 @@ void ControlsManager::initControllers()
 void ControlsManager::cleanup()
 {//==========================================================================================================================
 
-	log->info("Cleaning up controllers");
+	log.info("Cleaning up controllers");
 
 	for(int i=0;i<gameControllers.size();i++)
 	{
-		if(gameControllers.get(i)->haptic!=nullptr)
+		if(gameControllers.at(i)->haptic!=nullptr)
 		{
-			SDL_HapticClose(gameControllers.get(i)->haptic);
+			SDL_HapticClose(gameControllers.at(i)->haptic.get());
 		}
 	}
 
@@ -271,10 +271,11 @@ void ControlsManager::cleanup()
 
 		for (int i = 0; i < controllers->size(); i++)
 		{
-			sp<SDL_GameController >controller = controllers->get(i);
-			SDL_GameControllerClose(controller);
+			sp<SDL_GameController >controller = controllers->at(i);
+			SDL_GameControllerClose(controller.get());
 		}
-		delete controllers;
+		//delete controllers;
+		controllers = nullptr;
 	}
 	//controllersByJoystickNum->clear();
 	controllersByJoystickID.clear();
@@ -978,14 +979,14 @@ SDL_JoyHatEvent
 //	//doesn't work
 //	{
 //		int value = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
-//		//log->debug("Controller " + to_string(i) + " Axis X Value: "+to_string(value));
-//		if (value >= 20000) { CONTROLLER1_ANALOGLEFT_HELD = true; log->debug("left held"); }
-//		else if (value <= -20000) { CONTROLLER1_ANALOGRIGHT_HELD = true; log->debug("right held"); }
+//		//log.debug("Controller " + to_string(i) + " Axis X Value: "+to_string(value));
+//		if (value >= 20000) { CONTROLLER1_ANALOGLEFT_HELD = true; log.debug("left held"); }
+//		else if (value <= -20000) { CONTROLLER1_ANALOGRIGHT_HELD = true; log.debug("right held"); }
 //		else if (value <= 20000 && value >= -20000) { CONTROLLER1_ANALOGLEFT_HELD = false; CONTROLLER1_ANALOGRIGHT_HELD = false; }
 //
 //		value = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
-//		if (value >= 20000) { CONTROLLER1_ANALOGUP_HELD = true; log->debug("up held"); }
-//		else if (value <= -20000) { CONTROLLER1_ANALOGDOWN_HELD = true; log->debug("down held"); }
+//		if (value >= 20000) { CONTROLLER1_ANALOGUP_HELD = true; log.debug("up held"); }
+//		else if (value <= -20000) { CONTROLLER1_ANALOGDOWN_HELD = true; log.debug("down held"); }
 //		else if (value <= 20000 && value >= -20000) { CONTROLLER1_ANALOGUP_HELD = false; CONTROLLER1_ANALOGDOWN_HELD = false; }
 //	}
 //
@@ -1017,16 +1018,16 @@ SDL_JoyHatEvent
 //		if (leftX)
 //		{
 //			int value = SDL_JoystickGetAxis(joy, a);
-//			//log->debug(to_string(value));
-//			if (value >= 20000) { CONTROLLER1_ANALOGLEFT_HELD = true; log->debug("left held"); }
-//			else if (value <= -20000) { CONTROLLER1_ANALOGRIGHT_HELD = true; log->debug("right held"); }
+//			//log.debug(to_string(value));
+//			if (value >= 20000) { CONTROLLER1_ANALOGLEFT_HELD = true; log.debug("left held"); }
+//			else if (value <= -20000) { CONTROLLER1_ANALOGRIGHT_HELD = true; log.debug("right held"); }
 //			else if (value <= 20000 && value >= -20000) { CONTROLLER1_ANALOGLEFT_HELD = false; CONTROLLER1_ANALOGRIGHT_HELD = false; }
 //		}
 //		if (leftY)
 //		{
 //			int value = SDL_JoystickGetAxis(joy, a);
-//			if (value >= 20000) { CONTROLLER1_ANALOGUP_HELD = true; log->debug("up held"); }
-//			else if (value <= -20000) { CONTROLLER1_ANALOGDOWN_HELD = true; log->debug("down held"); }
+//			if (value >= 20000) { CONTROLLER1_ANALOGUP_HELD = true; log.debug("up held"); }
+//			else if (value <= -20000) { CONTROLLER1_ANALOGDOWN_HELD = true; log.debug("down held"); }
 //			else if (value <= 20000 && value >= -20000) { CONTROLLER1_ANALOGUP_HELD = false; CONTROLLER1_ANALOGDOWN_HELD = false; }
 //		}
 //
@@ -1054,16 +1055,16 @@ SDL_JoyHatEvent
 				if (controllersByJoystickID.containsValue(controller) == false)
 				{
 					//controllersByJoystickNum->put(i,controller);
-					log->debug("New Controller Connected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
+					log.debug("New Controller Connected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
 				}
 				else
 				{
-					log->debug("Existing Controller Reconnected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
+					log.debug("Existing Controller Reconnected: " + to_string(joystickDeviceIndex) + ": " + string(SDL_GameControllerName(controller)));
 				}
 
 				controllersByJoystickID.removeAllValues(controller);
 				controllersByJoystickID.put(joystickID, controller);
-				log->debug("Found Joystick on Controller: " + string(SDL_JoystickName(joy)));
+				log.debug("Found Joystick on Controller: " + string(SDL_JoystickName(joy)));
 
 				for (int n = 0; n < gameControllers.size(); n++)
 				{
@@ -1085,7 +1086,7 @@ SDL_JoyHatEvent
 				haptic = SDL_HapticOpenFromJoystick(joy);
 				if (haptic != NULL)
 				{
-					log->info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
+					log.info("Found Haptic on Controller: " + string(SDL_JoystickName(joy)));
 					g->haptic = haptic;
 
 					SDL_HapticRumbleInit(haptic);
@@ -1100,7 +1101,7 @@ SDL_JoyHatEvent
 				}
 
 				char* mapping = SDL_GameControllerMapping(controller);
-				log->debug("Controller " + to_string(joystickDeviceIndex) + " is mapped as " + string(mapping));
+				log.debug("Controller " + to_string(joystickDeviceIndex) + " is mapped as " + string(mapping));
 
 			}
 
@@ -1128,7 +1129,7 @@ SDL_JoyHatEvent
 
 				SDL_GameControllerClose(controller);
 
-				log->debug("Controller Removed: " + string(SDL_GameControllerName(controller)));
+				log.debug("Controller Removed: " + string(SDL_GameControllerName(controller)));
 
 
 			 }
@@ -1162,7 +1163,7 @@ SDL_JoyHatEvent
 					if (b == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_RIGHT");
 					s += (" Value:" + to_string(value));
 #ifdef _DEBUG
-					log->debug(s);
+					log.debug(s);
 #endif
 		
 					for (int i = 0; i < gameControllers.size(); i++)
@@ -1177,8 +1178,8 @@ SDL_JoyHatEvent
 							if (b == SDL_CONTROLLER_BUTTON_BACK)g->SELECT_HELD = true;
 							if (b == SDL_CONTROLLER_BUTTON_GUIDE)g->START_HELD = true;
 							if (b == SDL_CONTROLLER_BUTTON_START)g->START_HELD = true;
-							//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log->debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
-							//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log->debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
+							//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log.debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
+							//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log.debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
 							if (b == SDL_CONTROLLER_BUTTON_LEFTSHOULDER)g->L_HELD = true;
 							if (b == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)g->R_HELD = true;
 							if (b == SDL_CONTROLLER_BUTTON_DPAD_UP)g->UP_HELD = true;
@@ -1221,7 +1222,7 @@ SDL_JoyHatEvent
 					if (b == SDL_CONTROLLER_BUTTON_DPAD_RIGHT)s += (" Button: SDL_CONTROLLER_BUTTON_DPAD_RIGHT");
 					s += (" Value:" + to_string(value));
 #ifdef _DEBUG
-					log->debug(s);
+					log.debug(s);
 #endif
 					for (int i = 0; i < gameControllers.size(); i++)
 					{
@@ -1235,8 +1236,8 @@ SDL_JoyHatEvent
 							if (b == SDL_CONTROLLER_BUTTON_BACK)g->SELECT_HELD = false;
 							if (b == SDL_CONTROLLER_BUTTON_GUIDE)g->START_HELD = false;
 							if (b == SDL_CONTROLLER_BUTTON_START)g->START_HELD = false;
-							//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log->debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
-							//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log->debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
+							//if (b == SDL_CONTROLLER_BUTTON_LEFTSTICK)log.debug("SDL_CONTROLLER_BUTTON_LEFTSTICK");
+							//if (b == SDL_CONTROLLER_BUTTON_RIGHTSTICK)log.debug("SDL_CONTROLLER_BUTTON_RIGHTSTICK");
 							if (b == SDL_CONTROLLER_BUTTON_LEFTSHOULDER)g->L_HELD = false;
 							if (b == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)g->R_HELD = false;
 							if (b == SDL_CONTROLLER_BUTTON_DPAD_UP)g->UP_HELD = false;
@@ -1276,10 +1277,10 @@ SDL_JoyHatEvent
 						if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)s += (" Axis: SDL_CONTROLLER_AXIS_TRIGGERRIGHT");
 						s += " Value:" + to_string(value);
 
-						log->debug(s);
-						//log->debug("SDL_GameControllerGetStringForAxis:" + string(SDL_GameControllerGetStringForAxis(axis)));
+						log.debug(s);
+						//log.debug("SDL_GameControllerGetStringForAxis:" + string(SDL_GameControllerGetStringForAxis(axis)));
 						//SDL_GameControllerButtonBind bind = SDL_GameControllerGetBindForAxis(controller, axis);
-						//if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS)log->debug("Axis #:"+to_string(bind.value.axis));
+						//if (bind.bindType == SDL_CONTROLLER_BINDTYPE_AXIS)log.debug("Axis #:"+to_string(bind.value.axis));
 #endif
 
 						int dz = 32000;
@@ -1294,10 +1295,10 @@ SDL_JoyHatEvent
 								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value >= dz)g->R_HELD = true;
 								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)g->R_HELD = false;
 #ifdef _DEBUG
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value>= dz)log->debug("Controller Axis Event: Left trigger held " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)log->debug("Controller Axis Event: Left trigger released " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value>= dz)log->debug("Controller Axis Event: Right trigger held " + to_string(value));
-								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)log->debug("Controller Axis Event: Right trigger released " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value>= dz)log.debug("Controller Axis Event: Left trigger held " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT&&value < 100)log.debug("Controller Axis Event: Left trigger released " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value>= dz)log.debug("Controller Axis Event: Right trigger held " + to_string(value));
+								if (axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT&&value < 100)log.debug("Controller Axis Event: Right trigger released " + to_string(value));
 #endif
 							}
 						}
@@ -1317,15 +1318,15 @@ SDL_JoyHatEvent
 									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)g->ANALOGUP_HELD = true;
 									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)g->ANALOGDOWN_HELD = true;
 	#ifdef _DEBUG
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)log->debug("Controller Axis Event: Left held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)log->debug("Controller Axis Event: Right held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)log->debug("Controller Axis Event: Up held " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)log->debug("Controller Axis Event: Down held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < -dz)log.debug("Controller Axis Event: Left held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > dz)log.debug("Controller Axis Event: Right held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < -dz)log.debug("Controller Axis Event: Up held " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > dz)log.debug("Controller Axis Event: Down held " + to_string(value));
 
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz && g->ANALOGLEFT_HELD)log->debug("Controller Axis Event: Left unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz && g->ANALOGRIGHT_HELD)log->debug("Controller Axis Event: Right unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz && g->ANALOGUP_HELD)log->debug("Controller Axis Event: Up unpressed " + to_string(value));
-									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz && g->ANALOGDOWN_HELD)log->debug("Controller Axis Event: Down unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Controller Axis Event: Left unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Controller Axis Event: Right unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value > -dz && g->ANALOGUP_HELD)log.debug("Controller Axis Event: Up unpressed " + to_string(value));
+									if (axis == SDL_CONTROLLER_AXIS_LEFTY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Controller Axis Event: Down unpressed " + to_string(value));
 	#endif
 									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value > -dz)g->ANALOGLEFT_HELD = false;
 									if (axis == SDL_CONTROLLER_AXIS_LEFTX&&value < dz)g->ANALOGRIGHT_HELD = false;
@@ -1362,7 +1363,7 @@ SDL_JoyHatEvent
 						string s = string("Joystick Axis Event: " + string(SDL_GameControllerName(controller)));
 						s += string(" Axis: "+to_string(axis));
 						s += " Value:" + to_string(value);
-						log->debug(s);
+						log.debug(s);
 #endif
 
 						//this is wrong, SDL_CONTROLLER_AXIS_TRIGGERLEFT does not correspond to joystick axis
@@ -1377,11 +1378,11 @@ SDL_JoyHatEvent
 						//buffer in which to write the ASCII string
 						//int cbGUID = 4096; //the size of pszGUID
 						//SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), pszGUID, cbGUID);
-						//log->debug("GUIDString: " + string(pszGUID));
+						//log.debug("GUIDString: " + string(pszGUID));
 
 						char* mappingChar = SDL_GameControllerMapping(controller);
 						string mapping = string(mappingChar);
-						//log->debug("Mapping String: "+mapping);
+						//log.debug("Mapping String: "+mapping);
 						SDL_free(mappingChar);
 
 						//find axis value for lefttrigger and righttrigger in mapping string
@@ -1414,10 +1415,10 @@ SDL_JoyHatEvent
 								//						if (rightTrigger&&value <= -32767)g->R_HELD = false;
 
 #ifdef _DEBUG
-								if (leftTrigger&&value >= dz)log->debug("Joystick Axis Event: Left trigger held " + to_string(value));
-								if (leftTrigger&&value <= -dz)log->debug("Joystick Axis Event: Left trigger released " + to_string(value));
-								if (rightTrigger&&value >= dz)log->debug("Joystick Axis Event: Right trigger held " + to_string(value));
-								if (rightTrigger&&value <= -dz)log->debug("Joystick Axis Event: Right trigger released " + to_string(value));
+								if (leftTrigger&&value >= dz)log.debug("Joystick Axis Event: Left trigger held " + to_string(value));
+								if (leftTrigger&&value <= -dz)log.debug("Joystick Axis Event: Left trigger released " + to_string(value));
+								if (rightTrigger&&value >= dz)log.debug("Joystick Axis Event: Right trigger held " + to_string(value));
+								if (rightTrigger&&value <= -dz)log.debug("Joystick Axis Event: Right trigger released " + to_string(value));
 #endif
 							}
 						}
@@ -1439,15 +1440,15 @@ SDL_JoyHatEvent
 //									if (leftY&&value > dz)g->ANALOGDOWN_HELD = true;
 //
 //#ifdef _DEBUG
-//									if (leftX&&value < -dz)log->debug("Joystick Axis Event: Left held " + to_string(value));
-//									if (leftX&&value > dz)log->debug("Joystick Axis Event: Right held " + to_string(value));
-//									if (leftY&&value < -dz)log->debug("Joystick Axis Event: Up held " + to_string(value));
-//									if (leftY&&value > dz)log->debug("Joystick Axis Event: Down held " + to_string(value));
+//									if (leftX&&value < -dz)log.debug("Joystick Axis Event: Left held " + to_string(value));
+//									if (leftX&&value > dz)log.debug("Joystick Axis Event: Right held " + to_string(value));
+//									if (leftY&&value < -dz)log.debug("Joystick Axis Event: Up held " + to_string(value));
+//									if (leftY&&value > dz)log.debug("Joystick Axis Event: Down held " + to_string(value));
 //
-//									if (leftX&&value > -dz && g->ANALOGLEFT_HELD)log->debug("Joystick Axis Event: Left unpressed " + to_string(value));
-//									if (leftX&&value < dz && g->ANALOGRIGHT_HELD)log->debug("Joystick Axis Event: Right unpressed " + to_string(value));
-//									if (leftY&&value > -dz && g->ANALOGUP_HELD)log->debug("Joystick Axis Event: Up unpressed " + to_string(value));
-//									if (leftY&&value < dz && g->ANALOGDOWN_HELD)log->debug("Joystick Axis Event: Down unpressed " + to_string(value));
+//									if (leftX&&value > -dz && g->ANALOGLEFT_HELD)log.debug("Joystick Axis Event: Left unpressed " + to_string(value));
+//									if (leftX&&value < dz && g->ANALOGRIGHT_HELD)log.debug("Joystick Axis Event: Right unpressed " + to_string(value));
+//									if (leftY&&value > -dz && g->ANALOGUP_HELD)log.debug("Joystick Axis Event: Up unpressed " + to_string(value));
+//									if (leftY&&value < dz && g->ANALOGDOWN_HELD)log.debug("Joystick Axis Event: Down unpressed " + to_string(value));
 //#endif
 //									if (leftX&&value > -dz)g->ANALOGLEFT_HELD = false;
 //									if (leftX&&value < dz)g->ANALOGRIGHT_HELD = false;
@@ -1685,55 +1686,55 @@ SDL_JoyHatEvent
 		{
 
 #ifdef _DEBUG
-			if (event.type == SDL_FIRSTEVENT)							log->debug("SDL_FIRSTEVENT");
-			if (event.type == SDL_QUIT)								log->debug("SDL_QUIT");
-			if (event.type == SDL_APP_TERMINATING		)			log->debug("SDL_APP_TERMINATING");
-			if (event.type == SDL_APP_LOWMEMORY			)		log->debug("SDL_APP_LOWMEMORY");
-			if (event.type == SDL_APP_WILLENTERBACKGROUND)			log->debug("SDL_APP_WILLENTERBACKGROUND");
-			if (event.type == SDL_APP_DIDENTERBACKGROUND)			log->debug("SDL_APP_DIDENTERBACKGROUND");
-			if (event.type == SDL_APP_WILLENTERFOREGROUND)			log->debug("SDL_APP_WILLENTERFOREGROUND");
-			if (event.type == SDL_APP_DIDENTERFOREGROUND)			log->debug("SDL_APP_DIDENTERFOREGROUND");
-			if (event.type == SDL_WINDOWEVENT			)			log->debug("SDL_WINDOWEVENT");
-			if (event.type == SDL_SYSWMEVENT			)			log->debug("SDL_SYSWMEVENT");
-			//if (event.type == SDL_KEYDOWN				)			log->debug("SDL_KEYDOWN");
-			//if (event.type == SDL_KEYUP					)		log->debug("SDL_KEYUP");
-			//if (event.type == SDL_TEXTEDITING			)			log->debug("SDL_TEXTEDITING");
-			//if (event.type == SDL_TEXTINPUT				)		log->debug("SDL_TEXTINPUT");
-			if (event.type == SDL_KEYMAPCHANGED			)		log->debug("SDL_KEYMAPCHANGED");
-			//if (event.type == SDL_MOUSEMOTION			)			log->debug("SDL_MOUSEMOTION");
-			//if (event.type == SDL_MOUSEBUTTONDOWN		)			log->debug("SDL_MOUSEBUTTONDOWN");
-			//if (event.type == SDL_MOUSEBUTTONUP			)		log->debug("SDL_MOUSEBUTTONUP");
-			//if (event.type == SDL_MOUSEWHEEL			)			log->debug("SDL_MOUSEWHEEL");
-			//if (event.type == SDL_JOYAXISMOTION			)		log->debug("SDL_JOYAXISMOTION");
-			if (event.type == SDL_JOYBALLMOTION			)		log->debug("SDL_JOYBALLMOTION");
-			if (event.type == SDL_JOYHATMOTION			)		log->debug("SDL_JOYHATMOTION");
-			//if (event.type == SDL_JOYBUTTONDOWN			)		log->debug("SDL_JOYBUTTONDOWN");
-			//if (event.type == SDL_JOYBUTTONUP			)			log->debug("SDL_JOYBUTTONUP");
-			if (event.type == SDL_JOYDEVICEADDED		)			log->debug("SDL_JOYDEVICEADDED");
-			if (event.type == SDL_JOYDEVICEREMOVED		)		log->debug("SDL_JOYDEVICEREMOVED");
-			//if (event.type == SDL_CONTROLLERAXISMOTION	)		log->debug("SDL_CONTROLLERAXISMOTION");
-			//if (event.type == SDL_CONTROLLERBUTTONDOWN	)		log->debug("SDL_CONTROLLERBUTTONDOWN");
-			//if (event.type == SDL_CONTROLLERBUTTONUP	)			log->debug("SDL_CONTROLLERBUTTONUP");
-			if (event.type == SDL_CONTROLLERDEVICEADDED	)		log->debug("SDL_CONTROLLERDEVICEADDED");
-			if (event.type == SDL_CONTROLLERDEVICEREMOVED)			log->debug("SDL_CONTROLLERDEVICEREMOVED");
-			if (event.type == SDL_CONTROLLERDEVICEREMAPPED)		log->debug("SDL_CONTROLLERDEVICEREMAPPED");
-			if (event.type == SDL_FINGERDOWN			)			log->debug("SDL_FINGERDOWN");
-			if (event.type == SDL_FINGERUP				)		log->debug("SDL_FINGERUP");
-			if (event.type == SDL_FINGERMOTION			)		log->debug("SDL_FINGERMOTION");
-			if (event.type == SDL_DOLLARGESTURE			)		log->debug("SDL_DOLLARGESTURE");
-			if (event.type == SDL_DOLLARRECORD			)		log->debug("SDL_DOLLARRECORD");
-			if (event.type == SDL_MULTIGESTURE			)		log->debug("SDL_MULTIGESTURE");
-			if (event.type == SDL_CLIPBOARDUPDATE		)			log->debug("SDL_CLIPBOARDUPDATE");
-			if (event.type == SDL_DROPFILE				)		log->debug("SDL_DROPFILE");
-			//if (event.type == SDL_DROPTEXT				)		log->debug("SDL_DROPTEXT");
-			//if (event.type == SDL_DROPBEGIN				)		log->debug("SDL_DROPBEGIN");
-			//if (event.type == SDL_DROPCOMPLETE			)		log->debug("SDL_DROPCOMPLETE");
-			//if (event.type == SDL_AUDIODEVICEADDED		)		log->debug("SDL_AUDIODEVICEADDED");
-			//if (event.type == SDL_AUDIODEVICEREMOVED	)			log->debug("SDL_AUDIODEVICEREMOVED");
-			if (event.type == SDL_RENDER_TARGETS_RESET	)		log->debug("SDL_RENDER_TARGETS_RESET");
-			if (event.type == SDL_RENDER_DEVICE_RESET	)			log->debug("SDL_RENDER_DEVICE_RESET");
-			if (event.type == SDL_USEREVENT				)		log->debug("SDL_USEREVENT");
-			if (event.type == SDL_LASTEVENT				)		log->debug("SDL_LASTEVENT");
+			if (event.type == SDL_FIRSTEVENT)							log.debug("SDL_FIRSTEVENT");
+			if (event.type == SDL_QUIT)								log.debug("SDL_QUIT");
+			if (event.type == SDL_APP_TERMINATING		)			log.debug("SDL_APP_TERMINATING");
+			if (event.type == SDL_APP_LOWMEMORY			)		log.debug("SDL_APP_LOWMEMORY");
+			if (event.type == SDL_APP_WILLENTERBACKGROUND)			log.debug("SDL_APP_WILLENTERBACKGROUND");
+			if (event.type == SDL_APP_DIDENTERBACKGROUND)			log.debug("SDL_APP_DIDENTERBACKGROUND");
+			if (event.type == SDL_APP_WILLENTERFOREGROUND)			log.debug("SDL_APP_WILLENTERFOREGROUND");
+			if (event.type == SDL_APP_DIDENTERFOREGROUND)			log.debug("SDL_APP_DIDENTERFOREGROUND");
+			if (event.type == SDL_WINDOWEVENT			)			log.debug("SDL_WINDOWEVENT");
+			if (event.type == SDL_SYSWMEVENT			)			log.debug("SDL_SYSWMEVENT");
+			//if (event.type == SDL_KEYDOWN				)			log.debug("SDL_KEYDOWN");
+			//if (event.type == SDL_KEYUP					)		log.debug("SDL_KEYUP");
+			//if (event.type == SDL_TEXTEDITING			)			log.debug("SDL_TEXTEDITING");
+			//if (event.type == SDL_TEXTINPUT				)		log.debug("SDL_TEXTINPUT");
+			if (event.type == SDL_KEYMAPCHANGED			)		log.debug("SDL_KEYMAPCHANGED");
+			//if (event.type == SDL_MOUSEMOTION			)			log.debug("SDL_MOUSEMOTION");
+			//if (event.type == SDL_MOUSEBUTTONDOWN		)			log.debug("SDL_MOUSEBUTTONDOWN");
+			//if (event.type == SDL_MOUSEBUTTONUP			)		log.debug("SDL_MOUSEBUTTONUP");
+			//if (event.type == SDL_MOUSEWHEEL			)			log.debug("SDL_MOUSEWHEEL");
+			//if (event.type == SDL_JOYAXISMOTION			)		log.debug("SDL_JOYAXISMOTION");
+			if (event.type == SDL_JOYBALLMOTION			)		log.debug("SDL_JOYBALLMOTION");
+			if (event.type == SDL_JOYHATMOTION			)		log.debug("SDL_JOYHATMOTION");
+			//if (event.type == SDL_JOYBUTTONDOWN			)		log.debug("SDL_JOYBUTTONDOWN");
+			//if (event.type == SDL_JOYBUTTONUP			)			log.debug("SDL_JOYBUTTONUP");
+			if (event.type == SDL_JOYDEVICEADDED		)			log.debug("SDL_JOYDEVICEADDED");
+			if (event.type == SDL_JOYDEVICEREMOVED		)		log.debug("SDL_JOYDEVICEREMOVED");
+			//if (event.type == SDL_CONTROLLERAXISMOTION	)		log.debug("SDL_CONTROLLERAXISMOTION");
+			//if (event.type == SDL_CONTROLLERBUTTONDOWN	)		log.debug("SDL_CONTROLLERBUTTONDOWN");
+			//if (event.type == SDL_CONTROLLERBUTTONUP	)			log.debug("SDL_CONTROLLERBUTTONUP");
+			if (event.type == SDL_CONTROLLERDEVICEADDED	)		log.debug("SDL_CONTROLLERDEVICEADDED");
+			if (event.type == SDL_CONTROLLERDEVICEREMOVED)			log.debug("SDL_CONTROLLERDEVICEREMOVED");
+			if (event.type == SDL_CONTROLLERDEVICEREMAPPED)		log.debug("SDL_CONTROLLERDEVICEREMAPPED");
+			if (event.type == SDL_FINGERDOWN			)			log.debug("SDL_FINGERDOWN");
+			if (event.type == SDL_FINGERUP				)		log.debug("SDL_FINGERUP");
+			if (event.type == SDL_FINGERMOTION			)		log.debug("SDL_FINGERMOTION");
+			if (event.type == SDL_DOLLARGESTURE			)		log.debug("SDL_DOLLARGESTURE");
+			if (event.type == SDL_DOLLARRECORD			)		log.debug("SDL_DOLLARRECORD");
+			if (event.type == SDL_MULTIGESTURE			)		log.debug("SDL_MULTIGESTURE");
+			if (event.type == SDL_CLIPBOARDUPDATE		)			log.debug("SDL_CLIPBOARDUPDATE");
+			if (event.type == SDL_DROPFILE				)		log.debug("SDL_DROPFILE");
+			//if (event.type == SDL_DROPTEXT				)		log.debug("SDL_DROPTEXT");
+			//if (event.type == SDL_DROPBEGIN				)		log.debug("SDL_DROPBEGIN");
+			//if (event.type == SDL_DROPCOMPLETE			)		log.debug("SDL_DROPCOMPLETE");
+			//if (event.type == SDL_AUDIODEVICEADDED		)		log.debug("SDL_AUDIODEVICEADDED");
+			//if (event.type == SDL_AUDIODEVICEREMOVED	)			log.debug("SDL_AUDIODEVICEREMOVED");
+			if (event.type == SDL_RENDER_TARGETS_RESET	)		log.debug("SDL_RENDER_TARGETS_RESET");
+			if (event.type == SDL_RENDER_DEVICE_RESET	)			log.debug("SDL_RENDER_DEVICE_RESET");
+			if (event.type == SDL_USEREVENT				)		log.debug("SDL_USEREVENT");
+			if (event.type == SDL_LASTEVENT				)		log.debug("SDL_LASTEVENT");
 #endif
 		}
 
@@ -1983,12 +1984,12 @@ SDL_JoyHatEvent
 void ControlsManager::doHaptic(sp<GameController>g, int length, int magnitude, int attackLength, int fadeLength, int wavePeriod)
 {//=========================================================================================================================
 
-	log->debug("doHaptic");
+	log.debug("doHaptic");
 	if (g->haptic == nullptr)return;
 
 	SDL_HapticRumblePlay(g->haptic, (float)magnitude/32767.0f, length);
 
-	log->debug("Played haptic");
+	log.debug("Played haptic");
 
 //	if(g->hapticID!=-1)
 //	{

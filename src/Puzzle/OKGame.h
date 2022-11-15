@@ -48,7 +48,7 @@ class Room;
 
 
 //=========================================================================================================================
-class OKGame : public NDGameEngine
+class OKGame : public NDGameEngine, public std::enable_shared_from_this<OKGame>
 {//=========================================================================================================================
 private:
 	typedef NDGameEngine super;

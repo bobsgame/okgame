@@ -195,7 +195,7 @@ public:
 	}
 	IntArray(unsigned int len)
 	{
-		this->ints = (unsigned int*)calloc(len*4, 4);// new int[len];
+		this->ints = (unsigned int*)calloc((size_t)len*4, 4);// new int[len];
 		this->len = len;
 	}
 	~IntArray()

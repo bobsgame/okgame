@@ -2866,11 +2866,11 @@ void OKGame::loadRoomConfigMenuUpdate()
 
 
 
-		vector<string> roomConfigNames = OKGame::getRoomConfigsList();
+		sp<vector<string>> roomConfigNames = OKGame::getRoomConfigsList();
 
-		for (int i = 0; i < roomConfigNames.size(); i++)
+		for (int i = 0; i < roomConfigNames->size(); i++)
 		{
-			loadRoomConfigMenu->add(roomConfigNames.get(i));
+			loadRoomConfigMenu->add(roomConfigNames->at(i));
 		}
 
 		loadRoomConfigMenu->add("Cancel");
@@ -2906,9 +2906,9 @@ void OKGame::loadRoomConfigMenuUpdate()
 
 			for (int i = 0; i < ids.size(); i++)
 			{
-				if (loadRoomConfigMenu->isSelectedID(ids.get(i), clicked, mx, my))
+				if (loadRoomConfigMenu->isSelectedID(ids.at(i), clicked, mx, my))
 				{
-					sp<Room>r = OKGame::loadRoomConfig(ids.get(i));
+					sp<Room>r = OKGame::loadRoomConfig(ids.at(i));
 
 					if (r != nullptr)currentRoom = r;
 					leaveMenu = true;
@@ -3680,7 +3680,7 @@ void OKGame::gameSetupMenuUpdate()
 			if (selectedGameSequence == nullptr)
 			{
 				selectedGameSequence = ms<GameSequence>();
-				selectedGameSequence->gameTypes.add(ms<GameType>());
+				selectedGameSequence->gameTypes.push_back(ms<GameType>());
 			}
 			currentRoom->gameSequence = selectedGameSequence;
 			getPlayer1Game()->currentGameSequence = selectedGameSequence;
@@ -3698,7 +3698,7 @@ void OKGame::gameSetupMenuUpdate()
 				if (selectedGameSequence->gameTypes.size() == 1)
 				{
 					c->setText("Game Type: " + selectedGameSequence->name);
-					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->gameTypes.get(0)->uuid;
+					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->gameTypes.at(0)->uuid;
 				}
 			}
 		}
@@ -3732,7 +3732,7 @@ void OKGame::gameSetupMenuUpdate()
 			GameType gt;
 			for (int i = 0; i < gt.difficultyTypes.size(); i++)
 			{
-				string difficultyName = gt.difficultyTypes.get(i)->name;
+				string difficultyName = gt.difficultyTypes.at(i)->name;
 				if (selectedDifficultyName == difficultyName)selectedDifficultyIndex = i;
 			}
 
@@ -3916,7 +3916,7 @@ void OKGame::gameSetupMenuUpdate()
 				if (left)
 				{
 					selectedDifficultyIndex--;
-					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = gt.difficultyTypes.size() - 1;
+					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = (int)gt.difficultyTypes.size() - 1;
 				}
 				if (right)
 				{
@@ -3924,7 +3924,7 @@ void OKGame::gameSetupMenuUpdate()
 					if (selectedDifficultyIndex >= gt.difficultyTypes.size())selectedDifficultyIndex = 0;
 				}
 
-				sp<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex);
+				sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex);
 				string difficultyName = d->name;
 				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -3942,7 +3942,7 @@ void OKGame::gameSetupMenuUpdate()
 		//assign controller to p1 if start or b pressed
 		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
 		{
-			sp<GameController>g = getControlsManager()->gameControllers.get(i);
+			sp<GameController>g = getControlsManager()->gameControllers.at(i);
 			if (g->b_Pressed())
 			{
 				confirm = true;
@@ -4030,7 +4030,7 @@ void OKGame::gameSetupMenuUpdate()
 				if(getPlayer1Game()->currentGameSequence == nullptr)getPlayer1Game()->currentGameSequence = currentRoom->gameSequence;
 
 				GameType gt;
-				sp<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex);
+				sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex);
 				string difficultyName = d->name;
 				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -4420,7 +4420,7 @@ void OKGame::selectGameSequenceMenuUpdate()
 	{
 		for (int i = 0; i<loadedGameSequences.size(); i++)
 		{
-			sp<GameSequence>g = loadedGameSequences.get(i);
+			sp<GameSequence>g = loadedGameSequences.at(i);
 			if (selectGameSequenceMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 				if(statsMenuShowing)
@@ -4614,31 +4614,31 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 //	}
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		sp<GameType>g = loadedGameTypes.get(i);
+		sp<GameType>g = loadedGameTypes.at(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			sp<OKColor>color = OKColor::purple;
 			pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
 			pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = pair<sp<GameType>, pair<string, sp<OKColor>>>(g, stringColorPair);
-			gamesStringColor.add(gameTypeStringColorPairPair);
+			gamesStringColor->push_back(gameTypeStringColorPairPair);
 		}
 	}
 
 	vector<sp<GameType>> downloadedGames;
 	for (int i = 0; i<loadedGameTypes.size(); i++)
 	{
-		sp<GameType>g = loadedGameTypes.get(i);
+		sp<GameType>g = loadedGameTypes.at(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
-			downloadedGames.add(g);
+			downloadedGames.push_back(g);
 		}
 	}
 
 	multimap<double, sp<GameType>> games;
 	for (int i = 0; i < downloadedGames.size(); i++)
 	{
-		sp<GameType>g = downloadedGames.get(i);
+		sp<GameType>g = downloadedGames.at(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
@@ -4663,7 +4663,7 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 		sp<OKColor>color = OKColor::darkGray;
 		pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
 		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = pair<sp<GameType>, pair<string, sp<OKColor>>>(g, stringColorPair);
-		gamesStringColor.add(gameTypeStringColorPairPair);
+		gamesStringColor->push_back(gameTypeStringColorPairPair);
 	}
 
 	return gamesStringColor;
@@ -4671,10 +4671,10 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 }
 
 //=========================================================================================================================
-vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> OKGame::getSortedGameSequences()
+sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedGameSequences()
 {//=========================================================================================================================
 
-	vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> gamesStringColor;
+	sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> gamesStringColor;
 
 //	for (int i = 0; i<loadedGameSequences.size(); i++)
 //	{
@@ -4690,31 +4690,31 @@ vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> OKGame::getSortedGameS
 //	}
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		sp<GameSequence>g = loadedGameSequences.get(i);
+		sp<GameSequence>g = loadedGameSequences.at(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			sp<OKColor>color = OKColor::purple;
 			pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
 			pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = pair<sp<GameSequence>, pair<string, sp<OKColor>>>(g, stringColorPair);
-			gamesStringColor.add(gameSequenceStringColorPairPair);
+			gamesStringColor->push_back(gameSequenceStringColorPairPair);
 		}
 	}
 
-	vector<sp<GameSequence>> downloadedGames;
+	sp<vector<sp<GameSequence>>> downloadedGames;
 	for (int i = 0; i<loadedGameSequences.size(); i++)
 	{
-		sp<GameSequence>g = loadedGameSequences.get(i);
+		sp<GameSequence>g = loadedGameSequences.at(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
-			downloadedGames.add(g);
+			downloadedGames->push_back(g);
 		}
 	}
 
 	multimap<double, sp<GameSequence>> games;
-	for (int i = 0; i < downloadedGames.size(); i++)
+	for (int i = 0; i < downloadedGames->size(); i++)
 	{
-		sp<GameSequence>g = downloadedGames.get(i);
+		sp<GameSequence>g = downloadedGames->at(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
@@ -4739,7 +4739,7 @@ vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> OKGame::getSortedGameS
 		sp<OKColor>color = OKColor::darkGray;
 		pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
 		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = pair<sp<GameSequence>, pair<string, sp<OKColor>>>(g, stringColorPair);
-		gamesStringColor.add(gameSequenceStringColorPairPair);
+		gamesStringColor->push_back(gameSequenceStringColorPairPair);
 	}
 
 	return gamesStringColor;
@@ -4757,10 +4757,10 @@ void OKGame::populateGameTypesMenu(sp<OKMenu>menu)
 	//use smaller font
 	//username - game name - upvotes/downvotes
 
-	vector<pair<sp<GameType>, pair<string, sp<OKColor>>>> gamesStringColor = getSortedGameTypes();
-	for (int i = 0; i < gamesStringColor.size(); i++)
+	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = getSortedGameTypes();
+	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
 		sp<GameType>g = gameTypeStringColorPairPair.first;
 		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
@@ -4777,10 +4777,10 @@ void OKGame::populateGameTypesMenu(sp<OKMenu>menu)
 void OKGame::populateGameSequencesMenu(sp<OKMenu>menu)
 {//=========================================================================================================================
 
-	vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> gamesStringColor = getSortedGameSequences();
-	for (int i = 0; i < gamesStringColor.size(); i++)
+	sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> gamesStringColor = getSortedGameSequences();
+	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
 		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
 		pair<string, sp<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
@@ -4867,7 +4867,7 @@ sp<OKGameUserStatsForSpecificGameAndDifficulty> OKGame::getUserStatsForGame(stri
 	sp<OKGameUserStatsForSpecificGameAndDifficulty>stats = nullptr;
 	for (int i = 0; i < userStatsPerGameAndDifficulty.size(); i++)
 	{
-		sp<OKGameUserStatsForSpecificGameAndDifficulty>s = userStatsPerGameAndDifficulty.get(i);
+		sp<OKGameUserStatsForSpecificGameAndDifficulty>s = userStatsPerGameAndDifficulty.at(i);
 		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
 		{
 			if (s->difficultyName == difficultyString)
@@ -5017,18 +5017,18 @@ sp<OKGameLeaderBoardAndHighScoreBoard> OKGame::getLeaderboardOrHighScoreBoardFor
 
 	sp<OKGameLeaderBoardAndHighScoreBoard>stats = nullptr;
 
-	sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>board = &topPlayersByTotalTimePlayed;
+	sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>board = ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(topPlayersByTotalTimePlayed);
 
-	if (totalTimePlayed)board = &topPlayersByTotalTimePlayed;
-	if (totalBlocksCleared)board = &topPlayersByTotalBlocksCleared;
-	if (planeswalkerPoints)board = &topPlayersByPlaneswalkerPoints;
-	if (eloScore)board = &topPlayersByEloScore;
-	if (timeLasted)board = &topGamesByTimeLasted;
-	if (blocksCleared)board = &topGamesByBlocksCleared;
+	if (totalTimePlayed)board = ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(topPlayersByTotalTimePlayed);
+	if (totalBlocksCleared)board = ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(topPlayersByTotalBlocksCleared);
+	if (planeswalkerPoints)board = ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(topPlayersByPlaneswalkerPoints);
+	if (eloScore)board = ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(topPlayersByEloScore);
+	if (timeLasted)board = ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(topGamesByTimeLasted);
+	if (blocksCleared)board = ms<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>(topGamesByBlocksCleared);
 
 	for (int i = 0; i<board->size(); i++)
 	{
-		sp<OKGameLeaderBoardAndHighScoreBoard>s = board->get(i);
+		sp<OKGameLeaderBoardAndHighScoreBoard>s = board->at(i);
 		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
 		{
 			if (s->difficultyName == difficultyString)
@@ -5141,7 +5141,7 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(sp<OKMenu>menu, string ga
 	for (int i = 0; i < stats->entries.size(); i++)
 	{
 
-		sp<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry> e = stats->entries.get(i);
+		sp<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry> e = stats->entries.at(i);
 
 		if (e->userName == "") { continue; }
 
@@ -5327,7 +5327,7 @@ void OKGame::selectSingleGameTypeMenuUpdate()
 
 		for (int i = 0; i<loadedGameTypes.size(); i++)
 		{
-			sp<GameType>g = loadedGameTypes.get(i);
+			sp<GameType>g = loadedGameTypes.at(i);
 			if (selectSingleGameTypeMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 
@@ -5340,7 +5340,7 @@ void OKGame::selectSingleGameTypeMenuUpdate()
 				{
 
 					currentRoom->gameSequence = ms<GameSequence>();
-					currentRoom->gameSequence->gameTypes.add(g);
+					currentRoom->gameSequence->gameTypes.push_back(g);
 					currentRoom->gameSequence->name = g->name;
 
 					getPlayer1Game()->currentGameSequence = currentRoom->gameSequence;
@@ -5403,7 +5403,7 @@ void OKGame::difficultyMenuUpdate()
 
 		for (int i = 0; i<gt.difficultyTypes.size(); i++)
 		{
-			difficultyMenu->add(gt.difficultyTypes.get(i)->name);
+			difficultyMenu->add(gt.difficultyTypes.at(i)->name);
 		}
 
 		difficultyMenu->cursorPosition = difficultyMenuCursorPosition;
@@ -5445,7 +5445,7 @@ void OKGame::difficultyMenuUpdate()
 		for (int i = 0; i<gt.difficultyTypes.size(); i++)
 		{
 
-			string difficultyName = gt.difficultyTypes.get(i)->name;
+			string difficultyName = gt.difficultyTypes.at(i)->name;
 			if (difficultyMenu->isSelectedID(difficultyName, clicked, mx, my))
 			{
 
@@ -5571,7 +5571,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 	if(currentRoom->gameSequence == nullptr)
 	{
 		currentRoom->gameSequence = ms<GameSequence>();
-		currentRoom->gameSequence->gameTypes.add(ms<GameType>());
+		currentRoom->gameSequence->gameTypes.push_back(ms<GameType>());
 	}
 
 	if(currentRoom->multiplayer_AllowDifferentGameSequences)
@@ -5602,11 +5602,11 @@ void OKGame::multiplayerOptionsMenuUpdate()
 		GameType gt;
 		for (int i = 0; i < gt.difficultyTypes.size(); i++)
 		{
-			string difficultyName = gt.difficultyTypes.get(i)->name;
+			string difficultyName = gt.difficultyTypes.at(i)->name;
 			if (currentRoom->room_DifficultyName == difficultyName)selectedDifficultyIndex = i + 1;
 		}
 
-		sp<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
+		sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex - 1);
 		string difficultyName = d->name;
 		currentRoom->room_DifficultyName = difficultyName;
 		if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -5716,7 +5716,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 				if (selectedDifficultyIndex > 0)
 				{
 					currentRoom->multiplayer_AllowDifferentDifficulties = false;
-					sp<DifficultyType>d = gt.difficultyTypes.get(selectedDifficultyIndex - 1);
+					sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex - 1);
 					string difficultyName = d->name;
 					currentRoom->room_DifficultyName = difficultyName;
 					if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -5997,7 +5997,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		localMultiplayerPlayerJoinMenu->addInfo("Press the Space key or A on your controller to join");
 		localMultiplayerPlayerJoinMenu->addInfo("Press Esc or Select on your controller to return to Title Screen");
 
-		players.deleteAll();
+		players.clear();
 //		while (players.size()>0)
 //		{
 //			sp<PuzzlePlayer>p = players.get(players.size() - 1);
@@ -6016,7 +6016,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 	bool ready = true;
 	for (int i = 0; i<players.size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 		if (p->confirmed == false)
 		{
 			ready = false;
@@ -6096,14 +6096,14 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 			bool alreadyInUse = false;
 			for (int i = 0; i < players.size(); i++)
 			{
-				sp<PuzzlePlayer> p = players.get(i);
+				sp<PuzzlePlayer> p = players.at(i);
 				if (p->useKeyboard)alreadyInUse = true;
 			}
 			if (!alreadyInUse)
 			{
 				sp<PuzzlePlayer> p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 				p->useKeyboard = true;
-				players.add(p);
+				players.push_back(p);
 				p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
 			}
 		}
@@ -6112,10 +6112,10 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 	{
 		for (int i = 0; i < players.size(); i++)
 		{
-			sp<PuzzlePlayer> p = players.get(i);
+			sp<PuzzlePlayer> p = players.at(i);
 			if (p->useKeyboard)
 			{
-				players.removeAt(i);
+				players.erase(players.begin()+i);
 				//delete p;
 				p = nullptr;
 				i = 0;
@@ -6134,7 +6134,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 				bool alreadyInUse = false;
 				for (int i = 0; i < players.size(); i++)
 				{
-					sp<PuzzlePlayer> p = players.get(i);
+					sp<PuzzlePlayer> p = players.at(i);
 					if (p->gameController == g)alreadyInUse = true;
 				}
 
@@ -6142,7 +6142,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 				{
 					sp<PuzzlePlayer> p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 					p->gameController = g;
-					players.add(p);
+					players.push_back(p);
 					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
 				}
 			}
@@ -6152,10 +6152,10 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		{
 			for (int i = 0; i < players.size(); i++)
 			{
-				sp<PuzzlePlayer> p = players.get(i);
+				sp<PuzzlePlayer> p = players.at(i);
 				if (p->gameController == g)
 				{
-					players.removeAt(i);
+					players.erase(players.begin()+i);
 					//delete p;
 					p = nullptr;
 					i = 0;
@@ -6202,7 +6202,7 @@ void OKGame::localMultiplayerPlayerJoinMenuRender()
 
 	for (int i = 0; i < players.size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.get(i);
+		sp<PuzzlePlayer>p = players.at(i);
 
 		sp<OKTexture>t = nullptr;
 
@@ -6294,7 +6294,7 @@ void OKGame::playerDifficultyMiniMenuUpdate(sp<PuzzlePlayer>p)
 
 			for (int i = 0; i<g.difficultyTypes.size(); i++)
 			{
-				p->menu->add(g.difficultyTypes.get(i)->name);
+				p->menu->add(g.difficultyTypes.at(i)->name);
 			}
 		}
 
@@ -6336,7 +6336,7 @@ void OKGame::playerDifficultyMiniMenuUpdate(sp<PuzzlePlayer>p)
 
 				for (int i = 0; i<g.difficultyTypes.size(); i++)
 				{
-					string difficultyName = g.difficultyTypes.get(i)->name;
+					string difficultyName = g.difficultyTypes.at(i)->name;
 
 					if (p->menu->isSelectedID(difficultyName))
 					{
@@ -6535,7 +6535,7 @@ void OKGame::playerGameSequenceMiniMenuUpdate(sp<PuzzlePlayer>p)
 					for (int i = 0; i<loadedGameSequences.size(); i++)
 					{
 
-						sp<GameSequence>gs = loadedGameSequences.get(i);
+						sp<GameSequence>gs = loadedGameSequences.at(i);
 						if (p->menu->isSelectedID(gs->uuid))
 						{
 							game->currentGameSequence = gs;
@@ -6569,11 +6569,11 @@ void OKGame::playerGameSequenceMiniMenuUpdate(sp<PuzzlePlayer>p)
 
 					for (int i = 0; i<loadedGameTypes.size(); i++)
 					{
-						sp<GameType>g = loadedGameTypes.get(i);
+						sp<GameType>g = loadedGameTypes.at(i);
 						if (p->menu->isSelectedID(g->uuid))
 						{
 							game->currentGameSequence = ms<GameSequence>();
-							game->currentGameSequence->gameTypes.add(g);
+							game->currentGameSequence->gameTypes.push_back(g);
 							game->currentGameSequence->name = g->name;
 						}
 					}

@@ -584,17 +584,17 @@ void Main::initGWEN()
 	Uint64 start=0, now=0;
 	start = SDL_GetPerformanceCounter();
 
-	gwenRenderer = ms<Gwen>::Renderer::OpenGL_TruetypeFont();
+	gwenRenderer = Gwen::Renderer::OpenGL_TruetypeFont();
 	gwenRenderer->Init();
 	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
-	gwenSkin = ms<Gwen>::Skin::TexturedBase(gwenRenderer);
+	gwenSkin = Gwen::Skin::TexturedBase(gwenRenderer);
 	string path = Main::getPath();
 	gwenSkin->Init(path + "data/DefaultSkin.png");
 	gwenSkin->SetDefaultFont(Gwen::Utility::StringToUnicode(path + "data/fonts/Lato-Medium.ttf"), 16);
-	gwenCanvas = ms<Gwen>::Controls::Canvas(gwenSkin);
+	gwenCanvas = Gwen::Controls::Canvas(gwenSkin);
 	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
 	gwenCanvas->SetDrawBackground(false);
-	gwenInput = ms<Gwen>::Input::GwenSDL2();
+	gwenInput = Gwen::Input::GwenSDL2();
 	gwenInput->Initialize(gwenCanvas);
 
 	now = SDL_GetPerformanceCounter();
@@ -769,7 +769,7 @@ void Main::whilefix()
 			rightConsole->update();
 			bobNet->tcpServerConnection.update();
 
-			if (dynamic_cast<sp<Engine>>(mainObject->stateManager->getCurrentState()) != NULL)
+			if (dynamic_cast<Engine*>(mainObject->stateManager->getCurrentState().get()) != NULL)
 			{
 				((sp<Engine>)mainObject->stateManager->getCurrentState())->getCaptionManager()->update();
 			}
@@ -778,7 +778,7 @@ void Main::whilefix()
 			frame = true;
 
 			mainObject->render();
-			SDL_GL_SwapWindow(GLUtils::window);
+			SDL_GL_SwapWindow(GLUtils::window.get());
 		}
 		SDL_Delay(10);
 	}
@@ -944,7 +944,7 @@ void Main::mainLoop()
 				//Sleep(2); //TODO: vary this based on system speed
 				update();
 				render();
-				SDL_GL_SwapWindow(GLUtils::window);
+				SDL_GL_SwapWindow(GLUtils::window.get());
 				//System::framesrendered++;
 			}
 			else
@@ -956,13 +956,13 @@ void Main::mainLoop()
 					System::updateUpdateTimers();
 					update();
 					render();
-					SDL_GL_SwapWindow(GLUtils::window);
+					SDL_GL_SwapWindow(GLUtils::window.get());
 					//System::framesrendered++;
 				}
 				else
 				{
 					render();
-					SDL_GL_SwapWindow(GLUtils::window);
+					SDL_GL_SwapWindow(GLUtils::window.get());
 					//System::framesrendered++;
 				}
 
@@ -1108,9 +1108,9 @@ void Main::doScreenShotCheck()
 				flipdata[(((y*w) + x) * 4) + 3] = buffer[(((((h - 1) - y)*w) + x) * 4) + 3];
 
 			}
-		sp<SDL_Surface*> s = SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask);// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
-		IMG_SavePNG(s, fileName.c_str());
-		SDL_FreeSurface(s);
+		sp<SDL_Surface> s = ms<SDL_Surface>(SDL_CreateRGBSurfaceFrom(flipdata, w, h, 32, w * 4, GLUtils::rmask, GLUtils::gmask, GLUtils::bmask, GLUtils::amask));// 0x0000FF00, 0x00FF0000, 0xFF000000, 0x000000FF);
+		IMG_SavePNG(s.get(), fileName.c_str());
+		SDL_FreeSurface(s.get());
 		delete[] buffer;
 		delete[] flipdata;
 	}
@@ -1245,7 +1245,7 @@ void Main::processEvents()
 			else
 			{
 
-				stateManager->getCurrentState()->getActiveControlsManager()->events.add(event);
+				stateManager->getCurrentState()->getActiveControlsManager()->events.push_back(event);
 
 				gwenInput->ProcessEvent(event);
 				//ImGui_ImplSdl_ProcessEvent(&event);
@@ -1576,7 +1576,7 @@ void Main::checkVersion()
 					System::updateUpdateTimers();
 					c->update();
 					c->render();
-					SDL_GL_SwapWindow(GLUtils::window);
+					SDL_GL_SwapWindow(GLUtils::window.get());
 					SDL_Delay(100);
 				}
 
@@ -1694,7 +1694,7 @@ void Main::checkVersion()
 			System::updateUpdateTimers();
 			c->update();
 			c->render();
-			SDL_GL_SwapWindow(GLUtils::window);
+			SDL_GL_SwapWindow(GLUtils::window.get());
 
 			bool skip = false;
 			bool stop = false;
@@ -1733,7 +1733,7 @@ void Main::checkVersion()
 			System::updateUpdateTimers();
 			c->update();
 			c->render();
-			SDL_GL_SwapWindow(GLUtils::window);
+			SDL_GL_SwapWindow(GLUtils::window.get());
 
 			//download bobsgame.com/latestWindows.zip to working dir
 			try
@@ -1755,7 +1755,7 @@ void Main::checkVersion()
 				//int contentlen = (int)response.getContentLength();
 
 				FileStream fs(exePath + "update.zip", ios::out | ios::trunc | ios::binary);
-				std::auto_ptr<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
+				sp<std::istream> pStr(URIStreamOpener::defaultOpener().open(zipuri));
 				StreamCopier::copyStream(*pStr.get(), fs);
 				fs.close();
 			}
@@ -1852,7 +1852,7 @@ void Main::checkVersion()
 					c->setText("Something went wrong while updating.  Please download manually.");
 					c->update();
 					c->render();
-					SDL_GL_SwapWindow(GLUtils::window);
+					SDL_GL_SwapWindow(GLUtils::window.get());
 
 					log.error("Something went wrong while updating.  Please download manually.");
 					SDL_Delay(5000);

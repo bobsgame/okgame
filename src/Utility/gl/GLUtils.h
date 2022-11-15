@@ -18,7 +18,7 @@ class GLUtils
 public:
 	static void old_clear();
 	static void old_render();
-	static sp<OKTexture> loadTextureFromSurface(string filename, sp<SDL_Surface*> surface);
+	static sp<OKTexture> loadTextureFromSurface(string filename, sp<SDL_Surface> surface);
 	static void draw_texture_struct(sp <texture_STRUCT> PLAYER_TEXTURE, float x, float y);
 	static HashMap<string, sp<OKTexture>> textureCache;
 	static void clearCache(const string &name);// Remove a particular named image from the cache
@@ -67,9 +67,9 @@ public:
 
 	static float globalDrawScale;
 	static sp<OKTexture> rect;
-	static sp<GLfloat> box;
-	static sp<GLfloat> col;
-	static sp<GLfloat> tex;
+	static GLfloat box[12];
+	static GLfloat col[16];
+	static GLfloat tex[8];
 	GLUtils();
 	static void cleanup();
 	static int getOutlinedTextWidth(string cs);
@@ -101,7 +101,7 @@ public:
 	static int lastWindowWidth;// = 0;
 	static int lastWindowHeight;// = 0;
 	static SDL_DisplayMode getCurrentDisplayMode();
-	static vector<sp<SDL_DisplayMode>> getAvailableDisplayModes();
+	static sp<vector<sp<SDL_DisplayMode>>> getAvailableDisplayModes();
 	static int getRealWindowWidth();
 	static int getRealWindowHeight();
 	static int getViewportWidth();

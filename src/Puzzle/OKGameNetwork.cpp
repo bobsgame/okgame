@@ -69,7 +69,7 @@ void OKGame::tellAllPeersIAmHosting()
 {//=========================================================================================================================
 
 	currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
-	currentRoom->multiplayer_NumPlayers = players.size();
+	currentRoom->multiplayer_NumPlayers = (int)players.size();
 
 	string command = lobbyCommandAllPeers_HOSTING + currentRoom->encodeRoomData(true);
 

@@ -120,7 +120,7 @@ string FileUtils::removeSwearWords(string text)
 
 	for(int i=0;i<swearWords->size();i++)
 	{
-		string word = swearWords->get(i);
+		string word = swearWords->at(i);
 		int pos = text.find(word);
 		while(pos!=(int)string::npos)
 		{
@@ -709,7 +709,7 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 sp<vector<string>> FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
-	sp<vector<string>> lines = ms<ArrayList><string>();// = ms<ArrayList><string>();
+	sp<vector<string>> lines;// = ms<ArrayList><string>();// = ms<ArrayList><string>();
 
 	string line;
 	stringstream dosString;
@@ -719,7 +719,7 @@ sp<vector<string>> FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string file
 	{
 		rtrim(line);
 		//line.erase(line.find_last_not_of(" \n\r\t") + 1);
-		lines->add(line);
+		lines->push_back(line);
 	}
 	return lines;
 }
@@ -1094,7 +1094,7 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 	int j = 0;
 	int in_ = 0;
 	u8 char_array_4[4], char_array_3[3];
-	sp<vector<u8>> vec = new vector<u8>();
+	sp<vector<u8>> vec;// = new vector<u8>();
 
 	int n = 0;
 	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) 
@@ -1137,7 +1137,8 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 	{
 		ret->data()[x] = (*vec)[x];
 	}
-	delete vec;
+	//delete vec;
+	vec = nullptr;
 	return ret;
 
 //	u8* data = new u8[ret.size()];
@@ -1340,7 +1341,8 @@ u8* FileUtils::unlz4Base64StringToByteArray(const string &zippedBytesAsBase64Str
 //	if (return_value > 0)
 //		printf("We successfully decompressed some data!\n");
 
-	delete zippedBytes;
+	//delete zippedBytes;
+	zippedBytes = nullptr;
 
 	if(statusOrUncompressedSize < 0)
 	{
@@ -1649,14 +1651,16 @@ u8* FileUtils::unzipBase64StringToByteArray(const string &zippedBytesAsBase64Str
 	if (compressStatus != Z_OK)
 	{
 		log.error("Uncompress failed.");
-		delete zippedBytes;
+		//delete zippedBytes;
+		zippedBytes = nullptr;
 		delete[] uncompressedBytes;
 		//free(uncompressedBytes);
 		returnLength = 0;
 		return nullptr;
 	}
 
-	delete zippedBytes;
+	//delete zippedBytes;
+	zippedBytes = nullptr;
 
 	//log.debug("Decompressed " + to_string(zippedLength) + " bytes into " + to_string(uncompressedLength) + " bytes");
 	//printf("Decompressed from %u to %u bytes\n", (mz_uint32)size, (mz_uint32)uncomp_len);
@@ -1719,7 +1723,7 @@ string FileUtils::lz4StringToBase64String(const string& s)
 	u8 *val = new u8[s.length() + 1];
 	strcpy((char *)val, s.c_str());
 
-	return lz4ByteArrayToBase64String(val, s.length());
+	return lz4ByteArrayToBase64String(val, (int)s.length());
 }
 
 string FileUtils::unlz4Base64StringToString(const string& s)
@@ -1750,7 +1754,7 @@ string FileUtils::zipStringToBase64String(const string& s)
 	u8 *val = new u8[s.length() + 1];
 	strcpy((char *)val, s.c_str());
 
-	return zipByteArrayToBase64String(val, s.length());
+	return zipByteArrayToBase64String(val, (int)s.length());
 }
 
 string FileUtils::unzipBase64StringToString(const string& s)
@@ -1781,7 +1785,8 @@ string FileUtils::getFileMD5Checksum(const string& filename)
 
 	sp<ByteArray> bytes = loadByteFileFromExePath(filename);
 	string md5 = getByteArrayMD5Checksum(bytes);
-	delete bytes;
+	//delete bytes;
+	bytes = nullptr;
 	return md5;
 
 }

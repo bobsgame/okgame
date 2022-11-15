@@ -141,7 +141,7 @@ void GUIManager::render()
 sp<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(sp<FriendCharacter> friend_in, const string& gameName)
 { //=========================================================================================================================
 	sp<GameChallengeNotificationPanel> g = ms<GameChallengeNotificationPanel>(friend_in, gameName);
-	gameChallenges->add(g);
+	gameChallenges.push_back(g);
 
 	//   GUI* gui = new GUI(g, GLUtils::TWLrenderer);
 	//   gui->applyTheme(GLUtils::TWLthemeManager);
@@ -155,7 +155,7 @@ sp<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(sp<
 void GUIManager::removeGameNotification(sp<GameChallengeNotificationPanel> g)
 { //=========================================================================================================================
 
-	for (int i = 0; i < gameChallenges->size(); i++)
+	for (int i = 0; i < gameChallenges.size(); i++)
 	{
 		//      if (gameChallenges[i] == g)
 		//      {

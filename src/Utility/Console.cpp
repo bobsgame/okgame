@@ -27,11 +27,11 @@ sp<CaptionManager> Console::captionManager = nullptr;
 Console::Console()
 { //=========================================================================================================================
 
-	log->debug("Init console");
+	log.debug("Init console");
 
 	if(captionManager==nullptr)captionManager = ms<CaptionManager>(nullptr);
 
-	consoleTextList = ms<ArrayList><sp<ConsoleText>>();
+	consoleTextList = ms<vector<sp<ConsoleText>>>();
 }
 
 bool Console::showConsole = true;
@@ -53,7 +53,7 @@ void Console::update()
 
 	for (int i = 0; i < consoleTextList->size(); i++)
 	{
-		sp<ConsoleText> d = consoleTextList->get(i);
+		sp<ConsoleText> d = consoleTextList->at(i);
 
 		int cx = d->x;
 		int cy = d->y;
@@ -74,8 +74,9 @@ void Console::update()
 			if (d->ticks <= 0)
 			{
 				d->caption->setToBeDeletedImmediately();
-				consoleTextList->removeAt(i);
-				delete d;
+				consoleTextList->erase(consoleTextList->begin()+i);
+				//delete d;
+				d = nullptr;
 				i--;
 			}
 		}
@@ -89,10 +90,11 @@ void Console::pruneChats(int max)
 
 	while(consoleTextList->size()>max)
 	{
-		sp<ConsoleText> d = consoleTextList->get(0);
+		sp<ConsoleText> d = consoleTextList->at(0);
 		d->caption->setToBeDeletedImmediately();
-		consoleTextList->removeAt(0);
-		delete d;
+		consoleTextList->erase(consoleTextList->begin()+0);
+		//delete d;
+		d = nullptr;
 	}
 }
 
@@ -126,7 +128,7 @@ sp<ConsoleText> Console::add(const string& s, int ticks, int x, int y, sp<OKColo
 
 	sp<ConsoleText> dt = ms<ConsoleText>(s, c, x, y, ticks, isDebug);
 	lock_guard<mutex> lock(_consoleTextList_Mutex);
-	consoleTextList->add(dt);
+	consoleTextList->push_back(dt);
 	return dt;
 }
 
@@ -152,24 +154,24 @@ void Console::render()
 	vector<sp<ConsoleText>> bottomList;
 	for(int i=0;i<consoleTextList->size();i++)
 	{
-		sp<ConsoleText> dt = consoleTextList->get(i);
+		sp<ConsoleText> dt = consoleTextList->at(i);
 		if (dt->alwaysOnBottom)
 		{
-			consoleTextList->removeAt(i);
-			bottomList.insert(0,dt);
+			consoleTextList->erase(consoleTextList->begin()+i);
+			bottomList.insert(bottomList.begin()+0,dt);
 			i--;
 		}
 	}
 	for(int i=0;i<bottomList.size();i++)
 	{
-		consoleTextList->add(bottomList.get(i));
+		consoleTextList->push_back(bottomList.at(i));
 	}
 	bottomList.clear();
 
 	int numStrings = consoleTextList->size();
 	for (int n = numStrings; n > 0; n--)
 	{
-		sp<ConsoleText> dt = consoleTextList->get(n - 1);
+		sp<ConsoleText> dt = consoleTextList->at(n - 1);
 
 		if (dt->caption == nullptr)continue;
 
@@ -297,7 +299,7 @@ void ERROR_set_error(string error_string)
 {//===========================================================================================================================
 
 
-	Console::log->error(error_string);
+	Console::log.error(error_string);
 
 	//copy the new error string into a stored string
 	//char* new_error = (char*)malloc((strlen(error_string) + 2) * sizeof(char));
