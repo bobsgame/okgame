@@ -20,7 +20,7 @@ long long Engine::totalTicks = 0;
 long long Engine::ticksThisSecond = 0;
 int Engine::framesSkipped = 0;
 
-vector<sp<UDPPeerConnection>> Engine::onlineFriends;
+sp<vector<sp<UDPPeerConnection>>> Engine::onlineFriends;
 
 
 //=========================================================================================================================

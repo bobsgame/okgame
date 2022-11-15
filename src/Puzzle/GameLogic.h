@@ -115,8 +115,17 @@ public:
 	}
 
 	//=========================================================================================================================
-	static string getFrameStatesAsBase64LZ4XML(sp<vector<FrameState>>&n)
+	static string getFrameStatesAsBase64LZ4XML(sp<vector<sp<FrameState>>>spn)
 	{ //=========================================================================================================================
+
+		vector<FrameState> n;
+
+		for (int i = 0; i < spn->size(); i++)
+		{
+			FrameState f = *spn->at(i);
+			n.push_back(f);
+		}
+
 
 		std::stringstream ss;
 		boost::archive::xml_oarchive oarchive(ss);
@@ -127,31 +136,38 @@ public:
 	}
 
 	//=========================================================================================================================
-	static sp<vector<FrameState>> getFramesArrayFromBase64LZ4XML(const string &b64LZ4XML)
+	static sp<vector<sp<FrameState>>> getFramesArrayFromBase64LZ4XML(const string &b64LZ4XML)
 	{ //=========================================================================================================================
 
 		string xml = FileUtils::unlz4Base64StringToString(b64LZ4XML);
 
 		if (xml == "" || xml.length() == 0)
 		{
-			return sp<vector<FrameState>>();
+			return sp<vector<sp<FrameState>>>();
 		}
 
 		stringstream ss;
 		ss << xml;
 
 		boost::archive::xml_iarchive ia(ss);
-		sp<vector<FrameState>>* n = new sp<vector<FrameState>>();
+		vector<FrameState> n;// = new sp<vector<sp<FrameState>>>();
 		try
 		{
-			ia >> BOOST_SERIALIZATION_NVP(*n);
+			ia >> BOOST_SERIALIZATION_NVP(n);
 		}
 		catch (exception)
 		{
 			Main::log.error("Could not unserialize FramesArray");
 		}
 
-		return ms<vector<FrameState>>(*n);
+		sp<vector<sp<FrameState>>> spn;
+		for (int i = 0; i < n.size(); i++)
+		{
+			sp<FrameState> f = ms<FrameState>(n[i]);
+			spn->push_back(f);
+		}
+
+		return spn;
 	}
 
 };
@@ -687,7 +703,7 @@ public:
 	long long lastIncomingFramePacketID = 0;
 	long long storePacketsTicksCounter = 0;
 
-	typedef sp<vector<FrameState>> FrameStateArray;
+	typedef sp<vector<sp<FrameState>>> FrameStateArray;
 	sp<vector<FrameStateArray>> allNetworkPacketsSentUpUntilNow;
 
 	void sendPacketsToOtherPlayers();

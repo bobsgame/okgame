@@ -46,11 +46,11 @@ void Sprite::preloadFromDataFile(string name)
 	//load txt, parse id,width,height,frames,animations
 
 	//log->info("loadTextFileFromExePathIntosp<VectorOfStringsAndTrim "+name);
-	sp<vector<string>>>stringList = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/sprite/" + name + ".txt");
+	sp<vector<string>>stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sprite/" + name + ".txt");
 
 	preloadedFromData = true;
 
-	if (stringList->>size() > 0)
+	if (stringList->size() > 0)
 	{
 		for (int i = 0; i < stringList->size(); i++)
 		{

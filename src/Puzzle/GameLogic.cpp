@@ -1047,9 +1047,9 @@ void GameLogic::sendPacketsToOtherPlayers()
 		for (int j = lastSentPacketID; j < size; j++)
 		{
 
-			sp<vector<FrameState>> networkPacket = allNetworkPacketsSentUpUntilNow->at(j);
+			sp<vector<sp<FrameState>>> networkPacket = allNetworkPacketsSentUpUntilNow->at(j);
 
-			string b64zip = FrameState::getFrameStatesAsBase64LZ4XML(*networkPacket);
+			string b64zip = FrameState::getFrameStatesAsBase64LZ4XML(networkPacket);
 			string md5 = FileUtils::getStringMD5(b64zip);
 
 			//log.debug("Packet Size: "+b64zip.length());

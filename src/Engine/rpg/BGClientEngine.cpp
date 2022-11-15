@@ -561,13 +561,13 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadSkillData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadSkillData");
 	}
 	catch (exception e)
 	{
 		log.error("Could not load PreloadSkillData");
 	}
-	if (b64List->>size() > 0)
+	if (b64List->size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
@@ -590,7 +590,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadDialogueData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadDialogueData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -617,7 +617,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadFlagData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadFlagData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -644,7 +644,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadGameStringData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadGameStringData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -671,7 +671,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadEventData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadEventData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -698,7 +698,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadSpriteData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadSpriteData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -740,7 +740,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadSoundData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadSoundData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -784,7 +784,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadMusicData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadMusicData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -823,7 +823,7 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadMapData");
+		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadMapData");
 	}
 	catch (exception e)//IOException e)
 	{
@@ -1209,7 +1209,7 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(sp<Sprite> s)
 		{
 			if (getCurrentMap()->activeEntityList->at(i).get() == player.get())
 			{
-				getCurrentMap()->activeEntityList.erase(getCurrentMap()->activeEntityList.begin()+i);
+				getCurrentMap()->activeEntityList->erase(getCurrentMap()->activeEntityList->begin()+i);
 				getCurrentMap()->activeEntityList->push_back(p);
 			}
 		}
@@ -1238,7 +1238,7 @@ void BGClientEngine::setPlayerToNormalPlayer()
 		{
 			if (getCurrentMap()->activeEntityList->at(i).get() == player.get())
 			{
-				getCurrentMap()->activeEntityList.erase(getCurrentMap()->activeEntityList.begin() + i);
+				getCurrentMap()->activeEntityList->erase(getCurrentMap()->activeEntityList->begin() + i);
 				getCurrentMap()->activeEntityList->push_back(normalPlayer);
 			}
 		}
