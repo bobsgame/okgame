@@ -74,9 +74,9 @@ class Rotation //static
 {//=========================================================================================================================
 
 public:
-	vector<BlockOffset> blockOffsets;
+	sp<vector<sp<BlockOffset>>>blockOffsets;
 private:
-	vector<BlockOffset> importExport_blockOffsets;
+	vector<BlockOffset>importExport_blockOffsets;
 public:
 	//=========================================================================================================================
 	bool operator==(const Rotation& rhs) const
@@ -98,9 +98,9 @@ public:
 
 	}
 	//=========================================================================================================================
-	void push_back(BlockOffset b)
+	void push_back(sp<BlockOffset> b)
 	{//=========================================================================================================================
-		blockOffsets.push_back(b);
+		blockOffsets->push_back(b);
 	}
 	//=========================================================================================================================
 	template <typename Archive>
@@ -110,21 +110,21 @@ public:
 
 		importExport_blockOffsets.clear();
 		{
-			for (int i = 0; i<blockOffsets.size(); i++)
+			for (int i = 0; i<blockOffsets->size(); i++)
 			{
-				sp<BlockOffset>b = blockOffsets.at(i);
+				sp<BlockOffset>b = blockOffsets->at(i);
 				importExport_blockOffsets.push_back(*b);
 			}
 		}
 		ar & BOOST_SERIALIZATION_NVP(importExport_blockOffsets);
-		blockOffsets.clear();
+		blockOffsets->clear();
 		{
 			for (int i = 0; i<importExport_blockOffsets.size(); i++)
 			{
 				BlockOffset b = importExport_blockOffsets.at(i);
-				sp<BlockOffset>bp = ms<BlockOffset>();
-				*bp = b;
-				blockOffsets.push_back(bp);
+				sp<BlockOffset>bp = ms<BlockOffset>(b);
+				//*bp = b;
+				blockOffsets->push_back(bp);
 			}
 		}
 		importExport_blockOffsets.clear();
@@ -140,9 +140,9 @@ class RotationSet
 public:
 	string name = "";
 
-	vector<Rotation> rotationSet;
+	sp<vector<sp<Rotation>>>rotationSet;
 private:
-	vector<Rotation> importExport_rotationSet;
+	vector<Rotation>importExport_rotationSet;
 public:
 	//=========================================================================================================================
 	RotationSet()
@@ -155,15 +155,15 @@ public:
 		this->name = name;
 	}
 	//=========================================================================================================================
-	void push_back(Rotation r)
+	void push_back(sp<Rotation> r)
 	{//=========================================================================================================================
-		rotationSet.push_back(r);
+		rotationSet->push_back(r);
 	}
 
-	int size() { return (int)rotationSet.size(); }
-	Rotation at(int i) { return rotationSet.at(i); }
-	void clear() { rotationSet.clear(); }
-	void removeAt(int i) { rotationSet.erase(rotationSet.begin()+i); }
+	int size() { return (int)rotationSet->size(); }
+	sp<Rotation> at(int i) { return rotationSet->at(i); }
+	void clear() { rotationSet->clear(); }
+	void removeAt(int i) { rotationSet->erase(rotationSet->begin()+i); }
 
 	//=========================================================================================================================
 	template <typename Archive>
@@ -174,21 +174,21 @@ public:
 
 		importExport_rotationSet.clear();
 		{
-			for (int i = 0; i<rotationSet.size(); i++)
+			for (int i = 0; i<rotationSet->size(); i++)
 			{
-				Rotation b = rotationSet.at(i);
+				Rotation b = rotationSet->at(i);
 				importExport_rotationSet.push_back(b);
 			}
 		}
 		ar & BOOST_SERIALIZATION_NVP(importExport_rotationSet);
-		rotationSet.clear();
+		rotationSet->clear();
 		{
 			for (int i = 0; i<importExport_rotationSet.size(); i++)
 			{
 				Rotation b = importExport_rotationSet.at(i);
-				//sp<Rotation>bp = ms<Rotation>();
+				sp<Rotation>bp = ms<Rotation>(b);
 				//*bp = b;
-				rotationSet.push_back(b);
+				rotationSet->push_back(bp);
 			}
 		}
 		importExport_rotationSet.clear();
@@ -213,7 +213,7 @@ private:
 	OKColor importExport_color;
 public:
 
-	RotationSet rotationSet;												Info rotationSet_Info = Info("Block Placement And Rotation", "Design the layout of the blocks and rotation of the piece.");
+	sp<RotationSet> rotationSet;												Info rotationSet_Info = Info("Block Placement And Rotation", "Design the layout of the blocks and rotation of the piece.");
 
 	int frequencySpecialPieceTypeOnceEveryNPieces = 0;						Info frequencySpecialPieceTypeOnceEveryNPieces_Info = Info("Special Piece Type Once Every N Pieces", "This piece will be created once every n pieces.");
 	int randomSpecialPieceChanceOneOutOf = 0;								Info randomSpecialPieceChanceOneOutOf_Info = Info("Special Piece Random Chance One Out Of", "This piece has a random chance of occuring 1 out of n times.");
@@ -235,10 +235,10 @@ public:
 	bool pieceShooterPiece = false;											Info pieceShooterPiece_Info = Info("Piece Shooter Piece", "This piece will create blocks below it when the rotate button is pressed.");
 
 	//don't use!!! use uuid!
-	vector<sp<BlockType>> overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
-	vector<string> overrideBlockTypes_UUID;
+	sp<vector<sp<BlockType>>>overrideBlockTypes_DEPRECATED;					Info overrideBlockTypes_Info = Info("Override Block Types", "This piece will always be made with these blocks, not the randomly chosen normal type blocks.");
+	sp<vector<string>>overrideBlockTypes_UUID;
 private:
-	//ArrayList<BlockType> importExport_overrideBlockTypes;
+	//sp<vector<BlockType>>importExport_overrideBlockTypes;
 public:
 
 	bool operator==(const PieceType& rhs) const;
@@ -249,10 +249,10 @@ public:
 	
 
 //	PieceType();
-//	PieceType(sp<Color> color, int numBlocks, ArrayList<sp<Rotation>>* rotationSet);
-//	PieceType(sp<Color> color, int numBlocks, ArrayList<sp<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(const string& spriteName, sp<Color> color, int numBlocks, ArrayList<sp<Rotation>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
-//	PieceType(int numBlocks, ArrayList<sp<Rotation>>* rotationSet);
+//	PieceType(sp<Color> color, int numBlocks, sp<vector<sp<Rotation>>>* rotationSet);
+//	PieceType(sp<Color> color, int numBlocks, sp<vector<sp<Rotation>>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(const string& spriteName, sp<Color> color, int numBlocks, sp<vector<sp<Rotation>>>* rotationSet, int randomSpecialPieceChanceOneOutOf, int frequencySpecialPieceTypeOnceEveryNPieces);
+//	PieceType(int numBlocks, sp<vector<sp<Rotation>>>* rotationSet);
 
 	static sp<PieceType> emptyPieceType;
 	static sp<PieceType> oneBlockCursorPieceType;
@@ -272,16 +272,16 @@ public:
 		//this->numBlocks = 1;
 		//this->lastRotation = 0;
 
-		BlockOffset b;// = ms<BlockOffset>(0, 0);
-		Rotation r;// = ms<Rotation>();
-		r.push_back(b);
-		//rotationSet = ms<ArrayList><sp<Rotation>>();
-		rotationSet = RotationSet("");
-		rotationSet.push_back(r);
+		sp<BlockOffset> b;// = ms<BlockOffset>(0, 0);
+		sp<Rotation> r;// = ms<Rotation>();
+		r->push_back(b);
+		//rotationSet = ms<vector><sp<Rotation>>();
+		rotationSet = ms<RotationSet>("");
+		rotationSet->push_back(r);
 	}
 
 	//=========================================================================================================================
-	PieceType(const string &name, const string& spriteName = "", sp<OKColor>color = nullptr, int numBlocks = 1, RotationSet rotationSet = RotationSet("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
+	PieceType(const string &name, const string& spriteName = "", sp<OKColor>color = nullptr, int numBlocks = 1, sp<RotationSet> rotationSet = ms<RotationSet>("") , int randomSpecialPieceChanceOneOutOf = 0, int frequencySpecialPieceTypeOnceEveryNPieces = 0)
 	{//=========================================================================================================================
 		this->name = name;
 
@@ -292,7 +292,7 @@ public:
 		this->color = color;
 		//this->numBlocks = numBlocks;
 		this->rotationSet = rotationSet;
-		//this->lastRotation = rotationSet.size() - 1;
+		//this->lastRotation = rotationSet->size() - 1;
 		this->randomSpecialPieceChanceOneOutOf = randomSpecialPieceChanceOneOutOf;
 		this->frequencySpecialPieceTypeOnceEveryNPieces = frequencySpecialPieceTypeOnceEveryNPieces;
 	}
@@ -312,7 +312,7 @@ public:
 	//Color noColor;
 	//PieceType noPieceType;
 	//BlockType noBlockType;
-	//ArrayList<Color> emptyColors;
+	//sp<vector<Color>>emptyColors;
 
 	sp<Grid> grid = nullptr;
 	sp<GameLogic> game = nullptr;
@@ -322,7 +322,7 @@ public:
 	int xGrid = 0;
 	int yGrid = 0;
 
-	vector<sp<Block>> blocks;
+	sp<vector<sp<Block>>>blocks;
 
 	float cursorAlphaFrom = 0.3f;
 	float cursorAlphaTo = 1.0f;

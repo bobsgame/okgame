@@ -19,14 +19,14 @@ public:
 
 	static Logger log;
 
-	//vector<sp<Event>> cutsceneEventList;//project events and unattached events
-	vector<sp<Event>> eventList;//all events get put here for global lookup
-	vector<sp<Dialogue>> dialogueList;
-	vector<sp<GameString>> gameStringList;
-	vector<sp<Flag>> flagList;
-	vector<sp<Skill>> skillList;
-	vector<sp<Item>> itemList;
-	vector<sp<Event>> runningEventQueue;
+	//sp<vector<sp<Event>>>cutsceneEventList;//project events and unattached events
+	sp<vector<sp<Event>>>eventList;//all events get put here for global lookup
+	sp<vector<sp<Dialogue>>>dialogueList;
+	sp<vector<sp<GameString>>>gameStringList;
+	sp<vector<sp<Flag>>>flagList;
+	sp<vector<sp<Skill>>>skillList;
+	sp<vector<sp<Item>>>itemList;
+	sp<vector<sp<Event>>>runningEventQueue;
 
 	EventManager(sp<Engine> g);
 

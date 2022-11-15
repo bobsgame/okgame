@@ -74,9 +74,9 @@ OKGame::~OKGame()
 	log.debug("~OKGame()");
 #endif
 
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 
 		if (p->gameLogic != nullptr)
 		{
@@ -91,7 +91,7 @@ OKGame::~OKGame()
 
 	}
 
-	players.clear();
+	players->clear();
 
 }
 
@@ -132,16 +132,16 @@ void OKGame::init()
 	//	games.put(randomSeed,ME);
 	//	player2 = ms<Game>(this);
 	//	player2.controlledByNetwork = true;
-	//	games.push_back(player2);
+	//	games->push_back(player2);
 
 }
 
 //=========================================================================================================================
 void OKGame::initPlayer()
 {//=========================================================================================================================
-	for (int i = 0; i<players.size(); i++)
+	for (int i = 0; i<players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 
 		if (p->gameLogic != nullptr)
 		{
@@ -171,13 +171,13 @@ void OKGame::initPlayer()
 		//		}
 
 	}
-	players.clear();
+	players->clear();
 
 	sp<PuzzlePlayer>p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 	
 	p->useKeyboard = true;
-	//if (getControlsManager()->gameControllers.size() > 0)p->gameController = getControlsManager()->gameControllers.at(0);
-	players.push_back(p);
+	//if (getControlsManager()->gameControllers->size() > 0)p->gameController = getControlsManager()->gameControllers->at(0);
+	players->push_back(p);
 
 	if (currentRoom == nullptr)currentRoom = ms<Room>();
 
@@ -190,7 +190,7 @@ bool OKGame::isMultiplayer()
 {//=========================================================================================================================
 	if (networkMultiplayer)return true;
 	if (localMultiplayer)return true;
-	if (players.size() > 1)return true;
+	if (players->size() > 1)return true;
 	return false;
 }
 
@@ -199,9 +199,9 @@ bool OKGame::isMultiplayer()
 //=========================================================================================================================
 bool OKGame::isNetworkGame()
 {//=========================================================================================================================
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		if (players.at(i)->isNetworkPlayer())return true;
+		if (players->at(i)->isNetworkPlayer())return true;
 	}
 	if (networkMultiplayer)return true;
 	return false;
@@ -264,9 +264,9 @@ void OKGame::initAssets()
 	Path spriteFolderPath(spriteFolderString);
 	File spriteFolderPathDir(spriteFolderPath);
 	if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-	vector<string> files;
+	sp<vector<string>>files;
 	spriteFolderPathDir.list(files);
-	vector<string>::iterator it = files.begin();
+	sp<vector<string>>::iterator it = files.begin();
 	for (; it != files.end(); ++it)
 	{
 		//cout << *it << endl;
@@ -274,7 +274,7 @@ void OKGame::initAssets()
 		if (name.find(".txt") != string::npos)
 		{
 			string nameWithoutExtension = name.substr(0, name.find(".txt"));
-			loadedSprites.push_back(spriteManager->preloadSpriteFromDataFile(nameWithoutExtension));
+			loadedSprites->push_back(spriteManager->preloadSpriteFromDataFile(nameWithoutExtension));
 		}
 	}
 
@@ -318,12 +318,12 @@ sp<Sprite> OKGame::getSpriteFromName(const string& name)
 //=========================================================================================================================
 sp<GameLogic> OKGame::getPlayer1Game()
 {//=========================================================================================================================
-	return players.at(0)->gameLogic;
+	return players->at(0)->gameLogic;
 }
 //=========================================================================================================================
 sp<PuzzlePlayer> OKGame::getPlayer1()
 {//=========================================================================================================================
-	return players.at(0);
+	return players->at(0);
 }
 //=========================================================================================================================
 void OKGame::setOKGameFBOSize()
@@ -485,7 +485,7 @@ void OKGame::renderGameIntoFBO(sp<GameLogic> g, bool useColorFilter)
 
 	g->renderForeground();
 	
-	if(players.size()==1 && Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer)
+	if(players->size()==1 && Main::globalSettings->bobsGame_showScoreBarsInSinglePlayer)
 	{
 		g->renderHighScoreMeters();
 	}
@@ -496,9 +496,9 @@ void OKGame::renderGameIntoFBO(sp<GameLogic> g, bool useColorFilter)
 		captionManager->render(RenderOrder::ABOVE_TOP);
 		captionManager->render(RenderOrder::OVER_TEXT);
 		captionManager->render(RenderOrder::OVER_GUI);
-//		for (int i = 0; i < players.size(); i++)
+//		for (int i = 0; i < players->size(); i++)
 //		{
-//			sp<PuzzlePlayer>p = players.at(i);
+//			sp<PuzzlePlayer>p = players->at(i);
 //			sp<GameLogic>g = p->gameLogic;
 //			g->getCaptionManager()->render(RenderOrder::ABOVE);
 //			g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
@@ -619,9 +619,9 @@ void OKGame::render()
 //			captionManager->render(RenderOrder::ABOVE_TOP);
 //			captionManager->render(RenderOrder::OVER_TEXT);
 			captionManager->render(RenderOrder::OVER_GUI);
-//			for (int i = 0; i < players.size(); i++)
+//			for (int i = 0; i < players->size(); i++)
 //			{
-//				sp<PuzzlePlayer>p = players.at(i);
+//				sp<PuzzlePlayer>p = players->at(i);
 //				sp<GameLogic>g = p->gameLogic;
 //				g->getCaptionManager()->render(RenderOrder::OVER_GUI);
 //			}
@@ -695,7 +695,7 @@ void OKGame::render()
 
 			float time = (float)(ticksPassed / 2000.0f);
 
-			int shaderInt = GLUtils::bgShaders.at(shaderCount)->value();
+			int shaderInt = GLUtils::bgShaders->at(shaderCount)->value();
 
 			GLUtils::useShader(shaderInt);
 			GLUtils::setShaderVar2f(shaderInt, (char*)"resolution", (float)GLUtils::getViewportWidth()*GLUtils::SHADER_FBO_SCALE, (float)GLUtils::getViewportHeight()*GLUtils::SHADER_FBO_SCALE);
@@ -744,10 +744,10 @@ void OKGame::render()
 
 		setOKGameFBOSize();
 
-		for (int i = 0; i < players.size(); i++)
+		for (int i = 0; i < players->size(); i++)
 		{
 
-			sp<PuzzlePlayer>p = players.at(i);
+			sp<PuzzlePlayer>p = players->at(i);
 			sp<GameLogic>g = p->gameLogic;
 
 			//render into mainGameFBO
@@ -823,9 +823,9 @@ void OKGame::render()
 			captionManager->render(RenderOrder::ABOVE_TOP);
 			captionManager->render(RenderOrder::OVER_TEXT);
 			captionManager->render(RenderOrder::OVER_GUI);
-//			for (int i = 0; i < players.size(); i++)
+//			for (int i = 0; i < players->size(); i++)
 //			{
-//				sp<PuzzlePlayer>p = players.at(i);
+//				sp<PuzzlePlayer>p = players->at(i);
 //				sp<GameLogic>g = p->gameLogic;
 //				g->getCaptionManager()->render(RenderOrder::ABOVE);
 //				g->getCaptionManager()->render(RenderOrder::ABOVE_TOP);
@@ -834,9 +834,9 @@ void OKGame::render()
 //			}
 		}
 
-		for (int i = 0; i < players.size(); i++)
+		for (int i = 0; i < players->size(); i++)
 		{
-			sp<PuzzlePlayer>p = players.at(i);
+			sp<PuzzlePlayer>p = players->at(i);
 
 			if (p->gameLogic->pauseMiniMenuShowing)playerPauseMiniMenuRender(p, p->gameLogic->playingFieldX0, p->gameLogic->playingFieldX1, p->gameLogic->playingFieldY0, p->gameLogic->playingFieldY1);;
 		}
@@ -1024,14 +1024,14 @@ void OKGame::update()
 	}
 
 
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 
 		sp<GameLogic>g = p->gameLogic;
 
 		//actual game update
-		g->update(i,players.size());
+		g->update(i,(int)players->size());
 
 
 
@@ -1054,15 +1054,15 @@ void OKGame::update()
 
 	bool gameOver = false;
 
-	if (players.size() == 1 && players.at(0)->gameLogic->complete)
+	if (players->size() == 1 && players->at(0)->gameLogic->complete)
 	{
 		gameOver = true;
 	}
 
 	bool allPlayersDead = true;
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 		if (p->gameLogic->died == false)
 		{
 			allPlayersDead = false;
@@ -1073,12 +1073,12 @@ void OKGame::update()
 		gameOver = true;
 	}
 
-	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains && players.size()>1)
+	if (currentRoom->multiplayer_GameEndsWhenOnePlayerRemains && players->size()>1)
 	{
 		int alivePlayers = 0;
-		for (int i = 0; i < players.size(); i++)
+		for (int i = 0; i < players->size(); i++)
 		{
-			sp<PuzzlePlayer>p = players.at(i);
+			sp<PuzzlePlayer>p = players->at(i);
 			if (p->gameLogic->died == false)
 			{
 				alivePlayers++;
@@ -1087,9 +1087,9 @@ void OKGame::update()
 
 		if (alivePlayers == 1)
 		{
-			for (int i = 0; i < players.size(); i++)
+			for (int i = 0; i < players->size(); i++)
 			{
-				sp<PuzzlePlayer>p = players.at(i);
+				sp<PuzzlePlayer>p = players->at(i);
 				if (p->gameLogic->died == false)
 				{
 					p->gameLogic->won = true;
@@ -1099,13 +1099,13 @@ void OKGame::update()
 		}
 	}
 
-	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel && players.size()>1)
+	if (currentRoom->multiplayer_GameEndsWhenSomeoneCompletesCreditsLevel && players->size()>1)
 	{
 
 		bool someoneWon = false;
-		for (int i = 0; i < players.size(); i++)
+		for (int i = 0; i < players->size(); i++)
 		{
-			sp<PuzzlePlayer>p = players.at(i);
+			sp<PuzzlePlayer>p = players->at(i);
 			if (p->gameLogic->complete == true)
 			{
 				someoneWon = true;
@@ -1114,9 +1114,9 @@ void OKGame::update()
 
 		if (someoneWon)
 		{
-			for (int i = 0; i < players.size(); i++)
+			for (int i = 0; i < players->size(); i++)
 			{
-				sp<PuzzlePlayer>p = players.at(i);
+				sp<PuzzlePlayer>p = players->at(i);
 				if (p->gameLogic->complete == false)
 				{
 					p->gameLogic->lost = true;
@@ -1153,7 +1153,7 @@ void OKGame::update()
 			{
 				string text = "Press Enter or Start to restart";
 
-				if (isNetworkGame() || players.size() > 1)
+				if (isNetworkGame() || players->size() > 1)
 				{
 					text = "Press Enter or Start to return to lobby";
 				}
@@ -1170,7 +1170,7 @@ void OKGame::update()
 				sentVote = false;
 				
 
-				if (players.size() == 1)
+				if (players->size() == 1)
 				{
 					sp<GameSequence>gs = getPlayer1Game()->currentGameSequence;
 					initPlayer();
@@ -1244,9 +1244,9 @@ void OKGame::sendGameStatsToServer()
 		//even include local multiplayer why not
 		//include it in "games played" and "time played"
 
-		for (int i = 0; i < players.size(); i++)
+		for (int i = 0; i < players->size(); i++)
 		{
-			sp<PuzzlePlayer>p = players.at(i);
+			sp<PuzzlePlayer>p = players->at(i);
 			if (p->isNetworkPlayer() == false)
 			{
 
@@ -1256,11 +1256,11 @@ void OKGame::sendGameStatsToServer()
 				s.userName = g->getEngine()->getUserName_S();
 				s.userID = g->getEngine()->getUserID_S();
 
-				if (g->currentGameSequence->gameTypes.size() == 1)
+				if (g->currentGameSequence->gameTypes->size() == 1)
 				{
 					s.isGameTypeOrSequence = "GameType";
-					s.gameTypeName = g->currentGameSequence->gameTypes.at(0)->name;
-					s.gameTypeUUID = g->currentGameSequence->gameTypes.at(0)->uuid;
+					s.gameTypeName = g->currentGameSequence->gameTypes->at(0)->name;
+					s.gameTypeUUID = g->currentGameSequence->gameTypes->at(0)->uuid;
 				}
 				else
 				{
@@ -1279,7 +1279,7 @@ void OKGame::sendGameStatsToServer()
 				s.complete = (int)g->complete;
 				s.isLocalMultiplayer = (int)localMultiplayer;
 				s.isNetworkMultiplayer = (int)networkMultiplayer;
-				s.numPlayers = (int)players.size();
+				s.numPlayers = (int)players->size();
 				s.level = g->currentLevel;
 				s.timeLasted = g->totalTicksPassed;
 				s.timeStarted = g->timeStarted;
@@ -1298,9 +1298,9 @@ void OKGame::sendGameStatsToServer()
 
 				s.allFrameStatesZipped = "temp";// FrameState::getFrameStatesAsBase64GZippedXML(g->framesArray);
 
-				for (int n = 0; n < players.size(); n++)
+				for (int n = 0; n < players->size(); n++)
 				{
-					sp<PuzzlePlayer>pp = players.at(n);
+					sp<PuzzlePlayer>pp = players->at(n);
 					long long playerUserID = -1;
 					if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
 						playerUserID = pp->peerConnection->peerUserID;
@@ -1310,7 +1310,7 @@ void OKGame::sendGameStatsToServer()
 					if (pp->isNetworkPlayer() && pp->peerConnection != nullptr)
 						playerUserName = pp->peerConnection->getUserName();
 
-					if (players.size() == 1)playerUserName = g->getEngine()->getUserName_S();
+					if (players->size() == 1)playerUserName = g->getEngine()->getUserName_S();
 
 					string statusString = "";
 					if (pp->gameLogic->won)statusString = "won";
@@ -1352,11 +1352,11 @@ void OKGame::sendGameStatsToServer()
 				if (getServerConnection()->getAndResetGotOKGameGameStatsResponse_S())
 				{
 					gotStatsResponse = true;
-					vector<string> statsResponse = getServerConnection()->getAndResetOKGameGameStatsResponse_S();
-					for (int i = 0; i<statsResponse.size(); i++)
+					sp<vector<string>>statsResponse = getServerConnection()->getAndResetOKGameGameStatsResponse_S();
+					for (int i = 0; i<statsResponse->size(); i++)
 					{
 						statsUploadMenu->clear();
-						statsUploadMenu->add(statsResponse.at(i));
+						statsUploadMenu->add(statsResponse->at(i));
 						statsUploadMenu->add(" ");
 						statsUploadMenu->add("Press Action", "", OKColor::green);
 					}
@@ -1402,7 +1402,7 @@ void OKGame::doVoting()
 
 
 	if (
-		players.size() > 1 ||
+		players->size() > 1 ||
 		sentVote ||
 		getServerConnection()->getConnectedToServer_S() == false ||
 		getServerConnection()->getAuthorizedOnServer_S() == false
@@ -1423,10 +1423,10 @@ void OKGame::doVoting()
 		string type = "game sequence";
 		sp<GameSequence>gs = getPlayer1Game()->currentGameSequence;
 		string name = gs->name;
-		if (gs->gameTypes.size() == 1)
+		if (gs->gameTypes->size() == 1)
 		{
 			type = "game type";
-			sp<GameType>g = gs->gameTypes.at(0);
+			sp<GameType>g = gs->gameTypes->at(0);
 			name = g->name;
 			if (g->downloaded == false || g->yourVote != "none")
 			{
@@ -1488,9 +1488,9 @@ void OKGame::doVoting()
 				{
 					sentVote = true;
 
-					if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
+					if (getPlayer1Game()->currentGameSequence->gameTypes->size() == 1)
 					{
-						string uuid = getPlayer1Game()->currentGameSequence->gameTypes.at(0)->uuid;
+						string uuid = getPlayer1Game()->currentGameSequence->gameTypes->at(0)->uuid;
 						getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" + vote + ":" + OKNet::endline);
 					}
 					else
@@ -1499,10 +1499,10 @@ void OKGame::doVoting()
 						getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Vote_Request + "GameSequence:" + uuid + ":" + vote + ":" + OKNet::endline);
 					}
 
-					if (getPlayer1Game()->currentGameSequence->gameTypes.size() == 1)
+					if (getPlayer1Game()->currentGameSequence->gameTypes->size() == 1)
 					{
-						if (vote=="up")getPlayer1Game()->currentGameSequence->gameTypes.at(0)->yourVote = "up";
-						else getPlayer1Game()->currentGameSequence->gameTypes.at(0)->yourVote = "down";
+						if (vote=="up")getPlayer1Game()->currentGameSequence->gameTypes->at(0)->yourVote = "up";
+						else getPlayer1Game()->currentGameSequence->gameTypes->at(0)->yourVote = "down";
 					}
 					else
 					{
@@ -1600,9 +1600,9 @@ void OKGame::updateControls()
 void OKGame::resetPressedButtons()
 {//=========================================================================================================================
 
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 		p->resetPressedButtons();
 	}
 
@@ -1611,9 +1611,9 @@ void OKGame::resetPressedButtons()
 
 void OKGame::setButtonStates()
 {//=========================================================================================================================
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 		p->setButtonStates();
 	}
 
@@ -1622,12 +1622,12 @@ void OKGame::setButtonStates()
 
 	//puzzlegame
 
-//	if (players.size() == 1)
+//	if (players->size() == 1)
 //	{
 //
 //		//use MINIGAME controls
 //
-//		sp<PuzzlePlayer>p = players.at(0);
+//		sp<PuzzlePlayer>p = players->at(0);
 //
 //		if (getControlsManager()->MINIGAME_UP_HELD == true)p->UP_HELD = true;
 //		if (getControlsManager()->MINIGAME_DOWN_HELD == true)p->DOWN_HELD = true;
@@ -1671,13 +1671,13 @@ void OKGame::setButtonStates()
 //
 //	}
 //	else
-//	if (players.size() > 1)
+//	if (players->size() > 1)
 //	{
-	sp<PuzzlePlayer>p = nullptr;// = players.at(0);
+	sp<PuzzlePlayer>p = nullptr;// = players->at(0);
 
-		for (int i = 0; i < players.size();i++)
+		for (int i = 0; i < players->size();i++)
 		{
-			p = players.at(i);
+			p = players->at(i);
 
 			if (p->useKeyboard)
 			{
@@ -1815,18 +1815,18 @@ void OKGame::loadGameTypesFromXML()
 	if (builtInDataPathDir.exists() == false)builtInDataPathDir.createDirectories();
 	if (downloadedDataPathDir.exists() == false)downloadedDataPathDir.createDirectories();
 
-	loadedGameTypes.clear();
+	loadedGameTypes->clear();
 
 	bool found = false;
 
 	//show all files in dir
 	for (int i = 0; i<3; i++)
 	{
-		vector<string> files;
+		sp<vector<string>>files;
 		if (i == 0)builtInDataPathDir.list(files);
 		if (i == 1)userDataPathDir.list(files);
 		if (i == 2)downloadedDataPathDir.list(files);
-		vector<string>::iterator it = files.begin();
+		sp<vector<string>>::iterator it = files.begin();
 		for (; it != files.end(); ++it)
 		{
 			//cout << *it << endl;
@@ -1865,7 +1865,7 @@ void OKGame::loadGameTypesFromXML()
 					if(i==1) {s->creatorUserName = "(You)"; }//s->builtInType = false; 
 					if(i==2)s->downloaded = true;
 
-					loadedGameTypes.push_back(s);
+					loadedGameTypes->push_back(s);
 				}
 				catch(exception)
 				{
@@ -1898,18 +1898,18 @@ void OKGame::loadGameSequencesFromXML()
 	if (builtInDataPathDir.exists() == false)builtInDataPathDir.createDirectories();
 	if (downloadedDataPathDir.exists() == false)downloadedDataPathDir.createDirectories();
 
-	loadedGameSequences.clear();
+	loadedGameSequences->clear();
 
 	bool found = false;
 
 	//show all files in dir
 	for(int i=0;i<3;i++)
 	{
-		vector<string> files;
+		sp<vector<string>>files;
 		if(i==0)builtInDataPathDir.list(files);
 		if(i==1)userDataPathDir.list(files);
 		if(i==2)downloadedDataPathDir.list(files);
-		vector<string>::iterator it = files.begin();
+		sp<vector<string>>::iterator it = files.begin();
 		for (; it != files.end(); ++it)
 		{
 			//cout << *it << endl;
@@ -1950,7 +1950,7 @@ void OKGame::loadGameSequencesFromXML()
 					if (i == 1) { s->creatorUserName = "(You)"; }//s->builtInType = false; 
 					if (i == 2)s->downloaded = true;
 
-					loadedGameSequences.push_back(s);
+					loadedGameSequences->push_back(s);
 				}
 				catch(exception)
 				{
@@ -1967,9 +1967,9 @@ void OKGame::loadGameSequencesFromXML()
 		//initialize actual games from game names in game sequences, this should be improved using game IDs so it can download missing games and sequences can be shared
 
 
-		for(int i=0;i<loadedGameSequences.size();i++)
+		for(int i=0;i<loadedGameSequences->size();i++)
 		{
-			sp<GameSequence>g = loadedGameSequences.at(i);
+			sp<GameSequence>g = loadedGameSequences->at(i);
 
 			loadGameSequenceUUIDsToGamesArray(g);
 		}
@@ -1982,16 +1982,16 @@ void OKGame::loadGameSequencesFromXML()
 void OKGame::loadGameSequenceUUIDsToGamesArray(sp<GameSequence>g)
 {//=========================================================================================================================
 
-	g->gameTypes.clear();
+	g->gameTypes->clear();
 
-	for (int n = 0; n<g->importExport_gameUUIDs.size(); n++)
+	for (int n = 0; n<g->importExport_gameUUIDs->size(); n++)
 	{
-		string uuid = g->importExport_gameUUIDs.at(n);
+		string uuid = g->importExport_gameUUIDs->at(n);
 		sp<GameType>s = getGameTypeByUUID(uuid);
 
 		if (s != nullptr)
 		{
-			g->gameTypes.push_back(s);
+			g->gameTypes->push_back(s);
 		}
 		else
 		{
@@ -2007,9 +2007,9 @@ sp<GameType> OKGame::getGameTypeByName(string name)
 	if (name == "")return nullptr;
 
 	sp<GameType>bt = nullptr;
-	for (int i = 0; i<loadedGameTypes.size(); i++)
+	for (int i = 0; i<loadedGameTypes->size(); i++)
 	{
-		sp<GameType>b = loadedGameTypes.at(i);
+		sp<GameType>b = loadedGameTypes->at(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -2024,9 +2024,9 @@ sp<GameType> OKGame::getGameTypeByUUID(string uuid)
 	if (uuid == "")return nullptr;
 
 	sp<GameType>bt = nullptr;
-	for (int i = 0; i<loadedGameTypes.size(); i++)
+	for (int i = 0; i<loadedGameTypes->size(); i++)
 	{
-		sp<GameType>b = loadedGameTypes.at(i);
+		sp<GameType>b = loadedGameTypes->at(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -2041,9 +2041,9 @@ sp<GameSequence> OKGame::getGameSequenceByName(string name)
 	if (name == "")return nullptr;
 
 	sp<GameSequence>bt = nullptr;
-	for (int i = 0; i<loadedGameSequences.size(); i++)
+	for (int i = 0; i<loadedGameSequences->size(); i++)
 	{
-		sp<GameSequence>b = loadedGameSequences.at(i);
+		sp<GameSequence>b = loadedGameSequences->at(i);
 		if (b->name == name)
 		{
 			bt = b;
@@ -2057,9 +2057,9 @@ sp<GameSequence> OKGame::getGameSequenceByUUID(string uuid)
 	if (uuid == "")return nullptr;
 
 	sp<GameSequence>bt = nullptr;
-	for (int i = 0; i<loadedGameSequences.size(); i++)
+	for (int i = 0; i<loadedGameSequences->size(); i++)
 	{
-		sp<GameSequence>b = loadedGameSequences.at(i);
+		sp<GameSequence>b = loadedGameSequences->at(i);
 		if (b->uuid == uuid)
 		{
 			bt = b;
@@ -2082,11 +2082,11 @@ void OKGame::saveRoomConfigToFile(sp<Room> currentRoom,string name)
 
 	{
 		
-		if(currentRoom->gameSequence->gameTypes.size()==1)
+		if(currentRoom->gameSequence->gameTypes->size()==1)
 		{
 			currentRoom->room_IsGameSequenceOrType = "GameType";
-			currentRoom->room_GameTypeName = currentRoom->gameSequence->gameTypes.at(0)->name;
-			currentRoom->room_GameTypeUUID = currentRoom->gameSequence->gameTypes.at(0)->uuid;
+			currentRoom->room_GameTypeName = currentRoom->gameSequence->gameTypes->at(0)->name;
+			currentRoom->room_GameTypeUUID = currentRoom->gameSequence->gameTypes->at(0)->uuid;
 		}
 		else
 		{
@@ -2122,10 +2122,10 @@ sp<vector<string>> OKGame::getRoomConfigsList()
 	sp<vector<string>> roomConfigFileNames;
 
 
-	vector<string> files;
+	sp<vector<string>>files;
 	userDataPathDir.list(files);
 
-	vector<string>::iterator it = files.begin();
+	sp<vector<string>>::iterator it = files.begin();
 	for (; it != files.end(); ++it)
 	{
 		//cout << *it << endl;
@@ -2192,7 +2192,7 @@ sp<Room> OKGame::loadRoomConfig(string configName)
 		sp<GameType> gt = getGameTypeByUUID(room->room_GameTypeUUID);
 		if (gt != nullptr)
 		{
-			gs->gameTypes.push_back(gt);
+			gs->gameTypes->push_back(gt);
 		}
 		else
 		{
@@ -2215,16 +2215,16 @@ void OKGame::saveUnknownGameSequencesAndTypesToXML(sp<GameSequence>gs)
 	//go through each game sequence and each game type and ignore if the uuid doesn't exist
 	if (gs->creatorUserID != -1 && gs->dateCreated != -1 && getGameSequenceByUUID(gs->uuid) == nullptr)
 	{
-		loadedGameSequences.push_back(gs);
+		loadedGameSequences->push_back(gs);
 		saveGameSequenceToXML(gs, true);
 	}
-	for (int i = 0; i < gs->gameTypes.size(); i++)
+	for (int i = 0; i < gs->gameTypes->size(); i++)
 	{
-		sp<GameType>g = gs->gameTypes.at(i);
+		sp<GameType>g = gs->gameTypes->at(i);
 		if (g->creatorUserID != -1 && g->dateCreated != -1 && getGameTypeByUUID(g->uuid) == nullptr)
 		{
 
-			loadedGameTypes.push_back(g);
+			loadedGameTypes->push_back(g);
 			saveGameTypeToXML(g, true);
 		}
 	}
@@ -2405,7 +2405,15 @@ void OKGame::getGameTypesAndSequencesFromServer()
 							{
 								if (existing->downloaded == true)
 								{
-									loadedGameTypes.remove(existing);
+									//loadedGameTypes->remove(existing);
+									for (int i = 0; i < loadedGameTypes->size(); i++)
+									{
+										if (loadedGameTypes->at(i).get() == existing.get())
+										{
+											loadedGameTypes.erase(loadedGameTypes.begin() + i);
+											i--;
+										}
+									}
 								}
 							}
 
@@ -2415,7 +2423,7 @@ void OKGame::getGameTypesAndSequencesFromServer()
 							if (existing == nullptr || existing->downloaded == true)//dont replace usermade game with downloaded version
 							{
 								g->downloaded = true;
-								loadedGameTypes.push_back(g);
+								loadedGameTypes->push_back(g);
 								saveGameTypeToXML(g, true);
 							}
 						}
@@ -2429,20 +2437,28 @@ void OKGame::getGameTypesAndSequencesFromServer()
 							{
 								if (existing->downloaded == true)
 								{
-									loadedGameSequences.remove(existing);
+									//loadedGameSequences->remove(existing);
+									for (int i = 0; i < loadedGameSequences->size(); i++)
+									{
+										if (loadedGameSequences->at(i).get() == existing.get())
+										{
+											loadedGameSequences.erase(loadedGameSequences.begin() + i);
+											i--;
+										}
+									}
 								}
 							}
 							if (existing == nullptr || existing->downloaded == true)
 							{
 								g->downloaded = true;
-								loadedGameSequences.push_back(g);
+								loadedGameSequences->push_back(g);
 								saveGameSequenceToXML(g, true);
 							}
 						}
 
-						for (int i = 0; i<loadedGameSequences.size(); i++)
+						for (int i = 0; i<loadedGameSequences->size(); i++)
 						{
-							sp<GameSequence>g = loadedGameSequences.at(i);
+							sp<GameSequence>g = loadedGameSequences->at(i);
 
 							loadGameSequenceUUIDsToGamesArray(g);
 						}
@@ -2742,35 +2758,35 @@ void OKGame::updateVersion0ToVersion1()
 
 	//fix for loading version 0 game types before moved to using uuid
 	bool resave = false;
-	for (int i = 0; i<loadedGameTypes.size(); i++)
+	for (int i = 0; i<loadedGameTypes->size(); i++)
 	{
-		sp<GameType>g = loadedGameTypes.at(i);
+		sp<GameType>g = loadedGameTypes->at(i);
 
-		for (int n = 0; n < g->pieceTypes.size(); n++)
+		for (int n = 0; n < g->pieceTypes->size(); n++)
 		{
-			sp<PieceType> p = g->pieceTypes.at(n);
+			sp<PieceType> p = g->pieceTypes->at(n);
 			if (p->uuid == "")
 			{
 				boost::uuids::random_generator generator;
 				p->uuid = to_string(generator());
 			}
 		}
-		for (int n = 0; n < g->blockTypes.size(); n++)
+		for (int n = 0; n < g->blockTypes->size(); n++)
 		{
-			sp<BlockType> b = g->blockTypes.at(n);
+			sp<BlockType> b = g->blockTypes->at(n);
 			if (b->uuid == "")
 			{
 				boost::uuids::random_generator generator;
 				b->uuid = to_string(generator());
 			}
 		}
-		for (int n = 0; n<g->pieceTypes.size(); n++)
+		for (int n = 0; n<g->pieceTypes->size(); n++)
 		{
-			sp<PieceType> p = g->pieceTypes.at(n);
-			for (int x = 0; x<p->overrideBlockTypes_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
+			sp<PieceType> p = g->pieceTypes->at(n);
+			for (int x = 0; x<p->overrideBlockTypes_DEPRECATED->size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				sp<BlockType> b = p->overrideBlockTypes_DEPRECATED.at(x);//wrong block, instantiated by serialize
+				sp<BlockType> b = p->overrideBlockTypes_DEPRECATED->at(x);//wrong block, instantiated by serialize
 				sp<BlockType> correctBlock = g->getBlockTypeByName(b->name);
 				if (correctBlock != nullptr)
 				{
@@ -2779,18 +2795,18 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctBlock->uuid = to_string(generator());
 					}
-					p->overrideBlockTypes_UUID.push_back(correctBlock->uuid);
+					p->overrideBlockTypes_UUID->push_back(correctBlock->uuid);
 				}
 			}
 		}
-		for (int n = 0; n < g->blockTypes.size(); n++)
+		for (int n = 0; n < g->blockTypes->size(); n++)
 		{
-			sp<BlockType> b = g->blockTypes.at(n);
+			sp<BlockType> b = g->blockTypes->at(n);
 
-			for (int x = 0; x<b->makePieceTypeWhenCleared_DEPRECATED.size(); x++)
+			for (int x = 0; x<b->makePieceTypeWhenCleared_DEPRECATED->size(); x++)
 			{
 				resave = true;
-				PieceType p = b->makePieceTypeWhenCleared_DEPRECATED.at(x);
+				PieceType p = b->makePieceTypeWhenCleared_DEPRECATED->at(x);
 				sp<PieceType> correctPiece = g->getPieceTypeByName(p.name);
 				if (correctPiece != nullptr)
 				{
@@ -2799,13 +2815,13 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctPiece->uuid = to_string(generator());
 					}
-					b->makePieceTypeWhenCleared_UUID.push_back(correctPiece->uuid);
+					b->makePieceTypeWhenCleared_UUID->push_back(correctPiece->uuid);
 				}
 			}
-			for (int x = 0; x<b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
+			for (int x = 0; x<b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				BlockType bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.at(x);//wrong block, instantiated by serialize
+				BlockType bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->at(x);//wrong block, instantiated by serialize
 				sp<BlockType> correctBlock = g->getBlockTypeByName(bb.name);
 				if (correctBlock != nullptr)
 				{
@@ -2814,12 +2830,12 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctBlock->uuid = to_string(generator());
 					}
-					b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.push_back(correctBlock->uuid);
+					b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->push_back(correctBlock->uuid);
 				}
 			}
-			for (int x = 0; x < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); x++)
+			for (int x = 0; x < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); x++)
 			{
-				TurnFromBlockTypeToType t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(x);
+				TurnFromBlockTypeToType t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(x);
 				if (t.fromType_DEPRECATED != "")
 				{
 					sp<BlockType> correctBlock = g->getBlockTypeByName(t.fromType_DEPRECATED);
@@ -2849,14 +2865,14 @@ void OKGame::updateVersion0ToVersion1()
 			}
 		}
 
-		for(int n=0;n<g->difficultyTypes.size();n++)
+		for(int n=0;n<g->difficultyTypes->size();n++)
 		{
-			sp<DifficultyType>d = g->difficultyTypes.at(n);
+			sp<DifficultyType>d = g->difficultyTypes->at(n);
 
-			for (int x = 0; x < d->pieceTypesToDisallow_DEPRECATED.size(); x++)
+			for (int x = 0; x < d->pieceTypesToDisallow_DEPRECATED->size(); x++)
 			{
 				resave = true;
-				sp<PieceType> p = d->pieceTypesToDisallow_DEPRECATED.at(x);
+				sp<PieceType> p = d->pieceTypesToDisallow_DEPRECATED->at(x);
 				sp<PieceType> correctPiece = g->getPieceTypeByName(p->name);
 				if (correctPiece != nullptr)
 				{
@@ -2865,13 +2881,13 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctPiece->uuid = to_string(generator());
 					}
-					d->pieceTypesToDisallow_UUID.push_back(correctPiece->uuid);
+					d->pieceTypesToDisallow_UUID->push_back(correctPiece->uuid);
 				}
 			}
-			for (int x = 0; x<d->blockTypesToDisallow_DEPRECATED.size(); x++)//should not have anything in it if it is > version 0
+			for (int x = 0; x<d->blockTypesToDisallow_DEPRECATED->size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				sp<BlockType> bb = d->blockTypesToDisallow_DEPRECATED.at(x);//wrong block, instantiated by serialize
+				sp<BlockType> bb = d->blockTypesToDisallow_DEPRECATED->at(x);//wrong block, instantiated by serialize
 				sp<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
 				if (correctBlock != nullptr)
 				{
@@ -2880,7 +2896,7 @@ void OKGame::updateVersion0ToVersion1()
 						boost::uuids::random_generator generator;
 						correctBlock->uuid = to_string(generator());
 					}
-					d->blockTypesToDisallow_UUID.push_back(correctBlock->uuid);
+					d->blockTypesToDisallow_UUID->push_back(correctBlock->uuid);
 				}
 			}
 		}
@@ -2888,9 +2904,9 @@ void OKGame::updateVersion0ToVersion1()
 	}
 	if (resave)
 	{
-		for (int i = 0; i < loadedGameTypes.size(); i++)
+		for (int i = 0; i < loadedGameTypes->size(); i++)
 		{
-			sp<GameType>g = loadedGameTypes.at(i);
+			sp<GameType>g = loadedGameTypes->at(i);
 			//if (g->builtInType == false)
 				saveGameTypeToXML(g,g->downloaded);
 		}

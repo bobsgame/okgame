@@ -98,7 +98,7 @@ void Ramio::initGame()
 	getMapManager()->changeMap("MINIGAMERAMIOramiolevel1", 16, 0);
 
 	guy = ms<RamioGuy>(this, getCurrentMap());
-	getCurrentMap()->activeEntityList.push_back(guy);
+	getCurrentMap()->activeEntityList->push_back(guy);
 
 	getCurrentMap()->defaultDisableFloorOffset = true;
 
@@ -296,17 +296,17 @@ void Ramio::update()
 			//guy.update();
 			//Cameraman().update();
 
-			for (int i = 0; i < bobas.size(); i++)
+			for (int i = 0; i < bobas->size(); i++)
 			{
-				bobas.at(i)->update();
+				bobas->at(i)->update();
 			}
-			for (int i = 0; i < moneyBlocks.size(); i++)
+			for (int i = 0; i < moneyBlocks->size(); i++)
 			{
-				moneyBlocks.at(i)->update();
+				moneyBlocks->at(i)->update();
 			}
-			for (int i = 0; i < brickBlocks.size(); i++)
+			for (int i = 0; i < brickBlocks->size(); i++)
 			{
-				brickBlocks.at(i)->update();
+				brickBlocks->at(i)->update();
 			}
 
 

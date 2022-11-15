@@ -20,4 +20,4 @@ public:
 };
 
 
-// see arraylist.h for boolean/integer/float commented out
+// see ArrayList.h for boolean/integer/float commented out

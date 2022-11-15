@@ -54,7 +54,7 @@ public:
 	};
 
 public:
-	vector<sp<Coords>> actionsThisFrame;// = ms<ArrayList><sp<Coords>>();
+	sp<vector<sp<Coords>>>actionsThisFrame;// = ms<vector><sp<Coords>>();
 
 
 	ActionManager(sp<Engine> g);

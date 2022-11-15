@@ -22,7 +22,7 @@ public:
 	static Logger log;
 
 
-	vector<sp<Notification>> notificationList;// = ms<ArrayList><sp<Notification>>();
+	sp<vector<sp<Notification>>>notificationList;// = ms<vector><sp<Notification>>();
 
 	static sp<OKTexture> loadingBarTexture;
 	static sp<OKTexture> loadingBarBackgroundTexture;

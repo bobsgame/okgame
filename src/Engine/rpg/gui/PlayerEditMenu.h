@@ -38,9 +38,9 @@ public:
 	//   //Button addGooglePlusAccountButton;
 	//
 	//   sp<Label> genderLabel;
-	//   ArrayList<sp<Label>> genderButtonLabels;
+	//   sp<vector<sp<Label>>>genderButtonLabels;
 	//   sp<SimpleIntegerModel> genderOptionModel;
-	//   ArrayList<sp<ToggleButton>> genderButtons;
+	//   sp<vector<sp<ToggleButton>>>genderButtons;
 	//
 	//   sp<Label> countryLabel;
 	//   SimpleChangableListModel<string>* countryStrings;

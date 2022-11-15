@@ -14,7 +14,7 @@ class Logger;
 class MapManager : public EnginePart
 {
 public:
-	vector<sp<Map>> mapList;
+	sp<vector<sp<Map>>>mapList;
 	HashMap<string, sp<Map>> mapByNameHashMap;//ms<HashMap><string, sp<Map>>();
 	HashMap<int, sp<Map>> mapByIDHashMap;//ms<HashMap><int, sp<Map>>();
 

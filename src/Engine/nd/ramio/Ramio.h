@@ -56,9 +56,9 @@ public:
 	int dieSequenceStep = 0;
 
 
-	vector<sp<RamioOKa>> bobas;// = ms<ArrayList><sp<RamioOKa>>();
-	vector<sp<RamioBrickBlock>> brickBlocks;/// = ms<ArrayList><sp<RamioBrickBlock>>();
-	vector<sp<RamioMoneyBlock>> moneyBlocks;// = ms<ArrayList><sp<RamioMoneyBlock>>();
+	sp<vector<sp<RamioOKa>>>bobas;// = ms<vector><sp<RamioOKa>>();
+	sp<vector<sp<RamioBrickBlock>>>brickBlocks;/// = ms<vector><sp<RamioBrickBlock>>();
+	sp<vector<sp<RamioMoneyBlock>>>moneyBlocks;// = ms<vector><sp<RamioMoneyBlock>>();
 
 
 	sp<RamioGuy> guy = nullptr;

@@ -21,7 +21,7 @@ sp<CaptionManager> Console::captionManager = nullptr;
 
 
 
-//ArrayList<sp<ConsoleText>>* Console::consoleTextList = ms<ArrayList><sp<ConsoleText>>();
+//sp<vector<sp<ConsoleText>>>* Console::consoleTextList = ms<vector><sp<ConsoleText>>();
 //mutex Console::_consoleTextList_Mutex;
 
 Console::Console()
@@ -151,7 +151,7 @@ void Console::render()
 
 	int yPosition = 0;
 
-	vector<sp<ConsoleText>> bottomList;
+	sp<vector<sp<ConsoleText>>>bottomList;
 	for(int i=0;i<consoleTextList->size();i++)
 	{
 		sp<ConsoleText> dt = consoleTextList->at(i);
@@ -162,11 +162,11 @@ void Console::render()
 			i--;
 		}
 	}
-	for(int i=0;i<bottomList.size();i++)
+	for(int i=0;i<bottomList->size();i++)
 	{
-		consoleTextList->push_back(bottomList.at(i));
+		consoleTextList->push_back(bottomList->at(i));
 	}
-	bottomList.clear();
+	bottomList->clear();
 
 	int numStrings = consoleTextList->size();
 	for (int n = numStrings; n > 0; n--)

@@ -186,11 +186,11 @@ private:
 
 	//these are ASSET lists only populated with objectDatas to convert into JSON and fill the regular Map lists at runtime with.
 	
-	vector<sp<MapStateData>> stateDataList;// = ms<ArrayList><sp<MapStateData>>();
+	sp<vector<sp<MapStateData>>>stateDataList;// = ms<vector><sp<MapStateData>>();
 	
-	vector<sp<EventData>> eventDataList;// = ms<ArrayList><sp<EventData>>();
+	sp<vector<sp<EventData>>>eventDataList;// = ms<vector><sp<EventData>>();
 	
-	vector<sp<DoorData>> doorDataList;// = ms<ArrayList><sp<DoorData>>();
+	sp<vector<sp<DoorData>>>doorDataList;// = ms<vector><sp<DoorData>>();
 
 
 public:

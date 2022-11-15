@@ -393,7 +393,7 @@ using Poco::Path;
 //{//=========================================================================================================================
 //
 //	sp<GameSequence>bt = nullptr;
-//	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
+//	for (int i = 0; i<bobsGame->loadedGameSequences->size(); i++)
 //	{
 //		sp<GameSequence>b = bobsGame->loadedGameSequences.get(i);
 //		if (b->name == name)
@@ -408,8 +408,8 @@ using Poco::Path;
 void GameSequenceEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	vector<pair<sp<GameType>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
-	for (int i = 0; i < gamesStringColor.size(); i++)
+	sp<vector<pair<sp<GameType>>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
 		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
 		sp<GameType>g = gameTypeStringColorPairPair.first;
@@ -428,8 +428,8 @@ void GameSequenceEditorControl::populateGameTypesListBox()
 void GameSequenceEditorControl::populateGameSequencesListBox()
 {//=========================================================================================================================
 
-	vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
-	for (int i = 0; i < gamesStringColor.size(); i++)
+	sp<vector<pair<sp<GameSequence>>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
 		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
 		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
@@ -453,7 +453,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	//add all the names
 	//set the name and description from the textboxes
 
-	currentGameSequence->importExport_gameUUIDs.clear();
+	currentGameSequence->importExport_gameUUIDs->clear();
 	for(int i=0; i<currentGameSequenceListBox->GetNumRows(); i++)
 	{
 		Layout::TableRow* row = currentGameSequenceListBox->GetRow(i);
@@ -476,7 +476,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 
 	if (name == "")name = "New Game Sequence";
 	bool taken = false;
-	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
+	for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
 	{
 		sp<GameSequence>s = bobsGame->loadedGameSequences.get(i);
 		if (s != currentGameSequence && s->name == name)taken = true;
@@ -484,7 +484,7 @@ void GameSequenceEditorControl::saveGameSequenceListToCurrentGameSequence()
 	if (taken)
 	{
 		int n = 0;
-		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
+		for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
 		{
 			sp<GameSequence>s = bobsGame->loadedGameSequences.get(i);
 			if (s != currentGameSequence && s->name == name + " " + to_string(n))
@@ -512,7 +512,7 @@ void GameSequenceEditorControl::initFromCurrentGameSequence()
 	GetCanvas()->DoThink();
 	currentGameSequenceListBox->UnselectAll();
 
-	for(int i=0;i<currentGameSequence->importExport_gameUUIDs.size();i++)
+	for(int i=0;i<currentGameSequence->importExport_gameUUIDs->size();i++)
 	{
 		string otheruuid = currentGameSequence->importExport_gameUUIDs.get(i);
 		sp<GameType>gt = bobsGame->getGameTypeByUUID(otheruuid);
@@ -736,7 +736,7 @@ void GameSequenceEditorControl::createNewGameSequence(sp<Base> control)
 {//=========================================================================================================================
  //create new currentGameType with defaults and close the list
 	sp<GameSequence>s = ms<GameSequence>();
-	s->name += to_string(bobsGame->loadedGameSequences.size());
+	s->name += to_string(bobsGame->loadedGameSequences->size());
 	//bobsGame->loadedGameSequences.add(s);
 
 	currentGameSequence = s;
@@ -761,7 +761,7 @@ void GameSequenceEditorControl::duplicateGameSequence(sp<Base> control)
  //the only thing we would do is load the selected game type and then append the name with "copy"
 	if (gameSequencesListBox->IsAnyRowSelected() == false)return;
 
-	//OKGame::log.debug(to_string(currentGameType->pieceTypes.size()));
+	//OKGame::log.debug(to_string(currentGameType->pieceTypes->size()));
 
 	sp<GameSequence>s = ms<GameSequence>();
 	string uuid = s->uuid;
@@ -769,12 +769,12 @@ void GameSequenceEditorControl::duplicateGameSequence(sp<Base> control)
 	s->uuid = uuid;
 	//s->builtInType = false;
 	s->downloaded = false;
-	//OKGame::log.debug(to_string(s->pieceTypes.size()));
+	//OKGame::log.debug(to_string(s->pieceTypes->size()));
 
 
 	s->name += " Copy";
 	bool taken = false;
-	for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
+	for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
 	{
 		sp<GameSequence>g = bobsGame->loadedGameSequences.get(i);
 		if (g != s && g->name == s->name)taken = true;
@@ -782,7 +782,7 @@ void GameSequenceEditorControl::duplicateGameSequence(sp<Base> control)
 	if (taken)
 	{
 		int n = 0;
-		for (int i = 0; i < bobsGame->loadedGameSequences.size(); i++)
+		for (int i = 0; i < bobsGame->loadedGameSequences->size(); i++)
 		{
 			sp<GameSequence>g = bobsGame->loadedGameSequences.get(i);
 			if (g != s && g->name == s->name + " " + to_string(n))
@@ -831,7 +831,7 @@ void GameSequenceEditorControl::deleteGameSequence(sp<Base> control)
 //		return;
 //	}
 
-	if (bobsGame->loadedGameSequences.contains(bt))bobsGame->loadedGameSequences.remove(bt);
+	if (bobsGame->loadedGameSequences.contains(bt))bobsGame->loadedGameSequences->remove(bt);
 
 	gameSequenceSelectLabel->SetText("");
 
@@ -895,8 +895,8 @@ void GameSequenceEditorControl::onUploadButton(sp<Base> control)
 
 	onSaveButton(control);
 
-	if (currentGameSequence->importExport_gameUUIDs.size() == 0)return;
-	if (currentGameSequence->importExport_gameUUIDs.size() == 1)
+	if (currentGameSequence->importExport_gameUUIDs->size() == 0)return;
+	if (currentGameSequence->importExport_gameUUIDs->size() == 1)
 	{
 		sp<WindowControl>result = ms<WindowControl>(GetCanvas());
 		result->SetTitle("Result");
@@ -1051,7 +1051,7 @@ void GameSequenceEditorControl::onRemoveButton(sp<Base> control)
 	{
 		if(row==currentGameSequenceListBox->GetRow(i))
 		{
-			currentGameSequence->importExport_gameUUIDs.removeAt(i);
+			currentGameSequence->importExport_gameUUIDs->erase(->begin()+i);
 			currentGameSequenceListBox->RemoveItem(row);
 			break;
 		}
@@ -1081,12 +1081,12 @@ void GameSequenceEditorControl::onUpButton(sp<Base> control)
 
 	if(index>0)
 	{
-		currentGameSequence->importExport_gameUUIDs.removeAt(index);
+		currentGameSequence->importExport_gameUUIDs->erase(->begin()+index);
 		currentGameSequenceListBox->Clear();
 		GetCanvas()->DoThink();
 
 		currentGameSequence->importExport_gameUUIDs.insert(index - 1, selectedGame->uuid);
-		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs.size(); i++)
+		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs->size(); i++)
 		{
 			string newUUID = currentGameSequence->importExport_gameUUIDs.get(i);
 			sp<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
@@ -1120,12 +1120,12 @@ void GameSequenceEditorControl::onDownButton(sp<Base> control)
 
 	if (index < currentGameSequenceListBox->GetNumRows() - 1)
 	{
-		currentGameSequence->importExport_gameUUIDs.removeAt(index);
+		currentGameSequence->importExport_gameUUIDs->erase(->begin()+index);
 		currentGameSequenceListBox->Clear();
 		GetCanvas()->DoThink();
 
 		currentGameSequence->importExport_gameUUIDs.insert(index+1, selectedGame->uuid);
-		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs.size(); i++)
+		for (int i = 0; i<currentGameSequence->importExport_gameUUIDs->size(); i++)
 		{
 			string newUUID = currentGameSequence->importExport_gameUUIDs.get(i);
 			sp<GameType>game = bobsGame->getGameTypeByUUID(newUUID);
@@ -1179,11 +1179,11 @@ void OKGame::gameSequenceEditorMenuUpdate()
 		{
 
 			//remove unsaved game sequences
-//			for (int i = 0; i<loadedGameSequences.size(); i++)
+//			for (int i = 0; i<loadedGameSequences->size(); i++)
 //			{
 //				if (loadedGameSequences.get(i)->loadedFilename == "")
 //				{
-//					loadedGameSequences.removeAt(i);
+//					loadedGameSequences->erase(->begin()+i);
 //					i--;
 //				}
 //			}

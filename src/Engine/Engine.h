@@ -73,7 +73,7 @@ public:
 	sp<EventManager> eventManager = nullptr;
 
 
-	static vector<sp<UDPPeerConnection>> onlineFriends;
+	static sp<vector<sp<UDPPeerConnection>>>onlineFriends;
 
 	double engineSpeed = 1.0;
 

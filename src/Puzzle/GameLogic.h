@@ -115,7 +115,7 @@ public:
 	}
 
 	//=========================================================================================================================
-	static string getFrameStatesAsBase64LZ4XML(vector<FrameState> &n)
+	static string getFrameStatesAsBase64LZ4XML(sp<vector<FrameState>>&n)
 	{ //=========================================================================================================================
 
 		std::stringstream ss;
@@ -141,7 +141,7 @@ public:
 		ss << xml;
 
 		boost::archive::xml_iarchive ia(ss);
-		vector<FrameState>* n = new vector<FrameState>();
+		sp<vector<FrameState>>* n = new sp<vector<FrameState>>();
 		try
 		{
 			ia >> BOOST_SERIALIZATION_NVP(*n);
@@ -167,7 +167,7 @@ public:
 	static Logger log;
 
 	//static OKColor noColor;
-	//static ArrayList<OKColor> emptyColors;
+	//static sp<vector<OKColor>>emptyColors;
 
 	sp<GameSequence>currentGameSequence = nullptr;
 	sp<PuzzlePlayer> player = nullptr;
@@ -179,7 +179,7 @@ public:
 	//virtual sp<CaptionManager> getCaptionManager() override;
 
 	
-	vector<sp<GameType>> gameTypeRandomBag;
+	sp<vector<sp<GameType>>>gameTypeRandomBag;
 	sp<GameType> currentGameType = nullptr;//currentGameType
 
 	sp<Grid> grid = nullptr;
@@ -301,16 +301,16 @@ private:
 	long long flashBlocksTicksCounter = 0;
 	int timesToFlashBlocksQueue = 0;
 	long long removeBlocksTicksCounter = 0;
-	vector<sp<Block>> currentChainBlocks;
+	sp<vector<sp<Block>>>currentChainBlocks;
 public:
-	vector<sp<Block>> fadingOutBlocks;
+	sp<vector<sp<Block>>>fadingOutBlocks;
 
 	sp<Piece> currentPiece = nullptr;
 	sp<Piece> lastPiece = nullptr;
 
 	sp<Piece> holdPiece = nullptr;
-	vector<sp<Piece>> nextPieces;
-	vector<sp<Piece>> nextPieceSpecialBuffer;
+	sp<vector<sp<Piece>>>nextPieces;
+	sp<vector<sp<Piece>>>nextPieceSpecialBuffer;
 
 	int lastKnownLevel = 0;
 	int currentLevel = 0;
@@ -404,7 +404,7 @@ private:
 
 private:
 	void processFrame();
-	void addToChainBlocks(ArrayList<sp<Block>> &arr);
+	void addToChainBlocks(sp<vector<sp<Block>>>arr);
 	bool detectedChain();
 	void checkForChain();
 
@@ -567,8 +567,8 @@ public:
 	sp<Caption> piecesLeftToLevelUpCaption = nullptr;
 
 private:
-	vector<sp<Caption>> infoCaptions;// = ms<ArrayList><sp<Caption>>();
-	vector<sp<Caption>> announcementCaptions;// = ms<ArrayList><sp<Caption>>();
+	sp<vector<sp<Caption>>>infoCaptions;// = ms<vector><sp<Caption>>();
+	sp<vector<sp<Caption>>>announcementCaptions;// = ms<vector><sp<Caption>>();
 
 public:
 	sp<Caption> totalTicksPassedCaption = nullptr;
@@ -681,7 +681,7 @@ public:
 	typedef sp<vector<string>> ArrayListString;
 	ArrayListString outboundPacketQueueVector;
 	
-	typedef HashMap<string, string> HashMapStringString;
+	typedef HashMap<string, string>HashMapStringString;
 	HashMapStringString outboundPacketQueueHashMap;
 
 	long long lastIncomingFramePacketID = 0;
@@ -761,33 +761,33 @@ public:
 private:
 	typedef sp<vector<FrameState>> ArrayListFrameState;
 	typedef HashMap<long long, ArrayListFrameState> HashMapLongLongArrayListFrameState;
-	HashMapLongLongArrayListFrameState _incomingFramePackets;
+	sp<HashMapLongLongArrayListFrameState> _incomingFramePackets;
 	mutex _incomingFramePackets_Mutex;
 public:
 	sp<vector<FrameState>> incomingFramePacketsGet_S(long long k)
 	{
 		lock_guard<mutex> lock(_incomingFramePackets_Mutex);
-		return _incomingFramePackets.get(k);
+		return _incomingFramePackets->get(k);
 	}
 	int incomingFramePacketsSize_S()
 	{
 		lock_guard<mutex> lock(_incomingFramePackets_Mutex);
-		return _incomingFramePackets.size();
+		return _incomingFramePackets->size();
 	}
 	void incomingFramePacketsRemoveAt_S(long long k)
 	{
 		lock_guard<mutex> lock(_incomingFramePackets_Mutex);
-		_incomingFramePackets.removeAt(k);
+		_incomingFramePackets->removeAt(k);
 	}
 	void incomingFramePacketsPut_S(long long k, ArrayListFrameState v)
 	{
 		lock_guard<mutex> lock(_incomingFramePackets_Mutex);
-		_incomingFramePackets.put(k,v);
+		_incomingFramePackets->put(k,v);
 	}
 	bool incomingFramePacketsContainsKey_S(long long k)
 	{
 		lock_guard<mutex> lock(_incomingFramePackets_Mutex);
-		return _incomingFramePackets.containsKey(k);
+		return _incomingFramePackets->containsKey(k);
 	}
 };
 

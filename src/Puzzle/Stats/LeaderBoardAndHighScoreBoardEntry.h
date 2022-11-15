@@ -93,7 +93,7 @@ public:
 
 	};
 
-	vector<sp<OKGameLeaderBoardAndHighScoreBoardEntry>> entries;
+	sp<vector<sp<OKGameLeaderBoardAndHighScoreBoardEntry>>>entries;
 
 	int maxEntries = 10;
 
@@ -107,7 +107,7 @@ public:
 
 		for (int i = 0; i<maxEntries; i++)
 		{
-			entries.push_back(ms<OKGameLeaderBoardAndHighScoreBoardEntry>());
+			entries->push_back(ms<OKGameLeaderBoardAndHighScoreBoardEntry>());
 		}
 
 	}
@@ -206,10 +206,10 @@ public:
 //
 //
 //	//===============================================================================================
-//	static ArrayList<OKGameLeaderBoardAndHighScoreBoard> getAllLeaderBoardsAndHighScoreBoardsFromDB(Connection databaseConnection, string databaseName)
+//	static sp<vector<OKGameLeaderBoardAndHighScoreBoard>>getAllLeaderBoardsAndHighScoreBoardsFromDB(Connection databaseConnection, string databaseName)
 //	{//===============================================================================================
 //
-//		ArrayList<OKGameLeaderBoardAndHighScoreBoard> leaderBoards = ms<ArrayList><OKGameLeaderBoardAndHighScoreBoard>();
+//		sp<vector<OKGameLeaderBoardAndHighScoreBoard>>leaderBoards = ms<vector><OKGameLeaderBoardAndHighScoreBoard>();
 //
 //		ResultSet resultSet = nullptr;
 //		PreparedStatement ps = nullptr;
@@ -950,7 +950,7 @@ public:
 //			if (replaceScore)
 //			{
 //				entries.add(i, newStats);
-//				while (entries.size()>maxEntries)entries.remove(entries.size() - 1);
+//				while (entries->size()>maxEntries)entries->remove(entries->size() - 1);
 //				return true;
 //			}
 //
@@ -1053,7 +1053,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			string diff = "_" + to_string(i);
-			sp<OKGameLeaderBoardAndHighScoreBoardEntry>s = entries.at(i);
+			sp<OKGameLeaderBoardAndHighScoreBoardEntry>s = entries->at(i);
 
 			gameSavestring += ",userName:`" + s->userName + "`";
 			gameSavestring += ",userID:`" + to_string(s->userID) + "`";
@@ -1093,7 +1093,7 @@ public:
 
 		for (int i = 0; i<maxEntries; i++)
 		{
-			entries.push_back(ms<OKGameLeaderBoardAndHighScoreBoardEntry>());
+			entries->push_back(ms<OKGameLeaderBoardAndHighScoreBoardEntry>());
 		}
 
 		decode(s);
@@ -1144,7 +1144,7 @@ public:
 		for (int i = 0; i<maxEntries; i++)
 		{
 			//string diff = "_" + to_string(i);
-			sp<OKGameLeaderBoardAndHighScoreBoardEntry>stats = entries.at(i);
+			sp<OKGameLeaderBoardAndHighScoreBoardEntry>stats = entries->at(i);
 
 			s = s.substr(s.find('`') + 1);
 			t = s.substr(0, s.find('`'));

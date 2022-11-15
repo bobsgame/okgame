@@ -50,9 +50,9 @@ void SpriteManager::update()
 	}
 
 
-	for (int n = 0; n < screenSpriteList.size(); n++)
+	for (int n = 0; n < screenSpriteList->size(); n++)
 	{
-		sp<Entity> e = screenSpriteList.at(n);
+		sp<Entity> e = screenSpriteList->at(n);
 		e->update();
 	}
 
@@ -74,9 +74,9 @@ void SpriteManager::renderScreenSprites(RenderOrder layer)
 	{
 		//screensprites
 
-		for (int n = 0; n < screenSpriteList.size(); n++)
+		for (int n = 0; n < screenSpriteList->size(); n++)
 		{
-			sp<ScreenSprite> e = screenSpriteList.at(n);
+			sp<ScreenSprite> e = screenSpriteList->at(n);
 
 			if (e->getRenderOrder() == layer)
 			{

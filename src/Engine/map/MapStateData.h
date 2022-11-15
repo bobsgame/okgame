@@ -22,15 +22,15 @@ private:
 
 private:
 	
-	vector<sp<LightData>> lightDataList;
+	sp<vector<sp<LightData>>>lightDataList;
 
 	
-	vector<sp<EntityData>> entityDataList;
+	sp<vector<sp<EntityData>>>entityDataList;
 
-	//public ArrayList<EntityData> characterDataList = ms<ArrayList><EntityData>();
+	//public sp<vector<EntityData>>characterDataList = ms<vector><EntityData>();
 
 	
-	vector<sp<AreaData>> areaDataList;
+	sp<vector<sp<AreaData>>>areaDataList;
 
 
 	

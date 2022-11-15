@@ -6,8 +6,8 @@
 #include "oktypes.h"
 #include "src/Utility/HashMap.h"
 #include "src/Utility/ArrayList.h"
-#include "src/Utility/HashMap.h"
-#include "src/Utility/ArrayList.h"
+
+
 
 class Logger;
 class OKTexture;
@@ -93,7 +93,7 @@ public:
 	static void drawFilledRectXYWH(float x, float y, float width, float height, float r, float g, float b, float a);
 	static void drawLine(float x1, float y1, float x2, float y2, int thickness);
 	static SDL_DisplayMode currentDisplayMode;// = new SDL_DisplayMode();
-	static vector<sp<SDL_DisplayMode>> displayModes;// = ms<ArrayList><sp<SDL_DisplayMode>>();
+	static sp<vector<sp<SDL_DisplayMode>>>displayModes;// = ms<vector><sp<SDL_DisplayMode>>();
 	static int monitorWidth;// = 0;
 	static int monitorHeight;// = 0;
 	static int windowWidth;
@@ -118,7 +118,7 @@ public:
 	static bool useShaders;
 	static int lightShader;
 	static int colorShader;
-	static vector<sp<Integer>> bgShaders;
+	static sp<vector<sp<Integer>>>bgShaders;
 	static int bgShaderCount;
 	static GLuint gaussianShader;
 	static GLuint bloomMaskShader;

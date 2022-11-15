@@ -92,7 +92,7 @@ SpriteData::SpriteData
 
 void SpriteData::addAnimation(const string& frameSequenceName, int frameStart, int hitBoxOffsetLeft1X, int hitBoxOffsetRight1X, int hitBoxOffsetTop1X, int hitBoxOffsetBottom1X)
 { //=========================================================================================================================
-	animationList.push_back(ms<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
+	animationList->push_back(ms<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxOffsetLeft1X, hitBoxOffsetRight1X, hitBoxOffsetTop1X, hitBoxOffsetBottom1X));
 }
 
 //sp<SpriteData> SpriteData::fromBase64ZippedJSON(const string& b64)
@@ -353,7 +353,7 @@ string& SpriteData::initFromString(string& t)
 		t = t.substr(t.find("`,") + 2);
 
 		sp<SpriteAnimationSequence>s = ms<SpriteAnimationSequence>(frameSequenceName, frameStart, hitBoxFromLeftPixels1X, hitBoxFromRightPixels1X, hitBoxFromTopPixels1X, hitBoxFromBottomPixels1X);
-		animationList.push_back(s);
+		animationList->push_back(s);
 	}
 
 

@@ -27,7 +27,7 @@ private:
 	bool antiAlias = true;
 
 public:
-	vector<sp<TextWindow>> textBox;// = ms<ArrayList><sp<TextWindow>>();
+	sp<vector<sp<TextWindow>>>textBox;// = ms<vector><sp<TextWindow>>();
 
 
 	int width = 64 * 6 * 2; // *2 because we draw everything at 2x to allow for scaling (and higher res 1x unicode fonts)

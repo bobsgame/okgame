@@ -20,15 +20,15 @@ Flag::Flag(sp<Engine> g, int id)
 
 	this->data = ms<FlagData>(id, "");
 
-	for (int i = 0; i < (int)getEventManager()->flagList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->flagList->size(); i++)
 	{
-		if (getEventManager()->flagList.at(i)->getID() == data->getID())
+		if (getEventManager()->flagList->at(i)->getID() == data->getID())
 		{
 			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->flagList.push_back(shared_from_this());
+	getEventManager()->flagList->push_back(shared_from_this());
 
 	//we don't particularly need to know what the actual flag name is... ID is fine.
 	//so, don't really care about getting the flag name from the server.
@@ -42,15 +42,15 @@ Flag::Flag(sp<Engine> g, sp<FlagData> data)
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->flagList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->flagList->size(); i++)
 	{
-		if (getEventManager()->flagList.at(i)->getID() == data->getID())
+		if (getEventManager()->flagList->at(i)->getID() == data->getID())
 		{
 			log.error("Flag already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->flagList.push_back(shared_from_this());
+	getEventManager()->flagList->push_back(shared_from_this());
 }
 
 //The following method was originally marked 'synchronized':

@@ -38,18 +38,18 @@ void ItemsPanel::updateItems()
 { //=========================================================================================================================
 
 
-	vector<sp<Item>> items;
+	sp<vector<sp<Item>>>items;
 
-	for (int i = 0; i < (int)getEventManager()->itemList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->itemList->size(); i++)
 	{
-		if (getEventManager()->itemList.at(i)->getHaveItemValue_S() == true)
+		if (getEventManager()->itemList->at(i)->getHaveItemValue_S() == true)
 		{
-			items.push_back(getEventManager()->itemList.at(i));
+			items->push_back(getEventManager()->itemList->at(i));
 		}
 	}
 	//
 	//
-	//   itemDialogLayout = ArrayList<sp<DialogLayout>>(items->size());
+	//   itemDialogLayout = sp<vector<sp<DialogLayout>>>(items->size());
 	//
 	//   for (int n = 0; n < items->size(); n++)
 	//   {

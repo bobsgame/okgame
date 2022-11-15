@@ -161,7 +161,7 @@ void MapManager::render()
 
 			bool flip = true;
 
-			for (int i = 0; i < (int)currentMap->sortedLightsLayers.size(); i++)
+			for (int i = 0; i < (int)currentMap->sortedLightsLayers->size(); i++)
 			{
 				sp<vector<sp<Light>>> thisLayer = currentMap->sortedLightsLayers.get(i);
 
@@ -239,7 +239,7 @@ void MapManager::render()
 				if (currentMap->currentState != nullptr)
 				{
 					//draw mover lights after finished drawing blended lights.
-					for (int i = 0; i < (int)currentMap->currentState->lightList.size(); i++)
+					for (int i = 0; i < (int)currentMap->currentState->lightList->size(); i++)
 					{
 						sp<Light> l = currentMap->currentState->lightList.get(i);
 						if (l->getName().find("mover") != string::npos)
@@ -341,7 +341,7 @@ void MapManager::renderLastMap()
 		lastMap->renderEntities(RenderOrder::GROUND);
 
 
-		//			for(int i=0;i<lastMap.doorList.size();i++)
+		//			for(int i=0;i<lastMap.doorList->size();i++)
 		//			{
 		//				Door d = lastMap.doorList.get(i);
 		//
@@ -631,7 +631,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	{
 		if (lastMap != nullptr)
 		{
-			lastMap->activeEntityList.remove(getPlayer()); //DONE: each map should just render its own entities, so we can fade out the last map's entities along with the map.
+			lastMap->activeEntityList->remove(getPlayer()); //DONE: each map should just render its own entities, so we can fade out the last map's entities along with the map.
 		}
 		//so we should actually clear the entities after the last map is faded out.
 		//remove the entitymanager entirely.
@@ -841,13 +841,13 @@ sp<Area> MapManager::getAreaByID(int id)
 	//TODO: then check all states of current map
 
 	//then check all states of all maps
-	for (int i = 0; i < mapList.size(); i++)
+	for (int i = 0; i < mapList->size(); i++)
 	{
 		sp<Map> m = mapList.get(i);
-		for (int k = 0; k < (int)m->stateList.size(); k++)
+		for (int k = 0; k < (int)m->stateList->size(); k++)
 		{
 			sp<MapState> s = m->stateList.get(k);
-			for (int l = 0; l < (int)s->areaList.size(); l++)
+			for (int l = 0; l < (int)s->areaList->size(); l++)
 			{
 				sp<Area> a = s->areaList.get(l);
 				if (a->getID() == id)
@@ -857,7 +857,7 @@ sp<Area> MapManager::getAreaByID(int id)
 			}
 		}
 
-		for (int n = 0; n < (int)m->warpAreaList.size(); n++)
+		for (int n = 0; n < (int)m->warpAreaList->size(); n++)
 		{
 			if (m->warpAreaList.get(n)->getID() == id)
 			{
@@ -876,13 +876,13 @@ sp<Entity> MapManager::getEntityByID(int id)
 	//TODO: then check all states of current map
 
 	//then check all states of all maps
-	for (int i = 0; i < mapList.size(); i++)
+	for (int i = 0; i < mapList->size(); i++)
 	{
 		sp<Map> m = mapList.get(i);
-		for (int k = 0; k < (int)m->stateList.size(); k++)
+		for (int k = 0; k < (int)m->stateList->size(); k++)
 		{
 			sp<MapState> s = m->stateList.get(k);
-			for (int l = 0; l < (int)s->entityList.size(); l++)
+			for (int l = 0; l < (int)s->entityList->size(); l++)
 			{
 				sp<Entity> a = s->entityList.get(l);
 				if (a->getID() == id)
@@ -891,7 +891,7 @@ sp<Entity> MapManager::getEntityByID(int id)
 				}
 			}
 
-			for (int l = 0; l < (int)s->characterList.size(); l++)
+			for (int l = 0; l < (int)s->characterList->size(); l++)
 			{
 				sp<Entity> a = s->characterList.get(l);
 				if (a->getID() == id)
@@ -900,7 +900,7 @@ sp<Entity> MapManager::getEntityByID(int id)
 				}
 			}
 
-			for (int l = 0; l < (int)s->lightList.size(); l++)
+			for (int l = 0; l < (int)s->lightList->size(); l++)
 			{
 				sp<Entity> a = s->lightList.get(l);
 				if (a->getID() == id)
@@ -910,7 +910,7 @@ sp<Entity> MapManager::getEntityByID(int id)
 			}
 		}
 
-		for (int n = 0; n < (int)m->doorList.size(); n++)
+		for (int n = 0; n < (int)m->doorList->size(); n++)
 		{
 			if (m->doorList.get(n)->getID() == id)
 			{
@@ -918,7 +918,7 @@ sp<Entity> MapManager::getEntityByID(int id)
 			}
 		}
 
-		for (int n = 0; n < (int)m->activeEntityList.size(); n++)
+		for (int n = 0; n < (int)m->activeEntityList->size(); n++)
 		{
 			if (m->activeEntityList.get(n)->getID() == id)
 			{
@@ -927,7 +927,7 @@ sp<Entity> MapManager::getEntityByID(int id)
 		}
 	}
 
-	for (int n = 0; n < (int)getSpriteManager()->screenSpriteList.size(); n++)
+	for (int n = 0; n < (int)getSpriteManager()->screenSpriteList->size(); n++)
 	{
 		if (getSpriteManager()->screenSpriteList.get(n)->getID() == id)
 		{
@@ -945,13 +945,13 @@ sp<Light> MapManager::getLightByID(int id)
 	//TODO: then check all states of current map
 
 	//then check all states of all maps
-	for (int i = 0; i < mapList.size(); i++)
+	for (int i = 0; i < mapList->size(); i++)
 	{
 		sp<Map> m = mapList.get(i);
-		for (int k = 0; k < (int)m->stateList.size(); k++)
+		for (int k = 0; k < (int)m->stateList->size(); k++)
 		{
 			sp<MapState> s = m->stateList.get(k);
-			for (int l = 0; l < (int)s->lightList.size(); l++)
+			for (int l = 0; l < (int)s->lightList->size(); l++)
 			{
 				sp<Light> a = s->lightList.get(l);
 				if (a->getID() == id)
@@ -971,11 +971,11 @@ sp<Door> MapManager::getDoorByID(int id)
 	//TODO: first check current map
 
 	//then check all maps
-	for (int i = 0; i < mapList.size(); i++)
+	for (int i = 0; i < mapList->size(); i++)
 	{
 		sp<Map> m = mapList.get(i);
 
-		for (int l = 0; l < (int)m->doorList.size(); l++)
+		for (int l = 0; l < (int)m->doorList->size(); l++)
 		{
 			sp<Door> a = m->doorList.get(l);
 			if (a->getID() == id)

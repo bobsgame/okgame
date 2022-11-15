@@ -33,7 +33,7 @@ StuffMenu::StuffMenu()
 	debugInfoPanel = ms<DebugInfoPanel>();
 
 	//
-	//   stuffMenuTabs = ArrayList<sp<ToggleButton>>(8);
+	//   stuffMenuTabs = sp<vector<sp<ToggleButton>>>(8);
 	//   sp<SimpleIntegerModel> startMenuTabsIntModel = ms<SimpleIntegerModel>(1, stuffMenuTabs->size(), 0);
 	//
 	//   for (int i = 0; i < stuffMenuTabs->size(); i++)

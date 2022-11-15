@@ -10,7 +10,7 @@ class Logger;
 template <typename E> class Vector
 {
 public:
-	static void removeAt(vector<E> &v,int index)
+	static void removeAt(vector<E>&v,int index)
 	{
 		auto it = v.begin();
 		advance(it, index);
@@ -60,14 +60,14 @@ public:
 
 
 
-template <typename E> class ArrayList
+template <typename E> class BobArray
 {
 public:
 	static Logger log;
 
-	ArrayList<E>();
-	ArrayList<E>(int size);
-	~ArrayList<E>();
+	BobArray<E>();
+	BobArray<E>(int size);
+	~BobArray<E>();
 
 
 
@@ -83,10 +83,10 @@ public:
 	E get(int index);
 	int indexOf(E);
 	void deleteAll();
-	vector<E> v;
+	sp<vector<E>>v;
 
-	bool operator==(const ArrayList<E>& rhs) const;
-	bool operator!=(const ArrayList<E>& rhs) const;
+	bool operator==(const BobArray<E>& rhs) const;
+	bool operator!=(const BobArray<E>& rhs) const;
 
 
 	template <typename Archive>
@@ -98,8 +98,8 @@ public:
 
 };
 
-//BOOST_CLASS_VERSION(template <typename E> ArrayList<E>, 1)
-//BOOST_CLASS_TRACKING(ArrayList, boost::serialization::track_never)
+//BOOST_CLASS_VERSION(template <typename E> BobArray<E>, 1)
+//BOOST_CLASS_TRACKING(BobArray, boost::serialization::track_never)
 
 /*
 
@@ -119,13 +119,13 @@ void 	clear()
 Removes all of the elements from this list.
 
 Object 	clone()
-Returns a shallow copy of this ArrayList instance.
+Returns a shallow copy of this BobArray instance.
 
 boolean 	contains(Object o)
 Returns true if this list contains the specified element.
 
 void 	ensureCapacity(int minCapacity)
-Increases the capacity of this ArrayList instance, if necessary, to ensure that it can hold at least the number of elements specified by the minimum capacity argument.
+Increases the capacity of this BobArray instance, if necessary, to ensure that it can hold at least the number of elements specified by the minimum capacity argument.
 
 E 	get(int index)
 Returns the element at the specified position in this list.
@@ -179,16 +179,16 @@ Returns an array containing all of the elements in this list in proper sequence 
 Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array.
 
 void 	trimToSize()
-Trims the capacity of this ArrayList instance to be the list's current size.
+Trims the capacity of this BobArray instance to be the list's current size.
 
 */
 
 
 template <typename E>
-Logger ArrayList<E>::log = Logger("ArrayList");
+Logger BobArray<E>::log = Logger("BobArray");
 
 template <typename E>
-bool ArrayList<E>::operator==(const ArrayList<E>& rhs) const
+bool BobArray<E>::operator==(const BobArray<E>& rhs) const
 {
 	return
 		this->v == rhs.v
@@ -196,7 +196,7 @@ bool ArrayList<E>::operator==(const ArrayList<E>& rhs) const
 }
 
 template <typename E>
-bool ArrayList<E>::operator!=(const ArrayList<E>& rhs) const
+bool BobArray<E>::operator!=(const BobArray<E>& rhs) const
 {
 	return
 		(*this == rhs) == false
@@ -205,30 +205,30 @@ bool ArrayList<E>::operator!=(const ArrayList<E>& rhs) const
 
 
 template <typename E>
-ArrayList<E>::ArrayList()
+BobArray<E>::BobArray()
 {
 }
 
 template <typename E>
-ArrayList<E>::ArrayList(int size)
+BobArray<E>::BobArray(int size)
 {
 	v.resize(size);
 }
 
 template<typename E>
-ArrayList<E>::~ArrayList()
+BobArray<E>::~BobArray()
 {
 	//delete v;
 }
 
 template <typename E>
-void ArrayList<E>::add(E e)
+void BobArray<E>::add(E e)
 {
-	v.push_back(e);
+	v->push_back(e);
 }
 
 template <typename E>
-void ArrayList<E>::deleteAll()
+void BobArray<E>::deleteAll()
 {
 	for(int i=0;i<size();i++)
 	{
@@ -238,13 +238,13 @@ void ArrayList<E>::deleteAll()
 }
 
 template <typename E>
-void ArrayList<E>::insert(int index, E e)
+void BobArray<E>::insert(int index, E e)
 {
 	v.insert(v.begin()+index, e);
 }
 
 template<typename E>
-void ArrayList<E>::removeAt(int index)
+void BobArray<E>::removeAt(int index)
 {
 	if (index < 0 || index >= size())
 	{
@@ -254,7 +254,7 @@ void ArrayList<E>::removeAt(int index)
 
 	//E temp = get(index);
 
-	//typename ArrayList<E>::iterator
+	//typename BobArray<E>::iterator
 		auto it = v.begin();
 	advance(it, index);
 	v.erase(it);
@@ -263,7 +263,7 @@ void ArrayList<E>::removeAt(int index)
 }
 
 template <typename E>
-void ArrayList<E>::remove(E e)
+void BobArray<E>::remove(E e)
 {
 	//if (contains(e) == false)return nullptr;
 	int index = indexOf(e);
@@ -282,52 +282,52 @@ void ArrayList<E>::remove(E e)
 }
 
 template <typename E>
-bool ArrayList<E>::contains(E e)
+bool BobArray<E>::contains(E e)
 {
 	return find(v.begin(), v.end(), e) != v.end();
 }
 
 template <typename E>
-bool ArrayList<E>::containsValue(E e)
+bool BobArray<E>::containsValue(E e)
 {
 	return contains(e);
 }
 
 template<typename E>
-void ArrayList<E>::clear()
+void BobArray<E>::clear()
 {
-	v.clear();
+	v->clear();
 }
 
 template<typename E>
-bool ArrayList<E>::isEmpty()
+bool BobArray<E>::isEmpty()
 {
 	if (size() > 0)return false;
 	return true;
 }
 
 template<typename E>
-int ArrayList<E>::size()
+int BobArray<E>::size()
 {
-	return (int)v.size();
+	return (int)v->size();
 }
 
 template<typename E>
-E ArrayList<E>::get(int index)
+E BobArray<E>::get(int index)
 {
 	if (index < 0 || index >= size())
 	{
 		log.error("Index out of bounds!");
 	}
 
-	E temp = v.at(index);
+	E temp = v->at(index);
 	return temp;
 }
 
 template <typename E>
-int ArrayList<E>::indexOf(E e)
+int BobArray<E>::indexOf(E e)
 {
-	//typename ArrayList<E>::iterator 
+	//typename BobArray<E>::iterator 
 		auto it = v.begin(); 
 		
 		find(v.begin(), v.end(), e);

@@ -26,7 +26,7 @@ public:
 	//Color noColor;
 	//PieceType noPieceType;
 	//BlockType noBlockType;
-	//vector<Color> emptyColors;
+	//sp<vector<Color>>emptyColors;
 
 	sp<GameLogic> game = nullptr;
 
@@ -38,7 +38,7 @@ public:
 #ifdef blocksHashMap
 	HashMap<int, sp<Block>>* blocks = ms<HashMap><int, sp<Block>>();
 #else
-	vector<sp<Block>> blocks;
+	sp<vector<sp<Block>>>blocks;
 #endif
 
 	static sp<Block> nullBlock;
@@ -90,7 +90,7 @@ private:
 public:
 	int lastGarbageHoleX = 0;
 	bool garbageHoleDirectionToggle = true;
-	vector<sp<Piece>> randomBag;;
+	sp<vector<sp<Piece>>>randomBag;;
 	Grid(sp<GameLogic> gameInstance);
 	float getXInFBO();
 	float getXInFBONoShake();
@@ -107,11 +107,11 @@ public:
 	int getNumberOfFilledCells();
 	void removeAllBlocksOfPieceFromGrid(sp<Piece> p, bool fadeOut);
 	void replaceAllBlocksWithNewGameBlocks();
-	sp<Piece> dontPutSameColorDiagonalOrNextToEachOtherReturnNull(sp<Piece> p, int x, int y, vector<sp<PieceType>> &pieceTypes, vector<sp<BlockType>> &blockTypes);
-	sp<Piece> dontPutSameColorNextToEachOtherOrReturnNull(sp<Piece> p, int x, int y, vector<sp<PieceType>> &pieceTypes, vector<sp<BlockType>> &blockTypes);
-	sp<Piece> dontPutSameBlockTypeNextToEachOtherOrReturnNull(sp<Piece> p, int x, int y, vector<sp<PieceType>> &pieceTypes, vector<sp<BlockType>> &blockTypes);
+	sp<Piece> dontPutSameColorDiagonalOrNextToEachOtherReturnNull(sp<Piece> p, int x, int y, sp<vector<sp<PieceType>>>pieceTypes, sp<vector<sp<BlockType>>>blockTypes);
+	sp<Piece> dontPutSameColorNextToEachOtherOrReturnNull(sp<Piece> p, int x, int y, sp<vector<sp<PieceType>>>pieceTypes, sp<vector<sp<BlockType>>>blockTypes);
+	sp<Piece> dontPutSameBlockTypeNextToEachOtherOrReturnNull(sp<Piece> p, int x, int y, sp<vector<sp<PieceType>>>pieceTypes, sp<vector<sp<BlockType>>>blockTypes);
 	void removeAndDestroyAllBlocksInGrid();
-	sp<Piece> putOneBlockPieceInGridCheckingForFillRules(int x, int y, vector<sp<PieceType>> &pieceTypes, vector<sp<BlockType>> &blockTypes);
+	sp<Piece> putOneBlockPieceInGridCheckingForFillRules(int x, int y, sp<vector<sp<PieceType>>>pieceTypes, sp<vector<sp<BlockType>>>blockTypes);
 	void randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY);
 	void buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY);
 	bool scrollUpStack(sp<Piece> cursorPiece, int amt);
@@ -145,16 +145,16 @@ public:
 	void moveToAndRemoveAndFadeOut(sp<Block> b, int x, int y);
 	bool checkLine(int y);
 	sp<vector<sp<Piece>>> getArrayOfPiecesOnGrid();
-	sp<vector<sp<Block>>> checkLines(vector<sp<BlockType>> &ignoreTypes, vector<sp<BlockType>> &mustContainAtLeastOneTypes);
-	bool doBlocksMatchColor(sp<Block> a, sp<Block> b, vector<sp<BlockType>> &ignoreTypes);
+	sp<vector<sp<Block>>> checkLines(sp<vector<sp<BlockType>>> ignoreTypes, sp<vector<sp<BlockType>>> mustContainAtLeastOneTypes);
+	bool doBlocksMatchColor(sp<Block> a, sp<Block> b, sp<vector<sp<BlockType>>>ignoreTypes);
 	sp<vector<sp<Block>>> getConnectedBlocksUpDownLeftRight(sp<Block> b);
-	void checkRecursiveConnectedRowOrColumn(vector<sp<Block>> &connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, vector<sp<BlockType>> &ignoreTypes, vector<sp<BlockType>> &mustContainAtLeastOneTypes);
-	void setColorConnections(vector<sp<BlockType>> &ignoreTypes);// , vector<sp<BlockType>>* mustContainAtLeastOneTypes);
-	sp<vector<sp<Block>>> checkBreakerBlocks(int toRow, vector<sp<BlockType>> &ignoreUnlessTouchingBreakerBlockTypes, vector<sp<BlockType>> &breakerBlockTypes);
-	void recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(sp<Block> b, vector<sp<Block>> &connectedBlocks, vector<sp<BlockType>> &ignoreTypes);
-	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(sp<Block> b, vector<sp<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, vector<sp<BlockType>> &ignoreTypes, vector<sp<BlockType>> &mustContainAtLeastOneTypes);
-	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(sp<Block> b, vector<sp<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, vector<sp<BlockType>> &ignoreTypes, vector<sp<BlockType>> &mustContainAtLeastOneTypes);
-	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(sp<Block> b, vector<sp<Block>> &connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, vector<sp<BlockType>> &ignoreTypes, vector<sp<BlockType>> &mustContainAtLeastOneTypes);
+	void checkRecursiveConnectedRowOrColumn(sp<vector<sp<Block>>>connectedBlocks, int leastAmountConnected, int startX, int endX, int startY, int endY, sp<vector<sp<BlockType>>>ignoreTypes, sp<vector<sp<BlockType>>>mustContainAtLeastOneTypes);
+	void setColorConnections(sp<vector<sp<BlockType>>>ignoreTypes);// , sp<vector<sp<BlockType>>>* mustContainAtLeastOneTypes);
+	sp<vector<sp<Block>>> checkBreakerBlocks(int toRow, sp<vector<sp<BlockType>>>ignoreUnlessTouchingBreakerBlockTypes, sp<vector<sp<BlockType>>>breakerBlockTypes);
+	void recursivelyGetAllMatchingBlocksConnectedToBlockToArrayIfNotInItAlready(sp<Block> b, sp<vector<sp<Block>>>connectedBlocks, sp<vector<sp<BlockType>>> ignoreTypes);
+	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(sp<Block> b, sp<vector<sp<Block>>>connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, sp<vector<sp<BlockType>>>ignoreTypes, sp<vector<sp<BlockType>>>mustContainAtLeastOneTypes);
+	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(sp<Block> b, sp<vector<sp<Block>>>connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, sp<vector<sp<BlockType>>>ignoreTypes, sp<vector<sp<BlockType>>>mustContainAtLeastOneTypes);
+	void addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfDiagonalAtLeastAmount(sp<Block> b, sp<vector<sp<Block>>>connectedBlocks, int leastInARow, int startX, int endX, int startY, int endY, sp<vector<sp<BlockType>>>ignoreTypes, sp<vector<sp<BlockType>>>mustContainAtLeastOneTypes);
 	void renderBackground();
 	void render();
 	void renderBlockOutlines();
@@ -171,25 +171,25 @@ public:
 	void setPiece(sp<Piece> piece);
 	void setPiece(sp<Piece> piece, int x, int y);
 	bool moveDownLinesAboveBlankLinesOneLine();
-	bool moveDownDisconnectedBlocksAboveBlankSpacesOneLine(vector<sp<BlockType>> &ignoreTypes);
-	bool moveDownAnyBlocksAboveBlankSpacesOneLine(vector<sp<BlockType>> &ignoreTypes);
+	bool moveDownDisconnectedBlocksAboveBlankSpacesOneLine(sp<vector<sp<BlockType>>> ignoreTypes);
+	bool moveDownAnyBlocksAboveBlankSpacesOneLine(sp<vector<sp<BlockType>>> ignoreTypes);
 	void setRandomBlockColors();
 	void setRandomMatrixBlockColors();
-	void setRandomWholePieceColors(bool grayscale, sp<Piece> currentPiece, vector<sp<Piece>> &nextPieces);
-	void setRandomPieceGrayscaleColors(sp<Piece> currentPiece, vector<sp<Piece>> &nextPieces);
+	void setRandomWholePieceColors(bool grayscale, sp<Piece> currentPiece, sp<vector<sp<Piece>>> nextPieces);
+	void setRandomPieceGrayscaleColors(sp<Piece> currentPiece, sp<vector<sp<Piece>>>&nextPieces);
 	bool isAnythingAboveThreeQuarters();
 	void doDeathSequence();
-	sp<PieceType> getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(vector<sp<PieceType>> &arr);
-	sp<PieceType> getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(vector<sp<PieceType>> &arr);
+	sp<PieceType> getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(sp<vector<sp<PieceType>>> arr);
+	sp<PieceType> getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(sp<vector<sp<PieceType>>> arr);
 	sp<vector<sp<Piece>>> getBagOfOneOfEachNonRandomNormalPieces();
 	sp<Piece> getPieceFromNormalPieceRandomBag();
 	sp<Piece> getRandomPiece();
-	sp<Piece> getRandomPiece(vector<sp<PieceType>> &pieceArray, vector<sp<BlockType>> &blockArray);
-	sp<PieceType> getRandomPieceType(vector<sp<PieceType>> &arr);
-	sp<BlockType> getRandomBlockType(vector<sp<BlockType>> &arr);
-	sp<BlockType> getRandomBlockTypeDisregardingSpecialFrequency(vector<sp<BlockType>> &arr);
-	sp<BlockType> getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(vector<sp<BlockType>> &arr);
-	sp<BlockType> getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(vector<sp<BlockType>> &arr);
+	sp<Piece> getRandomPiece(sp<vector<sp<PieceType>>> pieceArray, sp<vector<sp<BlockType>>> blockArray);
+	sp<PieceType> getRandomPieceType(sp<vector<sp<PieceType>>> arr);
+	sp<BlockType> getRandomBlockType(sp<vector<sp<BlockType>>> arr);
+	sp<BlockType> getRandomBlockTypeDisregardingSpecialFrequency(sp<vector<sp<BlockType>>> arr);
+	sp<BlockType> getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull(sp<vector<sp<BlockType>>> arr);
+	sp<BlockType> getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(sp<vector<sp<BlockType>>> arr);
 	bool areAnyBlocksPopping();
 	int cellW();
 	int cellH();

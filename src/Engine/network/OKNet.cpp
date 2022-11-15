@@ -170,12 +170,12 @@ OKNet::~OKNet()
 		t.join();
 	}
 
-	for(int i=0;i<udpConnections.size();i++)
+	for(int i=0;i<udpConnections->size();i++)
 	{
 		sp<UDPPeerConnection>c = udpConnections.get(i);
 		delete c;
 	}
-	udpConnections.clear();
+	udpConnections->clear();
 
 	tcpServerConnection.cleanup();
 }
@@ -234,7 +234,7 @@ void OKNet::update()
 
 	tcpServerConnection.update();
 
-	for (int i = 0; i < udpConnections.size(); i++)
+	for (int i = 0; i < udpConnections->size(); i++)
 	{
 		sp<UDPPeerConnection>p = udpConnections.get(i);
 		p->update();
@@ -457,7 +457,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 
 		//find udpPeerConnection with that userID
 		bool found = false;
-		for(int i=0;i<udpConnections.size();i++)
+		for(int i=0;i<udpConnections->size();i++)
 		{
 			sp<UDPPeerConnection>c = udpConnections.get(i);
 			if(c->peerUserID==replyFriendUserID)
@@ -515,7 +515,7 @@ sp<UDPPeerConnection> OKNet::addFriendID(long long friendID, int type)
 
 	//if (type == UDPPeerConnection::FACEBOOK_TYPE)
 	{
-		for (int i = 0; i < udpConnections.size(); i++)
+		for (int i = 0; i < udpConnections->size(); i++)
 		{
 			if (udpConnections.get(i)->peerUserID == friendID)
 			{
@@ -533,7 +533,7 @@ sp<UDPPeerConnection> OKNet::addFriendID(long long friendID, int type)
 //===============================================================================================
 void OKNet::sendAllPeers(string s)
 {//===============================================================================================
-	for (int i = 0; i < udpConnections.size(); i++)
+	for (int i = 0; i < udpConnections->size(); i++)
 	{
 		sp<UDPPeerConnection> c = udpConnections.get(i);
 		if (c->getConnectedToPeer_S())

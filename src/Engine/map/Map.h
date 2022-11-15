@@ -29,9 +29,9 @@ public:
 	bool randomSpawnEnabled = true;
 
 
-	vector<sp<MapState>> stateList;
-	vector<sp<Event>> mapEventList;
-	//ArrayList<int> mapEventIDList;
+	sp<vector<sp<MapState>>>stateList;
+	sp<vector<sp<Event>>>mapEventList;
+	//sp<vector<int>>mapEventIDList;
 
 
 	float lastKnownScreenX = 0;
@@ -41,20 +41,20 @@ public:
 	float alpha = 1.0f;
 
 
-	//this is a ArrayList of ArrayLists of sorted lights per layer. this is filled in on map first load.
-	vector<vector<sp<Light>>> sortedLightsLayers;
+	//this is a vector of sp<vectors of sorted lights per layer. this is filled in on map first load.
+	sp<vector<sp<vector<sp<Light>>>>>sortedLightsLayers;
 
 
 	//these are entities that exist in this map
-	vector<sp<Entity>> activeEntityList;
+	sp<vector<sp<Entity>>>activeEntityList;
 	//this gets filled in once per frame with entities from entityList that are on the screen
-	vector<sp<Entity>> drawList;
+	sp<vector<sp<Entity>>>drawList;
 	//that gets sorted into zList which is drawn in sequence.
-	vector<sp<Entity>> zList;
+	sp<vector<sp<Entity>>>zList;
 
 	//door/warp list
-	vector<sp<Door>> doorList;
-	vector<sp<WarpArea>> warpAreaList;
+	sp<vector<sp<Door>>>doorList;
+	sp<vector<sp<WarpArea>>>warpAreaList;
 
 
 	sp<IntArray> hitLayer = nullptr;
@@ -584,9 +584,9 @@ public:
 	string& getPaletteMD5();
 	string& getTilesMD5();
 
-	//	public Vector<MapStateData> getStateDataList(){return getData().getStateDataList();}
-	//	public Vector<EventData> getEventDataList(){return getData().getEventDataList();}
-	//	public Vector<DoorData> getDoorDataList(){return getData().getDoorDataList();}
+	//	public sp<Vector<MapStateData>>getStateDataList(){return getData().getStateDataList();}
+	//	public sp<Vector<EventData>>getEventDataList(){return getData().getEventDataList();}
+	//	public sp<Vector<DoorData>>getDoorDataList(){return getData().getDoorDataList();}
 
 
 	//set

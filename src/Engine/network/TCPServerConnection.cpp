@@ -385,7 +385,7 @@ void TCPServerConnection::_checkForIncomingTraffic()
 
 		}
 
-		while (packetsToProcess.size() > 0)
+		while (packetsToProcess->size() > 0)
 		{
 
 			string s(packetsToProcess.front());
@@ -958,9 +958,9 @@ bool TCPServerConnection::messageReceived(string &s)// sp<ChannelHandlerContext>
 	}
 
 	bool processed = false;
-	for (int i = 0; i < OKNet::engines.size(); i++)
+	for (int i = 0; i < OKNet::engines->size(); i++)
 	{
-		if (OKNet::engines.at(i)->serverMessageReceived(s))processed = true;
+		if (OKNet::engines->at(i)->serverMessageReceived(s))processed = true;
 	}
 	if (processed)return true;
 
@@ -1635,11 +1635,11 @@ void TCPServerConnection::incomingOKGameGameStatsResponse_S(string s)
   //OK_Game_GameStats_Response:
 	s = s.substr(s.find(":") + 1);
 
-	vector<string> responseStrings;
+	sp<vector<string>>responseStrings;
 	while(s.find("`")!=string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		responseStrings.push_back(s.substr(0, s.find("`")));
+		responseStrings->push_back(s.substr(0, s.find("`")));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
@@ -1664,7 +1664,7 @@ void TCPServerConnection::incomingOKGameActivityStreamResponse_S(string s)
 	while(s.find("`")!=string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		OKGame::activityStream.push_back(FileUtils::removeSwearWords(s.substr(0, s.find("`"))));
+		OKGame::activityStream->push_back(FileUtils::removeSwearWords(s.substr(0, s.find("`"))));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
@@ -1678,17 +1678,17 @@ void TCPServerConnection::incomingOKGameActivityStreamUpdate_S(string s)
   //OK_Game_ActivityStream_Update:
 	s = s.substr(s.find(":") + 1);
 
-	vector<string> strings;
+	sp<vector<string>>strings;
 	while (s.find("`") != string::npos)
 	{
 		s = s.substr(s.find("`") + 1);
-		strings.push_back(s.substr(0, s.find("`")));
+		strings->push_back(s.substr(0, s.find("`")));
 		s = s.substr(s.find("`") + 1);
 		s = s.substr(s.find(",") + 1);
 	}
-	for(int i=(int)strings.size()-1;i<=0;i--)
+	for(int i=(int)strings->size()-1;i<=0;i--)
 	{
-		string a = FileUtils::removeSwearWords(strings.at(i));
+		string a = FileUtils::removeSwearWords(strings->at(i));
 		OKGame::activityStream.insert(OKGame::activityStream.begin()+0, a);
 
 		if (Main::globalSettings->hideNotifications == false)
@@ -1705,9 +1705,9 @@ void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(st
 	s = s.substr(s.find(":") + 1);
 
 	sp<OKGameUserStatsForSpecificGameAndDifficulty>gameStats = ms<OKGameUserStatsForSpecificGameAndDifficulty>(s);
-	for(int i=0;i<OKGame::userStatsPerGameAndDifficulty.size();i++)
+	for(int i=0;i<OKGame::userStatsPerGameAndDifficulty->size();i++)
 	{
-		sp<OKGameUserStatsForSpecificGameAndDifficulty>temp = OKGame::userStatsPerGameAndDifficulty.at(i);
+		sp<OKGameUserStatsForSpecificGameAndDifficulty>temp = OKGame::userStatsPerGameAndDifficulty->at(i);
 		if(
 			temp->isGameTypeOrSequence == gameStats->isGameTypeOrSequence &&
 			temp->gameTypeUUID == gameStats->gameTypeUUID &&
@@ -1722,7 +1722,7 @@ void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(st
 			return;
 		}
 	}
-	OKGame::userStatsPerGameAndDifficulty.push_back(gameStats);
+	OKGame::userStatsPerGameAndDifficulty->push_back(gameStats);
 }
 //===============================================================================================
 void TCPServerConnection::addToLeaderboard(sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> boardArray, sp<OKGameLeaderBoardAndHighScoreBoard>leaderBoard)

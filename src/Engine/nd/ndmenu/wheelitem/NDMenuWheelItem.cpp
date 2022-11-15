@@ -30,8 +30,8 @@ NDMenuWheelItem::NDMenuWheelItem(sp<Engine> g, sp<NDGameEngine> game, const stri
 	this->caption = ms<Caption>(g, Caption::Position::NONE, 0, 0, -1, name, OKFont::font_normal_16_outlined_smooth, color, nullptr, ms<OKColor>(0, 0, 0, 0), RenderOrder::ABOVE_TOP, 1.0f, 0);
 	this->caption->setAlphaImmediately(1.0f);
 
-	y = (float)firstCartY + (NDMenuWheel::wheelItems.size() - 1) * wheelItemHeight;
-	slot = NDMenuWheel::wheelItems.size() - 1;
+	y = (float)firstCartY + (NDMenuWheel::wheelItems->size() - 1) * wheelItemHeight;
+	slot = NDMenuWheel::wheelItems->size() - 1;
 }
 
 float NDMenuWheelItem::top()

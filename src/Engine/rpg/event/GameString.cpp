@@ -20,16 +20,16 @@ GameString::GameString(sp<Engine> g, int id)
 
 	this->data = ms<GameStringData>(id, "", "");
 
-	for (int i = 0; i < (int)getEventManager()->gameStringList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->gameStringList->size(); i++)
 	{
-		if (getEventManager()->gameStringList.at(i)->getID() == data->getID())
+		if (getEventManager()->gameStringList->at(i)->getID() == data->getID())
 		{
 			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}
 
-	getEventManager()->gameStringList.push_back(shared_from_this());
+	getEventManager()->gameStringList->push_back(shared_from_this());
 
 }
 
@@ -40,16 +40,16 @@ GameString::GameString(sp<Engine> g, sp<GameStringData> data)
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->gameStringList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->gameStringList->size(); i++)
 	{
-		if (getEventManager()->gameStringList.at(i)->getID() == data->getID())
+		if (getEventManager()->gameStringList->at(i)->getID() == data->getID())
 		{
 			log.error("GameString already exists:" + data->getName());
 			return;
 		}
 	}
 
-	getEventManager()->gameStringList.push_back(shared_from_this());
+	getEventManager()->gameStringList->push_back(shared_from_this());
 
 }
 

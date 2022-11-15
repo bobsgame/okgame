@@ -33,7 +33,7 @@ Sound::Sound(sp<Engine> g, sp<AudioFile>f)
 
 	this->audioFile = f;
 
-	for (int i = 0; i < (int)getAudioManager()->playingAudioList.size(); i++)
+	for (int i = 0; i < (int)getAudioManager()->playingAudioList->size(); i++)
 	{
 		if (getAudioManager()->playingAudioList.get(i)->getName() == f->getName())
 		{

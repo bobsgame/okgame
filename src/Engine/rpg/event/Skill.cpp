@@ -20,15 +20,15 @@ Skill::Skill(sp<Engine> g, int id)
 
 	this->data = ms<SkillData>(id, "");
 
-	for (int i = 0; i < (int)getEventManager()->skillList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->skillList->size(); i++)
 	{
-		if (getEventManager()->skillList.at(i)->getID() == data->getID())
+		if (getEventManager()->skillList->at(i)->getID() == data->getID())
 		{
 			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->skillList.push_back(shared_from_this());
+	getEventManager()->skillList->push_back(shared_from_this());
 }
 
 Skill::Skill(sp<Engine> g, sp<SkillData> data)
@@ -38,15 +38,15 @@ Skill::Skill(sp<Engine> g, sp<SkillData> data)
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->skillList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->skillList->size(); i++)
 	{
-		if (getEventManager()->skillList.at(i)->getID() == data->getID())
+		if (getEventManager()->skillList->at(i)->getID() == data->getID())
 		{
 			log.error("Skill already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->skillList.push_back(shared_from_this());
+	getEventManager()->skillList->push_back(shared_from_this());
 }
 
 sp<SkillData> Skill::getData()

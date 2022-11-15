@@ -276,7 +276,7 @@ bool Light::checkEdgeAgainstHitLayerAndOtherLightsInDirection(int dir)
 	float myBottom = getMiddleY() + getRadiusPixelsHQ() / 2;
 
 
-	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)getMap()->currentState->lightList->size(); i++)
 	{
 		sp<Light> l = getMap()->currentState->lightList.get(i);
 		if (l != this  && l->getName().find("mover") != string::npos)//&& l->getName() != getName()

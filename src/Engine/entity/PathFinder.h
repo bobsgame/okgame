@@ -92,7 +92,7 @@ public:
 	/// <summary>
 	/// The list of elements </summary>
 private:
-	vector<sp<PotentialTile>> list;// = ms<ArrayList><sp<PotentialTile>>();
+	sp<vector<sp<PotentialTile>>>list;// = ms<vector><sp<PotentialTile>>();
 
 
 	/// <summary>
@@ -180,11 +180,11 @@ public:
 	sp<TilePath> path = nullptr;
 
 private:
-	vector<sp<PotentialTile>> blockedPotentialTilesList;// = ms<ArrayList><sp<PotentialTile>>();
+	sp<vector<sp<PotentialTile>>>blockedPotentialTilesList;// = ms<vector><sp<PotentialTile>>();
 	sp<SortedList> openPotentialTilesList = ms<SortedList>(this);
 
-	//ArrayList<ArrayList<sp<PotentialTile>>>* potentialTiles = ms<ArrayList><ArrayList<sp<PotentialTile>>>();
-	vector<sp<PotentialTile>> potentialTiles;// = nullptr;
+	//sp<vector<vector<sp<PotentialTile>>>>* potentialTiles = ms<vector><vector<sp<PotentialTile>>>();
+	sp<vector<sp<PotentialTile>>>potentialTiles;// = nullptr;
 	bool* checkedTileArray = nullptr;
 
 

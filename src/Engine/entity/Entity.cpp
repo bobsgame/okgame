@@ -213,9 +213,9 @@ void Entity::renderDebugBoxes()
 		if (OKString::startsWith(getConnectionTYPEIDList()->at(i), "DOOR."))
 		{
 			//go through doorlist
-			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
+			for (int d = 0; d < (int)getMap()->doorList->size(); d++)
 			{
-				sp<Door> door = getMap()->doorList.at(d);
+				sp<Door> door = getMap()->doorList->at(d);
 
 				if (getConnectionTYPEIDList()->at(i) == "DOOR." + door->getName())
 				{
@@ -238,9 +238,9 @@ void Entity::renderDebugBoxes()
 				//					{
 				//						Area a = aEnum.nextElement();
 
-				for (int j = 0; j < (int)getMap()->currentState->areaList.size(); j++)
+				for (int j = 0; j < (int)getMap()->currentState->areaList->size(); j++)
 				{
-					sp<Area> a = getMap()->currentState->areaList.at(j);
+					sp<Area> a = getMap()->currentState->areaList->at(j);
 
 					if (getConnectionTYPEIDList()->at(i) == a->getName())
 					{
@@ -253,9 +253,9 @@ void Entity::renderDebugBoxes()
 			}
 
 			//if not found, go through warparea list
-			for (int j = 0; j < (int)getMap()->warpAreaList.size(); j++)
+			for (int j = 0; j < (int)getMap()->warpAreaList->size(); j++)
 			{
-				sp<Area> a = getMap()->warpAreaList.at(j);
+				sp<Area> a = getMap()->warpAreaList->at(j);
 
 				if (getConnectionTYPEIDList()->at(i) == a->getName())
 				{
@@ -417,8 +417,8 @@ void Entity::renderDebugInfo()
 	int movementsThisFrame = 0;
 	public float pixelsToMoveThisFrame = 0;
 	               
-	vector<String> getBehaviorList = ms<ArrayList><String>();
-	vector<String> connectionList = ms<ArrayList><String>();
+	sp<vector<String>>getBehaviorList = ms<vector><String>();
+	sp<vector<String>>connectionList = ms<vector><String>();
 	               
 	               */
 }
@@ -784,9 +784,9 @@ bool Entity::checkPathBlockedXY(float mapXHQ, float mapYHQ)
 	{
 		//go through all mapsprites, check if map characters
 
-		for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
+		for (int i = 0; i < (int)getMap()->activeEntityList->size(); i++)
 		{
-			sp<Entity> m = getMap()->activeEntityList.at(i);
+			sp<Entity> m = getMap()->activeEntityList->at(i);
 
 			if (m.get() != this &&
 				(dynamic_cast<Door*>(m.get()) != NULL) == false &&
@@ -820,9 +820,9 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 		return false;
 	}
 
-	for (int s = 0; s < (int)getMap()->activeEntityList.size(); s++)
+	for (int s = 0; s < (int)getMap()->activeEntityList->size(); s++)
 	{
-		sp<Entity> e = getMap()->activeEntityList.at(s);
+		sp<Entity> e = getMap()->activeEntityList->at(s);
 
 		if (e->getNonWalkable() == false)
 		{
@@ -845,9 +845,9 @@ bool Entity::checkXYAgainstNonWalkableEntities(float x, float y)
 		}
 	}
 
-	for (int s = 0; s < (int)getMap()->doorList.size(); s++)
+	for (int s = 0; s < (int)getMap()->doorList->size(); s++)
 	{
-		sp<Door> e = getMap()->doorList.at(s);
+		sp<Door> e = getMap()->doorList->at(s);
 
 		if (e->getNonWalkable() == false || e->isOpen())
 		{
@@ -1460,9 +1460,9 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 	sp<Map>m = getMap();
 	if (m != nullptr)
 	{
-		for (int i=0; i<m->activeEntityList.size();i++)
+		for (int i=0; i<m->activeEntityList->size();i++)
 		{
-			sp<Entity> se = m->activeEntityList.at(i);
+			sp<Entity> se = m->activeEntityList->at(i);
 			if (se.get() == this)
 			{
 				m->activeEntityList.erase(m->activeEntityList.begin() + i);
@@ -1470,7 +1470,7 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 		}
 		//if (m->activeEntityList.contains(this))
 		//{
-		//	m->activeEntityList.remove(this);
+		//	m->activeEntityList->remove(this);
 		//}
 	}
 
@@ -1486,7 +1486,7 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 
 void Entity::addEventBehavior(const string& s)
 { //=========================================================================================================================
-	eventBehaviorList.push_back(s); //TODO: handle this stuff right!
+	eventBehaviorList->push_back(s); //TODO: handle this stuff right!
 }
 
 sp<OKBool> Entity::checkServerTalkedToTodayValueAndResetAfterSuccessfulReturn()
@@ -1512,9 +1512,9 @@ sp<Entity> Entity::findNearestEntity()
 
 	int shortestdist = 65535;
 
-	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
+	for (int n = 0; n < (int)getMap()->activeEntityList->size(); n++)
 	{
-		sp<Entity> currentEntity = getMap()->activeEntityList.at(n);
+		sp<Entity> currentEntity = getMap()->activeEntityList->at(n);
 
 		if (this != currentEntity.get())
 		{
@@ -1549,9 +1549,9 @@ sp<Entity> Entity::findNearestEntityInDirection(int dir)
 	float radiusX = getWidth() / 2;
 	float radiusY = (getHeight() - getHitBoxFromTop()) / 2;
 
-	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
+	for (int n = 0; n < (int)getMap()->activeEntityList->size(); n++)
 	{
-		sp<Entity> e = getMap()->activeEntityList.at(n);
+		sp<Entity> e = getMap()->activeEntityList->at(n);
 
 		if (this != e.get())
 		{

@@ -17,7 +17,7 @@ int EventCommand::TYPE_COMMAND = 0;
 int EventCommand::TYPE_QUALIFIER_TRUE = 1;
 int EventCommand::TYPE_QUALIFIER_FALSE = 2;
 
-EventCommand::EventCommand(sp<Engine> g, const string& command, vector<sp<EventParameter>> &parameterList, int type)
+EventCommand::EventCommand(sp<Engine> g, const string& command, sp<vector<sp<EventParameter>>>&parameterList, int type)
 { //===============================================================================================
 
 	this->e = g;
@@ -32,13 +32,13 @@ EventCommand::EventCommand(sp<Engine> g, const string& command, vector<sp<EventP
 
 int EventCommand::getNumParams()
 { //===============================================================================================
-	if (parameterList.empty())
+	if (parameterList->empty())
 	{
 		return 0;
 	}
 	else
 	{
-		return (int)parameterList.size();
+		return (int)parameterList->size();
 	}
 }
 
@@ -89,7 +89,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 
 	if (commandString.find("(") != string::npos)
 	{
-		vector<sp<EventParameter>> newParameterList;// = ms<ArrayList><sp<EventParameter>>();
+		sp<vector<sp<EventParameter>>>newParameterList;// = ms<vector><sp<EventParameter>>();
 
 		string command = commandString.substr(0, commandString.find("("));
 
@@ -106,7 +106,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 				//commandString now looks like "thing)" or "thing|thing)"
 
 				//all parameters looks like THING.ID
-				newParameterList.push_back(ms<EventParameter>(g, parameterString));
+				newParameterList->push_back(ms<EventParameter>(g, parameterString));
 			}
 			else //commandString looks like thing)
 			{
@@ -115,7 +115,7 @@ sp<EventCommand> EventCommand::parseEventCommandFromCommandString(sp<Engine> g, 
 				//commandString now looks like ")"
 
 				//all parameters looks like THING.ID
-				newParameterList.push_back(ms<EventParameter>(g, parameterString));
+				newParameterList->push_back(ms<EventParameter>(g, parameterString));
 			}
 		}
 
@@ -141,7 +141,7 @@ sp<EventCommand> EventCommand::getParent()
 void EventCommand::addChild(sp<EventCommand> e)
 { //=========================================================================================================================
 
-	children.push_back(e);
+	children->push_back(e);
 	e->parent = shared_from_this();
 }
 
@@ -159,9 +159,9 @@ sp<EventCommand> EventCommand::getNextChild()
 	//if we are [doThing], we return [doNextThing]
 	//if we are [doNextThing], we return [ifPlayerInArea FALSE]
 
-	if (currentChildIndex < children.size())
+	if (currentChildIndex < children->size())
 	{
-		sp<EventCommand> e = children.at(currentChildIndex);
+		sp<EventCommand> e = children->at(currentChildIndex);
 		currentChildIndex++;
 
 		return e;

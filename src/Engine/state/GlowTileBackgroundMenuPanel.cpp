@@ -46,7 +46,7 @@ void GlowTileBackgroundMenuPanel::init()
 
 	bgScrollTexture = GLUtils::getTextureFromPNGExePath("data/guiBackground/glowTileFramesBG.png");
 
-	//glowTileFramesTexture = ms<ArrayList><sp<Texture>>();
+	//glowTileFramesTexture = ms<vector><sp<Texture>>();
 	for (int i = 0; i < tileFrames; i++)
 	{
 		glowTileFramesTexture->add(GLUtils::getTextureFromPNGExePath("data/guiBackground/glowTileFrames/" + to_string(i) + ".png"));
@@ -89,7 +89,7 @@ void GlowTileBackgroundMenuPanel::update()
 { //=========================================================================================================================
 
 
-	if (glowTileFramesTexture->isEmpty())
+	if (glowTileFramesTexture->empty())
 	{
 		init();
 	}

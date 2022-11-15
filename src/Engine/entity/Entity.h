@@ -104,8 +104,8 @@ public:
 
 	bool behaviorEnabled = true;
 
-	vector<string> eventBehaviorList;// = ms<ArrayList><string>(); //TODO: do something with this!
-	vector<string> eventTargetTYPEIDList;// = ms<ArrayList><string>(); //TODO: do something with this!
+	sp<vector<string>>eventBehaviorList;// = ms<vector><string>(); //TODO: do something with this!
+	sp<vector<string>>eventTargetTYPEIDList;// = ms<vector><string>(); //TODO: do something with this!
 
 	string currentAreaTYPEIDTarget = "";
 

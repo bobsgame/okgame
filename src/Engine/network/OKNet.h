@@ -22,7 +22,7 @@ public:
 	static void addEngineToForwardMessagesTo(sp<Engine> e);
 	static void update();
 
-	static vector<sp<UDPPeerConnection>> udpConnections;
+	static sp<vector<sp<UDPPeerConnection>>>udpConnections;
 	static sp<TCPServerConnection> tcpServerConnection;// = nullptr;
 
 	static const int status_AVAILABLE = 0;
@@ -37,7 +37,7 @@ public:
 	static void sendAllPeers(string s);
 	static sp<UDPPeerConnection> addFriendID(long long friendID, int type);
 
-	static vector<sp<Engine>>engines;// = ms<ArrayList><sp<State>>();
+	static sp<vector<sp<Engine>>>engines;// = ms<vector><sp<State>>();
 
 
 	static bool udpSTUNMessageReceived(string e);

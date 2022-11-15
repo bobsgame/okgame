@@ -30,9 +30,9 @@ const string OKGame::netCommand_FORFEIT = "FORFEIT:";
 void OKGame::sendAllJoinedPeers(const string& s)
 {//=========================================================================================================================
 
-	for (int i = 0; i<joinedPeers.size(); i++)
+	for (int i = 0; i<joinedPeers->size(); i++)
 	{
-		sp<UDPPeerConnection>c = joinedPeers.at(i);
+		sp<UDPPeerConnection>c = joinedPeers->at(i);
 		c->writeReliable_S("BOBSGAME:" + s + ":"+ OKNet::endline);
 	}
 }
@@ -69,7 +69,7 @@ void OKGame::tellAllPeersIAmHosting()
 {//=========================================================================================================================
 
 	currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
-	currentRoom->multiplayer_NumPlayers = (int)players.size();
+	currentRoom->multiplayer_NumPlayers = (int)players->size();
 
 	string command = lobbyCommandAllPeers_HOSTING + currentRoom->encodeRoomData(true);
 
@@ -79,13 +79,13 @@ void OKGame::tellAllPeersIAmHosting()
 //=========================================================================================================================
 void OKGame::tellAllPeersIAmNotHosting()
 {//=========================================================================================================================
-	sendAllPeers(lobbyCommandAllPeers_NOT_HOSTING + to_string(players.size()));
+	sendAllPeers(lobbyCommandAllPeers_NOT_HOSTING + to_string(players->size()));
 }
 
 //=========================================================================================================================
 void OKGame::tellAllPeersIAmPlayingAGame()
 {//=========================================================================================================================
-	sendAllPeers(lobbyCommandAllPeers_PLAYING + to_string(players.size()));
+	sendAllPeers(lobbyCommandAllPeers_PLAYING + to_string(players->size()));
 }
 
 //=========================================================================================================================
@@ -255,9 +255,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 
 				//tell the new peer about all the other peers
 				//need the host to send the other network players userIDs to each other to add each other as peers because they might not be friends
-				for (int i = 0; i < joinedPeers.size(); i++)
+				for (int i = 0; i < joinedPeers->size(); i++)
 				{
-					sp<UDPPeerConnection>existingPeer = joinedPeers.at(i);
+					sp<UDPPeerConnection>existingPeer = joinedPeers->at(i);
 					tellPeerThatOtherPeerHasJoined(newPeer,existingPeer);
 				}
 
@@ -266,9 +266,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				
 
 				//tell this new peer about all of our local players
-				for (int i = 0; i<players.size(); i++)
+				for (int i = 0; i<players->size(); i++)
 				{
-					sp<PuzzlePlayer>p = players.at(i);
+					sp<PuzzlePlayer>p = players->at(i);
 					if (p->isNetworkPlayer() == false)
 					{
 						tellPeerThatPlayerHasJoined(newPeer, p);
@@ -281,22 +281,22 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				}
 			}
 
-			if (joinedPeers.contains(newPeer) == false)joinedPeers.push_back(c);
+			if (joinedPeers.contains(newPeer) == false)joinedPeers->push_back(c);
 
 			return true;
 		}
 
 		if (OKString::startsWith(command, lobbyCommand_PEERGAMELEAVE))
 		{
-			while (joinedPeers.contains(c) == true)joinedPeers.remove(c);
+			while (joinedPeers.contains(c) == true)joinedPeers->remove(c);
 
-//			for (int i = 0; i<players.size(); i++)
+//			for (int i = 0; i<players->size(); i++)
 //			{
-//				sp<PuzzlePlayer>p = players.at(i);
+//				sp<PuzzlePlayer>p = players->at(i);
 //				if (p->peerConnection == c)
 //				{
 //					p->game->dead = true;
-////					players.removeAt(i);
+////					players->erase(->begin()+i);
 ////					i--;
 ////					delete p;
 //				}
@@ -328,9 +328,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 			sp<UDPPeerConnection>peer = nullptr;
 
 			//look through udpConnectionsList and see if this exists
-			for (int i = 0; i < OKNet::udpConnections.size(); i++)
+			for (int i = 0; i < OKNet::udpConnections->size(); i++)
 			{
-				sp<UDPPeerConnection>p = OKNet::udpConnections.at(i);
+				sp<UDPPeerConnection>p = OKNet::udpConnections->at(i);
 				if (p->peerUserID == peerUserID)
 				{
 					found = true;
@@ -340,13 +340,13 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 			if (!found)
 			{
 				peer = ms<UDPPeerConnection>(peerUserID, UDPPeerConnection::ANON_TYPE);
-				OKNet::udpConnections.push_back(peer);
+				OKNet::udpConnections->push_back(peer);
 			}
 
 			//tell this new peer about all of our local players
-			for (int i = 0; i<players.size(); i++)
+			for (int i = 0; i<players->size(); i++)
 			{
-				sp<PuzzlePlayer>p = players.at(i);
+				sp<PuzzlePlayer>p = players->at(i);
 				if (p->isNetworkPlayer() == false)
 				{
 					tellPeerThatPlayerHasJoined(peer, p);
@@ -359,7 +359,7 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				}
 			}
 
-			if (joinedPeers.contains(c) == false)joinedPeers.push_back(c);
+			if (joinedPeers.contains(c) == false)joinedPeers->push_back(c);
 
 			return true;
 		}
@@ -399,9 +399,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 
 				//support multiple players coming in from one friend
 				bool found = false;
-				for (int i = 0; i < players.size(); i++)
+				for (int i = 0; i < players->size(); i++)
 				{
-					sp<PuzzlePlayer>p = players.at(i);
+					sp<PuzzlePlayer>p = players->at(i);
 					if (p->getID() == playerIDString)found = true;
 				}
 				if (!found)
@@ -411,8 +411,8 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 					p->gameLogic->isNetworkPlayer = true;
 					p->peerConnection = c;
 					//c->addEnginePartToForwardMessagesTo(n);
-					players.push_back(p);
-					string name = "Network player " + to_string(players.size());
+					players->push_back(p);
+					string name = "Network player " + to_string(players->size());
 					string userName = p->peerConnection->getUserName();
 					if (userName != "")name = userName;
 					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, name, 16, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
@@ -426,9 +426,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 			{
 				bool found = false;
 				//support disconnected
-				for (int i = 0; i < players.size(); i++)
+				for (int i = 0; i < players->size(); i++)
 				{
-					sp<PuzzlePlayer>p = players.at(i);
+					sp<PuzzlePlayer>p = players->at(i);
 
 					if (p->getID() == playerIDString)
 					{
@@ -447,9 +447,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 			if (OKString::startsWith(command, lobbyCommand_PLAYERFORFEIT))
 			{
 				//support disconnected
-				for (int i = 0; i < players.size(); i++)
+				for (int i = 0; i < players->size(); i++)
 				{
-					sp<PuzzlePlayer>p = players.at(i);
+					sp<PuzzlePlayer>p = players->at(i);
 
 					if(p->peerConnection == c && p->getID() == playerIDString)
 					{
@@ -473,9 +473,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				saveUnknownGameSequencesAndTypesToXML(gs);
 
 				bool found = false;
-				for (int i = 0; i < players.size(); i++)
+				for (int i = 0; i < players->size(); i++)
 				{
-					sp<PuzzlePlayer>p = players.at(i);
+					sp<PuzzlePlayer>p = players->at(i);
 					if (p->getID() == playerIDString)
 					{
 						found = true;
@@ -524,7 +524,7 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 
 				OKNet::myStatus = OKNet::status_AVAILABLE;
 
-				joinedPeers.clear();
+				joinedPeers->clear();
 
 				hostStartedGame = false;
 				networkMultiplayerLobbyMenuShowing = true;
@@ -569,9 +569,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				newRoom->multiplayer_HostUserID = c->peerUserID;
 
 				bool found = false;
-				for (int i = 0; i<rooms.size(); i++)
+				for (int i = 0; i<rooms->size(); i++)
 				{
-					sp<Room>r = rooms.at(i);
+					sp<Room>r = rooms->at(i);
 					if (r->uuid == newRoom->uuid)
 					{
 						found = true;
@@ -580,7 +580,7 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				}
 				if (found == false)
 				{
-					rooms.push_back(newRoom);
+					rooms->push_back(newRoom);
 				}
 
 
@@ -591,9 +591,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 			if (OKString::startsWith(command, lobbyCommandAllPeers_NOT_HOSTING))
 			{
 
-				for (int i = 0; i<rooms.size(); i++)
+				for (int i = 0; i<rooms->size(); i++)
 				{
-					sp<Room>r = rooms.at(i);
+					sp<Room>r = rooms->at(i);
 					if(r->hostPeer==c)
 					{
 						rooms.erase(rooms.begin()+i);
@@ -623,9 +623,9 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 			if (userID == -1 || randomSeed == -1 || uuid == "")return false;
 
 			bool found = false;
-			for (int i = 0; i < players.size(); i++)
+			for (int i = 0; i < players->size(); i++)
 			{
-				sp<PuzzlePlayer>p = players.at(i);
+				sp<PuzzlePlayer>p = players->at(i);
 				if (p->getID() == playerIDString)
 				{
 					found = true;
@@ -720,9 +720,9 @@ void OKGame::populateRoomsMenu()
 	if (hidePrivateRooms == false)
 	{
 		roomsMenu->addInfo("Your Friends' Games:");
-		for (int i = 0; i < rooms.size(); i++)
+		for (int i = 0; i < rooms->size(); i++)
 		{
-			sp<Room> c = rooms.at(i);
+			sp<Room> c = rooms->at(i);
 
 			if (c->multiplayer_PrivateRoom && c->hostPeer != nullptr)
 			{
@@ -737,9 +737,9 @@ void OKGame::populateRoomsMenu()
 		if (hideFreePlayRooms == false)
 		{
 			roomsMenu->addInfo("Public Free Play Games:");
-			for (int i = 0; i < rooms.size(); i++)
+			for (int i = 0; i < rooms->size(); i++)
 			{
-				sp<Room> c = rooms.at(i);
+				sp<Room> c = rooms->at(i);
 
 				if (c->multiplayer_PrivateRoom == false && c->multiplayer_TournamentRoom == false)
 				{
@@ -752,9 +752,9 @@ void OKGame::populateRoomsMenu()
 		if (hideTournamentRooms == false)
 		{
 			roomsMenu->addInfo("Public Tournament Games:");
-			for (int i = 0; i < rooms.size(); i++)
+			for (int i = 0; i < rooms->size(); i++)
 			{
-				sp<Room> c = rooms.at(i);
+				sp<Room> c = rooms->at(i);
 
 				if (c->multiplayer_PrivateRoom == false && c->multiplayer_TournamentRoom == true)
 				{
@@ -964,7 +964,7 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 				{
 
 					tellHostPeerIAmJoiningTheirGame();
-					joinedPeers.push_back(currentRoom->hostPeer);
+					joinedPeers->push_back(currentRoom->hostPeer);
 
 					selectingHostedGame = false;
 					networkMultiplayerPlayerJoinMenuShowing = true;
@@ -1054,9 +1054,9 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 
 		if(selectingHostedGame)
 		{
-			for (int i = 0; i < rooms.size(); i++)
+			for (int i = 0; i < rooms->size(); i++)
 			{
-				sp<Room> c = rooms.at(i);
+				sp<Room> c = rooms->at(i);
 				if (roomsMenu->isSelectedID(c->uuid, false, mx, my))
 				{
 					string uuid = c->room_GameTypeUUID;
@@ -1100,25 +1100,25 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 	{
 		updateFriendsTime = currentTime;
 
-		onlineFriends.clear();
-		for (int i = 0; i < (int)OKNet::udpConnections.size(); i++)
+		onlineFriends->clear();
+		for (int i = 0; i < (int)OKNet::udpConnections->size(); i++)
 		{
-			sp<UDPPeerConnection> f = OKNet::udpConnections.at(i);
+			sp<UDPPeerConnection> f = OKNet::udpConnections->at(i);
 			if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true)// && f->getStatus_S() == OKNet::status_AVAILABLE)
 			{
 				if (onlineFriends.contains(f) == false)
-					onlineFriends.push_back(f);
+					onlineFriends->push_back(f);
 			}
 		}
 
 		friendsOnlineMenu->clear();
 		//friendsOnlineMenu->addInfo("Friends Online:");
 
-		if(onlineFriends.size()==0)friendsOnlineMenu->addInfo("No friends online, add some more!");
+		if(onlineFriends->size()==0)friendsOnlineMenu->addInfo("No friends online, add some more!");
 		
-		for (int i = 0; i < onlineFriends.size(); i++)
+		for (int i = 0; i < onlineFriends->size(); i++)
 		{
-			sp<UDPPeerConnection> c = onlineFriends.at(i);
+			sp<UDPPeerConnection> c = onlineFriends->at(i);
 
 //			if (c->bobsGameHosting)
 //			{
@@ -1167,14 +1167,14 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 		if(s != "")
 		{
 			//remove non private rooms since we are adding them back
-			for (int i = 0; i<rooms.size(); i++)
+			for (int i = 0; i<rooms->size(); i++)
 			{
-				sp<Room>r = rooms.at(i);
+				sp<Room>r = rooms->at(i);
 				if (r->multiplayer_PrivateRoom == false)
 				{
 					//delete r;
 					r = nullptr;
-					rooms.removeAt(i);
+					rooms->erase(->begin()+i);
 					i--;
 				}
 			}
@@ -1187,7 +1187,7 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 				
 				sp<Room>newRoom = Room::decodeRoomData(roomDescription, false);
 
-				rooms.push_back(newRoom);
+				rooms->push_back(newRoom);
 
 			}
 
@@ -1373,9 +1373,9 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 							//if (m != nullptr)
 							//{
 							//get the selected host
-							for (int i = 0; i < rooms.size(); i++)
+							for (int i = 0; i < rooms->size(); i++)
 							{
-								sp<Room> c = rooms.at(i);
+								sp<Room> c = rooms->at(i);
 								if (roomsMenu->isSelectedID(c->uuid, clicked, mx, my))
 								{
 									currentRoom = c;
@@ -1563,9 +1563,9 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 			selectSingleGameTypeMenu = nullptr;
 		}
 
-//		for (int i = 0; i < onlineFriends.size(); i++)
+//		for (int i = 0; i < onlineFriends->size(); i++)
 //		{
-//			sp<UDPPeerConnection> f = onlineFriends.at(i);
+//			sp<UDPPeerConnection> f = onlineFriends->at(i);
 //		}
 
 		if (statusLabel != nullptr)
@@ -1732,9 +1732,9 @@ void OKGame::selectGameSequenceFilterMenuUpdate()
 	int my = getControlsManager()->getMouseY();
 	if (confirm || clicked)
 	{
-		for (int i = 0; i<loadedGameSequences.size(); i++)
+		for (int i = 0; i<loadedGameSequences->size(); i++)
 		{
-			sp<GameSequence>g = loadedGameSequences.at(i);
+			sp<GameSequence>g = loadedGameSequences->at(i);
 			if (selectGameSequenceMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 				filterByGameSequenceName = g->name;
@@ -1862,9 +1862,9 @@ void OKGame::selectSingleGameTypeFilterMenuUpdate()
 	int my = getControlsManager()->getMouseY();
 	if (confirm || clicked)
 	{
-		for (int i = 0; i<loadedGameTypes.size(); i++)
+		for (int i = 0; i<loadedGameTypes->size(); i++)
 		{
-			sp<GameType>g = loadedGameTypes.at(i);
+			sp<GameType>g = loadedGameTypes->at(i);
 			if (selectSingleGameTypeMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 				filterByGameTypeUUID = g->uuid;
@@ -1905,7 +1905,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 		networkMultiplayerPlayerJoinMenu->addInfo("Press Esc or Select on your controller to return to lobby.");
 		networkMultiplayerPlayerJoinMenu->addInfo(" ");
 
-		players.clear();
+		players->clear();
 	}
 
 	if (networkMultiplayerRoomRulesMenu == nullptr)
@@ -1939,7 +1939,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 		string gameName = "Game: Any Game Sequence Or Type";
 		if (currentRoom->multiplayer_AllowDifferentGameSequences == false && currentRoom->gameSequence != nullptr)
 		{
-			if(currentRoom->gameSequence->gameTypes.size()==1)gameName = "Game Type: " + currentRoom->gameSequence->name;
+			if(currentRoom->gameSequence->gameTypes->size()==1)gameName = "Game Type: " + currentRoom->gameSequence->name;
 			else gameName = "Game Sequence: " + currentRoom->gameSequence->name;
 		}
 		networkMultiplayerRoomRulesMenu->addInfo(gameName);
@@ -2003,9 +2003,9 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			if (hosting)name += " (Host)";
 			m = networkMultiplayerJoinedPeersMenu->addInfo(name);
 
-			for (int i = 0; i < joinedPeers.size(); i++)
+			for (int i = 0; i < joinedPeers->size(); i++)
 			{
-				sp<UDPPeerConnection>c = joinedPeers.at(i);
+				sp<UDPPeerConnection>c = joinedPeers->at(i);
 				name = c->getUserName();
 				if (hosting == false && c == currentRoom->hostPeer)name += " (Host)";
 				m = networkMultiplayerJoinedPeersMenu->addInfo(name);
@@ -2041,7 +2041,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			if (hosting && currentRoom->multiplayer_PrivateRoom==false)
 			{
 				currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
-				currentRoom->multiplayer_NumPlayers = players.size();
+				currentRoom->multiplayer_NumPlayers = players->size();
 				
 
 				tellServerIAmHostingOrUpdateRoomStatus(currentRoom->encodeRoomData(false));
@@ -2071,9 +2071,9 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 	bool leaveMenu = false;
 
 	bool allPlayersConfirmed = true;
-	for (int i = 0; i<players.size(); i++)
+	for (int i = 0; i<players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 		if (p->confirmed == false)
 		{
 			allPlayersConfirmed = false;
@@ -2122,7 +2122,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 	if (getControlsManager()->key_SPACE_Pressed())
 	{
-		if (currentRoom->multiplayer_MaxPlayers > 1 && players.size() >= currentRoom->multiplayer_MaxPlayers)
+		if (currentRoom->multiplayer_MaxPlayers > 1 && players->size() >= currentRoom->multiplayer_MaxPlayers)
 		{
 			errorLabel->setText("Maximum players reached, cannot add a new player.");
 		}
@@ -2131,9 +2131,9 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			bool add = true;
 			if(currentRoom->multiplayer_TournamentRoom)
 			{
-				for(int i=0;i<players.size();i++)
+				for(int i=0;i<players->size();i++)
 				{
-					sp<PuzzlePlayer>p = players.at(i);
+					sp<PuzzlePlayer>p = players->at(i);
 					if(p->isNetworkPlayer()==false)
 					{
 						add = false;
@@ -2145,9 +2145,9 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			if (add)
 			{
 				bool alreadyInUse = false;
-				for (int i = 0; i < players.size(); i++)
+				for (int i = 0; i < players->size(); i++)
 				{
-					sp<PuzzlePlayer>p = players.at(i);
+					sp<PuzzlePlayer>p = players->at(i);
 					if (p->useKeyboard)alreadyInUse = true;
 				}
 				if (!alreadyInUse)
@@ -2156,16 +2156,16 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 					sp<PuzzlePlayer>p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 					p->useKeyboard = true;
 					
-					if (players.size()>0)
+					if (players->size()>0)
 					{
 						//always add local player on the left side, to the right of any existing local players
 						int i = 0;
-						while (players.at(i)->isNetworkPlayer() == false)i++;
+						while (players->at(i)->isNetworkPlayer() == false)i++;
 						players.insert(i, p);
 					}
 					else
 					{
-						players.push_back(p);
+						players->push_back(p);
 					}
 					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
 
@@ -2177,14 +2177,14 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 	}
 	if (getControlsManager()->key_LSHIFT_Pressed())
 	{
-		for (int i = 0; i < players.size(); i++)
+		for (int i = 0; i < players->size(); i++)
 		{
-			sp<PuzzlePlayer>p = players.at(i);
+			sp<PuzzlePlayer>p = players->at(i);
 			if (p->useKeyboard)
 			{
 				tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 
-				players.removeAt(i);
+				players->erase(->begin()+i);
 				//delete p;
 				p = nullptr;
 				i = 0;
@@ -2192,13 +2192,13 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers.size(); controllerNum++)
+	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers->size(); controllerNum++)
 	{
-		sp<GameController>g = getControlsManager()->gameControllers.at(controllerNum);
+		sp<GameController>g = getControlsManager()->gameControllers->at(controllerNum);
 
 		if (g->a_Pressed())
 		{
-			if (currentRoom->multiplayer_MaxPlayers > 1 && players.size() >= currentRoom->multiplayer_MaxPlayers)
+			if (currentRoom->multiplayer_MaxPlayers > 1 && players->size() >= currentRoom->multiplayer_MaxPlayers)
 			{
 				errorLabel->setText("Maximum players reached, cannot add a new player.");
 			}
@@ -2207,9 +2207,9 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 				bool add = true;
 				if (currentRoom->multiplayer_TournamentRoom)
 				{
-					for (int i = 0; i<players.size(); i++)
+					for (int i = 0; i<players->size(); i++)
 					{
-						sp<PuzzlePlayer>p = players.at(i);
+						sp<PuzzlePlayer>p = players->at(i);
 						if (p->isNetworkPlayer() == false)
 						{
 							add = false;
@@ -2221,9 +2221,9 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 				if (add)
 				{
 					bool alreadyInUse = false;
-					for (int i = 0; i < players.size(); i++)
+					for (int i = 0; i < players->size(); i++)
 					{
-						sp<PuzzlePlayer>p = players.at(i);
+						sp<PuzzlePlayer>p = players->at(i);
 						if (p->gameController == g)alreadyInUse = true;
 					}
 
@@ -2231,16 +2231,16 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 					{
 						sp<PuzzlePlayer>p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 						p->gameController = g;
-						if (players.size()>0)
+						if (players->size()>0)
 						{
 							//always add local player on the left side, to the right of any existing local players
 							int i = 0;
-							while(players.at(i)->isNetworkPlayer()==false)i++;
+							while(players->at(i)->isNetworkPlayer()==false)i++;
 							players.insert(i, p);
 						}
 						else
 						{
-							players.push_back(p);
+							players->push_back(p);
 						}
 						p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
 
@@ -2252,14 +2252,14 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 		if (g->b_Pressed())
 		{
-			for (int i = 0; i < players.size(); i++)
+			for (int i = 0; i < players->size(); i++)
 			{
-				sp<PuzzlePlayer>p = players.at(i);
+				sp<PuzzlePlayer>p = players->at(i);
 				if (p->gameController == g)
 				{
 					tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 					
-					players.removeAt(i);
+					players->erase(->begin()+i);
 					//delete p;
 					p = nullptr;
 					i = 0;
@@ -2306,7 +2306,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			}
 
 			OKNet::myStatus = OKNet::status_AVAILABLE;
-			joinedPeers.clear();
+			joinedPeers->clear();
 
 			leaveMenu = true;
 			networkMultiplayerLobbyMenuShowing = true;
@@ -2317,7 +2317,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 
 	if (hosting)
 	{
-		if (players.size() > 1)
+		if (players->size() > 1)
 		{
 			if (allPlayersConfirmed)
 			{
@@ -2341,7 +2341,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			}
 		}
 
-		if (players.size() <= 1 || allPlayersConfirmed == false)
+		if (players->size() <= 1 || allPlayersConfirmed == false)
 		{
 			if (networkMultiplayerPlayerJoinMenuPressStartCaption != nullptr)
 			{
@@ -2424,9 +2424,9 @@ void OKGame::networkMultiplayerPlayerJoinMenuRender()
 		errorLabel->screenY = (float)((getHeight() / 4 * 3) + 20);
 	}
 
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 
 		sp<OKTexture>t = nullptr;
 
@@ -2442,7 +2442,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuRender()
 
 			if (t != nullptr)
 			{
-				int slot = players.size();
+				int slot = players->size();
 				if (slot < 2)slot = 2;
 
 				float tx0 = 0;

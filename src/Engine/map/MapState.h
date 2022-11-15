@@ -16,18 +16,18 @@ class MapState
 	//these hold the Light objects themselves, created in the constructor for this map.
 	//these both hold the same thing for convenience.
 public:
-	vector<sp<Light>> lightList;
+	sp<vector<sp<Light>>>lightList;
 	HashMap<string, sp<Light>> lightByNameHashtable;//ms<HashMap><string, sp<Light>>();
 
 
-	vector<sp<Entity>> entityList;
+	sp<vector<sp<Entity>>>entityList;
 	HashMap<string, sp<Entity>> entityByNameHashtable;//ms<HashMap><string, sp<Entity>>();
 
-	vector<sp<Character>> characterList;
+	sp<vector<sp<Character>>>characterList;
 	HashMap<string, sp<Character>> characterByNameHashtable;//ms<HashMap><string, sp<Character>>();
 
 
-	vector<sp<Area>> areaList;
+	sp<vector<sp<Area>>>areaList;
 	HashMap<string, sp<Area>> areaByNameHashtable;//ms<HashMap><string, sp<Area>>();
 	HashMap<string, sp<Area>> areaByTYPEIDHashtable;//ms<HashMap><string, sp<Area>>();
 

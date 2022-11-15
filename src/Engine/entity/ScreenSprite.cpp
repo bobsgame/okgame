@@ -23,7 +23,7 @@ ScreenSprite::ScreenSprite(sp<Engine> g, const string& name, const string& sprit
 
 	setRenderOrder(RenderOrder::OVER_TEXT);
 
-	getSpriteManager()->screenSpriteList.push_back(shared_from_this());
+	getSpriteManager()->screenSpriteList->push_back(shared_from_this());
 
 	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
 }
@@ -147,12 +147,12 @@ void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 
 	//if (getSpriteManager()->screenSpriteList.contains(shared_from_this()))
 	//{
-	//	getSpriteManager()->screenSpriteList.remove(shared_from_this());
+	//	getSpriteManager()->screenSpriteList->remove(shared_from_this());
 	///}
 
-	for (int i = 0; i < getSpriteManager()->screenSpriteList.size(); i++)
+	for (int i = 0; i < getSpriteManager()->screenSpriteList->size(); i++)
 	{
-		sp<ScreenSprite> se = getSpriteManager()->screenSpriteList.at(i);
+		sp<ScreenSprite> se = getSpriteManager()->screenSpriteList->at(i);
 		if (se.get() == this)
 		{
 			getSpriteManager()->screenSpriteList.erase(getSpriteManager()->screenSpriteList.begin() + i);

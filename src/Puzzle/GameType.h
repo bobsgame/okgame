@@ -54,16 +54,16 @@ public:
 	int randomlyFillGridAmount = 30;												Info randomlyFillGridAmount_Info = Info("Drop: Randomly Fill Grid Amount", "How many blocks to fill the playing field with.");
 	//int randomlyFillStackAmount = 30;											Info randomlyFillStackAmount_Info = Info("Stack: Randomly Fill Stack Amount", "How many blocks to start the stack filled with.");
 
-	vector<sp<PieceType>> pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
-	vector<sp<BlockType>> blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
-	//ArrayList<sp<OKColor>> colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
+	sp<vector<sp<PieceType>>>pieceTypesToDisallow_DEPRECATED;		Info pieceTypesToDisallow_Info = Info("Piece Types To Disallow", "Add pieces here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less shapes.");
+	sp<vector<sp<BlockType>>>blockTypesToDisallow_DEPRECATED;		Info blockTypesToDisallow_Info = Info("Block Types To Disallow", "Add blocks here if you want them disabled for this difficulty level, for instance, on beginner modes you can disable special blocks.");
+	//sp<vector<sp<OKColor>>>colorsToDisallowInBlockTypes;	Info colorsToDisallowInBlockTypes_Info = Info("Colors To Disallow in Block Types", "Add colors here if you want them disabled for this difficulty level, for instance, on beginner modes you can have less colors to match.");
 
-	vector<string> pieceTypesToDisallow_UUID;
-	vector<string> blockTypesToDisallow_UUID;
+	sp<vector<string>>pieceTypesToDisallow_UUID;
+	sp<vector<string>>blockTypesToDisallow_UUID;
 
 private:
-	//ArrayList<PieceType> importExport_pieceTypesToDisallow;
-	//ArrayList<BlockType> importExport_blockTypesToDisallow;
+	//sp<vector<PieceType>>importExport_pieceTypesToDisallow;
+	//sp<vector<BlockType>>importExport_blockTypesToDisallow;
 public:
 
 	template <typename Archive>
@@ -195,7 +195,7 @@ public:
 	//Color noColor;
 	//PieceType noPieceType;
 	//BlockType noBlockType;
-	//ArrayList<Color> emptyColors;
+	//sp<vector<Color>>emptyColors;
 
 //	const OKColor clear = *OKColor::clear;
 //	const OKColor transparent = *OKColor::transparent;
@@ -453,9 +453,9 @@ public:
 	long long blockMovementInterpolationTicks = 100;						Info blockMovementInterpolationTicks_Info = Info("Visual: Block Movement Interpolation Ticks", "How many milliseconds to animate transitions between one movement to the next.");
 	int blockAnimationTicksRandomUpToBetweenLoop = 0;						Info blockAnimationTicksRandomUpToBetweenLoop_Info = Info("Visual: Block Animation Ticks Random Up To Between Loop", "If a block sprite has animation, maximum amount of milliseconds to wait before triggering animation cycle.");//drbob
 
-	vector<sp<BlockType>> blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
+	sp<vector<sp<BlockType>>>blockTypes;										//Info blockTypes_Info = Info("Block Types", "");
 	private:
-	vector<BlockType> importExport_blockTypes;
+	sp<vector<BlockType>>importExport_blockTypes;
 	public:
 
 
@@ -478,14 +478,14 @@ public:
 	bool currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty = false;		Info currentPieceRule_getNewPiecesRandomlyOutOfBagWithOneOfEachPieceUntilEmpty_Info = Info("Get New Pieces Randomly Out Of Bag With One Of Each Piece Until Empty", "Get one of each piece type randomly until all of them have been used instead of generating a completely random piece each time.  Prevents many duplicates in a row and guarantees you will get each piece, but reduces randomness.");
 
 	//TODO: can change these to pieceType.garbage, etc
-	vector<sp<PieceType>> pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
+	sp<vector<sp<PieceType>>>pieceTypes;															//Info pieceTypes_Info = Info("pieceTypes", "");
 private:
-	vector<PieceType> importExport_pieceTypes;
+	sp<vector<PieceType>>importExport_pieceTypes;
 public:
 
-	vector<sp<DifficultyType>> difficultyTypes;
+	sp<vector<sp<DifficultyType>>>difficultyTypes;
 private:
-	vector<DifficultyType> importExport_difficulties;
+	sp<vector<DifficultyType>>importExport_difficulties;
 public:
 
 	//---------------------------------------------------

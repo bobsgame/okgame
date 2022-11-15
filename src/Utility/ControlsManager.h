@@ -178,7 +178,7 @@ public:
 
 	ControlsManager();
 
-	vector<SDL_Event> events;
+	sp<vector<SDL_Event>>events;
 
 	static int numControllers;
 	static string controllerNames;
@@ -194,7 +194,7 @@ public:
 	static float ZOOMINCREMENT;
 
 
-	static vector<sp<GameController>> gameControllers;// = ms<ArrayList><sp<GameController>>();
+	static sp<vector<sp<GameController>>>gameControllers;// = ms<vector><sp<GameController>>();
 
 
 	//------------------------------------
@@ -614,9 +614,9 @@ public:
 
 		if (key_RETURN_Pressed())return true;
 
-		for (int i = 0; i < gameControllers.size(); i++)
+		for (int i = 0; i < gameControllers->size(); i++)
 		{
-			sp<GameController>g = gameControllers.at(i);
+			sp<GameController>g = gameControllers->at(i);
 			if (g->start_Pressed())return true;
 		}
 		return false;
@@ -629,9 +629,9 @@ public:
 
 		if (key_ESC_Pressed())return true;
 
-		for (int i = 0; i < gameControllers.size(); i++)
+		for (int i = 0; i < gameControllers->size(); i++)
 		{
-			sp<GameController>g = gameControllers.at(i);
+			sp<GameController>g = gameControllers->at(i);
 			if (g->select_Pressed())return true;
 		}
 		return false;
@@ -642,9 +642,9 @@ public:
 		//if (MINIGAME_ACTION_PRESSED) { MINIGAME_ACTION_PRESSED = false; return true; }return false;
 		if (key_SPACE_Pressed())return true;
 
-		for (int i = 0; i < gameControllers.size(); i++)
+		for (int i = 0; i < gameControllers->size(); i++)
 		{
-			sp<GameController>g = gameControllers.at(i);
+			sp<GameController>g = gameControllers->at(i);
 			if (g->b_Pressed())return true;
 		}
 		return false;
@@ -656,9 +656,9 @@ public:
 
 		if (key_LSHIFT_Pressed())return true;
 
-		for (int i = 0; i < gameControllers.size(); i++)
+		for (int i = 0; i < gameControllers->size(); i++)
 		{
-			sp<GameController>g = gameControllers.at(i);
+			sp<GameController>g = gameControllers->at(i);
 			if (g->a_Pressed())return true;
 		}
 		return false;

@@ -31,8 +31,8 @@ public:
 	sp<PlayerEditMenu> playerEditMenu = nullptr;
 	//GUI* playerEditGUI = nullptr;
 
-	vector<sp<GameChallengeNotificationPanel>> gameChallenges;// = ms<ArrayList><sp<GameChallengeNotificationPanel>>();
-	//ArrayList<GUI> gameChallengesGUIs;
+	sp<vector<sp<GameChallengeNotificationPanel>>>gameChallenges;// = ms<vector><sp<GameChallengeNotificationPanel>>();
+	//sp<vector<GUI>>gameChallengesGUIs;
 
 	sp<KeyboardMenuPanel> keyboardScreen = nullptr;
 	//GUI* keyboardScreenGUI = nullptr;

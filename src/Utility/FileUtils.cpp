@@ -78,14 +78,14 @@ void test()
 
 	//show all files in dir
 	{
-		vector<string> files;
+		sp<vector<string>>files;
 		tmpDir.list(files);
-		vector<string>::iterator it = files.begin();
+		sp<vector<string>>::iterator it = files.begin();
 		for (; it != files.end(); ++it)
 		{
 			cout << *it << endl;
 		}
-		tmpDir.remove(true);
+		tmpDir->remove(true);
 	}
 
 	//directory iterator
@@ -115,18 +115,18 @@ string FileUtils::removeSwearWords(string text)
 
 	if(swearWords==nullptr)
 	{
-		swearWords = loadTextFileFromExePathIntoVectorOfStringsAndTrim("/data/misc/swearwords.txt");
+		swearWords = loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("/data/misc/swearwords.txt");
 	}
 
-	for(int i=0;i<swearWords->size();i++)
+	for(int i=0;i<swearWords->>size();i++)
 	{
 		string word = swearWords->at(i);
-		int pos = text.find(word);
+		int pos = (int)text.find(word);
 		while(pos!=(int)string::npos)
 		{
 			text = text.substr(0, pos) + "*" +text.substr(pos + word.length() + 1);
 
-			pos = text.find(word);
+			pos = (int)text.find(word);
 		}
 	}
 	return text;
@@ -311,9 +311,9 @@ sp<BufferedImage> FileUtils::readBufferedImageFromFile(sp<OKFile> file)
 	return ms<BufferedImage>();
 }
 
-//ArrayList<string>* FileUtils::readLines(u8* get_resource_as_stream)
+//sp<vector<string>>* FileUtils::readLines(u8* get_resource_as_stream)
 //{
-//	return ms<ArrayList><string>;
+//	return ms<vector><string>;
 //}
 
 #include "Poco/File.h"
@@ -507,12 +507,12 @@ void FileUtils::makeDir(const string& cs)
 //}
 
 ////=========================================================================================================================
-//vector<uint16_t>* FileUtils::loadShortFile(string filename)
+//sp<vector<uint16_t>>* FileUtils::loadShortFile(string filename)
 //{//=========================================================================================================================
 //
 //	sp<ByteArray>byteArray = loadByteFileFromExePath(filename);
 //	
-//	vector<uint16_t> *shortArray = new vector<uint16_t>(byteArray->size() / 2);
+//	sp<vector<uint16_t>>*shortArray = new sp<vector<uint16_t>>(byteArray->size() / 2);
 //	
 //			for(int x=0;x<shortArray->size();x++)
 //			{
@@ -706,10 +706,10 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 }
 
 //=========================================================================================================================
-sp<vector<string>> FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
+sp<vector<string>> FileUtils::loadTextFileIntosp<VectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
-	sp<vector<string>> lines;// = ms<ArrayList><string>();// = ms<ArrayList><string>();
+	sp<vector<string>>>lines;// = ms<vector><string>();// = ms<vector><string>();
 
 	string line;
 	stringstream dosString;
@@ -725,7 +725,7 @@ sp<vector<string>> FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string file
 }
 
 //=========================================================================================================================
-sp<vector<string>> FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename)
+sp<vector<string>> FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -802,7 +802,7 @@ sp<vector<string>> FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(
 
 
 //=========================================================================================================================
-sp<ByteArray> FileUtils::loadByteFile(string filename)
+sp<ByteArray>>FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
@@ -894,7 +894,7 @@ sp<ByteArray> FileUtils::loadByteFile(string filename)
 //	file.seekg(0, std::ios::beg);
 //
 //	// reserve capacity
-//	std::vector<u8> *vec = new vector<u8>();
+//	std::sp<vector<u8>>*vec = new sp<vector<u8>>();
 //	vec->reserve(fileSize);
 //
 //	// read the data:
@@ -903,7 +903,7 @@ sp<ByteArray> FileUtils::loadByteFile(string filename)
 //		std::istream_iterator<u8>());
 //
 //	now = SDL_GetPerformanceCounter();
-//	log.info("vector iterator took " + to_string((double)((now - start) * 1000 * 1000) / SDL_GetPerformanceFrequency()) + "ms");
+//	log.info("sp<vector iterator took " + to_string((double)((now - start) * 1000 * 1000) / SDL_GetPerformanceFrequency()) + "ms");
 //	start = SDL_GetPerformanceCounter();
 
 //	return vec;
@@ -911,7 +911,7 @@ sp<ByteArray> FileUtils::loadByteFile(string filename)
 }
 
 //=========================================================================================================================
-sp<ByteArray> FileUtils::loadByteFileFromExePath(string filename)
+sp<ByteArray>>FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -1089,12 +1089,12 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 
 
 
-	long in_len = (long)encoded_string.size();
+	long in_len = (long)encoded_string->size();
 	int i = 0;
 	int j = 0;
 	int in_ = 0;
 	u8 char_array_4[4], char_array_3[3];
-	sp<vector<u8>> vec;// = new vector<u8>();
+	sp<vector<u8>> vec;// = new sp<vector<u8>>();
 
 	int n = 0;
 	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) 
@@ -1141,13 +1141,13 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 	vec = nullptr;
 	return ret;
 
-//	u8* data = new u8[ret.size()];
-//	for(int x=0;x<ret.size();x++)
+//	u8* data = new u8[ret->size()];
+//	for(int x=0;x<ret->size();x++)
 //	{
-//		data[x] = ret.at(x);
+//		data[x] = ret->at(x);
 //	}
 //	
-//	returnLength = ret.size();
+//	returnLength = ret->size();
 //	return data;
 }
 
@@ -2709,7 +2709,7 @@ void OKFile::deleteFile()
 	File f(path);
 	if (f.exists())
 	{
-		f.remove();
+		f->remove();
 	}
 
 }
@@ -2721,26 +2721,26 @@ void OKFile::deleteFile()
 
 Constructor
 
-std::vector<MyType> myVec(numberOfElementsToStart);
-int size = myVec.size();
+std::sp<vector<MyType>>myVec(numberOfElementsToStart);
+int size = myVec->size();
 int capacity = myVec.capacity();
 
 In this first case, using the constructor, size and numberOfElementsToStart will be equal and capacity will be greater than or equal to them.
 
-Think of myVec as a vector containing a number of items of MyType which can be accessed and modified, push_back(anotherInstanceOfMyType) will append it the the end of the vector.
+Think of myVec as a sp<vector containing a number of items of MyType which can be accessed and modified, push_back(anotherInstanceOfMyType) will append it the the end of the sp<vector.
 
 
 
 Reserve
 
-std::vector<MyType> myVec;
+std::vector<MyType>>>myVec;
 myVec.reserve(numberOfElementsToStart);
-int size = myVec.size();
+int size = myVec->size();
 int capacity = myVec.capacity();
 
 When using the reserve function, size will be 0 until you add an element to the array and capacity and numberOfElementsToStart will be equal.
 
-Think of myVec as an empty vector which can have new items appended to it using push_back with no overhead for the first numberOfElementsToStart elements.
+Think of myVec as an empty sp<vector which can have new items appended to it using push_back with no overhead for the first numberOfElementsToStart elements.
 
 */
 
@@ -2750,3 +2750,4 @@ Think of myVec as an empty vector which can have new items appended to it using 
 
 
 
+>

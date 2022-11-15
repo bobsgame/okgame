@@ -119,11 +119,11 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 
 	if (version == 0)
 	{
-		vector<BlockType> importExport_overrideBlockTypes;
+		sp<vector<BlockType>>importExport_overrideBlockTypes;
 		ar & BOOST_SERIALIZATION_NVP(importExport_overrideBlockTypes);
-		overrideBlockTypes_DEPRECATED.clear();
+		overrideBlockTypes_DEPRECATED->clear();
 		{
-			for (int i = 0; i < importExport_overrideBlockTypes.size(); i++)
+			for (int i = 0; i < importExport_overrideBlockTypes->size(); i++)
 			{
 				BlockType b = importExport_overrideBlockTypes.get(i);
 				sp<BlockType> bp(ms<BlockType>());
@@ -131,7 +131,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 				overrideBlockTypes_DEPRECATED.add(bp);
 			}
 		}
-		importExport_overrideBlockTypes.clear();
+		importExport_overrideBlockTypes->clear();
 	}
 	else
 	{
@@ -145,7 +145,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 }
 
 //=========================================================================================================================
-Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, ArrayList<sp<BlockType>> &blockTypes)
+Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, sp<vector<sp<BlockType>>>&blockTypes)
 {//=========================================================================================================================
 
 	this->game = gameInstance;
@@ -154,15 +154,15 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	this->pieceType = pieceType;
 
 	int maxNumBlocks = 0;
-	for(int i=0;i<pieceType->rotationSet.size();i++)
+	for(int i=0;i<pieceType->rotationSet->size();i++)
 	{
-		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet.get(i)->blockOffsets.size());
+		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet.get(i)->blockOffsets->size());
 	}
 
-	if (pieceType->overrideBlockTypes_UUID.size()>0)
+	if (pieceType->overrideBlockTypes_UUID->size()>0)
 	{
-		vector<sp<BlockType>> overrideBlockTypes;
-		for(int i=0;i<pieceType->overrideBlockTypes_UUID.size();i++)
+		sp<vector<sp<BlockType>>>overrideBlockTypes;
+		for(int i=0;i<pieceType->overrideBlockTypes_UUID->size();i++)
 		{
 			overrideBlockTypes.add(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID.get(i)));
 		}
@@ -195,10 +195,10 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	this->grid = grid;
 	this->pieceType = pieceType;
 
-	if (pieceType->overrideBlockTypes_UUID.size()>0)
+	if (pieceType->overrideBlockTypes_UUID->size()>0)
 	{
-		vector<sp<BlockType>> overrideBlockTypes;
-		for (int i = 0; i<pieceType->overrideBlockTypes_UUID.size(); i++)
+		sp<vector<sp<BlockType>>>overrideBlockTypes;
+		for (int i = 0; i<pieceType->overrideBlockTypes_UUID->size(); i++)
 		{
 			overrideBlockTypes.add(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID.get(i)));
 		}
@@ -207,9 +207,9 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	}
 
 	int maxNumBlocks = 0;
-	for (int i = 0; i<pieceType->rotationSet.size(); i++)
+	for (int i = 0; i<pieceType->rotationSet->size(); i++)
 	{
-		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet.get(i)->blockOffsets.size());
+		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet.get(i)->blockOffsets->size());
 	}
 
 	for (int b = 0; b < maxNumBlocks; b++)
@@ -227,7 +227,7 @@ void Piece::init()
 {//=========================================================================================================================
 
 	//initialize piece sp hack since can't do shared_from_this in constructor
-	for (int i = 0; i<blocks.size(); i++)
+	for (int i = 0; i<blocks->size(); i++)
 	{
 		blocks.get(i)->piece = this->shared_from_this();
 	}
@@ -244,11 +244,11 @@ void Piece::initColors()
 {//=========================================================================================================================
 	//set piece color
 
-	for (int i = 0; i < blocks.size(); i++)
+	for (int i = 0; i < blocks->size(); i++)
 	{
 		sp<Block> b = blocks.get(i);
 
-		if (b->blockType->colors.size()>0)
+		if (b->blockType->colors->size()>0)
 		{
 			b->setRandomBlockTypeColor();
 		}
@@ -265,11 +265,11 @@ void Piece::initColors()
 	if (getGameType()->whenGeneratingPieceDontMatchTwoBlocksOfTheSameSpecialRandomTypeAndColor)
 	{
 		//don't match a green crash piece with a green crash piece
-		for (int a = 0; a < blocks.size(); a++)
+		for (int a = 0; a < blocks->size(); a++)
 		{
 			sp<Block> blockA = blocks.get(a);
 
-			for (int b = 0; b < blocks.size(); b++)
+			for (int b = 0; b < blocks->size(); b++)
 			{
 				sp<Block> blockB = blocks.get(b);
 
@@ -280,7 +280,7 @@ void Piece::initColors()
 
 				if (blockA->blockType == blockB->blockType && blockA->blockType->isSpecialType() && blockB->blockType->isSpecialType())
 				{
-					while (blockA->getColor() == blockB->getColor() && blockA->blockType->colors.size()>1)
+					while (blockA->getColor() == blockB->getColor() && blockA->blockType->colors->size()>1)
 					{
 						blockA->setRandomBlockTypeColor();
 					}
@@ -292,11 +292,11 @@ void Piece::initColors()
 	if (getGameType()->whenGeneratingPieceDontMatchNormalBlockWithBlockOfDifferentTypeAndSameColor)
 	{
 		//don't match a green crash piece with a green gem
-		for (int a = 0; a < blocks.size(); a++)
+		for (int a = 0; a < blocks->size(); a++)
 		{
 			sp<Block> blockA = blocks.get(a);
 
-			for (int b = 0; b < blocks.size(); b++)
+			for (int b = 0; b < blocks->size(); b++)
 			{
 				sp<Block> blockB = blocks.get(b);
 
@@ -309,7 +309,7 @@ void Piece::initColors()
 				{
 					if (blockA->blockType->isSpecialType() == false)
 					{
-						while (blockA->getColor() == blockB->getColor() && blockA->blockType->colors.size()>1)
+						while (blockA->getColor() == blockB->getColor() && blockA->blockType->colors->size()>1)
 						{
 							blockA->setRandomBlockTypeColor();
 						}
@@ -318,7 +318,7 @@ void Piece::initColors()
 					{
 						if (blockB->blockType->isSpecialType() == false)
 						{
-							while (blockA->getColor() == blockB->getColor() && blockB->blockType->colors.size()>1)
+							while (blockA->getColor() == blockB->getColor() && blockB->blockType->colors->size()>1)
 							{
 								blockB->setRandomBlockTypeColor();
 							}
@@ -340,7 +340,7 @@ void Piece::initColors()
 		{
 			bool allTheSame = true;
 
-			for (int i = 0; i < blocks.size(); i++)
+			for (int i = 0; i < blocks->size(); i++)
 			{
 				if (c != blocks.get(i)->getColor())
 				{
@@ -352,7 +352,7 @@ void Piece::initColors()
 			{
 				sp<Block> blockA = blocks.get(0);
 
-				for (int b = 0; b < blocks.size(); b++)
+				for (int b = 0; b < blocks->size(); b++)
 				{
 					sp<Block> blockB = blocks.get(b);
 
@@ -361,7 +361,7 @@ void Piece::initColors()
 						continue;
 					}
 
-					while (blockA->getColor() == blockB->getColor() && blockB->blockType->colors.size()>1)
+					while (blockA->getColor() == blockB->getColor() && blockB->blockType->colors->size()>1)
 					{
 						blockB->setRandomBlockTypeColor();
 					}
@@ -375,14 +375,14 @@ void Piece::initColors()
 void Piece::setPieceBlockConnections()
 {//=========================================================================================================================
 
-	for (int b = 0; b < blocks.size(); b++)
+	for (int b = 0; b < blocks->size(); b++)
 	{
-		blocks.get(b)->connectedBlocksByPiece.clear();
+		blocks.get(b)->connectedBlocksByPiece->clear();
 	}
 
-	for (int b = 0; b < blocks.size(); b++)
+	for (int b = 0; b < blocks->size(); b++)
 	{
-		for (int c = 0; c < blocks.size(); c++)
+		for (int c = 0; c < blocks->size(); c++)
 		{
 			if (blocks.get(c) != blocks.get(b))
 			{
@@ -399,14 +399,14 @@ void Piece::setPieceBlockConnections()
 void Piece::setBlockColorConnectionsInPiece()
 {//=========================================================================================================================
 
-	for (int b = 0; b < blocks.size(); b++)
+	for (int b = 0; b < blocks->size(); b++)
 	{
-		blocks.get(b)->connectedBlocksByColor.clear();
+		blocks.get(b)->connectedBlocksByColor->clear();
 	}
 
-	for (int b = 0; b < blocks.size(); b++)
+	for (int b = 0; b < blocks->size(); b++)
 	{
-		for (int c = 0; c < blocks.size(); c++)
+		for (int c = 0; c < blocks->size(); c++)
 		{
 			if (blocks.get(c) != blocks.get(b))
 			{
@@ -426,7 +426,7 @@ void Piece::setBlockColorConnectionsInPiece()
 //=========================================================================================================================
 int Piece::getNumBlocksInCurrentRotation()
 {//=========================================================================================================================
-	return pieceType->rotationSet.get(currentRotation)->blockOffsets.size();
+	return pieceType->rotationSet.get(currentRotation)->blockOffsets->size();
 
 }
 
@@ -466,7 +466,7 @@ void Piece::update()
 		ghostAlpha = ghostAlphaTo - ((float)(ghostFadeTicks) / (float)(ghostFadeTicksPerPhase)) * (ghostAlphaTo - ghostAlphaFrom);
 	}
 
-	for (int i = 0; i < blocks.size(); i++)
+	for (int i = 0; i < blocks->size(); i++)
 	{
 		sp<Block> b = blocks.get(i);
 		if (b->blockType->counterType)
@@ -490,10 +490,10 @@ void Piece::update()
 		}
 
 
-		vector<sp<BlockType>> blockTypes;//special case, this is slow so we don't fill it unless we need it
+		sp<vector<sp<BlockType>>>blockTypes;//special case, this is slow so we don't fill it unless we need it
 		bool filledBlockTypes = false;
 
-		for (int i = 0; i < blocks.size(); i++)
+		for (int i = 0; i < blocks->size(); i++)
 		{
 			sp<Block> b = blocks.get(i);
 
@@ -523,7 +523,7 @@ void Piece::update()
 		}
 	}
 
-	for (int i = 0; i < blocks.size(); i++)
+	for (int i = 0; i < blocks->size(); i++)
 	{
 		blocks.get(i)->update();
 	}
@@ -592,7 +592,7 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 	float w = (float)cellW();
 	float h = (float)cellH();
 
-	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
+	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
 		sp<Block> b = blocks.get(i);
 
@@ -675,7 +675,7 @@ void Piece::renderAsCurrentPiece(float x, float y)
 	if (getGameType()->gameMode == GameMode::STACK)
 	//if (getCurrentGameType()->drawCursorInsteadOfCurrentPiece)//was currentPieceOutlineAllPieces
 	{
-		for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
+		for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 		{
 			int ox = getGameType()->gridPixelsBetweenColumns;
 			int oy = getGameType()->gridPixelsBetweenRows;
@@ -710,7 +710,7 @@ void Piece::renderAsCurrentPiece(float x, float y)
 //=========================================================================================================================
 void Piece::render(float x, float y)
 {//=========================================================================================================================
-	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
+	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
 		sp<Block> b = blocks.get(i);
 		b->render(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), 1.0f, 1.0f, true, false);
@@ -721,7 +721,7 @@ void Piece::render(float x, float y)
 void Piece::renderGhost(float x, float y, float alpha)
 {//=========================================================================================================================
 
-	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
+	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
 		sp<Block> b = blocks.get(i);
 
@@ -747,7 +747,7 @@ void Piece::renderGhost(float x, float y, float alpha)
 //=========================================================================================================================
 void Piece::setBlocksSlamming()
 {//=========================================================================================================================
-	for (int i = 0; i < blocks.size(); i++)
+	for (int i = 0; i < blocks->size(); i++)
 	{
 		sp<Block> b = blocks.get(i);
 		b->slamming = true;
@@ -762,14 +762,14 @@ int Piece::getWidth()
 
 	int lowestXOffset = 4;
 	int highestXOffset = -4;
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->xInPiece < lowestXOffset)
 		{
 			lowestXOffset = blocks.get(b)->xInPiece;
 		}
 	}
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->xInPiece > highestXOffset)
 		{
@@ -787,14 +787,14 @@ int Piece::getHeight()
 
 	int lowestYOffset = 4;
 	int highestYOffset = -4;
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->yInPiece < lowestYOffset)
 		{
 			lowestYOffset = blocks.get(b)->yInPiece;
 		}
 	}
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->yInPiece > highestYOffset)
 		{
@@ -809,7 +809,7 @@ int Piece::getHeight()
 int Piece::getLowestOffsetX()
 {//=========================================================================================================================
 	int lowestXOffset = 0;
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->xInPiece < lowestXOffset)
 		{
@@ -824,7 +824,7 @@ int Piece::getLowestOffsetX()
 int Piece::getLowestOffsetY()
 {//=========================================================================================================================
 	int lowestYOffset = 0;
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->yInPiece < lowestYOffset)
 		{
@@ -839,7 +839,7 @@ int Piece::getLowestOffsetY()
 int Piece::getHighestOffsetX()
 {//=========================================================================================================================
 	int highestXOffset = 0;
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->xInPiece > highestXOffset)
 		{
@@ -854,7 +854,7 @@ int Piece::getHighestOffsetX()
 int Piece::getHighestOffsetY()
 {//=========================================================================================================================
 	int highestYOffset = 0;
-	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks.size(); b++)
+	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
 		if (blocks.get(b)->yInPiece > highestYOffset)
 		{
@@ -870,7 +870,7 @@ void Piece::rotateCCW()
 {//=========================================================================================================================
 	if (currentRotation == 0)
 	{
-		currentRotation = pieceType->rotationSet.size()-1;
+		currentRotation = pieceType->rotationSet->size()-1;
 	}
 	else
 	{
@@ -882,7 +882,7 @@ void Piece::rotateCCW()
 //=========================================================================================================================
 void Piece::rotateCW()
 {//=========================================================================================================================
-	if (currentRotation == pieceType->rotationSet.size() - 1)
+	if (currentRotation == pieceType->rotationSet->size() - 1)
 	{
 		currentRotation = 0;
 	}
@@ -932,14 +932,14 @@ void Piece::setRotation(int rotation)
 
 	currentRotation = rotation;
 
-	if (rotation >= (int)pieceType->rotationSet.size())
+	if (rotation >= (int)pieceType->rotationSet->size())
 	{
-		rotation -= (int)pieceType->rotationSet.size();
+		rotation -= (int)pieceType->rotationSet->size();
 	}
 
 	sp<Rotation>r = pieceType->rotationSet.get(rotation);
 
-	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks.size(); i++)
+	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
 		sp<BlockOffset>b = r->blockOffsets.get(i);
 		blocks.get(i)->setXYOffsetInPiece(b->x, b->y);

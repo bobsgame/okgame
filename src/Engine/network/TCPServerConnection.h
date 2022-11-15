@@ -655,34 +655,34 @@ public:
 	};
 
 private:
-	vector<GameSaveUpdateRequest> _gameSaveUpdateRequestQueue;
+	sp<vector<sp<GameSaveUpdateRequest>>>_gameSaveUpdateRequestQueue;
 	int _requestCounter = 0;
 	mutex _gameSaveUpdateRequestQueue_Mutex;
 public:
-	GameSaveUpdateRequest getQueuedGameSaveUpdateRequest_S(int i)
+	sp<GameSaveUpdateRequest> getQueuedGameSaveUpdateRequest_S(int i)
 	{ //=========================================================================================================================
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
-		int size = (int)_gameSaveUpdateRequestQueue.size();
-		if (i >= size)return GameSaveUpdateRequest();
-		return _gameSaveUpdateRequestQueue.at(i);
+		int size = (int)_gameSaveUpdateRequestQueue->size();
+		if (i >= size)return ms<GameSaveUpdateRequest>();
+		return _gameSaveUpdateRequestQueue->at(i);
 	}
 	void addQueuedGameSaveUpdateRequest_S(string value)
 	{
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
 	  //all game save updates should be instantly queued
 	  //any changes to the game save should happen instantly on the client
-		GameSaveUpdateRequest g = GameSaveUpdateRequest(value, _requestCounter);
-		_gameSaveUpdateRequestQueue.push_back(g);
+		sp<GameSaveUpdateRequest> g = ms<GameSaveUpdateRequest>(value, _requestCounter);
+		_gameSaveUpdateRequestQueue->push_back(g);
 		_requestCounter++;
 	}
 	void removeQueuedGameSaveUpdateRequestByID_S(int requestID)
 	{
 		lock_guard<mutex> lock(_gameSaveUpdateRequestQueue_Mutex);
-		int size = (int)_gameSaveUpdateRequestQueue.size();
+		int size = (int)_gameSaveUpdateRequestQueue->size();
 		for (int i = 0; i < size; i++)
-			if (_gameSaveUpdateRequestQueue.at(i).requestID == requestID)
+			if (_gameSaveUpdateRequestQueue->at(i)->requestID == requestID)
 			{
-				_gameSaveUpdateRequestQueue.erase(_gameSaveUpdateRequestQueue.begin()+i);
+				_gameSaveUpdateRequestQueue->erase(_gameSaveUpdateRequestQueue->begin()+i);
 				i = size;
 				break;
 			}
@@ -920,19 +920,19 @@ public:
 
 	//------------------------------------
 	private:
-		vector<string> _bobsGameGameStatsResponse;
+		sp<vector<string>>_bobsGameGameStatsResponse;
 		mutex _bobsGameGameStatsResponse_Mutex;
 	public:
-		void setOKGameGameStatsResponse_S(vector<string> s)
+		void setOKGameGameStatsResponse_S(sp<vector<string>>s)
 		{
 			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
 			_bobsGameGameStatsResponse = s;
 		}
-		vector<string> getAndResetOKGameGameStatsResponse_S()
+		sp<vector<string>>getAndResetOKGameGameStatsResponse_S()
 		{
 			lock_guard<mutex> lock(_bobsGameGameStatsResponse_Mutex);
-			vector<string> s = _bobsGameGameStatsResponse;
-			_bobsGameGameStatsResponse.clear();
+			sp<vector<string>>s = _bobsGameGameStatsResponse;
+			_bobsGameGameStatsResponse->clear();
 			return s;
 		}
 	//------------------------------------	

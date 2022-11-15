@@ -45,7 +45,7 @@ void UDPPeerConnection::addEnginePartToForwardMessagesTo(sp<EnginePart> e)
 void UDPPeerConnection::removeEnginePartToForwardMessagesTo(sp<EnginePart> e)
 {
 	if (engineParts.contains(e) == true)
-		engineParts.remove(e);
+		engineParts->remove(e);
 }
 
 
@@ -270,12 +270,12 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						SDLNet_FreePacket(packet);
 				}
 
-				if (packetsToProcess.size() > 0)
+				if (packetsToProcess->size() > 0)
 				{
 					_lastReceivedDataTime = System::currentHighResTimer();
 				}
 
-				while (packetsToProcess.size() > 0)
+				while (packetsToProcess->size() > 0)
 				{
 					string *sp = packetsToProcess.front();
 					packetsToProcess.pop();
@@ -361,7 +361,7 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 									if (_frameSentTimes->containsKey(queuedID))
 									{
 										long long timeSentPacket = _frameSentTimes->get(queuedID);
-										_frameSentTimes->removeAt(queuedID);
+										_frameSentTimes->erase(->begin()+queuedID);
 
 										long long roundaboutTicks = (long long)System::getTicksBetweenTimes(timeSentPacket, System::currentHighResTimer());
 										_frameRoundaboutTicks->add(roundaboutTicks);
@@ -838,12 +838,12 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// sp<ChannelHandlerCont
 		return true;
 	}
 
-	for (int i = 0; i < OKNet::engines.size(); i++)
+	for (int i = 0; i < OKNet::engines->size(); i++)
 	{
 		if (OKNet::engines.get(i)->udpPeerMessageReceived(this, s))return true;
 	}
 
-	for (int i = 0; i < engineParts.size(); i++)
+	for (int i = 0; i < engineParts->size(); i++)
 	{
 		if (engineParts.get(i)->udpPeerMessageReceived(this, s))return true;
 	}

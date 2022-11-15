@@ -702,7 +702,7 @@ sp<OKColor> OKColor::getColorByName(string name)
 {//==========================================================================================================================
 
 	if (name == "" || name == "empty")return nullptr;
-	for(int i=0;i<colors.size();i++)
+	for(int i=0;i<colors->size();i++)
 	{
 		sp<OKColor>c = colors.get(i);
 

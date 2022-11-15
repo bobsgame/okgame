@@ -142,8 +142,8 @@ PlayerEditMenu::PlayerEditMenu()
 	//   genderLabel = ms<Label>("Gender:");
 	//   genderLabel->setCanAcceptKeyboardFocus(false);
 	//
-	//   genderButtons = ArrayList<sp<ToggleButton>>(2);
-	//   genderButtonLabels = ArrayList<sp<Label>>(2);
+	//   genderButtons = sp<vector<sp<ToggleButton>>>(2);
+	//   genderButtonLabels = sp<vector<sp<Label>>>(2);
 	//
 	//   genderButtonLabels[0] = ms<Label>("Male");
 	//   genderButtonLabels[1] = ms<Label>("Female");

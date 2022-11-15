@@ -87,7 +87,7 @@ public:
 	static sp<OKColor> getColorByName(string name);
 	static Logger log;
 
-	static ArrayList<sp<OKColor>> colors;
+	static sp<vector<sp<OKColor>>>colors;
 
 	static sp<OKColor> clear;
 	static sp<OKColor> transparent;

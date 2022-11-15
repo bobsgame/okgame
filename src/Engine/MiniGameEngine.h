@@ -40,7 +40,7 @@ public:
 
 
 	int numTitleMenuTextureFrames = 0;
-	vector<sp<OKTexture>> titleMenuTextures;// = ms<ArrayList><sp<OKTexture>>();
+	sp<vector<sp<OKTexture>>>titleMenuTextures;// = ms<vector><sp<OKTexture>>();
 	sp<OKTexture> titleMenuTexture = nullptr;
 	long long titleMenuFrameTicks = 0;
 	int currentTitleMenuTextureFrame = 0;
@@ -82,8 +82,8 @@ protected:
 	long long whichDifficultyToShow = 0;
 	long long updateFriendsTime = 0;
 	long long updatePublicGamesTime = 0;
-	vector<sp<Caption>> onlineFriendCaptions;// = ms<ArrayList><sp<Caption>>();
-	vector<sp<Caption>> waitingForFriendCaptions;// = ms<ArrayList><sp<Caption>>();
+	sp<vector<sp<Caption>>>onlineFriendCaptions;// = ms<vector><sp<Caption>>();
+	sp<vector<sp<Caption>>>waitingForFriendCaptions;// = ms<vector><sp<Caption>>();
 	void waitingForFriendScreenUpdate();
 	void waitingForFriendScreenRender();
 

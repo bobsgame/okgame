@@ -19,11 +19,11 @@ GameStore::GameStore()
 
 	//MenuPanel();
 
-	// games = ms<ArrayList><sp<GameItem>>();
+	// games = ms<vector><sp<GameItem>>();
 
 	for (int i = 0; i < 3; i++)
 	{
-		games.push_back(ms<GameItem>());
+		games->push_back(ms<GameItem>());
 	}
 	//
 	//   games[0]->gameTitleLabel.setText("Tetrid LIVE");

@@ -292,11 +292,11 @@ public:
 
 
 
-		if (gameSequence->gameTypes.size() == 1)
+		if (gameSequence->gameTypes->size() == 1)
 		{
 			room_IsGameSequenceOrType = "GameType";
-			room_GameTypeName = gameSequence->gameTypes.at(0)->name;
-			room_GameTypeUUID = gameSequence->gameTypes.at(0)->uuid;
+			room_GameTypeName = gameSequence->gameTypes->at(0)->name;
+			room_GameTypeUUID = gameSequence->gameTypes->at(0)->uuid;
 		}
 		else
 		{
@@ -664,11 +664,11 @@ public:
 				OKGame::saveUnknownGameSequencesAndTypesToXML(gs);
 
 				gameSequence = gs;
-				if (gs->gameTypes.size() == 1)
+				if (gs->gameTypes->size() == 1)
 				{
 					room_IsGameSequenceOrType = "GameType";
-					room_GameTypeName = gs->gameTypes.at(0)->name;
-					room_GameTypeUUID = gs->gameTypes.at(0)->uuid;
+					room_GameTypeName = gs->gameTypes->at(0)->name;
+					room_GameTypeUUID = gs->gameTypes->at(0)->uuid;
 				}
 				else
 				{
@@ -768,7 +768,7 @@ public:
 //				OKGame::saveUnknownGameSequencesAndTypesToXML(gs);
 //
 //				newRoom->gameSequence = gs;
-//				if (gs->gameTypes.size() == 1)
+//				if (gs->gameTypes->size() == 1)
 //				{
 //					//newRoom->isSingleGameType = true;
 //					newRoom->gameTypeUUID = gs->gameTypes.get(0)->uuid;

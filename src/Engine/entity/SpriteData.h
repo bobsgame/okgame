@@ -104,7 +104,7 @@ private:
 
 
 	
-	vector<sp<SpriteAnimationSequence>> animationList;// = ms<ArrayList><sp<SpriteAnimationSequence>>();
+	sp<vector<sp<SpriteAnimationSequence>>>animationList;// = ms<vector><sp<SpriteAnimationSequence>>();
 
 	sp<EventData> eventData = nullptr;
 

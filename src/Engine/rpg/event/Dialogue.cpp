@@ -20,15 +20,15 @@ Dialogue::Dialogue(sp<Engine> g, int id)
 
 	this->data = ms<DialogueData>(id, "", "", "", "");
 
-	for (int i = 0; i < (int)getEventManager()->dialogueList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->dialogueList->size(); i++)
 	{
-		if (getEventManager()->dialogueList.at(i)->getID() == data->getID())
+		if (getEventManager()->dialogueList->at(i)->getID() == data->getID())
 		{
 			log.error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->dialogueList.push_back(shared_from_this());
+	getEventManager()->dialogueList->push_back(shared_from_this());
 }
 
 Dialogue::Dialogue(sp<Engine> g, sp<DialogueData> data)
@@ -38,15 +38,15 @@ Dialogue::Dialogue(sp<Engine> g, sp<DialogueData> data)
 	this->data = data;
 	setInitialized_S(true);
 
-	for (int i = 0; i < (int)getEventManager()->dialogueList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->dialogueList->size(); i++)
 	{
-		if (getEventManager()->dialogueList.at(i)->getID() == data->getID())
+		if (getEventManager()->dialogueList->at(i)->getID() == data->getID())
 		{
 			log.error("Dialogue already exists:" + data->getName());
 			return;
 		}
 	}
-	getEventManager()->dialogueList.push_back(shared_from_this());
+	getEventManager()->dialogueList->push_back(shared_from_this());
 }
 
 //The following method was originally marked 'synchronized':

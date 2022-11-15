@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//ArrayList<sp<Label>> buttonValueLabel;
+	//sp<vector<sp<Label>>>buttonValueLabel;
 
 
 	ControlsPanel();

@@ -51,7 +51,7 @@ private:
 
 	//can pull connections from sprites to areas and doors, should add these to points of interest list inside sprite.
 	//automatically connect lines from all random points to any random spawn points, when click on random spawn point, should go to other spawn points as well
-	vector<string> connectionTYPEIDList;// = ms<ArrayList><string>(); //should ALWAYS be by ID
+	sp<vector<string>>connectionTYPEIDList;// = ms<vector><string>(); //should ALWAYS be by ID
 
 
 	//warp area specific

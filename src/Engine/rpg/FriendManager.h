@@ -20,8 +20,8 @@ public:
 
 
 
-	//ArrayList because threads will access it
-	vector<sp<FriendCharacter>> friendCharacters;// = ms<ArrayList><sp<FriendCharacter>>();
+	//sp<vector because threads will access it
+	sp<vector<sp<FriendCharacter>>>friendCharacters;// = ms<vector><sp<FriendCharacter>>();
 
 
 

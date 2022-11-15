@@ -37,7 +37,7 @@ public:
 	sp<OKTexture> texture = nullptr;
 	sp<OKTexture> shadowTexture = nullptr;
 
-	//ArrayList<sp<TextureRegion>>* frameTextureRegionList = ms<ArrayList><sp<TextureRegion>>();
+	//sp<vector<sp<TextureRegion>>>* frameTextureRegionList = ms<vector><sp<TextureRegion>>();
 
 	bool useHQ2X = false;
 

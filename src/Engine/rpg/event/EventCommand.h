@@ -30,15 +30,15 @@ public:
 	static int TYPE_QUALIFIER_FALSE;
 
 
-	vector<sp<EventParameter>> parameterList;// = ms<ArrayList><sp<EventParameter>>();
+	sp<vector<sp<EventParameter>>>parameterList;// = ms<vector><sp<EventParameter>>();
 
 	sp<EventCommand> parent = nullptr;
 
 
-	vector<sp<EventCommand>> children;// = ms<ArrayList><sp<EventCommand>>();
+	sp<vector<sp<EventCommand>>>children;// = ms<vector><sp<EventCommand>>();
 
 
-	EventCommand(sp<Engine> g, const string& command, vector<sp<EventParameter>> &parameterList, int type);
+	EventCommand(sp<Engine> g, const string& command, sp<vector<sp<EventParameter>>>&parameterList, int type);
 
 	int getNumParams();
 

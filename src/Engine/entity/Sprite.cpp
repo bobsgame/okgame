@@ -45,12 +45,12 @@ void Sprite::preloadFromDataFile(string name)
 
 	//load txt, parse id,width,height,frames,animations
 
-	//log->info("loadTextFileFromExePathIntoVectorOfStringsAndTrim "+name);
-	sp<vector<string>> stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sprite/" + name + ".txt");
+	//log->info("loadTextFileFromExePathIntosp<VectorOfStringsAndTrim "+name);
+	sp<vector<string>>>stringList = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/sprite/" + name + ".txt");
 
 	preloadedFromData = true;
 
-	if (stringList->size() > 0)
+	if (stringList->>size() > 0)
 	{
 		for (int i = 0; i < stringList->size(); i++)
 		{
@@ -635,7 +635,7 @@ void Sprite::loadTextures()
 					bool isRandom = getIsRandom();
 					bool hasShadow = getHasShadow();
 
-//					std::vector<std::future<void>> results;
+//					std::sp<vector<std::future<void>>>results;
 //					results.push_back
 //					(
 						generatePNGThreadPool->push

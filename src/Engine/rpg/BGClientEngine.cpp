@@ -561,13 +561,13 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadSkillData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadSkillData");
 	}
 	catch (exception e)
 	{
 		log.error("Could not load PreloadSkillData");
 	}
-	if (b64List->size() > 0)
+	if (b64List->>size() > 0)
 	{
 		for (int i = 0; i < b64List->size(); i++)
 		{
@@ -590,11 +590,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadDialogueData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadDialogueData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -617,11 +617,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadFlagData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadFlagData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -644,11 +644,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadGameStringData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadGameStringData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -671,11 +671,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadEventData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadEventData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -698,11 +698,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadSpriteData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadSpriteData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -740,11 +740,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadSoundData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadSoundData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -784,11 +784,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadMusicData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadMusicData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -823,11 +823,11 @@ void BGClientEngine::loadPreCachedObjectData()
 
 	try
 	{
-		b64List = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/PreloadMapData");
+		b64List = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/PreloadMapData");
 	}
 	catch (exception e)//IOException e)
 	{
-		//e->printStackTrace();
+		//e->>printStackTrace();
 	}
 	if (b64List->size() > 0)
 	{
@@ -843,7 +843,7 @@ void BGClientEngine::loadPreCachedObjectData()
 				{
 					sp<Map> m = ms<Map>(this, data);
 
-					getMapManager()->mapList.push_back(m);
+					getMapManager()->mapList->push_back(m);
 					getMapManager()->mapByNameHashMap.put(data->getName(), m);
 					getMapManager()->mapByIDHashMap.put(data->getID(), m);
 				}
@@ -1205,18 +1205,18 @@ void BGClientEngine::setPlayerToTempPlayerWithSprite(sp<Sprite> s)
 
 	if (getCurrentMap() != nullptr)
 	{
-		for (int i = 0; i < getCurrentMap()->activeEntityList.size(); i++)
+		for (int i = 0; i < getCurrentMap()->activeEntityList->size(); i++)
 		{
-			if (getCurrentMap()->activeEntityList.at(i).get() == player.get())
+			if (getCurrentMap()->activeEntityList->at(i).get() == player.get())
 			{
 				getCurrentMap()->activeEntityList.erase(getCurrentMap()->activeEntityList.begin()+i);
-				getCurrentMap()->activeEntityList.push_back(p);
+				getCurrentMap()->activeEntityList->push_back(p);
 			}
 		}
 		//if (getCurrentMap()->activeEntityList.contains(player))
 		//{
-		//	getCurrentMap()->activeEntityList.remove(player);
-		//	getCurrentMap()->activeEntityList.push_back(p);
+		//	getCurrentMap()->activeEntityList->remove(player);
+		//	getCurrentMap()->activeEntityList->push_back(p);
 		//}
 	}
 
@@ -1234,18 +1234,18 @@ void BGClientEngine::setPlayerToNormalPlayer()
 	if (getCurrentMap() != nullptr)
 	{
 
-		for (int i = 0; i < getCurrentMap()->activeEntityList.size(); i++)
+		for (int i = 0; i < getCurrentMap()->activeEntityList->size(); i++)
 		{
-			if (getCurrentMap()->activeEntityList.at(i).get() == player.get())
+			if (getCurrentMap()->activeEntityList->at(i).get() == player.get())
 			{
 				getCurrentMap()->activeEntityList.erase(getCurrentMap()->activeEntityList.begin() + i);
-				getCurrentMap()->activeEntityList.push_back(normalPlayer);
+				getCurrentMap()->activeEntityList->push_back(normalPlayer);
 			}
 		}
 		//if (getCurrentMap()->activeEntityList.contains(player))
 		//{
-		//	getCurrentMap()->activeEntityList.remove(player);
-		//	getCurrentMap()->activeEntityList.push_back(normalPlayer);
+		//	getCurrentMap()->activeEntityList->remove(player);
+		//	getCurrentMap()->activeEntityList->push_back(normalPlayer);
 		//}
 	}
 

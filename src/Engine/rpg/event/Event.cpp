@@ -68,49 +68,49 @@ void Event::initEvent()
 {//=========================================================================================================================
 	setInitialized_S(true);
 
-	for(int i=0;i<getData()->dialogueDataList.size();i++)
+	for(int i=0;i<getData()->dialogueDataList->size();i++)
 	{
-		sp<DialogueData> data = getData()->dialogueDataList.at(i);
+		sp<DialogueData> data = getData()->dialogueDataList->at(i);
 		sp<Dialogue> d = getEventManager()->getDialogueByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0; i<getData()->flagDataList.size();i++)
+	for(int i=0; i<getData()->flagDataList->size();i++)
 	{
-		sp<FlagData> data = getData()->flagDataList.at(i);
+		sp<FlagData> data = getData()->flagDataList->at(i);
 		sp<Flag> d = getEventManager()->getFlagByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0; i<getData()->gameStringDataList.size();i++)
+	for(int i=0; i<getData()->gameStringDataList->size();i++)
 	{
-		sp<GameStringData> data = getData()->gameStringDataList.at(i);
+		sp<GameStringData> data = getData()->gameStringDataList->at(i);
 		sp<GameString> d = getEventManager()->getGameStringByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0; i<getData()->skillDataList.size();i++)
+	for(int i=0; i<getData()->skillDataList->size();i++)
 	{
-		sp<SkillData> data = getData()->skillDataList.at(i);
+		sp<SkillData> data = getData()->skillDataList->at(i);
 		sp<Skill> d = getEventManager()->getSkillByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0; i<getData()->musicDataList.size();i++)
+	for(int i=0; i<getData()->musicDataList->size();i++)
 	{
-		sp<AudioData> data = getData()->musicDataList.at(i);
+		sp<AudioData> data = getData()->musicDataList->at(i);
 		sp<AudioFile> d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
-	for(int i=0; i<getData()->soundDataList.size();i++)
+	for(int i=0; i<getData()->soundDataList->size();i++)
 	{
-		sp<AudioData> data = getData()->soundDataList.at(i);
+		sp<AudioData> data = getData()->soundDataList->at(i);
 		sp<AudioFile> d = getAudioManager()->getAudioFileByIDCreateIfNotExist(data->getID());
 		d->setData_S(data);
 	}
 
 	bool exists = false;
 
-	for (int i = 0; i < (int)getEventManager()->eventList.size(); i++)
+	for (int i = 0; i < (int)getEventManager()->eventList->size(); i++)
 	{
 
-		sp<Event>e = getEventManager()->eventList.at(i);
+		sp<Event>e = getEventManager()->eventList->at(i);
 		if (e->getID() == data->getID())
 		{
 			log.warn("Event already exists:" + data->getName());
@@ -123,7 +123,7 @@ void Event::initEvent()
 	}
 	
 	if(exists == false)
-	getEventManager()->eventList.push_back(shared_from_this()); 
+	getEventManager()->eventList->push_back(shared_from_this()); 
 	//this tracks events created for areas and entities that don't exist after the map is unloaded, so they don't have to be loaded from the server and parsed again.
 
 }
@@ -434,9 +434,9 @@ void Event::run()
 					reset();
 
 
-					for (int i = 0; i < getEventManager()->runningEventQueue.size(); i++)
+					for (int i = 0; i < getEventManager()->runningEventQueue->size(); i++)
 					{
-						sp<Event> se = getEventManager()->runningEventQueue.at(i);
+						sp<Event> se = getEventManager()->runningEventQueue->at(i);
 						if (se.get() == this)
 						{
 							getEventManager()->runningEventQueue.erase(getEventManager()->runningEventQueue.begin()+i);
@@ -483,7 +483,7 @@ void Event::getNextCommand()
 	if (currentCommand != nullptr)
 	{
 		//increment command into currentCommand's children
-		if (currentCommand->children.size() > 0)
+		if (currentCommand->children->size() > 0)
 		{
 			currentCommand = currentCommand->getNextChild();
 			doCommand();
@@ -528,11 +528,11 @@ void Event::doCommand()
 
 	//qualifiers. check if TRUE or FALSE. skip children if false.
 
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		for (int i = 0; i < (int)currentCommand->parameterList.size(); i++)
+		for (int i = 0; i < (int)currentCommand->parameterList->size(); i++)
 		{
-			sp<EventParameter> e = currentCommand->parameterList.at(i);
+			sp<EventParameter> e = currentCommand->parameterList->at(i);
 			e->updateParameterVariablesFromString(shared_from_this());
 		}
 	}
@@ -2170,9 +2170,9 @@ void Event::isPlayerTouchingAnyEntityUsingThisSprite()
 void Event::isPlayerWalkingIntoDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isWalkingIntoEntity(d));
 	}
@@ -2181,9 +2181,9 @@ void Event::isPlayerWalkingIntoDoor_DOOR()
 void Event::isPlayerWalkingIntoWarp_WARP()
 { //===============================================================================================
 	int p = 0;
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		sp<WarpArea> d = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<WarpArea> d = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isWalkingIntoArea(d));
 	}
@@ -2205,9 +2205,9 @@ void Event::isFlagSet_FLAG()
 { //===============================================================================================
 	int p = 0;
 
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList.at(p++)->entityObject.get())); //we don't particularly need to know what the actual flag name is... ID is fine.
+		sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList->at(p++)->entityObject.get())); //we don't particularly need to know what the actual flag name is... ID is fine.
 
 		//Boolean value = f.checkServerValueAndResetAfterSuccessfulReturn();
 		//if(value!=null)
@@ -2222,10 +2222,10 @@ void Event::hasSkillAtLeast_SKILL_FLOAT1()
 { //===============================================================================================
 	int p = 0;
 
-	if (currentCommand->parameterList.size() > 1)
+	if (currentCommand->parameterList->size() > 1)
 	{
-		sp<Skill> s = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-		float f = currentCommand->parameterList.at(p++)->f;
+		sp<Skill> s = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+		float f = currentCommand->parameterList->at(p++)->f;
 
 		float value = s->getValue_S();
 
@@ -2239,9 +2239,9 @@ void Event::isCurrentState_STATE()
 { //===============================================================================================
 	int p = 0;
 
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		sp<MapState> s = ms<MapState>(dynamic_cast<MapState*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<MapState> s = ms<MapState>(dynamic_cast<MapState*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		if (s != nullptr)
 		{
@@ -2254,9 +2254,9 @@ void Event::isPlayerStandingInArea_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		sp<Area> area = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<Area> area = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getPlayer()->isAreaBoundaryTouchingMyHitBox(area));
 	}
@@ -2266,10 +2266,10 @@ void Event::isEntityStandingInArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	if (currentCommand->parameterList.size() > 1)
+	if (currentCommand->parameterList->size() > 1)
 	{
-		sp<Entity> entity = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-		sp<Area> area = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<Entity> entity = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+		sp<Area> area = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(entity->isAreaBoundaryTouchingMyHitBox(area));
 	}
@@ -2279,7 +2279,7 @@ void Event::hourPastOrEqualTo_INT23()
 { //===============================================================================================
 	int p = 0;
 
-	int hour = currentCommand->parameterList.at(p++)->i;
+	int hour = currentCommand->parameterList->at(p++)->i;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getClock()->hour >= hour);
 }
@@ -2288,7 +2288,7 @@ void Event::hourLessThan_INT23()
 { //===============================================================================================
 	int p = 0;
 
-	int hour = currentCommand->parameterList.at(p++)->i;
+	int hour = currentCommand->parameterList->at(p++)->i;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getClock()->hour < hour);
 }
@@ -2297,7 +2297,7 @@ void Event::minutePastOrEqualTo_INT59()
 { //===============================================================================================
 	int p = 0;
 
-	int minute = currentCommand->parameterList.at(p++)->i;
+	int minute = currentCommand->parameterList->at(p++)->i;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getClock()->minute >= minute);
 }
@@ -2305,7 +2305,7 @@ void Event::minutePastOrEqualTo_INT59()
 void Event::minuteLessThan_INT59()
 { //===============================================================================================
 	int p = 0;
-	int minute = currentCommand->parameterList.at(p++)->i;
+	int minute = currentCommand->parameterList->at(p++)->i;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getClock()->minute < minute);
 }
@@ -2313,7 +2313,7 @@ void Event::minuteLessThan_INT59()
 void Event::hasMoneyAtLeastAmount_FLOAT()
 { //===============================================================================================
 	int p = 0;
-	float money = currentCommand->parameterList.at(p++)->f;
+	float money = currentCommand->parameterList->at(p++)->f;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getWallet()->money >= money);
 }
@@ -2321,7 +2321,7 @@ void Event::hasMoneyAtLeastAmount_FLOAT()
 void Event::hasMoneyLessThanAmount_FLOAT()
 { //===============================================================================================
 	int p = 0;
-	float money = currentCommand->parameterList.at(p++)->f;
+	float money = currentCommand->parameterList->at(p++)->f;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getWallet()->money < money);
 }
@@ -2329,7 +2329,7 @@ void Event::hasMoneyLessThanAmount_FLOAT()
 void Event::hasItem_ITEM()
 { //===============================================================================================
 	int p = 0;
-	sp<Item> item = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Item> item = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(item->getHaveItemValue_S());
 }
@@ -2337,7 +2337,7 @@ void Event::hasItem_ITEM()
 void Event::hasGame_GAME()
 { //===============================================================================================
 	int p = 0;
-	sp<Item> item = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Item> item = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(item->getHaveItemValue_S());
 }
@@ -2358,7 +2358,7 @@ void Event::isAnyEntityUsingSprite_SPRITE()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -2378,8 +2378,8 @@ void Event::isAnyEntityUsingSpriteAtArea_SPRITE_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -2410,7 +2410,7 @@ void Event::isEntitySpawned_ENTITY()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//will be null if it couldn't find the object ID after searching the entityList
 
@@ -2421,11 +2421,11 @@ void Event::isEntityAtArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (e != nullptr)
 	{
-		sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		bool b = a->isEntityHitBoxTouchingMyBoundary(e);
 
@@ -2436,7 +2436,7 @@ void Event::isEntityAtArea_ENTITY_AREA()
 void Event::isAreaEmpty_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (a != nullptr)
 	{
@@ -2450,7 +2450,7 @@ void Event::hasFinishedDialogue_DIALOGUE()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (d != nullptr)
 	{
@@ -2496,7 +2496,7 @@ void Event::randomEqualsOneOutOfLessThan_INT()
 { //===============================================================================================
 	int p = 0;
 
-	int i = currentCommand->parameterList.at(p++)->i;
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(Math::randLessThan(i) == 1);
 }
@@ -2505,7 +2505,7 @@ void Event::randomEqualsOneOutOfIncluding_INT()
 { //===============================================================================================
 	int p = 0;
 
-	int i = currentCommand->parameterList.at(p++)->i;
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(Math::randUpToIncluding(i) == 1);
 }
@@ -2520,7 +2520,7 @@ void Event::isMusicPlaying()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(getAudioManager()->isSoundPlaying(m));
 }
@@ -2607,9 +2607,9 @@ void Event::hasTalkedToThisToday()
 void Event::hasBeenMinutesSinceFlagSet_FLAG_INT()
 { //===============================================================================================
 	int p = 0;
-	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
-	int i = currentCommand->parameterList.at(p++)->i;
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	long long startTime = f->getTimeSet();
 	long long currentTime = System::currentHighResTimer();
@@ -2625,9 +2625,9 @@ void Event::hasBeenMinutesSinceFlagSet_FLAG_INT()
 void Event::hasBeenHoursSinceFlagSet_FLAG_INT23()
 { //===============================================================================================
 	int p = 0;
-	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
-	int i = currentCommand->parameterList.at(p++)->i;
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	long long startTime = f->getTimeSet();
 	long long currentTime = System::currentHighResTimer();
@@ -2644,9 +2644,9 @@ void Event::hasBeenHoursSinceFlagSet_FLAG_INT23()
 void Event::hasBeenDaysSinceFlagSet_FLAG_INT()
 { //===============================================================================================
 	int p = 0;
-	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
-	int i = currentCommand->parameterList.at(p++)->i;
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	long long startTime = f->getTimeSet();
 	long long currentTime = System::currentHighResTimer();
@@ -2802,7 +2802,7 @@ void Event::haveHoursPassedSinceBeenHere_INT()
 void Event::isLightOn_LIGHT()
 { //===============================================================================================
 	int p = 0;
-	sp<Light> s = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Light> s = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	if (s != nullptr)
 	{
 		getNextCommandIfTrueOrSkipToNextParentCommandIfFalse(s->toggleOnOffToggle);
@@ -2828,7 +2828,7 @@ void Event::blockUntilActionButtonPressed()
 void Event::blockUntilActionCaptionButtonPressed_STRING()
 { //===============================================================================================
 	int p = 0;
-	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (s->getInitialized_S() == false)
 	{
@@ -2874,7 +2874,7 @@ void Event::blockForTicks_INT()
 { //===============================================================================================
 	int p = 0;
 
-	int i = currentCommand->parameterList.at(p++)->i;
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	ticksCounter += getEngine()->realWorldTicksPassed();
 
@@ -2889,7 +2889,7 @@ void Event::blockUntilClockHour_INT23()
 { //===============================================================================================
 	int p = 0;
 
-	int hour = currentCommand->parameterList.at(p++)->i;
+	int hour = currentCommand->parameterList->at(p++)->i;
 
 	if (getClock()->hour <= hour)
 	{
@@ -2900,7 +2900,7 @@ void Event::blockUntilClockHour_INT23()
 void Event::blockUntilClockMinute_INT59()
 { //===============================================================================================
 	int p = 0;
-	int minute = currentCommand->parameterList.at(p++)->i;
+	int minute = currentCommand->parameterList->at(p++)->i;
 
 	if (getClock()->minute <= minute)
 	{
@@ -2912,7 +2912,7 @@ void Event::loadMapState_STATE()
 { //===============================================================================================
 	int p = 0;
 
-	sp<MapState> s = ms<MapState>(dynamic_cast<MapState*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<MapState> s = ms<MapState>(dynamic_cast<MapState*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getMap()->loadMapState(s);
 
@@ -2922,7 +2922,7 @@ void Event::loadMapState_STATE()
 void Event::runEvent_EVENT()
 { //===============================================================================================
 	int p = 0;
-	sp<Event> e = ms<Event>(dynamic_cast<Event*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Event> e = ms<Event>(dynamic_cast<Event*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getEventManager()->addToEventQueueIfNotThere(e);
 
@@ -2932,7 +2932,7 @@ void Event::runEvent_EVENT()
 void Event::blockUntilEventDone_EVENT()
 { //===============================================================================================
 	int p = 0;
-	sp<Event> e = ms<Event>(dynamic_cast<Event*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Event> e = ms<Event>(dynamic_cast<Event*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (e->addedToQueue == false)
 	{
@@ -2943,13 +2943,13 @@ void Event::blockUntilEventDone_EVENT()
 void Event::clearEvent_EVENT()
 { //===============================================================================================
 	int p = 0;
-	sp<Event> e = ms<Event>(dynamic_cast<Event*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Event> e = ms<Event>(dynamic_cast<Event*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	e->reset();
 
-	//getEventManager()->runningEventQueue.remove(e);
-	for (int i = 0; i < getEventManager()->runningEventQueue.size(); i++)
+	//getEventManager()->runningEventQueue->remove(e);
+	for (int i = 0; i < getEventManager()->runningEventQueue->size(); i++)
 	{
-		sp<Event> se = getEventManager()->runningEventQueue.at(i);
+		sp<Event> se = getEventManager()->runningEventQueue->at(i);
 		if (se.get() == e.get())
 		{
 			getEventManager()->runningEventQueue.erase(getEventManager()->runningEventQueue.begin() + i);
@@ -2969,7 +2969,7 @@ void Event::clearThisEvent()
 void Event::setThisActivated_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	if (sprite != nullptr)
 	{
@@ -3079,8 +3079,8 @@ void Event::resetLastBeenHereTime()
 void Event::setFlag_FLAG_BOOL()
 { //===============================================================================================
 	int p = 0;
-	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	f->setValue_S(b);
 	getNextCommand();
@@ -3089,7 +3089,7 @@ void Event::setFlag_FLAG_BOOL()
 void Event::setFlagTrue_FLAG()
 { //===============================================================================================
 	int p = 0;
-	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	//boolean b = currentCommand.parameterList.get(p++).b;
 
 	f->setValue_S(true);
@@ -3099,7 +3099,7 @@ void Event::setFlagTrue_FLAG()
 void Event::setFlagFalse_FLAG()
 { //===============================================================================================
 	int p = 0;
-	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Flag> f = ms<Flag>(dynamic_cast<Flag*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	//boolean b = currentCommand.parameterList.get(p++).b;
 
 	f->setValue_S(false);
@@ -3109,8 +3109,8 @@ void Event::setFlagFalse_FLAG()
 void Event::giveSkillPoints_SKILL_INT()
 { //===============================================================================================
 	int p = 0;
-	sp<Skill> f = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int i = currentCommand->parameterList.at(p++)->i;
+	sp<Skill> f = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	float value = f->getValue_S();
 	value += i;
@@ -3122,8 +3122,8 @@ void Event::giveSkillPoints_SKILL_INT()
 void Event::removeSkillPoints_SKILL_INT()
 { //===============================================================================================
 	int p = 0;
-	sp<Skill> f = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int i = currentCommand->parameterList.at(p++)->i;
+	sp<Skill> f = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	float value = f->getValue_S();
 	value -= i;
@@ -3135,8 +3135,8 @@ void Event::removeSkillPoints_SKILL_INT()
 void Event::setSkillPoints_SKILL_INT()
 { //===============================================================================================
 	int p = 0;
-	sp<Skill> f = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int i = currentCommand->parameterList.at(p++)->i;
+	sp<Skill> f = ms<Skill>(dynamic_cast<Skill*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int i = currentCommand->parameterList->at(p++)->i;
 
 	f->setValue_S(i);
 
@@ -3164,7 +3164,7 @@ void Event::enterThisWarp()
 void Event::enterDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
-	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (d != nullptr)
 	{
@@ -3176,7 +3176,7 @@ void Event::enterDoor_DOOR()
 void Event::enterWarp_WARP()
 { //===============================================================================================
 	int p = 0;
-	sp<WarpArea> a = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<WarpArea> a = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (a != nullptr)
 	{
@@ -3189,9 +3189,9 @@ void Event::changeMap_MAP_AREA()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
+	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList->at(p++)->mapObject.get()));
 
-	sp<Area> o = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> o = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3203,9 +3203,9 @@ void Event::changeMap_MAP_DOOR()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
+	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList->at(p++)->mapObject.get()));
 
-	sp<Door> o = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Door> o = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3217,9 +3217,9 @@ void Event::changeMap_MAP_WARP()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
+	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList->at(p++)->mapObject.get()));
 
-	sp<WarpArea> o = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<WarpArea> o = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getMapManager()->changeMap(m, o);
 	this->map = m;
@@ -3231,10 +3231,10 @@ void Event::changeMap_MAP_INT_INT()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList.at(p++)->mapObject.get()));
+	sp<Map> m = ms<Map>(dynamic_cast<Map*>(currentCommand->parameterList->at(p++)->mapObject.get()));
 
-	int mapXTiles1X = currentCommand->parameterList.at(p++)->i * 2;
-	int mapYTiles1X = currentCommand->parameterList.at(p++)->i * 2;
+	int mapXTiles1X = currentCommand->parameterList->at(p++)->i * 2;
+	int mapYTiles1X = currentCommand->parameterList->at(p++)->i * 2;
 
 	getMapManager()->changeMap(m, mapXTiles1X, mapYTiles1X);
 	this->map = m;
@@ -3246,9 +3246,9 @@ void Event::doDialogue_DIALOGUE()
 { //===============================================================================================
 	int p = 0;
 
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		if (d->getInitialized_S() == false)
 		{
@@ -3279,9 +3279,9 @@ void Event::doDialogueWithCaption_DIALOGUE()
 { //=========================================================================================================================
 
 	int p = 0;
-	if (currentCommand->parameterList.size() > 0)
+	if (currentCommand->parameterList->size() > 0)
 	{
-		sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+		sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 		if (d->getInitialized_S() == false)
 		{
@@ -3324,7 +3324,7 @@ void Event::doDialogueWithCaption_DIALOGUE()
 void Event::doDialogueIfNew_DIALOGUE()
 { //===============================================================================================
 	int p = 0;
-	sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Dialogue> d = ms<Dialogue>(dynamic_cast<Dialogue*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (d->getInitialized_S() == false)
 	{
@@ -3361,9 +3361,9 @@ void Event::setSpriteBox0_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
-	getTextManager()->textBox.at(0)->setSpriteWindow(e, nullptr, "");
+	getTextManager()->textBox->at(0)->setSpriteWindow(e, nullptr, "");
 
 	getNextCommand();
 }
@@ -3372,9 +3372,9 @@ void Event::setSpriteBox1_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
-	getTextManager()->textBox.at(1)->setSpriteWindow(e, nullptr, "");
+	getTextManager()->textBox->at(1)->setSpriteWindow(e, nullptr, "");
 
 	getNextCommand();
 }
@@ -3383,13 +3383,13 @@ void Event::setSpriteBox0_SPRITE()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	if (s == nullptr)
 	{
 		return; //block until loaded.
 	}
 
-	getTextManager()->textBox.at(0)->setSpriteWindow(nullptr, s->texture, s->getDisplayName());
+	getTextManager()->textBox->at(0)->setSpriteWindow(nullptr, s->texture, s->getDisplayName());
 
 	getNextCommand();
 }
@@ -3398,13 +3398,13 @@ void Event::setSpriteBox1_SPRITE()
 { //===============================================================================================
 	int p = 0;
 	//handle 2x overloads
-	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	if (s == nullptr)
 	{
 		return; //block until loaded.
 	}
 
-	getTextManager()->textBox.at(1)->setSpriteWindow(nullptr, s->texture, s->getDisplayName());
+	getTextManager()->textBox->at(1)->setSpriteWindow(nullptr, s->texture, s->getDisplayName());
 
 	getNextCommand();
 }
@@ -3440,8 +3440,8 @@ void Event::doCinematicTextNoBorder_DIALOGUE_INTy()
 void Event::setDoorOpenAnimation_DOOR_BOOLopenClose()
 { //===============================================================================================
 	int p = 0;
-	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	d->setOpenManually(b);
 
@@ -3451,8 +3451,8 @@ void Event::setDoorOpenAnimation_DOOR_BOOLopenClose()
 void Event::setDoorActionIcon_DOOR_BOOLonOff()
 { //===============================================================================================
 	int p = 0;
-	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	d->showActionIcon = b;
 
@@ -3462,8 +3462,8 @@ void Event::setDoorActionIcon_DOOR_BOOLonOff()
 void Event::setDoorDestination_DOOR_DOORdestination()
 { //===============================================================================================
 	int p = 0;
-	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Door> d2 = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Door> d2 = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	d->setDestinationTYPEIDString(d2->getTYPEIDString());
 
@@ -3473,8 +3473,8 @@ void Event::setDoorDestination_DOOR_DOORdestination()
 void Event::setAreaActionIcon_AREA_BOOLonOff()
 { //===============================================================================================
 	int p = 0;
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	a->showActionIcon = b;
 
@@ -3484,8 +3484,8 @@ void Event::setAreaActionIcon_AREA_BOOLonOff()
 void Event::setWarpDestination_WARP_WARPdestination()
 { //===============================================================================================
 	int p = 0;
-	sp<WarpArea> d = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<WarpArea> d2 = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<WarpArea> d = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<WarpArea> d2 = ms<WarpArea>(dynamic_cast<WarpArea*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	d->setDestinationTYPEIDString(d2->getTYPEIDString());
 
@@ -3495,7 +3495,7 @@ void Event::setWarpDestination_WARP_WARPdestination()
 void Event::setPlayerToTempPlayerWithSprite_SPRITE()
 { //===============================================================================================
 	int p = 0;
-	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (s == nullptr)
 	{
@@ -3517,14 +3517,14 @@ void Event::setPlayerExists_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getClientGameEngine()->playerExistsInMap = b;
 
-	//getMap()->activeEntityList.remove(getPlayer());
-	for (int i = 0; i < getMap()->activeEntityList.size(); i++)
+	//getMap()->activeEntityList->remove(getPlayer());
+	for (int i = 0; i < getMap()->activeEntityList->size(); i++)
 	{
-		sp<Entity> se = getMap()->activeEntityList.at(i);
+		sp<Entity> se = getMap()->activeEntityList->at(i);
 		if (se.get() == getPlayer().get())
 		{
 			getMap()->activeEntityList.erase(getMap()->activeEntityList.begin() + i);
@@ -3537,7 +3537,7 @@ void Event::setPlayerExists_BOOL()
 void Event::setPlayerControlsEnabled_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getClientGameEngine()->controlsEnabled = b;
 	getNextCommand();
 }
@@ -3562,7 +3562,7 @@ void Event::setPlayerAutoPilot_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getPlayer()->setAutoPilot(b);
 	getNextCommand();
@@ -3571,7 +3571,7 @@ void Event::setPlayerAutoPilot_BOOL()
 void Event::setPlayerShowNameCaption_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getPlayer()->setShowName(b);
 	getNextCommand();
@@ -3580,7 +3580,7 @@ void Event::setPlayerShowNameCaption_BOOL()
 void Event::setPlayerShowAccountTypeCaption_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getPlayer()->setShowAccountType(b);
 	getNextCommand();
@@ -3590,7 +3590,7 @@ void Event::playerSetBehaviorQueueOnOff_BOOL()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getPlayer()->behaviorEnabled = b;
 
@@ -3601,7 +3601,7 @@ void Event::playerSetToArea_AREA()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getPlayer()->setFeetAtMapXY(a->middleX(), a->middleY());
 
@@ -3612,7 +3612,7 @@ void Event::playerSetToDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getPlayer()->setFeetAtMapXY((float)a->arrivalXPixelsHQ() + 8, (float)a->arrivalYPixelsHQ() + 8);
 
@@ -3623,8 +3623,8 @@ void Event::playerSetToTileXY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	int tx = currentCommand->parameterList.at(p++)->i;
-	int ty = currentCommand->parameterList.at(p++)->i;
+	int tx = currentCommand->parameterList->at(p++)->i;
+	int ty = currentCommand->parameterList->at(p++)->i;
 
 	getPlayer()->setFeetAtMapXY((float)tx * 2 * 8 + 8, (float)ty * 2 * 8 + 8);
 
@@ -3635,7 +3635,7 @@ void Event::playerWalkToArea_AREA()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO need behavior queue stuff working better.
 
@@ -3648,7 +3648,7 @@ void Event::playerWalkToDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO need behavior queue stuff working better.
 
@@ -3663,7 +3663,7 @@ void Event::playerWalkToEntity_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO need behavior queue stuff working better.
 
@@ -3688,7 +3688,7 @@ void Event::playerBlockUntilReachesArea_AREA()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	if (getPlayer()->isAreaBoundaryTouchingMyHitBox(a))
 	{
 		getNextCommand();
@@ -3699,7 +3699,7 @@ void Event::playerBlockUntilReachesEntity_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity a = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Entity> b = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> b = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (getPlayer()->isEntityHitBoxTouchingMyHitBox(b))
 	{
@@ -3711,7 +3711,7 @@ void Event::playerBlockUntilReachesDoor_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (getPlayer()->isEntityHitBoxTouchingMyHitBox(d))
 	{
@@ -3723,8 +3723,8 @@ void Event::playerBlockUntilReachesTileXY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
 	//Entity a = (Entity) currentCommand.parameterList.get(p++).object;
-	int tx = currentCommand->parameterList.at(p++)->i;
-	int ty = currentCommand->parameterList.at(p++)->i;
+	int tx = currentCommand->parameterList->at(p++)->i;
+	int ty = currentCommand->parameterList->at(p++)->i;
 
 	if (getPlayer()->isXYTouchingMyHitBox((float)tx * 8 * 2, (float)ty * 8 * 2))
 	{
@@ -3735,7 +3735,7 @@ void Event::playerBlockUntilReachesTileXY_INTxTile1X_INTyTile1X()
 void Event::playerWalkToAreaAndBlockUntilThere_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get())); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get())); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
 
 	//walk to area, use pathfinding always
 	int there = getPlayer()->walkToXYWithPathFinding(a->middleX(), a->middleY());
@@ -3766,7 +3766,7 @@ void Event::playerWalkToEntityAndBlockUntilThere_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//walk to area, use pathfinding always
 	int there = getPlayer()->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -3797,7 +3797,7 @@ void Event::playerWalkToDoorAndBlockUntilThere_DOOR()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//walk to area, use pathfinding always
 	int there = getPlayer()->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -3828,8 +3828,8 @@ void Event::playerWalkToTileXYAndBlockUntilThere_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
 	//Entity a = (Entity) currentCommand.parameterList.get(p++).object;
-	int tx = currentCommand->parameterList.at(p++)->i;
-	int ty = currentCommand->parameterList.at(p++)->i;
+	int tx = currentCommand->parameterList->at(p++)->i;
+	int ty = currentCommand->parameterList->at(p++)->i;
 
 	//TODO can use -1 to just walk in direction, etc
 
@@ -3875,7 +3875,7 @@ void Event::playerStandAndShuffleAndFaceEntity_ENTITY()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getPlayer()->addEventBehavior("StandAndShuffleAndFace:ENTITY." + to_string(e2->getID())); //TODO:
 
@@ -3891,7 +3891,7 @@ void Event::playerSetFaceMovementDirection_STRINGdirection()
 	//getNextCommand();
 
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	if (gs->getInitialized_S() == false)
 	{
 		return;
@@ -3954,7 +3954,7 @@ void Event::playerSetMovementSpeed_INTticksPerPixel()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	int speed = currentCommand->parameterList.at(p++)->i;
+	int speed = currentCommand->parameterList->at(p++)->i;
 
 	getPlayer()->setTicksPerPixelMoved((float)speed);
 
@@ -3966,10 +3966,10 @@ void Event::playerDoAnimationByNameOnce_STRINGanimationName_INTticksPerFrame_BOO
 	int p = 0;
 
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
 	{
@@ -3999,11 +3999,11 @@ void Event::playerDoAnimationByNameLoop_STRINGanimationName_INTticksPerFrame_BOO
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
-	int ticksBetweenLoop = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenLoop = currentCommand->parameterList.at(p++)->b;
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
+	int ticksBetweenLoop = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->at(p++)->b;
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
 	{
@@ -4037,8 +4037,8 @@ void Event::playerDoAnimationByNameOnce_STRINGanimationName_INTticksPerFrame()
 	int p = 0;
 
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
 	{
@@ -4066,8 +4066,8 @@ void Event::playerDoAnimationByNameLoop_STRINGanimationName_INTticksPerFrame()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
 
 	if (getPlayer() != nullptr && getPlayer()->sprite != nullptr && gs != nullptr)
 	{
@@ -4105,7 +4105,7 @@ void Event::playerSetGlobalAnimationDisabled_BOOL()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getPlayer()->setAnimationDisabled(b);
 
@@ -4116,7 +4116,7 @@ void Event::playerSetToAlpha_FLOAT()
 { //===============================================================================================
 	int p = 0;
 	//Entity e = (Entity) currentCommand.parameterList.get(p++).object;
-	float f = currentCommand->parameterList.at(p++)->f;
+	float f = currentCommand->parameterList->at(p++)->f;
 
 	getPlayer()->setToAlpha(f);
 
@@ -4126,8 +4126,8 @@ void Event::playerSetToAlpha_FLOAT()
 void Event::entitySetBehaviorQueueOnOff_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	e->behaviorEnabled = b;
 
@@ -4137,8 +4137,8 @@ void Event::entitySetBehaviorQueueOnOff_ENTITY_BOOL()
 void Event::entitySetToArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	e->setFeetAtMapXY(a->middleX(), a->middleY());
 
@@ -4148,8 +4148,8 @@ void Event::entitySetToArea_ENTITY_AREA()
 void Event::entitySetToDoor_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	e->setFeetAtMapXY((float)a->arrivalXPixelsHQ() + 8, (float)a->arrivalYPixelsHQ() + 8);
 
@@ -4159,9 +4159,9 @@ void Event::entitySetToDoor_ENTITY_DOOR()
 void Event::entitySetToTileXY_ENTITY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int tx = currentCommand->parameterList.at(p++)->i;
-	int ty = currentCommand->parameterList.at(p++)->i;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int tx = currentCommand->parameterList->at(p++)->i;
+	int ty = currentCommand->parameterList->at(p++)->i;
 
 	e->setFeetAtMapXY((float)tx * 2 * 8 + 8, (float)ty * 2 * 8 + 8);
 
@@ -4171,8 +4171,8 @@ void Event::entitySetToTileXY_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityWalkToArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO need behavior queue stuff working better.
 
@@ -4184,8 +4184,8 @@ void Event::entityWalkToArea_ENTITY_AREA()
 void Event::entityWalkToDoor_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO need behavior queue stuff working better.
 
@@ -4199,8 +4199,8 @@ void Event::entityWalkToDoor_ENTITY_DOOR()
 void Event::entityWalkToEntity_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO need behavior queue stuff working better.
 
@@ -4224,15 +4224,15 @@ void Event::entityWalkToTileXY_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityMoveToArea_ENTITY_AREA_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidOthers_BOOLpushOthers_BOOLpathfind_BOOLanimate_BOOLmoveDiagonal()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool bWalkOrSlide = currentCommand->parameterList.at(p++)->b;
-	bool bCheckHit = currentCommand->parameterList.at(p++)->b;
-	bool bAvoidOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPushOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPathFind = currentCommand->parameterList.at(p++)->b;
-	bool bAnimate = currentCommand->parameterList.at(p++)->b;
-	bool bMoveDiagonally = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool bWalkOrSlide = currentCommand->parameterList->at(p++)->b;
+	bool bCheckHit = currentCommand->parameterList->at(p++)->b;
+	bool bAvoidOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPushOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPathFind = currentCommand->parameterList->at(p++)->b;
+	bool bAnimate = currentCommand->parameterList->at(p++)->b;
+	bool bMoveDiagonally = currentCommand->parameterList->at(p++)->b;
 
 	
 	e->addEventBehavior(
@@ -4254,15 +4254,15 @@ void Event::entityMoveToDoor_ENTITY_DOOR_BOOLwalkOrSlide_BOOLcheckHit_BOOLavoidO
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Door> e2 = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool bWalkOrSlide = currentCommand->parameterList.at(p++)->b;
-	bool bCheckHit = currentCommand->parameterList.at(p++)->b;
-	bool bAvoidOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPushOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPathFind = currentCommand->parameterList.at(p++)->b;
-	bool bAnimate = currentCommand->parameterList.at(p++)->b;
-	bool bMoveDiagonally = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Door> e2 = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool bWalkOrSlide = currentCommand->parameterList->at(p++)->b;
+	bool bCheckHit = currentCommand->parameterList->at(p++)->b;
+	bool bAvoidOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPushOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPathFind = currentCommand->parameterList->at(p++)->b;
+	bool bAnimate = currentCommand->parameterList->at(p++)->b;
+	bool bMoveDiagonally = currentCommand->parameterList->at(p++)->b;
 
 	
 	e->addEventBehavior(
@@ -4284,15 +4284,15 @@ void Event::entityMoveToEntity_ENTITY_ENTITY_BOOLwalkOrSlide_BOOLcheckHit_BOOLav
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool bWalkOrSlide = currentCommand->parameterList.at(p++)->b;
-	bool bCheckHit = currentCommand->parameterList.at(p++)->b;
-	bool bAvoidOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPushOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPathFind = currentCommand->parameterList.at(p++)->b;
-	bool bAnimate = currentCommand->parameterList.at(p++)->b;
-	bool bMoveDiagonally = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool bWalkOrSlide = currentCommand->parameterList->at(p++)->b;
+	bool bCheckHit = currentCommand->parameterList->at(p++)->b;
+	bool bAvoidOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPushOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPathFind = currentCommand->parameterList->at(p++)->b;
+	bool bAnimate = currentCommand->parameterList->at(p++)->b;
+	bool bMoveDiagonally = currentCommand->parameterList->at(p++)->b;
 
 	
 	e->addEventBehavior(
@@ -4314,16 +4314,16 @@ void Event::entityMoveToTileXY_ENTITY_INTxTile1X_INTyTile1X_BOOLwalkOrSlide_BOOL
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int tX = currentCommand->parameterList.at(p++)->i;
-	int tY = currentCommand->parameterList.at(p++)->i;
-	bool bWalkOrSlide = currentCommand->parameterList.at(p++)->b;
-	bool bCheckHit = currentCommand->parameterList.at(p++)->b;
-	bool bAvoidOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPushOthers = currentCommand->parameterList.at(p++)->b;
-	bool bPathFind = currentCommand->parameterList.at(p++)->b;
-	bool bAnimate = currentCommand->parameterList.at(p++)->b;
-	bool bMoveDiagonally = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int tX = currentCommand->parameterList->at(p++)->i;
+	int tY = currentCommand->parameterList->at(p++)->i;
+	bool bWalkOrSlide = currentCommand->parameterList->at(p++)->b;
+	bool bCheckHit = currentCommand->parameterList->at(p++)->b;
+	bool bAvoidOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPushOthers = currentCommand->parameterList->at(p++)->b;
+	bool bPathFind = currentCommand->parameterList->at(p++)->b;
+	bool bAnimate = currentCommand->parameterList->at(p++)->b;
+	bool bMoveDiagonally = currentCommand->parameterList->at(p++)->b;
 
 	
 	e->addEventBehavior(
@@ -4345,8 +4345,8 @@ void Event::entityMoveToTileXY_ENTITY_INTxTile1X_INTyTile1X_BOOLwalkOrSlide_BOOL
 void Event::entityBlockUntilReachesArea_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	if (e->isAreaBoundaryTouchingMyHitBox(a))
 	{
 		getNextCommand();
@@ -4356,8 +4356,8 @@ void Event::entityBlockUntilReachesArea_ENTITY_AREA()
 void Event::entityBlockUntilReachesEntity_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Entity> b = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Entity> b = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (a->isEntityHitBoxTouchingMyHitBox(b))
 	{
@@ -4368,8 +4368,8 @@ void Event::entityBlockUntilReachesEntity_ENTITY_ENTITY()
 void Event::entityBlockUntilReachesDoor_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Door> d = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (e->isEntityHitBoxTouchingMyHitBox(d))
 	{
@@ -4380,9 +4380,9 @@ void Event::entityBlockUntilReachesDoor_ENTITY_DOOR()
 void Event::entityBlockUntilReachesTileXY_ENTITY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int tx = currentCommand->parameterList.at(p++)->i;
-	int ty = currentCommand->parameterList.at(p++)->i;
+	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int tx = currentCommand->parameterList->at(p++)->i;
+	int ty = currentCommand->parameterList->at(p++)->i;
 
 	if (a->isXYTouchingMyHitBox((float)tx * 8 * 2, (float)ty * 8 * 2))
 	{
@@ -4393,8 +4393,8 @@ void Event::entityBlockUntilReachesTileXY_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityWalkToAreaAndBlockUntilThere_ENTITY_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get())); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
+	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get())); //TODO need to rework behavior, eventBehavior, currentTargetTYPEID, thereYet, walking functions, etc.
 
 	//walk to area, use pathfinding always
 	int there = e->walkToXYWithPathFinding(a->middleX(), a->middleY());
@@ -4424,8 +4424,8 @@ void Event::entityWalkToAreaAndBlockUntilThere_ENTITY_AREA()
 void Event::entityWalkToEntityAndBlockUntilThere_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Entity> a = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//walk to area, use pathfinding always
 	int there = e->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -4455,8 +4455,8 @@ void Event::entityWalkToEntityAndBlockUntilThere_ENTITY_ENTITY()
 void Event::entityWalkToDoorAndBlockUntilThere_ENTITY_DOOR()
 { //===============================================================================================
 	int p = 0;
-	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Door> a = ms<Door>(dynamic_cast<Door*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//walk to area, use pathfinding always
 	int there = e->walkToXYWithPathFinding(a->getMiddleX(), a->getMiddleY());
@@ -4486,9 +4486,9 @@ void Event::entityWalkToDoorAndBlockUntilThere_ENTITY_DOOR()
 void Event::entityWalkToTileXYAndBlockUntilThere_ENTITY_INTxTile1X_INTyTile1X()
 { //===============================================================================================
 	int p = 0;
-	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int tx = currentCommand->parameterList.at(p++)->i;
-	int ty = currentCommand->parameterList.at(p++)->i;
+	sp<Character> e = ms<Character>(dynamic_cast<Character*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int tx = currentCommand->parameterList->at(p++)->i;
+	int ty = currentCommand->parameterList->at(p++)->i;
 
 	//TODO can use -1 to just walk in direction, etc
 
@@ -4523,7 +4523,7 @@ void Event::entityWalkToTileXYAndBlockUntilThere_ENTITY_INTxTile1X_INTyTile1X()
 void Event::entityStandAndShuffle_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	e->addEventBehavior("StandAndShuffle"); //TODO
 
@@ -4533,7 +4533,7 @@ void Event::entityStandAndShuffle_ENTITY()
 void Event::entityStandAndShuffleAndFacePlayer_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	e->addEventBehavior("StandAndShuffleAndFacePlayer"); //TODO:
 
@@ -4543,8 +4543,8 @@ void Event::entityStandAndShuffleAndFacePlayer_ENTITY()
 void Event::entityStandAndShuffleAndFaceEntity_ENTITY_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Entity> e2 = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	e->addEventBehavior("StandAndShuffleAndFace:ENTITY." + to_string(e2->getID())); //TODO:
 
@@ -4559,8 +4559,8 @@ void Event::entitySetFaceMovementDirection_ENTITY_STRINGdirection()
 	//((Character)e).setAnimationByDirection(dir);
 	//getNextCommand();
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	if (gs->getInitialized_S() == false)
 	{
 		return;
@@ -4618,8 +4618,8 @@ void Event::entitySetFaceMovementDirection_ENTITY_STRINGdirection()
 void Event::entitySetMovementSpeed_ENTITY_INTticksPerPixel()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int speed = currentCommand->parameterList.at(p++)->i;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int speed = currentCommand->parameterList->at(p++)->i;
 
 	e->setTicksPerPixelMoved((float)speed);
 
@@ -4629,9 +4629,9 @@ void Event::entitySetMovementSpeed_ENTITY_INTticksPerPixel()
 void Event::entitySetAnimateRandomFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksPerFrame = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksPerFrame = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
 
 	e->setAnimateLoopThroughAllFrames();
 	e->setRandomFrames(true);
@@ -4646,9 +4646,9 @@ void Event::entitySetAnimateRandomFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToT
 void Event::entityAnimateOnceThroughCurrentAnimationFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticks = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticks = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
 
 	e->setAnimateOnceThroughCurrentAnimation();
 
@@ -4662,11 +4662,11 @@ void Event::entityAnimateOnceThroughCurrentAnimationFrames_ENTITY_INTticksPerFra
 void Event::entityAnimateLoopThroughCurrentAnimationFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks_INTticksBetweenLoops_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
-	int ticksBetweenLoop = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenLoop = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
+	int ticksBetweenLoop = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->at(p++)->b;
 
 	e->setAnimateLoopThroughCurrentAnimation();
 
@@ -4683,9 +4683,9 @@ void Event::entityAnimateLoopThroughCurrentAnimationFrames_ENTITY_INTticksPerFra
 void Event::entityAnimateOnceThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
 
 	e->setAnimateOnceThroughAllFrames();
 
@@ -4700,11 +4700,11 @@ void Event::entityAnimateOnceThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandom
 void Event::entityAnimateLoopThroughAllFrames_ENTITY_INTticksPerFrame_BOOLrandomUpToTicks_INTticksBetweenLoops_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
-	int ticksBetweenLoop = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenLoop = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
+	int ticksBetweenLoop = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->at(p++)->b;
 
 	e->setAnimateLoopThroughAllFrames();
 
@@ -4723,8 +4723,8 @@ void Event::entitySetAnimationByNameFirstFrame_ENTITY_STRINGanimationName()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4749,9 +4749,9 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4778,9 +4778,9 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 void Event::entityDoAnimationByNameLoop_ENTITY_STRINGanimationName_INTticksPerFrame()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4809,11 +4809,11 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 { //===============================================================================================
 	int p = 0;
 
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4842,12 +4842,12 @@ void Event::entityDoAnimationByNameOnce_ENTITY_STRINGanimationName_INTticksPerFr
 void Event::entityDoAnimationByNameLoop_ENTITY_STRINGanimationName_INTticksPerFrame_BOOLrandomUpToTicks_INTticksBetweenLoops_BOOLrandomUpToTicks()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticksBetweenFrames = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenFrames = currentCommand->parameterList.at(p++)->b;
-	int ticksBetweenLoop = currentCommand->parameterList.at(p++)->i;
-	bool randomUpToTicksBetweenLoop = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gs = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticksBetweenFrames = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenFrames = currentCommand->parameterList->at(p++)->b;
+	int ticksBetweenLoop = currentCommand->parameterList->at(p++)->i;
+	bool randomUpToTicksBetweenLoop = currentCommand->parameterList->at(p++)->b;
 
 	if (e != nullptr && e->sprite != nullptr && gs != nullptr)
 	{
@@ -4879,7 +4879,7 @@ void Event::entityDoAnimationByNameLoop_ENTITY_STRINGanimationName_INTticksPerFr
 void Event::entityStopAnimating_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	e->stopAnimation();
 
 	getNextCommand();
@@ -4888,8 +4888,8 @@ void Event::entityStopAnimating_ENTITY()
 void Event::entitySetGlobalAnimationDisabled_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	e->setAnimationDisabled(b);
 
@@ -4899,8 +4899,8 @@ void Event::entitySetGlobalAnimationDisabled_ENTITY_BOOL()
 void Event::entitySetNonWalkable_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	e->setNonWalkable(b);
 
@@ -4910,8 +4910,8 @@ void Event::entitySetNonWalkable_ENTITY_BOOL()
 void Event::entitySetPushable_ENTITY_BOOL()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	e->setPushable(b);
 
@@ -4921,7 +4921,7 @@ void Event::entitySetPushable_ENTITY_BOOL()
 void Event::entityFadeOutDelete_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	e->fadeOutAndDelete();
 
@@ -4931,7 +4931,7 @@ void Event::entityFadeOutDelete_ENTITY()
 void Event::entityDeleteInstantly_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	e->deleteFromMapEntityListAndReleaseTexture();
 	//delete e;
@@ -4943,8 +4943,8 @@ void Event::entityDeleteInstantly_ENTITY()
 void Event::entitySetToAlpha_ENTITY_FLOAT()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	float f = currentCommand->parameterList.at(p++)->f;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	float f = currentCommand->parameterList->at(p++)->f;
 
 	e->setToAlpha(f);
 
@@ -4954,9 +4954,9 @@ void Event::entitySetToAlpha_ENTITY_FLOAT()
 void Event::spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -4981,9 +4981,9 @@ void Event::spawnSpriteAsEntity_SPRITE_STRINGentityIdent_AREA()
 void Event::spawnSpriteAsEntityFadeIn_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -5006,9 +5006,9 @@ void Event::spawnSpriteAsEntityFadeIn_SPRITE_STRINGentityIdent_AREA()
 void Event::spawnSpriteAsNPC_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -5038,9 +5038,9 @@ void Event::spawnSpriteAsNPC_SPRITE_STRINGentityIdent_AREA()
 void Event::spawnSpriteAsNPCFadeIn_SPRITE_STRINGentityIdent_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sprite> sprite = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (sprite == nullptr)
@@ -5067,9 +5067,9 @@ void Event::createScreenSpriteUnderTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	float screenX = currentCommand->parameterList.at(p++)->f;
-	float screenY = currentCommand->parameterList.at(p++)->f;
+	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	float screenX = currentCommand->parameterList->at(p++)->f;
+	float screenY = currentCommand->parameterList->at(p++)->f;
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
@@ -5103,9 +5103,9 @@ void Event::createScreenSpriteOverTextAtPercentOfScreen_SPRITE_FLOATx_FLOATy()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	float screenX = currentCommand->parameterList.at(p++)->f;
-	float screenY = currentCommand->parameterList.at(p++)->f;
+	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	float screenX = currentCommand->parameterList->at(p++)->f;
+	float screenY = currentCommand->parameterList->at(p++)->f;
 
 	//no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
@@ -5137,9 +5137,9 @@ void Event::createScreenSpriteUnderText_SPRITE_INTx_INTy()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int screenX = currentCommand->parameterList.at(p++)->i;
-	int screenY = currentCommand->parameterList.at(p++)->i;
+	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int screenX = currentCommand->parameterList->at(p++)->i;
+	int screenY = currentCommand->parameterList->at(p++)->i;
 
 	// no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
@@ -5172,9 +5172,9 @@ void Event::createScreenSpriteOverText_SPRITE_INTx_INTy()
 	//DONE: should make the screen coords floats, for percentage of screen. 0.80% x, etc.
 	//also an options for centerx and centery
 
-	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int screenX = currentCommand->parameterList.at(p++)->i;
-	int screenY = currentCommand->parameterList.at(p++)->i;
+	sp<Sprite> s = ms<Sprite>(dynamic_cast<Sprite*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int screenX = currentCommand->parameterList->at(p++)->i;
+	int screenY = currentCommand->parameterList->at(p++)->i;
 
 	//no spriteAsset here, use spriteAssetName or block until spriteAsset is loaded.
 	if (s == nullptr)
@@ -5201,7 +5201,7 @@ void Event::createScreenSpriteOverText_SPRITE_INTx_INTy()
 void Event::setCameraTarget_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Area> o = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> o = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getCameraman()->setTarget(o);
 
@@ -5211,7 +5211,7 @@ void Event::setCameraTarget_AREA()
 void Event::setCameraTarget_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> o = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> o = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getCameraman()->setTarget(o);
 
@@ -5229,7 +5229,7 @@ void Event::setCameraNoTarget()
 void Event::setCameraIgnoreBounds_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCameraman()->ignoreCameraFXBoundaries = b;
 	getNextCommand();
 }
@@ -5245,7 +5245,7 @@ void Event::setCameraTargetToPlayer()
 void Event::blockUntilCameraReaches_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Area> o = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> o = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (o->isWithinScreenBounds())
 	{
@@ -5256,7 +5256,7 @@ void Event::blockUntilCameraReaches_AREA()
 void Event::blockUntilCameraReaches_ENTITY()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> o = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Entity> o = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (o->isWithinScreenBounds())
 	{
@@ -5296,7 +5296,7 @@ void Event::popCameraState()
 void Event::setKeyboardCameraZoom_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCameraman()->setPlayerCanZoomManuallyWithKeyboard(b);
 	getNextCommand();
 }
@@ -5320,7 +5320,7 @@ void Event::disableKeyboardCameraZoom()
 void Event::setCameraAutoZoomByPlayerMovement_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCameraman()->setAutoZoomByPlayerMovement(b);
 
 	getNextCommand();
@@ -5348,7 +5348,7 @@ void Event::setCameraZoom_FLOAT()
 { //===============================================================================================
 	int p = 0;
 
-	float f = currentCommand->parameterList.at(p++)->f;
+	float f = currentCommand->parameterList->at(p++)->f;
 	getCameraman()->ZOOMto = (f);
 
 	getNextCommand();
@@ -5357,7 +5357,7 @@ void Event::setCameraZoom_FLOAT()
 void Event::setCameraSpeed_FLOAT()
 { //===============================================================================================
 	int p = 0;
-	float f = currentCommand->parameterList.at(p++)->f;
+	float f = currentCommand->parameterList->at(p++)->f;
 
 	getCameraman()->speedMultiplier = f;
 
@@ -5368,7 +5368,7 @@ void Event::giveItem_ITEM()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Item> i = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Item> i = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO:ask the server if we can do this
 
@@ -5382,7 +5382,7 @@ void Event::takeItem_ITEM()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Item> i = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Item> i = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//confirm this action with the server
 	i->setHaveItemValue_S(false);
@@ -5394,7 +5394,7 @@ void Event::giveGame_GAME()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Item> i = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Item> i = ms<Item>(dynamic_cast<Item*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//TODO:ask the server if we can do this
 
@@ -5435,7 +5435,7 @@ void Event::giveMoney_FLOAT()
 void Event::playSound_SOUND()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> s = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sound> s = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getAudioManager()->playSound(s,1,1,1);
 	getNextCommand();
@@ -5444,8 +5444,8 @@ void Event::playSound_SOUND()
 void Event::playSound_SOUND_FLOATvol()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> s = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	float vol = currentCommand->parameterList.at(p++)->f;
+	sp<Sound> s = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	float vol = currentCommand->parameterList->at(p++)->f;
 
 	getAudioManager()->playSound(s, vol,1,1);
 	getNextCommand();
@@ -5454,10 +5454,10 @@ void Event::playSound_SOUND_FLOATvol()
 void Event::playSound_SOUND_FLOATvol_FLOATpitch_INTtimes()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> s = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	float vol = currentCommand->parameterList.at(p++)->f;
-	float pitch = currentCommand->parameterList.at(p++)->f;
-	int times = currentCommand->parameterList.at(p++)->i;
+	sp<Sound> s = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	float vol = currentCommand->parameterList->at(p++)->f;
+	float pitch = currentCommand->parameterList->at(p++)->f;
+	int times = currentCommand->parameterList->at(p++)->i;
 
 	getAudioManager()->playSound(s, vol, pitch, times);
 	getNextCommand();
@@ -5466,7 +5466,7 @@ void Event::playSound_SOUND_FLOATvol_FLOATpitch_INTtimes()
 void Event::playMusicOnce_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getAudioManager()->playMusic(m, 1.0f, 1.0f, false);
 	getNextCommand();
@@ -5475,7 +5475,7 @@ void Event::playMusicOnce_MUSIC()
 void Event::playMusicLoop_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getAudioManager()->playMusic(m, 1.0f, 1.0f, true);
 	getNextCommand();
@@ -5484,10 +5484,10 @@ void Event::playMusicLoop_MUSIC()
 void Event::playMusic_MUSIC_FLOATvol_FLOATpitch_BOOLloop()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	float vol = currentCommand->parameterList.at(p++)->f;
-	float pitch = currentCommand->parameterList.at(p++)->f;
-	bool loop = currentCommand->parameterList.at(p++)->b;
+	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	float vol = currentCommand->parameterList->at(p++)->f;
+	float pitch = currentCommand->parameterList->at(p++)->f;
+	bool loop = currentCommand->parameterList->at(p++)->b;
 
 	getAudioManager()->playMusic(m, vol, pitch, loop);
 	getNextCommand();
@@ -5496,7 +5496,7 @@ void Event::playMusic_MUSIC_FLOATvol_FLOATpitch_BOOLloop()
 void Event::stopMusic_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	getAudioManager()->stopMusic(m);
 
@@ -5514,8 +5514,8 @@ void Event::stopAllMusic()
 void Event::blockUntilLoopingMusicDoneWithLoopAndReplaceWith_MUSIC_MUSIC()
 { //===============================================================================================
 	int p = 0;
-	sp<Sound> currentPlaying = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<Sound> replaceWith = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sound> currentPlaying = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<Sound> replaceWith = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	if (currentPlaying->getLoop() == true)
 	{
@@ -5534,7 +5534,7 @@ void Event::blockUntilMusicDone_MUSIC()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	//if music is LOOPING this will always block
 	if (m != nullptr)
@@ -5568,8 +5568,8 @@ void Event::fadeOutMusic_MUSIC_INT()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int ticks = currentCommand->parameterList.at(p++)->i;
+	sp<Sound> m = ms<Sound>(dynamic_cast<Sound*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int ticks = currentCommand->parameterList->at(p++)->i;
 
 	getAudioManager()->fadeOutSound(m, ticks);
 
@@ -5580,7 +5580,7 @@ void Event::fadeOutAllMusic_INT()
 { //===============================================================================================
 	int p = 0;
 
-	int ticks = currentCommand->parameterList.at(p++)->i;
+	int ticks = currentCommand->parameterList->at(p++)->i;
 
 	getAudioManager()->fadeOutAllMusic(ticks);
 
@@ -5590,10 +5590,10 @@ void Event::fadeOutAllMusic_INT()
 void Event::shakeScreen_INTticks_INTxpixels_INTypixels_INTticksPerShake()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
-	int maxX = currentCommand->parameterList.at(p++)->i;
-	int maxY = currentCommand->parameterList.at(p++)->i;
-	int ticksPerShake = currentCommand->parameterList.at(p++)->i;
+	int ticks = currentCommand->parameterList->at(p++)->i;
+	int maxX = currentCommand->parameterList->at(p++)->i;
+	int maxY = currentCommand->parameterList->at(p++)->i;
+	int ticksPerShake = currentCommand->parameterList->at(p++)->i;
 
 	getCinematicsManager()->shakeScreenForTicksDurationEaseInAndOutToMaxAmountWithEasingBetweenShakes(ticks, maxX, maxY, ticksPerShake);
 
@@ -5603,7 +5603,7 @@ void Event::shakeScreen_INTticks_INTxpixels_INTypixels_INTticksPerShake()
 void Event::fadeToBlack_INTticks()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
+	int ticks = currentCommand->parameterList->at(p++)->i;
 	getCinematicsManager()->fadeToBlack(ticks);
 
 	getNextCommand();
@@ -5612,7 +5612,7 @@ void Event::fadeToBlack_INTticks()
 void Event::fadeFromBlack_INTticks()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
+	int ticks = currentCommand->parameterList->at(p++)->i;
 	getCinematicsManager()->fadeFromBlack(ticks);
 
 	getNextCommand();
@@ -5621,7 +5621,7 @@ void Event::fadeFromBlack_INTticks()
 void Event::fadeToWhite_INTticks()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
+	int ticks = currentCommand->parameterList->at(p++)->i;
 	getCinematicsManager()->fadeToWhite(ticks);
 
 	getNextCommand();
@@ -5630,7 +5630,7 @@ void Event::fadeToWhite_INTticks()
 void Event::fadeFromWhite_INTticks()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
+	int ticks = currentCommand->parameterList->at(p++)->i;
 	getCinematicsManager()->fadeFromWhite(ticks);
 
 	getNextCommand();
@@ -5639,11 +5639,11 @@ void Event::fadeFromWhite_INTticks()
 void Event::fadeColorFromCurrentAlphaToAlpha_INTticks_INTr_INTg_INTb_FLOATtoAlpha()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float toAlpha = currentCommand->parameterList.at(p++)->f;
+	int ticks = currentCommand->parameterList->at(p++)->i;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float toAlpha = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->fadeColorFromCurrentAlphaToAlpha(ticks, ri, gi, bi, toAlpha);
 
@@ -5653,12 +5653,12 @@ void Event::fadeColorFromCurrentAlphaToAlpha_INTticks_INTr_INTg_INTb_FLOATtoAlph
 void Event::fadeColorFromAlphaToAlpha_INTticks_INTr_INTg_INTb_FLOATfromAlpha_FLOATtoAlpha()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float fromAlpha = currentCommand->parameterList.at(p++)->f;
-	float toAlpha = currentCommand->parameterList.at(p++)->f;
+	int ticks = currentCommand->parameterList->at(p++)->i;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float fromAlpha = currentCommand->parameterList->at(p++)->f;
+	float toAlpha = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->fadeColorFromAlphaToAlpha(ticks, ri, gi, bi, fromAlpha, toAlpha);
 
@@ -5668,11 +5668,11 @@ void Event::fadeColorFromAlphaToAlpha_INTticks_INTr_INTg_INTb_FLOATfromAlpha_FLO
 void Event::fadeColorFromTransparentToAlphaBackToTransparent_INTticks_INTr_INTg_INTb_FLOATtoAlpha()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float toAlpha = currentCommand->parameterList.at(p++)->f;
+	int ticks = currentCommand->parameterList->at(p++)->i;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float toAlpha = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->fadeColorFromTransparentToAlphaBackToTransparent(ticks, ri, gi, bi, toAlpha);
 
@@ -5682,10 +5682,10 @@ void Event::fadeColorFromTransparentToAlphaBackToTransparent_INTticks_INTr_INTg_
 void Event::setInstantOverlay_INTr_INTg_INTb_FLOATa()
 { //===============================================================================================
 	int p = 0;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float a = currentCommand->parameterList.at(p++)->f;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float a = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->setInstantOverlayColor(ri, gi, bi, a);
 
@@ -5704,11 +5704,11 @@ void Event::clearOverlay()
 void Event::fadeColorFromCurrentAlphaToAlphaUnderLights_INTticks_INTr_INTg_INTb_FLOATtoAlpha()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float toAlpha = currentCommand->parameterList.at(p++)->f;
+	int ticks = currentCommand->parameterList->at(p++)->i;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float toAlpha = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->fadeColorFromCurrentAlphaToAlphaUnderLights(ticks, ri, gi, bi, toAlpha);
 
@@ -5718,10 +5718,10 @@ void Event::fadeColorFromCurrentAlphaToAlphaUnderLights_INTticks_INTr_INTg_INTb_
 void Event::setInstantOverlayUnderLights_INTr_INTg_INTb_FLOATa()
 { //===============================================================================================
 	int p = 0;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float a = currentCommand->parameterList.at(p++)->f;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float a = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->setInstantOverlayColorUnderLights(ri, gi, bi, a);
 
@@ -5740,11 +5740,11 @@ void Event::clearOverlayUnderLights()
 void Event::fadeColorFromCurrentAlphaToAlphaGroundLayer_INTticks_INTr_INTg_INTb_FLOATtoAlpha()
 { //===============================================================================================
 	int p = 0;
-	int ticks = currentCommand->parameterList.at(p++)->i;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float toAlpha = currentCommand->parameterList.at(p++)->f;
+	int ticks = currentCommand->parameterList->at(p++)->i;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float toAlpha = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->fadeColorFromCurrentAlphaToAlphaGroundLayer(ticks, ri, gi, bi, toAlpha);
 
@@ -5754,10 +5754,10 @@ void Event::fadeColorFromCurrentAlphaToAlphaGroundLayer_INTticks_INTr_INTg_INTb_
 void Event::setInstantOverlayGroundLayer_INTr_INTg_INTb_FLOATa()
 { //===============================================================================================
 	int p = 0;
-	int ri = currentCommand->parameterList.at(p++)->i;
-	int gi = currentCommand->parameterList.at(p++)->i;
-	int bi = currentCommand->parameterList.at(p++)->i;
-	float a = currentCommand->parameterList.at(p++)->f;
+	int ri = currentCommand->parameterList->at(p++)->i;
+	int gi = currentCommand->parameterList->at(p++)->i;
+	int bi = currentCommand->parameterList->at(p++)->i;
+	float a = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->setInstantOverlayColorGroundLayer(ri, gi, bi, a);
 
@@ -5776,7 +5776,7 @@ void Event::clearOverlayGroundLayer()
 void Event::setLetterbox_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getCinematicsManager()->setLetterbox(b, 1000, 0.25f);
 
@@ -5786,8 +5786,8 @@ void Event::setLetterbox_BOOL()
 void Event::setLetterbox_BOOL_INTticks()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
-	int slideDurationTicks = currentCommand->parameterList.at(p++)->i;
+	bool b = currentCommand->parameterList->at(p++)->b;
+	int slideDurationTicks = currentCommand->parameterList->at(p++)->i;
 
 	getCinematicsManager()->setLetterbox(b, slideDurationTicks, 0.25f);
 
@@ -5797,9 +5797,9 @@ void Event::setLetterbox_BOOL_INTticks()
 void Event::setLetterbox_BOOL_INTticks_INTsize()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
-	int slideDurationTicks = currentCommand->parameterList.at(p++)->i;
-	int sizeY = currentCommand->parameterList.at(p++)->i;
+	bool b = currentCommand->parameterList->at(p++)->b;
+	int slideDurationTicks = currentCommand->parameterList->at(p++)->i;
+	int sizeY = currentCommand->parameterList->at(p++)->i;
 
 	getCinematicsManager()->setLetterbox(b, slideDurationTicks, sizeY);
 
@@ -5809,9 +5809,9 @@ void Event::setLetterbox_BOOL_INTticks_INTsize()
 void Event::setLetterbox_BOOL_INTticks_FLOATsize()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
-	int slideDurationTicks = currentCommand->parameterList.at(p++)->i;
-	float sizePercent = currentCommand->parameterList.at(p++)->f;
+	bool b = currentCommand->parameterList->at(p++)->b;
+	int slideDurationTicks = currentCommand->parameterList->at(p++)->i;
+	float sizePercent = currentCommand->parameterList->at(p++)->f;
 
 	getCinematicsManager()->setLetterbox(b, slideDurationTicks, sizePercent);
 
@@ -5821,7 +5821,7 @@ void Event::setLetterbox_BOOL_INTticks_FLOATsize()
 void Event::setBlur_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCinematicsManager()->setBlur(b);
 	getNextCommand();
 }
@@ -5829,7 +5829,7 @@ void Event::setBlur_BOOL()
 void Event::setMosaic_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCinematicsManager()->setMosaic(b);
 	getNextCommand();
 }
@@ -5837,7 +5837,7 @@ void Event::setMosaic_BOOL()
 void Event::setHBlankWave_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCinematicsManager()->setHBlankWave(b);
 	getNextCommand();
 }
@@ -5845,7 +5845,7 @@ void Event::setHBlankWave_BOOL()
 void Event::setRotate_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCinematicsManager()->setRotate(b);
 	getNextCommand();
 }
@@ -5853,7 +5853,7 @@ void Event::setRotate_BOOL()
 void Event::setBlackAndWhite_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCinematicsManager()->setBlackAndWhite(b);
 	getNextCommand();
 }
@@ -5861,7 +5861,7 @@ void Event::setBlackAndWhite_BOOL()
 void Event::setInvertedColors_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCinematicsManager()->setInvertedColors(b);
 	getNextCommand();
 }
@@ -5869,7 +5869,7 @@ void Event::setInvertedColors_BOOL()
 void Event::set8BitMode_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getCinematicsManager()->set8BitMode(b);
 	getNextCommand();
 }
@@ -5878,7 +5878,7 @@ void Event::setEngineSpeed_FLOAT()
 { //===============================================================================================
 	int p = 0;
 
-	float f = currentCommand->parameterList.at(p++)->f;
+	float f = currentCommand->parameterList->at(p++)->f;
 	getEngine()->setEngineSpeed(f);
 
 	getNextCommand();
@@ -5888,7 +5888,7 @@ void Event::toggleLightOnOff_LIGHT()
 { //===============================================================================================
 	int p = 0;
 
-	sp<Light> l = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Light> l = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	l->toggle();
 
@@ -5898,8 +5898,8 @@ void Event::toggleLightOnOff_LIGHT()
 void Event::setLightOnOff_LIGHT_BOOL()
 { //===============================================================================================
 	int p = 0;
-	sp<Light> l = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Light> l = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	l->setOnOff(b);
 
@@ -5909,8 +5909,8 @@ void Event::setLightOnOff_LIGHT_BOOL()
 void Event::setLightFlicker_LIGHT_BOOL()
 { //===============================================================================================
 	int p = 0;
-	sp<Light> l = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	bool b = currentCommand->parameterList.at(p++)->b;
+	sp<Light> l = ms<Light>(dynamic_cast<Light*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	l->setFlicker(b);
 
@@ -5921,9 +5921,9 @@ void Event::toggleAllLightsOnOff()
 { //===============================================================================================
 	//int p=0;
 
-	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)getMap()->currentState->lightList->size(); i++)
 	{
-		getMap()->currentState->lightList.at(i)->toggle();
+		getMap()->currentState->lightList->at(i)->toggle();
 	}
 
 	getNextCommand();
@@ -5933,11 +5933,11 @@ void Event::setAllLightsOnOff_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
-	for (int i = 0; i < (int)getMap()->currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)getMap()->currentState->lightList->size(); i++)
 	{
-		getMap()->currentState->lightList.at(i)->setOnOff(b);
+		getMap()->currentState->lightList->at(i)->setOnOff(b);
 	}
 
 	getNextCommand();
@@ -5947,7 +5947,7 @@ void Event::setRandomSpawn_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getMap()->randomSpawnEnabled = b;
 
@@ -5958,9 +5958,9 @@ void Event::deleteRandoms()
 { //===============================================================================================
 	//int p=0;
 
-	for (int i = 0; i < (int)getMap()->activeEntityList.size(); i++)
+	for (int i = 0; i < (int)getMap()->activeEntityList->size(); i++)
 	{
-		sp<Entity> e = getMap()->activeEntityList.at(i);
+		sp<Entity> e = getMap()->activeEntityList->at(i);
 
 		if ((dynamic_cast<RandomCharacter*>(e.get()) != nullptr))
 		{
@@ -5974,13 +5974,13 @@ void Event::deleteRandoms()
 void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int sec = currentCommand->parameterList.at(p++)->i;
-	int x = currentCommand->parameterList.at(p++)->i;
-	int y = currentCommand->parameterList.at(p++)->i;
-	u8 r = currentCommand->parameterList.at(p++)->i;
-	u8 g = currentCommand->parameterList.at(p++)->i;
-	u8 b = currentCommand->parameterList.at(p++)->i;
+	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int sec = currentCommand->parameterList->at(p++)->i;
+	int x = currentCommand->parameterList->at(p++)->i;
+	int y = currentCommand->parameterList->at(p++)->i;
+	u8 r = currentCommand->parameterList->at(p++)->i;
+	u8 g = currentCommand->parameterList->at(p++)->i;
+	u8 b = currentCommand->parameterList->at(p++)->i;
 
 	if (s->getInitialized_S() == false)
 	{
@@ -6003,11 +6003,11 @@ void Event::makeCaption_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int sec = currentCommand->parameterList.at(p++)->i;
-	u8 r = currentCommand->parameterList.at(p++)->i;
-	u8 g = currentCommand->parameterList.at(p++)->i;
-	u8 b = currentCommand->parameterList.at(p++)->i;
+	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int sec = currentCommand->parameterList->at(p++)->i;
+	u8 r = currentCommand->parameterList->at(p++)->i;
+	u8 g = currentCommand->parameterList->at(p++)->i;
+	u8 b = currentCommand->parameterList->at(p++)->i;
 
 	if (s->getInitialized_S() == false)
 	{
@@ -6024,12 +6024,12 @@ void Event::makeCaptionOverPlayer_STRING_INTsec_INTr_INTg_INTb()
 void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	int sec = currentCommand->parameterList.at(p++)->i;
-	u8 r = currentCommand->parameterList.at(p++)->i;
-	u8 g = currentCommand->parameterList.at(p++)->i;
-	u8 b = currentCommand->parameterList.at(p++)->i;
+	sp<Entity> e = ms<Entity>(dynamic_cast<Entity*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	int sec = currentCommand->parameterList->at(p++)->i;
+	u8 r = currentCommand->parameterList->at(p++)->i;
+	u8 g = currentCommand->parameterList->at(p++)->i;
+	u8 b = currentCommand->parameterList->at(p++)->i;
 
 	if (s->getInitialized_S() == false)
 	{
@@ -6046,7 +6046,7 @@ void Event::makeCaptionOverEntity_ENTITY_STRING_INTsec_INTr_INTg_INTb()
 void Event::makeNotification_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 { //===============================================================================================
 	int p = 0;
-	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<GameString> s = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 	//		int sec = currentCommand.parameterList.get(p++).i;
 	//		int x = currentCommand.parameterList.get(p++).i;
 	//		int y = currentCommand.parameterList.get(p++).i;
@@ -6070,11 +6070,11 @@ void Event::makeNotification_STRING_INTsec_INTx_INTy_INTr_INTg_INTb()
 void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 { //===============================================================================================
 	int p = 0;
-	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList.at(p++)->entityObject.get()));
-	u8 r = currentCommand->parameterList.at(p++)->i;
-	u8 g = currentCommand->parameterList.at(p++)->i;
-	u8 b = currentCommand->parameterList.at(p++)->i;
-	int ticks = currentCommand->parameterList.at(p++)->i;
+	sp<GameString> gameString = ms<GameString>(dynamic_cast<GameString*>(currentCommand->parameterList->at(p++)->entityObject.get()));
+	u8 r = currentCommand->parameterList->at(p++)->i;
+	u8 g = currentCommand->parameterList->at(p++)->i;
+	u8 b = currentCommand->parameterList->at(p++)->i;
+	int ticks = currentCommand->parameterList->at(p++)->i;
 
 	Main::console->add(gameString->text(), ticks, ms<OKColor>(r, g, b));
 
@@ -6084,7 +6084,7 @@ void Event::setShowConsoleMessage_GAMESTRING_INTr_INTg_INT_b_INTticks()
 void Event::setShowClockCaption_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->clockCaption->setEnabled(b);
 	getNextCommand();
 }
@@ -6092,7 +6092,7 @@ void Event::setShowClockCaption_BOOL()
 void Event::setShowDayCaption_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->dayCaption->setEnabled(b);
 	getNextCommand();
 }
@@ -6100,7 +6100,7 @@ void Event::setShowDayCaption_BOOL()
 void Event::setShowMoneyCaption_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->moneyCaption->setEnabled(b);
 	getNextCommand();
 }
@@ -6108,7 +6108,7 @@ void Event::setShowMoneyCaption_BOOL()
 void Event::setShowAllStatusBarCaptions_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->moneyCaption->setEnabled(b);
 	getStatusBar()->clockCaption->setEnabled(b);
 	getStatusBar()->dayCaption->setEnabled(b);
@@ -6118,7 +6118,7 @@ void Event::setShowAllStatusBarCaptions_BOOL()
 void Event::setShowStatusBar_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->setEnabled(b);
 	getNextCommand();
 }
@@ -6127,7 +6127,7 @@ void Event::setShowNDButton_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->ndButton->setEnabled(b);
 	getNextCommand();
 }
@@ -6136,7 +6136,7 @@ void Event::setShowGameStoreButton_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->gameStoreButton->setEnabled(b);
 	getNextCommand();
 }
@@ -6145,7 +6145,7 @@ void Event::setShowStuffButton_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->stuffButton->setEnabled(b);
 	getNextCommand();
 }
@@ -6154,7 +6154,7 @@ void Event::setShowAllButtons_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStatusBar()->stuffButton->setEnabled(b);
 	getStatusBar()->gameStoreButton->setEnabled(b);
 	getStatusBar()->ndButton->setEnabled(b);
@@ -6165,7 +6165,7 @@ void Event::setNDEnabled_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getND()->setEnabled(b);
 	getNextCommand();
 }
@@ -6174,7 +6174,7 @@ void Event::setGameStoreMenuEnabled_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getGameStore()->setEnabled(b);
 	getNextCommand();
 }
@@ -6183,7 +6183,7 @@ void Event::setStuffMenuEnabled_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 	getStuffMenu()->setEnabled(b);
 	getNextCommand();
 }
@@ -6191,7 +6191,7 @@ void Event::setStuffMenuEnabled_BOOL()
 void Event::setAllMenusAndNDEnabled_BOOL()
 { //===============================================================================================
 	int p = 0;
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	if (b)
 	{
@@ -6225,7 +6225,7 @@ void Event::setTimePaused_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	getClock()->setPaused(b);
 
@@ -6253,7 +6253,7 @@ void Event::setNDOpen_BOOL()
 { //===============================================================================================
 	int p = 0;
 
-	bool b = currentCommand->parameterList.at(p++)->b;
+	bool b = currentCommand->parameterList->at(p++)->b;
 
 	if (b)
 	{
@@ -6280,7 +6280,7 @@ void Event::startGame()
 void Event::startOKGameOnStadiumScreen_AREA()
 { //===============================================================================================
 	int p = 0;
-	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList.at(p++)->entityObject.get()));
+	sp<Area> a = ms<Area>(dynamic_cast<Area*>(currentCommand->parameterList->at(p++)->entityObject.get()));
 
 	sp<OKGameStadium> bobsGameStadium = ms<OKGameStadium>(getClientGameEngine()->stadiumScreen, a);
 	bobsGameStadium->init();
@@ -6402,7 +6402,7 @@ void Event::popGameState()
 	//int p=0;
 
 	//TODO
-	//   if (Main::mainObject->gameStack.size() > 0)
+	//   if (Main::mainObject->gameStack->size() > 0)
 	//   {
 	//      Main::mainObject->gameEngine = Main::mainObject->gameStack->pop();
 	//   }

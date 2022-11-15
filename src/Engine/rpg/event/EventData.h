@@ -27,7 +27,7 @@ protected:
 	string command;
 	string comment; //for editor
 
-	//ArrayList<EventParameter> eventParameters
+	//sp<vector<EventParameter>>eventParameters
 
 public:
 	string toString();
@@ -92,12 +92,12 @@ private:
 public:
 
 	//these are used for the client to preload dialogues, flags, music, etc without doing a server lookup.  USED FOR EXPORT ONLY IN TOOLS. not stored in data structure.
-	vector<sp<DialogueData>> dialogueDataList;// = ms<ArrayList><sp<DialogueData>>();
-	vector<sp<FlagData>> flagDataList;// = ms<ArrayList><sp<FlagData>>();
-	vector<sp<SkillData>> skillDataList;// = ms<ArrayList><sp<SkillData>>();
-	vector<sp<GameStringData>> gameStringDataList;// = ms<ArrayList><sp<GameStringData>>();
-	vector<sp<AudioData>> musicDataList;// = ms<ArrayList><sp<AudioData>>();
-	vector<sp<AudioData>> soundDataList;// = ms<ArrayList><sp<AudioData>>();
+	sp<vector<sp<DialogueData>>>dialogueDataList;// = ms<vector><sp<DialogueData>>();
+	sp<vector<sp<FlagData>>>flagDataList;// = ms<vector><sp<FlagData>>();
+	sp<vector<sp<SkillData>>>skillDataList;// = ms<vector><sp<SkillData>>();
+	sp<vector<sp<GameStringData>>>gameStringDataList;// = ms<vector><sp<GameStringData>>();
+	sp<vector<sp<AudioData>>>musicDataList;// = ms<vector><sp<AudioData>>();
+	sp<vector<sp<AudioData>>>soundDataList;// = ms<vector><sp<AudioData>>();
 
 
 
@@ -143,8 +143,8 @@ public:
 
 
 public:
-	static vector<sp<EventScriptCommand>> commandList;
-	static vector<sp<EventScriptQualifier>> qualifierList;
+	static sp<vector<sp<EventScriptCommand>>>commandList;
+	static sp<vector<sp<EventScriptQualifier>>>qualifierList;
 
 
 	const static sp<EventScriptQualifier> isPlayerTouchingThisArea;

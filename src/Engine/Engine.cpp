@@ -97,24 +97,24 @@ void Engine::cleanup()
 void Engine::update()
 { //=========================================================================================================================
 
-	onlineFriends.clear();
-	for (int i = 0; i < (int)OKNet::udpConnections.size(); i++)
+	onlineFriends->clear();
+	for (int i = 0; i < (int)OKNet::udpConnections->size(); i++)
 	{
-		sp<UDPPeerConnection> f = OKNet::udpConnections.at(i);
+		sp<UDPPeerConnection> f = OKNet::udpConnections->at(i);
 		if (f->getConnectedToPeer_S() == true && 
 			f->getGotFriendData_S() == true && 
 			f->peerStatus == OKNet::status_AVAILABLE)
 		{
 			bool contains = false;
-			for (int j = 0; j < onlineFriends.size(); j++)
+			for (int j = 0; j < onlineFriends->size(); j++)
 			{
-				if (onlineFriends.at(j).get() == f.get())
+				if (onlineFriends->at(j).get() == f.get())
 				{
 					contains = true;
 				}
 			}
 			if (contains == false)
-				onlineFriends.push_back(f);
+				onlineFriends->push_back(f);
 
 		}
 	}
@@ -771,7 +771,7 @@ void Engine::incomingMapData(string s)
 		if (getMapManager()->mapByNameHashMap.containsKey(data->getName()) == false)
 		{
 			sp<Map> m = ms<Map>(this, data);
-			getMapManager()->mapList.push_back(m);
+			getMapManager()->mapList->push_back(m);
 			getMapManager()->mapByNameHashMap.put(data->getName(), m);
 			getMapManager()->mapByIDHashMap.put(data->getID(), m);
 		}

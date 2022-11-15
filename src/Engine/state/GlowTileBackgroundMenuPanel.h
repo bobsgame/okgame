@@ -38,8 +38,8 @@ public:
 	};
 
 public:
-	vector<sp<GlowTile>> glowTiles;// = ms<ArrayList><sp<GlowTile>>();
-	vector<sp<OKTexture>> glowTileFramesTexture;// = ms<ArrayList><sp<OKTexture>>();
+	sp<vector<sp<GlowTile>>>glowTiles;// = ms<vector><sp<GlowTile>>();
+	sp<vector<sp<OKTexture>>>glowTileFramesTexture;// = ms<vector><sp<OKTexture>>();
 	sp<OKTexture> bgScrollTexture = nullptr;
 	float bgScrollX = 0;
 	float bgScrollY = 0;

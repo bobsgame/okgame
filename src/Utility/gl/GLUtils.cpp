@@ -144,7 +144,7 @@ GLuint GLUtils::bobsGame_bgShaderFBO_Texture_Attachment1 = 0;
 
 
 vector<sp<Integer>> GLUtils::bgShaders;
-//ArrayList<int> GLUtils::bgShaders;
+//sp<vector<int>>GLUtils::bgShaders;
 int GLUtils::bgShaderCount = 80;
 
 //=========================================================================================================================
@@ -935,12 +935,12 @@ void GLUtils::initGL(char* windowName)
 				int p = GLUtils::createProgramObject();
 				//log.debug("createProgramObject bg " + to_string(p));
 				e("createProgramObject");
-				bgShaders.push_back(ms<Integer>(p));
+				bgShaders->push_back(ms<Integer>(p));
 			}
 
 			int count = 0;
 
-			//log.debug("makeShader bg bgShaders size "+to_string(bgShaders.size()));
+			//log.debug("makeShader bg bgShaders size "+to_string(bgShaders->size()));
 			for (int i = 0; i < bgShaderCount; i++)
 			{
 				string name = to_string(count) + ".frag";
@@ -949,7 +949,7 @@ void GLUtils::initGL(char* windowName)
 					name = "0" + name;
 				}
 
-				if (GLUtils::makeShader(name, bgShaders.at(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
+				if (GLUtils::makeShader(name, bgShaders->at(i)->value(), "data/shaders/texCoord.vert", "data/shaders/bg/" + name) == false)
 				{
 					log.error("Could not make bg shader "+name);
 					bgShaderCount--;
@@ -1195,7 +1195,7 @@ SDL_DisplayMode GLUtils::getCurrentDisplayMode()
 sp<vector<sp<SDL_DisplayMode>>> GLUtils::getAvailableDisplayModes()
 {//=========================================================================================================================
 
-	if (displayModes.size() > 0)return ms<vector<sp<SDL_DisplayMode>>>(&displayModes);
+	if (displayModes->size() > 0)return ms<vector<sp<SDL_DisplayMode>>>(&displayModes);
 	int displayCount = 0;
 
 	displayCount = SDL_GetNumVideoDisplays();
@@ -1215,7 +1215,7 @@ sp<vector<sp<SDL_DisplayMode>>> GLUtils::getAvailableDisplayModes()
 			SDL_Log("SDL_GetDisplayMode:\t\t%i bpp\t%i x %i",
 				SDL_BITSPERPIXEL(mode->format), mode->w, mode->h);
 
-			displayModes.push_back(mode);
+			displayModes->push_back(mode);
 		}
 	}
 	checkSDLError("getAvailableDisplayModes");
@@ -3299,14 +3299,14 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> s
 void GLUtils::clearCache(const string &name)
 {//=========================================================================================================================
  //texturesLinear->erase(name);
-	textureCache.removeAt(name);
+	textureCache->erase(->begin()+name);
 }
 
 //=========================================================================================================================
 void GLUtils::clearCache()
 {//=========================================================================================================================
  //texturesLinear->clear();
-	textureCache.clear();
+	textureCache->clear();
 }
 
 //=========================================================================================================================
@@ -3411,7 +3411,7 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 }
 
 //=========================================================================================================================
-sp<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+sp<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, sp<vector<int>>&transparentRGB)
 {//=========================================================================================================================
 
 
@@ -3420,7 +3420,7 @@ sp<OKTexture>GLUtils::getTextureFromPNGExePath(string filename)// , const string
 
 }
 //=========================================================================================================================
-sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, ArrayList<int> &transparentRGB)
+sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const string &resourceName)//, int target, int magFilter, int minFilter, bool flipped)//, sp<vector<int>>&transparentRGB)
 {//=========================================================================================================================
 
 

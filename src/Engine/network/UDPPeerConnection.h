@@ -506,7 +506,7 @@ private:
 	};
 	typedef HashMap<long long, long long> HashMapLongLongLongLong;
 	sp<HashMapLongLongLongLong>_frameSentTimes = ms<HashMapLongLongLongLong>();
-	vector<long long> _frameRoundaboutTicks;// = ms<ArrayList><long long>();
+	sp<vector<long long>>_frameRoundaboutTicks;// = ms<vector><long long>();
 	//------------------------------------
 	//thread only functions
 	//------------------------------------
@@ -545,7 +545,7 @@ public:
 	//string multiplayer_SelectedDifficultyName = "Beginner";
 
 	//engine parts to forward udp messages to, they also get forwarded to engines which dispatch them
-	vector<sp<EnginePart>> engineParts;
+	sp<vector<sp<EnginePart>>>engineParts;
 	void addEnginePartToForwardMessagesTo(sp<EnginePart> e);
 	void removeEnginePartToForwardMessagesTo(sp<EnginePart> e);
 

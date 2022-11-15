@@ -25,7 +25,7 @@ public:
 	NDMenuWheel(sp<Engine> g);
 
 
-	static vector<sp<NDMenuWheelItem>> wheelItems;
+	static sp<vector<sp<NDMenuWheelItem>>>wheelItems;
 
 
 	int selectedWheelItem = 0;

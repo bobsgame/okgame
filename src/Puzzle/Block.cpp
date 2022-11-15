@@ -141,8 +141,8 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	ar & BOOST_SERIALIZATION_NVP(ignoreWhenCheckingChainConnections);
 
 	//ar & BOOST_SERIALIZATION_NVP(colors);
-	importExport_colors.clear();
-	for (int i = 0; i < colors.size(); i++)
+	importExport_colors->clear();
+	for (int i = 0; i < colors->size(); i++)
 	{
 		sp<OKColor>bp = colors.get(i);
 		if (bp->name != "" && bp->name != "empty")
@@ -162,8 +162,8 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_colors);
-	colors.clear();
-	for (int i = 0; i < importExport_colors.size(); i++)
+	colors->clear();
+	for (int i = 0; i < importExport_colors->size(); i++)
 	{
 		OKColor b = importExport_colors.get(i);
 		sp<OKColor>bp = OKColor::getColorByName(b.name);
@@ -176,7 +176,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 			//OKGame::log->error("Could not find color on import with name:" + b.name);
 		}
 	}
-	importExport_colors.clear();
+	importExport_colors->clear();
 
 
 	//ar & BOOST_SERIALIZATION_NVP(specialColor);
@@ -215,17 +215,17 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		vector<PieceType> importExport_makePieceTypeWhenCleared;
+		sp<vector<PieceType>>importExport_makePieceTypeWhenCleared;
 		ar & BOOST_SERIALIZATION_NVP(importExport_makePieceTypeWhenCleared);
-		makePieceTypeWhenCleared_DEPRECATED.clear();
-		for (int i = 0; i < importExport_makePieceTypeWhenCleared.size(); i++)
+		makePieceTypeWhenCleared_DEPRECATED->clear();
+		for (int i = 0; i < importExport_makePieceTypeWhenCleared->size(); i++)
 		{
 			PieceType b = importExport_makePieceTypeWhenCleared.get(i);
 			sp<PieceType> bp(ms<PieceType>());
 			*bp = b;
 			makePieceTypeWhenCleared_DEPRECATED.add(bp);
 		}
-		importExport_makePieceTypeWhenCleared.clear();
+		importExport_makePieceTypeWhenCleared->clear();
 
 	}
 	else
@@ -243,11 +243,11 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		vector<BlockType> importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
+		sp<vector<BlockType>>importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 		ar & BOOST_SERIALIZATION_NVP(importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType);
-		ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.clear();
+		ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->clear();
 		{
-			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.size(); i++)
+			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->size(); i++)
 			{
 				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.get(i);
 				sp<BlockType> bp(ms<BlockType>());
@@ -255,7 +255,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.add(bp);
 			}
 		}
-		importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.clear();
+		importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->clear();
 	}
 	else
 	{
@@ -266,9 +266,9 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
     
     
-	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
+	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();
 	{
-		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
+		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)
 		{
 			sp<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
 			TurnFromBlockTypeToType b;
@@ -277,9 +277,9 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut);
-	whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
+	whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();
 	{
-		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
+		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)
 		{
 			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
 			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>();
@@ -287,7 +287,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(bp);
 		}
 	}
-	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
+	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();
 
     
     
@@ -381,7 +381,7 @@ void Block::update()
 		{
 			fadingOut = false;
 
-			getGameLogic()->fadingOutBlocks.remove(this->shared_from_this());
+			getGameLogic()->fadingOutBlocks->remove(this->shared_from_this());
 			return;
 		}
 	}
@@ -391,7 +391,7 @@ void Block::update()
 		if (animationFrame == -1)
 		{
 			popping = false;
-			int randomIndex = getGameLogic()->getRandomIntLessThan(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.size(),"Block::update");
+			int randomIndex = getGameLogic()->getRandomIntLessThan(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->size(),"Block::update");
 			blockType = getGameLogic()->currentGameType->getBlockTypeByUUID(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.get(randomIndex));
 		}
 	}
@@ -635,9 +635,9 @@ void Block::update()
 
 	if (getSettings()->blockRule_drawBlocksConnectedByColorIgnoringPiece)
 	{
-		if (connectedBlocksByColor.size() > 0)
+		if (connectedBlocksByColor->size() > 0)
 		{
-			for (int i = 0; i < connectedBlocksByColor.size(); i++)
+			for (int i = 0; i < connectedBlocksByColor->size(); i++)
 			{
 				sp<Block> c = connectedBlocksByColor.get(i);
 				if (c->xGrid == xGrid && c->yGrid == yGrid - 1)
@@ -679,9 +679,9 @@ void Block::update()
 
 	if (getSettings()->blockRule_drawBlocksConnectedByPieceIgnoringColor)
 	{
-		if (connectedBlocksByPiece.size() > 0)
+		if (connectedBlocksByPiece->size() > 0)
 		{
-			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
+			for (int i = 0; i < connectedBlocksByPiece->size(); i++)
 			{
 				sp<Block> c = connectedBlocksByPiece.get(i);
 
@@ -760,9 +760,9 @@ void Block::update()
 
 	if (getSettings()->blockRule_drawBlocksConnectedByColorInPiece)
 	{
-		if (connectedBlocksByPiece.size() > 0)
+		if (connectedBlocksByPiece->size() > 0)
 		{
-			for (int i = 0; i < connectedBlocksByPiece.size(); i++)
+			for (int i = 0; i < connectedBlocksByPiece->size(); i++)
 			{
 				sp<Block> c = connectedBlocksByPiece.get(i);
 
@@ -973,46 +973,46 @@ void Block::setXYOffsetInPiece(int x, int y)
 void Block::breakConnectionsInPiece()
 {//=========================================================================================================================
 
-	for (int i = 0; i < connectedBlocksByColor.size(); i++)
+	for (int i = 0; i < connectedBlocksByColor->size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
 		sp<Block> connectedBlock = connectedBlocksByColor.get(i);
-		connectedBlock->connectedBlocksByColor.remove(this->shared_from_this());
+		connectedBlock->connectedBlocksByColor->remove(this->shared_from_this());
 	}
-	connectedBlocksByColor.clear();
+	connectedBlocksByColor->clear();
 
-	for (int i = 0; i < connectedBlocksByPiece.size(); i++)
+	for (int i = 0; i < connectedBlocksByPiece->size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
 		sp<Block> connectedBlock = connectedBlocksByPiece.get(i);
-		connectedBlock->connectedBlocksByPiece.remove(this->shared_from_this());
+		connectedBlock->connectedBlocksByPiece->remove(this->shared_from_this());
 	}
-	connectedBlocksByPiece.clear();
+	connectedBlocksByPiece->clear();
 
 	if (piece != nullptr)
 	{
 		//these should never happen due to above
-		for (int i = 0; i < (int)piece->blocks.size(); i++)
+		for (int i = 0; i < (int)piece->blocks->size(); i++)
 		{
 			sp<Block> c = piece->blocks.get(i);
 			while (c->connectedBlocksByColor.contains(this->shared_from_this()))
 			{
 				log->error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
-				c->connectedBlocksByColor.remove(this->shared_from_this());
+				c->connectedBlocksByColor->remove(this->shared_from_this());
 				
 			}
 			while (c->connectedBlocksByPiece.contains(this->shared_from_this()))
 			{
-				c->connectedBlocksByPiece.remove(this->shared_from_this());
+				c->connectedBlocksByPiece->remove(this->shared_from_this());
 				log->error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
 			}
 		}
 
-		for (int i = 0; i < (int)piece->blocks.size(); i++)
+		for (int i = 0; i < (int)piece->blocks->size(); i++)
 		{
 			if (piece->blocks.get(i) == this->shared_from_this())
 			{
-				piece->blocks.removeAt(i);
+				piece->blocks->erase(->begin()+i);
 				i = 0;
 			}
 		}
@@ -1020,7 +1020,7 @@ void Block::breakConnectionsInPiece()
 		//this should never happen due to above
 		while (piece->blocks.contains(this->shared_from_this()))
 		{
-			piece->blocks.remove(this->shared_from_this());
+			piece->blocks->remove(this->shared_from_this());
 
 			log->error("Shouldn't happen!");
 		}
@@ -1581,7 +1581,7 @@ void Block::setColor(sp<OKColor>color)
 void Block::setRandomBlockTypeColor()
 {//=========================================================================================================================
 
-	int amtColors = this->blockType->colors.size();
+	int amtColors = this->blockType->colors->size();
 	amtColors = min(amtColors, getGameLogic()->getCurrentDifficulty()->maximumBlockTypeColors);
 
 	if (amtColors > 0) 

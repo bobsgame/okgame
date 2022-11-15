@@ -38,7 +38,7 @@ public:
 	sp<SettingsPanel> settingsPanel = nullptr;
 
 
-	//ArrayList<sp<ToggleButton>> stuffMenuTabs;
+	//sp<vector<sp<ToggleButton>>>stuffMenuTabs;
 
 
 	float subPanelScreenWidthPercent = 0.80f;

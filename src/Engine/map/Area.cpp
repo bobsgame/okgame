@@ -254,7 +254,7 @@ void Area::update()
 							}
 							else
 							{
-								sp<vector<string>> targetTYPEIDList = ms<ArrayList><string>();
+								sp<vector<string>> targetTYPEIDList = ms<vector><string>();
 
 								//if this door has connections, set target to one of this door's connections
 								if (connectionTYPEIDList()->size() > 0)
@@ -279,7 +279,7 @@ void Area::update()
 										//don't count this door
 										if (targetTYPEIDList->get(i) == getTYPEIDString())
 										{
-											targetTYPEIDList->removeAt(i);
+											targetTYPEIDList->erase(->begin()+i);
 											continue;
 										}
 
@@ -303,7 +303,7 @@ void Area::update()
 												//entMan().isAnyoneTryingToGoToArea(a)==true
 												//||
 												{
-													targetTYPEIDList->removeAt(i);
+													targetTYPEIDList->erase(->begin()+i);
 													continue;
 												}
 												else
@@ -313,7 +313,7 @@ void Area::update()
 											}
 											else
 											{
-												targetTYPEIDList->removeAt(i);
+												targetTYPEIDList->erase(->begin()+i);
 												//this is a serious error, prints out on System.err in getAreaOrWarpAreaByName
 											}
 										}
@@ -426,7 +426,7 @@ void Area::renderDebugBoxes()
 		if (OKString::startsWith(connectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
-			for (int d = 0; d < (int)map->doorList.size(); d++)
+			for (int d = 0; d < (int)map->doorList->size(); d++)
 			{
 				sp<Door> door = map->doorList.get(d);
 
@@ -472,7 +472,7 @@ void Area::renderDebugBoxes()
 			}
 
 			//if not found, go through warparea list
-			for (int j = 0; j < (int)map->warpAreaList.size(); j++)
+			for (int j = 0; j < (int)map->warpAreaList->size(); j++)
 			{
 				sp<Area> area = map->warpAreaList.get(j);
 

@@ -381,14 +381,14 @@ private:
 	sp<BlockType> currentBlockType = nullptr;
     
 	//i use these temp arrays because i need to save the modifications to something
-	//ArrayList<sp<PieceType>> currentBlockType_makePieceTypeWhenCleared;
-	//ArrayList<sp<BlockType>> currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
-	//ArrayList<sp<TurnFromBlockTypeToType>> currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
+	//sp<vector<sp<PieceType>>>currentBlockType_makePieceTypeWhenCleared;
+	//sp<vector<sp<BlockType>>>currentBlockType_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
+	//sp<vector<sp<TurnFromBlockTypeToType>>>currentBlockType_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
     
 	sp<PieceType> currentPieceType = nullptr;
 	sp<DifficultyType>currentDifficultyType = nullptr;
 	//RotationSet currentPieceType_rotationSet;
-	//ArrayList<sp<BlockType>> currentPieceType_overrideBlockTypes;
+	//sp<vector<sp<BlockType>>>currentPieceType_overrideBlockTypes;
     
 	Gwen::Controls::WindowControl* selectWindow = nullptr;
 	Gwen::Controls::ListBox* selectListBox = nullptr;
@@ -435,9 +435,9 @@ private:
 	float previewSpeed = 0.5;
 	long long lastPreviewTime = 0;
 	int currentPreviewRotationIndex = 0;
-	vector<sp<OKColor>> colors;
+	sp<vector<sp<OKColor>>>colors;
     
-	vector<RotationSet> rotationSets;
+	sp<vector<RotationSet>>rotationSets;
     
 	int fontHeight = 20;
 	int lastW = 0;

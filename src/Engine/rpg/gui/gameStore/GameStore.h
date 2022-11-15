@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	vector<sp<GameItem>> games;// = ms<ArrayList><sp<GameItem>>();
+	sp<vector<sp<GameItem>>>games;// = ms<vector><sp<GameItem>>();
 	//public GameListPanel gameStorePanel;
 
 

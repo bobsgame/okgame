@@ -29,10 +29,10 @@ public:
 	string description = "This is an empty game sequence.";
 
 	//this is saved to XML, we don't want to save the entire currentGameType object
-	vector<string> importExport_gameUUIDs;
+	sp<vector<string>>importExport_gameUUIDs;
 
 	//this is populated from loadedGameTypes when sequence is loaded, if a name from gameUUIDs cannot be found it will not be in here and an error will be logged
-	vector<sp<GameType>>gameTypes;
+	sp<vector<sp<GameType>>>gameTypes;
 
 	bool randomizeSequence = true;
 
@@ -63,7 +63,7 @@ public:
 		ar & BOOST_SERIALIZATION_NVP(description);
 		if (version < 3)
 		{
-			vector<string> gameUUIDs;
+			sp<vector<string>>gameUUIDs;
 			ar & BOOST_SERIALIZATION_NVP(gameUUIDs);
 			importExport_gameUUIDs = gameUUIDs;
 		}
@@ -151,7 +151,7 @@ public:
 
 	}
 
-	vector<GameType>importExport_games; //we do want the entire currentGameType objects for the games when we are playing multiplayer and need to send this to other players
+	sp<vector<GameType>>importExport_games; //we do want the entire currentGameType objects for the games when we are playing multiplayer and need to send this to other players
 
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int version);

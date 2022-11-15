@@ -20,7 +20,7 @@ Item::Item(sp<Engine> g, const string& spriteAssetName)
 
 	this->spriteAssetName = spriteAssetName;
 
-	getEventManager()->itemList.push_back(shared_from_this());
+	getEventManager()->itemList->push_back(shared_from_this());
 }
 
 Item::Item(sp<Engine> g, int spriteAssetID)
@@ -29,7 +29,7 @@ Item::Item(sp<Engine> g, int spriteAssetID)
 
 	this->spriteAssetID = spriteAssetID;
 
-	getEventManager()->itemList.push_back(shared_from_this());
+	getEventManager()->itemList->push_back(shared_from_this());
 }
 
 Item::Item(sp<Engine> g, sp<Sprite> sprite)
@@ -42,7 +42,7 @@ Item::Item(sp<Engine> g, sp<Sprite> sprite)
 
 	setInitialized_S(true);
 
-	getEventManager()->itemList.push_back(shared_from_this());
+	getEventManager()->itemList->push_back(shared_from_this());
 }
 
 void Item::sendServerRequest()

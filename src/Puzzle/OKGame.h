@@ -122,7 +122,7 @@ public:
 	virtual void resetPressedButtons() override;
 	virtual void setButtonStates() override;
 
-	vector<sp<PuzzlePlayer>> players;
+	sp<vector<sp<PuzzlePlayer>>>players;
 	
 
 	
@@ -149,7 +149,7 @@ public:
 	void startScreenMenuRender();
 
 
-	static vector<string> activityStream;
+	static sp<vector<string>>activityStream;
 	bool sentActivityStreamRequest = false;
 	//bool gotActivityStream = false;
 	//long long lastCheckedActivityResponseTime = 0;
@@ -236,7 +236,7 @@ public:
 	sp<OKMenu>createAccountMenu = nullptr;
 	int createAccountMenuCursorPosition = 0;
 	
-	vector<sp<Room>> rooms;
+	sp<vector<sp<Room>>>rooms;
 	sp<Room> currentRoom = nullptr;
 
 	void addToRoomsMenu(sp<Room> c, string name, string id);
@@ -250,8 +250,8 @@ public:
 	bool selectGameSequenceFilterMenuShowing = false;
 	bool selectSingleGameTypeFilterMenuShowing = false;
 	bool selectGameSequenceOrSingleGameTypeFilterMenuShowing = false;
-	//ArrayList<sp<Caption>> *hostingFriendCaptions = ms<ArrayList><sp<Caption>>();
-	//ArrayList<sp<Caption>> *playingFriendCaptions = ms<ArrayList><sp<Caption>>();
+	//sp<vector<sp<Caption>>>*hostingFriendCaptions = ms<vector><sp<Caption>>();
+	//sp<vector<sp<Caption>>>*playingFriendCaptions = ms<vector><sp<Caption>>();
 	//int hostingFriendsCursorPosition = 0;
 	sp<OKMenu>networkMultiplayerLobbyMenu = nullptr;
 	sp<OKMenu>yourStatsMenu = nullptr;
@@ -262,7 +262,7 @@ public:
 	int networkMultiplayerLobbyMenuCursorPosition = 0;
 	bool selectingHostedGame = false;
 	//sp<UDPPeerConnection>hostPeer = nullptr;
-	vector<sp<UDPPeerConnection>> joinedPeers;// = ms<ArrayList><sp<UDPPeerConnection>>();
+	sp<vector<sp<UDPPeerConnection>>>joinedPeers;// = ms<vector><sp<UDPPeerConnection>>();
 	bool hostStartedGame = false;
 	string friendUserName = "";
 
@@ -505,13 +505,13 @@ public:
 
 
 
-	static vector<sp<OKGameUserStatsForSpecificGameAndDifficulty>> userStatsPerGameAndDifficulty;
-	static vector<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalTimePlayed;
-	static vector<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalBlocksCleared;
-	static vector<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByPlaneswalkerPoints;
-	static vector<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByEloScore;
-	static vector<sp<OKGameLeaderBoardAndHighScoreBoard>> topGamesByTimeLasted;
-	static vector<sp<OKGameLeaderBoardAndHighScoreBoard>> topGamesByBlocksCleared;
+	static sp<vector<sp<OKGameUserStatsForSpecificGameAndDifficulty>>>userStatsPerGameAndDifficulty;
+	static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByTotalTimePlayed;
+	static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByTotalBlocksCleared;
+	static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByPlaneswalkerPoints;
+	static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByEloScore;
+	static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topGamesByTimeLasted;
+	static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topGamesByBlocksCleared;
 
 
 
@@ -536,7 +536,7 @@ public:
 	static const string netCommand_FRAME;
 	static const string netCommand_FORFEIT;
 
-	//ArrayList<sp<PuzzlePlayer>>* bobsGameNetworkPlayers = ms<ArrayList><sp<PuzzlePlayer>>();
+	//sp<vector<sp<PuzzlePlayer>>>* bobsGameNetworkPlayers = ms<vector><sp<PuzzlePlayer>>();
 
 	void tellAllPeersOneOfMyPlayersForfeitsGame(sp<PuzzlePlayer>p);
 	//void cancelNetworkGame();
@@ -563,9 +563,9 @@ public:
 	virtual bool udpPeerMessageReceived(sp<UDPPeerConnection>c, string s) override;
 
   
-	static vector<sp<GameType>> loadedGameTypes;
-	static vector<sp<GameSequence>> loadedGameSequences;
-	static vector<sp<Sprite>> loadedSprites;
+	static sp<vector<sp<GameType>>>loadedGameTypes;
+	static sp<vector<sp<GameSequence>>>loadedGameSequences;
+	static sp<vector<sp<Sprite>>>loadedSprites;
 	void loadGameSequencesFromXML();
 	void loadGameTypesFromXML();
 

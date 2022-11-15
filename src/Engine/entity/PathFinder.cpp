@@ -95,25 +95,25 @@ SortedList::SortedList(sp<PathFinder> outerInstance)
 
 sp<PotentialTile> SortedList::first()
 {
-	return list.at(0);
+	return list->at(0);
 }
 
 void SortedList::clear()
 {
-	list.clear();
+	list->clear();
 }
 
 void SortedList::addAndSort(sp<PotentialTile> o)
 {
-	list.push_back(o);
+	list->push_back(o);
 	sort(list.begin(), list.end());
 }
 
 void SortedList::remove(sp<PotentialTile> o)
 {
-	for (int i = 0; i < list.size(); i++)
+	for (int i = 0; i < list->size(); i++)
 	{
-		if (list.at(i).get() == o.get())
+		if (list->at(i).get() == o.get())
 		{
 			list.erase(list.begin() + i);
 			i--;
@@ -123,7 +123,7 @@ void SortedList::remove(sp<PotentialTile> o)
 
 int SortedList::size()
 {
-	return (int)list.size();
+	return (int)list->size();
 }
 
 bool SortedList::contains(sp<PotentialTile> o)
@@ -422,12 +422,12 @@ PathFinder::PathFinder(sp<Entity> e, float middleStartXPixelsHQ, float middleSta
 
 
 	//ORIGINAL LINE: potentialTiles = ms<PotentialTile>[w][h];
-	potentialTiles.clear();// = new vector<sp<PotentialTile>>(w * h);
+	potentialTiles->clear();// = new sp<vector<sp<PotentialTile>>>(w * h);
 
 
 	for (int x = 0; x < w; x++)
 	{
-		//potentialTiles->add(ms<ArrayList><sp<PotentialTile>>());
+		//potentialTiles->add(ms<vector><sp<PotentialTile>>());
 
 
 		for (int y = 0; y < h; y++)
@@ -456,7 +456,7 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 	// tile is in the open list and it's cost is zero, i.e. we're already there
 	potentialTiles[startTileY*w+startTileX]->cumulativePathCost = 0;
 	potentialTiles[startTileY*w+startTileX]->depth = 0;
-	blockedPotentialTilesList.clear();
+	blockedPotentialTilesList->clear();
 	openPotentialTilesList->clear();
 	openPotentialTilesList->addAndSort(potentialTiles[startTileY*w + startTileX]);
 
@@ -477,7 +477,7 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 		}
 
 		openPotentialTilesList->remove(current);
-		blockedPotentialTilesList.push_back(current);
+		blockedPotentialTilesList->push_back(current);
 
 		// search through all the neighbours of the current node evaluating
 		// them as next steps
@@ -528,9 +528,9 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 						}
 
 
-						for (int i = 0; i < blockedPotentialTilesList.size(); i++)
+						for (int i = 0; i < blockedPotentialTilesList->size(); i++)
 						{
-							if (blockedPotentialTilesList.at(i).get() == neighbour.get())
+							if (blockedPotentialTilesList->at(i).get() == neighbour.get())
 							{
 								blockedPotentialTilesList.erase(blockedPotentialTilesList.begin() + i);
 								i--;
@@ -549,9 +549,9 @@ sp<TilePath> PathFinder::findPath(int startTileX, int startTileY, int toTileX, i
 					{
 						bool contains = false;
 
-						for (int i = 0; i < blockedPotentialTilesList.size(); i++)
+						for (int i = 0; i < blockedPotentialTilesList->size(); i++)
 						{
-							if (blockedPotentialTilesList.at(i).get() == neighbour.get())contains = true;
+							if (blockedPotentialTilesList->at(i).get() == neighbour.get())contains = true;
 						}
 
 						if(contains==false)

@@ -85,9 +85,9 @@ void GUIManager::update()
 	playerEditMenu->update();
 	keyboardScreen->update();
 
-	for (int i = 0; i < gameChallenges.size(); i++)
+	for (int i = 0; i < gameChallenges->size(); i++)
 	{
-		sp<GameChallengeNotificationPanel> g = gameChallenges.at(i);
+		sp<GameChallengeNotificationPanel> g = gameChallenges->at(i);
 		g->update();
 	}
 }
@@ -141,11 +141,11 @@ void GUIManager::render()
 sp<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(sp<FriendCharacter> friend_in, const string& gameName)
 { //=========================================================================================================================
 	sp<GameChallengeNotificationPanel> g = ms<GameChallengeNotificationPanel>(friend_in, gameName);
-	gameChallenges.push_back(g);
+	gameChallenges->push_back(g);
 
 	//   GUI* gui = new GUI(g, GLUtils::TWLrenderer);
 	//   gui->applyTheme(GLUtils::TWLthemeManager);
-	//   gameChallengesGUIs.push_back(gui);
+	//   gameChallengesGUIs->push_back(gui);
 
 	g->setActivated(true);
 
@@ -155,12 +155,12 @@ sp<GameChallengeNotificationPanel> GUIManager::makeGameChallengeNotification(sp<
 void GUIManager::removeGameNotification(sp<GameChallengeNotificationPanel> g)
 { //=========================================================================================================================
 
-	for (int i = 0; i < gameChallenges.size(); i++)
+	for (int i = 0; i < gameChallenges->size(); i++)
 	{
 		//      if (gameChallenges[i] == g)
 		//      {
-		//         gameChallenges.remove(i);
-		//         GUI* gui = gameChallengesGUIs.remove(i);
+		//         gameChallenges->remove(i);
+		//         GUI* gui = gameChallengesGUIs->remove(i);
 		//
 		//         gui->destroy();
 		//      }
@@ -180,8 +180,8 @@ void GUIManager::cleanup()
 	//
 	//   for (int i = 0; i < gameChallenges->size(); i++)
 	//   {
-	//      gameChallenges.remove(i);
-	//      GUI* gui = gameChallengesGUIs.remove(i);
+	//      gameChallenges->remove(i);
+	//      GUI* gui = gameChallengesGUIs->remove(i);
 	//      gui->destroy();
 	//   }
 }

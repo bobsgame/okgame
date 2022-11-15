@@ -31,7 +31,7 @@ public:
 	static Logger log;
 
 
-	vector<sp<Caption>> captionList;// = ms<ArrayList><sp<Caption>>();
+	sp<vector<sp<Caption>>>captionList;// = ms<vector><sp<Caption>>();
 
 
 

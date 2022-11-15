@@ -67,8 +67,8 @@ private:
 	
 	bool pullPlayer = false;
 	bool pushPlayer = false;
-	vector<string> behaviorList;// = ms<ArrayList><string>();
-	vector<string> connectionTYPEIDList;// = ms<ArrayList><string>();
+	sp<vector<string>>behaviorList;// = ms<vector><string>();
+	sp<vector<string>>connectionTYPEIDList;// = ms<vector><string>();
 	string comment = "";
 	bool isNPC = false; //only used for export from tools for now to determine whether to spawn a character or an entity. determined from the SPRITE.getIsNPC, which is where it should be.
 

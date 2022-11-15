@@ -21,41 +21,41 @@ EventManager::EventManager(sp<Engine> g)
 void EventManager::update()
 { //=========================================================================================================================
 
-	for(int i=0;i<eventList.size();i++)eventList.at(i)->update();//only update running events, otherwise we update events that we might not have access to yet.
+	for(int i=0;i<eventList->size();i++)eventList->at(i)->update();//only update running events, otherwise we update events that we might not have access to yet.
 
-	for (int i = 0; i < itemList.size(); i++)
+	for (int i = 0; i < itemList->size(); i++)
 	{
-		itemList.at(i)->update();
+		itemList->at(i)->update();
 	}
 
-	for (int i = 0; i < gameStringList.size(); i++)
+	for (int i = 0; i < gameStringList->size(); i++)
 	{
-		gameStringList.at(i)->update();
+		gameStringList->at(i)->update();
 	}
 
-	for (int i = 0; i < dialogueList.size(); i++)
+	for (int i = 0; i < dialogueList->size(); i++)
 	{
-		dialogueList.at(i)->update();
+		dialogueList->at(i)->update();
 	}
 
-	for (int i = 0; i < flagList.size(); i++)
+	for (int i = 0; i < flagList->size(); i++)
 	{
-		flagList.at(i)->update();
+		flagList->at(i)->update();
 	}
 
-	for (int i = 0; i < skillList.size(); i++)
+	for (int i = 0; i < skillList->size(); i++)
 	{
-		skillList.at(i)->update();
+		skillList->at(i)->update();
 	}
 
-//	for (int i = 0; i < cutsceneEventList.size(); i++)
+//	for (int i = 0; i < cutsceneEventList->size(); i++)
 //	{
-//		cutsceneEventList.at(i)->update();
+//		cutsceneEventList->at(i)->update();
 //	}
 
-	for (int i = 0; i < runningEventQueue.size(); i++)
+	for (int i = 0; i < runningEventQueue->size(); i++)
 	{
-		sp<Event> s = runningEventQueue.at(i);
+		sp<Event> s = runningEventQueue->at(i);
 		s->run();
 	}
 }
@@ -65,7 +65,7 @@ void EventManager::addToEventQueueIfNotThere(sp<Event> event)
 
 	if (event->getWasAddedToQueue() == false)
 	{
-		runningEventQueue.push_back(event);
+		runningEventQueue->push_back(event);
 		event->setAddedToQueue();
 	}
 
@@ -77,9 +77,9 @@ void EventManager::addToEventQueueIfNotThere(sp<Event> event)
 bool EventManager::isEventInQueue(sp<Event> event)
 { //=========================================================================================================================
 
-	for (int i = 0; i < runningEventQueue.size(); i++)
+	for (int i = 0; i < runningEventQueue->size(); i++)
 	{
-		sp<Event> s = runningEventQueue.at(i);
+		sp<Event> s = runningEventQueue->at(i);
 
 		if (s == event)
 		{
@@ -92,15 +92,15 @@ bool EventManager::isEventInQueue(sp<Event> event)
 void EventManager::unloadCurrentMapEvents()
 { //=========================================================================================================================
 
-	for (int i = 0; i < (int)getCurrentMap()->mapEventList.size(); i++)
+	for (int i = 0; i < (int)getCurrentMap()->mapEventList->size(); i++)
 	{
-		sp<Event> s = getCurrentMap()->mapEventList.at(i);// getEventManager()->getEventByID(getCurrentMap()->mapEventIDList.at(i));
+		sp<Event> s = getCurrentMap()->mapEventList->at(i);// getEventManager()->getEventByID(getCurrentMap()->mapEventIDList->at(i));
 		if(s!=nullptr)s->reset();
 	}
 
-	for (int i = 0; i < runningEventQueue.size(); i++)
+	for (int i = 0; i < runningEventQueue->size(); i++)
 	{
-		sp<Event> s = runningEventQueue.at(i);
+		sp<Event> s = runningEventQueue->at(i);
 
 		if (s->type() != EventData::TYPE_PROJECT_INITIAL_LOADER && s->type() != EventData::TYPE_PROJECT_CUTSCENE_DONT_RUN_UNTIL_CALLED)
 		{
@@ -113,9 +113,9 @@ void EventManager::unloadCurrentMapEvents()
 
 sp<Item> EventManager::getItemByID(int id)
 { //=========================================================================================================================
-	for (int i = 0; i < itemList.size(); i++)
+	for (int i = 0; i < itemList->size(); i++)
 	{
-		sp<Item> s = itemList.at(i);
+		sp<Item> s = itemList->at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -131,9 +131,9 @@ sp<Item> EventManager::getItemByID(int id)
 
 sp<Dialogue> EventManager::getDialogueByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
-	for (int i = 0; i < dialogueList.size(); i++)
+	for (int i = 0; i < dialogueList->size(); i++)
 	{
-		sp<Dialogue> d = dialogueList.at(i);
+		sp<Dialogue> d = dialogueList->at(i);
 		if (d->getID() == id)
 		{
 			return d;
@@ -146,9 +146,9 @@ sp<Dialogue> EventManager::getDialogueByIDCreateIfNotExist(int id)
 //{ //=========================================================================================================================
 //	//go through list
 //	//if event doesn't exist, make new one
-//	for (int i = 0; i < cutsceneEventList.size(); i++)
+//	for (int i = 0; i < cutsceneEventList->size(); i++)
 //	{
-//		sp<Event> d = cutsceneEventList.at(i);
+//		sp<Event> d = cutsceneEventList->at(i);
 //		if (d->getID() == id)
 //		{
 //			return d;
@@ -162,9 +162,9 @@ sp<Event> EventManager::getEventByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 	//go through list
 	//if event doesn't exist, make new one
-	for (int i = 0; i < eventList.size(); i++)
+	for (int i = 0; i < eventList->size(); i++)
 	{
-		sp<Event> d = eventList.at(i);
+		sp<Event> d = eventList->at(i);
 		if (d->getID() == id)
 		{
 			return d;
@@ -183,9 +183,9 @@ sp<Event> EventManager::getEventByIDCreateIfNotExist(int id)
 
 sp<Skill> EventManager::getSkillByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
-	for (int i = 0; i < skillList.size(); i++)
+	for (int i = 0; i < skillList->size(); i++)
 	{
-		sp<Skill> s = skillList.at(i);
+		sp<Skill> s = skillList->at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -204,9 +204,9 @@ sp<Skill> EventManager::getSkillByIDCreateIfNotExist(int id)
 sp<GameString> EventManager::getGameStringByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
 
-	for (int i = 0; i < gameStringList.size(); i++)
+	for (int i = 0; i < gameStringList->size(); i++)
 	{
-		sp<GameString> s = gameStringList.at(i);
+		sp<GameString> s = gameStringList->at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -218,9 +218,9 @@ sp<GameString> EventManager::getGameStringByIDCreateIfNotExist(int id)
 
 sp<Flag> EventManager::getFlagByIDCreateIfNotExist(int id)
 { //=========================================================================================================================
-	for (int i = 0; i < flagList.size(); i++)
+	for (int i = 0; i < flagList->size(); i++)
 	{
-		sp<Flag> s = flagList.at(i);
+		sp<Flag> s = flagList->at(i);
 		if (s->getID() == id)
 		{
 			return s;

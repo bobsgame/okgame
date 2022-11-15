@@ -74,7 +74,7 @@ Character::Character(sp<Engine> g, string name, sp<Sprite> sprite, sp<Area> a, s
 	this->map = m;
 
 
-	getCurrentMap()->currentState->characterList.push_back(shared_from_this());
+	getCurrentMap()->currentState->characterList->push_back(shared_from_this());
 	getCurrentMap()->currentState->characterByNameHashtable.put(name, shared_from_this());
 
 	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
@@ -1592,11 +1592,11 @@ sp<vector<sp<Entity>>> Character::getOnScreenNonCharacterEntitiesWithinRangeAmou
 { //=========================================================================================================================
 
 
-	sp<vector<sp<Entity>>> list;// = new vector<sp<Entity>>();
+	sp<vector<sp<Entity>>> list;// = new sp<vector<sp<Entity>>>();
 
-	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
+	for (int s = 0; s < (int)getMap()->zList->size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		sp<Entity> e = getMap()->zList.at(s);
+		sp<Entity> e = getMap()->zList->at(s);
 
 		if (dynamic_cast<Character*>(e.get()) != NULL || 
 			dynamic_cast<RandomCharacter*>(e.get()) != NULL || 
@@ -1624,7 +1624,7 @@ sp<vector<sp<Entity>>> Character::getOnScreenNonCharacterEntitiesWithinRangeAmou
 }
 
 //=========================================================================================================================
-bool Character::checkTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, float x, float y)
+bool Character::checkTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y)
 { //=========================================================================================================================
 
 	if (getEngine()->hitLayerEnabled == false)
@@ -1632,9 +1632,9 @@ bool Character::checkTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, flo
 		return false;
 	}
 
-	for (int s = 0; s < list.size(); s++)
+	for (int s = 0; s < list->size(); s++)
 	{
-		sp<Entity> e = list.at(s);
+		sp<Entity> e = list->at(s);
 
 		if (dynamic_cast<Character*>(e.get()) != NULL || 
 			dynamic_cast<RandomCharacter*>(e.get()) != NULL || 
@@ -1659,7 +1659,7 @@ bool Character::checkTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, flo
 }
 
 //=========================================================================================================================
-bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, float x, float y)
+bool Character::checkHitLayerAndTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y)
 { //=========================================================================================================================
 	if (getMap()->getHitLayerValueAtXYPixels(x, y) == false && 
 		checkTouchingAnyEntityInEntityList(list, x, y) == false)
@@ -1679,9 +1679,9 @@ bool Character::checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x,
 		return false;
 	}
 
-	for (int s = 0; s < (int)getMap()->zList.size(); s++) //NOTICE THIS IS USING ZLIST
+	for (int s = 0; s < (int)getMap()->zList->size(); s++) //NOTICE THIS IS USING ZLIST
 	{
-		sp<Entity> e = getMap()->zList.at(s);
+		sp<Entity> e = getMap()->zList->at(s);
 
 
 		if (dynamic_cast<Character*>(e.get()) != NULL || 
@@ -1741,7 +1741,7 @@ void Character::setShadowClip()
 	//REALIZATION: i should never have to clip against other entities, ever. your shadow will always be on the ground, and any entities in front of you will always be rendered AFTER your shadow.
 
 
-	//ArrayList<Entity> list = get_ONSCREEN_entities_besides_characters_within_amt(32);
+	//sp<vector<Entity>>list = get_ONSCREEN_entities_besides_characters_within_amt(32);
 
 	for (int x = 0; x < sprite->getImageWidth(); x++)
 	{
@@ -2120,9 +2120,9 @@ sp<Character> Character::findNearestCharacter()
 	int shortestdist = 65535;
 
 
-	for (int n = 0; n < (int)getMap()->activeEntityList.size(); n++)
+	for (int n = 0; n < (int)getMap()->activeEntityList->size(); n++)
 	{
-		sp<Entity> currentEntity = getMap()->activeEntityList.at(n);
+		sp<Entity> currentEntity = getMap()->activeEntityList->at(n);
 
 
 		if (this != currentEntity.get() &&

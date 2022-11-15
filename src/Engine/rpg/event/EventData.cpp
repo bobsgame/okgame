@@ -89,7 +89,7 @@ string& EventData::initFromString(string& t)
 		{
 			sp<DialogueData> data = ms<DialogueData>();
 			t = data->initFromString(t);
-			dialogueDataList.push_back(data);
+			dialogueDataList->push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -100,7 +100,7 @@ string& EventData::initFromString(string& t)
 		{
 			sp<FlagData> data = ms<FlagData>();
 			t = data->initFromString(t);
-			flagDataList.push_back(data);
+			flagDataList->push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -111,7 +111,7 @@ string& EventData::initFromString(string& t)
 		{
 			sp<SkillData> data = ms<SkillData>();
 			t = data->initFromString(t);
-			skillDataList.push_back(data);
+			skillDataList->push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -122,7 +122,7 @@ string& EventData::initFromString(string& t)
 		{
 			sp<GameStringData> data = ms<GameStringData>();
 			t = data->initFromString(t);
-			gameStringDataList.push_back(data);
+			gameStringDataList->push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -133,7 +133,7 @@ string& EventData::initFromString(string& t)
 		{
 			sp<AudioData> data = ms<AudioData>();
 			t = data->initFromString(t);
-			musicDataList.push_back(data);
+			musicDataList->push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -144,7 +144,7 @@ string& EventData::initFromString(string& t)
 		{
 			sp<AudioData> data = ms<AudioData>();
 			t = data->initFromString(t);
-			soundDataList.push_back(data);
+			soundDataList->push_back(data);
 		}
 		t = t.substr(t.find("}") + 1);
 		t = t.substr(t.find(",") + 1);
@@ -219,7 +219,7 @@ EventScriptCommand::EventScriptCommand(const string& command, const string& comm
 	this->command = command;
 	this->comment = comment;
 
-	EventData::commandList.push_back(shared_from_this());
+	EventData::commandList->push_back(shared_from_this());
 }
 
 
@@ -249,11 +249,11 @@ EventScriptQualifier::EventScriptQualifier(const string& command, const string& 
 	this->command = command;
 	this->comment = comment;
 
-	EventData::qualifierList.push_back(shared_from_this());
+	EventData::qualifierList->push_back(shared_from_this());
 }
 
-vector<sp<EventScriptCommand>> EventData::commandList;// = ms<ArrayList><sp<EventScriptCommand>>();
-vector<sp<EventScriptQualifier>> EventData::qualifierList;// = ms<ArrayList><sp<EventScriptQualifier>>();
+vector<sp<EventScriptCommand>> EventData::commandList;// = ms<vector><sp<EventScriptCommand>>();
+vector<sp<EventScriptQualifier>> EventData::qualifierList;// = ms<vector><sp<EventScriptQualifier>>();
 
 const sp<EventScriptQualifier> EventData::isPlayerTouchingThisArea = ms<EventScriptQualifier>("isPlayerTouchingThisArea", "");
 const sp<EventScriptQualifier> EventData::isPlayerWalkingIntoThisDoor = ms<EventScriptQualifier>("isPlayerWalkingIntoThisDoor", "");

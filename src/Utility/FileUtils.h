@@ -52,7 +52,7 @@ public:
 	static string removeIllegalFilenameChars(string s);
 	//static void fixPath(string &fullname);
 	static sp<BufferedImage> readBufferedImageFromFile(sp<OKFile> file);
-	//static ArrayList<string>* readLines(u8* get_resource_as_stream);
+	//static sp<vector<string>>* readLines(u8* get_resource_as_stream);
 	static void makeDir(const string& cs);
 	//static unsigned char* decodeBase64StringToByteArray(const string& cs);
 	//static string& encodeByteArrayToBase64String(unsigned char const* bytes_to_encode, unsigned int in_len);
@@ -69,14 +69,14 @@ public:
 	//static short* oldLoadShortIntFile(const string& filename);
 	static sp<IntArray> loadIntFile(string filename);
 	static sp<IntArray> loadIntFileFromExePath(string filename);
-	//static vector<uint16_t>* loadShortFile(string filename);
+	//static sp<vector<uint16_t>>* loadShortFile(string filename);
 	static string loadTextFileAndTrim(string filename);
 	static string loadTextFileFromExePathAndTrim(string filename);
 	static sp<vector<string>> loadTextFileIntoVectorOfStringsAndTrim(string filename);
 	static sp<vector<string>> loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename);
 	static sp<ByteArray> loadByteFile(string filename);
 	static sp<ByteArray> loadByteFileFromExePath(string filename);
-	//static sp<ByteArray> loadByteFileFromExePathIntoVector(string filename);
+	//static sp<ByteArray> loadByteFileFromExePathIntosp<Vector(string filename);
 
 	//static string lzoByteArrayToBase64String(const u8* byteArray, unsigned long sourceLength);
 	//static u8* unlzoBase64StringToByteArray(const string &zippedBytesAsString, unsigned long &returnLength);
@@ -123,7 +123,7 @@ public:
 	static string readSessionTokenFromCache();
 	static void deleteSessionTokenFromCache();
 	//void writeCookie(const string& s);
-	//ArrayList<string>* readCookies();
+	//sp<vector<string>>* readCookies();
 	//static void writeBrowserSessionCookieAndRefreshIFrame();
 	//static void deleteBrowserSessionCookieAndRefreshIFrame();
 	//static void writeBrowserSessionAndRefreshIFrame();

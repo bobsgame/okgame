@@ -148,7 +148,7 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 
 			difficultyCombo = new ComboBox(bottomBase,"difficultyCombo");
 			GameType g;
-			for(int i=0;i<g.difficultyTypes.size();i++)difficultyCombo->AddItem(Gwen::Utility::StringToUnicode(g.difficultyTypes.get(i)->name));
+			for(int i=0;i<g.difficultyTypes->size();i++)difficultyCombo->AddItem(Gwen::Utility::StringToUnicode(g.difficultyTypes.get(i)->name));
 			difficultyCombo->Dock(Pos::Left);
 			difficultyCombo->SetHeight(25);
 			difficultyCombo->onSelection.Add(this, &GameTestMenuControl::onChangeDifficulty);
@@ -277,7 +277,7 @@ using Poco::Path;
 //{//=========================================================================================================================
 //
 //	sp<GameSequence>bt = nullptr;
-//	for (int i = 0; i<bobsGame->loadedGameSequences.size(); i++)
+//	for (int i = 0; i<bobsGame->loadedGameSequences->size(); i++)
 //	{
 //		sp<GameSequence>b = bobsGame->loadedGameSequences.get(i);
 //		if (b->name == name)
@@ -296,7 +296,7 @@ void GameTestMenuControl::populateGameTypesListBox()
 	GetCanvas()->DoThink();
 
 	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
-	for (int i = 0; i < gamesStringColor.size(); i++)
+	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
 		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
 		sp<GameType>g = gameTypeStringColorPairPair.first;
@@ -332,8 +332,8 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	gameSequencesListBox->Clear();
 	GetCanvas()->DoThink();
 
-	vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
-	for (int i = 0; i < gamesStringColor.size(); i++)
+	sp<vector<pair<sp<GameSequence>>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
 		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
 		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
@@ -419,7 +419,7 @@ void GameTestMenuControl::vote(bool upDown)
 	string vote = "up";
 	if (upDown == false)vote = "down";
 
-	if (currentGameSequence->gameTypes.size() == 1)
+	if (currentGameSequence->gameTypes->size() == 1)
 	{
 		uuid = currentGameSequence->gameTypes.get(0)->uuid;
 		bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" +vote+":"+ OKNet::endline);
@@ -447,7 +447,7 @@ void GameTestMenuControl::vote(bool upDown)
 	if (response == "")response = "Did not get a response from the server. Try again later.";
 	else
 	{
-		if (currentGameSequence->gameTypes.size() == 1)
+		if (currentGameSequence->gameTypes->size() == 1)
 		{
 			if(upDown)currentGameSequence->gameTypes.get(0)->yourVote = "up";
 			else currentGameSequence->gameTypes.get(0)->yourVote = "down";
@@ -525,7 +525,7 @@ void GameTestMenuControl::initPreviewGame()
 	{
 		currentGameSequence = ms<GameSequence>();
 	}
-	if(currentGameSequence->gameTypes.size()==0)
+	if(currentGameSequence->gameTypes->size()==0)
 	{
 		
 
@@ -640,11 +640,11 @@ void OKGame::gameTestMenuUpdate()
 		{
 
 			//remove unsaved game sequences
-			//			for (int i = 0; i<loadedGameSequences.size(); i++)
+			//			for (int i = 0; i<loadedGameSequences->size(); i++)
 			//			{
 			//				if (loadedGameSequences.get(i)->loadedFilename == "")
 			//				{
-			//					loadedGameSequences.removeAt(i);
+			//					loadedGameSequences->erase(->begin()+i);
 			//					i--;
 			//				}
 			//			}

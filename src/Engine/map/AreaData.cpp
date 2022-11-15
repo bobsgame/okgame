@@ -223,7 +223,7 @@ void AreaData::addConnectionString(const string& s)
 //
 //
 //
-//	for (int i = 0; i<connectionTYPEIDList.size(); i++)
+//	for (int i = 0; i<connectionTYPEIDList->size(); i++)
 //	{
 //
 //		string t = connectionTYPEIDList.get(i);
@@ -234,7 +234,7 @@ void AreaData::addConnectionString(const string& s)
 //			string back = t.substr(t.find("`") + 1);
 //			t = front + back;
 //		}
-//		connectionTYPEIDList.remove(i);
+//		connectionTYPEIDList->remove(i);
 //		connectionTYPEIDList.add(i, t);
 //
 //	}
@@ -267,7 +267,7 @@ void AreaData::addConnectionString(const string& s)
 //	s += "comment:`" + comment + "`,";
 //	s += "mapID:`" + mapID + "`,";
 //	s += "stateID:`" + stateID + "`,";
-//	for (int i = 0; i<connectionTYPEIDList.size(); i++)
+//	for (int i = 0; i<connectionTYPEIDList->size(); i++)
 //	{
 //		s += "connectionTYPEIDList:`" + connectionTYPEIDList.get(i) + "`,";
 //	}

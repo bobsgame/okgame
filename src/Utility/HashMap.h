@@ -155,7 +155,7 @@ template <typename K, typename V>
 sp<vector<V>> HashMap<K, V>::getAllValues()
 {
 	//typename HashMap<K, V>::iterator it;
-	sp<vector<V>> v = new vector<V>();
+	sp<vector<V>> v = new sp<vector<V>>();
 	for (auto it = m->begin(); it != m->end(); ++it)v->push_back(it->second);
 	return v;
 }

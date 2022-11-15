@@ -164,7 +164,7 @@ void Door::update()
 						//TODO: don't spawn if there are too many randoms, have map limit?
 
 
-						sp<vector<string>> targetTYPEIDList = ms<ArrayList><string>();
+						sp<vector<string>> targetTYPEIDList = ms<vector><string>();
 
 						//if this door has connections, set target to one of this door's connections
 						if (getConnectionTYPEIDList()->size() > 0)
@@ -191,7 +191,7 @@ void Door::update()
 								//don't count this door
 								if (targetTYPEIDList->get(i) == "DOOR." + getName())
 								{
-									targetTYPEIDList->removeAt(i);
+									targetTYPEIDList->erase(->begin()+i);
 									continue;
 								}
 
@@ -215,7 +215,7 @@ void Door::update()
 										//entMan().isAnyoneTryingToGoToArea(a)==true
 										//||
 										{
-											targetTYPEIDList->removeAt(i);
+											targetTYPEIDList->erase(->begin()+i);
 											continue;
 										}
 										else
@@ -225,7 +225,7 @@ void Door::update()
 									}
 									else
 									{
-										targetTYPEIDList->removeAt(i);
+										targetTYPEIDList->erase(->begin()+i);
 										//this is a serious error, prints out on System.err in getAreaOrWarpAreaByName
 									}
 								}
@@ -285,7 +285,7 @@ void Door::enter()
 		sp<Map> map = getMapManager()->getMapByNameBlockUntilLoaded(destinationMapName());
 
 
-		for (int i = 0; i < (int)map->doorList.size(); i++)
+		for (int i = 0; i < (int)map->doorList->size(); i++)
 		{
 			sp<Door> d = map->doorList.get(i);
 
@@ -396,7 +396,7 @@ void Door::renderDebugBoxes()
 		if (OKString::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
 		{
 			//go through doorlist
-			for (int d = 0; d < (int)getMap()->doorList.size(); d++)
+			for (int d = 0; d < (int)getMap()->doorList->size(); d++)
 			{
 				sp<Door> door = getMap()->doorList.get(d);
 				if (door->getMap() == getMap())
@@ -436,7 +436,7 @@ void Door::renderDebugBoxes()
 			}
 
 			//if not found, go through warparea list
-			for (int j = 0; j < (int)getMap()->warpAreaList.size(); j++)
+			for (int j = 0; j < (int)getMap()->warpAreaList->size(); j++)
 			{
 				sp<Area> a = getMap()->warpAreaList.get(j);
 
@@ -533,8 +533,8 @@ void Door::renderDebugInfo()
 	boolean getRandomSpawnFemales;
 	               
 	               
-	vector<String> getBehaviorList = ms<ArrayList><String>();
-	vector<String> connectionList = ms<ArrayList><String>();
+	sp<vector<String>>getBehaviorList = ms<vector><String>();
+	sp<vector<String>>connectionList = ms<vector><String>();
 	               
 	               */
 }

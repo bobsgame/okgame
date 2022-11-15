@@ -356,8 +356,8 @@ void OKGame::updateTitleMenuLogoTexture()
 
 	//titleScreenTexture = GLUtils::getTextureFromPNG("data/guiBackground/logo/"+numString+".png");
 
-	//if(titleMenuTextures==nullptr)titleMenuTextures = ms<ArrayList><sp<OKTexture>>();// [numTileScreenTextureFrames];
-	if(titleMenuTextures.size()==0)
+	//if(titleMenuTextures==nullptr)titleMenuTextures = ms<vector><sp<OKTexture>>();// [numTileScreenTextureFrames];
+	if(titleMenuTextures->size()==0)
 	{
 		for (int i = 0; i<numTitleMenuTextureFrames; i++)
 		{
@@ -365,7 +365,7 @@ void OKGame::updateTitleMenuLogoTexture()
 			int len = (int)numString.length();
 			for (int n = 0; n<2 - len; n++)numString = "0" + numString;//pad to 2 zeros
 
-			titleMenuTextures.push_back(GLUtils::getTextureFromPNGExePath("data/guiBackground/logo/" + numString + ".png"));
+			titleMenuTextures->push_back(GLUtils::getTextureFromPNGExePath("data/guiBackground/logo/" + numString + ".png"));
 		}
 	}
 }
@@ -474,7 +474,7 @@ void OKGame::titleMenuRender()
 
 	if (
 		//titleMenuTextures != nullptr && 
-		titleMenuTextures.size()>0)t = titleMenuTextures.at(currentTitleMenuTextureFrame);
+		titleMenuTextures->size()>0)t = titleMenuTextures->at(currentTitleMenuTextureFrame);
 
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
@@ -574,7 +574,7 @@ void OKGame::startScreenMenuUpdate()
 	}
 
 
-	if (activityStream.size()>0)
+	if (activityStream->size()>0)
 	{
 							
 		if (activityMenu == nullptr)
@@ -584,9 +584,9 @@ void OKGame::startScreenMenuUpdate()
 			activityMenu->setFontSize(14);
 			activityMenu->center = false;
 
-			for (int i = 0; i < activityStream.size() && i < 20; i++)
+			for (int i = 0; i < activityStream->size() && i < 20; i++)
 			{
-				activityMenu->addInfo(activityStream.at(i));
+				activityMenu->addInfo(activityStream->at(i));
 			}
 		}
 	}
@@ -745,7 +745,7 @@ void OKGame::startScreenMenuRender()
 
 	if (
 		//titleMenuTextures != nullptr && 
-		titleMenuTextures.size()>0)t = titleMenuTextures.at(currentTitleMenuTextureFrame);
+		titleMenuTextures->size()>0)t = titleMenuTextures->at(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
 	if (startScreenMenu == nullptr)return;
@@ -822,7 +822,7 @@ void OKGame::gettingGamesFromServerMenuRender()
 
 	if (
 		//titleMenuTextures != nullptr && 
-		titleMenuTextures.size()>0)t = titleMenuTextures.at(currentTitleMenuTextureFrame);
+		titleMenuTextures->size()>0)t = titleMenuTextures->at(currentTitleMenuTextureFrame);
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
 	if (gettingGamesFromServerMenu == nullptr)return;
@@ -1027,7 +1027,7 @@ void OKGame::controllerMenuUpdate()
 
 		sp<OKMenu::MenuItem> m = controllerMenu->getMenuItemByID("Button Press Caption");
 
-		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
+		for (int i = 0; i < getControlsManager()->gameControllers->size(); i++)
 		{
 			sp<GameController>g = getControlsManager()->gameControllers.get(i);
 
@@ -1352,13 +1352,13 @@ void OKGame::playerPauseMiniMenuUpdate(sp<PuzzlePlayer>p)
 					}
 
 					p->gameLogic->died = true;
-					//players.remove(p);
+					//players->remove(p);
 					//deletePlayer = true;
 
 					bool allLocalPlayersDead = true;
-					for (int i = 0; i < players.size(); i++)
+					for (int i = 0; i < players->size(); i++)
 					{
-						sp<PuzzlePlayer>o = players.at(i);
+						sp<PuzzlePlayer>o = players->at(i);
 						if (o->isNetworkPlayer() == false && o->gameLogic->died==false)allLocalPlayersDead = false;
 					}
 
@@ -1376,7 +1376,7 @@ void OKGame::playerPauseMiniMenuUpdate(sp<PuzzlePlayer>p)
 							tellAllJoinedPeersIHaveLeftTheGame();
 
 							OKNet::myStatus = OKNet::status_AVAILABLE;
-							joinedPeers.clear();
+							joinedPeers->clear();
 							networkMultiplayerLobbyMenuShowing = true;
 						}
 						else
@@ -2902,13 +2902,13 @@ void OKGame::loadRoomConfigMenuUpdate()
 		else
 		{
 
-			vector<string> ids = loadRoomConfigMenu->getArrayListOfMenuItemIDs();
+			sp<vector<string>>ids = loadRoomConfigMenu->getsp<vectorOfMenuItemIDs();
 
-			for (int i = 0; i < ids.size(); i++)
+			for (int i = 0; i < ids->size(); i++)
 			{
-				if (loadRoomConfigMenu->isSelectedID(ids.at(i), clicked, mx, my))
+				if (loadRoomConfigMenu->>isSelectedID(ids->at(i), clicked, mx, my))
 				{
-					sp<Room>r = OKGame::loadRoomConfig(ids.at(i));
+					sp<Room>r = OKGame::loadRoomConfig(ids->at(i));
 
 					if (r != nullptr)currentRoom = r;
 					leaveMenu = true;
@@ -3680,7 +3680,7 @@ void OKGame::gameSetupMenuUpdate()
 			if (selectedGameSequence == nullptr)
 			{
 				selectedGameSequence = ms<GameSequence>();
-				selectedGameSequence->gameTypes.push_back(ms<GameType>());
+				selectedGameSequence->gameTypes->push_back(ms<GameType>());
 			}
 			currentRoom->gameSequence = selectedGameSequence;
 			getPlayer1Game()->currentGameSequence = selectedGameSequence;
@@ -3690,15 +3690,15 @@ void OKGame::gameSetupMenuUpdate()
 			sp<OKMenu::MenuItem> c = gameSetupMenu->getMenuItemByID("Select Game");
 			if (c != nullptr)
 			{
-				if (selectedGameSequence->gameTypes.size() > 1)
+				if (selectedGameSequence->gameTypes->size() > 1)
 				{
 					c->setText("Game Sequence: " + selectedGameSequence->name);
 					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->uuid;
 				}
-				if (selectedGameSequence->gameTypes.size() == 1)
+				if (selectedGameSequence->gameTypes->size() == 1)
 				{
 					c->setText("Game Type: " + selectedGameSequence->name);
-					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->gameTypes.at(0)->uuid;
+					statsMenu_gameSequenceOrTypeUUID = selectedGameSequence->gameTypes->at(0)->uuid;
 				}
 			}
 		}
@@ -3730,9 +3730,9 @@ void OKGame::gameSetupMenuUpdate()
 		{
 
 			GameType gt;
-			for (int i = 0; i < gt.difficultyTypes.size(); i++)
+			for (int i = 0; i < gt.difficultyTypes->size(); i++)
 			{
-				string difficultyName = gt.difficultyTypes.at(i)->name;
+				string difficultyName = gt.difficultyTypes->at(i)->name;
 				if (selectedDifficultyName == difficultyName)selectedDifficultyIndex = i;
 			}
 
@@ -3916,15 +3916,15 @@ void OKGame::gameSetupMenuUpdate()
 				if (left)
 				{
 					selectedDifficultyIndex--;
-					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = (int)gt.difficultyTypes.size() - 1;
+					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = (int)gt.difficultyTypes->size() - 1;
 				}
 				if (right)
 				{
 					selectedDifficultyIndex++;
-					if (selectedDifficultyIndex >= gt.difficultyTypes.size())selectedDifficultyIndex = 0;
+					if (selectedDifficultyIndex >= gt.difficultyTypes->size())selectedDifficultyIndex = 0;
 				}
 
-				sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex);
+				sp<DifficultyType>d = gt.difficultyTypes->at(selectedDifficultyIndex);
 				string difficultyName = d->name;
 				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -3940,9 +3940,9 @@ void OKGame::gameSetupMenuUpdate()
 		bool confirm = false;
 
 		//assign controller to p1 if start or b pressed
-		for (int i = 0; i < getControlsManager()->gameControllers.size(); i++)
+		for (int i = 0; i < getControlsManager()->gameControllers->size(); i++)
 		{
-			sp<GameController>g = getControlsManager()->gameControllers.at(i);
+			sp<GameController>g = getControlsManager()->gameControllers->at(i);
 			if (g->b_Pressed())
 			{
 				confirm = true;
@@ -4030,7 +4030,7 @@ void OKGame::gameSetupMenuUpdate()
 				if(getPlayer1Game()->currentGameSequence == nullptr)getPlayer1Game()->currentGameSequence = currentRoom->gameSequence;
 
 				GameType gt;
-				sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex);
+				sp<DifficultyType>d = gt.difficultyTypes->at(selectedDifficultyIndex);
 				string difficultyName = d->name;
 				currentRoom->room_DifficultyName = difficultyName;
 				if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -4418,9 +4418,9 @@ void OKGame::selectGameSequenceMenuUpdate()
 	int my = getControlsManager()->getMouseY();
 	if (confirm || clicked)
 	{
-		for (int i = 0; i<loadedGameSequences.size(); i++)
+		for (int i = 0; i<loadedGameSequences->size(); i++)
 		{
-			sp<GameSequence>g = loadedGameSequences.at(i);
+			sp<GameSequence>g = loadedGameSequences->at(i);
 			if (selectGameSequenceMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 				if(statsMenuShowing)
@@ -4600,7 +4600,7 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 
 	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor;
 
-//	for (int i = 0; i<loadedGameTypes.size(); i++)
+//	for (int i = 0; i<loadedGameTypes->size(); i++)
 //	{
 //		sp<GameType>g = loadedGameTypes.get(i);
 //		if (g->builtInType)
@@ -4612,9 +4612,9 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 //			gamesStringColor.add(gameTypeStringColorPairPair);
 //		}
 //	}
-	for (int i = 0; i<loadedGameTypes.size(); i++)
+	for (int i = 0; i<loadedGameTypes->size(); i++)
 	{
-		sp<GameType>g = loadedGameTypes.at(i);
+		sp<GameType>g = loadedGameTypes->at(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
@@ -4625,20 +4625,20 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 		}
 	}
 
-	vector<sp<GameType>> downloadedGames;
-	for (int i = 0; i<loadedGameTypes.size(); i++)
+	sp<vector<sp<GameType>>>downloadedGames;
+	for (int i = 0; i<loadedGameTypes->size(); i++)
 	{
-		sp<GameType>g = loadedGameTypes.at(i);
+		sp<GameType>g = loadedGameTypes->at(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
-			downloadedGames.push_back(g);
+			downloadedGames->push_back(g);
 		}
 	}
 
 	multimap<double, sp<GameType>> games;
-	for (int i = 0; i < downloadedGames.size(); i++)
+	for (int i = 0; i < downloadedGames->size(); i++)
 	{
-		sp<GameType>g = downloadedGames.at(i);
+		sp<GameType>g = downloadedGames->at(i);
 
 		double up = (double)(g->upVotes);
 		double total = (double)(g->upVotes + g->downVotes);
@@ -4676,7 +4676,7 @@ sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedG
 
 	sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> gamesStringColor;
 
-//	for (int i = 0; i<loadedGameSequences.size(); i++)
+//	for (int i = 0; i<loadedGameSequences->size(); i++)
 //	{
 //		sp<GameSequence>g = loadedGameSequences.get(i);
 //		if (g->builtInType)
@@ -4688,9 +4688,9 @@ sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedG
 //			gamesStringColor.add(gameSequenceStringColorPairPair);
 //		}
 //	}
-	for (int i = 0; i<loadedGameSequences.size(); i++)
+	for (int i = 0; i<loadedGameSequences->size(); i++)
 	{
-		sp<GameSequence>g = loadedGameSequences.at(i);
+		sp<GameSequence>g = loadedGameSequences->at(i);
 		if (g->downloaded == false)//g->builtInType == false &&
 		{
 			string name = g->creatorUserName + " - " + g->name;
@@ -4702,9 +4702,9 @@ sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedG
 	}
 
 	sp<vector<sp<GameSequence>>> downloadedGames;
-	for (int i = 0; i<loadedGameSequences.size(); i++)
+	for (int i = 0; i<loadedGameSequences->size(); i++)
 	{
-		sp<GameSequence>g = loadedGameSequences.at(i);
+		sp<GameSequence>g = loadedGameSequences->at(i);
 		if (g->downloaded == true)//g->builtInType == false &&
 		{
 			downloadedGames->push_back(g);
@@ -4865,9 +4865,9 @@ string getDateFromEpochTime(long long ms)
 sp<OKGameUserStatsForSpecificGameAndDifficulty> OKGame::getUserStatsForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString)
 {//=========================================================================================================================
 	sp<OKGameUserStatsForSpecificGameAndDifficulty>stats = nullptr;
-	for (int i = 0; i < userStatsPerGameAndDifficulty.size(); i++)
+	for (int i = 0; i < userStatsPerGameAndDifficulty->size(); i++)
 	{
-		sp<OKGameUserStatsForSpecificGameAndDifficulty>s = userStatsPerGameAndDifficulty.at(i);
+		sp<OKGameUserStatsForSpecificGameAndDifficulty>s = userStatsPerGameAndDifficulty->at(i);
 		if (s->gameTypeUUID == gameTypeOrSequenceUUID || s->gameSequenceUUID == gameTypeOrSequenceUUID || s->isGameTypeOrSequence == gameTypeOrSequenceUUID)
 		{
 			if (s->difficultyName == difficultyString)
@@ -4992,16 +4992,16 @@ void OKGame::populateUserStatsForSpecificGameAndDifficultyMenu(sp<OKMenu>menu, s
 
 /*
 
-static ArrayList<sp<OKGameUserStatsForSpecificGameAndDifficulty>> userStatsPerGameAndDifficulty;
-static ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalTimePlayed;
-static ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByTotalBlocksCleared;
-static ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByPlaneswalkerPoints;
-static ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> topPlayersByEloScore;
+static sp<vector<sp<OKGameUserStatsForSpecificGameAndDifficulty>>>userStatsPerGameAndDifficulty;
+static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByTotalTimePlayed;
+static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByTotalBlocksCleared;
+static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByPlaneswalkerPoints;
+static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topPlayersByEloScore;
 
 //TODO: could do highest level reached
 //TODO: could do biggest combo
-static ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> topGamesByTimeLasted;
-static ArrayList<sp<OKGameLeaderBoardAndHighScoreBoard>> topGamesByBlocksCleared;
+static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topGamesByTimeLasted;
+static sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>>topGamesByBlocksCleared;
 */
 
 
@@ -5126,7 +5126,7 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(sp<OKMenu>menu, string ga
 		string statsUUID = "";
 	};
 
-	vector<sp<OKGameLeaderBoardAndHighScoreBoardEntry>> entries;
+	sp<vector<sp<OKGameLeaderBoardAndHighScoreBoardEntry>>>entries;
 	*/
 
 	string titleName = "";
@@ -5138,10 +5138,10 @@ string OKGame::populateLeaderBoardOrHighScoreBoardMenu(sp<OKMenu>menu, string ga
 	menu->add("Objective: "+objectiveString);
 	menu->addInfo(" ");
 
-	for (int i = 0; i < stats->entries.size(); i++)
+	for (int i = 0; i < stats->entries->size(); i++)
 	{
 
-		sp<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry> e = stats->entries.at(i);
+		sp<OKGameLeaderBoardAndHighScoreBoard::OKGameLeaderBoardAndHighScoreBoardEntry> e = stats->entries->at(i);
 
 		if (e->userName == "") { continue; }
 
@@ -5325,9 +5325,9 @@ void OKGame::selectSingleGameTypeMenuUpdate()
 	if (confirm || clicked)
 	{
 
-		for (int i = 0; i<loadedGameTypes.size(); i++)
+		for (int i = 0; i<loadedGameTypes->size(); i++)
 		{
-			sp<GameType>g = loadedGameTypes.at(i);
+			sp<GameType>g = loadedGameTypes->at(i);
 			if (selectSingleGameTypeMenu->isSelectedID(g->uuid, clicked, mx, my))
 			{
 
@@ -5340,7 +5340,7 @@ void OKGame::selectSingleGameTypeMenuUpdate()
 				{
 
 					currentRoom->gameSequence = ms<GameSequence>();
-					currentRoom->gameSequence->gameTypes.push_back(g);
+					currentRoom->gameSequence->gameTypes->push_back(g);
 					currentRoom->gameSequence->name = g->name;
 
 					getPlayer1Game()->currentGameSequence = currentRoom->gameSequence;
@@ -5401,9 +5401,9 @@ void OKGame::difficultyMenuUpdate()
 			difficultyMenu->add("All Difficulties", "Allow Different Difficulties");
 		}
 
-		for (int i = 0; i<gt.difficultyTypes.size(); i++)
+		for (int i = 0; i<gt.difficultyTypes->size(); i++)
 		{
-			difficultyMenu->add(gt.difficultyTypes.at(i)->name);
+			difficultyMenu->add(gt.difficultyTypes->at(i)->name);
 		}
 
 		difficultyMenu->cursorPosition = difficultyMenuCursorPosition;
@@ -5442,10 +5442,10 @@ void OKGame::difficultyMenuUpdate()
 			}
 		}
 
-		for (int i = 0; i<gt.difficultyTypes.size(); i++)
+		for (int i = 0; i<gt.difficultyTypes->size(); i++)
 		{
 
-			string difficultyName = gt.difficultyTypes.at(i)->name;
+			string difficultyName = gt.difficultyTypes->at(i)->name;
 			if (difficultyMenu->isSelectedID(difficultyName, clicked, mx, my))
 			{
 
@@ -5571,7 +5571,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 	if(currentRoom->gameSequence == nullptr)
 	{
 		currentRoom->gameSequence = ms<GameSequence>();
-		currentRoom->gameSequence->gameTypes.push_back(ms<GameType>());
+		currentRoom->gameSequence->gameTypes->push_back(ms<GameType>());
 	}
 
 	if(currentRoom->multiplayer_AllowDifferentGameSequences)
@@ -5585,8 +5585,8 @@ void OKGame::multiplayerOptionsMenuUpdate()
 			sp<OKMenu::MenuItem> c = multiplayerOptionsMenu->getMenuItemByID("Select Game");
 			if (c != nullptr)
 			{
-				if (currentRoom->gameSequence->gameTypes.size() > 1)c->setText("Game Sequence: " + currentRoom->gameSequence->name);
-				if (currentRoom->gameSequence->gameTypes.size() == 1)c->setText("Game Type: " + currentRoom->gameSequence->name);
+				if (currentRoom->gameSequence->gameTypes->size() > 1)c->setText("Game Sequence: " + currentRoom->gameSequence->name);
+				if (currentRoom->gameSequence->gameTypes->size() == 1)c->setText("Game Type: " + currentRoom->gameSequence->name);
 			}
 		}
 	}
@@ -5600,13 +5600,13 @@ void OKGame::multiplayerOptionsMenuUpdate()
 	{
 
 		GameType gt;
-		for (int i = 0; i < gt.difficultyTypes.size(); i++)
+		for (int i = 0; i < gt.difficultyTypes->size(); i++)
 		{
-			string difficultyName = gt.difficultyTypes.at(i)->name;
+			string difficultyName = gt.difficultyTypes->at(i)->name;
 			if (currentRoom->room_DifficultyName == difficultyName)selectedDifficultyIndex = i + 1;
 		}
 
-		sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex - 1);
+		sp<DifficultyType>d = gt.difficultyTypes->at(selectedDifficultyIndex - 1);
 		string difficultyName = d->name;
 		currentRoom->room_DifficultyName = difficultyName;
 		if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -5705,18 +5705,18 @@ void OKGame::multiplayerOptionsMenuUpdate()
 				if (left)
 				{
 					selectedDifficultyIndex--;
-					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = gt.difficultyTypes.size();//-1
+					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = gt.difficultyTypes->size();//-1
 				}
 				if (right)
 				{
 					selectedDifficultyIndex++;
-					if (selectedDifficultyIndex > gt.difficultyTypes.size())selectedDifficultyIndex = 0;
+					if (selectedDifficultyIndex > gt.difficultyTypes->size())selectedDifficultyIndex = 0;
 				}
 
 				if (selectedDifficultyIndex > 0)
 				{
 					currentRoom->multiplayer_AllowDifferentDifficulties = false;
-					sp<DifficultyType>d = gt.difficultyTypes.at(selectedDifficultyIndex - 1);
+					sp<DifficultyType>d = gt.difficultyTypes->at(selectedDifficultyIndex - 1);
 					string difficultyName = d->name;
 					currentRoom->room_DifficultyName = difficultyName;
 					if (getPlayer1Game()->currentGameSequence != nullptr)
@@ -5997,11 +5997,11 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		localMultiplayerPlayerJoinMenu->addInfo("Press the Space key or A on your controller to join");
 		localMultiplayerPlayerJoinMenu->addInfo("Press Esc or Select on your controller to return to Title Screen");
 
-		players.clear();
-//		while (players.size()>0)
+		players->clear();
+//		while (players->size()>0)
 //		{
-//			sp<PuzzlePlayer>p = players.get(players.size() - 1);
-//			players.removeAt(players.size() - 1);
+//			sp<PuzzlePlayer>p = players.get(players->size() - 1);
+//			players->erase(->begin()+players->size() - 1);
 //			delete p;
 //		}
 	}
@@ -6014,9 +6014,9 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 	//if both ready, game start
 
 	bool ready = true;
-	for (int i = 0; i<players.size(); i++)
+	for (int i = 0; i<players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 		if (p->confirmed == false)
 		{
 			ready = false;
@@ -6059,7 +6059,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-	if (players.size() > 1)
+	if (players->size() > 1)
 	{
 		if (ready)
 		{
@@ -6079,7 +6079,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-	if (players.size() <= 1 || ready == false)
+	if (players->size() <= 1 || ready == false)
 	{
 		if (localMultiplayerPressStartCaption != nullptr)
 		{
@@ -6091,28 +6091,28 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 	//int maxPlayers = 4;
 	if (getControlsManager()->key_SPACE_Pressed())
 	{
-		//if (players.size() < maxPlayers)
+		//if (players->size() < maxPlayers)
 		{
 			bool alreadyInUse = false;
-			for (int i = 0; i < players.size(); i++)
+			for (int i = 0; i < players->size(); i++)
 			{
-				sp<PuzzlePlayer> p = players.at(i);
+				sp<PuzzlePlayer> p = players->at(i);
 				if (p->useKeyboard)alreadyInUse = true;
 			}
 			if (!alreadyInUse)
 			{
 				sp<PuzzlePlayer> p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 				p->useKeyboard = true;
-				players.push_back(p);
+				players->push_back(p);
 				p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Keyboard)", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
 			}
 		}
 	}
 	if (getControlsManager()->key_LSHIFT_Pressed())
 	{
-		for (int i = 0; i < players.size(); i++)
+		for (int i = 0; i < players->size(); i++)
 		{
-			sp<PuzzlePlayer> p = players.at(i);
+			sp<PuzzlePlayer> p = players->at(i);
 			if (p->useKeyboard)
 			{
 				players.erase(players.begin()+i);
@@ -6123,18 +6123,18 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		}
 	}
 
-	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers.size(); controllerNum++)
+	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers->size(); controllerNum++)
 	{
 		sp<GameController> g = getControlsManager()->gameControllers.get(controllerNum);
 
 		if (g->a_Pressed())
 		{
-			//if (players.size() < maxPlayers)
+			//if (players->size() < maxPlayers)
 			{
 				bool alreadyInUse = false;
-				for (int i = 0; i < players.size(); i++)
+				for (int i = 0; i < players->size(); i++)
 				{
-					sp<PuzzlePlayer> p = players.at(i);
+					sp<PuzzlePlayer> p = players->at(i);
 					if (p->gameController == g)alreadyInUse = true;
 				}
 
@@ -6142,7 +6142,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 				{
 					sp<PuzzlePlayer> p = ms<PuzzlePlayer>(ms<GameLogic>(this, -1));
 					p->gameController = g;
-					players.push_back(p);
+					players->push_back(p);
 					p->nameCaption = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, "Local (Controller " + to_string(controllerNum) + ")", 12, true, OKMenu::menuColor, OKMenu::clearColor, RenderOrder::OVER_GUI);
 				}
 			}
@@ -6150,9 +6150,9 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 
 		if (g->b_Pressed())
 		{
-			for (int i = 0; i < players.size(); i++)
+			for (int i = 0; i < players->size(); i++)
 			{
-				sp<PuzzlePlayer> p = players.at(i);
+				sp<PuzzlePlayer> p = players->at(i);
 				if (p->gameController == g)
 				{
 					players.erase(players.begin()+i);
@@ -6200,9 +6200,9 @@ void OKGame::localMultiplayerPlayerJoinMenuRender()
 	sp<OKTexture> kt = keyboardIconTexture;
 	sp<OKTexture> gt = controllerIconTexture;
 
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < players->size(); i++)
 	{
-		sp<PuzzlePlayer>p = players.at(i);
+		sp<PuzzlePlayer>p = players->at(i);
 
 		sp<OKTexture>t = nullptr;
 
@@ -6217,7 +6217,7 @@ void OKGame::localMultiplayerPlayerJoinMenuRender()
 
 		if (t != nullptr)
 		{
-			int slot = players.size();
+			int slot = players->size();
 			if (slot < 2)slot = 2;
 
 			float tx0 = 0;
@@ -6292,9 +6292,9 @@ void OKGame::playerDifficultyMiniMenuUpdate(sp<PuzzlePlayer>p)
 			p->menu->setFontSize(12);
 			GameType g;
 
-			for (int i = 0; i<g.difficultyTypes.size(); i++)
+			for (int i = 0; i<g.difficultyTypes->size(); i++)
 			{
-				p->menu->add(g.difficultyTypes.at(i)->name);
+				p->menu->add(g.difficultyTypes->at(i)->name);
 			}
 		}
 
@@ -6334,9 +6334,9 @@ void OKGame::playerDifficultyMiniMenuUpdate(sp<PuzzlePlayer>p)
 				sp<GameLogic>game = p->gameLogic;
 				GameType g;
 
-				for (int i = 0; i<g.difficultyTypes.size(); i++)
+				for (int i = 0; i<g.difficultyTypes->size(); i++)
 				{
-					string difficultyName = g.difficultyTypes.at(i)->name;
+					string difficultyName = g.difficultyTypes->at(i)->name;
 
 					if (p->menu->isSelectedID(difficultyName))
 					{
@@ -6532,10 +6532,10 @@ void OKGame::playerGameSequenceMiniMenuUpdate(sp<PuzzlePlayer>p)
 				else
 				if(p->selectGameSequenceMiniMenuShowing)
 				{
-					for (int i = 0; i<loadedGameSequences.size(); i++)
+					for (int i = 0; i<loadedGameSequences->size(); i++)
 					{
 
-						sp<GameSequence>gs = loadedGameSequences.at(i);
+						sp<GameSequence>gs = loadedGameSequences->at(i);
 						if (p->menu->isSelectedID(gs->uuid))
 						{
 							game->currentGameSequence = gs;
@@ -6567,13 +6567,13 @@ void OKGame::playerGameSequenceMiniMenuUpdate(sp<PuzzlePlayer>p)
 				if(p->selectSingleGameTypeMiniMenuShowing)
 				{
 
-					for (int i = 0; i<loadedGameTypes.size(); i++)
+					for (int i = 0; i<loadedGameTypes->size(); i++)
 					{
-						sp<GameType>g = loadedGameTypes.at(i);
+						sp<GameType>g = loadedGameTypes->at(i);
 						if (p->menu->isSelectedID(g->uuid))
 						{
 							game->currentGameSequence = ms<GameSequence>();
-							game->currentGameSequence->gameTypes.push_back(g);
+							game->currentGameSequence->gameTypes->push_back(g);
 							game->currentGameSequence->name = g->name;
 						}
 					}

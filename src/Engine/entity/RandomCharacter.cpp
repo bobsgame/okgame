@@ -29,81 +29,81 @@ RandomCharacter::RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, 
 
 	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), this);
 
-	vector<string> spriteNameList;// = ms<ArrayList><string>;
+	sp<vector<string>>spriteNameList;// = ms<vector><string>;
 
 	if (kid == true)
 	{
 		if (male == true)
 		{
-			spriteNameList.push_back("RANDOMBoyBuzzedHairLongSleeve");
-			spriteNameList.push_back("RANDOMBoyBuzzedHairShortSleeve");
-			spriteNameList.push_back("RANDOMBoyBuzzedHairLongSleeveShorts");
-			spriteNameList.push_back("RANDOMBoyBuzzedHairShortSleeveShorts");
-			spriteNameList.push_back("RANDOMBoyMessyHairLongSleeve");
-			spriteNameList.push_back("RANDOMBoyMessyHairShortSleeve");
-			spriteNameList.push_back("RANDOMBoyMessyHairLongSleeveShorts");
-			spriteNameList.push_back("RANDOMBoyMessyHairShortSleeveShorts");
-			spriteNameList.push_back("RANDOMBoyNormalHairLongSleeve");
-			spriteNameList.push_back("RANDOMBoyNormalHairShortSleeve");
-			spriteNameList.push_back("RANDOMBoyNormalHairLongSleeveShorts");
-			spriteNameList.push_back("RANDOMBoyNormalHairShortSleeveShorts");
-			spriteNameList.push_back("RANDOMBoyShortHairLongSleeve");
-			spriteNameList.push_back("RANDOMBoyShortHairShortSleeve");
-			spriteNameList.push_back("RANDOMBoyShortHairLongSleeveShorts");
-			spriteNameList.push_back("RANDOMBoyShortHairShortSleeveShorts");
-			spriteNameList.push_back("RANDOMLittleBoyBuzzedHairLongSleeve");
-			spriteNameList.push_back("RANDOMLittleBoyBuzzedHairShortSleeve");
-			spriteNameList.push_back("RANDOMLittleBoyBuzzedHairLongSleeveShorts");
-			spriteNameList.push_back("RANDOMLittleBoyBuzzedHairShortSleeveShorts");
-			spriteNameList.push_back("RANDOMLittleBoyMessyHairLongSleeve");
-			spriteNameList.push_back("RANDOMLittleBoyMessyHairShortSleeve");
-			spriteNameList.push_back("RANDOMLittleBoyMessyHairLongSleeveShorts");
-			spriteNameList.push_back("RANDOMLittleBoyMessyHairShortSleeveShorts");
-			spriteNameList.push_back("RANDOMLittleBoyNormalHairLongSleeve");
-			spriteNameList.push_back("RANDOMLittleBoyNormalHairShortSleeve");
-			spriteNameList.push_back("RANDOMLittleBoyNormalHairLongSleeveShorts");
-			spriteNameList.push_back("RANDOMLittleBoyNormalHairShortSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyBuzzedHairLongSleeve");
+			spriteNameList->push_back("RANDOMBoyBuzzedHairShortSleeve");
+			spriteNameList->push_back("RANDOMBoyBuzzedHairLongSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyBuzzedHairShortSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyMessyHairLongSleeve");
+			spriteNameList->push_back("RANDOMBoyMessyHairShortSleeve");
+			spriteNameList->push_back("RANDOMBoyMessyHairLongSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyMessyHairShortSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyNormalHairLongSleeve");
+			spriteNameList->push_back("RANDOMBoyNormalHairShortSleeve");
+			spriteNameList->push_back("RANDOMBoyNormalHairLongSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyNormalHairShortSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyShortHairLongSleeve");
+			spriteNameList->push_back("RANDOMBoyShortHairShortSleeve");
+			spriteNameList->push_back("RANDOMBoyShortHairLongSleeveShorts");
+			spriteNameList->push_back("RANDOMBoyShortHairShortSleeveShorts");
+			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairLongSleeve");
+			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairShortSleeve");
+			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairLongSleeveShorts");
+			spriteNameList->push_back("RANDOMLittleBoyBuzzedHairShortSleeveShorts");
+			spriteNameList->push_back("RANDOMLittleBoyMessyHairLongSleeve");
+			spriteNameList->push_back("RANDOMLittleBoyMessyHairShortSleeve");
+			spriteNameList->push_back("RANDOMLittleBoyMessyHairLongSleeveShorts");
+			spriteNameList->push_back("RANDOMLittleBoyMessyHairShortSleeveShorts");
+			spriteNameList->push_back("RANDOMLittleBoyNormalHairLongSleeve");
+			spriteNameList->push_back("RANDOMLittleBoyNormalHairShortSleeve");
+			spriteNameList->push_back("RANDOMLittleBoyNormalHairLongSleeveShorts");
+			spriteNameList->push_back("RANDOMLittleBoyNormalHairShortSleeveShorts");
 		}
 
 
 		if (female == true)
 		{
-			spriteNameList.push_back("RANDOMGirlLongHairDress");
-			spriteNameList.push_back("RANDOMGirlLongHairSkirt");
-			spriteNameList.push_back("RANDOMGirlLongHairSkirtHalter");
-			spriteNameList.push_back("RANDOMGirlLongHairJeans");
-			spriteNameList.push_back("RANDOMGirlLongHairJeansHalter");
-			spriteNameList.push_back("RANDOMGirlLongHairShortsHalter");
-			spriteNameList.push_back("RANDOMGirlPonytailDress");
-			spriteNameList.push_back("RANDOMGirlPonytailSkirt");
-			spriteNameList.push_back("RANDOMGirlPonytailSkirtHalter");
-			spriteNameList.push_back("RANDOMGirlPonytailJeans");
-			spriteNameList.push_back("RANDOMGirlPonytailJeansHalter");
-			spriteNameList.push_back("RANDOMGirlPonytailShortsHalter");
-			spriteNameList.push_back("RANDOMGirlShortHairDress");
-			spriteNameList.push_back("RANDOMGirlShortHairSkirt");
-			spriteNameList.push_back("RANDOMGirlShortHairSkirtHalter");
-			spriteNameList.push_back("RANDOMGirlShortHairJeans");
-			spriteNameList.push_back("RANDOMGirlShortHairJeansHalter");
-			spriteNameList.push_back("RANDOMGirlShortHairShortsHalter");
-			spriteNameList.push_back("RANDOMLittleGirlLongHairDress");
-			spriteNameList.push_back("RANDOMLittleGirlLongHairSkirt");
-			spriteNameList.push_back("RANDOMLittleGirlLongHairSkirtHalter");
-			spriteNameList.push_back("RANDOMLittleGirlLongHairJeans");
-			spriteNameList.push_back("RANDOMLittleGirlLongHairJeansHalter");
-			spriteNameList.push_back("RANDOMLittleGirlLongHairShortsHalter");
-			spriteNameList.push_back("RANDOMLittleGirlPonytailDress");
-			spriteNameList.push_back("RANDOMLittleGirlPonytailSkirt");
-			spriteNameList.push_back("RANDOMLittleGirlPonytailSkirtHalter");
-			spriteNameList.push_back("RANDOMLittleGirlPonytailJeans");
-			spriteNameList.push_back("RANDOMLittleGirlPonytailJeansHalter");
-			spriteNameList.push_back("RANDOMLittleGirlPonytailShortsHalter");
-			spriteNameList.push_back("RANDOMLittleGirlShortHairDress");
-			spriteNameList.push_back("RANDOMLittleGirlShortHairSkirt");
-			spriteNameList.push_back("RANDOMLittleGirlShortHairSkirtHalter");
-			spriteNameList.push_back("RANDOMLittleGirlShortHairJeans");
-			spriteNameList.push_back("RANDOMLittleGirlShortHairJeansHalter");
-			spriteNameList.push_back("RANDOMLittleGirlShortHairShortsHalter");
+			spriteNameList->push_back("RANDOMGirlLongHairDress");
+			spriteNameList->push_back("RANDOMGirlLongHairSkirt");
+			spriteNameList->push_back("RANDOMGirlLongHairSkirtHalter");
+			spriteNameList->push_back("RANDOMGirlLongHairJeans");
+			spriteNameList->push_back("RANDOMGirlLongHairJeansHalter");
+			spriteNameList->push_back("RANDOMGirlLongHairShortsHalter");
+			spriteNameList->push_back("RANDOMGirlPonytailDress");
+			spriteNameList->push_back("RANDOMGirlPonytailSkirt");
+			spriteNameList->push_back("RANDOMGirlPonytailSkirtHalter");
+			spriteNameList->push_back("RANDOMGirlPonytailJeans");
+			spriteNameList->push_back("RANDOMGirlPonytailJeansHalter");
+			spriteNameList->push_back("RANDOMGirlPonytailShortsHalter");
+			spriteNameList->push_back("RANDOMGirlShortHairDress");
+			spriteNameList->push_back("RANDOMGirlShortHairSkirt");
+			spriteNameList->push_back("RANDOMGirlShortHairSkirtHalter");
+			spriteNameList->push_back("RANDOMGirlShortHairJeans");
+			spriteNameList->push_back("RANDOMGirlShortHairJeansHalter");
+			spriteNameList->push_back("RANDOMGirlShortHairShortsHalter");
+			spriteNameList->push_back("RANDOMLittleGirlLongHairDress");
+			spriteNameList->push_back("RANDOMLittleGirlLongHairSkirt");
+			spriteNameList->push_back("RANDOMLittleGirlLongHairSkirtHalter");
+			spriteNameList->push_back("RANDOMLittleGirlLongHairJeans");
+			spriteNameList->push_back("RANDOMLittleGirlLongHairJeansHalter");
+			spriteNameList->push_back("RANDOMLittleGirlLongHairShortsHalter");
+			spriteNameList->push_back("RANDOMLittleGirlPonytailDress");
+			spriteNameList->push_back("RANDOMLittleGirlPonytailSkirt");
+			spriteNameList->push_back("RANDOMLittleGirlPonytailSkirtHalter");
+			spriteNameList->push_back("RANDOMLittleGirlPonytailJeans");
+			spriteNameList->push_back("RANDOMLittleGirlPonytailJeansHalter");
+			spriteNameList->push_back("RANDOMLittleGirlPonytailShortsHalter");
+			spriteNameList->push_back("RANDOMLittleGirlShortHairDress");
+			spriteNameList->push_back("RANDOMLittleGirlShortHairSkirt");
+			spriteNameList->push_back("RANDOMLittleGirlShortHairSkirtHalter");
+			spriteNameList->push_back("RANDOMLittleGirlShortHairJeans");
+			spriteNameList->push_back("RANDOMLittleGirlShortHairJeansHalter");
+			spriteNameList->push_back("RANDOMLittleGirlShortHairShortsHalter");
 		}
 	}
 
@@ -111,82 +111,82 @@ RandomCharacter::RandomCharacter(sp<Engine> g, sp<Map> map, int spawnXPixels1X, 
 	{
 		if (male == true)
 		{
-			spriteNameList.push_back("RANDOMManBaldUndershirt");
-			spriteNameList.push_back("RANDOMManBaldShortSleeve");
-			spriteNameList.push_back("RANDOMManBaldSuit");
-			spriteNameList.push_back("RANDOMManBaldSweats");
-			spriteNameList.push_back("RANDOMManBaldLongSleeve");
-			spriteNameList.push_back("RANDOMManBaldingUndershirt");
-			spriteNameList.push_back("RANDOMManBaldingShortSleeve");
-			spriteNameList.push_back("RANDOMManBaldingSuit");
-			spriteNameList.push_back("RANDOMManBaldingSweats");
-			spriteNameList.push_back("RANDOMManBaldingLongSleeve");
-			spriteNameList.push_back("RANDOMManBeardUndershirt");
-			spriteNameList.push_back("RANDOMManBeardShortSleeve");
-			spriteNameList.push_back("RANDOMManBeardSuit");
-			spriteNameList.push_back("RANDOMManBeardSweats");
-			spriteNameList.push_back("RANDOMManBeardLongSleeve");
-			spriteNameList.push_back("RANDOMManNormalHairUndershirt");
-			spriteNameList.push_back("RANDOMManNormalHairShortSleeve");
-			spriteNameList.push_back("RANDOMManNormalHairSuit");
-			spriteNameList.push_back("RANDOMManNormalHairSweats");
-			spriteNameList.push_back("RANDOMManNormalHairLongSleeve");
-			spriteNameList.push_back("RANDOMManShortHairUndershirt");
-			spriteNameList.push_back("RANDOMManShortHairShortSleeve");
-			spriteNameList.push_back("RANDOMManShortHairSuit");
-			spriteNameList.push_back("RANDOMManShortHairSweats");
-			spriteNameList.push_back("RANDOMManShortHairLongSleeve");
+			spriteNameList->push_back("RANDOMManBaldUndershirt");
+			spriteNameList->push_back("RANDOMManBaldShortSleeve");
+			spriteNameList->push_back("RANDOMManBaldSuit");
+			spriteNameList->push_back("RANDOMManBaldSweats");
+			spriteNameList->push_back("RANDOMManBaldLongSleeve");
+			spriteNameList->push_back("RANDOMManBaldingUndershirt");
+			spriteNameList->push_back("RANDOMManBaldingShortSleeve");
+			spriteNameList->push_back("RANDOMManBaldingSuit");
+			spriteNameList->push_back("RANDOMManBaldingSweats");
+			spriteNameList->push_back("RANDOMManBaldingLongSleeve");
+			spriteNameList->push_back("RANDOMManBeardUndershirt");
+			spriteNameList->push_back("RANDOMManBeardShortSleeve");
+			spriteNameList->push_back("RANDOMManBeardSuit");
+			spriteNameList->push_back("RANDOMManBeardSweats");
+			spriteNameList->push_back("RANDOMManBeardLongSleeve");
+			spriteNameList->push_back("RANDOMManNormalHairUndershirt");
+			spriteNameList->push_back("RANDOMManNormalHairShortSleeve");
+			spriteNameList->push_back("RANDOMManNormalHairSuit");
+			spriteNameList->push_back("RANDOMManNormalHairSweats");
+			spriteNameList->push_back("RANDOMManNormalHairLongSleeve");
+			spriteNameList->push_back("RANDOMManShortHairUndershirt");
+			spriteNameList->push_back("RANDOMManShortHairShortSleeve");
+			spriteNameList->push_back("RANDOMManShortHairSuit");
+			spriteNameList->push_back("RANDOMManShortHairSweats");
+			spriteNameList->push_back("RANDOMManShortHairLongSleeve");
 		}
 
 
 		if (female == true)
 		{
-			spriteNameList.push_back("RANDOMWomanBunDress");
-			spriteNameList.push_back("RANDOMWomanBunSkirt");
-			spriteNameList.push_back("RANDOMWomanBunSkirtHalter");
-			spriteNameList.push_back("RANDOMWomanBunJeans");
-			spriteNameList.push_back("RANDOMWomanBunJeansHalter");
-			spriteNameList.push_back("RANDOMWomanBunShortsHalter");
-			spriteNameList.push_back("RANDOMWomanLongHairDress");
-			spriteNameList.push_back("RANDOMWomanLongHairSkirt");
-			spriteNameList.push_back("RANDOMWomanLongHairSkirtHalter");
-			spriteNameList.push_back("RANDOMWomanLongHairJeans");
-			spriteNameList.push_back("RANDOMWomanLongHairJeansHalter");
-			spriteNameList.push_back("RANDOMWomanLongHairShortsHalter");
-			spriteNameList.push_back("RANDOMWomanPonytailDress");
-			spriteNameList.push_back("RANDOMWomanPonytailSkirt");
-			spriteNameList.push_back("RANDOMWomanPonytailSkirtHalter");
-			spriteNameList.push_back("RANDOMWomanPonytailJeans");
-			spriteNameList.push_back("RANDOMWomanPonytailJeansHalter");
-			spriteNameList.push_back("RANDOMWomanPonytailShortsHalter");
-			spriteNameList.push_back("RANDOMWomanPoofyHairDress");
-			spriteNameList.push_back("RANDOMWomanPoofyHairSkirt");
-			spriteNameList.push_back("RANDOMWomanPoofyHairSkirtHalter");
-			spriteNameList.push_back("RANDOMWomanPoofyHairJeans");
-			spriteNameList.push_back("RANDOMWomanPoofyHairJeansHalter");
-			spriteNameList.push_back("RANDOMWomanPoofyHairShortsHalter");
-			spriteNameList.push_back("RANDOMWomanShortHairDress");
-			spriteNameList.push_back("RANDOMWomanShortHairSkirt");
-			spriteNameList.push_back("RANDOMWomanShortHairSkirtHalter");
-			spriteNameList.push_back("RANDOMWomanShortHairJeans");
-			spriteNameList.push_back("RANDOMWomanShortHairJeansHalter");
-			spriteNameList.push_back("RANDOMWomanShortHairShortsHalter");
+			spriteNameList->push_back("RANDOMWomanBunDress");
+			spriteNameList->push_back("RANDOMWomanBunSkirt");
+			spriteNameList->push_back("RANDOMWomanBunSkirtHalter");
+			spriteNameList->push_back("RANDOMWomanBunJeans");
+			spriteNameList->push_back("RANDOMWomanBunJeansHalter");
+			spriteNameList->push_back("RANDOMWomanBunShortsHalter");
+			spriteNameList->push_back("RANDOMWomanLongHairDress");
+			spriteNameList->push_back("RANDOMWomanLongHairSkirt");
+			spriteNameList->push_back("RANDOMWomanLongHairSkirtHalter");
+			spriteNameList->push_back("RANDOMWomanLongHairJeans");
+			spriteNameList->push_back("RANDOMWomanLongHairJeansHalter");
+			spriteNameList->push_back("RANDOMWomanLongHairShortsHalter");
+			spriteNameList->push_back("RANDOMWomanPonytailDress");
+			spriteNameList->push_back("RANDOMWomanPonytailSkirt");
+			spriteNameList->push_back("RANDOMWomanPonytailSkirtHalter");
+			spriteNameList->push_back("RANDOMWomanPonytailJeans");
+			spriteNameList->push_back("RANDOMWomanPonytailJeansHalter");
+			spriteNameList->push_back("RANDOMWomanPonytailShortsHalter");
+			spriteNameList->push_back("RANDOMWomanPoofyHairDress");
+			spriteNameList->push_back("RANDOMWomanPoofyHairSkirt");
+			spriteNameList->push_back("RANDOMWomanPoofyHairSkirtHalter");
+			spriteNameList->push_back("RANDOMWomanPoofyHairJeans");
+			spriteNameList->push_back("RANDOMWomanPoofyHairJeansHalter");
+			spriteNameList->push_back("RANDOMWomanPoofyHairShortsHalter");
+			spriteNameList->push_back("RANDOMWomanShortHairDress");
+			spriteNameList->push_back("RANDOMWomanShortHairSkirt");
+			spriteNameList->push_back("RANDOMWomanShortHairSkirtHalter");
+			spriteNameList->push_back("RANDOMWomanShortHairJeans");
+			spriteNameList->push_back("RANDOMWomanShortHairJeansHalter");
+			spriteNameList->push_back("RANDOMWomanShortHairShortsHalter");
 		}
 	}
 
 	if (car == true)
 	{
-		spriteNameList.push_back("RANDOMcar");
-		spriteNameList.push_back("RANDOMmotorcycle");
-		spriteNameList.push_back("RANDOMvan");
-		spriteNameList.push_back("RANDOMtruck");
-		spriteNameList.push_back("RANDOMsuv");
-		spriteNameList.push_back("RANDOMferrari");
-		spriteNameList.push_back("RANDOMminivan");
+		spriteNameList->push_back("RANDOMcar");
+		spriteNameList->push_back("RANDOMmotorcycle");
+		spriteNameList->push_back("RANDOMvan");
+		spriteNameList->push_back("RANDOMtruck");
+		spriteNameList->push_back("RANDOMsuv");
+		spriteNameList->push_back("RANDOMferrari");
+		spriteNameList->push_back("RANDOMminivan");
 	}
 
 
-	getData()->setSpriteName(spriteNameList.at(Math::randLessThan((int)spriteNameList.size())));
+	getData()->setSpriteName(spriteNameList->at(Math::randLessThan((int)spriteNameList->size())));
 
 	this->sprite = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist(getSpriteName());
 

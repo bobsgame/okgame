@@ -188,7 +188,7 @@ public:
 	static void doResizeCheck();
 	static void doScreenShotCheck();
 
-	//static ArrayList<SDL_Event> events;// = ms<ArrayList><SDL_Event>();
+	//static sp<vector<SDL_Event>>events;// = ms<vector><SDL_Event>();
 
 	void printEvent(const sp<SDL_Event> e);
 	void processEvents();

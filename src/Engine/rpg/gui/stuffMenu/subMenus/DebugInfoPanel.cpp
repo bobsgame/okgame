@@ -14,7 +14,7 @@
 Logger DebugInfoPanel::log = Logger("DebugInfoPanel");
 
 
-//ArrayList<de::matthiasmann::twl::Label> DebugInfoPanel::label = nullptr;
+//sp<vector<de::matthiasmann::twl::Label>>DebugInfoPanel::label = nullptr;
 //de::matthiasmann::twl::DialogLayout::Group* DebugInfoPanel::horizontalGroup = nullptr;
 //de::matthiasmann::twl::DialogLayout::Group* DebugInfoPanel::verticalGroup = nullptr;
 
@@ -47,7 +47,7 @@ void DebugInfoPanel::update()
 		//
 		//      if (label->empty() || size != label->size())
 		//      {
-		//         label = ArrayList<sp<Label>>(size);
+		//         label = sp<vector<sp<Label>>>(size);
 		//
 		//         for (int i = 0; i < size; i++)
 		//         {

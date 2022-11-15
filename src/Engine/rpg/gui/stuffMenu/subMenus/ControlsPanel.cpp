@@ -79,11 +79,11 @@ ControlsPanel::ControlsPanel()
 	//
 	//   int buttons = 10;
 	//
-	//   ArrayList<sp<Label>> buttonLabel(buttons);
-	//   buttonValueLabel = ArrayList<sp<Label>>(buttons);
-	//   ArrayList<sp<Button>> buttonButton(buttons);
+	//   sp<vector<sp<Label>>>buttonLabel(buttons);
+	//   buttonValueLabel = sp<vector<sp<Label>>>(buttons);
+	//   sp<vector<sp<Button>>>buttonButton(buttons);
 	//
-	//   ArrayList<sp<DialogLayout>> buttonLayout(buttons);
+	//   sp<vector<sp<DialogLayout>>>buttonLayout(buttons);
 	//
 	//
 	//   for (int i = 0; i < buttons; i++)

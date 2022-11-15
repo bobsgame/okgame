@@ -49,7 +49,7 @@ public:
 	HashMap<string, sp<Sprite>> spriteByNameHashMap;//ms<HashMap><string, sp<Sprite>>();
 
 
-	vector<sp<ScreenSprite>> screenSpriteList;
+	sp<vector<sp<ScreenSprite>>>screenSpriteList;
 
 
 	static sp<OKTexture> actionTexture;// = nullptr;

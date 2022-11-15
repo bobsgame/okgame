@@ -109,10 +109,10 @@ void AudioManager::initAudioLibrary()
 			File spriteFolderPathDir(spriteFolderString);
 			log.debug("createDirectories");
 			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-			vector<string> files;
+			sp<vector<string>>files;
 			log.debug("list");
 			spriteFolderPathDir.list(files);
-			vector<string>::iterator it = files.begin();
+			sp<vector<string>>::iterator it = files.begin();
 			for (; it != files.end(); ++it)
 			{
 				//cout << *it << endl;
@@ -135,9 +135,9 @@ void AudioManager::initAudioLibrary()
 			Path spriteFolderPath(spriteFolderString);
 			File spriteFolderPathDir(spriteFolderPath);
 			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-			vector<string> files;
+			sp<vector<string>>files;
 			spriteFolderPathDir.list(files);
-			vector<string>::iterator it = files.begin();
+			sp<vector<string>>::iterator it = files.begin();
 			for (; it != files.end(); ++it)
 			{
 				//cout << *it << endl;
@@ -162,8 +162,8 @@ void AudioManager::initAudioLibrary()
 
 	//	//load sounds/index.txt
 	//	//for each line, load ogg file
-	//	ArrayList<string>* stringList = FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim("data/sounds/index.txt");
-	//	if (stringList->size() > 0)
+	//	sp<vector<string>>* stringList = FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("data/sounds/index.txt");
+	//	if (stringList->>size() > 0)
 	//	{
 	//		for (int i = 0; i < stringList->size(); i++)
 	//		{
@@ -212,7 +212,7 @@ void AudioManager::cleanup()
 //
 //	sp<Sound> s = nullptr;
 //
-//	for(int i=0;i<soundList.size();i++)if(soundList.at(i)->getName() == fileName)s = soundList.at(i);
+//	for(int i=0;i<soundList->size();i++)if(soundList->at(i)->getName() == fileName)s = soundList->at(i);
 //
 //	if (s == nullptr)
 //	{
@@ -235,9 +235,9 @@ void AudioManager::cleanup()
 void AudioManager::globalUpdate()
 {
 	
-	for (int i = 0; i < globalAudioFileList.size(); i++)
+	for (int i = 0; i < globalAudioFileList->size(); i++)
 	{
-		globalAudioFileList.at(i)->update();
+		globalAudioFileList->at(i)->update();
 	}
 }
 
@@ -247,9 +247,9 @@ void AudioManager::update()
 
 
 
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		playingAudioList.at(i)->update();
+		playingAudioList->at(i)->update();
 	}
 }
 
@@ -273,26 +273,26 @@ sp<Sound> AudioManager::getSoundByName(const string& musicName)
 		clippedName.substr(0, clippedName.find("."));
 	}
 
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		string name = playingAudioList.at(i)->getName();
+		string name = playingAudioList->at(i)->getName();
 
 		if (OKString::startsWith(name, clippedName))
 		{
 			
-			return playingAudioList.at(i);
+			return playingAudioList->at(i);
 		}
 	}
 
 
-	for (int i = 0; i < globalAudioFileList.size(); i++)
+	for (int i = 0; i < globalAudioFileList->size(); i++)
 	{
-		string name = globalAudioFileList.at(i)->getName();
+		string name = globalAudioFileList->at(i)->getName();
 
 		if (OKString::startsWith(name, clippedName))
 		{
-			sp<Sound> s = ms<Sound>(getEngine(), globalAudioFileList.at(i));
-			playingAudioList.push_back(s);
+			sp<Sound> s = ms<Sound>(getEngine(), globalAudioFileList->at(i));
+			playingAudioList->push_back(s);
 			return s;
 		}
 	}
@@ -311,7 +311,16 @@ void AudioManager::playMusic(sp<Sound> s, float vol, float pitch, bool loop)
 { //=========================================================================================================================
 	if (s != nullptr)
 	{
-		if (playingAudioList.contains(s) == false)playingAudioList.push_back(s);
+		
+		//if (playingAudioList.contains(s) == false)playingAudioList->push_back(s);
+		bool contains = false;
+		for (int i = 0; i < playingAudioList->size(); i++)
+		{
+			if (playingAudioList->at(i).get() == s.get())contains = true;
+		}
+		if (contains == false)playingAudioList->push_back(s);
+
+
 		s->play(pitch, vol, loop);
 	}
 }
@@ -322,7 +331,16 @@ sp<Sound> AudioManager::playMusic(const string& musicName, float volume, float p
 	if (m != nullptr)
 	{
 		m->play(pitch, volume, loop);
-		if (playingAudioList.contains(m) == false)playingAudioList.push_back(m);
+
+
+		//if (playingAudioList.contains(m) == false)playingAudioList->push_back(m);
+		bool contains = false;
+		for (int i = 0; i < playingAudioList->size(); i++)
+		{
+			if (playingAudioList->at(i).get() == m.get())contains = true;
+		}
+		if (contains == false)playingAudioList->push_back(m);
+
 		return m;
 	}
 	return nullptr;
@@ -363,7 +381,15 @@ void AudioManager::playSound(sp<Sound> s, float vol, float pitch, int times)
 { //=========================================================================================================================
 	if (s != nullptr)
 	{
-		if (playingAudioList.contains(s) == false)playingAudioList.push_back(s);
+		//if (playingAudioList.contains(s) == false)playingAudioList->push_back(s);
+		bool contains = false;
+		for (int i = 0; i < playingAudioList->size(); i++)
+		{
+			if (playingAudioList->at(i).get() == s.get())contains = true;
+		}
+		if (contains == false)playingAudioList->push_back(s);
+
+
 		s->play(pitch, vol, times);
 	}
 }
@@ -375,7 +401,16 @@ void AudioManager::playMusic(sp<Sound> m)
 void AudioManager::playSoundLoop(sp<Sound> m)
 { //=========================================================================================================================
 	m->playLoop();
-	if (playingAudioList.contains(m) == false)playingAudioList.push_back(m);
+
+
+	//if (playingAudioList.contains(m) == false)playingAudioList->push_back(m);
+	bool contains = false;
+	for (int i = 0; i < playingAudioList->size(); i++)
+	{
+		if (playingAudioList->at(i).get() == m.get())contains = true;
+	}
+	if (contains == false)playingAudioList->push_back(m);
+
 }
 
 sp<Sound> AudioManager::playMusic(const string& musicName)
@@ -399,7 +434,15 @@ sp<Sound> AudioManager::playSoundLoop(const string& musicName)
 bool AudioManager::isSoundPlaying(sp<Sound> m)
 { //=========================================================================================================================
 
-	if (playingAudioList.contains(m) == false)return false;
+	
+	//if (playingAudioList.contains(m) == false)return false;
+	bool contains = false;
+	for (int i = 0; i < playingAudioList->size(); i++)
+	{
+		if (playingAudioList->at(i).get() == m.get())contains = true;
+	}
+	if (contains == false)return false;
+
 	return m->isPlaying();
 }
 
@@ -408,7 +451,15 @@ bool AudioManager::isSoundPlaying(const string& musicName)
 	sp<Sound> m = getSoundByName(musicName);
 	if (m != nullptr)
 	{
-		if (playingAudioList.contains(m) == false)return false;
+
+		//if (playingAudioList.contains(m) == false)return false;
+		bool contains = false;
+		for (int i = 0; i < playingAudioList->size(); i++)
+		{
+			if (playingAudioList->at(i).get() == m.get())contains = true;
+		}
+		if (contains == false)return false;
+
 		return m->isPlaying();
 	}
 	return false;
@@ -468,9 +519,9 @@ bool AudioManager::isAnyMusicPlaying()
 
 bool AudioManager::isAnyLoopingSoundPlaying()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->getLoop() && m->isPlaying())
 		{
 			return true;
@@ -482,9 +533,9 @@ bool AudioManager::isAnyLoopingSoundPlaying()
 void AudioManager::pauseAnyPlayingLoopingSounds()
 {//=========================================================================================================================
 
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->getLoop() && m->isPlaying())
 		{
 			m->pause();
@@ -494,9 +545,9 @@ void AudioManager::pauseAnyPlayingLoopingSounds()
 //=========================================================================================================================
 void AudioManager::playAnyPausedLoopingSounds()
 {//=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->getLoop() && m->isPlaying())
 		{
 			m->unpause();
@@ -507,9 +558,9 @@ void AudioManager::playAnyPausedLoopingSounds()
 //=========================================================================================================================
 void AudioManager::setAllPlayingSoundsVolume(float v)
 {//=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->isPlaying())
 		{
 			m->setVolume(v);
@@ -519,9 +570,9 @@ void AudioManager::setAllPlayingSoundsVolume(float v)
 //=========================================================================================================================
 void AudioManager::setAllPlayingLoopingSoundsVolume(float v)
 {//=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->isPlaying() && m->getLoop())
 		{
 			m->setVolume(v);
@@ -536,9 +587,9 @@ void AudioManager::stopAllMusic()
 }
 void AudioManager::stopAllLoopingSounds()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound>m = playingAudioList.at(i);
+		sp<Sound>m = playingAudioList->at(i);
 		if(m->getLoop())m->stop();
 	}
 	
@@ -551,9 +602,9 @@ void AudioManager::fadeOutAllMusic(int ticks)
 
 void AudioManager::fadeOutAllLoopingSounds(int ticks)
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 
 		if (m->getLoop())m->fadeOutAndStop(ticks);
 		
@@ -562,9 +613,9 @@ void AudioManager::fadeOutAllLoopingSounds(int ticks)
 }
 void AudioManager::fadeOutAllSounds(int ticks)
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 
 		m->fadeOutAndStop(ticks);
 		
@@ -574,9 +625,9 @@ void AudioManager::fadeOutAllSounds(int ticks)
 
 void AudioManager::setAllLoopingSoundsThatAreNotFadingOutToNotLoop()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->getLoop() && m->isPlaying() == true)
 		{
 			if (m->isFadingOut() == false)
@@ -589,9 +640,9 @@ void AudioManager::setAllLoopingSoundsThatAreNotFadingOutToNotLoop()
 
 void AudioManager::setAllLoopingSoundsToNotLoop()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->getLoop() && m->isPlaying() == true)
 		{
 			
@@ -603,35 +654,35 @@ void AudioManager::setAllLoopingSoundsToNotLoop()
 
 void AudioManager::pauseAllLoopingSounds()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->getLoop())m->pause();
 	}
 }
 
 void AudioManager::unpauseAllLoopingSounds()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		if (m->getLoop())m->unpause();
 	}
 }
 void AudioManager::pauseAllSounds()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		m->pause();
 	}
 }
 
 void AudioManager::unpauseAllSounds()
 { //=========================================================================================================================
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		sp<Sound> m = playingAudioList.at(i);
+		sp<Sound> m = playingAudioList->at(i);
 		m->unpause();
 	}
 }
@@ -642,9 +693,9 @@ sp<AudioFile> AudioManager::getAudioFileByName(string name)
 {//=========================================================================================================================
 
 
-	for (int i = 0; i < globalAudioFileList.size(); i++)
+	for (int i = 0; i < globalAudioFileList->size(); i++)
 	{
-		sp<AudioFile> s = globalAudioFileList.at(i);
+		sp<AudioFile> s = globalAudioFileList->at(i);
 		if (s->getName() == name)return s;
 	}
 	return nullptr;
@@ -656,9 +707,9 @@ sp<AudioFile> AudioManager::getAudioFileByIDCreateIfNotExist(int id)
 {//=========================================================================================================================
 
 
-	for (int i = 0; i < globalAudioFileList.size(); i++)
+	for (int i = 0; i < globalAudioFileList->size(); i++)
 	{
-		sp<AudioFile> s = globalAudioFileList.at(i);
+		sp<AudioFile> s = globalAudioFileList->at(i);
 		if (s->getID() == id)return s;
 	}
 	return ms<AudioFile>(ms<AudioData>(id,"",""));
@@ -669,18 +720,18 @@ sp<Sound> AudioManager::getSoundByIDCreateIfNotExist(int id)
 {//=========================================================================================================================
 
 
-	for (int i = 0; i < playingAudioList.size(); i++)
+	for (int i = 0; i < playingAudioList->size(); i++)
 	{
-		if (playingAudioList.at(i)->getID()==id)
+		if (playingAudioList->at(i)->getID()==id)
 		{
 
-			return playingAudioList.at(i);
+			return playingAudioList->at(i);
 		}
 	}
 
-	for (int i = 0; i < globalAudioFileList.size(); i++)
+	for (int i = 0; i < globalAudioFileList->size(); i++)
 	{
-		sp<AudioFile> s = globalAudioFileList.at(i);
+		sp<AudioFile> s = globalAudioFileList->at(i);
 		if (s->getID() == id)return ms<Sound>(e, s);
 	}
 	return ms<Sound>(e, ms<AudioFile>(ms<AudioData>(id,"","")));

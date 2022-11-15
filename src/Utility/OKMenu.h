@@ -74,7 +74,7 @@ public:
 	float rectangleCursorCurrentY = 0;
 
 	
-	static vector<sp<OKMenu>> activeMenus;
+	static sp<vector<sp<OKMenu>>>activeMenus;
 
 	sp<OKTexture>graphic = nullptr;
 	int filter = GLUtils::FILTER_NEAREST;
@@ -109,7 +109,7 @@ public:
 		void setText(string s);
 	};
 
-	vector<sp<MenuItem>> menuItems;
+	sp<vector<sp<MenuItem>>>menuItems;
 
 	sp<MenuItem> topMenuItemDrawn = nullptr;
 
@@ -135,7 +135,7 @@ public:
 	sp<MenuItem> addYesNo(string caption, bool yesNo);
 
 	int getAmountOfMenuItems();
-	vector<string> getArrayListOfMenuItemIDs();
+	sp<vector<string>> getArrayListOfMenuItemIDs();
 
 	//returns bottom of graphic y position
 	void render(

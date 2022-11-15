@@ -68,7 +68,7 @@ void WarpArea::enter()
 
 	if (map != nullptr)
 	{
-		for (int i = 0; i < (int)map->warpAreaList.size(); i++)
+		for (int i = 0; i < (int)map->warpAreaList->size(); i++)
 		{
 			sp<WarpArea> w = map->warpAreaList.get(i);
 

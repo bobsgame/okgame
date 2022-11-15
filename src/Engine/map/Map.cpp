@@ -56,9 +56,9 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	chunksWidth = (mapData->getWidthTiles1X() / chunkSizeTiles1X) + 1;
 	chunksHeight = (mapData->getHeightTiles1X() / chunkSizeTiles1X) + 1;
 
-//	if (chunkTexture.isEmpty())
+//	if (chunkTexture->empty())
 //	{
-//	    //chunkTexture = ms<ArrayList><sp<Texture>>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
+//	    //chunkTexture = ms<vector><sp<Texture>>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
 //	    for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 //	    {
 //	        delete chunkTexture.get(i);
@@ -69,7 +69,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	//these are thread safe variables but it's OK here because it's only on init
 	if (_chunkPNGFileExists == nullptr)
 	{
-		_chunkPNGFileExists = ms<vector<bool>>(new vector<bool>(chunksWidth * chunksHeight * 2));
+		_chunkPNGFileExists = ms<vector<bool>>(new sp<vector<bool>>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_chunkPNGFileExists)[i] = false;
@@ -78,7 +78,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (_hq2xChunkPNGFileExists == nullptr)
 	{
-		_hq2xChunkPNGFileExists = ms<vector<bool>>(new vector<bool>(chunksWidth * chunksHeight * 2));
+		_hq2xChunkPNGFileExists = ms<vector<bool>>(new sp<vector<bool>>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_hq2xChunkPNGFileExists)[i] = false;
@@ -87,7 +87,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (usingHQ2XTexture == nullptr)
 	{
-		usingHQ2XTexture = ms<vector<bool>>(new vector<bool>(chunksWidth * chunksHeight * 2));
+		usingHQ2XTexture = ms<vector<bool>>(new sp<vector<bool>>(chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*usingHQ2XTexture)[i] = false;
@@ -106,11 +106,11 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 		sp<Event> event = nullptr;
 
-		for (int k = 0; k < (int)getEventManager()->eventList.size(); k++)
+		for (int k = 0; k < (int)getEventManager()->eventList->size(); k++)
 		{
-			if (getEventManager()->eventList.at(k)->getID() == eventData->getID())
+			if (getEventManager()->eventList->at(k)->getID() == eventData->getID())
 			{
-				event = getEventManager()->eventList.at(k);
+				event = getEventManager()->eventList->at(k);
 			}
 		}
 
@@ -120,7 +120,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 		}
 
 
-		mapEventList.push_back(event);
+		mapEventList->push_back(event);
 
 	}
 
@@ -136,7 +136,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 		//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 		//also check and make sure it is sending event update
 
-		doorList.push_back(door);
+		doorList->push_back(door);
 	}
 
 
@@ -148,7 +148,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 		//create state, add to state list.
 		sp<MapState> mapState = ms<MapState>(mapStateData, this);
 
-		stateList.push_back(mapState);
+		stateList->push_back(mapState);
 
 
 		for (int n = 0; n < (int)mapStateData->getAreaDataList()->size(); n++)
@@ -163,7 +163,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 				//TODO: in door update, send command to load door connecting map, it will return as a network thread, create the map object, block that thread until it is loaded.
 				//also check and make sure it is sending event update
 
-				warpAreaList.push_back(warpArea);
+				warpAreaList->push_back(warpArea);
 				//note that warp areas DON'T get added to the currentMap.areaHashmap.
 				//i go through each map and search for the appropriate warparea in that list
 			}
@@ -172,7 +172,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 				sp<Area> area = ms<Area>(getEngine(), areaData, this);
 				mapState->areaByNameHashtable.put(area->getName(), area);
 				mapState->areaByTYPEIDHashtable.put(area->getTYPEIDString(), area);
-				mapState->areaList.push_back(area);
+				mapState->areaList->push_back(area);
 			}
 		}
 
@@ -183,7 +183,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 			sp<Light> light = ms<Light>(getEngine(), lightData, this);
 
 
-			mapState->lightList.push_back(light);
+			mapState->lightList->push_back(light);
 			mapState->lightByNameHashtable.put(light->getName(), light);
 		}
 
@@ -196,14 +196,14 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 			{
 				sp<Character> character = ms<Character>(getEngine(), entityData, this);
 
-				mapState->characterList.push_back(character);
+				mapState->characterList->push_back(character);
 				mapState->characterByNameHashtable.put(character->getName(), character);
 			}
 			else
 			{
 				sp<Entity> entity = ms<Entity>(getEngine(), entityData, this);
 
-				mapState->entityList.push_back(entity);
+				mapState->entityList->push_back(entity);
 				mapState->entityByNameHashtable.put(entity->getName(), entity);
 			}
 		}
@@ -229,22 +229,22 @@ sp<Entity> Map::getEntityByName(const string& name)
 
 	if (e == nullptr)
 	{
-		for (int i = 0; i < activeEntityList.size(); i++)
+		for (int i = 0; i < activeEntityList->size(); i++)
 		{
-			if (activeEntityList.at(i)->getName() == name)
+			if (activeEntityList->at(i)->getName() == name)
 			{
-				e = activeEntityList.at(i);
+				e = activeEntityList->at(i);
 			}
 		}
 	}
 
 	if (e == nullptr)
 	{
-		for (int i = 0; i < (int)getSpriteManager()->screenSpriteList.size(); i++)
+		for (int i = 0; i < (int)getSpriteManager()->screenSpriteList->size(); i++)
 		{
-			if (getSpriteManager()->screenSpriteList.at(i)->getName().compare(name) == 0)
+			if (getSpriteManager()->screenSpriteList->at(i)->getName().compare(name) == 0)
 			{
-				e = getSpriteManager()->screenSpriteList.at(i);
+				e = getSpriteManager()->screenSpriteList->at(i);
 			}
 		}
 	}
@@ -297,9 +297,9 @@ sp<Area> Map::getAreaOrWarpAreaByName(string name)
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < stateList.size(); i++)
+		for (int i = 0; i < stateList->size(); i++)
 		{
-			sp<MapState> s = stateList.at(i);
+			sp<MapState> s = stateList->at(i);
 			if (s->areaByNameHashtable.containsKey(name))
 			a = s->areaByNameHashtable.get(name);
 			if (a != nullptr)
@@ -311,11 +311,11 @@ sp<Area> Map::getAreaOrWarpAreaByName(string name)
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < warpAreaList.size(); i++)
+		for (int i = 0; i < warpAreaList->size(); i++)
 		{
-			if (warpAreaList.at(i)->getName() == name)
+			if (warpAreaList->at(i)->getName() == name)
 			{
-				a = warpAreaList.at(i);
+				a = warpAreaList->at(i);
 			}
 		}
 	}
@@ -350,20 +350,20 @@ sp<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < warpAreaList.size(); i++)
+		for (int i = 0; i < warpAreaList->size(); i++)
 		{
-			if (warpAreaList.at(i)->getTYPEIDString() == typeID)
+			if (warpAreaList->at(i)->getTYPEIDString() == typeID)
 			{
-				a = warpAreaList.at(i);
+				a = warpAreaList->at(i);
 			}
 		}
 	}
 
 	if (a == nullptr)
 	{
-		for (int i = 0; i < stateList.size(); i++)
+		for (int i = 0; i < stateList->size(); i++)
 		{
-			sp<MapState> s = stateList.at(i);
+			sp<MapState> s = stateList->at(i);
 
 			if (s->areaByTYPEIDHashtable.containsKey(typeID))
 			a = s->areaByTYPEIDHashtable.get(typeID);
@@ -397,13 +397,13 @@ sp<Door> Map::getDoorByTYPEID(const string& typeID_in)
 	}
 
 	//doors
-	//for(int n=0;n<MapAssetIndex.mapList.size();n++)
+	//for(int n=0;n<MapAssetIndex.mapList->size();n++)
 	{
-		//MapAsset m = MapAssetIndex.mapList.at(n);
+		//MapAsset m = MapAssetIndex.mapList->at(n);
 
-		for (int i = 0; i < doorList.size(); i++)
+		for (int i = 0; i < doorList->size(); i++)
 		{
-			sp<Door> d = doorList.at(i);
+			sp<Door> d = doorList->at(i);
 
 			if (typeID == d->getTYPEIDString())
 			{
@@ -430,13 +430,13 @@ sp<Door> Map::getDoorByName(const string& name_in)
 	}
 
 	//doors
-	//for(int n=0;n<MapAssetIndex.mapList.size();n++)
+	//for(int n=0;n<MapAssetIndex.mapList->size();n++)
 	{
-		//MapAsset m = MapAssetIndex.mapList.at(n);
+		//MapAsset m = MapAssetIndex.mapList->at(n);
 
-		for (int i = 0; i < doorList.size(); i++)
+		for (int i = 0; i < doorList->size(); i++)
 		{
-			sp<Door> d = doorList.at(i);
+			sp<Door> d = doorList->at(i);
 
 			if (name == d->getName())
 			{
@@ -452,9 +452,9 @@ sp<Door> Map::getDoorByName(const string& name_in)
 
 sp<MapState> Map::getMapStateByName(const string& name)
 { //=========================================================================================================================
-	for (int i = 0; i < stateList.size(); i++)
+	for (int i = 0; i < stateList->size(); i++)
 	{
-		sp<MapState> mapState = stateList.at(i);
+		sp<MapState> mapState = stateList->at(i);
 
 		if (name == mapState->getName())
 		{
@@ -467,7 +467,7 @@ sp<MapState> Map::getMapStateByName(const string& name)
 	log.error("Could not find Map State:" + name + ". This should never happen.");
 
 	//MapState s = ms<MapState>(-1,name);
-	//stateList.push_back(s);
+	//stateList->push_back(s);
 
 
 	return nullptr;
@@ -476,9 +476,9 @@ sp<MapState> Map::getMapStateByName(const string& name)
 sp<MapState> Map::getMapStateByID(int id)
 { //=========================================================================================================================
 	//this should look through the current map mapStateList first
-	for (int i = 0; i < stateList.size(); i++)
+	for (int i = 0; i < stateList->size(); i++)
 	{
-		sp<MapState> s = stateList.at(i);
+		sp<MapState> s = stateList->at(i);
 		if (s->getID() == id)
 		{
 			return s;
@@ -490,7 +490,7 @@ sp<MapState> Map::getMapStateByID(int id)
 	//then it should look through every map mapStateList, since state ID is guaranteed to be unique.
 
 	//MapState s = ms<MapState>(id,"????");
-	//stateList.push_back(s);
+	//stateList->push_back(s);
 
 
 	return nullptr;
@@ -499,7 +499,7 @@ sp<MapState> Map::getMapStateByID(int id)
 sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 { //=========================================================================================================================
 
-	sp<vector<string>> areaTYPEIDList;// = ms<ArrayList><string>();
+	sp<vector<string>> areaTYPEIDList;// = ms<vector><string>();
 
 
 	//areas
@@ -522,9 +522,9 @@ sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 
 
 	//warpareas
-	for (int i = 0; i < warpAreaList.size(); i++)
+	for (int i = 0; i < warpAreaList->size(); i++)
 	{
-		sp<Area> a = warpAreaList.at(i);
+		sp<Area> a = warpAreaList->at(i);
 		if (a->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->push_back(a->getTYPEIDString());
@@ -533,9 +533,9 @@ sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 
 
 	//doors
-	for (int i = 0; i < doorList.size(); i++)
+	for (int i = 0; i < doorList->size(); i++)
 	{
-		sp<Door> d = doorList.at(i);
+		sp<Door> d = doorList->at(i);
 		if (d->randomPointOfInterestOrExit())
 		{
 			areaTYPEIDList->push_back(d->getTYPEIDString()); //"DOOR."+d.getTYPEIDString());
@@ -615,13 +615,13 @@ void Map::update()
 
 			bool eventsAllLoadedThisTime = false;
 
-			if (mapEventList.size() > 0)
+			if (mapEventList->size() > 0)
 			{
 				eventsAllLoadedThisTime = true;
-				for (int i = 0; i < mapEventList.size(); i++)
+				for (int i = 0; i < mapEventList->size(); i++)
 				{
-					//int eventID = mapEventList.at(i);
-					sp<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
+					//int eventID = mapEventList->at(i);
+					sp<Event> event = mapEventList->at(i);// getEventManager()->getEventByIDCreateIfNotExist(eventID);
 					event->map = shared_from_this();
 					if (event->getInitialized_S() == false)
 					{
@@ -647,7 +647,7 @@ void Map::update()
 	//DONE: need to choose a MapState here.
 	//this is decided by the DEFAULT map Event, which should be loaded and run exactly once before the map loads.
 	//so we need to go through currentMap's event list, find event type -1, and run that- before the map actually starts running. how to do that?
-	//m.currentState = m.stateList.at(0);
+	//m.currentState = m.stateList->at(0);
 
 
 	if (currentState == nullptr)
@@ -658,9 +658,9 @@ void Map::update()
 		if (ticksPassed > 200)
 		{
 			lastLoadEventRequestTime = currentTime;
-			for (int i = 0; i < mapEventList.size(); i++)
+			for (int i = 0; i < mapEventList->size(); i++)
 			{
-				sp<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.at(i));
+				sp<Event> event = mapEventList->at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList->at(i));
 				event->map = shared_from_this();
 				if (event->type() == EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 				{
@@ -696,7 +696,7 @@ void Map::update()
 	}
 
 
-	if (sortedLightsLayers.empty())
+	if (sortedLightsLayers->empty())
 	{
 		sortLightLayers();
 	}
@@ -717,9 +717,9 @@ void Map::update()
 	{
 		lastLoadEventRequestTime = currentTime;
 		//run all events, **this will also run post-load events for this map, which stop executing after one loop.
-		for (int i = 0; i < mapEventList.size(); i++)
+		for (int i = 0; i < mapEventList->size(); i++)
 		{
-			sp<Event> event = mapEventList.at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList.at(i));
+			sp<Event> event = mapEventList->at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList->at(i));
 			event->map = this;
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
@@ -996,9 +996,9 @@ void Map::updateEntities()
 { //=========================================================================================================================
 
 	//for all entities update
-	for (int n = 0; n < activeEntityList.size(); n++)
+	for (int n = 0; n < activeEntityList->size(); n++)
 	{
-		sp<Entity> e = activeEntityList.at(n);
+		sp<Entity> e = activeEntityList->at(n);
 
 		e->update();
 	}
@@ -1007,9 +1007,9 @@ void Map::updateEntities()
 void Map::updateDoors()
 { //=========================================================================================================================
 
-	for (int n = 0; n < doorList.size(); n++)
+	for (int n = 0; n < doorList->size(); n++)
 	{
-		sp<Door> e = doorList.at(n);
+		sp<Door> e = doorList->at(n);
 
 		e->update();
 	}
@@ -1030,20 +1030,20 @@ void Map::updateAreas()
 	//			a.update();
 	//		}
 
-	for (int i = 0; i < (int)currentState->areaList.size(); i++)
+	for (int i = 0; i < (int)currentState->areaList->size(); i++)
 	{
-		sp<Area> a = currentState->areaList.at(i);
+		sp<Area> a = currentState->areaList->at(i);
 		a->update();
 	}
 }
 
 void Map::updateWarpAreas()
 { //=========================================================================================================================
-	for (int i = 0; i < warpAreaList.size(); i++)
+	for (int i = 0; i < warpAreaList->size(); i++)
 	{
 		{
-			//if(warpAreaList.at(i).mapAsset==currentMap)
-			warpAreaList.at(i)->update();
+			//if(warpAreaList->at(i).mapAsset==currentMap)
+			warpAreaList->at(i)->update();
 		}
 	}
 }
@@ -1051,9 +1051,9 @@ void Map::updateWarpAreas()
 void Map::updateLights()
 { //=========================================================================================================================
 
-	for (int i = 0; i < (int)currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)currentState->lightList->size(); i++)
 	{
-		currentState->lightList.at(i)->update();
+		currentState->lightList->at(i)->update();
 	}
 }
 
@@ -1061,12 +1061,12 @@ void Map::zOrderEntities()
 { //=========================================================================================================================
 
 
-	drawList.clear();
+	drawList->clear();
 
 
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1074,14 +1074,14 @@ void Map::zOrderEntities()
 		{
 			if (drawList.contains(e) == false)
 			{
-				drawList.push_back(e);
+				drawList->push_back(e);
 			}
 		}
 	}
 
-	for (int i = 0; i < doorList.size(); i++)
+	for (int i = 0; i < doorList->size(); i++)
 	{
-		sp<Door> e = doorList.at(i);
+		sp<Door> e = doorList->at(i);
 
 		//decide which ones need rendering
 		//add to new linked list of on-screen entities to z-order
@@ -1089,7 +1089,7 @@ void Map::zOrderEntities()
 		{
 			if (drawList.contains(e) == false)
 			{
-				drawList.push_back(e);
+				drawList->push_back(e);
 			}
 		}
 	}
@@ -1102,7 +1102,7 @@ void Map::zOrderEntities()
 			{
 				if ((drawList.contains(getPlayer())) == false)
 				{
-					drawList.push_back(getPlayer());
+					drawList->push_back(getPlayer());
 				}
 			}
 		}
@@ -1112,9 +1112,9 @@ void Map::zOrderEntities()
 	if (dynamic_cast<sp<BGClientEngine>>(getEngine()) != nullptr)
 	{
 		//add friends, they are not added to any entityList
-		for (int i = 0; i < (int)getClientGameEngine()->friendManager->friendCharacters.size(); i++)
+		for (int i = 0; i < (int)getClientGameEngine()->friendManager->friendCharacters->size(); i++)
 		{
-			sp<FriendCharacter> f = getFriendManager()->friendCharacters.at(i);
+			sp<FriendCharacter> f = getFriendManager()->friendCharacters->at(i);
 
 			if (f->mapName == getName())
 			{
@@ -1122,7 +1122,7 @@ void Map::zOrderEntities()
 				{
 					if (drawList.contains(f) == false)
 					{
-						drawList.push_back(f);
+						drawList->push_back(f);
 					}
 				}
 			}
@@ -1136,15 +1136,15 @@ void Map::zOrderEntities()
 	//for each entity in the drawList, find the topmost one and add it to the new list, then remove it from the drawList
 
 
-	zList.clear();
+	zList->clear();
 
-	while (drawList.size() != 0)
+	while (drawList->size() != 0)
 	{
 		sp<Entity> highestOnScreenEntity = nullptr;
 
-		for (int n = 0; n < drawList.size(); n++)
+		for (int n = 0; n < drawList->size(); n++)
 		{
-			sp<Entity> e = drawList.at(n);
+			sp<Entity> e = drawList->at(n);
 
 			//store topmost entity on screen
 			//check for non-zordering entities, entities always on top, entities always on bottom here.
@@ -1162,16 +1162,16 @@ void Map::zOrderEntities()
 			}
 		}
 
-		drawList.remove(highestOnScreenEntity);
-		zList.push_back(highestOnScreenEntity);
+		drawList->remove(highestOnScreenEntity);
+		zList->push_back(highestOnScreenEntity);
 	}
 
 
 	//		log.debug("---------------------");
 	//
-	//		for(int i=0;i<zList.size();i++)
+	//		for(int i=0;i<zList->size();i++)
 	//		{
-	//			Entity e = zList.at(i);
+	//			Entity e = zList->at(i);
 	//			log.debug(e.getSpriteName());
 	//		}
 
@@ -1189,29 +1189,29 @@ void Map::sortLightLayers()
 	//for all lights
 	//if light is not drawn
 
-	for (int i = 0; i < (int)currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)currentState->lightList->size(); i++)
 	{
-		sp<Light> l = currentState->lightList.at(i);
+		sp<Light> l = currentState->lightList->at(i);
 		//if light is not drawn
 		if (l->sortingState != Light::DRAWN)
 		{
-			sp<vector<sp<Light>>> thisLayerList;// = ms<ArrayList><sp<Light>>();
+			sp<vector<sp<Light>>> thisLayerList;// = ms<vector><sp<Light>>();
 
 			//light is drawing
 			l->sortingState = Light::DRAWING;
 
 			//for all lights from this light to the end
-			for (int a = i + 1; a < (int)currentState->lightList.size(); a++)
+			for (int a = i + 1; a < (int)currentState->lightList->size(); a++)
 			{
-				sp<Light> compareLight = currentState->lightList.at(a);
+				sp<Light> compareLight = currentState->lightList->at(a);
 
 				//if that light isn't already drawn
 				if (compareLight->sortingState != Light::DRAWN)
 				{
 					//for all lights
-					for (int b = 0; b < (int)currentState->lightList.size(); b++)
+					for (int b = 0; b < (int)currentState->lightList->size(); b++)
 					{
-						sp<Light> overlapLight = currentState->lightList.at(b);
+						sp<Light> overlapLight = currentState->lightList->at(b);
 
 						//if this light isn't
 						if (a != b && overlapLight->sortingState == Light::DRAWING)
@@ -1244,9 +1244,9 @@ void Map::sortLightLayers()
 			}
 
 
-			for (int d = 0; d < (int)currentState->lightList.size(); d++)
+			for (int d = 0; d < (int)currentState->lightList->size(); d++)
 			{
-				sp<Light> drawLight = currentState->lightList.at(d);
+				sp<Light> drawLight = currentState->lightList->at(d);
 				if (drawLight->sortingState == Light::DRAWING)
 				{
 					thisLayerList->push_back(drawLight);
@@ -1258,7 +1258,7 @@ void Map::sortLightLayers()
 
 			//log.debug("Light layer "+layer);
 			//layer++;
-			sortedLightsLayers.push_back(thisLayerList.get());
+			sortedLightsLayers->push_back(thisLayerList.get());
 		}
 	}
 }
@@ -1560,9 +1560,9 @@ void Map::renderEntities(RenderOrder layer)
 	{
 		//for all entities, render as needed, in proper order
 
-		for (int n = 0; n < zList.size(); n++)
+		for (int n = 0; n < zList->size(); n++)
 		{
-			sp<Entity> e = zList.at(n);
+			sp<Entity> e = zList->at(n);
 
 
 			if (layer == RenderOrder::SPRITE_DEBUG_OUTLINES)
@@ -1591,9 +1591,9 @@ void Map::renderAllLightsUnsorted()
 
 	if (currentState != nullptr)
 	{
-		for (int i = 0; i < (int)currentState->lightList.size(); i++)
+		for (int i = 0; i < (int)currentState->lightList->size(); i++)
 		{
-			sp<Light> l = currentState->lightList.at(i);
+			sp<Light> l = currentState->lightList->at(i);
 			l->renderLight();
 		}
 	}
@@ -1627,9 +1627,9 @@ void Map::renderAreaActionIcons()
 
 
 	//warpareas
-	for (int i = 0; i < warpAreaList.size(); i++)
+	for (int i = 0; i < warpAreaList->size(); i++)
 	{
-		sp<Area> a = warpAreaList.at(i);
+		sp<Area> a = warpAreaList->at(i);
 		//if(a.isAnAction)
 		a->renderActionIcon();
 	}
@@ -1760,9 +1760,9 @@ void Map::renderHitLayer()
 void Map::renderLightBoxes()
 { //===============================================================================================
 	//light boxes
-	for (int i = 0; i < sortedLightsLayers.size(); i++)
+	for (int i = 0; i < sortedLightsLayers->size(); i++)
 	{
-		sp<vector<sp<Light>>> thisLayer = ms<vector<sp<Light>>>(sortedLightsLayers.at(i));
+		sp<vector<sp<Light>>> thisLayer = ms<vector<sp<Light>>>(sortedLightsLayers->at(i));
 		for (int n = 0; n < thisLayer->size(); n++)
 		{
 			thisLayer->at(n)->renderDebugBoxes();
@@ -1825,11 +1825,11 @@ void Map::renderAreaDebugInfo()
 void Map::renderWarpAreaDebugBoxes()
 { //=========================================================================================================================
 
-	for (int i = 0; i < warpAreaList.size(); i++)
+	for (int i = 0; i < warpAreaList->size(); i++)
 	{
 		{
-			//if(warpAreaList.at(i).mapAsset==currentMap)
-			warpAreaList.at(i)->renderDebugBoxes();
+			//if(warpAreaList->at(i).mapAsset==currentMap)
+			warpAreaList->at(i)->renderDebugBoxes();
 		}
 	}
 }
@@ -1837,11 +1837,11 @@ void Map::renderWarpAreaDebugBoxes()
 void Map::renderWarpAreaDebugInfo()
 { //=========================================================================================================================
 
-	for (int i = 0; i < warpAreaList.size(); i++)
+	for (int i = 0; i < warpAreaList->size(); i++)
 	{
 		{
-			//if(warpAreaList.at(i).mapAsset==currentMap)
-			warpAreaList.at(i)->renderDebugInfo();
+			//if(warpAreaList->at(i).mapAsset==currentMap)
+			warpAreaList->at(i)->renderDebugInfo();
 		}
 	}
 }
@@ -2094,24 +2094,24 @@ void Map::unloadArea(const string& s)
 	if(currentState->areaByNameHashtable.containsKey(s))
 	a = currentState->areaByNameHashtable.get(s);
 
-	currentState->areaByNameHashtable.removeAt(s);
+	currentState->areaByNameHashtable->erase(->begin()+s);
 
 	if(currentState->areaByTYPEIDHashtable.containsKey(a->getTYPEIDString()))
-	currentState->areaByTYPEIDHashtable.removeAt(a->getTYPEIDString());
+	currentState->areaByTYPEIDHashtable->erase(->begin()+a->getTYPEIDString());
 
 
-	currentState->areaList.remove(a);
+	currentState->areaList->remove(a);
 }
 
 void Map::unloadLight(const string& s)
 { //=========================================================================================================================
-	//public ArrayList<Light> lightList = ms<ArrayList><Light>();
+	//public sp<vector<Light>>lightList = ms<vector><Light>();
 	//public Hashtable<String,Light> lightHashtable = ms<Hashtable><String,Light>();
 
 
-	for (int i = 0; i < (int)currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)currentState->lightList->size(); i++)
 	{
-		if (currentState->lightList.at(i)->getName() == s)
+		if (currentState->lightList->at(i)->getName() == s)
 		{
 			currentState->lightList.erase(currentState->lightList.begin()+i);
 			i--;
@@ -2122,15 +2122,15 @@ void Map::unloadLight(const string& s)
 		}
 	}
 
-	currentState->lightByNameHashtable.removeAt(s);
+	currentState->lightByNameHashtable->erase(->begin()+s);
 
-	for (int i = 0; i < sortedLightsLayers.size(); i++)
+	for (int i = 0; i < sortedLightsLayers->size(); i++)
 	{
-		for (int j = 0; j < (int)sortedLightsLayers.at(i).size(); j++)
+		for (int j = 0; j < (int)sortedLightsLayers->at(i)->size(); j++)
 		{
-			if (sortedLightsLayers.at(i).at(j)->getName() == s)
+			if (sortedLightsLayers->at(i)->at(j)->getName() == s)
 			{
-				sortedLightsLayers.at(i).erase(sortedLightsLayers.at(i).begin()+j);
+				sortedLightsLayers->at(i).erase(sortedLightsLayers->at(i).begin()+j);
 				j--;
 				if (j < 0)
 				{
@@ -2145,12 +2145,12 @@ void Map::unloadMapEntity(const string& s)
 { //=========================================================================================================================
 
 
-	//public ArrayList<MapSprite> entityList = ms<ArrayList><MapSprite>();
+	//public sp<vector<MapSprite>>entityList = ms<vector><MapSprite>();
 	//public Hashtable<String, MapSprite> entityHashtable = ms<Hashtable><String, MapSprite>();
 
-	for (int i = 0; i < (int)currentState->entityList.size(); i++)
+	for (int i = 0; i < (int)currentState->entityList->size(); i++)
 	{
-		if (currentState->entityList.at(i)->getName() == s)
+		if (currentState->entityList->at(i)->getName() == s)
 		{
 			currentState->entityList.erase(currentState->entityList.begin()+i);
 			i--;
@@ -2161,7 +2161,7 @@ void Map::unloadMapEntity(const string& s)
 		}
 	}
 
-	currentState->entityByNameHashtable.removeAt(s);
+	currentState->entityByNameHashtable->erase(->begin()+s);
 }
 
 void Map::releaseAllTextures()
@@ -2227,10 +2227,10 @@ void Map::releaseAllTextures()
 	//delete chunks;
 	chunks = nullptr;
 
-	chunkTexture.clear();
+	chunkTexture->clear();
 
 
-	sortedLightsLayers.clear();
+	sortedLightsLayers->clear();
 
 
 	/*if(chunkFileExists!=null)
@@ -2411,9 +2411,9 @@ void Map::updateLastKnownScreenXYBasedOnCamera()
 //		if(getHit==false)
 //		{
 //			//go through all mapsprites, check if map characters
-//			for(int i=0;i<activeEntityList.size();i++)
+//			for(int i=0;i<activeEntityList->size();i++)
 //			{
-//				Entity m = activeEntityList.at(i);
+//				Entity m = activeEntityList->at(i);
 //				if(m.getNonWalkable()==true
 //						&&x<m.getRight()
 //						&&x>m.getLeft()
@@ -2846,11 +2846,11 @@ bool Map::loadLightTexturesFromCachePNGs()
 	bool tempAllLightTexturesLoaded = true;
 
 
-	for (int i = 0; i < (int)currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)currentState->lightList->size(); i++)
 	{
 		{
-			//if(lightList.at(i).mapAsset==this)
-			sp<Light> l = currentState->lightList.at(i);
+			//if(lightList->at(i).mapAsset==this)
+			sp<Light> l = currentState->lightList->at(i);
 
 			//check if tile has texture already in gpu
 			if (l->texture == nullptr)
@@ -3088,7 +3088,7 @@ void Map::startThreadsForMissingChunkPNGs()
 						incrementChunkPNGThreadsCreated();
 						
 
-//						std::vector<std::future<void>> results;
+//						std::sp<vector<std::future<void>>>results;
 //						results.push_back
 //						(
 							generatePNGThreadPool->push(
@@ -3237,11 +3237,11 @@ void Map::startThreadsForMissingLightPNGs()
 	//for all the lights see if there is a texture generated for it, stored in the light object itself
 	//if there isn't, generate the light as a bufferedImage, create a texture for it, and set it in the light object
 
-	for (int i = 0; i < (int)currentState->lightList.size(); i++)
+	for (int i = 0; i < (int)currentState->lightList->size(); i++)
 	{
 		{
-			//if(lightList.at(i).mapAsset==this)
-			sp<Light> l = currentState->lightList.at(i);
+			//if(lightList->at(i).mapAsset==this)
+			sp<Light> l = currentState->lightList->at(i);
 
 
 			//don't create a thread to generate a texture that is already being made.
@@ -3249,7 +3249,7 @@ void Map::startThreadsForMissingLightPNGs()
 			bool c = false;
 			for (int j = 0; j < i; j++)
 			{
-				if (currentState->lightList.at(j)->getFileName() == l->getFileName())
+				if (currentState->lightList->at(j)->getFileName() == l->getFileName())
 				{
 					c = true;
 					break;
@@ -3288,7 +3288,7 @@ void Map::startThreadsForMissingLightPNGs()
 						incrementLightPNGThreadsCreated();
 
 
-//						std::vector<std::future<void>> results;
+//						std::sp<vector<std::future<void>>>results;
 //						results.push_back
 //						(
 							generateLightPNGThreadPool->push
@@ -3415,7 +3415,7 @@ void Map::startThreadsForMissingHQ2XChunkPNGs()
 				{
 					incrementHQ2XChunkPNGThreadsCreated();
 					
-//					std::vector<std::future<void>> results;
+//					std::sp<vector<std::future<void>>>results;
 //					results.push_back
 //					(
 						generatePNGThreadPool->push
@@ -4393,21 +4393,21 @@ void Map::addEntitiesAndCharactersFromCurrentStateToActiveEntityList()
 { //=========================================================================================================================
 
 
-	for (int n = 0; n < (int)currentState->entityList.size(); n++)
+	for (int n = 0; n < (int)currentState->entityList->size(); n++)
 	{
-		sp<Entity> ms = currentState->entityList.at(n);
-		activeEntityList.push_back(ms);
+		sp<Entity> ms = currentState->entityList->at(n);
+		activeEntityList->push_back(ms);
 	}
 
-	for (int n = 0; n < (int)currentState->characterList.size(); n++)
+	for (int n = 0; n < (int)currentState->characterList->size(); n++)
 	{
-		sp<Character> ms = currentState->characterList.at(n);
-		activeEntityList.push_back(ms);
+		sp<Character> ms = currentState->characterList->at(n);
+		activeEntityList->push_back(ms);
 	}
 
 	if (getPlayer() != nullptr && getClientGameEngine()->playerExistsInMap)
 	{
-		activeEntityList.push_back(getPlayer());
+		activeEntityList->push_back(getPlayer());
 	}
 }
 
@@ -4415,9 +4415,9 @@ void Map::clearActiveEntityList()
 { //=========================================================================================================================
 
 	//have to release unique textures on random entities
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
 		{
 			sp<RandomCharacter> r = static_cast<sp<RandomCharacter>>(e);
@@ -4430,17 +4430,17 @@ void Map::clearActiveEntityList()
 		}
 	}
 
-	activeEntityList.clear();
-	//if(getPlayer()!=null)entityList.push_back(getPlayer());
-	//entityList.push_back(getCameraman());
+	activeEntityList->clear();
+	//if(getPlayer()!=null)entityList->push_back(getPlayer());
+	//entityList->push_back(getCameraman());
 }
 
 bool Map::isAnyoneOverlappingXY(float x, float y)
 { //=========================================================================================================================
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
 		//find any characters
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 
 		if (x > e->getLeft() && x < e->getRight() && y > e->getTop() && y < e->getBottom())
 		{
@@ -4453,10 +4453,10 @@ bool Map::isAnyoneOverlappingXY(float x, float y)
 
 bool Map::isAnyoneOverlappingXYXY(float x, float y, float x2, float y2)
 { //=========================================================================================================================
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
 		//find any characters
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 
 		if (x < e->getRight() && x2 > e->getLeft() && y < e->getBottom() && y2 > e->getTop())
 		{
@@ -4469,10 +4469,10 @@ bool Map::isAnyoneOverlappingXYXY(float x, float y, float x2, float y2)
 
 bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 { //=========================================================================================================================
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
 		//find any characters
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 
 		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
 		{
@@ -4491,7 +4491,7 @@ bool Map::isAnyRandomCharacterTryingToGoToXY(float x, float y)
 int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 { //=========================================================================================================================
 
-	vector<int*> coords;// = new vector<int>();
+	sp<vector<int*>>coords;// = new sp<vector<int>>();
 
 	for (int x = 1; x < a->getWidth() / 8; x++)
 	{
@@ -4500,14 +4500,14 @@ int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 			int* xy = new int[2];
 			xy[0] = x;
 			xy[1] = y;
-			coords.push_back(xy);
+			coords->push_back(xy);
 		}
 	}
 
-	while (coords.size() > 0)
+	while (coords->size() > 0)
 	{
-		int i = Math::randLessThan(coords.size());
-		int* xy = coords.at(i);
+		int i = Math::randLessThan(coords->size());
+		int* xy = coords->at(i);
 		int x = xy[0];
 		int y = xy[1];
 
@@ -4537,9 +4537,9 @@ bool Map::isAnyCharacterTouchingArea(sp<Area> a)
 
 	if (a != nullptr) //DEBUG HERE
 	{
-		for (int i = 0; i < activeEntityList.size(); i++)
+		for (int i = 0; i < activeEntityList->size(); i++)
 		{
-			sp<Entity> e = activeEntityList.at(i);
+			sp<Entity> e = activeEntityList->at(i);
 
 			if (
 				(
@@ -4574,9 +4574,9 @@ bool Map::isAnyEntityTouchingArea(sp<Area> a)
 
 	if (a != nullptr) //DEBUG HERE
 	{
-		for (int i = 0; i < activeEntityList.size(); i++)
+		for (int i = 0; i < activeEntityList->size(); i++)
 		{
-			sp<Entity> e = activeEntityList.at(i);
+			sp<Entity> e = activeEntityList->at(i);
 
 			if (a->isEntityHitBoxTouchingMyBoundary(e))
 			{
@@ -4591,12 +4591,12 @@ bool Map::isAnyEntityTouchingArea(sp<Area> a)
 sp<vector<sp<Entity>>> Map::getAllEntitiesTouchingArea(sp<Area> a)
 { //=========================================================================================================================
 
-	sp<vector<sp<Entity>>> entitiesInArea;// = ms<ArrayList><sp<Entity>>();
+	sp<vector<sp<Entity>>> entitiesInArea;// = ms<vector><sp<Entity>>();
 
 
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 
 		if (a->isEntityHitBoxTouchingMyBoundary(e))
 		{
@@ -4610,12 +4610,12 @@ sp<vector<sp<Entity>>> Map::getAllEntitiesTouchingArea(sp<Area> a)
 sp<vector<sp<Entity>>> Map::getAllEntitiesPlayerIsTouching()
 { //=========================================================================================================================
 
-	sp<vector<sp<Entity>>> entitiesTouching;// = ms<ArrayList><sp<Entity>>();
+	sp<vector<sp<Entity>>> entitiesTouching;// = ms<vector><sp<Entity>>();
 
 
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 
 		if (getPlayer()->isEntityHitBoxTouchingMyHitBox(e))
 		{
@@ -4630,9 +4630,9 @@ bool Map::isAnyoneTryingToGoToArea(sp<Area> a)
 { //=========================================================================================================================
 	if (a != nullptr) //DEBUG HERE
 	{
-		for (int i = 0; i < activeEntityList.size(); i++)
+		for (int i = 0; i < activeEntityList->size(); i++)
 		{
-			if (activeEntityList.at(i)->currentAreaTYPEIDTarget == a->getName())
+			if (activeEntityList->at(i)->currentAreaTYPEIDTarget == a->getName())
 			{
 				return true;
 			}
@@ -4644,9 +4644,9 @@ bool Map::isAnyoneTryingToGoToArea(sp<Area> a)
 bool Map::isAnyEntityUsingSpriteAsset(sp<Sprite> s)
 { //=========================================================================================================================
 
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
-		if (activeEntityList.at(i)->sprite == s)
+		if (activeEntityList->at(i)->sprite == s)
 		{
 			return true;
 		}
@@ -4661,9 +4661,9 @@ sp<vector<sp<Entity>>> Map::getAllEntitiesUsingSpriteAsset(sp<Sprite> s)
 
 	sp<vector<sp<Entity>>> entitiesUsingSprite;// = ms<vector><sp<Entity>>();
 
-	for (int i = 0; i < activeEntityList.size(); i++)
+	for (int i = 0; i < activeEntityList->size(); i++)
 	{
-		sp<Entity> e = activeEntityList.at(i);
+		sp<Entity> e = activeEntityList->at(i);
 
 		if (e->sprite == s)
 		{
@@ -4683,7 +4683,7 @@ sp<Entity> Map::createEntity(const string& spriteName, sp<Sprite> spriteAsset, f
 
 	sp<Entity> e = ms<Entity>(getEngine(), entityData, shared_from_this());
 
-	getCurrentMap()->currentState->entityList.push_back(e);
+	getCurrentMap()->currentState->entityList->push_back(e);
 	getCurrentMap()->currentState->entityByNameHashtable.put(e->getName(),e);
 
 	return e;

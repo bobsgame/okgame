@@ -31,10 +31,10 @@ class AudioManager : EnginePart
 public:
 	static Logger log;
 
-	static vector<sp<AudioFile>> globalAudioFileList;
+	static sp<vector<sp<AudioFile>>>globalAudioFileList;
 
 	static bool loadedBuiltIn;
-	vector<sp<Sound>> playingAudioList;
+	sp<vector<sp<Sound>>>playingAudioList;
 
 	
 

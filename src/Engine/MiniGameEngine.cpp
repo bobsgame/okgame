@@ -177,17 +177,17 @@ void MiniGameEngine::unloadTitleMenuTextures()
 {//=========================================================================================================================
 	if(
 		//titleMenuTextures!= nullptr && 
-		titleMenuTextures.size()>0
+		titleMenuTextures->size()>0
 		)
 	{
 		for (int i = 0; i < numTitleMenuTextureFrames; i++)
 		{
-			titleMenuTextures.at(i)->release();
+			titleMenuTextures->at(i)->release();
 			//delete titleMenuTextures->get(i);
-			titleMenuTextures.at(i) = nullptr;
+			titleMenuTextures->at(i) = nullptr;
 		}
 		
-		titleMenuTextures.clear();
+		titleMenuTextures->clear();
 	}
 
 	if (titleMenuTexture != nullptr)
@@ -287,9 +287,9 @@ void MiniGameEngine::titleMenuRender()
 
 	if (
 		//titleMenuTextures != nullptr && 
-		titleMenuTextures.size()>0
+		titleMenuTextures->size()>0
 		)
-		t = titleMenuTextures.at(currentTitleMenuTextureFrame);
+		t = titleMenuTextures->at(currentTitleMenuTextureFrame);
 
 	if (titleMenuTexture != nullptr)t = titleMenuTexture;
 
@@ -379,22 +379,22 @@ void MiniGameEngine::pauseMenuRender()
 void MiniGameEngine::multiplayerScreenUpdate()
 { //=========================================================================================================================
 
-	if (onlineFriendCaptions.empty())
+	if (onlineFriendCaptions->empty())
 	{
-		//onlineFriendCaptions = ms<ArrayList><sp<Caption>>();
+		//onlineFriendCaptions = ms<vector><sp<Caption>>();
 
-		for (int i = 0; i < onlineFriends.size(); i++)
+		for (int i = 0; i < onlineFriends->size(); i++)
 		{
-			sp<UDPPeerConnection> f = onlineFriends.at(i);
-			int y = (onlineFriendCaptions.size() + 1) * 20;
+			sp<UDPPeerConnection> f = onlineFriends->at(i);
+			int y = (onlineFriendCaptions->size() + 1) * 20;
 
 			sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, f->getFriendData_S().characterName, 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
-			onlineFriendCaptions.push_back(c);
+			onlineFriendCaptions->push_back(c);
 		}
 
-		int y = (onlineFriendCaptions.size() + 1) * 20;
+		int y = (onlineFriendCaptions->size() + 1) * 20;
 		sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
-		onlineFriendCaptions.push_back(c);
+		onlineFriendCaptions->push_back(c);
 	}
 
 	if (getControlsManager()->miniGame_UP_Pressed())
@@ -402,14 +402,14 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		multiplayerScreenCursorPosition--;
 		if (multiplayerScreenCursorPosition < 0)
 		{
-			multiplayerScreenCursorPosition = (int)(onlineFriendCaptions.size() - 1);
+			multiplayerScreenCursorPosition = (int)(onlineFriendCaptions->size() - 1);
 		}
 	}
 
 	if (getControlsManager()->miniGame_DOWN_Pressed())
 	{
 		multiplayerScreenCursorPosition++;
-		if (multiplayerScreenCursorPosition > (int)(onlineFriendCaptions.size() - 1))
+		if (multiplayerScreenCursorPosition > (int)(onlineFriendCaptions->size() - 1))
 		{
 			multiplayerScreenCursorPosition = 0;
 		}
@@ -422,13 +422,13 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		
 		leaveMenu = true;
 
-		if (multiplayerScreenCursorPosition == (int)(onlineFriendCaptions.size() - 1))
+		if (multiplayerScreenCursorPosition == (int)(onlineFriendCaptions->size() - 1))
 		{
 			titleMenuShowing = true;
 		}
 		else
 		{
-			sp<UDPPeerConnection> f = onlineFriends.at(multiplayerScreenCursorPosition);
+			sp<UDPPeerConnection> f = onlineFriends->at(multiplayerScreenCursorPosition);
 			this->connection = f;
 			//OKNet::addEngineToForwardMessagesTo(this);
 
@@ -446,15 +446,15 @@ void MiniGameEngine::multiplayerScreenUpdate()
 	if(leaveMenu)
 	{
 		multiplayerScreenShowing = false;
-		if (onlineFriendCaptions.size() > 0)
+		if (onlineFriendCaptions->size() > 0)
 		{
-			for (int i = 0; i < onlineFriendCaptions.size(); i++)
+			for (int i = 0; i < onlineFriendCaptions->size(); i++)
 			{
-				onlineFriendCaptions.at(i)->setToBeDeletedImmediately();
+				onlineFriendCaptions->at(i)->setToBeDeletedImmediately();
 			}
 		}
 
-		onlineFriendCaptions.clear();
+		onlineFriendCaptions->clear();
 		//onlineFriends->clear();
 	}
 
@@ -468,7 +468,7 @@ void MiniGameEngine::multiplayerScreenRender()
 
 	sp<OKTexture> t = OKMenu::cursorTexture;
 
-	if (t != nullptr && onlineFriendCaptions.size() > 0)
+	if (t != nullptr && onlineFriendCaptions->size() > 0)
 	{
 		float tx0 = 0;
 		float tx1 = 1;
@@ -476,14 +476,14 @@ void MiniGameEngine::multiplayerScreenRender()
 		float ty0 = 0;
 		float ty1 = 1;
 
-		float sx0 = onlineFriendCaptions.at(multiplayerScreenCursorPosition)->screenX - 16;
+		float sx0 = onlineFriendCaptions->at(multiplayerScreenCursorPosition)->screenX - 16;
 		if (OKMenu::cursorInOutToggle)
 		{
 			sx0 += 2;
 		}
 		float sx1 = sx0 + 16;
 
-		float sy0 = onlineFriendCaptions.at(multiplayerScreenCursorPosition)->screenY + 2;
+		float sy0 = onlineFriendCaptions->at(multiplayerScreenCursorPosition)->screenY + 2;
 		float sy1 = sy0 + 16;
 
 		GLUtils::drawTexture(t, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);
@@ -526,17 +526,17 @@ void MiniGameEngine::waitingForFriendScreenUpdate()
 		}
 	}
 
-	if (waitingForFriendCaptions.empty())
+	if (waitingForFriendCaptions->empty())
 	{
-		//waitingForFriendCaptions = ms<ArrayList><sp<Caption>>();
+		//waitingForFriendCaptions = ms<vector><sp<Caption>>();
 
-		int y = ((int)waitingForFriendCaptions.size() + 1) * 20;
+		int y = ((int)waitingForFriendCaptions->size() + 1) * 20;
 		sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Sending game request...", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
-		waitingForFriendCaptions.push_back(c);
+		waitingForFriendCaptions->push_back(c);
 
-		y = ((int)waitingForFriendCaptions.size() + 1) * 20;
+		y = ((int)waitingForFriendCaptions->size() + 1) * 20;
 		c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
-		waitingForFriendCaptions.push_back(c);
+		waitingForFriendCaptions->push_back(c);
 	}
 
 	{
@@ -552,11 +552,11 @@ void MiniGameEngine::waitingForFriendScreenUpdate()
 				getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_SCREEN, 0, 0, 3000, "Timed out.", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
 			}
 
-			if (waitingForFriendCaptions.size() > 0)
+			if (waitingForFriendCaptions->size() > 0)
 			{
-				for (int i = 0; i < waitingForFriendCaptions.size(); i++)
+				for (int i = 0; i < waitingForFriendCaptions->size(); i++)
 				{
-					waitingForFriendCaptions.at(i)->setToBeDeletedImmediately();
+					waitingForFriendCaptions->at(i)->setToBeDeletedImmediately();
 				}
 			}
 
@@ -565,7 +565,7 @@ void MiniGameEngine::waitingForFriendScreenUpdate()
 			//delete this->friendCharacter;
 			//this->friendCharacter = nullptr;
 
-			waitingForFriendCaptions.clear();
+			waitingForFriendCaptions->clear();
 
 			titleMenuShowing = true;
 			waitingForFriendScreenShowing = false;
@@ -611,15 +611,15 @@ void MiniGameEngine::waitingForFriendScreenUpdate()
 
 				setIncomingGameChallengeResponse(gameChallengeResponse_NONE);
 
-				if (waitingForFriendCaptions.size() > 0)
+				if (waitingForFriendCaptions->size() > 0)
 				{
-					for (int i = 0; i < waitingForFriendCaptions.size(); i++)
+					for (int i = 0; i < waitingForFriendCaptions->size(); i++)
 					{
-						waitingForFriendCaptions.at(i)->setToBeDeletedImmediately();
+						waitingForFriendCaptions->at(i)->setToBeDeletedImmediately();
 					}
 				}
 
-				waitingForFriendCaptions.clear();
+				waitingForFriendCaptions->clear();
 			}
 		}
 	}
@@ -631,7 +631,7 @@ void MiniGameEngine::waitingForFriendScreenRender()
 
 	sp<OKTexture> t = OKMenu::cursorTexture;
 
-	if (t != nullptr && waitingForFriendCaptions.size() > 0)
+	if (t != nullptr && waitingForFriendCaptions->size() > 0)
 	{
 		float tx0 = 0;
 		float tx1 = 1;
@@ -639,14 +639,14 @@ void MiniGameEngine::waitingForFriendScreenRender()
 		float ty0 = 0;
 		float ty1 = 1;
 
-		float sx0 = waitingForFriendCaptions.at(1)->screenX - 16;
+		float sx0 = waitingForFriendCaptions->at(1)->screenX - 16;
 		if (OKMenu::cursorInOutToggle)
 		{
 			sx0 += 2;
 		}
 		float sx1 = sx0 + 16;
 
-		float sy0 = waitingForFriendCaptions.at(1)->screenY + 2;
+		float sy0 = waitingForFriendCaptions->at(1)->screenY + 2;
 		float sy1 = sy0 + 16;
 
 		GLUtils::drawTexture(t, tx0, tx1, ty0, ty1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);

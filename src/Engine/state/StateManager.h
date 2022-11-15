@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	vector<sp<Engine>> states;
+	sp<vector<sp<Engine>>>states;
 
 	//sp<Engine> currentState = nullptr;
 

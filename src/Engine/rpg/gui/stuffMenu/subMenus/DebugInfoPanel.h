@@ -18,7 +18,7 @@ public:
 	static Logger log;
 
 
-	//static ArrayList<sp<Label>> label;
+	//static sp<vector<sp<Label>>>label;
 
 	//static DialogLayout::Group* horizontalGroup;
 	//static DialogLayout::Group* verticalGroup;

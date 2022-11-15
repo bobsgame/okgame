@@ -142,9 +142,9 @@ public:
 
 	sp<vector<sp<Entity>>> getOnScreenNonCharacterEntitiesWithinRangeAmount(int amt);
 
-	bool checkTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, float x, float y);
+	bool checkTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y);
 
-	bool checkHitLayerAndTouchingAnyEntityInEntityList(vector<sp<Entity>> &list, float x, float y);
+	bool checkHitLayerAndTouchingAnyEntityInEntityList(sp<vector<sp<Entity>>>&list, float x, float y);
 
 	bool checkTouchingAnyOnScreenNonCharacterNonWalkableEntities(float x, float y);
 

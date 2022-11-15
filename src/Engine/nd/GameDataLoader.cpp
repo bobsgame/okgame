@@ -27,7 +27,7 @@ void GameDataLoader::loadGameData()
 	//
 	//   Cache::downloadBigFileToCacheIfNotExist("gameData");
 	//
-	//   ArrayList<string> stringList;
+	//   sp<vector<string>>stringList;
 	//
 	//   try
 	//   {
@@ -124,7 +124,7 @@ void GameDataLoader::loadGameData()
 	//                     sp<Map> map = ms<Map>(Engine(), data);
 	//
 	//
-	//                     getMapManager()->mapList.push_back(map);
+	//                     getMapManager()->mapList->push_back(map);
 	//                     getMapManager()->mapByIDHashMap.put(map->id(), map);
 	//                     getMapManager()->mapByNameHashMap.put(map->name(), map);
 	//

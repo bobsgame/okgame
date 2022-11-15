@@ -20,7 +20,7 @@ AudioFile::AudioFile(sp<AudioData> data)
 	setInitialized_S(true);
 
 
-	for (int i = 0; i < (int)AudioManager::globalAudioFileList.size(); i++)
+	for (int i = 0; i < (int)AudioManager::globalAudioFileList->size(); i++)
 	{
 		if (AudioManager::globalAudioFileList.get(i)->getName() == data->getName())
 		{

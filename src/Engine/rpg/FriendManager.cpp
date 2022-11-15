@@ -97,25 +97,25 @@ void FriendManager::init()
 		//      sp<FriendCharacter> f = ms<FriendCharacter>(getGameEngine(), 1, FriendCharacter::FACEBOOK_TYPE, myPort, theirPort);
 		//
 		//
-		//      friendCharacters.push_back(f);
+		//      friendCharacters->push_back(f);
 	}
 }
 
 void FriendManager::cleanup()
 { //===============================================================================================
 
-	for (int i = 0; i < friendCharacters.size(); i++)
+	for (int i = 0; i < friendCharacters->size(); i++)
 	{
-		friendCharacters.at(i)->cleanup();
+		friendCharacters->at(i)->cleanup();
 	}
 }
 
 void FriendManager::update()
 { //===============================================================================================
 
-	for (int i = 0; i < friendCharacters.size(); i++)
+	for (int i = 0; i < friendCharacters->size(); i++)
 	{
-		friendCharacters.at(i)->update();
+		friendCharacters->at(i)->update();
 	}
 
 }

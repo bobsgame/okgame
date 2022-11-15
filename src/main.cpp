@@ -677,7 +677,7 @@ void Main::saveGlobalSettingsToXML()
 
 	if (file.exists())
 	{
-		file.remove();
+		file->remove();
 	}
 
 	{
@@ -1245,7 +1245,7 @@ void Main::processEvents()
 			else
 			{
 
-				stateManager->getCurrentState()->getActiveControlsManager()->events.push_back(event);
+				stateManager->getCurrentState()->getActiveControlsManager()->events->push_back(event);
 
 				gwenInput->ProcessEvent(event);
 				//ImGui_ImplSdl_ProcessEvent(&event);
@@ -1562,7 +1562,7 @@ void Main::checkVersion()
 			File f(exePath+"bobsgame.old");
 			if (f.exists())
 			{
-				f.remove();
+				f->remove();
 				//sp<Caption> c =
 				//((sp<Engine>)(getMain()->stateManager->getState()))->captionManager->newManagedCaption((int)(Caption::CENTERED_SCREEN), 0, 5000, "Update installed!", OKFont::ttf_oswald_32, OKColor::green, OKColor::clear, RenderOrder::OVER_GUI);
 				//doesn't go away because we're not updating captionManager??
@@ -1616,7 +1616,7 @@ void Main::checkVersion()
 			//check bobsgame.com/version.php?
 			URI uri("http://bobsgame.com/version.php");
 			string path(uri.getPathAndQuery());
-			if (path.empty()) path = "/";
+			if (path->empty()) path = "/";
 
 			HTTPClientSession session(uri.getHost(), uri.getPort());
 			session.setTimeout(Poco::Timespan(4, 0));
@@ -1801,9 +1801,9 @@ void Main::checkVersion()
 
 				Decompress dec(inp, Poco::Path(exePath));
 				//log.info("Create decompress object");
-				//dec.EError += Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string> >(this, &ZipTest::onDecompressError);
+				//dec.EError += Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string>>(this, &ZipTest::onDecompressError);
 				dec.decompressAllFiles();
-				//dec.EError -= Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string> >(this, &ZipTest::onDecompressError);
+				//dec.EError -= Poco::Delegate<ZipTest, std::pair<const Poco::Zip::ZipLocalFileHeader, const std::string>>(this, &ZipTest::onDecompressError);
 				//log.info("decompressAllFiles();");
 				inp.close();
 				//log.info("close()");
@@ -1821,7 +1821,7 @@ void Main::checkVersion()
 			//delete update.zip
 			try
 			{
-				File(exePath + "update.zip").remove();
+				File(exePath + "update.zip")->remove();
 			}
 			catch (Exception)
 			{
@@ -1842,7 +1842,7 @@ void Main::checkVersion()
 					c->update();
 
 					//Args args;
-					std::vector<std::string> args;
+					std::sp<vector<std::string>>args;
 					Process::launch(exePath + exename, args);
 					//quit
 					exit(0);
