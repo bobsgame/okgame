@@ -1279,7 +1279,7 @@ void OKGame::sendGameStatsToServer()
 				s.complete = (int)g->complete;
 				s.isLocalMultiplayer = (int)localMultiplayer;
 				s.isNetworkMultiplayer = (int)networkMultiplayer;
-				s.numPlayers = players.size();
+				s.numPlayers = (int)players.size();
 				s.level = g->currentLevel;
 				s.timeLasted = g->totalTicksPassed;
 				s.timeStarted = g->timeStarted;

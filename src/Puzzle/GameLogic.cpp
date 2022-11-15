@@ -1802,7 +1802,7 @@ void GameLogic::handleNewChain()
 		if (currentCombo == 0)
 		{
 			currentCombo = 1;
-			currentChain = currentChainBlocks.size();
+			currentChain = (int)currentChainBlocks.size();
 
 			makeAnnouncementCaption("Chain: " + to_string(currentChain));
 
@@ -1830,7 +1830,7 @@ void GameLogic::handleNewChain()
 		else
 		{
 			currentCombo++;
-			currentChain = currentChainBlocks.size();
+			currentChain = (int)currentChainBlocks.size();
 			comboChainTotal += currentChain;
 			totalCombosMade++;
 
@@ -1856,22 +1856,22 @@ void GameLogic::handleNewChain()
 
 		//add any gray blobs touching the chain to the chain
 		vector<sp<Block>> addToChain;
-		for (int i = 0; i < currentChainBlocks.size(); i++)
+		for (int i = 0; i < (int)currentChainBlocks.size(); i++)
 		{
-			sp<Block> a = currentChainBlocks.get(i);
+			sp<Block> a = currentChainBlocks.at(i);
 
-			vector<sp<Block>> temp = grid->getConnectedBlocksUpDownLeftRight(a);
-			if (temp.size() > 0)
+			sp<vector<sp<Block>>> temp = grid->getConnectedBlocksUpDownLeftRight(a);
+			if (temp->size() > 0)
 			{
 				for (int k = 0; k < temp.size(); k++)
 				{
-					sp<Block> b = temp.get(k);
+					sp<Block> b = temp.at(k);
 
 					if (b->blockType->addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks)
 					{
 						if (addToChain.contains(b) == false)
 						{
-							addToChain.add(b);
+							addToChain.push_back(b);
 						}
 					}
 				}
@@ -1880,16 +1880,16 @@ void GameLogic::handleNewChain()
 
 		for (int i = 0; i < addToChain.size(); i++)
 		{
-			sp<Block> a = addToChain.get(i);
+			sp<Block> a = addToChain.at(i);
 			if (currentChainBlocks.contains(a) == false)
 			{
-				currentChainBlocks.add(a);
+				currentChainBlocks.push_back(a);
 			}
 		}
 
 		for (int i = 0; i < currentChainBlocks.size(); i++)
 		{
-			sp<Block> a = currentChainBlocks.get(i);
+			sp<Block> a = currentChainBlocks.at(i);
 			a->flashingToBeRemoved = true;
 		}
 

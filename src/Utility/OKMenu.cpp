@@ -168,7 +168,7 @@ void OKMenu::setAllCaptionsToFullAlpha()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if(m->caption!=nullptr)m->caption->setAlphaImmediately(1.0f);
 	}
 }
@@ -195,11 +195,11 @@ void OKMenu::update(sp<Engine>g, int ticksPassed)
 
 	for(int i = 0; i < activeMenus.size(); i++)
 	{
-		sp<OKMenu>m = activeMenus.get(i);
+		sp<OKMenu>m = activeMenus.at(i);
 
 		for(int n = 0; n < m->menuItems.size(); n++)
 		{
-			sp<MenuItem>mi = m->menuItems.get(n);
+			sp<MenuItem>mi = m->menuItems.at(n);
 
 			if (mi->info)continue;
 			if (mi->hidden)continue;
@@ -231,7 +231,7 @@ bool OKMenu::areAllMenusDisabled()
 	bool allDisabled = true;
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if (m->hidden == false && m->info == false)
 		{
 			allDisabled = false;
@@ -269,7 +269,7 @@ void OKMenu::down(bool noSound)
 }
 
 //=========================================================================================================================
-OKMenu::MenuItem* OKMenu::addInfo(string caption, string id, sp<OKColor>color)
+sp<OKMenu::MenuItem> OKMenu::addInfo(string caption, string id, sp<OKColor>color)
 {//=========================================================================================================================
 
 	if (color == nullptr)color = infoColor;
@@ -292,12 +292,12 @@ OKMenu::MenuItem* OKMenu::addInfo(string caption, string id, sp<OKColor>color)
 	if (id == "")id = caption;
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	m->id = id;
-	menuItems.add(m);
+	menuItems.push_back(m);
 	return m;
 }
 
 //=========================================================================================================================
-OKMenu::MenuItem* OKMenu::add(string caption, string id, sp<OKColor>color)
+sp<OKMenu::MenuItem> OKMenu::add(string caption, string id, sp<OKColor>color)
 {//=========================================================================================================================
 
 	if (color == nullptr)color = defaultMenuColor;
@@ -315,7 +315,7 @@ OKMenu::MenuItem* OKMenu::add(string caption, string id, sp<OKColor>color)
 }
 
 //=========================================================================================================================
-OKMenu::MenuItem* OKMenu::addYesNo(string caption, bool yesNo)
+sp<OKMenu::MenuItem> OKMenu::addYesNo(string caption, bool yesNo)
 {//=========================================================================================================================
 	//string value = "";
 	//if (yesNo==false)value = " - (No)";
@@ -337,7 +337,7 @@ void OKMenu::setHidden(string id, bool b)
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if (m->id == id)
 		{
 			m->hidden = b;
@@ -350,7 +350,7 @@ void OKMenu::setAllInvisible()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if (m->caption != nullptr)m->caption->visible = false;
 	}
 }
@@ -360,7 +360,7 @@ void OKMenu::setAllVisible()
 {//=========================================================================================================================
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if (m->caption != nullptr)m->caption->visible = true;
 	}
 }
@@ -375,7 +375,7 @@ bool OKMenu::isSelectedID(string id, bool clicked, int mx, int my)
 	{
 		for(int i=0;i<menuItems.size();i++)
 		{
-			sp<MenuItem>m = menuItems.get(i);
+			sp<MenuItem>m = menuItems.at(i);
 			if (m->id != id)continue;
 
 			sp<Caption>c = m->caption;
@@ -397,7 +397,7 @@ bool OKMenu::isSelectedID(string id, bool clicked, int mx, int my)
 	}
 	else
 	{
-		if(menuItems.get(cursorPosition)->id == id)
+		if(menuItems.at(cursorPosition)->id == id)
 		{
 			//getAudioManager()->playSound("touchblock", 0.5f,1.0f);
 			return true;
@@ -414,7 +414,7 @@ void OKMenu::setSelectedID(string id)
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	for (int i = 0; i < menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if (m->id == id)
 		{
 			cursorPosition = i;
@@ -428,7 +428,7 @@ sp<Caption> OKMenu::getCaptionByID(string id)
 
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if (m->id == id)
 		{
 			return m->caption;
@@ -438,13 +438,13 @@ sp<Caption> OKMenu::getCaptionByID(string id)
 }
 
 //=========================================================================================================================
-OKMenu::MenuItem* OKMenu::getMenuItemByID(string id)
+sp<OKMenu::MenuItem> OKMenu::getMenuItemByID(string id)
 {//=========================================================================================================================
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 
 	for (int i = 0; i<menuItems.size(); i++)
 	{
-		sp<MenuItem>m = menuItems.get(i);
+		sp<MenuItem>m = menuItems.at(i);
 		if (m->id == id)
 		{
 			return m;
@@ -454,10 +454,10 @@ OKMenu::MenuItem* OKMenu::getMenuItemByID(string id)
 }
 
 //=========================================================================================================================
-OKMenu::MenuItem* OKMenu::getSelectedMenuItem()
+sp<OKMenu::MenuItem> OKMenu::getSelectedMenuItem()
 {//=========================================================================================================================
 	if (cursorPosition >= menuItems.size())return nullptr;
-	return menuItems.get(cursorPosition);
+	return menuItems.at(cursorPosition);
 }
 
 
@@ -508,13 +508,13 @@ int OKMenu::getAmountOfMenuItems()
 	return menuItems.size();
 }
 
-vector<string> OKMenu::getArrayListOfMenuItemIDs()
+sp<vector<string>> OKMenu::getArrayListOfMenuItemIDs()
 {
 	vector<string> ids;
 
 	for(int i=0;i<menuItems.size();i++)
 	{
-		ids.add(menuItems.get(i)->id);
+		ids.add(menuItems.at(i)->id);
 	}
 
 	return ids;
@@ -628,7 +628,7 @@ void OKMenu::render
 		//populate visibleMenuItems
 		for (int i = 0; i < menuItems.size(); i++)
 		{
-			sp<MenuItem>m = menuItems.get(i);
+			sp<MenuItem>m = menuItems.at(i);
 			sp<Caption>c = m->caption;
 
 			if (c != nullptr)
@@ -663,7 +663,7 @@ void OKMenu::render
 
 			for (int i = 0; i < visibleMenuItems.size(); i++)
 			{
-				sp<MenuItem>m = visibleMenuItems.get(i);
+				sp<MenuItem>m = visibleMenuItems.at(i);
 				sp<Caption>c = m->caption;
 
 				if (c != nullptr)
@@ -699,7 +699,7 @@ void OKMenu::render
 				//decrease the font size for all menu items
 				for (int i = 0; i < menuItems.size(); i++)
 				{
-					sp<MenuItem>m = menuItems.get(i);
+					sp<MenuItem>m = menuItems.at(i);
 					sp<Caption>c = m->caption;
 					scaledFontSize = c->reduceHeightByOne();
 
@@ -720,7 +720,7 @@ void OKMenu::render
 				//increase the font size for all menu items only up to the default size
 				for (int i = 0; i < menuItems.size(); i++)
 				{
-					sp<MenuItem>m = menuItems.get(i);
+					sp<MenuItem>m = menuItems.at(i);
 					sp<Caption>c = m->caption;
 					scaledFontSize = c->increaseHeightByOne();
 
@@ -751,7 +751,7 @@ void OKMenu::render
 		//set them all invisible so i can only enable the ones to fit on the screen
 		for (int i = 0; i < visibleMenuItems.size(); i++)
 		{
-			sp<MenuItem>m = visibleMenuItems.get(i);
+			sp<MenuItem>m = visibleMenuItems.at(i);
 			sp<Caption>c = m->caption;
 
 			if (c != nullptr)
@@ -769,7 +769,7 @@ void OKMenu::render
 			//figure out visible menu items before cursor
 			for (int i = 0; i < visibleMenuItems.size(); i++)
 			{
-				if (visibleMenuItems.get(i) == selectedMenuItem)
+				if (visibleMenuItems.at(i) == selectedMenuItem)
 				{
 					numVisibleMenuItemsBeforeCursor = i;
 				}
@@ -793,7 +793,7 @@ void OKMenu::render
 			bool found = false;
 			for (int i = 0; i < visibleMenuItems.size(); i++)
 			{
-				if (topMenuItemDrawn == visibleMenuItems.get(i))
+				if (topMenuItemDrawn == visibleMenuItems.at(i))
 				{
 					found = true;
 					topVisibleMenuItemIndex = i;
@@ -808,7 +808,7 @@ void OKMenu::render
 		int selectedVisibleMenuItemIndex = 0;
 		for (int i = 0; i < visibleMenuItems.size(); i++)
 		{
-			if (menuItems.get(cursorPosition) == visibleMenuItems.get(i))
+			if (menuItems.at(cursorPosition) == visibleMenuItems.at(i))
 			{
 				selectedVisibleMenuItemIndex = i;
 				break;
@@ -840,7 +840,7 @@ void OKMenu::render
 					if (selectedVisibleMenuItemIndex == bottomIndex && bottomIndex < visibleMenuItems.size() - 1)topVisibleMenuItemIndex++;
 				}
 				//set topMenuItemDrawn to top menu item
-				topMenuItemDrawn = visibleMenuItems.get(topVisibleMenuItemIndex);
+				topMenuItemDrawn = visibleMenuItems.at(topVisibleMenuItemIndex);
 
 				if (topVisibleMenuItemIndex > 0 && menuItemsToShow < visibleMenuItems.size())
 				{
@@ -855,7 +855,7 @@ void OKMenu::render
 			}
 			if (i < 0)i = 0;
 
-			sp<MenuItem>m = visibleMenuItems.get(i);
+			sp<MenuItem>m = visibleMenuItems.at(i);
 			sp<Caption>c = m->caption;
 
 			if (c != nullptr)
@@ -928,7 +928,7 @@ void OKMenu::render
 		//draw transparent cursor rectangle
 		//interpolate cursor rectangle location
 		//pulse fade
-		if(menuItems.get(cursorPosition)->info==false)menuItems.get(cursorPosition)->caption->setTextColor(OKColor::green);
+		if(menuItems.at(cursorPosition)->info==false)menuItems.at(cursorPosition)->caption->setTextColor(OKColor::green);
 
 		if (areAllMenusDisabled() == false && drawCursor)
 		{
@@ -955,7 +955,7 @@ void OKMenu::render
 				}
 			}
 
-			rectangleCursorToY = menuItems.get(cursorPosition)->caption->screenY - 2;
+			rectangleCursorToY = menuItems.at(cursorPosition)->caption->screenY - 2;
 
 			if (rectangleCursorFromY < y || rectangleCursorCurrentY < y)
 			{
@@ -994,7 +994,7 @@ void OKMenu::render
 				float sx1 = rightX + 24;
 
 				float sy0 = rectangleCursorCurrentY;
-				float sy1 = sy0 + menuItems.get(cursorPosition)->caption->getHeight() + 4;
+				float sy1 = sy0 + menuItems.at(cursorPosition)->caption->getHeight() + 4;
 
 				GLUtils::drawTexture(cursor, sx0, sx1, sy0, sy1, rectangleCursorPulseCurrentAlpha, GLUtils::FILTER_NEAREST);
 			}
@@ -1003,7 +1003,7 @@ void OKMenu::render
 		//getCaptionManager()->render(RenderOrder::OVER_GUI);
 		for (int i = 0; i < menuItems.size(); i++)
 		{
-			sp<MenuItem>m = menuItems.get(i);
+			sp<MenuItem>m = menuItems.at(i);
 			if (i != cursorPosition)m->caption->setTextColor(m->color);
 			sp<Caption>c = m->caption;
 			c->update();
@@ -1028,11 +1028,11 @@ void OKMenu::render
 		//				if (cursor != nullptr && menuItems != nullptr && menuItems.size() > 0)
 		//				{
 		//
-		//					float sx0 = menuItems.get(cursorPosition)->caption->screenX - 18;
+		//					float sx0 = menuItems.at(cursorPosition)->caption->screenX - 18;
 		//					if (cursorInOutToggle)sx0 += 2;
 		//					float sx1 = sx0 + 16;
 		//
-		//					float sy0 = menuItems.get(cursorPosition)->caption->screenY + 4;
+		//					float sy0 = menuItems.at(cursorPosition)->caption->screenY + 4;
 		//					float sy1 = sy0 + 16;
 		//
 		//					GLUtils::drawTexture(cursor, 0, 1, 0, 1, sx0, sx1, sy0, sy1, 1.0f, GLUtils::FILTER_NEAREST);

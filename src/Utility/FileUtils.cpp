@@ -1280,7 +1280,7 @@ string FileUtils::lz4ByteArrayToBase64String(const u8* byteArray, unsigned long 
 
 
 	int return_value = 0;
-	return_value = LZ4_compress_default((char*)byteArray, compressed_data, sourceLength, max_dst_size);
+	return_value = LZ4_compress_default((char*)byteArray, compressed_data, sourceLength, (int)max_dst_size);
 	// Check return_value to determine what happened.
 	if (return_value < 0)
 		log.error("A negative result from LZ4_compress_default indicates a failure trying to compress the data.  See exit code (echo $?) for value returned.");
@@ -1294,7 +1294,7 @@ string FileUtils::lz4ByteArrayToBase64String(const u8* byteArray, unsigned long 
 
 
 	string zipDataHexString = "";
-	zipDataHexString = encodeByteArrayToBase64String((u8*)compressed_data, compressed_data_size);
+	zipDataHexString = encodeByteArrayToBase64String((u8*)compressed_data, (int)compressed_data_size);
 
 	free(compressed_data);
 

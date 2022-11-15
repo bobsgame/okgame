@@ -74,7 +74,7 @@ public:
 	float rectangleCursorCurrentY = 0;
 
 	
-	static ArrayList<sp<OKMenu>> activeMenus;
+	static vector<sp<OKMenu>> activeMenus;
 
 	sp<OKTexture>graphic = nullptr;
 	int filter = GLUtils::FILTER_NEAREST;

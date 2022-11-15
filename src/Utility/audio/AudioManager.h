@@ -31,7 +31,7 @@ class AudioManager : EnginePart
 public:
 	static Logger log;
 
-	static ArrayList<sp<AudioFile>> globalAudioFileList;
+	static vector<sp<AudioFile>> globalAudioFileList;
 
 	static bool loadedBuiltIn;
 	vector<sp<Sound>> playingAudioList;

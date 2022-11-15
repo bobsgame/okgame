@@ -584,17 +584,17 @@ void Main::initGWEN()
 	Uint64 start=0, now=0;
 	start = SDL_GetPerformanceCounter();
 
-	gwenRenderer = Gwen::Renderer::OpenGL_TruetypeFont();
+	gwenRenderer = new Gwen::Renderer::OpenGL_TruetypeFont();
 	gwenRenderer->Init();
 	gwenRenderer->SetDrawColor(Gwen::Color(255, 0, 0, 255));
-	gwenSkin = Gwen::Skin::TexturedBase(gwenRenderer);
+	gwenSkin = new Gwen::Skin::TexturedBase(gwenRenderer);
 	string path = Main::getPath();
 	gwenSkin->Init(path + "data/DefaultSkin.png");
 	gwenSkin->SetDefaultFont(Gwen::Utility::StringToUnicode(path + "data/fonts/Lato-Medium.ttf"), 16);
-	gwenCanvas = Gwen::Controls::Canvas(gwenSkin);
+	gwenCanvas = new Gwen::Controls::Canvas(gwenSkin);
 	gwenCanvas->SetSize(GLUtils::getViewportWidth(), GLUtils::getViewportHeight());
 	gwenCanvas->SetDrawBackground(false);
-	gwenInput = Gwen::Input::GwenSDL2();
+	gwenInput = new Gwen::Input::GwenSDL2();
 	gwenInput->Initialize(gwenCanvas);
 
 	now = SDL_GetPerformanceCounter();
