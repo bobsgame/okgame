@@ -437,7 +437,7 @@ private:
 	int currentPreviewRotationIndex = 0;
 	sp<vector<sp<OKColor>>>colors;
     
-	sp<vector<RotationSet>>rotationSets;
+	sp<vector<sp<RotationSet>>>rotationSets;
     
 	int fontHeight = 20;
 	int lastW = 0;

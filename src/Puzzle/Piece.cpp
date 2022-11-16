@@ -125,10 +125,10 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 		{
 			for (int i = 0; i < importExport_overrideBlockTypes->size(); i++)
 			{
-				BlockType b = importExport_overrideBlockTypes.get(i);
+				BlockType b = importExport_overrideBlockTypes->at(i);
 				sp<BlockType> bp(ms<BlockType>());
 				*bp = b;
-				overrideBlockTypes_DEPRECATED.add(bp);
+				overrideBlockTypes_DEPRECATED.push_back(bp);
 			}
 		}
 		importExport_overrideBlockTypes->clear();
@@ -145,7 +145,7 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 }
 
 //=========================================================================================================================
-Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, sp<vector<sp<BlockType>>>&blockTypes)
+Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType, sp<vector<sp<BlockType>>>blockTypes)
 {//=========================================================================================================================
 
 	this->game = gameInstance;
@@ -156,7 +156,7 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	int maxNumBlocks = 0;
 	for(int i=0;i<pieceType->rotationSet->size();i++)
 	{
-		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet.get(i)->blockOffsets->size());
+		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet->at(i)->blockOffsets->size());
 	}
 
 	if (pieceType->overrideBlockTypes_UUID->size()>0)
@@ -164,19 +164,19 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 		sp<vector<sp<BlockType>>>overrideBlockTypes;
 		for(int i=0;i<pieceType->overrideBlockTypes_UUID->size();i++)
 		{
-			overrideBlockTypes.add(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID.get(i)));
+			overrideBlockTypes->push_back(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID->at(i)));
 		}
 
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(sp<Block>(ms<Block>(gameInstance, grid, nullptr, grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
+			blocks->push_back(sp<Block>(ms<Block>(gameInstance, grid, nullptr, grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes))));
 		}
 	}
 	else
 	{
 		for (int b = 0; b < maxNumBlocks; b++)
 		{
-			blocks.add(sp<Block>(ms<Block>(gameInstance, grid, nullptr, grid->getRandomBlockType(blockTypes))));
+			blocks->push_back(sp<Block>(ms<Block>(gameInstance, grid, nullptr, grid->getRandomBlockType(blockTypes))));
 		}
 	}
 
@@ -200,7 +200,7 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 		sp<vector<sp<BlockType>>>overrideBlockTypes;
 		for (int i = 0; i<pieceType->overrideBlockTypes_UUID->size(); i++)
 		{
-			overrideBlockTypes.add(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID.get(i)));
+			overrideBlockTypes->push_back(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID->at(i)));
 		}
 
 		blockType = grid->getRandomBlockTypeDisregardingSpecialFrequency(overrideBlockTypes);
@@ -209,12 +209,12 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	int maxNumBlocks = 0;
 	for (int i = 0; i<pieceType->rotationSet->size(); i++)
 	{
-		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet.get(i)->blockOffsets->size());
+		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet->at(i)->blockOffsets->size());
 	}
 
 	for (int b = 0; b < maxNumBlocks; b++)
 	{
-		blocks.add(sp<Block>(ms<Block>(gameInstance, grid, nullptr, blockType)));
+		blocks->push_back(sp<Block>(ms<Block>(gameInstance, grid, nullptr, blockType)));
 	}
 
 	setRotation(0);
@@ -229,7 +229,7 @@ void Piece::init()
 	//initialize piece sp hack since can't do shared_from_this in constructor
 	for (int i = 0; i<blocks->size(); i++)
 	{
-		blocks.get(i)->piece = this->shared_from_this();
+		blocks->at(i)->piece = this->shared_from_this();
 	}
 
 	initColors();
@@ -246,7 +246,7 @@ void Piece::initColors()
 
 	for (int i = 0; i < blocks->size(); i++)
 	{
-		sp<Block> b = blocks.get(i);
+		sp<Block> b = blocks->at(i);
 
 		if (b->blockType->colors->size()>0)
 		{
@@ -267,11 +267,11 @@ void Piece::initColors()
 		//don't match a green crash piece with a green crash piece
 		for (int a = 0; a < blocks->size(); a++)
 		{
-			sp<Block> blockA = blocks.get(a);
+			sp<Block> blockA = blocks->at(a);
 
 			for (int b = 0; b < blocks->size(); b++)
 			{
-				sp<Block> blockB = blocks.get(b);
+				sp<Block> blockB = blocks->at(b);
 
 				if (blockB == blockA)
 				{
@@ -294,11 +294,11 @@ void Piece::initColors()
 		//don't match a green crash piece with a green gem
 		for (int a = 0; a < blocks->size(); a++)
 		{
-			sp<Block> blockA = blocks.get(a);
+			sp<Block> blockA = blocks->at(a);
 
 			for (int b = 0; b < blocks->size(); b++)
 			{
-				sp<Block> blockB = blocks.get(b);
+				sp<Block> blockB = blocks->at(b);
 
 				if (blockB == blockA)
 				{
@@ -333,7 +333,7 @@ void Piece::initColors()
 	{
 		//don't make 3 jewels of the same color
 
-		sp<OKColor>c = blocks.get(0)->getColor();
+		sp<OKColor>c = blocks->at(0)->getColor();
 
 		
 		if (c != nullptr)
@@ -342,7 +342,7 @@ void Piece::initColors()
 
 			for (int i = 0; i < blocks->size(); i++)
 			{
-				if (c != blocks.get(i)->getColor())
+				if (c != blocks->at(i)->getColor())
 				{
 					allTheSame = false;
 				}
@@ -350,11 +350,11 @@ void Piece::initColors()
 
 			if (allTheSame)
 			{
-				sp<Block> blockA = blocks.get(0);
+				sp<Block> blockA = blocks->at(0);
 
 				for (int b = 0; b < blocks->size(); b++)
 				{
-					sp<Block> blockB = blocks.get(b);
+					sp<Block> blockB = blocks->at(b);
 
 					if (blockB == blockA)
 					{
@@ -377,18 +377,18 @@ void Piece::setPieceBlockConnections()
 
 	for (int b = 0; b < blocks->size(); b++)
 	{
-		blocks.get(b)->connectedBlocksByPiece->clear();
+		blocks->at(b)->connectedBlocksByPiece->clear();
 	}
 
 	for (int b = 0; b < blocks->size(); b++)
 	{
 		for (int c = 0; c < blocks->size(); c++)
 		{
-			if (blocks.get(c) != blocks.get(b))
+			if (blocks->at(c) != blocks->at(b))
 			{
-				if (blocks.get(b)->connectedBlocksByPiece.contains(blocks.get(c)) == false)
+				if (blocks->at(b)->connectedBlocksByPiece->contains(blocks->at(c)) == false)
 				{
-					blocks.get(b)->connectedBlocksByPiece.add(blocks.get(c));
+					blocks->at(b)->connectedBlocksByPiece->push_back(blocks->at(c));
 				}
 			}
 		}
@@ -401,20 +401,20 @@ void Piece::setBlockColorConnectionsInPiece()
 
 	for (int b = 0; b < blocks->size(); b++)
 	{
-		blocks.get(b)->connectedBlocksByColor->clear();
+		blocks->at(b)->connectedBlocksByColor->clear();
 	}
 
 	for (int b = 0; b < blocks->size(); b++)
 	{
 		for (int c = 0; c < blocks->size(); c++)
 		{
-			if (blocks.get(c) != blocks.get(b))
+			if (blocks->at(c) != blocks->at(b))
 			{
-				if (blocks.get(b)->getColor() == blocks.get(c)->getColor())
+				if (blocks->at(b)->getColor() == blocks->at(c)->getColor())
 				{
-					if (blocks.get(b)->connectedBlocksByColor.contains(blocks.get(c)) == false)
+					if (blocks->at(b)->connectedBlocksByColor->contains(blocks->at(c)) == false)
 					{
-						blocks.get(b)->connectedBlocksByColor.add(blocks.get(c));
+						blocks->at(b)->connectedBlocksByColor->push_back(blocks->at(c));
 
 					}
 				}
@@ -426,7 +426,7 @@ void Piece::setBlockColorConnectionsInPiece()
 //=========================================================================================================================
 int Piece::getNumBlocksInCurrentRotation()
 {//=========================================================================================================================
-	return pieceType->rotationSet.get(currentRotation)->blockOffsets->size();
+	return pieceType->rotationSet->at(currentRotation)->blockOffsets->size();
 
 }
 
@@ -468,7 +468,7 @@ void Piece::update()
 
 	for (int i = 0; i < blocks->size(); i++)
 	{
-		sp<Block> b = blocks.get(i);
+		sp<Block> b = blocks->at(i);
 		if (b->blockType->counterType)
 		{
 			if (b->counterCount == -2)
@@ -495,7 +495,7 @@ void Piece::update()
 
 		for (int i = 0; i < blocks->size(); i++)
 		{
-			sp<Block> b = blocks.get(i);
+			sp<Block> b = blocks->at(i);
 
 			if (b->blockType->turnBackToNormalBlockAfterNPiecesLock != -1)
 			{
@@ -525,7 +525,7 @@ void Piece::update()
 
 	for (int i = 0; i < blocks->size(); i++)
 	{
-		blocks.get(i)->update();
+		blocks->at(i)->update();
 	}
 	if (holdingBlock != nullptr)
 	{
@@ -552,7 +552,7 @@ void Piece::renderOutlineFirstBlock(float x, float y, float alpha, bool asGhost)
 	float w = (float)cellW();
 	float h = (float)cellH();
 
-	sp<Block> b = blocks.get(0);
+	sp<Block> b = blocks->at(0);
 
 	float bx = x + b->xInPiece * w;
 	float by = y + b->yInPiece * h;
@@ -594,7 +594,7 @@ void Piece::renderOutlineBlockZeroZero(float x, float y, float alpha, bool asGho
 
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
-		sp<Block> b = blocks.get(i);
+		sp<Block> b = blocks->at(i);
 
 		//outline main piece
 		if (b->xInPiece == 0 && b->yInPiece == 0)
@@ -679,7 +679,7 @@ void Piece::renderAsCurrentPiece(float x, float y)
 		{
 			int ox = getGameType()->gridPixelsBetweenColumns;
 			int oy = getGameType()->gridPixelsBetweenRows;
-			sp<Block> b = blocks.get(i);
+			sp<Block> b = blocks->at(i);
 			float bx = x + b->xInPiece * w + b->xInPiece * ox;
 			float by = y + b->yInPiece * h + b->yInPiece * oy;
 
@@ -712,7 +712,7 @@ void Piece::render(float x, float y)
 {//=========================================================================================================================
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
-		sp<Block> b = blocks.get(i);
+		sp<Block> b = blocks->at(i);
 		b->render(x + b->xInPiece * cellW(), y + b->yInPiece * cellH(), 1.0f, 1.0f, true, false);
 	}
 }
@@ -723,7 +723,7 @@ void Piece::renderGhost(float x, float y, float alpha)
 
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
-		sp<Block> b = blocks.get(i);
+		sp<Block> b = blocks->at(i);
 
 		sp<OKColor>c = getGameLogic()->player->gridCheckeredBackgroundColor1;
 
@@ -749,7 +749,7 @@ void Piece::setBlocksSlamming()
 {//=========================================================================================================================
 	for (int i = 0; i < blocks->size(); i++)
 	{
-		sp<Block> b = blocks.get(i);
+		sp<Block> b = blocks->at(i);
 		b->slamming = true;
 		b->slamX = getScreenX() + (b->xInPiece) * cellW();
 		b->slamY = getScreenY() + (b->yInPiece) * cellH();
@@ -764,16 +764,16 @@ int Piece::getWidth()
 	int highestXOffset = -4;
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->xInPiece < lowestXOffset)
+		if (blocks->at(b)->xInPiece < lowestXOffset)
 		{
-			lowestXOffset = blocks.get(b)->xInPiece;
+			lowestXOffset = blocks->at(b)->xInPiece;
 		}
 	}
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->xInPiece > highestXOffset)
+		if (blocks->at(b)->xInPiece > highestXOffset)
 		{
-			highestXOffset = blocks.get(b)->xInPiece;
+			highestXOffset = blocks->at(b)->xInPiece;
 		}
 	}
 
@@ -789,16 +789,16 @@ int Piece::getHeight()
 	int highestYOffset = -4;
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->yInPiece < lowestYOffset)
+		if (blocks->at(b)->yInPiece < lowestYOffset)
 		{
-			lowestYOffset = blocks.get(b)->yInPiece;
+			lowestYOffset = blocks->at(b)->yInPiece;
 		}
 	}
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->yInPiece > highestYOffset)
+		if (blocks->at(b)->yInPiece > highestYOffset)
 		{
-			highestYOffset = blocks.get(b)->yInPiece;
+			highestYOffset = blocks->at(b)->yInPiece;
 		}
 	}
 
@@ -811,9 +811,9 @@ int Piece::getLowestOffsetX()
 	int lowestXOffset = 0;
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->xInPiece < lowestXOffset)
+		if (blocks->at(b)->xInPiece < lowestXOffset)
 		{
-			lowestXOffset = blocks.get(b)->xInPiece;
+			lowestXOffset = blocks->at(b)->xInPiece;
 		}
 	}
 
@@ -826,9 +826,9 @@ int Piece::getLowestOffsetY()
 	int lowestYOffset = 0;
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->yInPiece < lowestYOffset)
+		if (blocks->at(b)->yInPiece < lowestYOffset)
 		{
-			lowestYOffset = blocks.get(b)->yInPiece;
+			lowestYOffset = blocks->at(b)->yInPiece;
 		}
 	}
 
@@ -841,9 +841,9 @@ int Piece::getHighestOffsetX()
 	int highestXOffset = 0;
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->xInPiece > highestXOffset)
+		if (blocks->at(b)->xInPiece > highestXOffset)
 		{
-			highestXOffset = blocks.get(b)->xInPiece;
+			highestXOffset = blocks->at(b)->xInPiece;
 		}
 	}
 
@@ -856,9 +856,9 @@ int Piece::getHighestOffsetY()
 	int highestYOffset = 0;
 	for (int b = 0; b < getNumBlocksInCurrentRotation() && b < blocks->size(); b++)
 	{
-		if (blocks.get(b)->yInPiece > highestYOffset)
+		if (blocks->at(b)->yInPiece > highestYOffset)
 		{
-			highestYOffset = blocks.get(b)->yInPiece;
+			highestYOffset = blocks->at(b)->yInPiece;
 		}
 	}
 
@@ -905,7 +905,7 @@ void Piece::setRandomPieceColors(bool grayscale)
 	//TODO:
 	//		for(int i=0;i<colors->length;i++)
 	//		{
-	//			colors->get(i) = Color->black;
+	//			colors->at(i) = Color->black;
 	//		}
 	//
 	//		for(int i=0;i<colors->length;i++)
@@ -919,10 +919,10 @@ void Piece::setRandomPieceColors(bool grayscale)
 	//				if(grayscale)temp = Block->getRandomGrayscaleColor();
 	//				else temp = Block->getRandomColor();
 	//
-	//				for(int n=0;n<colors->length;n++)if(colors->get(n)==temp)taken=true;
+	//				for(int n=0;n<colors->length;n++)if(colors->at(n)==temp)taken=true;
 	//			}
 	//
-	//			colors->get(i)=temp;
+	//			colors->at(i)=temp;
 	//		}
 }
 
@@ -937,20 +937,20 @@ void Piece::setRotation(int rotation)
 		rotation -= (int)pieceType->rotationSet->size();
 	}
 
-	sp<Rotation>r = pieceType->rotationSet.get(rotation);
+	sp<Rotation>r = pieceType->rotationSet->at(rotation);
 
 	for (int i = 0; i < getNumBlocksInCurrentRotation() && i < blocks->size(); i++)
 	{
-		sp<BlockOffset>b = r->blockOffsets.get(i);
-		blocks.get(i)->setXYOffsetInPiece(b->x, b->y);
+		sp<BlockOffset>b = r->blockOffsets->at(i);
+		blocks->at(i)->setXYOffsetInPiece(b->x, b->y);
 	}
 }
 
 //=========================================================================================================================
-RotationSet Piece::get2BlockRotateAround00RotationSet()
+sp<RotationSet> Piece::get2BlockRotateAround00RotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("2 Block Rotate Around 0,0");
+	sp<RotationSet> rotations = ms<RotationSet>("2 Block Rotate Around 0,0");
 
 	//if(pieceType->name->equals("BLOB") || pieceType->name->equals("DAMA") || pieceType->name->equals("PUZZLEFIGHTER"))
 
@@ -958,43 +958,43 @@ RotationSet Piece::get2BlockRotateAround00RotationSet()
 	//if(rotation==0)
 	{
 		sp<Rotation>r = ms<Rotation>();
-		r->add(ms<BlockOffset>(0, 0));
-		r->add(ms<BlockOffset>(1, 0));
-		rotations.add(r);
+		r->push_back(ms<BlockOffset>(0, 0));
+		r->push_back(ms<BlockOffset>(1, 0));
+		rotations->push_back(r);
 	}
 
 	{
 		//if(rotation==1)
 		sp<Rotation>r = ms<Rotation>();
-		r->add(ms<BlockOffset>(0, 0));
-		r->add(ms<BlockOffset>(0, 1));
-		rotations.add(r);
+		r->push_back(ms<BlockOffset>(0, 0));
+		r->push_back(ms<BlockOffset>(0, 1));
+		rotations->push_back(r);
 	}
 
 	{
 		//if(rotation==2)
 		sp<Rotation>r = ms<Rotation>();
-		r->add(ms<BlockOffset>(0, 0));
-		r->add(ms<BlockOffset>(-1, 0));
-		rotations.add(r);
+		r->push_back(ms<BlockOffset>(0, 0));
+		r->push_back(ms<BlockOffset>(-1, 0));
+		rotations->push_back(r);
 	}
 
 	{
 		//if(rotation==3)
 		sp<Rotation>r = ms<Rotation>();
-		r->add(ms<BlockOffset>(0, 0));
-		r->add(ms<BlockOffset>(0, -1));
-		rotations.add(r);
+		r->push_back(ms<BlockOffset>(0, 0));
+		r->push_back(ms<BlockOffset>(0, -1));
+		rotations->push_back(r);
 	}
 
 	return rotations;
 }
 
 //=========================================================================================================================
-RotationSet Piece::get2BlockBottomLeftAlwaysFilledRotationSet()
+sp<RotationSet> Piece::get2BlockBottomLeftAlwaysFilledRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("2 Block BottomLeft Always Filled");
+	sp<RotationSet> rotations = ms<RotationSet>("2 Block BottomLeft Always Filled");
 
 	//if(pieceType->name->equals("DRBOB"))
 
@@ -1003,36 +1003,36 @@ RotationSet Piece::get2BlockBottomLeftAlwaysFilledRotationSet()
 	{
 		sp<Rotation>r = ms<Rotation>();
 		
-		r->add(ms<BlockOffset>(0, 0));
-		r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+		r->push_back(ms<BlockOffset>(0, 0));
+		r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 
 	{
 		//if(rotation==1)
 		sp<Rotation>r = ms<Rotation>();
 		
-		r->add(ms<BlockOffset>(0, -1));
-		r->add(ms<BlockOffset>(0, 0));
-			rotations.add(r);
+		r->push_back(ms<BlockOffset>(0, -1));
+		r->push_back(ms<BlockOffset>(0, 0));
+			rotations->push_back(r);
 		}
 
 	{
 		//if(rotation==2)
 		sp<Rotation>r = ms<Rotation>();
 		
-		r->add(ms<BlockOffset>(1, 0));
-		r->add(ms<BlockOffset>(0, 0));
-			rotations.add(r);
+		r->push_back(ms<BlockOffset>(1, 0));
+		r->push_back(ms<BlockOffset>(0, 0));
+			rotations->push_back(r);
 		}
 
 	{
 		//if(rotation==3)
 		sp<Rotation>r = ms<Rotation>();
 		
-		r->add(ms<BlockOffset>(0, 0));
-		r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+		r->push_back(ms<BlockOffset>(0, 0));
+		r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 
 	return rotations;
@@ -1040,10 +1040,10 @@ RotationSet Piece::get2BlockBottomLeftAlwaysFilledRotationSet()
 
 
 //=========================================================================================================================
-RotationSet Piece::get1BlockCursorRotationSet()
+sp<RotationSet> Piece::get1BlockCursorRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("1 Block Cursor");
+	sp<RotationSet> rotations = ms<RotationSet>("1 Block Cursor");
 
 	{
 		//if(pieceType->name->equals("PANELPUZZLE")) if(pieceType->name->equals("DAMASWAP_CURSOR"))
@@ -1052,8 +1052,8 @@ RotationSet Piece::get1BlockCursorRotationSet()
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1061,10 +1061,10 @@ RotationSet Piece::get1BlockCursorRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get2BlockHorizontalCursorRotationSet()
+sp<RotationSet> Piece::get2BlockHorizontalCursorRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("2 Block Horizontal Cursor");
+	sp<RotationSet> rotations = ms<RotationSet>("2 Block Horizontal Cursor");
 
 	{
 		//if(pieceType->name->equals("PANELPUZZLE_CURSOR"))
@@ -1072,9 +1072,9 @@ RotationSet Piece::get2BlockHorizontalCursorRotationSet()
 		{
 			sp<Rotation>r = ms<Rotation>();
 
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1082,10 +1082,10 @@ RotationSet Piece::get2BlockHorizontalCursorRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get2BlockVerticalCursorRotationSet()
+sp<RotationSet> Piece::get2BlockVerticalCursorRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("2 Block Vertical Cursor");
+	sp<RotationSet> rotations = ms<RotationSet>("2 Block Vertical Cursor");
 
 	{
 		//if(pieceType->name->equals("PANELPUZZLE_CURSOR"))
@@ -1093,9 +1093,9 @@ RotationSet Piece::get2BlockVerticalCursorRotationSet()
 		{
 			sp<Rotation>r = ms<Rotation>();
 
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1103,20 +1103,20 @@ RotationSet Piece::get2BlockVerticalCursorRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockHorizontalCursorRotationSet()
+sp<RotationSet> Piece::get3BlockHorizontalCursorRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block Horizontal Cursor");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block Horizontal Cursor");
 
 	{
 
 		{
 			sp<Rotation>r = ms<Rotation>();
 
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1124,20 +1124,20 @@ RotationSet Piece::get3BlockHorizontalCursorRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockVerticalCursorRotationSet()
+sp<RotationSet> Piece::get3BlockVerticalCursorRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block Vertical Cursor");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block Vertical Cursor");
 
 	{
 
 		{
 			sp<Rotation>r = ms<Rotation>();
 
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1145,10 +1145,10 @@ RotationSet Piece::get3BlockVerticalCursorRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockCursorRotationSet()
+sp<RotationSet> Piece::get4BlockCursorRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("4 Block Cursor");
+	sp<RotationSet> rotations = ms<RotationSet>("4 Block Cursor");
 
 	{
 		//if(pieceType->name->equals("PUZZLEFIGHTER_CURSOR"))
@@ -1156,11 +1156,11 @@ RotationSet Piece::get4BlockCursorRotationSet()
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1168,10 +1168,10 @@ RotationSet Piece::get4BlockCursorRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockVerticalRotationSet()
+sp<RotationSet> Piece::get3BlockVerticalRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block Vertical Swap");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block Vertical Swap");
 
 	{
 		//if(pieceType->name->equals("COLUMNS"))
@@ -1180,40 +1180,40 @@ RotationSet Piece::get3BlockVerticalRotationSet()
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, -2));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, -2));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, -2));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -2));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, -2));
-			r->add(ms<BlockOffset>(0, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, -2));
+			r->push_back(ms<BlockOffset>(0, 0));
+			rotations->push_back(r);
 		}
 	}
 	return rotations;
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockHorizontalRotationSet()
+sp<RotationSet> Piece::get3BlockHorizontalRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block Horizontal Swap");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block Horizontal Swap");
 
 	{
 		//if(pieceType->name->equals("COLUMNS"))
@@ -1222,167 +1222,167 @@ RotationSet Piece::get3BlockHorizontalRotationSet()
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 
-			r->add(ms<BlockOffset>(0,0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0,0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 	}
 	return rotations;
 }
 //=========================================================================================================================
-RotationSet Piece::get3BlockTRotationSet()
+sp<RotationSet> Piece::get3BlockTRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block T");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block T");
 
 	{
 		//if(pieceType->name->equals("TETRID_T"))
 		/*
-		->->->->->->get(0)
-		->->->get(1)->->->[2]
+		->->->->->->at(0)
+		->->->at(1)->->->[2]
 		*/
 		//if(rotation==0)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->[1]
-		->->->->->->get(0)
+		->->->->->->at(0)
 		->->[2]
 		*/
 		//if(rotation==1)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->[2]->->->[1]
-		->->->->->->get(0)
+		->->->->->->at(0)
 		*/
 		//if(rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->->->->->[2]
-		->->->->->->get(0)
+		->->->->->->at(0)
 		->->->->->->->->[1]
 		*/
 		//if(rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 1));
-			r->add(ms<BlockOffset>(1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(1, -1));
+			rotations->push_back(r);
 		}
 	}
 	return rotations;
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockLRotationSet()
+sp<RotationSet> Piece::get3BlockLRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block L");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block L");
 
 	{
 		//if(pieceType->name->equals("TETRID_L"))
 		/*
 		->->->[1]
-		->->->->->->->get(0)
+		->->->->->->->at(0)
 		->->->->->->[2]
 		*/
 		//if(rotation==0)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->->->->->->[1]
-		->->->[2]->get(0)
+		->->->[2]->at(0)
 		*/
 		//if(rotation==1)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->->->[2]
-		->->->->->->->get(0)
+		->->->->->->->at(0)
 		->->->->->->->->->[1]
 		*/
 		//if(rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 1));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 
 		/*
-		->->->->->->->get(0)[2]
+		->->->->->->->at(0)[2]
 		->->->[1]
 		*/
 		//if(rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1390,69 +1390,69 @@ RotationSet Piece::get3BlockLRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockJRotationSet()
+sp<RotationSet> Piece::get3BlockJRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block J");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block J");
 
 	{
 		//if(pieceType->name->equals("TETRID_J"))
 		/*
 		->->->->->->->->->[1]
-		->->->->->->->get(0)
+		->->->->->->->at(0)
 		->->->->->->[2]
 		*/
 		//if(rotation==0)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 
 		/*
-		->->->[2]->get(0)
+		->->->[2]->at(0)
 		->->->->->->->->->[1]
 		*/
 		//if(rotation==1)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 1));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->->->[2]
-		->->->->->->->get(0)
+		->->->->->->->at(0)
 		->->->[1]
 		*/
 		//if(rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->[1]
-		->->->->->->->get(0)[2]
+		->->->->->->->at(0)[2]
 		*/
 		//if(rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1460,68 +1460,68 @@ RotationSet Piece::get3BlockJRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockIRotationSet()
+sp<RotationSet> Piece::get3BlockIRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block I");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block I");
 
 	{
 		//if(pieceType->name->equals("TETRID_I"))
 
 		/*
 		->->->->[1]
-		->->->->->get(0)
+		->->->->->at(0)
 		->->->->[2]
 		*/
 		//if(rotation==0 || rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 
 		/*
-		->->[2]->get(0)[1]
+		->->[2]->at(0)[1]
 		*/
 		//if(rotation==1 || rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->[2]
-		->->->->->get(0)
+		->->->->->at(0)
 		->->->->[1]
 		*/
 		//if(rotation==0 || rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 
 		/*
-		->->->get(1)->get(0)[2]
+		->->->at(1)->at(0)[2]
 		*/
 		//if(rotation==1 || rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1529,67 +1529,67 @@ RotationSet Piece::get3BlockIRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockCRotationSet()
+sp<RotationSet> Piece::get3BlockCRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block C");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block C");
 
 	{
 		//if(pieceType->name->equals("TETRID_C"))
 		/*
-		->->[2]->get(0)
+		->->[2]->at(0)
 		->->->->->[1]
 		*/
 		//if(rotation==0)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->->[2]
-		->->->get(1)->get(0)
+		->->->at(1)->at(0)
 		*/
 		//if(rotation==1)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->[1]
-		->->->get(0)[2]
+		->->->at(0)[2]
 		*/
 		//if(rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 
 		/*
-		->->->get(0)[1]
+		->->->at(0)[1]
 		->->[2]
 		*/
 		//if(rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1597,70 +1597,70 @@ RotationSet Piece::get3BlockCRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get3BlockDRotationSet()
+sp<RotationSet> Piece::get3BlockDRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("3 Block D");
+	sp<RotationSet> rotations = ms<RotationSet>("3 Block D");
 
 	{
 		//if(pieceType->name->equals("TETRID_D"))
 		/*
 		->->[1]
-		->->->->->->get(0)
+		->->->->->->at(0)
 		->->->->->->->->[2]
 		*/
 		//if(rotation==0 || rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->->->->->[1]
-		->->->->->->get(0)
+		->->->->->->at(0)
 		->->[2]
 		*/
 		//if(rotation==1 || rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 		/*
 		->->[2]
-		->->->->->->get(0)
+		->->->->->->at(0)
 		->->->->->->->->[1]
 		*/
 		//if(rotation==0 || rotation==2)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 1));
-			r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 
 		/*
 		->->->->->->->->[2]
-		->->->->->->get(0)
+		->->->->->->at(0)
 		->->[1]
 		*/
 		//if(rotation==1 || rotation==3)
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(1, -1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1668,10 +1668,10 @@ RotationSet Piece::get3BlockDRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockORotationSet()
+sp<RotationSet> Piece::get4BlockORotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("4 Block O");
+	sp<RotationSet> rotations = ms<RotationSet>("4 Block O");
 
 	{
 		//same everywhere
@@ -1679,42 +1679,42 @@ RotationSet Piece::get4BlockORotationSet()
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(1, -1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
 
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1722,10 +1722,10 @@ RotationSet Piece::get4BlockORotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockSolidRotationSet()
+sp<RotationSet> Piece::get4BlockSolidRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("4 Block Solid");
+	sp<RotationSet> rotations = ms<RotationSet>("4 Block Solid");
 
 	{
 		//same everywhere
@@ -1733,11 +1733,11 @@ RotationSet Piece::get4BlockSolidRotationSet()
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(1, -1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1745,10 +1745,10 @@ RotationSet Piece::get4BlockSolidRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get9BlockSolidRotationSet()
+sp<RotationSet> Piece::get9BlockSolidRotationSet()
 {//=========================================================================================================================
 
-	RotationSet rotations("9 Block Solid");
+	sp<RotationSet> rotations = ms<RotationSet>("9 Block Solid");
 
 	{
 		//same everywhere
@@ -1756,16 +1756,16 @@ RotationSet Piece::get9BlockSolidRotationSet()
 		{
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(2, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(2, -1));
-			r->add(ms<BlockOffset>(0, -2));
-			r->add(ms<BlockOffset>(1, -2));
-			r->add(ms<BlockOffset>(2, -2));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(2, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(2, -1));
+			r->push_back(ms<BlockOffset>(0, -2));
+			r->push_back(ms<BlockOffset>(1, -2));
+			r->push_back(ms<BlockOffset>(2, -2));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1773,198 +1773,198 @@ RotationSet Piece::get9BlockSolidRotationSet()
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockIRotationSet(RotationType type)
+sp<RotationSet> Piece::get4BlockIRotationSet(sp<RotationType> type)
 {//=========================================================================================================================
 
 	string name = "4 Block I";
-	if (type == RotationType::DTET)name += " (DTET)";
-	if (type == RotationType::SRS)name += " (SRS)";
-	if (type == RotationType::SEGA)name += " (SEGA)";
-	if (type == RotationType::NES)name += " (NES)";
-	if (type == RotationType::GB)name += " (GB)";
-	RotationSet rotations(name);
+	if (*type.get() == RotationType::DTET)name += " (DTET)";
+	if (*type.get() == RotationType::SRS)name += " (SRS)";
+	if (*type.get() == RotationType::SEGA)name += " (SEGA)";
+	if (*type.get() == RotationType::NES)name += " (NES)";
+	if (*type.get() == RotationType::GB)name += " (GB)";
+	sp<RotationSet> rotations = ms<RotationSet>(name);
 
-	if (type == RotationType::SRS || type == RotationType::DTET || type == RotationType::SEGA) //unique for SRS: 4 position ISZ rotation
+	if (*type.get() == RotationType::SRS || *type.get() == RotationType::DTET || *type.get() == RotationType::SEGA) //unique for SRS: 4 position ISZ rotation
 	{
-		if (type == RotationType::SRS || type == RotationType::SEGA)
+		if (*type.get() == RotationType::SRS || *type.get() == RotationType::SEGA)
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
 
-			r->add(ms<BlockOffset>(-2, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-2, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::DTET)
+		if (*type.get() == RotationType::DTET)
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-2, 1));
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-2, 1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, 2));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 2));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SRS || type == RotationType::DTET)
+		if (*type.get() == RotationType::SRS || *type.get() == RotationType::DTET)
 		{
 			{
 				//if(rotation==2)
 				sp<Rotation>r = ms<Rotation>();
 				
-				r->add(ms<BlockOffset>(1, 1));
+				r->push_back(ms<BlockOffset>(1, 1));
 
-				r->add(ms<BlockOffset>(0, 1));
-				r->add(ms<BlockOffset>(-1, 1));
-				r->add(ms<BlockOffset>(-2, 1));
-			rotations.add(r);
+				r->push_back(ms<BlockOffset>(0, 1));
+				r->push_back(ms<BlockOffset>(-1, 1));
+				r->push_back(ms<BlockOffset>(-2, 1));
+			rotations->push_back(r);
 		}
 			{
 				//if(rotation==3)
 				sp<Rotation>r = ms<Rotation>();
 				
-				r->add(ms<BlockOffset>(-1, 2));
+				r->push_back(ms<BlockOffset>(-1, 2));
 
-				r->add(ms<BlockOffset>(-1, 1));
-				r->add(ms<BlockOffset>(-1, 0));
-				r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+				r->push_back(ms<BlockOffset>(-1, 1));
+				r->push_back(ms<BlockOffset>(-1, 0));
+				r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 		}
-		if (type == RotationType::SEGA)
+		if (*type.get() == RotationType::SEGA)
 		{
 			{
 				//if(rotation==2)
 				sp<Rotation>r = ms<Rotation>();
 				
-				r->add(ms<BlockOffset>(1, 0));
-				r->add(ms<BlockOffset>(0, 0));
-				r->add(ms<BlockOffset>(-1, 0));
-				r->add(ms<BlockOffset>(-2, 0));
-			rotations.add(r);
+				r->push_back(ms<BlockOffset>(1, 0));
+				r->push_back(ms<BlockOffset>(0, 0));
+				r->push_back(ms<BlockOffset>(-1, 0));
+				r->push_back(ms<BlockOffset>(-2, 0));
+			rotations->push_back(r);
 		}
 			{
 				//if(rotation==3)
 				sp<Rotation>r = ms<Rotation>();
 				
 
-				r->add(ms<BlockOffset>(0, 2));
-				r->add(ms<BlockOffset>(0, 1));
-				r->add(ms<BlockOffset>(0, 0));
+				r->push_back(ms<BlockOffset>(0, 2));
+				r->push_back(ms<BlockOffset>(0, 1));
+				r->push_back(ms<BlockOffset>(0, 0));
 
-				r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+				r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 		}
 	}
 
-	if (type == RotationType::GB)
+	if (*type.get() == RotationType::GB)
 	{
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(2, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(2, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, -2));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -2));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(2, 0));
+			r->push_back(ms<BlockOffset>(2, 0));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 1));
 
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, -2));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, -2));
+			rotations->push_back(r);
 		}
 	}
 
-	if (type == RotationType::NES)
+	if (*type.get() == RotationType::NES)
 	{
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-2, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-2, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, -2));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -2));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
 
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(-2, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(-2, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 1));
 
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, -2));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, -2));
+			rotations->push_back(r);
 		}
 	}
 
@@ -1972,124 +1972,124 @@ RotationSet Piece::get4BlockIRotationSet(RotationType type)
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockJRotationSet(RotationType type)
+sp<RotationSet> Piece::get4BlockJRotationSet(sp<RotationType> type)
 {//=========================================================================================================================
 
-	//RotationSet rotations("4 Block J");
+	//sp<RotationSet> rotations = ms<RotationSet>("4 Block J");
 	string name = "4 Block J";
-	if (type == RotationType::DTET)name += " (DTET)";
-	if (type == RotationType::SRS)name += " (SRS)";
-	if (type == RotationType::SEGA)name += " (SEGA)";
-	if (type == RotationType::NES)name += " (NES)";
-	if (type == RotationType::GB)name += " (GB)";
-	RotationSet rotations(name);
+	if (*type.get() == RotationType::DTET)name += " (DTET)";
+	if (*type.get() == RotationType::SRS)name += " (SRS)";
+	if (*type.get() == RotationType::SEGA)name += " (SEGA)";
+	if (*type.get() == RotationType::NES)name += " (NES)";
+	if (*type.get() == RotationType::GB)name += " (GB)";
+	sp<RotationSet> rotations = ms<RotationSet>(name);
 
-	if (type == RotationType::SRS) //unique for SRS: flat side down
+	if (*type.get() == RotationType::SRS) //unique for SRS: flat side down
 	{
 		{
 			//if(rotation==0)//this is rotation 2 for every other game()
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(-1, 0));
 
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 1));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 	}
 
-	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES || type == RotationType::DTET)
+	if (*type.get() == RotationType::SEGA || *type.get() == RotationType::GB || *type.get() == RotationType::NES || *type.get() == RotationType::DTET)
 	{
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SEGA || type == RotationType::DTET)
+		if (*type.get() == RotationType::SEGA || *type.get() == RotationType::DTET)
 		{
 			//if(rotation==2)//SRS rotation 0 but down 1 //down one from other games, on floor
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::GB || type == RotationType::NES)
+		if (*type.get() == RotationType::GB || *type.get() == RotationType::NES)
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
 
-			r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==3)//SRS rotation 1
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(1, -1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -2097,126 +2097,126 @@ RotationSet Piece::get4BlockJRotationSet(RotationType type)
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockLRotationSet(RotationType type)
+sp<RotationSet> Piece::get4BlockLRotationSet(sp<RotationType> type)
 {//=========================================================================================================================
 
-	//RotationSet rotations("4 Block L");
+	//sp<RotationSet> rotations = ms<RotationSet>("4 Block L");
 	string name = "4 Block L";
-	if (type == RotationType::DTET)name += " (DTET)";
-	if (type == RotationType::SRS)name += " (SRS)";
-	if (type == RotationType::SEGA)name += " (SEGA)";
-	if (type == RotationType::NES)name += " (NES)";
-	if (type == RotationType::GB)name += " (GB)";
-	RotationSet rotations(name);
+	if (*type.get() == RotationType::DTET)name += " (DTET)";
+	if (*type.get() == RotationType::SRS)name += " (SRS)";
+	if (*type.get() == RotationType::SEGA)name += " (SEGA)";
+	if (*type.get() == RotationType::NES)name += " (NES)";
+	if (*type.get() == RotationType::GB)name += " (GB)";
+	sp<RotationSet> rotations = ms<RotationSet>(name);
 
-	if (type == RotationType::SRS) //unique for SRS: flat side down
+	if (*type.get() == RotationType::SRS) //unique for SRS: flat side down
 	{
 		{
 			//if(rotation==0)//this is rotation 2 for every other game()
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
 
-			r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 	}
 
-	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES || type == RotationType::DTET)
+	if (*type.get() == RotationType::SEGA || *type.get() == RotationType::GB || *type.get() == RotationType::NES || *type.get() == RotationType::DTET)
 	{
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SEGA || type == RotationType::DTET)
+		if (*type.get() == RotationType::SEGA || *type.get() == RotationType::DTET)
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::GB || type == RotationType::NES)
+		if (*type.get() == RotationType::GB || *type.get() == RotationType::NES)
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==2)//down one from other games, on floor
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 1));
 
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -2224,7 +2224,7 @@ RotationSet Piece::get4BlockLRotationSet(RotationType type)
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockSRotationSet(RotationType type)
+sp<RotationSet> Piece::get4BlockSRotationSet(sp<RotationType> type)
 {//=========================================================================================================================
 
 	//type=RotationType->SRS;
@@ -2233,151 +2233,151 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 	//type=RotationType->NES;
 	//type=RotationType->GB;
 
-	//RotationSet rotations("4 Block S");
+	//sp<RotationSet> rotations = ms<RotationSet>("4 Block S");
 	string name = "4 Block S";
-	if (type == RotationType::DTET)name += " (DTET)";
-	if (type == RotationType::SRS)name += " (SRS)";
-	if (type == RotationType::SEGA)name += " (SEGA)";
-	if (type == RotationType::NES)name += " (NES)";
-	if (type == RotationType::GB)name += " (GB)";
-	RotationSet rotations(name);
+	if (*type.get() == RotationType::DTET)name += " (DTET)";
+	if (*type.get() == RotationType::SRS)name += " (SRS)";
+	if (*type.get() == RotationType::SEGA)name += " (SEGA)";
+	if (*type.get() == RotationType::NES)name += " (NES)";
+	if (*type.get() == RotationType::GB)name += " (GB)";
+	sp<RotationSet> rotations = ms<RotationSet>(name);
 
-	if (type == RotationType::SRS || type == RotationType::DTET) //unique for SRS: 4 position ISZ rotation
+	if (*type.get() == RotationType::SRS || *type.get() == RotationType::DTET) //unique for SRS: 4 position ISZ rotation
 	{
-		if (type == RotationType::SRS)
+		if (*type.get() == RotationType::SRS)
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::DTET)
+		if (*type.get() == RotationType::DTET)
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
 
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(0, 1));
 
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
 
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 	}
 
-	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES)
+	if (*type.get() == RotationType::SEGA || *type.get() == RotationType::GB || *type.get() == RotationType::NES)
 	{
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SEGA || type == RotationType::GB)
+		if (*type.get() == RotationType::SEGA || *type.get() == RotationType::GB)
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(-1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(-1, -1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::NES)
+		if (*type.get() == RotationType::NES)
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SEGA || type == RotationType::GB)
+		if (*type.get() == RotationType::SEGA || *type.get() == RotationType::GB)
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::NES)
+		if (*type.get() == RotationType::NES)
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -2385,125 +2385,125 @@ RotationSet Piece::get4BlockSRotationSet(RotationType type)
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockTRotationSet(RotationType type)
+sp<RotationSet> Piece::get4BlockTRotationSet(sp<RotationType> type)
 {//=========================================================================================================================
 
-	//RotationSet rotations("4 Block T");
+	//sp<RotationSet> rotations = ms<RotationSet>("4 Block T");
 	string name = "4 Block T";
-	if (type == RotationType::DTET)name += " (DTET)";
-	if (type == RotationType::SRS)name += " (SRS)";
-	if (type == RotationType::SEGA)name += " (SEGA)";
-	if (type == RotationType::NES)name += " (NES)";
-	if (type == RotationType::GB)name += " (GB)";
-	RotationSet rotations(name);
+	if (*type.get() == RotationType::DTET)name += " (DTET)";
+	if (*type.get() == RotationType::SRS)name += " (SRS)";
+	if (*type.get() == RotationType::SEGA)name += " (SEGA)";
+	if (*type.get() == RotationType::NES)name += " (NES)";
+	if (*type.get() == RotationType::GB)name += " (GB)";
+	sp<RotationSet> rotations = ms<RotationSet>(name);
 
-	if (type == RotationType::SRS) //unique for SRS: flat side down
+	if (*type.get() == RotationType::SRS) //unique for SRS: flat side down
 	{
 		{
 			//if(rotation==0)//this is rotation 2 for every other game()
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
 
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 	}
 
-	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES || type == RotationType::DTET)
+	if (*type.get() == RotationType::SEGA || *type.get() == RotationType::GB || *type.get() == RotationType::NES || *type.get() == RotationType::DTET)
 	{
 		{
 			//if(rotation==0)//SRS rotation 2, same as NES,GB
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
 
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==1)//SRS rotation 3, same as NES,GB
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SEGA || type == RotationType::DTET)
+		if (*type.get() == RotationType::SEGA || *type.get() == RotationType::DTET)
 		{
 			//if(rotation==2)//down one from other games, on floor
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::GB || type == RotationType::NES)
+		if (*type.get() == RotationType::GB || *type.get() == RotationType::NES)
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
 
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==3)//STS rotation 1, same as NES,GB
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 	}
 
@@ -2511,43 +2511,43 @@ RotationSet Piece::get4BlockTRotationSet(RotationType type)
 }
 
 //=========================================================================================================================
-RotationSet Piece::get4BlockZRotationSet(RotationType type)
+sp<RotationSet> Piece::get4BlockZRotationSet(sp<RotationType> type)
 {//=========================================================================================================================
 
-	//RotationSet rotations("4 Block Z");
+	//sp<RotationSet> rotations = ms<RotationSet>("4 Block Z");
 	string name = "4 Block Z";
-	if (type == RotationType::DTET)name += " (DTET)";
-	if (type == RotationType::SRS)name += " (SRS)";
-	if (type == RotationType::SEGA)name += " (SEGA)";
-	if (type == RotationType::NES)name += " (NES)";
-	if (type == RotationType::GB)name += " (GB)";
-	RotationSet rotations(name);
+	if (*type.get() == RotationType::DTET)name += " (DTET)";
+	if (*type.get() == RotationType::SRS)name += " (SRS)";
+	if (*type.get() == RotationType::SEGA)name += " (SEGA)";
+	if (*type.get() == RotationType::NES)name += " (NES)";
+	if (*type.get() == RotationType::GB)name += " (GB)";
+	sp<RotationSet> rotations = ms<RotationSet>(name);
 
-	if (type == RotationType::SRS || type == RotationType::DTET) //unique for SRS: 4 position ISZ rotation
+	if (*type.get() == RotationType::SRS || *type.get() == RotationType::DTET) //unique for SRS: 4 position ISZ rotation
 	{
-		if (type == RotationType::SRS)
+		if (*type.get() == RotationType::SRS)
 		{
 			//if(rotation==0)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-1, -1));
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, -1));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			rotations->push_back(r);
 		}
 		else
 		{
-			if (type == RotationType::DTET)
+			if (*type.get() == RotationType::DTET)
 			{
 				//if(rotation==0)
 				sp<Rotation>r = ms<Rotation>();
 				
-				r->add(ms<BlockOffset>(-1, 0));
-				r->add(ms<BlockOffset>(0, 0));
-				r->add(ms<BlockOffset>(0, 1));
-				r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+				r->push_back(ms<BlockOffset>(-1, 0));
+				r->push_back(ms<BlockOffset>(0, 0));
+				r->push_back(ms<BlockOffset>(0, 1));
+				r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 		}
 
@@ -2555,112 +2555,112 @@ RotationSet Piece::get4BlockZRotationSet(RotationType type)
 			//if(rotation==1)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(1, -1));
 
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==2)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
 
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 	}
 
-	if (type == RotationType::SEGA || type == RotationType::GB || type == RotationType::NES)
+	if (*type.get() == RotationType::SEGA || *type.get() == RotationType::GB || *type.get() == RotationType::NES)
 	{
 		{
 			//if(rotation==0)//same as STS rotation 2, same as NES,GB
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SEGA || type == RotationType::NES)
+		if (*type.get() == RotationType::SEGA || *type.get() == RotationType::NES)
 		{
 			//if(rotation==1 || rotation==3)//same as STS rotation 1, same as NES
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, -1));
-			r->add(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			r->push_back(ms<BlockOffset>(1, 0));
 
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, 1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::GB)
+		if (*type.get() == RotationType::GB)
 		{
 			//if(rotation==1 || rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, -1));
-			r->add(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			r->push_back(ms<BlockOffset>(0, 0));
 
-			r->add(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
 
-			r->add(ms<BlockOffset>(-1, 1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 1));
+			rotations->push_back(r);
 		}
 		{
 			//if(rotation==2)//same as STS rotation 2, same as NES,GB
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(1, 1));
+			r->push_back(ms<BlockOffset>(1, 1));
 
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(-1, 0));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::SEGA || type == RotationType::NES)
+		if (*type.get() == RotationType::SEGA || *type.get() == RotationType::NES)
 		{
 			//if(rotation==3)//same as STS rotation 1, same as NES
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(0, 1));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(1, 0));
-			r->add(ms<BlockOffset>(1, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(0, 1));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(1, 0));
+			r->push_back(ms<BlockOffset>(1, -1));
+			rotations->push_back(r);
 		}
 
-		if (type == RotationType::GB)
+		if (*type.get() == RotationType::GB)
 		{
 			//if(rotation==3)
 			sp<Rotation>r = ms<Rotation>();
 			
-			r->add(ms<BlockOffset>(-1, 1));
-			r->add(ms<BlockOffset>(-1, 0));
-			r->add(ms<BlockOffset>(0, 0));
-			r->add(ms<BlockOffset>(0, -1));
-			rotations.add(r);
+			r->push_back(ms<BlockOffset>(-1, 1));
+			r->push_back(ms<BlockOffset>(-1, 0));
+			r->push_back(ms<BlockOffset>(0, 0));
+			r->push_back(ms<BlockOffset>(0, -1));
+			rotations->push_back(r);
 		}
 	}
 

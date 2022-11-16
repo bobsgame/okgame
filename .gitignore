@@ -22,7 +22,7 @@ version.txt
 log.html
 src/Puzzle/Legacy.h
 _just steam.bat
-
+*.bak
 
 
 # Compiled Object files
