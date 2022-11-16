@@ -22,7 +22,7 @@ SoLoud::Soloud *AudioManager::soLoud = nullptr;
 #endif
 
 //global and static, shared between all audiomanagers
-vector<sp<AudioFile>> AudioManager::globalAudioFileList;
+sp<vector<sp<AudioFile>>> AudioManager::globalAudioFileList;
 bool AudioManager::loadedBuiltIn = false;
 
 //=========================================================================================================================
@@ -109,10 +109,10 @@ void AudioManager::initAudioLibrary()
 			File spriteFolderPathDir(spriteFolderString);
 			log.debug("createDirectories");
 			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-			sp<vector<string>>files;
+			vector<string>files;
 			log.debug("list");
 			spriteFolderPathDir.list(files);
-			sp<vector<string>>::iterator it = files.begin();
+			vector<string>::iterator it = files.begin();
 			for (; it != files.end(); ++it)
 			{
 				//cout << *it << endl;
@@ -135,9 +135,9 @@ void AudioManager::initAudioLibrary()
 			Path spriteFolderPath(spriteFolderString);
 			File spriteFolderPathDir(spriteFolderPath);
 			if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-			sp<vector<string>>files;
+			vector<string>files;
 			spriteFolderPathDir.list(files);
-			sp<vector<string>>::iterator it = files.begin();
+			vector<string>::iterator it = files.begin();
 			for (; it != files.end(); ++it)
 			{
 				//cout << *it << endl;

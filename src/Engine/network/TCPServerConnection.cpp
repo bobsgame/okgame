@@ -385,7 +385,7 @@ void TCPServerConnection::_checkForIncomingTraffic()
 
 		}
 
-		while (packetsToProcess->size() > 0)
+		while (packetsToProcess.size() > 0)
 		{
 
 			string s(packetsToProcess.front());
@@ -1291,30 +1291,30 @@ void TCPServerConnection::sendQueuedGameSaveUpdates()
 { //=========================================================================================================================
 
   //keep resending the same game update request every few seconds until we have a definite reply.
-	GameSaveUpdateRequest g = getQueuedGameSaveUpdateRequest_S(0);
+	sp<GameSaveUpdateRequest> g = getQueuedGameSaveUpdateRequest_S(0);
 
-	if (g.requestString!="")
+	if (g->requestString!="")
 	{
-		if (g.sent == true)
+		if (g->sent == true)
 		{
-			long long startTime = g.timeLastSent;
+			long long startTime = g->timeLastSent;
 			long long currentTime = System::currentHighResTimer();
 			int ticksPassed = (int)(System::getTicksBetweenTimes(startTime, currentTime));
 			if (ticksPassed > 3000)
 			{
-				g.timeLastSent = currentTime;
-				connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Encrypted_GameSave_Update_Request + to_string(g.requestID) + "," + g.requestString + ",gameSave:" + getEncryptedGameSave_S() + OKNet::endline);
+				g->timeLastSent = currentTime;
+				connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Encrypted_GameSave_Update_Request + to_string(g->requestID) + "," + g->requestString + ",gameSave:" + getEncryptedGameSave_S() + OKNet::endline);
 
-				threadLogInfo_S("Sent Game Save Update Request:" + to_string(g.requestID));
+				threadLogInfo_S("Sent Game Save Update Request:" + to_string(g->requestID));
 			}
 		}
 		else
 		{
 			//GameSaveUpdateRequest:14,flagsSet:`3`,gameSave
-			connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Encrypted_GameSave_Update_Request + to_string(g.requestID) + "," + g.requestString + ",gameSave:" + getEncryptedGameSave_S() + OKNet::endline);
-			g.sent = true;
+			connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::Encrypted_GameSave_Update_Request + to_string(g->requestID) + "," + g->requestString + ",gameSave:" + getEncryptedGameSave_S() + OKNet::endline);
+			g->sent = true;
 
-			threadLogInfo_S("Sent Game Save Update Request:" + to_string(g.requestID));
+			threadLogInfo_S("Sent Game Save Update Request:" + to_string(g->requestID));
 		}
 	}
 }
@@ -1689,7 +1689,7 @@ void TCPServerConnection::incomingOKGameActivityStreamUpdate_S(string s)
 	for(int i=(int)strings->size()-1;i<=0;i--)
 	{
 		string a = FileUtils::removeSwearWords(strings->at(i));
-		OKGame::activityStream.insert(OKGame::activityStream.begin()+0, a);
+		OKGame::activityStream->insert(OKGame::activityStream->begin()+0, a);
 
 		if (Main::globalSettings->hideNotifications == false)
 		{
@@ -1716,8 +1716,8 @@ void TCPServerConnection::incomingOKGameUserStatsForSpecificGameAndDifficulty(st
 			temp->objectiveString == gameStats->objectiveString
 			)
 		{
-			OKGame::userStatsPerGameAndDifficulty.erase(OKGame::userStatsPerGameAndDifficulty.begin()+i);
-			OKGame::userStatsPerGameAndDifficulty.insert(OKGame::userStatsPerGameAndDifficulty.begin() + i, gameStats);
+			OKGame::userStatsPerGameAndDifficulty->erase(OKGame::userStatsPerGameAndDifficulty->begin()+i);
+			OKGame::userStatsPerGameAndDifficulty->insert(OKGame::userStatsPerGameAndDifficulty->begin() + i, gameStats);
 			//delete temp;
 			return;
 		}

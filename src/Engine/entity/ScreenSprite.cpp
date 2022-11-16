@@ -155,7 +155,7 @@ void ScreenSprite::deleteFromMapEntityListAndReleaseTexture()
 		sp<ScreenSprite> se = getSpriteManager()->screenSpriteList->at(i);
 		if (se.get() == this)
 		{
-			getSpriteManager()->screenSpriteList.erase(getSpriteManager()->screenSpriteList.begin() + i);
+			getSpriteManager()->screenSpriteList->erase(getSpriteManager()->screenSpriteList->begin() + i);
 		}
 	}
 }

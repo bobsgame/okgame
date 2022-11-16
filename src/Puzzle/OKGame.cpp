@@ -24,21 +24,21 @@ queue<sp<GameType>>OKGame::_incomingGameTypes;
 mutex OKGame::_incomingGameTypes_Mutex;
 queue<sp<GameSequence>>OKGame::_incomingGameSequences;
 mutex OKGame::_incomingGameSequences_Mutex;
-vector<sp<GameType>> OKGame::loadedGameTypes;
-vector<sp<GameSequence>> OKGame::loadedGameSequences;
-vector<sp<Sprite>> OKGame::loadedSprites;
+sp<vector<sp<GameType>>> OKGame::loadedGameTypes;
+sp<vector<sp<GameSequence>>> OKGame::loadedGameSequences;
+sp<vector<sp<Sprite>>> OKGame::loadedSprites;
 
 
-vector<sp<OKGameUserStatsForSpecificGameAndDifficulty>> OKGame::userStatsPerGameAndDifficulty;
-vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByTotalTimePlayed;
-vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByTotalBlocksCleared;
-vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByPlaneswalkerPoints;
-vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topPlayersByEloScore;
-vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topGamesByTimeLasted;
-vector<sp<OKGameLeaderBoardAndHighScoreBoard>> OKGame::topGamesByBlocksCleared;
+sp<vector<sp<OKGameUserStatsForSpecificGameAndDifficulty>>> OKGame::userStatsPerGameAndDifficulty;
+sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> OKGame::topPlayersByTotalTimePlayed;
+sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> OKGame::topPlayersByTotalBlocksCleared;
+sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> OKGame::topPlayersByPlaneswalkerPoints;
+sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> OKGame::topPlayersByEloScore;
+sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> OKGame::topGamesByTimeLasted;
+sp<vector<sp<OKGameLeaderBoardAndHighScoreBoard>>> OKGame::topGamesByBlocksCleared;
 
 
-vector<string> OKGame::activityStream;
+sp<vector<string>> OKGame::activityStream;
 
 
 
@@ -264,9 +264,9 @@ void OKGame::initAssets()
 	Path spriteFolderPath(spriteFolderString);
 	File spriteFolderPathDir(spriteFolderPath);
 	if (spriteFolderPathDir.exists() == false)spriteFolderPathDir.createDirectories();
-	sp<vector<string>>files;
+	vector<string>files;
 	spriteFolderPathDir.list(files);
-	sp<vector<string>>::iterator it = files.begin();
+	vector<string>::iterator it = files.begin();
 	for (; it != files.end(); ++it)
 	{
 		//cout << *it << endl;
@@ -1822,11 +1822,11 @@ void OKGame::loadGameTypesFromXML()
 	//show all files in dir
 	for (int i = 0; i<3; i++)
 	{
-		sp<vector<string>>files;
+		vector<string>files;
 		if (i == 0)builtInDataPathDir.list(files);
 		if (i == 1)userDataPathDir.list(files);
 		if (i == 2)downloadedDataPathDir.list(files);
-		sp<vector<string>>::iterator it = files.begin();
+		vector<string>::iterator it = files.begin();
 		for (; it != files.end(); ++it)
 		{
 			//cout << *it << endl;
@@ -1905,11 +1905,11 @@ void OKGame::loadGameSequencesFromXML()
 	//show all files in dir
 	for(int i=0;i<3;i++)
 	{
-		sp<vector<string>>files;
+		vector<string>files;
 		if(i==0)builtInDataPathDir.list(files);
 		if(i==1)userDataPathDir.list(files);
 		if(i==2)downloadedDataPathDir.list(files);
-		sp<vector<string>>::iterator it = files.begin();
+		vector<string>::iterator it = files.begin();
 		for (; it != files.end(); ++it)
 		{
 			//cout << *it << endl;
@@ -2122,10 +2122,10 @@ sp<vector<string>> OKGame::getRoomConfigsList()
 	sp<vector<string>> roomConfigFileNames;
 
 
-	sp<vector<string>>files;
+	vector<string>files;
 	userDataPathDir.list(files);
 
-	sp<vector<string>>::iterator it = files.begin();
+	vector<string>::iterator it = files.begin();
 	for (; it != files.end(); ++it)
 	{
 		//cout << *it << endl;
@@ -2410,7 +2410,7 @@ void OKGame::getGameTypesAndSequencesFromServer()
 									{
 										if (loadedGameTypes->at(i).get() == existing.get())
 										{
-											loadedGameTypes.erase(loadedGameTypes.begin() + i);
+											loadedGameTypes->erase(loadedGameTypes->begin() + i);
 											i--;
 										}
 									}
@@ -2442,7 +2442,7 @@ void OKGame::getGameTypesAndSequencesFromServer()
 									{
 										if (loadedGameSequences->at(i).get() == existing.get())
 										{
-											loadedGameSequences.erase(loadedGameSequences.begin() + i);
+											loadedGameSequences->erase(loadedGameSequences->begin() + i);
 											i--;
 										}
 									}

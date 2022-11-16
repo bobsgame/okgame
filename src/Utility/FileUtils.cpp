@@ -78,14 +78,14 @@ void test()
 
 	//show all files in dir
 	{
-		sp<vector<string>>files;
+		vector<string>files;
 		tmpDir.list(files);
-		sp<vector<string>>::iterator it = files.begin();
+		vector<string>::iterator it = files.begin();
 		for (; it != files.end(); ++it)
 		{
 			cout << *it << endl;
 		}
-		tmpDir->remove(true);
+		tmpDir.remove(true);
 	}
 
 	//directory iterator
@@ -115,10 +115,10 @@ string FileUtils::removeSwearWords(string text)
 
 	if(swearWords==nullptr)
 	{
-		swearWords = loadTextFileFromExePathIntosp<VectorOfStringsAndTrim("/data/misc/swearwords.txt");
+		swearWords = loadTextFileFromExePathIntoVectorOfStringsAndTrim("/data/misc/swearwords.txt");
 	}
 
-	for(int i=0;i<swearWords->>size();i++)
+	for(int i=0;i<swearWords->size();i++)
 	{
 		string word = swearWords->at(i);
 		int pos = (int)text.find(word);
@@ -706,10 +706,10 @@ string FileUtils::loadTextFileFromExePathAndTrim(string filename)
 }
 
 //=========================================================================================================================
-sp<vector<string>> FileUtils::loadTextFileIntosp<VectorOfStringsAndTrim(string filename)
+sp<vector<string>> FileUtils::loadTextFileIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
-	sp<vector<string>>>lines;// = ms<vector><string>();// = ms<vector><string>();
+	sp<vector<string>>lines;// = ms<vector><string>();// = ms<vector><string>();
 
 	string line;
 	stringstream dosString;
@@ -725,7 +725,7 @@ sp<vector<string>> FileUtils::loadTextFileIntosp<VectorOfStringsAndTrim(string f
 }
 
 //=========================================================================================================================
-sp<vector<string>> FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTrim(string filename)
+sp<vector<string>> FileUtils::loadTextFileFromExePathIntoVectorOfStringsAndTrim(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -802,7 +802,7 @@ sp<vector<string>> FileUtils::loadTextFileFromExePathIntosp<VectorOfStringsAndTr
 
 
 //=========================================================================================================================
-sp<ByteArray>>FileUtils::loadByteFile(string filename)
+sp<ByteArray>FileUtils::loadByteFile(string filename)
 {//=========================================================================================================================
 
 
@@ -911,7 +911,7 @@ sp<ByteArray>>FileUtils::loadByteFile(string filename)
 }
 
 //=========================================================================================================================
-sp<ByteArray>>FileUtils::loadByteFileFromExePath(string filename)
+sp<ByteArray>FileUtils::loadByteFileFromExePath(string filename)
 {//=========================================================================================================================
 
 	filename = Main::getPath() + filename;
@@ -1089,7 +1089,7 @@ sp<ByteArray> FileUtils::decodeBase64StringToByteArray(std::string const& encode
 
 
 
-	long in_len = (long)encoded_string->size();
+	long in_len = (long)encoded_string.size();
 	int i = 0;
 	int j = 0;
 	int in_ = 0;
@@ -2709,7 +2709,7 @@ void OKFile::deleteFile()
 	File f(path);
 	if (f.exists())
 	{
-		f->remove();
+		f.remove();
 	}
 
 }
@@ -2748,6 +2748,3 @@ Think of myVec as an empty sp<vector which can have new items appended to it usi
 
 
 
-
-
->
