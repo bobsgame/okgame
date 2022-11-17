@@ -368,8 +368,8 @@ void ERROR_draw_error_console()
 	{
 		line++;
 
-		if (x == amount_of_errors - 1)error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, error_messages[x].c_str(), green_COLOR, black_COLOR);
-		else error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, error_messages[x].c_str(), white_COLOR, black_COLOR);
+		if (x == amount_of_errors - 1)error_SURFACE = ms<SDL_Surface>(TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8.get(), error_messages[x].c_str(), green_COLOR, black_COLOR));
+		else error_SURFACE = ms<SDL_Surface>(TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8.get(), error_messages[x].c_str(), white_COLOR, black_COLOR));
 
 		error_TEXTURE = GLUtils::loadTextureFromSurface(string(error_messages[x]), error_SURFACE);
 
@@ -377,7 +377,7 @@ void ERROR_draw_error_console()
 
 		if (error_SURFACE != NULL)
 		{
-			SDL_FreeSurface(error_SURFACE);
+			SDL_FreeSurface(error_SURFACE.get());
 			error_SURFACE = NULL;
 		}
 		if (error_TEXTURE != NULL)
@@ -473,7 +473,7 @@ void DEBUG_draw_overlays()
 	{
 		if (DEBUG_overlays[x] != NULL)
 		{
-			error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, DEBUG_overlays[x]->text.c_str(), white_COLOR, black_COLOR);
+			error_SURFACE = ms<SDL_Surface>(TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8.get(), DEBUG_overlays[x]->text.c_str(), white_COLOR, black_COLOR));
 			error_TEXTURE = GLUtils::loadTextureFromSurface(string(DEBUG_overlays[x]->text), error_SURFACE);
 
 			GLUtils::drawTexture(error_TEXTURE, (float)DEBUG_overlays[x]->x, (float)DEBUG_overlays[x]->y, GLUtils::FILTER_NEAREST);
@@ -482,7 +482,7 @@ void DEBUG_draw_overlays()
 
 			if (error_SURFACE != NULL)
 			{
-				SDL_FreeSurface(error_SURFACE);
+				SDL_FreeSurface(error_SURFACE.get());
 				error_SURFACE = NULL;
 			}
 			if (error_TEXTURE != NULL)
@@ -505,7 +505,7 @@ void DEBUG_draw_text(float screenX0, float screenY0, string text, sp<OKColor> co
 	SDL_Color black_COLOR = { 0,0,0,255 };
 
 
-	error_SURFACE = TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8, text.c_str(), white_COLOR, black_COLOR);
+	error_SURFACE = ms<SDL_Surface>(TTF_RenderText_Shaded(OKFont::ttf_bobsgame_8.get(), text.c_str(), white_COLOR, black_COLOR));
 	error_TEXTURE = GLUtils::loadTextureFromSurface(text.c_str(), error_SURFACE);
 
 	GLUtils::drawTexture(error_TEXTURE, screenX0, screenY0, GLUtils::FILTER_NEAREST);
@@ -513,7 +513,7 @@ void DEBUG_draw_text(float screenX0, float screenY0, string text, sp<OKColor> co
 
 	if (error_SURFACE != NULL)
 	{
-		SDL_FreeSurface(error_SURFACE);
+		SDL_FreeSurface(error_SURFACE.get());
 		error_SURFACE = NULL;
 	}
 	if (error_TEXTURE != NULL)

@@ -150,10 +150,10 @@ const string OKNet::Client_Location_Response = "Client_Location_Response:";
 Logger OKNet::log = Logger("OKNet");
 sp<Logger> OKNet::_threadLog = ms<Logger>("OKNet");
 
-vector<sp<UDPPeerConnection>> OKNet::udpConnections;
+sp<vector<sp<UDPPeerConnection>>> OKNet::udpConnections;
 sp<TCPServerConnection> OKNet::tcpServerConnection = ms<TCPServerConnection>();
 int OKNet::myStatus = status_AVAILABLE;
-vector<sp<Engine>> OKNet::engines;
+sp<vector<sp<Engine>>> OKNet::engines;
 
 bool OKNet::threadStarted = false;
 
@@ -172,12 +172,13 @@ OKNet::~OKNet()
 
 	for(int i=0;i<udpConnections->size();i++)
 	{
-		sp<UDPPeerConnection>c = udpConnections.get(i);
-		delete c;
+		sp<UDPPeerConnection>c = udpConnections->at(i);
+		//delete c;
+		c = nullptr;
 	}
 	udpConnections->clear();
 
-	tcpServerConnection.cleanup();
+	tcpServerConnection->cleanup();
 }
 
 mutex OKNet::threadLog_Mutex;
@@ -211,8 +212,8 @@ mutex OKNet::_stunMessageQueue_Mutex;
 //===============================================================================================
 void OKNet::addEngineToForwardMessagesTo(sp<Engine> e)
 {//===============================================================================================
-	if(engines.contains(e)==false)
-	engines.add(e);
+	if(engines->contains(e)==false)
+	engines->push_back(e);
 }
 //===============================================================================================
 void OKNet::update()
@@ -220,7 +221,7 @@ void OKNet::update()
 
 	if (threadStarted == false)
 	{
-		log->debug("Created STUN thread");
+		log.debug("Created STUN thread");
 		t = thread(&OKNet::updateThreadLoop);
 		threadStarted = true;
 	}
@@ -232,11 +233,11 @@ void OKNet::update()
 		udpSTUNMessageReceived(s);
 	}
 
-	tcpServerConnection.update();
+	tcpServerConnection->update();
 
 	for (int i = 0; i < udpConnections->size(); i++)
 	{
-		sp<UDPPeerConnection>p = udpConnections.get(i);
+		sp<UDPPeerConnection>p = udpConnections->at(i);
 		p->update();
 	}
 }
@@ -284,7 +285,7 @@ bool OKNet::_ensureSocketIsOpen()
 		}
 
 		setSocket_S(SDLNet_UDP_Open(Main::STUNServerUDPPort));//this is client port, not server port, so it is +1 if the server is hosted locally
-		log->debug("Opened socket to STUN server on port " + to_string(Main::STUNServerUDPPort));
+		log.debug("Opened socket to STUN server on port " + to_string(Main::STUNServerUDPPort));
 		if (!getSocket_S())
 		{
 			//SDLNet_FreeSocketSet(set);
@@ -304,7 +305,7 @@ bool OKNet::_ensureSocketIsOpen()
 				setSocketAddedToSet_S(true);
 		}
 
-		setStunChannel_S(SDLNet_UDP_Bind(getSocket_S(), -1, getStunServerIPAddress_S()));
+		setStunChannel_S(SDLNet_UDP_Bind(getSocket_S(), -1, getStunServerIPAddress_S().get()));
 
 		setSocketIsOpen_S(true);
 		return true;
@@ -333,8 +334,8 @@ bool OKNet::_checkForIncomingSTUNTraffic()
 
 		if (rd > 0)
 		{
-			sp<UDPpacket>packet = SDLNet_AllocPacket(10000);
-			numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet);
+			sp<UDPpacket>packet = ms<UDPpacket>(SDLNet_AllocPacket(10000));
+			numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet.get());
 
 			if (numPacketsReceived > 0)
 			{
@@ -345,7 +346,7 @@ bool OKNet::_checkForIncomingSTUNTraffic()
 
 				string s = string((char*)packet->data, packet->len);
 
-				SDLNet_FreePacket(packet);
+				SDLNet_FreePacket(packet.get());
 
 				//return udpSTUNMessageReceived(s);
 				stunMessageQueuePush_S(s);
@@ -354,7 +355,7 @@ bool OKNet::_checkForIncomingSTUNTraffic()
 			}
 			else if (numPacketsReceived < 0)
 			{
-				SDLNet_FreePacket(packet);
+				SDLNet_FreePacket(packet.get());
 				//connection lost
 				SDLNet_UDP_Close(getSocket_S());
 
@@ -371,7 +372,7 @@ bool OKNet::_checkForIncomingSTUNTraffic()
 				setSocketIsOpen_S(false);
 				return false;
 			}
-			SDLNet_FreePacket(packet);
+			SDLNet_FreePacket(packet.get());
 		}
 		else
 		if (rd < 0)
@@ -394,7 +395,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 
 		//	if (e->getRemoteAddress()->toString()->equals(stunServerAddress->toString()) == false)
 		//	{
-		//		log->error("STUN IP address didn't match stunServerAddress");
+		//		log.error("STUN IP address didn't match stunServerAddress");
 		//		return;
 		//	}
 
@@ -402,7 +403,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 
 		if (s.find(OKNet::endline) == string::npos)
 		{
-			log->error("Message doesn't end with endline");
+			log.error("Message doesn't end with endline");
 			s = s + OKNet::endline;
 		}
 
@@ -410,7 +411,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 		s = s.substr(0, s.find(OKNet::endline));
 
 #ifdef _DEBUG
-		log->debug(s);
+		log.debug(s);
 #endif
 		string friendIPString = "";
 		int friendPort = -1;
@@ -425,7 +426,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 		}
 		catch(exception)
 		{
-			log->error("Could not parse friend User ID in STUN reply");
+			log.error("Could not parse friend User ID in STUN reply");
 			return false;
 		}
 
@@ -441,7 +442,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 		}
 		catch(exception)
 		{
-			log->error("Could not parse friend port in STUN reply");
+			log.error("Could not parse friend port in STUN reply");
 			return false;
 		}
 
@@ -453,13 +454,13 @@ bool OKNet::udpSTUNMessageReceived(string e)
 		{
 			return false;
 		}
-		//log->debug("STUN reply:"+to_string(replyFriendUserID)+":" + friendIPString + ":" + to_string(friendPort));
+		//log.debug("STUN reply:"+to_string(replyFriendUserID)+":" + friendIPString + ":" + to_string(friendPort));
 
 		//find udpPeerConnection with that userID
 		bool found = false;
 		for(int i=0;i<udpConnections->size();i++)
 		{
-			sp<UDPPeerConnection>c = udpConnections.get(i);
+			sp<UDPPeerConnection>c = udpConnections->at(i);
 			if(c->peerUserID==replyFriendUserID)
 			{
 				c->setPeerIPAddress_S(friendIPString, friendPort);
@@ -468,7 +469,7 @@ bool OKNet::udpSTUNMessageReceived(string e)
 		}
 		if(!found)
 		{
-			log->error("Could not find peer with STUN reply userID");
+			log.error("Could not find peer with STUN reply userID");
 		}
 		
 		
@@ -486,7 +487,7 @@ void OKNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myPo
 	string s = (OKNet::STUN_Request + to_string(myUserID) + "," + to_string(friendUserID) + "," + to_string(myPort) + "," + OKNet::endline);
 
 #ifdef _DEBUG
-		log->debug("SEND STUN SERVER:" + s.substr(0, s.length() - OKNet::endline.length()));
+		log.debug("SEND STUN SERVER:" + s.substr(0, s.length() - OKNet::endline.length()));
 #endif
 
 	const char* buf = s.c_str();
@@ -505,7 +506,7 @@ void OKNet::sendSTUNRequest(long long myUserID, long long friendUserID, int myPo
 
 	if (sent==0)
 	{
-		log->error("Could not send UDP packet to STUN server");
+		log.error("Could not send UDP packet to STUN server");
 	}
 }
 
@@ -517,15 +518,15 @@ sp<UDPPeerConnection> OKNet::addFriendID(long long friendID, int type)
 	{
 		for (int i = 0; i < udpConnections->size(); i++)
 		{
-			if (udpConnections.get(i)->peerUserID == friendID)
+			if (udpConnections->at(i)->peerUserID == friendID)
 			{
-				return udpConnections.get(i);
+				return udpConnections->at(i);
 			}
 		}
 
 		sp<UDPPeerConnection> f = ms<UDPPeerConnection>(friendID,type);
-		udpConnections.add(f);
-		log->debug("Added peer: " + to_string(friendID));
+		udpConnections->push_back(f);
+		log.debug("Added peer: " + to_string(friendID));
 		return f;
 	}
 }
@@ -535,7 +536,7 @@ void OKNet::sendAllPeers(string s)
 {//===============================================================================================
 	for (int i = 0; i < udpConnections->size(); i++)
 	{
-		sp<UDPPeerConnection> c = udpConnections.get(i);
+		sp<UDPPeerConnection> c = udpConnections->at(i);
 		if (c->getConnectedToPeer_S())
 		{
 			c->writeReliable_S(s);

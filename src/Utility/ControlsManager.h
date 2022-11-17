@@ -187,7 +187,7 @@ public:
 
 	//static SDL_Event event;
 	//static HashMap<int,sp<SDL_GameController>> *controllersByJoystickNum;
-	static HashMap<SDL_JoystickID, sp<SDL_GameController>> controllersByJoystickID;
+	static sp<HashMap<SDL_JoystickID, sp<SDL_GameController>>> controllersByJoystickID;
 
 	static float MAXZOOM;
 	static float MINZOOM;

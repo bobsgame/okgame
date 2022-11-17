@@ -63,7 +63,7 @@ public:
 	sp<IntArray> lightMaskLayer = nullptr;
 
 
-	HashMap<int,sp<OKTexture>> chunkTexture;//= ms<HashMap><int, sp<Texture>>();
+	sp<HashMap<int,sp<OKTexture>>> chunkTexture;//= ms<HashMap><int, sp<Texture>>();
 
 	sp<vector<bool>> usingHQ2XTexture = nullptr;
 

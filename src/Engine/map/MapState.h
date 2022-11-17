@@ -17,19 +17,19 @@ class MapState
 	//these both hold the same thing for convenience.
 public:
 	sp<vector<sp<Light>>>lightList;
-	HashMap<string, sp<Light>> lightByNameHashtable;//ms<HashMap><string, sp<Light>>();
+	sp<HashMap<string, sp<Light>>> lightByNameHashtable;//ms<HashMap><string, sp<Light>>();
 
 
 	sp<vector<sp<Entity>>>entityList;
-	HashMap<string, sp<Entity>> entityByNameHashtable;//ms<HashMap><string, sp<Entity>>();
+	sp<HashMap<string, sp<Entity>>> entityByNameHashtable;//ms<HashMap><string, sp<Entity>>();
 
 	sp<vector<sp<Character>>>characterList;
-	HashMap<string, sp<Character>> characterByNameHashtable;//ms<HashMap><string, sp<Character>>();
+	sp<HashMap<string, sp<Character>>> characterByNameHashtable;//ms<HashMap><string, sp<Character>>();
 
 
 	sp<vector<sp<Area>>>areaList;
-	HashMap<string, sp<Area>> areaByNameHashtable;//ms<HashMap><string, sp<Area>>();
-	HashMap<string, sp<Area>> areaByTYPEIDHashtable;//ms<HashMap><string, sp<Area>>();
+	sp<HashMap<string, sp<Area>>> areaByNameHashtable;//ms<HashMap><string, sp<Area>>();
+	sp<HashMap<string, sp<Area>>> areaByTYPEIDHashtable;//ms<HashMap><string, sp<Area>>();
 
 
 

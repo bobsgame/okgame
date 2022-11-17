@@ -170,8 +170,8 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 			else
 			{
 				sp<Area> area = ms<Area>(getEngine(), areaData, this);
-				mapState->areaByNameHashtable.put(area->getName(), area);
-				mapState->areaByTYPEIDHashtable.put(area->getTYPEIDString(), area);
+				mapState->areaByNameHashtable->put(area->getName(), area);
+				mapState->areaByTYPEIDHashtable->put(area->getTYPEIDString(), area);
 				mapState->areaList->push_back(area);
 			}
 		}
@@ -184,7 +184,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 
 			mapState->lightList->push_back(light);
-			mapState->lightByNameHashtable.put(light->getName(), light);
+			mapState->lightByNameHashtable->put(light->getName(), light);
 		}
 
 
@@ -197,14 +197,14 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 				sp<Character> character = ms<Character>(getEngine(), entityData, this);
 
 				mapState->characterList->push_back(character);
-				mapState->characterByNameHashtable.put(character->getName(), character);
+				mapState->characterByNameHashtable->put(character->getName(), character);
 			}
 			else
 			{
 				sp<Entity> entity = ms<Entity>(getEngine(), entityData, this);
 
 				mapState->entityList->push_back(entity);
-				mapState->entityByNameHashtable.put(entity->getName(), entity);
+				mapState->entityByNameHashtable->put(entity->getName(), entity);
 			}
 		}
 	}
@@ -219,8 +219,8 @@ sp<Entity> Map::getEntityByName(const string& name)
 { //=========================================================================================================================
 	sp<Entity> e = nullptr;
 
-	if(currentState->entityByNameHashtable.containsKey(name))
-	e = currentState->entityByNameHashtable.get(name);
+	if(currentState->entityByNameHashtable->containsKey(name))
+	e = currentState->entityByNameHashtable->get(name);
 
 	if (e == nullptr)
 	{
@@ -261,7 +261,7 @@ sp<Entity> Map::getEntityByName(const string& name)
 //=========================================================================================================================
 sp<Character> Map::getCharacterByName(const string& name)
 { //=========================================================================================================================
-	return currentState->characterByNameHashtable.get(name);
+	return currentState->characterByNameHashtable->get(name);
 }
 
 
@@ -271,7 +271,7 @@ sp<Light> Map::getLightByName(const string& name)
 
 	//log.debug("getLightByName: "+name);
 
-	return currentState->lightByNameHashtable.get(name);
+	return currentState->lightByNameHashtable->get(name);
 }
 
 
@@ -291,8 +291,8 @@ sp<Area> Map::getAreaOrWarpAreaByName(string name)
 	sp<Area> a = nullptr;
 	if (currentState != nullptr)
 	{
-		if (currentState->areaByNameHashtable.containsKey(name))
-		a = currentState->areaByNameHashtable.get(name);
+		if (currentState->areaByNameHashtable->containsKey(name))
+		a = currentState->areaByNameHashtable->get(name);
 	}
 
 	if (a == nullptr)
@@ -300,8 +300,8 @@ sp<Area> Map::getAreaOrWarpAreaByName(string name)
 		for (int i = 0; i < stateList->size(); i++)
 		{
 			sp<MapState> s = stateList->at(i);
-			if (s->areaByNameHashtable.containsKey(name))
-			a = s->areaByNameHashtable.get(name);
+			if (s->areaByNameHashtable->containsKey(name))
+			a = s->areaByNameHashtable->get(name);
 			if (a != nullptr)
 			{
 				break;
@@ -344,8 +344,8 @@ sp<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 	sp<Area> a = nullptr;
 	if (currentState != nullptr)
 	{
-		if (currentState->areaByTYPEIDHashtable.containsKey(typeID))
-		a = currentState->areaByTYPEIDHashtable.get(typeID);
+		if (currentState->areaByTYPEIDHashtable->containsKey(typeID))
+		a = currentState->areaByTYPEIDHashtable->get(typeID);
 	}
 
 	if (a == nullptr)
@@ -365,8 +365,8 @@ sp<Area> Map::getAreaOrWarpAreaByTYPEID(string typeID)
 		{
 			sp<MapState> s = stateList->at(i);
 
-			if (s->areaByTYPEIDHashtable.containsKey(typeID))
-			a = s->areaByTYPEIDHashtable.get(typeID);
+			if (s->areaByTYPEIDHashtable->containsKey(typeID))
+			a = s->areaByTYPEIDHashtable->get(typeID);
 
 			if (a != nullptr)
 			{
@@ -508,7 +508,7 @@ sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//   {
 	//      sp<Area> a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
+	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
 		sp<Area> a = areas->at(i);
@@ -720,7 +720,7 @@ void Map::update()
 		for (int i = 0; i < mapEventList->size(); i++)
 		{
 			sp<Event> event = mapEventList->at(i);// getEventManager()->getEventByIDCreateIfNotExist(mapEventIDList->at(i));
-			event->map = this;
+			event->map = shared_from_this();
 			if (event->type() != EventData::TYPE_MAP_DONT_RUN_UNTIL_CALLED && event->type() != EventData::TYPE_MAP_RUN_ONCE_BEFORE_LOAD)
 			{
 				getEventManager()->addToEventQueueIfNotThere(event);
@@ -1072,7 +1072,7 @@ void Map::zOrderEntities()
 		//add to new linked list of on-screen entities to z-order
 		if (e->shouldDraw())
 		{
-			if (drawList.contains(e) == false)
+			if (drawList->contains(e) == false)
 			{
 				drawList->push_back(e);
 			}
@@ -1087,20 +1087,20 @@ void Map::zOrderEntities()
 		//add to new linked list of on-screen entities to z-order
 		if (e->shouldDraw())
 		{
-			if (drawList.contains(e) == false)
+			if (drawList->contains(e) == false)
 			{
 				drawList->push_back(e);
 			}
 		}
 	}
 
-	if (getCurrentMap() != nullptr && getCurrentMap() == this)
+	if (getCurrentMap() != nullptr && getCurrentMap().get() == this)
 	{
 		if (getClientGameEngine() != nullptr && getClientGameEngine()->playerExistsInMap == false)
 		{
 			if (getPlayer() != nullptr && getPlayer()->shouldDraw())
 			{
-				if ((drawList.contains(getPlayer())) == false)
+				if ((drawList->contains(getPlayer())) == false)
 				{
 					drawList->push_back(getPlayer());
 				}
@@ -1120,7 +1120,7 @@ void Map::zOrderEntities()
 			{
 				if (f->shouldDraw())
 				{
-					if (drawList.contains(f) == false)
+					if (drawList->contains(f) == false)
 					{
 						drawList->push_back(f);
 					}
@@ -1258,7 +1258,7 @@ void Map::sortLightLayers()
 
 			//log.debug("Light layer "+layer);
 			//layer++;
-			sortedLightsLayers->push_back(thisLayerList.get());
+			sortedLightsLayers->push_back(thisLayerList);
 		}
 	}
 }
@@ -1616,7 +1616,7 @@ void Map::renderAreaActionIcons()
 	//   {
 	//      sp<Area> a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
+	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
 		sp<Area> a = areas->at(i);
@@ -1784,7 +1784,7 @@ void Map::renderAreaDebugBoxes()
 	//   {
 	//      sp<Area> a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
+	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
 		sp<Area> a = areas->at(i);
@@ -1811,7 +1811,7 @@ void Map::renderAreaDebugInfo()
 	//   {
 	//      sp<Area> a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable.getAllValues();
+	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
 	for (int i = 0; i<areas->size(); i++)
 	{
 		sp<Area> a = areas->at(i);
@@ -2091,13 +2091,13 @@ void Map::unloadArea(const string& s)
 	//public Hashtable<String, Area> areaHashtable = ms<Hashtable><String, Area>();
 
 	sp<Area> a = nullptr;
-	if(currentState->areaByNameHashtable.containsKey(s))
-	a = currentState->areaByNameHashtable.get(s);
+	if(currentState->areaByNameHashtable->containsKey(s))
+	a = currentState->areaByNameHashtable->get(s);
 
-	currentState->areaByNameHashtable->erase(->begin()+s);
+	currentState->areaByNameHashtable->removeAt(s);
 
-	if(currentState->areaByTYPEIDHashtable.containsKey(a->getTYPEIDString()))
-	currentState->areaByTYPEIDHashtable->erase(->begin()+a->getTYPEIDString());
+	if(currentState->areaByTYPEIDHashtable->containsKey(a->getTYPEIDString()))
+	currentState->areaByTYPEIDHashtable->removeAt(a->getTYPEIDString());
 
 
 	currentState->areaList->remove(a);
@@ -2113,7 +2113,7 @@ void Map::unloadLight(const string& s)
 	{
 		if (currentState->lightList->at(i)->getName() == s)
 		{
-			currentState->lightList.erase(currentState->lightList.begin()+i);
+			currentState->lightList->removeAt(i);
 			i--;
 			if (i < 0)
 			{
@@ -2122,7 +2122,7 @@ void Map::unloadLight(const string& s)
 		}
 	}
 
-	currentState->lightByNameHashtable->erase(->begin()+s);
+	currentState->lightByNameHashtable->removeAt(s);
 
 	for (int i = 0; i < sortedLightsLayers->size(); i++)
 	{
@@ -2130,7 +2130,7 @@ void Map::unloadLight(const string& s)
 		{
 			if (sortedLightsLayers->at(i)->at(j)->getName() == s)
 			{
-				sortedLightsLayers->at(i).erase(sortedLightsLayers->at(i).begin()+j);
+				sortedLightsLayers->at(i)->erase(sortedLightsLayers->at(i)->begin()+j);
 				j--;
 				if (j < 0)
 				{
@@ -2152,7 +2152,7 @@ void Map::unloadMapEntity(const string& s)
 	{
 		if (currentState->entityList->at(i)->getName() == s)
 		{
-			currentState->entityList.erase(currentState->entityList.begin()+i);
+			currentState->entityList->erase(currentState->entityList->begin()+i);
 			i--;
 			if (i < 0)
 			{
@@ -2161,7 +2161,7 @@ void Map::unloadMapEntity(const string& s)
 		}
 	}
 
-	currentState->entityByNameHashtable->erase(->begin()+s);
+	currentState->entityByNameHashtable->removeAt(s);
 }
 
 void Map::releaseAllTextures()
@@ -2205,7 +2205,7 @@ void Map::releaseAllTextures()
 
 
 	
-	sp<vector<sp<OKTexture>>> chunks = chunkTexture.getAllValues();
+	sp<vector<sp<OKTexture>>> chunks = chunkTexture->getAllValues();
 	{
 		for (int i = 0; i < chunks->size(); i++)
 		{
@@ -2588,23 +2588,23 @@ bool Map::isXYWithinScreen(float x, float y)
 sp<OKTexture> Map::getChunkTexture(int index)
 { //=========================================================================================================================
 
-	if (chunkTexture.containsKey(index) == false)return nullptr;
-	return chunkTexture.get(index);
+	if (chunkTexture->containsKey(index) == false)return nullptr;
+	return chunkTexture->get(index);
 }
 
 //The following method was originally marked 'synchronized':
 void Map::setChunkTexture(int index, sp<OKTexture> t)
 { //=========================================================================================================================
-	chunkTexture.put(index, t);
+	chunkTexture->put(index, t);
 }
 
 //The following method was originally marked 'synchronized':
 void Map::releaseChunkTexture(int index)
 { //=========================================================================================================================
-	chunkTexture.get(index)->release();
+	chunkTexture->get(index)->release();
 	//delete chunkTexture.get(index);
-	chunkTexture.get(index) = nullptr;
-	chunkTexture.put(index, nullptr);
+	chunkTexture->get(index) = nullptr;
+	chunkTexture->put(index, nullptr);
 }
 
 
@@ -4070,7 +4070,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	//----------------------
 
 	//hq2x bottom+top
-	sp<BufferedImage> hq2xBottomAndTop = (new HQ2X())->hq2x(bottomAndTop);
+	sp<BufferedImage> hq2xBottomAndTop = ms<BufferedImage>((new HQ2X())->hq2x(bottomAndTop.get()));
 	//setHQ2XAlphaFromOriginal(hq2xBottomAndTop,bottomAndTop); //(shouldnt be transparent here)
 
 	//dont need bottomandtop
@@ -4201,7 +4201,7 @@ void Map::createHQ2XTexturePNG_THREAD(int chunkX, int chunkY)
 	setHQ2XAlphaFromOriginal(hq2xBottomAndTop, bottom);
 
 	//hq2x bottom
-	sp<BufferedImage> hq2xBottom = ms<BufferedImage>(new HQ2X())->hq2x(bottom);
+	sp<BufferedImage> hq2xBottom = ms<BufferedImage>((new HQ2X())->hq2x(bottom.get()));
 
 
 	//dont need bottom
@@ -4420,11 +4420,11 @@ void Map::clearActiveEntityList()
 		sp<Entity> e = activeEntityList->at(i);
 		if ((dynamic_cast<RandomCharacter*>(e.get()) != NULL))
 		{
-			sp<RandomCharacter> r = static_cast<sp<RandomCharacter>>(e);
+			sp<RandomCharacter> r = ms<RandomCharacter>(e);
 			if (r->uniqueTexture != nullptr)
 			{
 				r->uniqueTexture->release();
-				delete r->uniqueTexture;
+				//delete r->uniqueTexture;
 				r->uniqueTexture = nullptr;
 			}
 		}
@@ -4524,7 +4524,7 @@ int* Map::findOpenSpaceInArea(sp<Area> a, int w, int h)
 		}
 		else
 		{
-			coords.erase(coords.begin()+i);
+			coords->erase(coords->begin()+i);
 		}
 	}
 	return nullptr;
