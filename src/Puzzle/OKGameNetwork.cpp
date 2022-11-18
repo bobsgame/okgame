@@ -281,14 +281,14 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				}
 			}
 
-			if (joinedPeers.contains(newPeer) == false)joinedPeers->push_back(c);
+			if (joinedPeers->contains(newPeer) == false)joinedPeers->push_back(c);
 
 			return true;
 		}
 
 		if (OKString::startsWith(command, lobbyCommand_PEERGAMELEAVE))
 		{
-			while (joinedPeers.contains(c) == true)joinedPeers->remove(c);
+			while (joinedPeers->contains(c) == true)joinedPeers->remove(c);
 
 //			for (int i = 0; i<players->size(); i++)
 //			{
@@ -359,7 +359,7 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				}
 			}
 
-			if (joinedPeers.contains(c) == false)joinedPeers->push_back(c);
+			if (joinedPeers->contains(c) == false)joinedPeers->push_back(c);
 
 			return true;
 		}
@@ -433,7 +433,7 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 					if (p->getID() == playerIDString)
 					{
 						found = true;
-						players.erase(players.begin()+i);
+						players->erase(players->begin()+i);
 						i--;
 						//delete p;
 						p = nullptr;
@@ -596,7 +596,7 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 					sp<Room>r = rooms->at(i);
 					if(r->hostPeer==c)
 					{
-						rooms.erase(rooms.begin()+i);
+						rooms->erase(rooms->begin()+i);
 						//delete r;
 						r = nullptr;
 					}
@@ -1106,7 +1106,7 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 			sp<UDPPeerConnection> f = OKNet::udpConnections->at(i);
 			if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true)// && f->getStatus_S() == OKNet::status_AVAILABLE)
 			{
-				if (onlineFriends.contains(f) == false)
+				if (onlineFriends->contains(f) == false)
 					onlineFriends->push_back(f);
 			}
 		}
@@ -1174,7 +1174,7 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 				{
 					//delete r;
 					r = nullptr;
-					rooms->erase(->begin()+i);
+					rooms->erase(rooms->begin()+i);
 					i--;
 				}
 			}
@@ -2041,7 +2041,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			if (hosting && currentRoom->multiplayer_PrivateRoom==false)
 			{
 				currentRoom->multiplayer_HostUserID = getServerConnection()->getUserID_S();
-				currentRoom->multiplayer_NumPlayers = players->size();
+				currentRoom->multiplayer_NumPlayers = (int)players->size();
 				
 
 				tellServerIAmHostingOrUpdateRoomStatus(currentRoom->encodeRoomData(false));
@@ -2161,7 +2161,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 						//always add local player on the left side, to the right of any existing local players
 						int i = 0;
 						while (players->at(i)->isNetworkPlayer() == false)i++;
-						players.insert(i, p);
+						players->insert(players->begin()+i, p);
 					}
 					else
 					{
@@ -2184,7 +2184,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 			{
 				tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 
-				players->erase(->begin()+i);
+				players->erase(players->begin()+i);
 				//delete p;
 				p = nullptr;
 				i = 0;
@@ -2236,7 +2236,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 							//always add local player on the left side, to the right of any existing local players
 							int i = 0;
 							while(players->at(i)->isNetworkPlayer()==false)i++;
-							players.insert(i, p);
+							players->insert(players->begin()+i, p);
 						}
 						else
 						{
@@ -2259,7 +2259,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuUpdate()
 				{
 					tellAllJoinedPeersOneOfMyPlayersHasLeftTheLobby(p);
 					
-					players->erase(->begin()+i);
+					players->erase(players->begin()+i);
 					//delete p;
 					p = nullptr;
 					i = 0;
@@ -2442,7 +2442,7 @@ void OKGame::networkMultiplayerPlayerJoinMenuRender()
 
 			if (t != nullptr)
 			{
-				int slot = players->size();
+				int slot = (int)players->size();
 				if (slot < 2)slot = 2;
 
 				float tx0 = 0;

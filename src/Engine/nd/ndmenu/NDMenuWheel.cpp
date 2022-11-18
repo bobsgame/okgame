@@ -24,7 +24,7 @@ NDMenuWheel::NDMenuWheel(sp<Engine> g)
 	this->e = g;
 }
 
-vector<sp<NDMenuWheelItem>> NDMenuWheel::wheelItems;// = sp<vector<sp<NDMenuWheelItem>>>();
+sp<vector<sp<NDMenuWheelItem>>> NDMenuWheel::wheelItems;// = sp<vector<sp<NDMenuWheelItem>>>();
 int NDMenuWheel::CLOCKWISE = 0;
 int NDMenuWheel::COUNTERCLOCKWISE = 1;
 float NDMenuWheel::highlightColor = 0;
@@ -78,22 +78,22 @@ void NDMenuWheel::addGame(sp<NDGameEngine> game, const string& name, sp<OKColor>
 	//set up wheel items
 	//------------------------------------------
 
-	//			wheelItems.get(0).labelTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
-	//			wheelItems.get(0).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
+	//			wheelItems->at(0).labelTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
+	//			wheelItems->at(0).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/gamestore/label_gamestore.png");
 	//
-	//			wheelItems.get(1).labelTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame.png");
-	//			wheelItems.get(1).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame_glow.png");
+	//			wheelItems->at(1).labelTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame.png");
+	//			wheelItems->at(1).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/bobsgame/label_bobsgame_glow.png");
 	//
-	//			wheelItems.get(2).labelTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
-	//			wheelItems.get(2).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
+	//			wheelItems->at(2).labelTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
+	//			wheelItems->at(2).labelGlowTexture = GLUtils.loadTexture("res/nD/menu/items/settings/label_settings.png");
 	//
-	//			wheelItems.get(0).name="Game Store";
-	//			wheelItems.get(1).name="\"bob's game\"";
-	//			wheelItems.get(2).name="Settings";
+	//			wheelItems->at(0).name="Game Store";
+	//			wheelItems->at(1).name="\"bob's game\"";
+	//			wheelItems->at(2).name="Settings";
 	//
-	//			wheelItems.get(0).color = Color.red;
-	//			wheelItems.get(1).color = Color.green;
-	//			wheelItems.get(2).color = Color.yellow;
+	//			wheelItems->at(0).color = Color.red;
+	//			wheelItems->at(1).color = Color.green;
+	//			wheelItems->at(2).color = Color.yellow;
 	//
 
 
@@ -116,7 +116,7 @@ void NDMenuWheel::render()
 	//draw each wheel item
 	//------------------------------------------
 
-	for (int c = 0; c < wheelItems->size(); c++)
+	for (int c = 0; c < (int)wheelItems->size(); c++)
 	{
 		wheelItems->at(c)->render(c == selectedWheelItem);
 	}
@@ -154,7 +154,7 @@ void NDMenuWheel::spinWheel(int dir)
 		//wheelSpinDirection=wheelClockwise;
 		selectedWheelItem++;
 
-		if (selectedWheelItem >= wheelItems->size())
+		if (selectedWheelItem >= (int)wheelItems->size())
 		{
 			selectedWheelItem = 0;
 		}
@@ -170,7 +170,7 @@ void NDMenuWheel::spinWheel(int dir)
 
 			if (selectedWheelItem < 0)
 			{
-				selectedWheelItem = wheelItems->size() - 1;
+				selectedWheelItem = (int)wheelItems->size() - 1;
 			}
 
 			wheelSoundQueue++;

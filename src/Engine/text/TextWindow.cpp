@@ -33,13 +33,13 @@ void TextWindow::init()
 
 	if (spriteWindowEntity != nullptr)
 	{
-		delete spriteWindowEntity;
+		//delete spriteWindowEntity;
 		spriteWindowEntity = nullptr;
 	}
 
 	if (textBoxTextureByteArray != nullptr)
 	{
-		delete textBoxTextureByteArray;
+		//delete textBoxTextureByteArray;
 		textBoxTextureByteArray = nullptr;
 	}
 
@@ -66,7 +66,7 @@ void TextWindow::init()
 
 	if (spriteWindowTextureByteArray != nullptr)
 	{
-		delete spriteWindowTextureByteArray;
+		//delete spriteWindowTextureByteArray;
 		spriteWindowTextureByteArray = nullptr;
 	}
 
@@ -147,7 +147,7 @@ void TextWindow::render()
 	float startScrollPosition = (float)getEngine()->getHeight();
 	float finalScrollPosition = getEngine()->getHeight() - totalScaledHeight - 16;
 
-	if (this == getTextManager()->textBox->get(1))
+	if (this == getTextManager()->textBox->at(1).get())
 	{
 		//scroll from top
 		startScrollPosition = (float)0 - totalScaledHeight;
@@ -265,7 +265,7 @@ void TextWindow::render()
 	//getTextManager()->ttfFont.drawString(x0+48,y1+10-6,label,Color.white);//TODO
 
 
-	if (this == getTextManager()->textBox->get(getTextManager()->selectedTextbox))
+	if (this == getTextManager()->textBox->at(getTextManager()->selectedTextbox).get())
 	{
 		tx0 = 0.0f;
 		tx1 = 1.0f;
@@ -453,11 +453,13 @@ void TextWindow::updateSpriteWindowTexture()
 
 	// make texture from new 64*64 array
 
-	delete spriteWindowTextureByteArray;
+	//delete spriteWindowTextureByteArray;
+	spriteWindowTextureByteArray = nullptr;
 	spriteWindowTextureByteArray = newtex;
 
 	spriteBoxTexture->release();
-	delete spriteBoxTexture;
+	//delete spriteBoxTexture;
+	spriteBoxTexture = nullptr;
 	spriteBoxTexture = GLUtils::getTextureFromData("spriteWindow", 64, 64, spriteWindowTextureByteArray);
 
 	/*
@@ -489,14 +491,14 @@ void TextWindow::setSpriteWindow(sp<Entity> entity, sp<OKTexture> texture, const
 		{
 			voicePitch = entity->getVoicePitch();
 
-			if ((dynamic_cast<sp<Player>>(entity) != NULL))
+			if ((dynamic_cast<Player*>(entity.get()) != NULL))
 			{
-				texture = (static_cast<sp<Player>>(entity))->uniqueTexture;
+				texture = (static_cast<Player*>(entity.get()))->uniqueTexture;
 			}
 
-			if ((dynamic_cast<sp<RandomCharacter>>(entity) != NULL))
+			if ((dynamic_cast<RandomCharacter*>(entity.get()) != NULL))
 			{
-				texture = (static_cast<sp<RandomCharacter>>(entity))->uniqueTexture;
+				texture = (static_cast<RandomCharacter*>(entity.get()))->uniqueTexture;
 			}
 
 
@@ -558,7 +560,7 @@ void TextWindow::setSpriteWindow(sp<Entity> entity, sp<OKTexture> texture, const
 	{
 		string e = "Tried to update sprite window with both npc and gfx null.";
 		Main::console->error(e);
-		log->error(e);
+		log.error(e);
 	}
 }
 
@@ -570,7 +572,8 @@ void TextWindow::updateTextureFromByteArray()
 		// TODO: it might actually be more efficient to overwrite the previous texture, the way i had it before, instead of releasing and recreating.
 
 		textBoxTexture->release();
-		delete textBoxTexture;
+		//delete textBoxTexture;
+		textBoxTexture = nullptr;
 		textBoxTexture = GLUtils::getTextureFromData("textBox", getTextManager()->width, getTextManager()->height, textBoxTextureByteArray);
 
 		redraw = false;

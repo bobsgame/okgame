@@ -3168,7 +3168,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> s
 
 	if (textureCache.containsKey(filename))
 	{
-		tex = textureCache.get(filename);
+		tex = textureCache->at(filename);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -3329,7 +3329,7 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 
 	if (textureCache.containsKey(textureName))
 	{
-		tex = textureCache.get(textureName);
+		tex = textureCache->at(textureName);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -3431,7 +3431,7 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 
 	if (textureCache.containsKey(filename))
 	{
-		tex = textureCache.get(filename);
+		tex = textureCache->at(filename);
 		if (tex != nullptr)
 		{
 			return tex;

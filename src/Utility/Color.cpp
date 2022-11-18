@@ -14,7 +14,7 @@ Logger OKColor::log = Logger("Color");
 bool OKColor::colorsInitialized = false;
 
 
-vector<sp<OKColor>> OKColor::colors;
+sp<vector<sp<OKColor>>> OKColor::colors;
 
 sp<OKColor> OKColor::clear = ms<OKColor>(0, 0, 0, 0);
 sp<OKColor> OKColor::transparent = clear;

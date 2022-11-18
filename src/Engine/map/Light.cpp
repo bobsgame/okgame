@@ -66,8 +66,8 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 
 		sp<OKTexture> t = nullptr;
 
-		if (getMapManager()->lightTextureHashMap.containsKey(getFileName()))
-			t = getMapManager()->lightTextureHashMap.get(getFileName());
+		if (getMapManager()->lightTextureHashMap->containsKey(getFileName()))
+			t = getMapManager()->lightTextureHashMap->get(getFileName());
 
 		
 
@@ -95,7 +95,7 @@ Light::Light(sp<Engine> g, const string& name, int mapXPixels1X, int mapYPixels1
 			//
 			//				}
 
-			getMapManager()->lightTextureHashMap.put(getFileName(), t);
+			getMapManager()->lightTextureHashMap->put(getFileName(), t);
 		}
 
 
@@ -278,8 +278,8 @@ bool Light::checkEdgeAgainstHitLayerAndOtherLightsInDirection(int dir)
 
 	for (int i = 0; i < (int)getMap()->currentState->lightList->size(); i++)
 	{
-		sp<Light> l = getMap()->currentState->lightList.get(i);
-		if (l != this  && l->getName().find("mover") != string::npos)//&& l->getName() != getName()
+		sp<Light> l = getMap()->currentState->lightList->at(i);
+		if (l.get() != this && l->getName().find("mover") != string::npos)//&& l->getName() != getName()
 		{
 			int r = 8 + Math::randLessThan(16);
 
@@ -836,7 +836,8 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 				//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 				//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 				//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)-yFromCenter),1,1);
-				delete c;
+				//delete c;
+				c = nullptr;
 			}
 		}
 	}
@@ -847,7 +848,8 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			lightImage->setColor(c);
 			//lightImageGraphics.fillRect(lightBoxX, lightBoxY, lightBoxWidth, lightBoxHeight);
 			lightImage->fillRect(centerX, centerY, lightBoxWidth / 2, lightBoxHeight / 2);
-			delete c;
+			//delete c;
+			c = nullptr;
 		}
 
 		int xFromCenter = 0;
@@ -929,7 +931,8 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 						//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 						//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 						//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)-yFromCenter),1,1);
-						delete c;
+						//delete c;
+						c = nullptr;
 					}
 				}
 			}
@@ -959,7 +962,8 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),(centerY+yFromCenter),1,1);
 			//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)+yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)-xFromCenter),((centerY-1)+yFromCenter),1,1);
-			delete c;
+			//delete c;
+			c = nullptr;
 		}
 
 		xFromCenter = 0;
@@ -990,7 +994,8 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 			//lightImageGraphics.fillRect((centerX+xFromCenter),((centerY-1)-yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)+xFromCenter),(centerY+yFromCenter),1,1);
 			//lightImageGraphics.fillRect(((centerX-1)+xFromCenter),((centerY-1)-yFromCenter),1,1);
-			delete c;
+			//delete c;
+			c = nullptr;
 		}
 	}
 
@@ -1014,7 +1019,8 @@ void Light::createLightTexturePNG(string fileName, u8 r, u8 g, u8 b, u8 a, float
 
 	//lightImage->flush();
 	//Java to C++ Converter converted the original 'null' assignment to a call to 'delete', but you should review memory allocation of all pointer variables in the converted code:
-	delete lightImage;
+	//delete lightImage;
+	lightImage = nullptr;
 
 	//System.runFinalization();
 	//System.gc();
@@ -1214,7 +1220,7 @@ float Light::getHitBoxFromBottom()
 
 sp<LightData> Light::getLightData()
 {
-	return static_cast<sp<LightData>>(data);
+	return ms<LightData>(data.get());
 }
 
 float Light::getWidth()

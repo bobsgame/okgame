@@ -69,7 +69,7 @@ string& MapStateData::initFromString(string& t)
 
 		sp<LightData>data = ms<LightData>();
 		t = data->initFromString(t);
-		lightDataList.add(data);
+		lightDataList->push_back(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -81,7 +81,7 @@ string& MapStateData::initFromString(string& t)
 	{
 		sp<EntityData>data = ms<EntityData>();
 		t = data->initFromString(t);
-		entityDataList.add(data);
+		entityDataList->push_back(data);
 
 	}
 	t = t.substr(t.find("}") + 1);
@@ -94,7 +94,7 @@ string& MapStateData::initFromString(string& t)
 	{
 		sp<AreaData>data = ms<AreaData>();
 		t = data->initFromString(t);
-		areaDataList.add(data);
+		areaDataList->push_back(data);
 
 	}
 	t = t.substr(t.find("}") + 1);
@@ -115,17 +115,17 @@ string MapStateData::getTYPEIDString()
 
 sp<vector<sp<LightData>>> MapStateData::getLightDataList()
 {
-	return &lightDataList;
+	return lightDataList;
 }
 
 sp<vector<sp<EntityData>>> MapStateData::getEntityDataList()
 {
-	return &entityDataList;
+	return entityDataList;
 }
 
 sp<vector<sp<AreaData>>> MapStateData::getAreaDataList()
 {
-	return &areaDataList;
+	return areaDataList;
 }
 
 int MapStateData::getMapID()

@@ -35,14 +35,14 @@ Sound::Sound(sp<Engine> g, sp<AudioFile>f)
 
 	for (int i = 0; i < (int)getAudioManager()->playingAudioList->size(); i++)
 	{
-		if (getAudioManager()->playingAudioList.get(i)->getName() == f->getName())
+		if (getAudioManager()->playingAudioList->at(i)->getName() == f->getName())
 		{
-			if (getAudioManager()->playingAudioList.get(i)->getID() == -1)getAudioManager()->playingAudioList.get(i)->setID(f->getID());
+			if (getAudioManager()->playingAudioList->at(i)->getID() == -1)getAudioManager()->playingAudioList->at(i)->setID(f->getID());
 			//log->warn("Sound already exists:" + data->getName());
 			return;
 		}
 	}
-	getAudioManager()->playingAudioList.add(this);
+	getAudioManager()->playingAudioList->push_back(shared_from_this());
 
 
 	if (f->getByteData() != nullptr)initFromByteData();
@@ -61,8 +61,8 @@ void Sound::initFromByteData()
 #endif
 #ifdef USE_SDL_MIXER
 
-	sp<SDL_RWops> file = SDL_RWFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
-	mixChunk = Mix_LoadWAV_RW(file, 0);
+	SDL_RWops* file = SDL_RWFromMem(audioFile->getByteData()->data(), (int)audioFile->getByteData()->size());
+	mixChunk = ms<Mix_Chunk>(Mix_LoadWAV_RW(file, 0));
 	file->close(file);
 
 #endif
@@ -123,7 +123,7 @@ void Sound::update()
 						if (timesToPlay > 1)
 						{
 							timesToPlay--;
-							channel = Mix_PlayChannel(-1, mixChunk, 0);
+							channel = Mix_PlayChannel(-1, mixChunk.get(), 0);
 						}
 						else
 						{
@@ -132,7 +132,7 @@ void Sound::update()
 					}
 					else
 					{
-						channel = Mix_PlayChannel(-1, mixChunk, 0);
+						channel = Mix_PlayChannel(-1, mixChunk.get(), 0);
 					}
 
 				}
@@ -226,7 +226,7 @@ void Sound::playImmediately()
 	AudioManager::soLoud->play(*soLoudWave);
 #endif
 #ifdef USE_SDL_MIXER
-	channel = Mix_PlayChannel(-1, mixChunk, 0);
+	channel = Mix_PlayChannel(-1, mixChunk.get(), 0);
 	//could maybe use the callback function to replay the music without any delay due to frame skipping etc which may happen when doing it this way
 #endif
 	playingStarted = true;

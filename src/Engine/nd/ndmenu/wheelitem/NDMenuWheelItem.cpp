@@ -31,7 +31,7 @@ NDMenuWheelItem::NDMenuWheelItem(sp<Engine> g, sp<NDGameEngine> game, const stri
 	this->caption->setAlphaImmediately(1.0f);
 
 	y = (float)firstCartY + (NDMenuWheel::wheelItems->size() - 1) * wheelItemHeight;
-	slot = NDMenuWheel::wheelItems->size() - 1;
+	slot = (int)NDMenuWheel::wheelItems->size() - 1;
 }
 
 float NDMenuWheelItem::top()

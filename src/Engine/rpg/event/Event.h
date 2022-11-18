@@ -544,9 +544,9 @@ private:
 	//	
 	//	private void setEntityProperty_ENTITY_STRINGpropertyName_BOOL()//(ENTITY,STRINGpropertyName,BOOL)
 	//	{
-	//		Entity e = (Entity) currentCommand.parameterList.get(p++).object;
+	//		Entity e = (Entity) currentCommand.parameterList->at(p++).object;
 	//
-	//		boolean b = currentCommand.parameterList.get(p++).b;
+	//		boolean b = currentCommand.parameterList->at(p++).b;
 	//
 	//		// TODO
 	//

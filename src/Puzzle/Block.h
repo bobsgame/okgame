@@ -60,9 +60,9 @@ public:
 	bool chainConnectionsMustContainAtLeastOneBlockWithThisTrue = false;	Info chainConnectionsMustContainAtLeastOneBlockWithThisTrue_Info = Info("Chain Connections Must Contain At Least One Of These Block Types", "When checking for chains, the chain must contain one of these blocks in order to qualify.");
 	bool ignoreWhenCheckingChainConnections = false;						Info ignoreWhenCheckingChainConnections_Info = Info("Ignore When Checking Chain Connections", "This block type is neutral and is ignored when checking chains.  It can only be cleared through other means.");
 
-	sp<vector<OKColor>>colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
+	sp<vector<sp<OKColor>>>colors;												Info colors_Info = Info("Colors", "Possible colors that this block can have, randomly chosen from when creating a block.");
 private:
-	sp<vector<OKColor>>importExport_colors;	
+	vector<OKColor>importExport_colors;	
 public:
 	sp<OKColor>specialColor = nullptr;													Info specialColor_Info = Info("Special Color", "If this is set, it will override the normal color until the block loses its special property.  For instance, you can disguise the true color of a block until some action happens.  For now, the only thing that does this is turnBackToNormalBlockAfterNPiecesLock.  If the piece type is special flashing and has a color, it will prioritize that.");
 private:
@@ -78,7 +78,7 @@ public:
 	//sp<vector<PieceType>>importExport_makePieceTypeWhenCleared;
 public:
 	//don't use!!! use uuid!
-	sp<vector<PieceType>>makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
+	sp<vector<sp<PieceType>>>makePieceTypeWhenCleared_DEPRECATED;							Info makePieceTypeWhenCleared_Info = Info("Special: Make Piece Type When Cleared", "When this block is cleared, it will create this piece type in the queue of next pieces.");
 	sp<vector<string>>makePieceTypeWhenCleared_UUID;
 
 	bool clearEveryOtherLineOnGridWhenCleared = false;						Info clearEveryOtherLineOnGridWhenCleared_Info = Info("Special: Clear Every Other Line On Grid When Cleared", "When this block is cleared it will remove every other line on the grid.");
@@ -93,14 +93,14 @@ public:
 	//sp<vector<BlockType>>importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 public:
 	//don't use!!! use uuid!
-	sp<vector<BlockType>>ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED;		Info ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info = Info("If Connected Up Down Left Right To Cleared Block Change Into This Type", "If a block that is touching this one is cleared, this block will transform into one of these block types.");
+	sp<vector<sp<BlockType>>>ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED;		Info ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_Info = Info("If Connected Up Down Left Right To Cleared Block Change Into This Type", "If a block that is touching this one is cleared, this block will transform into one of these block types.");
 	sp<vector<string>>ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID;
 
 	bool addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks = false;				Info addToChainIfConnectedUpDownLeftRightToExplodingChainBlocks_Info = Info("Add To Chain If Connected Up Down Left Right To Cleared Chain Blocks", "If a block that is touching this one is being cleared, this block should be cleared too even if it does not match.");
 
-	sp<vector<TurnFromBlockTypeToType>>whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;	Info whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info = Info("When Set Turn All Touching Blocks Of FromTypes Into ToType And Fade Out", "When this block is set into the grid, turn any FromTypes into ToType and clear this block.");
+	sp<vector<sp<TurnFromBlockTypeToType>>>whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;	Info whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut_Info = Info("When Set Turn All Touching Blocks Of FromTypes Into ToType And Fade Out", "When this block is set into the grid, turn any FromTypes into ToType and clear this block.");
 //private:
-	sp<vector<TurnFromBlockTypeToType>>importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
+	vector<TurnFromBlockTypeToType>importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut;
 public:
 	bool removeAllBlocksOfColorOnFieldBlockIsSetOn = false;									Info removeAllBlocksOfColorOnFieldBlockIsSetOn_Info = Info("Remove All Blocks Of Color On Field Block Is Set On", "When this block is set down, any blocks with the color it touches will be removed from the grid.");
 	bool changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor = false;					Info changeAllBlocksOfColorOnFieldBlockIsSetOnToDiamondColor_Info = Info("Change All Blocks Of Color On Field Block Is Set On To This Color", "When this block is set down, any blocks with the color it touches will change into this color.");
@@ -137,7 +137,7 @@ public:
 		uuid = to_string(generator());
 	}
 	//=========================================================================================================================
-	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, sp<vector<OKColor>>colorsArray, sp<OKColor>specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
+	BlockType(const string &name, const string& spriteName, const string& specialSpriteName, sp<vector<sp<OKColor>>>colorsArray, sp<OKColor>specialColor, int randomSpecialBlockChanceOneOutOf, int frequencySpecialBlockTypeOnceEveryNBlocks)
 	{//=========================================================================================================================
 		this->name = name;
 		this->spriteName = spriteName;

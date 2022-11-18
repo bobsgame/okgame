@@ -146,7 +146,7 @@ void Character::update()
 	//for(int i=0;i<getBehaviorList->size();i++)
 	{
 		{
-			//if(getBehaviorList.get(i).equals("walkToPointsRandomly"))
+			//if(getBehaviorList->at(i).equals("walkToPointsRandomly"))
 			//if we have a current area
 
 			if (currentAreaTYPEIDTarget.length() > 0)

@@ -158,7 +158,7 @@ void Console::render()
 		if (dt->alwaysOnBottom)
 		{
 			consoleTextList->erase(consoleTextList->begin()+i);
-			bottomList.insert(bottomList.begin()+0,dt);
+			bottomList->insert(bottomList->begin()+0,dt);
 			i--;
 		}
 	}
@@ -168,7 +168,7 @@ void Console::render()
 	}
 	bottomList->clear();
 
-	int numStrings = consoleTextList->size();
+	int numStrings = (int)consoleTextList->size();
 	for (int n = numStrings; n > 0; n--)
 	{
 		sp<ConsoleText> dt = consoleTextList->at(n - 1);

@@ -1029,7 +1029,7 @@ void OKGame::controllerMenuUpdate()
 
 		for (int i = 0; i < getControlsManager()->gameControllers->size(); i++)
 		{
-			sp<GameController>g = getControlsManager()->gameControllers.get(i);
+			sp<GameController>g = getControlsManager()->gameControllers->at(i);
 
 			m->setColor(OKColor::lightRed);
 
@@ -2902,11 +2902,11 @@ void OKGame::loadRoomConfigMenuUpdate()
 		else
 		{
 
-			sp<vector<string>>ids = loadRoomConfigMenu->getsp<vectorOfMenuItemIDs();
+			sp<vector<string>>ids = loadRoomConfigMenu->getArrayListOfMenuItemIDs();
 
 			for (int i = 0; i < ids->size(); i++)
 			{
-				if (loadRoomConfigMenu->>isSelectedID(ids->at(i), clicked, mx, my))
+				if (loadRoomConfigMenu->isSelectedID(ids->at(i), clicked, mx, my))
 				{
 					sp<Room>r = OKGame::loadRoomConfig(ids->at(i));
 
@@ -4602,7 +4602,7 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 
 //	for (int i = 0; i<loadedGameTypes->size(); i++)
 //	{
-//		sp<GameType>g = loadedGameTypes.get(i);
+//		sp<GameType>g = loadedGameTypes->at(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
@@ -4678,7 +4678,7 @@ sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedG
 
 //	for (int i = 0; i<loadedGameSequences->size(); i++)
 //	{
-//		sp<GameSequence>g = loadedGameSequences.get(i);
+//		sp<GameSequence>g = loadedGameSequences->at(i);
 //		if (g->builtInType)
 //		{
 //			string name = g->name;
@@ -5705,7 +5705,7 @@ void OKGame::multiplayerOptionsMenuUpdate()
 				if (left)
 				{
 					selectedDifficultyIndex--;
-					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = gt.difficultyTypes->size();//-1
+					if (selectedDifficultyIndex < 0)selectedDifficultyIndex = (int)gt.difficultyTypes->size();//-1
 				}
 				if (right)
 				{
@@ -6000,7 +6000,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 		players->clear();
 //		while (players->size()>0)
 //		{
-//			sp<PuzzlePlayer>p = players.get(players->size() - 1);
+//			sp<PuzzlePlayer>p = players->at(players->size() - 1);
 //			players->erase(->begin()+players->size() - 1);
 //			delete p;
 //		}
@@ -6115,7 +6115,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 			sp<PuzzlePlayer> p = players->at(i);
 			if (p->useKeyboard)
 			{
-				players.erase(players.begin()+i);
+				players->erase(players->begin()+i);
 				//delete p;
 				p = nullptr;
 				i = 0;
@@ -6125,7 +6125,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 
 	for (int controllerNum = 0; controllerNum < getControlsManager()->gameControllers->size(); controllerNum++)
 	{
-		sp<GameController> g = getControlsManager()->gameControllers.get(controllerNum);
+		sp<GameController> g = getControlsManager()->gameControllers->at(controllerNum);
 
 		if (g->a_Pressed())
 		{
@@ -6155,7 +6155,7 @@ void OKGame::localMultiplayerPlayerJoinMenuUpdate()
 				sp<PuzzlePlayer> p = players->at(i);
 				if (p->gameController == g)
 				{
-					players.erase(players.begin()+i);
+					players->erase(players->begin()+i);
 					//delete p;
 					p = nullptr;
 					i = 0;
@@ -6217,7 +6217,7 @@ void OKGame::localMultiplayerPlayerJoinMenuRender()
 
 		if (t != nullptr)
 		{
-			int slot = players->size();
+			int slot = (int)players->size();
 			if (slot < 2)slot = 2;
 
 			float tx0 = 0;

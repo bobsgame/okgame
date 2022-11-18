@@ -653,36 +653,36 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	rotationSets->push_back(Piece::get4BlockORotationSet());
 	rotationSets->push_back(Piece::get4BlockSolidRotationSet());
 	rotationSets->push_back(Piece::get9BlockSolidRotationSet());
-	rotationSets->push_back(Piece::get4BlockIRotationSet(RotationType::DTET));
-	rotationSets->push_back(Piece::get4BlockJRotationSet(RotationType::DTET));
-	rotationSets->push_back(Piece::get4BlockLRotationSet(RotationType::DTET));
-	rotationSets->push_back(Piece::get4BlockSRotationSet(RotationType::DTET));
-	rotationSets->push_back(Piece::get4BlockTRotationSet(RotationType::DTET));
-	rotationSets->push_back(Piece::get4BlockZRotationSet(RotationType::DTET));
-	rotationSets->push_back(Piece::get4BlockIRotationSet(RotationType::SRS));
-	rotationSets->push_back(Piece::get4BlockJRotationSet(RotationType::SRS));
-	rotationSets->push_back(Piece::get4BlockLRotationSet(RotationType::SRS));
-	rotationSets->push_back(Piece::get4BlockSRotationSet(RotationType::SRS));
-	rotationSets->push_back(Piece::get4BlockTRotationSet(RotationType::SRS));
-	rotationSets->push_back(Piece::get4BlockZRotationSet(RotationType::SRS));
-	rotationSets->push_back(Piece::get4BlockIRotationSet(RotationType::SEGA));
-	rotationSets->push_back(Piece::get4BlockJRotationSet(RotationType::SEGA));
-	rotationSets->push_back(Piece::get4BlockLRotationSet(RotationType::SEGA));
-	rotationSets->push_back(Piece::get4BlockSRotationSet(RotationType::SEGA));
-	rotationSets->push_back(Piece::get4BlockTRotationSet(RotationType::SEGA));
-	rotationSets->push_back(Piece::get4BlockZRotationSet(RotationType::SEGA));
-	rotationSets->push_back(Piece::get4BlockIRotationSet(RotationType::NES));
-	rotationSets->push_back(Piece::get4BlockJRotationSet(RotationType::NES));
-	rotationSets->push_back(Piece::get4BlockLRotationSet(RotationType::NES));
-	rotationSets->push_back(Piece::get4BlockSRotationSet(RotationType::NES));
-	rotationSets->push_back(Piece::get4BlockTRotationSet(RotationType::NES));
-	rotationSets->push_back(Piece::get4BlockZRotationSet(RotationType::NES));
-	rotationSets->push_back(Piece::get4BlockIRotationSet(RotationType::GB));
-	rotationSets->push_back(Piece::get4BlockJRotationSet(RotationType::GB));
-	rotationSets->push_back(Piece::get4BlockLRotationSet(RotationType::GB));
-	rotationSets->push_back(Piece::get4BlockSRotationSet(RotationType::GB));
-	rotationSets->push_back(Piece::get4BlockTRotationSet(RotationType::GB));
-	rotationSets->push_back(Piece::get4BlockZRotationSet(RotationType::GB));
+	rotationSets->push_back(Piece::get4BlockIRotationSet(ms<RotationType>(RotationType::DTET)));
+	rotationSets->push_back(Piece::get4BlockJRotationSet(ms<RotationType>(RotationType::DTET)));
+	rotationSets->push_back(Piece::get4BlockLRotationSet(ms<RotationType>(RotationType::DTET)));
+	rotationSets->push_back(Piece::get4BlockSRotationSet(ms<RotationType>(RotationType::DTET)));
+	rotationSets->push_back(Piece::get4BlockTRotationSet(ms<RotationType>(RotationType::DTET)));
+	rotationSets->push_back(Piece::get4BlockZRotationSet(ms<RotationType>(RotationType::DTET)));
+	rotationSets->push_back(Piece::get4BlockIRotationSet(ms<RotationType>(RotationType::SRS)));
+	rotationSets->push_back(Piece::get4BlockJRotationSet(ms<RotationType>(RotationType::SRS)));
+	rotationSets->push_back(Piece::get4BlockLRotationSet(ms<RotationType>(RotationType::SRS)));
+	rotationSets->push_back(Piece::get4BlockSRotationSet(ms<RotationType>(RotationType::SRS)));
+	rotationSets->push_back(Piece::get4BlockTRotationSet(ms<RotationType>(RotationType::SRS)));
+	rotationSets->push_back(Piece::get4BlockZRotationSet(ms<RotationType>(RotationType::SRS)));
+	rotationSets->push_back(Piece::get4BlockIRotationSet(ms<RotationType>(RotationType::SEGA)));
+	rotationSets->push_back(Piece::get4BlockJRotationSet(ms<RotationType>(RotationType::SEGA)));
+	rotationSets->push_back(Piece::get4BlockLRotationSet(ms<RotationType>(RotationType::SEGA)));
+	rotationSets->push_back(Piece::get4BlockSRotationSet(ms<RotationType>(RotationType::SEGA)));
+	rotationSets->push_back(Piece::get4BlockTRotationSet(ms<RotationType>(RotationType::SEGA)));
+	rotationSets->push_back(Piece::get4BlockZRotationSet(ms<RotationType>(RotationType::SEGA)));
+	rotationSets->push_back(Piece::get4BlockIRotationSet(ms<RotationType>(RotationType::NES)));
+	rotationSets->push_back(Piece::get4BlockJRotationSet(ms<RotationType>(RotationType::NES)));
+	rotationSets->push_back(Piece::get4BlockLRotationSet(ms<RotationType>(RotationType::NES)));
+	rotationSets->push_back(Piece::get4BlockSRotationSet(ms<RotationType>(RotationType::NES)));
+	rotationSets->push_back(Piece::get4BlockTRotationSet(ms<RotationType>(RotationType::NES)));
+	rotationSets->push_back(Piece::get4BlockZRotationSet(ms<RotationType>(RotationType::NES)));
+	rotationSets->push_back(Piece::get4BlockIRotationSet(ms<RotationType>(RotationType::GB)));
+	rotationSets->push_back(Piece::get4BlockJRotationSet(ms<RotationType>(RotationType::GB)));
+	rotationSets->push_back(Piece::get4BlockLRotationSet(ms<RotationType>(RotationType::GB)));
+	rotationSets->push_back(Piece::get4BlockSRotationSet(ms<RotationType>(RotationType::GB)));
+	rotationSets->push_back(Piece::get4BlockTRotationSet(ms<RotationType>(RotationType::GB)));
+	rotationSets->push_back(Piece::get4BlockZRotationSet(ms<RotationType>(RotationType::GB)));
 }
 
 void CustomGameEditorControl::initFromCurrentGameType()
@@ -1719,7 +1719,7 @@ void CustomGameEditorControl::initBlockPropTree(sp<BlockType> b)
 						n++; p->Add("Color " + to_string(i), colorCombo, "1")->SetToolTip(b->colors_Info.tip);
 						if (i < b->colors->size())
 						{
-							colorCombo->GetComboBox()->SelectItemByName(b->colors->at(i).name);
+							colorCombo->GetComboBox()->SelectItemByName(b->colors->at(i)->name);
 						}
 					}
 				}
@@ -1914,7 +1914,7 @@ void CustomGameEditorControl::saveBlockPropTreeToCurrentBlockType()
 		else
 		{
 			colorName = p->Find("Color " + to_string(i))->GetProperty()->GetPropertyValue().c_str();
-			if (colorName != "")currentBlockType->colors->push_back(*OKColor::getColorByName(colorName).get());
+			if (colorName != "")currentBlockType->colors->push_back(OKColor::getColorByName(colorName));
 		}
 	}
 
@@ -3219,7 +3219,7 @@ void CustomGameEditorControl::newTurnFromBlockTypeToType(Base* control)
 	sp<TurnFromBlockTypeToType>b = ms<TurnFromBlockTypeToType>();
 	b->fromType_UUID = currentGameType->blockTypes->at(0)->uuid;
 	b->toType_UUID = currentGameType->blockTypes->at(0)->uuid;
-	currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(*b.get());
+	currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(b);
 
 	Layout::TableRow *row = toFromListBox->AddItem(b->getName(currentGameType));
 	row->onRowSelected.Add(this, &CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect);
@@ -3259,7 +3259,7 @@ void CustomGameEditorControl::deleteTurnFromBlockTypeToType(Base* control)
 
 	for (int i = 0; i < currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)//.contains(bt))
 	{
-		if (currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i) == *bt.get())
+		if (currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i).get() == bt.get())
 		{
 			currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->erase(currentBlockType->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->begin() + i);
 			i--;
@@ -3678,7 +3678,7 @@ void CustomGameEditorControl::createNewGameType(Base* control)
 	sp<BlockType> bt(ms<BlockType>());
 	bt->name = "Gray Square";
 	//bt->spriteName = "Square";
-	bt->colors->push_back(*OKColor::gray.get());
+	bt->colors->push_back(OKColor::gray);
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
 	bt->useAsGarbage = true;

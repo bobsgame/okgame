@@ -254,14 +254,14 @@ void Area::update()
 							}
 							else
 							{
-								sp<vector<string>> targetTYPEIDList = ms<vector><string>();
+								sp<vector<string>> targetTYPEIDList;// = ms<vector><string>();
 
 								//if this door has connections, set target to one of this door's connections
 								if (connectionTYPEIDList()->size() > 0)
 								{
 									for (int i = 0; i < connectionTYPEIDList()->size(); i++)
 									{
-										targetTYPEIDList->add(connectionTYPEIDList()->get(i));
+										targetTYPEIDList->push_back(connectionTYPEIDList()->at(i));
 									}
 								}
 								else
@@ -277,23 +277,23 @@ void Area::update()
 										int i = Math::randLessThan(targetTYPEIDList->size());
 
 										//don't count this door
-										if (targetTYPEIDList->get(i) == getTYPEIDString())
+										if (targetTYPEIDList->at(i) == getTYPEIDString())
 										{
-											targetTYPEIDList->erase(->begin()+i);
+											targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
 											continue;
 										}
 
 										bool canMakeRandom = false;
 
 										//if there is another exit, keep pumping out randoms, they will go there.
-										if (OKString::startsWith(targetTYPEIDList->get(i), "DOOR."))
+										if (OKString::startsWith(targetTYPEIDList->at(i), "DOOR."))
 										{
 											canMakeRandom = true;
 										}
 										else
 										{
 											//else we should check to make sure there is a random point of interest to go to, otherwise he will have nowhere to go and just stand there.
-											sp<Area> a = map->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->get(i));
+											sp<Area> a = map->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->at(i));
 
 											if (a != nullptr)
 											{
@@ -303,7 +303,7 @@ void Area::update()
 												//entMan().isAnyoneTryingToGoToArea(a)==true
 												//||
 												{
-													targetTYPEIDList->erase(->begin()+i);
+													targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
 													continue;
 												}
 												else
@@ -313,7 +313,7 @@ void Area::update()
 											}
 											else
 											{
-												targetTYPEIDList->erase(->begin()+i);
+												targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
 												//this is a serious error, prints out on System.err in getAreaOrWarpAreaByName
 											}
 										}
@@ -322,7 +322,7 @@ void Area::update()
 										{
 											sp<RandomCharacter> r = ms<RandomCharacter>(getEngine(), map, (int)middleX(), (int)middleY(), randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), randomSpawnCars());
 
-											r->currentAreaTYPEIDTarget = targetTYPEIDList->get(i);
+											r->currentAreaTYPEIDTarget = targetTYPEIDList->at(i);
 											r->cameFrom = getName();
 
 											if (standSpawnDirection() != -1)
@@ -381,7 +381,7 @@ void Area::renderDebugBoxes()
 	int g = 0;
 	int b = 0;
 
-	if ((dynamic_cast<sp<WarpArea>>(this) != NULL))
+	if (dynamic_cast<WarpArea*>(this) != NULL)
 	{
 		r = 200;
 		g = 0;
@@ -410,10 +410,10 @@ void Area::renderDebugBoxes()
 	GLUtils::drawBox(screenLeft(), screenRight() - 1, screenTop(), screenBottom() - 1, r, g, b); //-1 so the box is inside one pixel
 
 	//warparea arrival point
-	if ((dynamic_cast<sp<WarpArea>>(this) != NULL))
+	if ((dynamic_cast<WarpArea*>(this) != NULL))
 	{
-		float ax = map->getScreenX((static_cast<sp<WarpArea>>(this))->arrivalXPixelsHQ(), 16);
-		float ay = map->getScreenY((static_cast<sp<WarpArea>>(this))->arrivalYPixelsHQ(), 16);
+		float ax = map->getScreenX(((WarpArea*)this)->arrivalXPixelsHQ(), 16);
+		float ay = map->getScreenY(((WarpArea*)this)->arrivalYPixelsHQ(), 16);
 
 		GLUtils::drawBox(ax, ax + (16 * zoom) - 1, ay, ay + (16 * zoom) - 1, 200, 0, 255);
 
@@ -423,14 +423,14 @@ void Area::renderDebugBoxes()
 	for (int i = 0; i < connectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (OKString::startsWith(connectionTYPEIDList()->get(i), "DOOR."))
+		if (OKString::startsWith(connectionTYPEIDList()->at(i), "DOOR."))
 		{
 			//go through doorlist
 			for (int d = 0; d < (int)map->doorList->size(); d++)
 			{
-				sp<Door> door = map->doorList.get(d);
+				sp<Door> door = map->doorList->at(d);
 
-				if (connectionTYPEIDList()->get(i) == door->getTYPEIDString())
+				if (connectionTYPEIDList()->at(i) == door->getTYPEIDString())
 				{
 					float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 					float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -457,12 +457,12 @@ void Area::renderDebugBoxes()
 			//            }
 			//         }
 
-			sp<vector<sp<Area>>>areas = map->currentState->areaByNameHashtable.getAllValues();
+			sp<vector<sp<Area>>>areas = map->currentState->areaByNameHashtable->getAllValues();
 			for (int n = 0; n<areas->size(); n++)
 			{
-				sp<Area> a = areas->get(n);
+				sp<Area> a = areas->at(n);
 
-				if (connectionTYPEIDList()->get(i) == a->getTYPEIDString())
+				if (connectionTYPEIDList()->at(i) == a->getTYPEIDString())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -474,9 +474,9 @@ void Area::renderDebugBoxes()
 			//if not found, go through warparea list
 			for (int j = 0; j < (int)map->warpAreaList->size(); j++)
 			{
-				sp<Area> area = map->warpAreaList.get(j);
+				sp<Area> area = map->warpAreaList->at(j);
 
-				if (connectionTYPEIDList()->get(i) == area->getTYPEIDString())
+				if (connectionTYPEIDList()->at(i) == area->getTYPEIDString())
 				{
 					float ax = area->screenLeft() + (area->getWidth() / 2) * zoom;
 					float ay = area->screenTop() + (area->getHeight() / 2) * zoom;
@@ -496,7 +496,7 @@ void Area::renderDebugInfo()
 
 	int strings = -1;
 
-	if ((dynamic_cast<sp<WarpArea>>(this) != nullptr) == false)
+	if ((dynamic_cast<WarpArea*>(this) != nullptr) == false)
 	{
 		GLUtils::drawOutlinedString(getName(), x, y - 9, OKColor::white);
 	}
@@ -832,7 +832,7 @@ float Area::screenX()
 		screenXPixelsHQ = (left - screenleft);
 	}
 
-	return screenXsp<PixelsHQ> zoom;
+	return screenXPixelsHQ * zoom;
 }
 
 float Area::screenY()
@@ -863,7 +863,7 @@ float Area::screenY()
 		screenYPixelsHQ = top - screentop;
 	}
 
-	return screenYsp<PixelsHQ> zoom;
+	return screenYPixelsHQ * zoom;
 }
 
 float Area::screenLeft()

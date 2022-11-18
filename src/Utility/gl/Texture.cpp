@@ -22,7 +22,7 @@ OKTexture::OKTexture(const string &cacheName, GLuint textureID)
 	this->glTargetType = GL_TEXTURE_2D;
 	this->cacheName = cacheName;
 	this->textureID = textureID;
-	lastBoundTexture = this;
+	lastBoundTexture = shared_from_this();
 }
 
 
@@ -59,9 +59,9 @@ void OKTexture::unbind()
 //=========================================================================================================================
 void OKTexture::bind()
 {//=========================================================================================================================
-	if (lastBoundTexture != this)
+	if (lastBoundTexture.get() != this)
 	{
-		lastBoundTexture = this;
+		lastBoundTexture = shared_from_this();
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(glTargetType, textureID);
 	}
@@ -155,14 +155,14 @@ void OKTexture::release()
 {//=========================================================================================================================
 
 
-	sp<GLuint>textureIDs = ms<GLuint>[1];
+	GLuint* textureIDs = new GLuint [1];
 	textureIDs[0] = textureID;
 
 	glDeleteTextures(1, textureIDs);
 
 	delete[] textureIDs;
 
-	if (lastBoundTexture == this)
+	if (lastBoundTexture.get() == this)
 	{
 		bindNone();
 	}

@@ -532,7 +532,7 @@ void NDMenu::drawScreenOverlayFade()
 	{
 		//fill black opaque
 		fillScreenBlack(1.0f);
-		nD->setGame(NDMenuWheel::wheelItems->get(wheel->selectedWheelItem)->game);
+		nD->setGame(NDMenuWheel::wheelItems->at(wheel->selectedWheelItem)->game);
 	}
 }
 

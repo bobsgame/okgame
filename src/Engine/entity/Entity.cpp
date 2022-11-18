@@ -1465,7 +1465,7 @@ void Entity::deleteFromMapEntityListAndReleaseTexture()
 			sp<Entity> se = m->activeEntityList->at(i);
 			if (se.get() == this)
 			{
-				m->activeEntityList.erase(m->activeEntityList.begin() + i);
+				m->activeEntityList->erase(m->activeEntityList->begin() + i);
 			}
 		}
 		//if (m->activeEntityList.contains(this))

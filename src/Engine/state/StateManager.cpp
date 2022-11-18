@@ -22,7 +22,7 @@ sp<Engine> StateManager::getCurrentState()
 { //=========================================================================================================================
 
 	if(states->size()>0)
-	return states.get(0);
+	return states->at(0);
 	else return nullptr;
 }
 
@@ -33,13 +33,13 @@ sp<Engine> StateManager::getCurrentState()
 
 void StateManager::pushState(sp<Engine> s)
 { //=========================================================================================================================
-	states.insert(0, s);
+	states->insert(0, s);
 }
 
 void StateManager::popState()
 { //=========================================================================================================================
 	if(states->size()>0)
-	states->erase(->begin()+0);
+	states->erase(states->begin()+0);
 }
 
 void StateManager::update()

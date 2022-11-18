@@ -61,7 +61,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 //	    //chunkTexture = ms<vector><sp<Texture>>(chunksWidth * chunksHeight * 2); // *2 for over/under layer
 //	    for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 //	    {
-//	        delete chunkTexture.get(i);
+//	        delete chunkTexture->at(i);
 //	    }
 //	}
 
@@ -2602,7 +2602,7 @@ void Map::setChunkTexture(int index, sp<OKTexture> t)
 void Map::releaseChunkTexture(int index)
 { //=========================================================================================================================
 	chunkTexture->get(index)->release();
-	//delete chunkTexture.get(index);
+	//delete chunkTexture->at(index);
 	chunkTexture->get(index) = nullptr;
 	chunkTexture->put(index, nullptr);
 }
@@ -2858,7 +2858,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 				//see if it's in the hashmap loaded already from a different map
 
 				if(getMapManager()->lightTextureHashMap.containsKey(l->getFileName()))
-				l->texture = getMapManager()->lightTextureHashMap.get(l->getFileName());
+				l->texture = getMapManager()->lightTextureHashMap->at(l->getFileName());
 
 
 				if (l->texture == nullptr)
@@ -4684,7 +4684,7 @@ sp<Entity> Map::createEntity(const string& spriteName, sp<Sprite> spriteAsset, f
 	sp<Entity> e = ms<Entity>(getEngine(), entityData, shared_from_this());
 
 	getCurrentMap()->currentState->entityList->push_back(e);
-	getCurrentMap()->currentState->entityByNameHashtable.put(e->getName(),e);
+	getCurrentMap()->currentState->entityByNameHashtable->put(e->getName(),e);
 
 	return e;
 }

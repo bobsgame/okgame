@@ -22,9 +22,9 @@ AudioFile::AudioFile(sp<AudioData> data)
 
 	for (int i = 0; i < (int)AudioManager::globalAudioFileList->size(); i++)
 	{
-		if (AudioManager::globalAudioFileList.get(i)->getName() == data->getName())
+		if (AudioManager::globalAudioFileList->at(i)->getName() == data->getName())
 		{
-			if (AudioManager::globalAudioFileList.get(i)->getID() == -1)AudioManager::globalAudioFileList.get(i)->setID(data->getID());
+			if (AudioManager::globalAudioFileList->at(i)->getID() == -1)AudioManager::globalAudioFileList->at(i)->setID(data->getID());
 			//log->warn("Sound already exists:" + data->getName());
 			return;
 		}
@@ -61,7 +61,7 @@ AudioFile::AudioFile(string filename)
 	_fileExists = true;
 	setInitialized_S(true);
 
-	AudioManager::globalAudioFileList.add(shared_from_this());
+	AudioManager::globalAudioFileList->push_back(shared_from_this());
 
 	log.info("Loaded " + filename);
 

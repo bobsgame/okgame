@@ -266,7 +266,7 @@ string& MapData::initFromString(string& t)
 	{
 		sp<MapStateData>data = ms<MapStateData>();
 		t = data->initFromString(t);
-		stateDataList->add(data);
+		stateDataList->push_back(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -277,7 +277,7 @@ string& MapData::initFromString(string& t)
 	{
 		sp<EventData>data = ms<EventData>();
 		t = data->initFromString(t);
-		eventDataList->add(data);
+		eventDataList->push_back(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);
@@ -288,7 +288,7 @@ string& MapData::initFromString(string& t)
 	{
 		sp<DoorData>data = ms<DoorData>();
 		t = data->initFromString(t);
-		doorDataList->add(data);
+		doorDataList->push_back(data);
 	}
 	t = t.substr(t.find("}") + 1);
 	t = t.substr(t.find(",") + 1);

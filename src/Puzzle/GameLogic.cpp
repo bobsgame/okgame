@@ -1072,7 +1072,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 		if (outboundPacketQueueVector->size() > 0)
 		{
 			string idAndMD5String = outboundPacketQueueVector->at(0);
-			string b64zip = outboundPacketQueueHashMap.get(idAndMD5String);
+			string b64zip = outboundPacketQueueHashMap->at(idAndMD5String);
 
 			getOKGame()->sendAllJoinedPeers(OKGame::netCommand_FRAME + player->getID() + ":" + idAndMD5String + ":" + b64zip);
 

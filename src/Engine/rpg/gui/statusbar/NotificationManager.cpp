@@ -70,7 +70,7 @@ void NotificationManager::remove(sp<Notification> n)
 	{
 		if (notificationList->at(i).get() == n.get())
 		{
-			notificationList.erase(notificationList.begin() + i);
+			notificationList->erase(notificationList->begin() + i);
 			i--;
 		}
 		

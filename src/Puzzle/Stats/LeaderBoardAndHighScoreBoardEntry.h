@@ -691,7 +691,7 @@ public:
 //		for (int i = 0; i<maxEntries; i++)
 //		{
 //
-//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries->at(i);
 //
 //
 //
@@ -998,7 +998,7 @@ public:
 //			for (int i = 0; i<maxEntries; i++)
 //			{
 //				string diff = "_" + i;
-//				OKGameLeaderBoardAndHighScoreBoardEntry s = entries.get(i);
+//				OKGameLeaderBoardAndHighScoreBoardEntry s = entries->at(i);
 //
 //
 //				s.userName = databaseResultSet.getstring("userName" + diff);
@@ -1312,7 +1312,7 @@ public:
 //		for (int i = 0; i<maxEntries; i++)
 //		{
 //			string diffName = "_" + i;
-//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries->at(i);
 //
 //
 //			query += "" + diffStats.userName + diffName + " = ? ";
@@ -1358,7 +1358,7 @@ public:
 //			for (int i = 0; i<maxEntries; i++)
 //			{
 //
-//				OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//				OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries->at(i);
 //
 //
 //				ps.setstring(++n, diffStats.userName);
@@ -1435,7 +1435,7 @@ public:
 //		for (int i = 0; i<maxEntries; i++)
 //		{
 //			string diffName = "_" + i;
-//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//			OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries->at(i);
 //
 //
 //
@@ -1479,7 +1479,7 @@ public:
 //				for (int i = 0; i<maxEntries; i++)
 //				{
 //
-//					OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries.get(i);
+//					OKGameLeaderBoardAndHighScoreBoardEntry diffStats = entries->at(i);
 //
 //
 //					ps.setstring(++n, diffStats.userName);

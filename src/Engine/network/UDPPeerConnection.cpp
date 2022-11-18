@@ -22,7 +22,7 @@ UDPPeerConnection::UDPPeerConnection(long long friendUserID, int type)
 	this->peerUserID = friendUserID;
 	this->peerType = type;
 
-	//   log->info("UDP Channel: " + channel->getId()->toString());
+	//   log.info("UDP Channel: " + channel->getId()->toString());
 
 }
 
@@ -38,13 +38,13 @@ UDPPeerConnection::~UDPPeerConnection()
 
 void UDPPeerConnection::addEnginePartToForwardMessagesTo(sp<EnginePart> e)
 {
-	if (engineParts.contains(e) == false)
-		engineParts.add(e);
+	if (engineParts->contains(e) == false)
+		engineParts->push_back(e);
 }
 
 void UDPPeerConnection::removeEnginePartToForwardMessagesTo(sp<EnginePart> e)
 {
-	if (engineParts.contains(e) == true)
+	if (engineParts->contains(e) == true)
 		engineParts->remove(e);
 }
 
@@ -54,7 +54,7 @@ void UDPPeerConnection::update()
 
 	if (threadStarted == false)
 	{
-		log->debug("Created peer thread");
+		log.debug("Created peer thread");
 		t = thread(&UDPPeerConnection::updateThreadLoop, this);
 		threadStarted = true;
 	}
@@ -82,7 +82,7 @@ void UDPPeerConnection::update()
 			else
 				if (partialPacketString.length()>0)
 				{
-					log->error("Partial packet from client was not completed! Client:"+to_string(peerUserID));
+					log.error("Partial packet from client was not completed! Client:"+to_string(peerUserID));
 				}
 				else
 				{
@@ -196,7 +196,7 @@ bool UDPPeerConnection::_ensureSocketIsOpen()
 
 			//SDLNet_UDP_SetPacketLoss(getSocket_S(), 20);
 
-			int channel = SDLNet_UDP_Bind(getSocket_S(), -1, getPeerIPAddress_S());
+			int channel = SDLNet_UDP_Bind(getSocket_S(), -1, getPeerIPAddress_S().get());
 			if (channel < 0)
 			{
 				threadLogError_S("Could not bind socket: " + string(SDLNet_GetError()) + string(SDL_GetError()));
@@ -239,8 +239,8 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 
 				while (numPacketsReceived > 0)
 				{
-					sp<UDPpacket>packet = SDLNet_AllocPacket(65535);
-					numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet);
+					sp<UDPpacket>packet = ms<UDPpacket>(SDLNet_AllocPacket(65535));
+					numPacketsReceived = SDLNet_UDP_Recv(getSocket_S(), packet.get());
 
 					if (numPacketsReceived > 0)
 					{
@@ -248,45 +248,45 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 //#ifndef _DEBUG
 //						if (packet->address.host != getPeerIPAddress_S()->host)
 //						{
-//							log->warn("Peer address didn't match in incoming packet. Peer IP:" + to_string(getPeerIPAddress_S()->host) + " Packet IP:" + to_string(packet->address.host));
+//							log.warn("Peer address didn't match in incoming packet. Peer IP:" + to_string(getPeerIPAddress_S()->host) + " Packet IP:" + to_string(packet->address.host));
 //							break;
 //						}
 //#endif
 
 						string* packetData = new string((char*)packet->data, packet->len);
-						SDLNet_FreePacket(packet);
+						SDLNet_FreePacket(packet.get());
 
-						packetsToProcess.push(packetData);
+						packetsToProcess.push(*packetData);
 						
 					}
 					else if (numPacketsReceived < 0)
 					{
-						SDLNet_FreePacket(packet);
+						SDLNet_FreePacket(packet.get());
 
 						//connection lost
 						setDisconnectedFromPeer_S("Error receiving data.");
 					}
 					else
-						SDLNet_FreePacket(packet);
+						SDLNet_FreePacket(packet.get());
 				}
 
-				if (packetsToProcess->size() > 0)
+				if (packetsToProcess.size() > 0)
 				{
 					_lastReceivedDataTime = System::currentHighResTimer();
 				}
 
-				while (packetsToProcess->size() > 0)
+				while (packetsToProcess.size() > 0)
 				{
-					string *sp = packetsToProcess.front();
+					string s = packetsToProcess.front();
 					packetsToProcess.pop();
-					string &s = *sp;
+					//string &s = *sp;
 
 					if (_truncatedPacketString != "")
 					{
-						string *temp = new string(_truncatedPacketString + *sp);
-						delete sp;
-						sp = temp;
-						s = *sp;
+						string *temp = new string(_truncatedPacketString + s);
+						//delete sp;
+						//sp = temp;
+						s = *temp;
 						_truncatedPacketString = "";
 					}
 
@@ -308,13 +308,15 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 							{
 								threadLogWarn_S("peerAddress was null, but got ping.");
 							}
-							delete sp;
+							//delete sp;
+							s = "";
 							continue;
 						}
 
 						if (OKString::startsWith(s, "pong"))
 						{
-							delete sp;
+							//delete sp;
+							s = "";
 							continue;
 						}
 
@@ -331,7 +333,8 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 							catch (exception)
 							{
 								threadLogError_S("Could not parse ACK packet ID");
-								delete sp;
+								//delete sp;
+								s = "";
 								continue;
 							}
 
@@ -348,28 +351,29 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 								catch (exception)
 								{
 									threadLogError_S("Could not parse queued packet ID");
-									delete sp;
+									//delete sp;
+									s = "";
 									continue;
 								}
 								if (queuedID == ackPacketID)
 								{
 									//gotACK = true;
 									sentPacketQueuePop_S();
-									SDLNet_FreePacket(q);
+									SDLNet_FreePacket(q.get());
 									//lastSentPacketTime = System::currentHighResTimer();
 
 									if (_frameSentTimes->containsKey(queuedID))
 									{
 										long long timeSentPacket = _frameSentTimes->get(queuedID);
-										_frameSentTimes->erase(->begin()+queuedID);
+										_frameSentTimes->removeAt(queuedID);
 
 										long long roundaboutTicks = (long long)System::getTicksBetweenTimes(timeSentPacket, System::currentHighResTimer());
-										_frameRoundaboutTicks->add(roundaboutTicks);
+										_frameRoundaboutTicks->push_back(roundaboutTicks);
 
 										long long totalRoundaboutTicks = 0;
 										for (int i = 0; i < _frameRoundaboutTicks->size(); i++)
 										{
-											totalRoundaboutTicks += _frameRoundaboutTicks->get(i);
+											totalRoundaboutTicks += _frameRoundaboutTicks->at(i);
 										}
 										setAverageRoundaboutTicks_S(totalRoundaboutTicks / _frameRoundaboutTicks->size());
 									}
@@ -379,7 +383,8 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 									threadLogError_S("Got ACK for packet ID which is not the last packet sent.  Last sent packet ID:" + to_string(queuedID) + " ACK packet ID:" + to_string(ackPacketID));
 								}
 							}
-							delete sp;
+							//delete sp;
+							s = "";
 							continue;
 						}
 
@@ -394,7 +399,8 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						catch (exception)
 						{
 							threadLogError_S("Could not parse incoming packet ID");
-							delete sp;
+							//delete sp;
+							s = "";
 							continue;
 						}
 
@@ -410,7 +416,8 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 							else
 							{
 								threadLogError_S("Received packet with ID less than already processed, peer probably didn't get ACK in time. Last packet ID:" + to_string(_lastPacketIDReceived) + " This packet ID:" + to_string(packetID));
-								delete sp;
+								//delete sp;
+								s = "";
 								continue;
 							}
 						}
@@ -419,14 +426,16 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						{
 							threadLogError_S("Received save packet twice, peer probably didn't get ACK in time. Last packet ID:" + to_string(_lastPacketIDReceived) + " This packet ID:" + to_string(packetID));
 
-							delete sp;
+							//delete sp;
+							s = "";
 							continue;
 						}
 
 						if (packetID - 1 > _lastPacketIDReceived)
 						{
 							threadLogError_S("Received packet with ID greater than last packet ID + 1, missed a packet? Last packet ID:" + to_string(_lastPacketIDReceived) + " This packet ID:" + to_string(packetID));
-							delete sp;
+							//delete sp;
+							s = "";
 							continue;
 						}
 
@@ -452,7 +461,8 @@ void UDPPeerConnection::_checkForIncomingPeerTraffic()
 						}
 					}
 
-					delete sp;
+					//delete sp;
+					s = "";
 				}
 			}
 			else
@@ -478,7 +488,7 @@ sp<UDPpacket> UDPPeerConnection::makePacket(string s)
 		return nullptr;
 	}
 
-	sp<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
+	sp<UDPpacket> packet = ms<UDPpacket>(SDLNet_AllocPacket((int)s.length()));
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)
@@ -592,10 +602,10 @@ void UDPPeerConnection::_writeQueuedPackets()
 			return;
 		}
 
-		if (SDLNet_UDP_Send(getSocket_S(), -1, packet) == 0)
+		if (SDLNet_UDP_Send(getSocket_S(), -1, packet.get()) == 0)
 		{
 			_writePacketWait += 2000;
-			SDLNet_FreePacket(packet);
+			SDLNet_FreePacket(packet.get());
 			threadLogWarn_S("Could not send UDP packet");
 		}
 		else
@@ -790,7 +800,7 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// sp<ChannelHandlerCont
 		string idmd5 = c.substr(0, c.find(":") + 1);//195,e43d6f5f2951a1f767d634346812ad73:
 		c = c.substr(c.find(":") + 1);
 
-		log->warn("FROM PEER: " + command + frame + playerid + idmd5);
+		log.warn("FROM PEER: " + command + frame + playerid + idmd5);
 	}
 	else
 	if(OKString::startsWith(s, "BOBSGAME:HOSTING:") || OKString::startsWith(s, "BOBSGAME:PLAYERCONFIRM:"))
@@ -805,12 +815,12 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// sp<ChannelHandlerCont
 		string data = c.substr(0, c.find(":") + 1);//1.2078078643:
 		c = c.substr(c.find(":") + 1);
 
-		log->warn("FROM PEER: " + command + hosting + data);
+		log.warn("FROM PEER: " + command + hosting + data);
 	}
 	else
 	if (OKString::startsWith(s, "Friend_Location_Update") == false && OKString::startsWith(s, "ACK:") == false)
 	{
-		log->warn("FROM PEER: " + s);// +channel->getId() + " | " + s);
+		log.warn("FROM PEER: " + s);// +channel->getId() + " | " + s);
 	}
 #endif
 
@@ -840,15 +850,15 @@ bool UDPPeerConnection::udpPeerMessageReceived(string s)// sp<ChannelHandlerCont
 
 	for (int i = 0; i < OKNet::engines->size(); i++)
 	{
-		if (OKNet::engines.get(i)->udpPeerMessageReceived(this, s))return true;
+		if (OKNet::engines->at(i)->udpPeerMessageReceived(shared_from_this(), s))return true;
 	}
 
 	for (int i = 0; i < engineParts->size(); i++)
 	{
-		if (engineParts.get(i)->udpPeerMessageReceived(this, s))return true;
+		if (engineParts->at(i)->udpPeerMessageReceived(shared_from_this(), s))return true;
 	}
 
-	log->error("Did not handle UDP packet:" + s);
+	log.error("Did not handle UDP packet:" + s);
 	return false;
 
 }
@@ -869,7 +879,7 @@ void UDPPeerConnection::writeUnreliable_S(string s)
 		return;
 	}
 
-	sp<UDPpacket> packet = SDLNet_AllocPacket((int)s.length());
+	sp<UDPpacket> packet = ms<UDPpacket>(SDLNet_AllocPacket((int)s.length()));
 	packet->channel = -1;
 	packet->address = *peerAddress;
 	for (int i = 0; i < (int)s.length(); i++)
@@ -878,12 +888,12 @@ void UDPPeerConnection::writeUnreliable_S(string s)
 	}
 	packet->len = (int)s.length();
 
-	if (SDLNet_UDP_Send(getSocket_S(), -1, packet) == 0)
+	if (SDLNet_UDP_Send(getSocket_S(), -1, packet.get()) == 0)
 	{
 		threadLogWarn_S("Could not send UDP packet");
 	}
 
-	SDLNet_FreePacket(packet);
+	SDLNet_FreePacket(packet.get());
 
 }
 
@@ -927,7 +937,7 @@ bool UDPPeerConnection::writeReliable_S(string s)
 
 //   if (SDLNet_UDP_Send(socket, -1, packet) == 0)
 //   {
-//	   log->warn("Could not send UDP packet");
+//	   log.warn("Could not send UDP packet");
 //	   return false;
 //   }
 //   lastSentPacketTime = System::currentHighResTimer();
@@ -961,13 +971,13 @@ void UDPPeerConnection::incomingPeerConnectResponse(string e)//sp<MessageEvent> 
 	}
 	catch (exception)
 	{
-		log->warn(friendUserIDString);
-		log->error("Could not parse replyFriendUserID in incomingPeerConnectResponse");
+		log.warn(friendUserIDString);
+		log.error("Could not parse replyFriendUserID in incomingPeerConnectResponse");
 	}
 
 	if (peerUserID != replyFriendUserID)
 	{
-		log->error("Friend userID did not match in Friend reply.");
+		log.error("Friend userID did not match in Friend reply.");
 
 		return;
 	}
@@ -1112,7 +1122,7 @@ void FriendData::decode(string s)
 	}
 	catch (exception ex)//NumberFormatException ex)
 	{
-		log->error("Could not parse friendType");
+		log.error("Could not parse friendType");
 
 	}
 	s = s.substr(s.find(",") + 1);
@@ -1161,7 +1171,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse accountType");
+				log.error("Could not parse accountType");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1179,7 +1189,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse accountCreatedTime");
+				log.error("Could not parse accountCreatedTime");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1197,7 +1207,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse timesLoggedIn");
+				log.error("Could not parse timesLoggedIn");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1215,7 +1225,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse totalTimePlayed");
+				log.error("Could not parse totalTimePlayed");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1288,7 +1298,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse lat");
+				log.error("Could not parse lat");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1306,7 +1316,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse lon");
+				log.error("Could not parse lon");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1324,7 +1334,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse miniGamesTimesPlayed");
+				log.error("Could not parse miniGamesTimesPlayed");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1342,7 +1352,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse miniGamesTimesBattled");
+				log.error("Could not parse miniGamesTimesBattled");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1360,7 +1370,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse miniGamesTimesChallenged");
+				log.error("Could not parse miniGamesTimesChallenged");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1378,7 +1388,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse miniGamesTimesChallenger");
+				log.error("Could not parse miniGamesTimesChallenger");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1396,7 +1406,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse miniGamesTimesWon");
+				log.error("Could not parse miniGamesTimesWon");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1414,7 +1424,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse miniGamesTimesLost");
+				log.error("Could not parse miniGamesTimesLost");
 			}
 		}
 		s = s.substr(s.find('`') + 1);
@@ -1432,7 +1442,7 @@ void FriendData::decode(string s)
 			}
 			catch (exception ex)//NumberFormatException ex)
 			{
-				log->error("Could not parse miniGamesTimesTied");
+				log.error("Could not parse miniGamesTimesTied");
 			}
 		}
 		s = s.substr(s.find('`') + 1);

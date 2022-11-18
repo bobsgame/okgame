@@ -226,7 +226,7 @@ void AreaData::addConnectionString(const string& s)
 //	for (int i = 0; i<connectionTYPEIDList->size(); i++)
 //	{
 //
-//		string t = connectionTYPEIDList.get(i);
+//		string t = connectionTYPEIDList->at(i);
 //
 //		while (t.contains("`"))
 //		{
@@ -269,7 +269,7 @@ void AreaData::addConnectionString(const string& s)
 //	s += "stateID:`" + stateID + "`,";
 //	for (int i = 0; i<connectionTYPEIDList->size(); i++)
 //	{
-//		s += "connectionTYPEIDList:`" + connectionTYPEIDList.get(i) + "`,";
+//		s += "connectionTYPEIDList:`" + connectionTYPEIDList->at(i) + "`,";
 //	}
 //	s += "destinationTYPEID:`" + destinationTYPEID + "`,";
 //	s += "arrivalXPixels1X:`" + arrivalXPixels1X + "`,";

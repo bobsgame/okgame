@@ -15,8 +15,8 @@ class MapManager : public EnginePart
 {
 public:
 	sp<vector<sp<Map>>>mapList;
-	HashMap<string, sp<Map>> mapByNameHashMap;//ms<HashMap><string, sp<Map>>();
-	HashMap<int, sp<Map>> mapByIDHashMap;//ms<HashMap><int, sp<Map>>();
+	sp<HashMap<string, sp<Map>>> mapByNameHashMap;//ms<HashMap><string, sp<Map>>();
+	sp<HashMap<int, sp<Map>>> mapByIDHashMap;//ms<HashMap><int, sp<Map>>();
 
 	static Logger log;
 	
@@ -41,20 +41,20 @@ public:
 
 
 	//textures mapped to light filenames
-	static HashMap<string, sp<OKTexture>> lightTextureHashMap;//ms<HashMap><string, sp<Texture>>();
+	static sp<HashMap<string, sp<OKTexture>>> lightTextureHashMap;//ms<HashMap><string, sp<Texture>>();
 
 
 
 
 	//threadsafe HashMap mapped to light filename, and boolean set whether it exists (so multiple threads don't check if file exists at same time)
-	static HashMap<string, bool> _lightTextureFileExistsHashtable;
+	static sp<HashMap<string, bool>> _lightTextureFileExistsHashtable;
 	static mutex _lightTextureFileExistsHashtable_Mutex;
 																  
 	static void setLightTexturePNGFileExists_S(string filename, bool exists)
 	{ //===============================================================================================
 
 		lock_guard<mutex> lock(_lightTextureFileExistsHashtable_Mutex);
-		_lightTextureFileExistsHashtable.put(filename, exists);
+		_lightTextureFileExistsHashtable->put(filename, exists);
 	}
 
 	static bool getLightTexturePNGFileExists_S(string filename)
@@ -64,9 +64,9 @@ public:
 		bool existsInHashtable = false;
 
 
-		if (_lightTextureFileExistsHashtable.containsKey(filename))
+		if (_lightTextureFileExistsHashtable->containsKey(filename))
 		{
-			existsInHashtable = _lightTextureFileExistsHashtable.get(filename);
+			existsInHashtable = _lightTextureFileExistsHashtable->get(filename);
 
 		}
 

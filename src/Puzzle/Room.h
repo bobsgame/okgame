@@ -771,7 +771,7 @@ public:
 //				if (gs->gameTypes->size() == 1)
 //				{
 //					//newRoom->isSingleGameType = true;
-//					newRoom->gameTypeUUID = gs->gameTypes.get(0)->uuid;
+//					newRoom->gameTypeUUID = gs->gameTypes->at(0)->uuid;
 //				}
 //				else
 //				{

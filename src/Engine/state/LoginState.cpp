@@ -479,7 +479,7 @@ void LoginMenuPanel::update()
 				if (loginMenu != nullptr)
 				{
 					loginMenuCursorPosition = loginMenu->cursorPosition;
-					delete loginMenu;
+					//delete loginMenu;
 					loginMenu = nullptr;
 				}
 
@@ -671,7 +671,7 @@ void LoginMenuPanel::doLoginWithFacebook()
 	//               {
 	//                  responseTries = 0;
 	//                  statusLabel->setText(" ");
-	//                  errorLabel->setText("Error: Did not receive a response from the Facebook OAuth dialog->");
+	//                  errorLabel->setText("Error: Did not receive a response from the Facebook OAuth dialog.");
 	//
 	//                  setButtonsVisible(true);
 	//
@@ -790,10 +790,10 @@ void LoginMenuPanel::doLoginWithFacebook()
 	//
 	//               Main::cacheManager->writeSessionTokenToCache(getServerConnection()->getUserID_S(), getServerConnection()->getSessionToken_S(), sendStatsToggleButton->isActive());
 	//               //String temp = Main.cacheManager.readSessionTokenFromCache();
-	//               //log->debug("Read session: "+temp);
+	//               //log.debug("Read session: "+temp);
 	//               //Main.cacheManager.deleteSessionTokenFromCache();
 	//               //temp = Main.cacheManager.readSessionTokenFromCache();
-	//               //log->debug("Deleted session: "+temp);
+	//               //log.debug("Deleted session: "+temp);
 	//            }
 	//
 	//            //-------------------------------------------------------
@@ -1214,10 +1214,10 @@ void LoginMenuPanel::doLogin()
 	//
 	//                  Main::cacheManager->writeSessionTokenToCache(getServerConnection()->getUserID_S(), getServerConnection()->getSessionToken_S(), sendStatsToggleButton->isActive());
 	//                  //String temp = Main.cacheManager.readSessionTokenFromCache();
-	//                  //log->debug("Read session: "+temp);
+	//                  //log.debug("Read session: "+temp);
 	//                  //Main.cacheManager.deleteSessionTokenFromCache();
 	//                  //temp = Main.cacheManager.readSessionTokenFromCache();
-	//                  //log->debug("Deleted session: "+temp);
+	//                  //log.debug("Deleted session: "+temp);
 	//               }
 	//
 	//               //-------------------------------------------------------
@@ -1281,17 +1281,17 @@ void LoginMenuPanel::checkForSessionTokenAndLogInIfExists()
 	//if session token cache exists, try to log in with that.
 	//set browser cookie, refresh iframe
 
-	log->debug("Checking for Session Token");
+	log.debug("Checking for Session Token");
 
 	const string token = FileUtils::readSessionTokenFromCache();
 
 	if (token != "")
 	{
-		log->debug("Session Token Found");
+		log.debug("Session Token Found");
 	}
 	else
 	{
-		log->debug("Session Token not found in cache.");
+		log.debug("Session Token not found in cache.");
 	}
 
 	if (token != "")

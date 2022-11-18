@@ -251,7 +251,7 @@ void Caption::initTTF(sp<Engine> g, Position fixedPosition, float screenX, float
 
 	
 
-	sp<SDL_Surface*> surface = nullptr;
+	sp<SDL_Surface> surface = nullptr;
 
 
 	sp<TTF_Font> outlineFont = nullptr;
@@ -299,18 +299,18 @@ void Caption::initTTF(sp<Engine> g, Position fixedPosition, float screenX, float
 		outlineOKColor.darker();
 		outlineOKColor.darker();
 		SDL_Color outlineColor = { (Uint8)outlineOKColor.ri() ,(Uint8)outlineOKColor.gi(),(Uint8)outlineOKColor.bi(),(Uint8)outlineOKColor.ai() };
-		surface = TTF_RenderText_Blended(outlineFont.get(), this->text.c_str(), outlineColor);
-		sp<SDL_Surface*> fg_surface = TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor);
+		surface = ms<SDL_Surface>(TTF_RenderText_Blended(outlineFont.get(), this->text.c_str(), outlineColor));
+		sp<SDL_Surface> fg_surface = ms<SDL_Surface>(TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor));
 		SDL_Rect rect = { OUTLINE_SIZE, OUTLINE_SIZE, fg_surface->w, fg_surface->h };
 
 		// blit text onto its outline 
-		SDL_SetSurfaceBlendMode(fg_surface, SDL_BLENDMODE_BLEND);
-		SDL_BlitSurface(fg_surface, NULL, surface, &rect);
+		SDL_SetSurfaceBlendMode(fg_surface.get(), SDL_BLENDMODE_BLEND);
+		SDL_BlitSurface(fg_surface.get(), NULL, surface.get(), &rect);
 
 		this->width = fg_surface->w + OUTLINE_SIZE * 2;
 		this->height = fg_surface->h + OUTLINE_SIZE * 2;
 
-		SDL_FreeSurface(fg_surface);
+		SDL_FreeSurface(fg_surface.get());
 
 		if (surface == NULL || surface == nullptr)
 		{
@@ -341,8 +341,8 @@ void Caption::initTTF(sp<Engine> g, Position fixedPosition, float screenX, float
 		SDL_Color bgSDLColor = { (Uint8)textBGColor->ri() ,(Uint8)textBGColor->gi(),(Uint8)textBGColor->bi(),(Uint8)textBGColor->ai() };
 
 		surface = nullptr;
-		if (textBGColor != OKColor::clear)surface = TTF_RenderText_Shaded(ttfFont.get(), this->text.c_str(), textSDLColor, bgSDLColor);
-		else surface = TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor);// , bgSDLColor);
+		if (textBGColor != OKColor::clear)surface = ms<SDL_Surface>(TTF_RenderText_Shaded(ttfFont.get(), this->text.c_str(), textSDLColor, bgSDLColor));
+		else surface = ms<SDL_Surface>(TTF_RenderText_Blended(ttfFont.get(), this->text.c_str(), textSDLColor));// , bgSDLColor);
 
 		this->width = surface->w;
 		this->height = surface->h;
@@ -358,7 +358,7 @@ void Caption::initTTF(sp<Engine> g, Position fixedPosition, float screenX, float
 
 
 	this->texture = GLUtils::loadTextureFromSurface("Caption" + to_string(rand()) + to_string(rand()), surface);
-	SDL_FreeSurface(surface);
+	SDL_FreeSurface(surface.get());
 
 	this->texWidth = texture->getTextureWidth();
 	this->texHeight = texture->getTextureHeight();
@@ -443,13 +443,13 @@ void Caption::init(sp<Engine> g, Position fixedPosition, float screenX, float sc
 	if (texture != nullptr)
 	{
 		texture->release();
-		delete texture;
+		//delete texture;
 		texture = nullptr;
 	}
 
 	if (textureByteArray != nullptr)
 	{
-		delete textureByteArray;
+		//delete textureByteArray;
 		textureByteArray = nullptr;
 	}
 
@@ -507,7 +507,7 @@ void Caption::init(sp<Engine> g, Position fixedPosition, float screenX, float sc
 
 
 	this->texture = GLUtils::getTextureFromData("Caption"+to_string(rand()) + to_string(rand()), texWidth, texHeight, textureByteArray);
-	delete textureByteArray;
+	//delete textureByteArray;
 	textureByteArray = nullptr;
 
 
@@ -806,7 +806,7 @@ void Caption::calculateTextureWidthAndHeightByParsingEachLine()
 	if (font != nullptr)maxCharHeight = font->maxCharHeight;
 	else
 	{
-		log->error("calculateTextureWidthAndHeightByParsingEachLine font is null!");
+		log.error("calculateTextureWidthAndHeightByParsingEachLine font is null!");
 	}
 
 	width = longestLineWidth;
@@ -1117,7 +1117,7 @@ void Caption::setPixel(int index, sp<OKColor> c)
 
 	if (c == nullptr)
 	{
-		log->error("setPixel Color c was null, should never happen!");
+		log.error("setPixel Color c was null, should never happen!");
 		return;
 	}
 
@@ -1315,7 +1315,11 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 				u8 b = (int)(min(255, (int)(c->bi() + (((float)(maxCharHeight - y) / (float)(maxCharHeight))*255.0f))));
 				u8 a = c->ai();
 
-				if (c != nullptr)delete c;
+				if (c != nullptr) 
+				{ 
+					//delete c; 
+					c = nullptr;
+				}
 				c = ms<OKColor>(r, g, b, a);
 			}
 		}
@@ -1332,7 +1336,10 @@ void Caption::drawColumn(int xInLetter, int letterIndex, bool blank)
 			setPixel((lineIndex + yIndex + xIndex) * 4, c);
 		}
 		if (c != nullptr)
-			delete c;
+		{
+			//delete c;
+			c = nullptr;
+		}
 	}
 }
 
@@ -1381,10 +1388,10 @@ void Caption::updateScreenXY()
 			int captionOverHeadOffset = 0;
 			for (int i = getCaptionManager()->captionList->size() - 1; i >= 0; i--)
 			{
-				sp<Caption> tempC = getCaptionManager()->captionList->get(i);
+				sp<Caption> tempC = getCaptionManager()->captionList->at(i);
 				if (tempC->fixedPosition == Position::CENTERED_OVER_ENTITY)
 				{
-					if (tempC == this)break;
+					if (tempC.get() == this)break;
 
 					captionOverHeadOffset += (int)((tempC->height + 2) * tempC->scale);
 				}
@@ -1583,7 +1590,7 @@ void Caption::update()
 		if (texture != nullptr)
 		{
 			texture->release();
-			delete texture;
+			//delete texture;
 			texture = nullptr;
 		}
 

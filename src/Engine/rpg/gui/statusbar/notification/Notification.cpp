@@ -91,7 +91,7 @@ void Notification::update()
 
 		if (alpha == 0.0f)
 		{
-			getStatusBar()->notificationManager->remove(this);
+			getStatusBar()->notificationManager->remove(shared_from_this());
 
 
 			if (caption->texture != nullptr)

@@ -60,7 +60,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 		pieceTypesToDisallow_DEPRECATED->clear();
 		for (int i = 0; i < importExport_pieceTypesToDisallow->size(); i++)
 		{
-			PieceType b = importExport_pieceTypesToDisallow.get(i);
+			PieceType b = importExport_pieceTypesToDisallow->at(i);
 			sp<PieceType> bp(ms<PieceType>());
 			*bp = b;
 			pieceTypesToDisallow_DEPRECATED.add(bp);
@@ -73,7 +73,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 		blockTypesToDisallow_DEPRECATED->clear();
 		for (int i = 0; i < importExport_blockTypesToDisallow->size(); i++)
 		{
-			BlockType b = importExport_blockTypesToDisallow.get(i);
+			BlockType b = importExport_blockTypesToDisallow->at(i);
 			sp<BlockType> bp(ms<BlockType>());
 			*bp = b;
 			blockTypesToDisallow_DEPRECATED.add(bp);
@@ -275,7 +275,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     importExport_blockTypes->clear();
     for (int i = 0; i < blockTypes->size(); i++)
     {
-        sp<BlockType> bp = blockTypes.get(i);
+        sp<BlockType> bp = blockTypes->at(i);
 		BlockType b;
 		b = *bp;
         importExport_blockTypes.add(b);
@@ -284,7 +284,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     blockTypes->clear();
     for (int i = 0; i < importExport_blockTypes->size(); i++)
     {
-        BlockType b = importExport_blockTypes.get(i);
+        BlockType b = importExport_blockTypes->at(i);
         sp<BlockType> bp(ms<BlockType>());
 		*bp = b;
         blockTypes.add(bp);
@@ -317,7 +317,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     importExport_pieceTypes->clear();
     for (int i = 0; i < pieceTypes->size(); i++)
     {
-        sp<PieceType> bp = pieceTypes.get(i);
+        sp<PieceType> bp = pieceTypes->at(i);
 		PieceType b;
 		b = *bp;
         importExport_pieceTypes.add(b);
@@ -326,7 +326,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     pieceTypes->clear();
     for (int i = 0; i<importExport_pieceTypes->size(); i++)
     {
-        PieceType b = importExport_pieceTypes.get(i);
+        PieceType b = importExport_pieceTypes->at(i);
         sp<PieceType> bp(ms<PieceType>());
 		*bp = b;
         pieceTypes.add(bp);
@@ -339,7 +339,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     importExport_difficulties->clear();
     for (int i = 0; i < difficultyTypes->size(); i++)
     {
-        sp<DifficultyType>bp = difficultyTypes.get(i);
+        sp<DifficultyType>bp = difficultyTypes->at(i);
 		DifficultyType b;
 		b = *bp;
         importExport_difficulties.add(b);
@@ -348,7 +348,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     difficultyTypes->clear();
     for (int i = 0; i<importExport_difficulties->size(); i++)
     {
-        DifficultyType b = importExport_difficulties.get(i);
+        DifficultyType b = importExport_difficulties->at(i);
         sp<DifficultyType>bp = ms<DifficultyType>();
 		*bp = b;
         difficultyTypes.add(bp);
@@ -361,7 +361,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 		for (int i = 0; i < difficultyTypes->size(); i++)
 		{
-			sp<DifficultyType>bp = difficultyTypes.get(i);
+			sp<DifficultyType>bp = difficultyTypes->at(i);
 			bp->randomlyFillGrid = import_randomlyFillGrid;
 		}
 		
@@ -369,7 +369,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 		for (int i = 0; i < difficultyTypes->size(); i++)
 		{
-			sp<DifficultyType>bp = difficultyTypes.get(i);
+			sp<DifficultyType>bp = difficultyTypes->at(i);
 			bp->randomlyFillGridStartY = import_randomlyFillGridStartY;
 		}
 		
@@ -523,7 +523,7 @@ string GameType::toBase64GZippedXML()
 	std::stringstream ss;
 	boost::archive::xml_oarchive oarchive(ss);
 	oarchive << BOOST_SERIALIZATION_NVP(gs);
-	log->debug(ss.str());
+	log.debug(ss.str());
 	string zip = FileUtils::zipStringToBase64String(ss.str());
 	return zip;
 }
@@ -552,7 +552,7 @@ sp<GameType>GameType::fromBase64GZippedXML(string b64GZipXML)
 	}
 	catch(exception)
 	{
-		log->error("Could not unserialize GameType");
+		log.error("Could not unserialize GameType");
 	}
 
 	return nullptr;
@@ -574,124 +574,124 @@ sp<GameType>GameType::fromBase64GZippedXML(string b64GZipXML)
 //		regularFrequencySpecialPieceTypes.Add(pieceType);
 //	}
 
-vector<sp<BlockType>> GameType::getNormalBlockTypes(sp<DifficultyType>d)
+sp<vector<sp<BlockType>>> GameType::getNormalBlockTypes(sp<DifficultyType>d)
 {//=========================================================================================================================
 	sp<vector<sp<BlockType>>>arr;
 	for (int i = 0; i<blockTypes->size(); i++)
 	{
-		sp<BlockType> b = blockTypes.get(i);
+		sp<BlockType> b = blockTypes->at(i);
 		if (b->useInNormalPieces)
 		{
 			bool found = false;
 			for(int n=0;n<d->blockTypesToDisallow_UUID->size();n++)
 			{	
-				if(d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if(d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if(found==false)arr.add(b);
+			if(found==false)arr->push_back(b);
 		}
 	}
 	return arr;
 }
 
-vector<sp<BlockType>> GameType::getGarbageBlockTypes(sp<DifficultyType>d)
+sp<vector<sp<BlockType>>> GameType::getGarbageBlockTypes(sp<DifficultyType>d)
 {//=========================================================================================================================
 	sp<vector<sp<BlockType>>>arr;
 	for(int i=0;i<blockTypes->size();i++)
 	{
-		sp<BlockType> b = blockTypes.get(i);
+		sp<BlockType> b = blockTypes->at(i);
 		if (b->useAsGarbage)
 		{
 			bool found = false;
 			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
 }
 
-vector<sp<BlockType>> GameType::getPlayingFieldBlockTypes(sp<DifficultyType>d)
+sp<vector<sp<BlockType>>> GameType::getPlayingFieldBlockTypes(sp<DifficultyType>d)
 {//=========================================================================================================================
 
 	sp<vector<sp<BlockType>>>arr;
 	for (int i = 0; i<blockTypes->size(); i++)
 	{
-		sp<BlockType> b = blockTypes.get(i);
+		sp<BlockType> b = blockTypes->at(i);
 		if (b->useAsPlayingFieldFiller)
 		{
 			bool found = false;
 			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
 }
 
-vector<sp<BlockType>> GameType::getBlockTypesToIgnoreWhenCheckingChain(sp<DifficultyType>d)
+sp<vector<sp<BlockType>>> GameType::getBlockTypesToIgnoreWhenCheckingChain(sp<DifficultyType>d)
 {//=========================================================================================================================
 	sp<vector<sp<BlockType>>>arr;
 	for (int i = 0; i<blockTypes->size(); i++)
 	{
-		sp<BlockType> b = blockTypes.get(i);
+		sp<BlockType> b = blockTypes->at(i);
 		if (b->ignoreWhenCheckingChainConnections)
 		{
 			bool found = false;
 			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
 
 }
 
-vector<sp<BlockType>> GameType::getBlockTypesToIgnoreWhenMovingDown(sp<DifficultyType>d)
+sp<vector<sp<BlockType>>> GameType::getBlockTypesToIgnoreWhenMovingDown(sp<DifficultyType>d)
 {//=========================================================================================================================
 	sp<vector<sp<BlockType>>>arr;
 	for (int i = 0; i<blockTypes->size(); i++)
 	{
-		sp<BlockType> b = blockTypes.get(i);
+		sp<BlockType> b = blockTypes->at(i);
 		if (b->ignoreWhenMovingDownBlocks)
 		{
 			bool found = false;
 			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
 
 }
 
-vector<sp<BlockType>> GameType::getBlockTypesChainMustContain(sp<DifficultyType>d)
+sp<vector<sp<BlockType>>> GameType::getBlockTypesChainMustContain(sp<DifficultyType>d)
 {//=========================================================================================================================
 	sp<vector<sp<BlockType>>>arr;
 	for (int i = 0; i<blockTypes->size(); i++)
 	{
-		sp<BlockType> b = blockTypes.get(i);
+		sp<BlockType> b = blockTypes->at(i);
 		if (b->chainConnectionsMustContainAtLeastOneBlockWithThisTrue)
 		{
 			bool found = false;
 			for (int n = 0; n<d->blockTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->blockTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->blockTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
@@ -699,62 +699,62 @@ vector<sp<BlockType>> GameType::getBlockTypesChainMustContain(sp<DifficultyType>
 }
 
 
-vector<sp<PieceType>> GameType::getNormalPieceTypes(sp<DifficultyType>d)
+sp<vector<sp<PieceType>>> GameType::getNormalPieceTypes(sp<DifficultyType>d)
 {//=========================================================================================================================
 	sp<vector<sp<PieceType>>>arr;
 	for (int i = 0; i<pieceTypes->size(); i++)
 	{
-		sp<PieceType> b = pieceTypes.get(i);
+		sp<PieceType> b = pieceTypes->at(i);
 		if (b->useAsNormalPiece)
 		{
 			bool found = false;
 			for (int n = 0; n<d->pieceTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->pieceTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->pieceTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
 }
 
-vector<sp<PieceType>> GameType::getGarbagePieceTypes(sp<DifficultyType>d)
+sp<vector<sp<PieceType>>> GameType::getGarbagePieceTypes(sp<DifficultyType>d)
 {//=========================================================================================================================
 	sp<vector<sp<PieceType>>>arr;
 	for (int i = 0; i<pieceTypes->size(); i++)
 	{
-		sp<PieceType> b = pieceTypes.get(i);
+		sp<PieceType> b = pieceTypes->at(i);
 		if (b->useAsGarbagePiece)
 		{
 			bool found = false;
 			for (int n = 0; n<d->pieceTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->pieceTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->pieceTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
 }
 
-vector<sp<PieceType>> GameType::getPlayingFieldPieceTypes(sp<DifficultyType>d)
+sp<vector<sp<PieceType>>> GameType::getPlayingFieldPieceTypes(sp<DifficultyType>d)
 {//=========================================================================================================================
 
 	sp<vector<sp<PieceType>>>arr;
 	for (int i = 0; i<pieceTypes->size(); i++)
 	{
-		sp<PieceType> b = pieceTypes.get(i);
+		sp<PieceType> b = pieceTypes->at(i);
 		if (b->useAsPlayingFieldFillerPiece)
 		{
 			bool found = false;
 			for (int n = 0; n<d->pieceTypesToDisallow_UUID->size(); n++)
 			{
-				if (d->pieceTypesToDisallow_UUID.get(n) == b->uuid)found = true;
+				if (d->pieceTypesToDisallow_UUID->at(n) == b->uuid)found = true;
 			}
 
-			if (found == false)arr.add(b);
+			if (found == false)arr->push_back(b);
 		}
 	}
 	return arr;
@@ -858,11 +858,11 @@ GameType::GameType()
 	sp<DifficultyType> insane = ms<DifficultyType>(*difficulty_INSANE);
 
 	difficultyTypes->clear();
-	difficultyTypes.add(beginner);
-	difficultyTypes.add(easy);
-	difficultyTypes.add(normal);
-	difficultyTypes.add(hard);
-	difficultyTypes.add(insane);
+	difficultyTypes->push_back(beginner);
+	difficultyTypes->push_back(easy);
+	difficultyTypes->push_back(normal);
+	difficultyTypes->push_back(hard);
+	difficultyTypes->push_back(insane);
 
 	//currentDifficulty = normal;
 }
@@ -871,14 +871,14 @@ sp<BlockType> GameType::getBlockTypeByName(string s)
 {//=========================================================================================================================
 	for (int i = 0; i<blockTypes->size(); i++)
 	{
-		sp<BlockType> d = blockTypes.get(i);
+		sp<BlockType> d = blockTypes->at(i);
 		if (d->name == s)
 		{
 			return d;
 		}
 	}
 
-	log->error("Could not find blockType: " + s + " in " + name);
+	log.error("Could not find blockType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -887,14 +887,14 @@ sp<PieceType> GameType::getPieceTypeByName(string s)
 {//=========================================================================================================================
 	for (int i = 0; i<pieceTypes->size(); i++)
 	{
-		sp<PieceType> d = pieceTypes.get(i);
+		sp<PieceType> d = pieceTypes->at(i);
 		if (d->name == s)
 		{
 			return d;
 		}
 	}
 
-	log->error("Could not find PieceType: " + s + " in " + name);
+	log.error("Could not find PieceType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -903,14 +903,14 @@ sp<BlockType> GameType::getBlockTypeByUUID(string s)
 {//=========================================================================================================================
 	for (int i = 0; i<blockTypes->size(); i++)
 	{
-		sp<BlockType> d = blockTypes.get(i);
+		sp<BlockType> d = blockTypes->at(i);
 		if (d->uuid == s)
 		{
 			return d;
 		}
 	}
 
-	log->error("Could not find blockType: " + s + " in " + name);
+	log.error("Could not find blockType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -919,14 +919,14 @@ sp<PieceType> GameType::getPieceTypeByUUID(string s)
 {//=========================================================================================================================
 	for (int i = 0; i<pieceTypes->size(); i++)
 	{
-		sp<PieceType> d = pieceTypes.get(i);
+		sp<PieceType> d = pieceTypes->at(i);
 		if (d->uuid == s)
 		{
 			return d;
 		}
 	}
 
-	log->error("Could not find PieceType: " + s + " in " + name);
+	log.error("Could not find PieceType: " + s + " in " + name);
 
 	return nullptr;
 }
@@ -937,14 +937,14 @@ sp<DifficultyType> GameType::getDifficultyByName(string s)
 	//bool found = false;
 	for (int i = 0; i<difficultyTypes->size(); i++)
 	{
-		sp<DifficultyType>d = difficultyTypes.get(i);
+		sp<DifficultyType>d = difficultyTypes->at(i);
 		if (d->name == s)
 		{
 			return d;
 		}
 	}
 
-	log->error("Could not find difficulty: " + s + " in " + name);
+	log.error("Could not find difficulty: " + s + " in " + name);
 	
 	return nullptr;
 }
@@ -1000,7 +1000,7 @@ sp<DifficultyType> GameType::getDifficultyByName(string s)
 //{//=========================================================================================================================
 //	for (int i = 0; i < disallowedFirstPieceTypes->size(); i++)
 //	{
-//		if (pieceType == disallowedFirstPieceTypes.get(i))
+//		if (pieceType == disallowedFirstPieceTypes->at(i))
 //		{
 //			return false;
 //		}

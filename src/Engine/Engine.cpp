@@ -728,8 +728,8 @@ void Engine::incomingSpriteData(string s)
 	else
 	{
 		sp<Sprite> sprite = nullptr;
-		if(getSpriteManager()->spriteByNameHashMap.containsKey(data->getName()))
-		sprite = getSpriteManager()->spriteByNameHashMap.get(data->getName());
+		if(getSpriteManager()->spriteByNameHashMap->containsKey(data->getName()))
+		sprite = getSpriteManager()->spriteByNameHashMap->get(data->getName());
 
 		if (sprite == nullptr)
 		{
@@ -738,8 +738,8 @@ void Engine::incomingSpriteData(string s)
 
 		sprite->initializeWithSpriteData(data);
 
-		getSpriteManager()->spriteByNameHashMap.put(sprite->getName(), sprite);
-		getSpriteManager()->spriteByIDHashMap.put(sprite->getID(), sprite);
+		getSpriteManager()->spriteByNameHashMap->put(sprite->getName(), sprite);
+		getSpriteManager()->spriteByIDHashMap->put(sprite->getID(), sprite);
 	}
 }
 
@@ -768,12 +768,12 @@ void Engine::incomingMapData(string s)
 	}
 	else
 	{
-		if (getMapManager()->mapByNameHashMap.containsKey(data->getName()) == false)
+		if (getMapManager()->mapByNameHashMap->containsKey(data->getName()) == false)
 		{
 			sp<Map> m = ms<Map>(this, data);
 			getMapManager()->mapList->push_back(m);
-			getMapManager()->mapByNameHashMap.put(data->getName(), m);
-			getMapManager()->mapByIDHashMap.put(data->getID(), m);
+			getMapManager()->mapByNameHashMap->put(data->getName(), m);
+			getMapManager()->mapByIDHashMap->put(data->getID(), m);
 		}
 	}
 }

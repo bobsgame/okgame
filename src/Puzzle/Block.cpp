@@ -144,7 +144,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	importExport_colors->clear();
 	for (int i = 0; i < colors->size(); i++)
 	{
-		sp<OKColor>bp = colors.get(i);
+		sp<OKColor>bp = colors->at(i);
 		if (bp->name != "" && bp->name != "empty")
 		{
 			OKColor b;//keep this, custom copy constructor which doesnt copy uuid
@@ -165,7 +165,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	colors->clear();
 	for (int i = 0; i < importExport_colors->size(); i++)
 	{
-		OKColor b = importExport_colors.get(i);
+		OKColor b = importExport_colors->at(i);
 		sp<OKColor>bp = OKColor::getColorByName(b.name);
 		if (bp != nullptr && bp->name != "" && bp->name != "empty")
 		{
@@ -220,7 +220,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		makePieceTypeWhenCleared_DEPRECATED->clear();
 		for (int i = 0; i < importExport_makePieceTypeWhenCleared->size(); i++)
 		{
-			PieceType b = importExport_makePieceTypeWhenCleared.get(i);
+			PieceType b = importExport_makePieceTypeWhenCleared->at(i);
 			sp<PieceType> bp(ms<PieceType>());
 			*bp = b;
 			makePieceTypeWhenCleared_DEPRECATED.add(bp);
@@ -249,7 +249,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		{
 			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->size(); i++)
 			{
-				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.get(i);
+				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->at(i);
 				sp<BlockType> bp(ms<BlockType>());
 				*bp = b;
 				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.add(bp);
@@ -270,7 +270,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	{
 		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)
 		{
-			sp<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+			sp<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i);
 			TurnFromBlockTypeToType b;
 			b = *bp;
 			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(b);
@@ -281,7 +281,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 	{
 		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)
 		{
-			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.get(i);
+			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i);
 			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>();
 			*bp = b;
 			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(bp);
@@ -381,7 +381,7 @@ void Block::update()
 		{
 			fadingOut = false;
 
-			getGameLogic()->fadingOutBlocks->remove(this->shared_from_this());
+			getGameLogic()->fadingOutBlocks->remove(this);
 			return;
 		}
 	}
@@ -392,7 +392,7 @@ void Block::update()
 		{
 			popping = false;
 			int randomIndex = getGameLogic()->getRandomIntLessThan(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->size(),"Block::update");
-			blockType = getGameLogic()->currentGameType->getBlockTypeByUUID(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID.get(randomIndex));
+			blockType = getGameLogic()->currentGameType->getBlockTypeByUUID(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->at(randomIndex));
 		}
 	}
 
@@ -639,7 +639,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByColor->size(); i++)
 			{
-				sp<Block> c = connectedBlocksByColor.get(i);
+				sp<Block> c = connectedBlocksByColor->at(i);
 				if (c->xGrid == xGrid && c->yGrid == yGrid - 1)
 				{
 					connectedUp = true;
@@ -683,7 +683,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByPiece->size(); i++)
 			{
-				sp<Block> c = connectedBlocksByPiece.get(i);
+				sp<Block> c = connectedBlocksByPiece->at(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1)
 				{
@@ -764,7 +764,7 @@ void Block::update()
 		{
 			for (int i = 0; i < connectedBlocksByPiece->size(); i++)
 			{
-				sp<Block> c = connectedBlocksByPiece.get(i);
+				sp<Block> c = connectedBlocksByPiece->at(i);
 
 				if (c->xInPiece == xInPiece && c->yInPiece == yInPiece - 1 && c->color == color && color != nullptr)
 				{
@@ -976,7 +976,7 @@ void Block::breakConnectionsInPiece()
 	for (int i = 0; i < connectedBlocksByColor->size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		sp<Block> connectedBlock = connectedBlocksByColor.get(i);
+		sp<Block> connectedBlock = connectedBlocksByColor->at(i);
 		connectedBlock->connectedBlocksByColor->remove(this->shared_from_this());
 	}
 	connectedBlocksByColor->clear();
@@ -984,7 +984,7 @@ void Block::breakConnectionsInPiece()
 	for (int i = 0; i < connectedBlocksByPiece->size(); i++)
 	{
 		//remove this block from its connected blocks connectedBlocks list.
-		sp<Block> connectedBlock = connectedBlocksByPiece.get(i);
+		sp<Block> connectedBlock = connectedBlocksByPiece->at(i);
 		connectedBlock->connectedBlocksByPiece->remove(this->shared_from_this());
 	}
 	connectedBlocksByPiece->clear();
@@ -994,35 +994,35 @@ void Block::breakConnectionsInPiece()
 		//these should never happen due to above
 		for (int i = 0; i < (int)piece->blocks->size(); i++)
 		{
-			sp<Block> c = piece->blocks.get(i);
-			while (c->connectedBlocksByColor.contains(this->shared_from_this()))
+			sp<Block> c = piece->blocks->at(i);
+			while (c->connectedBlocksByColor->contains(this->shared_from_this()))
 			{
-				log->error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
+				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
 				c->connectedBlocksByColor->remove(this->shared_from_this());
 				
 			}
-			while (c->connectedBlocksByPiece.contains(this->shared_from_this()))
+			while (c->connectedBlocksByPiece->contains(this->shared_from_this()))
 			{
 				c->connectedBlocksByPiece->remove(this->shared_from_this());
-				log->error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
+				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
 			}
 		}
 
 		for (int i = 0; i < (int)piece->blocks->size(); i++)
 		{
-			if (piece->blocks.get(i) == this->shared_from_this())
+			if (piece->blocks->at(i) == this->shared_from_this())
 			{
-				piece->blocks->erase(->begin()+i);
+				piece->blocks->erase(piece->blocks->begin()+i);
 				i = 0;
 			}
 		}
 
 		//this should never happen due to above
-		while (piece->blocks.contains(this->shared_from_this()))
+		while (piece->blocks->contains(this->shared_from_this()))
 		{
 			piece->blocks->remove(this->shared_from_this());
 
-			log->error("Shouldn't happen!");
+			log.error("Shouldn't happen!");
 		}
 	}
 }
@@ -1215,7 +1215,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 
 		if (c == nullptr)
 		{
-			log->error("Should never happen!");
+			log.error("Should never happen!");
 			c = OKColor::gray;//TODO: should never happen?
 		}
 
@@ -1244,7 +1244,7 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		}
 		else
 		{
-			log->warn("Should never happen!");
+			log.warn("Should never happen!");
 			renderColor = OKColor(*OKColor::darkerBurgandy);
 		}
 	}
@@ -1425,11 +1425,11 @@ void Block::render(float screenX, float screenY, float a, float scale, bool inte
 		float spriteImageHeight = (float)sprite->getImageHeight();
 
 		float imageToTextureRatioX = (spriteImageWidth / (float)texture->getTextureWidth());
-		float tx0 = x0sp<InImage> imageToTextureRatioX;
-		float tx1 = x1sp<InImage> imageToTextureRatioX;
+		float tx0 = x0InImage* imageToTextureRatioX;
+		float tx1 = x1InImage* imageToTextureRatioX;
 		float imageToTextureRatioY = (spriteImageHeight / (float)texture->getTextureHeight());
-		float ty0 = y0sp<InImage> imageToTextureRatioY;
-		float ty1 = y1sp<InImage> imageToTextureRatioY;
+		float ty0 = y0InImage* imageToTextureRatioY;
+		float ty1 = y1InImage* imageToTextureRatioY;
 
 		//log->info(""+tx0+" "+tx1+" "+ty0+" "+ty1);
 
@@ -1563,7 +1563,7 @@ void Block::renderOutlines(float screenX, float screenY, float s)
 	//			int blockNum = 0;
 	//			for(int i=0;i<Piece().pieceType.numblocks;i++)
 	//			{
-	//				if(Piece().blocks.get(i)==this){blockNum=i;break;}
+	//				if(Piece().blocks->at(i)==this){blockNum=i;break;}
 	//			}
 	//
 	//			GLUtils::drawOutlinedString(""+blockNum,(int)x,(int)y,Color.white);
@@ -1586,7 +1586,7 @@ void Block::setRandomBlockTypeColor()
 
 	if (amtColors > 0) 
 	{
-		this->color = this->blockType->colors.get(getGameLogic()->getRandomIntLessThan(amtColors,"setRandomBlockTypeColor"));
+		this->color = this->blockType->colors->at(getGameLogic()->getRandomIntLessThan(amtColors,"setRandomBlockTypeColor"));
 	}
 }
 

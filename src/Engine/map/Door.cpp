@@ -164,14 +164,14 @@ void Door::update()
 						//TODO: don't spawn if there are too many randoms, have map limit?
 
 
-						sp<vector<string>> targetTYPEIDList = ms<vector><string>();
+						sp<vector<string>> targetTYPEIDList;// = ms<vector><string>();
 
 						//if this door has connections, set target to one of this door's connections
 						if (getConnectionTYPEIDList()->size() > 0)
 						{
 							for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 							{
-								targetTYPEIDList->add(getConnectionTYPEIDList()->get(i));
+								targetTYPEIDList->push_back(getConnectionTYPEIDList()->at(i));
 							}
 						}
 						else
@@ -189,23 +189,23 @@ void Door::update()
 								int i = Math::randLessThan(targetTYPEIDList->size());
 
 								//don't count this door
-								if (targetTYPEIDList->get(i) == "DOOR." + getName())
+								if (targetTYPEIDList->at(i) == "DOOR." + getName())
 								{
-									targetTYPEIDList->erase(->begin()+i);
+									targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
 									continue;
 								}
 
 								bool canMakeRandom = false;
 
 								//if there is another exit, keep pumping out randoms, they will go there.
-								if (OKString::startsWith(targetTYPEIDList->get(i), "DOOR."))
+								if (OKString::startsWith(targetTYPEIDList->at(i), "DOOR."))
 								{
 									canMakeRandom = true;
 								}
 								else
 								{
 									//else we should check to make sure there is a random point of interest to go to, otherwise he will have nowhere to go and just stand there.
-									sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->get(i));
+									sp<Area> a = getMap()->getAreaOrWarpAreaByTYPEID(targetTYPEIDList->at(i));
 
 									if (a != nullptr)
 									{
@@ -215,7 +215,7 @@ void Door::update()
 										//entMan().isAnyoneTryingToGoToArea(a)==true
 										//||
 										{
-											targetTYPEIDList->erase(->begin()+i);
+											targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
 											continue;
 										}
 										else
@@ -225,7 +225,7 @@ void Door::update()
 									}
 									else
 									{
-										targetTYPEIDList->erase(->begin()+i);
+										targetTYPEIDList->erase(targetTYPEIDList->begin()+i);
 										//this is a serious error, prints out on System.err in getAreaOrWarpAreaByName
 									}
 								}
@@ -233,7 +233,7 @@ void Door::update()
 								if (canMakeRandom == true)
 								{
 									sp<RandomCharacter> r = ms<RandomCharacter>(getEngine(), getMap(), (int)(arrivalXPixelsHQ() + 8) / 2, (int)(arrivalYPixelsHQ() + 8) / 2, randomSpawnKids(), randomSpawnAdults(), randomSpawnMales(), randomSpawnFemales(), false);
-									r->currentAreaTYPEIDTarget = targetTYPEIDList->get(i);
+									r->currentAreaTYPEIDTarget = targetTYPEIDList->at(i);
 									r->cameFrom = "DOOR." + getName();
 									targetTYPEIDList->clear();
 									open = true;
@@ -287,13 +287,13 @@ void Door::enter()
 
 		for (int i = 0; i < (int)map->doorList->size(); i++)
 		{
-			sp<Door> d = map->doorList.get(i);
+			sp<Door> d = map->doorList->at(i);
 
 			if (d->getName() == destinationDoorName())
 			{
 				open = true;
 
-				getMapManager()->doorEntered = this;
+				getMapManager()->doorEntered = shared_from_this();
 				getMapManager()->doorExited = d;
 
 				d->open = true;
@@ -393,15 +393,15 @@ void Door::renderDebugBoxes()
 	for (int i = 0; i < getConnectionTYPEIDList()->size(); i++)
 	{
 		//draw connections to doors
-		if (OKString::startsWith(getConnectionTYPEIDList()->get(i), "DOOR."))
+		if (OKString::startsWith(getConnectionTYPEIDList()->at(i), "DOOR."))
 		{
 			//go through doorlist
 			for (int d = 0; d < (int)getMap()->doorList->size(); d++)
 			{
-				sp<Door> door = getMap()->doorList.get(d);
+				sp<Door> door = getMap()->doorList->at(d);
 				if (door->getMap() == getMap())
 				{
-					if (getConnectionTYPEIDList()->get(i) == "DOOR." + door->getName())
+					if (getConnectionTYPEIDList()->at(i) == "DOOR." + door->getName())
 					{
 						float dx = door->getScreenLeft() + (door->getWidth() / 2) * zoom;
 						float dy = door->getScreenTop() + (door->getHeight()) * zoom;
@@ -421,12 +421,12 @@ void Door::renderDebugBoxes()
 			//         {
 			//            sp<Area> a = aEnum->nextElement();
 
-			sp<vector<sp<Area>>>areas = getMap()->currentState->areaByNameHashtable.getAllValues();
+			sp<vector<sp<Area>>>areas = getMap()->currentState->areaByNameHashtable->getAllValues();
 			for (int n = 0; n<areas->size(); n++)
 			{
-				sp<Area> a = areas->get(n);
+				sp<Area> a = areas->at(n);
 
-				if (getConnectionTYPEIDList()->get(i) == a->getName())
+				if (getConnectionTYPEIDList()->at(i) == a->getName())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -438,9 +438,9 @@ void Door::renderDebugBoxes()
 			//if not found, go through warparea list
 			for (int j = 0; j < (int)getMap()->warpAreaList->size(); j++)
 			{
-				sp<Area> a = getMap()->warpAreaList.get(j);
+				sp<Area> a = getMap()->warpAreaList->at(j);
 
-				if (getConnectionTYPEIDList()->get(i) == a->getName())
+				if (getConnectionTYPEIDList()->at(i) == a->getName())
 				{
 					float ax = a->screenLeft() + (a->getWidth() / 2) * zoom;
 					float ay = a->screenTop() + (a->getHeight() / 2) * zoom;
@@ -546,7 +546,7 @@ sp<EntityData> Door::getData()
 
 sp<DoorData> Door::getDoorData()
 {
-	return ((sp<DoorData>)getData());
+	return (ms<DoorData>(getData().get()));
 }
 
 float Door::arrivalXPixelsHQ()

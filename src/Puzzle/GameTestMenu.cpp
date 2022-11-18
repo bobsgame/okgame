@@ -148,7 +148,7 @@ GameTestMenuControl::GameTestMenuControl(Gwen::Controls::Base* pParent, const Gw
 
 			difficultyCombo = new ComboBox(bottomBase,"difficultyCombo");
 			GameType g;
-			for(int i=0;i<g.difficultyTypes->size();i++)difficultyCombo->AddItem(Gwen::Utility::StringToUnicode(g.difficultyTypes.get(i)->name));
+			for(int i=0;i<g.difficultyTypes->size();i++)difficultyCombo->AddItem(Gwen::Utility::StringToUnicode(g.difficultyTypes->at(i)->name));
 			difficultyCombo->Dock(Pos::Left);
 			difficultyCombo->SetHeight(25);
 			difficultyCombo->onSelection.Add(this, &GameTestMenuControl::onChangeDifficulty);
@@ -279,7 +279,7 @@ using Poco::Path;
 //	sp<GameSequence>bt = nullptr;
 //	for (int i = 0; i<bobsGame->loadedGameSequences->size(); i++)
 //	{
-//		sp<GameSequence>b = bobsGame->loadedGameSequences.get(i);
+//		sp<GameSequence>b = bobsGame->loadedGameSequences->at(i);
 //		if (b->name == name)
 //		{
 //			bt = b;
@@ -298,7 +298,7 @@ void GameTestMenuControl::populateGameTypesListBox()
 	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor.get(i);
+		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
 		sp<GameType>g = gameTypeStringColorPairPair.first;
 		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
 		string name = stringColorPair.first;
@@ -335,7 +335,7 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	sp<vector<pair<sp<GameSequence>>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor.get(i);
+		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
 		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
 		pair<string, sp<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
 		string name = stringColorPair.first;
@@ -421,7 +421,7 @@ void GameTestMenuControl::vote(bool upDown)
 
 	if (currentGameSequence->gameTypes->size() == 1)
 	{
-		uuid = currentGameSequence->gameTypes.get(0)->uuid;
+		uuid = currentGameSequence->gameTypes->at(0)->uuid;
 		bobsGame->getServerConnection()->connectAndAuthorizeAndQueueWriteToChannel_S(OKNet::OK_Game_GameTypesAndSequences_Vote_Request + "GameType:" + uuid + ":" +vote+":"+ OKNet::endline);
 	}
 	else
@@ -449,8 +449,8 @@ void GameTestMenuControl::vote(bool upDown)
 	{
 		if (currentGameSequence->gameTypes->size() == 1)
 		{
-			if(upDown)currentGameSequence->gameTypes.get(0)->yourVote = "up";
-			else currentGameSequence->gameTypes.get(0)->yourVote = "down";
+			if(upDown)currentGameSequence->gameTypes->at(0)->yourVote = "up";
+			else currentGameSequence->gameTypes->at(0)->yourVote = "down";
 		}
 		else
 		{
@@ -532,7 +532,7 @@ void GameTestMenuControl::initPreviewGame()
 		sp<GameType>g = ms<GameType>();
 		sp<BlockType> bt(ms<BlockType>());
 		bt->name = "Gray Square";
-		bt->colors.add(OKColor::gray);
+		bt->colors->push_back(OKColor::gray);
 		bt->useInNormalPieces = true;
 		bt->useAsPlayingFieldFiller = true;
 		bt->useAsGarbage = true;
@@ -541,14 +541,14 @@ void GameTestMenuControl::initPreviewGame()
 		pt->useAsNormalPiece = true;
 		pt->useAsPlayingFieldFillerPiece = true;
 		pt->useAsGarbagePiece = true;
-		g->blockTypes.add(bt);
-		g->pieceTypes.add(pt);
+		g->blockTypes->push_back(bt);
+		g->pieceTypes->push_back(pt);
 
 		currentGameSequence->gameTypes.add(g);
 	}
 
 	
-	bobsGame->getPlayer1Game()->currentGameType = (currentGameSequence->gameTypes.get(0));
+	bobsGame->getPlayer1Game()->currentGameType = (currentGameSequence->gameTypes->at(0));
 	bobsGame->getPlayer1Game()->currentGameSequence = currentGameSequence;
 	bobsGame->getPlayer1Game()->currentGameSequence->currentDifficultyName = difficultyCombo->GetSelectedItem()->GetText().c_str();
 	bobsGame->currentRoom->endlessMode = true;
@@ -642,7 +642,7 @@ void OKGame::gameTestMenuUpdate()
 			//remove unsaved game sequences
 			//			for (int i = 0; i<loadedGameSequences->size(); i++)
 			//			{
-			//				if (loadedGameSequences.get(i)->loadedFilename == "")
+			//				if (loadedGameSequences->at(i)->loadedFilename == "")
 			//				{
 			//					loadedGameSequences->erase(->begin()+i);
 			//					i--;

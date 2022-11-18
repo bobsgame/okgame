@@ -62,7 +62,7 @@ bool TextManager::isTextAnswerBoxOpen()
 void TextManager::init()
 { //=========================================================================================================================
 
-	//log->debug("Init TextManager");
+	//log.debug("Init TextManager");
 	/*
 	 * // load a default java font
 	 * try
@@ -102,11 +102,11 @@ void TextManager::init()
 	//pow2TexHeight = Math::getClosestPowerOfTwo(height);
 
 	textBox->clear();
-	textBox->add(ms<TextWindow>(getEngine()));
-	textBox->add(ms<TextWindow>(getEngine()));
+	textBox->push_back(ms<TextWindow>(getEngine()));
+	textBox->push_back(ms<TextWindow>(getEngine()));
 
-	textBox->get(0)->init();
-	textBox->get(1)->init();
+	textBox->at(0)->init();
+	textBox->at(1)->init();
 }
 
 void TextManager::reset()
@@ -129,22 +129,22 @@ void TextManager::reset()
 	waitingForCancelButtonUnpress = false;
 	getActionManager()->deleteCaptionWithBlipSound();
 
-	textBox->get(0)->scrollPercent = 0;
-	textBox->get(1)->scrollPercent = 0;
+	textBox->at(0)->scrollPercent = 0;
+	textBox->at(1)->scrollPercent = 0;
 
-	textBox->get(0)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
-	textBox->get(1)->setSpriteWindow(getCameraman()->targetEntity, questionMarkTexture, "???");
+	textBox->at(0)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
+	textBox->at(1)->setSpriteWindow(getCameraman()->targetEntity, questionMarkTexture, "???");
 
 
 	int i = 0;
 	for (i = 0; i < 2; i++)
 	{
-		textBox->get(i)->clearByteArray();
+		textBox->at(i)->clearByteArray();
 
-		textBox->get(i)->line = 0;
-		textBox->get(i)->xInLine = 0;
+		textBox->at(i)->line = 0;
+		textBox->at(i)->xInLine = 0;
 
-		textBox->get(i)->redraw = true;
+		textBox->at(i)->redraw = true;
 	}
 }
 
@@ -167,13 +167,13 @@ void TextManager::render()
 
 	if (textEngineState != TextEngineState::CLOSED)
 	{
-		if (textBox->get(0) != nullptr)
+		if (textBox->at(0) != nullptr)
 		{
-			textBox->get(0)->render();
+			textBox->at(0)->render();
 		}
-		if (textBox->get(1) != nullptr)
+		if (textBox->at(1) != nullptr)
 		{
-			textBox->get(1)->render();
+			textBox->at(1)->render();
 		}
 	}
 }
@@ -245,11 +245,11 @@ void TextManager::update()
 					reset();
 
 					// zoom the camera to the talking NPC
-					getCameraman()->setTarget(textBox->get(0)->spriteWindowEntity);
+					getCameraman()->setTarget(textBox->at(0)->spriteWindowEntity);
 					getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 					getCameraman()->ignoreCameraFXBoundaries = true; // avoid camera boundaries
 
-					getAudioManager()->playSound("blah", 0.5f, textBox->get(selectedTextbox)->voicePitch + Math::randLessThanFloat(2.0f), 1);
+					getAudioManager()->playSound("blah", 0.5f, textBox->at(selectedTextbox)->voicePitch + Math::randLessThanFloat(2.0f), 1);
 
 					scrollingUp = true; // wait for the getText box to scroll up before drawing getText in it.
 
@@ -267,10 +267,10 @@ void TextManager::update()
 						keepOpenForNewText = false;
 
 						// start a new line of getText.
-						textBox->get(selectedTextbox)->xInLine = 0;
-						textBox->get(selectedTextbox)->line++;
+						textBox->at(selectedTextbox)->xInLine = 0;
+						textBox->at(selectedTextbox)->line++;
 
-						if (textBox->get(selectedTextbox)->line > MAX_LINES)
+						if (textBox->at(selectedTextbox)->line > MAX_LINES)
 						{
 							waitingForButtonForNewPage = true;
 						}
@@ -320,8 +320,8 @@ void TextManager::update()
 
 		doScrolling(ticksPassed);
 
-		textBox->get(0)->updateTextureFromByteArray();
-		textBox->get(1)->updateTextureFromByteArray();
+		textBox->at(0)->updateTextureFromByteArray();
+		textBox->at(1)->updateTextureFromByteArray();
 	}
 
 
@@ -627,7 +627,7 @@ void TextManager::drawText(long long ticksPassed)
 
 				string e = "A tag was parsed inside drawText()";
 				Main::console->error(e);
-				log->error(e);
+				log.error(e);
 			}
 
 			else
@@ -648,14 +648,14 @@ void TextManager::drawText(long long ticksPassed)
 
 						string e = "A word was too long for the getText engine.";
 						Main::console->error(e);
-						log->error(e);
+						log.error(e);
 
 						nextWordLength = OKFont::getNextWordLength(currentText, position, font);
 					}
 
 					// see if it fits on the current line
-					int pixelsLeftInLine = getLineSizeX() - textBox->get(selectedTextbox)->xInLine;
-					if (textBox->get(selectedTextbox)->line == MAX_LINES)
+					int pixelsLeftInLine = getLineSizeX() - textBox->at(selectedTextbox)->xInLine;
+					if (textBox->at(selectedTextbox)->line == MAX_LINES)
 					{
 						pixelsLeftInLine -= 32; // for the getText button icon
 					}
@@ -663,11 +663,11 @@ void TextManager::drawText(long long ticksPassed)
 					// if it doesnt fit, go to the next line
 					if (pixelsLeftInLine < nextWordLength)
 					{
-						textBox->get(selectedTextbox)->xInLine = 0;
-						textBox->get(selectedTextbox)->line++;
+						textBox->at(selectedTextbox)->xInLine = 0;
+						textBox->at(selectedTextbox)->line++;
 
 						// if we're on the last line, wait for input
-						if (textBox->get(selectedTextbox)->line > MAX_LINES)
+						if (textBox->at(selectedTextbox)->line > MAX_LINES)
 						{
 							waitingForButtonForNewPage = true;
 						}
@@ -678,7 +678,7 @@ void TextManager::drawText(long long ticksPassed)
 					// else MusicAndSoundManager().playSound("blah",127,TEXT_textbox[TEXT_selected_textbox].voice_pitch+(rand()%20000),0);
 
 					// only draw the space if we're not at the beginning of the getText box
-					if (textBox->get(selectedTextbox)->xInLine != 0)
+					if (textBox->at(selectedTextbox)->xInLine != 0)
 					{
 						drawLetter();
 					}
@@ -716,14 +716,14 @@ void TextManager::drawText(long long ticksPassed)
 
 				if (currentText[position] == '!')
 				{
-					textBox->get(selectedTextbox)->shakeTicksYTotal = 300;//300
-					//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
+					textBox->at(selectedTextbox)->shakeTicksYTotal = 300;//300
+					//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
 				}
 
 				if (currentText[position] == '?')
 				{
-					textBox->get(selectedTextbox)->shakeTicksXTotal = 300;//300
-					//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
+					textBox->at(selectedTextbox)->shakeTicksXTotal = 300;//300
+					//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
 				}
 			}
 			// increment the string
@@ -764,11 +764,11 @@ void TextManager::handleInput()
 			{
 				if (selectedTextbox == BOTTOM)
 				{
-					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
+					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox->at(0).screen_y+64-8-2,255);
 				}
 				if (selectedTextbox == TOP)
 				{
-					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
+					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
 				}
 				buttonIconIsOn = true;
 			}
@@ -793,19 +793,19 @@ void TextManager::handleInput()
 				if (buttonIconIsOn == true)
 				{
 					buttonIconIsOn = false;
-					// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
+					// HARDWARE_delete_sprite(TEXT_textbox->at(0).button_sprite);
 				}
 
 				buttonAUnpressed = false;
-				textBox->get(selectedTextbox)->clearByteArray();
+				textBox->at(selectedTextbox)->clearByteArray();
 
 				if (waitingForButtonPressToClose == false && textEngineState != TextEngineState::CLOSING)
 				{
-					textBox->get(selectedTextbox)->redraw = true;
+					textBox->at(selectedTextbox)->redraw = true;
 				}
 
-				textBox->get(selectedTextbox)->line = 0;
-				textBox->get(selectedTextbox)->xInLine = 0;
+				textBox->at(selectedTextbox)->line = 0;
+				textBox->at(selectedTextbox)->xInLine = 0;
 				waitingForButtonForNewPage = false;
 			}
 		}
@@ -836,13 +836,13 @@ void TextManager::handleInput()
 			{
 				if (selectedTextbox == BOTTOM)
 				{
-					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-2,255);
+					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox->at(0).screen_y+64-8-2,255);
 				}
 
 
 				if (selectedTextbox == TOP)
 				{
-					// TEXT_textbox->get(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
+					// TEXT_textbox->at(0).button_sprite = HARDWARE_create_sprite(TEXT_button_icon_GFX,0,1,1.0f,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-2,255);
 				}
 
 
@@ -869,7 +869,7 @@ void TextManager::handleInput()
 				{
 					buttonIconIsOn = false;
 
-					// HARDWARE_delete_sprite(TEXT_textbox->get(0).button_sprite);
+					// HARDWARE_delete_sprite(TEXT_textbox->at(0).button_sprite);
 				}
 
 				buttonAUnpressed = false;
@@ -935,49 +935,49 @@ void TextManager::doScrolling(long long ticksPassed)
 	 */
 
 
-	textBox->get(0)->alpha = textBox->get(0)->scrollPercent;
-	textBox->get(1)->alpha = textBox->get(1)->scrollPercent;
+	textBox->at(0)->alpha = textBox->at(0)->scrollPercent;
+	textBox->at(1)->alpha = textBox->at(1)->scrollPercent;
 
 
 	float fastScroll = 0.003f * ticksPassed;
 	//float mediumScroll = 0.001f * ticksPassed;
 
 
-	if (topBoxActivated == true && textBox->get(1)->scrollPercent != 1.0f)
+	if (topBoxActivated == true && textBox->at(1)->scrollPercent != 1.0f)
 	{
-		textBox->get(1)->scrollPercent += fastScroll;
-		if (textBox->get(1)->scrollPercent > 1.0f)
+		textBox->at(1)->scrollPercent += fastScroll;
+		if (textBox->at(1)->scrollPercent > 1.0f)
 		{
-			textBox->get(1)->scrollPercent = 1.0f;
+			textBox->at(1)->scrollPercent = 1.0f;
 		}
 	}
 
 
-	if (topBoxActivated == false && textBox->get(1)->scrollPercent != 0.0f)
+	if (topBoxActivated == false && textBox->at(1)->scrollPercent != 0.0f)
 	{
-		textBox->get(1)->scrollPercent -= fastScroll;
-		if (textBox->get(1)->scrollPercent < 0.0f)
+		textBox->at(1)->scrollPercent -= fastScroll;
+		if (textBox->at(1)->scrollPercent < 0.0f)
 		{
-			textBox->get(1)->scrollPercent = 0.0f;
+			textBox->at(1)->scrollPercent = 0.0f;
 		}
 	}
 
 
 	if (textEngineState == TextEngineState::ANSWER_BOX_ON) // ANSWER BOX TURNED ON,SCROLL TEXT BOX UP,ANSWER BOX UP
 	{
-		//			if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
+		//			if(textBox->at(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
 		//			{
-		//				textBox->get(0).scrollPercent-=mediumScroll;
-		//				if(textBox->get(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
-		//					textBox->get(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2;
+		//				textBox->at(0).scrollPercent-=mediumScroll;
+		//				if(textBox->at(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
+		//					textBox->at(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2;
 		//			}
 		//
-		//			if(textBox->get(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
+		//			if(textBox->at(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-(11*numberOfAnswers)-2)
 		//			{
-		//				if(answerBoxY>textBox->get(0).scrollPercent+textWindowHeight+8-2)
+		//				if(answerBoxY>textBox->at(0).scrollPercent+textWindowHeight+8-2)
 		//				{
 		//					answerBoxY-=fastScroll;
-		//					if(answerBoxY<textBox->get(0).scrollPercent+textWindowHeight+8-2) answerBoxY=textBox->get(0).scrollPercent+textWindowHeight+8-2;
+		//					if(answerBoxY<textBox->at(0).scrollPercent+textWindowHeight+8-2) answerBoxY=textBox->at(0).scrollPercent+textWindowHeight+8-2;
 		//				}
 		//			}
 
@@ -1000,13 +1000,13 @@ void TextManager::doScrolling(long long ticksPassed)
 			{
 				cursorPixelUpDownToggle = false;
 				//if(cursorScreenSprite!=null)
-				//cursorScreenSprite.screenXPixelsHQ=textBox->get(0).getScreenX+(64*3)-(64*4)-8-1;//TODO
+				//cursorScreenSprite.screenXPixelsHQ=textBox->at(0).getScreenX+(64*3)-(64*4)-8-1;//TODO
 			}
 			else
 			{
 				cursorPixelUpDownToggle = true;
 				//if(cursorScreenSprite!=null)
-				//cursorScreenSprite.screenXPixelsHQ=textBox->get(0).getScreenX+(64*3)-(64*4)-8;
+				//cursorScreenSprite.screenXPixelsHQ=textBox->at(0).getScreenX+(64*3)-(64*4)-8;
 			}
 		}
 	}
@@ -1017,11 +1017,11 @@ void TextManager::doScrolling(long long ticksPassed)
 			answerBoxY += fastScroll;
 		}
 
-		//			if(textBox->get(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y)
+		//			if(textBox->at(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y)
 		//			{
-		//				textBox->get(0).scrollPercent+=mediumScroll;
-		//				if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y)
-		//					textBox->get(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y;
+		//				textBox->at(0).scrollPercent+=mediumScroll;
+		//				if(textBox->at(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y)
+		//					textBox->at(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y;
 		//			}
 		//			else
 		//			{
@@ -1030,18 +1030,18 @@ void TextManager::doScrolling(long long ticksPassed)
 	}
 	else if (textEngineState == TextEngineState::KEYBOARD_ON) // KEYBOARD TURNED ON,SCROLL TEXT BOX UP,KEYBOARD BOX UP
 	{
-		//			if(textBox->get(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-64-2)
+		//			if(textBox->at(0).scrollPercent>BOTTOM_ACTIVE_POSITION_Y-64-2)
 		//			{
-		//				textBox->get(0).scrollPercent-=mediumScroll;
-		//				if(textBox->get(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-64-2) textBox->get(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-64-2;
+		//				textBox->at(0).scrollPercent-=mediumScroll;
+		//				if(textBox->at(0).scrollPercent<BOTTOM_ACTIVE_POSITION_Y-64-2) textBox->at(0).scrollPercent=BOTTOM_ACTIVE_POSITION_Y-64-2;
 		//			}
 		//
-		//			if(textBox->get(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-64-2)
+		//			if(textBox->at(0).scrollPercent==BOTTOM_ACTIVE_POSITION_Y-64-2)
 		//			{
-		//				if(keyboardY>textBox->get(0).scrollPercent+64+8-2)
+		//				if(keyboardY>textBox->at(0).scrollPercent+64+8-2)
 		//				{
 		//					keyboardY-=fastScroll;
-		//					if(keyboardY<textBox->get(0).scrollPercent+64+8-2) keyboardY=textBox->get(0).scrollPercent+64+8-2;
+		//					if(keyboardY<textBox->at(0).scrollPercent+64+8-2) keyboardY=textBox->at(0).scrollPercent+64+8-2;
 		//
 		//					if(keyboardScreenSprite!=null) keyboardScreenSprite.screenYPixelsHQ=keyboardY;
 		//				}
@@ -1059,12 +1059,12 @@ void TextManager::doScrolling(long long ticksPassed)
 				keyboardScreenSprite->screenYPixelsHQ = keyboardY;
 			}
 		}
-		if (textBox->get(0)->scrollPercent > 0.0f)
+		if (textBox->at(0)->scrollPercent > 0.0f)
 		{
-			textBox->get(0)->scrollPercent -= fastScroll;
-			if (textBox->get(0)->scrollPercent < 0.0f)
+			textBox->at(0)->scrollPercent -= fastScroll;
+			if (textBox->at(0)->scrollPercent < 0.0f)
 			{
-				textBox->get(0)->scrollPercent = 0.0f;
+				textBox->at(0)->scrollPercent = 0.0f;
 			}
 		}
 		else
@@ -1078,14 +1078,14 @@ void TextManager::doScrolling(long long ticksPassed)
 	{
 		if (textEngineState == TextEngineState::OPEN) // ==================================TEXT BOX IS IN RUNNING STATE==============================
 		{
-			if (textBox->get(0)->scrollPercent >= 1.0f)
+			if (textBox->at(0)->scrollPercent >= 1.0f)
 			{
-				textBox->get(0)->scrollPercent = 1.0f;
+				textBox->at(0)->scrollPercent = 1.0f;
 				scrollingUp = false;
 			}
-			else if (textBox->get(0)->scrollPercent < 1.0f)
+			else if (textBox->at(0)->scrollPercent < 1.0f)
 			{
-				textBox->get(0)->scrollPercent += fastScroll;
+				textBox->at(0)->scrollPercent += fastScroll;
 				scrollingUp = true;
 			}
 
@@ -1093,101 +1093,101 @@ void TextManager::doScrolling(long long ticksPassed)
 
 			for (int i = 0; i < 2; i++)
 			{
-				if (textBox->get(i)->shakeTicksXTotal > 0)
+				if (textBox->at(i)->shakeTicksXTotal > 0)
 				{
-					if (textBox->get(i)->shakeTicksXTotal > 0)
+					if (textBox->at(i)->shakeTicksXTotal > 0)
 					{
-						textBox->get(i)->shakeTicksXTotal -= (int)ticksPassed;
+						textBox->at(i)->shakeTicksXTotal -= (int)ticksPassed;
 					}
-					if (textBox->get(i)->shakeTicksXTotal < 0)
+					if (textBox->at(i)->shakeTicksXTotal < 0)
 					{
-						textBox->get(i)->shakeTicksXTotal = 0;
+						textBox->at(i)->shakeTicksXTotal = 0;
 					}
 
 
-					textBox->get(i)->shakeTicksLeftRightCounter += (int)ticksPassed;
+					textBox->at(i)->shakeTicksLeftRightCounter += (int)ticksPassed;
 
-					if (textBox->get(i)->shakeTicksLeftRightCounter > 10)
+					if (textBox->at(i)->shakeTicksLeftRightCounter > 10)
 					{
-						textBox->get(i)->shakeTicksLeftRightCounter = 0;
+						textBox->at(i)->shakeTicksLeftRightCounter = 0;
 
-						if (textBox->get(i)->shakeLeftRightToggle == true)
+						if (textBox->at(i)->shakeLeftRightToggle == true)
 						{
-							textBox->get(i)->shakeX++;
-							if (textBox->get(i)->shakeX >= textBox->get(i)->shakeMaxX)
+							textBox->at(i)->shakeX++;
+							if (textBox->at(i)->shakeX >= textBox->at(i)->shakeMaxX)
 							{
-								textBox->get(i)->shakeLeftRightToggle = !textBox->get(i)->shakeLeftRightToggle;
+								textBox->at(i)->shakeLeftRightToggle = !textBox->at(i)->shakeLeftRightToggle;
 							}
 						}
 						else
 						{
-							textBox->get(i)->shakeX--;
-							if (textBox->get(i)->shakeX <= 0 - textBox->get(i)->shakeMaxX)
+							textBox->at(i)->shakeX--;
+							if (textBox->at(i)->shakeX <= 0 - textBox->at(i)->shakeMaxX)
 							{
-								textBox->get(i)->shakeLeftRightToggle = !textBox->get(i)->shakeLeftRightToggle;
+								textBox->at(i)->shakeLeftRightToggle = !textBox->at(i)->shakeLeftRightToggle;
 							}
 						}
 					}
 				}
 				else
 				{
-					textBox->get(i)->shakeX = 0;
+					textBox->at(i)->shakeX = 0;
 				}
 
 
-				if (textBox->get(i)->shakeTicksYTotal > 0)
+				if (textBox->at(i)->shakeTicksYTotal > 0)
 				{
-					if (textBox->get(i)->shakeTicksYTotal > 0)
+					if (textBox->at(i)->shakeTicksYTotal > 0)
 					{
-						textBox->get(i)->shakeTicksYTotal -= (int)ticksPassed;
+						textBox->at(i)->shakeTicksYTotal -= (int)ticksPassed;
 					}
-					if (textBox->get(i)->shakeTicksYTotal < 0)
+					if (textBox->at(i)->shakeTicksYTotal < 0)
 					{
-						textBox->get(i)->shakeTicksYTotal = 0;
+						textBox->at(i)->shakeTicksYTotal = 0;
 					}
 
 
-					textBox->get(i)->shakeTicksUpDownCounter += (int)ticksPassed;
+					textBox->at(i)->shakeTicksUpDownCounter += (int)ticksPassed;
 
-					if (textBox->get(i)->shakeTicksUpDownCounter > 10)
+					if (textBox->at(i)->shakeTicksUpDownCounter > 10)
 					{
-						textBox->get(i)->shakeTicksUpDownCounter = 0;
+						textBox->at(i)->shakeTicksUpDownCounter = 0;
 
-						if (textBox->get(i)->shakeUpDownToggle == true)
+						if (textBox->at(i)->shakeUpDownToggle == true)
 						{
-							textBox->get(i)->shakeY++;
-							if (textBox->get(i)->shakeY >= textBox->get(i)->shakeMaxY)
+							textBox->at(i)->shakeY++;
+							if (textBox->at(i)->shakeY >= textBox->at(i)->shakeMaxY)
 							{
-								textBox->get(i)->shakeUpDownToggle = !textBox->get(i)->shakeUpDownToggle;
+								textBox->at(i)->shakeUpDownToggle = !textBox->at(i)->shakeUpDownToggle;
 							}
 						}
 						else
 						{
-							textBox->get(i)->shakeY--;
-							if (textBox->get(i)->shakeY <= 0 - textBox->get(i)->shakeMaxY)
+							textBox->at(i)->shakeY--;
+							if (textBox->at(i)->shakeY <= 0 - textBox->at(i)->shakeMaxY)
 							{
-								textBox->get(i)->shakeUpDownToggle = !textBox->get(i)->shakeUpDownToggle;
+								textBox->at(i)->shakeUpDownToggle = !textBox->at(i)->shakeUpDownToggle;
 							}
 						}
 					}
 				}
 				else
 				{
-					textBox->get(i)->shakeY = 0;
+					textBox->at(i)->shakeY = 0;
 				}
 			}
 		} // END IF TEXT BOX ON
 
 		else if (textEngineState == TextEngineState::CLOSING) // ===========================TEXT BOX IS IN SCROLLING DOWN STATE. WHEN FINISHED,DELETE TEXT BOX===================
 		{
-			if (textBox->get(0)->scrollPercent > 0.0f)
+			if (textBox->at(0)->scrollPercent > 0.0f)
 			{
-				textBox->get(0)->scrollPercent -= fastScroll;
+				textBox->at(0)->scrollPercent -= fastScroll;
 			}
 
-			if (textBox->get(0)->scrollPercent < 0.0f)
+			if (textBox->at(0)->scrollPercent < 0.0f)
 			{
-				textBox->get(0)->scrollPercent = 0.0f;
+				textBox->at(0)->scrollPercent = 0.0f;
 
 
 				getCameraman()->ignoreCameraFXBoundaries = false; // TODO: restore previous state
@@ -1202,8 +1202,8 @@ void TextManager::doScrolling(long long ticksPassed)
 
 		else if (textEngineState == TextEngineState::CLOSED)
 		{
-			textBox->get(0)->scrollPercent = 0.0f;
-			textBox->get(1)->scrollPercent = 0.0f;
+			textBox->at(0)->scrollPercent = 0.0f;
+			textBox->at(1)->scrollPercent = 0.0f;
 		}
 	}
 
@@ -1212,11 +1212,11 @@ void TextManager::doScrolling(long long ticksPassed)
 	//		{
 	//
 	//			// if(TEXT_selected_textbox==false)
-	//			// HARDWARE_set_sprite_xy(TEXT_textbox->get(0).button_sprite,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox->get(0).screen_y+64-8-(TEXT_button_icon_down*2));
+	//			// HARDWARE_set_sprite_xy(TEXT_textbox->at(0).button_sprite,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox->at(0).screen_y+64-8-(TEXT_button_icon_down*2));
 	//
 	//
 	//			// if(TEXT_selected_textbox==true)
-	//			// HARDWARE_set_sprite_xy(TEXT_textbox->get(0).button_sprite,TEXT_textbox->get(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-(TEXT_button_icon_down*2));
+	//			// HARDWARE_set_sprite_xy(TEXT_textbox->at(0).button_sprite,TEXT_textbox->at(0).screen_x+(64*3)-8,TEXT_textbox[1].screen_y+64-8-(TEXT_button_icon_down*2));
 	//
 	//			if(buttonTimer>500)
 	//			{
@@ -1250,15 +1250,15 @@ void TextManager::drawLetter()
 
 
 	// play sound sometimes, for vowels
-	if ((textBox->get(selectedTextbox)->xInLine == 0 && textBox->get(selectedTextbox)->line == 0) || (position % 2 == 0 && position < length - 1 && (OKFont::is_a_vowel(currentText[position - 1]) != OKFont::is_a_vowel(currentText[position]) || OKFont::is_a_vowel(currentText[position]) != OKFont::is_a_vowel(currentText[position + 1]))))
+	if ((textBox->at(selectedTextbox)->xInLine == 0 && textBox->at(selectedTextbox)->line == 0) || (position % 2 == 0 && position < length - 1 && (OKFont::is_a_vowel(currentText[position - 1]) != OKFont::is_a_vowel(currentText[position]) || OKFont::is_a_vowel(currentText[position]) != OKFont::is_a_vowel(currentText[position + 1]))))
 	{
 		if (font == OKFont::font_bob_16)
 		{
-			getAudioManager()->playSound("blah", 0.5f, textBox->get(selectedTextbox)->voicePitch + ((10 + Math::randUpToIncluding(20)) / 10.0f), 1);
+			getAudioManager()->playSound("blah", 0.5f, textBox->at(selectedTextbox)->voicePitch + ((10 + Math::randUpToIncluding(20)) / 10.0f), 1);
 		}
 		else
 		{
-			getAudioManager()->playSound("blah", 0.5f, textBox->get(selectedTextbox)->voicePitch + (Math::randUpToIncluding(20) / 10.0f), 1);
+			getAudioManager()->playSound("blah", 0.5f, textBox->at(selectedTextbox)->voicePitch + (Math::randUpToIncluding(20) / 10.0f), 1);
 		}
 
 		delay = true; // /why do i do this? slight delay on vowels so the sound has time to play?
@@ -1271,14 +1271,14 @@ void TextManager::drawLetter()
 	int xInLetter = 0;
 	for (xInLetter = 0; xInLetter < letterWidth; xInLetter++)
 	{
-		if (textBox->get(selectedTextbox)->xInLine > getLineSizeX())
+		if (textBox->at(selectedTextbox)->xInLine > getLineSizeX())
 		{
-			textBox->get(selectedTextbox)->xInLine = 0;
-			textBox->get(selectedTextbox)->line++;
+			textBox->at(selectedTextbox)->xInLine = 0;
+			textBox->at(selectedTextbox)->line++;
 		}
 
 
-		if (textBox->get(selectedTextbox)->line > MAX_LINES)
+		if (textBox->at(selectedTextbox)->line > MAX_LINES)
 		{
 			// PAUSE,CLEAR,START OVER
 			waitingForButtonForNewPage = true;
@@ -1286,16 +1286,16 @@ void TextManager::drawLetter()
 
 
 		// it it's a space on the last tile/chunk/pixel, skip it
-		if (currentText[position] == ' ' && textBox->get(selectedTextbox)->xInLine >= getLineSizeX())
+		if (currentText[position] == ' ' && textBox->at(selectedTextbox)->xInLine >= getLineSizeX())
 		{
-			textBox->get(selectedTextbox)->xInLine = 0;
-			textBox->get(selectedTextbox)->line++;
+			textBox->at(selectedTextbox)->xInLine = 0;
+			textBox->at(selectedTextbox)->line++;
 
 			xInLetter = letterWidth;
 
 			putInSpaceAlready = true;
 
-			if (textBox->get(selectedTextbox)->line > MAX_LINES)
+			if (textBox->at(selectedTextbox)->line > MAX_LINES)
 			{
 				waitingForButtonForNewPage = true;
 			}
@@ -1303,8 +1303,8 @@ void TextManager::drawLetter()
 
 		if (waitingForButtonForNewPage == false && putInSpaceAlready == false)
 		{
-			textBox->get(selectedTextbox)->drawColumn(letterIndex, xInLetter, false);
-			textBox->get(selectedTextbox)->xInLine++;
+			textBox->at(selectedTextbox)->drawColumn(letterIndex, xInLetter, false);
+			textBox->at(selectedTextbox)->xInLine++;
 		}
 	}
 
@@ -1313,25 +1313,25 @@ void TextManager::drawLetter()
 	// if(getText[TEXT_string_position]==' ')put_in_space_already=true; breaks the pixel length count.. i'd have to make it width-1 in get_text_length
 
 
-	if (textBox->get(selectedTextbox)->line <= MAX_LINES && textBox->get(selectedTextbox)->xInLine < getLineSizeX() && putInSpaceAlready == false)
+	if (textBox->at(selectedTextbox)->line <= MAX_LINES && textBox->at(selectedTextbox)->xInLine < getLineSizeX() && putInSpaceAlready == false)
 	{
-		textBox->get(selectedTextbox)->drawColumn(0, 0, true);
-		textBox->get(selectedTextbox)->xInLine++;
+		textBox->at(selectedTextbox)->drawColumn(0, 0, true);
+		textBox->at(selectedTextbox)->xInLine++;
 
-//		textBox->get(selectedTextbox)->drawColumn(0, 0, true);
-//		textBox->get(selectedTextbox)->xInLine++;
+//		textBox->at(selectedTextbox)->drawColumn(0, 0, true);
+//		textBox->at(selectedTextbox)->xInLine++;
 
 		putInSpaceAlready = true;
 	}
 
-	if (textBox->get(selectedTextbox)->xInLine > getLineSizeX())
+	if (textBox->at(selectedTextbox)->xInLine > getLineSizeX())
 	{
-		textBox->get(selectedTextbox)->xInLine = 0;
-		textBox->get(selectedTextbox)->line++;
+		textBox->at(selectedTextbox)->xInLine = 0;
+		textBox->at(selectedTextbox)->line++;
 	}
 
 
-	if (textBox->get(selectedTextbox)->line > MAX_LINES)
+	if (textBox->at(selectedTextbox)->line > MAX_LINES)
 	{
 		// PAUSE,CLEAR,START OVER
 		waitingForButtonForNewPage = true;
@@ -1340,7 +1340,7 @@ void TextManager::drawLetter()
 
 	// END INSERT SPACE===================================================================
 	// /TEXT_update_textbox_sprite_textures();
-	textBox->get(selectedTextbox)->redraw = true;
+	textBox->at(selectedTextbox)->redraw = true;
 }
 
 void TextManager::parseOption()
@@ -1416,14 +1416,14 @@ void TextManager::parseOption()
 	else if (optionBuffer == "0" || optionBuffer == "BOTTOM")
 	{
 		selectedTextbox = BOTTOM;
-		getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity); // if is not null!! else yuu
+		getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity); // if is not null!! else yuu
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "1" || optionBuffer == "TOP")
 	{
 		selectedTextbox = TOP;
 		topBoxActivated = true;
-		getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+		getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "PAUSE")
@@ -1629,12 +1629,12 @@ void TextManager::parseOption()
 
 	else if (optionBuffer == "CAM0" || optionBuffer == "CAMBOTTOM")
 	{
-		getCameraman()->setTarget(textBox->get(BOTTOM)->spriteWindowEntity);
+		getCameraman()->setTarget(textBox->at(BOTTOM)->spriteWindowEntity);
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "CAM1" || optionBuffer == "CAMTOP")
 	{
-		getCameraman()->setTarget(textBox->get(TOP)->spriteWindowEntity);
+		getCameraman()->setTarget(textBox->at(TOP)->spriteWindowEntity);
 		getCameraman()->setTicksPerPixelMoved((float)getCameraman()->ticksPerPixel_CAMERA_CONVERSATION);
 	}
 	else if (optionBuffer == "CLOSE1" || optionBuffer == "CLOSETOP")
@@ -1644,13 +1644,13 @@ void TextManager::parseOption()
 	}
 	else if (optionBuffer == "SHAKE1SEC")
 	{
-		textBox->get(selectedTextbox)->shakeTicksXTotal = 1000;
-		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
+		textBox->at(selectedTextbox)->shakeTicksXTotal = 1000;
+		//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
 	}
 	else if (optionBuffer == "SHAKE2SEC")
 	{
-		textBox->get(selectedTextbox)->shakeTicksXTotal = 2000;
-		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
+		textBox->at(selectedTextbox)->shakeTicksXTotal = 2000;
+		//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
 	}
 
 	else if (OKString::startsWith(optionBuffer, "SHAKE:"))
@@ -1662,26 +1662,26 @@ void TextManager::parseOption()
 		}
 		catch (exception)
 		{
-			log->error("Could not parse ticks in optionBuffer");
+			log.error("Could not parse ticks in optionBuffer");
 		}
-		textBox->get(selectedTextbox)->shakeTicksXTotal = ticks;
-		//textBox->get(selectedTextbox).shakeTicksLeft = textBox->get(selectedTextbox).shakeTicksTotal;
+		textBox->at(selectedTextbox)->shakeTicksXTotal = ticks;
+		//textBox->at(selectedTextbox).shakeTicksLeft = textBox->at(selectedTextbox).shakeTicksTotal;
 	}
 	else
 	{
 		if (optionBuffer == "CLEAR")
 		{
-			textBox->get(selectedTextbox)->line = 0;
-			textBox->get(selectedTextbox)->xInLine = 0;
-			textBox->get(selectedTextbox)->clearByteArray();
+			textBox->at(selectedTextbox)->line = 0;
+			textBox->at(selectedTextbox)->xInLine = 0;
+			textBox->at(selectedTextbox)->clearByteArray();
 			// /TEXT_update_textbox_sprite_textures();
-			textBox->get(selectedTextbox)->redraw = true;
+			textBox->at(selectedTextbox)->redraw = true;
 		}
 		else if (optionBuffer == "NEXTLINE" || optionBuffer == "NEWLINE")
 		{
-			textBox->get(selectedTextbox)->xInLine = 0;
-			textBox->get(selectedTextbox)->line++;
-			if (textBox->get(selectedTextbox)->line > MAX_LINES)
+			textBox->at(selectedTextbox)->xInLine = 0;
+			textBox->at(selectedTextbox)->line++;
+			if (textBox->at(selectedTextbox)->line > MAX_LINES)
 			{
 				waitingForButtonForNewPage = true;
 			}
@@ -1720,7 +1720,7 @@ void TextManager::parseOption()
 			}
 			catch (exception)
 			{
-				log->error("Could not parse ticks in optionBuffer");
+				log.error("Could not parse ticks in optionBuffer");
 			}
 			delay = true;
 			delayTicks = ticks;
@@ -1734,7 +1734,7 @@ void TextManager::parseOption()
 			}
 			catch (exception)
 			{
-				log->error("Could not parse ticks in optionBuffer");
+				log.error("Could not parse ticks in optionBuffer");
 			}
 
 			ticksPerLetter = ticks;
@@ -1751,12 +1751,12 @@ void TextManager::parseOption()
 		{
 			if (getPlayer() != nullptr)
 			{
-				textBox->get(selectedTextbox)->setSpriteWindow(getPlayer(), nullptr, "");
-				getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+				textBox->at(selectedTextbox)->setSpriteWindow(getPlayer(), nullptr, "");
+				getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 			}
 			else
 			{
-				textBox->get(selectedTextbox)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
+				textBox->at(selectedTextbox)->setSpriteWindow(getCameraman()->targetEntity, nullptr, "");
 			}
 		}
 		else if (optionBuffer == "MOM")
@@ -1766,8 +1766,8 @@ void TextManager::parseOption()
 			{
 				return;
 			}
-			textBox->get(selectedTextbox)->setSpriteWindow(e, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(e, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "DAD")
 		{
@@ -1776,8 +1776,8 @@ void TextManager::parseOption()
 			{
 				return;
 			}
-			textBox->get(selectedTextbox)->setSpriteWindow(e, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(e, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "BROTHER")
 		{
@@ -1786,38 +1786,38 @@ void TextManager::parseOption()
 			{
 				return;
 			}
-			textBox->get(selectedTextbox)->setSpriteWindow(e, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(e, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC1")
 		{
-			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity1, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity1, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC2")
 		{
-			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity2, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity2, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC3")
 		{
-			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity3, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity3, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC4")
 		{
-			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity4, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity4, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC5")
 		{
-			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity5, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity5, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (optionBuffer == "NPC6")
 		{
-			textBox->get(selectedTextbox)->setSpriteWindow(optionTargetEntity6, nullptr, "");
-			getCameraman()->setTarget(textBox->get(selectedTextbox)->spriteWindowEntity);
+			textBox->at(selectedTextbox)->setSpriteWindow(optionTargetEntity6, nullptr, "");
+			getCameraman()->setTarget(textBox->at(selectedTextbox)->spriteWindowEntity);
 		}
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOENTITY:"))
 		{
@@ -1825,7 +1825,7 @@ void TextManager::parseOption()
 			sp<Entity> e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
-				textBox->get(0)->setSpriteWindow(e, nullptr, "");
+				textBox->at(0)->setSpriteWindow(e, nullptr, "");
 			}
 		}
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOENTITY:"))
@@ -1834,7 +1834,7 @@ void TextManager::parseOption()
 			sp<Entity> e = getCurrentMap()->getEntityByName(s);
 			if (e != nullptr)
 			{
-				textBox->get(1)->setSpriteWindow(e, nullptr, "");
+				textBox->at(1)->setSpriteWindow(e, nullptr, "");
 			}
 		}
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX0TOSPRITE:"))
@@ -1843,7 +1843,7 @@ void TextManager::parseOption()
 			sp<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
-				textBox->get(0)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
+				textBox->at(0)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
 			}
 		}
 		else if (OKString::startsWith(optionBuffer, "SETSPRITEBOX1TOSPRITE:"))
@@ -1852,7 +1852,7 @@ void TextManager::parseOption()
 			sp<Sprite> e = getSpriteManager()->getSpriteByNameOrRequestFromServerIfNotExist("SPRITE." + s);
 			if (e != nullptr)
 			{
-				textBox->get(1)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
+				textBox->at(1)->setSpriteWindow(nullptr, e->texture, e->getDisplayName());
 			}
 		}
 		else if (OKString::startsWith(optionBuffer, "PITCH:"))
@@ -1864,10 +1864,10 @@ void TextManager::parseOption()
 			}
 			catch(exception)
 			{
-				log->error("Could not parse pitch");
+				log.error("Could not parse pitch");
 			}
 
-			textBox->get(selectedTextbox)->voicePitch = pitch;
+			textBox->at(selectedTextbox)->voicePitch = pitch;
 		}
 		else if (OKString::startsWith(optionBuffer, "Q:"))
 		{
@@ -1885,7 +1885,7 @@ void TextManager::parseOption()
 		{
 			string e = "Unknown tag parsed in TextEngine: " + optionBuffer;
 			Main::console->error(e);
-			log->error(e);
+			log.error(e);
 		}
 	}
 }

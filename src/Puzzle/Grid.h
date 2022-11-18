@@ -176,7 +176,7 @@ public:
 	void setRandomBlockColors();
 	void setRandomMatrixBlockColors();
 	void setRandomWholePieceColors(bool grayscale, sp<Piece> currentPiece, sp<vector<sp<Piece>>> nextPieces);
-	void setRandomPieceGrayscaleColors(sp<Piece> currentPiece, sp<vector<sp<Piece>>>&nextPieces);
+	void setRandomPieceGrayscaleColors(sp<Piece> currentPiece, sp<vector<sp<Piece>>>nextPieces);
 	bool isAnythingAboveThreeQuarters();
 	void doDeathSequence();
 	sp<PieceType> getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull(sp<vector<sp<PieceType>>> arr);

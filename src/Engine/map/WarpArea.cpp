@@ -70,7 +70,7 @@ void WarpArea::enter()
 	{
 		for (int i = 0; i < (int)map->warpAreaList->size(); i++)
 		{
-			sp<WarpArea> w = map->warpAreaList.get(i);
+			sp<WarpArea> w = map->warpAreaList->at(i);
 
 
 			//if(w.mapAsset==getMapManager()->getMapByName(getDestinationMapName()))//should always be true since we are checking the destination map above

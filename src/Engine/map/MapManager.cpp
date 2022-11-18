@@ -19,10 +19,10 @@ bool MapManager::generateHQ2XChunks = false;
 bool MapManager::loadTexturesOnDemand = true;
 
 
-HashMap<string, sp<OKTexture>> MapManager::lightTextureHashMap;
+sp<HashMap<string, sp<OKTexture>>> MapManager::lightTextureHashMap;
 
 
-HashMap<string, bool> MapManager::_lightTextureFileExistsHashtable;
+sp<HashMap<string, bool>> MapManager::_lightTextureFileExistsHashtable;
 mutex MapManager::_lightTextureFileExistsHashtable_Mutex;
 
 MapManager::MapManager(sp<Engine> g)
@@ -102,7 +102,7 @@ void MapManager::render()
 	}
 
 
-	if (dynamic_cast<sp<BGClientEngine>>(getEngine()) != nullptr)//GLUtils::useFBO && 
+	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr)//GLUtils::useFBO && 
 	{
 		GLUtils::bindFBO(GLUtils::postColorFilterFBO); //set the framebuffer object to the MAIN FBO
 
@@ -163,7 +163,7 @@ void MapManager::render()
 
 			for (int i = 0; i < (int)currentMap->sortedLightsLayers->size(); i++)
 			{
-				sp<vector<sp<Light>>> thisLayer = currentMap->sortedLightsLayers.get(i);
+				sp<vector<sp<Light>>> thisLayer = currentMap->sortedLightsLayers->at(i);
 
 
 				if (flip == true)
@@ -212,7 +212,7 @@ void MapManager::render()
 				//this is "ping pong" rendering technique.
 				for (int n = 0; n < thisLayer->size(); n++)
 				{
-					sp<Light> l = thisLayer->get(n);
+					sp<Light> l = thisLayer->at(n);
 					if (l->getName().find("mover") != string::npos == false) //skip mover lights, draw them afterwards.
 					{
 						if (l->renderLight() == true)
@@ -241,7 +241,7 @@ void MapManager::render()
 					//draw mover lights after finished drawing blended lights.
 					for (int i = 0; i < (int)currentMap->currentState->lightList->size(); i++)
 					{
-						sp<Light> l = currentMap->currentState->lightList.get(i);
+						sp<Light> l = currentMap->currentState->lightList->at(i);
 						if (l->getName().find("mover") != string::npos)
 						{
 							l->renderLight();
@@ -343,7 +343,7 @@ void MapManager::renderLastMap()
 
 		//			for(int i=0;i<lastMap.doorList->size();i++)
 		//			{
-		//				Door d = lastMap.doorList.get(i);
+		//				Door d = lastMap.doorList->at(i);
 		//
 		//				{
 		//					if(d!=doorEntered)
@@ -614,7 +614,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	sp<Map> m = getMapByNameBlockUntilLoaded(mapName);
 	if (m == nullptr)
 	{
-		log->error("Could not load map: " + mapName);
+		log.error("Could not load map: " + mapName);
 		return;
 	}
 
@@ -627,7 +627,7 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	setTransitionOffsets();
 
 
-	if (dynamic_cast<sp<BGClientEngine>>(getEngine()) != nullptr)
+	if (dynamic_cast<BGClientEngine*>(getEngine().get()) != nullptr)
 	{
 		if (lastMap != nullptr)
 		{
@@ -685,7 +685,7 @@ sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 
 	if (id == -1)
 	{
-		log->warn("getMapByID: " + to_string(id));
+		log.warn("getMapByID: " + to_string(id));
 		return getCurrentMap();
 	}
 
@@ -693,13 +693,13 @@ sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 	
 	sp<Map> m = nullptr;
 
-	if (mapByIDHashMap.containsKey(id))
-		m = mapByIDHashMap.get(id);
+	if (mapByIDHashMap->containsKey(id))
+		m = mapByIDHashMap->get(id);
 	
 
 	if (m == nullptr)
 	{
-		log->warn("Map did not exist in mapByIDHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors.");
+		log.warn("Map did not exist in mapByIDHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors.");
 
 
 		getEngine()->sendMapDataRequestByID(id);
@@ -712,7 +712,7 @@ sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 			tries++;
 			if (tries > 5)
 			{
-				log->warn("Map did not load in more than 5 seconds. Resending request.");
+				log.warn("Map did not load in more than 5 seconds. Resending request.");
 
 				tries = 0;
 				getEngine()->sendMapDataRequestByID(id);
@@ -722,10 +722,10 @@ sp<Map> MapManager::getMapByIDBlockUntilLoaded(int id)
 
 
 
-			m = mapByIDHashMap.get(id);
+			m = mapByIDHashMap->get(id);
 		}
 
-		log->warn("Map finished loading from network.");
+		log.warn("Map finished loading from network.");
 	}
 
 	return m;
@@ -736,21 +736,21 @@ sp<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
 	{
-		log->warn("getMapByName: " + name);
+		log.warn("getMapByName: " + name);
 		return getCurrentMap();
 	}
 
 
 	sp<Map> m = nullptr;
 	
-	if (mapByNameHashMap.containsKey(name))
+	if (mapByNameHashMap->containsKey(name))
 	{
-		m = mapByNameHashMap.get(name);
+		m = mapByNameHashMap->get(name);
 	}
 
 	if (m == nullptr)
 	{
-		log->warn(string("Map NAME: \"") + name + string("\" did not exist in mapNameHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors."));
+		log.warn(string("Map NAME: \"") + name + string("\" did not exist in mapNameHashMap. Blocking until loaded from network. This should never happen, we should preemptively load map data for connecting doors."));
 
 
 		getEngine()->sendMapDataRequestByName(name);
@@ -763,7 +763,7 @@ sp<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 			tries++;
 			if (tries > 5)
 			{
-				log->warn(string("Map NAME: \"") + name + string("\" did not load in more than 5 seconds. Resending request."));
+				log.warn(string("Map NAME: \"") + name + string("\" did not load in more than 5 seconds. Resending request."));
 
 				tries = 0;
 				getEngine()->sendMapDataRequestByName(name);
@@ -772,12 +772,12 @@ sp<Map> MapManager::getMapByNameBlockUntilLoaded(const string& name)
 			Main::delay(1000);
 
 
-			if (mapByNameHashMap.containsKey(name))
-				m = mapByNameHashMap.get(name);
+			if (mapByNameHashMap->containsKey(name))
+				m = mapByNameHashMap->get(name);
 			
 		}
 
-		log->warn(string("Map NAME: \"") + name + string("\" finished loading from network."));
+		log.warn(string("Map NAME: \"") + name + string("\" finished loading from network."));
 	}
 
 	return m;
@@ -789,7 +789,7 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 
 	if (name == "" || name == "none" || name == "null" || name.length() == 0)
 	{
-		log->warn("requestMapDataIfNotLoadedYet: " + name);
+		log.warn("requestMapDataIfNotLoadedYet: " + name);
 		return;
 	}
 
@@ -797,9 +797,9 @@ void MapManager::requestMapDataIfNotLoadedYet(const string& name)
 
 	sp<Map> m = nullptr;
 
-	if (mapByNameHashMap.containsKey(name))
+	if (mapByNameHashMap->containsKey(name))
 	{
-		m = mapByNameHashMap.get(name);
+		m = mapByNameHashMap->get(name);
 	}
 	if (m == nullptr)
 	{
@@ -843,13 +843,13 @@ sp<Area> MapManager::getAreaByID(int id)
 	//then check all states of all maps
 	for (int i = 0; i < mapList->size(); i++)
 	{
-		sp<Map> m = mapList.get(i);
+		sp<Map> m = mapList->at(i);
 		for (int k = 0; k < (int)m->stateList->size(); k++)
 		{
-			sp<MapState> s = m->stateList.get(k);
+			sp<MapState> s = m->stateList->at(k);
 			for (int l = 0; l < (int)s->areaList->size(); l++)
 			{
-				sp<Area> a = s->areaList.get(l);
+				sp<Area> a = s->areaList->at(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -859,9 +859,9 @@ sp<Area> MapManager::getAreaByID(int id)
 
 		for (int n = 0; n < (int)m->warpAreaList->size(); n++)
 		{
-			if (m->warpAreaList.get(n)->getID() == id)
+			if (m->warpAreaList->at(n)->getID() == id)
 			{
-				return m->warpAreaList.get(n);
+				return m->warpAreaList->at(n);
 			}
 		}
 	}
@@ -878,13 +878,13 @@ sp<Entity> MapManager::getEntityByID(int id)
 	//then check all states of all maps
 	for (int i = 0; i < mapList->size(); i++)
 	{
-		sp<Map> m = mapList.get(i);
+		sp<Map> m = mapList->at(i);
 		for (int k = 0; k < (int)m->stateList->size(); k++)
 		{
-			sp<MapState> s = m->stateList.get(k);
+			sp<MapState> s = m->stateList->at(k);
 			for (int l = 0; l < (int)s->entityList->size(); l++)
 			{
-				sp<Entity> a = s->entityList.get(l);
+				sp<Entity> a = s->entityList->at(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -893,7 +893,7 @@ sp<Entity> MapManager::getEntityByID(int id)
 
 			for (int l = 0; l < (int)s->characterList->size(); l++)
 			{
-				sp<Entity> a = s->characterList.get(l);
+				sp<Entity> a = s->characterList->at(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -902,7 +902,7 @@ sp<Entity> MapManager::getEntityByID(int id)
 
 			for (int l = 0; l < (int)s->lightList->size(); l++)
 			{
-				sp<Entity> a = s->lightList.get(l);
+				sp<Entity> a = s->lightList->at(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -912,26 +912,26 @@ sp<Entity> MapManager::getEntityByID(int id)
 
 		for (int n = 0; n < (int)m->doorList->size(); n++)
 		{
-			if (m->doorList.get(n)->getID() == id)
+			if (m->doorList->at(n)->getID() == id)
 			{
-				return m->doorList.get(n);
+				return m->doorList->at(n);
 			}
 		}
 
 		for (int n = 0; n < (int)m->activeEntityList->size(); n++)
 		{
-			if (m->activeEntityList.get(n)->getID() == id)
+			if (m->activeEntityList->at(n)->getID() == id)
 			{
-				return m->activeEntityList.get(n);
+				return m->activeEntityList->at(n);
 			}
 		}
 	}
 
 	for (int n = 0; n < (int)getSpriteManager()->screenSpriteList->size(); n++)
 	{
-		if (getSpriteManager()->screenSpriteList.get(n)->getID() == id)
+		if (getSpriteManager()->screenSpriteList->at(n)->getID() == id)
 		{
-			return getSpriteManager()->screenSpriteList.get(n);
+			return getSpriteManager()->screenSpriteList->at(n);
 		}
 	}
 
@@ -947,13 +947,13 @@ sp<Light> MapManager::getLightByID(int id)
 	//then check all states of all maps
 	for (int i = 0; i < mapList->size(); i++)
 	{
-		sp<Map> m = mapList.get(i);
+		sp<Map> m = mapList->at(i);
 		for (int k = 0; k < (int)m->stateList->size(); k++)
 		{
-			sp<MapState> s = m->stateList.get(k);
+			sp<MapState> s = m->stateList->at(k);
 			for (int l = 0; l < (int)s->lightList->size(); l++)
 			{
-				sp<Light> a = s->lightList.get(l);
+				sp<Light> a = s->lightList->at(l);
 				if (a->getID() == id)
 				{
 					return a;
@@ -973,11 +973,11 @@ sp<Door> MapManager::getDoorByID(int id)
 	//then check all maps
 	for (int i = 0; i < mapList->size(); i++)
 	{
-		sp<Map> m = mapList.get(i);
+		sp<Map> m = mapList->at(i);
 
 		for (int l = 0; l < (int)m->doorList->size(); l++)
 		{
-			sp<Door> a = m->doorList.get(l);
+			sp<Door> a = m->doorList->at(l);
 			if (a->getID() == id)
 			{
 				return a;

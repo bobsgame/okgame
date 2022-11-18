@@ -1209,7 +1209,7 @@ sp<SpriteAnimationSequence> Sprite::getFirstAnimation()
 
 	if (getAnimationList()->size() > 0)
 	{
-		return getAnimationByFrame(0); //getAnimationList().get(0);
+		return getAnimationByFrame(0); //getAnimationList()->at(0);
 	}
 	else
 	{

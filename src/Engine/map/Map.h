@@ -176,7 +176,7 @@ public:
 
 	//public Tile getTileByName(String name)
 	//{
-	//return tileHashtable.get(name);
+	//return tileHashtable->at(name);
 	//}
 
 

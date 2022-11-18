@@ -45,8 +45,8 @@ public:
 	static Logger log;
 
 
-	HashMap<int, sp<Sprite>> spriteByIDHashMap;//ms<HashMap><int, sp<Sprite>>();
-	HashMap<string, sp<Sprite>> spriteByNameHashMap;//ms<HashMap><string, sp<Sprite>>();
+	sp<HashMap<int, sp<Sprite>>> spriteByIDHashMap;//ms<HashMap><int, sp<Sprite>>();
+	sp<HashMap<string, sp<Sprite>>> spriteByNameHashMap;//ms<HashMap><string, sp<Sprite>>();
 
 
 	sp<vector<sp<ScreenSprite>>>screenSpriteList;

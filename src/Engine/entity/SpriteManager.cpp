@@ -59,7 +59,7 @@ void SpriteManager::update()
 
 	//TODO: update sprites here, initialize them from server etc. need to reorganize this better.
 
-	sp<vector<sp<Sprite>>> sprites = ms<vector<sp<Sprite>>>(spriteByIDHashMap.getAllValues());
+	sp<vector<sp<Sprite>>> sprites = ms<vector<sp<Sprite>>>(spriteByIDHashMap->getAllValues());
 	for (int n = 0; n < sprites->size(); n++)
 	{
 		sprites->at(n)->update();
@@ -96,22 +96,22 @@ sp<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExist(int id
 	if (id == -1)
 	{
 		sp<Sprite> s = nullptr;
-		if(spriteByIDHashMap.containsKey(id))
-		s = spriteByIDHashMap.get(id);
+		if(spriteByIDHashMap->containsKey(id))
+		s = spriteByIDHashMap->get(id);
 		if (s == nullptr)
 		{
 			s = ms<Sprite>(getEngine());
 			s->initializeWithSpriteData(nullptr);
-			spriteByNameHashMap.put(s->getName(), s);
-			spriteByIDHashMap.put(s->getID(), s);
+			spriteByNameHashMap->put(s->getName(), s);
+			spriteByIDHashMap->put(s->getID(), s);
 		}
 		return s;
 	}
 
 
 	sp<Sprite> s = nullptr;
-	if (spriteByIDHashMap.containsKey(id))
-		s = spriteByIDHashMap.get(id);
+	if (spriteByIDHashMap->containsKey(id))
+		s = spriteByIDHashMap->get(id);
 	if (s != nullptr)
 	{
 		if (s->getInitialized_S() == true)
@@ -126,7 +126,7 @@ sp<Sprite> SpriteManager::getSpriteAssetByIDOrRequestFromServerIfNotExist(int id
 	else
 	{
 		s = ms<Sprite>(getEngine());
-		spriteByIDHashMap.put(id, s);
+		spriteByIDHashMap->put(id, s);
 
 		s->sendDataRequest(id);
 	}
@@ -151,8 +151,8 @@ sp<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(string sp
 	{
 		sp<Sprite> s = nullptr;
 
-		if(spriteByNameHashMap.containsKey(spriteAssetName))
-			s = spriteByNameHashMap.get(spriteAssetName);
+		if(spriteByNameHashMap->containsKey(spriteAssetName))
+			s = spriteByNameHashMap->get(spriteAssetName);
 
 		if (s == nullptr)
 		{
@@ -169,8 +169,8 @@ sp<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(string sp
 			}
 
 			s->initializeWithSpriteData(d);
-			spriteByNameHashMap.put(s->getName(), s);
-			spriteByIDHashMap.put(s->getID(), s);
+			spriteByNameHashMap->put(s->getName(), s);
+			spriteByIDHashMap->put(s->getID(), s);
 		}
 
 
@@ -180,8 +180,8 @@ sp<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(string sp
 
 	sp<Sprite> s = nullptr;
 
-	if (spriteByNameHashMap.containsKey(spriteAssetName))
-		s = spriteByNameHashMap.get(spriteAssetName);
+	if (spriteByNameHashMap->containsKey(spriteAssetName))
+		s = spriteByNameHashMap->get(spriteAssetName);
 
 	if (s != nullptr)
 	{
@@ -199,7 +199,7 @@ sp<Sprite> SpriteManager::getSpriteByNameOrRequestFromServerIfNotExist(string sp
 	{
 		s = ms<Sprite>(getEngine());
 
-		spriteByNameHashMap.put(spriteAssetName, s);
+		spriteByNameHashMap->put(spriteAssetName, s);
 		
 		s->sendDataRequest(spriteAssetName);
 	}
@@ -230,8 +230,8 @@ sp<Sprite> SpriteManager::preloadSpriteFromDataFile(const string& spriteAssetNam
 
 
 	//log->info("if spriteByNameHashMap.containsKey " + spriteAssetName);
-	if (spriteByNameHashMap.containsKey(spriteAssetName))
-		s = spriteByNameHashMap.get(spriteAssetName);
+	if (spriteByNameHashMap->containsKey(spriteAssetName))
+		s = spriteByNameHashMap->get(spriteAssetName);
 
 	if (s == nullptr)
 	{
@@ -243,8 +243,8 @@ sp<Sprite> SpriteManager::preloadSpriteFromDataFile(const string& spriteAssetNam
 
 
 
-		spriteByNameHashMap.put(s->getName(), s);
-		spriteByIDHashMap.put(s->getID(), s);
+		spriteByNameHashMap->put(s->getName(), s);
+		spriteByIDHashMap->put(s->getID(), s);
 	}
 
 
@@ -259,8 +259,8 @@ sp<Sprite> SpriteManager::getSpriteByName(const string& spriteAssetName)
 
 	sp<Sprite> s = nullptr;
 
-	if (spriteByNameHashMap.containsKey(spriteAssetName))
-		s = spriteByNameHashMap.get(spriteAssetName);
+	if (spriteByNameHashMap->containsKey(spriteAssetName))
+		s = spriteByNameHashMap->get(spriteAssetName);
 
 	if (s == nullptr)
 	{

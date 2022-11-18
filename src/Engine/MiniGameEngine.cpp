@@ -386,13 +386,13 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		for (int i = 0; i < onlineFriends->size(); i++)
 		{
 			sp<UDPPeerConnection> f = onlineFriends->at(i);
-			int y = (onlineFriendCaptions->size() + 1) * 20;
+			int y = ((int)onlineFriendCaptions->size() + 1) * 20;
 
 			sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, f->getFriendData_S().characterName, 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
 			onlineFriendCaptions->push_back(c);
 		}
 
-		int y = (onlineFriendCaptions->size() + 1) * 20;
+		int y = ((int)onlineFriendCaptions->size() + 1) * 20;
 		sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::CENTERED_X, 0, y, -1, "Cancel", 16, true, OKColor::white, OKColor::clear, RenderOrder::OVER_GUI);
 		onlineFriendCaptions->push_back(c);
 	}
@@ -402,14 +402,14 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		multiplayerScreenCursorPosition--;
 		if (multiplayerScreenCursorPosition < 0)
 		{
-			multiplayerScreenCursorPosition = (int)(onlineFriendCaptions->size() - 1);
+			multiplayerScreenCursorPosition = ((int)onlineFriendCaptions->size() - 1);
 		}
 	}
 
 	if (getControlsManager()->miniGame_DOWN_Pressed())
 	{
 		multiplayerScreenCursorPosition++;
-		if (multiplayerScreenCursorPosition > (int)(onlineFriendCaptions->size() - 1))
+		if (multiplayerScreenCursorPosition > ((int)onlineFriendCaptions->size() - 1))
 		{
 			multiplayerScreenCursorPosition = 0;
 		}
@@ -422,7 +422,7 @@ void MiniGameEngine::multiplayerScreenUpdate()
 		
 		leaveMenu = true;
 
-		if (multiplayerScreenCursorPosition == (int)(onlineFriendCaptions->size() - 1))
+		if (multiplayerScreenCursorPosition == ((int)onlineFriendCaptions->size() - 1))
 		{
 			titleMenuShowing = true;
 		}
