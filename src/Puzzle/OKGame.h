@@ -401,9 +401,9 @@ public:
 	int selectGameSequenceMenuCursorPosition = 0;
 
 	double wilsonScore(double up, double total, double confidence = 1.644853);
-	typedef pair<string, sp<OKColor>> StringColorPair;
-	typedef pair<sp<GameType>, StringColorPair> GameTypeStringColorPairPair;
-	typedef pair<sp<GameSequence>, StringColorPair> GameSequenceStringColorPairPair;
+	typedef sp<pair<string, sp<OKColor>>> StringColorPair;
+	typedef sp<pair<sp<GameType>, StringColorPair>> GameTypeStringColorPairPair;
+	typedef sp<pair<sp<GameSequence>, StringColorPair>> GameSequenceStringColorPairPair;
 
 	//gameTypeOrSequenceString or difficulty string can be "OVERALL"
 	sp<OKGameUserStatsForSpecificGameAndDifficulty> getUserStatsForGame(string gameTypeOrSequenceUUID, string difficultyString, string objectiveString);

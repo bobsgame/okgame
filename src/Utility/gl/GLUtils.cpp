@@ -12,7 +12,7 @@ Logger GLUtils::log = Logger("GLUtils");
 //#include "../../../lib/SDL_stbimage.h"
 //#define STB_IMAGE_IMPLEMENTATION
 
-HashMap<string, sp<OKTexture>> GLUtils::textureCache;
+sp<HashMap<string, sp<OKTexture>>> GLUtils::textureCache;
 
 //-----------------------------------------------
 //OLD STUFF
@@ -84,7 +84,7 @@ int GLUtils::lastWindowWidth = 0;
 int GLUtils::lastWindowHeight = 0;
 
 SDL_DisplayMode GLUtils::currentDisplayMode;
-vector<sp<SDL_DisplayMode>> GLUtils::displayModes;
+sp<vector<sp<SDL_DisplayMode>>> GLUtils::displayModes;
 int GLUtils::monitorWidth = 0;
 int GLUtils::monitorHeight = 0;
 
@@ -143,7 +143,7 @@ GLuint GLUtils::bobsGame_bgShaderFBO_Texture_Attachment1 = 0;
 
 
 
-vector<sp<Integer>> GLUtils::bgShaders;
+sp<vector<sp<Integer>>> GLUtils::bgShaders;
 //sp<vector<int>>GLUtils::bgShaders;
 int GLUtils::bgShaderCount = 80;
 
@@ -953,7 +953,7 @@ void GLUtils::initGL(char* windowName)
 				{
 					log.error("Could not make bg shader "+name);
 					bgShaderCount--;
-					bgShaders.erase(bgShaders.begin()+i);
+					bgShaders->erase(bgShaders->begin()+i);
 					i--;
 				}
 
@@ -3166,9 +3166,9 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> s
 
 	sp<OKTexture> tex = nullptr;
 
-	if (textureCache.containsKey(filename))
+	if (textureCache->containsKey(filename))
 	{
-		tex = textureCache->at(filename);
+		tex = textureCache->get(filename);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -3202,7 +3202,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> s
 	{
 		log.error("Allocating a texture too big for the current hardware");
 	}
-	delete[] maxTexSizeArray;
+	//delete[] maxTexSizeArray;
 	//maxTexSizeArray = nullptr;
 	//int srcPixelFormat = hasAlpha ? GL_RGBA : GL_RGB;
 
@@ -3257,7 +3257,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> s
 		SDL_UnlockSurface(surface.get());
 
 	//tex->setCacheName(filename);
-	textureCache.put(filename, tex);
+	textureCache->put(filename, tex);
 
 	GLUtils::texturesLoaded++;
 	GLUtils::textureBytesLoaded += (tex->getTextureWidth()*tex->getTextureHeight() * 4);
@@ -3299,7 +3299,7 @@ sp<OKTexture> GLUtils::loadTextureFromSurface(string filename, sp<SDL_Surface> s
 void GLUtils::clearCache(const string &name)
 {//=========================================================================================================================
  //texturesLinear->erase(name);
-	textureCache->erase(->begin()+name);
+	textureCache->removeAt(name);
 }
 
 //=========================================================================================================================
@@ -3327,9 +3327,9 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 
 	sp<OKTexture>tex = nullptr;
 
-	if (textureCache.containsKey(textureName))
+	if (textureCache->containsKey(textureName))
 	{
-		tex = textureCache->at(textureName);
+		tex = textureCache->get(textureName);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -3401,7 +3401,7 @@ sp<OKTexture>GLUtils::getTextureFromData(string textureName, int imageWidth, int
 
 
 	//tex->setCacheName(textureName);
-	textureCache.put(textureName, tex);
+	textureCache->put(textureName, tex);
 
 	GLUtils::texturesLoaded++;
 	GLUtils::textureBytesLoaded += (tex->getTextureWidth()*tex->getTextureHeight() * 4);
@@ -3429,9 +3429,9 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 	sp<OKTexture>tex = nullptr;
 
 
-	if (textureCache.containsKey(filename))
+	if (textureCache->containsKey(filename))
 	{
-		tex = textureCache->at(filename);
+		tex = textureCache->get(filename);
 		if (tex != nullptr)
 		{
 			return tex;
@@ -3546,7 +3546,7 @@ sp<OKTexture>GLUtils::getTextureFromPNGAbsolutePath(string filename)// , const s
 
 
 	//tex->setCacheName(filename);
-	textureCache.put(filename, tex);
+	textureCache->put(filename, tex);
 
 
 	GLUtils::texturesLoaded++;

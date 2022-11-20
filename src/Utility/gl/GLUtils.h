@@ -20,7 +20,7 @@ public:
 	static void old_render();
 	static sp<OKTexture> loadTextureFromSurface(string filename, sp<SDL_Surface> surface);
 	static void draw_texture_struct(sp <texture_STRUCT> PLAYER_TEXTURE, float x, float y);
-	static HashMap<string, sp<OKTexture>> textureCache;
+	static sp<HashMap<string, sp<OKTexture>>> textureCache;
 	static void clearCache(const string &name);// Remove a particular named image from the cache
 	static void clearCache();
 	static GLuint createTextureID();

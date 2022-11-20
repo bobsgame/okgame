@@ -466,7 +466,7 @@ sp<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(sp<Piece> p, int x, 
 
 	if (acceptableColors->size() > 0)
 	{
-		sp<OKColor>color = acceptableColors->at(getGameLogic()->getRandomIntLessThan(acceptableColors->size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
+		sp<OKColor>color = acceptableColors->at(getGameLogic()->getRandomIntLessThan((int)acceptableColors->size(),"dontPutSameColorNextToEachOtherOrReturnNull"));
 
 		if (p == nullptr)
 		{
@@ -3602,7 +3602,7 @@ sp<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNul
 	{
 		getGameLogic()->createdPiecesCounterForFrequencyPieces = 0;
 
-		sp<PieceType> p = randomBag->at(getGameLogic()->getRandomIntLessThan(randomBag->size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
+		sp<PieceType> p = randomBag->at(getGameLogic()->getRandomIntLessThan((int)randomBag->size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
 		return p;
 	}
 
@@ -3632,7 +3632,7 @@ sp<PieceType> Grid::getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNul
 
 	if (randomBag->size() > 0)
 	{
-		sp<PieceType> p = randomBag->at(getGameLogic()->getRandomIntLessThan(randomBag->size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
+		sp<PieceType> p = randomBag->at(getGameLogic()->getRandomIntLessThan((int)randomBag->size(),"getRandomSpecialPieceTypeFromArrayExcludingNormalPiecesOrNull"));
 		//if(p!=emptyPieceType)
 		return p;
 	}
@@ -3657,7 +3657,7 @@ sp<PieceType> Grid::getRandomPieceTypeFromArrayExcludingSpecialPieceTypes(sp<vec
 
 	if (randomBag->size() > 0)
 	{
-		sp<PieceType> b = randomBag->at(getGameLogic()->getRandomIntLessThan(randomBag->size(),"getRandomPieceTypeFromArrayExcludingSpecialPieceTypes"));
+		sp<PieceType> b = randomBag->at(getGameLogic()->getRandomIntLessThan((int)randomBag->size(),"getRandomPieceTypeFromArrayExcludingSpecialPieceTypes"));
 		return b;
 	}
 
@@ -3698,7 +3698,7 @@ sp<Piece> Grid::getPieceFromNormalPieceRandomBag()
 
 		while (tempBag->size() > 0)
 		{
-			int i = getGameLogic()->getRandomIntLessThan(tempBag->size(),"getPieceFromNormalPieceRandomBag");
+			int i = getGameLogic()->getRandomIntLessThan((int)tempBag->size(),"getPieceFromNormalPieceRandomBag");
 			if (randomBag->empty())
 			{
 				bool anyAllowedAsFirstPiece = false;
@@ -3711,7 +3711,7 @@ sp<Piece> Grid::getPieceFromNormalPieceRandomBag()
 				{
 					while (tempBag->at(i)->pieceType->disallowAsFirstPiece == true)
 					{
-						i = getGameLogic()->getRandomIntLessThan(tempBag->size(), "getPieceFromNormalPieceRandomBag");
+						i = getGameLogic()->getRandomIntLessThan((int)tempBag->size(), "getPieceFromNormalPieceRandomBag");
 					}
 				}
 			}
@@ -3726,7 +3726,7 @@ sp<Piece> Grid::getPieceFromNormalPieceRandomBag()
 		sp<vector<sp<Piece>>>tempBag = getBagOfOneOfEachNonRandomNormalPieces();
 		while (tempBag->size() > 0)
 		{
-			int i = getGameLogic()->getRandomIntLessThan(tempBag->size(),"getPieceFromNormalPieceRandomBag");
+			int i = getGameLogic()->getRandomIntLessThan((int)tempBag->size(),"getPieceFromNormalPieceRandomBag");
 			randomBag->push_back(tempBag->at(i));
 			tempBag->erase(tempBag->begin()+i);
 		}
@@ -3818,7 +3818,7 @@ sp<BlockType> Grid::getRandomBlockType(sp<vector<sp<BlockType>>>arr)
 sp<BlockType> Grid::getRandomBlockTypeDisregardingSpecialFrequency(sp<vector<sp<BlockType>>>arr)
 {//=========================================================================================================================
 
-	sp<BlockType> blockType = arr->at(getGameLogic()->getRandomIntLessThan(arr->size(), "getRandomBlockTypeDisregardingSpecialFrequency"));
+	sp<BlockType> blockType = arr->at(getGameLogic()->getRandomIntLessThan((int)arr->size(), "getRandomBlockTypeDisregardingSpecialFrequency"));
 
 	if (blockType == nullptr)blockType = BlockType::emptyBlockType;
 	return blockType;
@@ -3846,7 +3846,7 @@ sp<BlockType> Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNul
 	{
 		getGameLogic()->createdPiecesCounterForFrequencyPieces = 0;
 
-		sp<BlockType> b = randomBag->at(getGameLogic()->getRandomIntLessThan(randomBag->size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
+		sp<BlockType> b = randomBag->at(getGameLogic()->getRandomIntLessThan((int)randomBag->size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
 		return b;
 	}
 
@@ -3877,7 +3877,7 @@ sp<BlockType> Grid::getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNul
 
 	if (randomBag->size() > 0)
 	{
-		sp<BlockType> b = randomBag->at(getGameLogic()->getRandomIntLessThan(randomBag->size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
+		sp<BlockType> b = randomBag->at(getGameLogic()->getRandomIntLessThan((int)randomBag->size(),"getRandomSpecialBlockTypeFromArrayExcludingNormalBlocksOrNull"));
 
 		//			if(b!=emptyBlockType)
 		return b;
@@ -3904,7 +3904,7 @@ sp<BlockType> Grid::getRandomBlockTypeFromArrayExcludingSpecialBlockTypes(sp<vec
 
 	if (randomBag->size() > 0)
 	{
-		sp<BlockType> b = randomBag->at(getGameLogic()->getRandomIntLessThan(randomBag->size(),"getRandomBlockTypeFromArrayExcludingSpecialBlockTypes"));
+		sp<BlockType> b = randomBag->at(getGameLogic()->getRandomIntLessThan((int)randomBag->size(),"getRandomBlockTypeFromArrayExcludingSpecialBlockTypes"));
 		return b;
 	}
 

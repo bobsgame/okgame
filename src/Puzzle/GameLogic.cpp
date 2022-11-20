@@ -730,7 +730,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 						{
 							if (queuedVSGarbageAmountToSend > 0)
 							{
-								sp<GameLogic>g2 = alivePlayers->at(getRandomIntLessThan(alivePlayers->size(), "sendGarbage"));
+								sp<GameLogic>g2 = alivePlayers->at(getRandomIntLessThan((int)alivePlayers->size(), "sendGarbage"));
 								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
 								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
 
@@ -941,7 +941,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 		if (framesArray->size() > 0)
 		{
-			int numFrames = framesArray->size();
+			int numFrames = (int)framesArray->size();
 			int framesToProcess = 1;
 			int secondsBehind = (int)floor((float)numFrames * 16.0f / 1000.0f );
 			if (secondsBehind >= 1)framesToProcess = 1 + ((int)pow(2,secondsBehind)-1);
@@ -1016,7 +1016,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 				{
 					sp<vector<FrameState>> partialPacket;
 
-					int size = packetToSplit->size();
+					int size = (int)packetToSplit->size();
 					for (int i = 0; i < maxFramesInPacket && i < size; i++)
 					{
 						FrameState frame = packetToSplit->at(0);
@@ -1042,7 +1042,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 
 	//queueSendPackets()
 	{
-		int size = allNetworkPacketsSentUpUntilNow->size();
+		int size = (int)allNetworkPacketsSentUpUntilNow->size();
 
 		for (int j = lastSentPacketID; j < size; j++)
 		{
@@ -1479,7 +1479,7 @@ void GameLogic::removeFlashedChainBlocks()
 			{
 				if (b->blockType->makePieceTypeWhenCleared_UUID->size()>0)
 				{
-					sp<PieceType> pt = currentGameType->getPieceTypeByUUID(b->blockType->makePieceTypeWhenCleared_UUID->at(getRandomIntLessThan(b->blockType->makePieceTypeWhenCleared_UUID->size(), "removeFlashedChainBlocks")));
+					sp<PieceType> pt = currentGameType->getPieceTypeByUUID(b->blockType->makePieceTypeWhenCleared_UUID->at(getRandomIntLessThan((int)b->blockType->makePieceTypeWhenCleared_UUID->size(), "removeFlashedChainBlocks")));
 					sp<Piece> p(ms<Piece>(this, grid, pt, BlockType::emptyBlockType));
 					p->init();
 					nextPieceSpecialBuffer->push_back(p);
@@ -1647,7 +1647,7 @@ void GameLogic::removeFlashedChainBlocks()
 		lineClearDelayTicksCounter += blocksCleared * currentGameType->lineClearDelayTicksAmountPerBlock;
 	}
 
-	currentChain = currentChainBlocks->size();
+	currentChain = (int)currentChainBlocks->size();
 }
 
 //=========================================================================================================================
@@ -2745,7 +2745,7 @@ void GameLogic::newRandomPiece()
 
 	currentPiece = nextPieces->at(0);
 
-	nextPieces->erase(->begin()+0);
+	nextPieces->erase(nextPieces->begin()+0);
 
 
 	setCurrentPieceAtTop();
@@ -2754,7 +2754,7 @@ void GameLogic::newRandomPiece()
 	//if(currentPiece.yGrid<0+GameLogic.aboveGridBuffer)
 	if (lastPiece != nullptr)
 	{
-		for(int i=0;i<lastPiece->blocks->size();i++)
+		for(int i=0;i< (int)lastPiece->blocks->size();i++)
 		{
 			if(lastPiece->blocks->at(i)->yGrid < 0 + GameLogic::aboveGridBuffer && lastPiece->blocks->at(i)->yGrid > 0 && lastPiece->blocks->at(i)->xGrid > 0 && lastPiece->blocks->at(i)->yGrid < grid->getHeight() && grid->contains(lastPiece->blocks->at(i)->xGrid, lastPiece->blocks->at(i)->yGrid))//lastPiece->yGrid + lastPiece->getHighestOffsetY()
 			{
@@ -2768,7 +2768,7 @@ void GameLogic::newRandomPiece()
 	piecesMadeThisGame++;
 	piecesMadeThisLevel++;
 	piecesMadeTotal++;
-	blocksMadeTotal += currentPiece->blocks->size();
+	blocksMadeTotal += (int)currentPiece->blocks->size();
 
 	if (garbageWaitForPiecesSetCount > 0)
 	{

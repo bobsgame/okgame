@@ -4595,10 +4595,10 @@ double OKGame::wilsonScore(double up, double total, double confidence)
 }
 
 //=========================================================================================================================
-sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTypes()
+sp<vector<sp<pair<sp<GameType>,sp<pair<string,sp<OKColor>>>>>>> OKGame::getSortedGameTypes()
 {//=========================================================================================================================
 
-	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor;
+	sp<vector<sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor;
 
 //	for (int i = 0; i<loadedGameTypes->size(); i++)
 //	{
@@ -4619,8 +4619,8 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			sp<OKColor>color = OKColor::purple;
-			pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
-			pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = pair<sp<GameType>, pair<string, sp<OKColor>>>(g, stringColorPair);
+			sp<pair<string, sp<OKColor>>> stringColorPair = ms<pair<string, sp<OKColor>>>(pair<string, sp<OKColor>>(name, color));
+			sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = ms<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>(pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>(g, stringColorPair));
 			gamesStringColor->push_back(gameTypeStringColorPairPair);
 		}
 	}
@@ -4661,8 +4661,8 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 		string name = g->creatorUserName + " - " + g->name + " | Score: " + to_string(g->upVotes - g->downVotes) + " Age: " + to_string(daysExisted) + " days";
 
 		sp<OKColor>color = OKColor::darkGray;
-		pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = pair<sp<GameType>, pair<string, sp<OKColor>>>(g, stringColorPair);
+		sp<pair<string, sp<OKColor>>> stringColorPair = ms<pair<string, sp<OKColor>>>(pair<string, sp<OKColor>>(name, color));
+		sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = ms<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>(pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>(g, stringColorPair));
 		gamesStringColor->push_back(gameTypeStringColorPairPair);
 	}
 
@@ -4671,10 +4671,10 @@ sp<vector<pair<sp<GameType>,pair<string,sp<OKColor>>>>> OKGame::getSortedGameTyp
 }
 
 //=========================================================================================================================
-sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedGameSequences()
+sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> OKGame::getSortedGameSequences()
 {//=========================================================================================================================
 
-	sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> gamesStringColor;
+	sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor;
 
 //	for (int i = 0; i<loadedGameSequences->size(); i++)
 //	{
@@ -4695,8 +4695,8 @@ sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedG
 		{
 			string name = g->creatorUserName + " - " + g->name;
 			sp<OKColor>color = OKColor::purple;
-			pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
-			pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = pair<sp<GameSequence>, pair<string, sp<OKColor>>>(g, stringColorPair);
+			sp<pair<string, sp<OKColor>>> stringColorPair = ms<pair<string, sp<OKColor>>>(pair<string, sp<OKColor>>(name, color));
+			sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>> gameSequenceStringColorPairPair = ms<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>(pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>(g, stringColorPair));
 			gamesStringColor->push_back(gameSequenceStringColorPairPair);
 		}
 	}
@@ -4737,8 +4737,8 @@ sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> OKGame::getSortedG
 		string name = g->creatorUserName + " - " + g->name + " | Score: " + to_string(g->upVotes - g->downVotes) + " Age: " + to_string(daysExisted) + " days";
 
 		sp<OKColor>color = OKColor::darkGray;
-		pair<string, sp<OKColor>> stringColorPair = pair<string, sp<OKColor>>(name, color);
-		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = pair<sp<GameSequence>, pair<string, sp<OKColor>>>(g, stringColorPair);
+		sp<pair<string, sp<OKColor>>> stringColorPair = ms<pair<string, sp<OKColor>>>(pair<string, sp<OKColor>>(name, color));
+		sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>> gameSequenceStringColorPairPair = ms<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>(pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>(g, stringColorPair));
 		gamesStringColor->push_back(gameSequenceStringColorPairPair);
 	}
 
@@ -4757,14 +4757,14 @@ void OKGame::populateGameTypesMenu(sp<OKMenu>menu)
 	//use smaller font
 	//username - game name - upvotes/downvotes
 
-	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = getSortedGameTypes();
+	sp<vector<sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
-		sp<GameType>g = gameTypeStringColorPairPair.first;
-		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
-		string name = stringColorPair.first;
-		sp<OKColor>color = stringColorPair.second;
+		sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
+		sp<GameType>g = gameTypeStringColorPairPair->first;
+		sp<pair<string, sp<OKColor>>> stringColorPair = gameTypeStringColorPairPair->second;
+		string name = stringColorPair->first;
+		sp<OKColor>color = stringColorPair->second;
 
 		sp<OKMenu::MenuItem> m = menu->add(name, g->uuid);
 		m->setColor(color);
@@ -4777,14 +4777,14 @@ void OKGame::populateGameTypesMenu(sp<OKMenu>menu)
 void OKGame::populateGameSequencesMenu(sp<OKMenu>menu)
 {//=========================================================================================================================
 
-	sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> gamesStringColor = getSortedGameSequences();
+	sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
-		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
-		pair<string, sp<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
-		string name = stringColorPair.first;
-		sp<OKColor>color = stringColorPair.second;
+		sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
+		sp<GameSequence>g = gameSequenceStringColorPairPair->first;
+		sp<pair<string, sp<OKColor>>> stringColorPair = gameSequenceStringColorPairPair->second;
+		string name = stringColorPair->first;
+		sp<OKColor>color = stringColorPair->second;
 
 		sp<OKMenu::MenuItem> m = menu->add(name, g->uuid);
 		m->setColor(color);

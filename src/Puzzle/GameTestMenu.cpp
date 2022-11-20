@@ -332,7 +332,7 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	gameSequencesListBox->Clear();
 	GetCanvas()->DoThink();
 
-	sp<vector<pair<sp<GameSequence>>, pair<string, sp<OKColor>>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
 		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
