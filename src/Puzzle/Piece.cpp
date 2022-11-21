@@ -119,19 +119,19 @@ void PieceType::serialize(Archive & ar, const unsigned int version)
 
 	if (version == 0)
 	{
-		sp<vector<BlockType>>importExport_overrideBlockTypes;
+		vector<BlockType>importExport_overrideBlockTypes;
 		ar & BOOST_SERIALIZATION_NVP(importExport_overrideBlockTypes);
 		overrideBlockTypes_DEPRECATED->clear();
 		{
-			for (int i = 0; i < importExport_overrideBlockTypes->size(); i++)
+			for (int i = 0; i < importExport_overrideBlockTypes.size(); i++)
 			{
-				BlockType b = importExport_overrideBlockTypes->at(i);
+				BlockType b = importExport_overrideBlockTypes.at(i);
 				sp<BlockType> bp(ms<BlockType>());
 				*bp = b;
-				overrideBlockTypes_DEPRECATED.push_back(bp);
+				overrideBlockTypes_DEPRECATED->push_back(bp);
 			}
 		}
-		importExport_overrideBlockTypes->clear();
+		importExport_overrideBlockTypes.clear();
 	}
 	else
 	{
@@ -154,15 +154,15 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	this->pieceType = pieceType;
 
 	int maxNumBlocks = 0;
-	for(int i=0;i<pieceType->rotationSet->size();i++)
+	for(int i=0;i< (int)pieceType->rotationSet->size();i++)
 	{
-		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet->at(i)->blockOffsets->size());
+		maxNumBlocks = max(maxNumBlocks, (int)pieceType->rotationSet->at(i)->blockOffsets->size());
 	}
 
-	if (pieceType->overrideBlockTypes_UUID->size()>0)
+	if ((int)pieceType->overrideBlockTypes_UUID->size()>0)
 	{
 		sp<vector<sp<BlockType>>>overrideBlockTypes;
-		for(int i=0;i<pieceType->overrideBlockTypes_UUID->size();i++)
+		for(int i=0;i< (int)pieceType->overrideBlockTypes_UUID->size();i++)
 		{
 			overrideBlockTypes->push_back(gameInstance->currentGameType->getBlockTypeByUUID(pieceType->overrideBlockTypes_UUID->at(i)));
 		}
@@ -195,7 +195,7 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	this->grid = grid;
 	this->pieceType = pieceType;
 
-	if (pieceType->overrideBlockTypes_UUID->size()>0)
+	if ((int)pieceType->overrideBlockTypes_UUID->size()>0)
 	{
 		sp<vector<sp<BlockType>>>overrideBlockTypes;
 		for (int i = 0; i<pieceType->overrideBlockTypes_UUID->size(); i++)
@@ -207,9 +207,9 @@ Piece::Piece(sp<GameLogic> gameInstance, sp<Grid> grid, sp<PieceType> pieceType,
 	}
 
 	int maxNumBlocks = 0;
-	for (int i = 0; i<pieceType->rotationSet->size(); i++)
+	for (int i = 0; i< (int)pieceType->rotationSet->size(); i++)
 	{
-		maxNumBlocks = max(maxNumBlocks, pieceType->rotationSet->at(i)->blockOffsets->size());
+		maxNumBlocks = max(maxNumBlocks, (int)pieceType->rotationSet->at(i)->blockOffsets->size());
 	}
 
 	for (int b = 0; b < maxNumBlocks; b++)
@@ -227,7 +227,7 @@ void Piece::init()
 {//=========================================================================================================================
 
 	//initialize piece sp hack since can't do shared_from_this in constructor
-	for (int i = 0; i<blocks->size(); i++)
+	for (int i = 0; i< (int)blocks->size(); i++)
 	{
 		blocks->at(i)->piece = this->shared_from_this();
 	}
@@ -244,7 +244,7 @@ void Piece::initColors()
 {//=========================================================================================================================
 	//set piece color
 
-	for (int i = 0; i < blocks->size(); i++)
+	for (int i = 0; i < (int)blocks->size(); i++)
 	{
 		sp<Block> b = blocks->at(i);
 
@@ -426,7 +426,7 @@ void Piece::setBlockColorConnectionsInPiece()
 //=========================================================================================================================
 int Piece::getNumBlocksInCurrentRotation()
 {//=========================================================================================================================
-	return pieceType->rotationSet->at(currentRotation)->blockOffsets->size();
+	return (int)pieceType->rotationSet->at(currentRotation)->blockOffsets->size();
 
 }
 

@@ -656,7 +656,7 @@ sp<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(sp<Piece> p, int
 		}
 	}
 
-	if (acceptableBlockTypes->size() > 0)
+	if ((int)acceptableBlockTypes->size() > 0)
 	{
 
 		if (p != nullptr)
@@ -676,16 +676,16 @@ sp<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(sp<Piece> p, int
 		if(p == nullptr)
 		{
 			sp<PieceType> pieceType = getRandomPieceType(pieceTypes);
-			sp<BlockType> blockType = acceptableBlockTypes->at(getGameLogic()->getRandomIntLessThan(acceptableBlockTypes->size(), "dontPutSameBlockTypeNextToEachOtherOrReturnNull"));
+			sp<BlockType> blockType = acceptableBlockTypes->at(getGameLogic()->getRandomIntLessThan((int)acceptableBlockTypes->size(), "dontPutSameBlockTypeNextToEachOtherOrReturnNull"));
 
 			p = sp<Piece>(ms<Piece>(game, this, pieceType, blockType));
 			p->init();
 
 			//remove other blocks and break connections, we only want one block
-			while (p->blocks->size() > 1)
+			while ((int)p->blocks->size() > 1)
 			{
-				sp<Block> b = p->blocks->at(p->blocks->size() - 1);
-				p->blocks->erase(p->blocks->begin()+p->blocks->size() - 1);
+				sp<Block> b = p->blocks->at((int)p->blocks->size() - 1);
+				p->blocks->erase(p->blocks->begin()+ (int)p->blocks->size() - 1);
 				b->breakConnectionsInPiece();
 			}
 		}
@@ -2298,26 +2298,26 @@ sp<vector<sp<Block>>> Grid::checkBreakerBlocks(int toRow, sp<vector<sp<BlockType
 					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(b, connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, breakerBlockTypes);
 					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(b, connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, breakerBlockTypes);
 
-					if (connected->size() > 0)
+					if ((int)connected->size() > 0)
 					{
 						//recursively add all connected blocks to each connectedBlock
-						int size = connected->size();
+						int size = (int)connected->size();
 						for (int i = 0; i < size; i++)
 						{
 							sp<vector<sp<BlockType>>>emptyBlockTypeArray;
 							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(connected->at(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
 							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(connected->at(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
-							if (connected->size() > size)
+							if ((int)connected->size() > size)
 							{
-								size = connected->size();
+								size = (int)connected->size();
 								i = -1;
 							}
 						}
 
 						//if we have at least 2 connected pieces, this breaker block will explode.
-						if (connected->size() >= 2)
+						if ((int)connected->size() >= 2)
 						{
-							for (int i = 0; i < connected->size(); i++)
+							for (int i = 0; i < (int)connected->size(); i++)
 							{
 								sp<Block> c = connected->at(i);
 								if (breakBlocks->contains(c) == false)
@@ -2329,7 +2329,7 @@ sp<vector<sp<Block>>> Grid::checkBreakerBlocks(int toRow, sp<vector<sp<BlockType
 							//take out any counter pieces it is touching as well
 							sp<vector<sp<Block>>>surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
 
-							for (int i = 0; i < surroundingBlocks->size(); i++)
+							for (int i = 0; i < (int)surroundingBlocks->size(); i++)
 							{
 								sp<Block> d = surroundingBlocks->at(i);
 								if (ignoreUnlessTouchingBreakerBlockTypes->contains(d->blockType))
@@ -2376,25 +2376,25 @@ void Grid::checkRecursiveConnectedRowOrColumn(sp<vector<sp<Block>>>connectedBloc
 					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(b, connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
 					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(b, connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
 
-					if (connectedToThisBlock->size() > 0)
+					if ((int)connectedToThisBlock->size() > 0)
 					{
 						//recursively add all connected blocks to each connectedBlock
-						int size = connectedToThisBlock->size();
+						int size = (int)connectedToThisBlock->size();
 						for (int i = 0; i < size; i++)
 						{
 							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(connectedToThisBlock->at(i), connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
 							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(connectedToThisBlock->at(i), connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
-							if (connectedToThisBlock->size() > size)
+							if ((int)connectedToThisBlock->size() > size)
 							{
-								size = connectedToThisBlock->size();
+								size = (int)connectedToThisBlock->size();
 								i = -1;
 							}
 						}
 
 						//if we have at least 4 connected pieces in a blob, add to allConnectedBlocks
-						if (connectedToThisBlock->size() >= leastAmountConnected)
+						if ((int)connectedToThisBlock->size() >= leastAmountConnected)
 						{
-							for (int i = 0; i < connectedToThisBlock->size(); i++)
+							for (int i = 0; i < (int)connectedToThisBlock->size(); i++)
 							{
 								sp<Block> c = connectedToThisBlock->at(i);
 								if (connectedBlocks->contains(c) == false)

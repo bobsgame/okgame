@@ -1386,7 +1386,7 @@ void Caption::updateScreenXY()
 
 
 			int captionOverHeadOffset = 0;
-			for (int i = getCaptionManager()->captionList->size() - 1; i >= 0; i--)
+			for (int i = (int)getCaptionManager()->captionList->size() - 1; i >= 0; i--)
 			{
 				sp<Caption> tempC = getCaptionManager()->captionList->at(i);
 				if (tempC->fixedPosition == Position::CENTERED_OVER_ENTITY)

@@ -106,7 +106,7 @@ void GameLogic::fillGameTypeRandomBag()
 	{
 		sp<vector<sp<GameType>>>tempBag;
 
-		for (int i = 0; i < currentGameSequence->gameTypes->size(); i++)
+		for (int i = 0; i < (int)currentGameSequence->gameTypes->size(); i++)
 		{
 			tempBag->push_back(currentGameSequence->gameTypes->at(i));
 		}
@@ -114,9 +114,9 @@ void GameLogic::fillGameTypeRandomBag()
 		//tempBag->push_back(GameType::TETRID);
 		//tempBag->push_back(GameType::DRBOB);
 
-		while (tempBag->size() > 0)
+		while ((int)tempBag->size() > 0)
 		{
-			int i = getRandomIntLessThan(tempBag->size(), "fillGameTypeRandomBag");
+			int i = getRandomIntLessThan((int)tempBag->size(), "fillGameTypeRandomBag");
 
 			sp<GameType> g = tempBag->at(i);
 			gameTypeRandomBag->push_back(g);
@@ -126,7 +126,7 @@ void GameLogic::fillGameTypeRandomBag()
 	}
 	else
 	{
-		for (int i = 0; i < currentGameSequence->gameTypes->size(); i++)
+		for (int i = 0; i < (int)currentGameSequence->gameTypes->size(); i++)
 		{
 			gameTypeRandomBag->push_back(currentGameSequence->gameTypes->at(i));
 		}

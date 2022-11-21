@@ -714,13 +714,13 @@ void BGClientEngine::loadPreCachedObjectData()
 			{
 				sp<SpriteData> data = ms<SpriteData>(); data->initFromString(s);
 
-				if (getSpriteManager()->spriteByIDHashMap.containsKey(data->getID()) == false)
+				if (getSpriteManager()->spriteByIDHashMap->containsKey(data->getID()) == false)
 				{
 					sp<Sprite> sprite = ms<Sprite>(this);
 					sprite->initializeWithSpriteData(data);
 
-					getSpriteManager()->spriteByNameHashMap.put(data->getName(), sprite);
-					getSpriteManager()->spriteByIDHashMap.put(data->getID(), sprite);
+					getSpriteManager()->spriteByNameHashMap->put(data->getName(), sprite);
+					getSpriteManager()->spriteByIDHashMap->put(data->getID(), sprite);
 				}
 				else
 				{
@@ -839,13 +839,13 @@ void BGClientEngine::loadPreCachedObjectData()
 			{
 				sp<MapData> data = ms<MapData>(); data->initFromString(s);
 
-				if (getMapManager()->mapByIDHashMap.containsKey(data->getID()) == false)
+				if (getMapManager()->mapByIDHashMap->containsKey(data->getID()) == false)
 				{
 					sp<Map> m = ms<Map>(this, data);
 
 					getMapManager()->mapList->push_back(m);
-					getMapManager()->mapByNameHashMap.put(data->getName(), m);
-					getMapManager()->mapByIDHashMap.put(data->getID(), m);
+					getMapManager()->mapByNameHashMap->put(data->getName(), m);
+					getMapManager()->mapByIDHashMap->put(data->getID(), m);
 				}
 				else
 				{

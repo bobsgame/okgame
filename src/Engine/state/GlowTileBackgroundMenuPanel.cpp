@@ -292,7 +292,7 @@ void GlowTileBackgroundMenuPanel::render()
 	//draw background glow
 	//------------------------------------------
 
-	for (int i = glowTiles->size() - 1; i >= 0; i--) //from top to bottom
+	for (int i = (int)glowTiles->size() - 1; i >= 0; i--) //from top to bottom
 	{
 		sp<GlowTile> tile = glowTiles->at(i);
 

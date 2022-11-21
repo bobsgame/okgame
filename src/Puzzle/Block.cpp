@@ -142,7 +142,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 
 	//ar & BOOST_SERIALIZATION_NVP(colors);
 	importExport_colors->clear();
-	for (int i = 0; i < colors->size(); i++)
+	for (int i = 0; i < (int)colors->size(); i++)
 	{
 		sp<OKColor>bp = colors->at(i);
 		if (bp->name != "" && bp->name != "empty")
@@ -158,25 +158,25 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 //			b.b = bp->b;
 //			b.a = bp->a;
 
-			importExport_colors.add(b);
+			importExport_colors.push_back(b);
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_colors);
 	colors->clear();
-	for (int i = 0; i < importExport_colors->size(); i++)
+	for (int i = 0; i < (int)importExport_colors.size(); i++)
 	{
-		OKColor b = importExport_colors->at(i);
+		OKColor b = importExport_colors.at(i);
 		sp<OKColor>bp = OKColor::getColorByName(b.name);
 		if (bp != nullptr && bp->name != "" && bp->name != "empty")
 		{
-			colors.add(bp);
+			colors->push_back(bp);
 		}
 		else
 		{
 			//OKGame::log->error("Could not find color on import with name:" + b.name);
 		}
 	}
-	importExport_colors->clear();
+	importExport_colors.clear();
 
 
 	//ar & BOOST_SERIALIZATION_NVP(specialColor);
@@ -266,28 +266,28 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
     
     
-	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();
+	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
 	{
 		for (int i = 0; i < whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)
 		{
 			sp<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i);
 			TurnFromBlockTypeToType b;
 			b = *bp;
-			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(b);
+			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.push_back(b);
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut);
 	whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();
 	{
-		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); i++)
+		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
-			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i);
+			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i);
 			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>();
 			*bp = b;
 			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(bp);
 		}
 	}
-	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();
+	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.clear();
 
     
     
@@ -391,7 +391,7 @@ void Block::update()
 		if (animationFrame == -1)
 		{
 			popping = false;
-			int randomIndex = getGameLogic()->getRandomIntLessThan(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->size(),"Block::update");
+			int randomIndex = getGameLogic()->getRandomIntLessThan((int)blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->size(),"Block::update");
 			blockType = getGameLogic()->currentGameType->getBlockTypeByUUID(blockType->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_UUID->at(randomIndex));
 		}
 	}
@@ -1581,7 +1581,7 @@ void Block::setColor(sp<OKColor>color)
 void Block::setRandomBlockTypeColor()
 {//=========================================================================================================================
 
-	int amtColors = this->blockType->colors->size();
+	int amtColors = (int)this->blockType->colors->size();
 	amtColors = min(amtColors, getGameLogic()->getCurrentDifficulty()->maximumBlockTypeColors);
 
 	if (amtColors > 0) 

@@ -821,7 +821,7 @@ void OKMenu::render
 		
 
 		int selectedVisibleMenuItemIndex = 0;
-		for (int i = 0; i < visibleMenuItems->size(); i++)
+		for (int i = 0; i < (int)visibleMenuItems->size(); i++)
 		{
 			if (menuItems->at(cursorPosition) == visibleMenuItems->at(i))
 			{
@@ -837,7 +837,7 @@ void OKMenu::render
 
 
 
-		for (int i = 0; i < visibleMenuItems->size() && numDrawn <= menuItemsToShow; i++)
+		for (int i = 0; i < (int)visibleMenuItems->size() && numDrawn <= menuItemsToShow; i++)
 		{
 
 			//figure out first caption to show
@@ -851,13 +851,13 @@ void OKMenu::render
 
 					//if selected menu item is topMenuItemIndex+menuItemsToShow and topMenuItemIndex+menuItemsToShow < visibleMenuItems, topMenuItemIndex++(scroll menu down)
 					int bottomIndex = topVisibleMenuItemIndex + menuItemsToShow;
-					if (bottomIndex >= visibleMenuItems->size())bottomIndex = visibleMenuItems->size()-1;
-					if (selectedVisibleMenuItemIndex == bottomIndex && bottomIndex < visibleMenuItems->size() - 1)topVisibleMenuItemIndex++;
+					if (bottomIndex >= (int)visibleMenuItems->size())bottomIndex = (int)visibleMenuItems->size()-1;
+					if (selectedVisibleMenuItemIndex == bottomIndex && bottomIndex < (int)visibleMenuItems->size() - 1)topVisibleMenuItemIndex++;
 				}
 				//set topMenuItemDrawn to top menu item
 				topMenuItemDrawn = visibleMenuItems->at(topVisibleMenuItemIndex);
 
-				if (topVisibleMenuItemIndex > 0 && menuItemsToShow < visibleMenuItems->size())
+				if (topVisibleMenuItemIndex > 0 && menuItemsToShow < (int)visibleMenuItems->size())
 				{
 					//if cursor > menuItemsToShow / 2, draw up arrow, start on cursor position - menuItemsToShow/2 - 1
 					//draw up arrow
