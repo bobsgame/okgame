@@ -11,7 +11,7 @@
 class Logger;
 
 #include "src/Engine/EnginePart.h"
-#include "src/Utility/Color.h"
+#include "src/Utility/OKColor.h"
 #include "src/Utility/OKFont.h"
 
 

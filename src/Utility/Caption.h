@@ -12,7 +12,7 @@ class Logger;
 #include "src/Engine/rpg/event/ActionManager.h"
 #include "src/Engine/EnginePart.h"
 #include "OKFont.h"
-#include "Color.h"
+#include "OKColor.h"
 
 class Logger;
 class OKGame;

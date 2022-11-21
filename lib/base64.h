@@ -17,7 +17,7 @@ class Base64 {
 
     out->resize(EncodedLength(in));
 
-    int input_len = in.size();
+    int input_len = (int)in.size();
     std::string::const_iterator input = in.begin();
 
     while (input_len--) {
@@ -100,7 +100,7 @@ class Base64 {
     unsigned char a3[3];
     unsigned char a4[4];
 
-    int input_len = in.size();
+    int input_len = (int)in.size();
     std::string::const_iterator input = in.begin();
 
     out->resize(DecodedLength(in));
@@ -201,12 +201,12 @@ class Base64 {
     const char *in_end = in + in_length;
     while (*--in_end == '=') ++numEq;
 
-    return ((6 * in_length) / 8) - numEq;
+    return ((6 * (int)in_length) / 8) - numEq;
   }
 
   static int DecodedLength(const std::string &in) {
     int numEq = 0;
-    int n = in.size();
+    int n = (int)in.size();
 
     for (std::string::const_reverse_iterator it = in.rbegin(); *it == '='; ++it) {
       ++numEq;
@@ -216,7 +216,7 @@ class Base64 {
   }
 
   inline static int EncodedLength(size_t length) {
-    return (length + 2 - ((length + 2) % 3)) / 3 * 4;
+    return ((int)length + 2 - (((int)length + 2) % 3)) / 3 * 4;
   }
 
   inline static int EncodedLength(const std::string &in) {

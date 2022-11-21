@@ -7,7 +7,7 @@
 #pragma once
 #include "oktypes.h"
 #include <src/Engine/EnginePart.h>
-#include "Color.h"
+#include "OKColor.h"
 #include "Caption.h"
 #include "gl/GLUtils.h"
 

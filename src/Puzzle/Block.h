@@ -7,7 +7,7 @@
 #include "oktypes.h"
 #include <Gwen/ControlList.h>
 #include "../Utility/ArrayList.h"
-#include "../Utility/Color.h"
+#include "../Utility/OKColor.h"
 #include "OKGame.h"
 class Logger;
 

@@ -407,7 +407,7 @@
     <ClInclude Include="src\Utility\ControlsManager.h" />
     <ClInclude Include="src\Utility\gl\GLUtils.h" />
     <ClInclude Include="src\Utility\System.h" />
-    <ClInclude Include="src\Utility\Color.h" />
+    <ClInclude Include="src\Utility\OKColor.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
@@ -598,7 +598,7 @@
     <ClCompile Include="src\Utility\CaptionManager.cpp" />
     <ClCompile Include="src\Utility\ControlsManager.cpp" />
     <ClCompile Include="src\Utility\gl\GLUtils.cpp" />
-    <ClCompile Include="src\Utility\Color.cpp" />
+    <ClCompile Include="src\Utility\OKColor.cpp" />
     <ClCompile Include="src\Utility\OKFont.cpp" />
     <ClCompile Include="src\Utility\OKMenu.cpp" />
     <ClCompile Include="src\Utility\OKString.cpp" />

@@ -186,7 +186,7 @@
     <ClInclude Include="src\Utility\ArrayList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\Color.h">
+    <ClInclude Include="src\Utility\OKColor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility\Hashmap.h">
@@ -740,7 +740,7 @@
     <ClCompile Include="src\Utility\gl\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\Color.cpp">
+    <ClCompile Include="src\Utility\OKColor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\HQ2X\HQ2X.cpp">

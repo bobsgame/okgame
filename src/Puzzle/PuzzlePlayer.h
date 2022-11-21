@@ -7,7 +7,7 @@
 #pragma once
 #include "oktypes.h"
 #include "GameLogic.h"
-#include "src/Utility/Color.h"
+#include "src/Utility/OKColor.h"
 
 //=========================================================================================================================
 class PuzzlePlayer : public std::enable_shared_from_this<PuzzlePlayer>

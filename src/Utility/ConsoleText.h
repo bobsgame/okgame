@@ -8,7 +8,7 @@
 #include "oktypes.h"
 class Logger;
 
-#include "src/Utility/Color.h"
+#include "src/Utility/OKColor.h"
 
 
 class Caption;

@@ -13,7 +13,7 @@
 
 
 #include "src/Utility/Logger.h"
-#include "src/Utility/Color.h"
+#include "src/Utility/OKColor.h"
 #include "src/Utility/stringconverter.h"
 #include "src/Utility/Easing.h"
 #include "src/Utility/OKMath.h"
