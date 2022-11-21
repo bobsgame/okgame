@@ -573,7 +573,7 @@ CustomGameEditorControl::CustomGameEditorControl(Gwen::Controls::Base* pParent, 
 	sp<BlockType> bt(ms<BlockType>());
 	bt->name = "Gray Square";
 	//bt->spriteName = "Square";
-	bt->colors->push_back(*OKColor::gray.get());
+	bt->colors->push_back(OKColor::gray);
 	bt->useInNormalPieces = true;
 	bt->useAsPlayingFieldFiller = true;
 	bt->useAsGarbage = true;
@@ -3402,14 +3402,14 @@ void CustomGameEditorControl::onTurnFromBlockTypeToTypeSelect(Base* control)
 void CustomGameEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	sp<vector<sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
-		sp<GameType>g = gameTypeStringColorPairPair.first;
-		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
-		string name = stringColorPair.first;
-		sp<OKColor>color = stringColorPair.second;
+		sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
+		sp<GameType>g = gameTypeStringColorPairPair->first;
+		sp<pair<string, sp<OKColor>>> stringColorPair = gameTypeStringColorPairPair->second;
+		string name = stringColorPair->first;
+		sp<OKColor>color = stringColorPair->second;
 
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &CustomGameEditorControl::onGameTypesListSelect);

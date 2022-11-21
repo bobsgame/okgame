@@ -252,8 +252,8 @@ EventScriptQualifier::EventScriptQualifier(const string& command, const string& 
 	EventData::qualifierList->push_back(shared_from_this());
 }
 
-vector<sp<EventScriptCommand>> EventData::commandList;// = ms<vector><sp<EventScriptCommand>>();
-vector<sp<EventScriptQualifier>> EventData::qualifierList;// = ms<vector><sp<EventScriptQualifier>>();
+sp<vector<sp<EventScriptCommand>>> EventData::commandList;// = ms<vector><sp<EventScriptCommand>>();
+sp<vector<sp<EventScriptQualifier>>> EventData::qualifierList;// = ms<vector><sp<EventScriptQualifier>>();
 
 const sp<EventScriptQualifier> EventData::isPlayerTouchingThisArea = ms<EventScriptQualifier>("isPlayerTouchingThisArea", "");
 const sp<EventScriptQualifier> EventData::isPlayerWalkingIntoThisDoor = ms<EventScriptQualifier>("isPlayerWalkingIntoThisDoor", "");

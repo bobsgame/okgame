@@ -29,7 +29,7 @@ AudioFile::AudioFile(sp<AudioData> data)
 			return;
 		}
 	}
-	AudioManager::globalAudioFileList.add(shared_from_this());
+	AudioManager::globalAudioFileList->push_back(shared_from_this());
 }
 
 

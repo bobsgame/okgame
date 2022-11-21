@@ -26,7 +26,7 @@ sp<OKColor> OKMenu::statusColor = nullptr;
 sp<OKColor> OKMenu::errorColor = nullptr;
 sp<OKColor> OKMenu::bgColor = nullptr;
 
-vector<sp<OKMenu>> OKMenu::activeMenus;
+sp<vector<sp<OKMenu>>> OKMenu::activeMenus;
 
 
 //=========================================================================================================================
@@ -35,7 +35,8 @@ OKMenu::MenuItem::~MenuItem()
 	if (caption != nullptr)
 	{
 		//caption->setToBeDeletedImmediately();
-		delete caption;
+		//delete caption;
+		caption = nullptr;
 	}
 	
 
@@ -52,8 +53,14 @@ void OKMenu::MenuItem::setYesNo(bool yesNo)
 		//if (yesNo)value = "Yes";
 		//else value = "   ";
 		//if (caption != nullptr)caption->replaceText("(" + value + ") " + captionText);
-		if (yesNo == false) {setColor(disabledMenuColor, true);}
-		else {setColor(menuColor,true);}
+		if (yesNo == false) 
+		{
+			setColor(disabledMenuColor, true);
+		}
+		else 
+		{
+			setColor(menuColor,true);
+		}
 		
 	}
 }
@@ -132,14 +139,22 @@ OKMenu::OKMenu(sp<Engine>g, string title, string subtitle)
 		subtitleCaption = ms<Caption>(e, Caption::Position::NONE, 0, 0, -1, subtitle, 22, false, infoColor, RenderOrder::OVER_GUI);
 	}
 
-	activeMenus.add(this);
+	activeMenus->push_back(shared_from_this());
 }
 //=========================================================================================================================
 OKMenu::~OKMenu()
 {//=========================================================================================================================
-	if (titleCaption != nullptr)delete titleCaption;// titleCaption->setToBeDeletedImmediately();
-	if (subtitleCaption != nullptr)delete subtitleCaption;// titleCaption->setToBeDeletedImmediately();
-	menuItems.deleteAll();
+	if (titleCaption != nullptr)
+	{
+		//delete titleCaption;// titleCaption->setToBeDeletedImmediately();
+		titleCaption = nullptr;
+	}
+	if (subtitleCaption != nullptr)
+	{
+		//delete subtitleCaption;// titleCaption->setToBeDeletedImmediately();
+		subtitleCaption = nullptr;
+	}
+	menuItems->clear();
 	
 	activeMenus->remove(this);
 }
@@ -159,7 +174,7 @@ void OKMenu::setGraphic(sp<OKTexture> t, int graphicWidth, int graphicYStartPosi
 //=========================================================================================================================
 void OKMenu::clear()
 {//=========================================================================================================================
-	menuItems.deleteAll();
+	menuItems->clear();
 	topMenuItemDrawn = nullptr;
 }
 
@@ -193,11 +208,11 @@ void OKMenu::update(sp<Engine>g, int ticksPassed)
 		lastMY = my;
 	}
 
-	for(int i = 0; i < activeMenus->size(); i++)
+	for(int i = 0; i < (int)activeMenus->size(); i++)
 	{
 		sp<OKMenu>m = activeMenus->at(i);
 
-		for(int n = 0; n < m->menuItems->size(); n++)
+		for(int n = 0; n < (int)m->menuItems->size(); n++)
 		{
 			sp<MenuItem>mi = m->menuItems->at(n);
 
@@ -229,7 +244,7 @@ void OKMenu::update(sp<Engine>g, int ticksPassed)
 bool OKMenu::areAllMenusDisabled()
 {//=========================================================================================================================
 	bool allDisabled = true;
-	for (int i = 0; i < menuItems->size(); i++)
+	for (int i = 0; i < (int)menuItems->size(); i++)
 	{
 		sp<MenuItem>m = menuItems->at(i);
 		if (m->hidden == false && m->info == false)
@@ -248,7 +263,7 @@ void OKMenu::up(bool noSound)
 	do
 	{
 		cursorPosition--;
-		if (cursorPosition < 0)cursorPosition = menuItems->size() - 1;
+		if (cursorPosition < 0)cursorPosition = (int)menuItems->size() - 1;
 	} while (getSelectedMenuItem()->hidden == true || getSelectedMenuItem()->info == true);
 	rectangleCursorMovementLastTime = System::currentHighResTimer();
 	if(noSound==false)getAudioManager()->playSound("tick", 0.5f, 1.0f);
@@ -262,7 +277,7 @@ void OKMenu::down(bool noSound)
 	do
 	{
 		cursorPosition++;
-		if (cursorPosition > menuItems->size() - 1)cursorPosition = 0;
+		if (cursorPosition > (int)menuItems->size() - 1)cursorPosition = 0;
 	} while (getSelectedMenuItem()->hidden == true || getSelectedMenuItem()->info == true);
 	rectangleCursorMovementLastTime = System::currentHighResTimer();
 	if (noSound == false)getAudioManager()->playSound("tick", 0.5f, 1.0f);
@@ -310,7 +325,7 @@ sp<OKMenu::MenuItem> OKMenu::add(string caption, string id, sp<OKColor>color)
 	if (id == "")id = caption;
 	std::transform(id.begin(), id.end(), id.begin(), ::tolower);
 	m->id = id;
-	menuItems.add(m);
+	menuItems->push_back(m);
 	return m;
 }
 
@@ -505,16 +520,16 @@ void OKMenu::setFontSize(int size)
 
 int OKMenu::getAmountOfMenuItems()
 {
-	return menuItems->size();
+	return (int)menuItems->size();
 }
 
 sp<vector<string>> OKMenu::getArrayListOfMenuItemIDs()
 {
 	sp<vector<string>>ids;
 
-	for(int i=0;i<menuItems->size();i++)
+	for(int i=0;i<(int)menuItems->size();i++)
 	{
-		ids.add(menuItems->at(i)->id);
+		ids->push_back(menuItems->at(i)->id);
 	}
 
 	return ids;
@@ -654,14 +669,14 @@ void OKMenu::render
 		do
 		{
 
-			menuItemsToShow = visibleMenuItems->size();
+			menuItemsToShow = (int)visibleMenuItems->size();
 
 			int lowestHeight = y;
 			bool pastEnd = false;
 
 			int captionHeight = 0;
 
-			for (int i = 0; i < visibleMenuItems->size(); i++)
+			for (int i = 0; i < (int)visibleMenuItems->size(); i++)
 			{
 				sp<MenuItem>m = visibleMenuItems->at(i);
 				sp<Caption>c = m->caption;

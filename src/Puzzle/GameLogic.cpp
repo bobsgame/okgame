@@ -593,8 +593,8 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 			}
 		}
 
-		frameState = FrameState();
-		frameState.ticksPassed = getEngine()->engineTicksPassed();
+		frameState = ms<FrameState>();
+		frameState->ticksPassed = getEngine()->engineTicksPassed();
 
 		if(player->pausePressed())
 		{
@@ -687,7 +687,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 								sp<GameLogic> g2 = alivePlayers->at(lastSentGarbageToPlayerIndex);
 
 								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
-								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+								g2->frameState->receivedGarbageAmount += queuedVSGarbageAmountToSend;
 								
 								queuedVSGarbageAmountToSend = 0;
 							}
@@ -715,7 +715,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 								if (leastBlocksPlayer != nullptr)
 								{
 									leastBlocksPlayer->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
-									leastBlocksPlayer->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+									leastBlocksPlayer->frameState->receivedGarbageAmount += queuedVSGarbageAmountToSend;
 								}
 
 								queuedVSGarbageAmountToSend = 0;
@@ -732,7 +732,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 							{
 								sp<GameLogic>g2 = alivePlayers->at(getRandomIntLessThan((int)alivePlayers->size(), "sendGarbage"));
 								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
-								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+								g2->frameState->receivedGarbageAmount += queuedVSGarbageAmountToSend;
 
 								queuedVSGarbageAmountToSend = 0;
 							}
@@ -758,7 +758,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 						for (auto g2 : *otherPlayers)
 						{
 							g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
-							g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+							g2->frameState->receivedGarbageAmount += queuedVSGarbageAmountToSend;
 						}
 						queuedVSGarbageAmountToSend = 0;
 					}
@@ -771,7 +771,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 						if (g2->queuedVSGarbageAmountToSend > 0)
 						{
 							gotVSGarbageFromOtherPlayer(g2->queuedVSGarbageAmountToSend);
-							frameState.receivedGarbageAmount += g2->queuedVSGarbageAmountToSend;
+							frameState->receivedGarbageAmount += g2->queuedVSGarbageAmountToSend;
 							g2->queuedVSGarbageAmountToSend = 0;
 						}
 					}
@@ -790,7 +790,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 							if (getRandomIntLessThan(2, "sendGarbage") == 0)
 							{
 								g2->gotVSGarbageFromOtherPlayer(queuedVSGarbageAmountToSend);
-								g2->frameState.receivedGarbageAmount += queuedVSGarbageAmountToSend;
+								g2->frameState->receivedGarbageAmount += queuedVSGarbageAmountToSend;
 							}
 						}
 						queuedVSGarbageAmountToSend = 0;
@@ -806,7 +806,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 							if (getRandomIntLessThan(2, "sendGarbage") == 0)
 							{
 								gotVSGarbageFromOtherPlayer(g2->queuedVSGarbageAmountToSend);
-								frameState.receivedGarbageAmount += g2->queuedVSGarbageAmountToSend;
+								frameState->receivedGarbageAmount += g2->queuedVSGarbageAmountToSend;
 							}
 							g2->queuedVSGarbageAmountToSend = 0;
 						}
@@ -830,8 +830,8 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 			{
 				gridString += to_string(grid->blocks->at(n) != grid->nullBlock);
 			}
-			frameState.gridString = gridString;
-			frameState.randomInt = randomGenerator();
+			frameState->gridString = gridString;
+			frameState->randomInt = randomGenerator();
 
 
 			sendPacketsToOtherPlayers();
@@ -885,14 +885,14 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 		{
 			if (incomingFramePacketsContainsKey_S(lastIncomingFramePacketID))
 			{
-				sp<vector<FrameState>> incomingFrames = incomingFramePacketsGet_S(lastIncomingFramePacketID);
+				sp<vector<sp<FrameState>>> incomingFrames = incomingFramePacketsGet_S(lastIncomingFramePacketID);
 				incomingFramePacketsRemoveAt_S(lastIncomingFramePacketID);
 
 				lastIncomingFramePacketID++;
 
 				while (incomingFrames->size()>0)
 				{
-					FrameState f = incomingFrames->at(0);
+					sp<FrameState> f = incomingFrames->at(0);
 					incomingFrames->erase(incomingFrames->begin()+0);
 					framesArray->push_back(f);
 				}
@@ -963,9 +963,9 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 
 					if (getRoom()->multiplayer_DisableVSGarbage == false)
 					{
-						if (frameState.receivedGarbageAmount > 0) //this should only happen when we are the network side
+						if (frameState->receivedGarbageAmount > 0) //this should only happen when we are the network side
 						{
-							gotVSGarbageFromOtherPlayer(frameState.receivedGarbageAmount);
+							gotVSGarbageFromOtherPlayer(frameState->receivedGarbageAmount);
 						}
 					}
 
@@ -975,7 +975,7 @@ void GameLogic::update(int gameIndex, int numGames, float forceWidth, float forc
 						gridString += to_string(grid->blocks->at(n) != grid->nullBlock);
 					}
 					int r = randomGenerator();
-					if(frameState.gridString != gridString || frameState.randomInt != r)log.error("Desync! r: " + to_string(r) + "  frameState.randomInt: " + to_string(frameState.randomInt) + " gridString: "+gridString + " frameState.gridString: "+frameState.gridString );
+					if(frameState->gridString != gridString || frameState->randomInt != r)log.error("Desync! r: " + to_string(r) + "  frameState.randomInt: " + to_string(frameState->randomInt) + " gridString: "+gridString + " frameState.gridString: "+frameState->gridString );
 
 
 
@@ -1002,8 +1002,8 @@ void GameLogic::sendPacketsToOtherPlayers()
 		{
 			storePacketsTicksCounter = currentTime;
 
-			sp<vector<FrameState>> packetToSplit = framesArray;
-			framesArray = sp<vector<FrameState>>();
+			sp<vector<sp<FrameState>>> packetToSplit = framesArray;
+			framesArray = ms<vector<sp<FrameState>>>();
 
 			int maxFramesInPacket = 800/16;
 
@@ -1014,12 +1014,12 @@ void GameLogic::sendPacketsToOtherPlayers()
 				//so we split it into multiple packets.
 				while (packetToSplit->size() > 0)
 				{
-					sp<vector<FrameState>> partialPacket;
+					sp<vector<sp<FrameState>>> partialPacket;
 
 					int size = (int)packetToSplit->size();
 					for (int i = 0; i < maxFramesInPacket && i < size; i++)
 					{
-						FrameState frame = packetToSplit->at(0);
+						sp<FrameState> frame = packetToSplit->at(0);
 
 						packetToSplit->erase(packetToSplit->begin()+0);
 						//sp<Vector<FrameState>>::removeAt(packetToSplit.frameStates,0);
@@ -1057,7 +1057,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 			string idAndMD5String = to_string(j) + "," + md5;
 
 			outboundPacketQueueVector->push_back(idAndMD5String); //just so we have an ordered list we can get(0) from
-			outboundPacketQueueHashMap.put(idAndMD5String, b64zip);
+			outboundPacketQueueHashMap->put(idAndMD5String, b64zip);
 		}
 
 		lastSentPacketID = size;
@@ -1072,7 +1072,7 @@ void GameLogic::sendPacketsToOtherPlayers()
 		if (outboundPacketQueueVector->size() > 0)
 		{
 			string idAndMD5String = outboundPacketQueueVector->at(0);
-			string b64zip = outboundPacketQueueHashMap->at(idAndMD5String);
+			string b64zip = outboundPacketQueueHashMap->get(idAndMD5String);
 
 			getOKGame()->sendAllJoinedPeers(OKGame::netCommand_FRAME + player->getID() + ":" + idAndMD5String + ":" + b64zip);
 
@@ -1080,8 +1080,8 @@ void GameLogic::sendPacketsToOtherPlayers()
 			//remove id,MD5 from hashmap queue 	
 			//if got id, md5, remove packet 0 	
 			//if not, send packet 0 again 	
-			outboundPacketQueueHashMap->erase(->begin()+idAndMD5String);
-			outboundPacketQueueVector->erase(->begin()+0);// idAndMD5String);
+			outboundPacketQueueHashMap->removeAt(idAndMD5String);
+			outboundPacketQueueVector->erase(outboundPacketQueueVector->begin()+0);// idAndMD5String);
 		}
 	}
 
@@ -1166,7 +1166,7 @@ void GameLogic::_processIncomingPackets()
 		{
 
 			//if not in log, add to log, add frames to queue, send back id, md5 as confirmation
-			sp<vector<FrameState>> packet = FrameState::getFramesArrayFromBase64LZ4XML(frameData);
+			sp<vector<sp<FrameState>>> packet = FrameState::getFramesArrayFromBase64LZ4XML(frameData);
 
 			//queue<FrameState> frames = packet.frameStates;
 
@@ -1253,18 +1253,18 @@ void GameLogic::setTheyForfeit(bool b)
 void GameLogic::setControlsState()
 {//=========================================================================================================================
 
-	frameState.ROTATECW_HELD = player->ROTATECW_HELD;
-	frameState.HOLDRAISE_HELD = player->HOLDRAISE_HELD;
-	frameState.ROTATECCW_HELD = player->ROTATECCW_HELD;
-	frameState.UP_HELD = player->UP_HELD;
-	frameState.LEFT_HELD = player->LEFT_HELD;
-	frameState.DOWN_HELD = player->DOWN_HELD;
-	frameState.RIGHT_HELD = player->RIGHT_HELD;
-	frameState.SLAM_HELD = player->SLAM_HELD;
+	frameState->ROTATECW_HELD = player->ROTATECW_HELD;
+	frameState->HOLDRAISE_HELD = player->HOLDRAISE_HELD;
+	frameState->ROTATECCW_HELD = player->ROTATECCW_HELD;
+	frameState->UP_HELD = player->UP_HELD;
+	frameState->LEFT_HELD = player->LEFT_HELD;
+	frameState->DOWN_HELD = player->DOWN_HELD;
+	frameState->RIGHT_HELD = player->RIGHT_HELD;
+	frameState->SLAM_HELD = player->SLAM_HELD;
 
-	frameState.slamLock = player->slamLock;
-	frameState.singleDownLock = player->singleDownLock;
-	frameState.doubleDownLock = player->doubleDownLock;
+	frameState->slamLock = player->slamLock;
+	frameState->singleDownLock = player->singleDownLock;
+	frameState->doubleDownLock = player->doubleDownLock;
 }
 
 
@@ -1529,7 +1529,7 @@ void GameLogic::removeFlashedChainBlocks()
 							sp<Block> c = grid->get(x, y);
 							if (c != nullptr)
 							{
-								if (currentChainBlocks.contains(c) == false)
+								if (currentChainBlocks->contains(c) == false)
 								{
 									currentChainBlocks->push_back(c);
 								}
@@ -1697,7 +1697,7 @@ void GameLogic::addToChainBlocks(sp<vector<sp<Block>>> arr)
 
 		for (int i = 0; i < arr->size(); i++)
 		{
-			if (currentChainBlocks.contains(arr->at(i)) == false)
+			if (currentChainBlocks->contains(arr->at(i)) == false)
 			{
 				currentChainBlocks->push_back(arr->at(i));
 			}
@@ -1756,7 +1756,7 @@ void GameLogic::checkForChain()
 			{
 				sp<Block> b = grid->get(x, y);
 
-				if (b != nullptr && (ignoreTypes->empty() || ignoreTypes.contains(b->blockType) == false))
+				if (b != nullptr && (ignoreTypes->empty() || ignoreTypes->contains(b->blockType) == false))
 				{
 					if (currentGameType->chainRule_CheckRow)
 					{
@@ -2645,7 +2645,7 @@ void GameLogic::setPiece()
 			for (int y = startY; y < endY && y < gridH(); y++)
 			{
 				sp<Block> b = grid->get(x, y);
-				if (b != nullptr && explodeBlocks.contains(b) == false)
+				if (b != nullptr && explodeBlocks->contains(b) == false)
 				{
 					explodeBlocks->push_back(b);
 				}
@@ -2734,7 +2734,7 @@ void GameLogic::newRandomPiece()
 		if (nextPieceSpecialBuffer->size() > 0)
 		{
 			nextPieces->push_back(nextPieceSpecialBuffer->at(0));
-			nextPieceSpecialBuffer->erase(->begin()+0);
+			nextPieceSpecialBuffer->erase(nextPieceSpecialBuffer->begin()+0);
 		}
 		else
 		{
@@ -3063,7 +3063,7 @@ void GameLogic::renderQueuedGarbage()
 			}
 
 			sp<BlockType> blockType = blockTypes->at((blockTypes->size()-1) % (i+1));
-			Block b(this, grid, nullptr, blockType);
+			Block b(shared_from_this(), grid, nullptr, blockType);
 			b.update();//set the sprite
 			b.render(grid->getXInFBO() + ((i%(int)(grid->getWidth()/scale)) * blockWidth * scale), grid->getYInFBO() + (blockHeight*scale*(i/(grid->getWidth()/scale))), 1.0f, scale, false, false);// - blockHeight
 //			if (garbageBlock != nullptr)
@@ -4431,7 +4431,7 @@ void GameLogic::makeAnnouncementCaption(const string& text, sp<OKColor> color)
 
 	sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, 0, -1, text, announcementCaptionFontSize, true, color, announcementCaptionBGColor, RenderOrder::ABOVE_TOP, announcementCaptionScale);
 	//c->drawAbove = true;
-	announcementCaptions->add(c);
+	announcementCaptions->push_back(c);
 }
 
 //=========================================================================================================================
@@ -4492,7 +4492,7 @@ sp<Caption> GameLogic::makeInfoCaption(const string& text)
 	sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (int)++captionY * captionYSize, -1, string("" + text), captionFontSize, true, captionTextColor, captionBGColor, RenderOrder::ABOVE, captionScale);
 	if (infoCaptions->contains(c) == false)
 	{
-		infoCaptions->add(c);
+		infoCaptions->push_back(c);
 	}
 	return c;
 }
@@ -4563,22 +4563,22 @@ void GameLogic::deleteScoreBarCaptions()
 {//=========================================================================================================================
 	if (scoreBarTypeCaption != nullptr)
 	{
-		delete scoreBarTypeCaption;
+		//delete scoreBarTypeCaption;
 		scoreBarTypeCaption = nullptr;
 	}
 	if (myScoreBarCaption != nullptr)
 	{
-		delete myScoreBarCaption;
+		//delete myScoreBarCaption;
 		myScoreBarCaption = nullptr;
 	}
 	if (myHighScoreBarCaption != nullptr)
 	{
-		delete myHighScoreBarCaption;
+		//delete myHighScoreBarCaption;
 		myHighScoreBarCaption = nullptr;
 	}
 	if (leaderboardBarCaption != nullptr)
 	{
-		delete leaderboardBarCaption;
+		//delete leaderboardBarCaption;
 		leaderboardBarCaption = nullptr;
 	}
 }
@@ -4904,13 +4904,14 @@ void GameLogic::updateCaptions()
 	totalTicksPassedCaption->screenX = grid->getXOnScreenNoShake() + (grid->getWidth() * blockWidth) / 2 - timeCaptionStandardizedWidth / 2;
 	totalTicksPassedCaption->screenY = playingFieldY1 - 40;// grid->screenY + grid->getHeight() * blockHeight + 20;
 
+
 	levelCaption->setTextColor(ms<OKColor>(captionColorCycleHueValue, 0.5f, 1.0f, 1.0f, true));
 
 	if (announcementCaptions->size() > 15)
 	{
 		sp<Caption> c = announcementCaptions->at(0);
 		c->setToFadeOutAndBeDeleted();
-		announcementCaptions->erase(->begin()+0);
+		announcementCaptions->erase(announcementCaptions->begin()+0);
 	}
 
 	//defaults for original font
@@ -4985,7 +4986,7 @@ void GameLogic::updateCaptions()
 		if (c->getBeingDeletedWhenFadeOutStatus() == true && c->getAlpha() == 0.0f)
 		{
 			//announcementCaptions.RemoveAt(i);
-			announcementCaptions->erase(->begin()+i);
+			announcementCaptions->erase(announcementCaptions->begin()+i);
 			i = -1;
 			continue;
 		}
@@ -5337,7 +5338,7 @@ int GameLogic::gridH()
 //=========================================================================================================================
 long long GameLogic::ticks()
 {//=========================================================================================================================
-	return frameState.ticksPassed;
+	return frameState->ticksPassed;
 }
 
 //=========================================================================================================================

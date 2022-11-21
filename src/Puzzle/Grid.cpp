@@ -344,10 +344,27 @@ sp<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(sp<Piece> p,
 
 			for (int i = 0; i < amtColors; i++)
 			{
-				if (acceptableColors->contains(blockType->colors->at(i)) == false)
+
+				sp<OKColor> c = blockType->colors->at(i);
+				//if (acceptableColors->contains(c) == false)
+				//{
+				//	acceptableColors->push_back(c);
+				//}
+
+				bool contains = false;
+				for (int j = 0; j < acceptableColors->size(); j++)
 				{
-					acceptableColors->push_back(blockType->colors->at(i));
+					if (acceptableColors->at(j).get() == c.get())
+					{
+						contains = true;
+					}
 				}
+				if (contains == false)
+				{
+					acceptableColors->push_back(c);
+				}
+
+
 			}
 		}
 	}
@@ -357,31 +374,71 @@ sp<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(sp<Piece> p,
 	{
 		//acceptableColors.Remove(get(x - 1,y - 1)->getColor()); //upleft
 		sp<OKColor> c = get(x - 1, y - 1)->getColor();
-		if (acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 	if (x > 0 && y < getHeight() - 1 && get(x - 1, y + 1) != nullptr && get(x - 1, y + 1)->getColor() != nullptr)
 	{
 		//acceptableColors.Remove(get(x - 1,y + 1)->getColor()); //downleft
 		sp<OKColor> c = get(x - 1, y + 1)->getColor();
-		if (acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 	if (x > 0 && get(x - 1, y) != nullptr && get(x - 1, y)->getColor() != nullptr)
 	{
 		//acceptableColors.Remove(get(x - 1,y)->getColor()); //left
 		sp<OKColor> c = get(x - 1, y)->getColor();
-		if (acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 	if (y < getHeight() - 1 && get(x, y + 1) != nullptr && get(x, y + 1)->getColor() != nullptr)
 	{
 		//acceptableColors.Remove(get(x,y + 1)->getColor()); //down
 		sp<OKColor> c = get(x, y + 1)->getColor();
-		if (acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 	if (y > 0 && get(x, y - 1) != nullptr && get(x, y - 1)->getColor() != nullptr)
 	{
 		//acceptableColors.Remove(get(x,y - 1)->getColor()); //up
 		sp<OKColor> c = get(x, y - 1)->getColor();
-		if (acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 
 	if (acceptableColors->size() > 0)
@@ -436,7 +493,15 @@ sp<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(sp<Piece> p, int x, 
 			{
 				sp<OKColor>c = blockType->colors->at(i);
 
-				if (acceptableColors->contains(c) == false)
+				bool contains = false;
+				for (int j = 0; j < acceptableColors->size(); j++)
+				{
+					if (acceptableColors->at(j).get() == c.get())
+					{
+						contains = true;
+					}
+				}
+				if (contains == false)
 				{
 					acceptableColors->push_back(c);
 				}
@@ -449,19 +514,43 @@ sp<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(sp<Piece> p, int x, 
 	{
 		 //left
 		sp<OKColor>c = get(x - 1, y)->getColor();
-		if(acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 	if (y < getHeight() - 1 && get(x, y + 1) != nullptr && get(x, y + 1)->getColor() != nullptr)
 	{
 		//down
 		sp<OKColor>c = get(x, y + 1)->getColor();
-		if (acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 	if (y > 0 && get(x, y - 1) != nullptr && get(x, y - 1)->getColor() != nullptr)
 	{
 		 //up
 		sp<OKColor>c = get(x, y - 1)->getColor();
-		if (acceptableColors->contains(c))acceptableColors->remove(c);
+		//if (acceptableColors->contains(c))acceptableColors->remove(c);
+		for (int i = 0; i < acceptableColors->size(); i++)
+		{
+			if (acceptableColors->at(i).get() == c.get())
+			{
+				acceptableColors->erase(acceptableColors->begin() + i);
+				i--;
+			}
+		}
 	}
 
 	if (acceptableColors->size() > 0)
@@ -492,8 +581,22 @@ sp<Piece> Grid::dontPutSameColorNextToEachOtherOrReturnNull(sp<Piece> p, int x, 
 			{
 				sp<Block> b = p->blocks->at(i);
 
-				if(acceptableColors->contains(b->getColor())==false)
+				//if(acceptableColors->contains(b->getColor())==false)
+				//	b->setColor(color);
+
+				bool contains = false;
+				for (int j = 0; j < acceptableColors->size(); j++)
+				{
+					if (acceptableColors->at(j).get() == b->getColor().get())
+					{
+						contains = true;
+					}
+				}
+				if (contains == false)
+				{
 					b->setColor(color);
+				}
+
 			}
 		}
 
@@ -522,20 +625,35 @@ sp<Piece> Grid::dontPutSameBlockTypeNextToEachOtherOrReturnNull(sp<Piece> p, int
 	if (x > 0)//left
 	{
 		sp<Block> leftBlock = get(x - 1, y);
-		if(leftBlock!=nullptr && acceptableBlockTypes->contains(leftBlock->blockType))
-			acceptableBlockTypes->remove(leftBlock->blockType);
+		if (leftBlock != nullptr)
+		{
+			if (acceptableBlockTypes->contains(leftBlock->blockType))
+			{
+				acceptableBlockTypes->remove(leftBlock->blockType);
+			}
+		}
 	}
 	if (y < getHeight() - 1)//down
 	{
 		sp<Block> downBlock = get(x, y + 1);
-		if (downBlock != nullptr && acceptableBlockTypes->contains(downBlock->blockType))
-			acceptableBlockTypes->remove(downBlock->blockType);
+		if (downBlock != nullptr) 
+		{
+			if (acceptableBlockTypes->contains(downBlock->blockType))
+			{
+				acceptableBlockTypes->remove(downBlock->blockType);
+			}
+		}
 	}
 	if (y > 0)//up
 	{
 		sp<Block> upBlock = get(x, y - 1);
-		if (upBlock != nullptr && acceptableBlockTypes->contains(upBlock->blockType))
-			acceptableBlockTypes->remove(upBlock->blockType);
+		if (upBlock != nullptr) 
+		{
+			if (acceptableBlockTypes->contains(upBlock->blockType))
+			{
+				acceptableBlockTypes->remove(upBlock->blockType);
+			}
+		}
 	}
 
 	if (acceptableBlockTypes->size() > 0)
@@ -702,9 +820,12 @@ void Grid::randomlyFillGridWithPlayingFieldPieces(int numberOfBlocks, int topY)
 			if (contains(x, y))//TODO redundant but trying to find all bad accesses
 			{
 				sp<Block> b = remove(x, y, false, true);
-				if (b != nullptr && blockList->contains(b) == false)
+				if (b != nullptr)
 				{
-					blockList->push_back(b);
+					if (blockList->contains(b) == false)
+					{
+						blockList->push_back(b);
+					}
 				}
 			}
 		}
@@ -801,9 +922,12 @@ void Grid::buildRandomStackRetainingExistingBlocks(int numberOfBlocks, int topY)
 			if (contains(x, y))//TODO redundant but trying to find all bad accesses
 			{
 				sp<Block> b = remove(x, y, false, true);
-				if (b != nullptr && blockList->contains(b) == false)
+				if (b != nullptr)
 				{
-					blockList->push_back(b);
+					if (blockList->contains(b) == false)
+					{
+						blockList->push_back(b);
+					}
 				}
 			}
 		}
@@ -1859,6 +1983,7 @@ sp<Block> Grid::remove(int x, int y, bool fadeOut, bool breakConnections)
 			if (fadeOut) 
 			{
 				b->fadingOut = true;
+
 				if (getGameLogic()->fadingOutBlocks->contains(b) == false)
 				{
 					getGameLogic()->fadingOutBlocks->push_back(b);
@@ -1941,9 +2066,12 @@ sp<vector<sp<Piece>>> Grid::getArrayOfPiecesOnGrid()
 		for (int x = 0; x < getWidth(); x++)
 		{
 			sp<Block> b = get(x, y);
-			if (b != nullptr && b->piece != nullptr && piecesOnGrid->contains(b->piece) == false)
+			if (b != nullptr && b->piece != nullptr)
 			{
-				piecesOnGrid->push_back(b->piece);
+				if (piecesOnGrid->contains(b->piece) == false)
+				{
+					piecesOnGrid->push_back(b->piece);
+				}
 			}
 		}
 	}
@@ -1964,6 +2092,10 @@ sp<vector<sp<Block>>> Grid::checkLines(sp<vector<sp<BlockType>>>ignoreTypes, sp<
 		for (int x = 0; x < getWidth(); x++)
 		{
 			sp<Block> b = get(x, y);
+
+
+
+
 			if (b == nullptr || (ignoreTypes->size() > 0 && ignoreTypes->contains(b->blockType)))
 			{
 				lineFull = false;
@@ -1976,6 +2108,8 @@ sp<vector<sp<Block>>> Grid::checkLines(sp<vector<sp<BlockType>>>ignoreTypes, sp<
 			for (int x = 0; x < getWidth(); x++)
 			{
 				sp<Block> b = get(x, y);
+
+
 				if (blocksOnFullLines->contains(b) == false)
 				{
 					blocksOnFullLines->push_back(b);
@@ -1992,9 +2126,12 @@ sp<vector<sp<Block>>> Grid::checkLines(sp<vector<sp<BlockType>>>ignoreTypes, sp<
 							for (int cx = 0; cx < getWidth(); cx++)
 							{
 								sp<Block> otherLineBlock = get(cx, connected->yGrid);
-								if (otherLineBlock != nullptr && blocksOnFullLines->contains(otherLineBlock) == false)
+								if (otherLineBlock != nullptr)
 								{
-									blocksOnFullLines->push_back(otherLineBlock);
+									if (blocksOnFullLines->contains(otherLineBlock) == false)
+									{
+										blocksOnFullLines->push_back(otherLineBlock);
+									}
 								}
 							}
 						}
@@ -2150,54 +2287,57 @@ sp<vector<sp<Block>>> Grid::checkBreakerBlocks(int toRow, sp<vector<sp<BlockType
 
 			sp<Block> b = get(x, y);
 
-			if (b != nullptr && breakerBlockTypes->contains(b->blockType))
+			if (b != nullptr)
 			{
-				//get recursive list of any blocks of the same color it is touching
-				//do breaker blocks set off other breaker blocks? yes, of the same color.
-
-				//if (getGameLogic()->getCurrentGameType()->chainRule_CheckRow)
-				addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(b, connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, breakerBlockTypes);
-				addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(b, connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, breakerBlockTypes);
-
-				if (connected->size() > 0)
+				if (breakerBlockTypes->contains(b->blockType))
 				{
-					//recursively add all connected blocks to each connectedBlock
-					int size = connected->size();
-					for (int i = 0; i < size; i++)
-					{
-						sp<vector<sp<BlockType>>>emptyBlockTypeArray;
-						addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(connected->at(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
-						addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(connected->at(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
-						if (connected->size() > size)
-						{
-							size = connected->size();
-							i = -1;
-						}
-					}
+					//get recursive list of any blocks of the same color it is touching
+					//do breaker blocks set off other breaker blocks? yes, of the same color.
 
-					//if we have at least 2 connected pieces, this breaker block will explode.
-					if (connected->size() >= 2)
+					//if (getGameLogic()->getCurrentGameType()->chainRule_CheckRow)
+					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(b, connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, breakerBlockTypes);
+					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(b, connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, breakerBlockTypes);
+
+					if (connected->size() > 0)
 					{
-						for (int i = 0; i < connected->size(); i++)
+						//recursively add all connected blocks to each connectedBlock
+						int size = connected->size();
+						for (int i = 0; i < size; i++)
 						{
-							sp<Block> c = connected->at(i);
-							if (breakBlocks->contains(c) == false)
+							sp<vector<sp<BlockType>>>emptyBlockTypeArray;
+							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(connected->at(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
+							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(connected->at(i), connected, 2, 0, getWidth(), 0, getHeight(), ignoreUnlessTouchingBreakerBlockTypes, emptyBlockTypeArray);
+							if (connected->size() > size)
 							{
-								breakBlocks->push_back(c);
+								size = connected->size();
+								i = -1;
 							}
 						}
 
-						//take out any counter pieces it is touching as well
-						sp<vector<sp<Block>>>surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
-
-						for (int i = 0; i < surroundingBlocks->size(); i++)
+						//if we have at least 2 connected pieces, this breaker block will explode.
+						if (connected->size() >= 2)
 						{
-							sp<Block> d = surroundingBlocks->at(i);
-							if (ignoreUnlessTouchingBreakerBlockTypes->contains(d->blockType))
+							for (int i = 0; i < connected->size(); i++)
 							{
-								if (breakBlocks->contains(d) == false)
+								sp<Block> c = connected->at(i);
+								if (breakBlocks->contains(c) == false)
 								{
-									breakBlocks->push_back(d);
+									breakBlocks->push_back(c);
+								}
+							}
+
+							//take out any counter pieces it is touching as well
+							sp<vector<sp<Block>>>surroundingBlocks = getConnectedBlocksUpDownLeftRight(b);
+
+							for (int i = 0; i < surroundingBlocks->size(); i++)
+							{
+								sp<Block> d = surroundingBlocks->at(i);
+								if (ignoreUnlessTouchingBreakerBlockTypes->contains(d->blockType))
+								{
+									if (breakBlocks->contains(d) == false)
+									{
+										breakBlocks->push_back(d);
+									}
 								}
 							}
 						}
@@ -2229,35 +2369,38 @@ void Grid::checkRecursiveConnectedRowOrColumn(sp<vector<sp<Block>>>connectedBloc
 
 			sp<Block> b = get(x, y);
 
-			if (b != nullptr && ignoreTypes->contains(b->blockType) == false)
+			if (b != nullptr)
 			{
-				addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(b, connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
-				addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(b, connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
-
-				if (connectedToThisBlock->size() > 0)
+				if (ignoreTypes->contains(b->blockType) == false)
 				{
-					//recursively add all connected blocks to each connectedBlock
-					int size = connectedToThisBlock->size();
-					for (int i = 0; i < size; i++)
-					{
-						addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(connectedToThisBlock->at(i), connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
-						addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(connectedToThisBlock->at(i), connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
-						if (connectedToThisBlock->size() > size)
-						{
-							size = connectedToThisBlock->size();
-							i = -1;
-						}
-					}
+					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(b, connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
+					addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(b, connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
 
-					//if we have at least 4 connected pieces in a blob, add to allConnectedBlocks
-					if (connectedToThisBlock->size() >= leastAmountConnected)
+					if (connectedToThisBlock->size() > 0)
 					{
-						for (int i = 0; i < connectedToThisBlock->size(); i++)
+						//recursively add all connected blocks to each connectedBlock
+						int size = connectedToThisBlock->size();
+						for (int i = 0; i < size; i++)
 						{
-							sp<Block> c = connectedToThisBlock->at(i);
-							if (connectedBlocks->contains(c) == false)
+							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInRowAtLeastAmount(connectedToThisBlock->at(i), connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
+							addBlocksConnectedToBlockToArrayIfNotInItAlreadyIfInColumnAtLeastAmount(connectedToThisBlock->at(i), connectedToThisBlock, 2, startX, endX, startY, endY, ignoreTypes, mustContainAtLeastOneTypes);
+							if (connectedToThisBlock->size() > size)
 							{
-								connectedBlocks->push_back(c);
+								size = connectedToThisBlock->size();
+								i = -1;
+							}
+						}
+
+						//if we have at least 4 connected pieces in a blob, add to allConnectedBlocks
+						if (connectedToThisBlock->size() >= leastAmountConnected)
+						{
+							for (int i = 0; i < connectedToThisBlock->size(); i++)
+							{
+								sp<Block> c = connectedToThisBlock->at(i);
+								if (connectedBlocks->contains(c) == false)
+								{
+									connectedBlocks->push_back(c);
+								}
 							}
 						}
 					}

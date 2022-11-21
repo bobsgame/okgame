@@ -223,7 +223,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 			PieceType b = importExport_makePieceTypeWhenCleared->at(i);
 			sp<PieceType> bp(ms<PieceType>());
 			*bp = b;
-			makePieceTypeWhenCleared_DEPRECATED.add(bp);
+			makePieceTypeWhenCleared_DEPRECATED->push_back(bp);
 		}
 		importExport_makePieceTypeWhenCleared->clear();
 
@@ -252,7 +252,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->at(i);
 				sp<BlockType> bp(ms<BlockType>());
 				*bp = b;
-				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED.add(bp);
+				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->push_back(bp);
 			}
 		}
 		importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->clear();
@@ -273,7 +273,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 			sp<TurnFromBlockTypeToType>bp = whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i);
 			TurnFromBlockTypeToType b;
 			b = *bp;
-			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(b);
+			importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(b);
 		}
 	}
 	ar & BOOST_SERIALIZATION_NVP(importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut);
@@ -284,7 +284,7 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(i);
 			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>();
 			*bp = b;
-			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.add(bp);
+			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(bp);
 		}
 	}
 	importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->clear();

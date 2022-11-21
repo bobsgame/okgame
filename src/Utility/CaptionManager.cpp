@@ -44,9 +44,9 @@ void CaptionManager::update()
 	//-----------------------------
 	//update time
 	//-----------------------------
-	for (int n = 0; n < captionList->size(); n++)
+	for (int n = 0; n < (int)captionList->size(); n++)
 	{
-		sp<Caption> c = captionList->get(n);
+		sp<Caption> c = captionList->at(n);
 		if (c->ticksToRemain > 0)
 		{
 			c->ticksToRemain -= ticksPassed;
@@ -58,9 +58,9 @@ void CaptionManager::update()
 	}
 
 
-	for (int n = 0; n < captionList->size(); n++)
+	for (int n = 0; n < (int)captionList->size(); n++)
 	{
-		sp<Caption> c = captionList->get(n);
+		sp<Caption> c = captionList->at(n);
 		c->update();
 
 		if(c->deleteMe)
@@ -68,12 +68,13 @@ void CaptionManager::update()
 			captionList->remove(c);
 			if(c->texture!=nullptr)
 			{
-				log->debug("Caption texture was not null on delete, should not happen.");
+				log.debug("Caption texture was not null on delete, should not happen.");
 				c->texture->release();
-				delete c->texture;
+				//delete c->texture;
 				c->texture = nullptr;
 			}
-			delete c;
+			//delete c;
+			c = nullptr;
 			n--;
 		}
 
@@ -90,9 +91,9 @@ void CaptionManager::render(RenderOrder layer)
 	//in the case of the clock, we want to draw the older time over the new time so it fades nicely
 
 
-	for (int n = captionList->size() - 1; n >= 0; n--)
+	for (int n = (int)captionList->size() - 1; n >= 0; n--)
 	{
-		sp<Caption> c = captionList->get(n);
+		sp<Caption> c = captionList->at(n);
 		if (c->layer == layer)
 		{
 			c->render();
@@ -126,11 +127,11 @@ sp<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, i
 
 	if (ticks >= 0 && ticks < 100)
 	{
-		log->log("Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
+		log.log("Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
 	sp<Caption> c = ms<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, font, textColor, textAAColor, textBGColor, r, scale, width, entity, area, fadeLetterColorTowardsTop, centerTextOnMultipleLines);
-	captionList->add(c);
+	captionList->push_back(c);
 	return c;
 }
 
@@ -140,11 +141,11 @@ sp<Caption> CaptionManager::newManagedCaption(Caption::Position fixedPosition, i
 
 	if (ticks >= 0 && ticks < 100)
 	{
-		log->log("TTF Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
+		log.log("TTF Caption was made with ticks: " + to_string(ticks) + ". Text: " + text);
 	}
 
 	sp<Caption> c = ms<Caption>(this->e, fixedPosition, (float)x, (float)y, ticks, text, fontSize, outline, textColor, textBGColor, r, scale, entity, area);
-	captionList->add(c);
+	captionList->push_back(c);
 	return c;
 }
 

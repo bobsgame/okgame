@@ -105,7 +105,7 @@ void EventManager::unloadCurrentMapEvents()
 		if (s->type() != EventData::TYPE_PROJECT_INITIAL_LOADER && s->type() != EventData::TYPE_PROJECT_CUTSCENE_DONT_RUN_UNTIL_CALLED)
 		{
 			s->reset();
-			runningEventQueue.erase(runningEventQueue.begin()+i);
+			runningEventQueue->erase(runningEventQueue->begin()+i);
 			i = -1;
 		}
 	}

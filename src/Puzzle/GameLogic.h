@@ -684,8 +684,8 @@ public:
 
 	bool isNetworkPlayer = false;
 
-	sp<vector<FrameState>> framesArray;
-	FrameState frameState;
+	sp<vector<sp<FrameState>>> framesArray;
+	sp<FrameState> frameState;
 
 	long long randomSeed = -1;
 	string uuid = "";
@@ -697,7 +697,7 @@ public:
 	typedef sp<vector<string>> ArrayListString;
 	ArrayListString outboundPacketQueueVector;
 	
-	typedef HashMap<string, string>HashMapStringString;
+	typedef sp<HashMap<string, string>>HashMapStringString;
 	HashMapStringString outboundPacketQueueHashMap;
 
 	long long lastIncomingFramePacketID = 0;
@@ -775,12 +775,12 @@ public:
 
 	//------------------------------------
 private:
-	typedef sp<vector<FrameState>> ArrayListFrameState;
-	typedef HashMap<long long, ArrayListFrameState> HashMapLongLongArrayListFrameState;
-	sp<HashMapLongLongArrayListFrameState> _incomingFramePackets;
+	typedef sp<vector<sp<FrameState>>> ArrayListFrameState;
+	typedef sp<HashMap<long long, ArrayListFrameState>> HashMapLongLongArrayListFrameState;
+	HashMapLongLongArrayListFrameState _incomingFramePackets;
 	mutex _incomingFramePackets_Mutex;
 public:
-	sp<vector<FrameState>> incomingFramePacketsGet_S(long long k)
+	sp<vector<sp<FrameState>>> incomingFramePacketsGet_S(long long k)
 	{
 		lock_guard<mutex> lock(_incomingFramePackets_Mutex);
 		return _incomingFramePackets->get(k);

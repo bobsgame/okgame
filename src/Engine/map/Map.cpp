@@ -69,7 +69,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 	//these are thread safe variables but it's OK here because it's only on init
 	if (_chunkPNGFileExists == nullptr)
 	{
-		_chunkPNGFileExists = ms<vector<bool>>(new sp<vector<bool>>(chunksWidth * chunksHeight * 2));
+		_chunkPNGFileExists = ms<vector<bool>>(chunksWidth * chunksHeight * 2);
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_chunkPNGFileExists)[i] = false;
@@ -78,7 +78,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (_hq2xChunkPNGFileExists == nullptr)
 	{
-		_hq2xChunkPNGFileExists = ms<vector<bool>>(new sp<vector<bool>>(chunksWidth * chunksHeight * 2));
+		_hq2xChunkPNGFileExists = ms<vector<bool>>((chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*_hq2xChunkPNGFileExists)[i] = false;
@@ -87,7 +87,7 @@ void Map::initMap(sp<Engine> g, sp<MapData> mapData)
 
 	if (usingHQ2XTexture == nullptr)
 	{
-		usingHQ2XTexture = ms<vector<bool>>(new sp<vector<bool>>(chunksWidth * chunksHeight * 2));
+		usingHQ2XTexture = ms<vector<bool>>((chunksWidth * chunksHeight * 2));
 		for (int i = 0; i < chunksWidth * chunksHeight * 2; i++)
 		{
 			(*usingHQ2XTexture)[i] = false;
@@ -2113,7 +2113,7 @@ void Map::unloadLight(const string& s)
 	{
 		if (currentState->lightList->at(i)->getName() == s)
 		{
-			currentState->lightList->removeAt(i);
+			currentState->lightList->erase(currentState->lightList->begin()+i);
 			i--;
 			if (i < 0)
 			{
@@ -2857,8 +2857,8 @@ bool Map::loadLightTexturesFromCachePNGs()
 			{
 				//see if it's in the hashmap loaded already from a different map
 
-				if(getMapManager()->lightTextureHashMap.containsKey(l->getFileName()))
-				l->texture = getMapManager()->lightTextureHashMap->at(l->getFileName());
+				if(getMapManager()->lightTextureHashMap->containsKey(l->getFileName()))
+				l->texture = getMapManager()->lightTextureHashMap->get(l->getFileName());
 
 
 				if (l->texture == nullptr)
@@ -2881,7 +2881,7 @@ bool Map::loadLightTexturesFromCachePNGs()
 
 
 						sp<OKTexture> t = GLUtils::getTextureFromPNGAbsolutePath(FileUtils::cacheDir + "l" + "/" + l->getFileName());
-						getMapManager()->lightTextureHashMap.put(l->getFileName(), t);
+						getMapManager()->lightTextureHashMap->put(l->getFileName(), t);
 
 						l->texture = t;
 					}

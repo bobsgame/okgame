@@ -295,14 +295,14 @@ void GameTestMenuControl::populateGameTypesListBox()
 	gameTypesListBox->Clear();
 	GetCanvas()->DoThink();
 
-	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	sp<vector<sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
-		sp<GameType>g = gameTypeStringColorPairPair.first;
-		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
-		string name = stringColorPair.first;
-		sp<OKColor>color = stringColorPair.second;
+		sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
+		sp<GameType>g = gameTypeStringColorPairPair->first;
+		sp<pair<string, sp<OKColor>>> stringColorPair = gameTypeStringColorPairPair->second;
+		string name = stringColorPair->first;
+		sp<OKColor>color = stringColorPair->second;
 
 		//if (g->builtInType)
 //		{
@@ -335,11 +335,11 @@ void GameTestMenuControl::populateGameSequencesListBox()
 	sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
-		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
-		pair<string, sp<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
-		string name = stringColorPair.first;
-		sp<OKColor>color = stringColorPair.second;
+		sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
+		sp<GameSequence>g = gameSequenceStringColorPairPair->first;
+		sp<pair<string, sp<OKColor>>> stringColorPair = gameSequenceStringColorPairPair->second;
+		string name = stringColorPair->first;
+		sp<OKColor>color = stringColorPair->second;
 
 //		if (g->builtInType)
 //		{
@@ -372,12 +372,12 @@ void GameTestMenuControl::onGameTypesListSelect(Base* control)
 
 	if (s == nullptr)
 	{
-		OKGame::log->error("Could not find game type with uuid:" + uuid);
+		OKGame::log.error("Could not find game type with uuid:" + uuid);
 		return;
 	}
 
 	currentGameSequence = ms<GameSequence>();
-	currentGameSequence->gameTypes.add(s);
+	currentGameSequence->gameTypes->push_back(s);
 
 	selectedGameLabel->SetText(Utility::StringToUnicode("Current Game Type:"+s->name));
 	initPreviewGame();
@@ -393,7 +393,7 @@ void GameTestMenuControl::onGameSequencesListSelect(Base* control)
 
 	if (s == nullptr)
 	{
-		OKGame::log->error("Could not find game sequence with uuid:" + uuid);
+		OKGame::log.error("Could not find game sequence with uuid:" + uuid);
 		return;
 	}
 
@@ -544,7 +544,7 @@ void GameTestMenuControl::initPreviewGame()
 		g->blockTypes->push_back(bt);
 		g->pieceTypes->push_back(pt);
 
-		currentGameSequence->gameTypes.add(g);
+		currentGameSequence->gameTypes->push_back(g);
 	}
 
 	
@@ -591,7 +591,7 @@ void GameTestPreviewRectangle::Render(Skin::Base* skin)
 	//glLoadIdentity();
 	//GLUtils::setPreColorFilterViewport();
 	Gwen::Texture *t = new Gwen::Texture();
-	t->data = (sp<GLuint>)&GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
+	t->data = (GLuint*) &GLUtils::bobsGame_mainGameFBO_Texture_Attachment0;
 	skin->GetRender()->DrawTexturedRect(t, Gwen::Rect(0, Height(), Width(), 0 - Height()));
 	delete t;
 	//glPopMatrix();
@@ -650,7 +650,7 @@ void OKGame::gameTestMenuUpdate()
 			//			}
 
 			leaveMenu = true;
-			delete gameTestMenu;
+			//delete gameTestMenu;
 			gameTestMenu = nullptr;
 		}
 	}

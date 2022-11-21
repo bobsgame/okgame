@@ -75,7 +75,7 @@ Character::Character(sp<Engine> g, string name, sp<Sprite> sprite, sp<Area> a, s
 
 
 	getCurrentMap()->currentState->characterList->push_back(shared_from_this());
-	getCurrentMap()->currentState->characterByNameHashtable.put(name, shared_from_this());
+	getCurrentMap()->currentState->characterByNameHashtable->put(name, shared_from_this());
 
 	if (getEventData() != nullptr)this->event = ms<Event>(g, getEventData(), shared_from_this());
 }
