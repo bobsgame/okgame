@@ -1,6 +1,6 @@
 **Join the [discussion](https://discord.gg/FfDxFc4JuS)!**
 
-Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok.
+Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok game.
 
 **ok game** is "Open Source"
 
