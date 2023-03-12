@@ -1,10 +1,13 @@
 # Compiling bob's game
 
+> :warning: The latest commit is currently broken since Bob is working on wrapping everything in `shared_ptr`, if you want a buildable commit, please change the project to the last working commit by running `git reset --hard bd12292e037de0babb79b4106125df95d4d5436f` in the project root directory.
+
 This guide is for compiling straight from the bob's game repo. All of the modified files are in this repo.
 
 Join the [discussion Discord](https://discord.gg/FfDxFc4JuS)!
 
 ## Installing VS 2017
+> Bob claimed Visual Studio 2022 works with compiling bob's game, you may want to try that if you cannot find the download for Visual Studio 2017 Community.
 1. Download Visual Studio 2017 from <https://visualstudio.microsoft.com/vs/older-downloads/> *(You may need a Microsoft account)*
 2. Download "Visual Studio Community 2017 (version 15.9)."
 3. In the Visual Studio Installer make sure to install these:
