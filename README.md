@@ -1,10 +1,10 @@
-**Join the [discussion](https://discord.gg/FfDxFc4JuS)!**
+[![Discord](https://img.shields.io/discord/953721054495387659.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/FfDxFc4JuS)
 
 Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok game.
 
 **ok game** is "Open Source"
 
---
+---
 
 # *ok game* is:
 
