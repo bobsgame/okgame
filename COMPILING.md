@@ -48,14 +48,14 @@ It should look like this:
 ### Compiling GWEN
 
 #### GWEN-Static
-*Skip this step if you copied from this repository, but set the character set to not set, switch to release and build.*
+*Skip this step if you copied from this repository, but follow steps 4, 6, 7, 11 and 12.*
 1. Head over to `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects` and open a terminal there.
 2. Edit the `Build.bat` file and remove `rem` on the line where it says `rem premake4 vs2010`.
 3. A Visual Studio 2010 project should be created in `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects\windows\vs2010`.
 4. Open the solution in Visual Studio 2017, it will ask you to retarget projects, make sure your Windows SDK version is `10.0.19041.0` and the Platform Toolset is `Upgrade to v141`. Click OK.
 5. Edit `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\src\Platforms\gwen_platform_base.cpp` and add `#include <chrono>`.
 6. Right click the `GWEN-Static` project and click "Properties".
-7. Go to General > Character Set and select "Not Set". Apply and click OK.
+7. Go to General (or Advanced) > Character Set and select "Not Set". Apply and click OK.
 
 **TODO: Some way to do this without modifying file names and source.**
 
