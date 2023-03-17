@@ -48,7 +48,7 @@ It should look like this:
 ### Compiling GWEN
 
 #### GWEN-Static
-*Skip this step if you copied from this repository, but follow steps 4, 6, 7, 11 and 12.*
+*Skip over this section if you copied from this repository, but follow steps 4, 6, 7, 11 and 12.*
 1. Head over to `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects` and open a terminal there.
 2. Edit the `Build.bat` file and remove `rem` on the line where it says `rem premake4 vs2010`.
 3. A Visual Studio 2010 project should be created in `C:\Users\Administrator\workspace\bobsgame\lib\GWEN-master\gwen\Projects\windows\vs2010`.
