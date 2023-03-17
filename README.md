@@ -1,8 +1,8 @@
 [![Discord](https://img.shields.io/discord/953721054495387659.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/FfDxFc4JuS)
 
-Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok game.
+Check out [COMPILING.md](COMPILING.md) for instructions about how to compile *ok game*.
 
-**ok game** is "Open Source"
+# ok game is "Open Source"
 
 ---
 
@@ -27,7 +27,6 @@ Check out [COMPILING.md](COMPILING.md) for instructions about how to compile ok 
 ## WRITTEN FROM SCRATCH IN C++
 
 ## OPEN SOURCE
-
 
 **ok game** is a multiplayer puzzle game- but not just any puzzle game, **EVERY puzzle game!** It's a build-your-own puzzle game with a puzzle game creator where YOU define all the rules to your own custom game!
 
