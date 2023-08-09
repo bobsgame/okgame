@@ -408,14 +408,14 @@ using Poco::Path;
 void GameSequenceEditorControl::populateGameTypesListBox()
 {//=========================================================================================================================
 
-	sp<vector<pair<sp<GameType>, pair<string, sp<OKColor>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
+	sp<vector<sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameTypes();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameType>, pair<string, sp<OKColor>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
-		sp<GameType>g = gameTypeStringColorPairPair.first;
-		pair<string, sp<OKColor>> stringColorPair = gameTypeStringColorPairPair.second;
-		string name = stringColorPair.first;
-		sp<OKColor>color = stringColorPair.second;
+		sp<pair<sp<GameType>, sp<pair<string, sp<OKColor>>>>> gameTypeStringColorPairPair = gamesStringColor->at(i);
+		sp<GameType>g = gameTypeStringColorPairPair->first;
+		sp<pair<string, sp<OKColor>>> stringColorPair = gameTypeStringColorPairPair->second;
+		string name = stringColorPair->first;
+		sp<OKColor>color = stringColorPair->second;
 
 		Layout::TableRow *row = gameTypesListBox->AddItem(name, g->uuid);
 		//row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameTypesListSelect);
@@ -428,14 +428,14 @@ void GameSequenceEditorControl::populateGameTypesListBox()
 void GameSequenceEditorControl::populateGameSequencesListBox()
 {//=========================================================================================================================
 
-	sp<vector<pair<sp<GameSequence>, pair<string, sp<OKColor>>>>> gamesStringColor = bobsGame->getSortedGameSequences();
+	sp<vector<sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>>>> gamesStringColor = bobsGame->getSortedGameSequences();
 	for (int i = 0; i < gamesStringColor->size(); i++)
 	{
-		pair<sp<GameSequence>, pair<string, sp<OKColor>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
-		sp<GameSequence>g = gameSequenceStringColorPairPair.first;
-		pair<string, sp<OKColor>> stringColorPair = gameSequenceStringColorPairPair.second;
-		string name = stringColorPair.first;
-		sp<OKColor>color = stringColorPair.second;
+		sp<pair<sp<GameSequence>, sp<pair<string, sp<OKColor>>>>> gameSequenceStringColorPairPair = gamesStringColor->at(i);
+		sp<GameSequence>g = gameSequenceStringColorPairPair->first;
+		sp<pair<string, sp<OKColor>>> stringColorPair = gameSequenceStringColorPairPair->second;
+		string name = stringColorPair->first;
+		sp<OKColor>color = stringColorPair->second;
 
 		Layout::TableRow *row = gameSequencesListBox->AddItem(name, g->uuid);
 		row->onRowSelected.Add(this, &GameSequenceEditorControl::onGameSequencesListSelect);
@@ -831,7 +831,15 @@ void GameSequenceEditorControl::deleteGameSequence(Base* control)
 //		return;
 //	}
 
-	if (bobsGame->loadedGameSequences->contains(bt))bobsGame->loadedGameSequences->remove(bt);
+	//if (bobsGame->loadedGameSequences->contains(bt))bobsGame->loadedGameSequences->remove(bt);
+	for (int i = 0; i < (int)bobsGame->loadedGameSequences->size(); i++)
+	{
+		if (bobsGame->loadedGameSequences->at(i).get() == bt.get())
+		{
+			bobsGame->loadedGameSequences->erase(bobsGame->loadedGameSequences->begin() + i);
+			i--;
+		}
+	}
 
 	gameSequenceSelectLabel->SetText("");
 
@@ -884,9 +892,20 @@ void GameSequenceEditorControl::onSaveButton(Base* control)
 	saveCurrentGameSequenceToXML();
 
 	//save new or duplicated gametype to loadedGameSequence list since we don't do this now until save
-	if (bobsGame->loadedGameSequences->contains(currentGameSequence) == false)
+	//if (bobsGame->loadedGameSequences->contains(currentGameSequence) == false)
+	//	bobsGame->loadedGameSequences->push_back(currentGameSequence);
+	bool contains = false;
+	for (int i = 0; i < (int)bobsGame->loadedGameSequences->size(); i++)
+	{
+		if (bobsGame->loadedGameSequences->at(i).get() == currentGameSequence.get())
+		{
+			contains = true;
+		}
+	}
+	if (contains == false)
+	{
 		bobsGame->loadedGameSequences->push_back(currentGameSequence);
-
+	}
 
 }
 

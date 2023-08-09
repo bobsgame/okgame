@@ -107,10 +107,10 @@ void Player::handleAreas()
 	//   {
 	//      sp<Area> a = aEnum->nextElement();
 
-	sp<vector<sp<Area>>>areas = getMap()->currentState->areaByNameHashtable.getAllValues();
+	sp<vector<sp<Area>>>areas = getMap()->currentState->areaByNameHashtable->getAllValues();
 	for (int i=0;i<areas->size();i++)
 	{
-		sp<Area> a = areas->get(i);
+		sp<Area> a = areas->at(i);
 
 		if (a->isXYXYTouchingMyBoundary(getLeft(), getTop(), getRight(), getBottom()))
 		{

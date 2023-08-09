@@ -155,7 +155,7 @@ AreaData::AreaData
 
 void AreaData::addConnectionString(const string& s)
 { //=========================================================================================================================
-	connectionTYPEIDList->add(s);
+	connectionTYPEIDList->push_back(s);
 }
 
 //sp<AreaData> AreaData::fromBase64ZippedJSON(const string& b64)

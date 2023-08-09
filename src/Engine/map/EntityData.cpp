@@ -284,7 +284,7 @@ string& EntityData::initFromString(string& t)
 	{
 		t = t.substr(t.find("behaviorList:`") + 1);
 		t = t.substr(t.find("`") + 1);
-		behaviorList->add(t.substr(0, t.find("`")));
+		behaviorList->push_back(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 	}
 
@@ -292,7 +292,7 @@ string& EntityData::initFromString(string& t)
 	{
 		t = t.substr(t.find("connectionTYPEIDList:`") + 1);
 		t = t.substr(t.find("`") + 1);
-		connectionTYPEIDList->add(t.substr(0, t.find("`")));
+		connectionTYPEIDList->push_back(t.substr(0, t.find("`")));
 		t = t.substr(t.find("`,") + 2);
 	}
 

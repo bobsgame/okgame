@@ -281,14 +281,30 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				}
 			}
 
-			if (joinedPeers->contains(newPeer) == false)joinedPeers->push_back(c);
+			bool contains = false;
+			for (int i = 0; i < (int)joinedPeers->size(); i++)
+			{
+				if (joinedPeers->at(i).get() == newPeer.get())
+				{
+					contains = true;
+				}
+			}
+			if (contains == false)joinedPeers->push_back(newPeer);
 
 			return true;
 		}
 
 		if (OKString::startsWith(command, lobbyCommand_PEERGAMELEAVE))
 		{
-			while (joinedPeers->contains(c) == true)joinedPeers->remove(c);
+			//while (joinedPeers->contains(c) == true)joinedPeers->remove(c);
+			for (int i = 0; i < (int)joinedPeers->size(); i++)
+			{
+				if (joinedPeers->at(i).get() == c.get())
+				{
+					joinedPeers->erase(joinedPeers->begin() + i);
+					i--;
+				}
+			}
 
 //			for (int i = 0; i<players->size(); i++)
 //			{
@@ -359,7 +375,16 @@ bool OKGame::udpPeerMessageReceived(sp<UDPPeerConnection>c, string s)
 				}
 			}
 
-			if (joinedPeers->contains(c) == false)joinedPeers->push_back(c);
+			//if (joinedPeers->contains(c) == false)joinedPeers->push_back(c);
+			bool contains = false;
+			for (int i = 0; i < (int)joinedPeers->size(); i++)
+			{
+				if (joinedPeers->at(i).get() == c.get())
+				{
+					contains = true;
+				}
+			}
+			if (contains == false)joinedPeers->push_back(c);
 
 			return true;
 		}
@@ -1106,8 +1131,18 @@ void OKGame::networkMultiplayerLobbyMenuUpdate()
 			sp<UDPPeerConnection> f = OKNet::udpConnections->at(i);
 			if (f->getConnectedToPeer_S() == true && f->getGotFriendData_S() == true)// && f->getStatus_S() == OKNet::status_AVAILABLE)
 			{
-				if (onlineFriends->contains(f) == false)
-					onlineFriends->push_back(f);
+				//if (onlineFriends->contains(f) == false)onlineFriends->push_back(f);
+				bool contains = false;
+				for (int i = 0; i < (int)onlineFriends->size(); i++)
+				{
+					if (onlineFriends->at(i).get() == f.get())
+					{
+						contains = true;
+					}
+				}
+				if (contains == false)onlineFriends->push_back(f);
+
+				
 			}
 		}
 

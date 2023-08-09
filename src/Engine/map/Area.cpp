@@ -274,7 +274,7 @@ void Area::update()
 									//don't spawn if all the possible random points are full
 									while (targetTYPEIDList->size() > 0)
 									{
-										int i = Math::randLessThan(targetTYPEIDList->size());
+										int i = Math::randLessThan((int)targetTYPEIDList->size());
 
 										//don't count this door
 										if (targetTYPEIDList->at(i) == getTYPEIDString())

@@ -443,7 +443,7 @@ sp<Piece> Grid::dontPutSameColorDiagonalOrNextToEachOtherReturnNull(sp<Piece> p,
 
 	if (acceptableColors->size() > 0)
 	{
-		sp<OKColor>color = acceptableColors->at(getGameLogic()->getRandomIntLessThan(acceptableColors->size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
+		sp<OKColor>color = acceptableColors->at(getGameLogic()->getRandomIntLessThan((int)acceptableColors->size(),"dontPutSameColorDiagonalOrNextToEachOtherReturnNull"));
 
 		if (p == nullptr)
 		{

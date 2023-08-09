@@ -63,7 +63,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 			PieceType b = importExport_pieceTypesToDisallow->at(i);
 			sp<PieceType> bp(ms<PieceType>());
 			*bp = b;
-			pieceTypesToDisallow_DEPRECATED.add(bp);
+			pieceTypesToDisallow_DEPRECATED->push_back(bp);
 		}
 		importExport_pieceTypesToDisallow->clear();
 		//---------------------------------------------------
@@ -76,7 +76,7 @@ void DifficultyType::serialize(Archive & ar, const unsigned int version)
 			BlockType b = importExport_blockTypesToDisallow->at(i);
 			sp<BlockType> bp(ms<BlockType>());
 			*bp = b;
-			blockTypesToDisallow_DEPRECATED.add(bp);
+			blockTypesToDisallow_DEPRECATED->push_back(bp);
 		}
 		importExport_blockTypesToDisallow->clear();
 		//---------------------------------------------------
@@ -276,18 +276,18 @@ void GameType::serialize(Archive & ar, const unsigned int version)
     for (int i = 0; i < blockTypes->size(); i++)
     {
         sp<BlockType> bp = blockTypes->at(i);
-		BlockType b;
-		b = *bp;
-        importExport_blockTypes.add(b);
+		//BlockType b;
+		//b = *bp;
+        importExport_blockTypes.add(*bp);
     }
     ar & BOOST_SERIALIZATION_NVP(importExport_blockTypes);
     blockTypes->clear();
     for (int i = 0; i < importExport_blockTypes->size(); i++)
     {
         BlockType b = importExport_blockTypes->at(i);
-        sp<BlockType> bp(ms<BlockType>());
-		*bp = b;
-        blockTypes.add(bp);
+        //sp<BlockType> bp();
+		//*bp = b;
+        blockTypes->push_back(ms<BlockType>(b));
     }
     importExport_blockTypes->clear();
 	//---------------------------------------------------
@@ -517,7 +517,7 @@ void GameType::serialize(Archive & ar, const unsigned int version)
 
 string GameType::toBase64GZippedXML()
 {//=========================================================================================================================
-	sp<GameType>s = this;
+	sp<GameType>s = shared_from_this();
 	GameType gs = GameType();
 	gs = *s;
 	std::stringstream ss;

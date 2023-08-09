@@ -212,8 +212,24 @@ mutex OKNet::_stunMessageQueue_Mutex;
 //===============================================================================================
 void OKNet::addEngineToForwardMessagesTo(sp<Engine> e)
 {//===============================================================================================
-	if(engines->contains(e)==false)
-	engines->push_back(e);
+	//if(engines->contains(e)==false)
+	//engines->push_back(e);
+
+	bool contains = false;
+	for (int i = 0; i < engines->size(); i++)
+	{
+		if(engines->at(i).get() == e.get())
+		{
+			contains = true;
+		}
+	}
+	if(contains==false)
+	{
+		engines->push_back(e);
+	}
+
+
+
 }
 //===============================================================================================
 void OKNet::update()

@@ -215,17 +215,17 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		sp<vector<PieceType>>importExport_makePieceTypeWhenCleared;
+		vector<PieceType>importExport_makePieceTypeWhenCleared;
 		ar & BOOST_SERIALIZATION_NVP(importExport_makePieceTypeWhenCleared);
 		makePieceTypeWhenCleared_DEPRECATED->clear();
-		for (int i = 0; i < importExport_makePieceTypeWhenCleared->size(); i++)
+		for (int i = 0; i < importExport_makePieceTypeWhenCleared.size(); i++)
 		{
-			PieceType b = importExport_makePieceTypeWhenCleared->at(i);
-			sp<PieceType> bp(ms<PieceType>());
-			*bp = b;
+			PieceType b = importExport_makePieceTypeWhenCleared.at(i);
+			sp<PieceType> bp(ms<PieceType>(b));
+			//*bp = b;
 			makePieceTypeWhenCleared_DEPRECATED->push_back(bp);
 		}
-		importExport_makePieceTypeWhenCleared->clear();
+		importExport_makePieceTypeWhenCleared.clear();
 
 	}
 	else
@@ -243,19 +243,19 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
     
 	if (version == 0)
 	{
-		sp<vector<BlockType>>importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
+		vector<BlockType>importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType;
 		ar & BOOST_SERIALIZATION_NVP(importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType);
 		ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->clear();
 		{
-			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->size(); i++)
+			for (int i = 0; i < importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.size(); i++)
 			{
-				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->at(i);
-				sp<BlockType> bp(ms<BlockType>());
-				*bp = b;
+				BlockType b = importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.at(i);
+				sp<BlockType> bp(ms<BlockType>(b));
+				//*bp = b;
 				ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->push_back(bp);
 			}
 		}
-		importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType->clear();
+		importExport_ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType.clear();
 	}
 	else
 	{
@@ -282,8 +282,8 @@ void BlockType::serialize(Archive & ar, const unsigned int version)
 		for (int i = 0; i < importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.size(); i++)
 		{
 			TurnFromBlockTypeToType b = importExport_whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut.at(i);
-			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>();
-			*bp = b;
+			sp<TurnFromBlockTypeToType>bp = ms<TurnFromBlockTypeToType>(b);
+			//*bp = b;
 			whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->push_back(bp);
 		}
 	}
@@ -382,6 +382,9 @@ void Block::update()
 			fadingOut = false;
 
 			getGameLogic()->fadingOutBlocks->remove(this);
+
+
+
 			return;
 		}
 	}

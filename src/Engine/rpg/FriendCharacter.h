@@ -21,7 +21,7 @@ class BGClientEngine;
 class GameChallengeNotificationPanel;
 
 
-class FriendCharacter : public Character
+class FriendCharacter : public Character, public std::enable_shared_from_this<FriendCharacter>
 {
 public:
 	static Logger log;

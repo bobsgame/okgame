@@ -28,7 +28,7 @@ UDPPeerConnection::UDPPeerConnection(long long friendUserID, int type)
 
 UDPPeerConnection::~UDPPeerConnection()
 {
-	if(threadStarted)
+	if (threadStarted)
 	{
 		setStopThread_S(true);
 		t.join();
@@ -38,14 +38,46 @@ UDPPeerConnection::~UDPPeerConnection()
 
 void UDPPeerConnection::addEnginePartToForwardMessagesTo(sp<EnginePart> e)
 {
-	if (engineParts->contains(e) == false)
+	//if (engineParts->contains(e) == false)
+	//	engineParts->push_back(e);
+
+	bool contains = false;
+	for (int i = 0; i < engineParts->size(); i++)
+	{
+		if (engineParts->at(i).get() == e.get())
+		{
+			contains = true;
+		}
+	}
+
+	if (contains == false)
+	{
 		engineParts->push_back(e);
+	}
+
+
 }
 
 void UDPPeerConnection::removeEnginePartToForwardMessagesTo(sp<EnginePart> e)
 {
-	if (engineParts->contains(e) == true)
-		engineParts->remove(e);
+	//if (engineParts->contains(e) == true)
+	//	engineParts->remove(e);
+
+
+	//for (int i = 0; i < engineParts->size(); i++)
+	//{
+	//	if (engineParts->at(i).get() == e.get())
+	//	{
+	//		engineParts->erase
+	//	}
+	//}
+
+	for (auto it = engineParts->begin(); it != engineParts->end(); )
+	{
+		if (it->get() == e.get()) { engineParts->erase(it++); break; }
+		else { ++it; }
+	}
+
 }
 
 
@@ -1585,6 +1617,6 @@ void FriendData::decode(string s)
 
 sp<TCPServerConnection> UDPPeerConnection::getServerConnection()
 {
-	return &OKNet::tcpServerConnection;
+	return OKNet::tcpServerConnection;
 }
 

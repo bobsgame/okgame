@@ -2806,8 +2806,8 @@ void OKGame::updateVersion0ToVersion1()
 			for (int x = 0; x<b->makePieceTypeWhenCleared_DEPRECATED->size(); x++)
 			{
 				resave = true;
-				PieceType p = b->makePieceTypeWhenCleared_DEPRECATED->at(x);
-				sp<PieceType> correctPiece = g->getPieceTypeByName(p.name);
+				sp<PieceType> p = b->makePieceTypeWhenCleared_DEPRECATED->at(x);
+				sp<PieceType> correctPiece = g->getPieceTypeByName(p->name);
 				if (correctPiece != nullptr)
 				{
 					if (correctPiece->uuid == "")
@@ -2821,8 +2821,8 @@ void OKGame::updateVersion0ToVersion1()
 			for (int x = 0; x<b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->size(); x++)//should not have anything in it if it is > version 0
 			{
 				resave = true;
-				BlockType bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->at(x);//wrong block, instantiated by serialize
-				sp<BlockType> correctBlock = g->getBlockTypeByName(bb.name);
+				sp<BlockType> bb = b->ifConnectedUpDownLeftRightToExplodingBlockChangeIntoThisType_DEPRECATED->at(x);//wrong block, instantiated by serialize
+				sp<BlockType> correctBlock = g->getBlockTypeByName(bb->name);
 				if (correctBlock != nullptr)
 				{
 					if (correctBlock->uuid == "")
@@ -2835,10 +2835,10 @@ void OKGame::updateVersion0ToVersion1()
 			}
 			for (int x = 0; x < b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->size(); x++)
 			{
-				TurnFromBlockTypeToType t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(x);
-				if (t.fromType_DEPRECATED != "")
+				sp<TurnFromBlockTypeToType> t = b->whenSetTurnAllTouchingBlocksOfFromTypesIntoToTypeAndFadeOut->at(x);
+				if (t->fromType_DEPRECATED != "")
 				{
-					sp<BlockType> correctBlock = g->getBlockTypeByName(t.fromType_DEPRECATED);
+					sp<BlockType> correctBlock = g->getBlockTypeByName(t->fromType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2846,12 +2846,12 @@ void OKGame::updateVersion0ToVersion1()
 							boost::uuids::random_generator generator;
 							correctBlock->uuid = to_string(generator());
 						}
-						t.fromType_UUID = correctBlock->uuid;
+						t->fromType_UUID = correctBlock->uuid;
 					}
 				}
-				if (t.toType_DEPRECATED != "")
+				if (t->toType_DEPRECATED != "")
 				{
-					sp<BlockType> correctBlock = g->getBlockTypeByName(t.toType_DEPRECATED);
+					sp<BlockType> correctBlock = g->getBlockTypeByName(t->toType_DEPRECATED);
 					if (correctBlock != nullptr)
 					{
 						if (correctBlock->uuid == "")
@@ -2859,7 +2859,7 @@ void OKGame::updateVersion0ToVersion1()
 							boost::uuids::random_generator generator;
 							correctBlock->uuid = to_string(generator());
 						}
-						t.toType_UUID = correctBlock->uuid;
+						t->toType_UUID = correctBlock->uuid;
 					}
 				}
 			}

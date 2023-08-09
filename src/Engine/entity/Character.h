@@ -16,7 +16,7 @@ class Caption;
 class Sprite;
 class Area;
 
-class Character : public Entity , public std::enable_shared_from_this<Character>
+class Character : public Entity, public std::enable_shared_from_this<Character>
 {
 public:
 	static Logger log;

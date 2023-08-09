@@ -509,10 +509,9 @@ sp<vector<string>> Map::getListOfRandomPointsOfInterestTYPEIDs()
 	//      sp<Area> a = aEnum->nextElement();
 
 	sp<vector<sp<Area>>>areas = currentState->areaByNameHashtable->getAllValues();
-	for (int i = 0; i<areas->size(); i++)
+	for (int i = 0; i < areas->size(); i++)
 	{
 		sp<Area> a = areas->at(i);
-
 
 		if (a->randomPointOfInterestOrExit())
 		{

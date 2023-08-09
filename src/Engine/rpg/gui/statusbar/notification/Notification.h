@@ -11,7 +11,7 @@ class Logger;
 
 #include "../buttons/StatusBarButton.h"
 
-class Notification : public StatusBarButton
+class Notification : public StatusBarButton, public std::enable_shared_from_this<Notification>
 {
 public:
 

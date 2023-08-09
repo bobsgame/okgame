@@ -33,7 +33,8 @@ sp<Engine> StateManager::getCurrentState()
 
 void StateManager::pushState(sp<Engine> s)
 { //=========================================================================================================================
-	states->insert(0, s);
+	//states->insert(0, s);
+	states->insert(states->begin(), s);
 }
 
 void StateManager::popState()

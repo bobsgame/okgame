@@ -78,7 +78,7 @@ void WarpArea::enter()
 
 			if (w->getName() == getDestinationWarpAreaName())
 			{
-				getMapManager()->warpEntered = this;
+				getMapManager()->warpEntered = shared_from_this();
 				getMapManager()->warpExited = w;
 
 

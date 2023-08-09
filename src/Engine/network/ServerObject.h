@@ -11,7 +11,7 @@ class Logger;
 
 class Logger;
 
-class ServerObject : public EnginePart, public std::enable_shared_from_this<ServerObject>
+class ServerObject : public EnginePart//, public std::enable_shared_from_this<ServerObject>
 {
 public:
 

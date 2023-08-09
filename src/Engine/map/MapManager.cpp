@@ -631,7 +631,26 @@ void MapManager::changeMap(const string& mapName, int mapXPixelsHQ, int mapYPixe
 	{
 		if (lastMap != nullptr)
 		{
-			lastMap->activeEntityList->remove(getPlayer()); //DONE: each map should just render its own entities, so we can fade out the last map's entities along with the map.
+			//lastMap->activeEntityList->remove(getPlayer()); //DONE: each map should just render its own entities, so we can fade out the last map's entities along with the map.
+
+			for (auto it = lastMap->activeEntityList->begin(); it != lastMap->activeEntityList->end(); )
+			{
+				if (it->get() == getPlayer().get()) { lastMap->activeEntityList->erase(it++); break; }
+				else { ++it; }
+			}
+			//failed attempt to remove at index without iterator
+			//for (int i = 0; i < lastMap->activeEntityList->size(); i++)
+			//{
+			//	if (lastMap->activeEntityList->at(i).get() == getPlayer().get())
+			//	{
+			//		lastMap->activeEntityList->erase(lastMap->activeEntityList->at(i));
+			//		i = lastMap->activeEntityList->size();
+			//		break;
+			//	}
+			//}
+
+
+
 		}
 		//so we should actually clear the entities after the last map is faded out.
 		//remove the entitymanager entirely.
