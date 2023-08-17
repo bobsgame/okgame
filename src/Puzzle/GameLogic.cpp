@@ -1529,7 +1529,16 @@ void GameLogic::removeFlashedChainBlocks()
 							sp<Block> c = grid->get(x, y);
 							if (c != nullptr)
 							{
-								if (currentChainBlocks->contains(c) == false)
+
+
+								bool contains = false;
+								for (int i = 0; i < currentChainBlocks->size(); i++)
+								{
+									if (currentChainBlocks->at(i).get() == c.get())contains = true;
+								}
+
+
+								if (contains == false)
 								{
 									currentChainBlocks->push_back(c);
 								}
@@ -1697,7 +1706,15 @@ void GameLogic::addToChainBlocks(sp<vector<sp<Block>>> arr)
 
 		for (int i = 0; i < arr->size(); i++)
 		{
-			if (currentChainBlocks->contains(arr->at(i)) == false)
+
+
+			bool contains = false;
+			for (int j = 0; j < currentChainBlocks->size(); j++)
+			{
+				if (currentChainBlocks->at(j).get() == arr->at(i).get())contains = true;
+			}
+
+			if (contains == false)
 			{
 				currentChainBlocks->push_back(arr->at(i));
 			}
@@ -1756,7 +1773,16 @@ void GameLogic::checkForChain()
 			{
 				sp<Block> b = grid->get(x, y);
 
-				if (b != nullptr && (ignoreTypes->empty() || ignoreTypes->contains(b->blockType) == false))
+
+
+				bool contains = false;
+				for (int i = 0; i < ignoreTypes->size(); i++)
+				{
+					if (ignoreTypes->at(i).get() == b->blockType.get())contains = true;
+				}
+
+
+				if (b != nullptr && (ignoreTypes->empty() || contains == false))
 				{
 					if (currentGameType->chainRule_CheckRow)
 					{
@@ -2645,7 +2671,18 @@ void GameLogic::setPiece()
 			for (int y = startY; y < endY && y < gridH(); y++)
 			{
 				sp<Block> b = grid->get(x, y);
-				if (b != nullptr && explodeBlocks->contains(b) == false)
+
+
+
+				bool contains = false;
+				for (int i = 0; i < explodeBlocks->size(); i++)
+				{
+					if (explodeBlocks->at(i).get() == b.get())contains = true;
+				}
+
+
+
+				if (b != nullptr && contains == false)
 				{
 					explodeBlocks->push_back(b);
 				}
@@ -4490,7 +4527,16 @@ sp<Caption> GameLogic::makeInfoCaption(const string& text)
 {//=========================================================================================================================
 
 	sp<Caption> c = getCaptionManager()->newManagedCaption(Caption::Position::NONE, 0, (int)++captionY * captionYSize, -1, string("" + text), captionFontSize, true, captionTextColor, captionBGColor, RenderOrder::ABOVE, captionScale);
-	if (infoCaptions->contains(c) == false)
+
+
+	bool contains = false;
+	for (int i = 0; i < infoCaptions->size(); i++)
+	{
+		if (infoCaptions->at(i).get() == c.get())contains = true;
+	}
+
+
+	if (contains == false)
 	{
 		infoCaptions->push_back(c);
 	}
