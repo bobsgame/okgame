@@ -232,7 +232,7 @@ void Main::mainInit()
 
 
 
-	ms<Logger>();
+	sp<Logger> temp = ms<Logger>();
 	Logger::initLogger();
 
 	OKColor::initPresetColors();
@@ -301,8 +301,8 @@ void Main::mainInit()
 
 
 
-	ms<GLUtils>();
-	ms<AudioManager>();
+	sp<GLUtils> temp2 = ms<GLUtils>();
+	sp<AudioManager> temp3 = ms<AudioManager>();
 
 	AudioManager::initAudioLibrary();
 
@@ -328,7 +328,7 @@ void Main::mainInit()
 	//GLUtils::initTWL();
 	GLUtils::e();
 
-	ms<ControlsManager>();
+	sp<ControlsManager> temp2 = ms<ControlsManager>();
 	ControlsManager::initControllers();
 	GLUtils::e();
 

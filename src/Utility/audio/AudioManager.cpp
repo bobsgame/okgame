@@ -119,7 +119,7 @@ void AudioManager::initAudioLibrary()
 				string name = *it;
 				if (name.find(".ogg") != string::npos)
 				{
-					ms<AudioFile>("data/sounds/" + name);
+					sp<AudioFile> temp = ms<AudioFile>("data/sounds/" + name);
 				}
 			}
 		}
@@ -144,7 +144,7 @@ void AudioManager::initAudioLibrary()
 				string name = *it;
 				if (name.find(".ogg") != string::npos)
 				{
-					ms<AudioFile>("data/music/" + name);
+					sp<AudioFile> temp = ms<AudioFile>("data/music/" + name);
 				}
 			}
 		}
@@ -265,12 +265,12 @@ sp<Sound> AudioManager::getSoundByName(const string& musicName)
 	string clippedName = musicName;
 	if (clippedName.find("_v") != -1)
 	{
-		clippedName.substr(0, clippedName.find("_v"));
+		clippedName = clippedName.substr(0, clippedName.find("_v"));
 	}	
 	
 	if (clippedName.find(".") != -1)
 	{
-		clippedName.substr(0, clippedName.find("."));
+		clippedName = clippedName.substr(0, clippedName.find("."));
 	}
 
 	for (int i = 0; i < playingAudioList->size(); i++)

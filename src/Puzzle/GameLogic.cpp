@@ -4931,9 +4931,9 @@ void GameLogic::updateCaptions()
 
 
 	ostringstream oss1;
-	string ms = "000";
+	string msec = "000";
 	oss1 << setfill('0') << setw(3) << (totalTicksPassed % 1000);
-	ms = oss1.str();
+	msec = oss1.str();
 	
 	ostringstream oss2;
 	string seconds = "00";
@@ -4945,7 +4945,7 @@ void GameLogic::updateCaptions()
 	oss3 << setfill('0') << setw(2) << ((totalTicksPassed / 1000 / 60) % 60);
 	minutes = oss3.str();
 
-	totalTicksPassedCaption->setText(minutes + ":" + seconds + ":" + ms);
+	totalTicksPassedCaption->setText(minutes + ":" + seconds + ":" + msec);
 
 	totalTicksPassedCaption->screenX = grid->getXOnScreenNoShake() + (grid->getWidth() * blockWidth) / 2 - timeCaptionStandardizedWidth / 2;
 	totalTicksPassedCaption->screenY = playingFieldY1 - 40;// grid->screenY + grid->getHeight() * blockHeight + 20;
