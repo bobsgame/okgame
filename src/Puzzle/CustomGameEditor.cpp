@@ -4192,7 +4192,7 @@ void CustomGameEditorControl::doEditRotationSetWindowButton(Base* control)
 
 
 
-void CustomGameEditorControl::renderRotationEditor(sp<OKGame>g)
+void CustomGameEditorControl::renderRotationEditor(OKGame* g)
 {//=========================================================================================================================
 
 
@@ -5468,7 +5468,7 @@ void OKGame::customGameEditorMenuRender()
 	{
 		if (customGameEditor->rotationEditorOpen && customGameEditor->presetRotationWindowOpen == false)
 		{
-			customGameEditor->renderRotationEditor(shared_from_this());
+			customGameEditor->renderRotationEditor(this);
 			customGameEditor->renderRotationPreview();
 		}
 

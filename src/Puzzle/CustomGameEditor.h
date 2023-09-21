@@ -270,7 +270,7 @@ public:
 	void onSelectedPresetRotationOK(Gwen::Controls::Base* control);
 	void onSelectedPresetRotationCancel(Gwen::Controls::Base* control);
 	void renderRotationPreview();
-	void renderRotationEditor(sp<OKGame>g);
+	void renderRotationEditor(OKGame* g);
 	void updateRotationEditor();
 	void onRotationEditMouseClick(int x, int y, bool bDown);
     

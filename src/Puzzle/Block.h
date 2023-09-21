@@ -445,7 +445,7 @@ public:
 //	}
 
 	Block();
-	Block(sp<GameLogic> game, sp<Grid> grid, sp<Piece> piece, sp<BlockType> blockType);
+	Block(GameLogic* game, sp<Grid> grid, sp<Piece> piece, sp<BlockType> blockType);
 	void update();
 	void setXYOffsetInPiece(int x, int y);
 	void breakConnectionsInPiece();

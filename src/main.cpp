@@ -328,7 +328,7 @@ void Main::mainInit()
 	//GLUtils::initTWL();
 	GLUtils::e();
 
-	sp<ControlsManager> temp2 = ms<ControlsManager>();
+	sp<ControlsManager> temp4 = ms<ControlsManager>();
 	ControlsManager::initControllers();
 	GLUtils::e();
 

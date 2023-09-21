@@ -3100,7 +3100,7 @@ void GameLogic::renderQueuedGarbage()
 			}
 
 			sp<BlockType> blockType = blockTypes->at((blockTypes->size()-1) % (i+1));
-			Block b(shared_from_this(), grid, nullptr, blockType);
+			Block b(this, grid, nullptr, blockType);
 			b.update();//set the sprite
 			b.render(grid->getXInFBO() + ((i%(int)(grid->getWidth()/scale)) * blockWidth * scale), grid->getYInFBO() + (blockHeight*scale*(i/(grid->getWidth()/scale))), 1.0f, scale, false, false);// - blockHeight
 //			if (garbageBlock != nullptr)

@@ -309,10 +309,10 @@ Block::Block()
 }
 
 //=========================================================================================================================
-Block::Block(sp<GameLogic> game, sp<Grid> grid, sp<Piece> piece, sp<BlockType> blockType)
+Block::Block(GameLogic *game, sp<Grid> grid, sp<Piece> piece, sp<BlockType> blockType)
 {//=========================================================================================================================
 
-	this->game = game;
+	this->game = ms<GameLogic>(*game);
 	this->grid = grid;
 	this->piece = piece;
 	this->blockType = blockType;
@@ -980,7 +980,7 @@ void Block::breakConnectionsInPiece()
 	{
 		//remove this block from its connected blocks connectedBlocks list.
 		sp<Block> connectedBlock = connectedBlocksByColor->at(i);
-		connectedBlock->connectedBlocksByColor->remove(this->shared_from_this());
+		connectedBlock->connectedBlocksByColor->remove(this);
 	}
 	connectedBlocksByColor->clear();
 
@@ -988,7 +988,7 @@ void Block::breakConnectionsInPiece()
 	{
 		//remove this block from its connected blocks connectedBlocks list.
 		sp<Block> connectedBlock = connectedBlocksByPiece->at(i);
-		connectedBlock->connectedBlocksByPiece->remove(this->shared_from_this());
+		connectedBlock->connectedBlocksByPiece->remove(this);
 	}
 	connectedBlocksByPiece->clear();
 
@@ -998,15 +998,15 @@ void Block::breakConnectionsInPiece()
 		for (int i = 0; i < (int)piece->blocks->size(); i++)
 		{
 			sp<Block> c = piece->blocks->at(i);
-			while (c->connectedBlocksByColor->contains(this->shared_from_this()))
+			while (c->connectedBlocksByColor->contains(this))
 			{
 				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
-				c->connectedBlocksByColor->remove(this->shared_from_this());
+				c->connectedBlocksByColor->remove(this);
 				
 			}
-			while (c->connectedBlocksByPiece->contains(this->shared_from_this()))
+			while (c->connectedBlocksByPiece->contains(this))
 			{
-				c->connectedBlocksByPiece->remove(this->shared_from_this());
+				c->connectedBlocksByPiece->remove(this);
 				log.error("A block in this piece was connected to this block, but this block wasn't connected to that one.");
 			}
 		}
