@@ -2,12 +2,9 @@
 
 Check out [COMPILING.md](COMPILING.md) for instructions about how to compile *ok game*.
 
-<<<<<<< Updated upstream
-# ok game is "Open Source"
+discussion here: <https://discord.gg/FfDxFc4JuS>
 
----
-=======
->>>>>>> Stashed changes
+# ok game is "Open Source"
 
 # *ok game* is:
 
@@ -29,7 +26,6 @@ Check out [COMPILING.md](COMPILING.md) for instructions about how to compile *ok
 
 ## OPEN SOURCE
 
-<<<<<<< Updated upstream
 **ok game** is a multiplayer puzzle game- but not just any puzzle game, **EVERY puzzle game!** It's a build-your-own puzzle game with a puzzle game creator where YOU define all the rules to your own custom game!
 =======
 -
@@ -48,10 +44,6 @@ Check out [COMPILING.md](COMPILING.md) for instructions about how to compile *ok
 
 ### EMBED LIBRETRO INTO IT AND PLAY IT RECURSIVELY INSIDE RETROARCH INSIDE ITSELF
 
-
-
->>>>>>> Stashed changes
-
 More than that, great care has been made to ensure that **ok game** is the *best* version of every puzzle game. I went through every puzzle game forum and wiki I could find and made sure to implement every detail and feature required by tournament level hardcore players. It has wall kicks, floor kicks, spin kicks, T-spins, adjustable timing, powerups, you name it. All of these features apply to all the games however you want, making it the best version of every game!
 
 **ok game** change in real time as you play it, morphing from game to game and making every round completely unique. Or you can choose to play just your favorite game type against your friends with fantastic controls, super tight timing, and features and powerups from other games.
@@ -66,11 +58,11 @@ Create your own puzzle modes! Invent custom rulesets or challenge your friends t
 
 The source code is available on GitHub so it can grow into a standard tournament platform for all puzzle games!
 
-<<<<<<< Updated upstream
+
 **ok game is not done- it's quite playable, but I am actively adding many more features.**
 =======
 **ok is never done- it's quite playable, but I am actively adding many more features.**
->>>>>>> Stashed changes
+
 
 ## Upcoming feature list:
 * Lots more game mode features, modes, and goals
